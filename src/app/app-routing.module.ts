@@ -1,12 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { FullLayoutComponent } from './layout/full-layout/full-layout.component';
+import { CommonLayoutComponent } from './layout/common-layout/common-layout.component';
 
 
 const routes: Routes = [
   {
     path: "",
+    component: FullLayoutComponent,
     loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
+  }, {
+    path: "subscriber",
+    component: CommonLayoutComponent,
+    loadChildren: () => import('./subscriber/subscriber.module').then(m => m.SubscriberModule)
   }, {
     path: "**",
     component: NotFoundComponent
