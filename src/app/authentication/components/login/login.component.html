@@ -1,39 +1,46 @@
 <div class="lucy-login-form">
-    <div class="p-t-100" fxLayout="column" fxLayoutGap="15px">
-      <div fxLayout="row wrap">
-        <div class="m-auto" fxFlex="25" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column">
-          <mat-card class="p-5">
-            <!--Form Title-->
-            <mat-card-title>LUCY</mat-card-title>
-  
-            <!--Form subTitle-->
-            <mat-card-subtitle class="m-t-5 m-b-50">Sign In your lucy account</mat-card-subtitle>
-            <mat-card-content>
-  
-              <!--Form start-->
-              <form fxLayout="row wrap">
-                <mat-form-field appearance="outline" fxFlex="100">
-                  <mat-label>User Name</mat-label>
-                  <input matInput placeholder="User Name">
-                  <mat-icon matSuffix>supervised_user_circle</mat-icon>
-                </mat-form-field>
-                <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
-                  <mat-label>Password</mat-label>
-                  <input matInput placeholder="Password">
-                  <mat-icon matSuffix>lock</mat-icon>
-                </mat-form-field>
-                <mat-checkbox class="p-t-5 p-b-5"> Keep me signed in</mat-checkbox>
-                <button mat-raised-button color="primary" [routerLink]="['/pages']">Sign In</button>
-              </form>
-  
-              <!--Form end-->
-            </mat-card-content>
-  
-          </mat-card>
-          <div class="lucy-forgot"><span routerLink="/authentication/forgot-password">Forgot password?</span></div>
-          <div class="lucy-new-account">Do not have an account? <span routerLink="/register"> Create an
-              account</span></div>
-        </div>
+  <div class="p-t-100" fxLayout="column" fxLayoutGap="15px">
+    <div fxLayout="row wrap">
+      <div class="m-auto" fxFlex="25" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column">
+        <mat-card class="p-5">
+          <!--Form Title-->
+          <mat-card-title>LUCY</mat-card-title>
+
+          <!--Form subTitle-->
+          <mat-card-subtitle class="m-t-5 m-b-50">Sign In your lucy account</mat-card-subtitle>
+          <mat-card-content>
+
+            <!--Form start-->
+            <form fxLayout="row wrap" [formGroup]="loginForm" (ngSubmit)="login()" >
+              
+              <mat-form-field appearance="outline" fxFlex="100" [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                <mat-label>User Name</mat-label>
+                <input matInput name="email" placeholder="User Name" formControlName="email">
+                <mat-icon matSuffix>supervised_user_circle</mat-icon>
+              </mat-form-field>
+              <div *ngIf="isSubmitted && formControls.email.errors" class="help-block">
+                <div *ngIf="formControls.email.errors.required">Email is required</div>
+              </div>
+              <mat-form-field class="mt-20" appearance="outline" fxFlex="100" [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+                <mat-label>Password</mat-label>
+                <input matInput name="password" placeholder="Password" formControlName="password">
+                <mat-icon matSuffix>lock</mat-icon>
+              </mat-form-field>
+              <div *ngIf="isSubmitted && formControls.password.errors" class="help-block">
+                <div *ngIf="formControls.password.errors.required">Password is required</div>
+              </div>
+              <mat-checkbox class="p-t-5 p-b-5"> Keep me signed in</mat-checkbox>
+              <button mat-raised-button color="primary" type="submit">Sign In</button>
+            </form>
+
+            <!--Form end-->
+          </mat-card-content>
+
+        </mat-card>
+        <div class="lucy-forgot"><span routerLink="/authentication/forgot-password">Forgot password?</span></div>
+        <div class="lucy-new-account">Do not have an account? <span routerLink="/register"> Create an
+            account</span></div>
       </div>
     </div>
   </div>
+</div>

@@ -7,6 +7,7 @@ import { AuthenticationService } from './services/authentication.service';
 // import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent, RegisterComponent } from "./components/index"
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({

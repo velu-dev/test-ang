@@ -9,7 +9,8 @@ import { CommonLayoutComponent } from './layout/common-layout/common-layout.comp
 import { TokenInterceptorService } from './token-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
+// import { FlexLayoutModule } from '@angular/flex-layout';
+// import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     SharedModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    // FlexLayoutModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

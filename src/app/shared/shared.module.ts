@@ -5,6 +5,8 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MaterialModule } from './material.module';
 import { CognitoService } from './services/cognito.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -16,7 +18,10 @@ import { CognitoService } from './services/cognito.service';
     SharedRoutingModule
   ],
   exports: [
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule
   ],
   providers: [
     CognitoService
