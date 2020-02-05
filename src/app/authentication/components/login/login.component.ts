@@ -1,5 +1,6 @@
-import { Component, OnInit, ɵbypassSanitizationTrustHtml } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
+import { CognitoService } from 'src/app/shared/services/cognito.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private cognitoService: CognitoService) { }
 
   ngOnInit() {
 
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     let auth = { username: "velu", password: "Velu@123" }
-    this.authenticationService.logIn(auth).subscribe(response => {
+    this.cognitoService.logIn(auth).subscribe(response => {
       console.log(response.signInUserSession.idToken.jwtToken)
     })
   }
@@ -34,14 +35,14 @@ export class LoginComponent implements OnInit {
         'custom:Postgres_UserID': "2"
       }
     }
-    this.authenticationService.signUp(userDetails).subscribe(signUpRes => {
+    this.cognitoService.signUp(userDetails).subscribe(signUpRes => {
       console.log(signUpRes);
 
     })
   }
 
   signupVerify() {
-    this.authenticationService.signUpVerification('velu', '970936').subscribe(verifydata => {
+    this.cognitoService.signUpVerification('velu', '970936').subscribe(verifydata => {
       console.log(verifydata)
     })
   }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SharedRoutingModule } from './shared-routing.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { MaterialModule } from './material.module';
+import { CognitoService } from './services/cognito.service';
 
 
 @NgModule({
@@ -14,8 +15,11 @@ import { MaterialModule } from './material.module';
     CommonModule,
     SharedRoutingModule
   ],
-  exports:[
+  exports: [
     MaterialModule
+  ],
+  providers: [
+    CognitoService
   ]
 })
 export class SharedModule { }
