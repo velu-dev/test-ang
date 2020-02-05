@@ -1,0 +1,96 @@
+@import "spacing";
+
+
+
+//colors 
+$bg-light-blue:#e0e8f3;
+//Primary background colors 
+$primarycolor:#123f9c;
+$primarylightcolor:#5569ce;
+$primarydarkcolor:#001a6d;
+
+//Secondary background colors 
+$secondarycolor:#388e3c;
+$secondarylightcolor:#6abf69;
+$psecondaryarkcolor:'#00600f';
+
+//Extra colors 
+$white:#ffffff;
+$block:#000000;
+$gray:#ccc;
+
+// Matero Variables
+//
+// Layout
+$gutter: 16px !default;
+
+// Sidenav
+$sidenav-width: 240px !default;
+$sidenav-collapsed-width: 50px !default;
+$sidenav-width-mobile: 280px !default;
+
+// Toolbar
+$toolbar-height-desktop: 64px !default;
+$toolbar-height-mobile: 56px !default;
+
+
+// Typography
+$font-size-base: 14px !default;
+$font-weight-base: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-bold: 600 !default;
+
+$font-size-h1: 40px !default;
+$font-size-h2: 32px !default;
+$font-size-h3: 28px !default;
+$font-size-h4: 24px !default;
+$font-size-h5: 20px !default;
+$font-size-h6: 16px !default;
+
+//Font-size 
+$font-15:15px;
+$font-16:16px;
+$font-17:17px;
+$font-18:18px;
+$font-19:19px;
+$font-20:20px;
+$font-25:25px;
+$font-28:28px;
+
+//Alignment
+$float-left :left;
+$float-right :right;
+$float-none :none;
+//
+// Breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+$breakpoints: (
+  xsmall: 0,
+  small: 600px,
+  medium: 960px,
+  large: 1280px,
+  xlarge: 1920px
+) !default;
+
+//
+// Scrollbar
+//
+$scrollbar-selectors: '.matero-easy-table-content';
+
+%new-account {
+  padding-top: 40px;
+  color: #a0a0a0;
+  font-size: $font-15;
+  text-align: center;
+  span {
+    cursor: pointer;
+    font-size: $font-16;
+    font-weight: $font-weight-bold;
+    color: $white;
+    &:focus {
+        outline: none;
+    }
+  }
+}

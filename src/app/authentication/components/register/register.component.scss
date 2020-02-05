@@ -1,0 +1,16 @@
+@import "variables";
+@import "mixins";
+
+.lucy-register-form {
+  @include lucy-form;
+  mat-card-content {
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 5px;
+    }
+  }
+  .lucy-new-account {
+    @extend %new-account;
+  }
+}

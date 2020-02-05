@@ -1,0 +1,28 @@
+@import "variables";
+
+@mixin lucy-form {
+  background: $primarycolor;
+  height: 100%;
+  padding: 15px;
+}
+
+
+@mixin content-wrapper {
+    padding: 15px;
+    background-color: $bg-light-blue;
+    }
+@mixin main-title {
+   padding-left: 10px !important;
+   margin-bottom:3px;
+  
+}
+
+
+@mixin  mat-card-title {
+    font-size: $font-16;
+    font-weight: $font-weight-bold;
+    button{
+      float: $float-right;
+    }
+  }
+ 

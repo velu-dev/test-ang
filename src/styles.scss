@@ -3,6 +3,9 @@
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
 // Plus imports for other components in your app.
+@import '_spacing.scss';
+@import '_variables.scss';
+@import '_mixins.scss';
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -29,4 +32,14 @@ $lucyfrontend-theme: mat-light-theme($lucyfrontend-primary, $lucyfrontend-accent
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {     font-family: Cerebri Sans,sans-serif;
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #12263f;}
+
+.spacer {flex: 1 1 auto;}
+
+button:focus {
+    outline:none !important;
+}
