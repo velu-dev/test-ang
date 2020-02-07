@@ -1,20 +1,35 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: false,
+
+  baseUrl: 'http://192.168.1.231:3000/', //natarajan
+
+  //authentication
+  signUp:'signUp',
+
   Amplify: {
     Auth: {
-      identityPoolId: "us-west-2:e5dd97f0-5920-4932-bd14-c26fa8f988c0",
-      region: "us-west-2",
-      identityPoolRegion: "us-west-2",
-      userPoolId: "us-west-2_4NfuUmY7O",
-      userPoolWebClientId: "28ualvkodspj8haps15rogik79",
+      identityPoolId: 'us-west-2:e5dd97f0-5920-4932-bd14-c26fa8f988c0',
+      region: 'us-west-2',
+      identityPoolRegion: 'us-west-2',
+      userPoolId: 'us-west-2_nH46VcXfj',
+      userPoolWebClientId: '87eqflc6acglihb7bipvgnrlj',
       //userPoolWebClientIdSecret:'1ohn1ja654cb1eh6bbbgv2h3q9leipv3m023qabrf0fslgkk9lvi',
       mandatorySignIn: true,
-      authenticationFlowType: "USER_SRP_AUTH"
-      
+      authenticationFlowType: 'USER_SRP_AUTH',
+      cookieStorage: {
+        // REQUIRED - Cookie domain (only required if cookieStorage is provided)
+            domain: '192.168.1.54',
+        // OPTIONAL - Cookie path
+            path: '/',
+        // OPTIONAL - Cookie expiration in days
+            expires: 365,
+        // OPTIONAL - Cookie secure flag
+        // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
+            secure: true
+        },
     }
   }
 };
