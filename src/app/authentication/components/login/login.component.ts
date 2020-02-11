@@ -3,12 +3,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
-<<<<<<< HEAD
 import * as globals from '../../../globals'
-=======
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
->>>>>>> ffce836f9addea2f1d99c440afb41a415fe2b3bb
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,14 +15,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
   passwordFieldType: boolean;
-<<<<<<< HEAD
   logo = globals.logo
-  constructor(private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService) { }
-=======
-  constructor(private authenticationService: AuthenticationService, private cognitoService: CognitoService,
-    private formBuilder: FormBuilder, private cookieService: CookieService,
-    private spinnerService: NgxSpinnerService, private snackBar: MatSnackBar) { }
->>>>>>> ffce836f9addea2f1d99c440afb41a415fe2b3bb
+  constructor(private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService, private spinnerService: NgxSpinnerService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
