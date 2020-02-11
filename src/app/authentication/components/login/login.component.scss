@@ -1,32 +1,65 @@
 @import "variables";
-@import "mixins";
 
-.lucy-login-form {
-  @include lucy-form;
+.lucy-auth-form {
+  background-color: $bg-light-blue;
+  height: 100%;
+  width: 100%;
 
-  mat-card-content {
-    button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 5px;
+  mat-card {
+    img {
+      width: 80px;
+      height: auto;
+      margin: 0px auto;
+      display: block;
     }
-  }
-  .lucy-forgot {
-    padding-top: 50px;
-    color: $white;
-    font-size: 16px;
-    text-align: center;
-    span {
+    box-shadow: 5px 5px 25px #b3c5de9c;
+    mat-card-title {
+      font-family: Source Sans Pro;
+      letter-spacing: 0;
+      color: #3c3cff;
+      opacity: 1;
+      text-align: center;
+    }
+    form {
+      mat-form-field {
+        .mat-form-field-wrapper {
+          margin-bottom: 0px !important;
+          padding-bottom: 0px !important;
+        }
+      }
+      .forgot-password {
+        text-align: right;
+        letter-spacing: 0;
+        color: $text-gray;
+        opacity: 1;
+        width: 100%;
+        font-size: $font-size-1;
+        padding: 3px;
+        cursor: pointer;
+        &:hover {
+          color: blue;
+        }
+      }
+      button {
+        @include auth-btn;
+      }
+    }
+    .lucy-new-account {
+      padding-top: 15px;
+      text-align: center;
+      color: $text-gray;
       cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      color: $white;
-      &:focus {
+      font-weight: $font-weight-base;
+      outline: none;
+
+      &:focus,
+      &:active {
         outline: none;
+      }
+
+      span {
+        color: $primarycolor;
+      }
     }
-  }
-}
-  .lucy-new-account {
-    @extend %new-account;
   }
 }

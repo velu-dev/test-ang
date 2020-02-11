@@ -1,9 +1,6 @@
-@import "spacing";
-
-
 
 //colors 
-$bg-light-blue:#e0e8f3;
+$bg-light-blue:#E0E8F3;
 //Primary background colors 
 $primarycolor:#123f9c;
 $primarylightcolor:#5569ce;
@@ -18,6 +15,7 @@ $psecondaryarkcolor:'#00600f';
 $white:#ffffff;
 $block:#000000;
 $gray:#ccc;
+$text-gray: #43425D;
 
 // Matero Variables
 //
@@ -48,14 +46,33 @@ $font-size-h5: 20px !default;
 $font-size-h6: 16px !default;
 
 //Font-size 
-$font-15:15px;
-$font-16:16px;
-$font-17:17px;
-$font-18:18px;
-$font-19:19px;
-$font-20:20px;
-$font-25:25px;
-$font-28:28px;
+$font-size-1: 0.875rem; // font-size: 14px
+$font-size-2: 1rem; // font-size: 16px;
+$font-size-3: 0.75rem; // font-size: 12px;
+$font-size-4: 1.375rem; // font-size: 22px;
+$font-size-5: 0.6875rem; // font-size: 11px;
+$font-size-6: 1.0625rem; // font-size: 17px;
+$font-size-7: 0.8125rem; // font-size: 13px;
+$font-size-8: 0.5625rem; // font-size: 9px;
+$font-size-9: 1.25rem; // font-size: 20px;
+$font-size-10: 1.125rem; // font-size: 18px;
+$font-size-11: 0.938rem; // font-size: 15px;
+$font-size-12: 0.625rem; // font-size: 10px;
+$font-size-13: 1.5rem; // font-size: 24px;
+$font-size-14: 2.25rem; // font-size: 36px;
+$font-size-15: 3rem; //font-size: 48px;
+$font-size-16: 5.5rem; // font-size: 88px;
+$font-size-17: 1.875rem; // font-size: 30px;
+$font-size-18: 5.625rem; // font-size: 90px;
+$font-size-19: 2.5rem; // font-size: 40px;
+$font-size-20: 0.7em;
+$font-size-21: 1.1875rem; // font-size: 19px;
+$font-size-22: 0.656rem; //font-size: 10.5px;
+$font-size-23: 2em;
+
+//Font-family
+$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto",
+  "Ubuntu", "Helvetica", sans-serif;
 
 //Alignment
 $float-left :left;
@@ -82,15 +99,55 @@ $scrollbar-selectors: '.matero-easy-table-content';
 %new-account {
   padding-top: 40px;
   color: #a0a0a0;
-  font-size: $font-15;
+  font-size: $font-size-1;
   text-align: center;
   span {
     cursor: pointer;
-    font-size: $font-16;
+    font-size: $font-size-2;
     font-weight: $font-weight-bold;
     color: $white;
     &:focus {
         outline: none;
     }
   }
+}
+
+
+
+// mixins scss 
+@mixin lucy-form {
+  background: $bg-light-blue;
+  height: 100%;
+  padding: 15px;
+}
+
+
+@mixin content-wrapper {
+    padding: 15px;
+    background-color: $bg-light-blue;
+    }
+@mixin main-title {
+   padding-left: 10px !important;
+   margin-bottom:3px;
+  
+}
+
+
+@mixin  mat-card-title {
+    font-size: $font-size-2;
+    font-weight: $font-weight-bold;
+    button{
+      float: $float-right;
+    }
+  }
+@mixin  auth-btn {
+  background: transparent linear-gradient(100deg, #3C3CFF 0%, #224580 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 5px #2E5EAF;
+  border-radius: 2px;
+  opacity: 1;
+  width: 100%;
+  pad: 5px;
+  margin-top: 20px;
+  
+    
 }

@@ -3,6 +3,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import * as globals from '../../../globals'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,6 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
   passwordFieldType: boolean;
+  logo = globals.logo
   constructor(private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService) { }
 
   ngOnInit() {
