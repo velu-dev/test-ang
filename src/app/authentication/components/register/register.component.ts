@@ -27,6 +27,8 @@ export class RegisterComponent implements OnInit {
       email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       password: ['', Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"), Validators.minLength(8)])],
+      captcha:['',Validators.required],
+      policy:['',Validators.required]
     });
   }
 
@@ -35,6 +37,9 @@ export class RegisterComponent implements OnInit {
   //register submit
   registerSubmit() {
     this.isSubmitted = true;
+
+    console.log(this.registerForm.value.captcha);
+
     if (this.registerForm.invalid) {
       return;
     }
@@ -54,7 +59,8 @@ export class RegisterComponent implements OnInit {
           'middle_name': this.registerForm.value.middleInitial,
           'custom:isAdmin': "0",
           'custom:Organization_ID': signupRes.data.Organization_ID.toString(),
-          'custom:Postgres_UserID': signupRes.data.Postgres_User_ID.toString()
+          'custom:Postgres_UserID': signupRes.data.Postgres_User_ID.toString(),
+          'custom:isPlatformAdmin': "0"
         }
       }
       this.cognitoService.signUp(userDetails).subscribe(signUpRes => {

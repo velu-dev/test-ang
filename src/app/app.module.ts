@@ -10,6 +10,7 @@ import { TokenInterceptorService } from './token-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings ,RecaptchaFormsModule} from 'ng-recaptcha';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +23,8 @@ import { CookieService } from 'ngx-cookie-service';
     SharedModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    RecaptchaFormsModule,
+    RecaptchaModule
   ],
   providers: [
     CookieService,
@@ -29,6 +32,12 @@ import { CookieService } from 'ngx-cookie-service';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
+    },
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+      } as RecaptchaSettings,
     }
   ],
   bootstrap: [AppComponent]
