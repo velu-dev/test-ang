@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -9,7 +12,7 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormsModule],
+      imports: [ReactiveFormsModule, FormsModule, SharedModule, HttpClientTestingModule,BrowserAnimationsModule],
       declarations: [LoginComponent]
     })
       .compileComponents();
@@ -38,7 +41,7 @@ describe('LoginComponent', () => {
     expect(errors['required']).toBeTruthy();
 
     // Set email to something
-    email.setValue("test");
+    email.setValue("sarath.s@auriss.com");
     errors = email.errors || {};
     expect(errors['required']).toBeFalsy();
     expect(errors['pattern']).toBeTruthy();
@@ -77,7 +80,7 @@ describe('LoginComponent', () => {
     component.loginForm.controls['password'].setValue("Sarath@123");
     expect(component.loginForm.valid).toBeTruthy();
 
-   let user: any;
+    let user: any;
     // Subscribe to the Observable and store the user in a local variable.
     component.loginForm.value.subscribe((value) => user = value);
 

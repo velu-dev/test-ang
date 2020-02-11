@@ -13,18 +13,25 @@
               <mat-form-field appearance="outline" fxFlex="100"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
                 <mat-label>User Name</mat-label>
-                <input matInput name="email" placeholder="User Name" formControlName="email">
+                <input matInput name="email" placeholder="User Name" formControlName="email" autocomplete="off">
                 <mat-icon matSuffix>supervised_user_circle</mat-icon>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
                 <mat-label>Password</mat-label>
-                <input matInput name="password" [type]="passwordFieldType ? 'text' : 'password'" placeholder="Password" formControlName="password">
+                <input matInput name="password" [type]="passwordFieldType ? 'text' : 'password'" placeholder="Password"
+                  formControlName="password">
                 <mat-icon matSuffix (click)="togglePasswordFieldType()">remove_red_eye</mat-icon>
               </mat-form-field>
+              <!-- <div *ngIf="isSubmitted && formControls.password.errors" class="invalid-feedback">
+                <div *ngIf="formControls.password.errors.required">Password is required</div>
+                <div *ngIf="formControls.password.errors.minlength">Password must be at least 6 characters</div>
+                <div *ngIf="formControls.password.errors.pattern">Password must be at</div>
+            </div> -->
               <mat-checkbox class="p-t-5 p-b-5"> Keep me signed in</mat-checkbox>
               <button mat-raised-button color="primary" type="submit">Sign In</button>
             </form>
+            <!-- <button (click)="logout()">Logout</button> -->
             <!--Form end-->
           </mat-card-content>
         </mat-card>

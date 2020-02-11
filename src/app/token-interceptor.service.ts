@@ -18,38 +18,36 @@ export class TokenInterceptorService implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
 
-    // if (req.headers.has(InterceptorSkipHeader)) {
-    //   const headers = req.headers.delete(InterceptorSkipHeader);
-    //   return next.handle(req.clone({ headers })).pipe(
-    //     catchError((error: HttpErrorResponse) => {
-    //       let err: any = error;
-    //       console.log(err);
-    //       return throwError(error);
-    //     })
-    //   );
-    // }
+    if (req.headers.has(InterceptorSkipHeader)) {
+      const headers = req.headers.delete(InterceptorSkipHeader);
+      return next.handle(req.clone({ headers })).pipe(
+        catchError((error: HttpErrorResponse) => {
+          let err: any = error;
+          console.log(err);
+          return throwError(error);
+        })
+      );
+    }
    
-    // return from(Auth.currentSession())
-    //   .pipe(
-    //     switchMap(token => {
+    return from(Auth.currentSession())
+      .pipe(
+        switchMap(token => {
+          const headerSettings: { [name: string]: string | string[] } = {};
+          headerSettings["Authorization"] = "Bearer " + token['idToken'].jwtToken;
+          const newHeader = new HttpHeaders(headerSettings);
+          const reqClone = req.clone({
+            headers: newHeader
+          });
 
-    //       const headerSettings: { [name: string]: string | string[] } = {};
-    //       headerSettings["Authorization"] = "Bearer " + token['idToken'].jwtToken;
-    //       const newHeader = new HttpHeaders(headerSettings);
-    //       const reqClone = req.clone({
-    //         headers: newHeader
-    //       });
-
-    //       return next.handle(reqClone);
-    //     })
-    //   )
-    //   .pipe(
-    //     catchError((error: HttpErrorResponse) => {
-    //       let err: any = error;
-    //       console.log(err.status);
-    //       return throwError(error);
-    //     })
-    //   );
-    return;
+          return next.handle(reqClone);
+        })
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let err: any = error;
+          console.log(err.status);
+          return throwError(error);
+        })
+      );
   }
 }

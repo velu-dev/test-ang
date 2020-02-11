@@ -16,7 +16,6 @@ export const environment = {
       identityPoolRegion: 'us-west-2',
       userPoolId: 'us-west-2_nH46VcXfj',
       userPoolWebClientId: '87eqflc6acglihb7bipvgnrlj',
-      //userPoolWebClientIdSecret:'1ohn1ja654cb1eh6bbbgv2h3q9leipv3m023qabrf0fslgkk9lvi',
       mandatorySignIn: true,
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
@@ -25,10 +24,10 @@ export const environment = {
         // OPTIONAL - Cookie path
             path: '/',
         // OPTIONAL - Cookie expiration in days
-            expires: 365,
+            expires: 1,
         // OPTIONAL - Cookie secure flag
         // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
-            secure: true
+            secure: false
         },
     }
   }

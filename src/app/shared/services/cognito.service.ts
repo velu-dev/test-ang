@@ -8,7 +8,7 @@ import { Observable, from } from 'rxjs';
 export class CognitoService {
 
   constructor() { }
-  
+
   logIn(auth): Observable<any> {
     return from(Auth.signIn(auth.name, auth.password))
   }
@@ -33,7 +33,7 @@ export class CognitoService {
     return from(Auth.currentSession());
   }
 
-  currentUserInfo(){
+  currentUserInfo() {
     return from(Auth.currentUserInfo());
   }
 
