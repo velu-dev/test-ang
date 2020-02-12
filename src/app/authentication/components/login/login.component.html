@@ -22,7 +22,7 @@
                   formControlName="password">
                 <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
                   {{passwordFieldType ? 'visibility_off' : 'visibility'}}</mat-icon>
-                <mat-error>Please enter a valid password.</mat-error>
+                <mat-error>{{errorMessages?.passwordpattern}}</mat-error>
               </mat-form-field>
 
               <div class="forgot-password"> Forgot Password ?</div>

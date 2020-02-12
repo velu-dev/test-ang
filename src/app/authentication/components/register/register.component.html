@@ -37,7 +37,7 @@
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Password*</mat-label>
                 <input matInput type="password" placeholder="Password" formControlName="password">
-                <mat-error>Please enter a valid password.</mat-error>
+                <mat-error>{{errorMessages?.passwordpattern}}</mat-error>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Confirm password*</mat-label>

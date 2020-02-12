@@ -4,6 +4,8 @@ import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import * as globals from '../../../globals';
+import * as  errors  from '../../../shared/messages/errors'
+import * as  success  from '../../../shared/messages/success'
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 @Component({
@@ -15,7 +17,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
   passwordFieldType: boolean;
-  logo = globals.logo
+  logo = globals.logo;
+  errorMessages = errors;
   constructor(private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService, private spinnerService: NgxSpinnerService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -45,9 +48,10 @@ export class LoginComponent implements OnInit {
       console.log(loginRes.signInUserSession.idToken.jwtToken)
       this.spinnerService.hide()
       //  alert('Login Successfully')
-      this.openSnackBar("Login Successfully")
+      this.openSnackBar(success.loginSuccess)
     }, error => {
       console.log("loginError", error)
+      this.openSnackBar(error.message)
       this.spinnerService.hide()
     })
   }

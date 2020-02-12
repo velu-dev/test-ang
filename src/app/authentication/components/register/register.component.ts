@@ -4,6 +4,7 @@ import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import * as globals from '../../../globals';
+import * as  errors  from '../../../shared/messages/errors'
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -13,6 +14,8 @@ export class RegisterComponent implements OnInit {
   logo = globals.logo
   registerForm: FormGroup;
   isSubmitted = false;
+  errorMessages = errors;
+  
   constructor(private formBuilder: FormBuilder,
     private cognitoService: CognitoService,
     private authenticationService: AuthenticationService,
