@@ -1,21 +1,20 @@
+//colors
+$bg-light-blue: #e0e8f3;
+//Primary background colors
+$primarycolor: #123f9c;
+$primarylightcolor: #5569ce;
+$primarydarkcolor: #001a6d;
 
-//colors 
-$bg-light-blue:#E0E8F3;
-//Primary background colors 
-$primarycolor:#123f9c;
-$primarylightcolor:#5569ce;
-$primarydarkcolor:#001a6d;
+//Secondary background colors
+$secondarycolor: #388e3c;
+$secondarylightcolor: #6abf69;
+$psecondaryarkcolor: "#00600f";
 
-//Secondary background colors 
-$secondarycolor:#388e3c;
-$secondarylightcolor:#6abf69;
-$psecondaryarkcolor:'#00600f';
-
-//Extra colors 
-$white:#ffffff;
-$block:#000000;
-$gray:#ccc;
-$text-gray: #43425D;
+//Extra colors
+$white: #ffffff;
+$block: #000000;
+$gray: #ccc;
+$text-gray: #43425d;
 
 // Matero Variables
 //
@@ -31,7 +30,6 @@ $sidenav-width-mobile: 280px !default;
 $toolbar-height-desktop: 64px !default;
 $toolbar-height-mobile: 56px !default;
 
-
 // Typography
 $font-size-base: 14px !default;
 $font-weight-base: 400 !default;
@@ -45,7 +43,7 @@ $font-size-h4: 24px !default;
 $font-size-h5: 20px !default;
 $font-size-h6: 16px !default;
 
-//Font-size 
+//Font-size
 $font-size-1: 0.875rem; // font-size: 14px
 $font-size-2: 1rem; // font-size: 16px;
 $font-size-3: 0.75rem; // font-size: 12px;
@@ -71,13 +69,12 @@ $font-size-22: 0.656rem; //font-size: 10.5px;
 $font-size-23: 2em;
 
 //Font-family
-$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto",
-  "Ubuntu", "Helvetica", sans-serif;
+$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica", sans-serif;
 
 //Alignment
-$float-left :left;
-$float-right :right;
-$float-none :none;
+$float-left: left;
+$float-right: right;
+$float-none: none;
 //
 // Breakpoints
 //
@@ -94,7 +91,7 @@ $breakpoints: (
 //
 // Scrollbar
 //
-$scrollbar-selectors: '.matero-easy-table-content';
+$scrollbar-selectors: ".matero-easy-table-content";
 
 %new-account {
   padding-top: 40px;
@@ -107,47 +104,69 @@ $scrollbar-selectors: '.matero-easy-table-content';
     font-weight: $font-weight-bold;
     color: $white;
     &:focus {
-        outline: none;
+      outline: none;
     }
   }
 }
 
-
-
-// mixins scss 
+// mixins scss
 @mixin lucy-form {
   background: $bg-light-blue;
   height: 100%;
   padding: 15px;
 }
 
-
 @mixin content-wrapper {
-    padding: 15px;
-    background-color: $bg-light-blue;
-    }
+  padding: 15px;
+  background-color: $bg-light-blue;
+}
 @mixin main-title {
-   padding-left: 10px !important;
-   margin-bottom:3px;
-  
+  padding-left: 10px !important;
+  margin-bottom: 3px;
 }
 
-
-@mixin  mat-card-title {
-    font-size: $font-size-2;
-    font-weight: $font-weight-bold;
-    button{
-      float: $float-right;
-    }
+@mixin mat-card-title {
+  font-size: $font-size-2;
+  font-weight: $font-weight-bold;
+  button {
+    float: $float-right;
   }
-@mixin  auth-btn {
-  background: transparent linear-gradient(100deg, #3C3CFF 0%, #224580 100%) 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 5px #2E5EAF;
+}
+@mixin auth-btn {
+  background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 5px #2e5eaf;
   border-radius: 2px;
   opacity: 1;
   width: 100%;
-  pad: 5px;
+  padding: 5px;
   margin-top: 20px;
-  
-    
+  i {
+    float: right;
+    padding: 12px 10px 2px 0px;
+  }
+}
+@mixin logo {
+  width: 65px;
+  height: auto;
+  margin: 0px auto;
+  display: block;
+}
+
+@mixin switched-link {
+  padding-top: 22px;
+  text-align: center;
+  color: $text-gray;
+  cursor: pointer;
+  font-weight: $font-weight-base;
+  outline: none;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  span {
+    color: $primarycolor;
+    outline: none;
+  }
 }

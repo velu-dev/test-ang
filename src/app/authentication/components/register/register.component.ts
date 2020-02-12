@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
-
+import * as globals from '../../../globals';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  logo = globals.logo
   registerForm: FormGroup;
   isSubmitted = false;
   constructor(private formBuilder: FormBuilder,

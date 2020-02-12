@@ -3,7 +3,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
-import * as globals from '../../../globals'
+import * as globals from '../../../globals';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 @Component({
