@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
-
+import * as globals from '../../../globals';
 @Component({
   selector: 'app-user-verification',
   templateUrl: './user-verification.component.html',
   styleUrls: ['./user-verification.component.scss']
 })
 export class UserVerificationComponent implements OnInit {
+  logo = globals.logo
   verificationForm: FormGroup;
   isSubmitted = false;
   constructor(private formBuilder: FormBuilder, private cognitoService: CognitoService, private router: Router) { }

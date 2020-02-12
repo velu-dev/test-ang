@@ -1,13 +1,14 @@
 <div class="lucy-register-form">
-  <div class="p-t-100" fxLayout="column" fxLayoutGap="15px">
+  <div class="p-t-50 p-b-50" fxLayout="column" fxLayoutGap="15px">
     <div fxLayout="row wrap">
       <div class="m-auto" fxFlex="25" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column">
         <mat-card class="p-5">
           <!--Form Title-->
-          <mat-card-title>LUCY</mat-card-title>
+          <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
+          <mat-card-title class="p-t-10 ">Sign Up</mat-card-title>
 
           <!--Form subTitle-->
-          <mat-card-subtitle class="m-t-5 m-b-50">Sign Up your lucy account</mat-card-subtitle>
+          <mat-card-subtitle class="p-b-20">With your Subscriber account</mat-card-subtitle>
           <mat-card-content>
 
             <!--Form start-->
@@ -15,47 +16,43 @@
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>First name*</mat-label>
                 <input matInput placeholder="First name" formControlName="firstName" autocomplete="off">
-                <mat-icon matSuffix>supervised_user_circle</mat-icon>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Last name*</mat-label>
                 <input matInput placeholder="Last name" formControlName="lastName" autocomplete="off">
-                <mat-icon matSuffix>supervised_user_circle</mat-icon>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
-                <mat-label>Middle initial*</mat-label>
-                <input matInput placeholder="Middle initial" formControlName="middleInitial" autocomplete="off">
-                <mat-icon matSuffix>supervised_user_circle</mat-icon>
+                <mat-label>Middle name/MI*</mat-label>
+                <input matInput placeholder="Middle name/MI" formControlName="middleInitial" autocomplete="off">
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Company name</mat-label>
                 <input matInput placeholder="Company name" formControlName="companyName">
-                <mat-icon matSuffix>lock</mat-icon>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
-                <mat-label>E Mail*</mat-label>
-                <input matInput placeholder="E Mail" formControlName="email" autocomplete="off">
-                <mat-icon matSuffix>email</mat-icon>
+                <mat-label>Email ID*</mat-label>
+                <input matInput placeholder="Email ID" formControlName="email" autocomplete="off">
+                <mat-error>Please enter a valid email address.</mat-error>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Password*</mat-label>
                 <input matInput type="password" placeholder="Password" formControlName="password">
-                <mat-icon matSuffix>lock</mat-icon>
+                <mat-error>Please enter a valid password.</mat-error>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
-                <mat-label>Confirm Password*</mat-label>
-                <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
-                <mat-icon matSuffix>lock</mat-icon>
+                <mat-label>Confirm password*</mat-label>
+                <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword">
+                <mat-icon matSuffix class="check-password">remove_red_eye</mat-icon>
               </mat-form-field>
               <re-captcha formControlName="captcha" name="captcha" required></re-captcha>
-              <mat-checkbox class="p-t-5 p-b-5" name="policy" formControlName="policy"> Agree the terms and policy</mat-checkbox>
-              <button mat-raised-button color="primary" type="submit">Sign Up</button>
+              <mat-checkbox class="p-t-5 p-b-5" name="policy" formControlName="policy"> Agree the terms and policy
+              </mat-checkbox>
+              <button mat-raised-button color="primary" type="submit">Sign up<i class="fa fa-arrow-right"></i></button>
             </form>
-            <!--Form end-->
+            <div class="lucy-new-account">Already have an account? <span routerLink="/login">Sign In</span></div>
           </mat-card-content>
 
         </mat-card>
-        <div class="lucy-new-account">Already have an account? <span routerLink="/login"> Sign In</span></div>
       </div>
     </div>
   </div>

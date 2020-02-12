@@ -1,14 +1,48 @@
 @import "variables";
+
 .lucy-register-form {
-  @include lucy-form;
-  mat-card-content {
-    button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 5px;
+  background-color: $bg-light-blue;
+  min-height: 100%;
+  width: 100%;
+
+  mat-card {
+    padding: 50px 25px 25px 25px;
+    box-shadow: 5px 5px 25px #b3c5de9c;
+    .logo {
+      @include logo;
     }
-  }
-  .lucy-new-account {
-    @extend %new-account;
+    mat-card-title {
+      font-family: Source Sans Pro;
+      letter-spacing: 0;
+      color: #3c3cff;
+      opacity: 1;
+      font-size: $font-size-14;
+      text-align: center;
+    }
+    mat-card-subtitle {
+      text-align: center;
+      color: #323232;
+      font-size: $font-size-1;
+    }
+    form {
+      mat-form-field {
+        mat-icon {
+          color: $text-gray !important;
+        }
+        .check-password {
+          cursor: pointer;
+        }
+        mat-error {
+          padding-top: 2px;
+        }
+      }
+      button {
+        @include auth-btn;
+        margin-top: 30px;
+      }
+    }
+    .lucy-new-account {
+      @include switched-link;
+    }
   }
 }
