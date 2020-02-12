@@ -13,4 +13,8 @@ export class AuthenticationService {
   signUp(signUpDetails): Observable<any> {
     return this.http.post(environment.baseUrl + environment.signUp, signUpDetails, { headers: this.headers });
   }
+
+  signUpVerify(email): Observable<any> {
+    return this.http.post(environment.baseUrl + environment.signupVerify, { email_id: email }, { headers: this.headers });
+  }
 }

@@ -8,6 +8,7 @@ export const environment = {
 
   //authentication
   signUp:'signUp',
+  signupVerify: 'signup-verify',
 
   Amplify: {
     Auth: {

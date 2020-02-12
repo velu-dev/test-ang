@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-user-verification',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class UserVerificationComponent implements OnInit {
   verificationForm: FormGroup;
   isSubmitted = false;
-  constructor(private formBuilder: FormBuilder, private cognitoService: CognitoService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private cognitoService: CognitoService, private router: Router, private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.verificationForm = this.formBuilder.group({
@@ -28,9 +29,17 @@ export class UserVerificationComponent implements OnInit {
     }
     this.cognitoService.signUpVerification(this.verificationForm.value.email, this.verificationForm.value.code).subscribe(signUpVerify => {
       console.log("signUpVerify", signUpVerify);
-      this.router.navigate(['/login'])
+      if (signUpVerify == 'SUCCESS') {
+        this.authenticationService.signUpVerify(this.verificationForm.value.email).subscribe(res => {
+          this.router.navigate(['/login'])
+        },
+          error => {
+            console.log("Error", error)
+          })
+
+      }
+
     })
   }
-
 
 }

@@ -35,31 +35,32 @@ export class LoginComponent implements OnInit {
 
   //login submit
   login() {
-    this.spinnerService.show()
     let auth = { name: this.loginForm.value.email, password: this.loginForm.value.password }
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
       return;
     }
+    this.spinnerService.show()
     this.cognitoService.logIn(auth).subscribe(loginRes => {
       console.log(loginRes.signInUserSession.idToken.jwtToken)
       this.spinnerService.hide()
       //  alert('Login Successfully')
-      this.openSnackBar()
+      this.openSnackBar("Login Successfully")
     }, error => {
       console.log("loginError", error)
+      this.spinnerService.hide()
     })
   }
 
-  openSnackBar() {
+  openSnackBar(message) {
     let config = new MatSnackBarConfig();
     let horizontalPosition: MatSnackBarHorizontalPosition = 'end';
     let verticalPosition: MatSnackBarVerticalPosition = 'top';
     config.verticalPosition = verticalPosition;
     config.horizontalPosition = horizontalPosition;
     config.duration = 3000;
-    config.panelClass =  ['test'];
-    this.snackBar.open('login successfully','',config);
+    config.panelClass = ['test'];
+    this.snackBar.open(message, '', config);
   }
 
   logout() {
