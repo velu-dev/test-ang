@@ -6,14 +6,14 @@
   width: 100%;
   mat-card {
     padding: 50px 25px 25px 25px;
-    box-shadow: 5px 5px 25px #b3c5de9c;
+    box-shadow:$box-shadow-1;
     .logo {
       @include logo;
     }
     mat-card-title {
       font-family: Source Sans Pro;
       letter-spacing: 0;
-      color: #3c3cff;
+      color:  $primarycolor;
       opacity: 1;
       font-size: $font-size-14;
       text-align: center;
@@ -41,7 +41,7 @@
         cursor: pointer;
 
         &:hover {
-          color: blue;
+          color: $primarycolor;
         }
       }
       button {
@@ -54,3 +54,7 @@
     }
   }
 }
+
+
+
+

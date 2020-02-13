@@ -1,9 +1,9 @@
 //colors
 $bg-light-blue: #e0e8f3;
 //Primary background colors
-$primarycolor: #123f9c;
-$primarylightcolor: #5569ce;
-$primarydarkcolor: #001a6d;
+$primarycolor: #3c3cff;
+$primarylightcolor: #8369ff;
+$primarydarkcolor: #000eca;
 
 //Secondary background colors
 $secondarycolor: #388e3c;
@@ -88,26 +88,13 @@ $breakpoints: (
   xlarge: 1920px
 ) !default;
 
-//
-// Scrollbar
-//
-$scrollbar-selectors: ".matero-easy-table-content";
+//box Shadow
+$box-shadow-1:  5px 5px 25px #b3c5de9c;
 
-%new-account {
-  padding-top: 40px;
-  color: #a0a0a0;
-  font-size: $font-size-1;
-  text-align: center;
-  span {
-    cursor: pointer;
-    font-size: $font-size-2;
-    font-weight: $font-weight-bold;
-    color: $white;
-    &:focus {
-      outline: none;
-    }
-  }
-}
+//button Shadow
+$btn-primary-shadow: 0px 3px 5px #2e5eaf;
+
+
 
 // mixins scss
 @mixin lucy-form {
@@ -134,7 +121,7 @@ $scrollbar-selectors: ".matero-easy-table-content";
 }
 @mixin auth-btn {
   background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 5px #2e5eaf;
+  box-shadow: $btn-primary-shadow;
   border-radius: 2px;
   opacity: 1;
   width: 100%;
@@ -170,3 +157,5 @@ $scrollbar-selectors: ".matero-easy-table-content";
     outline: none;
   }
 }
+
+
