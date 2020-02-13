@@ -30,6 +30,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/sass"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -124,6 +129,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "lucyfrontend"
 }

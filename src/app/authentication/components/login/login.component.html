@@ -1,4 +1,38 @@
-<h1>Login</h1>
-<button (click)="login()">Login</button>
-<button (click)="signup()">Signup</button>
-<button (click)="signupVerify()">verify</button>
+<div class="lucy-login-form">
+  <div class="p-t-100 p-b-50" fxLayout="column" fxLayoutGap="15px">
+    <div fxLayout="row wrap">
+      <div class="m-auto" fxFlex="25" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column">
+        <mat-card class="p-5">
+          <!--Form Title-->
+          <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
+          <mat-card-title class="p-t-10 p-b-20">Sign In</mat-card-title>
+          <mat-card-content>
+            <!--Form start-->
+            <form fxLayout="row wrap" [formGroup]="loginForm" (ngSubmit)="login()" class="p-t-20">
+              <mat-form-field appearance="outline" fxFlex="100"
+                [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+                <mat-label>Email ID</mat-label>
+                <input matInput name="email" placeholder="Enter Email ID" formControlName="email" autocomplete="off">
+                <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="100"
+                [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }" class="m-b-0">
+                <mat-label>Password</mat-label>
+                <input matInput name="password" [type]="passwordFieldType ? 'text' : 'password'" placeholder="Password"
+                  formControlName="password">
+                <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
+                  {{passwordFieldType ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error>{{errorMessages?.passwordpattern}}</mat-error>
+              </mat-form-field>
+
+              <div class="forgot-password"> Forgot Password ?</div>
+              <button mat-raised-button color="primary" type="submit" class="auth-btn "> Login <i
+                  class="fa fa-arrow-right"></i></button>
+            </form>
+            <div class="lucy-new-account">New to Lucy ? <span routerLink="/register"> Sign up here</span></div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

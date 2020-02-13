@@ -1,9 +1,53 @@
 import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse ,HttpHeaders, HttpErrorResponse}
+  from '@angular/common/http';
+import { Observable,throwError, from  } from 'rxjs';
+import { switchMap } from "rxjs/operators";
+import { Auth } from "aws-amplify";
+import { catchError } from "rxjs/operators";
+export const InterceptorSkipHeader = "X-Skip-Interceptor";
 
 @Injectable({
   providedIn: 'root'
 })
-export class TokenInterceptorService {
+export class TokenInterceptorService implements HttpInterceptor {
 
   constructor() { }
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+
+    if (req.headers.has(InterceptorSkipHeader)) {
+      const headers = req.headers.delete(InterceptorSkipHeader);
+      return next.handle(req.clone({ headers })).pipe(
+        catchError((error: HttpErrorResponse) => {
+          let err: any = error;
+          console.log(err);
+          return throwError(error);
+        })
+      );
+    }
+   
+    return from(Auth.currentSession())
+      .pipe(
+        switchMap(token => {
+          const headerSettings: { [name: string]: string | string[] } = {};
+          headerSettings["Authorization"] = "Bearer " + token['idToken'].jwtToken;
+          const newHeader = new HttpHeaders(headerSettings);
+          const reqClone = req.clone({
+            headers: newHeader
+          });
+
+          return next.handle(reqClone);
+        })
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          let err: any = error;
+          console.log(err.status);
+          return throwError(error);
+        })
+      );
+  }
 }

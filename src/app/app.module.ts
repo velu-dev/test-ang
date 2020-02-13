@@ -9,6 +9,9 @@ import { CommonLayoutComponent } from './layout/common-layout/common-layout.comp
 import { TokenInterceptorService } from './token-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CookieService } from 'ngx-cookie-service';
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings ,RecaptchaFormsModule} from 'ng-recaptcha';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -21,13 +24,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RecaptchaFormsModule,
+    RecaptchaModule,
+    NgxSpinnerModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptorService,
-    multi: true
-  },],
+  providers: [
+    CookieService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+      } as RecaptchaSettings,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

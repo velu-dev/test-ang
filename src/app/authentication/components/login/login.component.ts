@@ -1,49 +1,74 @@
-import { Component, OnInit, ɵbypassSanitizationTrustHtml } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-
+import { CognitoService } from 'src/app/shared/services/cognito.service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import * as globals from '../../../globals';
+import * as  errors from '../../../shared/messages/errors'
+import * as  success from '../../../shared/messages/success'
+import { NgxSpinnerService } from "ngx-spinner";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertComponent } from './../../../shared/components/alert/alert.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private authenticationService: AuthenticationService) { }
+  loginForm: FormGroup;
+  isSubmitted = false;
+  passwordFieldType: boolean;
+  logo = globals.logo;
+  errorMessages = errors;
+  constructor(private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService, private spinnerService: NgxSpinnerService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
+    this.loginForm = this.formBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      password: ['', Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"), Validators.minLength(8)])]
+    });
   }
 
+  //change password <-> text
+  togglePasswordFieldType() {
+    this.passwordFieldType = !this.passwordFieldType;
+  }
+
+  get formControls() { return this.loginForm.controls; }
+
+  //login submit
   login() {
-    let auth = { username: "velu", password: "Velu@123" }
-    this.authenticationService.logIn(auth).subscribe(response => {
-      console.log(response.signInUserSession.idToken.jwtToken)
-    })
-  }
-
-  signup() {
-    let userDetails = {
-      'username': 'velu',
-      'password': 'Velu@123',
-      'attributes': {
-        'email': 'velusamy.v@auriss.com',
-        'name': 'velu',
-        'middle_name': 'v',
-        'custom:isAdmin': "0",
-        'custom:Organization_ID': "1",
-        'custom:Postgres_UserID': "2"
-      }
+    let auth = { name: this.loginForm.value.email, password: this.loginForm.value.password }
+    this.isSubmitted = true;
+    if (this.loginForm.invalid) {
+      return;
     }
-    this.authenticationService.signUp(userDetails).subscribe(signUpRes => {
-      console.log(signUpRes);
-
+    this.spinnerService.show()
+    this.cognitoService.logIn(auth).subscribe(loginRes => {
+      console.log(loginRes.signInUserSession.idToken.jwtToken)
+      this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(data => {
+        this.spinnerService.hide()
+        this.openSnackBar(success.loginSuccess)
+      })
+    }, error => {
+      console.log("loginError", error)
+      this.openSnackBar(error.message)
+      this.spinnerService.hide()
     })
   }
 
-  signupVerify() {
-    this.authenticationService.signUpVerification('velu', '970936').subscribe(verifydata => {
-      console.log(verifydata)
-    })
+  openSnackBar(message) {
+    this.snackBar.openFromComponent(AlertComponent, {
+      duration: 5 * 1000,
+      data: message
+    });
   }
 
+  logout() {
+    this.cognitoService.logOut().subscribe(response => {
+      console.log("logout", response)
+      this.cookieService.deleteAll();
+    })
+  }
 }

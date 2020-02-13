@@ -7,12 +7,14 @@ import { AuthenticationService } from './services/authentication.service';
 // import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent, RegisterComponent } from "./components/index"
 import { SharedModule } from '../shared/shared.module';
+import { UserVerificationComponent } from './components/user-verification/user-verification.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserVerificationComponent
   ],
   imports: [
     CommonModule,

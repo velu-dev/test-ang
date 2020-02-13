@@ -1,27 +1,26 @@
 @import "variables";
 
-.lucy-register-form {
+.lucy-login-form {
   background-color: $bg-light-blue;
-  min-height: 100%;
+  min-height: calc(100% - 65px);
   width: 100%;
-
   mat-card {
     padding: 50px 25px 25px 25px;
-    box-shadow: $box-shadow-1;
+    box-shadow: 5px 5px 25px #b3c5de9c;
     .logo {
       @include logo;
     }
     mat-card-title {
       font-family: Source Sans Pro;
       letter-spacing: 0;
-      color: $primarycolor;
+      color: #3c3cff;
       opacity: 1;
       font-size: $font-size-14;
       text-align: center;
     }
     mat-card-subtitle {
       text-align: center;
-      color: $text-gray;
+      color: #323232;
       font-size: $font-size-1;
     }
     form {
@@ -34,6 +33,19 @@
         }
         mat-error {
           padding-top: 2px;
+        }
+      }
+      .forgot-password {
+        text-align: right;
+        letter-spacing: 0;
+        color: $text-gray;
+        opacity: 1;
+        width: 100%;
+        font-size: $font-size-1;
+        padding: 3px;
+        cursor: pointer;
+        &:hover {
+          color: blue;
         }
       }
       button {

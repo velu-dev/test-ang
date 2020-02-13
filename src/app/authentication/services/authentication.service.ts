@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Auth } from 'aws-amplify';
-import { Observable, from } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+export const InterceptorSkipHeader = 'X-Skip-Interceptor';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private headers = new HttpHeaders().set(InterceptorSkipHeader, '');
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
-
-  logIn(auth): Observable<any> {
-    return from(Auth.signIn(auth.username, auth.password))
+  signIn(token) {
+    return this.http.post(environment.baseUrl + environment.signIn, {});
   }
 
-  signUp(userData): Observable<any> {
-    return from(Auth.signUp(userData))
+  signUp(signUpDetails): Observable<any> {
+    return this.http.post(environment.baseUrl + environment.signUp, signUpDetails, { headers: this.headers });
   }
-  signUpVerification(userName, code): Observable<any> {
-    return from(Auth.confirmSignUp(userName, code, { forceAliasCreation: true }))
+
+  signUpVerify(email): Observable<any> {
+    return this.http.post(environment.baseUrl + environment.signupVerify, { sign_in_email_id: email }, { headers: this.headers });
   }
 }

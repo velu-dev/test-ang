@@ -1,0 +1,161 @@
+//colors
+$bg-light-blue: #e0e8f3;
+//Primary background colors
+$primarycolor: #3c3cff;
+$primarylightcolor: #8369ff;
+$primarydarkcolor: #000eca;
+
+//Secondary background colors
+$secondarycolor: #388e3c;
+$secondarylightcolor: #6abf69;
+$psecondaryarkcolor: "#00600f";
+
+//Extra colors
+$white: #ffffff;
+$block: #000000;
+$gray: #ccc;
+$text-gray: #43425d;
+
+// Matero Variables
+//
+// Layout
+$gutter: 16px !default;
+
+// Sidenav
+$sidenav-width: 240px !default;
+$sidenav-collapsed-width: 50px !default;
+$sidenav-width-mobile: 280px !default;
+
+// Toolbar
+$toolbar-height-desktop: 64px !default;
+$toolbar-height-mobile: 56px !default;
+
+// Typography
+$font-size-base: 14px !default;
+$font-weight-base: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-bold: 600 !default;
+
+$font-size-h1: 40px !default;
+$font-size-h2: 32px !default;
+$font-size-h3: 28px !default;
+$font-size-h4: 24px !default;
+$font-size-h5: 20px !default;
+$font-size-h6: 16px !default;
+
+//Font-size
+$font-size-1: 0.875rem; // font-size: 14px
+$font-size-2: 1rem; // font-size: 16px;
+$font-size-3: 0.75rem; // font-size: 12px;
+$font-size-4: 1.375rem; // font-size: 22px;
+$font-size-5: 0.6875rem; // font-size: 11px;
+$font-size-6: 1.0625rem; // font-size: 17px;
+$font-size-7: 0.8125rem; // font-size: 13px;
+$font-size-8: 0.5625rem; // font-size: 9px;
+$font-size-9: 1.25rem; // font-size: 20px;
+$font-size-10: 1.125rem; // font-size: 18px;
+$font-size-11: 0.938rem; // font-size: 15px;
+$font-size-12: 0.625rem; // font-size: 10px;
+$font-size-13: 1.5rem; // font-size: 24px;
+$font-size-14: 2.25rem; // font-size: 36px;
+$font-size-15: 3rem; //font-size: 48px;
+$font-size-16: 5.5rem; // font-size: 88px;
+$font-size-17: 1.875rem; // font-size: 30px;
+$font-size-18: 5.625rem; // font-size: 90px;
+$font-size-19: 2.5rem; // font-size: 40px;
+$font-size-20: 0.7em;
+$font-size-21: 1.1875rem; // font-size: 19px;
+$font-size-22: 0.656rem; //font-size: 10.5px;
+$font-size-23: 2em;
+
+//Font-family
+$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica", sans-serif;
+
+//Alignment
+$float-left: left;
+$float-right: right;
+$float-none: none;
+//
+// Breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+$breakpoints: (
+  xsmall: 0,
+  small: 600px,
+  medium: 960px,
+  large: 1280px,
+  xlarge: 1920px
+) !default;
+
+//box Shadow
+$box-shadow-1:  5px 5px 25px #b3c5de9c;
+
+//button Shadow
+$btn-primary-shadow: 0px 3px 5px #2e5eaf;
+
+
+
+// mixins scss
+@mixin lucy-form {
+  background: $bg-light-blue;
+  height: 100%;
+  padding: 15px;
+}
+
+@mixin content-wrapper {
+  padding: 15px;
+  background-color: $bg-light-blue;
+}
+@mixin main-title {
+  padding-left: 10px !important;
+  margin-bottom: 3px;
+}
+
+@mixin mat-card-title {
+  font-size: $font-size-2;
+  font-weight: $font-weight-bold;
+  button {
+    float: $float-right;
+  }
+}
+@mixin auth-btn {
+  background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
+  box-shadow: $btn-primary-shadow;
+  border-radius: 2px;
+  opacity: 1;
+  width: 100%;
+  padding: 5px;
+  margin-top: 20px;
+  i {
+    float: right;
+    padding: 12px 10px 2px 0px;
+  }
+}
+@mixin logo {
+  width: 65px;
+  height: auto;
+  margin: 0px auto;
+  display: block;
+}
+
+@mixin switched-link {
+  padding-top: 22px;
+  text-align: center;
+  color: $text-gray;
+  cursor: pointer;
+  font-weight: $font-weight-base;
+  outline: none;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  span {
+    color: $primarycolor;
+    outline: none;
+  }
+}
+
+
