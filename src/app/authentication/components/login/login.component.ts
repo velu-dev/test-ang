@@ -4,10 +4,11 @@ import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import * as globals from '../../../globals';
-import * as  errors  from '../../../shared/messages/errors'
-import * as  success  from '../../../shared/messages/success'
+import * as  errors from '../../../shared/messages/errors'
+import * as  success from '../../../shared/messages/success'
 import { NgxSpinnerService } from "ngx-spinner";
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertComponent } from './../../../shared/components/alert/alert.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -57,14 +58,9 @@ export class LoginComponent implements OnInit {
   }
 
   openSnackBar(message) {
-    let config = new MatSnackBarConfig();
-    let horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-    let verticalPosition: MatSnackBarVerticalPosition = 'top';
-    config.verticalPosition = verticalPosition;
-    config.horizontalPosition = horizontalPosition;
-    config.duration = 3000;
-    config.panelClass = ['test'];
-    this.snackBar.open(message, '', config);
+    this.snackBar.openFromComponent(AlertComponent, {
+      duration: 5 * 1000,
+    });
   }
 
   logout() {
