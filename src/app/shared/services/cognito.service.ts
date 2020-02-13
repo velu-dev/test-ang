@@ -49,8 +49,8 @@ export class CognitoService {
     return from(Auth.verifyCurrentUserAttributeSubmit('email',code))
   }
 
-  resentSignupCode(userName): Observable<any> {
-    return from(Auth.resendSignUp(userName.email))
+  resentSignupCode(email): Observable<any> {
+    return from(Auth.resendSignUp(email))
   }
 
 

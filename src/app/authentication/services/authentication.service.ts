@@ -10,6 +10,10 @@ export class AuthenticationService {
   private headers = new HttpHeaders().set(InterceptorSkipHeader, '');
   constructor(private http: HttpClient) { }
 
+  signIn(token) {
+    return this.http.post(environment.baseUrl + environment.signIn, {});
+  }
+
   signUp(signUpDetails): Observable<any> {
     return this.http.post(environment.baseUrl + environment.signUp, signUpDetails, { headers: this.headers });
   }

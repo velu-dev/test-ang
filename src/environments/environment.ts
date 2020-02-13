@@ -7,8 +7,9 @@ export const environment = {
   baseUrl: 'http://192.168.1.231:3000/', //natarajan
 
   //authentication
-  signUp:'signUp',
-  signupVerify: 'signup-verify',
+  signIn:'auth/Authentication/signin',
+  signUp:'auth/Authentication/signup',
+  signupVerify: 'auth/Authentication/signup-verify',
 
   Amplify: {
     Auth: {

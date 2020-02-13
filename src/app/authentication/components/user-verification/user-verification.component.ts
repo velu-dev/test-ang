@@ -37,9 +37,14 @@ export class UserVerificationComponent implements OnInit {
           error => {
             console.log("Error", error)
           })
-
       }
+    })
+  }
 
+  verifyResend() {
+
+    this.cognitoService.resentSignupCode(this.verificationForm.value.email).subscribe(resendVerify => {
+      console.log(resendVerify)
     })
   }
 

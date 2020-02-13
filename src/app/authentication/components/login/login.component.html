@@ -13,7 +13,7 @@
                 [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
                 <mat-label>Email ID</mat-label>
                 <input matInput name="email" placeholder="Enter Email ID" formControlName="email" autocomplete="off">
-                <mat-error>Please enter a valid email address.</mat-error>
+                <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="100"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }" class="m-b-0">
