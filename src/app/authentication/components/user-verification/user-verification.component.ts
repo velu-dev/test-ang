@@ -30,13 +30,17 @@ export class UserVerificationComponent implements OnInit {
   }
   get formControls() { return this.verificationForm.controls; }
 
+  //open alert
   openSnackBar(message) {
     this.snackBar.openFromComponent(AlertComponent, {
       duration: 5 * 1000,
-      data: message
+      data: message,
+      verticalPosition: 'top',
+      horizontalPosition: 'end'
     });
   }
 
+  //signup verify submit
   verifySubmit() {
     if (this.verificationForm.invalid) {
       return;
@@ -63,6 +67,7 @@ export class UserVerificationComponent implements OnInit {
     })
   }
 
+  //verification code resend
   verifyResend() {
     if(this.verificationForm.value.email){ 
     this.cognitoService.resentSignupCode(this.verificationForm.value.email).subscribe(resendVerify => {

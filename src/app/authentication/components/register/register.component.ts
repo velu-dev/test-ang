@@ -36,8 +36,8 @@ export class RegisterComponent implements OnInit {
       middleInitial: ['', Validators.compose([Validators.required])],
       companyName: [''],
       email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"), Validators.minLength(8)])],
-      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"), Validators.minLength(8)])],
+      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
+      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
       captcha: ['', Validators.required],
       policy: ['', Validators.required]
     });
@@ -45,6 +45,7 @@ export class RegisterComponent implements OnInit {
 
   get formControls() { return this.registerForm.controls; }
 
+  //change password <-> text
   togglePasswordFieldType() {
     this.passwordFieldType = !this.passwordFieldType;
   }
@@ -60,7 +61,12 @@ export class RegisterComponent implements OnInit {
       this. openSnackBar(this.errorMessages.passworddidnotMatch)
       return;
     }
+
+    if (!this.registerForm.value.policy){
+      return;
+    }
     this.spinnerService.show();
+    //role id set role_id = 1-admin, 2-subscriber
     let signUpDetails = { first_name: this.registerForm.value.firstName, middle_name: this.registerForm.value.middleInitial, last_name: this.registerForm.value.lastName, sign_in_email_id: this.registerForm.value.email, company_name: this.registerForm.value.companyName }
     this.authenticationService.signUp(signUpDetails).subscribe(signupRes => {
       console.log("signupRes", signupRes);
@@ -70,10 +76,9 @@ export class RegisterComponent implements OnInit {
         'attributes': {
           'name': this.registerForm.value.firstName + ' ' + this.registerForm.value.lastName,
           'middle_name': this.registerForm.value.middleInitial,
-          'custom:isAdmin': "0",
           'custom:Organization_ID': signupRes.data.Organization_ID.toString(),
           'custom:Postgres_UserID': signupRes.data.Postgres_User_ID.toString(),
-          //'custom:isPlatformAdmin': "0"
+          'custom:isPlatformAdmin': "0"
         }
       }
       this.cognitoService.signUp(userDetails).subscribe(signUpRes => {
@@ -92,10 +97,13 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  //open alert
   openSnackBar(message) {
     this.snackBar.openFromComponent(AlertComponent, {
       duration: 5 * 1000,
-      data: message
+      data: message,
+      verticalPosition: 'top',
+      horizontalPosition: 'end'
     });
   }
 
