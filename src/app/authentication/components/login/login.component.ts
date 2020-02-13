@@ -4,8 +4,11 @@ import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import * as globals from '../../../globals';
+import * as  errors from '../../../shared/messages/errors'
+import * as  success from '../../../shared/messages/success'
 import { NgxSpinnerService } from "ngx-spinner";
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertComponent } from './../../../shared/components/alert/alert.component';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +18,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isSubmitted = false;
   passwordFieldType: boolean;
-  logo = globals.logo
+  logo = globals.logo;
+  errorMessages = errors;
   constructor(private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService, private spinnerService: NgxSpinnerService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
@@ -35,31 +39,30 @@ export class LoginComponent implements OnInit {
 
   //login submit
   login() {
-    this.spinnerService.show()
     let auth = { name: this.loginForm.value.email, password: this.loginForm.value.password }
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
       return;
     }
+    this.spinnerService.show()
     this.cognitoService.logIn(auth).subscribe(loginRes => {
       console.log(loginRes.signInUserSession.idToken.jwtToken)
-      this.spinnerService.hide()
-      //  alert('Login Successfully')
-      this.openSnackBar()
+      this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(data => {
+        this.spinnerService.hide()
+        this.openSnackBar(success.loginSuccess)
+      })
     }, error => {
       console.log("loginError", error)
+      this.openSnackBar(error.message)
+      this.spinnerService.hide()
     })
   }
 
-  openSnackBar() {
-    let config = new MatSnackBarConfig();
-    let horizontalPosition: MatSnackBarHorizontalPosition = 'end';
-    let verticalPosition: MatSnackBarVerticalPosition = 'top';
-    config.verticalPosition = verticalPosition;
-    config.horizontalPosition = horizontalPosition;
-    config.duration = 3000;
-    config.panelClass =  ['test'];
-    this.snackBar.open('login successfully','',config);
+  openSnackBar(message) {
+    this.snackBar.openFromComponent(AlertComponent, {
+      duration: 5 * 1000,
+      data: message
+    });
   }
 
   logout() {

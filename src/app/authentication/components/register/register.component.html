@@ -6,11 +6,7 @@
           <!--Form Title-->
           <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
           <mat-card-title class="p-t-10 ">Sign Up</mat-card-title>
-
-          <!--Form subTitle-->
-          <mat-card-subtitle class="p-b-20">With your Subscriber account</mat-card-subtitle>
           <mat-card-content>
-
             <!--Form start-->
             <form fxLayout="row wrap" [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
@@ -32,26 +28,28 @@
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Email ID*</mat-label>
                 <input matInput placeholder="Email ID" formControlName="email" autocomplete="off">
-                <mat-error>Please enter a valid email address.</mat-error>
+                <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Password*</mat-label>
-                <input matInput type="password" placeholder="Password" formControlName="password">
-                <mat-error>Please enter a valid password.</mat-error>
+                <input matInput [type]="passwordFieldType ? 'text' : 'password'" placeholder="Password"
+                  formControlName="password">
+                <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
+                  {{passwordFieldType ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error>{{errorMessages?.passwordpattern}}</mat-error>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Confirm password*</mat-label>
-                <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword">
-                <mat-icon matSuffix class="check-password">remove_red_eye</mat-icon>
+                <input matInput [type]="passwordFieldType ? 'text' : 'password'" placeholder="Confirm password" formControlName="confirmPassword">
+                <!-- <mat-error>{{errorMessages?.passworddidnotMatch}}</mat-error> -->
               </mat-form-field>
               <re-captcha formControlName="captcha" name="captcha" required></re-captcha>
-              <mat-checkbox class="p-t-5 p-b-5" name="policy" formControlName="policy"> Agree the terms and policy
+              <mat-checkbox class="p-t-5 p-b-5" name="policy" formControlName="policy"> Agree the terms and conditions
               </mat-checkbox>
               <button mat-raised-button color="primary" type="submit">Sign up<i class="fa fa-arrow-right"></i></button>
             </form>
             <div class="lucy-new-account">Already have an account? <span routerLink="/login">Sign In</span></div>
           </mat-card-content>
-
         </mat-card>
       </div>
     </div>

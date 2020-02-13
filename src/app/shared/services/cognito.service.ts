@@ -37,4 +37,21 @@ export class CognitoService {
     return from(Auth.currentUserInfo());
   }
 
+  updateUserAttribute(user, data): Observable<any> {
+    return from(Auth.updateUserAttributes(user, data))
+  }
+
+  userAttributes(user) {
+    return from(Auth.userAttributes(user))
+  }
+
+  verifyUserAttribute(code) {
+    return from(Auth.verifyCurrentUserAttributeSubmit('email',code))
+  }
+
+  resentSignupCode(email): Observable<any> {
+    return from(Auth.resendSignUp(email))
+  }
+
+
 }
