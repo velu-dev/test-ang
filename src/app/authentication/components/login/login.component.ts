@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
   openSnackBar(message) {
     this.snackBar.openFromComponent(AlertComponent, {
       duration: 5 * 1000,
+      data: message
     });
   }
 

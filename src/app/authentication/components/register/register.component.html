@@ -40,7 +40,7 @@
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Confirm password*</mat-label>
-                <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword">
+                <input matInput [type]="passwordFieldType ? 'text' : 'password'" placeholder="Confirm password" formControlName="confirmPassword">
                 <!-- <mat-error>{{errorMessages?.passworddidnotMatch}}</mat-error> -->
               </mat-form-field>
               <re-captcha formControlName="captcha" name="captcha" required></re-captcha>

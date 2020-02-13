@@ -19,6 +19,6 @@ export class AuthenticationService {
   }
 
   signUpVerify(email): Observable<any> {
-    return this.http.post(environment.baseUrl + environment.signupVerify, { email_id: email }, { headers: this.headers });
+    return this.http.post(environment.baseUrl + environment.signupVerify, { sign_in_email_id: email }, { headers: this.headers });
   }
 }

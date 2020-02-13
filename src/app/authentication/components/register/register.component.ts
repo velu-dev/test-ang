@@ -5,7 +5,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
-
+import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -17,12 +19,14 @@ export class RegisterComponent implements OnInit {
   isSubmitted = false;
   errorMessages = errors;
   passwordFieldType: boolean;
-  passwordMatchStatus:boolean = false;
+  passwordMatchStatus: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private cognitoService: CognitoService,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private spinnerService: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
@@ -52,12 +56,11 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    if(this.registerForm.value.password != this.registerForm.value.confirmPassword){
+    if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
+      this. openSnackBar(this.errorMessages.passworddidnotMatch)
       return;
-    }else{
-      this.passwordMatchStatus = true;
     }
-
+    this.spinnerService.show();
     let signUpDetails = { first_name: this.registerForm.value.firstName, middle_name: this.registerForm.value.middleInitial, last_name: this.registerForm.value.lastName, sign_in_email_id: this.registerForm.value.email, company_name: this.registerForm.value.companyName }
     this.authenticationService.signUp(signUpDetails).subscribe(signupRes => {
       console.log("signupRes", signupRes);
@@ -75,15 +78,25 @@ export class RegisterComponent implements OnInit {
       }
       this.cognitoService.signUp(userDetails).subscribe(signUpRes => {
         console.log(signUpRes);
+        this.spinnerService.hide();
         this.router.navigate(['/verification'])
       }, error => {
         console.log("cognitoSignUpError", error);
+        this. openSnackBar(error.message);
       })
 
     }, error => {
       console.log("signup", error);
+      this.spinnerService.hide();
+      this. openSnackBar(error.error.error)
     })
+  }
 
+  openSnackBar(message) {
+    this.snackBar.openFromComponent(AlertComponent, {
+      duration: 5 * 1000,
+      data: message
+    });
   }
 
 }
