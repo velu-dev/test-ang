@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-common-layout',
   templateUrl: './common-layout.component.html',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommonLayoutComponent implements OnInit {
 
-  constructor() { }
+ // fillerNav = [1,2,3,4,5,6]
+ 
+ constructor() { }
 
-  ngOnInit() {
-  }
+ ngOnInit() {
+ }
 
 }

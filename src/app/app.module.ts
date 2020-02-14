@@ -10,8 +10,9 @@ import { TokenInterceptorService } from './token-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
-import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings ,RecaptchaFormsModule} from 'ng-recaptcha';
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { _LayoutModule } from './shared/components/_layouts/_layout.module';
 
 @NgModule({
   declarations: [
@@ -21,13 +22,14 @@ import { NgxSpinnerModule } from "ngx-spinner";
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    SharedModule,
-    HttpClientModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    SharedModule,
     RecaptchaFormsModule,
     RecaptchaModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    _LayoutModule
   ],
   providers: [
     CookieService,

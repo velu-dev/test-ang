@@ -12,8 +12,8 @@ export class AlertComponent implements OnInit {
   ngOnInit() {
 
     let config = new MatSnackBarConfig();
-   let horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  let verticalPosition: MatSnackBarVerticalPosition = 'top';
+    let horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+    let verticalPosition: MatSnackBarVerticalPosition = 'top';
     config.verticalPosition = verticalPosition;
     config.horizontalPosition = horizontalPosition;
   }

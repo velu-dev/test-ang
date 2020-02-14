@@ -15,6 +15,10 @@ const routes: Routes = [
     component: CommonLayoutComponent,
     loadChildren: () => import('./subscriber/subscriber.module').then(m => m.SubscriberModule)
   }, {
+    path: "admin",
+    component: CommonLayoutComponent,
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  }, {
     path: "**",
     component: NotFoundComponent
   }

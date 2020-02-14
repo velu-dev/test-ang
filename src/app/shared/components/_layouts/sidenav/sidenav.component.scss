@@ -1,0 +1,76 @@
+@import "variables";
+mat-sidenav-container {
+  mat-sidenav {
+    width: $sidenav-width;
+    background-color: $primarycolor;
+    background: $primarycolor;
+    color: $white;
+    mat-toolbar {
+      background-color: $primarycolor;
+      color: $white;
+    }
+    mat-nav-list {
+      .menu-card-title {
+        padding: 10px;
+        display: block;
+        color: #5ace74;
+        &::after {
+          content: "";
+          background: rgba(255, 255, 255, 0.26);
+          height: 2px;
+          display: inherit;
+          width: 50%;
+          margin-left: auto;
+          margin-top: -10px;
+        }
+      }
+      .mat-list-item {
+        color: #fff;
+        height: 42px;
+        font-size: 13px;
+        &:hover {
+          cursor: pointer;
+          color: #fff;
+          background-color: #298a00;
+        }
+        &:active {
+          color: #fff;
+          background-color: #298a00;
+        }
+        mat-icon {
+          font-size: 14px;
+          margin-top: 2px;
+          margin-right: 5px;
+          background: alpha($color: #000);
+        }
+      }
+    }
+  } //mat-sidenav end
+  mat-sidenav-content {
+    mat-toolbar {
+      background-color: $white;
+      color: #5c77ff;
+      font-size: 22px;
+      height: 40px;
+      box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+      min-height: 55px !important;
+    }
+    mat-toolbar-row {
+      mat-card-actions {
+        button {
+          margin-top: 15px;
+        }
+      }
+    }
+  }
+}
+
+
+
+.content-wrapper {
+    @include content-wrapper;
+    .main-card {
+        max-height: 100px ;
+        background-color:$white; 
+    }
+}
