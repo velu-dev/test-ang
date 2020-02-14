@@ -66,8 +66,29 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     }
   }
 }
-.mat-form-field-appearance-outline .mat-form-field-wrapper {
-    margin-bottom: 8px !important;
-    padding-bottom: 13px;
-  }
+// .mat-form-field-appearance-outline .mat-form-field-wrapper {    
+//     padding-bottom: 05px;
+//     display: block;
+//     .mat-form-field-subscript-wrapper {
+//       position: inherit !important;
+//     }
+//   }
 
+
+// ==================================================
+// SNACKBAR STYLE
+// ==================================================
+ 
+
+  .mat-snack-bar-container  {
+    background: #4CAF50;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+    .example-pizza-party {
+       color: $black !important;
+       padding: 10px;
+    }
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 10px;
+    }
