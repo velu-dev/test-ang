@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { SharedModule } from '../../shared.module';
 import { MaterialModule } from '../../material.module';
-import { TitleBarComponent } from '../navigation/title_bar/title_bar.component';
+import { PageHeaderComponent } from '../navigation/page_header/page_header.component';
 import { BreadcrumbComponent } from '../navigation/breadcrumb/breadcrumb.component';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { BreadcrumbComponent } from '../navigation/breadcrumb/breadcrumb.compone
         HeaderComponent,
         SidenavComponent,
         FooterComponent,
-        TitleBarComponent,
+        PageHeaderComponent,
         BreadcrumbComponent
     ],
     imports: [
@@ -29,7 +29,7 @@ import { BreadcrumbComponent } from '../navigation/breadcrumb/breadcrumb.compone
         HeaderComponent,
         SidenavComponent,
         FooterComponent,
-        TitleBarComponent,
+        PageHeaderComponent,
         BreadcrumbComponent
     ],
     providers: [

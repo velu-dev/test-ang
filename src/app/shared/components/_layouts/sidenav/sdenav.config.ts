@@ -12,8 +12,8 @@ export const ROUTES: SideNavInterface[] = [
             group: "Admin",
             role: 1
         },{
-            path: '/admin/dashboard',
-            title: 'User Management',
+            path: '/admin/users',
+            title: 'Manage User',
             icon: 'dashboard',
             submenu: [],
             group: "Admin",

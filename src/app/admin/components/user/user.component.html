@@ -1,0 +1,57 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Users</mat-card-title>
+        <button mat-mini-fab>
+            <mat-icon>add_circle</mat-icon>
+        </button>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email">
+        </mat-form-field>
+        <span class="spacer"></span>
+        <mat-icon class="filter-icon" aria-hidden="false" aria-label="Example home icon" [matMenuTriggerFor]="filter">filter_list</mat-icon>
+        <mat-menu #filter="matMenu">
+            <mat-list role="list">
+                <mat-list-item role="listitem" *ngFor="let role of roles">
+                    <mat-checkbox>{{role}}</mat-checkbox>
+                </mat-list-item>
+            </mat-list>
+
+        </mat-menu>
+
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-elevation-z8">
+            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i= index">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnName[i]}} </th>
+                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+            </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <div class="example-element-detail"
+                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                        <div class="example-element-diagram">
+                            <div class="example-element-first_name"> {{element.first_name}} </div>
+                            <div class="example-element-last_name"> {{element.last_name}} </div>
+                            <div class="example-element-email"> {{element.email}} </div>
+                            <div class="example-element-role"> {{element.role}} </div>
+                        </div>
+                        <div class="example-element-description">
+                            {{element.first_name}}
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                [class.example-expanded-row]="expandedElement === element"
+                (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[ 5, 10, 25, 100]"></mat-paginator>
+
+    </mat-card-content>
+</mat-card>
