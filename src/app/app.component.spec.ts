@@ -3,18 +3,23 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { CommonLayoutComponent } from './layout/common-layout/common-layout.component';
 import { FullLayoutComponent } from './layout/full-layout/full-layout.component';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxSpinnerService } from "ngx-spinner";
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        NgxSpinnerModule
       ],
       declarations: [
         AppComponent,
         FullLayoutComponent,
         CommonLayoutComponent
       ],
+      providers: [
+        NgxSpinnerService
+      ]
     }).compileComponents();
   }));
 
