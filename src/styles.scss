@@ -71,3 +71,16 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     padding-bottom: 13px;
   }
 
+// ==================================================
+// SNACKBAR STYLE
+// ==================================================
+ 
+
+  .mat-snack-bar-container  {
+    background: #4CAF50;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+    .example-pizza-party {
+       color: $black !important;
+       padding: 10px;
+    }
+    }
