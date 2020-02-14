@@ -66,10 +66,14 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     }
   }
 }
-.mat-form-field-appearance-outline .mat-form-field-wrapper {
-    margin-bottom: 8px !important;
-    padding-bottom: 13px;
-  }
+// .mat-form-field-appearance-outline .mat-form-field-wrapper {    
+//     padding-bottom: 05px;
+//     display: block;
+//     .mat-form-field-subscript-wrapper {
+//       position: inherit !important;
+//     }
+//   }
+
 
 // ==================================================
 // SNACKBAR STYLE
@@ -83,4 +87,8 @@ $sides: (top, bottom, left, right); // Leave this variable alone
        color: $black !important;
        padding: 10px;
     }
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 10px;
     }
