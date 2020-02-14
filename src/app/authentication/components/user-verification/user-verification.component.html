@@ -22,6 +22,7 @@
                 <mat-label>Verification code</mat-label>
                 <input matInput name="VerificationCode" placeholder="Verification code" formControlName="code" autocomplete="off">
                 <mat-icon matSuffix>verified_user</mat-icon>
+                <mat-error>{{errorMessages?.verifycode}}</mat-error>
               </mat-form-field>
               <button mat-raised-button color="primary" type="submit">Submit<i class="fa fa-arrow-right"></i></button>
             </form>
