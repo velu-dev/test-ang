@@ -7,7 +7,12 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { ROUTES } from './sdenav.config';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-
+import { CognitoService } from './../../../services/cognito.service';
+import { CookieService } from 'ngx-cookie-service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertComponent } from '../../alert/alert.component';
+import * as success from 'src/app/shared/messages/success';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -33,10 +38,13 @@ export class SidenavComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  constructor(
+  constructor(private cognitoService: CognitoService,
     @Inject(DOCUMENT) private document: any,
     private breakpointObserver: BreakpointObserver,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService,
+    private spinnerService: NgxSpinnerService,
+    private snackBar: MatSnackBar
   ) {
 
   }
@@ -56,6 +64,27 @@ export class SidenavComponent implements OnInit {
     console.log(menu)
     this.router.navigate([menu.path])
   }
+  logout() {
+    this.spinnerService.show();
+    this.cognitoService.logOut().subscribe(response => {
+      this.openSnackBar(success.logoutSuccess)
+      this.spinnerService.hide();
+      this.cookieService.deleteAll();
+      this.router.navigate(['/'])
+    }, error => {
+      this.openSnackBar(error.message)
+      this.spinnerService.hide()
+    })
+  }
+  openSnackBar(message) {
+    this.snackBar.openFromComponent(AlertComponent, {
+      duration: 5 * 100,
+      data: message,
+      verticalPosition: 'top',
+      horizontalPosition: 'end'
+    });
+  }
+
   isFullScreen = false;
   fullScreen() {
     this.isFullScreen = !this.isFullScreen;

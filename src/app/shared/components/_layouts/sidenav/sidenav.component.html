@@ -138,7 +138,7 @@
                         <button mat-icon-button [matMenuTriggerFor]="settings">
                             <mat-icon>supervised_user_circle</mat-icon>
                         </button> -->
-                        <button mat-icon-button [routerLink]="['/authentication']">
+                        <button mat-icon-button (click)="logout()">
                             <mat-icon>exit_to_app</mat-icon>
                         </button>
                     </div>
