@@ -3,6 +3,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-user',
@@ -17,18 +20,45 @@ import { MatSort } from '@angular/material/sort';
   ]
 })
 export class UserComponent implements OnInit {
-  roles = ["Admin", "Subscriber", "Vendor"]
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  roles = []
+  selectedRole: any;
+  dataSource: any;
   columnName = ["First Name", "Last Name", "Email", "Role"]
-  columnsToDisplay = ['first_name', 'last_name', 'email', 'role'];
-  expandedElement: PeriodicElement | null;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor() { }
+  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name'];
+  expandedElement: User | null;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  constructor(private userSercice: UserService) {
+    this.userSercice.getRoles().subscribe(response => {
+      this.roles = response.data.map(function (el) {
+        var o = Object.assign({}, el);
+        o.checked = false;
+        return o;
+      });
+    })
+    this.getUser();
+  }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
+  }
+  getUser() {
+    this.userSercice.getUsers().subscribe(response => {
+      this.dataSource = new MatTableDataSource(response.data)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, error => {
+      console.log(error)
+    })
+  }
+  selectedRoleId = []
+  filterByRole() {
+    this.selectedRoleId = [];
+    this.roles.map(res => {
+      if (res.checked) {
+        this.selectedRoleId.push(res.id);
+      }
+    })
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -37,63 +67,3 @@ export class UserComponent implements OnInit {
     }
   }
 }
-export interface PeriodicElement {
-  first_name: string;
-  last_name: string;
-  email: string;
-  role: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    first_name: "james",
-    last_name: "Taylor",
-    email: "jt@gmail.com",
-    role: "Historian"
-  }, {
-    first_name: "iiek",
-    last_name: "Stortenbecker",
-    email: "ns@gmail.com",
-    role: "Historian Staff"
-  }, {
-    first_name: "iatrick",
-    last_name: "Curry",
-    email: "pc@company.com",
-    role: "Summarizer"
-  }, {
-    first_name: "Brock",
-    last_name: "Curry",
-    email: "brock@company.com",
-    role: "Summarizer Staff"
-  }, {
-    first_name: "James",
-    last_name: "Taylor",
-    email: "jt@gmail.com",
-    role: "Historian"
-  }, {
-    first_name: "iiek",
-    last_name: "Stortenbecker",
-    email: "ns@gmail.com",
-    role: "Historian Staff"
-  }, {
-    first_name: "Patrick",
-    last_name: "Curry",
-    email: "pc@company.com",
-    role: "Summarizer"
-  }, {
-    first_name: "Brock",
-    last_name: "Curry",
-    email: "brock@company.com",
-    role: "Summarizer Staff"
-  }, {
-    first_name: "Patrick",
-    last_name: "Curry",
-    email: "pc@company.com",
-    role: "Summarizer"
-  }, {
-    first_name: "irock",
-    last_name: "Curry",
-    email: "brock@company.com",
-    role: "Summarizer Staff"
-  },
-];

@@ -9,6 +9,8 @@ import { CognitoService } from './services/cognito.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorService } from './interceptors/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsM
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     SharedRoutingModule
   ],
   exports: [
@@ -33,7 +36,11 @@ import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsM
     AlertComponent
   ],
   providers: [
-    CognitoService,
+    CognitoService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {

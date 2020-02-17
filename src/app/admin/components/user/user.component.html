@@ -10,16 +10,16 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email">
         </mat-form-field>
         <span class="spacer"></span>
-        <mat-icon class="filter-icon" aria-hidden="false" aria-label="Example home icon" [matMenuTriggerFor]="filter">filter_list</mat-icon>
+        <mat-icon class="filter-icon" aria-hidden="false" aria-label="Example home icon" [matMenuTriggerFor]="filter">
+            filter_list</mat-icon>
         <mat-menu #filter="matMenu">
             <mat-list role="list">
                 <mat-list-item role="listitem" *ngFor="let role of roles">
-                    <mat-checkbox>{{role}}</mat-checkbox>
+                    <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}</mat-checkbox>
                 </mat-list-item>
             </mat-list>
 
         </mat-menu>
-
         <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-elevation-z8">
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i= index">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnName[i]}} </th>
@@ -34,8 +34,8 @@
                         <div class="example-element-diagram">
                             <div class="example-element-first_name"> {{element.first_name}} </div>
                             <div class="example-element-last_name"> {{element.last_name}} </div>
-                            <div class="example-element-email"> {{element.email}} </div>
-                            <div class="example-element-role"> {{element.role}} </div>
+                            <div class="example-element-email"> {{element.sign_in_email_id}} </div>
+                            <div class="example-element-role"> {{element.role_name}} </div>
                         </div>
                         <div class="example-element-description">
                             {{element.first_name}}
