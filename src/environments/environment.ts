@@ -16,8 +16,8 @@ export const environment = {
       identityPoolId: 'us-west-2:e5dd97f0-5920-4932-bd14-c26fa8f988c0',
       region: 'us-west-2',
       identityPoolRegion: 'us-west-2',
-      userPoolId: 'us-west-2_nH46VcXfj',
-      userPoolWebClientId: '87eqflc6acglihb7bipvgnrlj',
+      userPoolId: 'us-west-2_6wyQzuC6i',
+      userPoolWebClientId: '264h43856dgphrnp2pn3gakgpc',
       mandatorySignIn: true,
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {

@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"), Validators.minLength(8)])]
+      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])]
     });
   }
 
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
       console.log(loginRes.signInUserSession.idToken.jwtToken)
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(data => {
         this.spinnerService.hide()
-        this.openSnackBar(success.loginSuccess)
+        this.openSnackBar(success.loginSuccess);
       })
     }, error => {
       console.log("loginError", error)
@@ -58,10 +58,13 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  //open alert
   openSnackBar(message) {
     this.snackBar.openFromComponent(AlertComponent, {
-      duration: 5 * 1000,
-      data: message
+      duration: 500 * 1000,
+      data: message,
+      verticalPosition: 'top',
+      horizontalPosition: 'end'
     });
   }
 
