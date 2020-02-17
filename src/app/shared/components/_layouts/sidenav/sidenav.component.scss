@@ -47,13 +47,14 @@ mat-sidenav-container {
     }
   } //mat-sidenav end
   mat-sidenav-content {
+    min-height: calc(100vh - 150px);
     mat-toolbar {
       background-color: $white;
       color: #5c77ff;
       font-size: 22px;
       height: 40px;
       box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
-      min-height: 55px !important;
+     
     }
     mat-toolbar-row {
       mat-card-actions {
@@ -69,6 +70,7 @@ mat-sidenav-container {
 
 .content-wrapper {
     @include content-wrapper;
+    min-height: calc(100vh - 160px);
     .main-card {
         max-height: 100px ;
         background-color:$white; 
