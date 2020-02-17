@@ -9,6 +9,7 @@ import { CognitoService } from './services/cognito.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
+import { AlertService } from './services/alert.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsM
   ],
   providers: [
     CognitoService,
+    AlertService,
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {

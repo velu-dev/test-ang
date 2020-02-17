@@ -7,9 +7,8 @@ import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import * as  success from '../../../shared/messages/success'
 import { NgxSpinnerService } from "ngx-spinner";
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { AlertComponent } from './../../../shared/components/alert/alert.component';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +20,7 @@ export class LoginComponent implements OnInit {
   passwordFieldType: boolean;
   logo = globals.logo;
   errorMessages = errors;
-  constructor(private router: Router, private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService, private spinnerService: NgxSpinnerService, private snackBar: MatSnackBar) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService, private spinnerService: NgxSpinnerService, private alertService: AlertService) { }
 
   ngOnInit() {
 
@@ -52,28 +51,18 @@ export class LoginComponent implements OnInit {
         console.log(data)
         this.spinnerService.hide()
         if (data['user']['custom:isPlatformAdmin'] == '1') {
-          this.openSnackBar('success',success.loginSuccess);
+          this.alertService.openSnackBar(success.loginSuccess,'success');
           this.router.navigate(['/admin'])
         }
         else {
-          this.openSnackBar('error',"Under processing");
+          this.alertService.openSnackBar("Under processing",'error',);
         }
       })
     }, error => {
       console.log("loginError", error)
-      this.openSnackBar('error',error.message)
+      this.alertService.openSnackBar(error.message,'error');
       this.spinnerService.hide()
     })
-  }
-
-  //open alert
-  openSnackBar(status, message) {
-    this.snackBar.openFromComponent(AlertComponent, {
-      duration: 5 * 100,
-      data: { status: status, message: message },
-      verticalPosition: 'top',
-      horizontalPosition: 'end'
-    });
   }
 
   logout() {
