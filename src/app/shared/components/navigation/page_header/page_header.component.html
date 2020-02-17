@@ -1,7 +1,7 @@
 <mat-toolbar>
     <mat-toolbar-row>
-        <span>Page Header</span>
+        <span>Page header</span>
         <span class="example-spacer"></span>
-        <app-breadcrumb></app-breadcrumb>
+        <app-breadcrumb [menus]="breadcrumbEvent.asObservable()"></app-breadcrumb>
     </mat-toolbar-row>
 </mat-toolbar>

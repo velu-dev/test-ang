@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -28,7 +29,7 @@ export class UserComponent implements OnInit {
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private userSercice: UserService) {
+  constructor(private userSercice: UserService, private router: Router) {
     this.userSercice.getRoles().subscribe(response => {
       this.roles = response.data.map(function (el) {
         var o = Object.assign({}, el);
@@ -59,6 +60,9 @@ export class UserComponent implements OnInit {
         this.selectedRoleId.push(res.id);
       }
     })
+  }
+  navigate(){
+    this.router.navigate(['/admin/users/new'])
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

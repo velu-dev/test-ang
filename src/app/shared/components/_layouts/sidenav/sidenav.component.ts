@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, ViewChild, Inject, Output } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -13,6 +13,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertComponent } from '../../alert/alert.component';
 import * as success from 'src/app/shared/messages/success';
+import { Auth } from 'aws-amplify';
+import { switchMap } from "rxjs/operators";
+import { EventEmitter } from 'protractor';
+
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -28,11 +32,13 @@ import * as success from 'src/app/shared/messages/success';
   ]
 })
 export class SidenavComponent implements OnInit {
+  menuEvent: Subject<void> = new Subject<void>();
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
-  public menuItems: any = ROUTES.filter(menuItem => menuItem);;
+  public menuItems: any;
   elem;
   expandedMenu = "";
   expanded: boolean = false;
+  roleId: any;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -46,6 +52,10 @@ export class SidenavComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private snackBar: MatSnackBar
   ) {
+    Auth.currentSession().then(token => {
+      this.roleId = token['idToken']['payload']['custom:isPlatformAdmin']
+      this.menuItems = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);
+    })
 
   }
 
@@ -61,7 +71,7 @@ export class SidenavComponent implements OnInit {
     this.expandedMenu = menu;
   }
   navigate(menu) {
-    console.log(menu)
+    this.menuEvent.next(menu);
     this.router.navigate([menu.path])
   }
   logout() {

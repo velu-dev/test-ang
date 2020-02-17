@@ -4,6 +4,7 @@ import { SideNavInterface } from './../../../interfaces/sidenav.type';
 export const ROUTES: SideNavInterface[] = [
     {
         group: "Admin",
+        role_id: 1,
         menu: [{
             path: '/admin/dashboard',
             title: 'Dashboard',
@@ -11,16 +12,24 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             group: "Admin",
             role: 1
-        },{
+        }, {
             path: '/admin/users',
             title: 'Manage User',
             icon: 'dashboard',
-            submenu: [],
+            submenu: [{
+                path: '/admin/dashboard',
+                title: 'Dashboard',
+                icon: 'dashboard',
+                submenu: [],
+                group: "Admin",
+                role: 1
+            }],
             group: "Admin",
             role: 1
         }]
     }, {
         group: "Subscriber",
+        role_id: 2,
         menu: [{
             path: '/subscriber/dashboard',
             title: 'Dashboard',
