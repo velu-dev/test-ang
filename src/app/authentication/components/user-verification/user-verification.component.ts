@@ -31,10 +31,10 @@ export class UserVerificationComponent implements OnInit {
   get formControls() { return this.verificationForm.controls; }
 
   //open alert
-  openSnackBar(message) {
+  openSnackBar(status, message) {
     this.snackBar.openFromComponent(AlertComponent, {
-      duration: 5 * 1000,
-      data: message,
+      duration: 5 * 100,
+      data: { status: status, message: message },
       verticalPosition: 'top',
       horizontalPosition: 'end'
     });
@@ -51,19 +51,19 @@ export class UserVerificationComponent implements OnInit {
       if (signUpVerify == 'SUCCESS') {
         this.authenticationService.signUpVerify(this.verificationForm.value.email).subscribe(res => {
           this.spinnerService.hide();
-          this.openSnackBar(success.signupsuccess)
+          this.openSnackBar('success',success.signupsuccess)
           this.router.navigate(['/login']);
         },
           error => {
             this.spinnerService.hide()
             console.log("Error", error);
-            this.openSnackBar(error.error.error);
+            this.openSnackBar('error',error.error.error);
           })
       }
     }, error => {
       this.spinnerService.hide();
       console.log("Error", error);
-      this.openSnackBar(error.message);
+      this.openSnackBar('error',error.message);
     })
   }
 
@@ -72,13 +72,13 @@ export class UserVerificationComponent implements OnInit {
     if(this.verificationForm.value.email){ 
     this.cognitoService.resentSignupCode(this.verificationForm.value.email).subscribe(resendVerify => {
       console.log(resendVerify);
-      this.openSnackBar(success.resendcode)
+      this.openSnackBar('error',success.resendcode)
     }, error => {
       console.log("Error", error);
-      this.openSnackBar(error.message);
+      this.openSnackBar('error',error.message);
     })
   }else{
-    this.openSnackBar(this.errorMessages.entervalidemail);
+    this.openSnackBar('error',this.errorMessages.entervalidemail);
   }
   }
 

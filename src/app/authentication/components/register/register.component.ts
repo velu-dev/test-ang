@@ -58,12 +58,12 @@ export class RegisterComponent implements OnInit {
     }
 
     if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
-      this.openSnackBar(this.errorMessages.passworddidnotMatch)
+      this.openSnackBar('error',this.errorMessages.passworddidnotMatch)
       return;
     }
 
     if (!this.registerForm.value.policy) {
-      this.openSnackBar(this.errorMessages.agreeterms)
+      this.openSnackBar('error',this.errorMessages.agreeterms)
       return;
     }
     this.spinnerService.show();
@@ -88,21 +88,21 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/verification'])
       }, error => {
         console.log("cognitoSignUpError", error);
-        this.openSnackBar(error.message);
+        this.openSnackBar('error',error.message);
       })
 
     }, error => {
       console.log("signup", error);
       this.spinnerService.hide();
-      this.openSnackBar(error.error.error)
+      this.openSnackBar('error',error.error.error)
     })
   }
 
   //open alert
-  openSnackBar(message) {
+  openSnackBar(status, message) {
     this.snackBar.openFromComponent(AlertComponent, {
-      duration: 5 * 1000,
-      data: message,
+      duration: 5 * 100,
+      data: { status: status, message: message },
       verticalPosition: 'top',
       horizontalPosition: 'end'
     });

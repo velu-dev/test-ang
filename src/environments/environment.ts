@@ -5,6 +5,7 @@ export const environment = {
   production: false,
 
   baseUrl: 'http://192.168.1.231:3000/', //natarajan
+  //baseUrl: 'http://localhost:3000/', //natarajan
 
   //authentication
   signIn:'auth/Authentication/signin',

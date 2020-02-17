@@ -1,3 +1,6 @@
-<span class="example-pizza-party">
-  <i class="far fa-check-circle"></i> {{data}}
+<span class="alert-success" *ngIf="data.status == 'success'">
+  <i class="far fa-check-circle"></i> {{data.message}}
+</span>
+<span class="alert-error"  *ngIf="data.status == 'error'">
+  <i class="far fa-check-circle"></i> {{data.message}}
 </span>
