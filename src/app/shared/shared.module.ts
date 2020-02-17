@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './interceptors/token-interceptor.service';
+import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,12 @@ import { TokenInterceptorService } from './interceptors/token-interceptor.servic
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
+    }, {
+      provide: MatSnackBarRef,
+      useValue: {}
+    }, {
+      provide: MAT_SNACK_BAR_DATA,
+      useValue: {} // Add any data you wish to test if it is passed/used correctly
     },
     {
       provide: RECAPTCHA_SETTINGS,
