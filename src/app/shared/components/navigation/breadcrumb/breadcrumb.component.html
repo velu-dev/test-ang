@@ -1,7 +1,6 @@
-<a class="list-nav" mat-list-item (click)="breadCrumbMain()">
-    <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>Home
-</a>
-/
-<span *ngFor="let menu of menuHeader; let indx = index">
-    <a (click)="breadCrumb(menu, indx)">{{menu?.title}}</a>/
-</span>
+<ul class="breadcrumb-home">    
+     <li> <mat-icon aria-hidden="false" aria-label="home icon">home</mat-icon></li>
+</ul>
+<ul class="breadcrumb" *ngFor="let menu of menuHeader; let indx = index">
+    <li (click)="breadCrumb(menu, indx)"> {{menu.title}}</li>
+</ul>

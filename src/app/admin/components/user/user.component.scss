@@ -1,13 +1,18 @@
+@import "variables";
+
 table {
   width: 100%;
 }
+.mat-card-header-text {
+  margin: 0px !important;
 
+}
 tr.example-detail-row {
   height: 0;
 }
 
 tr.example-element-row:not(.example-expanded-row):hover {
-  background: #777;
+  background: #e0e8f3;
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
@@ -52,4 +57,9 @@ tr.example-element-row:not(.example-expanded-row):active {
 //  Custom SCSS
 .filter-icon{
   cursor: pointer;
+  float: right;
+  padding-top: 20px
+}
+.mat-table {
+  box-shadow: $box-shadow-1;
 }
