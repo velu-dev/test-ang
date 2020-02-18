@@ -16,7 +16,7 @@ import * as success from 'src/app/shared/messages/success';
 import { Auth } from 'aws-amplify';
 import { switchMap } from "rxjs/operators";
 import { EventEmitter } from 'protractor';
-
+import * as globals from '../../../../globals';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -32,6 +32,7 @@ import { EventEmitter } from 'protractor';
   ]
 })
 export class SidenavComponent implements OnInit {
+  logo_white = globals.logo_white;
   menuEvent: Subject<void> = new Subject<void>();
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
   public menuItems: any;

@@ -8,9 +8,7 @@
   mat-card {
     padding: 50px 25px 25px 25px;
     box-shadow: $box-shadow-1;
-    .logo {
-      @include logo;
-    }
+
     mat-card-title {
       font-family: Source Sans Pro;
       letter-spacing: 0;
@@ -36,12 +34,8 @@
           padding-top: 3px;
         }
       }
-      button {
-        @include auth-btn;
-        margin-top: 30px;
-      }
       .note {
-        font-size:$font-size-3 ;
+        font-size: $font-size-3;
         width: 100%;
       }
     }
@@ -50,4 +44,3 @@
     }
   }
 }
-
