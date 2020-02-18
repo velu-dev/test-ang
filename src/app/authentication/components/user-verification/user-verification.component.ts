@@ -6,9 +6,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import * as  success from '../../../shared/messages/success'
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxSpinnerService } from "ngx-spinner";
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-user-verification',
@@ -20,7 +19,7 @@ export class UserVerificationComponent implements OnInit {
   verificationForm: FormGroup;
   isSubmitted = false;
   errorMessages = errors;
-  constructor(private formBuilder: FormBuilder, private cognitoService: CognitoService, private router: Router, private authenticationService: AuthenticationService, private snackBar: MatSnackBar, private spinnerService: NgxSpinnerService) { }
+  constructor(private formBuilder: FormBuilder, private cognitoService: CognitoService, private router: Router, private authenticationService: AuthenticationService, private alertService: AlertService, private spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
     this.verificationForm = this.formBuilder.group({
@@ -29,16 +28,6 @@ export class UserVerificationComponent implements OnInit {
     });
   }
   get formControls() { return this.verificationForm.controls; }
-
-  //open alert
-  openSnackBar(message) {
-    this.snackBar.openFromComponent(AlertComponent, {
-      duration: 5 * 1000,
-      data: message,
-      verticalPosition: 'top',
-      horizontalPosition: 'end'
-    });
-  }
 
   //signup verify submit
   verifySubmit() {
@@ -51,35 +40,35 @@ export class UserVerificationComponent implements OnInit {
       if (signUpVerify == 'SUCCESS') {
         this.authenticationService.signUpVerify(this.verificationForm.value.email).subscribe(res => {
           this.spinnerService.hide();
-          this.openSnackBar(success.signupsuccess)
+          this.alertService.openSnackBar(success.signupsuccess, 'success')
           this.router.navigate(['/login']);
         },
           error => {
             this.spinnerService.hide()
             console.log("Error", error);
-            this.openSnackBar(error.error.error);
+            this.alertService.openSnackBar(error.error.error, 'error');
           })
       }
     }, error => {
       this.spinnerService.hide();
       console.log("Error", error);
-      this.openSnackBar(error.message);
+      this.alertService.openSnackBar(error.message, 'error');
     })
   }
 
   //verification code resend
   verifyResend() {
-    if(this.verificationForm.value.email){ 
-    this.cognitoService.resentSignupCode(this.verificationForm.value.email).subscribe(resendVerify => {
-      console.log(resendVerify);
-      this.openSnackBar(success.resendcode)
-    }, error => {
-      console.log("Error", error);
-      this.openSnackBar(error.message);
-    })
-  }else{
-    this.openSnackBar(this.errorMessages.entervalidemail);
-  }
+    if (this.verificationForm.value.email) {
+      this.cognitoService.resentSignupCode(this.verificationForm.value.email).subscribe(resendVerify => {
+        console.log(resendVerify);
+        this.alertService.openSnackBar(success.resendcode, 'error')
+      }, error => {
+        console.log("Error", error);
+        this.alertService.openSnackBar(error.message, 'error');
+      })
+    } else {
+      this.alertService.openSnackBar(this.errorMessages.entervalidemail, 'error');
+    }
   }
 
 }

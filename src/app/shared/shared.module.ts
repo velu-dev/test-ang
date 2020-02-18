@@ -12,6 +12,7 @@ import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsM
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './interceptors/token-interceptor.service';
 import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { AlertService } from './services/alert.service';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
       provide: MAT_SNACK_BAR_DATA,
       useValue: {} // Add any data you wish to test if it is passed/used correctly
     },
+    AlertService,
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {

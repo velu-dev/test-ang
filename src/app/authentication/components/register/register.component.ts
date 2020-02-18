@@ -5,9 +5,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxSpinnerService } from "ngx-spinner";
+import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -25,7 +24,7 @@ export class RegisterComponent implements OnInit {
     private cognitoService: CognitoService,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private snackBar: MatSnackBar,
+    private alertService: AlertService,
     private spinnerService: NgxSpinnerService,
   ) { }
 
@@ -58,12 +57,12 @@ export class RegisterComponent implements OnInit {
     }
 
     if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
-      this.openSnackBar(this.errorMessages.passworddidnotMatch)
+      this.alertService.openSnackBar(this.errorMessages.passworddidnotMatch, 'error')
       return;
     }
 
     if (!this.registerForm.value.policy) {
-      this.openSnackBar(this.errorMessages.agreeterms)
+      this.alertService.openSnackBar(this.errorMessages.agreeterms, 'error')
       return;
     }
     this.spinnerService.show();
@@ -88,24 +87,14 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/verification'])
       }, error => {
         console.log("cognitoSignUpError", error);
-        this.openSnackBar(error.message);
+        this.alertService.openSnackBar(error.message, 'error');
       })
 
     }, error => {
       console.log("signup", error);
       this.spinnerService.hide();
-      this.openSnackBar(error.error.error)
+      this.alertService.openSnackBar(error.error.error, 'error')
     })
-  }
-
-  //open alert
-  openSnackBar(message) {
-    this.snackBar.openFromComponent(AlertComponent, {
-      duration: 5 * 1000,
-      data: message,
-      verticalPosition: 'top',
-      horizontalPosition: 'end'
-    });
   }
 
 }
