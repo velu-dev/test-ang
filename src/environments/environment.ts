@@ -23,7 +23,8 @@ export const environment = {
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-        domain: '192.168.1.208',
+        domain: 'localhost',
+        // domain: '192.168.1.208',
         // OPTIONAL - Cookie path
         path: '/',
         // OPTIONAL - Cookie expiration in days

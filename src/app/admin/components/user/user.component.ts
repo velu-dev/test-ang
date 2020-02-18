@@ -44,7 +44,7 @@ export class UserComponent implements OnInit {
 
   }
   getUser() {
-    this.userSercice.getUsers().subscribe(response => {
+    this.userSercice.getUsers(this.roles).subscribe(response => {
       this.dataSource = new MatTableDataSource(response.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

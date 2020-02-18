@@ -14,9 +14,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertComponent } from '../../alert/alert.component';
 import * as success from 'src/app/shared/messages/success';
 import { Auth } from 'aws-amplify';
-import { switchMap } from "rxjs/operators";
-import { EventEmitter } from 'protractor';
-
+import { Store, select } from '@ngrx/store';
+import * as breadcrumbActions from "./../../../store/breadcrumb.actions";
+import * as fromBreadcrumb from "./../../../store/breadcrumb.reducer";
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -32,7 +32,6 @@ import { EventEmitter } from 'protractor';
   ]
 })
 export class SidenavComponent implements OnInit {
-  menuEvent: Subject<void> = new Subject<void>();
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
   public menuItems: any;
   elem;
@@ -50,7 +49,8 @@ export class SidenavComponent implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private store: Store<{ count: number }>
   ) {
     Auth.currentSession().then(token => {
       this.roleId = token['idToken']['payload']['custom:isPlatformAdmin']
@@ -58,7 +58,6 @@ export class SidenavComponent implements OnInit {
     })
 
   }
-
   ngOnInit() {
     this.elem = document.documentElement;
     // this.menuItems = menuItems.reduce((r, a) => {
@@ -71,7 +70,7 @@ export class SidenavComponent implements OnInit {
     this.expandedMenu = menu;
   }
   navigate(menu) {
-    this.menuEvent.next(menu);
+    this.store.dispatch(new breadcrumbActions.AddBreadcrumb(menu));
     this.router.navigate([menu.path])
   }
   logout() {

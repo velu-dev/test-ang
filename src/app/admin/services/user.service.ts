@@ -9,10 +9,10 @@ import { environment } from 'src/environments/environment';
 export class UserService {
 
   constructor(private http: HttpClient) { }
-  getUsers(): Observable<any> {
-    return this.http.get(environment.baseUrl + "adminAPI/Admin/GetDetails")
+  getUsers(roles): Observable<any> {
+    return this.http.post(environment.baseUrl + "admin-api/admin/users", {role_filter: roles})
   }
-  getRoles(): Observable<any>{
-    return this.http.get(environment.baseUrl+ "adminAPI/Admin/roledrp")
+  getRoles(): Observable<any> {
+    return this.http.get(environment.baseUrl + "admin-api/admin/role-dropdown")
   }
 }

@@ -13,6 +13,8 @@ import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsM
 import { NgxSpinnerModule } from "ngx-spinner";
 import { _LayoutModule } from './shared/components/_layouts/_layout.module';
 import { TokenInterceptorService } from './shared/interceptors/token-interceptor.service';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,14 @@ import { TokenInterceptorService } from './shared/interceptors/token-interceptor
     RecaptchaFormsModule,
     RecaptchaModule,
     NgxSpinnerModule,
-    _LayoutModule
+    _LayoutModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    })
   ],
   providers: [
     CookieService,

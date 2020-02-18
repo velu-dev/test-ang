@@ -1,62 +1,48 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Auth } from 'aws-amplify';
 import { ROUTES } from '../../_layouts/sidenav/sdenav.config';
-import { Observable, Subscription } from 'rxjs';
-
+import { Observable, Subscription, ObservedValueOf } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import * as breadcrumbActions from "./../../../store/breadcrumb.actions";
+import * as frombreadcrumb from "./../../../store/breadcrumb.reducer";
+import { async } from '@angular/core/testing';
 @Component({
     selector: 'app-breadcrumb',
     templateUrl: './breadcrumb.component.html',
     styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent implements OnInit {
-    @Input() menus: Observable<void>;
-    private eventsSubscription: Subscription;
-
-    menuHeader = [];
-    appitemsTravel;
+    menu$: Observable<any>;
     roleId: any;
-    breadcrumMenu = [{ menu: "Admin", path: "/admin" }, { menu: "Dashboard", path: "dashboard" }]
-    constructor() { }
+    constructor(private store: Store<{ breadcrumb: any }>) {
+        this.menu$ = store.pipe(select('breadcrumb'));
+        console.log("breadcrumb", this.menu$)
+    }
 
     ngOnInit() {
-        this.menus.subscribe((res) => {
-            if (res['submenu'].length != 0) {
-                let data = this.menuHeader.find(menu => menu.title === res['title']);
-                console.log(data)
-                if (data == undefined) {
-                    this.appitemsTravel = res;
-                    this.menuHeader.push(res);
-                }
-            }
+        this.store.dispatch(new breadcrumbActions.ListBreadcrumb());
 
-        });
-        Auth.currentSession().then(token => {
-            this.roleId = token['idToken']['payload']['custom:isPlatformAdmin']
-            this.appitemsTravel = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);
-        })
     }
     breadCrumb(menu, index) {
-        console.log('sub breadCrumb');
-        this.menuHeader.splice(index + 1, this.menuHeader.length - 1);
-        if (menu[index] && menu[index].items && menu[index].items.length) {
-            this.appitemsTravel = menu[index].items;
-        }
+        let menu_data: any;
+        // this.menu$.subscribe(res => {
+        //     menu_data = res.menu
+        //     console.log(menu_data, index)
+        //     menu_data.pop()
+        //     console.log(menu_data)
+            this.store.dispatch(new breadcrumbActions.RemoveBreadcrumb({index: index}));
+        // })
+        // console.log((), menu, index)
+        // 
+        // 
     }
 
     menuChange(menuChange) {
 
-        if (menuChange.items) {
-
-            this.appitemsTravel = menuChange.items;
-            this.menuHeader.push({ label: menuChange.label, icon: 'keyboard_arrow_right', items: menuChange.items });
-            // this.menuHeader.push(menuChange);
-
-            console.log('hasMultiMenuLabel');
-        }
     }
     breadCrumbMain() {
-        this.appitemsTravel = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);;
-        this.menuHeader = [];
+        this.store.dispatch(new breadcrumbActions.ResetBreadcrumb());
     }
 
 }
+
