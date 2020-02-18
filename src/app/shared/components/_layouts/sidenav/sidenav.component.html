@@ -1,10 +1,12 @@
 <mat-sidenav-container class="sidenav-container ">
     <mat-sidenav #drawer class="sidenav " fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-        <mat-toolbar><span>LUCY ADMIN</span></mat-toolbar>
+
+        <mat-toolbar> <img mat-card-image [src]="logo_white" alt="Lucy logo" class="logo-white"> <span
+                class="p-l-4">LUCY ADMIN</span></mat-toolbar>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
-                <a class="menu-card-title ">{{menuItem.group}}</a>
+                <a class="menu-card-title">{{menuItem.group}}</a>
                 <a *ngFor="let menu of menuItem.menu" class="list-nav" mat-list-item (click)="navigate(menu)">
                     <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> {{menu.title}}
                 </a>
@@ -161,9 +163,11 @@
 
         </mat-toolbar>
         <!-- Add Content Here -->
-        <div class="content-wrapper">
+        <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>
-            <router-outlet></router-outlet>
+            <mat-card>
+                <router-outlet></router-outlet>
+            </mat-card>
         </div>
         <app-footer></app-footer>
     </mat-sidenav-content>

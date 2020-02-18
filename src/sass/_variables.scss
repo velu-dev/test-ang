@@ -1,23 +1,26 @@
 //colors
-$bg-light-blue: #e0e8f3;
+$bg-light-blue: #f2f7ff;
 //Primary background colors
 $primarycolor: #3c3cff;
 $primarylightcolor: #8369ff;
 $primarydarkcolor: #000eca;
 
 //Secondary background colors
-$secondarycolor: #388e3c;
-$secondarylightcolor: #6abf69;
-$psecondaryarkcolor: "#00600f";
+$secondarycolor: #65ff88;
+$secondarylightcolor: #9effb9;
+$psecondaryarkcolor: "#19cb59";
 
 //Extra colors
+$green: #65ff88;
 $white: #ffffff;
 $black: #000000;
 $gray: #ccc;
 $text-gray: #43425d;
+$light-gray: #d3d3d3;
+$text-dark: #45515F;
+$menu-active: #383838;
 
-
-$transparent : transparent;
+$transparent: transparent;
 // Matero Variables
 //
 // Layout
@@ -71,7 +74,7 @@ $font-size-22: 0.656rem; //font-size: 10.5px;
 $font-size-23: 2em;
 
 //Font-family
-$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica", sans-serif;
+$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Roboto", sans-serif;
 
 //Alignment
 $float-left: left;
@@ -91,12 +94,13 @@ $breakpoints: (
 ) !default;
 
 //box Shadow
-$box-shadow-1:  5px 5px 25px #b3c5de9c;
+$box-shadow-1: 5px 5px 25px #b3c5de9c;
+$box-shadow-2: 3px 0 10px 0 rgba(183, 192, 206, 0.2);  // Using navebar
+$box-shadow-3: 0px 3px 6px #00000029;
+$box-shadow-4:0px 3px 6px #00000029;  // Using logo toolbar
 
 //button Shadow
 $btn-primary-shadow: 0px 3px 5px #2e5eaf;
-
-
 
 // mixins scss
 @mixin lucy-form {
@@ -121,25 +125,6 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
     float: $float-right;
   }
 }
-@mixin auth-btn {
-  background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
-  box-shadow: $btn-primary-shadow;
-  border-radius: 2px;
-  opacity: 1;
-  width: 100%;
-  padding: 5px;
-  margin-top: 20px;
-  i {
-    float: right;
-    padding: 12px 10px 2px 0px;
-  }
-}
-@mixin logo {
-  width: 65px;
-  height: auto;
-  margin: 0px auto;
-  display: block;
-}
 
 @mixin switched-link {
   padding-top: 22px;
@@ -160,4 +145,47 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
   }
 }
 
+.logo {
+  width: auto;
+  margin: 0px auto;
+  display: block;
+  max-width: 100%;
+}
+.logo-white {
+  width: auto;
+ margin:0px !important
+}
+.auth-tilte {
+  font-family: Source Sans Pro;
+  letter-spacing: 0;
+  color: $primarycolor;
+  opacity: 1;
+  font-size: $font-size-14;
+  text-align: center;
+}
+.authentication-btn {
+  background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
+  box-shadow: $btn-primary-shadow;
+  border-radius: 2px;
+  opacity: 1;
+  width: 100%;
+  padding: 5px;
+  margin-top: 30px;
 
+  i {
+    float: right;
+    padding: 12px 10px 2px 0px;
+  }
+}
+
+.page-heading {
+  color: $text-dark;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.mat-card-header-text {
+   margin:0px !important;
+   line-height: 2;
+  
+}

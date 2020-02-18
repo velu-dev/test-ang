@@ -17,6 +17,7 @@ import { Auth } from 'aws-amplify';
 import { Store, select } from '@ngrx/store';
 import * as breadcrumbActions from "./../../../store/breadcrumb.actions";
 import * as fromBreadcrumb from "./../../../store/breadcrumb.reducer";
+import * as globals from '../../../../globals';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -32,6 +33,7 @@ import * as fromBreadcrumb from "./../../../store/breadcrumb.reducer";
   ]
 })
 export class SidenavComponent implements OnInit {
+  logo_white = globals.logo_white;
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
   public menuItems: any;
   elem;
