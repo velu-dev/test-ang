@@ -8,7 +8,7 @@ $primarydarkcolor: #000eca;
 //Secondary background colors
 $secondarycolor: #65ff88;
 $secondarylightcolor: #9effb9;
-$psecondaryarkcolor: "#19cb59";
+$secondaryarkcolor: #19cb59;
 
 //ternary color
 $ternary: #6464fa;
@@ -243,17 +243,17 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 
 .table-heading {
   background-color: $ternary;
-  color: $white;
-  font-size: $font-size-1;
 }
 table {
   tr {
-    th,
-    td {
+    th {
       padding: 0px 10px !important;
+      color: $white !important;
+      font-size: $font-size-1;
     }
     td {
       color: #4d4f5c;
+      padding: 0px 10px !important;
     }
   }
   .mat-header-row {
@@ -270,5 +270,22 @@ table {
       width: auto;
       height: auto;
     }
+  }
+}
+.edit-user {
+  color: $secondaryarkcolor;
+  font-size: $font-size-2;
+  padding: 5px;
+  border: 1px solid $transparent;
+  vertical-align: middle;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  border-radius:5px;;
+  &:hover {
+    border: 1px solid $secondaryarkcolor;
+    background-color: $secondaryarkcolor;
+    color: $white;
+   
   }
 }

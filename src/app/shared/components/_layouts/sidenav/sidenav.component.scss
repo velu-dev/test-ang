@@ -77,7 +77,7 @@ mat-sidenav-container {
 
 .content-wrapper {
   @include content-wrapper;
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 139px);
   .main-card {
     max-height: 100px;
     background-color: $white;
@@ -86,7 +86,7 @@ mat-sidenav-container {
 .active-list-item {
   background-color: $secondarycolor !important;
   color: $black !important;
-  i {
+  mat-icon {
     color: $black !important;
   }
 }

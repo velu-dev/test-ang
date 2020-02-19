@@ -47,7 +47,17 @@ export class UserComponent implements OnInit {
   getUser(roles) {
     console.log(roles)
     this.userService.getUsers(roles).subscribe(response => {
-      this.dataSource = new MatTableDataSource(response.data)
+      let data = []
+      response.data.map(res => {
+        data.push(res)
+      })
+      response.data.map(res => {
+        data.push(res)
+      })
+      response.data.map(res => {
+        data.push(res)
+      })
+      this.dataSource = new MatTableDataSource(data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }, error => {
@@ -55,8 +65,8 @@ export class UserComponent implements OnInit {
     })
   }
   gotoEdit(data) {
-    this.router.navigate(["/admin/users/"+ data.id])
-    
+    this.router.navigate(["/admin/users/" + data.id])
+
   }
   selectedRoleId = []
   filterByRole() {
