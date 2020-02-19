@@ -1,6 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -42,6 +41,7 @@ import { reducers, metaReducers } from './reducers';
   ],
   providers: [
     CookieService,
+    Title,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
