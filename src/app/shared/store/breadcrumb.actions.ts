@@ -14,13 +14,11 @@ export enum BreadcrumActions {
 export class ListBreadcrumb implements Action {
     readonly type = BreadcrumActions.LIST
     constructor() {
-        console.log("from action")
     }
 }
 export class AddBreadcrumb implements Action {
     readonly type = BreadcrumActions.ADD;
     constructor(public payload: any) {
-        // console.log("from action add", payload)
     }
 }
 export class RemoveBreadcrumb implements Action {
@@ -32,7 +30,3 @@ export class RemoveBreadcrumb implements Action {
 export class ResetBreadcrumb implements Action {
     readonly type = BreadcrumActions.RESET;
 }
-// export type Action =
-//     | AddBreadcrumb
-//     | RemoveBreadcrumb
-//     | ResetBreadcrumb;

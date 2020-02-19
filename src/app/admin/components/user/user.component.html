@@ -8,14 +8,15 @@
 </mat-card-header>
 <mat-divider></mat-divider>
 <mat-card-content class="p-t-3">
-    <mat-form-field appearance="fill" class="table-filter">
-        <mat-label>Search by name, email</mat-label>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="">
-      </mat-form-field>
 
+    <div class="table-filter">
+        <input (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email, role">
+    </div>
     <span class="spacer"></span>
-    <mat-icon class="filter-icon" aria-hidden="false" aria-label=" home icon" [matMenuTriggerFor]="filter">
-        filter_list</mat-icon>
+    <button mat-icon-button class="filter-icon">
+        <mat-icon mat-icon-button  aria-hidden="false" material-icons aria-label=" home icon"
+            [matMenuTriggerFor]="filter">filter_list</mat-icon>
+    </button>
     <mat-menu #filter="matMenu">
         <mat-list role="list">
             <mat-list-item role="listitem" *ngFor="let role of roles">

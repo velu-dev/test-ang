@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { EventEmitter } from 'protractor';
 import { Observable, Subscription, Subject } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-page_header',
@@ -8,8 +9,10 @@ import { Observable, Subscription, Subject } from 'rxjs';
     styleUrls: ['./page_header.component.scss']
 })
 export class PageHeaderComponent implements OnInit {
-
-    constructor() {
+    page_title = "";
+    constructor(private title: Title) {
+        this.page_title = this.title.getTitle();
+        console.log(this.page_title)
     }
 
     ngOnInit() {

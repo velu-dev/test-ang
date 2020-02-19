@@ -55,11 +55,7 @@ tr.element-row:not(.expanded-row):active {
   margin-right: 8px;
 }
 //  Custom SCSS
-.filter-icon{
-  cursor: pointer;
-  float: right;
-  padding-top: 20px
-}
+
 .mat-table {
   box-shadow: $box-shadow-1;
 }

@@ -14,9 +14,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertComponent } from '../../alert/alert.component';
 import * as success from 'src/app/shared/messages/success';
 import { Auth } from 'aws-amplify';
-import { Store, select } from '@ngrx/store';
-import * as breadcrumbActions from "./../../../store/breadcrumb.actions";
-import * as fromBreadcrumb from "./../../../store/breadcrumb.reducer";
 import * as globals from '../../../../globals';
 @Component({
   selector: 'app-sidenav',
@@ -51,8 +48,7 @@ export class SidenavComponent implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
-    private snackBar: MatSnackBar,
-    private store: Store<{ count: number }>
+    private snackBar: MatSnackBar
   ) {
     Auth.currentSession().then(token => {
       this.roleId = token['idToken']['payload']['custom:isPlatformAdmin']
@@ -62,17 +58,12 @@ export class SidenavComponent implements OnInit {
   }
   ngOnInit() {
     this.elem = document.documentElement;
-    // this.menuItems = menuItems.reduce((r, a) => {
-    //   r[a.group] = [...r[a.group] || [], a];
-    //   return r;
-    //  }, []);
   }
   clickMenu(menu) {
     this.expanded = this.expandedMenu == menu ? false : false;
     this.expandedMenu = menu;
   }
   navigate(menu) {
-    this.store.dispatch(new breadcrumbActions.AddBreadcrumb(menu));
     this.router.navigate([menu.path])
   }
   logout() {
