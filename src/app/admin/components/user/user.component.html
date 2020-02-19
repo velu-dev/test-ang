@@ -1,59 +1,59 @@
+<mat-card-header>
+    <mat-card-title class="m-0">Users</mat-card-title>
+    <span class="spacer"></span>
+    <button (click)="navigate()" mat-mini-fab class="add-user">
+        <mat-icon>add</mat-icon>
+    </button>
 
-    <mat-card-header>
-        <mat-card-title class="m-0">Users</mat-card-title>
-        <span class="spacer"></span>
-        <button (click)="navigate()" mat-mini-fab color="primary">
-            <mat-icon >add</mat-icon>
-        </button>
-        
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content class="p-t-3">
-        <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email">
-        </mat-form-field>
-        <span class="spacer"></span>
-        <mat-icon class="filter-icon" aria-hidden="false" aria-label=" home icon" [matMenuTriggerFor]="filter">
-            filter_list</mat-icon>
-        <mat-menu #filter="matMenu">
-            <mat-list role="list">
-                <mat-list-item role="listitem" *ngFor="let role of roles">
-                    <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}</mat-checkbox>
-                </mat-list-item>
-            </mat-list>
+</mat-card-header>
+<mat-divider></mat-divider>
+<mat-card-content class="p-t-3">
+    <mat-form-field appearance="fill" class="table-filter">
+        <mat-label>Search by name, email</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="">
+      </mat-form-field>
 
-        </mat-menu>
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-table">
-            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i= index">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnName[i]}} </th>
-                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-            </ng-container>
+    <span class="spacer"></span>
+    <mat-icon class="filter-icon" aria-hidden="false" aria-label=" home icon" [matMenuTriggerFor]="filter">
+        filter_list</mat-icon>
+    <mat-menu #filter="matMenu">
+        <mat-list role="list">
+            <mat-list-item role="listitem" *ngFor="let role of roles">
+                <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}</mat-checkbox>
+            </mat-list-item>
+        </mat-list>
 
-            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-            <ng-container matColumnDef="expandedDetail">
-                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                    <div class="example-element-detail"
-                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                        <div class="example-element-diagram">
-                            <div class="example-element-first_name"> {{element.first_name}} </div>
-                            <div class="example-element-last_name"> {{element.last_name}} </div>
-                            <div class="example-element-email"> {{element.sign_in_email_id}} </div>
-                            <div class="example-element-role"> {{element.role_name}} </div>
-                        </div>
-                        <div class="example-element-description">
-                            {{element.first_name}}
-                        </div>
+    </mat-menu>
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort class="mat-table">
+        <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i= index">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-heading"> {{columnName[i]}} </th>
+            <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                    <div class="element-diagram">
+                        <div class="element-first_name"> {{element.first_name}} </div>
+                        <div class="element-last_name"> {{element.last_name}} </div>
+                        <div class="element-email"> {{element.sign_in_email_id}} </div>
+                        <div class="element-role"> {{element.role_name}} </div>
                     </div>
-                </td>
-            </ng-container>
+                    <div class="element-description">
+                        {{element.first_name}}
+                    </div>
+                </div>
+            </td>
+        </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
-                [class.example-expanded-row]="expandedElement === element"
-                (click)="expandedElement = expandedElement === element ? null : element">
-            </tr>
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-        </table>
-        <mat-paginator [pageSizeOptions]="[ 5, 10, 25, 100]"></mat-paginator>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
+            [class.expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
 
-    </mat-card-content>
+</mat-card-content>

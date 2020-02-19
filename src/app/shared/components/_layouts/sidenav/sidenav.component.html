@@ -7,14 +7,14 @@
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
                 <a class="menu-card-title">{{menuItem.group}}</a>
-                <a *ngFor="let menu of menuItem.menu" class="list-nav" mat-list-item (click)="navigate(menu)">
+                <a *ngFor="let menu of menuItem.menu" mat-list-item  class="list-nav active"  (click)="navigate(menu)">
                     <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> {{menu.title}}
                 </a>
             </span>
             <!-- {{menuItems | json}} -->
             <!-- <a class="list-nav" mat-list-item>
                 <mat-icon aria-hidden="false" aria-label="Example supervised_user_circle icon">supervised_user_circle
-                </mat-icon>
+                </mat-icon>ˀ
                 Manage Admin
             </a>
 
@@ -134,8 +134,7 @@
                         <button mat-icon-button>
                             <mat-icon matBadge="5" matBadgeColor="warn">notifications_none</mat-icon>
                         </button>
-                        <!-- <button mat-icon-button [matMenuTriggerFor]="settings"> -->
-                            <button mat-icon-button>
+                        <button mat-icon-button [matMenuTriggerFor]="settings">
                             <mat-icon>supervised_user_circle</mat-icon>
                         </button>
                         <button mat-icon-button (click)="logout()">
@@ -144,7 +143,7 @@
                         </button>
                     </div>
                 </mat-card-actions>
-                <!-- <mat-menu #settings="matMenu">
+                <mat-menu #settings="matMenu">
                     <button mat-menu-item>
                         <mat-icon>perm_identity</mat-icon>
                         <span>Profile</span>
@@ -157,7 +156,7 @@
                         <mat-icon>notifications_off</mat-icon>
                         <span>Logout</span>
                     </button>
-                </mat-menu> -->
+                </mat-menu>
 
             </mat-toolbar-row>
 
@@ -165,7 +164,7 @@
         <!-- Add Content Here -->
         <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>
-            <mat-card>
+            <mat-card class="m-card">
                 <router-outlet></router-outlet>
             </mat-card>
         </div>

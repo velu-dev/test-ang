@@ -10,17 +10,24 @@ $secondarycolor: #65ff88;
 $secondarylightcolor: #9effb9;
 $psecondaryarkcolor: "#19cb59";
 
+//ternary color
+$ternary: #6464fa;
 //Extra colors
 $green: #65ff88;
 $white: #ffffff;
 $black: #000000;
 $gray: #ccc;
 $text-gray: #43425d;
+$dark-gray: #4d4f5c;
 $light-gray: #d3d3d3;
-$text-dark: #45515F;
+$text-dark: #45515f;
 $menu-active: #383838;
-
 $transparent: transparent;
+
+//alert colors
+$success: #4caf50;
+$error: rgba(255, 54, 54, 0.8);
+$warning: rgba(255, 178, 54, 0.8);
 // Matero Variables
 //
 // Layout
@@ -95,9 +102,10 @@ $breakpoints: (
 
 //box Shadow
 $box-shadow-1: 5px 5px 25px #b3c5de9c;
-$box-shadow-2: 3px 0 10px 0 rgba(183, 192, 206, 0.2);  // Using navebar
+$box-shadow-2: 3px 0 10px 0 rgba(183, 192, 206, 0.2); // Using navebar
 $box-shadow-3: 0px 3px 6px #00000029;
-$box-shadow-4:0px 3px 6px #00000029;  // Using logo toolbar
+$box-shadow-4: 0px 3px 6px #00000029; // Using logo toolbar
+$box-shadow-5: 0px 3px 6px #448aff38; //using table header
 
 //button Shadow
 $btn-primary-shadow: 0px 3px 5px #2e5eaf;
@@ -110,7 +118,7 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 }
 
 @mixin content-wrapper {
-  padding: 15px;
+  padding: 20px;
   background-color: $bg-light-blue;
 }
 @mixin main-title {
@@ -153,7 +161,7 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 }
 .logo-white {
   width: auto;
- margin:0px !important
+  margin: 0px !important;
 }
 .auth-tilte {
   font-family: Source Sans Pro;
@@ -180,12 +188,64 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 
 .page-heading {
   color: $text-dark;
-    font-size: 22px;
-    font-weight: 500;
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .mat-card-header-text {
-   margin:0px !important;
-   line-height: 2;
-  
+  margin: 0px !important;
+  line-height: 2;
+  .mat-card-title {
+    line-height: 1.8 !important;
+    margin-bottom: 15px !important;
+  }
+}
+
+.m-card {
+  box-shadow: $box-shadow-2;
+}
+// Table Scss
+.table-filter {
+  .mat-form-field-wrapper {
+    .mat-form-field-flex {
+      box-shadow: $box-shadow-3;
+    }
+    .mat-form-field-underline {
+      &::before {
+        background-color: $transparent !important;
+      }
+    }
+    .mat-form-field-subscript-wrapper {
+       position: inherit !important;
+    }
+  }
+}
+
+.table-heading {
+  background-color: $ternary;
+  color: $white;
+  font-size: $font-size-1;
+}
+table {
+  tr {
+    th,
+    td {
+      padding: 0px 10px !important;
+    }
+    td {
+      color: #4d4f5c;
+    }
+  }
+}
+.add-user {
+  background-color: $ternary;
+  width: 35px;
+  height: 35px;
+  .mat-button-wrapper {
+    padding: 0px !important;
+    .mat-icon {
+      width: auto;
+      height: auto;
+    }
+  }
 }
