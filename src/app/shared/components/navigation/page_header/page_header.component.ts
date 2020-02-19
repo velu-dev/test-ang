@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { EventEmitter } from 'protractor';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { Title } from '@angular/platform-browser';
+import { Store, select } from '@ngrx/store';
 
 @Component({
     selector: 'app-page_header',
@@ -10,7 +11,9 @@ import { Title } from '@angular/platform-browser';
 })
 export class PageHeaderComponent implements OnInit {
     page_title = "";
-    constructor(private title: Title) {
+    menu$: Observable<any>;
+    constructor(private title: Title,  private store: Store<{ breadcrumb: any }>) {
+        this.menu$ = store.pipe(select('breadcrumb'));
         this.page_title = this.title.getTitle();
         console.log(this.page_title)
     }

@@ -25,13 +25,13 @@ export class UserComponent implements OnInit {
   roles = []
   selectedRole: any;
   dataSource: any;
-  columnName = ["First Name", "Last Name", "Email", "Role"]
-  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name'];
+  columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
+  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private userService: UserService, private router: Router, private title: Title) {
-    this.title.setTitle("Manage User");
+    this.title.setTitle("APP | Manage User");
     this.userService.getRoles().subscribe(response => {
       this.roles = response.data.map(function (el) {
         var o = Object.assign({}, el);
@@ -43,7 +43,6 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.title.setTitle("Manage User");
   }
   getUser(roles) {
     console.log(roles)
@@ -54,6 +53,10 @@ export class UserComponent implements OnInit {
     }, error => {
       console.log(error)
     })
+  }
+  gotoEdit(data) {
+    this.router.navigate(["/admin/users/"+ data.id])
+    
   }
   selectedRoleId = []
   filterByRole() {

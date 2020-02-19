@@ -42,16 +42,22 @@ export class AppComponent {
         routerSplit.shift();
         let menu_join = "";
         routerSplit.map(res => {
+          console.log(res, "fvbdsgdhs")
           menu_join = menu_join + "/" + res;
           this.menu.map(menu_name => {
-            if (menu_name.path == menu_join) {
+            if(res == "*"){
               this.breadcrumbList.push(menu_name)
-            }
-            menu_name.submenu.map(sub => {
-              if (sub.path == menu_join) {
-                this.breadcrumbList.push(sub)
+            } else {
+              if (menu_name.path == menu_join) {
+                this.breadcrumbList.push(menu_name)
               }
-            })
+              menu_name.submenu.map(sub => {
+                if (sub.path == menu_join) {
+                  this.breadcrumbList.push(sub)
+                }
+              })
+            }
+       
           })
         })
         let breadcrumb= this.breadcrumbList

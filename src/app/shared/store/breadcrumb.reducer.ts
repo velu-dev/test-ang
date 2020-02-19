@@ -1,10 +1,14 @@
 import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as breadcrumActions from './breadcrumb.actions';
 export interface State {
-  menu: any[]
+  menu: any[],
+  // active_menu: "",
+  active_title: ""
 }
 const initialState: State = {
-  menu: []
+  menu: [],
+  // active_menu: "",
+  active_title: ""
 };
 export function breadcrumbreducer(
   state = initialState,
@@ -21,7 +25,8 @@ export function breadcrumbreducer(
       // console.log(state)
       return {
         ...state,
-        menu: action['payload']
+        menu: action['payload'],
+        active_title: action['payload'][action['payload'].length - 1].title
       }
     }
     case breadcrumActions.BreadcrumActions.REMOVE: {

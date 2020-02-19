@@ -83,3 +83,10 @@ mat-sidenav-container {
     background-color: $white;
   }
 }
+.active-list-item {
+  background-color: $secondarycolor !important;
+  color: $black !important;
+  i {
+    color: $black !important;
+  }
+}

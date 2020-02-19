@@ -10,9 +10,12 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
   getUsers(roles): Observable<any> {
-    return this.http.post(environment.baseUrl + "admin-api/admin/users", {role_filter: roles})
+    return this.http.post(environment.baseUrl + "admin-api/admin/users", { role_filter: roles })
   }
   getRoles(): Observable<any> {
     return this.http.get(environment.baseUrl + "admin-api/admin/role-dropdown")
+  }
+  getUser(id): Observable<any> {
+    return this.http.get(environment.baseUrl + "admin-api/admin/user/" + id)
   }
 }

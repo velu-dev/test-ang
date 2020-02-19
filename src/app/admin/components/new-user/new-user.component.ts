@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../../services/user.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
@@ -8,7 +10,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class NewUserComponent implements OnInit {
   userForm: FormGroup;
   isSubmitted = false;
-  constructor(private formBuilder: FormBuilder) { }
+  isEdit: boolean = false;
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private userService: UserService) {
+    this.route.params.subscribe(params_res => {
+      if (params_res.id) {
+        this.isEdit = true;
+        this.userService.getUser(params_res.id).subscribe(res => {
+          console.log(res)
+        })
+      }
+    })
+  }
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
@@ -20,13 +32,13 @@ export class NewUserComponent implements OnInit {
       phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(''), Validators.minLength(10)])],
     });
   }
-  
-  userSubmit(){
+
+  userSubmit() {
     this.isSubmitted = true;
     if (this.userForm.invalid) {
       return;
     }
-    console.log("userForm",this.userForm.value)
+    console.log("userForm", this.userForm.value)
   }
 
 }
