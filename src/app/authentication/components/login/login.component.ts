@@ -46,20 +46,20 @@ export class LoginComponent implements OnInit {
     }
     this.spinnerService.show()
     this.cognitoService.logIn(auth).subscribe(loginRes => {
-      console.log(loginRes.signInUserSession.idToken.jwtToken)
+      // console.log(loginRes.signInUserSession.idToken.jwtToken)
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(data => {
-        console.log(data)
+        // console.log(data)
         this.spinnerService.hide()
         if (data['user']['custom:isPlatformAdmin'] == '1') {
           this.alertService.openSnackBar(success.loginSuccess,'success');
-          this.router.navigate(['/admin'])
+          this.router.navigate(['/admin/dashboard'])
         }
         else {
           this.alertService.openSnackBar("Under processing",'error',);
         }
       })
     }, error => {
-      console.log("loginError", error)
+      // console.log("loginError", error)
       this.alertService.openSnackBar(error.message,'error');
       this.spinnerService.hide()
     })
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
 
   logout() {
     this.cognitoService.logOut().subscribe(response => {
-      console.log("logout", response)
+      // console.log("logout", response)
       this.cookieService.deleteAll();
     })
   }

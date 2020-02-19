@@ -11,12 +11,19 @@ export class NewUserComponent implements OnInit {
   userForm: FormGroup;
   isSubmitted = false;
   isEdit: boolean = false;
+  userData: any;
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private userService: UserService) {
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
         this.isEdit = true;
         this.userService.getUser(params_res.id).subscribe(res => {
-          console.log(res)
+          // this.userData['first_name'] = res.data.first_name;
+          // this.userData['last_name'] = res.data.last_name;
+          // this.userData['sign_in_email_id'] = res.data.sign_in_email_id;
+          // this.userData['companyName'] = "";
+          // this.userData['password'] = "";
+          // this.userData['phoneNumber'] = "";
+          this.userForm.setValue(this.userData)
         })
       }
     })
@@ -24,10 +31,10 @@ export class NewUserComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
-      firstName: ['', Validators.compose([Validators.required])],
-      lastName: ['', Validators.compose([Validators.required])],
+      first_name: ['', Validators.compose([Validators.required])],
+      last_name: ['', Validators.compose([Validators.required])],
       companyName: [''],
-      email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      sign_in_email_id: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
       phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(''), Validators.minLength(10)])],
     });
@@ -38,7 +45,6 @@ export class NewUserComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    console.log("userForm", this.userForm.value)
   }
 
 }

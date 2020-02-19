@@ -13,13 +13,13 @@
             <form fxLayout="row wrap" [formGroup]="verificationForm" (ngSubmit)="verifySubmit()">
               <mat-form-field appearance="outline" fxFlex="100"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
-                <mat-label>Email</mat-label>
+                <mat-label>Email*</mat-label>
                 <input matInput name="email" placeholder="Email" formControlName="email" autocomplete="off">
                 <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
-                <mat-label>Verification code</mat-label>
+                <mat-label>Verification code*</mat-label>
                 <input matInput name="VerificationCode" placeholder="Verification code" formControlName="code"
                   autocomplete="off">
                 <mat-icon matSuffix>verified_user</mat-icon>

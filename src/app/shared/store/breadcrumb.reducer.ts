@@ -3,12 +3,12 @@ import * as breadcrumActions from './breadcrumb.actions';
 export interface State {
   menu: any[],
   // active_menu: "",
-  active_title: ""
+  active_title: "Dashboard"
 }
 const initialState: State = {
   menu: [],
   // active_menu: "",
-  active_title: ""
+  active_title: "Dashboard"
 };
 export function breadcrumbreducer(
   state = initialState,
@@ -18,11 +18,12 @@ export function breadcrumbreducer(
   switch (action['type']) {
     case breadcrumActions.BreadcrumActions.LIST: {
       return {
-        ...state
+        ...state,
+        menu: [],
+        active_title: "Dashboard"
       }
     }
     case breadcrumActions.BreadcrumActions.ADD: {
-      // console.log(state)
       return {
         ...state,
         menu: action['payload'],

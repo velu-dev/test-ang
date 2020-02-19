@@ -45,13 +45,11 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
   getUser(roles) {
-    console.log(roles)
     this.userService.getUsers(roles).subscribe(response => {
       this.dataSource = new MatTableDataSource(response.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }, error => {
-      console.log(error)
     })
   }
   gotoEdit(data) {

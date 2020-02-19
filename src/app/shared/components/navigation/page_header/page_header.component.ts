@@ -15,10 +15,12 @@ export class PageHeaderComponent implements OnInit {
     constructor(private title: Title,  private store: Store<{ breadcrumb: any }>) {
         this.menu$ = store.pipe(select('breadcrumb'));
         this.page_title = this.title.getTitle();
-        console.log(this.page_title)
     }
 
     ngOnInit() {
+        this.menu$.subscribe(res => {
+            console.log("after login", res)
+        })
 
     }
     openSidenav() {

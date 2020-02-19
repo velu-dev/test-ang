@@ -42,10 +42,9 @@ export class AppComponent {
         routerSplit.shift();
         let menu_join = "";
         routerSplit.map(res => {
-          console.log(res, "fvbdsgdhs")
           menu_join = menu_join + "/" + res;
           this.menu.map(menu_name => {
-            if(res == "*"){
+            if (res == "*") {
               this.breadcrumbList.push(menu_name)
             } else {
               if (menu_name.path == menu_join) {
@@ -57,11 +56,13 @@ export class AppComponent {
                 }
               })
             }
-       
+
           })
         })
-        let breadcrumb= this.breadcrumbList
-        this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
+        let breadcrumb = this.breadcrumbList
+        if (breadcrumb.length != 0) {
+          this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
+        }
       }
     });
   }

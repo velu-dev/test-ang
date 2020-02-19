@@ -8,11 +8,11 @@
               <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userSubmit()">
                 <mat-form-field class="m-t-20" appearance="outline" fxFlex="50">
                   <mat-label>First name*</mat-label>
-                  <input matInput placeholder="First name" formControlName="firstName" autocomplete="off">
+                  <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
                 </mat-form-field>
                 <mat-form-field  class="m-t-20" appearance="outline" fxFlex="50">
                   <mat-label>Last name*</mat-label>
-                  <input matInput placeholder="Last name" formControlName="lastName" autocomplete="off">
+                  <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="50" >
                   <mat-label>Company name</mat-label>
@@ -20,7 +20,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="50">
                   <mat-label>Email ID*</mat-label>
-                  <input matInput placeholder="Email ID" formControlName="email">
+                  <input matInput placeholder="Email ID" formControlName="sign_in_email_id">
                   <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
                 </mat-form-field>
                 <mat-form-field  appearance="outline" fxFlex="50" >

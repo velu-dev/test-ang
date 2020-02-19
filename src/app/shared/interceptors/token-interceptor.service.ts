@@ -23,7 +23,7 @@ export class TokenInterceptorService implements HttpInterceptor {
       return next.handle(req.clone({ headers })).pipe(
         catchError((error: HttpErrorResponse) => {
           let err: any = error;
-          console.log(err);
+          // console.log(err);
           return throwError(error);
         })
       );
@@ -45,7 +45,7 @@ export class TokenInterceptorService implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           let err: any = error;
-          console.log(err.status);
+          // console.log(err.status);
           return throwError(error);
         })
       );
