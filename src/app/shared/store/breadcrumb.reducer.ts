@@ -18,10 +18,10 @@ export function breadcrumbreducer(
       }
     }
     case breadcrumActions.BreadcrumActions.ADD: {
-      console.log(state)
+      // console.log(state)
       return {
         ...state,
-        menu: [...state.menu, action['payload']]
+        menu: action['payload']
       }
     }
     case breadcrumActions.BreadcrumActions.REMOVE: {
@@ -32,7 +32,7 @@ export function breadcrumbreducer(
       }
     }
     case breadcrumActions.BreadcrumActions.RESET: {
-      console.log(state)
+      // console.log(state)
       return {
         ...state,
         menu: initialState.menu

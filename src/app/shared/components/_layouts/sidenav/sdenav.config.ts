@@ -17,8 +17,8 @@ export const ROUTES: SideNavInterface[] = [
             title: 'Manage Admins',
             icon: 'person_add',
             submenu: [{
-                path: '/admin/dashboard',
-                title: 'Dashboard',
+                path: '/admin/users/new',
+                title: 'New User',
                 icon: 'dashboard',
                 submenu: [],
                 group: "Admin",
@@ -34,14 +34,14 @@ export const ROUTES: SideNavInterface[] = [
         group: "Subscriber",
         role_id: 1,
         menu: [{
-            path: '/admin/',
+            path: '/subscriber',
             title: 'Subscriber Account',
             icon: 'people_alt',
             submenu: [],
             group: "Admin",
             role: 1
         }, {
-            path: '/admin/',
+            path: '/subscriber/fees',
             title: 'Fees Management',
             icon: 'credit_card',
             submenu: [],

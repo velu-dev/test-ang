@@ -14,7 +14,7 @@ export enum BreadcrumActions {
 export class ListBreadcrumb implements Action {
     readonly type = BreadcrumActions.LIST
     constructor() {
-        console.log("from action")
+        // console.log("from action")/
     }
 }
 export class AddBreadcrumb implements Action {
