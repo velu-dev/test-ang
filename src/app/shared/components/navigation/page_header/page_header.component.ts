@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { EventEmitter } from 'protractor';
 import { Observable, Subscription, Subject } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-page_header',
@@ -8,24 +9,17 @@ import { Observable, Subscription, Subject } from 'rxjs';
     styleUrls: ['./page_header.component.scss']
 })
 export class PageHeaderComponent implements OnInit {
-    breadcrumbEvent: Subject<void> = new Subject<void>();
-    @Input() events: Observable<void>;
-    menu: any;
-    // private eventsSubscription: Subscription
-    // @Input() menu: string;
-
-    constructor() {
-        // console.log(menu)
+    page_title = "";
+    constructor(private title: Title) {
+        this.page_title = this.title.getTitle();
+        console.log(this.page_title)
     }
 
     ngOnInit() {
-        this.menu = this.events.subscribe((res) => {
-            this.breadcrumbEvent.next(res)
-        });
+
     }
     openSidenav() {
     }
     ngOnDestroy() {
-        // this.eventsSubscription.unsubscribe();
     }
 }

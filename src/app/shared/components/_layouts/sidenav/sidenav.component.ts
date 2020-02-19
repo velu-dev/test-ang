@@ -14,9 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertComponent } from '../../alert/alert.component';
 import * as success from 'src/app/shared/messages/success';
 import { Auth } from 'aws-amplify';
-import { switchMap } from "rxjs/operators";
-import { EventEmitter } from 'protractor';
-
+import * as globals from '../../../../globals';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -32,7 +30,7 @@ import { EventEmitter } from 'protractor';
   ]
 })
 export class SidenavComponent implements OnInit {
-  menuEvent: Subject<void> = new Subject<void>();
+  logo_white = globals.logo_white;
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
   public menuItems: any;
   elem;
@@ -58,20 +56,14 @@ export class SidenavComponent implements OnInit {
     })
 
   }
-
   ngOnInit() {
     this.elem = document.documentElement;
-    // this.menuItems = menuItems.reduce((r, a) => {
-    //   r[a.group] = [...r[a.group] || [], a];
-    //   return r;
-    //  }, []);
   }
   clickMenu(menu) {
     this.expanded = this.expandedMenu == menu ? false : false;
     this.expandedMenu = menu;
   }
   navigate(menu) {
-    this.menuEvent.next(menu);
     this.router.navigate([menu.path])
   }
   logout() {

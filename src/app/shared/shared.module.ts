@@ -13,6 +13,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './interceptors/token-interceptor.service';
 import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { AlertService } from './services/alert.service';
+import { StoreModule } from '@ngrx/store';
+import { breadcrumbreducer } from './store/breadcrumb.reducer';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { AlertService } from './services/alert.service';
   imports: [
     CommonModule,
     HttpClientModule,
-    SharedRoutingModule
+    SharedRoutingModule,
+    StoreModule.forFeature("breadcrumb", breadcrumbreducer)
   ],
   exports: [
     MaterialModule,

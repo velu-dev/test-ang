@@ -4,7 +4,8 @@
 export const environment = {
   production: false,
 
-  baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
+  baseUrl: 'https://dev01api.simplexam.com/', //Dev
+  // baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
   // baseUrl: 'http://192.168.1.122:3000/', //Rajan-local
 
   //authentication
@@ -23,7 +24,8 @@ export const environment = {
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-        domain: '192.168.1.208',
+        domain: 'localhost',
+        // domain: '192.168.1.208',
         // OPTIONAL - Cookie path
         path: '/',
         // OPTIONAL - Cookie expiration in days

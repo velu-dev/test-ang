@@ -7,6 +7,7 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user',
@@ -29,22 +30,24 @@ export class UserComponent implements OnInit {
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private userSercice: UserService, private router: Router) {
-    this.userSercice.getRoles().subscribe(response => {
+  constructor(private userService: UserService, private router: Router, private title: Title) {
+    this.title.setTitle("Manage User");
+    this.userService.getRoles().subscribe(response => {
       this.roles = response.data.map(function (el) {
         var o = Object.assign({}, el);
         o.checked = false;
         return o;
       });
     })
-    this.getUser();
+    this.getUser(this.roles);
   }
 
   ngOnInit() {
-
+    this.title.setTitle("Manage User");
   }
-  getUser() {
-    this.userSercice.getUsers().subscribe(response => {
+  getUser(roles) {
+    console.log(roles)
+    this.userService.getUsers(roles).subscribe(response => {
       this.dataSource = new MatTableDataSource(response.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -60,8 +63,9 @@ export class UserComponent implements OnInit {
         this.selectedRoleId.push(res.id);
       }
     })
+    this.getUser(this.selectedRoleId)
   }
-  navigate(){
+  navigate() {
     this.router.navigate(['/admin/users/new'])
   }
   applyFilter(filterValue: string) {
