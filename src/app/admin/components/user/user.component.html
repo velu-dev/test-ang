@@ -1,19 +1,21 @@
 <mat-card-header>
     <mat-card-title class="m-0">Users</mat-card-title>
     <span class="spacer"></span>
-    <button (click)="navigate()" mat-mini-fab color="primary">
+    <button (click)="navigate()" mat-mini-fab class="add-user">
         <mat-icon>add</mat-icon>
     </button>
 
 </mat-card-header>
 <mat-divider></mat-divider>
 <mat-card-content class="p-t-3">
-    <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email">
-    </mat-form-field>
+    <div class="table-filter">
+        <input (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email, role">
+    </div>
     <span class="spacer"></span>
-    <mat-icon class="filter-icon" aria-hidden="false" aria-label=" home icon" [matMenuTriggerFor]="filter">
-        filter_list</mat-icon>
+    <button mat-icon-button class="filter-icon">
+        <mat-icon mat-icon-button aria-hidden="false" material-icons aria-label=" home icon"
+            [matMenuTriggerFor]="filter">filter_list</mat-icon>
+    </button>
     <mat-menu #filter="matMenu">
         <mat-list role="list">
             <mat-list-item role="listitem" *ngFor="let role of roles">
@@ -41,12 +43,14 @@
         </ng-container>
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element" (click)="gotoEdit(element)"> <mat-icon>edit</mat-icon></td>
+            <td mat-cell *matCellDef="let element" (click)="gotoEdit(element)">
+                <mat-icon>edit</mat-icon>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[ 5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
 
 </mat-card-content>

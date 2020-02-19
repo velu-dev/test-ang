@@ -80,13 +80,13 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 // ==================================================
  
 .success {
-  background-color: lightseagreen;
+  background-color: $success;
 }
 .error {
-  background-color: lightcoral;
+  background-color:$error;
 }
 .warning {
-  background-color: lightyellow;
+  background-color:$warning;
 }
   // .mat-snack-bar-container  {
   //   background: #4CAF50;
