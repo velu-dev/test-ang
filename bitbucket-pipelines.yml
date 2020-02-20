@@ -9,13 +9,15 @@ pipelines:
             - echo "Frontend:::This step runs once you click the 'Run' button"
 
       - step:
-          name: Bundle
+          name: Build app
           trigger: manual
-          script:          
-          - mkdir artifact
-          - echo "Frontend Bitbucket Pipeline!" > artifact/index.html
+          script: # The script below will build the application.          
+          - npm install
+          - npm install -g @angular/cli
+          - ng build --progress=false
+          - echo "Building Front-end application completed!"
           artifacts:
-          - artifact/*
+          - dist/**
 
       - step:
           name: Upload to S3 Bucket
@@ -32,4 +34,4 @@ pipelines:
               S3_BUCKET: $S3_BUCKET
               COMMAND: 'upload'
               LOCAL_PATH: 'artifact'
-              
+          - echo "Uploading to S3 bucket completed!"              
