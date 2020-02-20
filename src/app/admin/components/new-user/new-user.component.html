@@ -1,43 +1,47 @@
-<mat-card-header>
-  <mat-card-title class="m-0">User Information</mat-card-title>
-
-</mat-card-header>
-<mat-divider></mat-divider>
-<mat-card-content>
-  <!--Form start-->
-  <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userSubmit()" class="mat-grid-form">
-    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-      <mat-label>First name*</mat-label>
-      <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
-    </mat-form-field>
-    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-      <mat-label>Last name*</mat-label>
-      <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
-    </mat-form-field>
-    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-      <mat-label>Company name</mat-label>
-      <input matInput placeholder="Company name" formControlName="companyName" autocomplete="off">
-    </mat-form-field>
-    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-      <mat-label>Email ID*</mat-label>
-      <input matInput placeholder="Email ID" formControlName="sign_in_email_id">
-      <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-      <mat-label>Password*</mat-label>
-      <input matInput [type]="passwordFieldType ? 'text' : 'password'" placeholder="Password"
-        formControlName="password">
-      <mat-icon matSuffix
-        matTooltip="Password must contain at least 8 characters, including UPPER/lowercase, special character and numbers."
-        matTooltipPosition="above">error_outline</mat-icon>
-      <!-- <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
+<div class="lucy-register-form">
+    <div class="p-t-30 p-b-30" fxLayout="column" fxLayoutGap="15px">
+      <div fxLayout="row">
+        <div class="m-auto" fxLayout="column"  fxLayoutGap="15px">
+          <mat-card class="p-5">
+            <mat-card-content>
+              <!--Form start-->
+              <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userSubmit()">
+                <mat-form-field class="m-t-20" appearance="outline" fxFlex="50">
+                  <mat-label>First name*</mat-label>
+                  <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+                </mat-form-field>
+                <mat-form-field  class="m-t-20" appearance="outline" fxFlex="50">
+                  <mat-label>Last name*</mat-label>
+                  <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" >
+                  <mat-label>Company name</mat-label>
+                  <input matInput placeholder="Company name" formControlName="companyName" autocomplete="off">
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50">
+                  <mat-label>Email ID*</mat-label>
+                  <input matInput placeholder="Email ID" formControlName="sign_in_email_id">
+                  <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
+                </mat-form-field>
+                <mat-form-field  appearance="outline" fxFlex="50" >
+                  <mat-label>Password*</mat-label>
+                  <input matInput [type]="passwordFieldType ? 'text' : 'password'" placeholder="Password"
+                    formControlName="password">   
+                    <mat-icon matSuffix matTooltip="Password must contain at least 8 characters, including UPPER/lowercase, special character and numbers." matTooltipPosition="above">error_outline</mat-icon>            
+                    <!-- <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
                       {{passwordFieldType ? 'visibility_off' : 'visibility'}}</mat-icon> -->
-    </mat-form-field>
-    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-      <mat-label>Phone number*</mat-label>
-      <input matInput placeholder="Phone number" formControlName="phoneNumber">
-    </mat-form-field>
-    <div class="text-center w-100 m-t-10"> <button mat-raised-button color="primary" type="submit" class="m-r-10"> Submit </button>
-      <button mat-raised-button (click)="userForm.reset()">Cancel</button></div>
-  </form>
-</mat-card-content>
+                  </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50">
+                  <mat-label>Phone number*</mat-label>
+                  <input matInput  placeholder="Phone number"
+                    formControlName="phoneNumber">
+                </mat-form-field>
+                <button mat-raised-button color="primary" type="submit" class="auth-btn">Submit<i class="fa fa-arrow-right"></i></button>
+                <button (click)="userForm.reset()">Reset</button>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>

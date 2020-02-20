@@ -24,7 +24,7 @@ export const environment = {
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-        domain: 'localhost', // Global local IP
+        domain: 'localhost', // GLobal local IP
         // domain: 'd2re2whflovy37.cloudfront.net', //dev server
         // domain: '192.168.1.208', // Velu's IP
         // OPTIONAL - Cookie path
