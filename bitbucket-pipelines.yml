@@ -13,10 +13,11 @@ pipelines:
           trigger: manual
           services:
           - docker          
-          script: # The script below will build the application.          
-          - npm install
+          script: # The script below will build the application.                    
           - npm install -g @angular/cli
+          - echo "Ng version:"
           - echo ng --version
+          - npm install
           - ng build
           - echo "Building Front-end application completed!"
           artifacts:
