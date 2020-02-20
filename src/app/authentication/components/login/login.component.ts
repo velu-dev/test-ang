@@ -51,16 +51,16 @@ export class LoginComponent implements OnInit {
         // console.log(data)
         this.spinnerService.hide()
         if (data['user']['custom:isPlatformAdmin'] == '1') {
-          this.alertService.openSnackBar(success.loginSuccess,'success');
+          this.alertService.openSnackBar(success.loginSuccess, 'success');
           this.router.navigate(['/admin/dashboard'])
         }
         else {
-          this.alertService.openSnackBar("Under processing",'error',);
+          this.alertService.openSnackBar("Under processing", 'error');
         }
       })
     }, error => {
       // console.log("loginError", error)
-      this.alertService.openSnackBar(error.message,'error');
+      this.alertService.openSnackBar(error.message, 'error');
       this.spinnerService.hide()
     })
   }

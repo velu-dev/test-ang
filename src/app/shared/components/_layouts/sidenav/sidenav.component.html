@@ -15,47 +15,7 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <mat-toolbar class="nav-bar">
-            <mat-toolbar-row>
-                <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-                    <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
-                </button>
-
-                <span flex class="spacer"></span>
-                <mat-card-actions>
-                    <div fxLayout="row">
-                        <button (click)="fullScreen()" mat-icon-button>
-                            <mat-icon> {{isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
-                        </button>
-                        <button mat-icon-button>
-                            <mat-icon matBadge="5" matBadgeColor="warn">notifications_none</mat-icon>
-                        </button>
-                        <button mat-icon-button [matMenuTriggerFor]="settings">
-                            <mat-icon>supervised_user_circle</mat-icon>
-                        </button>
-                        <button mat-icon-button (click)="logout()">
-                            <mat-icon>exit_to_app</mat-icon>
-
-                        </button>
-                    </div>
-                </mat-card-actions>
-                <mat-menu #settings="matMenu">
-                    <button routerLink="profile" mat-menu-item>
-                        <mat-icon>perm_identity</mat-icon>
-                        <span>Profile</span>
-                    </button>
-                    <button routerLink="settings" mat-menu-item>
-                        <mat-icon>settings</mat-icon>
-                        <span>Settings</span>
-                    </button>
-                    <button mat-menu-item>
-                        <mat-icon>notifications_off</mat-icon>
-                        <span>Logout</span>
-                    </button>
-                </mat-menu>
-
-            </mat-toolbar-row>
-        </mat-toolbar>
+        <app-header [inputSideNav]="drawer"></app-header>
         <!-- Add Content Here -->
         <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>

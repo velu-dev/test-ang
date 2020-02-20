@@ -7,49 +7,35 @@
         <span flex class="spacer"></span>
         <mat-card-actions>
             <div fxLayout="row">
-                <button mat-icon-button [matMenuTriggerFor]="notification">
-                    <mat-icon matBadge="15" matBadgeColor="warn">notifications_none</mat-icon>
-                    <!-- Include text description of the icon's meaning for screen-readers -->
-                    <span class="cdk-visually-hidden">
-                        Example with a home icon with overlaid badge showing the number 15
-                    </span>
+                <button (click)="fullScreen()" mat-icon-button>
+                    <mat-icon> {{isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
+                </button>
+                <button mat-icon-button>
+                    <mat-icon matBadge="5" matBadgeColor="warn">notifications_none</mat-icon>
                 </button>
                 <button mat-icon-button [matMenuTriggerFor]="settings">
                     <mat-icon>supervised_user_circle</mat-icon>
                 </button>
-                <button mat-icon-button [routerLink]="['/authentication']">
+                <button mat-icon-button (click)="logout()">
                     <mat-icon>exit_to_app</mat-icon>
+
                 </button>
             </div>
         </mat-card-actions>
-        <mat-menu #notification="matMenu">
-            <button mat-menu-item>
-                <mat-icon class="example-icon" aria-hidden="false" aria-label="Example supervised_user_circle icon">
-                    supervised_user_circle</mat-icon>
-            </button>
-            <button mat-menu-item>
-                <mat-icon class="example-icon" aria-hidden="false" aria-label="Example supervised_user_circle icon">
-                    supervised_user_circle</mat-icon>
-            </button>
-            <button mat-menu-item>
-                <mat-icon class="example-icon" aria-hidden="false" aria-label="Example supervised_user_circle icon">
-                    supervised_user_circle</mat-icon>
-            </button>
-        </mat-menu>
         <mat-menu #settings="matMenu">
-            <button mat-menu-item>
-                <mat-icon>supervised_user_circle</mat-icon>
+            <button routerLink="profile" mat-menu-item>
+                <mat-icon>perm_identity</mat-icon>
                 <span>Profile</span>
             </button>
-            <button mat-menu-item disabled>
-                <mat-icon>settings_applications</mat-icon>
-                <span>settings</span>
+            <button routerLink="settings" mat-menu-item>
+                <mat-icon>settings</mat-icon>
+                <span>Settings</span>
             </button>
-            <button mat-menu-item [routerLink]="['/authentication']">
-                <mat-icon>exit_to_app</mat-icon>
+            <button mat-menu-item>
+                <mat-icon>notifications_off</mat-icon>
                 <span>Logout</span>
             </button>
         </mat-menu>
-    </mat-toolbar-row>
 
+    </mat-toolbar-row>
 </mat-toolbar>

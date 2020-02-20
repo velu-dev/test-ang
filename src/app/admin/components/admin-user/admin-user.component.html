@@ -11,6 +11,10 @@
     <div class="table-filter">
         <input (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email, role">
     </div>
+    <span class="spacer"></span>
+    <button mat-icon-button class="filter-icon" (click)="exportData()">
+        <i class="fas fa-file-excel"></i>
+    </button>
     <table mat-table [dataSource]="dataSource" matSort class="mat-table">
         <ng-container matColumnDef="first_name">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>

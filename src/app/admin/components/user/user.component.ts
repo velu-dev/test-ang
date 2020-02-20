@@ -8,6 +8,7 @@ import { User } from '../../models/user.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { ExportService } from './../../../shared/services/export.service';
 
 @Component({
   selector: 'app-user',
@@ -30,7 +31,12 @@ export class UserComponent implements OnInit {
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private userService: UserService, private router: Router, private title: Title) {
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private title: Title,
+    private exportService: ExportService
+  ) {
     this.title.setTitle("APP | Manage User");
     this.userService.getRoles().subscribe(response => {
       this.roles = response.data.map(function (el) {
@@ -44,6 +50,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
   }
+  users = [];
   getUser(roles) {
     this.userService.getUsers(roles).subscribe(response => {
       let data = []
@@ -56,6 +63,7 @@ export class UserComponent implements OnInit {
       response.data.map(res => {
         data.push(res)
       })
+      this.users = response.data;
       this.dataSource = new MatTableDataSource(data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -84,5 +92,17 @@ export class UserComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  exportData(){
+    let data = [];
+    this.users.map(res => {
+      data.push({
+        "First Name": res.first_name,
+        "Last Name": res.last_name,
+        "Email ID": res.sign_in_email_id,
+        "Role ID": res.role_name
+      })
+    })
+    this.exportService.exportExcel( data, "Non-Admin-Users")
   }
 }

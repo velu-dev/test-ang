@@ -15,6 +15,7 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
 import { AlertService } from './services/alert.service';
 import { StoreModule } from '@ngrx/store';
 import { breadcrumbreducer } from './store/breadcrumb.reducer';
+import { ExportService } from './services/export.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,10 @@ import { breadcrumbreducer } from './store/breadcrumb.reducer';
     AlertComponent
   ],
   providers: [
-    CognitoService, {
+    CognitoService,
+    AlertService,
+    ExportService,
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
@@ -52,7 +56,6 @@ import { breadcrumbreducer } from './store/breadcrumb.reducer';
       provide: MAT_SNACK_BAR_DATA,
       useValue: {} // Add any data you wish to test if it is passed/used correctly
     },
-    AlertService,
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {
