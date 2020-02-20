@@ -11,9 +11,9 @@ pipelines:
       - step:
           name: Build app
           trigger: manual
-          script: # The script below will build the application.          
-          - npm install
-          - npm install -g @angular/cli
+          script: # The script below will build the application.                    
+          - npm install @angular/cli
+          - npm install          
           - ng build --progress=false
           - echo "Building Front-end application completed!"
           artifacts:
