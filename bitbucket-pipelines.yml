@@ -1,5 +1,6 @@
 ##image: atlassian/default-image:2
-image: node:10
+##image: node:10
+image: node:alpine
 
 pipelines:
   branches:
@@ -16,8 +17,6 @@ pipelines:
           - docker          
           script: # The script below will build the application.                    
           - npm install -g @angular/cli@8.3.24
-          - echo "Ng version:"
-          - echo ng --version
           - npm install
           - ng build --prod
           - echo "Building Front-end application completed!"
