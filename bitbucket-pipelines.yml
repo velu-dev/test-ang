@@ -19,7 +19,7 @@ pipelines:
           - echo "Ng version:"
           - echo ng --version
           - npm install
-          - ng build
+          - ng build --prod
           - echo "Building Front-end application completed!"
           artifacts:
           - dist/lucyfrontend/*

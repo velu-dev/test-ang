@@ -19,11 +19,11 @@ export class AdminUserComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   admin = [];
   constructor(
-    private userService: UserService, 
-    private router: Router, 
+    private userService: UserService,
+    private router: Router,
     private title: Title,
     private exportService: ExportService
-    ) {
+  ) {
     this.title.setTitle("APP | Manage Admin");
     this.getUser([1]);
   }
@@ -44,7 +44,7 @@ export class AdminUserComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  exportData(){
+  exportData() {
     let data = [];
     this.admin.map(res => {
       data.push({
@@ -54,6 +54,12 @@ export class AdminUserComponent implements OnInit {
         "Role ID": res.role_name
       })
     })
-    this.exportService.exportExcel( data, "Admin-Users")
+    this.exportService.exportExcel(data, "Admin-Users")
+  }
+  gotoEdit(id) {
+
+  }
+  navigate(){
+    
   }
 }

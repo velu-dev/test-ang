@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
+import * as  errors from '../../../shared/messages/errors'
+
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
@@ -12,6 +14,8 @@ export class NewUserComponent implements OnInit {
   isSubmitted = false;
   isEdit: boolean = false;
   userData: any;
+  errorMessages = errors;
+  passwordFieldType = "password"
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private userService: UserService) {
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
