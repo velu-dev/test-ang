@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import Amplify, { Auth } from 'aws-amplify';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
-import { ROUTES } from './shared/components/_layouts/sidenav/sdenav.config';
+import { ROUTES } from './shared/components/navigation/breadcrumb/breadcrumb.config';
 import * as breadcrumbActions from "./shared/store/breadcrumb.actions";
 import * as fromBreadcrumb from "./shared/store/breadcrumb.reducer";
 import { Store } from '@ngrx/store';
@@ -22,13 +22,11 @@ export class AppComponent {
   }
   ngOnInit() {
     this.listenRouting();
-    ROUTES.map(res => {
-      res.menu.map(menu => {
-        let menuData = {};
-        menuData = menu
-        menuData['children'] = menu.submenu;
-        this.menu.push(menuData)
-      })
+    ROUTES.map(menu => {
+      let menuData = {};
+      menuData = menu
+      menuData['children'] = menu.submenu;
+      this.menu.push(menuData)
     })
   }
   listenRouting() {

@@ -1,0 +1,42 @@
+##image: atlassian/default-image:2
+image: node:10
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: Initial step
+          script:
+            - echo "Frontend:::This step runs once you click the 'Run' button"
+
+      - step:
+          name: Build app
+          trigger: manual
+          services:
+          - docker          
+          script: # The script below will build the application.                    
+          - npm install -g @angular/cli@8.3.24
+          - echo "Ng version:"
+          - echo ng --version
+          - npm install
+          - ng build --prod
+          - echo "Building Front-end application completed!"
+          artifacts:
+          - dist/lucyfrontend/*
+
+      - step:
+          name: Upload to S3 Bucket
+          trigger: manual
+          services:
+          - docker
+          script:
+          # Upload to S3 code deploy bucket
+          - pipe: atlassian/aws-s3-deploy:0.3.7
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+              S3_BUCKET: $S3_BUCKET
+              COMMAND: 'upload'
+              LOCAL_PATH: 'dist/lucyfrontend'
+          - echo "Uploading to S3 bucket completed!"              

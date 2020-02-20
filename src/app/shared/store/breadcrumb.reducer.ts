@@ -18,9 +18,7 @@ export function breadcrumbreducer(
   switch (action['type']) {
     case breadcrumActions.BreadcrumActions.LIST: {
       return {
-        ...state,
-        menu: [],
-        active_title: "Dashboard"
+        ...state
       }
     }
     case breadcrumActions.BreadcrumActions.ADD: {

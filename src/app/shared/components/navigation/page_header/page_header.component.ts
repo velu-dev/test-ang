@@ -19,7 +19,6 @@ export class PageHeaderComponent implements OnInit {
 
     ngOnInit() {
         this.menu$.subscribe(res => {
-            console.log("after login", res)
         })
 
     }

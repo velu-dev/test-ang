@@ -29,6 +29,8 @@
     "ngx-cookie-service": "^2.3.0",
     "ngx-spinner": "^8.1.0",
     "rxjs": "~6.4.0",
+    "file-saver": "^2.0.2",
+    "xlsx": "^0.15.5",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
