@@ -3,3 +3,8 @@
 mat-toolbar {
    background-color: $transparent;
 }
+.hide-mobile {
+   @media only screen and (max-width: 568px) {
+      display: none;
+   }
+}

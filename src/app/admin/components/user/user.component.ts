@@ -63,6 +63,15 @@ export class UserComponent implements OnInit {
       response.data.map(res => {
         data.push(res)
       })
+      response.data.map(res => {
+        data.push(res)
+      })
+      response.data.map(res => {
+        data.push(res)
+      })
+      response.data.map(res => {
+        data.push(res)
+      })
       this.users = response.data;
       this.dataSource = new MatTableDataSource(data)
       this.dataSource.paginator = this.paginator;
