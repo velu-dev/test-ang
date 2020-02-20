@@ -17,7 +17,7 @@ $green: #65ff88;
 $white: #ffffff;
 $black: #000000;
 $gray: #ccc;
-$text-gray: #43425d;
+$text-gray: #5b626b;
 $dark-gray: #4d4f5c;
 $light-gray: #d3d3d3;
 $text-dark: #45515f;
@@ -121,6 +121,15 @@ $box-shadow-5: 0px 3px 6px #448aff38; //using table header
 //button Shadow
 $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
 // mixins scss
 @mixin lucy-form {
   background: $bg-light-blue;
@@ -162,6 +171,16 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
     color: $primarycolor;
     outline: none;
   }
+}
+
+@mixin text {
+  color: $dark-gray;
+  letter-spacing: 0.5;
+}
+@mixin card-main-title {
+  font-size: $font-size-10 !important;
+  font-weight: $font-weight-base;
+  color: $text-gray;
 }
 
 .logo {
@@ -214,6 +233,7 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 
 .m-card {
   box-shadow: $box-shadow-2;
+  min-height: 600px;
 }
 // Table Scss
 .table-filter {
@@ -281,11 +301,10 @@ table {
   width: auto;
   height: auto;
   cursor: pointer;
-  border-radius:5px;;
+  border-radius: 5px;
   &:hover {
     border: 1px solid $secondaryarkcolor;
     background-color: $secondaryarkcolor;
     color: $white;
-   
   }
 }
