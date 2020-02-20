@@ -46,12 +46,6 @@ import { reducers, metaReducers } from './reducers';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    },
-    {
-      provide: RECAPTCHA_SETTINGS,
-      useValue: {
-        siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
-      } as RecaptchaSettings,
     }
   ],
   bootstrap: [AppComponent]

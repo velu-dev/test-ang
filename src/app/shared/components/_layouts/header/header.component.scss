@@ -1,0 +1,21 @@
+@import "variables";
+
+mat-toolbar {
+  background-color: $white;
+  color:$ternary;
+  font-size: 22px;
+  height: 40px;
+}
+mat-toolbar-row {
+  box-shadow: $box-shadow-2;
+  mat-card-actions {
+    button {
+      margin-top: 15px;
+    }
+ 
+  }
+}
+
+.mw-300 {
+    min-width: 240px !important;
+}
