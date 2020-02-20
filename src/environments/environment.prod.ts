@@ -19,7 +19,7 @@ export const environment = {
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-        domain: 'd2re2whflovy37.cloudfront.net', //dev server
+        domain: 'dev01app.simplexam.com', //dev server
         // OPTIONAL - Cookie path
         path: '/',
         // OPTIONAL - Cookie expiration in days
