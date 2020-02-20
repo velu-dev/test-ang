@@ -38,5 +38,5 @@ pipelines:
               AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
               S3_BUCKET: $S3_BUCKET
               COMMAND: 'upload'
-              LOCAL_PATH: dist/**
+              LOCAL_PATH: 'dist'
           - echo "Uploading to S3 bucket completed!"              
