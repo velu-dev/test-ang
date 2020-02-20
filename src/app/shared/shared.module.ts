@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { SharedRoutingModule } from './shared-routing.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AlertComponent } from './components/alert/alert.component';
@@ -59,7 +58,7 @@ import { ExportService } from './services/export.service';
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {
-        siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+        siteKey: '6LcKp9oUAAAAAPA16aG4vWRMkKCIkTMr8xKLKiu5',
       } as RecaptchaSettings,
     }
   ]
