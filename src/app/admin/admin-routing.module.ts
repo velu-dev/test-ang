@@ -5,6 +5,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserComponent } from './components/user/user.component';
 import { NewUserComponent } from './components/new-user/new-user.component';
 import { AdminUserComponent } from './components/admin-user/admin-user.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 
 const routes: Routes = [{
@@ -33,6 +35,12 @@ const routes: Routes = [{
     component: NewUserComponent
   }
   ]
+}, {
+  path: "profile",
+  component: ProfileComponent
+}, {
+  path: "settings",
+  component: SettingsComponent
 },
 {
   path: "",
