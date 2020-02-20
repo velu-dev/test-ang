@@ -1,5 +1,5 @@
 ##image: atlassian/default-image:2
-image: node:10
+image: node:8
 
 pipelines:
   branches:
@@ -38,5 +38,5 @@ pipelines:
               AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
               S3_BUCKET: $S3_BUCKET
               COMMAND: 'upload'
-              LOCAL_PATH: 'artifact'
+              LOCAL_PATH: dist/**
           - echo "Uploading to S3 bucket completed!"              
