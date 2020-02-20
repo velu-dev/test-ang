@@ -1,11 +1,11 @@
 <div class="lucy-login-form">
   <div class="p-t-100 p-b-50" fxLayout="column" fxLayoutGap="15px">
     <div fxLayout="row wrap">
-      <div class="m-auto" fxFlex="25" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column">
+      <div class="m-auto" fxFlex="30" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxFlex.xl="25" fxLayout="column">
         <mat-card class="p-5">
           <!--Form Title-->
           <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
-          <mat-card-title class="p-t-10 p-b-20">Sign In</mat-card-title>
+          <mat-card-title class="p-t-10 p-b-20 auth-tilte">Sign In</mat-card-title>
           <mat-card-content>
             <!--Form start-->
             <form fxLayout="row wrap" [formGroup]="loginForm" (ngSubmit)="login()" class="p-t-20">
@@ -22,11 +22,11 @@
                   formControlName="password">
                 <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
                   {{passwordFieldType ? 'visibility_off' : 'visibility'}}</mat-icon>
-                <mat-error>{{errorMessages?.passwordpattern}}</mat-error>
+                <mat-error>{{errorMessages?.entervalidpassword}}</mat-error>
               </mat-form-field>
 
               <div class="forgot-password"> Forgot Password ?</div>
-              <button mat-raised-button color="primary" type="submit" class="auth-btn "> Login <i
+              <button mat-raised-button color="primary" type="submit" class="authentication-btn"> Login <i
                   class="fa fa-arrow-right"></i></button>
             </form>
             <div class="lucy-new-account">New to Lucy ? <span routerLink="/register"> Sign up here</span></div>

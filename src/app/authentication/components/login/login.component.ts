@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { CognitoService } from 'src/app/shared/services/cognito.service';
+import { CognitoService } from './../../../shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import * as  success from '../../../shared/messages/success'
 import { NgxSpinnerService } from "ngx-spinner";
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { AlertComponent } from './../../../shared/components/alert/alert.component';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,13 +20,13 @@ export class LoginComponent implements OnInit {
   passwordFieldType: boolean;
   logo = globals.logo;
   errorMessages = errors;
-  constructor(private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService, private spinnerService: NgxSpinnerService, private snackBar: MatSnackBar) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService, private spinnerService: NgxSpinnerService, private alertService: AlertService) { }
 
   ngOnInit() {
 
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"), Validators.minLength(8)])]
+      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])]
     });
   }
 
@@ -46,28 +46,28 @@ export class LoginComponent implements OnInit {
     }
     this.spinnerService.show()
     this.cognitoService.logIn(auth).subscribe(loginRes => {
-      console.log(loginRes.signInUserSession.idToken.jwtToken)
+      // console.log(loginRes.signInUserSession.idToken.jwtToken)
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(data => {
+        // console.log(data)
         this.spinnerService.hide()
-        this.openSnackBar(success.loginSuccess)
+        if (data['user']['custom:isPlatformAdmin'] == '1') {
+          this.alertService.openSnackBar(success.loginSuccess, 'success');
+          this.router.navigate(['/admin/dashboard'])
+        }
+        else {
+          this.alertService.openSnackBar("Under processing", 'error');
+        }
       })
     }, error => {
-      console.log("loginError", error)
-      this.openSnackBar(error.message)
+      // console.log("loginError", error)
+      this.alertService.openSnackBar(error.message, 'error');
       this.spinnerService.hide()
     })
   }
 
-  openSnackBar(message) {
-    this.snackBar.openFromComponent(AlertComponent, {
-      duration: 5 * 1000,
-      data: message
-    });
-  }
-
   logout() {
     this.cognitoService.logOut().subscribe(response => {
-      console.log("logout", response)
+      // console.log("logout", response)
       this.cookieService.deleteAll();
     })
   }

@@ -5,9 +5,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxSpinnerService } from "ngx-spinner";
+import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -25,7 +24,7 @@ export class RegisterComponent implements OnInit {
     private cognitoService: CognitoService,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private snackBar: MatSnackBar,
+    private alertService: AlertService,
     private spinnerService: NgxSpinnerService,
   ) { }
 
@@ -36,8 +35,8 @@ export class RegisterComponent implements OnInit {
       middleInitial: ['', Validators.compose([Validators.required])],
       companyName: [''],
       email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"), Validators.minLength(8)])],
-      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern("(?=^.{6,255}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*"), Validators.minLength(8)])],
+      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
+      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
       captcha: ['', Validators.required],
       policy: ['', Validators.required]
     });
@@ -45,6 +44,7 @@ export class RegisterComponent implements OnInit {
 
   get formControls() { return this.registerForm.controls; }
 
+  //change password <-> text
   togglePasswordFieldType() {
     this.passwordFieldType = !this.passwordFieldType;
   }
@@ -57,10 +57,16 @@ export class RegisterComponent implements OnInit {
     }
 
     if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
-      this. openSnackBar(this.errorMessages.passworddidnotMatch)
+      this.alertService.openSnackBar(this.errorMessages.passworddidnotMatch, 'error')
+      return;
+    }
+
+    if (!this.registerForm.value.policy) {
+      this.alertService.openSnackBar(this.errorMessages.agreeterms, 'error')
       return;
     }
     this.spinnerService.show();
+    //role id set role_id = 1-admin, 2-subscriber
     let signUpDetails = { first_name: this.registerForm.value.firstName, middle_name: this.registerForm.value.middleInitial, last_name: this.registerForm.value.lastName, sign_in_email_id: this.registerForm.value.email, company_name: this.registerForm.value.companyName }
     this.authenticationService.signUp(signUpDetails).subscribe(signupRes => {
       console.log("signupRes", signupRes);
@@ -70,10 +76,9 @@ export class RegisterComponent implements OnInit {
         'attributes': {
           'name': this.registerForm.value.firstName + ' ' + this.registerForm.value.lastName,
           'middle_name': this.registerForm.value.middleInitial,
-          'custom:isAdmin': "0",
           'custom:Organization_ID': signupRes.data.Organization_ID.toString(),
           'custom:Postgres_UserID': signupRes.data.Postgres_User_ID.toString(),
-          //'custom:isPlatformAdmin': "0"
+          'custom:isPlatformAdmin': "0"
         }
       }
       this.cognitoService.signUp(userDetails).subscribe(signUpRes => {
@@ -82,21 +87,14 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/verification'])
       }, error => {
         console.log("cognitoSignUpError", error);
-        this. openSnackBar(error.message);
+        this.alertService.openSnackBar(error.message, 'error');
       })
 
     }, error => {
       console.log("signup", error);
       this.spinnerService.hide();
-      this. openSnackBar(error.error.error)
+      this.alertService.openSnackBar(error.error.error, 'error')
     })
-  }
-
-  openSnackBar(message) {
-    this.snackBar.openFromComponent(AlertComponent, {
-      duration: 5 * 1000,
-      data: message
-    });
   }
 
 }

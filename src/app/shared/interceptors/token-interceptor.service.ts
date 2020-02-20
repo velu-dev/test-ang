@@ -23,7 +23,7 @@ export class TokenInterceptorService implements HttpInterceptor {
       return next.handle(req.clone({ headers })).pipe(
         catchError((error: HttpErrorResponse) => {
           let err: any = error;
-          console.log(err);
+          // console.log(err);
           return throwError(error);
         })
       );
@@ -32,9 +32,9 @@ export class TokenInterceptorService implements HttpInterceptor {
     return from(Auth.currentSession())
       .pipe(
         switchMap(token => {
-          const headerSettings: { [name: string]: string | string[] } = {};
-          headerSettings["Authorization"] = "Bearer " + token['idToken'].jwtToken;
-          const newHeader = new HttpHeaders(headerSettings);
+          const headers: { [name: string]: string | string[] } = {};
+          headers["Authorization"] = "Bearer " + token['idToken'].jwtToken;
+          const newHeader = new HttpHeaders(headers);
           const reqClone = req.clone({
             headers: newHeader
           });
@@ -45,7 +45,7 @@ export class TokenInterceptorService implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           let err: any = error;
-          console.log(err.status);
+          // console.log(err.status);
           return throwError(error);
         })
       );
