@@ -1,22 +1,35 @@
 image: atlassian/default-image:2
 
 pipelines:
-  default:
-    - step:
-        script:
+  branches:
+    develop:
+      - step:
+          name: Initial step
+          script:
+            - echo "Frontend:::This step runs once you click the 'Run' button"
+
+      - step:
+          name: Bundle
+          trigger: manual
+          script:          
           - mkdir artifact
           - echo "Frontend Bitbucket Pipeline!" > artifact/index.html
-        artifacts:
+          artifacts:
           - artifact/*
-    - step:
-        deployment: production
-        script:
+
+      - step:
+          name: Upload to S3 Bucket
+          trigger: manual
+          services:
+          - docker
+          script:
+          # Upload to S3 code deploy bucket
           - pipe: atlassian/aws-s3-deploy:0.3.7
             variables:
               AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
               AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
               AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
               S3_BUCKET: $S3_BUCKET
-              EXPIRES: '2020-10-10'
+              COMMAND: 'upload'
               LOCAL_PATH: 'artifact'
-              ACL: 'public-read'
+              
