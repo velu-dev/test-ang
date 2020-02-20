@@ -11,29 +11,8 @@
                     <mat-icon> {{isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
                 </button>
                 <button mat-icon-button>
-                    <mat-icon matBadge="5" matBadgeColor="warn" [matMenuTriggerFor]="notification">notifications_none
-                    </mat-icon>
+                    <mat-icon matBadge="5" matBadgeColor="warn">notifications_none</mat-icon>
                 </button>
-                <mat-menu #notification="matMenu" class="">
-                    <mat-card class="mw-300">
-                        <mat-card-title>Notification</mat-card-title>
-                        <mat-divider></mat-divider>
-                        <mat-card-content class="notification">
-                            <mat-list>
-                                <h3 mat-subheader>Folders</h3>
-                                <mat-list-item *ngFor="let folder of folders">
-                                    <mat-icon mat-list-icon>folder</mat-icon>
-                                    <h4 mat-line>Test</h4>
-                                    <p mat-line> Test </p>
-                                </mat-list-item>
-                                <mat-divider></mat-divider>
-                                <h3 mat-subheader>Notes</h3>
-                               
-                            </mat-list>
-                        </mat-card-content>
-                        <mat-card-footer>Test</mat-card-footer>
-                    </mat-card>
-                </mat-menu>
                 <button mat-icon-button [matMenuTriggerFor]="settings">
                     <mat-icon>supervised_user_circle</mat-icon>
                 </button>
@@ -57,7 +36,6 @@
                 <span>Logout</span>
             </button>
         </mat-menu>
-
 
     </mat-toolbar-row>
 </mat-toolbar>

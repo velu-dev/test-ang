@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Auth } from 'aws-amplify';
+import { ROUTES } from '../../_layouts/sidenav/sdenav.config';
+import { Observable, Subscription, ObservedValueOf } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import * as breadcrumbActions from "./../../../store/breadcrumb.actions";
+import * as frombreadcrumb from "./../../../store/breadcrumb.reducer";
+import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
 @Component({
     selector: 'app-breadcrumb',
