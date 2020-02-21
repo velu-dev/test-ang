@@ -50,7 +50,7 @@ import { reducers, metaReducers } from './reducers';
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {
-        siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+        siteKey: '6LcKp9oUAAAAAPA16aG4vWRMkKCIkTMr8xKLKiu5',
       } as RecaptchaSettings,
     }
   ],
