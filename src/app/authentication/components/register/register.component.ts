@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.compose([Validators.required])],
       lastName: ['', Validators.compose([Validators.required])],
-      middleInitial: ['', Validators.compose([Validators.required])],
+      middleInitial: [''],
       companyName: [''],
       email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
@@ -53,6 +53,7 @@ export class RegisterComponent implements OnInit {
   registerSubmit() {
     this.isSubmitted = true;
     if (this.registerForm.invalid) {
+      this.alertService.openSnackBar("Fill all mandatory fields", "error")
       return;
     }
 

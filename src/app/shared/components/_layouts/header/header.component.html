@@ -11,10 +11,10 @@
                     <mat-icon> {{isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
                 </button>
                 <button mat-icon-button>
-                    <mat-icon matBadge="5" matBadgeColor="warn" [matMenuTriggerFor]="notification">notifications_none
+                    <mat-icon matBadge="5" matBadgeColor="warn">notifications_none
                     </mat-icon>
                 </button>
-                <mat-menu #notification="matMenu" class="">
+                <!-- <mat-menu #notification="matMenu" class="">
                     <mat-card class="mw-300">
                         <mat-card-title>Notification</mat-card-title>
                         <mat-divider></mat-divider>
@@ -33,7 +33,7 @@
                         </mat-card-content>
                         <mat-card-footer>Test</mat-card-footer>
                     </mat-card>
-                </mat-menu>
+                </mat-menu> -->
                 <button mat-icon-button [matMenuTriggerFor]="settings">
                     <mat-icon>supervised_user_circle</mat-icon>
                 </button>
