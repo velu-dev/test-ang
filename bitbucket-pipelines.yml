@@ -39,4 +39,5 @@ pipelines:
               S3_BUCKET: $S3_BUCKET
               COMMAND: 'upload'
               LOCAL_PATH: 'dist/lucyfrontend'
+              ACL: 'public-read'
           - echo "Uploading to S3 bucket completed!"              
