@@ -1,4 +1,5 @@
 @import "variables";
+
 mat-sidenav-container {
   mat-sidenav {
     width: $sidenav-width;
@@ -8,12 +9,14 @@ mat-sidenav-container {
     mat-toolbar {
       background-color: $primarycolor;
       color: $white;
+      box-shadow: $box-shadow-3;
     }
     mat-nav-list {
       .menu-card-title {
+        margin-top: 10px;
         padding: 10px;
         display: block;
-        color: #5ace74;
+        color: $green;
         &::after {
           content: "";
           background: rgba(255, 255, 255, 0.26);
@@ -21,56 +24,56 @@ mat-sidenav-container {
           display: inherit;
           width: 50%;
           margin-left: auto;
-          margin-top: -10px;
+          margin-top: -8px;
         }
       }
       .mat-list-item {
-        color: #fff;
+        color: $white;
         height: 42px;
-        font-size: 13px;
-        &:hover {
-          cursor: pointer;
-          color: #fff;
-          background-color: #298a00;
-        }
+        font-size: $font-size-11;
+        width: 95%;
+        margin: 0px auto;
+        margin-top: 5px;
+        border-radius: 3px;
+        &:hover,
         &:active {
-          color: #fff;
-          background-color: #298a00;
+          cursor: pointer;
+          background-color: $secondarycolor;
+          width: 95%;
+          margin: 0px auto;
+          color: $menu-active;
+          margin-top: 5px;
+          mat-icon {
+            color: $black;
+          }
         }
         mat-icon {
-          font-size: 14px;
-          margin-top: 2px;
+          font-size: $font-size-10;
+          margin-top: 8px;
           margin-right: 5px;
-          background: alpha($color: #000);
+          color: $light-gray;
         }
       }
     }
   } //mat-sidenav end
   mat-sidenav-content {
-    mat-toolbar {
-      background-color: $white;
-      color: #5c77ff;
-      font-size: 22px;
-      height: 40px;
-      box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
-      min-height: 55px !important;
-    }
-    mat-toolbar-row {
-      mat-card-actions {
-        button {
-          margin-top: 15px;
-        }
-      }
-    }
+    min-height: calc(100vh - 150px);
+
   }
 }
 
-
-
 .content-wrapper {
-    @include content-wrapper;
-    .main-card {
-        max-height: 100px ;
-        background-color:$white; 
-    }
+  @include content-wrapper;
+  min-height: calc(100vh - 139px);
+  .main-card {
+    max-height: 100px;
+    background-color: $white;
+  }
+}
+.active-list-item {
+  background-color: $secondarycolor !important;
+  color: $black !important;
+  mat-icon {
+    color: $black !important;
+  }
 }

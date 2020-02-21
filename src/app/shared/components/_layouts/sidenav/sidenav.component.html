@@ -1,186 +1,27 @@
 <mat-sidenav-container class="sidenav-container ">
     <mat-sidenav #drawer class="sidenav " fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-        <mat-toolbar><span>LUCY ADMIN</span></mat-toolbar>
+
+        <mat-toolbar> <img mat-card-image [src]="logo_white" alt="Lucy logo" class="logo-white"> <span
+                class="p-l-4">LUCY ADMIN</span></mat-toolbar>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
-                <a class="menu-card-title ">{{menuItem.group}}</a>
-                <a *ngFor="let menu of menuItem.menu" class="list-nav" mat-list-item (click)="navigate(menu)">
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">{{menu.icon}}</mat-icon> {{menu.title}}
+                <a class="menu-card-title">{{menuItem.group}}</a>
+                <a *ngFor="let menu of menuItem.menu" [routerLink]="menu.path" routerLinkActive="active-list-item"
+                    class="list-nav" mat-list-item>
+                    <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> {{menu.title}}
                 </a>
             </span>
-            <!-- {{menuItems | json}} -->
-            <!-- <a class="list-nav" mat-list-item>
-                <mat-icon aria-hidden="false" aria-label="Example supervised_user_circle icon">supervised_user_circle
-                </mat-icon>
-                Manage Admin
-            </a>
-
-
-            <a class="menu-card-title p-t-20">Subscriber</a>
-            <a class="list-nav" mat-list-item>
-                <mat-icon aria-hidden="false" aria-label="Example home icon">emoji_people
-                </mat-icon> Manage Subscribers
-            </a>
-            <a class="list-nav" mat-list-item>
-                <mat-icon aria-hidden="false" aria-label="Example home icon">filter_vintage</mat-icon> Manage Subscriber
-                Account
-            </a>
-            <a class="list-nav p-b-20" mat-list-item href="javascript:void(0)" (click)="clickMenu('msf')">
-                <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                </mat-icon> Manage Subscriber
-                Fees
-                <span fxFlex>
-                    <span fxFlex></span>
-                    <mat-icon [@indicatorRotate]="expanded && expandedMenu == 'msf' ? 'expanded': 'collapsed'">
-                        expand_more
-                    </mat-icon>
-                </span> 
-            </a>-->
-            <!-- <div *ngIf="expanded && expandedMenu == 'msf'" class="pl-4">
-                <a class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                    </mat-icon> Collect Subscription Fee
-                </a>
-                <a class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                    </mat-icon>Collect Payment For Vendor Service
-                </a>
-            </div> -->
-            <!--  SUBMENU EXAMPLE-->
-
-            <!-- <a class="list-nav p-b-20" mat-list-item href="javascript:void(0)" (click)="clickMenu('msf1')">
-                <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                </mat-icon> Sub Menu -1
-                <span fxFlex>
-                    <span fxFlex></span>
-                    <mat-icon [@indicatorRotate]="expanded && expandedMenu == 'msf1' ? 'expanded': 'collapsed'">
-                        expand_more
-                    </mat-icon>
-                </span>
-            </a>
-            <div *ngIf="expanded && expandedMenu == 'msf1'" class="pl-4">
-                <a class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                    </mat-icon> Sub Menu -1
-                </a>
-                <a class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                    </mat-icon>Sub Menu -1
-                </a>
-            </div>
-
-            <a class="list-nav p-b-20" mat-list-item href="javascript:void(0)" (click)="clickMenu('msf2')">
-                <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                </mat-icon> Sub Menu -2
-                <span fxFlex>
-                    <span fxFlex></span>
-                    <mat-icon [@indicatorRotate]="expanded && expandedMenu == 'msf2' ? 'expanded': 'collapsed'">
-                        expand_more
-                    </mat-icon>
-                </span>
-            </a>
-            <div *ngIf="expanded && expandedMenu == 'msf2'" class="pl-4">
-                <a class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                    </mat-icon> Sub Menu -2
-                </a>
-                <a class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                    </mat-icon>Sub Menu -2
-                </a>
-            </div>
-
-
-
-            <a class="menu-card-title p-t-20">Vendor</a>
-            <a class="list-nav" mat-list-item>
-                <mat-icon aria-hidden="false" aria-label="Example home icon">directions_walk
-                </mat-icon> Manage Vendor
-            </a>
-            <a class="list-nav" mat-list-item>
-                <mat-icon aria-hidden="false" aria-label="Example home icon">payment</mat-icon> Manage Vendor Payments
-            </a>
-            <a class="list-nav" mat-list-item>
-                <mat-icon aria-hidden="false" aria-label="Example home icon">payment</mat-icon> Manage Notifications
-            </a>
-
-            <a class="menu-card-title p-t-20">UI Components</a>
-            <a class="list-nav" mat-list-item [routerLink]="['/pages/flex-layout']"
-                routerLinkActive="router-link-active">
-                <mat-icon>dashboard </mat-icon> Flex Layout
-            </a>
-            <a class="list-nav" mat-list-item [routerLink]="['/pages/forms']" routerLinkActive="router-link-active">
-                <mat-icon>line_style </mat-icon> Forms
-            </a> -->
-
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <mat-toolbar class="nav-bar">
-            <mat-toolbar-row>
-                <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
-                    <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
-                </button>
-
-                <span flex class="spacer"></span>
-                <mat-card-actions>
-                    <div fxLayout="row">
-                        <button (click)="fullScreen()" mat-icon-button>
-                            <mat-icon> {{isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
-                        </button>
-                        <!-- <button  mat-icon-button [matMenuTriggerFor]="notification">
-                            
-                            <span class="cdk-visually-hidden">
-                                Example with a home icon with overlaid badge showing the number 15
-                            </span>
-                        </button>
-                        <button mat-icon-button [matMenuTriggerFor]="settings">
-                            <mat-icon>supervised_user_circle</mat-icon>
-                        </button> -->
-                        <button mat-icon-button (click)="logout()">
-                            <mat-icon>exit_to_app</mat-icon>
-                        </button>
-                    </div>
-                </mat-card-actions>
-                <!-- <mat-menu #notification="matMenu">
-                    <button mat-menu-item>
-                        <mat-icon class="example-icon" aria-hidden="false"
-                            aria-label="Example supervised_user_circle icon">
-                            supervised_user_circle</mat-icon>
-                    </button>
-                    <button mat-menu-item>
-                        <mat-icon class="example-icon" aria-hidden="false"
-                            aria-label="Example supervised_user_circle icon">
-                            supervised_user_circle</mat-icon>
-                    </button>
-                    <button mat-menu-item>
-                        <mat-icon class="example-icon" aria-hidden="false"
-                            aria-label="Example supervised_user_circle icon">
-                            supervised_user_circle</mat-icon>
-                    </button>
-                </mat-menu> -->
-                <!-- <mat-menu #settings="matMenu">
-                    <button mat-menu-item>
-                        <mat-icon>supervised_user_circle</mat-icon>
-                        <span>Profile</span>
-                    </button>
-                    <button mat-menu-item disabled>
-                        <mat-icon>settings_applications</mat-icon>
-                        <span>settings</span>
-                    </button>
-                    <button mat-menu-item [routerLink]="['/authentication']">
-                        <mat-icon>exit_to_app</mat-icon>
-                        <span>Logout</span>
-                    </button>
-                </mat-menu> -->
-            </mat-toolbar-row>
-
-        </mat-toolbar>
+        <app-header [inputSideNav]="drawer"></app-header>
         <!-- Add Content Here -->
-        <div class="content-wrapper">
+        <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>
-            <router-outlet></router-outlet>
+            <mat-card class="m-card">
+                <router-outlet></router-outlet>
+            </mat-card>
         </div>
         <app-footer></app-footer>
     </mat-sidenav-content>

@@ -1,4 +1,8 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
+import { EventEmitter } from 'protractor';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { Title } from '@angular/platform-browser';
+import { Store, select } from '@ngrx/store';
 
 @Component({
     selector: 'app-page_header',
@@ -6,12 +10,20 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
     styleUrls: ['./page_header.component.scss']
 })
 export class PageHeaderComponent implements OnInit {
-
-
-    constructor() { }
+    page_title = "";
+    menu$: Observable<any>;
+    constructor(private title: Title,  private store: Store<{ breadcrumb: any }>) {
+        this.menu$ = store.pipe(select('breadcrumb'));
+        this.page_title = this.title.getTitle();
+    }
 
     ngOnInit() {
+        this.menu$.subscribe(res => {
+        })
+
     }
     openSidenav() {
+    }
+    ngOnDestroy() {
     }
 }

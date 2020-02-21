@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { AuthenticationService } from './services/authentication.service';
-// import { LoginComponent } from './components/login/login.component';
-// import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent, RegisterComponent } from "./components/index"
 import { SharedModule } from '../shared/shared.module';
 import { UserVerificationComponent } from './components/user-verification/user-verification.component';
@@ -23,6 +21,7 @@ import { PasswordChangeComponent } from './components/password-change/password-c
     AuthenticationRoutingModule,
     SharedModule
   ],
-  providers: [AuthenticationService]
+  providers: [AuthenticationService,
+  ]
 })
 export class AuthenticationModule { }

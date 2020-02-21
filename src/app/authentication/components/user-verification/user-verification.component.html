@@ -1,7 +1,7 @@
 <div class="lucy-login-form">
   <div class="p-t-100" fxLayout="column" fxLayoutGap="15px">
     <div fxLayout="row wrap">
-      <div class="m-auto" fxFlex="30" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100"  fxFlex.xl="25" fxLayout="column">
+      <div class="m-auto" fxFlex="30" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxFlex.xl="25" fxLayout="column">
         <mat-card class="p-5">
           <!--Form Title-->
           <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
@@ -13,18 +13,20 @@
             <form fxLayout="row wrap" [formGroup]="verificationForm" (ngSubmit)="verifySubmit()">
               <mat-form-field appearance="outline" fxFlex="100"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
-                <mat-label>Email</mat-label>
+                <mat-label>Email*</mat-label>
                 <input matInput name="email" placeholder="Email" formControlName="email" autocomplete="off">
                 <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
               <mat-form-field class="mt-20" appearance="outline" fxFlex="100"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
-                <mat-label>Verification code</mat-label>
-                <input matInput name="VerificationCode" placeholder="Verification code" formControlName="code" autocomplete="off">
+                <mat-label>Verification code*</mat-label>
+                <input matInput name="VerificationCode" placeholder="Verification code" formControlName="code"
+                  autocomplete="off">
                 <mat-icon matSuffix>verified_user</mat-icon>
                 <mat-error>{{errorMessages?.verifycode}}</mat-error>
               </mat-form-field>
-              <button mat-raised-button color="primary" type="submit">Submit<i class="fa fa-arrow-right"></i></button>
+              <button mat-raised-button color="primary" type="submit" class="authentication-btn">Submit<i
+                  class="fa fa-arrow-right"></i></button>
             </form>
             <div class="lucy-new-account">Didn't receive the code ?<span (click)="verifyResend()"> Resend</span></div>
           </mat-card-content>

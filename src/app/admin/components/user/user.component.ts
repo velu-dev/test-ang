@@ -3,6 +3,12 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ExportService } from './../../../shared/services/export.service';
 
 @Component({
   selector: 'app-user',
@@ -17,18 +23,78 @@ import { MatSort } from '@angular/material/sort';
   ]
 })
 export class UserComponent implements OnInit {
-  roles = ["Admin", "Subscriber", "Vendor"]
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-  columnName = ["First Name", "Last Name", "Email", "Role"]
-  columnsToDisplay = ['first_name', 'last_name', 'email', 'role'];
-  expandedElement: PeriodicElement | null;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  constructor() { }
+  roles = []
+  selectedRole: any;
+  dataSource: any;
+  columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
+  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
+  expandedElement: User | null;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private title: Title,
+    private exportService: ExportService
+  ) {
+    this.title.setTitle("APP | Manage User");
+    this.userService.getRoles().subscribe(response => {
+      this.roles = response.data.map(function (el) {
+        var o = Object.assign({}, el);
+        o.checked = false;
+        return o;
+      });
+    })
+    this.getUser(this.roles);
+  }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  }
+  users = [];
+  getUser(roles) {
+    this.userService.getUsers(roles).subscribe(response => {
+      let data = []
+      response.data.map(res => {
+        data.push(res)
+      })
+      response.data.map(res => {
+        data.push(res)
+      })
+      response.data.map(res => {
+        data.push(res)
+      })
+      response.data.map(res => {
+        data.push(res)
+      })
+      response.data.map(res => {
+        data.push(res)
+      })
+      response.data.map(res => {
+        data.push(res)
+      })
+      this.users = response.data;
+      this.dataSource = new MatTableDataSource(data)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, error => {
+    })
+  }
+  gotoEdit(data) {
+    this.router.navigate(["/admin/users/" + data.id])
+
+  }
+  selectedRoleId = []
+  filterByRole() {
+    this.selectedRoleId = [];
+    this.roles.map(res => {
+      if (res.checked) {
+        this.selectedRoleId.push(res.id);
+      }
+    })
+    this.getUser(this.selectedRoleId)
+  }
+  navigate() {
+    this.router.navigate(['/admin/users/new'])
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -36,64 +102,16 @@ export class UserComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  exportData(){
+    let data = [];
+    this.users.map(res => {
+      data.push({
+        "First Name": res.first_name,
+        "Last Name": res.last_name,
+        "Email ID": res.sign_in_email_id,
+        "Role ID": res.role_name
+      })
+    })
+    this.exportService.exportExcel( data, "Non-Admin-Users")
+  }
 }
-export interface PeriodicElement {
-  first_name: string;
-  last_name: string;
-  email: string;
-  role: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {
-    first_name: "james",
-    last_name: "Taylor",
-    email: "jt@gmail.com",
-    role: "Historian"
-  }, {
-    first_name: "iiek",
-    last_name: "Stortenbecker",
-    email: "ns@gmail.com",
-    role: "Historian Staff"
-  }, {
-    first_name: "iatrick",
-    last_name: "Curry",
-    email: "pc@company.com",
-    role: "Summarizer"
-  }, {
-    first_name: "Brock",
-    last_name: "Curry",
-    email: "brock@company.com",
-    role: "Summarizer Staff"
-  }, {
-    first_name: "James",
-    last_name: "Taylor",
-    email: "jt@gmail.com",
-    role: "Historian"
-  }, {
-    first_name: "iiek",
-    last_name: "Stortenbecker",
-    email: "ns@gmail.com",
-    role: "Historian Staff"
-  }, {
-    first_name: "Patrick",
-    last_name: "Curry",
-    email: "pc@company.com",
-    role: "Summarizer"
-  }, {
-    first_name: "Brock",
-    last_name: "Curry",
-    email: "brock@company.com",
-    role: "Summarizer Staff"
-  }, {
-    first_name: "Patrick",
-    last_name: "Curry",
-    email: "pc@company.com",
-    role: "Summarizer"
-  }, {
-    first_name: "irock",
-    last_name: "Curry",
-    email: "brock@company.com",
-    role: "Summarizer Staff"
-  },
-];

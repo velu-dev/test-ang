@@ -4,9 +4,9 @@
 export const environment = {
   production: false,
 
-  //baseUrl: 'http://192.168.1.231:3000/', //natarajan
-  baseUrl: 'http://localhost:3000/', //local
-  //baseUrl: 'https://dev01api.simplexam.com/', //dev
+  baseUrl: 'https://dev01api.simplexam.com/', //Dev
+  // baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
+  // baseUrl: 'http://192.168.1.122:3000/', //Rajan-local
 
   //authentication
   signIn: 'auth/Authentication/signin',
@@ -25,7 +25,9 @@ export const environment = {
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-        domain: 'localhost',
+        domain: 'localhost', // Global local IP
+        // domain: 'd2re2whflovy37.cloudfront.net', //dev server
+        // domain: '192.168.1.208', // Velu's IP
         // OPTIONAL - Cookie path
         path: '/',
         // OPTIONAL - Cookie expiration in days

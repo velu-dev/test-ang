@@ -1,0 +1,95 @@
+<div fxLayout="column" fxLayoutGap="25px">
+    <div fxLayout="row wrap" class="d-cards">
+        <!-- loop over the cardList and show the cards -->
+        <div fxFlex="30" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
+            <mat-card class="profile">
+                <mat-card-header matRipple>
+                    <mat-card-title class="m-0">Pat curry</mat-card-title>
+                    <mat-card-subtitle>Dental Public Health</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="profile_bg" alt="Profile photo">
+                <mat-card-content class="p-t-50 text-center p-b-100">
+                    <div class="p-l-5 p-r-5"><i class="fas fa-map-marker-alt"></i> 3141 Doctors Drive, Los Angeles,
+                        California, 90017</div>
+                    <div class="p-t-10 p-l-5 p-r-5"><i class="fas fa-phone-alt"></i> (+00) 00000000000</div>
+                </mat-card-content>
+
+            </mat-card>
+
+        </div>
+
+        <!-- loop over the cardList and show the cards -->
+        <div fxFlex="70" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
+            <mat-card class="shadow p-t-15">
+                <mat-tab-group>
+                    <mat-tab label="Security Settings">
+                        <!-- cards here -->
+                        <div class="edit-profile">
+                            <mat-card-content>
+                                <!--Form start-->
+                                <form fxLayout="row wrap">
+                                    <mat-form-field class="m-t-5" appearance="standard" fxFlex="100">
+                                        <mat-label>Current Password</mat-label>
+                                        <input matInput placeholder="Current Password" autocomplete="off">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard" fxFlex="100" class="m-t-5">
+                                        <mat-label>New Password</mat-label>
+                                        <input matInput placeholder="New Password" autocomplete="off">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard" fxFlex="100" class=" m-t-5">
+                                        <mat-label>Confirm New Password</mat-label>
+                                        <input matInput placeholder="Confirm New Password" autocomplete="off">
+                                        <mat-icon matSuffix>remove_red_eye</mat-icon>
+                                    </mat-form-field>
+
+                                    <button mat-raised-button color="primary" class="m-t-5">SAVE CHANGES </button>
+                                </form>
+                            </mat-card-content>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Account Settings">
+                        <!-- Edit profile -->
+                        <div class="edit-profile m-t-10">
+                            <mat-card-content>
+                                <!--Form start-->
+                                <form fxLayout="row wrap">
+                                    <mat-form-field class="m-t-5" appearance="standard" fxFlex="50"
+                                        class="m-t-5 p-r-10">
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput placeholder="First Name" autocomplete="off">
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="standard" fxFlex="50" class="m-t-5">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput placeholder="Last Name" autocomplete="off">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard" fxFlex="50" class="m-t-5  p-r-10">
+                                        <mat-label>Email ID</mat-label>
+                                        <input matInput placeholder="Email ID" autocomplete="off">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard" fxFlex="50" class=" m-t-5">
+                                        <mat-label>Phone Number</mat-label>
+                                        <input matInput placeholder="Phone Number" autocomplete="off">
+                                        <mat-icon matSuffix>remove_red_eye</mat-icon>
+                                    </mat-form-field>
+
+                                    <button mat-raised-button color="primary" class="m-t-5">SAVE CHANGES </button>
+                                </form>
+                            </mat-card-content>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+
+            </mat-card>
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>

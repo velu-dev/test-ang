@@ -19,15 +19,15 @@ export const environment = {
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-            domain: 'localhost',
+        domain: 'd2re2whflovy37.cloudfront.net', //dev server
         // OPTIONAL - Cookie path
-            path: '/',
+        path: '/',
         // OPTIONAL - Cookie expiration in days
-            expires: 1,
+        expires: 1,
         // OPTIONAL - Cookie secure flag
         // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
-            secure: false
-        },
+        secure: false
+      },
     }
   }
 };

@@ -1,21 +1,33 @@
 //colors
-$bg-light-blue: #e0e8f3;
+$bg-light-blue: #f2f7ff;
 //Primary background colors
 $primarycolor: #3c3cff;
 $primarylightcolor: #8369ff;
 $primarydarkcolor: #000eca;
 
 //Secondary background colors
-$secondarycolor: #388e3c;
-$secondarylightcolor: #6abf69;
-$psecondaryarkcolor: "#00600f";
+$secondarycolor: #65ff88;
+$secondarylightcolor: #9effb9;
+$secondaryarkcolor: #19cb59;
 
+//ternary color
+$ternary: #6464fa;
 //Extra colors
+$green: #65ff88;
 $white: #ffffff;
 $black: #000000;
 $gray: #ccc;
-$text-gray: #43425d;
+$text-gray: #5b626b;
+$dark-gray: #4d4f5c;
+$light-gray: #d3d3d3;
+$text-dark: #45515f;
+$menu-active: #383838;
+$transparent: transparent;
 
+//alert colors
+$success: #4caf50;
+$error: rgba(255, 54, 54, 0.8);
+$warning: rgba(255, 178, 54, 0.8);
 // Matero Variables
 //
 // Layout
@@ -69,7 +81,7 @@ $font-size-22: 0.656rem; //font-size: 10.5px;
 $font-size-23: 2em;
 
 //Font-family
-$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Ubuntu", "Helvetica", sans-serif;
+$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Roboto", sans-serif;
 
 //Alignment
 $float-left: left;
@@ -88,13 +100,68 @@ $breakpoints: (
   xlarge: 1920px
 ) !default;
 
+//Width
+$width-10: 10%;
+$width-20: 20%;
+$width-30: 30%;
+$width-40: 40%;
+$width-50: 50%;
+$width-60: 60%;
+$width-70: 70%;
+$width-80: 80%;
+$width-90: 90%;
+$width-100: 100%;
 //box Shadow
-$box-shadow-1:  5px 5px 25px #b3c5de9c;
+$box-shadow-1: 5px 5px 25px #b3c5de9c;
+$box-shadow-2: 3px 0 10px 0 rgba(183, 192, 206, 0.2); // Using navebar
+$box-shadow-3: 0px 3px 6px #00000029;
+$box-shadow-4: 0px 3px 6px #00000029; // Using logo toolbar
+$box-shadow-5: 0px 3px 6px #448aff38; //using table header
 
 //button Shadow
 $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
 
+//Width
+.w-10 {
+  width: 10%;
+}
+.w-20 {
+  width: 20%;
+}
+.w-30 {
+  width: 30%;
+}
+.w-40 {
+  width: 40%;
+}
+.w-50 {
+  width: 50%;
+}
+.w-60 {
+  width: 60%;
+}
+.w-70 {
+  width: 70%;
+}
+.w-80 {
+  width: 80%;
+}
+.w-90 {
+  width: 90%;
+}
+.w-100 {
+  width: 100%;
+}
 
 // mixins scss
 @mixin lucy-form {
@@ -104,7 +171,7 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 }
 
 @mixin content-wrapper {
-  padding: 15px;
+  padding: 20px;
   background-color: $bg-light-blue;
 }
 @mixin main-title {
@@ -118,25 +185,6 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
   button {
     float: $float-right;
   }
-}
-@mixin auth-btn {
-  background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
-  box-shadow: $btn-primary-shadow;
-  border-radius: 2px;
-  opacity: 1;
-  width: 100%;
-  padding: 5px;
-  margin-top: 20px;
-  i {
-    float: right;
-    padding: 12px 10px 2px 0px;
-  }
-}
-@mixin logo {
-  width: 65px;
-  height: auto;
-  margin: 0px auto;
-  display: block;
 }
 
 @mixin switched-link {
@@ -158,4 +206,148 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
   }
 }
 
+@mixin text {
+  color: $dark-gray;
+  letter-spacing: 0.5;
+}
+@mixin card-main-title {
+  font-size: $font-size-10 !important;
+  font-weight: $font-weight-base;
+  color: $text-gray;
+}
 
+.logo {
+  width: auto;
+  margin: 0px auto;
+  display: block;
+  max-width: 100%;
+}
+.logo-white {
+  width: auto;
+  margin: 0px !important;
+}
+.auth-tilte {
+  font-family: Source Sans Pro;
+  letter-spacing: 0;
+  color: $primarycolor;
+  opacity: 1;
+  font-size: $font-size-14;
+  text-align: center;
+}
+.authentication-btn {
+  background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
+  box-shadow: $btn-primary-shadow;
+  border-radius: 2px;
+  opacity: 1;
+  width: 100%;
+  padding: 5px;
+  margin-top: 30px;
+
+  i {
+    float: right;
+    padding: 12px 10px 2px 0px;
+  }
+}
+
+.page-heading {
+  color: $text-dark;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.mat-card-header-text {
+  margin: 0px !important;
+  line-height: 2;
+  .mat-card-title {
+    line-height: 1.8 !important;
+    margin-bottom: 15px !important;
+  }
+}
+
+.m-card {
+  box-shadow: $box-shadow-2;
+  min-height: 600px;
+}
+// Table Scss
+.table-filter {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  float: left;
+  input {
+    padding: 10px 10px;
+    border: 1px solid $transparent;
+    font-size: $font-size-1;
+    outline: none;
+    width: $width-100;
+    border-radius: 3px;
+    box-shadow: $box-shadow-3;
+    &:focus,
+    &:hover,
+    &:active {
+      outline: none;
+    }
+  }
+}
+.filter-icon {
+  cursor: pointer;
+  float: right;
+  margin-top: 10px;
+}
+
+.table-heading {
+  background-color: $ternary;
+}
+table {
+  tr {
+    th {
+      padding: 0px 10px !important;
+      color: $white !important;
+      font-size: $font-size-1;
+    }
+    td {
+      color: #4d4f5c;
+      padding: 0px 10px !important;
+    }
+  }
+  .mat-header-row {
+    height: 50px !important;
+  }
+}
+.add-user {
+  background-color: $ternary;
+  width: 35px;
+  height: 35px;
+  .mat-button-wrapper {
+    padding: 0px !important;
+    .mat-icon {
+      width: auto;
+      height: auto;
+    }
+  }
+}
+.edit-user {
+  color: $secondaryarkcolor;
+  font-size: $font-size-2;
+  padding: 5px;
+  border: 1px solid $transparent;
+  vertical-align: middle;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+  border-radius: 5px;
+  &:hover {
+    border: 1px solid $secondaryarkcolor;
+    background-color: $secondaryarkcolor;
+    color: $white;
+  }
+}
+
+.mat-grid-form {
+  mat-form-field {
+    padding: 10px;
+  }
+}
+
+.mat-sort-header-arrow {
+  color: $white !important;
+}
