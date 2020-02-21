@@ -1,3 +1,5 @@
+@import "table";
+
 //colors
 $bg-light-blue: #f2f7ff;
 //Primary background colors
@@ -121,6 +123,9 @@ $box-shadow-5: 0px 3px 6px #448aff38; //using table header
 //button Shadow
 $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 
+//table shadow
+$box-shadow: 0px 0px 5px #b3c5de9c;
+
 .text-center {
   text-align: center;
 }
@@ -163,6 +168,9 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
   width: 100%;
 }
 
+.icon-16 {
+  width: 16px;
+}
 // mixins scss
 @mixin lucy-form {
   background: $bg-light-blue;
@@ -266,7 +274,7 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 
 .m-card {
   box-shadow: $box-shadow-2;
-  min-height: 600px;
+  min-height: calc(100vh - 240px);
 }
 // Table Scss
 .table-filter {
@@ -278,9 +286,12 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
     border: 1px solid $transparent;
     font-size: $font-size-1;
     outline: none;
-    width: $width-100;
+    width: 500px;
     border-radius: 3px;
     box-shadow: $box-shadow-3;
+    @media only screen and (max-width: 568px) {
+      width: $width-100;
+    }
     &:focus,
     &:hover,
     &:active {
@@ -350,4 +361,8 @@ table {
 
 .mat-sort-header-arrow {
   color: $white !important;
+}
+
+.mat-table {
+  box-shadow: $box-shadow;
 }

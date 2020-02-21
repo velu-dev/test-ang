@@ -9,7 +9,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ExportService } from './../../../shared/services/export.service';
-
+import * as globals from '../../../globals';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -23,6 +23,7 @@ import { ExportService } from './../../../shared/services/export.service';
   ]
 })
 export class UserComponent implements OnInit {
+  xls = globals.xls;
   roles = []
   selectedRole: any;
   dataSource: any;
@@ -60,18 +61,6 @@ export class UserComponent implements OnInit {
       response.data.map(res => {
         data.push(res)
       })
-      response.data.map(res => {
-        data.push(res)
-      })
-      response.data.map(res => {
-        data.push(res)
-      })
-      response.data.map(res => {
-        data.push(res)
-      })
-      response.data.map(res => {
-        data.push(res)
-      })
       this.users = response.data;
       this.dataSource = new MatTableDataSource(data)
       this.dataSource.paginator = this.paginator;
@@ -102,7 +91,7 @@ export class UserComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  exportData(){
+  exportData() {
     let data = [];
     this.users.map(res => {
       data.push({
@@ -112,6 +101,6 @@ export class UserComponent implements OnInit {
         "Role ID": res.role_name
       })
     })
-    this.exportService.exportExcel( data, "Non-Admin-Users")
+    this.exportService.exportExcel(data, "Non-Admin-Users")
   }
 }

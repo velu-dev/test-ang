@@ -109,3 +109,64 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 .warning {
   background-color: $warning;
 }
+
+.empty-data {
+  top: 45%;
+  left: 50%;
+  text-align: center;
+  position: fixed;
+  h3 {
+    color: $light-gray;
+  }
+}
+
+.user-detail {
+  min-height: 62vh; //table empty space
+}
+
+// ==================================================
+// NOTIFICATION STYLE
+// ==================================================
+
+.notification {
+  mat-card-header {
+    width: $width-100;
+    display: block;
+    mat-card-title {
+      font-size: $font-size-1 !important;
+      font-weight: $font-weight-medium;
+      text-align: center;
+      margin-bottom: 5px !important;
+    }
+    mat-card-content {
+      margin-bottom: 3px !important;
+      mat-list {
+        mat-list-item {
+          padding: 0px !important;
+          .mat-list-item-content {
+            padding: 0px !important;
+            img {
+              width: 50px !important;
+              height: auto !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  mat-card-footer {
+    div {
+      font-size: $font-size-1 !important;
+      font-weight: $font-weight-medium;
+      text-align: center;
+      margin-bottom: 5px !important;
+      color: $ternary !important;
+    }
+  }
+}
+
+.hide-mobile {
+  @media only screen and (max-width: 568px) {
+    display: none !important;
+  }
+}

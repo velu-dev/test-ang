@@ -6,12 +6,14 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ExportService } from 'src/app/shared/services/export.service';
+import * as globals from '../../../globals';
 @Component({
   selector: 'app-admin-user',
   templateUrl: './admin-user.component.html',
   styleUrls: ['./admin-user.component.scss']
 })
 export class AdminUserComponent implements OnInit {
+  xls = globals.xls
   dataSource: any;
   columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
   columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
@@ -59,7 +61,7 @@ export class AdminUserComponent implements OnInit {
   gotoEdit(id) {
 
   }
-  navigate(){
-    
+  navigate() {
+
   }
 }

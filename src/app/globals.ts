@@ -3,3 +3,6 @@
 export const logo = './assets/images/lucy-logo.svg'
 export const logo_white = './assets/images/lucy-logo-white.svg'
 export const profile_bg = './assets/images/profile.jpg'
+export const xls = './assets/images/xls.svg'
+export const profile = './assets/images/profile.svg'
+export const no_data = './assets/images/no-data.svg'
