@@ -39,7 +39,7 @@ import { AlertService } from './services/alert.service';
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {
-        siteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI',
+        siteKey: '6Lfz6doUAAAAANgvOxZA8lZmFEK0vm0v1lWkveLq',
       } as RecaptchaSettings,
     }
   ]

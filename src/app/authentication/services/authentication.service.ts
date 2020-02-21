@@ -21,4 +21,8 @@ export class AuthenticationService {
   signUpVerify(email): Observable<any> {
     return this.http.post(environment.baseUrl + environment.signupVerify, { sign_in_email_id: email }, { headers: this.headers });
   }
+
+  setPassword(userData) {
+    return this.http.post(environment.baseUrl + environment.resetPassword, userData, { headers: this.headers });
+  }
 }

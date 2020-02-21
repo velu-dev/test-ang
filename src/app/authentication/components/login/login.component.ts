@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])]
+      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!_;@$%^&*-]).{8,}$'), Validators.minLength(8)])]
     });
   }
 
@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
 
   //login submit
   login() {
+    this.cookieService.deleteAll();
     let auth = { name: this.loginForm.value.email, password: this.loginForm.value.password }
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
@@ -46,21 +47,26 @@ export class LoginComponent implements OnInit {
     }
     this.spinnerService.show()
     this.cognitoService.logIn(auth).subscribe(loginRes => {
-      console.log(loginRes.signInUserSession.idToken.jwtToken)
+
+      console.log(loginRes.challengeName)
+      if (loginRes && loginRes.challengeName == 'NEW_PASSWORD_REQUIRED') {
+        this.spinnerService.hide()
+        this.router.navigate(['/changepassword'])
+        return;
+      }
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(data => {
-        console.log(data)
         this.spinnerService.hide()
         if (data['user']['custom:isPlatformAdmin'] == '1') {
-          this.alertService.openSnackBar(success.loginSuccess,'success');
+          this.alertService.openSnackBar(success.loginSuccess, 'success');
           this.router.navigate(['/admin'])
         }
         else {
-          this.alertService.openSnackBar("Under processing",'error',);
+          this.alertService.openSnackBar("Under processing", 'error');
         }
       })
     }, error => {
       console.log("loginError", error)
-      this.alertService.openSnackBar(error.message,'error');
+      this.alertService.openSnackBar(error.message, 'error');
       this.spinnerService.hide()
     })
   }

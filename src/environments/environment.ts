@@ -4,13 +4,15 @@
 export const environment = {
   production: false,
 
-  baseUrl: 'http://192.168.1.231:3000/', //natarajan
-  //baseUrl: 'http://localhost:3000/', //natarajan
+  //baseUrl: 'http://192.168.1.231:3000/', //natarajan
+  baseUrl: 'http://localhost:3000/', //local
+  //baseUrl: 'https://dev01api.simplexam.com/', //dev
 
   //authentication
-  signIn:'auth/Authentication/signin',
-  signUp:'auth/Authentication/signup',
+  signIn: 'auth/Authentication/signin',
+  signUp: 'auth/Authentication/signup',
   signupVerify: 'auth/Authentication/signup-verify',
+  resetPassword: 'admin-api/admin/reset-admin-password',
 
   Amplify: {
     Auth: {
@@ -23,15 +25,15 @@ export const environment = {
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-            domain: 'localhost',
+        domain: 'localhost',
         // OPTIONAL - Cookie path
-            path: '/',
+        path: '/',
         // OPTIONAL - Cookie expiration in days
-            expires: 1,
+        expires: 1,
         // OPTIONAL - Cookie secure flag
         // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
-            secure: false
-        },
+        secure: false
+      },
     }
   }
 };
