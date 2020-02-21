@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import * as  errors from '../../../shared/messages/errors'
+import { NgxSpinnerService } from 'ngx-spinner';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-new-user',
@@ -16,17 +18,19 @@ export class NewUserComponent implements OnInit {
   userData: any;
   errorMessages = errors;
   passwordFieldType = "password"
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private userService: UserService) {
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private spinnerService: NgxSpinnerService,
+    private alertService: AlertService
+  ) {
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
         this.isEdit = true;
         this.userService.getUser(params_res.id).subscribe(res => {
-          // this.userData['first_name'] = res.data.first_name;
-          // this.userData['last_name'] = res.data.last_name;
-          // this.userData['sign_in_email_id'] = res.data.sign_in_email_id;
-          // this.userData['companyName'] = "";
-          // this.userData['password'] = "";
-          // this.userData['phoneNumber'] = "";
+          this.userData = res.data;
+          console.log(res.data)
           this.userForm.setValue(this.userData)
         })
       }
@@ -35,12 +39,12 @@ export class NewUserComponent implements OnInit {
 
   ngOnInit() {
     this.userForm = this.formBuilder.group({
+      id: [""],
       first_name: ['', Validators.compose([Validators.required])],
       last_name: ['', Validators.compose([Validators.required])],
-      companyName: [''],
-      sign_in_email_id: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
-      phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(''), Validators.minLength(10)])],
+      middle_name: [''],
+      company_name: [''],
+      sign_in_email_id: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
   }
 
@@ -49,6 +53,17 @@ export class NewUserComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
+    this.spinnerService.show();
+    let data: any;
+    data = this.userForm.value;
+    data['role_id'] = "2"
+    this.userService.createUser(data).subscribe(res => {
+      this.alertService.openSnackBar("User created successful", 'success');
+      this.spinnerService.hide();
+    }, error => {
+      this.spinnerService.hide();
+      this.alertService.openSnackBar("Something went wrong try again", 'error');
+    })
   }
 
 }

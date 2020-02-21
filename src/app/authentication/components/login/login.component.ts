@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])]
+      password: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
     });
   }
 
@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
         }
         else {
           this.alertService.openSnackBar("Under processing", 'error');
+          this.logout();
         }
       })
     }, error => {
