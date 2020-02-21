@@ -10,6 +10,8 @@ import * as success from './../../../messages/success';
 import * as error from './../../../messages/errors';
 import { AlertService } from "./../../../services/alert.service"
 import * as globals from './../../../../globals';
+import { Auth } from 'aws-amplify';
+import { UserService } from 'src/app/admin/services/user.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -21,15 +23,24 @@ export class HeaderComponent implements OnInit {
   @Input() inputSideNav: MatSidenav;
   elem;
   folders = [];
-
+  currentUserID = "";
+  user = {};
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
     private cognitoService: CognitoService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private alertService: AlertService
-  ) { }
+    private alertService: AlertService,
+    private userService: UserService
+  ) {
+    Auth.currentSession().then(token => {
+      this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
+      this.userService.getUser(this.currentUserID).subscribe(res => {
+        this.user = res.data;
+      })
+    })
+  }
 
   ngOnInit() {
     this.elem = document.documentElement;

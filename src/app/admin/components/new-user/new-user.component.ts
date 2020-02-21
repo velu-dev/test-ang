@@ -25,7 +25,6 @@ export class NewUserComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private alertService: AlertService
   ) {
-    alert("hi")
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
         this.isEdit = true;
