@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
   // @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
   @Input() inputSideNav: MatSidenav;
   elem;
+  folders = [];
 
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
