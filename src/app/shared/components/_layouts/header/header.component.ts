@@ -9,12 +9,14 @@ import { Router } from '@angular/router';
 import * as success from './../../../messages/success';
 import * as error from './../../../messages/errors';
 import { AlertService } from "./../../../services/alert.service"
+import * as globals from './../../../../globals';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  profile = globals.profile
   // @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
   @Input() inputSideNav: MatSidenav;
   elem;

@@ -7,35 +7,41 @@
         <span flex class="spacer"></span>
         <mat-card-actions>
             <div fxLayout="row">
-                <button (click)="fullScreen()" mat-icon-button>
+                <button (click)="fullScreen()" mat-icon-button class="hide-mobile">
                     <mat-icon> {{isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
                 </button>
                 <button mat-icon-button>
                     <mat-icon matBadge="5" matBadgeColor="warn">notifications_none
                     </mat-icon>
                 </button>
-                <!-- <mat-menu #notification="matMenu" class="">
-                    <mat-card class="mw-300">
-                        <mat-card-title>Notification</mat-card-title>
+                <mat-menu #notification="matMenu" class="">
+                    <mat-card class="p-t-0 notification">
+                        <mat-card-header class="text-center">
+                            <mat-card-title class="m-b-2">NOTIFICATIONS</mat-card-title>
+                        </mat-card-header>
                         <mat-divider></mat-divider>
-                        <mat-card-content class="notification">
+                        <mat-card-content>
                             <mat-list>
-                                <h3 mat-subheader>Folders</h3>
-                                <mat-list-item *ngFor="let folder of folders">
-                                    <mat-icon mat-list-icon>folder</mat-icon>
-                                    <h4 mat-line>Test</h4>
-                                    <p mat-line> Test </p>
+                                <mat-list-item>
+                                    <img mat-list-icon [src]="profile" alt="Welcome" class="text-left" />
+                                    <h4 mat-line>Name here</h4>
+                                    <p mat-line> Message content here...</p>
                                 </mat-list-item>
                                 <mat-divider></mat-divider>
-                                <h3 mat-subheader>Notes</h3>
-                               
+
                             </mat-list>
                         </mat-card-content>
-                        <mat-card-footer>Test</mat-card-footer>
+                        <mat-card-footer class="text-center">
+                            <div>View All Notifications</div>
+                        </mat-card-footer>
+
                     </mat-card>
-                </mat-menu> -->
-                <button mat-icon-button [matMenuTriggerFor]="settings">
-                    <mat-icon>supervised_user_circle</mat-icon>
+                </mat-menu>
+                <button mat-button [matMenuTriggerFor]="settings" class="welcome">
+                    <span class="hide-mobile"><small>Welcome,</small><br />
+                        Username
+                    </span>
+                    <img [src]="profile" alt="Welcome" class="p-l-10" />
                 </button>
                 <button mat-icon-button (click)="logout()">
                     <mat-icon>exit_to_app</mat-icon>
