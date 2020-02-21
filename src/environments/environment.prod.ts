@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
-
-  baseUrl: 'https://dev01api.simplexam.com/', //Dev
+  baseUrl: 'https://dev01api.simplexam.com/', //dev
 
   //authentication
-  signIn: 'auth/Authentication/signin',
-  signUp: 'auth/Authentication/signup',
+  signIn:'auth/Authentication/signin',
+  signUp:'auth/Authentication/signup',
   signupVerify: 'auth/Authentication/signup-verify',
+  resetPassword: 'admin-api/admin/reset-admin-password',
 
   Amplify: {
     Auth: {

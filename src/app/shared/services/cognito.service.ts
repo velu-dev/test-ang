@@ -53,5 +53,16 @@ export class CognitoService {
     return from(Auth.resendSignUp(email))
   }
 
+  changePassword(user, oldPassword, newPassword): Observable<any> {
+    return from(Auth.changePassword(user, oldPassword, newPassword));
+  }
+
+  completeNewPassword(user,newPassword,data){
+    return from(Auth.completeNewPassword(user,newPassword,data));
+  }
+
+  userDetails(){
+    return from(Auth.currentUserInfo());
+  }
 
 }

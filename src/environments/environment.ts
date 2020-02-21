@@ -12,6 +12,7 @@ export const environment = {
   signIn: 'auth/Authentication/signin',
   signUp: 'auth/Authentication/signup',
   signupVerify: 'auth/Authentication/signup-verify',
+  resetPassword: 'admin-api/admin/reset-admin-password',
 
   Amplify: {
     Auth: {

@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
 
   //login submit
   login() {
+    this.cookieService.deleteAll();
     let auth = { name: this.loginForm.value.email, password: this.loginForm.value.password }
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
@@ -46,9 +47,13 @@ export class LoginComponent implements OnInit {
     }
     this.spinnerService.show()
     this.cognitoService.logIn(auth).subscribe(loginRes => {
-      // console.log(loginRes.signInUserSession.idToken.jwtToken)
+
+      if (loginRes && loginRes.challengeName == 'NEW_PASSWORD_REQUIRED') {
+        this.spinnerService.hide()
+        this.router.navigate(['/changepassword'])
+        return;
+      }
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(data => {
-        // console.log(data)
         this.spinnerService.hide()
         if (data['user']['custom:isPlatformAdmin'] == '1') {
           this.alertService.openSnackBar(success.loginSuccess, 'success');
