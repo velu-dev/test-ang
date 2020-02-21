@@ -1,39 +1,33 @@
-<div class="lucy-register-form">
-  <div class="p-t-30 p-b-30" fxLayout="column" fxLayoutGap="15px">
-    <div fxLayout="row">
-      <div class="m-auto" fxLayout="column" fxLayoutGap="15px">
-        <mat-card class="p-5">
-          <mat-card-content>
-            <!--Form start-->
-            <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userSubmit()">
-              <mat-form-field class="m-t-20" appearance="outline" fxFlex="50">
-                <mat-label>First Name*</mat-label>
-                <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
-              </mat-form-field>
-              <mat-form-field class="m-t-20" appearance="outline" fxFlex="50">
-                <mat-label>Last name*</mat-label>
-                <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
-              </mat-form-field>
-              <mat-form-field class="m-t-20" appearance="outline" fxFlex="50">
-                <mat-label>Middle name*</mat-label>
-                <input matInput placeholder="Last name" formControlName="middle_name" autocomplete="off">
-              </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="50">
-                <mat-label>Company name</mat-label>
-                <input matInput placeholder="Company name" formControlName="company_name" autocomplete="off">
-              </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="50">
-                <mat-label>Email ID*</mat-label>
-                <input matInput placeholder="Email ID" formControlName="sign_in_email_id">
-                <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
-              </mat-form-field>
-              <button mat-raised-button color="primary" type="submit" class="auth-btn">Submit<i
-                  class="fa fa-arrow-right"></i></button>
-              <button mat-raised-button color="danger" (click)="userForm.reset()">Reset</button>
-            </form>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-  </div>
-</div>
+<mat-card-header>
+  <mat-card-title class="m-0">User Information</mat-card-title>
+</mat-card-header>
+<mat-divider></mat-divider>
+<mat-card-content>
+  <!--Form start-->
+  <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userSubmit()" class="mat-grid-form">
+    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-label>First name*</mat-label>
+      <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-label>Last name*</mat-label>
+      <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-label>Last name*</mat-label>
+      <input matInput placeholder="Middle name" formControlName="middle_name" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-label>Company name</mat-label>
+      <input matInput placeholder="Company name" formControlName="company_name" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-label>Email ID*</mat-label>
+      <input matInput placeholder="Email ID" formControlName="sign_in_email_id">
+      <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
+    </mat-form-field>
+    <div class="text-center w-100 m-t-10"> <button mat-raised-button color="primary" type="submit" class="m-r-10">
+        Submit </button>
+      <button mat-raised-button (click)="userForm.reset()">Cancel</button></div>
+  </form>
+</mat-card-content>
