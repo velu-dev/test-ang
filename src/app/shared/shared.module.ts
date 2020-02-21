@@ -8,7 +8,7 @@ import { MaterialModule } from './material.module';
 import { CognitoService } from './services/cognito.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
+import { RecaptchaModule, RecaptchaFormsModule, RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './interceptors/token-interceptor.service';
 import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
@@ -36,8 +36,9 @@ import { ExportService } from './services/export.service';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    RecaptchaFormsModule,
     RecaptchaModule,
+    RecaptchaV3Module,
+    RecaptchaFormsModule,
     NotFoundComponent,
     AlertComponent
   ],
@@ -56,10 +57,11 @@ import { ExportService } from './services/export.service';
       provide: MAT_SNACK_BAR_DATA,
       useValue: {} // Add any data you wish to test if it is passed/used correctly
     },
+    // { provide: RECAPTCHA_V3_SITE_KEY, useValue: '6LcKp9oUAAAAAPA16aG4vWRMkKCIkTMr8xKLKiu5' },
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {
-        siteKey: '6LcKp9oUAAAAAPA16aG4vWRMkKCIkTMr8xKLKiu5',
+        siteKey: '6Lfz6doUAAAAANgvOxZA8lZmFEK0vm0v1lWkveLq',
       } as RecaptchaSettings,
     }
   ]
