@@ -10,9 +10,7 @@ pipelines:
 
       - step:
           name: Build app
-          trigger: manual
-          services:
-          - docker          
+          trigger: manual               
           script: # The script below will build the application.                    
           - npm install -g @angular/cli@8.3.24
           - npm install
@@ -24,9 +22,7 @@ pipelines:
 
       - step:
           name: Upload to S3 Bucket
-          #trigger: manual
-          services:
-          - docker
+          #trigger: manual          
           script:
           # Upload to S3 code deploy bucket
           - pipe: atlassian/aws-s3-deploy:0.3.7
