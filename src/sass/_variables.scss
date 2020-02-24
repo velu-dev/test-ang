@@ -1,4 +1,3 @@
-@import "table";
 
 //colors
 $bg-light-blue: #f2f7ff;
@@ -13,7 +12,7 @@ $secondarylightcolor: #9effb9;
 $secondaryarkcolor: #19cb59;
 
 //ternary color
-$ternary: #6464fa;
+$ternary-color: #6464fa;
 //Extra colors
 $green: #65ff88;
 $white: #ffffff;
@@ -305,28 +304,8 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   float: right;
   margin-top: 10px;
 }
-
-.table-heading {
-  background-color: $ternary;
-}
-table {
-  tr {
-    th {
-      padding: 0px 10px !important;
-      color: $white !important;
-      font-size: $font-size-1;
-    }
-    td {
-      color: #4d4f5c;
-      padding: 0px 10px !important;
-    }
-  }
-  .mat-header-row {
-    height: 50px !important;
-  }
-}
 .add-user {
-  background-color: $ternary;
+  background-color: $ternary-color;
   width: 35px;
   height: 35px;
   .mat-button-wrapper {

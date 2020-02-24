@@ -101,15 +101,15 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   border-radius: 5px;
 }
 
-.alert-success {
+.alert-success, .success {
   background-color: $bg-success;
   color: $text-success;
 }
-.alert-danger {
+.alert-danger, .error {
   background-color: $bg-error;
   color: $text-error;
 }
-.alert-warning {
+.alert-warning, .warning {
   background-color: $bg-warning;
   color: $text-warning;
 }
@@ -196,7 +196,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
       font-weight: $font-weight-medium;
       text-align: center;
       padding: 10px 0 0 0;
-      color: $ternary !important;
+      color: $ternary-color !important;
       cursor: pointer;
     }
   }

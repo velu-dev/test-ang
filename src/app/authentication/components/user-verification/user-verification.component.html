@@ -4,10 +4,10 @@
       <div class="m-auto" fxFlex="30" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxFlex.xl="25" fxLayout="column">
         <mat-card class="p-5">
           <!--Form Title-->
-          <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
-          <mat-card-title>Verify your account </mat-card-title>
+          <img mat-card-image [src]="logo" alt="Lucy logo" class="logo m-t-0">
+          <mat-card-title class="p-t-10 auth-title">Verify your account </mat-card-title>
           <!--Form subTitle-->
-          <mat-card-subtitle class="m-t-5 m-b-50">We've send a code to your registered email id</mat-card-subtitle>
+          <mat-card-subtitle class="p-b-20">We've send a code to your registered email id</mat-card-subtitle>
           <mat-card-content>
             <!--Form start-->
             <form fxLayout="row wrap" [formGroup]="verificationForm" (ngSubmit)="verifySubmit()">
