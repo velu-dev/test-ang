@@ -35,10 +35,12 @@ export class HeaderComponent implements OnInit {
     private alertService: AlertService,
     private userService: UserService
   ) {
+    this.spinnerService.show();
     Auth.currentSession().then(token => {
       this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
       this.userService.getUser(this.currentUserID).subscribe(res => {
         this.user = res.data;
+        this.spinnerService.hide();
       })
     })
   }

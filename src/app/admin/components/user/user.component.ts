@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ExportService } from './../../../shared/services/export.service';
 import * as globals from '../../../globals';
+import { Role } from '../../models/role.model';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -24,8 +25,8 @@ import * as globals from '../../../globals';
 })
 export class UserComponent implements OnInit {
   xls = globals.xls;
-  roles = []
-  selectedRole: any;
+  roles: Role[];
+  selectedRole: any = [];
   dataSource: any;
   columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
   columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
@@ -42,11 +43,12 @@ export class UserComponent implements OnInit {
     this.userService.getRoles().subscribe(response => {
       this.roles = response.data.map(function (el) {
         var o = Object.assign({}, el);
-        o.checked = false;
+        o['checked'] = false;
         return o;
       });
+      // console.log()
     })
-    this.getUser(this.roles);
+    this.getUser(this.selectedRole);
   }
 
   ngOnInit() {
@@ -70,7 +72,7 @@ export class UserComponent implements OnInit {
   filterByRole() {
     this.selectedRoleId = [];
     this.roles.map(res => {
-      if (res.checked) {
+      if (res['checked']) {
         this.selectedRoleId.push(res.id);
       }
     })
