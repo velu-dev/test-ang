@@ -22,7 +22,7 @@ pipelines:
 
       - step:
           name: Upload to S3 Bucket
-          #trigger: manual          
+          trigger: manual          
           script:
           # Upload to S3 code deploy bucket
           - pipe: atlassian/aws-s3-deploy:0.3.7
