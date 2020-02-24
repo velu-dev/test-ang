@@ -16,8 +16,8 @@ pipelines:
           script: # The script below will build the application.                    
           - npm install -g @angular/cli@8.3.24
           - npm install
-          - ng build --prod
-          #- ng build --prod --aot --build-optimizer --progress=false
+          #- ng build --prod
+          - ng build --prod --aot --build-optimizer --progress=false
           - echo "Building Front-end application completed!"
           artifacts:
           - dist/lucyfrontend/*
