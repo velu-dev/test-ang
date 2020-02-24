@@ -33,5 +33,5 @@ pipelines:
               S3_BUCKET: $S3_BUCKET
               COMMAND: 'upload'
               LOCAL_PATH: 'dist'
-              ACL: 'public-read'
+              #ACL: 'public-read'
           - echo "Uploading to S3 bucket completed!"              
