@@ -29,11 +29,17 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: []
         }, {
-            path: '/admin/users/*',
+            path: '/admin/users/',
             title: 'Edit User',
             icon: 'dashboard',
             submenu: []
-        }]
+        },{
+            path: '/admin/admin-users/new',
+            title: 'New Admin User',
+            icon: 'dashboard',
+            submenu: []
+        }
+    ]
     }, {
         path: '/subscriber',
         title: 'Subscriber Account',

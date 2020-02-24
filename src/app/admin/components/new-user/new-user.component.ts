@@ -30,7 +30,7 @@ export class NewUserComponent implements OnInit {
   ) {
     this.route.params.subscribe(params_res => {
       this.userService.getRoles().subscribe(response => {
-          this.roles = response.data;
+        this.roles = response.data;
       })
       if (params_res.id) {
         this.isEdit = true;
@@ -39,6 +39,8 @@ export class NewUserComponent implements OnInit {
           this.userData = res.data;
           console.log(res.data)
           this.userForm.setValue(this.userData)
+          this.userForm.controls.sign_in_email_id.disable();
+          this.userForm.controls.company_name.disable();
         })
       }
     })
@@ -61,15 +63,21 @@ export class NewUserComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    this.spinnerService.show();
-    this.userService.createUser(this.userForm.value).subscribe(res => {
-      this.alertService.openSnackBar("User created successful", 'success');
-      this.spinnerService.hide();
-      this.router.navigate(['/admin/users'])
-    }, error => {
-      this.spinnerService.hide();
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
+    if (!this.isEdit) {
+      this.userService.createUser(this.userForm.value).subscribe(res => {
+        this.alertService.openSnackBar("User created successful", 'success');
+        this.router.navigate(['/admin/users'])
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    } else {
+      this.userService.updateUser(this.userForm.value).subscribe(res => {
+        this.alertService.openSnackBar("User update successful", 'success');
+        this.router.navigate(['/admin/users'])
+      }, error => {
+        this.alertService.openSnackBar(error.message, 'error');
+      })
+    }
   }
 
 }
