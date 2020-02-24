@@ -10,12 +10,12 @@
                 <button (click)="fullScreen()" mat-icon-button class="hide-mobile">
                     <mat-icon> {{isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
                 </button>
-                <button mat-icon-button>
+                <button mat-icon-button [matMenuTriggerFor]="notification">
                     <mat-icon matBadge="5" matBadgeColor="warn">notifications_none
                     </mat-icon>
                 </button>
                 <mat-menu #notification="matMenu" class="">
-                    <mat-card class="p-t-0 notification">
+                    <div class="p-t-0 notification">
                         <mat-card-header class="text-center">
                             <mat-card-title class="m-b-2">NOTIFICATIONS</mat-card-title>
                         </mat-card-header>
@@ -23,19 +23,29 @@
                         <mat-card-content>
                             <mat-list>
                                 <mat-list-item>
-                                    <img mat-list-icon [src]="profile" alt="Welcome" class="text-left" />
-                                    <h4 mat-line>Name here</h4>
+                                    <img mat-list-icon [src]="notification_user" alt="Welcome" class="text-left" />
+                                    <h4 mat-line>Name here<br /> <small class="text-right"><i
+                                                class="fa fa-clock-o"></i>13-12-2020</small></h4>
                                     <p mat-line> Message content here...</p>
                                 </mat-list-item>
                                 <mat-divider></mat-divider>
 
+                                <mat-list-item>
+                                    <img mat-list-icon [src]="notification_user" alt="Welcome" class="text-left" />
+                                    <h4 mat-line>Name here<br /> <small class="text-right"><i
+                                                class="fa fa-clock-o"></i>13-12-2020</small></h4>
+                                    <p mat-line> Message content here...</p>
+                                </mat-list-item>
+
                             </mat-list>
                         </mat-card-content>
+                        <mat-divider></mat-divider>
                         <mat-card-footer class="text-center">
+
                             <div>View All Notifications</div>
                         </mat-card-footer>
 
-                    </mat-card>
+                    </div>
                 </mat-menu>
                 <button mat-button [matMenuTriggerFor]="settings" class="welcome">
                     <span class="hide-mobile"><small>Welcome,</small><br />
@@ -58,8 +68,9 @@
                 <mat-icon>settings</mat-icon>
                 <span>Settings</span>
             </button>
+            <mat-divider></mat-divider>
             <button mat-menu-item>
-                <mat-icon>notifications_off</mat-icon>
+                <mat-icon>exit_to_app</mat-icon>
                 <span>Logout</span>
             </button>
         </mat-menu>

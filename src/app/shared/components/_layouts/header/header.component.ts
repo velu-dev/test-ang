@@ -20,6 +20,7 @@ import { User } from 'src/app/admin/models/user.model';
 })
 export class HeaderComponent implements OnInit {
   profile = globals.profile
+  notification_user = globals.notification_user
   // @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
   @Input() inputSideNav: MatSidenav;
   elem;
