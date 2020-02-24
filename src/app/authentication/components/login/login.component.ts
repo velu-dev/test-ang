@@ -40,11 +40,12 @@ export class LoginComponent implements OnInit {
   //login submit
   login() {
     this.cookieService.deleteAll();
-    let auth = { name: this.loginForm.value.email, password: this.loginForm.value.password }
+   
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
       return;
     }
+    let auth = { name: this.loginForm.value.email.toLowerCase(), password: this.loginForm.value.password }
     this.spinnerService.show()
     this.cognitoService.logIn(auth).subscribe(loginRes => {
 
@@ -65,15 +66,16 @@ export class LoginComponent implements OnInit {
         }
       })
     }, error => {
-      // console.log("loginError", error)
-      this.alertService.openSnackBar(error.message, 'error');
       this.spinnerService.hide()
+      this.alertService.openSnackBar(error.message, 'error');
+      if(error.code == 'UserNotConfirmedException'){
+        this.router.navigate(['/verification']);
+      }
     })
   }
 
   logout() {
     this.cognitoService.logOut().subscribe(response => {
-      // console.log("logout", response)
       this.cookieService.deleteAll();
     })
   }

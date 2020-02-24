@@ -30,13 +30,13 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.compose([Validators.required])],
-      lastName: ['', Validators.compose([Validators.required])],
-      middleInitial: [''],
-      companyName: [''],
+      firstName: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      lastName: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      middleInitial: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      companyName: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
-      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
+      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*-]).{8,}$'), Validators.minLength(8)])],
+      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*-]).{8,}$'), Validators.minLength(8)])],
       captcha: ['', Validators.required],
       policy: ['', Validators.required]
     });
@@ -53,7 +53,6 @@ export class RegisterComponent implements OnInit {
   registerSubmit() {
     this.isSubmitted = true;
     if (this.registerForm.invalid) {
-      this.alertService.openSnackBar("Fill all mandatory fields", "error")
       return;
     }
 
@@ -63,7 +62,6 @@ export class RegisterComponent implements OnInit {
     }
 
     if (!this.registerForm.value.policy) {
-      this.alertService.openSnackBar(this.errorMessages.agreeterms, 'error')
       return;
     }
     this.spinnerService.show();
@@ -72,7 +70,7 @@ export class RegisterComponent implements OnInit {
     this.authenticationService.signUp(signUpDetails).subscribe(signupRes => {
       console.log("signupRes", signupRes);
       let userDetails = {
-        'username': this.registerForm.value.email,
+        'username': this.registerForm.value.email.toLowerCase(),
         'password': this.registerForm.value.password,
         'attributes': {
           'name': this.registerForm.value.firstName + ' ' + this.registerForm.value.lastName,
@@ -88,6 +86,10 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/verification'])
       }, error => {
         console.log("cognitoSignUpError", error);
+        this.spinnerService.hide();
+        if(error.code == 'UsernameExistsException'){
+          error.message = 'This email address is already in use'
+        }
         this.alertService.openSnackBar(error.message, 'error');
       })
 
