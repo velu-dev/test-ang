@@ -16,11 +16,13 @@ import { AlertService } from './services/alert.service';
 import { StoreModule } from '@ngrx/store';
 import { breadcrumbreducer } from './store/breadcrumb.reducer';
 import { ExportService } from './services/export.service';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
     NotFoundComponent,
-    AlertComponent
+    AlertComponent,
+    ErrorComponent
   ],
   entryComponents: [
     AlertComponent
@@ -40,7 +42,8 @@ import { ExportService } from './services/export.service';
     RecaptchaV3Module,
     RecaptchaFormsModule,
     NotFoundComponent,
-    AlertComponent
+    AlertComponent,
+    ErrorComponent
   ],
   providers: [
     CognitoService,
