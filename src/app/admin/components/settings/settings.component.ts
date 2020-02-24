@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { Auth } from 'aws-amplify';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from '../../models/user.model';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -11,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class SettingsComponent implements OnInit {
   profile_bg = globals.profile_bg;
-  user = {};
+  user: User;
   currentUserID = "";
   userForm: FormGroup;
   constructor(private spinnerService: NgxSpinnerService, private userService: UserService, private formBuilder: FormBuilder) {

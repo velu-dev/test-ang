@@ -17,7 +17,6 @@ export class TokenInterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-
     if (req.headers.has(InterceptorSkipHeader)) {
       const headers = req.headers.delete(InterceptorSkipHeader);
       return next.handle(req.clone({ headers })).pipe(

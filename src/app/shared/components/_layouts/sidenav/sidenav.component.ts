@@ -24,6 +24,7 @@ import * as globals from '../../../../globals';
   ]
 })
 export class SidenavComponent implements OnInit {
+  screenWidth: number;
   logo_white = globals.logo_white;
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
   public menuItems: any;
@@ -39,16 +40,24 @@ export class SidenavComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar
   ) {
+    this.screenWidth = window.innerWidth;
     Auth.currentSession().then(token => {
       this.roleId = token['idToken']['payload']['custom:isPlatformAdmin']
       this.menuItems = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);
     })
+    window.onresize = () => {
+      console.log(window.innerWidth)
+      // set screenWidth on screen size change
+      this.screenWidth = window.innerWidth;
+    };
 
   }
   ngOnInit() {
   }
-  navigate(menu) {
-    this.router.navigate([menu.path])
+  navigate() {
+    if ((this.screenWidth < 400)) {
+      this.sidenav.toggle();
+    }
   }
- 
+
 }

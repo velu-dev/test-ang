@@ -7,7 +7,9 @@ import { Observable, from } from 'rxjs';
 })
 export class CognitoService {
 
-  constructor() { }
+  constructor() { 
+    
+  }
 
   logIn(auth): Observable<any> {
     return from(Auth.signIn(auth.name, auth.password))
