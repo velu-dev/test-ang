@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   get formControls() { return this.loginForm.controls; }
-
+  error: any;
   //login submit
   login() {
     this.cookieService.deleteAll();
@@ -66,6 +66,8 @@ export class LoginComponent implements OnInit {
         }
       })
     }, error => {
+      this.error = { message: error.message, action: "danger" }
+      this.alertService.openSnackBar(error.message, 'error');
       this.spinnerService.hide()
       this.alertService.openSnackBar(error.message, 'error');
       if(error.code == 'UserNotConfirmedException'){

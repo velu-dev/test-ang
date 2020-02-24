@@ -88,26 +88,30 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     }
   }
 }
-// .mat-form-field-appearance-outline .mat-form-field-wrapper {
-//     padding-bottom: 05px;
-//     display: block;
-//     .mat-form-field-subscript-wrapper {
-//       position: inherit !important;
-//     }
-//   }
 
 // ==================================================
-// SNACKBAR STYLE
+// Error style
 // ==================================================
+.auth-alert {
+  padding: 10px;
+  width: auto;
+  text-align: center;
+  opacity: 1;
+  box-shadow: $box-shadow-3;
+  border-radius: 5px;
+}
 
-.success {
-  background-color: $success;
+.alert-success, .success {
+  background-color: $bg-success;
+  color: $text-success;
 }
-.error {
-  background-color: $error;
+.alert-danger, .error {
+  background-color: $bg-error;
+  color: $text-error;
 }
-.warning {
-  background-color: $warning;
+.alert-warning, .warning {
+  background-color: $bg-warning;
+  color: $text-warning;
 }
 
 .empty-data {
@@ -129,6 +133,8 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 // ==================================================
 
 .notification {
+  box-shadow: $box-shadow-none;
+  min-width: 280px;
   mat-card-header {
     width: $width-100;
     display: block;
@@ -138,16 +144,45 @@ $sides: (top, bottom, left, right); // Leave this variable alone
       text-align: center;
       margin-bottom: 5px !important;
     }
-    mat-card-content {
-      margin-bottom: 3px !important;
-      mat-list {
-        mat-list-item {
-          padding: 0px !important;
-          .mat-list-item-content {
-            padding: 0px !important;
-            img {
-              width: 50px !important;
-              height: auto !important;
+  }
+  mat-card-content {
+    margin-bottom: 6px !important;
+    max-height: 200px;
+    min-height: 200px;
+    mat-list {
+      mat-list-item {
+        height: auto !important;
+
+        .mat-list-item-content {
+          padding: 10px !important;
+          img {
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 5px !important;
+            box-shadow: $box-shadow-3;
+            padding: 5px;
+          }
+          .mat-list-text {
+            padding: 0 10px 0 10px !important;
+            h4 {
+              margin: 0;
+              font-size: $font-size-7;
+              color: $text-dark;
+              float: left;
+              width: $width-100;
+              line-height: 1;
+              font-weight: $font-weight-bold;
+              small {
+                color: $light-gray;
+              }
+            }
+            p {
+              margin: 0;
+              font-size: $font-size-3 !important;
+              color: $text-gray;
+              float: left;
+              width: $width-100;
+              line-height: 20px;
             }
           }
         }
@@ -155,12 +190,14 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     }
   }
   mat-card-footer {
+    margin: 0px !important;
     div {
       font-size: $font-size-1 !important;
       font-weight: $font-weight-medium;
       text-align: center;
-      margin-bottom: 5px !important;
-      color: $ternary !important;
+      padding: 10px 0 0 0;
+      color: $ternary-color !important;
+      cursor: pointer;
     }
   }
 }

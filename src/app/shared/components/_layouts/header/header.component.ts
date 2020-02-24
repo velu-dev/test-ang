@@ -20,6 +20,7 @@ import { User } from 'src/app/admin/models/user.model';
 })
 export class HeaderComponent implements OnInit {
   profile = globals.profile
+  notification_user = globals.notification_user
   // @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
   @Input() inputSideNav: MatSidenav;
   elem;
@@ -35,10 +36,12 @@ export class HeaderComponent implements OnInit {
     private alertService: AlertService,
     private userService: UserService
   ) {
+    this.spinnerService.show();
     Auth.currentSession().then(token => {
       this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
       this.userService.getUser(this.currentUserID).subscribe(res => {
         this.user = res.data;
+        this.spinnerService.hide();
       })
     })
   }

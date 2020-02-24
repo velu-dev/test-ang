@@ -17,10 +17,12 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: AdminUserComponent
-  }
-
-  ]
-}, {
+  },
+  {
+    path: "new",
+    component: NewUserComponent
+  }]
+},{
   path: "users",
   children: [{
     path: "",

@@ -27,12 +27,11 @@
         mat-icon {
           color: $text-gray !important;
         }
-        .check-password {
-          cursor: pointer;
-        }
-        mat-error {
-          padding-top: 3px;
-        }
+      }
+      .check-password {
+        cursor: pointer;
+        padding-top: 15px;
+        padding-left: 5px;
       }
       .note {
         font-size: $font-size-3;
