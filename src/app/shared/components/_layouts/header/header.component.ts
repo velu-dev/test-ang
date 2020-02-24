@@ -12,6 +12,7 @@ import { AlertService } from "./../../../services/alert.service"
 import * as globals from './../../../../globals';
 import { Auth } from 'aws-amplify';
 import { UserService } from 'src/app/admin/services/user.service';
+import { User } from 'src/app/admin/models/user.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -24,7 +25,7 @@ export class HeaderComponent implements OnInit {
   elem;
   folders = [];
   currentUserID = "";
-  user = {};
+  user: User;
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,

@@ -1,6 +1,9 @@
 export interface User {
-    first_name: string;
-    last_name: string;
-    email: string;
-    role: string;
-  }
+  id: string;
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  sign_in_email_id: string;
+  role: string;
+  company_name: string;
+}
