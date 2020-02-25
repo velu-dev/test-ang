@@ -67,6 +67,7 @@ export class UserComponent implements OnInit {
   }
   users = [];
   getUser(roles) {
+    this.users = [];
     this.userService.getUsers(roles).subscribe(response => {
       response.data.map(user => {
         user['isExpand'] = false;
