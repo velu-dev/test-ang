@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.error = '';
     this.cookieService.deleteAll();
-   
+
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
       return;
@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
 
       if (loginRes && loginRes.challengeName == 'NEW_PASSWORD_REQUIRED') {
         this.spinnerService.hide()
+        this.cookieService.set('email', this.loginForm.value.email.toLowerCase())
         this.router.navigate(['/changepassword'])
         return;
       }
@@ -69,7 +70,7 @@ export class LoginComponent implements OnInit {
     }, error => {
       this.error = { message: error.message, action: "danger" }
       this.spinnerService.hide()
-      if(error.code == 'UserNotConfirmedException'){
+      if (error.code == 'UserNotConfirmedException') {
         this.router.navigate(['/verification']);
       }
     })

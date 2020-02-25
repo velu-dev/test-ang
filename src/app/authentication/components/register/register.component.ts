@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
     }
     this.spinnerService.show();
     //role id set role_id = 1-admin, 2-subscriber
-    let signUpDetails = { first_name: this.registerForm.value.firstName, middle_name: this.registerForm.value.middleInitial, last_name: this.registerForm.value.lastName, sign_in_email_id: this.registerForm.value.email, company_name: this.registerForm.value.companyName }
+    let signUpDetails = { first_name: this.registerForm.value.firstName, middle_name: this.registerForm.value.middleInitial, last_name: this.registerForm.value.lastName, sign_in_email_id: this.registerForm.value.email.toLowerCase(), company_name: this.registerForm.value.companyName }
     this.authenticationService.signUp(signUpDetails).subscribe(signupRes => {
       console.log("signupRes", signupRes);
       let userDetails = {

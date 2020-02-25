@@ -37,8 +37,7 @@ export class UserVerificationComponent implements OnInit {
     if (this.verificationForm.invalid) {
       return;
     }
-    this.authenticationService.emailVerify(this.verificationForm.value.email).subscribe(emailVerifyRes => {
-      console.log("emailVerifyRes", emailVerifyRes)
+    this.authenticationService.emailVerify(this.verificationForm.value.email.toLowerCase()).subscribe(emailVerifyRes => {
       let verifyDetails: any = emailVerifyRes;
       if (!verifyDetails.status) {
         this.error = { message: verifyDetails.message, action: "danger" }
@@ -46,7 +45,7 @@ export class UserVerificationComponent implements OnInit {
       }
 
       this.spinnerService.show();
-      this.cognitoService.signUpVerification(this.verificationForm.value.email, this.verificationForm.value.code).subscribe(signUpVerify => {
+      this.cognitoService.signUpVerification(this.verificationForm.value.email.toLowerCase(), this.verificationForm.value.code).subscribe(signUpVerify => {
         console.log("signUpVerify", signUpVerify);
         if (signUpVerify == 'SUCCESS') {
           this.authenticationService.signUpVerify(this.verificationForm.value.email).subscribe(res => {
@@ -72,17 +71,26 @@ export class UserVerificationComponent implements OnInit {
 
   //verification code resend
   verifyResend() {
+    this.error = '';
     if (this.verificationForm.value.email) {
-      this.cognitoService.resentSignupCode(this.verificationForm.value.email).subscribe(resendVerify => {
-        console.log(resendVerify);
-        this.alertService.openSnackBar(success.resendcode, 'succes')
-      }, error => {
-        console.log("Error", error);
-        this.error = { message: error.message, action: "danger" }
+      this.authenticationService.emailVerify(this.verificationForm.value.email.toLowerCase()).subscribe(emailVerifyRes => {
+        let verifyDetails: any = emailVerifyRes;
+        if (!verifyDetails.status) {
+          this.error = { message: verifyDetails.message, action: "danger" }
+          return;
+        }
+        this.cognitoService.resentSignupCode(this.verificationForm.value.email).subscribe(resendVerify => {
+          console.log(resendVerify);
+          this.alertService.openSnackBar(success.resendcode, 'succes')
+        }, error => {
+          console.log("Error", error);
+          this.error = { message: error.message, action: "danger" }
+        })
       })
     } else {
       this.error = { message: this.errorMessages.entervalidemail, action: "danger" }
     }
+
   }
 
 }
