@@ -8,7 +8,17 @@ export const ROUTES = [
         path: "/admin/admin-users",
         title: "Manage Admin",
         icon: "person_add",
-        submenu: []
+        submenu: [{
+            path: '/admin/admin-users/new',
+            title: 'New Admin User',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/admin/admin-users/update',
+            title: 'Edit Admin User',
+            icon: 'dashboard',
+            submenu: []
+        }]
     }, {
         path: "/admin/settings",
         title: "Settings",
@@ -29,17 +39,12 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: []
         }, {
-            path: '/admin/users/',
+            path: '/admin/users/update',
             title: 'Edit User',
             icon: 'dashboard',
             submenu: []
-        },{
-            path: '/admin/admin-users/new',
-            title: 'New Admin User',
-            icon: 'dashboard',
-            submenu: []
         }
-    ]
+        ]
     }, {
         path: '/subscriber',
         title: 'Subscriber Account',

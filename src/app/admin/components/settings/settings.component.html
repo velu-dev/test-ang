@@ -4,7 +4,7 @@
         <div fxFlex="30" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
             <mat-card class="profile">
                 <mat-card-header matRipple>
-                    <mat-card-title class="m-0">{{user.first_name}} {{user.last_name}}</mat-card-title>
+                    <mat-card-title class="m-0">{{user?.first_name}} {{user?.last_name}}</mat-card-title>
                     <mat-card-subtitle>Dental Public Health</mat-card-subtitle>
                 </mat-card-header>
                 <img mat-card-image [src]="profile_bg" alt="Profile photo">
@@ -86,8 +86,8 @@
                                             autocomplete="off">
                                     </mat-form-field>
                                     <mat-form-field appearance="standard" fxFlex="50" class=" m-t-5">
-                                        <mat-label>Company Name</mat-label>
-                                        <input matInput placeholder="Company Name" formControlName="company_name"
+                                        <mat-label>Middle Name</mat-label>
+                                        <input matInput placeholder="Middle Name" formControlName="middle_name"
                                             autocomplete="off">
                                     </mat-form-field>
                                     <button mat-raised-button color="primary" class="m-t-5">Update</button>

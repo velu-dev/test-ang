@@ -60,8 +60,8 @@ export class AdminUserComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Admin-Users")
   }
-  gotoEdit(id) {
-
+  gotoEdit(data) {
+    this.router.navigate(["/admin/admin-users/" + data.id])
   }
   navigate() {
     // this.router.navigate(['new'])
