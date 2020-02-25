@@ -72,6 +72,7 @@ $spaceamounts: (
   40,
   45,
   50,
+  65,
   75,
   100
 ); // Adjust this to include the pixel amounts you need.
@@ -101,15 +102,18 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   border-radius: 5px;
 }
 
-.alert-success, .success {
+.alert-success,
+.success {
   background-color: $bg-success;
   color: $text-success;
 }
-.alert-danger, .error {
+.alert-danger,
+.error {
   background-color: $bg-error;
   color: $text-error;
 }
-.alert-warning, .warning {
+.alert-warning,
+.warning {
   background-color: $bg-warning;
   color: $text-warning;
 }
@@ -142,17 +146,18 @@ $sides: (top, bottom, left, right); // Leave this variable alone
       font-size: $font-size-1 !important;
       font-weight: $font-weight-medium;
       text-align: center;
-      margin-bottom: 5px !important;
+      margin-bottom: 5px;
     }
   }
   mat-card-content {
-    margin-bottom: 6px !important;
-    max-height: 200px;
-    min-height: 200px;
+    margin-bottom: 0px;
+    display: block;
+    max-height: 220px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
     mat-list {
       mat-list-item {
         height: auto !important;
-
         .mat-list-item-content {
           padding: 10px !important;
           img {

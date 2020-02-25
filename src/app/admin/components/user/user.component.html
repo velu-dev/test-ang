@@ -1,3 +1,5 @@
+
+<mat-card class="m-card">
 <mat-card-header>
     <mat-card-title class="m-0">Users</mat-card-title>
     <span class="spacer"></span>
@@ -26,7 +28,7 @@
         </mat-list>
 
     </mat-menu>
-    <div class="user-detail">
+    <div class="user-detail" *ngIf="dataSource">
         <table mat-table [dataSource]="dataSource" matSort class="mat-table">
             <ng-container matColumnDef="first_name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
@@ -60,3 +62,4 @@
     <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
 
 </mat-card-content>
+</mat-card>
