@@ -19,6 +19,7 @@ export class UserVerificationComponent implements OnInit {
   verificationForm: FormGroup;
   isSubmitted = false;
   errorMessages = errors;
+  error: any;
   constructor(private formBuilder: FormBuilder, private cognitoService: CognitoService, private router: Router, private authenticationService: AuthenticationService, private alertService: AlertService, private spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -31,28 +32,41 @@ export class UserVerificationComponent implements OnInit {
 
   //signup verify submit
   verifySubmit() {
+    this.error = '';
+    this.isSubmitted = true;
     if (this.verificationForm.invalid) {
       return;
     }
-    this.spinnerService.show();
-    this.cognitoService.signUpVerification(this.verificationForm.value.email, this.verificationForm.value.code).subscribe(signUpVerify => {
-      console.log("signUpVerify", signUpVerify);
-      if (signUpVerify == 'SUCCESS') {
-        this.authenticationService.signUpVerify(this.verificationForm.value.email).subscribe(res => {
-          this.spinnerService.hide();
-          this.alertService.openSnackBar(success.signupsuccess, 'success')
-          this.router.navigate(['/login']);
-        },
-          error => {
-            this.spinnerService.hide()
-            console.log("Error", error);
-            this.alertService.openSnackBar(error.error.error, 'error');
-          })
+    this.authenticationService.emailVerify(this.verificationForm.value.email).subscribe(emailVerifyRes => {
+      console.log("emailVerifyRes", emailVerifyRes)
+      let verifyDetails: any = emailVerifyRes;
+      if (!verifyDetails.status) {
+        this.error = { message: verifyDetails.message, action: "danger" }
+        return;
       }
+
+      this.spinnerService.show();
+      this.cognitoService.signUpVerification(this.verificationForm.value.email, this.verificationForm.value.code).subscribe(signUpVerify => {
+        console.log("signUpVerify", signUpVerify);
+        if (signUpVerify == 'SUCCESS') {
+          this.authenticationService.signUpVerify(this.verificationForm.value.email).subscribe(res => {
+            this.spinnerService.hide();
+            this.alertService.openSnackBar(success.signupsuccess, 'success')
+            this.router.navigate(['/login']);
+          },
+            error => {
+              this.spinnerService.hide()
+              console.log("Error", error);
+              this.error = { message: error.error.error, action: "danger" }
+            })
+        }
+      }, error => {
+        this.spinnerService.hide();
+        console.log("Error", error);
+        this.error = { message: error.message, action: "danger" }
+      })
     }, error => {
-      this.spinnerService.hide();
-      console.log("Error", error);
-      this.alertService.openSnackBar(error.message, 'error');
+      console.log("error", error)
     })
   }
 
@@ -61,13 +75,13 @@ export class UserVerificationComponent implements OnInit {
     if (this.verificationForm.value.email) {
       this.cognitoService.resentSignupCode(this.verificationForm.value.email).subscribe(resendVerify => {
         console.log(resendVerify);
-        this.alertService.openSnackBar(success.resendcode, 'error')
+        this.alertService.openSnackBar(success.resendcode, 'succes')
       }, error => {
         console.log("Error", error);
-        this.alertService.openSnackBar(error.message, 'error');
+        this.error = { message: error.message, action: "danger" }
       })
     } else {
-      this.alertService.openSnackBar(this.errorMessages.entervalidemail, 'error');
+      this.error = { message: this.errorMessages.entervalidemail, action: "danger" }
     }
   }
 

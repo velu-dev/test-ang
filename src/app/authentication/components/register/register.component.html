@@ -7,6 +7,7 @@
           <!--Form Title-->
           <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
           <mat-card-title class="p-t-10 ">Sign Up</mat-card-title>
+          <app-error *ngIf="error" [data]="error"></app-error>
           <mat-card-content>
             <!--Form start-->
             <form fxLayout="row wrap" [formGroup]="registerForm" (ngSubmit)="registerSubmit()">

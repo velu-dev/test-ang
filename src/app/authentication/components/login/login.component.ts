@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
   error: any;
   //login submit
   login() {
+    this.error = '';
     this.cookieService.deleteAll();
    
     this.isSubmitted = true;
@@ -61,15 +62,13 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/admin/dashboard'])
         }
         else {
-          this.alertService.openSnackBar("Under processing", 'error');
+          this.error = { message: "Under processing", action: "danger" }
           this.logout();
         }
       })
     }, error => {
       this.error = { message: error.message, action: "danger" }
-      this.alertService.openSnackBar(error.message, 'error');
       this.spinnerService.hide()
-      this.alertService.openSnackBar(error.message, 'error');
       if(error.code == 'UserNotConfirmedException'){
         this.router.navigate(['/verification']);
       }

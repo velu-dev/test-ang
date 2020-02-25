@@ -8,17 +8,16 @@
           <mat-card-title class="p-t-10 auth-title">Verify your account </mat-card-title>
           <!--Form subTitle-->
           <mat-card-subtitle class="m-t-5 m-b-50">We've sent a verification code to your registered email id</mat-card-subtitle>
+          <app-error *ngIf="error" [data]="error"></app-error>
           <mat-card-content>
             <!--Form start-->
             <form fxLayout="row wrap" [formGroup]="verificationForm" (ngSubmit)="verifySubmit()">
-              <mat-form-field appearance="outline" fxFlex="100"
-                [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
+              <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>Email ID*</mat-label>
                 <input matInput name="email" placeholder="Email" formControlName="email" autocomplete="off">
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
-              <mat-form-field class="mt-20" appearance="outline" fxFlex="100"
-                [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+              <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Verification code*</mat-label>
                 <input matInput name="VerificationCode" placeholder="Verification code" formControlName="code"
                   autocomplete="off">

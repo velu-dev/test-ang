@@ -25,4 +25,8 @@ export class AuthenticationService {
   setPassword(userData) {
     return this.http.post(environment.baseUrl + environment.resetPassword, userData, { headers: this.headers });
   }
+
+  emailVerify(email){
+    return this.http.post(environment.baseUrl + environment.emailVerify, {email_id : email}, { headers: this.headers });
+  }
 }

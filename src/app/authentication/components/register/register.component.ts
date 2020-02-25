@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import { NgxSpinnerService } from "ngx-spinner";
-import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -19,12 +18,12 @@ export class RegisterComponent implements OnInit {
   errorMessages = errors;
   passwordFieldType: boolean;
   passwordMatchStatus: boolean = false;
+  error:any;
 
   constructor(private formBuilder: FormBuilder,
     private cognitoService: CognitoService,
     private authenticationService: AuthenticationService,
     private router: Router,
-    private alertService: AlertService,
     private spinnerService: NgxSpinnerService,
   ) { }
 
@@ -52,12 +51,13 @@ export class RegisterComponent implements OnInit {
   //register submit
   registerSubmit() {
     this.isSubmitted = true;
+    this.error = '';
     if (this.registerForm.invalid) {
       return;
     }
 
     if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
-      this.alertService.openSnackBar(this.errorMessages.passworddidnotMatch, 'error')
+      this.error = { message: this.errorMessages.passworddidnotMatch, action: "danger" }
       return;
     }
 
@@ -90,13 +90,13 @@ export class RegisterComponent implements OnInit {
         if(error.code == 'UsernameExistsException'){
           error.message = 'This email address is already in use'
         }
-        this.alertService.openSnackBar(error.message, 'error');
+        this.error = { message: error.message, action: "danger" }
       })
 
     }, error => {
       console.log("signup", error);
       this.spinnerService.hide();
-      this.alertService.openSnackBar(error.error.error, 'error')
+      this.error = { message: error.error.error, action: "danger" }
     })
   }
 
