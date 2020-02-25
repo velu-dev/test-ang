@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Auth } from 'aws-amplify';
 import { Observable, from } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CognitoService {
 
-  constructor() { 
-    
+  constructor(private spinnerService: NgxSpinnerService) { 
+    // this.spinnerService.show();
   }
 
   logIn(auth): Observable<any> {

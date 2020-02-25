@@ -21,8 +21,12 @@ const routes: Routes = [{
   {
     path: "new",
     component: NewUserComponent
+  },
+  {
+    path: ":id",
+    component: NewUserComponent
   }]
-},{
+}, {
   path: "users",
   children: [{
     path: "",

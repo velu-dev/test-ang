@@ -45,16 +45,13 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-    this.spinnerService.show()
     this.cognitoService.logIn(auth).subscribe(loginRes => {
 
       if (loginRes && loginRes.challengeName == 'NEW_PASSWORD_REQUIRED') {
-        this.spinnerService.hide()
         this.router.navigate(['/changepassword'])
         return;
       }
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(data => {
-        this.spinnerService.hide()
         if (data['user']['custom:isPlatformAdmin'] == '1') {
           this.alertService.openSnackBar(success.loginSuccess, 'success');
           this.router.navigate(['/admin/dashboard'])
@@ -68,7 +65,6 @@ export class LoginComponent implements OnInit {
       this.error = { message: error.message, action: "danger" }
       // console.log("loginError", error)
       this.alertService.openSnackBar(error.message, 'error');
-      this.spinnerService.hide()
     })
   }
 

@@ -24,6 +24,7 @@ import { Role } from '../../models/role.model';
   ]
 })
 export class UserComponent implements OnInit {
+  screenWidth: number;
   xls = globals.xls;
   roles: Role[];
   selectedRole: any = [];
@@ -39,6 +40,7 @@ export class UserComponent implements OnInit {
     private title: Title,
     private exportService: ExportService
   ) {
+    this.screenWidth = window.innerWidth;
     this.title.setTitle("APP | Manage User");
     this.userService.getRoles().subscribe(response => {
       this.roles = response.data.map(function (el) {
@@ -49,6 +51,9 @@ export class UserComponent implements OnInit {
       // console.log()
     })
     this.getUser(this.selectedRole);
+    window.onresize = () => {
+      this.screenWidth = window.innerWidth;
+    };
   }
 
   ngOnInit() {
@@ -56,8 +61,11 @@ export class UserComponent implements OnInit {
   users = [];
   getUser(roles) {
     this.userService.getUsers(roles).subscribe(response => {
-      let data = []
-      this.users = response.data;
+      response.data.map(user => {
+        user['isExpand'] = false;
+        this.users.push(user);
+      })
+      console.log(this.users)
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -69,11 +77,16 @@ export class UserComponent implements OnInit {
 
   }
   selectedRoleId = []
-  filterByRole() {
+  filterByRole(value?: string) {
     this.selectedRoleId = [];
     this.roles.map(res => {
-      if (res['checked']) {
-        this.selectedRoleId.push(res.id);
+      if (value) {
+        res['checked'] = !res['checked'];
+        this.selectedRoleId.push(res.id)
+      } else {
+        if (res['checked']) {
+          this.selectedRoleId.push(res.id);
+        }
       }
     })
     this.getUser(this.selectedRoleId)
@@ -98,5 +111,10 @@ export class UserComponent implements OnInit {
       })
     })
     this.exportService.exportExcel(data, "Non-Admin-Users")
+  }
+  openElement(element) {
+    if ((this.screenWidth < 800)) {
+      element.isExpand = !element.isExpand;
+    }
   }
 }
