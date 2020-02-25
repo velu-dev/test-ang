@@ -33,6 +33,7 @@
           <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}</mat-option>
         </mat-select>
       </mat-form-field>
+     
       <div class="text-center w-100 m-t-10"> <button mat-raised-button color="primary" type="submit" class="m-r-10">
           Submit </button>
         <button mat-raised-button (click)="userForm.reset()">Cancel</button></div>
