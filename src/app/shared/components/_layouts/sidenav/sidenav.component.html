@@ -7,9 +7,9 @@
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
                 <a class="menu-card-title">{{menuItem.group}}</a>
-                <a *ngFor="let menu of menuItem.menu"  (click)="navigate()" [routerLink]="menu.path" routerLinkActive="active-list-item"
-                    class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> {{menu.title }} 
+                <a *ngFor="let menu of menuItem.menu" (click)="navigate()" [routerLink]="menu.path"
+                    routerLinkActive="active-list-item" class="list-nav" mat-list-item>
+                    <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> {{menu.title }}
                 </a>
             </span>
         </mat-nav-list>
@@ -19,9 +19,7 @@
         <!-- Add Content Here -->
         <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>
-            <mat-card class="m-card">
-                <router-outlet></router-outlet>
-            </mat-card>
+            <router-outlet></router-outlet>
         </div>
         <app-footer></app-footer>
     </mat-sidenav-content>

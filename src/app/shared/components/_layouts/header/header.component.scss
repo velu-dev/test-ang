@@ -5,12 +5,21 @@ mat-toolbar {
   color: $ternary-color;
   font-size: $font-size-4;
   height: 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
 }
 mat-toolbar-row {
   box-shadow: $box-shadow-2;
   mat-card-actions {
     button {
       margin-top: 15px;
+      margin-right: 10px;
+      @media only screen and (max-width: 568px) {        
+      margin-right: 0px;
+      }
       // &::after {
       //   content: '';
       //   border-right: 2px solid $primarycolor;
@@ -19,7 +28,6 @@ mat-toolbar-row {
       //   margin-left: 12px;
       // }
     }
-
     .welcome {
       line-height: 0px !important;
       margin: auto 0 0 0;
@@ -29,6 +37,13 @@ mat-toolbar-row {
         top: 12px;
         position: relative;
       }
+      img {
+        padding-left: 15px;
+        @media only screen and (max-width: 568px) {        
+          padding-left: 0px ;
+           }
+      }
     }
+    
   }
 }

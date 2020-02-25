@@ -19,6 +19,15 @@ import { User } from 'src/app/admin/models/user.model';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  notifications = [
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() }
+  ]
   profile = globals.profile
   notification_user = globals.notification_user
   // @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
