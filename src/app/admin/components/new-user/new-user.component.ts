@@ -34,6 +34,9 @@ export class NewUserComponent implements OnInit {
     private store: Store<{ breadcrumb: any }>,
     private _location: Location
   ) {
+    this.userService.getRoles().subscribe(response => {
+      this.roles = response.data;
+    })
     this.store.subscribe(res => {
       if (res.breadcrumb.active_title.includes("Admin")) {
         this.isAdminCreate = true;
@@ -50,22 +53,9 @@ export class NewUserComponent implements OnInit {
           this.userForm.setValue(this.userData)
         })
       } else {
-        if (this.isAdminCreate) {
-          this.roles = []
-          this.userService.getRoles().subscribe(response => {
-            this.roles = response.data;
-            // response.data.map(role => {
-            // if (this.activeTitle.includes(role.role_name)) {
-            //   console.log(this.roles)
-            //   role['disabled'] = false;
-            //   this.roles.push(role)
-            // } else {
-            //   role['disabled'] = true;
-            //   this.roles.push(role)
-            // }
-            // })
-          })
-        }
+        // if (this.isAdminCreate) {
+ 
+        // }
       }
     })
   }

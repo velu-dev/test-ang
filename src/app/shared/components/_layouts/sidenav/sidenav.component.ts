@@ -64,6 +64,7 @@ export class SidenavComponent implements OnInit {
   }
   navigate() {
     if ((this.screenWidth < 800)) {
+      alert("hi")
       this.sidenav.toggle();
     }
   }

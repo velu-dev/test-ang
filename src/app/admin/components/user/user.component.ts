@@ -42,15 +42,22 @@ export class UserComponent implements OnInit {
   ) {
     this.screenWidth = window.innerWidth;
     this.title.setTitle("APP | Manage User");
+    this.roles = [];
     this.userService.getRoles().subscribe(response => {
-      this.roles = response.data.map(function (el) {
+      response.data.map(role => {
+        if (!(role.role_name == "Admin")) {
+          this.roles.push(role)
+          this.selectedRoleId.push(role.id)
+        }
+      })
+      this.getUser(this.selectedRoleId);
+      this.roles.map(function (el) {
         var o = Object.assign({}, el);
         o['checked'] = false;
         return o;
       });
       // console.log()
     })
-    this.getUser(this.selectedRole);
     window.onresize = () => {
       this.screenWidth = window.innerWidth;
     };
@@ -65,7 +72,6 @@ export class UserComponent implements OnInit {
         user['isExpand'] = false;
         this.users.push(user);
       })
-      console.log(this.users)
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
