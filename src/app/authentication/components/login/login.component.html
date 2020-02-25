@@ -14,7 +14,7 @@
                 [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
                 <mat-label>Email ID</mat-label>
                 <input matInput name="email" placeholder="Enter Email ID" formControlName="email" autocomplete="off">
-                <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
+                <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="100"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }" class="m-b-0">
@@ -23,10 +23,10 @@
                   formControlName="password">
                 <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
                   {{passwordFieldType ? 'visibility_off' : 'visibility'}}</mat-icon>
-                <mat-error>{{errorMessages?.entervalidpassword}}</mat-error>
+                <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
               </mat-form-field>
 
-              <div class="forgot-password"> Forgot Password ?</div>
+              <div class="forgot-password" > <span routerLink="/forgotpassword">Forgot Password ?</span></div>
               <button mat-raised-button color="primary" type="submit" class="authentication-btn"> Login <i
                   class="fa fa-arrow-right"></i></button>
             </form>
