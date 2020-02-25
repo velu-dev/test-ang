@@ -33,5 +33,13 @@ pipelines:
               S3_BUCKET: $S3_BUCKET
               COMMAND: 'upload'
               LOCAL_PATH: 'dist'
-          - echo "Uploading to S3 bucket completed!"            
+          - echo "Uploading to S3 bucket completed!"
+           # CloudFront Invalidation Process
+          - pipe: atlassian/aws-cloudfront-invalidate:0.3.0
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+              DISTRIBUTION_ID: 'E2K9SM7CR7W4JM'
+          - echo "CloudFront Invalidation Completed!"
     
