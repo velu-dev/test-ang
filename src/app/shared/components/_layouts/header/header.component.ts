@@ -19,7 +19,17 @@ import { User } from 'src/app/admin/models/user.model';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  notifications = [
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() },
+    { name: "Name here", message: "Message content here", date: new Date() }
+  ]
   profile = globals.profile
+  notification_user = globals.notification_user
   // @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
   @Input() inputSideNav: MatSidenav;
   elem;
@@ -35,10 +45,12 @@ export class HeaderComponent implements OnInit {
     private alertService: AlertService,
     private userService: UserService
   ) {
+    this.spinnerService.show();
     Auth.currentSession().then(token => {
       this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
       this.userService.getUser(this.currentUserID).subscribe(res => {
         this.user = res.data;
+        this.spinnerService.hide();
       })
     })
   }

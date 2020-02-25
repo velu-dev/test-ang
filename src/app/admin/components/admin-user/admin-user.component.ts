@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ExportService } from 'src/app/shared/services/export.service';
 import * as globals from '../../../globals';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-admin-user',
   templateUrl: './admin-user.component.html',
@@ -24,7 +25,8 @@ export class AdminUserComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private title: Title,
-    private exportService: ExportService
+    private exportService: ExportService,
+    private spinnerService: NgxSpinnerService
   ) {
     this.title.setTitle("APP | Manage Admin");
     this.getUser([1]);
@@ -58,10 +60,11 @@ export class AdminUserComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Admin-Users")
   }
-  gotoEdit(id) {
-
+  gotoEdit(data) {
+    this.router.navigate(["/admin/admin-users/" + data.id])
   }
   navigate() {
+    // this.router.navigate(['new'])
 
   }
 }

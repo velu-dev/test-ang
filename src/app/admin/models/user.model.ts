@@ -4,6 +4,6 @@ export interface User {
   last_name: string;
   middle_name: string;
   sign_in_email_id: string;
-  role: string;
+  role_id: string;
   company_name: string;
 }

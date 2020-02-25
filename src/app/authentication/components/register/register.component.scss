@@ -27,13 +27,8 @@
         mat-icon {
           color: $text-gray !important;
         }
-        .check-password {
-          cursor: pointer;
-        }
-        mat-error {
-          padding-top: 3px;
-        }
       }
+    
       .note {
         font-size: $font-size-3;
         width: 100%;

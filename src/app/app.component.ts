@@ -49,6 +49,16 @@ export class AppComponent {
                 this.breadcrumbList.push(menu_name)
               }
               menu_name.submenu.map(sub => {
+                if (!isNaN(Number(res))) {
+                  let mm = menu_join.split("/")
+                  mm.shift();
+                  mm.pop();
+                  let menu = '/' + mm.join('/') + '/update'
+                  if (menu == sub.path) {
+                    this.breadcrumbList.push(sub)
+                  }
+                }
+
                 if (sub.path == menu_join) {
                   this.breadcrumbList.push(sub)
                 }

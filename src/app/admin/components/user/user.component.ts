@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ExportService } from './../../../shared/services/export.service';
 import * as globals from '../../../globals';
+import { Role } from '../../models/role.model';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -23,9 +24,10 @@ import * as globals from '../../../globals';
   ]
 })
 export class UserComponent implements OnInit {
+  screenWidth: number;
   xls = globals.xls;
-  roles = []
-  selectedRole: any;
+  roles: Role[];
+  selectedRole: any = [];
   dataSource: any;
   columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
   columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
@@ -38,24 +40,39 @@ export class UserComponent implements OnInit {
     private title: Title,
     private exportService: ExportService
   ) {
+    this.screenWidth = window.innerWidth;
     this.title.setTitle("APP | Manage User");
+    this.roles = [];
     this.userService.getRoles().subscribe(response => {
-      this.roles = response.data.map(function (el) {
+      response.data.map(role => {
+        if (!(role.role_name == "Admin")) {
+          this.roles.push(role)
+          this.selectedRoleId.push(role.id)
+        }
+      })
+      this.getUser(this.selectedRoleId);
+      this.roles.map(function (el) {
         var o = Object.assign({}, el);
-        o.checked = false;
+        o['checked'] = false;
         return o;
       });
+      // console.log()
     })
-    this.getUser(this.roles);
+    window.onresize = () => {
+      this.screenWidth = window.innerWidth;
+    };
   }
 
   ngOnInit() {
   }
   users = [];
   getUser(roles) {
+    this.users = [];
     this.userService.getUsers(roles).subscribe(response => {
-      let data = []
-      this.users = response.data;
+      response.data.map(user => {
+        user['isExpand'] = false;
+        this.users.push(user);
+      })
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -67,11 +84,16 @@ export class UserComponent implements OnInit {
 
   }
   selectedRoleId = []
-  filterByRole() {
+  filterByRole(value?: string) {
     this.selectedRoleId = [];
     this.roles.map(res => {
-      if (res.checked) {
-        this.selectedRoleId.push(res.id);
+      if (value) {
+        res['checked'] = !res['checked'];
+        this.selectedRoleId.push(res.id)
+      } else {
+        if (res['checked']) {
+          this.selectedRoleId.push(res.id);
+        }
       }
     })
     this.getUser(this.selectedRoleId)
@@ -96,5 +118,10 @@ export class UserComponent implements OnInit {
       })
     })
     this.exportService.exportExcel(data, "Non-Admin-Users")
+  }
+  openElement(element) {
+    if ((this.screenWidth < 800)) {
+      element.isExpand = !element.isExpand;
+    }
   }
 }

@@ -4,28 +4,27 @@
       <div class="m-auto" fxFlex="30" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxFlex.xl="25" fxLayout="column">
         <mat-card class="p-5">
           <!--Form Title-->
-          <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
-          <mat-card-title>Verify your account </mat-card-title>
+          <img mat-card-image [src]="logo" alt="Lucy logo" class="logo m-t-0">
+          <mat-card-title class="p-t-10 auth-title">Verify your account </mat-card-title>
           <!--Form subTitle-->
-          <mat-card-subtitle class="m-t-5 m-b-50">We've send a code to your registered email id</mat-card-subtitle>
+          <mat-card-subtitle class="m-t-5 m-b-50">We've sent a verification code to your registered email id</mat-card-subtitle>
+          <app-error *ngIf="error" [data]="error"></app-error>
           <mat-card-content>
             <!--Form start-->
             <form fxLayout="row wrap" [formGroup]="verificationForm" (ngSubmit)="verifySubmit()">
-              <mat-form-field appearance="outline" fxFlex="100"
-                [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
-                <mat-label>Email*</mat-label>
+              <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Email ID*</mat-label>
                 <input matInput name="email" placeholder="Email" formControlName="email" autocomplete="off">
-                <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
+                <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
-              <mat-form-field class="mt-20" appearance="outline" fxFlex="100"
-                [ngClass]="{ 'has-error': isSubmitted && formControls.password.errors }">
+              <mat-form-field class="mt-20" appearance="outline" fxFlex="100">
                 <mat-label>Verification code*</mat-label>
                 <input matInput name="VerificationCode" placeholder="Verification code" formControlName="code"
                   autocomplete="off">
                 <mat-icon matSuffix>verified_user</mat-icon>
-                <mat-error>{{errorMessages?.verifycode}}</mat-error>
+                <mat-error *ngIf="isSubmitted">{{errorMessages?.verifycode}}</mat-error>
               </mat-form-field>
-              <button mat-raised-button color="primary" type="submit" class="authentication-btn">Submit<i
+              <button mat-raised-button color="primary" type="submit" class="authentication-btn">Verify<i
                   class="fa fa-arrow-right"></i></button>
             </form>
             <div class="lucy-new-account">Didn't receive the code ?<span (click)="verifyResend()"> Resend</span></div>

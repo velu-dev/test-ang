@@ -4,7 +4,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserVerificationComponent } from './components/user-verification/user-verification.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
-
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ForgotPasswordVerifyComponent } from './components/forgot-password-verify/forgot-password-verify.component';
 
 const routes: Routes = [{
   path: "login",
@@ -21,6 +22,14 @@ const routes: Routes = [{
 {
   path: "changepassword",
   component: PasswordChangeComponent
+},
+{
+  path: "forgotpassword",
+  component: ForgotPasswordComponent
+},
+{
+  path: "forgotpassword-verify",
+  component: ForgotPasswordVerifyComponent
 },
 {
   path: "",

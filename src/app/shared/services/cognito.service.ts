@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Auth } from 'aws-amplify';
 import { Observable, from } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CognitoService {
 
-  constructor() { }
+  constructor() {
+
+  }
 
   logIn(auth): Observable<any> {
     return from(Auth.signIn(auth.name, auth.password))
@@ -46,7 +49,7 @@ export class CognitoService {
   }
 
   verifyUserAttribute(code) {
-    return from(Auth.verifyCurrentUserAttributeSubmit('email',code))
+    return from(Auth.verifyCurrentUserAttributeSubmit('email', code))
   }
 
   resentSignupCode(email): Observable<any> {
@@ -57,12 +60,16 @@ export class CognitoService {
     return from(Auth.changePassword(user, oldPassword, newPassword));
   }
 
-  completeNewPassword(user,newPassword,data){
-    return from(Auth.completeNewPassword(user,newPassword,data));
+  userDetails() {
+    return from(Auth.currentUserInfo());
   }
 
-  userDetails(){
-    return from(Auth.currentUserInfo());
+  forgotPassword(email): Observable<any> {
+    return from(Auth.forgotPassword(email));
+  }
+
+  forgotPasswordSubmit(email, code, password): Observable<any> {
+    return from(Auth.forgotPasswordSubmit(email, code, password));
   }
 
 }
