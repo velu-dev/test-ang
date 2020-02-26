@@ -34,9 +34,11 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div class="text-center w-100 m-t-10"> <button mat-raised-button color="primary" type="submit" class="m-r-10">
+      <div class="text-center w-100 m-t-10">
+        <button mat-raised-button color="primary" type="submit" class="m-r-10">
           Submit </button>
-        <button mat-raised-button (click)="cancel()">Cancel</button></div>
+        <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

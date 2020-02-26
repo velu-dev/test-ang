@@ -44,27 +44,27 @@ export const ROUTES: SideNavInterface[] = [
         ]
 
     },
-    {
-        group: "Subscriber",
-        role_id: 1,
-        menu: [{
-            path: '/subscriber',
-            title: 'Subscriber Account',
-            icon: 'people_alt',
-            submenu: [],
-            group: "Admin",
-            role: 1
-        }, {
-            path: '/subscriber/fees',
-            title: 'Fees Management',
-            icon: 'credit_card',
-            submenu: [],
-            group: "Admin",
-            role: 1
-        }
-        ]
+    // {
+    //     group: "Subscriber",
+    //     role_id: 1,
+    //     menu: [{
+    //         path: '/subscriber',
+    //         title: 'Subscriber Account',
+    //         icon: 'people_alt',
+    //         submenu: [],
+    //         group: "Admin",
+    //         role: 1
+    //     }, {
+    //         path: '/subscriber/fees',
+    //         title: 'Fees Management',
+    //         icon: 'credit_card',
+    //         submenu: [],
+    //         group: "Admin",
+    //         role: 1
+    //     }
+    //     ]
 
-    },
+    // },
     {
         group: "Subscriber",
         role_id: 2,
