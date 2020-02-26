@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse ,HttpHeaders, HttpErrorResponse}
+import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, HttpHeaders, HttpErrorResponse }
   from '@angular/common/http';
-import { Observable,throwError, from  } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { switchMap } from "rxjs/operators";
 import { Auth } from "aws-amplify";
 import { catchError } from "rxjs/operators";
+import { CookieService } from 'ngx-cookie-service';
 export const InterceptorSkipHeader = "X-Skip-Interceptor";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenInterceptorService implements HttpInterceptor {
-
-  constructor() { }
+  roleId: any;
+  constructor(private cookieService: CookieService) {
+    this.roleId = this.cookieService.get("role_id")
+  }
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -27,12 +30,13 @@ export class TokenInterceptorService implements HttpInterceptor {
         })
       );
     }
-   
+
     return from(Auth.currentSession())
       .pipe(
         switchMap(token => {
           const headers: { [name: string]: string | string[] } = {};
           headers["Authorization"] = "Bearer " + token['idToken'].jwtToken;
+          headers["role_id"] = this.roleId;
           const newHeader = new HttpHeaders(headers);
           const reqClone = req.clone({
             headers: newHeader

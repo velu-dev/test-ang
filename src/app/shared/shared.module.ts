@@ -18,6 +18,8 @@ import { breadcrumbreducer } from './store/breadcrumb.reducer';
 import { ExportService } from './services/export.service';
 import { ErrorComponent } from './components/error/error.component';
 import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
+import { UserService } from './services/user.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
     CognitoService,
     AlertService,
     ExportService,
+    UserService,
+    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

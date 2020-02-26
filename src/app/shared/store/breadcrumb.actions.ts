@@ -1,10 +1,6 @@
 import { createAction } from '@ngrx/store';
 import { Action } from '@ngrx/store';
 
-export const increment = createAction('[Counter Component] Increment');
-export const decrement = createAction('[Counter Component] Decrement');
-export const reset = createAction('[Counter Component] Reset');
-
 export enum BreadcrumActions {
     LIST = "[Breadcrumb] List",
     ADD = "[BreadCrumb] Add",
