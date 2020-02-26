@@ -44,7 +44,7 @@
                 <mat-icon matSuffix
                   matTooltip="Password must contain at least 8 characters, including UPPER/lowercase, special character and numbers."
                   matTooltipPosition="above">error_outline</mat-icon>
-                <mat-error>{{errorMessages?.entervalidpassword}}</mat-error>
+                <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="90" fxFlex.md="45" fxFlex.lg="45" fxFlex.sm="45"
                 fxFlex.xl="45">
