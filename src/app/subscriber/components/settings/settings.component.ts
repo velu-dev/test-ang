@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import * as globals from '../../../globals';
-import { UserService } from '../../services/user.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { User } from '../../models/user.model';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { Router } from '@angular/router';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { UserService } from './../../service/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { User } from 'src/app/shared/model/user.model';
+import * as globals from './../../../globals'
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -69,7 +70,7 @@ export class SettingsComponent implements OnInit {
     this.isTypePassword = !this.isTypePassword
   }
   changePassword() {
-
+    this.spinnerService.show();
     if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
       console.log("password miss match  ")
       return
@@ -78,7 +79,6 @@ export class SettingsComponent implements OnInit {
       console.log("Not valid form ")
       return;
     }
-    this.spinnerService.show();
     this.cognitoService.getCurrentUser().subscribe(user => {
       console.log(user)
       this.cognitoService.changePassword(user, this.userPasswrdForm.value.current_password, this.userPasswrdForm.value.new_password).subscribe(res => {

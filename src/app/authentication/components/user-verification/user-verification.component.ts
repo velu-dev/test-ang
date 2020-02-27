@@ -80,8 +80,7 @@ export class UserVerificationComponent implements OnInit {
           return;
         }
         this.cognitoService.resentSignupCode(this.verificationForm.value.email).subscribe(resendVerify => {
-          console.log(resendVerify);
-          this.alertService.openSnackBar(success.resendcode, 'succes')
+          this.error = { message: success.resendcode, action: "danger" }
         }, error => {
           console.log("Error", error);
           this.error = { message: error.message, action: "danger" }

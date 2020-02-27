@@ -46,18 +46,18 @@ export const ROUTES = [
         }
         ]
     }, {
-        path: '/subscriber',
-        title: 'Subscriber Account',
-        icon: 'people_alt',
-        submenu: [],
-    }, {
-        path: '/subscriber/fees',
-        title: 'Fees Management',
+        path: '/subscriber/users',
+        title: 'User Management',
         icon: 'credit_card',
         submenu: [],
     }, {
         path: '/subscriber/dashboard',
         title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    }, {
+        path: '/subscriber/settings',
+        title: 'Settings',
         icon: 'dashboard',
         submenu: [],
     }

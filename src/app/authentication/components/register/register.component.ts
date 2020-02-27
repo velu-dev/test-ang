@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
@@ -33,14 +33,13 @@ export class RegisterComponent implements OnInit {
       lastName: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middleInitial: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       companyName: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*-]).{8,}$'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*-]).{8,}$'), Validators.minLength(8)])],
       captcha: ['', Validators.required],
       policy: ['', Validators.required]
     });
   }
-
   get formControls() { return this.registerForm.controls; }
 
   //change password <-> text
