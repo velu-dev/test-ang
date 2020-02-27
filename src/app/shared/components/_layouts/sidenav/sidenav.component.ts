@@ -61,9 +61,9 @@ export class SidenavComponent implements OnInit {
 
   }
   ngAfterViewInit() {
-    if ((this.screenWidth < 800)) {
-      this.sidenav.toggle();
-    }
+    // if ((this.screenWidth < 800)) {
+    //   this.sidenav.toggle();
+    // }
   }
   navigate() {
     if ((this.screenWidth < 800)) {
