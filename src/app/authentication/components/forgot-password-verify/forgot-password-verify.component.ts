@@ -54,7 +54,7 @@ export class ForgotPasswordVerifyComponent implements OnInit {
     }
     this.authenticationService.emailVerify(this.forgotVerifyForm.value.email.toLowerCase()).subscribe(emailVerifyRes => {
       let verifyDetails: any = emailVerifyRes;
-      if (verifyDetails.message == "This email id does not exist!" || verifyDetails.message == "This email id is not verified!") {
+      if (verifyDetails.message == this.errorMessages.emailnotexist || verifyDetails.message == this.errorMessages.emailnotverify) {
         this.error = { message: verifyDetails.message, action: "danger" }
         this.spinnerService.hide();
         return;
@@ -68,31 +68,8 @@ export class ForgotPasswordVerifyComponent implements OnInit {
       }, error => {
         this.spinnerService.hide()
         console.log("error", error);
-      })
-    })
-  }
-
-  //verification code resend
-  verifyResend() {
-    this.error = '';
-    if (this.forgotVerifyForm.value.email) {
-      this.authenticationService.emailVerify(this.forgotVerifyForm.value.email).subscribe(emailVerifyRes => {
-        let verifyDetails: any = emailVerifyRes;
-        if (verifyDetails.message == "This email id does not exist!" || verifyDetails.message == "This email id is not verified!") {
-          this.error = { message: verifyDetails.message, action: "danger" }
-          this.spinnerService.hide();
-          return;
-        }
-      this.cognitoService.resentSignupCode(this.forgotVerifyForm.value.email).subscribe(resendVerify => {
-        console.log(resendVerify);
-        this.alertService.openSnackBar(success.resendcode, 'succes')
-      }, error => {
-        console.log("Error", error);
         this.error = { message: error.message, action: "danger" }
       })
     })
-    } else {
-      this.error = { message: this.errorMessages.entervalidemail, action: "danger" }
-    }
   }
 }
