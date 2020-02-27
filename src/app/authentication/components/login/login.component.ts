@@ -39,15 +39,20 @@ export class LoginComponent implements OnInit {
   error: any;
   //login submit
   login() {
+    this.error = '';
     this.cookieService.deleteAll();
-    let auth = { name: this.loginForm.value.email, password: this.loginForm.value.password }
+
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
       return;
     }
+    let auth = { name: this.loginForm.value.email.toLowerCase(), password: this.loginForm.value.password }
+    this.spinnerService.show()
     this.cognitoService.logIn(auth).subscribe(loginRes => {
 
       if (loginRes && loginRes.challengeName == 'NEW_PASSWORD_REQUIRED') {
+        this.spinnerService.hide()
+        this.cookieService.set('email', this.loginForm.value.email.toLowerCase())
         this.router.navigate(['/changepassword'])
         return;
       }
@@ -57,20 +62,21 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/admin/dashboard'])
         }
         else {
-          this.alertService.openSnackBar("Under processing", 'error');
+          this.error = { message: "Under processing", action: "danger" }
           this.logout();
         }
       })
     }, error => {
       this.error = { message: error.message, action: "danger" }
-      // console.log("loginError", error)
-      this.alertService.openSnackBar(error.message, 'error');
+      this.spinnerService.hide()
+      if (error.code == 'UserNotConfirmedException') {
+        this.router.navigate(['/verification']);
+      }
     })
   }
 
   logout() {
     this.cognitoService.logOut().subscribe(response => {
-      // console.log("logout", response)
       this.cookieService.deleteAll();
     })
   }

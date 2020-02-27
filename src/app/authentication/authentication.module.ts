@@ -7,6 +7,8 @@ import { LoginComponent, RegisterComponent } from "./components/index"
 import { SharedModule } from '../shared/shared.module';
 import { UserVerificationComponent } from './components/user-verification/user-verification.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ForgotPasswordVerifyComponent } from './components/forgot-password-verify/forgot-password-verify.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { PasswordChangeComponent } from './components/password-change/password-c
     LoginComponent,
     RegisterComponent,
     UserVerificationComponent,
-    PasswordChangeComponent
+    PasswordChangeComponent,
+    ForgotPasswordComponent,
+    ForgotPasswordVerifyComponent
   ],
   imports: [
     CommonModule,

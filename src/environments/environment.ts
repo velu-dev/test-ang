@@ -4,8 +4,8 @@
 export const environment = {
   production: false,
 
-  // baseUrl: 'https://dev01api.simplexam.com/', //Dev
-  baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
+  baseUrl: 'https://dev01api.simplexam.com/', //Dev
+  // baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
   // baseUrl: 'http://192.168.1.122:3000/', //Rajan-local
 
   //authentication
@@ -13,6 +13,7 @@ export const environment = {
   signUp: 'auth/Authentication/signup',
   signupVerify: 'auth/Authentication/signup-verify',
   resetPassword: 'admin-api/admin/reset-admin-password',
+  emailVerify: 'auth/authentication/email-verify',
 
   Amplify: {
     Auth: {

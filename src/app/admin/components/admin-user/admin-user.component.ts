@@ -21,6 +21,7 @@ export class AdminUserComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   admin = [];
+  isLoading = false;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -28,6 +29,7 @@ export class AdminUserComponent implements OnInit {
     private exportService: ExportService,
     private spinnerService: NgxSpinnerService
   ) {
+    this.isLoading = true;
     this.title.setTitle("APP | Manage Admin");
     this.getUser([1]);
   }
@@ -39,6 +41,7 @@ export class AdminUserComponent implements OnInit {
       this.dataSource = new MatTableDataSource(response.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.isLoading = false;
     }, error => {
     })
   }
