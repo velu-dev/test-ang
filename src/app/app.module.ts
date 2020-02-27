@@ -13,12 +13,14 @@ import { _LayoutModule } from './shared/components/_layouts/_layout.module';
 import { TokenInterceptorService } from './shared/interceptors/token-interceptor.service';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
+import { DashboardComponent } from './vendor/components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FullLayoutComponent,
-    CommonLayoutComponent
+    CommonLayoutComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
