@@ -36,8 +36,8 @@
                 <input matInput placeholder="Email ID" formControlName="email" autocomplete="off">
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
-              <mat-form-field class="p-r-5" appearance="outline" fxFlex="100" fxFlex.md="45" fxFlex.lg="45"
-                fxFlex.sm="45" fxFlex.xl="45">
+              <mat-form-field class="p-r-5" appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                fxFlex.sm="50" fxFlex.xl="50">
                 <mat-label>Password*</mat-label>
                 <input matInput [type]="passwordFieldType ? 'text' : 'password'" placeholder="Password"
                   formControlName="password">
@@ -46,27 +46,24 @@
                   matTooltipPosition="above">error_outline</mat-icon>
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
               </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="90" fxFlex.md="45" fxFlex.lg="45" fxFlex.sm="45"
-                fxFlex.xl="45">
+              <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.sm="50"
+                fxFlex.xl="50">
                 <mat-label>Confirm password*</mat-label>
                 <input matInput [type]="passwordFieldType ? 'text' : 'password'" placeholder="Confirm password"
                   formControlName="confirmPassword">
-
-              </mat-form-field>
-              <div fxFlex="10" fxFlex.md="10" fxFlex.lg="10" fxFlex.sm="10" fxFlex.xl="10">
                 <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
                   {{passwordFieldType ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </div>
-
-              <!-- <div class="p-b-3 note">Note : {{errorMessages?.passwordpattern}}</div> -->
-
+              </mat-form-field>
 
               <re-captcha formControlName="captcha" name="captcha" required></re-captcha>
+              <div class="p-t-5 p-b-5 checkbox">
+                <mat-checkbox name="policy" formControlName="policy"> Agree the terms and conditions
+                </mat-checkbox>
+                <mat-error *ngIf="isSubmitted && (formControls.policy.errors || !formControls.policy.value)"
+                  class="note">{{errorMessages?.agreeterms}}
+                </mat-error>
+              </div>
 
-              <mat-checkbox class="p-t-5 p-b-5" name="policy" formControlName="policy"> Agree the terms and conditions
-              </mat-checkbox>
-              <mat-error *ngIf="isSubmitted && (formControls.policy.errors || !formControls.policy.value)" class="note">{{errorMessages?.agreeterms}}
-              </mat-error>
               <button mat-raised-button color="primary" type="submit" class="authentication-btn">Sign up<i
                   class="fa fa-arrow-right"></i></button>
             </form>
