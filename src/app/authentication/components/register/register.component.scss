@@ -28,7 +28,12 @@
           color: $text-gray !important;
         }
       }
-    
+      .checkbox  {
+        min-height: 40px;
+        mat-error {
+          font-size: 75%;
+        }
+      }
       .note {
         font-size: $font-size-3;
         width: 100%;
