@@ -2,16 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SubscriberRoutingModule } from './subscriber-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SharedModule } from '../shared/shared.module';
+import { UserComponent } from './components/user/user.component';
+import { NewUserComponent } from './components/new-user/new-user.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    UserComponent,
+    NewUserComponent,
+    SettingsComponent
   ],
   imports: [
     CommonModule,
-    SubscriberRoutingModule
+    SubscriberRoutingModule,
+    SharedModule
   ]
 })
 export class SubscriberModule { }

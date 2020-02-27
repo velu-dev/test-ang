@@ -75,6 +75,13 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             group: "Subscriber",
             role: 2
+        }, {
+            path: '/subscriber/users',
+            title: 'Manage Users',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 2
         }]
     }
 ]
