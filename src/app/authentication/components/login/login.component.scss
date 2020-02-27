@@ -10,14 +10,11 @@
 
     form {
       mat-form-field {
-                mat-icon {
+        mat-icon {
           color: $text-gray !important;
         }
         .check-password {
           cursor: pointer;
-        }
-        mat-error {
-          padding-top: 3px;
         }
       }
       .forgot-password {
@@ -27,11 +24,12 @@
         opacity: 1;
         width: 100%;
         font-size: $font-size-1;
-        padding: 3px;
-        cursor: pointer;
-
         &:hover {
           color: $primarycolor;
+        }
+        span {
+          outline: none;
+          cursor: pointer;
         }
       }
     }
