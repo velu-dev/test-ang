@@ -10,6 +10,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Auth } from 'aws-amplify';
 import * as globals from '../../../../globals';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { UserService } from './../../../services/user.service';
+import { CookieService } from 'ngx-cookie-service';
+
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -40,14 +43,14 @@ export class SidenavComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private router: Router,
     private snackBar: MatSnackBar,
-    private loaderService: NgxSpinnerService
+    private loaderService: NgxSpinnerService,
+    private userService: UserService,
+    private cookieService: CookieService
   ) {
     this.loaderService.show();
     this.screenWidth = window.innerWidth;
-    Auth.currentSession().then(token => {
-      this.roleId = token['idToken']['payload']['custom:isPlatformAdmin']
-      this.menuItems = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);
-    })
+    this.roleId = this.cookieService.get("role_id");
+    this.menuItems = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);
     window.onresize = () => {
       this.screenWidth = window.innerWidth;
     };
@@ -55,16 +58,15 @@ export class SidenavComponent implements OnInit {
 
   }
   ngOnInit() {
-   
+
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     if ((this.screenWidth < 800)) {
       this.sidenav.toggle();
     }
   }
   navigate() {
     if ((this.screenWidth < 800)) {
-      alert("hi")
       this.sidenav.toggle();
     }
   }

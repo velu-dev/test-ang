@@ -9,6 +9,7 @@ import * as  success from '../../../shared/messages/success'
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +21,15 @@ export class LoginComponent implements OnInit {
   passwordFieldType: boolean;
   logo = globals.logo;
   errorMessages = errors;
-  constructor(private router: Router, private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private cookieService: CookieService, private spinnerService: NgxSpinnerService, private alertService: AlertService) { }
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private cognitoService: CognitoService,
+    private formBuilder: FormBuilder,
+    private cookieService: CookieService,
+    private spinnerService: NgxSpinnerService,
+    private alertService: AlertService
+  ) { }
 
   ngOnInit() {
 
@@ -56,14 +65,15 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/changepassword'])
         return;
       }
-      this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(data => {
-        if (data['user']['custom:isPlatformAdmin'] == '1') {
+      this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(res => {
+        this.cookieService.set("role_id", res['data'].role_id)
+        if (res['data'].role_id == '1') {
           this.alertService.openSnackBar(success.loginSuccess, 'success');
           this.router.navigate(['/admin/dashboard'])
         }
         else {
-          this.error = { message: "Under processing", action: "danger" }
-          this.logout();
+          this.alertService.openSnackBar(success.loginSuccess, 'success');
+          this.router.navigate(['/subscriber/dashboard'])
         }
       })
     }, error => {

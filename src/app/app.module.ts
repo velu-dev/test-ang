@@ -7,8 +7,7 @@ import { FullLayoutComponent } from './layout/full-layout/full-layout.component'
 import { CommonLayoutComponent } from './layout/common-layout/common-layout.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CookieService } from 'ngx-cookie-service';
-import { RecaptchaFormsModule, RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module,RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+import { RecaptchaFormsModule, RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { _LayoutModule } from './shared/components/_layouts/_layout.module';
 import { TokenInterceptorService } from './shared/interceptors/token-interceptor.service';
@@ -41,7 +40,6 @@ import { reducers, metaReducers } from './reducers';
     })
   ],
   providers: [
-    CookieService,
     Title,
     {
       provide: HTTP_INTERCEPTORS,
