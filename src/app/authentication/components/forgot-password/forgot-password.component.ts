@@ -7,8 +7,6 @@ import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
-import * as  success from '../../../shared/messages/success'
-import { error } from 'protractor';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -21,7 +19,7 @@ export class ForgotPasswordComponent implements OnInit {
   logo = globals.logo;
   errorMessages = errors;
   error: any;
-  constructor(private router: Router, private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private spinnerService: NgxSpinnerService, private alertService: AlertService) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
     this.forgotPasswordForm = this.formBuilder.group({
@@ -39,7 +37,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.authenticationService.emailVerify(this.forgotPasswordForm.value.email.toLowerCase()).subscribe(emailVerifyRes => {
       console.log("emailVerifyRes", emailVerifyRes)
       let verifyDetails: any = emailVerifyRes;
-      if (verifyDetails.message == "This email id does not exist!" || verifyDetails.message == "This email id is not verified!") {
+      if (verifyDetails.message == this.errorMessages.emailnotexist || verifyDetails.message == this.errorMessages.emailnotverify) {
         this.error = { message: verifyDetails.message, action: "danger" }
         this.spinnerService.hide();
         return;
