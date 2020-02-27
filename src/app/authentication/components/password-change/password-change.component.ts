@@ -3,7 +3,6 @@ import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import * as  success from '../../../shared/messages/success'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -20,15 +19,16 @@ export class PasswordChangeComponent implements OnInit {
   isSubmitted = false;
   errorMessages = errors;
   passwordFieldType: boolean;
-  email:string;
-  constructor(private formBuilder: FormBuilder, private cognitoService: CognitoService, private router: Router, private authenticationService: AuthenticationService, private alertService: AlertService, private spinnerService: NgxSpinnerService,private cookieService:CookieService) { }
+  email: string;
+  error: any;
+  constructor(private formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService, private alertService: AlertService, private spinnerService: NgxSpinnerService, private cookieService: CookieService) { }
 
   ngOnInit() {
     this.changePaswordForm = this.formBuilder.group({
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*-]).{8,}$'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*-]).{8,}$'), Validators.minLength(8)])],
     });
-    this.email =  this.cookieService.get('email');
+    this.email = this.cookieService.get('email');
   }
 
   get formControls() { return this.changePaswordForm.controls; }
@@ -43,12 +43,12 @@ export class PasswordChangeComponent implements OnInit {
     }
 
     if (this.changePaswordForm.value.password != this.changePaswordForm.value.confirmPassword) {
-      this.alertService.openSnackBar(this.errorMessages.passworddidnotMatch, 'error')
+      this.error = { message: this.errorMessages.passworddidnotMatch, action: "danger" }
       return;
     }
 
-    if(!this.email){
-      this.alertService.openSnackBar('Please Re-login', 'error')
+    if (!this.email) {
+      this.error = { message: 'Please Re-login', action: "danger" }
       this.router.navigate(['/login'])
       return;
     }
@@ -65,7 +65,7 @@ export class PasswordChangeComponent implements OnInit {
     }, error => {
       console.log(error)
       this.spinnerService.hide()
-      this.alertService.openSnackBar(error.error.error, 'error')
+      this.error = { message: error.error.error, action: "danger" }
     })
   }
 }

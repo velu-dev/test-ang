@@ -10,5 +10,8 @@ export class AlertComponent implements OnInit {
   constructor(@Inject(MAT_SNACK_BAR_DATA) public data: any) { }
 
   ngOnInit() {
+    if(this.data.message == null || typeof(this.data.message) != 'string'){
+      this.data.message = 'Unknown error'
+    }
   }
 }

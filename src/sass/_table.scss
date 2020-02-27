@@ -1,4 +1,4 @@
-@import 'variables';
+@import "variables";
 
 table {
   width: $width-100;
@@ -12,13 +12,53 @@ table {
     td {
       color: $dark-gray;
       padding: 0px 10px !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
     &:hover {
       background-color: $bg-light-blue;
       cursor: pointer;
-          }
+    }
   }
   .mat-header-row {
     height: 50px !important;
   }
+}
+// ==================================
+// Table Responsive styles   ========
+// ==================================
+
+tr.detail-row {
+  height: 0;
+}
+.detail {
+  overflow: hidden;
+  display: flex;
+  .resposive-table {
+    min-width: $width-100;
+    background-color: $bg-light-blue;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 5px 0;
+  }
+  div {
+    color: $dark-gray;
+    span {
+      font-weight: $font-weight-bold;
+      min-width: 90px;
+      display: inline-block;
+      padding: 5px 0;
+    }
+  }
+}
+
+
+.table-expand {
+  padding-top: 8px;
+  color:$text-error;
+  font-size: $font-size-4;
+}
+.expand-close {
+  padding-top: 8px;
+  color:$primarylightcolor;
+  font-size: $font-size-4;
 }

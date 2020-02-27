@@ -11,13 +11,10 @@ import { Title } from '@angular/platform-browser';
 import { ExportService } from './../../../shared/services/export.service';
 import * as globals from '../../../globals';
 import { Role } from '../../models/role.model';
-import { Observable } from 'rxjs';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map, shareReplay } from 'rxjs/operators';
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss'],
+  selector: 'app-vendors',
+  templateUrl: './vendors.component.html',
+  styleUrls: ['./vendors.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -26,41 +23,23 @@ import { map, shareReplay } from 'rxjs/operators';
     ]),
   ]
 })
-export class UserComponent implements OnInit {
+export class VendorsComponent implements OnInit {
   screenWidth: number;
   xls = globals.xls;
   roles: Role[];
   selectedRole: any = [];
   dataSource: any;
-  columnName = []
-  columnsToDisplay = [];
+  columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
+  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
-  isMobile: boolean = false;
   constructor(
-    private breakpointObserver: BreakpointObserver,
     private userService: UserService,
     private router: Router,
     private title: Title,
     private exportService: ExportService
   ) {
-
-    this.isHandset$.subscribe(res => {
-      this.isMobile = res;
-      if (res) {
-        this.columnName = ["","First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "action"]
-      } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"]
-      }
-    })
     this.screenWidth = window.innerWidth;
     this.title.setTitle("APP | Manage User");
     this.roles = [];
@@ -141,7 +120,7 @@ export class UserComponent implements OnInit {
     this.exportService.exportExcel(data, "Non-Admin-Users")
   }
   openElement(element) {
-    if (this.isMobile) {
+    if ((this.screenWidth < 800)) {
       element.isExpand = !element.isExpand;
     }
   }
