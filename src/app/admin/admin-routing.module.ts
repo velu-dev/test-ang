@@ -7,6 +7,7 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { AdminUserComponent } from './components/admin-user/admin-user.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { VendorsComponent } from './components/vendors/vendors.component';
 
 
 const routes: Routes = [{
@@ -41,6 +42,12 @@ const routes: Routes = [{
     component: NewUserComponent
   }
   ]
+}, {
+  path: "vendors",
+  children: [{
+    path: "",
+    component: VendorsComponent
+  }]
 }, {
   path: "profile",
   component: ProfileComponent

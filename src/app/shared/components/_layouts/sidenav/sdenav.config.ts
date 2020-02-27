@@ -40,7 +40,14 @@ export const ROUTES: SideNavInterface[] = [
             }],
             group: "Admin",
             role: 1
-        },
+        }, {
+            path: '/admin/vendors',
+            title: 'Manage Vendor',
+            icon: 'person_add',
+            submenu: [],
+            group: "Admin",
+            role: 1
+        }
         ]
 
     },

@@ -10,6 +10,7 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { AdminUserComponent } from './components/admin-user/admin-user.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { VendorsComponent } from './components/vendors/vendors.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { SettingsComponent } from './components/settings/settings.component';
     NewUserComponent,
     AdminUserComponent,
     ProfileComponent,
-    SettingsComponent
+    SettingsComponent,
+    VendorsComponent
   ],
   imports: [
     CommonModule,
