@@ -44,27 +44,6 @@ export const ROUTES: SideNavInterface[] = [
         ]
 
     },
-    // {
-    //     group: "Subscriber",
-    //     role_id: 1,
-    //     menu: [{
-    //         path: '/subscriber',
-    //         title: 'Subscriber Account',
-    //         icon: 'people_alt',
-    //         submenu: [],
-    //         group: "Admin",
-    //         role: 1
-    //     }, {
-    //         path: '/subscriber/fees',
-    //         title: 'Fees Management',
-    //         icon: 'credit_card',
-    //         submenu: [],
-    //         group: "Admin",
-    //         role: 1
-    //     }
-    //     ]
-
-    // },
     {
         group: "Subscriber",
         role_id: 2,
@@ -82,6 +61,25 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             group: "Subscriber",
             role: 2
+        }]
+    },
+    {
+        group: "Vendor",
+        role_id: 5,
+        menu: [{
+            path: '/vendor/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 5
+        }, {
+            path: '/vendor/users',
+            title: 'Manage Users',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 5
         }]
     }
 ]
