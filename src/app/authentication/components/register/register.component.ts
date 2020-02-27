@@ -87,7 +87,7 @@ export class RegisterComponent implements OnInit {
         console.log("cognitoSignUpError", error);
         this.spinnerService.hide();
         if(error.code == 'UsernameExistsException'){
-          error.message = 'This email address is already in use'
+          error.message = this.errorMessages.emailalready;
         }
         this.error = { message: error.message, action: "danger" }
       })
