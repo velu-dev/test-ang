@@ -10,11 +10,10 @@ pipelines:
 
       - step:
           name: Build app
-          trigger: manual               
+          trigger: automatic               
           script: # The script below will build the application.                    
           - npm install -g @angular/cli@8.3.24
           - npm install
-          #- ng build --prod
           - ng build --prod --aot --build-optimizer --progress=false
           - echo "Building Front-end application completed!"
           artifacts:
@@ -22,7 +21,7 @@ pipelines:
 
       - step:
           name: Upload to S3 Bucket
-          trigger: manual          
+          trigger: automatic          
           script:
           # Upload to S3 Front-end bucket
           - pipe: atlassian/aws-s3-deploy:0.3.7

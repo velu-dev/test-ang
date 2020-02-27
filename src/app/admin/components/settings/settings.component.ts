@@ -69,7 +69,7 @@ export class SettingsComponent implements OnInit {
     this.isTypePassword = !this.isTypePassword
   }
   changePassword() {
-    this.spinnerService.show();
+
     if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
       console.log("password miss match  ")
       return
@@ -78,6 +78,7 @@ export class SettingsComponent implements OnInit {
       console.log("Not valid form ")
       return;
     }
+    this.spinnerService.show();
     this.cognitoService.getCurrentUser().subscribe(user => {
       console.log(user)
       this.cognitoService.changePassword(user, this.userPasswrdForm.value.current_password, this.userPasswrdForm.value.new_password).subscribe(res => {
