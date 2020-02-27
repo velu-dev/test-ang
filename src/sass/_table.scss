@@ -50,3 +50,15 @@ tr.detail-row {
     }
   }
 }
+
+
+.table-expand {
+  padding-top: 8px;
+  color:$text-error;
+  font-size: $font-size-4;
+}
+.expand-close {
+  padding-top: 8px;
+  color:$primarylightcolor;
+  font-size: $font-size-4;
+}
