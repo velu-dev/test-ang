@@ -11,6 +11,9 @@ import { Title } from '@angular/platform-browser';
 import { ExportService } from './../../../shared/services/export.service';
 import * as globals from '../../../globals';
 import { Role } from '../../models/role.model';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -29,17 +32,35 @@ export class UserComponent implements OnInit {
   roles: Role[];
   selectedRole: any = [];
   dataSource: any;
-  columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
+  columnName = []
+  columnsToDisplay = [];
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  isMobile: boolean = false;
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private userService: UserService,
     private router: Router,
     private title: Title,
     private exportService: ExportService
   ) {
+
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["","First Name", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "action"]
+      } else {
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"]
+      }
+    })
     this.screenWidth = window.innerWidth;
     this.title.setTitle("APP | Manage User");
     this.roles = [];
@@ -120,7 +141,7 @@ export class UserComponent implements OnInit {
     this.exportService.exportExcel(data, "Non-Admin-Users")
   }
   openElement(element) {
-    if ((this.screenWidth < 800)) {
+    if (this.isMobile) {
       element.isExpand = !element.isExpand;
     }
   }
