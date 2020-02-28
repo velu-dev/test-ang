@@ -26,7 +26,7 @@ export const ROUTES = [
         submenu: []
     },{
         path: "/admin/vendors",
-        title: "Manage vendors",
+        title: "Manage Vendors",
         icon: "settings",
         submenu: []
     }, {
@@ -36,16 +36,16 @@ export const ROUTES = [
         submenu: []
     }, {
         path: '/admin/users',
-        title: 'Manage Users',
+        title: 'Manage Subscribers',
         icon: 'person_add',
         submenu: [{
             path: '/admin/users/new',
-            title: 'New User',
+            title: 'New Subscribers',
             icon: 'dashboard',
             submenu: []
         }, {
             path: '/admin/users/update',
-            title: 'Edit User',
+            title: 'Edit Subscribers',
             icon: 'dashboard',
             submenu: []
         }
