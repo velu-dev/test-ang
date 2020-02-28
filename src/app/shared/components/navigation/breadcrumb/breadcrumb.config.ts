@@ -24,6 +24,11 @@ export const ROUTES = [
         title: "Settings",
         icon: "settings",
         submenu: []
+    },{
+        path: "/admin/vendors",
+        title: "Manage vendors",
+        icon: "settings",
+        submenu: []
     }, {
         path: "/admin/profile",
         title: "Profile",
