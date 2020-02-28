@@ -24,4 +24,10 @@ export class UserService {
   updateUser(data): Observable<any> {
     return this.http.put(environment.baseUrl + "admin-api/admin/update-user/" + data.id, data)
   }
+  getSubscriberRole(): Observable<any>{
+    return this.http.get(environment.baseUrl + "admin-api/subscriber/roles")
+  }
+  getVendorRole(): Observable<any>{
+    return this.http.get(environment.baseUrl + "admin-api/vendor/roles")
+  }
 }

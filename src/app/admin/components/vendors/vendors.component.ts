@@ -43,7 +43,7 @@ export class VendorsComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.title.setTitle("APP | Manage User");
     this.roles = [];
-    this.userService.getRoles().subscribe(response => {
+    this.userService.getVendorRole().subscribe(response => {
       response.data.map(role => {
         if (!(role.role_name == "Admin")) {
           this.roles.push(role)
@@ -68,7 +68,7 @@ export class VendorsComponent implements OnInit {
   users = [];
   getUser(roles) {
     this.users = [];
-    this.userService.getUsers(roles).subscribe(response => {
+    this.userService.getUsers([5,7,9]).subscribe(response => {
       response.data.map(user => {
         user['isExpand'] = false;
         this.users.push(user);
@@ -99,7 +99,7 @@ export class VendorsComponent implements OnInit {
     this.getUser(this.selectedRoleId)
   }
   navigate() {
-    this.router.navigate(['/admin/users/new'])
+    this.router.navigate(['/admin/vendor/new'])
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
