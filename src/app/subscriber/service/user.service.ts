@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, ObservedValueOf } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,15 +13,18 @@ export class UserService {
     return this.http.post(environment.baseUrl + "admin-api/subscriber/users", { role_filter: roles })
   }
   getRoles(): Observable<any> {
-    return this.http.get(environment.baseUrl + "admin-api/admin/roles")
+    return this.http.get(environment.baseUrl + "admin-api/subscriber/roles")
   }
   getUser(id): Observable<any> {
-    return this.http.get(environment.baseUrl + "admin-api/admin/user/" + id)
+    return this.http.get(environment.baseUrl + "admin-api/subscriber/user/" + id)
   }
   createUser(data): Observable<any> {
-    return this.http.post(environment.baseUrl + "admin-api/admin/create-user", data)
+    return this.http.post(environment.baseUrl + "admin-api/subscriber/create", data)
   }
   updateUser(data): Observable<any> {
-    return this.http.put(environment.baseUrl + "admin-api/admin/update-user/" + data.id, data)
+    return this.http.put(environment.baseUrl + "admin-api/subscriber/profile-update/" + data.id, data)
+  }
+  getProfile(): Observable<any>{
+    return this.http.get(environment.baseUrl + "admin-api/subscriber/profile");
   }
 }
