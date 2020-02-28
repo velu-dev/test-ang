@@ -71,6 +71,11 @@ export const ROUTES = [
         title: 'Dashboard',
         icon: 'dashboard',
         submenu: [],
+    },{
+        path: '/vendor/users',
+        title: 'Manage Users',
+        icon: 'dashboard',
+        submenu: [],
     }, {
         path: '/vendor/settings',
         title: 'Settings',
