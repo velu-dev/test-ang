@@ -57,13 +57,16 @@ export class SettingsComponent implements OnInit {
     });
   }
   userformSubmit() {
+    this.isSubmitted = true;
     if (this.userForm.invalid) {
       return;
     }
     this.userService.updateProfile(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successful", 'success');
+      this.isSubmitted = false;
       this.router.navigate(['/vendor/settings'])
     }, error => {
+      this.isSubmitted = false;
       this.alertService.openSnackBar(error.message, 'error');
     })
   }

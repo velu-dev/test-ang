@@ -7,13 +7,15 @@ import { SharedModule } from '../shared/shared.module';
 import { SettingsComponent } from './components/settings/settings.component';
 import { UserService } from './service/user.service';
 import { UserComponent } from './components/user/user.component';
+import { NewUserComponent } from './components/new-user/new-user.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     SettingsComponent,
-    UserComponent
+    UserComponent,
+    NewUserComponent
   ],
   imports: [
     CommonModule,
