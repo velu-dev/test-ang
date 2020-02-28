@@ -1,7 +1,42 @@
 @import "variables";
 mat-card {
-    padding: 10px;
-    box-shadow: $box-shadow-1 !important;
-    min-height: 90px !important;
-    border-top: 2px solid $primarycolor;  
+  padding: 10px;
+  box-shadow: $box-shadow-1 !important;
+  min-height: 100px;
+  max-height: 100px !important;
+  mat-card-header {
+    mat-card-title {
+      font-size: $font-size-11;
+      padding-left: 10px;
+    }
+    button {
+      .mat-icon {
+        height: 19px !important;
+        width: 19px !important;
+        line-height: 16px !important;
+        font-size: 20px !important;
+      }
+    }
+  }
+  mat-card-content {
+    mat-icon {
+      font-size: $font-size-19;
+      opacity: 0.6;
+      padding: 20px;
+      color: $primarycolor;
+    }
+    .user-count {
+      padding: 15px;
+      text-align: right;
+    }
+    span {
+      font-size: $font-size-9;
+      width: $width-100;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+.br-top {
+  border-top: 3px solid;
+  border-color: $primarycolor;
 }

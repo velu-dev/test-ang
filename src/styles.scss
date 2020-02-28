@@ -229,3 +229,8 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     display: none !important;
   }
 }
+.show-mobile {
+  @media only screen and (min-width: 568px) {
+    display: none !important;
+  }
+}

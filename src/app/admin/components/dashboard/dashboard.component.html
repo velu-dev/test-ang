@@ -1,47 +1,100 @@
 <div fxLayout="column" fxLayoutGap="25px">
-    <div fxLayout="row wrap" class="d-cards">
+    <div fxLayout="row wrap">
         <!-- loop over the cardList and show the cards -->
         <div fxFlex="25" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
-            <mat-card matRipple class="">
-                <mat-card-content class="d-card-style-one">
-                    <span class="text-success mt-50">1254</span>
-                    <div>Avaliable Appointments</div>
-                    <mat-icon class="text-success">equalizer</mat-icon>
-                </mat-card-content>
-            </mat-card>
-
-        </div>
-
-        <!-- loop over the cardList and show the cards -->
-        <div fxFlex="25" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
-            <!-- cards here -->
-            <mat-card matRipple class="">
-                <mat-card-content class="d-card-style-one">
-                    <span class="text-warning">1254</span>
-                    <div>New Claims</div>
-                    <mat-icon class="text-warning">equalizer</mat-icon>
+            <mat-card matRipple class="br-top">
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                        <div fxFlex="20" fxLayout="column">
+                            <mat-icon mat-list-icon>calendar_today</mat-icon>
+                        </div>
+                        <div fxFlex="80" fxLayout="column" class="user-count">
+                            <span class="mt-50">125</span>
+                            <div>Platform Earnings</div>
+                        </div>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>
         <!-- loop over the cardList and show the cards -->
         <div fxFlex="25" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
-            <!-- cards here -->
-            <mat-card matRipple class="">
-                <mat-card-content class="d-card-style-one">
-                    <span class="text-primary">1254</span>
-                    <div>Finished Claims</div>
-                    <mat-icon class="text-primary">equalizer</mat-icon>
+            <mat-card matRipple class="br-top">
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                        <div fxFlex="20" fxLayout="column">
+                            <mat-icon mat-list-icon>equalizer</mat-icon>
+                        </div>
+                        <div fxFlex="80" fxLayout="column" class="user-count">
+                            <span class="mt-50">4586</span>
+                            <div>Subscribers & Staffs</div>
+                        </div>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>
         <!-- loop over the cardList and show the cards -->
         <div fxFlex="25" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
-            <!-- cards here -->
-            <mat-card matRipple class="">
-                <mat-card-content class="d-card-style-one">
-                    <span class="text-danger">1254</span>
-                    <div>Finished Work</div>
-                    <mat-icon class="text-danger">equalizer</mat-icon>
+            <mat-card matRipple class="br-top">
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                        <div fxFlex="20" fxLayout="column">
+                            <mat-icon mat-list-icon>supervisor_account</mat-icon>
+                        </div>
+                        <div fxFlex="80" fxLayout="column" class="user-count">
+                            <span class="mt-50">1254</span>
+                            <div>Vendors & Staffs</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!-- loop over the cardList and show the cards -->
+        <div fxFlex="25" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
+            <mat-card matRipple class="br-top">
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                        <div fxFlex="20" fxLayout="column">
+                            <mat-icon mat-list-icon>equalizer</mat-icon>
+                        </div>
+                        <div fxFlex="80" fxLayout="column" class="user-count">
+                            <span class="mt-50">1235</span>
+                            <div>Examiners</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
+<div fxLayout="column" fxLayoutGap="25px" class="p-t-10">
+    <div fxLayout="row wrap">
+        <!-- loop over the cardList and show the cards -->
+        <div fxFlex="60" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Recent Users</mat-card-title>
+                    <span class="spacer"></span>
+                    <button mat-icon-button aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <!-- loop over the cardList and show the cards -->
+        <div fxFlex="40" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Notifications</mat-card-title>
+                    <span class="spacer"></span>
+                    <button mat-icon-button aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
                 </mat-card-content>
             </mat-card>
         </div>
