@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import * as globals from '../../../globals';
-import { UserService } from './../../../shared/services/user.service';
+import { UserService } from './../../service/user.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from './../../../shared/model/user.model';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
+import * as  errors from '../../../shared/messages/errors'
 
 @Component({
   selector: 'app-settings',
@@ -19,7 +20,8 @@ export class SettingsComponent implements OnInit {
   currentUser = {};
   userForm: FormGroup;
   userPasswrdForm: FormGroup;
-
+  errorMessages = errors;
+  isSubmitted = false;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: UserService,
@@ -47,30 +49,33 @@ export class SettingsComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       id: [''],
       role_id: [''],
-      first_name: ['', Validators.compose([Validators.required])],
-      last_name: ['', Validators.compose([Validators.required])],
-      middle_name: ['', Validators.compose([Validators.required])],
+      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       company_name: [{ value: "", disabled: true }, Validators.compose([Validators.required])],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
   }
   userformSubmit() {
+    this.isSubmitted = true;
     if (this.userForm.invalid) {
       return;
     }
-    // this.userService.updateUser(this.userForm.value).subscribe(res => {
-    //   this.alertService.openSnackBar("Profile updated successful", 'success');
-    //   this.router.navigate(['/admin/settings'])
-    // }, error => {
-    //   this.alertService.openSnackBar(error.message, 'error');
-    // })
+    this.userService.updateProfile(this.userForm.value).subscribe(res => {
+      this.alertService.openSnackBar("Profile updated successful", 'success');
+      this.isSubmitted = false;
+      this.router.navigate(['/vendor/settings'])
+    }, error => {
+      this.isSubmitted = false;
+      this.alertService.openSnackBar(error.message, 'error');
+    })
   }
   isTypePassword = true;
   changeInputType() {
     this.isTypePassword = !this.isTypePassword
   }
   changePassword() {
-
+    this.isSubmitted = true;
     if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
       console.log("password miss match  ")
       return
@@ -86,10 +91,12 @@ export class SettingsComponent implements OnInit {
         this.alertService.openSnackBar("Password successfully changed", "success");
         this.cognitoService.logOut().subscribe(res => {
           this.spinnerService.hide();
+          this.isSubmitted = false;
           this.router.navigate(['/'])
         })
       }, error => {
         this.spinnerService.hide();
+        this.isSubmitted = false;
         this.alertService.openSnackBar(error.message, "success");
       })
     })
