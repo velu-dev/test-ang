@@ -47,6 +47,9 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: VendorsComponent
+  }, {
+    path: "new",
+    component: NewUserComponent
   }]
 }, {
   path: "profile",
