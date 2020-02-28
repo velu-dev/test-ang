@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as globals from '../../../globals';
-import { UserService } from './../../../shared/services/user.service';
+import { UserService } from './../../service/user.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from './../../../shared/model/user.model';
@@ -60,12 +60,12 @@ export class SettingsComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    // this.userService.updateUser(this.userForm.value).subscribe(res => {
-    //   this.alertService.openSnackBar("Profile updated successful", 'success');
-    //   this.router.navigate(['/admin/settings'])
-    // }, error => {
-    //   this.alertService.openSnackBar(error.message, 'error');
-    // })
+    this.userService.updateProfile(this.userForm.value).subscribe(res => {
+      this.alertService.openSnackBar("Profile updated successful", 'success');
+      this.router.navigate(['/vendor/settings'])
+    }, error => {
+      this.alertService.openSnackBar(error.message, 'error');
+    })
   }
   isTypePassword = true;
   changeInputType() {
@@ -88,12 +88,12 @@ export class SettingsComponent implements OnInit {
         this.alertService.openSnackBar("Password successfully changed", "success");
         this.cognitoService.logOut().subscribe(res => {
           this.spinnerService.hide();
-          this.isSubmitted  = false;
+          this.isSubmitted = false;
           this.router.navigate(['/'])
         })
       }, error => {
         this.spinnerService.hide();
-        this.isSubmitted  = false;
+        this.isSubmitted = false;
         this.alertService.openSnackBar(error.message, "success");
       })
     })

@@ -5,17 +5,21 @@ import { VendorRoutingModule } from './vendor-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
 import { SettingsComponent } from './components/settings/settings.component';
+import { UserService } from './service/user.service';
+import { UserComponent } from './components/user/user.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    SettingsComponent
+    SettingsComponent,
+    UserComponent
   ],
   imports: [
     CommonModule,
     VendorRoutingModule,
     SharedModule
-  ]
+  ],
+  providers: [UserService]
 })
 export class VendorModule { }
