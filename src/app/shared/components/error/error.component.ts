@@ -11,5 +11,8 @@ export class ErrorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if(this.data.message == null){
+      this.data.message = 'Unknown error'
+    }
   }
 }

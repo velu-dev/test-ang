@@ -6,12 +6,14 @@
         <mat-card class="p-5">
           <!--Form Title-->
           <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
-          <mat-card-title class="p-t-10 ">Sign Up</mat-card-title>
-          <app-error *ngIf="error" [data]="error"></app-error>
+          <div class="auth-header-1 p-t-10">
+            <mat-card-title>Sign Up</mat-card-title>
+            <app-error *ngIf="error" [data]="error"></app-error>
+          </div>
           <mat-card-content>
             <!--Form start-->
             <form fxLayout="row wrap" [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
-              <mat-form-field class="m-t-20" appearance="outline" fxFlex="100">
+              <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>First name*</mat-label>
                 <input matInput placeholder="First name" formControlName="firstName" autocomplete="off">
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
@@ -24,7 +26,6 @@
               <mat-form-field appearance="outline" fxFlex="40">
                 <mat-label>Middle name/MI</mat-label>
                 <input matInput placeholder="Middle name/MI" formControlName="middleInitial" autocomplete="off">
-                <!-- <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error> -->
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>Company name</mat-label>

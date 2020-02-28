@@ -78,7 +78,7 @@ mat-sidenav-container {
 
 .content-wrapper {
   @include content-wrapper;
-  min-height: calc(100vh - 75px);
+  min-height: calc(100vh - 139px);
   .main-card {
     max-height: 100px;
     background-color: $white;

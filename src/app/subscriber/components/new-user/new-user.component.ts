@@ -76,26 +76,16 @@ export class NewUserComponent implements OnInit {
     }
     if (!this.isEdit) {
       this.userService.createUser(this.userForm.value).subscribe(res => {
-        if (this.isAdminCreate) {
-          this.alertService.openSnackBar("Admin User created successful", 'success');
-          this.router.navigate(['/admin/admin-users'])
-        } else {
-          this.alertService.openSnackBar("User created successful", 'success');
-          this.router.navigate(['/admin/users'])
-        }
+        this.alertService.openSnackBar("User created successful", 'success');
+        this.router.navigate(['/subscriber/users'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.userService.updateUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User update successful", 'success');
-        if (this.isAdminCreate) {
-          this.alertService.openSnackBar("Admin User updated successful", 'success');
-          this.router.navigate(['/admin/admin-users'])
-        } else {
-          this.alertService.openSnackBar("User updated successful", 'success');
-          this.router.navigate(['/admin/users'])
-        }
+        this.alertService.openSnackBar("User updated successful", 'success');
+        this.router.navigate(['/subscriber/users'])
       }, error => {
         this.alertService.openSnackBar(error.message, 'error');
       })

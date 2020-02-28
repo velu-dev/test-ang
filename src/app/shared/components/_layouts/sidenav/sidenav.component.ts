@@ -39,6 +39,7 @@ export class SidenavComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+  isMobile: boolean = false;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -54,6 +55,9 @@ export class SidenavComponent implements OnInit {
     window.onresize = () => {
       this.screenWidth = window.innerWidth;
     };
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+    })
     this.loaderService.hide();
 
   }
@@ -61,12 +65,9 @@ export class SidenavComponent implements OnInit {
 
   }
   ngAfterViewInit() {
-    if ((this.screenWidth < 800)) {
-      this.sidenav.toggle();
-    }
   }
   navigate() {
-    if ((this.screenWidth < 800)) {
+    if (this.isMobile) {
       this.sidenav.toggle();
     }
   }

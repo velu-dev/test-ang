@@ -5,15 +5,17 @@
         <mat-card class="p-5">
           <!--Form Title-->
           <img mat-card-image [src]="logo" alt="Lucy logo" class="logo">
-          <mat-card-title class="p-t-10 p-b-20 auth-tilte">Sign In</mat-card-title>
-          <app-error *ngIf="error" [data]="error"></app-error>
+          <div class="auth-header-1 p-t-10">
+            <mat-card-title class="auth-tilte">Sign In</mat-card-title>
+            <app-error *ngIf="error" [data]="error"></app-error>
+          </div>
           <mat-card-content>
             <!--Form start-->
-            <form fxLayout="row wrap" [formGroup]="loginForm" (ngSubmit)="login()" class="p-t-20">
+            <form fxLayout="row wrap" [formGroup]="loginForm" (ngSubmit)="login()">
               <mat-form-field appearance="outline" fxFlex="100"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.email.errors }">
                 <mat-label>Email ID*</mat-label>
-                <input matInput name="email" placeholder="Enter Email ID*" formControlName="email" autocomplete="off">
+                <input matInput name="email" placeholder="Email ID*" formControlName="email" autocomplete="off">
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="100"
@@ -26,7 +28,7 @@
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
               </mat-form-field>
 
-              <div class="forgot-password" > <span routerLink="/forgotpassword">Forgot Password ?</span></div>
+              <div class="forgot-password"> <span routerLink="/forgotpassword">Forgot Password ?</span></div>
               <button mat-raised-button color="primary" type="submit" class="authentication-btn"> Login <i
                   class="fa fa-arrow-right"></i></button>
             </form>
