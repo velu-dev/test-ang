@@ -6,7 +6,7 @@ pipelines:
       - step:
           name: Initial step
           script:
-            - echo "Frontend:::This step runs once you click the 'Run' button"
+            - echo "Frontend:::This step runs once you click the 'Run' button!"
 
       - step:
           name: Build app

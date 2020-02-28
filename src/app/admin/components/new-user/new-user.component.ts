@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -54,7 +54,7 @@ export class NewUserComponent implements OnInit {
         })
       } else {
         // if (this.isAdminCreate) {
- 
+
         // }
       }
     })
@@ -79,13 +79,14 @@ export class NewUserComponent implements OnInit {
     }
     if (!this.isEdit) {
       this.userService.createUser(this.userForm.value).subscribe(res => {
-        if (this.isAdminCreate) {
-          this.alertService.openSnackBar("Admin User created successful", 'success');
-          this.router.navigate(['/admin/admin-users'])
-        } else {
-          this.alertService.openSnackBar("User created successful", 'success');
-          this.router.navigate(['/admin/users'])
-        }
+        // if (this.isAdminCreate) {
+        this.alertService.openSnackBar("User created successful", 'success');
+        // this.router.navigate(['/admin/admin-users'])
+        this._location.back();
+        //   } else {
+        //   this.alertService.openSnackBar("User created successful", 'success');
+        //   this.router.navigate(['/admin/users'])
+        // }
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })

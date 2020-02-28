@@ -38,6 +38,8 @@ export class PasswordChangeComponent implements OnInit {
   }
 
   changePasswordSubmit() {
+    this.error = '';
+    this.isSubmitted = true;
     if (this.changePaswordForm.invalid) {
       return;
     }

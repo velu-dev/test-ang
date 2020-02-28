@@ -1,19 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.model';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { ExportService } from './../../../shared/services/export.service';
 import * as globals from '../../../globals';
-import { Role } from '../../models/role.model';
+import { User } from './../../../shared/model/user.model';
+import { Role } from './../../../shared/model/role.model';
+import { UserService } from './../../service/user.service';
+import { Router } from '@angular/router';
+import { ExportService } from './../../../shared/services/export.service';
+import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -32,9 +31,10 @@ export class UserComponent implements OnInit {
   roles: Role[];
   selectedRole: any = [];
   dataSource: any;
-  columnName = []
-  columnsToDisplay = [];
+  columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
+  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
   expandedElement: User | null;
+  selectedRoleId = []
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -43,18 +43,14 @@ export class UserComponent implements OnInit {
       shareReplay()
     );
   isMobile: boolean = false;
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private userService: UserService,
+  constructor(private userService: UserService,
     private router: Router,
-    private title: Title,
-    private exportService: ExportService
-  ) {
-
+    private exportService: ExportService,
+    private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["","First Name", "Action"]
+        this.columnName = ["", "First Name", "Action"]
         this.columnsToDisplay = ['is_expand', 'first_name', "action"]
       } else {
         this.columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
@@ -62,15 +58,9 @@ export class UserComponent implements OnInit {
       }
     })
     this.screenWidth = window.innerWidth;
-    this.title.setTitle("APP | Manage User");
     this.roles = [];
     this.userService.getRoles().subscribe(response => {
-      response.data.map(role => {
-        if (!(role.role_name == "Admin")) {
-          this.roles.push(role)
-          this.selectedRoleId.push(role.id)
-        }
-      })
+      this.roles = response.data;
       this.getUser(this.selectedRoleId);
       this.roles.map(function (el) {
         var o = Object.assign({}, el);
@@ -89,7 +79,7 @@ export class UserComponent implements OnInit {
   users = [];
   getUser(roles) {
     this.users = [];
-    this.userService.getUsers([2]).subscribe(response => {
+    this.userService.getUsers(roles).subscribe(response => {
       response.data.map(user => {
         user['isExpand'] = false;
         this.users.push(user);
@@ -101,10 +91,9 @@ export class UserComponent implements OnInit {
     })
   }
   gotoEdit(data) {
-    this.router.navigate(["/admin/users/" + data.id])
+    this.router.navigate(["/vendor/users/" + data.id])
 
   }
-  selectedRoleId = []
   filterByRole(value?: string) {
     this.selectedRoleId = [];
     this.roles.map(res => {
@@ -120,7 +109,7 @@ export class UserComponent implements OnInit {
     this.getUser(this.selectedRoleId)
   }
   navigate() {
-    this.router.navigate(['/admin/users/new'])
+    this.router.navigate(['/vendor/users/new'])
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -141,7 +130,7 @@ export class UserComponent implements OnInit {
     this.exportService.exportExcel(data, "Non-Admin-Users")
   }
   openElement(element) {
-    if (this.isMobile) {
+    if ((this.screenWidth < 800)) {
       element.isExpand = !element.isExpand;
     }
   }

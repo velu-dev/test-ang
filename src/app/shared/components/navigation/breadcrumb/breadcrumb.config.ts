@@ -1,8 +1,14 @@
 export const ROUTES = [
+    //Admin Menu
     {
         path: '/admin/dashboard',
         title: 'Dashboard',
         icon: 'dashboard',
+        submenu: []
+    }, {
+        path: "/admin/settings",
+        title: "Settings",
+        icon: "settings",
         submenu: []
     }, {
         path: "/admin/admin-users",
@@ -20,15 +26,15 @@ export const ROUTES = [
             submenu: []
         }]
     }, {
-        path: "/admin/settings",
-        title: "Settings",
-        icon: "settings",
-        submenu: []
-    },{
         path: "/admin/vendors",
         title: "Manage Vendors",
         icon: "settings",
-        submenu: []
+        submenu: [{
+            path: '/admin/vendors/new',
+            title: 'New Vendor',
+            icon: 'dashboard',
+            submenu: []
+        }]
     }, {
         path: "/admin/profile",
         title: "Profile",
@@ -50,12 +56,9 @@ export const ROUTES = [
             submenu: []
         }
         ]
-    }, {
-        path: '/subscriber/users',
-        title: 'User Management',
-        icon: 'credit_card',
-        submenu: [],
-    }, {
+    },
+    //Subscriber Menu
+    {
         path: '/subscriber/dashboard',
         title: 'Dashboard',
         icon: 'dashboard',
@@ -67,10 +70,32 @@ export const ROUTES = [
         submenu: [],
     },
     {
+        path: '/subscriber/users',
+        title: 'User Management',
+        icon: 'credit_card',
+        submenu: [{
+            path: '/subscriber/users/new',
+            title: 'New Subscriber staff',
+            icon: 'dashboard',
+            submenu: []
+        }],
+    },
+    //Vendor Menu
+    {
         path: '/vendor/dashboard',
         title: 'Dashboard',
         icon: 'dashboard',
         submenu: [],
+    }, {
+        path: '/vendor/users',
+        title: 'Manage Users',
+        icon: 'dashboard',
+        submenu: [, {
+            path: "/vendor/users/new",
+            title: "New Vendor",
+            icon: "settings",
+            submenu: []
+        }],
     }, {
         path: '/vendor/settings',
         title: 'Settings',

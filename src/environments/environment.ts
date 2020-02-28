@@ -8,13 +8,6 @@ export const environment = {
   // baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
   // baseUrl: 'http://192.168.1.122:3000/', //Rajan-local
 
-  //authentication
-  signIn: 'auth/Authentication/signin',
-  signUp: 'auth/Authentication/signup',
-  signupVerify: 'auth/Authentication/signup-verify',
-  resetPassword: 'admin-api/admin/reset-admin-password',
-  emailVerify: 'auth/authentication/email-verify',
-
   Amplify: {
     Auth: {
       identityPoolId: 'us-west-2:e5dd97f0-5920-4932-bd14-c26fa8f988c0',

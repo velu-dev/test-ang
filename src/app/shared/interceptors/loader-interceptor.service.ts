@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class LoaderInterceptor implements HttpInterceptor {
     constructor(public loaderService: NgxSpinnerService) { }
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        console.log("call loader")
         this.loaderService.show();
         return next.handle(req).pipe(
             finalize(() => this.loaderService.hide())
