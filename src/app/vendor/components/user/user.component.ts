@@ -91,7 +91,7 @@ export class UserComponent implements OnInit {
     })
   }
   gotoEdit(data) {
-    this.router.navigate(["/subscriber/users/" + data.id])
+    this.router.navigate(["/vendor/users/" + data.id])
 
   }
   filterByRole(value?: string) {
@@ -109,7 +109,7 @@ export class UserComponent implements OnInit {
     this.getUser(this.selectedRoleId)
   }
   navigate() {
-    this.router.navigate(['/subscriber/users/new'])
+    this.router.navigate(['/vendor/users/new'])
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
