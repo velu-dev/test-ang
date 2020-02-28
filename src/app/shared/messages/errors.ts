@@ -11,3 +11,6 @@ export const entervalidfirstname = "Please enter a valid first name";
 export const entervalidlastname = "Please enter a valid last name";
 export const entervalidmiddlename = "Please enter a valid middle name/MI";
 export const entervalidcompanyname = "Please enter a valid company name";
+export const emailnotexist = "Email ID does not exist!";
+export const emailnotverify = "Email ID is not verified!";
+export const emailalready = "Email ID is already in use";

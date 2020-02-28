@@ -67,13 +67,16 @@ export class LoginComponent implements OnInit {
       }
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(res => {
         this.cookieService.set("role_id", res['data'].role_id)
-        if (res['data'].role_id == '1') {
+        if (res['data'].role_id == 1) {
           this.alertService.openSnackBar(success.loginSuccess, 'success');
           this.router.navigate(['/admin/dashboard'])
         }
-        else {
+        else if (res['data'].role_id == 2) {
           this.alertService.openSnackBar(success.loginSuccess, 'success');
           this.router.navigate(['/subscriber/dashboard'])
+        } else {
+          this.alertService.openSnackBar(success.loginSuccess, 'success');
+          this.router.navigate(['/vendor/dashboard'])
         }
       })
     }, error => {
