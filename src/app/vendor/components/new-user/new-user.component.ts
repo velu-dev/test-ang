@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Role } from 'src/app/shared/model/role.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from './../../service/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as  errors from '../../../shared/messages/errors'
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { Role } from './../../../shared/model/role.model';
 import { Store } from '@ngrx/store';
-import { Location } from '@angular/common';
-import * as  errors from '../../../shared/messages/errors'
 
 @Component({
   selector: 'app-new-user',
@@ -53,6 +53,9 @@ export class NewUserComponent implements OnInit {
           this.userForm.setValue(this.userData)
         })
       } else {
+        // if (this.isAdminCreate) {
+
+        // }
       }
     })
   }
@@ -77,15 +80,15 @@ export class NewUserComponent implements OnInit {
     if (!this.isEdit) {
       this.userService.createUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successful", 'success');
-        this.router.navigate(['/subscriber/users'])
+        this.router.navigate(['/vendor/users'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.userService.updateUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User update successful", 'success');
-        this.alertService.openSnackBar("User updated successful", 'success');
-        this.router.navigate(['/subscriber/users'])
+          this.alertService.openSnackBar("User updated successful", 'success');
+          this.router.navigate(['/vendor/users'])
       }, error => {
         this.alertService.openSnackBar(error.message, 'error');
       })
@@ -94,4 +97,5 @@ export class NewUserComponent implements OnInit {
   cancel() {
     this._location.back();
   }
+
 }
