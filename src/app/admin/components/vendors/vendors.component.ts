@@ -68,7 +68,7 @@ export class VendorsComponent implements OnInit {
   users = [];
   getUser(roles) {
     this.users = [];
-    this.userService.getUsers([5,7,9]).subscribe(response => {
+    this.userService.getVendors().subscribe(response => {
       response.data.map(user => {
         user['isExpand'] = false;
         this.users.push(user);

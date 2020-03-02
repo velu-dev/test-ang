@@ -13,6 +13,7 @@ import { _LayoutModule } from './shared/components/_layouts/_layout.module';
 import { TokenInterceptorService } from './shared/interceptors/token-interceptor.service';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
+import { MaterialModule } from './shared/material.module';
 
 @NgModule({
   declarations: [
