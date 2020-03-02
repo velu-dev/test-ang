@@ -30,7 +30,8 @@
                         </span>
                         <span *ngIf="i != (columnsToDisplay.length-1)">{{element[column]}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-2)">
-                            <mat-slide-toggle class="example-margin" [color]="color" [checked]="checked" (change)="onDisable($event, element.id)"></mat-slide-toggle>
+                            <mat-slide-toggle color="warm" [checked]="checked" (change)="onDisable($event, element.id)">
+                            </mat-slide-toggle>
                         </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">
                             <mat-icon (click)="gotoDelete(element)" class="edit-user" mat-raised-button
@@ -54,8 +55,8 @@
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                <tr [ngClass]="{'disabled': disabled}" mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
-                    [class.row]="expandedElement === element" (click)="openElement(element)">
+                <tr [ngClass]="{'disabled': disabled}" mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                    class="row" [class.row]="expandedElement === element" (click)="openElement(element)">
                 </tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>

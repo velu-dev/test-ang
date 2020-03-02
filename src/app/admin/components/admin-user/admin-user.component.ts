@@ -98,7 +98,7 @@ export class AdminUserComponent implements OnInit {
   }
   onDisable(data, id) {
     if (data.checked) {
-      this.openDialog('eneble', id);
+      this.openDialog('enable', id);
     } else {
       this.openDialog('disable', id);
     }
@@ -109,7 +109,7 @@ export class AdminUserComponent implements OnInit {
   }
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '250px',
+      width: '350px',
       data: { name: dialogue }
     });
 
