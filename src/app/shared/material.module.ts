@@ -46,6 +46,7 @@ import { MatTreeModule } from '@angular/material/tree';
         MatSliderModule,
         MatAutocompleteModule,
         MatBadgeModule,
+        MatDialogModule,
         MatBottomSheetModule,
         MatDialogModule,
         MatButtonModule,
