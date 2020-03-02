@@ -36,6 +36,7 @@ export class AdminUserComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   admin = [];
   isLoading = false;
+  selectedFile: any;
   isMobile = false;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -125,6 +126,20 @@ export class AdminUserComponent implements OnInit {
     // this.router.navigate(['new'])
 
   }
+
+  selectFile() {
+    document.getElementById('uploadFile').click();
+  }
+
+  uploadFile(event) {
+    this.selectedFile = event.target.files[0];
+    console.log('selectedFile',this.selectedFile)
+    let formData = new FormData()
+    formData.append('role', '1')
+    formData.append('user_list_csv', this.selectedFile)
+    console.log("formData",formData)
+  }
+
   openElement(element) {
     if (this.isMobile) {
       element.isExpand = !element.isExpand;
