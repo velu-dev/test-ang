@@ -28,6 +28,17 @@
           color: $text-gray !important;
         }
       }
+      .p-r-m-0 {
+        @media only screen and (max-width: 568px) {
+          padding-right: 0 !important;
+        }
+      }
+      .re-captcha-error {
+        min-height: 95px;
+        mat-error {
+          font-size: 75%;
+        }
+      }
       .checkbox  {
         min-height: 40px;
         mat-error {
@@ -37,6 +48,7 @@
       .note {
         font-size: $font-size-3;
         width: 100%;
+        padding-left: 25px;
       }
     }
     .lucy-new-account {

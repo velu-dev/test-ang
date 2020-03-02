@@ -117,6 +117,15 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   text-align: left;
   opacity: 1;
   border-radius: 5px;
+  display: flow-root;
+  .icon {
+    width: 6%;
+    float: left;
+  }
+  .alert{
+    width: 94%;
+    float: left;
+  }
 }
 
 .alert-success,

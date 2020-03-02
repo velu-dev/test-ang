@@ -1,5 +1,5 @@
 <div class="lucy-login-form">
-  <div class="p-t-100" fxLayout="column" fxLayoutGap="15px">
+  <div class="p-t-100 p-b-30" fxLayout="column" fxLayoutGap="15px">
     <div fxLayout="row wrap">
       <div class="m-auto" fxFlex="30" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxFlex.xl="25" fxLayout="column">
         <mat-card class="p-5">
@@ -7,9 +7,9 @@
           <img mat-card-image [src]="logo" alt="Simplexam logo" class="logo m-t-0">
           <div class="auth-header p-t-10">
             <mat-card-title class="auth-title">Verify your account </mat-card-title>
-          <!--Form subTitle-->
-          <mat-card-subtitle >Check your Registered Email ID for the Verification code!</mat-card-subtitle>
-          <app-error *ngIf="error" [data]="error"></app-error>
+            <!--Form subTitle-->
+            <mat-card-subtitle>Check your Registered Email ID for the Verification code!</mat-card-subtitle>
+            <app-error *ngIf="error" [data]="error"></app-error>
           </div>
           <mat-card-content class="m-t-5">
             <!--Form start-->

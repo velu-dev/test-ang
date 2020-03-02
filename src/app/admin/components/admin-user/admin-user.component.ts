@@ -14,6 +14,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { User } from 'src/app/shared/model/user.model';
 
 @Component({
   selector: 'app-admin-user',
@@ -44,6 +45,9 @@ export class AdminUserComponent implements OnInit {
       shareReplay()
     );
   checked = true;
+  expandedElement: User | null;
+  color= "primary";
+  disabled = false;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -99,7 +103,7 @@ export class AdminUserComponent implements OnInit {
   }
   onDisable(data, id) {
     if (data.checked) {
-      this.openDialog('eneble', id);
+      this.openDialog('enable', id);
     } else {
       this.openDialog('disable', id);
     }
@@ -110,12 +114,12 @@ export class AdminUserComponent implements OnInit {
   }
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '250px',
+      width: '350px',
       data: { name: dialogue }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result.data) {
+      if (result['data']) {
         alert("Deleted")
       } else {
         alert("Cancled")
