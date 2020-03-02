@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -8,27 +8,60 @@ import { Title } from '@angular/platform-browser';
 import { ExportService } from 'src/app/shared/services/export.service';
 import * as globals from '../../../globals';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+
 @Component({
   selector: 'app-admin-user',
   templateUrl: './admin-user.component.html',
-  styleUrls: ['./admin-user.component.scss']
+  styleUrls: ['./admin-user.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class AdminUserComponent implements OnInit {
   xls = globals.xls
   dataSource: any;
-  columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
+  columnName = []
+  columnsToDisplay = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   admin = [];
   isLoading = false;
+  isMobile = false;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  checked = true;
   constructor(
     private userService: UserService,
     private router: Router,
     private title: Title,
+    private breakpointObserver: BreakpointObserver,
     private exportService: ExportService,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    public dialog: MatDialog
   ) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "First Name", "Disabled", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled", "action"]
+      } else {
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled", "Action"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled", "action"]
+      }
+    })
     this.isLoading = true;
     this.title.setTitle("APP | Manage Admin");
     this.getUser([1]);
@@ -63,11 +96,38 @@ export class AdminUserComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Admin-Users")
   }
-  gotoEdit(data) {
-    this.router.navigate(["/admin/admin-users/" + data.id])
+  onDisable(data, id) {
+    if (data.checked) {
+      this.openDialog('eneble', id);
+    } else {
+      this.openDialog('disable', id);
+    }
+  }
+  gotoDelete(data) {
+    // this.router.navigate(["/admin/admin-users/" + data.id])
+    this.openDialog('delete', data);
+  }
+  openDialog(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '250px',
+      data: { name: dialogue }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data) {
+        alert("Deleted")
+      } else {
+        alert("Cancled")
+      }
+    });
   }
   navigate() {
     // this.router.navigate(['new'])
 
+  }
+  openElement(element) {
+    if (this.isMobile) {
+      element.isExpand = !element.isExpand;
+    }
   }
 }

@@ -18,33 +18,46 @@
         </button>
 
         <div class="user-detail" *ngIf="dataSource">
-            <table *ngIf="!isLoading" mat-table [dataSource]="dataSource" matSort class="mat-table">
-                <ng-container matColumnDef="first_name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
-                </ng-container>
-                <ng-container matColumnDef="last_name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
-                </ng-container>
-                <ng-container matColumnDef="sign_in_email_id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-                    <td mat-cell *matCellDef="let element"> {{element.sign_in_email_id}} </td>
-                </ng-container>
-                <ng-container matColumnDef="role_name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
-                    <td mat-cell *matCellDef="let element"> {{element.role_name}} </td>
-                </ng-container>
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let element" (click)="gotoEdit(element)">
-                        <mat-icon class="edit-user" mat-raised-button matTooltip="Edit {{element.first_name}} Account"
-                            matTooltipPosition="right">edit</mat-icon>
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnName[i]}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="i == 0 && isMobile">
+                            <mat-icon mat-raised-button
+                                [ngClass]="{'table-expand': element.isExpand, 'expand-close': !element.isExpand}">
+                                {{ element.isExpand ? 'remove_circle' : 'add_circle'}}
+                            </mat-icon>
+                        </span>
+                        <span *ngIf="i != (columnsToDisplay.length-1)">{{element[column]}} </span>
+                        <span *ngIf="i == (columnsToDisplay.length-2)">
+                            <mat-slide-toggle class="example-margin" [color]="color" [checked]="checked" (change)="onDisable($event, element.id)"></mat-slide-toggle>
+                        </span>
+                        <span *ngIf="i == (columnsToDisplay.length-1)">
+                            <mat-icon (click)="gotoDelete(element)" class="edit-user" mat-raised-button
+                                matTooltip="Delete {{element.first_name}} Account" matTooltipPosition="right">delete
+                            </mat-icon>
+                        </span>
+
                     </td>
                 </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="columnsToDisplay" class="table-heading"></tr>
-                <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                        <div class="detail" [@detailExpand]="element.isExpand ? 'expanded' : 'collapsed'">
+                            <div class="resposive-table">
+                                <div class="first_name"><span>First Name</span> {{element.first_name}} </div>
+                                <div class="last_name"><span>Last Name</span> {{element.last_name}} </div>
+                                <div class="sign in sign_in_email_id"><span>Email ID</span> {{element.sign_in_email_id}}
+                                </div>
+                                <div class="role_name"><span>Role</span> {{element.role_name}} </div>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr [ngClass]="{'disabled': disabled}" mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
+                    [class.row]="expandedElement === element" (click)="openElement(element)">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
         </div>
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
