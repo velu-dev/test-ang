@@ -13,8 +13,14 @@
             <input (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email, role">
         </div>
         <span class="spacer"></span>
+        <input type="file" hidden (change)="uploadFile($event)" id="uploadFile" accept="CSV">
+            
         <button mat-icon-button class="filter-icon" (click)="exportData()">
             <img class="icon-16" [src]="xls" alt="export" />
+        </button>
+        <button mat-icon-button class="filter-icon">
+            <mat-icon (click)="selectFile()">cloud_upload</mat-icon>
+            <!-- <img class="icon-16" [src]="xls" alt="export"  /> -->
         </button>
 
         <div class="user-detail" *ngIf="dataSource">
