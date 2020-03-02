@@ -14,6 +14,8 @@ import { Role } from '../../models/role.model';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -43,22 +45,24 @@ export class UserComponent implements OnInit {
       shareReplay()
     );
   isMobile: boolean = false;
+  checked = true;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
     private router: Router,
     private title: Title,
-    private exportService: ExportService
+    private exportService: ExportService,
+    public dialog: MatDialog
   ) {
 
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["","First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "action"]
+        this.columnName = ["", "First Name","Disable", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name',"disabled", "action"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role","Disabled", "Action"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name',"disabled", "action"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -67,8 +71,8 @@ export class UserComponent implements OnInit {
     this.userService.getSubscriberRole().subscribe(response => {
       response.data.map(role => {
         // if (!(role.role_name == "Admin")) {
-          this.roles.push(role)
-          this.selectedRoleId.push(role.id)
+        this.roles.push(role)
+        this.selectedRoleId.push(role.id)
         // }
       })
       this.getUser();
@@ -144,5 +148,26 @@ export class UserComponent implements OnInit {
     if (this.isMobile) {
       element.isExpand = !element.isExpand;
     }
+  }
+  onDisable(data, id) {
+    if (data.checked) {
+      this.openDialog('enable', id);
+    } else {
+      this.openDialog('disable', id);
+    }
+  }
+  openDialog(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        alert("Deleted")
+      } else {
+        alert("Cancled")
+      }
+    });
   }
 }

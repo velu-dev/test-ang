@@ -34,15 +34,29 @@ export class NewUserComponent implements OnInit {
     private store: Store<{ breadcrumb: any }>,
     private _location: Location
   ) {
-    this.userService.getRoles().subscribe(response => {
-      this.roles = response.data;
-    })
+    this.roles = [];
     this.store.subscribe(res => {
-      if (res.breadcrumb.active_title.includes("Admin")) {
-        this.isAdminCreate = true;
-        this.activeTitle = res.breadcrumb.active_title;
-      }
+
+      this.isAdminCreate = true;
+      this.activeTitle = res.breadcrumb.active_title;
     })
+      this.userService.getRoles().subscribe(response => {
+        response.data.map(role => {
+          if (this.activeTitle.split(" ").includes("Admin")) {
+            if (role.role_name.includes("Admin")) {
+              this.roles.push(role)
+            }
+          } else if (this.activeTitle.split(" ").includes("Subscribers")) {
+            if (role.role_name.includes("Subscriber")) {
+              this.roles.push(role)
+            }
+          } else if (this.activeTitle.split(" ").includes("Vendor")) {
+            if (!(role.role_name.includes("Admin") || role.role_name.includes("Subscriber"))) {
+              this.roles.push(role)
+            }
+          }
+        })
+      })
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
         this.isEdit = true;

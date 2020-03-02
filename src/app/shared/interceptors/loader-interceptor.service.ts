@@ -11,7 +11,6 @@ export class LoaderInterceptor implements HttpInterceptor {
         this.loaderService.show();
         return next.handle(req).pipe(
             finalize(() => {
-                console.log(req)
                 this.loaderService.hide()
             })
         );

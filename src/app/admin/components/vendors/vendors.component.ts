@@ -11,6 +11,11 @@ import { Title } from '@angular/platform-browser';
 import { ExportService } from './../../../shared/services/export.service';
 import * as globals from '../../../globals';
 import { Role } from '../../models/role.model';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 @Component({
   selector: 'app-vendors',
   templateUrl: './vendors.component.html',
@@ -34,12 +39,31 @@ export class VendorsComponent implements OnInit {
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches),
+    shareReplay()
+  );
+isMobile: boolean = false;
+checked = true;
   constructor(
     private userService: UserService,
     private router: Router,
     private title: Title,
-    private exportService: ExportService
+    private exportService: ExportService,
+    private breakpointObserver: BreakpointObserver,
+    public dialog: MatDialog
   ) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "First Name", "Disable", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled", "action"]
+      } else {
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled", "Action"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled", "action"]
+      }
+    });
     this.screenWidth = window.innerWidth;
     this.title.setTitle("APP | Manage User");
     this.roles = [];
@@ -123,5 +147,26 @@ export class VendorsComponent implements OnInit {
     if ((this.screenWidth < 800)) {
       element.isExpand = !element.isExpand;
     }
+  }
+  onDisable(data, id) {
+    if (data.checked) {
+      this.openDialog('enable', id);
+    } else {
+      this.openDialog('disable', id);
+    }
+  }
+  openDialog(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        alert("Deleted")
+      } else {
+        alert("Cancled")
+      }
+    });
   }
 }
