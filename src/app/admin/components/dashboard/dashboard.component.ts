@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import * as globals from '../../../globals';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { User } from 'src/app/shared/model/user.model';
 
 // am4core.useTheme();
 
@@ -42,6 +43,7 @@ export class DashboardComponent implements OnInit {
   isMobile: boolean = false;
   columnName = [];
   columnsToDisplay = [];
+  expandedElement: User | null;
   constructor(private breakpointObserver: BreakpointObserver, private title: Title, private userService: UserService) {
 
     this.isHandset$.subscribe(res => {

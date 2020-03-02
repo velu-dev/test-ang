@@ -2,13 +2,6 @@ export const environment = {
   production: true,
   baseUrl: 'https://dev01api.simplexam.com/', //dev
 
-  //authentication
-  signIn:'auth/Authentication/signin',
-  signUp:'auth/Authentication/signup',
-  signupVerify: 'auth/Authentication/signup-verify',
-  resetPassword: 'admin-api/admin/reset-admin-password',
-  emailVerify: 'auth/authentication/email-verify',
-
   Amplify: {
     Auth: {
       identityPoolId: 'us-west-2:e5dd97f0-5920-4932-bd14-c26fa8f988c0',
