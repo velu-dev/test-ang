@@ -28,6 +28,8 @@ import { VendorsComponent } from './components/vendors/vendors.component';
     SharedModule,
     AdminRoutingModule
   ],
+  entryComponents: [
+  ],
   providers: [UserService]
 })
 export class AdminModule { }

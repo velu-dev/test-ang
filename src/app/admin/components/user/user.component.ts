@@ -64,14 +64,14 @@ export class UserComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.title.setTitle("APP | Manage User");
     this.roles = [];
-    this.userService.getRoles().subscribe(response => {
+    this.userService.getSubscriberRole().subscribe(response => {
       response.data.map(role => {
-        if (!(role.role_name == "Admin")) {
+        // if (!(role.role_name == "Admin")) {
           this.roles.push(role)
           this.selectedRoleId.push(role.id)
-        }
+        // }
       })
-      this.getUser(this.selectedRoleId);
+      this.getUser();
       this.roles.map(function (el) {
         var o = Object.assign({}, el);
         o['checked'] = false;
@@ -87,9 +87,9 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
   users = [];
-  getUser(roles) {
+  getUser() {
     this.users = [];
-    this.userService.getUsers([2]).subscribe(response => {
+    this.userService.getSubscribers().subscribe(response => {
       response.data.map(user => {
         user['isExpand'] = false;
         this.users.push(user);
@@ -117,7 +117,7 @@ export class UserComponent implements OnInit {
         }
       }
     })
-    this.getUser(this.selectedRoleId)
+    this.getUser()
   }
   navigate() {
     this.router.navigate(['/admin/users/new'])

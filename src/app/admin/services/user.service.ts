@@ -30,4 +30,10 @@ export class UserService {
   getVendorRole(): Observable<any>{
     return this.http.get(environment.baseUrl + "admin-api/vendor/roles")
   }
+  getSubscribers():Observable<any>{
+    return this.http.get(environment.baseUrl+ "admin-api/admin/subscribers")
+  }
+  getVendors():Observable<any>{
+    return this.http.get(environment.baseUrl+ "admin-api/admin/vendors")
+  }
 }
