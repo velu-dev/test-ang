@@ -37,6 +37,7 @@ export class AdminUserComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   admin = [];
   isLoading = false;
+  selectedFile: any;
   isMobile = false;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -102,7 +103,7 @@ export class AdminUserComponent implements OnInit {
   }
   onDisable(data, id) {
     if (data.checked) {
-      this.openDialog('eneble', id);
+      this.openDialog('enable', id);
     } else {
       this.openDialog('disable', id);
     }
@@ -113,7 +114,7 @@ export class AdminUserComponent implements OnInit {
   }
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '250px',
+      width: '350px',
       data: { name: dialogue }
     });
 
@@ -129,6 +130,20 @@ export class AdminUserComponent implements OnInit {
     // this.router.navigate(['new'])
 
   }
+
+  selectFile() {
+    document.getElementById('uploadFile').click();
+  }
+
+  uploadFile(event) {
+    this.selectedFile = event.target.files[0];
+    console.log('selectedFile',this.selectedFile)
+    let formData = new FormData()
+    formData.append('role', '1')
+    formData.append('user_list_csv', this.selectedFile)
+    console.log("formData",formData)
+  }
+
   openElement(element) {
     if (this.isMobile) {
       element.isExpand = !element.isExpand;
