@@ -20,15 +20,18 @@ import { ErrorComponent } from './components/error/error.component';
 import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
 import { UserService } from './services/user.service';
 import { CookieService } from 'ngx-cookie-service';
+import { DialogueComponent } from './components/dialogue/dialogue.component';
 
 @NgModule({
   declarations: [
     NotFoundComponent,
     AlertComponent,
-    ErrorComponent
+    ErrorComponent,
+    DialogueComponent
   ],
   entryComponents: [
-    AlertComponent
+    AlertComponent,
+    DialogueComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +49,8 @@ import { CookieService } from 'ngx-cookie-service';
     RecaptchaFormsModule,
     NotFoundComponent,
     AlertComponent,
-    ErrorComponent
+    ErrorComponent,
+    DialogueComponent
   ],
   providers: [
     CognitoService,

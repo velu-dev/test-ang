@@ -55,8 +55,10 @@
                 <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
                   {{passwordFieldType ? 'visibility_off' : 'visibility'}}</mat-icon>
               </mat-form-field>
-
-              <re-captcha formControlName="captcha" name="captcha" required></re-captcha>
+              <div class="re-captcha-error">
+                <re-captcha formControlName="captcha" name="captcha" required></re-captcha>
+                <mat-error class="note" *ngIf="isSubmitted && (formControls.captcha.errors || !formControls.captcha.value)">{{errorMessages?.imnotrobot}}</mat-error>
+              </div>
               <div class="p-t-5 p-b-5 checkbox">
                 <mat-checkbox name="policy" formControlName="policy"> Agree the terms and conditions
                 </mat-checkbox>
