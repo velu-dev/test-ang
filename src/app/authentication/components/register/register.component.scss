@@ -28,6 +28,12 @@
           color: $text-gray !important;
         }
       }
+      .re-captcha-error {
+        min-height: 95px;
+        mat-error {
+          font-size: 75%;
+        }
+      }
       .checkbox  {
         min-height: 40px;
         mat-error {
