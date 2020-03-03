@@ -7,6 +7,7 @@ import * as breadcrumbActions from "./../../../store/breadcrumb.actions";
 import * as frombreadcrumb from "./../../../store/breadcrumb.reducer";
 import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
     selector: 'app-breadcrumb',
     templateUrl: './breadcrumb.component.html',
@@ -15,7 +16,9 @@ import { Router } from '@angular/router';
 export class BreadcrumbComponent implements OnInit {
     menu$: Observable<any>;
     roleId: any;
-    constructor(private router: Router, private store: Store<{ breadcrumb: any }>) {
+    role: any;
+    routeUrl: string;
+    constructor(private router: Router, private store: Store<{ breadcrumb: any }>,private cookieService: CookieService) {
         this.menu$ = store.pipe(select('breadcrumb'));
     }
 
@@ -27,8 +30,31 @@ export class BreadcrumbComponent implements OnInit {
         this.store.dispatch(new breadcrumbActions.RemoveBreadcrumb({ index: index }));
     }
     breadCrumbMain() {
-        this.router.navigate(['/'])
-        this.store.dispatch(new breadcrumbActions.ResetBreadcrumb());
+       // this.router.navigate(['/'])
+        this.role = this.cookieService.get('role_id')
+        this.routeUrl = this.router.url.split('/')[1]
+    
+        switch (this.role) {
+            case '1':
+                    this.router.navigate(["/admin/dashboard"]);
+                break;
+            case '2':
+                    this.router.navigate(["/subscriber/dashboard"]);
+                break;
+            case '5':
+                    this.router.navigate(["/vendor/dashboard"]);
+                break;
+            case '7':
+                    this.router.navigate(["/vendor/dashboard"]);
+                break;
+            case '9':
+                    this.router.navigate(["/vendor/dashboard"]);
+                break;
+            default:
+                this.router.navigate(["/"]);
+                break;
+        }
+       // this.store.dispatch(new breadcrumbActions.ResetBreadcrumb());
     }
 
 }

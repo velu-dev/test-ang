@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -46,6 +46,8 @@ export class UserComponent implements OnInit {
     );
   isMobile: boolean = false;
   checked = true;
+  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  selectedFile: File = null;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
@@ -173,5 +175,21 @@ export class UserComponent implements OnInit {
         alert("Cancled")
       }
     });
+  }
+  uploadFile(event) {
+    this.selectedFile = event.target.files[0];
+    console.log('selectedFile', this.selectedFile)
+    let formData = new FormData()
+    formData.append('role', '2')
+    formData.append('file', this.selectedFile)
+    console.log("formData", formData)
+    this.userService.uploadUserCsv(formData).subscribe(CSVRes => {
+      console.log(CSVRes);
+      this.fileUpload.nativeElement.value = "";
+    }, error => {
+      console.log('error', error)
+      this.fileUpload.nativeElement.value = "";
+    })
+
   }
 }
