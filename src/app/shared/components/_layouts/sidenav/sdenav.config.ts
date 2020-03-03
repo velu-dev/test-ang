@@ -20,14 +20,14 @@ export const ROUTES: SideNavInterface[] = [
         menu: [{
             path: "/admin/admin-users",
             title: "Platform Admin",
-            icon: "person_add",
+            icon: "person",
             submenu: [],
             group: "Admin",
             role: 1
         }, {
             path: '/admin/users',
             title: 'Subscriber',
-            icon: 'person_add',
+            icon: 'people_alt',
             submenu: [{
                 path: '/admin/users/new',
                 title: 'New User',
