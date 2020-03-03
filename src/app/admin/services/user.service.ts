@@ -19,16 +19,16 @@ export class UserService {
     return this.http.get(environment.baseUrl + "admin-api/admin/user/" + id)
   }
   createUser(data): Observable<any> {
-    return this.http.post(environment.baseUrl + "admin-api/admin/create-user", data)
+    return this.http.post(environment.baseUrl + "admin-api/admin/create", data)
   }
   updateUser(data): Observable<any> {
     return this.http.put(environment.baseUrl + "admin-api/admin/update-user/" + data.id, data)
   }
   getSubscriberRole(): Observable<any>{
-    return this.http.get(environment.baseUrl + "admin-api/subscriber/roles")
+    return this.http.get(environment.baseUrl + "admin-api/admin/subscriber-roles")
   }
   getVendorRole(): Observable<any>{
-    return this.http.get(environment.baseUrl + "admin-api/vendor/roles")
+    return this.http.get(environment.baseUrl + "admin-api/admin/vendor-roles")
   }
   getSubscribers():Observable<any>{
     return this.http.get(environment.baseUrl+ "admin-api/admin/subscribers")
