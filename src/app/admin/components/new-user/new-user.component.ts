@@ -22,7 +22,8 @@ export class NewUserComponent implements OnInit {
   errorMessages = errors;
   passwordFieldType = "password";
   roles: Role[];
-  isAdminCreate: boolean = false;
+  isAdmin = { status: false, role_id: "", disabled: false }
+  isSubscriber = { status: false, role_id: "", disabled: false }
   activeTitle = "";
   constructor(
     private route: ActivatedRoute,
@@ -36,27 +37,25 @@ export class NewUserComponent implements OnInit {
   ) {
     this.roles = [];
     this.store.subscribe(res => {
-
-      this.isAdminCreate = true;
       this.activeTitle = res.breadcrumb.active_title;
     })
-      this.userService.getRoles().subscribe(response => {
-        response.data.map(role => {
-          if (this.activeTitle.split(" ").includes("Admin")) {
-            if (role.role_name.includes("Admin")) {
-              this.roles.push(role)
-            }
-          } else if (this.activeTitle.split(" ").includes("Subscribers")) {
-            if (role.role_name.includes("Subscriber")) {
-              this.roles.push(role)
-            }
-          } else if (this.activeTitle.split(" ").includes("Vendor")) {
-            if (!(role.role_name.includes("Admin") || role.role_name.includes("Subscriber"))) {
-              this.roles.push(role)
-            }
-          }
-        })
+    if (this.activeTitle.split(" ").includes("Admin")) {
+      this.isAdmin.status = true;
+      this.isAdmin.disabled = true;
+      this.userService.getRoles().subscribe(res => {
+        this.roles.push(res.data[0])
       })
+    } else if (this.activeTitle.split(" ").includes("Subscribers")) {
+      this.isSubscriber.status = true;
+      this.isSubscriber.disabled = true;
+      this.userService.getRoles().subscribe(res => {
+        this.roles = res.data;
+      })
+    } else if (this.activeTitle.split(" ").includes("Vendor")) {
+      this.userService.getVendorRole().subscribe(res => {
+        this.roles = res.data;
+      })
+    }
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
         this.isEdit = true;
@@ -67,22 +66,33 @@ export class NewUserComponent implements OnInit {
           this.userForm.setValue(this.userData)
         })
       } else {
-        // if (this.isAdminCreate) {
-
-        // }
       }
     })
   }
 
   ngOnInit() {
+    let role_id: any;
+    let disabled: any;
+    if (this.isAdmin.status) {
+      role_id = 1;
+      this.isAdmin.role_id = "1";
+      disabled = true;
+    } else if (this.isSubscriber.status) {
+      role_id = 2;
+      disabled = true;
+      this.isSubscriber.role_id = "2";
+    } else {
+      role_id = "";
+      disabled = false;
+    }
+
     this.userForm = this.formBuilder.group({
-      id: [""],
       first_name: ['', Validators.compose([Validators.required])],
       last_name: ['', Validators.compose([Validators.required])],
       middle_name: [''],
       company_name: [{ value: '', disabled: this.isEdit }],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      role_id: [{ value: '', disabled: this.isEdit }, Validators.required]
+      role_id: [{ value: role_id, disabled: disabled }, Validators.required]
     });
   }
 
@@ -91,23 +101,25 @@ export class NewUserComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
+    if (this.isAdmin.status) {
+      this.userForm.value['role_id'] = 1;
+    }
+    if (this.isSubscriber.status) {
+      this.userForm.value.role_id = 2
+    }
+
     if (!this.isEdit) {
       this.userService.createUser(this.userForm.value).subscribe(res => {
-        // if (this.isAdminCreate) {
         this.alertService.openSnackBar("User created successful", 'success');
-        // this.router.navigate(['/admin/admin-users'])
         this._location.back();
-        //   } else {
-        //   this.alertService.openSnackBar("User created successful", 'success');
-        //   this.router.navigate(['/admin/users'])
-        // }
       }, error => {
-        this.alertService.openSnackBar(error.error.message, 'error');
+        console.log(error)
+        this.alertService.openSnackBar(error.error.error, 'error');
       })
     } else {
       this.userService.updateUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User update successful", 'success');
-        if (this.isAdminCreate) {
+        if (this.isAdmin.status) {
           this.alertService.openSnackBar("Admin User updated successful", 'success');
           this.router.navigate(['/admin/admin-users'])
         } else {
@@ -115,7 +127,7 @@ export class NewUserComponent implements OnInit {
           this.router.navigate(['/admin/users'])
         }
       }, error => {
-        this.alertService.openSnackBar(error.message, 'error');
+        this.alertService.openSnackBar(error.error, 'error');
       })
     }
   }

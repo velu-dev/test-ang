@@ -40,12 +40,12 @@ export class VendorsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches),
-    shareReplay()
-  );
-isMobile: boolean = false;
-checked = true;
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  isMobile: boolean = false;
+  checked = true;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -106,6 +106,10 @@ checked = true;
   gotoEdit(data) {
     this.router.navigate(["/admin/users/" + data.id])
 
+  }
+  gotoDelete(data) {
+    // this.router.navigate(["/admin/admin-users/" + data.id])
+    this.openDialog('delete', data);
   }
   selectedRoleId = []
   filterByRole(value?: string) {

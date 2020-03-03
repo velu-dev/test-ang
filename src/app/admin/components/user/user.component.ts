@@ -108,6 +108,10 @@ export class UserComponent implements OnInit {
     this.router.navigate(["/admin/users/" + data.id])
 
   }
+  gotoDelete(data) {
+    // this.router.navigate(["/admin/admin-users/" + data.id])
+    this.openDialog('delete', data);
+  }
   selectedRoleId = []
   filterByRole(value?: string) {
     this.selectedRoleId = [];
