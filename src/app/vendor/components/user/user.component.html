@@ -44,8 +44,8 @@
                         </span>
                         <span *ngIf="i != (columnsToDisplay.length-1)">{{element[column]}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">
-                            <mat-icon (click)="gotoEdit(element)" class="edit-user" mat-raised-button
-                                matTooltip="Edit {{element.first_name}} Account" matTooltipPosition="right">edit
+                            <mat-icon class="edit-user" mat-raised-button
+                                matTooltip="Delete {{element.first_name}} Account" matTooltipPosition="right">delete
                             </mat-icon>
                         </span>
 

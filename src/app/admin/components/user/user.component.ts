@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -14,6 +14,8 @@ import { Role } from '../../models/role.model';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -43,22 +45,26 @@ export class UserComponent implements OnInit {
       shareReplay()
     );
   isMobile: boolean = false;
+  checked = true;
+  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  selectedFile: File = null;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
     private router: Router,
     private title: Title,
-    private exportService: ExportService
+    private exportService: ExportService,
+    public dialog: MatDialog
   ) {
 
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["","First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "action"]
+        this.columnName = ["", "First Name","Disable", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name',"disabled", "action"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role","Disabled", "Action"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name',"disabled", "action"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -67,8 +73,8 @@ export class UserComponent implements OnInit {
     this.userService.getSubscriberRole().subscribe(response => {
       response.data.map(role => {
         // if (!(role.role_name == "Admin")) {
-          this.roles.push(role)
-          this.selectedRoleId.push(role.id)
+        this.roles.push(role)
+        this.selectedRoleId.push(role.id)
         // }
       })
       this.getUser();
@@ -103,6 +109,10 @@ export class UserComponent implements OnInit {
   gotoEdit(data) {
     this.router.navigate(["/admin/users/" + data.id])
 
+  }
+  gotoDelete(data) {
+    // this.router.navigate(["/admin/admin-users/" + data.id])
+    this.openDialog('delete', data);
   }
   selectedRoleId = []
   filterByRole(value?: string) {
@@ -144,5 +154,42 @@ export class UserComponent implements OnInit {
     if (this.isMobile) {
       element.isExpand = !element.isExpand;
     }
+  }
+  onDisable(data, id) {
+    if (data.checked) {
+      this.openDialog('enable', id);
+    } else {
+      this.openDialog('disable', id);
+    }
+  }
+  openDialog(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        alert("Deleted")
+      } else {
+        alert("Cancled")
+      }
+    });
+  }
+  uploadFile(event) {
+    this.selectedFile = event.target.files[0];
+    console.log('selectedFile', this.selectedFile)
+    let formData = new FormData()
+    formData.append('role', '2')
+    formData.append('file', this.selectedFile)
+    console.log("formData", formData)
+    this.userService.uploadUserCsv(formData).subscribe(CSVRes => {
+      console.log(CSVRes);
+      this.fileUpload.nativeElement.value = "";
+    }, error => {
+      console.log('error', error)
+      this.fileUpload.nativeElement.value = "";
+    })
+
   }
 }

@@ -18,10 +18,9 @@
         <button mat-icon-button class="filter-icon" (click)="exportData()">
             <img class="icon-16" [src]="xls" alt="export" />
         </button>
-        <button mat-icon-button class="filter-icon">
+        <!-- <button mat-icon-button class="filter-icon">
             <mat-icon (click)="selectFile()">cloud_upload</mat-icon>
-            <!-- <img class="icon-16" [src]="xls" alt="export"  /> -->
-        </button>
+        </button> -->
 
         <div class="user-detail" *ngIf="dataSource">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
@@ -34,7 +33,7 @@
                                 {{ element.isExpand ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="i != (columnsToDisplay.length-1)">{{element[column]}} </span>
+                        <span>{{element[column]}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-2)">
                             <mat-slide-toggle color="warm" [checked]="checked" (change)="onDisable($event, element.id)">
                             </mat-slide-toggle>

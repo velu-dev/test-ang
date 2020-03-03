@@ -10,15 +10,14 @@
                 <button (click)="fullScreen()" mat-icon-button class="hide-mobile">
                     <mat-icon> {{isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
                 </button>
-                <button mat-icon-button [matMenuTriggerFor]="notification"  class="hide-mobile">
+                <button mat-icon-button [matMenuTriggerFor]="notification" class="hide-mobile">
                     <mat-icon matBadge="7" matBadgeColor="warn">notifications_none
                     </mat-icon>
                 </button>
-                <button mat-icon-button  class="show-mobile">
+                <button mat-icon-button class="show-mobile">
                     <mat-icon matBadge="7" matBadgeColor="warn">notifications_none
                     </mat-icon>
                 </button>
-                <!--  Notification section -->
                 <mat-menu #notification="matMenu" class="">
                     <div class="p-t-0 notification">
                         <mat-card-header class="text-center">

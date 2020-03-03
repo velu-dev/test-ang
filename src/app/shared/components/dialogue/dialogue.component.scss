@@ -14,21 +14,23 @@
       font-weight: $font-weight-bold;
       cursor: pointer;
       &:hover {
-          box-shadow: $box-shadow-1;
+        box-shadow: $box-shadow-1;
       }
     }
     .no {
       background-color: $white;
       color: $black;
+      border: 0;
       &:hover {
-          background-color: $bg-light-blue;
+        background-color: $white;
       }
       @extend .btn;
     }
 
     .yes {
-      background-color: $bg-success;      
+      background-color: $bg-success;
       color: $white;
+      border: 0;
       @extend .btn;
     }
   }

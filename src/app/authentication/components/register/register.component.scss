@@ -1,6 +1,6 @@
 @import "variables";
 
-.lucy-register-form {
+.register-form {
   background-color: $bg-light-blue;
   min-height: calc(100% - 55px);
   width: 100%;
@@ -51,7 +51,7 @@
         padding-left: 25px;
       }
     }
-    .lucy-new-account {
+    .new-account {
       @include switched-link;
     }
   }

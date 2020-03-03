@@ -54,7 +54,7 @@ button:focus {
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 3px;
 }
 
 ::-webkit-scrollbar-track {
@@ -66,7 +66,7 @@ button:focus {
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: rgb(0, 0, 0);
+  background: $light-gray;
   opacity: 0.5;
 }
 
@@ -133,8 +133,11 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   background-color: $bg-success;
   color: $text-success;
 }
-.alert-danger,
 .error {
+  background-color: $bg-error-style-one ;
+  color: $text-error;
+}
+.alert-danger {
   background-color: $bg-error;
   color: $text-error;
 }
@@ -244,3 +247,36 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 .amcharts-chart-div a {display:none !important;}
+
+
+
+// FIle Upload
+
+.file-upload {
+  margin-top: 10px;
+  border: 1px dashed $primarycolor;
+  padding: 30px 50px;
+  background-color: $bg-light-blue;
+  border-radius: 5px;
+  color: $white;
+  vertical-align: middle;
+  box-shadow: $box-shadow-5;
+  p {
+    vertical-align: middle;
+    color: $primarycolor;
+    text-align: center;
+  }
+  input {
+    padding: 8px 25px;
+    color: $white;
+    background-color: $primarycolor;
+    box-shadow: $box-shadow-5;
+    border-radius: 3px;
+    text-align: center;
+    margin: 0px auto;
+    display: block;
+    &:focus {
+      outline: none;
+    }
+  }
+}
