@@ -17,20 +17,44 @@
       margin-bottom: 5px !important;
     }
     mat-card-subtitle {
-      color: $light-gray;
+      color: $white;
+      opacity: .8;
     }
   }
-  img {
+  .profile-upload {
     position: absolute;
-    top: 90px;
+    top: 115px;
+    left: 42%;
+    i {
+      position: absolute;
+      top: 38px;
+      left: 84%;
+      width: 12px;
+      height: 12px;
+      font-size: $font-size-7;
+      vertical-align: middle;
+      padding: 5px;
+      background: $primarycolor;
+      border: 2px solid transparent;
+      box-shadow: $box-shadow-3;
+      color:$white;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    img {
     border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    left: 44%;
+    width: 80px;
+    height: 80px;
     box-shadow: $box-shadow-3;
     padding: 2px;
+    }
   }
   mat-card-content {
     @include text;
   }
+}
+
+.shadow {
+  box-shadow: $box-shadow-5;
+
 }

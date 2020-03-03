@@ -3,7 +3,7 @@
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
 
         <mat-toolbar> <img mat-card-image [src]="logo_white" alt="Lucy logo" class="logo-white"> <span
-                class="p-l-4">Simplexam Admin</span></mat-toolbar>
+                class="p-l-4">Simplexam</span></mat-toolbar>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
                 <a class="menu-card-title">{{menuItem.group}}</a>
