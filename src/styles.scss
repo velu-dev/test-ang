@@ -133,8 +133,11 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   background-color: $bg-success;
   color: $text-success;
 }
-.alert-danger,
 .error {
+  background-color: $bg-error-style-one ;
+  color: $text-error;
+}
+.alert-danger {
   background-color: $bg-error;
   color: $text-error;
 }

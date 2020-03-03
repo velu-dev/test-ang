@@ -18,10 +18,9 @@
         <button mat-icon-button class="filter-icon" (click)="exportData()">
             <img class="icon-16" [src]="xls" alt="export" />
         </button>
-        <button mat-icon-button class="filter-icon">
+        <!-- <button mat-icon-button class="filter-icon">
             <mat-icon (click)="selectFile()">cloud_upload</mat-icon>
-            <!-- <img class="icon-16" [src]="xls" alt="export"  /> -->
-        </button>
+        </button> -->
 
         <div class="user-detail" *ngIf="dataSource">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
