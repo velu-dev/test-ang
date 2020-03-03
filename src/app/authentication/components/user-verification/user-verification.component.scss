@@ -4,6 +4,11 @@
   background-color: $bg-light-blue;
   min-height: calc(100% - 55px);
   width: 100%;
+  .p-t-100 {
+    @media only screen and (max-width: 568px) {
+      padding-top: 30px !important;
+    }
+  }
   mat-card {
     padding: 50px 25px 25px 25px;
     box-shadow: 5px 5px 25px #b3c5de9c;
@@ -50,4 +55,3 @@
     }
   }
 }
-
