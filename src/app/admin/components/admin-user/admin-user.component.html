@@ -22,7 +22,7 @@
             <mat-icon (click)="selectFile()">cloud_upload</mat-icon>
         </button> -->
 
-        <div class="user-detail" *ngIf="dataSource">
+        <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnName[i]}} </th>
