@@ -13,9 +13,6 @@
             <input (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email, role">
         </div>
         <span class="spacer"></span>
-        <button mat-icon-button class="filter-icon p-t-0" [matMenuTriggerFor]="filter">
-            <mat-icon mat-icon-button aria-hidden="false" material-icons aria-label="home icon">filter_list</mat-icon>
-        </button>
         <button mat-icon-button class="filter-icon" (click)="exportData()" matTooltip="Export"
             matTooltipPosition="before">
             <img class="icon-16" [src]="xls" alt="export" />

@@ -34,8 +34,8 @@ export class UserService {
   getSubscribers(): Observable<any> {
     return this.http.get(environment.baseUrl + "admin-api/admin/subscribers")
   }
-  getVendors(): Observable<any> {
-    return this.http.get(environment.baseUrl + "admin-api/admin/vendors")
+  getVendors(roles): Observable<any> {
+    return this.http.post(environment.baseUrl + "admin-api/admin/vendors", {role_filter: roles})
   }
   uploadUserCsv(data) {
     return this.http.post(environment.baseUrl + api_endpoint.userCsvUpload, data)
