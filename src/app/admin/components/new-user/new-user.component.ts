@@ -87,9 +87,9 @@ export class NewUserComponent implements OnInit {
     }
 
     this.userForm = this.formBuilder.group({
-      first_name: ['', Validators.compose([Validators.required])],
-      last_name: ['', Validators.compose([Validators.required])],
-      middle_name: [''],
+      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       company_name: [{ value: '', disabled: this.isEdit }],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: role_id, disabled: disabled }, Validators.required]
