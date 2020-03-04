@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CognitoService } from './../../../shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -9,6 +9,8 @@ import * as  success from '../../../shared/messages/success'
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { MatInput } from '@angular/material/input';
+
 
 @Component({
   selector: 'app-login',
@@ -16,6 +18,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('firstname', {static: true}) firstname:any;
   loginForm: FormGroup;
   isSubmitted = false;
   passwordFieldType: boolean;
@@ -32,7 +35,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    this.firstname.nativeElement.focus();
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
