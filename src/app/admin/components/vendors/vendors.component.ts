@@ -46,6 +46,7 @@ export class VendorsComponent implements OnInit {
     );
   isMobile: boolean = false;
   checked = true;
+  filterAll = false;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -114,9 +115,10 @@ export class VendorsComponent implements OnInit {
     this.selectedRoleId = [];
     this.roles.map(res => {
       if (value) {
-        res['checked'] = !res['checked'];
+        this.filterAll ? res['checked'] = true : res['checked'] = false
         this.selectedRoleId.push(res.id)
       } else {
+        this.filterAll = false;
         if (res['checked']) {
           this.selectedRoleId.push(res.id);
         }
