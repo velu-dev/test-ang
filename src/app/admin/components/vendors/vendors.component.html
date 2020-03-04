@@ -23,7 +23,7 @@
         <mat-menu #filter="matMenu">
             <mat-list role="list">
                 <mat-list-item role="listitem">
-                    <mat-checkbox (change)="filterByRole('all')">All</mat-checkbox>
+                    <mat-checkbox (change)="filterByRole('all')" [(ngModel)]="filterAll">All</mat-checkbox>
                 </mat-list-item>
                 <mat-list-item role="listitem" *ngFor="let role of roles">
                     <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}</mat-checkbox>

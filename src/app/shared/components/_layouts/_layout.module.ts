@@ -8,6 +8,7 @@ import { SharedModule } from '../../shared.module';
 import { MaterialModule } from '../../material.module';
 import { PageHeaderComponent } from '../navigation/page_header/page_header.component';
 import { BreadcrumbComponent } from '../navigation/breadcrumb/breadcrumb.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
     exports: [
@@ -24,6 +25,7 @@ import { BreadcrumbComponent } from '../navigation/breadcrumb/breadcrumb.compone
         CommonModule,
         SharedModule,
         MaterialModule,
+        NgxSpinnerModule
     ],
     declarations: [
         HeaderComponent,

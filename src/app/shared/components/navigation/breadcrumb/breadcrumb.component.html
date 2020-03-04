@@ -2,5 +2,5 @@
      <li (click)="breadCrumbMain()"> <mat-icon aria-hidden="false" aria-label="home icon">home</mat-icon>Home</li>
 </ul>
 <ul class="breadcrumb" *ngFor="let menu of (menu$ | async)?.menu; let indx = index">
-    <li (click)="breadCrumb(menu, indx)"> {{menu.title}}           </li>
+    <li *ngIf="menu.title != 'Dashboard'" (click)="breadCrumb(menu, indx)"> {{menu.title}}</li>
 </ul>
