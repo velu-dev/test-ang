@@ -60,11 +60,11 @@ export class UserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name","Disable", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name',"disabled", "action"]
+        this.columnName = ["", "First Name", "Disable", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled", "action"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role","Disabled", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name',"disabled", "action"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled", "Action"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled", "action"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -96,10 +96,7 @@ export class UserComponent implements OnInit {
   getUser() {
     this.users = [];
     this.userService.getSubscribers().subscribe(response => {
-      response.data.map(user => {
-        user['isExpand'] = false;
-        this.users.push(user);
-      })
+      this.users = response.data;
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -150,9 +147,10 @@ export class UserComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Non-Admin-Users")
   }
+  expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      element.isExpand = !element.isExpand;
+      this.expandId = element.id;
     }
   }
   onDisable(data, id) {
