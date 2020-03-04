@@ -20,7 +20,6 @@ export class CommonLayoutComponent implements OnInit {
     this.routeUrl = this.router.url.split('/')[1]
     switch (this.role) {
       case '1':
-        console.log(this.role)
         if (this.routeUrl != 'admin') {
           this.router.navigate(["/admin"]);
         }

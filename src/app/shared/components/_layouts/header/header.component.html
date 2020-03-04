@@ -48,10 +48,7 @@
                     </span>
                     <img [src]="profile" alt="Welcome" class="" />
                 </button>
-                <button mat-icon-button (click)="logout()">
-                    <mat-icon>exit_to_app</mat-icon>
-
-                </button>
+             
             </div>
         </mat-card-actions>
         <mat-menu #settings="matMenu">
@@ -64,7 +61,7 @@
                 <span>Settings</span>
             </button>
             <mat-divider></mat-divider>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
                 <span>Logout</span>
             </button>

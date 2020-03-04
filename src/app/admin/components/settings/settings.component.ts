@@ -7,6 +7,7 @@ import { User } from '../../models/user.model';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
+import * as  errors from '../../../shared/messages/errors'
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -18,7 +19,8 @@ export class SettingsComponent implements OnInit {
   currentUser = {};
   userForm: FormGroup;
   userPasswrdForm: FormGroup;
-
+  errorMessages = errors;
+  isSubmitted = false;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: UserService,
@@ -69,13 +71,12 @@ export class SettingsComponent implements OnInit {
     this.isTypePassword = !this.isTypePassword
   }
   changePassword() {
-
+    this.isSubmitted = true;
     if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
       console.log("password miss match  ")
       return
     }
     if (this.userPasswrdForm.invalid) {
-      console.log("Not valid form ")
       return;
     }
     this.spinnerService.show();

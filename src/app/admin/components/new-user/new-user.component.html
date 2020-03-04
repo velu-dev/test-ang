@@ -32,7 +32,7 @@
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Select a Role</mat-label>
+        <mat-label>Select a Role*</mat-label>
         <mat-select formControlName="role_id">
           <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}
           </mat-option>
