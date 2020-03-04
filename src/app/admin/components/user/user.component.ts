@@ -60,11 +60,11 @@ export class UserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Disable", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled", "action"]
+        this.columnName = ["", "First Name","Disable", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name',"disabled", "action"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled", "action"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role","Disabled", "Action"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name',"disabled", "action"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -96,7 +96,10 @@ export class UserComponent implements OnInit {
   getUser() {
     this.users = [];
     this.userService.getSubscribers().subscribe(response => {
-      this.users = response.data;
+      response.data.map(user => {
+        user['isExpand'] = false;
+        this.users.push(user);
+      })
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
