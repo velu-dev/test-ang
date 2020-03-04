@@ -46,6 +46,7 @@ export class VendorsComponent implements OnInit {
     );
   isMobile: boolean = false;
   checked = true;
+  filterAll = false;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -60,6 +61,7 @@ export class VendorsComponent implements OnInit {
         this.columnName = ["", "First Name", "Disable", "Action"]
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled", "action"]
       } else {
+        this.expandId = "";
         this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled", "Action"]
         this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled", "action"]
       }
@@ -92,11 +94,8 @@ export class VendorsComponent implements OnInit {
   users = [];
   getUser(roles) {
     this.users = [];
-    this.userService.getVendors().subscribe(response => {
-      response.data.map(user => {
-        user['isExpand'] = false;
-        this.users.push(user);
-      })
+    this.userService.getVendors(roles).subscribe(response => {
+      this.users = response.data;
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -116,9 +115,10 @@ export class VendorsComponent implements OnInit {
     this.selectedRoleId = [];
     this.roles.map(res => {
       if (value) {
-        res['checked'] = !res['checked'];
+        this.filterAll ? res['checked'] = true : res['checked'] = false
         this.selectedRoleId.push(res.id)
       } else {
+        this.filterAll = false;
         if (res['checked']) {
           this.selectedRoleId.push(res.id);
         }
@@ -147,9 +147,10 @@ export class VendorsComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Non-Admin-Users")
   }
+  expandId: any;
   openElement(element) {
-    if ((this.screenWidth < 800)) {
-      element.isExpand = !element.isExpand;
+    if (this.isMobile) {
+      this.expandId = element.id;
     }
   }
   onDisable(data, id) {

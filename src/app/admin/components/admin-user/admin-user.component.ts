@@ -143,10 +143,11 @@ export class AdminUserComponent implements OnInit {
     formData.append('user_list_csv', this.selectedFile)
     console.log("formData",formData)
   }
-
+expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      element.isExpand = !element.isExpand;
+      this.expandId = element.id;
+      // element.isExpand = !element.isExpand;
     }
   }
 }

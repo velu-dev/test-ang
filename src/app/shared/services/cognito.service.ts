@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Auth } from 'aws-amplify';
 import { Observable, from } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CognitoService {
 
-  constructor() {
+  constructor(private cookiesStorge: CookieService) {
 
   }
 
@@ -17,7 +18,7 @@ export class CognitoService {
   }
 
   signUp(userData): Observable<any> {
-    return from(Auth.signUp(userData))
+    return from(Auth.signUp(userData));
   }
 
   signUpVerification(userName, code): Observable<any> {
@@ -25,7 +26,8 @@ export class CognitoService {
   }
 
   logOut(): Observable<any> {
-    return from(Auth.signOut())
+    this.cookiesStorge.deleteAll();
+    return from(Auth.signOut());
   }
 
   getCurrentUser(): Observable<any> {
