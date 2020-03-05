@@ -106,6 +106,13 @@ export const ROUTES = [
         icon: 'dashboard',
         submenu: [],
     },
+    //Historian staff menu
+    {
+        path: '/vendor/historian/staff/dashboard',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    },
     // Summarizer menus
     {
         path: '/vendor/summarizer/dashboard',
@@ -122,6 +129,13 @@ export const ROUTES = [
     {
         path: '/vendor/summarizer/users/new',
         title: 'New Staff',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    //Summarizer staff menu
+    {
+        path: '/vendor/summarizer/staff/dashboard',
+        title: 'Dashboard',
         icon: 'dashboard',
         submenu: [],
     },
@@ -143,5 +157,12 @@ export const ROUTES = [
         title: 'New Staff',
         icon: 'dashboard',
         submenu: [],
-    }
+    },
+    //Transcriber staff menu
+    {
+        path: '/vendor/transcriber/staff/dashboard',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    },
 ]

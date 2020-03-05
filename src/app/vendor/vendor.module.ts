@@ -15,6 +15,9 @@ import { TranscriberDashboardComponent } from './components/transcriber/transcri
 import { TranscriberNewUserComponent } from './components/transcriber/transcriber-new-user/transcriber-new-user.component';
 import { TranscriberSettingsComponent } from './components/transcriber/transcriber-settings/transcriber-settings.component';
 import { TranscriberUserComponent } from './components/transcriber/transcriber-user/transcriber-user.component';
+import { HistoryStaffDashboardComponent } from './components/historian-staff/history-staff-dashboard/history-staff-dashboard.component';
+import { SummaryStaffDashboardComponent } from './components/summarizer-staff/summary-staff-dashboard/summary-staff-dashboard.component';
+import { TranscriberStaffDashboardComponent } from './components/transcriber-staff/transcriber-staff-dashboard/transcriber-staff-dashboard.component';
 
 
 @NgModule({
@@ -30,7 +33,10 @@ import { TranscriberUserComponent } from './components/transcriber/transcriber-u
     TranscriberDashboardComponent,
     TranscriberNewUserComponent,
     TranscriberSettingsComponent,
-    TranscriberUserComponent
+    TranscriberUserComponent,
+    HistoryStaffDashboardComponent,
+    SummaryStaffDashboardComponent,
+    TranscriberStaffDashboardComponent
   ],
   imports: [
     CommonModule,

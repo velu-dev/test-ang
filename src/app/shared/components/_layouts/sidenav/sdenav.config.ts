@@ -146,6 +146,17 @@ export const ROUTES: SideNavInterface[] = [
             role: 7
         }]
     }, {
+        group: "Vendor Summarizer Staff",
+        role_id: 8,
+        menu: [{
+            path: '/vendor/summarizer/staff/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Vendor",
+            role: 8
+        }]
+    }, {
         group: "Vendor Transcriber",
         role_id: 9,
         menu: [{
@@ -162,6 +173,18 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             group: "Vendor",
             role: 9
+        }]
+    },
+    {
+        group: "Vendor Transcriber Staff",
+        role_id: 10,
+        menu: [{
+            path: '/vendor/transcriber/staff/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Vendor",
+            role: 6
         }]
     },
 ]
