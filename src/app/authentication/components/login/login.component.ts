@@ -26,15 +26,15 @@ export class LoginComponent implements OnInit {
   redirectUrls = [
     { role_id: 1, redirect_url: "/admin/dashboard" },
     { role_id: 2, redirect_url: "/subscriber/dashboard" },
-    { role_id: 3, redirect_url: "/subscriber/manager" },
-    { role_id: 4, redirect_url: "/subscriber/staff" },
-    { role_id: 5, redirect_url: "/vendor/historian" },
-    { role_id: 6, redirect_url: "/vendor/historian/staff" },
-    { role_id: 7, redirect_url: "/vendor/summarizer" },
-    { role_id: 8, redirect_url: "/vendor/summarizer/staff" },
+    { role_id: 3, redirect_url: "/subscriber/manager/dashboard" },
+    { role_id: 4, redirect_url: "/subscriber/staff/dashboard" },
+    { role_id: 5, redirect_url: "/vendor/historian/dashboard" },
+    { role_id: 6, redirect_url: "/vendor/historian/staff/dashboard" },
+    { role_id: 7, redirect_url: "/vendor/summarizer/dashboard" },
+    { role_id: 8, redirect_url: "/vendor/summarizer/staff/dashboard" },
     { role_id: 9, redirect_url: "/vendor/transcriber/dashboard" },
-    { role_id: 10, redirect_url: "/vendor/transcriber/staff" },
-    { role_id: 11, redirect_url: "/subscriber/examiner" },
+    { role_id: 10, redirect_url: "/vendor/transcriber/staff/dashboard" },
+    { role_id: 11, redirect_url: "/subscriber/examiner/dashboard" },
   ]
   constructor(
     private router: Router,

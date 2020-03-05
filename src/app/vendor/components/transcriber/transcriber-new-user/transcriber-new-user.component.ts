@@ -80,15 +80,15 @@ export class TranscriberNewUserComponent implements OnInit {
     if (!this.isEdit) {
       this.userService.createUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successful", 'success');
-        this.router.navigate(['/vendor/users'])
+        this._location.back();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.userService.updateUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User update successful", 'success');
-          this.alertService.openSnackBar("User updated successful", 'success');
-          this.router.navigate(['/vendor/users'])
+        this.alertService.openSnackBar("User updated successful", 'success');
+        this._location.back();
       }, error => {
         this.alertService.openSnackBar(error.message, 'error');
       })

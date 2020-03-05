@@ -88,7 +88,7 @@ export class HistorianNewUserComponent implements OnInit {
       this.userService.updateUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User update successful", 'success');
         this.alertService.openSnackBar("User updated successful", 'success');
-        this.router.navigate(['/vendor/users'])
+        this._location.back();
       }, error => {
         this.alertService.openSnackBar(error.message, 'error');
       })
