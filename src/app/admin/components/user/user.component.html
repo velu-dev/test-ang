@@ -21,10 +21,6 @@
                     matTooltipPosition="before">
                     <img class="icon-16" [src]="xls" alt="export" />
                 </button>
-                <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile" accept="CSV">
-                <button mat-icon-button class="filter-icon">
-                    <mat-icon (click)="uploader.click()">cloud_upload</mat-icon>
-                </button>
                 <mat-menu #filter="matMenu">
                     <mat-list role="list">
                         <mat-list-item role="listitem">

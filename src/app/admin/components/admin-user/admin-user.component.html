@@ -17,15 +17,9 @@
                     <input (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email, role">
                 </div>
                 <span class="spacer"></span>
-                <input type="file" hidden (change)="uploadFile($event)" id="uploadFile" accept="CSV">
-
                 <button mat-icon-button class="filter-icon" (click)="exportData()">
                     <img class="icon-16" [src]="xls" alt="export" />
                 </button>
-                <!-- <button mat-icon-button class="filter-icon">
-                    <mat-icon (click)="selectFile()">cloud_upload</mat-icon>
-                </button> -->
-
                 <div class="user-detail">
                     <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
                         <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
