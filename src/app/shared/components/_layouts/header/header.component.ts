@@ -105,4 +105,11 @@ export class HeaderComponent implements OnInit {
       }
     }
   }
+  gotoSettings() {
+    let urlSplit = this.router.url.split("/");
+    urlSplit.pop();
+    let url = urlSplit.join("/")
+    url = url+ "/settings"
+    this.router.navigate([url])
+  }
 }
