@@ -5,5 +5,5 @@ export const api_endpoint = {
     signupVerify: 'auth/Authentication/signup-verify',
     resetPassword: 'admin-api/admin/reset-admin-password',
     emailVerify: 'auth/authentication/email-verify',
-    userCsvUpload: 'admin-api/admin/csv-upload',
+    userCsvUpload: 'admin-api/vendor/csv-upload',
 }

@@ -71,8 +71,9 @@ export class NewUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    let role_id: any;
-    let disabled: any;
+    let role_id:any = "";
+    let disabled = false;
+    
     if (this.isAdmin.status) {
       role_id = 1;
       this.isAdmin.role_id = "1";
@@ -81,9 +82,6 @@ export class NewUserComponent implements OnInit {
       role_id = 2;
       disabled = true;
       this.isSubscriber.role_id = "2";
-    } else {
-      role_id = "";
-      disabled = false;
     }
 
     this.userForm = this.formBuilder.group({
