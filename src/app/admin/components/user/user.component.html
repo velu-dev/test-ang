@@ -2,9 +2,9 @@
     <mat-card-header>
         <mat-card-title class="m-0">Users</mat-card-title>
         <span class="spacer"></span>
-        <button routerLink="new" mat-mini-fab class="add-user">
+        <!-- <button routerLink="new" mat-mini-fab class="add-user">
             <mat-icon>add</mat-icon>
-        </button>
+        </button> -->
 
     </mat-card-header>
     <mat-divider></mat-divider>
@@ -16,11 +16,6 @@
         <button mat-icon-button class="filter-icon" (click)="exportData()" matTooltip="Export"
             matTooltipPosition="before">
             <img class="icon-16" [src]="xls" alt="export" />
-        </button>
-
-        <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile" accept="CSV">
-        <button mat-icon-button class="filter-icon">
-            <mat-icon (click)="uploader.click()">cloud_upload</mat-icon>
         </button>
 
         <mat-menu #filter="matMenu">

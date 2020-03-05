@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,6 +16,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import * as  success from '../../../shared/messages/success'
 @Component({
   selector: 'app-vendors',
   templateUrl: './vendors.component.html',
@@ -47,13 +49,16 @@ export class VendorsComponent implements OnInit {
   isMobile: boolean = false;
   checked = true;
   filterAll = false;
+  selectedFile: File = null;
+  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(
     private userService: UserService,
     private router: Router,
     private title: Title,
     private exportService: ExportService,
     private breakpointObserver: BreakpointObserver,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private alertService: AlertService,
   ) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -173,5 +178,23 @@ export class VendorsComponent implements OnInit {
         alert("Cancled")
       }
     });
+  }
+
+
+  uploadFile(event) {
+    this.selectedFile = event.target.files[0];
+    let formData = new FormData()
+    formData.append('file', this.selectedFile)
+    console.log("formData", formData)
+    this.userService.uploadUserCsv(formData).subscribe(CSVRes => {
+      this.alertService.openSnackBar(success.fileupload, 'success');
+      this.fileUpload.nativeElement.value = "";
+      this.getUser(this.selectedRoleId);
+    }, error => {
+      console.log('error', error)
+      this.fileUpload.nativeElement.value = "";
+      this.alertService.openSnackBar(error.error.error, 'error');
+    })
+
   }
 }
