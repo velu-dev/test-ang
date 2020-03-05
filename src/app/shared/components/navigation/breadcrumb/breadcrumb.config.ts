@@ -80,26 +80,68 @@ export const ROUTES = [
             submenu: []
         }],
     },
-    //Vendor Menu
+    //Subscriber staff manager
     {
-        path: '/vendor/dashboard',
+        path: '/subscriber/manager',
         title: 'Dashboard',
         icon: 'dashboard',
         submenu: [],
-    }, {
-        path: '/vendor/users',
-        title: 'Manage Users',
-        icon: 'dashboard',
-        submenu: [, {
-            path: "/vendor/users/new",
-            title: "New Vendor",
-            icon: "settings",
-            submenu: []
-        }],
-    }, {
-        path: '/vendor/settings',
-        title: 'Settings',
+    },
+    //Vendor historian Menu
+    {
+        path: '/vendor/historian/dashboard',
+        title: 'Dashboard',
         icon: 'dashboard',
         submenu: [],
     },
+    {
+        path: '/vendor/historian/users',
+        title: 'Historian users',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/vendor/historian/users/new',
+        title: 'New Staff',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    // Summarizer menus
+    {
+        path: '/vendor/summarizer/dashboard',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/vendor/summarizer/users',
+        title: 'Summarizer users',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/vendor/summarizer/users/new',
+        title: 'New Staff',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    // Transcriber menus
+    {
+        path: '/vendor/transcriber/dashboard',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/vendor/transcriber/users',
+        title: 'Transcriber users',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/vendor/transcriber/users/new',
+        title: 'New Staff',
+        icon: 'dashboard',
+        submenu: [],
+    }
 ]

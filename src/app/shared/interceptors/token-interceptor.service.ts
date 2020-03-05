@@ -14,7 +14,7 @@ export const InterceptorSkipHeader = "X-Skip-Interceptor";
 export class TokenInterceptorService implements HttpInterceptor {
   roleId: any;
   constructor(private cookieService: CookieService) {
-    this.roleId = this.cookieService.get("role_id")
+
   }
   intercept(
     req: HttpRequest<any>,
@@ -30,7 +30,7 @@ export class TokenInterceptorService implements HttpInterceptor {
         })
       );
     }
-
+    this.roleId = this.cookieService.get("role_id")
     return from(Auth.currentSession())
       .pipe(
         switchMap(token => {

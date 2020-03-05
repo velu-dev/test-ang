@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import * as globals from '../../../globals';
-import { UserService } from './../../service/user.service';
+import * as globals from '../../../../globals';
+import { UserService } from './../../../service/user.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { User } from './../../../shared/model/user.model';
+import { User } from './../../../../shared/model/user.model';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
-import * as  errors from '../../../shared/messages/errors'
+import * as  errors from '../../../../shared/messages/errors'
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  selector: 'app-summarizer-settings',
+  templateUrl: './summarizer-settings.component.html',
+  styleUrls: ['./summarizer-settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class SummarizerSettingsComponent implements OnInit {
   profile_bg = globals.profile_bg;
   user: User;
   currentUser = {};

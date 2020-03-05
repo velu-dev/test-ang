@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from './../../service/user.service';
+import { UserService } from './../../../service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as  errors from '../../../shared/messages/errors'
+import * as  errors from './../../../../shared/messages/errors'
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { Role } from './../../../shared/model/role.model';
+import { Role } from './../../../../shared/model/role.model';
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'app-new-user',
-  templateUrl: './new-user.component.html',
-  styleUrls: ['./new-user.component.scss']
+  selector: 'app-transcriber-new-user',
+  templateUrl: './transcriber-new-user.component.html',
+  styleUrls: ['./transcriber-new-user.component.scss']
 })
-export class NewUserComponent implements OnInit {
+export class TranscriberNewUserComponent implements OnInit {
   userForm: FormGroup;
   isSubmitted = false;
   isEdit: boolean = false;

@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import * as globals from '../../../globals';
-import { User } from './../../../shared/model/user.model';
-import { Role } from './../../../shared/model/role.model';
-import { UserService } from './../../service/user.service';
+import * as globals from './../../../../globals';
+import { User } from './../../../../shared/model/user.model';
+import { Role } from './../../../../shared/model/role.model';
+import { UserService } from './../../../service/user.service';
 import { Router } from '@angular/router';
-import { ExportService } from './../../../shared/services/export.service';
+import { ExportService } from './../../../../shared/services/export.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
@@ -14,9 +14,9 @@ import { map, shareReplay } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss'],
+  selector: 'app-transcriber-user',
+  templateUrl: './transcriber-user.component.html',
+  styleUrls: ['./transcriber-user.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -25,7 +25,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ]),
   ]
 })
-export class UserComponent implements OnInit {
+export class TranscriberUserComponent implements OnInit {
   screenWidth: number;
   xls = globals.xls;
   roles: Role[];

@@ -73,19 +73,41 @@ export const ROUTES: SideNavInterface[] = [
             group: "Subscriber",
             role: 2
         }]
+    }, {
+        group: "Subscriber Staff manager",
+        role_id: 3,
+        menu: [{
+            path: '/subscriber/manager/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 3
+        }]
+    }, {
+        group: "Subscriber Staff",
+        role_id: 4,
+        menu: [{
+            path: '/subscriber/staff/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 4
+        }]
     },
     {
-        group: "Vendor",
+        group: "Vendor Historian",
         role_id: 5,
         menu: [{
-            path: '/vendor/dashboard',
+            path: '/vendor/historian/dashboard',
             title: 'Dashboard',
             icon: 'dashboard',
             submenu: [],
             group: "Vendor",
             role: 5
         }, {
-            path: '/vendor/users',
+            path: '/vendor/historian/users',
             title: 'Manage Users',
             icon: 'dashboard',
             submenu: [],
@@ -94,22 +116,52 @@ export const ROUTES: SideNavInterface[] = [
         }]
     },
     {
-        group: "Vendor",
+        group: "Vendor Historian Staff",
+        role_id: 6,
+        menu: [{
+            path: '/vendor/historian/staff/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Vendor",
+            role: 6
+        }]
+    },
+    {
+        group: "Vendor Summarizer",
         role_id: 7,
         menu: [{
-            path: '/vendor/dashboard',
+            path: '/vendor/summarizer/dashboard',
             title: 'Dashboard',
             icon: 'dashboard',
             submenu: [],
             group: "Vendor",
             role: 7
         }, {
-            path: '/vendor/users',
+            path: '/vendor/summarizer/users',
             title: 'Manage Users',
             icon: 'dashboard',
             submenu: [],
             group: "Vendor",
             role: 7
         }]
-    }
+    }, {
+        group: "Vendor Transcriber",
+        role_id: 9,
+        menu: [{
+            path: '/vendor/transcriber/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Vendor",
+            role: 9
+        }, {
+            path: '/vendor/transcriber/users',
+            title: 'Manage Users',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Vendor",
+            role: 9
+        }]
+    },
 ]

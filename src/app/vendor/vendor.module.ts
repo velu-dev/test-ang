@@ -1,21 +1,36 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { VendorRoutingModule } from './vendor-routing.module';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SharedModule } from '../shared/shared.module';
-import { SettingsComponent } from './components/settings/settings.component';
 import { UserService } from './service/user.service';
-import { UserComponent } from './components/user/user.component';
-import { NewUserComponent } from './components/new-user/new-user.component';
+import { HistorianDashboardComponent } from './components/historian/historian-dashboard/historian-dashboard.component';
+import { HistorianNewUserComponent } from './components/historian/historian-new-user/historian-new-user.component';
+import { HistorianSettingsComponent } from './components/historian/historian-settings/historian-settings.component';
+import { HistorianUserComponent } from './components/historian/historian-user/historian-user.component';
+import { SummarizerDashboardComponent } from './components/summarizer/summarizer-dashboard/summarizer-dashboard.component';
+import { SummarizerNewUserComponent } from './components/summarizer/summarizer-new-user/summarizer-new-user.component';
+import { SummarizerSettingsComponent } from './components/summarizer/summarizer-settings/summarizer-settings.component';
+import { SummarizerUserComponent } from './components/summarizer/summarizer-user/summarizer-user.component';
+import { TranscriberDashboardComponent } from './components/transcriber/transcriber-dashboard/transcriber-dashboard.component';
+import { TranscriberNewUserComponent } from './components/transcriber/transcriber-new-user/transcriber-new-user.component';
+import { TranscriberSettingsComponent } from './components/transcriber/transcriber-settings/transcriber-settings.component';
+import { TranscriberUserComponent } from './components/transcriber/transcriber-user/transcriber-user.component';
 
 
 @NgModule({
   declarations: [
-    DashboardComponent,
-    SettingsComponent,
-    UserComponent,
-    NewUserComponent
+    HistorianDashboardComponent,
+    HistorianNewUserComponent,
+    HistorianSettingsComponent,
+    HistorianUserComponent,
+    SummarizerDashboardComponent,
+    SummarizerNewUserComponent,
+    SummarizerSettingsComponent,
+    SummarizerUserComponent,
+    TranscriberDashboardComponent,
+    TranscriberNewUserComponent,
+    TranscriberSettingsComponent,
+    TranscriberUserComponent
   ],
   imports: [
     CommonModule,

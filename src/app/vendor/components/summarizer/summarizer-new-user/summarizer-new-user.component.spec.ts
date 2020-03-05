@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserComponent } from './user.component';
+import { SummarizerNewUserComponent } from './summarizer-new-user.component';
 
-describe('UserComponent', () => {
-  let component: UserComponent;
-  let fixture: ComponentFixture<UserComponent>;
+describe('SummarizerNewUserComponent', () => {
+  let component: SummarizerNewUserComponent;
+  let fixture: ComponentFixture<SummarizerNewUserComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserComponent ]
+      declarations: [ SummarizerNewUserComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserComponent);
+    fixture = TestBed.createComponent(SummarizerNewUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
