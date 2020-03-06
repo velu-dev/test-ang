@@ -83,7 +83,7 @@ export class VendorsComponent implements OnInit {
         }
       })
       this.tabName = 'activeUsers'
-      this.getUser(this.selectedRoleId,this.tabName);
+      this.getUser(this.selectedRoleId, this.tabName);
       this.roles.map(function (el) {
         var o = Object.assign({}, el);
         o['checked'] = false;
@@ -99,16 +99,25 @@ export class VendorsComponent implements OnInit {
   ngOnInit() {
   }
   users = [];
-  getUser(roles,status) {
+  getUser(roles, status) {
     this.users = [];
-    this.userService.getVendors(roles,status).subscribe(response => {
+    this.allUser = [];
+    this.userService.getVendors(roles, status).subscribe(response => {
       this.allUser = response;
-      this.tabchange(0)
+      if (status == 'invitedUsers') {
+        this.tabchange(1)
+      } else if (status == 'disabledUsers') {
+        this.tabchange(2)
+      } else {
+        this.tabchange(0)
+      }
+
     }, error => {
     })
   }
-   tabName:string;
+  tabName: string;
   tabchange(event) {
+    this.selectedRoleId = [];
     this.dataSource = [];
     this.users = [];
     this.tabName = ''
@@ -147,7 +156,7 @@ export class VendorsComponent implements OnInit {
         }
       }
     })
-    this.getUser(this.selectedRoleId,this.tabName)
+    this.getUser(this.selectedRoleId, this.tabName)
   }
   navigate() {
     this.router.navigate(['/admin/vendor/new'])
@@ -207,7 +216,7 @@ export class VendorsComponent implements OnInit {
     this.userService.uploadUserCsv(formData).subscribe(CSVRes => {
       this.alertService.openSnackBar(success.fileupload, 'success');
       this.fileUpload.nativeElement.value = "";
-      this.getUser(this.selectedRoleId,this.tabName);
+      this.getUser(this.selectedRoleId, this.tabName);
     }, error => {
       console.log('error', error)
       this.fileUpload.nativeElement.value = "";
