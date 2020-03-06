@@ -47,6 +47,8 @@ export class AdminUserComponent implements OnInit {
   expandedElement: User | null;
   color = "primary";
   disabled = false;
+  allUser: any;
+  filterValue : string;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -74,14 +76,29 @@ export class AdminUserComponent implements OnInit {
   }
   getUser(roles) {
     this.userService.getUsers(roles).subscribe(response => {
-      console.log(response.data)
-      this.admin = response.data;
-      this.dataSource = new MatTableDataSource(response.data)
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.isLoading = false;
+      this.allUser = response;
+      this.tabchange(0);
     }, error => {
     })
+  }
+
+  tabchange(event) {
+    this.filterValue = '';
+    this.dataSource = [];
+    this.admin = [];
+    let tabName;
+    if (event == 0) {
+      tabName = 'activeUsers'
+    } else if (event == 1) {
+      tabName = 'invitedUsers'
+    } else if (event == 2) {
+      tabName = 'disabledUsers'
+    }
+    this.admin = this.allUser[tabName];
+    this.dataSource = new MatTableDataSource(this.allUser[tabName])
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.isLoading = false;
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -126,9 +143,9 @@ export class AdminUserComponent implements OnInit {
       }
     });
   }
-  navigate() {
+  navigate(eve) {
     // this.router.navigate(['new'])
-
+    console.log(eve)
   }
 
   expandId: any;

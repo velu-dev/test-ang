@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit {
   folders = [];
   currentUserID = "";
   user: User;
+  isOpen: any
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
@@ -57,9 +58,15 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.elem = document.documentElement;
+    this.isOpen = this.inputSideNav.opened;
   }
+
   openSidenav() {
     this.inputSideNav.toggle();
+    this.isOpen = this.inputSideNav.opened;
+    // this.inputSideNav.toggle().then(res => {
+    //   console.table(res)
+    // })
   }
   logout() {
     this.spinnerService.show();
@@ -109,7 +116,7 @@ export class HeaderComponent implements OnInit {
     let urlSplit = this.router.url.split("/");
     urlSplit.pop();
     let url = urlSplit.join("/")
-    url = url+ "/settings"
+    url = url + "/settings"
     this.router.navigate([url])
   }
 }
