@@ -124,7 +124,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     width: 6%;
     float: left;
   }
-  .alert{
+  .alert {
     width: 94%;
     float: left;
   }
@@ -136,7 +136,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   color: $text-success;
 }
 .error {
-  background-color: $bg-error-style-one ;
+  background-color: $bg-error-style-one;
   color: $text-error;
 }
 .alert-danger {
@@ -157,6 +157,11 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   h3 {
     color: $light-gray;
   }
+}
+
+.table-empty-data {
+  width: 100%;
+  text-align: center;
 }
 
 .user-detail {
@@ -248,9 +253,9 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     display: none !important;
   }
 }
-.amcharts-chart-div a {display:none !important;}
-
-
+.amcharts-chart-div a {
+  display: none !important;
+}
 
 // FIle Upload
 
@@ -283,9 +288,10 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 
+.mat-form-field-outline-end {
+  border-radius: 0px !important;
+}
 
-// .mat-form-field-outline-gap:hover {
-//   display: none !important;
- 
-// }
-
+.mat-form-field-outline-start {
+  border-radius: 0px !important;
+}

@@ -29,6 +29,7 @@ import { User } from 'src/app/shared/model/user.model';
 })
 export class DashboardComponent implements OnInit {
   xls = globals.xls;
+  table_no_data = globals.table_no_data
   chart: any;
   roles = [];
   selectedRoleId = [];
@@ -92,36 +93,36 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.title.setTitle("Admin Dashboard")
     this.chart = am4core.create("chartdiv", am4charts.XYChart);
-         this.chart.paddingRight = 20;
-      let data = [];
-      let visits = 10;
-      for (let i = 1; i < 366; i++) {
-        visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-        data.push({ date: new Date(2018, 0, i), name: "name" + i, value: visits });
-      }
-      this.chart.data = data;
-      let dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
-      dateAxis.renderer.grid.template.location = 0;
-      let valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.tooltip.disabled = true;
-      valueAxis.renderer.minWidth = 35;
-      let series = this.chart.series.push(new am4charts.LineSeries());
-      series.dataFields.dateX = "date";
-      series.dataFields.valueY = "value";
-      series.tooltipText = "{valueY.value}";
-      this.chart.cursor = new am4charts.XYCursor();
-      let scrollbarX = new am4charts.XYChartScrollbar();
-      scrollbarX.series.push(series);
-      this.chart.scrollbarX = scrollbarX;
-      this.chart = this.chart;
-    };
-    
-    
+    this.chart.paddingRight = 20;
+    let data = [];
+    let visits = 10;
+    for (let i = 1; i < 366; i++) {
+      visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
+      data.push({ date: new Date(2018, 0, i), name: "name" + i, value: visits });
+    }
+    this.chart.data = data;
+    let dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis.renderer.grid.template.location = 0;
+    let valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.tooltip.disabled = true;
+    valueAxis.renderer.minWidth = 35;
+    let series = this.chart.series.push(new am4charts.LineSeries());
+    series.dataFields.dateX = "date";
+    series.dataFields.valueY = "value";
+    series.tooltipText = "{valueY.value}";
+    this.chart.cursor = new am4charts.XYCursor();
+    let scrollbarX = new am4charts.XYChartScrollbar();
+    scrollbarX.series.push(series);
+    this.chart.scrollbarX = scrollbarX;
+    this.chart = this.chart;
+  };
+
+
   openElement(element) {
     if (this.isMobile) {
       element.isExpand = !element.isExpand;
     }
   }
-  
+
 
 }

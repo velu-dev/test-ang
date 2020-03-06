@@ -1,7 +1,9 @@
+@import "variables";
 
-.mat-tab-group .mat-tab-label-active{
-    background-color:#3c3cff1f !important
-  }
+.mat-tab-group .mat-tab-label-active {
+  background-color: $tab-active !important;
+  opacity: 1 !important;
+}
 .user-list {
-    min-height: 50px;
+  min-height: 50px;
 }
