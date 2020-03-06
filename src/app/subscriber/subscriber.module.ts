@@ -7,6 +7,8 @@ import { SharedModule } from '../shared/shared.module';
 import { UserComponent } from './components/user/user.component';
 import { NewUserComponent } from './components/new-user/new-user.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
+import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { SettingsComponent } from './components/settings/settings.component';
     DashboardComponent,
     UserComponent,
     NewUserComponent,
-    SettingsComponent
+    SettingsComponent,
+    ManagerDashboardComponent,
+    StaffDashboardComponent
   ],
   imports: [
     CommonModule,

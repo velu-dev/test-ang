@@ -17,12 +17,25 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('firstname', {static: true}) firstname:any;
+  @ViewChild('firstname', { static: true }) firstname: any;
   loginForm: FormGroup;
   isSubmitted = false;
   passwordFieldType: boolean;
   logo = globals.logo;
   errorMessages = errors;
+  redirectUrls = [
+    { role_id: 1, redirect_url: "/admin/dashboard" },
+    { role_id: 2, redirect_url: "/subscriber/dashboard" },
+    { role_id: 3, redirect_url: "/subscriber/manager/dashboard" },
+    { role_id: 4, redirect_url: "/subscriber/staff/dashboard" },
+    { role_id: 5, redirect_url: "/vendor/historian/dashboard" },
+    { role_id: 6, redirect_url: "/vendor/historian/staff/dashboard" },
+    { role_id: 7, redirect_url: "/vendor/summarizer/dashboard" },
+    { role_id: 8, redirect_url: "/vendor/summarizer/staff/dashboard" },
+    { role_id: 9, redirect_url: "/vendor/transcriber/dashboard" },
+    { role_id: 10, redirect_url: "/vendor/transcriber/staff/dashboard" },
+    { role_id: 11, redirect_url: "/subscriber/examiner/dashboard" },
+  ]
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -68,18 +81,15 @@ export class LoginComponent implements OnInit {
         return;
       }
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(res => {
-        this.cookieService.set("role_id", res['data'].role_id)
-        if (res['data'].role_id == 1) {
-          this.alertService.openSnackBar(success.loginSuccess, 'success');
-          this.router.navigate(['/admin/dashboard'])
-        }
-        else if (res['data'].role_id == 2) {
-          this.alertService.openSnackBar(success.loginSuccess, 'success');
-          this.router.navigate(['/subscriber/dashboard'])
-        } else {
-          this.alertService.openSnackBar(success.loginSuccess, 'success');
-          this.router.navigate(['/vendor/dashboard'])
-        }
+        this.redirectUrls.map(redirect => {
+          if (redirect.role_id == res['data'].role_id) {
+            this.cookieService.set("role_id", res['data'].role_id)
+            this.alertService.openSnackBar(success.loginSuccess, 'success');
+            console.log(redirect.redirect_url)
+            this.router.navigate([redirect.redirect_url])
+            this.spinnerService.hide();
+          }
+        })
       })
     }, error => {
       this.error = { message: error.message, action: "danger" }
