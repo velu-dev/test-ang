@@ -61,11 +61,11 @@ export class AdminUserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Disabled", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled", "action"]
+        this.columnName = ["", "First Name", "Disabled" ]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled" ]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled", "action"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
       }
     })
     this.isLoading = true;
