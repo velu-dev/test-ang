@@ -51,6 +51,7 @@ export class VendorsComponent implements OnInit {
   filterAll = false;
   selectedFile: File = null;
   allUser: any;
+  filterValue : string;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(
     private userService: UserService,
@@ -117,6 +118,7 @@ export class VendorsComponent implements OnInit {
   }
   tabName: string;
   tabchange(event) {
+    this.filterValue = '';
     this.selectedRoleId = [];
     this.dataSource = [];
     this.users = [];
