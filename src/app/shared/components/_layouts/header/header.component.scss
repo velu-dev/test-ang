@@ -1,16 +1,27 @@
 @import "variables";
-
+.opened {
+  margin-left: 240px;
+  transition-delay: .1s;
+  @media only screen and (max-width: 568px) {
+    margin-left: 0;
+  }
+}
+.closed {
+  margin-left: 0;
+}
 mat-toolbar {
   background-color: $white;
   color: $ternary-color;
   font-size: $font-size-4;
   height: 40px;
-  // position:fixed;
-  // top: 0;
-  // left: 0;
-  // right: 0;
-  // z-index: 1;
-  // display: block;
+}
+mat-toolbar.navbar-fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: block;
 }
 mat-toolbar-row {
   box-shadow: $box-shadow-2;
@@ -19,16 +30,9 @@ mat-toolbar-row {
     button {
       margin-top: 15px;
       margin-right: 10px;
-      @media only screen and (max-width: 568px) {        
-      margin-right: 0px;
+      @media only screen and (max-width: 568px) {
+        margin-right: 0px;
       }
-      // &::after {
-      //   content: '';
-      //   border-right: 2px solid $primarycolor;
-      //   height: 80px;
-      //   vertical-align: middle;
-      //   margin-left: 12px;
-      // }
     }
     .welcome {
       line-height: 0px !important;
@@ -41,22 +45,10 @@ mat-toolbar-row {
       }
       img {
         padding-left: 20px;
-        @media only screen and (max-width: 568px) {        
-          padding-left: 0px ;
-           }
+        @media only screen and (max-width: 568px) {
+          padding-left: 0px;
+        }
       }
     }
-    
   }
 }
-
-
-// .navbar-fixed-header {
-//   .Side {
-//     left: 500px;
-//     &:active {
-//        left: 0;
-//     }
-//   }
-
-// }

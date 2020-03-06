@@ -1,9 +1,9 @@
 <mat-toolbar class="nav-bar navbar-fixed-header">
     <mat-toolbar-row>
-        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="openSidenav()">
+        <button [ngClass]="{'opened': isOpen, 'closed': !isOpen}" type="button" aria-label="Toggle sidenav"
+            mat-icon-button (click)="openSidenav()">
             <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
         </button>
-
         <span flex class="spacer"></span>
         <mat-card-actions>
             <div fxLayout="row">
@@ -48,7 +48,7 @@
                     </span>
                     <img [src]="profile" alt="Welcome" class="" />
                 </button>
-             
+
             </div>
         </mat-card-actions>
         <mat-menu #settings="matMenu">

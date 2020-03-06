@@ -95,8 +95,11 @@
                     </button>
                 </mat-card-header>
                 <mat-divider></mat-divider>
-                <mat-card-content class="p-t-50 p-b-100 m-t-75 m-b-50">                    
-                    <h3 class="text-center">NO DATA AVAILABLE</h3>
+                <mat-card-content class="p-t-25">                    
+                    <div class="table-empty-data p-t-10">
+                        <img [src]="table_no_data" alt="" />
+                        <h3>NO DATA AVAILABLE </h3>
+                    </div>
                 </mat-card-content>
             </mat-card>
         </div>
@@ -164,6 +167,10 @@
                                         </div>
                                     </div>
                                 </td>
+                                   <div class="table-empty-data p-t-10">
+                        <img [src]="table_no_data" alt="" />
+                        <h3>NO DATA AVAILABLE </h3>
+                    </div>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
                             <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
