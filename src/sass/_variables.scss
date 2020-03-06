@@ -21,7 +21,8 @@ $text-gray: #5b626b;
 $dark-gray: #4d4f5c;
 $light-gray: #a2a1a1;
 $text-dark: #45515f;
-$menu-active: #383838;
+$menu-active: #383838; //Menu active background
+$tab-active: #3c3cff1f; //Tab active background
 $transparent: transparent;
 
 //alert colors
@@ -31,7 +32,7 @@ $text-warning: rgb(206, 123, 0);
 $bg-success: rgb(76, 175, 80);
 $bg-error: rgba(255, 54, 54, 0.05);
 $bg-warning: rgba(255, 178, 54, 0.4);
-$bg-error-style-one :#ff8f8f;
+$bg-error-style-one: #ff8f8f;
 
 // Matero Variables
 //
@@ -87,7 +88,8 @@ $font-size-23: 2em;
 
 //Font-family
 
-$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Roboto", sans-serif;
+$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Roboto ", sans-serif;
+$font-family-source-san-serif: "Source Sans Pro", sans-serif;
 
 //Alignment
 $float-left: left;
@@ -255,7 +257,7 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   }
 }
 .auth-tilte {
-  font-family: Source Sans Pro;
+  font-family: $font-family-source-san-serif;
   letter-spacing: 0;
   color: $primarycolor;
   opacity: 1;
@@ -334,7 +336,7 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
 //   .mat-button-wrapper {
 //     padding: 0px !important;
 //     .mat-icon {
-//       width: auto;
+//       width:  auto;
 //       height: auto;
 //       line-height: 0px;
 //     }

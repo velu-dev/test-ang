@@ -5,7 +5,7 @@ export const environment = {
   production: false,
 
   // baseUrl: 'https://dev01api.simplexam.com/', //Dev
-  baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
+   baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
   // baseUrl: 'http://192.168.1.122:3000/', //Rajan-local
 
   Amplify: {
@@ -22,7 +22,7 @@ export const environment = {
         domain: 'localhost', // GLobal local IP
         // domain: 'd2re2whflovy37.cloudfront.net', //dev server
         // domain: '192.168.1.208', // Velu's IP
-        //domain: '192.168.1.100', // Venkatesan Mariyappan's IP
+        // domain: '192.168.1.100', // Venkatesan Mariyappan's IP
         // OPTIONAL - Cookie path
         path: '/',
         // OPTIONAL - Cookie expiration in days

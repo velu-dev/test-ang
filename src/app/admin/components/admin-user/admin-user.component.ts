@@ -47,6 +47,8 @@ export class AdminUserComponent implements OnInit {
   expandedElement: User | null;
   color = "primary";
   disabled = false;
+  allUser: any;
+  filterValue: string;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -59,11 +61,11 @@ export class AdminUserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Disabled", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled", "action"]
+        this.columnName = ["", "First Name", "Disabled" ]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled" ]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled", "action"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
       }
     })
     this.isLoading = true;
@@ -74,14 +76,29 @@ export class AdminUserComponent implements OnInit {
   }
   getUser(roles) {
     this.userService.getUsers(roles).subscribe(response => {
-      console.log(response.data)
-      this.admin = response.data;
-      this.dataSource = new MatTableDataSource(response.data)
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.isLoading = false;
+      this.allUser = response;
+      this.tabchange(0);
     }, error => {
     })
+  }
+
+  tabchange(event) {
+    this.filterValue = '';
+    this.dataSource = [];
+    this.admin = [];
+    let tabName;
+    if (event == 0) {
+      tabName = 'activeUsers'
+    } else if (event == 1) {
+      tabName = 'invitedUsers'
+    } else if (event == 2) {
+      tabName = 'disabledUsers'
+    }
+    this.admin = this.allUser[tabName];
+    this.dataSource = new MatTableDataSource(this.allUser[tabName])
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.isLoading = false;
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -101,18 +118,18 @@ export class AdminUserComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Admin-Users")
   }
-  onDisable(data, id) {
+  onDisable(data, user) {
     if (data.checked) {
-      this.openDialog('enable', id);
+      this.openDialog('enable', user);
     } else {
-      this.openDialog('disable', id);
+      this.openDialog('disable', user);
     }
   }
   gotoDelete(data) {
     // this.router.navigate(["/admin/admin-users/" + data.id])
     this.openDialog('delete', data);
   }
-  openDialog(dialogue, data) {
+  openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
       data: { name: dialogue }
@@ -120,15 +137,17 @@ export class AdminUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        alert("Deleted")
+        this.userService.disableUser(user.id, !user.status).subscribe(res => {
+          this.getUser([1]);
+        })
       } else {
-        alert("Cancled")
+
       }
     });
   }
-  navigate() {
+  navigate(eve) {
     // this.router.navigate(['new'])
-
+    console.log(eve)
   }
 
   expandId: any;
