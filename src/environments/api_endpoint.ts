@@ -14,5 +14,6 @@ export const api_endpoint = {
     getSubscribersRole: "admin-api/admin/subscriber-roles",
     getVendorRole: "admin-api/admin/vendor-roles",
     getSubscribers :"admin-api/admin/subscribers",
-    getvendors: "admin-api/admin/vendors"
+    getvendors: "admin-api/admin/vendors",
+    disable_user: "admin-api/admin/disable-user/",
 }

@@ -34,10 +34,13 @@ export class UserService {
   getSubscribers(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getSubscribers)
   }
-  getVendors(roles): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.getvendors, {role_filter: roles,status:status})
+  getVendors(roles, status): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getvendors, { role_filter: roles, status: status })
   }
   uploadUserCsv(data) {
     return this.http.post(environment.baseUrl + api_endpoint.userCsvUpload, data)
+  }
+  disableUser(id, status): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.disable_user + id, { status: status })
   }
 }

@@ -48,7 +48,7 @@ export class AdminUserComponent implements OnInit {
   color = "primary";
   disabled = false;
   allUser: any;
-  filterValue : string;
+  filterValue: string;
   constructor(
     private userService: UserService,
     private router: Router,
@@ -118,18 +118,18 @@ export class AdminUserComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Admin-Users")
   }
-  onDisable(data, id) {
+  onDisable(data, user) {
     if (data.checked) {
-      this.openDialog('enable', id);
+      this.openDialog('enable', user);
     } else {
-      this.openDialog('disable', id);
+      this.openDialog('disable', user);
     }
   }
   gotoDelete(data) {
     // this.router.navigate(["/admin/admin-users/" + data.id])
     this.openDialog('delete', data);
   }
-  openDialog(dialogue, data) {
+  openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
       data: { name: dialogue }
@@ -137,9 +137,11 @@ export class AdminUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        alert("Deleted")
+        this.userService.disableUser(user.id, !user.status).subscribe(res => {
+          this.getUser([1]);
+        })
       } else {
-        alert("Cancled")
+
       }
     });
   }
