@@ -50,6 +50,7 @@ export class VendorsComponent implements OnInit {
   checked = true;
   filterAll = false;
   selectedFile: File = null;
+  allUser: any;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(
     private userService: UserService,
@@ -81,7 +82,8 @@ export class VendorsComponent implements OnInit {
           this.selectedRoleId.push(role.id)
         }
       })
-      this.getUser(this.selectedRoleId);
+      this.tabName = 'activeUsers'
+      this.getUser(this.selectedRoleId,this.tabName);
       this.roles.map(function (el) {
         var o = Object.assign({}, el);
         o['checked'] = false;
@@ -97,16 +99,32 @@ export class VendorsComponent implements OnInit {
   ngOnInit() {
   }
   users = [];
-  getUser(roles) {
+  getUser(roles,status) {
     this.users = [];
-    this.userService.getVendors(roles).subscribe(response => {
-      this.users = response.data;
-      this.dataSource = new MatTableDataSource(this.users)
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.userService.getVendors(roles,status).subscribe(response => {
+      this.allUser = response;
+      this.tabchange(0)
     }, error => {
     })
   }
+   tabName:string;
+  tabchange(event) {
+    this.dataSource = [];
+    this.users = [];
+    this.tabName = ''
+    if (event == 0) {
+      this.tabName = 'activeUsers'
+    } else if (event == 1) {
+      this.tabName = 'invitedUsers'
+    } else if (event == 2) {
+      this.tabName = 'disabledUsers'
+    }
+    this.users = this.allUser[this.tabName];
+    this.dataSource = new MatTableDataSource(this.users)
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   gotoEdit(data) {
     this.router.navigate(["/admin/users/" + data.id])
 
@@ -129,7 +147,7 @@ export class VendorsComponent implements OnInit {
         }
       }
     })
-    this.getUser(this.selectedRoleId)
+    this.getUser(this.selectedRoleId,this.tabName)
   }
   navigate() {
     this.router.navigate(['/admin/vendor/new'])
@@ -189,7 +207,7 @@ export class VendorsComponent implements OnInit {
     this.userService.uploadUserCsv(formData).subscribe(CSVRes => {
       this.alertService.openSnackBar(success.fileupload, 'success');
       this.fileUpload.nativeElement.value = "";
-      this.getUser(this.selectedRoleId);
+      this.getUser(this.selectedRoleId,this.tabName);
     }, error => {
       console.log('error', error)
       this.fileUpload.nativeElement.value = "";

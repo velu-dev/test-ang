@@ -46,7 +46,8 @@ export class UserComponent implements OnInit {
     );
   isMobile: boolean = false;
   checked = true;
-  
+  allUser: any;
+  filterValue : string;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
@@ -95,13 +96,8 @@ export class UserComponent implements OnInit {
   getUser() {
     this.users = [];
     this.userService.getSubscribers().subscribe(response => {
-      response.data.map(user => {
-        user['isExpand'] = false;
-        this.users.push(user);
-      })
-      this.dataSource = new MatTableDataSource(this.users)
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.allUser = response;
+      this.tabchange(0);
     }, error => {
     })
   }
@@ -128,6 +124,28 @@ export class UserComponent implements OnInit {
     })
     this.getUser()
   }
+
+  tabchange(event) {
+    this.filterValue = '';
+    this.dataSource = [];
+    this.users = [];
+    let tabName;
+    if (event == 0) {
+      tabName = 'activeUsers'
+    } else if (event == 1) {
+      tabName = 'invitedUsers'
+    } else if (event == 2) {
+      tabName = 'disabledUsers'
+    }
+    this.allUser[tabName].map(user => {
+      user['isExpand'] = false;
+      this.users.push(user);
+    })
+    this.dataSource = new MatTableDataSource(this.users)
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   navigate() {
     this.router.navigate(['/admin/users/new'])
   }

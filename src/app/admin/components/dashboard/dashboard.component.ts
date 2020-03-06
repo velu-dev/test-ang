@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit {
   getUser(roles) {
     this.users = [];
     this.userService.getUsers(roles).subscribe(response => {
-      response.data.map(user => {
+      response['activeUsers'].map(user => {
         user['isExpand'] = false;
         this.users.push(user);
       })

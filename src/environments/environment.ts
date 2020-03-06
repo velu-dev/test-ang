@@ -5,7 +5,7 @@ export const environment = {
   production: false,
 
   // baseUrl: 'https://dev01api.simplexam.com/', //Dev
-  baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
+   baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
   // baseUrl: 'http://192.168.1.122:3000/', //Rajan-local
 
   Amplify: {
