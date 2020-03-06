@@ -37,7 +37,6 @@ export class AdminUserComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   admin = [];
   isLoading = false;
-  selectedFile: any;
   isMobile = false;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -46,7 +45,7 @@ export class AdminUserComponent implements OnInit {
     );
   checked = true;
   expandedElement: User | null;
-  color= "primary";
+  color = "primary";
   disabled = false;
   constructor(
     private userService: UserService,
@@ -75,6 +74,7 @@ export class AdminUserComponent implements OnInit {
   }
   getUser(roles) {
     this.userService.getUsers(roles).subscribe(response => {
+      console.log(response.data)
       this.admin = response.data;
       this.dataSource = new MatTableDataSource(response.data)
       this.dataSource.paginator = this.paginator;
@@ -131,19 +131,7 @@ export class AdminUserComponent implements OnInit {
 
   }
 
-  selectFile() {
-    document.getElementById('uploadFile').click();
-  }
-
-  uploadFile(event) {
-    this.selectedFile = event.target.files[0];
-    console.log('selectedFile',this.selectedFile)
-    let formData = new FormData()
-    formData.append('role', '1')
-    formData.append('user_list_csv', this.selectedFile)
-    console.log("formData",formData)
-  }
-expandId: any;
+  expandId: any;
   openElement(element) {
     if (this.isMobile) {
       this.expandId = element.id;

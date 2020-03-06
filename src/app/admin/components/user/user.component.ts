@@ -46,8 +46,7 @@ export class UserComponent implements OnInit {
     );
   isMobile: boolean = false;
   checked = true;
-  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
-  selectedFile: File = null;
+  
   constructor(
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
@@ -177,20 +176,5 @@ export class UserComponent implements OnInit {
       }
     });
   }
-  uploadFile(event) {
-    this.selectedFile = event.target.files[0];
-    console.log('selectedFile', this.selectedFile)
-    let formData = new FormData()
-    formData.append('role', '2')
-    formData.append('file', this.selectedFile)
-    console.log("formData", formData)
-    this.userService.uploadUserCsv(formData).subscribe(CSVRes => {
-      console.log(CSVRes);
-      this.fileUpload.nativeElement.value = "";
-    }, error => {
-      console.log('error', error)
-      this.fileUpload.nativeElement.value = "";
-    })
-
-  }
+  
 }

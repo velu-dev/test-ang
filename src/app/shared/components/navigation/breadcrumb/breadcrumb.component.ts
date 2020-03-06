@@ -18,7 +18,7 @@ export class BreadcrumbComponent implements OnInit {
     roleId: any;
     role: any;
     routeUrl: string;
-    constructor(private router: Router, private store: Store<{ breadcrumb: any }>,private cookieService: CookieService) {
+    constructor(private router: Router, private store: Store<{ breadcrumb: any }>, private cookieService: CookieService) {
         this.menu$ = store.pipe(select('breadcrumb'));
     }
 
@@ -30,31 +30,45 @@ export class BreadcrumbComponent implements OnInit {
         this.store.dispatch(new breadcrumbActions.RemoveBreadcrumb({ index: index }));
     }
     breadCrumbMain() {
-       // this.router.navigate(['/'])
+        // this.router.navigate(['/'])
         this.role = this.cookieService.get('role_id')
         this.routeUrl = this.router.url.split('/')[1]
-    
+
         switch (this.role) {
             case '1':
-                    this.router.navigate(["/admin/dashboard"]);
-                break;
+                this.router.navigate(["/admin"]);
             case '2':
-                    this.router.navigate(["/subscriber/dashboard"]);
+                this.router.navigate(["/subscriber"]);
+                break;
+            case '3':
+                this.router.navigate(["/subscriber/manager"]);
+                break;
+            case '4':
+                this.router.navigate(["/subscriber/staff"]);
                 break;
             case '5':
-                    this.router.navigate(["/vendor/dashboard"]);
+                this.router.navigate(["/vendor/historian"]);
+                break;
+            case '6':
+                this.router.navigate(["/vendor/historian/staff"]);
                 break;
             case '7':
-                    this.router.navigate(["/vendor/dashboard"]);
+                this.router.navigate(["/vendor/summarizer"]);
+                break;
+            case '8':
+                this.router.navigate(["/vendor/summarizer/staff"]);
                 break;
             case '9':
-                    this.router.navigate(["/vendor/dashboard"]);
+                this.router.navigate(["/vendor/transcriber"]);
+                break;
+            case '10':
+                this.router.navigate(["/vendor/transcriber/staff"]);
                 break;
             default:
                 this.router.navigate(["/"]);
                 break;
         }
-       // this.store.dispatch(new breadcrumbActions.ResetBreadcrumb());
+        this.store.dispatch(new breadcrumbActions.ResetBreadcrumb());
     }
 
 }

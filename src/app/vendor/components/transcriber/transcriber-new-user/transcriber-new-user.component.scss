@@ -1,0 +1,32 @@
+@import "variables";
+
+.lucy-register-form {
+  background-color: $bg-light-blue;
+  //min-height: calc(100% - 65px);
+  width: 100%;
+
+  mat-card {
+    padding: 50px 25px 25px 25px;
+    box-shadow: $box-shadow-1;
+    form {
+      mat-form-field {
+        mat-icon {
+          color: $text-gray !important;
+        }
+        .check-password {
+          cursor: pointer;
+        }
+        mat-error {
+          padding-top: 3px;
+        }
+      }
+      .note {
+        font-size: $font-size-3;
+        width: 100%;
+      }
+    }
+    .new-account {
+      @include switched-link;
+    }
+  }
+}

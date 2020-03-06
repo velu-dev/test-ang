@@ -1,13 +1,30 @@
 <mat-card class="m-card">
-    <mat-card-header>
-        <mat-card-title class="m-0">Users</mat-card-title>
-        <span class="spacer"></span>
-        <button routerLink="new" mat-mini-fab class="add-user">
-            <mat-icon>add</mat-icon>
-        </button>
-
-    </mat-card-header>
-    <mat-divider></mat-divider>
+    <button routerLink="new" mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user">
+        <mat-icon>add</mat-icon>
+    </button>
+    <mat-tab-group class="user-list">
+        <!-- ######~~~~~ Active Users ~~~~~##### -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="p-r-5"> assignment_ind </mat-icon>
+                <span matBadge="25" matBadgeOverlap="false"> Active Users</span>
+            </ng-template>
+        </mat-tab>
+        <!-- ######~~~~~ Invited Users ~~~~~##### -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="p-r-5"> person_add </mat-icon>
+                <span matBadge="25" matBadgeOverlap="false" matBadgeColor="warn"> Invited Users</span>
+            </ng-template>
+        </mat-tab>
+        <!-- ######~~~~~ Disabled Users ~~~~~##### -->
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="p-r-5"> person_add_disabled </mat-icon>
+                <span matBadge="25" matBadgeOverlap="false" matBadgeColor="accent" disabled>Disabled Users </span>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
     <mat-card-content class="p-t-3 m-b-0">
         <div class="table-filter">
             <input (keyup)="applyFilter($event.target.value)" placeholder="Search by name, email, role">
@@ -17,22 +34,16 @@
             matTooltipPosition="before">
             <img class="icon-16" [src]="xls" alt="export" />
         </button>
-
-        <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile" accept="CSV">
-        <button mat-icon-button class="filter-icon">
-            <mat-icon (click)="uploader.click()">cloud_upload</mat-icon>
-        </button>
-
         <mat-menu #filter="matMenu">
             <mat-list role="list">
                 <mat-list-item role="listitem">
                     <mat-checkbox (change)="filterByRole('all')">All</mat-checkbox>
                 </mat-list-item>
                 <mat-list-item role="listitem" *ngFor="let role of roles">
-                    <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}</mat-checkbox>
+                    <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}
+                    </mat-checkbox>
                 </mat-list-item>
             </mat-list>
-
         </mat-menu>
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
@@ -47,15 +58,16 @@
                         </span>
                         <span *ngIf="i != (columnsToDisplay.length-1)">{{element[column]}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-2)">
-                            <mat-slide-toggle color="warm" [checked]="checked" (change)="onDisable($event, element.id)">
+                            <mat-slide-toggle color="warm" [checked]="checked"
+                                (change)="onDisable($event, element.id)">
                             </mat-slide-toggle>
                         </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">
                             <mat-icon (click)="gotoDelete(element)" class="edit-user" mat-raised-button
-                                matTooltip="Edit {{element.first_name}} Account" matTooltipPosition="right">delete
+                                matTooltip="Edit {{element.first_name}} Account" matTooltipPosition="right">
+                                delete
                             </mat-icon>
                         </span>
-
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
