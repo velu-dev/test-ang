@@ -6,4 +6,13 @@ export const api_endpoint = {
     resetPassword: 'admin-api/admin/reset-admin-password',
     emailVerify: 'auth/authentication/email-verify',
     userCsvUpload: 'admin-api/vendor/csv-upload',
+    getAdminUser: "admin-api/admin/users",
+    getAdminRoles: "admin-api/admin/roles",
+    getUser: "admin-api/admin/user/",
+    createUser: "admin-api/admin/create",
+    updateUser: "admin-api/admin/update-user/",
+    getSubscribersRole: "admin-api/admin/subscriber-roles",
+    getVendorRole: "admin-api/admin/vendor-roles",
+    getSubscribers :"admin-api/admin/subscribers",
+    getvendors: "admin-api/admin/vendors"
 }

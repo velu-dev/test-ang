@@ -11,31 +11,31 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
   getUsers(roles): Observable<any> {
-    return this.http.post(environment.baseUrl + "admin-api/admin/users", { role_filter: roles })
+    return this.http.post(environment.baseUrl + api_endpoint.getAdminUser, { role_filter: roles })
   }
   getRoles(): Observable<any> {
-    return this.http.get(environment.baseUrl + "admin-api/admin/roles")
+    return this.http.get(environment.baseUrl + api_endpoint.getAdminRoles)
   }
   getUser(id): Observable<any> {
-    return this.http.get(environment.baseUrl + "admin-api/admin/user/" + id)
+    return this.http.get(environment.baseUrl + api_endpoint.getUser + id)
   }
   createUser(data): Observable<any> {
-    return this.http.post(environment.baseUrl + "admin-api/admin/create", data)
+    return this.http.post(environment.baseUrl + api_endpoint.createUser, data)
   }
   updateUser(data): Observable<any> {
-    return this.http.put(environment.baseUrl + "admin-api/admin/update-user/" + data.id, data)
+    return this.http.put(environment.baseUrl + api_endpoint.updateUser + data.id, data)
   }
-  getSubscriberRole(): Observable<any>{
-    return this.http.get(environment.baseUrl + "admin-api/admin/subscriber-roles")
+  getSubscriberRole(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getSubscribersRole)
   }
-  getVendorRole(): Observable<any>{
-    return this.http.get(environment.baseUrl + "admin-api/admin/vendor-roles")
+  getVendorRole(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getVendorRole)
   }
   getSubscribers(): Observable<any> {
-    return this.http.get(environment.baseUrl + "admin-api/admin/subscribers")
+    return this.http.get(environment.baseUrl + api_endpoint.getSubscribers)
   }
   getVendors(roles): Observable<any> {
-    return this.http.post(environment.baseUrl + "admin-api/admin/vendors", {role_filter: roles})
+    return this.http.post(environment.baseUrl + api_endpoint.getvendors, { role_filter: roles })
   }
   uploadUserCsv(data) {
     return this.http.post(environment.baseUrl + api_endpoint.userCsvUpload, data)
