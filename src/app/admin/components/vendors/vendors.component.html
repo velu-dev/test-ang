@@ -68,18 +68,12 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="i != (columnsToDisplay.length-1)">{{element[column]}} </span>
-                        <span *ngIf="i == (columnsToDisplay.length-2)">
-                            <mat-slide-toggle color="warm" [checked]="element.status" (change)="onDisable($event, element)">
-                            </mat-slide-toggle>
-                    
-                        </span>
+                        <span>{{element[column]}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">
-                            <mat-icon (click)="gotoDelete(element)" class="edit-user" mat-raised-button
-                                matTooltip="Edit {{element.first_name}} Account" matTooltipPosition="right">delete
-                            </mat-icon>
+                            <span class="user-disable-enable" (click)="onDisable($event, element)">
+                                {{element.status ? 'Disable' : 'Enable' }}</span>
+                            <!-- <span class="user-enable"> Enable</span>  -->
                         </span>
-
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">

@@ -36,8 +36,8 @@ export class VendorsComponent implements OnInit {
   roles: Role[];
   selectedRole: any = [];
   dataSource: any;
-  columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
+  columnName = [];
+  columnsToDisplay = [];
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -66,12 +66,12 @@ export class VendorsComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Disable", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled", "action"]
+        this.columnName = ["", "First Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
         this.expandId = "";
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled", "action"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disable User"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
       }
     });
     this.screenWidth = window.innerWidth;
@@ -190,7 +190,7 @@ export class VendorsComponent implements OnInit {
     }
   }
   onDisable(data, id) {
-    if (data.checked) {
+    if (this.tabIndex == 2) {
       this.openDialog('enable', id);
     } else {
       this.openDialog('disable', id);

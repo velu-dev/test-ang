@@ -1,8 +1,8 @@
 <mat-card class="m-card">
-    <button routerLink="new" mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}"
+    <!-- <button routerLink="new" mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}"
         class="add-user">
         <mat-icon>add</mat-icon>
-    </button>
+    </button> -->
     <mat-tab-group class="user-list" (selectedTabChange)="tabchange($event.index)">
         <!-- ######~~~~~ Active Users ~~~~~##### -->
         <mat-tab>
@@ -59,17 +59,10 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="i != (columnsToDisplay.length-1)">{{element[column]}} </span>
-                        <span *ngIf="i == (columnsToDisplay.length-2)">
-                            <mat-slide-toggle color="warm" [checked]="element.status"
-                                (change)="onDisable($event, element)">
-                            </mat-slide-toggle>
-                        </span>
-                        <span *ngIf="i == (columnsToDisplay.length-1)">
-                            <mat-icon (click)="gotoDelete(element)" class="edit-user" mat-raised-button
-                                matTooltip="Edit {{element.first_name}} Account" matTooltipPosition="right">
-                                delete
-                            </mat-icon>
+                        <span>{{element[column]}} </span>
+                        <span *ngIf="i == (columnsToDisplay.length-1)">                            
+                            <span class="user-disable-enable"  (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
+                            <!-- <span class="user-enable"> Enable</span>  -->
                         </span>
                     </td>
                 </ng-container>
