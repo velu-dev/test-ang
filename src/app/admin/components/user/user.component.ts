@@ -48,6 +48,7 @@ export class UserComponent implements OnInit {
   checked = true;
   allUser: any;
   filterValue : string;
+  tabIndex: number = 0;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
@@ -97,7 +98,7 @@ export class UserComponent implements OnInit {
     this.users = [];
     this.userService.getSubscribers().subscribe(response => {
       this.allUser = response;
-      this.tabchange(0);
+      this.tabchange(this.tabIndex);
     }, error => {
     })
   }
@@ -129,6 +130,7 @@ export class UserComponent implements OnInit {
     this.filterValue = '';
     this.dataSource = [];
     this.users = [];
+    this.tabIndex = event;
     let tabName;
     if (event == 0) {
       tabName = 'activeUsers'
@@ -180,7 +182,8 @@ export class UserComponent implements OnInit {
       this.openDialog('disable', id);
     }
   }
-  openDialog(dialogue, data) {
+ 
+  openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
       data: { name: dialogue }
@@ -188,9 +191,11 @@ export class UserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        alert("Deleted")
+        this.userService.disableUser(user.id, !user.status).subscribe(res => {
+          this.getUser();
+        })
       } else {
-        alert("Cancled")
+
       }
     });
   }

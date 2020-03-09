@@ -52,6 +52,7 @@ export class VendorsComponent implements OnInit {
   selectedFile: File = null;
   allUser: any;
   filterValue : string;
+  tabIndex: number = 0;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(
     private userService: UserService,
@@ -123,6 +124,7 @@ export class VendorsComponent implements OnInit {
     this.dataSource = [];
     this.users = [];
     this.tabName = ''
+    this.tabIndex = event;
     if (event == 0) {
       this.tabName = 'activeUsers'
     } else if (event == 1) {
@@ -194,7 +196,7 @@ export class VendorsComponent implements OnInit {
       this.openDialog('disable', id);
     }
   }
-  openDialog(dialogue, data) {
+  openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
       data: { name: dialogue }
@@ -202,9 +204,11 @@ export class VendorsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        alert("Deleted")
+        this.userService.disableUser(user.id, !user.status).subscribe(res => {
+          this.getUser(this.selectedRoleId, this.tabName);
+        })
       } else {
-        alert("Cancled")
+
       }
     });
   }

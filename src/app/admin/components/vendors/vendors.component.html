@@ -67,7 +67,7 @@
                         </span>
                         <span *ngIf="i != (columnsToDisplay.length-1)">{{element[column]}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-2)">
-                            <mat-slide-toggle color="warm" [checked]="checked" (change)="onDisable($event, element.id)">
+                            <mat-slide-toggle color="warm" [checked]="element.status" (change)="onDisable($event, element)">
                             </mat-slide-toggle>
                         </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">
