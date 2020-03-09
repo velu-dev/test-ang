@@ -36,8 +36,8 @@ export class VendorsComponent implements OnInit {
   roles: Role[];
   selectedRole: any = [];
   dataSource: any;
-  columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
+  columnName = [];
+  columnsToDisplay = [];
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -52,6 +52,7 @@ export class VendorsComponent implements OnInit {
   selectedFile: File = null;
   allUser: any;
   filterValue : string;
+  tabIndex: number = 0;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(
     private userService: UserService,
@@ -65,12 +66,12 @@ export class VendorsComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Disable", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled", "action"]
+        this.columnName = ["", "First Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
         this.expandId = "";
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled", "action"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disable User"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
       }
     });
     this.screenWidth = window.innerWidth;
@@ -123,6 +124,7 @@ export class VendorsComponent implements OnInit {
     this.dataSource = [];
     this.users = [];
     this.tabName = ''
+    this.tabIndex = event;
     if (event == 0) {
       this.tabName = 'activeUsers'
     } else if (event == 1) {
@@ -188,13 +190,13 @@ export class VendorsComponent implements OnInit {
     }
   }
   onDisable(data, id) {
-    if (data.checked) {
+    if (this.tabIndex == 2) {
       this.openDialog('enable', id);
     } else {
       this.openDialog('disable', id);
     }
   }
-  openDialog(dialogue, data) {
+  openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
       data: { name: dialogue }
@@ -202,9 +204,11 @@ export class VendorsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        alert("Deleted")
+        this.userService.disableUser(user.id, !user.status).subscribe(res => {
+          this.getUser(this.selectedRoleId, this.tabName);
+        })
       } else {
-        alert("Cancled")
+
       }
     });
   }

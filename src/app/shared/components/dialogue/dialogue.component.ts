@@ -16,7 +16,7 @@ export class DialogueComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close({ data: true });
+    this.dialogRef.close({ data: false });
   }
   onYesClick(): void {
     this.dialogRef.close(
