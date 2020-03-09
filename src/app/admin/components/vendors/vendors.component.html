@@ -1,5 +1,6 @@
 <mat-card class="m-card">
-    <button routerLink="new" mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user">
+    <button routerLink="new" mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}"
+        class="add-user">
         <mat-icon>add</mat-icon>
     </button>
     <mat-tab-group class="user-list" (selectedTabChange)="tabchange($event.index)">
@@ -7,28 +8,30 @@
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="p-r-5"> assignment_ind </mat-icon>
-                <span [matBadge]="allUser?.activeUsers?.length" matBadgeOverlap="false"> Active Users</span>
+                <span> Active Users <span class="active-user-count">({{allUser?.activeUsers?.length}})</span></span>
             </ng-template>
-          
+
         </mat-tab>
         <!-- ######~~~~~ Invited Users ~~~~~##### -->
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="p-r-5"> person_add </mat-icon>
-                <span [matBadge]="allUser?.invitedUsers?.length" matBadgeOverlap="false" matBadgeColor="warn"> Invited Users</span>
+                <span> Invited Users <span class="invited-user-count">({{allUser?.invitedUsers?.length}})</span></span>
             </ng-template>
         </mat-tab>
         <!-- ######~~~~~ Disabled Users ~~~~~##### -->
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="p-r-5"> person_add_disabled </mat-icon>
-                <span [matBadge]="allUser?.disabledUsers?.length" matBadgeOverlap="false" matBadgeColor="accent" disabled>Disabled Users </span>
+                <span>Disabled Users <span
+                        class="disabled-user-count">({{allUser?.disabledUsers?.length}})</span></span>
             </ng-template>
         </mat-tab>
     </mat-tab-group>
     <mat-card-content class="p-t-3 m-b-0">
         <div class="table-filter">
-            <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue" placeholder="Search by name, email, role">
+            <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+                placeholder="Search by name, email, role">
         </div>
         <span class="spacer"></span>
         <button mat-icon-button class="filter-icon p-t-0" [matMenuTriggerFor]="filter">
@@ -42,7 +45,7 @@
         <button mat-icon-button class="filter-icon">
             <mat-icon (click)="uploader.click()">cloud_upload</mat-icon>
         </button>
-        
+
         <mat-menu #filter="matMenu">
             <mat-list role="list">
                 <mat-list-item role="listitem">
@@ -69,6 +72,7 @@
                         <span *ngIf="i == (columnsToDisplay.length-2)">
                             <mat-slide-toggle color="warm" [checked]="element.status" (change)="onDisable($event, element)">
                             </mat-slide-toggle>
+                    
                         </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">
                             <mat-icon (click)="gotoDelete(element)" class="edit-user" mat-raised-button
