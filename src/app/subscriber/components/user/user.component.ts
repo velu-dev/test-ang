@@ -77,15 +77,15 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
   users = [];
-  allUsers = [];
+  allUser = [];
   getUser(roles) {
     this.users = [];
-    this.allUsers = [];
+    this.allUser = [];
     this.userService.getUsers(roles).subscribe(response => {
       this.tabchange(0);
       response.data.map(user => {
         user['isExpand'] = false;
-        this.allUsers.push(user);
+        this.allUser.push(user);
       })
     }, error => {
     })

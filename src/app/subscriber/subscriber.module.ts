@@ -9,6 +9,8 @@ import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-d
 import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
 import { SubscriberUserService } from './service/subscriber-user.service';
 import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-settings.component';
+import { ManageUserComponent } from './manager/manage-user/manage-user.component';
+import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-se
     SubscriberSettingsComponent,
     ManagerDashboardComponent,
     StaffDashboardComponent,
+    ManageUserComponent,
+    ManageNewUserComponent,
   ],
   imports: [
     CommonModule,

@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
   //login submit
   login() {
     this.error = '';
-    // this.cookieService.deleteAll();
+    this.cookieService.deleteAll();
 
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
         return;
       }
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(res => {
-        document.cookie = "role_id" + "=" + res['data'].role_id;
+        this.cookieService.set('role_id', res['data'].role_id)
         this.redirectUrls.map(redirect => {
           if (redirect.role_id == res['data'].role_id) {
             this.alertService.openSnackBar(success.loginSuccess, 'success');
