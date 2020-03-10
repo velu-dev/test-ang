@@ -11,7 +11,7 @@ import { Auth } from 'aws-amplify';
 import * as globals from '../../../../globals';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from './../../../services/user.service';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 
 @Component({
   selector: 'app-sidenav',

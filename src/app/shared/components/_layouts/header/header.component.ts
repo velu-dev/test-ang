@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Inject } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DOCUMENT } from '@angular/common';
-import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -13,6 +12,7 @@ import * as globals from './../../../../globals';
 import { Auth } from 'aws-amplify';
 import { UserService } from 'src/app/admin/services/user.service';
 import { User } from 'src/app/admin/models/user.model';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

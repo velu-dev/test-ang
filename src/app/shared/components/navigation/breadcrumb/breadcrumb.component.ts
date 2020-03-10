@@ -7,7 +7,7 @@ import * as breadcrumbActions from "./../../../store/breadcrumb.actions";
 import * as frombreadcrumb from "./../../../store/breadcrumb.reducer";
 import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 @Component({
     selector: 'app-breadcrumb',
     templateUrl: './breadcrumb.component.html',
