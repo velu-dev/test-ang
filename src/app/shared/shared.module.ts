@@ -19,7 +19,7 @@ import { ExportService } from './services/export.service';
 import { ErrorComponent } from './components/error/error.component';
 import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
 import { UserService } from './services/user.service';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from './services/cookie.service';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { NodataComponent } from './components/nodata/nodata.component';
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable} from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
 import { Auth } from 'aws-amplify';
+import { CookieService } from '../services/cookie.service';
 
 @Injectable({
   providedIn: 'root'
