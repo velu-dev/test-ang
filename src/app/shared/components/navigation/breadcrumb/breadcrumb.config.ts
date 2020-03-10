@@ -86,6 +86,26 @@ export const ROUTES = [
         title: 'Dashboard',
         icon: 'dashboard',
         submenu: [],
+    }, {
+        path: '/subscriber/manager/dashboard',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    }, {
+        path: '/subscriber/manager/staff',
+        title: 'Staff List',
+        icon: 'dashboard',
+        submenu: [],
+    }, {
+        path: '/subscriber/manager/staff/new',
+        title: 'New Staff',
+        icon: 'dashboard',
+        submenu: []
+    }, {
+        path: '/subscriber/manager/settings',
+        title: 'Settings',
+        icon: 'dashboard',
+        submenu: []
     },
     //Vendor historian Menu
     {
