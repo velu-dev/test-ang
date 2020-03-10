@@ -18,6 +18,7 @@ export class UserService {
   getUser(id): Observable<any> {
     return this.http.get(environment.baseUrl + "admin-api/subscriber/user/" + id)
   }
+  
   createUser(data): Observable<any> {
     return this.http.post(environment.baseUrl + "admin-api/subscriber/create", data)
   }

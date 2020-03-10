@@ -1,1 +1,55 @@
-<p>new-claim works!</p>
+<mat-card class="m-card">
+    <mat-card-header>
+      <mat-card-title class="m-0">Create New Claim</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <!--Form start-->
+      <form fxLayout="row wrap" class="mat-grid-form">
+        
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>First name</mat-label>
+          <input matInput placeholder="First name" autocomplete="off">
+          <mat-error>error msg here</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>Last name</mat-label>
+          <input matInput placeholder="Last name" autocomplete="off">
+          <mat-error>error msg here</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput placeholder="Date of Birth" autocomplete="off">
+          <mat-error>error msg here</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>Claim Number</mat-label>
+          <input matInput placeholder="Claim Number" autocomplete="off" value="ADJ123456" disabled>
+          <mat-error>error msg here</mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>Examiner</mat-label>
+          <input matInput placeholder="Examiner" autocomplete="off">
+          <mat-error>error msg here</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+            <mat-label>Gender</mat-label>
+            <input matInput placeholder="Gender" autocomplete="off" >
+            <mat-error>error msg here</mat-error>
+          </mat-form-field>
+    
+  
+        <div class="text-center w-100 m-t-10">
+          <button mat-raised-button color="primary" type="submit" class="m-r-10">
+            Submit </button>
+          <button mat-raised-button type="button">Cancel</button>
+        </div>
+  
+      </form>
+    </mat-card-content>
+  </mat-card>
