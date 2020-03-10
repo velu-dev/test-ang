@@ -9,6 +9,7 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
 import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
+import { SubscriberUserService } from './service/subscriber-user.service';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard
     CommonModule,
     SubscriberRoutingModule,
     SharedModule
-  ]
+  ],
+  providers: [SubscriberUserService]
 })
 export class SubscriberModule { }

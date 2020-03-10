@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import * as globals from '../../../globals';
 import { User } from './../../../shared/model/user.model';
 import { Role } from './../../../shared/model/role.model';
-import { UserService } from './../../service/user.service';
+import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { Router } from '@angular/router';
 import { ExportService } from './../../../shared/services/export.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -43,7 +43,7 @@ export class UserComponent implements OnInit {
       shareReplay()
     );
   isMobile: boolean = false;
-  constructor(private userService: UserService,
+  constructor(private userService: SubscriberUserService,
     private router: Router,
     private exportService: ExportService,
     private breakpointObserver: BreakpointObserver) {
@@ -77,18 +77,34 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
   users = [];
+  allUsers = [];
   getUser(roles) {
     this.users = [];
+    this.allUsers = [];
     this.userService.getUsers(roles).subscribe(response => {
+      this.tabchange(0);
       response.data.map(user => {
         user['isExpand'] = false;
-        this.users.push(user);
+        this.allUsers.push(user);
       })
-      this.dataSource = new MatTableDataSource(this.users)
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
     }, error => {
     })
+  }
+
+  tabchange(event) {
+    this.dataSource = [];
+    let tabName;
+    if (event == 0) {
+      tabName = 'activeUsers'
+    } else if (event == 1) {
+      tabName = 'invitedUsers'
+    } else if (event == 2) {
+      tabName = 'disabledUsers'
+    }
+    this.users = this.users[tabName];
+    this.dataSource = new MatTableDataSource(this.users)
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   gotoEdit(data) {
     this.router.navigate(["/subscriber/users/" + data.id])
