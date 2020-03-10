@@ -3,10 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UserComponent } from './components/user/user.component';
 import { NewUserComponent } from './components/new-user/new-user.component';
-import { SettingsComponent } from './components/settings/settings.component';
 import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
 import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
-import { ManagerSettingsComponent } from './manager/manager-settings/manager-settings.component';
+import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-settings.component';
 
 
 const routes: Routes = [{
@@ -29,7 +28,7 @@ const routes: Routes = [{
   }]
 }, {
   path: "settings",
-  component: SettingsComponent
+  component: SubscriberSettingsComponent
 }, {
   path: "staff",
   children: [
@@ -39,6 +38,9 @@ const routes: Routes = [{
     }, {
       path: "dashboard",
       component: StaffDashboardComponent
+    },{
+      path: "settings",
+      component: SubscriberSettingsComponent
     }]
 }, {
   path: "manager",
@@ -50,7 +52,7 @@ const routes: Routes = [{
     component: ManagerDashboardComponent
   }, {
     path: "settings",
-    component: ManagerSettingsComponent
+    component: SubscriberSettingsComponent
   }]
 }
 ];
