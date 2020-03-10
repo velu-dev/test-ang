@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth } from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import { Observable, from } from 'rxjs';
 import { CookieService } from './cookie.service';
 

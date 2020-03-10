@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import Amplify, { Auth } from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { ROUTES } from './shared/components/navigation/breadcrumb/breadcrumb.config';
 import * as breadcrumbActions from "./shared/store/breadcrumb.actions";
 import * as fromBreadcrumb from "./shared/store/breadcrumb.reducer";
 import { Store } from '@ngrx/store';
-Amplify.configure(environment.Amplify);
+Auth.configure(environment.Amplify);
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

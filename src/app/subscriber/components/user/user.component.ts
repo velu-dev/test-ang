@@ -35,6 +35,7 @@ export class UserComponent implements OnInit {
   columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
   expandedElement: User | null;
   selectedRoleId = []
+  filterValue:string;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -50,11 +51,11 @@ export class UserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "action"]
+        this.columnName = ["", "First Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disable User"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -77,15 +78,15 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
   users = [];
-  allUsers = [];
+  allUser:any = [];
   getUser(roles) {
     this.users = [];
-    this.allUsers = [];
+    this.allUser = [];
     this.userService.getUsers(roles).subscribe(response => {
       this.tabchange(0);
       response.data.map(user => {
         user['isExpand'] = false;
-        this.allUsers.push(user);
+        this.allUser.push(user);
       })
     }, error => {
     })
@@ -145,9 +146,18 @@ export class UserComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Non-Admin-Users")
   }
+  expandId:any;
   openElement(element) {
-    if ((this.screenWidth < 800)) {
-      element.isExpand = !element.isExpand;
-    }
+    // if ((this.screenWidth < 800)) {
+    //   element.isExpand = !element.isExpand;
+    // }
+  }
+
+  onDisable(data, id) {
+    // if (this.tabIndex == 2) {
+    //   this.openDialog('enable', id);
+    // } else {
+    //   this.openDialog('disable', id);
+    // }
   }
 }
