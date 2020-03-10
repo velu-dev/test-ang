@@ -13,7 +13,11 @@ export const api_endpoint = {
     updateUser: "admin-api/admin/update-user/",
     getSubscribersRole: "admin-api/admin/subscriber-roles",
     getVendorRole: "admin-api/admin/vendor-roles",
-    getSubscribers :"admin-api/admin/subscribers",
+    getSubscribers: "admin-api/admin/subscribers",
     getvendors: "admin-api/admin/vendors",
     disable_user: "admin-api/admin/disable-user/",
+
+    /// Subscriber staff
+    manager_profile: "subscriber-staff-manager/profile",
+    manager_profile_update: "subscriber-staff-manager/profile-update/",
 }

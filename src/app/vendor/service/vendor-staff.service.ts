@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ObservedValueOf } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { api_endpoint } from 'src/environments/api_endpoint';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StaffManagerService {
+export class VendorStaffService {
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) { }
   getProfile(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.manager_profile)
   }

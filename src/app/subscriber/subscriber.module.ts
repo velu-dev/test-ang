@@ -14,6 +14,7 @@ import { NewClaimentComponent } from './components/claims/claiment/new-claiment/
 import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 import { SubscriberUserService } from './service/subscriber-user.service';
+import { ManagerSettingsComponent } from './manager/manager-settings/manager-settings.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SubscriberUserService } from './service/subscriber-user.service';
     ClaimentComponent,
     NewClaimentComponent,
     ClaimListComponent,
-    NewClaimComponent
+    NewClaimComponent,
+    ManagerSettingsComponent
   ],
   imports: [
     CommonModule,

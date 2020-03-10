@@ -47,7 +47,7 @@ export class UserComponent implements OnInit {
   isMobile: boolean = false;
   checked = true;
   allUser: any;
-  filterValue : string;
+  filterValue: string;
   tabIndex: number = 0;
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -61,11 +61,11 @@ export class UserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name","Disable User"]
-        this.columnsToDisplay = ['is_expand', 'first_name',"disabled"]
+        this.columnName = ["", "First Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role","Disable User"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name',"disabled"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disable User"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -132,11 +132,13 @@ export class UserComponent implements OnInit {
     this.users = [];
     this.tabIndex = event;
     let tabName;
+    this.columnName[this.columnName.indexOf("Enable User")] = "Disable User";
     if (event == 0) {
       tabName = 'activeUsers'
     } else if (event == 1) {
       tabName = 'invitedUsers'
     } else if (event == 2) {
+      this.columnName[this.columnName.indexOf("Disable User")] = "Enable User";
       tabName = 'disabledUsers'
     }
     this.allUser[tabName].map(user => {
@@ -182,7 +184,7 @@ export class UserComponent implements OnInit {
       this.openDialog('disable', id);
     }
   }
- 
+
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
@@ -199,5 +201,5 @@ export class UserComponent implements OnInit {
       }
     });
   }
-  
+
 }

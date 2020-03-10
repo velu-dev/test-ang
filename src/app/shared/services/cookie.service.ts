@@ -28,6 +28,10 @@ export class CookieService {
     return "";
   }
 
+  delete(name) {
+    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  }
+
   deleteAll() {
     var cookies = document.cookie.split(";");
 

@@ -88,11 +88,13 @@ export class AdminUserComponent implements OnInit {
     this.admin = [];
     this.tabIndex = event;
     let tabName;
+    this.columnName[this.columnName.indexOf("Enable User")] = "Disable User"
     if (event == 0) {
       tabName = 'activeUsers'
     } else if (event == 1) {
       tabName = 'invitedUsers'
     } else if (event == 2) {
+      this.columnName[this.columnName.indexOf("Disable User")] = "Enable User"
       tabName = 'disabledUsers'
     }
     this.admin = this.allUser[tabName];

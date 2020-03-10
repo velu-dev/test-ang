@@ -10,7 +10,7 @@ import { ClaimListComponent } from './components/claims/claim-list/claim-list.co
 import { NewClaimentComponent } from './components/claims/claiment/new-claiment/new-claiment.component';
 import { ClaimentComponent } from './components/claims/claiment/claiment.component';
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
-
+import { ManagerSettingsComponent } from './manager/manager-settings/manager-settings.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -69,6 +69,9 @@ const routes: Routes = [{
   }, {
     path: "dashboard",
     component: ManagerDashboardComponent
+  }, {
+    path: "settings",
+    component: ManagerSettingsComponent
   }]
 }
 ];
