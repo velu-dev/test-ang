@@ -52,7 +52,7 @@
                         </span>
                         <span>{{element[column]}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">                            
-                            <span class="user-disable-enable"  (click)="onDisable($event, element)"> {{element.status ? 'Enable' : 'Disable' }}</span>
+                            <span class="user-disable-enable"  (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
                             <!-- <span class="user-enable"> Enable</span>  -->
                         </span>
                     </td>
