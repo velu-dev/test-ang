@@ -9,6 +9,10 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
 import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
+import { ClaimentComponent } from './components/claims/claiment/claiment.component';
+import { NewClaimentComponent } from './components/claims/claiment/new-claiment/new-claiment.component';
+import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
+import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 
 
 @NgModule({
@@ -18,7 +22,11 @@ import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard
     NewUserComponent,
     SettingsComponent,
     ManagerDashboardComponent,
-    StaffDashboardComponent
+    StaffDashboardComponent,
+    ClaimentComponent,
+    NewClaimentComponent,
+    ClaimListComponent,
+    NewClaimComponent
   ],
   imports: [
     CommonModule,

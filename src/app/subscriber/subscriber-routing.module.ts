@@ -6,6 +6,10 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
 import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
+import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
+import { NewClaimentComponent } from './components/claims/claiment/new-claiment/new-claiment.component';
+import { ClaimentComponent } from './components/claims/claiment/claiment.component';
+import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 
 
 const routes: Routes = [{
@@ -29,6 +33,24 @@ const routes: Routes = [{
 }, {
   path: "settings",
   component: SettingsComponent
+}, {
+  path: "claiment",
+  children: [{
+    path: "",
+    component: ClaimentComponent
+  }, {
+    path: "new",
+    component: NewClaimentComponent
+  }]
+},{
+  path: "claims",
+  children: [{
+    path: "",
+    component: ClaimListComponent
+  }, {
+    path: "new",
+    component: NewClaimComponent
+  }]
 }, {
   path: "staff",
   children: [
