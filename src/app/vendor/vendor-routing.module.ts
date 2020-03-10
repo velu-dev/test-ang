@@ -13,6 +13,7 @@ import { HistoryStaffDashboardComponent } from './components/historian-staff/his
 import { SummaryStaffDashboardComponent } from './components/summarizer-staff/summary-staff-dashboard/summary-staff-dashboard.component';
 import { TranscriberStaffDashboardComponent } from './components/transcriber-staff/transcriber-staff-dashboard/transcriber-staff-dashboard.component';
 import { HistorianSettingsComponent } from './components/historian/historian-settings/historian-settings.component';
+import { VendorSettingsComponent } from './components/vendor-settings/vendor-settings.component';
 
 const routes: Routes = [{
   path: "historian",
@@ -45,6 +46,9 @@ const routes: Routes = [{
       {
         path: "dashboard",
         component: HistoryStaffDashboardComponent
+      }, {
+        path: "settings",
+        component: VendorSettingsComponent
       }
     ]
   }]
@@ -75,6 +79,9 @@ const routes: Routes = [{
       {
         path: "dashboard",
         component: SummaryStaffDashboardComponent
+      }, {
+        path: "settings",
+        component: VendorSettingsComponent
       }
     ]
   }]
@@ -106,6 +113,9 @@ const routes: Routes = [{
       {
         path: "dashboard",
         component: TranscriberStaffDashboardComponent
+      }, {
+        path: "settings",
+        component: VendorSettingsComponent
       }
     ]
   }]
