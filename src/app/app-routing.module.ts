@@ -13,15 +13,18 @@ const routes: Routes = [
     loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
   }, {
     path: "subscriber",
-    component: CommonLayoutComponent, canActivate: [AuthGuard],
+    component: CommonLayoutComponent,
+    canActivate: [AuthGuard],
     loadChildren: () => import('./subscriber/subscriber.module').then(m => m.SubscriberModule)
   }, {
     path: "admin",
-    component: CommonLayoutComponent, canActivate: [AuthGuard],
+    component: CommonLayoutComponent,
+    canActivate: [AuthGuard],
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
   }, {
     path: "vendor",
-    component: CommonLayoutComponent, canActivate: [AuthGuard],
+    component: CommonLayoutComponent, 
+    canActivate: [AuthGuard],
     loadChildren: () => import('./vendor/vendor.module').then(m => m.VendorModule)
   }, {
     path: "**",

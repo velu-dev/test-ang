@@ -5,7 +5,7 @@ import { Observable, throwError, from } from 'rxjs';
 import { switchMap } from "rxjs/operators";
 import { Auth } from "aws-amplify";
 import { catchError } from "rxjs/operators";
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from '../services/cookie.service';
 export const InterceptorSkipHeader = "X-Skip-Interceptor";
 
 @Injectable({

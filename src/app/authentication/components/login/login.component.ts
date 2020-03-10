@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CognitoService } from './../../../shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from './../../../shared/services/cookie.service';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import * as  success from '../../../shared/messages/success'
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
   //login submit
   login() {
     this.error = '';
-    this.cookieService.deleteAll();
+    // this.cookieService.deleteAll();
 
     this.isSubmitted = true;
     if (this.loginForm.invalid) {
@@ -81,9 +81,10 @@ export class LoginComponent implements OnInit {
         return;
       }
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(res => {
+        document.cookie = "role_id" + "=" + res['data'].role_id;
         this.redirectUrls.map(redirect => {
           if (redirect.role_id == res['data'].role_id) {
-            this.cookieService.set("role_id", res['data'].role_id)
+            alert(res['data'].role_id)
             this.alertService.openSnackBar(success.loginSuccess, 'success');
             console.log(redirect.redirect_url)
             this.router.navigate([redirect.redirect_url])

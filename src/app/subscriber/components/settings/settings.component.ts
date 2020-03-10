@@ -3,7 +3,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { UserService } from './../../service/user.service';
+import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from 'src/app/shared/model/user.model';
 import * as globals from './../../../globals'
@@ -23,7 +23,7 @@ export class SettingsComponent implements OnInit {
   errorMessages = errors
   constructor(
     private spinnerService: NgxSpinnerService,
-    private userService: UserService,
+    private userService: SubscriberUserService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private router: Router,

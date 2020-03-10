@@ -5,8 +5,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CookieService } from 'ngx-cookie-service';
 import { NgxSpinnerService } from "ngx-spinner";
+import { CookieService } from 'src/app/shared/services/cookie.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

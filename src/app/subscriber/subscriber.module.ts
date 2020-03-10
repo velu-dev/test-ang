@@ -13,7 +13,7 @@ import { ClaimentComponent } from './components/claims/claiment/claiment.compone
 import { NewClaimentComponent } from './components/claims/claiment/new-claiment/new-claiment.component';
 import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
-
+import { SubscriberUserService } from './service/subscriber-user.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +32,7 @@ import { NewClaimComponent } from './components/claims/new-claim/new-claim.compo
     CommonModule,
     SubscriberRoutingModule,
     SharedModule
-  ]
+  ],
+  providers: [SubscriberUserService]
 })
 export class SubscriberModule { }
