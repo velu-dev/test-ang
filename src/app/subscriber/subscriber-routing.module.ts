@@ -6,6 +6,7 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
 import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
+import { ManagerSettingsComponent } from './manager/manager-settings/manager-settings.component';
 
 
 const routes: Routes = [{
@@ -47,6 +48,9 @@ const routes: Routes = [{
   }, {
     path: "dashboard",
     component: ManagerDashboardComponent
+  }, {
+    path: "settings",
+    component: ManagerSettingsComponent
   }]
 }
 ];

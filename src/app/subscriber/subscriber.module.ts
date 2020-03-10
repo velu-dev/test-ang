@@ -10,6 +10,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
 import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
 import { SubscriberUserService } from './service/subscriber-user.service';
+import { ManagerSettingsComponent } from './manager/manager-settings/manager-settings.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { SubscriberUserService } from './service/subscriber-user.service';
     NewUserComponent,
     SettingsComponent,
     ManagerDashboardComponent,
-    StaffDashboardComponent
+    StaffDashboardComponent,
+    ManagerSettingsComponent
   ],
   imports: [
     CommonModule,
