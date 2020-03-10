@@ -18,6 +18,7 @@ import { TranscriberUserComponent } from './components/transcriber/transcriber-u
 import { HistoryStaffDashboardComponent } from './components/historian-staff/history-staff-dashboard/history-staff-dashboard.component';
 import { SummaryStaffDashboardComponent } from './components/summarizer-staff/summary-staff-dashboard/summary-staff-dashboard.component';
 import { TranscriberStaffDashboardComponent } from './components/transcriber-staff/transcriber-staff-dashboard/transcriber-staff-dashboard.component';
+import { VendorSettingsComponent } from './components/vendor-settings/vendor-settings.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { TranscriberStaffDashboardComponent } from './components/transcriber-sta
     TranscriberUserComponent,
     HistoryStaffDashboardComponent,
     SummaryStaffDashboardComponent,
-    TranscriberStaffDashboardComponent
+    TranscriberStaffDashboardComponent,
+    VendorSettingsComponent
   ],
   imports: [
     CommonModule,
