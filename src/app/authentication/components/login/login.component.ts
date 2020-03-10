@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { CognitoService } from './../../../shared/services/cognito.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from './../../../shared/services/cookie.service';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import * as  success from '../../../shared/messages/success'

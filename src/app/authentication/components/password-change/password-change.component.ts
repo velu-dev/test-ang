@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthenticationService } from '../../services/authentication.service';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 @Component({
   selector: 'app-password-change',
   templateUrl: './password-change.component.html',

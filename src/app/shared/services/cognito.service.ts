@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth } from 'aws-amplify';
 import { Observable, from } from 'rxjs';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from './cookie.service';
 
 @Injectable({
   providedIn: 'root'
