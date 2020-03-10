@@ -61,10 +61,10 @@ export class AdminUserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Disabled" ]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled" ]
+        this.columnName = ["", "First Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disabled"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disable User"]
         this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
       }
     })
@@ -77,15 +77,16 @@ export class AdminUserComponent implements OnInit {
   getUser(roles) {
     this.userService.getUsers(roles).subscribe(response => {
       this.allUser = response;
-      this.tabchange(0);
+      this.tabchange(this.tabIndex);
     }, error => {
     })
   }
-
+  tabIndex: number = 0;
   tabchange(event) {
     this.filterValue = '';
     this.dataSource = [];
     this.admin = [];
+    this.tabIndex = event;
     let tabName;
     if (event == 0) {
       tabName = 'activeUsers'
@@ -119,7 +120,7 @@ export class AdminUserComponent implements OnInit {
     this.exportService.exportExcel(data, "Admin-Users")
   }
   onDisable(data, user) {
-    if (data.checked) {
+    if (this.tabIndex == 2) {
       this.openDialog('enable', user);
     } else {
       this.openDialog('disable', user);
