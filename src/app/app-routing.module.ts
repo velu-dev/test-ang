@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: "",
     component: FullLayoutComponent,
-    canActivate: [],
+    canActivate: [SessionGuard],
     loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
   }, {
     path: "subscriber",

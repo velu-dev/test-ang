@@ -1,8 +1,8 @@
 <mat-card class="m-card">
-    <!-- <button routerLink="new" mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}"
+    <button routerLink="new" mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}"
         class="add-user">
         <mat-icon>add</mat-icon>
-    </button> -->
+    </button>
     <mat-tab-group class="user-list" (selectedTabChange)="tabchange($event.index)">
         <!-- ######~~~~~ Active Users ~~~~~##### -->
         <mat-tab>
@@ -10,6 +10,7 @@
                 <mat-icon class="p-r-5"> assignment_ind </mat-icon>
                 <span> Active Users <span class="active-user-count">({{allUser?.activeUsers?.length}})</span></span>
             </ng-template>
+
         </mat-tab>
         <!-- ######~~~~~ Invited Users ~~~~~##### -->
         <mat-tab>
@@ -22,7 +23,7 @@
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="p-r-5"> person_add_disabled </mat-icon>
-                <span> Disabled Users <span
+                <span>Disabled Users <span
                         class="disabled-user-count">({{allUser?.disabledUsers?.length}})</span></span>
             </ng-template>
         </mat-tab>
@@ -33,20 +34,24 @@
                 placeholder="Search by name, email, role">
         </div>
         <span class="spacer"></span>
+        <button mat-icon-button class="filter-icon p-t-0" [matMenuTriggerFor]="filter">
+            <mat-icon mat-icon-button aria-hidden="false" material-icons aria-label="home icon">filter_list</mat-icon>
+        </button>
         <button mat-icon-button class="filter-icon" (click)="exportData()" matTooltip="Export"
             matTooltipPosition="before">
             <img class="icon-16" [src]="xls" alt="export" />
         </button>
+
         <mat-menu #filter="matMenu">
             <mat-list role="list">
                 <mat-list-item role="listitem">
-                    <mat-checkbox (change)="filterByRole('all')">All</mat-checkbox>
+                    <mat-checkbox (change)="filterByRole('all')" [(ngModel)]="filterAll">All</mat-checkbox>
                 </mat-list-item>
                 <mat-list-item role="listitem" *ngFor="let role of roles">
-                    <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}
-                    </mat-checkbox>
+                    <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}</mat-checkbox>
                 </mat-list-item>
             </mat-list>
+
         </mat-menu>
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
@@ -60,8 +65,9 @@
                             </mat-icon>
                         </span>
                         <span>{{element[column]}} </span>
-                        <span *ngIf="i == (columnsToDisplay.length-1)">                            
-                            <span class="user-disable-enable"  (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
+                        <span *ngIf="i == (columnsToDisplay.length-1)">
+                            <span class="user-disable-enable" (click)="onDisable($event, element)">
+                                {{element.status ? 'Disable' : 'Enable' }}</span>
                             <!-- <span class="user-enable"> Enable</span>  -->
                         </span>
                     </td>

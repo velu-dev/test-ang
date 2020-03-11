@@ -50,7 +50,6 @@ export class SessionGuard implements CanActivate {
         }
           return false;
         } else {
-          this.router.navigate(['/login']);
           return true;
         }
       }, error => {

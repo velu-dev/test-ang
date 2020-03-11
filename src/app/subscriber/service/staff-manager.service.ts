@@ -12,10 +12,16 @@ export class StaffManagerService {
   constructor(private http: HttpClient) {
 
   }
-  getProfile(): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.manager_profile)
+  
+  createUser(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.createSubscriberUser, data)
   }
-  updateProfile(data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.manager_profile_update + data.id, data)
+
+  getRoles(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getSubscriberRole)
+  }
+
+  getUsers(roles): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getSubscriberUsers, { role_filter: roles })
   }
 }
