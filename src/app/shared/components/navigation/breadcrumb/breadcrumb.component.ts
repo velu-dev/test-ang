@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { Auth } from 'aws-amplify';
 import { ROUTES } from '../../_layouts/sidenav/sdenav.config';
 import { Observable, Subscription, ObservedValueOf } from 'rxjs';
 import { Store, select } from '@ngrx/store';

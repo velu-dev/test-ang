@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable} from 'rxjs';
-import { Auth } from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import { CookieService } from '../services/cookie.service';
 
 @Injectable({

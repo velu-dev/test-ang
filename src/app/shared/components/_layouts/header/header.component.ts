@@ -9,7 +9,7 @@ import * as success from './../../../messages/success';
 import * as error from './../../../messages/errors';
 import { AlertService } from "./../../../services/alert.service"
 import * as globals from './../../../../globals';
-import { Auth } from 'aws-amplify';
+import Auth from '@aws-amplify/auth';
 import { UserService } from 'src/app/admin/services/user.service';
 import { User } from 'src/app/admin/models/user.model';
 import { CookieService } from 'src/app/shared/services/cookie.service';

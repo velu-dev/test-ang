@@ -4,12 +4,14 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { FullLayoutComponent } from './layout/full-layout/full-layout.component';
 import { CommonLayoutComponent } from './layout/common-layout/common-layout.component';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { SessionGuard } from './shared/guard/session.guard';
 
 
 const routes: Routes = [
   {
     path: "",
     component: FullLayoutComponent,
+    canActivate: [SessionGuard],
     loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
   }, {
     path: "subscriber",

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import * as globals from '../../../globals';
@@ -12,6 +12,9 @@ import { Observable } from 'rxjs';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 
 @Component({
   selector: 'app-user',
@@ -31,10 +34,9 @@ export class UserComponent implements OnInit {
   roles: Role[];
   selectedRole: any = [];
   dataSource: any;
-  columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-  columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"];
+  columnName = [];
+  columnsToDisplay = [];
   expandedElement: User | null;
-  selectedRoleId = []
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -43,25 +45,43 @@ export class UserComponent implements OnInit {
       shareReplay()
     );
   isMobile: boolean = false;
-  constructor(private userService: SubscriberUserService,
+  checked = true;
+  filterAll = false;
+  selectedFile: File = null;
+  allUser: any;
+  filterValue: string;
+  tabIndex: number = 0;
+  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  constructor(
+    private userService: SubscriberUserService,
     private router: Router,
     private exportService: ExportService,
-    private breakpointObserver: BreakpointObserver) {
+    private breakpointObserver: BreakpointObserver,
+    public dialog: MatDialog,
+    private alertService: AlertService,
+  ) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "action"]
+        this.columnName = ["", "First Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "action"]
+        this.expandId = "";
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disable User"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
       }
-    })
+    });
     this.screenWidth = window.innerWidth;
     this.roles = [];
     this.userService.getRoles().subscribe(response => {
-      this.roles = response.data;
-      this.getUser(this.selectedRoleId);
+      response.data.map(role => {
+        if (!(role.role_name == "Admin")) {
+          this.roles.push(role)
+          this.selectedRoleId.push(role.id)
+        }
+      })
+      this.tabName = 'activeUsers'
+      this.getUser(this.selectedRoleId, this.tabName);
       this.roles.map(function (el) {
         var o = Object.assign({}, el);
         o['checked'] = false;
@@ -77,56 +97,62 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
   users = [];
-  allUsers = [];
-  getUser(roles) {
+  getUser(roles, status) {
     this.users = [];
-    this.allUsers = [];
-    this.userService.getUsers(roles).subscribe(response => {
-      this.tabchange(0);
-      response.data.map(user => {
-        user['isExpand'] = false;
-        this.allUsers.push(user);
-      })
+    this.allUser = [];
+    this.userService.getUsers(roles, status).subscribe(response => {
+      this.allUser = response;
+      if (status == 'invitedUsers') {
+        this.tabchange(1)
+      } else if (status == 'disabledUsers') {
+        this.tabchange(2)
+      } else {
+        this.tabchange(0)
+      }
+
     }, error => {
     })
   }
-
+  tabName: string;
   tabchange(event) {
+    this.filterValue = '';
+    this.selectedRoleId = [];
     this.dataSource = [];
-    let tabName;
+    this.users = [];
+    this.tabName = ''
+    this.tabIndex = event;
+    this.columnName[this.columnName.indexOf("Enable User")] = "Disable User";
     if (event == 0) {
-      tabName = 'activeUsers'
+      this.tabName = 'activeUsers'
     } else if (event == 1) {
-      tabName = 'invitedUsers'
+      this.tabName = 'invitedUsers'
     } else if (event == 2) {
-      tabName = 'disabledUsers'
+      this.columnName[this.columnName.indexOf("Disable User")] = "Enable User";
+      this.tabName = 'disabledUsers'
     }
-    this.users = this.users[tabName];
+    this.users = this.allUser[this.tabName];
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  gotoEdit(data) {
-    this.router.navigate(["/subscriber/users/" + data.id])
 
-  }
+  selectedRoleId = []
   filterByRole(value?: string) {
     this.selectedRoleId = [];
     this.roles.map(res => {
       if (value) {
-        res['checked'] = !res['checked'];
+        this.filterAll ? res['checked'] = true : res['checked'] = false
         this.selectedRoleId.push(res.id)
       } else {
+        this.filterAll = false;
         if (res['checked']) {
           this.selectedRoleId.push(res.id);
         }
       }
     })
-    this.getUser(this.selectedRoleId)
+    this.getUser(this.selectedRoleId, this.tabName)
   }
-  navigate() {
-    this.router.navigate(['/subscriber/users/new'])
-  }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -145,9 +171,32 @@ export class UserComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Non-Admin-Users")
   }
+  expandId: any;
   openElement(element) {
-    if ((this.screenWidth < 800)) {
-      element.isExpand = !element.isExpand;
+    if (this.isMobile) {
+      this.expandId = element.id;
     }
   }
+  onDisable(data, id) {
+    if (this.tabIndex == 2) {
+      this.openDialog('enable', id);
+    } else {
+      this.openDialog('disable', id);
+    }
+  }
+  openDialog(dialogue, user) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.userService.disableUser(user.id, !user.status).subscribe(res => {
+          this.getUser(this.selectedRoleId, this.tabName);
+        })
+      } 
+    });
+  }
+
 }

@@ -1,36 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { CognitoService } from 'src/app/shared/services/cognito.service';
-import { Router } from '@angular/router';
-import { AlertService } from 'src/app/shared/services/alert.service';
-import { SubscriberUserService } from '../../service/subscriber-user.service';
+import * as globals from '../../../globals';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { User } from 'src/app/shared/model/user.model';
-import * as globals from './../../../globals'
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { Router } from '@angular/router';
+import { CognitoService } from 'src/app/shared/services/cognito.service';
 import * as  errors from '../../../shared/messages/errors'
+import { User } from 'src/app/shared/model/user.model';
+import { VendorStaffService } from '../../service/vendor-staff.service';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  selector: 'app-vendor-settings',
+  templateUrl: './vendor-settings.component.html',
+  styleUrls: ['./vendor-settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class VendorSettingsComponent implements OnInit {
   profile_bg = globals.profile_bg;
   user: User;
   currentUser = {};
   userForm: FormGroup;
   userPasswrdForm: FormGroup;
-  errorMessages = errors
+  errorMessages = errors;
+  isSubmitted = false;
   constructor(
     private spinnerService: NgxSpinnerService,
-    private userService: SubscriberUserService,
+    private vendorStaffService: VendorStaffService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private router: Router,
     private cognitoService: CognitoService
   ) {
-    this.userService.getProfile().subscribe(res => {
-      // this.spinnerService.hide();
+    this.vendorStaffService.getProfile().subscribe(res => {
       this.user = res.data;
       this.userForm.setValue(res.data)
     })
@@ -44,25 +44,21 @@ export class SettingsComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       id: [''],
       role_id: [''],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      company_name: [{ value: "", disabled: true }],
+      first_name: ['', Validators.compose([Validators.required])],
+      last_name: ['', Validators.compose([Validators.required])],
+      middle_name: ['', Validators.compose([Validators.required])],
+      company_name: [{ value: "", disabled: true }, Validators.compose([Validators.required])],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
   }
   userformSubmit() {
-    this.isSubmit = true;
     if (this.userForm.invalid) {
       return;
     }
-    this.userService.updateUser(this.userForm.value).subscribe(res => {
+    this.vendorStaffService.updateProfile(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successful", 'success');
-      this.isSubmit = false;
-      this.router.navigate(['/admin/settings'])
+      this.router.navigate(['/subscriber/manager/settings'])
     }, error => {
-      this.isSubmit = false;
-      console.log(error.message)
       this.alertService.openSnackBar(error.message, 'error');
     })
   }
@@ -70,16 +66,13 @@ export class SettingsComponent implements OnInit {
   changeInputType() {
     this.isTypePassword = !this.isTypePassword
   }
-  isSubmit = false;
   changePassword() {
-    this.isSubmit = true;
-    console.log(this.userPasswrdForm, this.userPasswrdForm.controls.current_password.errors.required)
+    this.isSubmitted = true;
     if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
       console.log("password miss match  ")
       return
     }
     if (this.userPasswrdForm.invalid) {
-      console.log("Not valid form ")
       return;
     }
     this.spinnerService.show();
@@ -89,7 +82,6 @@ export class SettingsComponent implements OnInit {
         this.alertService.openSnackBar("Password successfully changed", "success");
         this.cognitoService.logOut().subscribe(res => {
           this.spinnerService.hide();
-          this.isSubmit = false;
           this.router.navigate(['/'])
         })
       }, error => {
@@ -98,4 +90,5 @@ export class SettingsComponent implements OnInit {
       })
     })
   }
+
 }

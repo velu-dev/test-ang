@@ -7,7 +7,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { ROUTES } from './sdenav.config';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Auth } from 'aws-amplify';
 import * as globals from '../../../../globals';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from './../../../services/user.service';
