@@ -1,26 +1,26 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.model';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { ExportService } from './../../../shared/services/export.service';
 import * as globals from '../../../globals';
-import { Role } from '../../models/role.model';
+import { User } from './../../../shared/model/user.model';
+import { Role } from './../../../shared/model/role.model';
+import { Router } from '@angular/router';
+import { ExportService } from './../../../shared/services/export.service';
+import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
+import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { StaffManagerService } from '../../service/staff-manager.service';
+
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss'],
-  animations: [
+  selector: 'app-manage-user',
+  templateUrl: './manage-user.component.html',
+  styleUrls: ['./manage-user.component.scss'],
+   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
@@ -28,13 +28,14 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
     ]),
   ]
 })
-export class UserComponent implements OnInit {
+export class ManageUserComponent implements OnInit {
+
   screenWidth: number;
   xls = globals.xls;
   roles: Role[];
   selectedRole: any = [];
   dataSource: any;
-  columnName = []
+  columnName = [];
   columnsToDisplay = [];
   expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -46,39 +47,42 @@ export class UserComponent implements OnInit {
     );
   isMobile: boolean = false;
   checked = true;
+  filterAll = false;
+  selectedFile: File = null;
   allUser: any;
   filterValue: string;
   tabIndex: number = 0;
+  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(
-    private breakpointObserver: BreakpointObserver,
-    private userService: UserService,
+    private staffManagerService: StaffManagerService,
     private router: Router,
-    private title: Title,
     private exportService: ExportService,
-    public dialog: MatDialog
+    private breakpointObserver: BreakpointObserver,
+    public dialog: MatDialog,
+    private alertService: AlertService,
   ) {
-
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "First Name", "Disable User"]
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
+        this.expandId = "";
         this.columnName = ["First Name", "Last Name", "Email", "Role", "Disable User"]
         this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
       }
-    })
+    });
     this.screenWidth = window.innerWidth;
-    this.title.setTitle("APP | Manage User");
     this.roles = [];
-    this.userService.getSubscriberRole().subscribe(response => {
+    this.staffManagerService.getRoles().subscribe(response => {
       response.data.map(role => {
-        // if (!(role.role_name == "Admin")) {
-        this.roles.push(role)
-        this.selectedRoleId.push(role.id)
-        // }
+        if (!(role.role_name == "Admin")) {
+          this.roles.push(role)
+          this.selectedRoleId.push(role.id)
+        }
       })
-      this.getUser();
+      this.tabName = 'activeUsers'
+      this.getUser(this.selectedRoleId, this.tabName);
       this.roles.map(function (el) {
         var o = Object.assign({}, el);
         o['checked'] = false;
@@ -94,65 +98,62 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
   users = [];
-  getUser() {
+  getUser(roles, status) {
     this.users = [];
-    this.userService.getSubscribers().subscribe(response => {
+    this.allUser = [];
+    this.staffManagerService.getUsers(roles, status).subscribe(response => {
       this.allUser = response;
-      this.tabchange(this.tabIndex);
+      if (status == 'invitedUsers') {
+        this.tabchange(1)
+      } else if (status == 'disabledUsers') {
+        this.tabchange(2)
+      } else {
+        this.tabchange(0)
+      }
+
     }, error => {
     })
   }
-  gotoEdit(data) {
-    this.router.navigate(["/admin/users/" + data.id])
-
-  }
-  gotoDelete(data) {
-    // this.router.navigate(["/admin/admin-users/" + data.id])
-    this.openDialog('delete', data);
-  }
-  selectedRoleId = []
-  filterByRole(value?: string) {
-    this.selectedRoleId = [];
-    this.roles.map(res => {
-      if (value) {
-        res['checked'] = !res['checked'];
-        this.selectedRoleId.push(res.id)
-      } else {
-        if (res['checked']) {
-          this.selectedRoleId.push(res.id);
-        }
-      }
-    })
-    this.getUser()
-  }
-
+  tabName: string;
   tabchange(event) {
     this.filterValue = '';
+    this.selectedRoleId = [];
     this.dataSource = [];
     this.users = [];
+    this.tabName = ''
     this.tabIndex = event;
-    let tabName;
     this.columnName[this.columnName.indexOf("Enable User")] = "Disable User";
     if (event == 0) {
-      tabName = 'activeUsers'
+      this.tabName = 'activeUsers'
     } else if (event == 1) {
-      tabName = 'invitedUsers'
+      this.tabName = 'invitedUsers'
     } else if (event == 2) {
       this.columnName[this.columnName.indexOf("Disable User")] = "Enable User";
-      tabName = 'disabledUsers'
+      this.tabName = 'disabledUsers'
     }
-    this.allUser[tabName].map(user => {
-      user['isExpand'] = false;
-      this.users.push(user);
-    })
+    this.users = this.allUser[this.tabName];
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  navigate() {
-    this.router.navigate(['/admin/users/new'])
+  selectedRoleId = []
+  filterByRole(value?: string) {
+    this.selectedRoleId = [];
+    this.roles.map(res => {
+      if (value) {
+        this.filterAll ? res['checked'] = true : res['checked'] = false
+        this.selectedRoleId.push(res.id)
+      } else {
+        this.filterAll = false;
+        if (res['checked']) {
+          this.selectedRoleId.push(res.id);
+        }
+      }
+    })
+    this.getUser(this.selectedRoleId, this.tabName)
   }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -184,7 +185,6 @@ export class UserComponent implements OnInit {
       this.openDialog('disable', id);
     }
   }
-
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
@@ -193,11 +193,9 @@ export class UserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.userService.disableUser(user.id, !user.status).subscribe(res => {
-          this.getUser();
+        this.staffManagerService.disableUser(user.id, !user.status).subscribe(res => {
+          this.getUser(this.selectedRoleId, this.tabName);
         })
-      } else {
-
       }
     });
   }

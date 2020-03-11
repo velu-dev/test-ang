@@ -10,24 +10,24 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
   getUsers(roles): Observable<any> {
-    return this.http.post(environment.baseUrl + "admin-api/vendor/users", { role_filter: roles })
+    return this.http.post(environment.baseUrl + "vendor/users", { role_filter: roles })
   }
   getRoles(): Observable<any> {
-    return this.http.get(environment.baseUrl + "admin-api/vendor/roles")
+    return this.http.get(environment.baseUrl + "vendor/roles")
   }
   getUser(id): Observable<any> {
-    return this.http.get(environment.baseUrl + "admin-api/vendor/user/" + id)
+    return this.http.get(environment.baseUrl + "vendor/user/" + id)
   }
   createUser(data): Observable<any> {
-    return this.http.post(environment.baseUrl + "admin-api/vendor/create", data)
+    return this.http.post(environment.baseUrl + "vendor/create", data)
   }
   updateUser(data): Observable<any> {
-    return this.http.put(environment.baseUrl + "admin-api/admin/update-user/" + data.id, data)
+    return this.http.put(environment.baseUrl + "admin/update-user/" + data.id, data)
   }
   updateProfile(data): Observable<any> {
-    return this.http.put(environment.baseUrl + "admin-api/vendor/profile-update/" + data.id, data)
+    return this.http.put(environment.baseUrl + "vendor/profile-update/" + data.id, data)
   }
   getProfile(): Observable<any> {
-    return this.http.get(environment.baseUrl + "admin-api/vendor/profile")
+    return this.http.get(environment.baseUrl + "vendor/profile")
   }
 }

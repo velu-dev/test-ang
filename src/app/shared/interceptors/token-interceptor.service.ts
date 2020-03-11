@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, Htt
   from '@angular/common/http';
 import { Observable, throwError, from } from 'rxjs';
 import { switchMap } from "rxjs/operators";
-import { Auth } from "aws-amplify";
+import  Auth  from "@aws-amplify/auth";
 import { catchError } from "rxjs/operators";
 import { CookieService } from '../services/cookie.service';
 export const InterceptorSkipHeader = "X-Skip-Interceptor";

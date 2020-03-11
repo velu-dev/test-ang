@@ -19,8 +19,9 @@ export class PageHeaderComponent implements OnInit {
 
     ngOnInit() {
         this.menu$.subscribe(res => {
+            if(res){
             this.title.setTitle("APP | " + res.active_title ? res.active_title : "");
-
+            }
         })
 
     }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Role } from 'src/app/shared/model/role.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from './../../service/user.service';
+import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Store } from '@ngrx/store';
@@ -27,7 +27,7 @@ export class NewUserComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private userService: UserService,
+    private userService: SubscriberUserService,
     private spinnerService: NgxSpinnerService,
     private alertService: AlertService,
     private router: Router,

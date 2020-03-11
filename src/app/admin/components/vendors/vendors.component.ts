@@ -125,11 +125,13 @@ export class VendorsComponent implements OnInit {
     this.users = [];
     this.tabName = ''
     this.tabIndex = event;
+    this.columnName[this.columnName.indexOf("Enable User")] = "Disable User";
     if (event == 0) {
       this.tabName = 'activeUsers'
     } else if (event == 1) {
       this.tabName = 'invitedUsers'
     } else if (event == 2) {
+      this.columnName[this.columnName.indexOf("Disable User")] = "Enable User";
       this.tabName = 'disabledUsers'
     }
     this.users = this.allUser[this.tabName];

@@ -81,9 +81,9 @@ export class LoginComponent implements OnInit {
         return;
       }
       this.authenticationService.signIn(loginRes.signInUserSession.idToken.jwtToken).subscribe(res => {
+        this.cookieService.set('role_id', res['data'].role_id)
         this.redirectUrls.map(redirect => {
           if (redirect.role_id == res['data'].role_id) {
-            this.cookieService.set("role_id", res['data'].role_id)
             this.alertService.openSnackBar(success.loginSuccess, 'success');
             console.log(redirect.redirect_url)
             this.router.navigate([redirect.redirect_url])
