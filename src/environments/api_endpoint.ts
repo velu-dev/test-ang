@@ -26,7 +26,9 @@ export const api_endpoint = {
     subscriberProfile : 'subscriber/profile',
     subscriberDisableUser: "subscriber/disable-user/",
 
-    /// Subscriber staff
-    manager_profile: "subscriber-staff-manager/profile",
-    manager_profile_update: "subscriber-staff-manager/profile-update/",
+    /// subscriber-staff-manager
+    createSubscriberManageUser: 'subscriber-staff-manager/create',
+    getSubscriberManageUsers: 'subscriber-staff-manager/users',
+    getSubscriberManageRole: 'subscriber-staff-manager/roles',
+    subscriberManageDisableUser: "subscriber-staff-manager/disable-user/",
 }

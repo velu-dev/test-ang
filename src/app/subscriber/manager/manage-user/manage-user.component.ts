@@ -19,7 +19,14 @@ import { StaffManagerService } from '../../service/staff-manager.service';
 @Component({
   selector: 'app-manage-user',
   templateUrl: './manage-user.component.html',
-  styleUrls: ['./manage-user.component.scss']
+  styleUrls: ['./manage-user.component.scss'],
+   animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class ManageUserComponent implements OnInit {
 
@@ -43,7 +50,7 @@ export class ManageUserComponent implements OnInit {
   filterAll = false;
   selectedFile: File = null;
   allUser: any;
-  filterValue : string;
+  filterValue: string;
   tabIndex: number = 0;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(
@@ -94,7 +101,7 @@ export class ManageUserComponent implements OnInit {
   getUser(roles, status) {
     this.users = [];
     this.allUser = [];
-    this.staffManagerService.getUsers(roles).subscribe(response => {
+    this.staffManagerService.getUsers(roles, status).subscribe(response => {
       this.allUser = response;
       if (status == 'invitedUsers') {
         this.tabchange(1)
@@ -146,7 +153,7 @@ export class ManageUserComponent implements OnInit {
     })
     this.getUser(this.selectedRoleId, this.tabName)
   }
- 
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -185,13 +192,11 @@ export class ManageUserComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // if (result['data']) {
-      //   this.staffManagerService.disableUser(user.id, !user.status).subscribe(res => {
-      //     this.getUser(this.selectedRoleId, this.tabName);
-      //   })
-      // } else {
-
-      // }
+      if (result['data']) {
+        this.staffManagerService.disableUser(user.id, !user.status).subscribe(res => {
+          this.getUser(this.selectedRoleId, this.tabName);
+        })
+      }
     });
   }
 

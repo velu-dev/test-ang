@@ -195,9 +195,7 @@ export class UserComponent implements OnInit {
         this.userService.disableUser(user.id, !user.status).subscribe(res => {
           this.getUser(this.selectedRoleId, this.tabName);
         })
-      } else {
-
-      }
+      } 
     });
   }
 
