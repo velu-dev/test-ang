@@ -11,9 +11,9 @@ export class VendorStaffService {
 
   constructor(private http: HttpClient) { }
   getProfile(): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.manager_profile)
+    return this.http.get(environment.baseUrl + api_endpoint.subscriberProfileUpdate)
   }
   updateProfile(data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.manager_profile_update + data.id, data)
+    return this.http.put(environment.baseUrl + api_endpoint.subscriberProfileUpdate + data.id, data)
   }
 }
