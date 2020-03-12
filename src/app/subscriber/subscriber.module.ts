@@ -7,11 +7,15 @@ import { UserComponent } from './components/user/user.component';
 import { NewUserComponent } from './components/new-user/new-user.component';
 import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
 import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
+import { ClaimentComponent } from './components/claims/claiment/claiment.component';
+import { NewClaimentComponent } from './components/claims/claiment/new-claiment/new-claiment.component';
+import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
+import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 import { SubscriberUserService } from './service/subscriber-user.service';
 import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-settings.component';
 import { ManageUserComponent } from './manager/manage-user/manage-user.component';
 import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
-
+import { AppointmentComponent } from './examinor/appointment/appointment.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,11 @@ import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-use
     StaffDashboardComponent,
     ManageUserComponent,
     ManageNewUserComponent,
+    AppointmentComponent,
+    ClaimentComponent,
+    NewClaimentComponent,
+    ClaimListComponent,
+    NewClaimComponent
   ],
   imports: [
     CommonModule,

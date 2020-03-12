@@ -50,9 +50,11 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span>{{element[column]}} </span>
+                        <span *ngIf="column != 'createdAt'">{{element[column]}} </span>
+                        <span *ngIf="column == 'createdAt'">{{element[column] | date:'MM-dd-yyyy'}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">                            
-                            <span class="user-disable-enable"  (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
+                            <span class="user-disable-enable" *ngIf="tabIndex != 1" (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
+                            <span class="user-disable-enable" *ngIf="tabIndex == 1"  (click)="onDisable($event, element)"> Cancel </span>
                             <!-- <span class="user-enable"> Enable</span>  -->
                         </span>
                     </td>
@@ -67,6 +69,7 @@
                                     {{element.sign_in_email_id}}
                                 </div>
                                 <div class="role_name"><span>Role</span> {{element.role_name}} </div>
+                                <div class="role_name"><span>Enrolled On</span> {{element.createdAt | date:'MM-dd-yyyy'}} </div>
                             </div>
                         </div>
                     </td>

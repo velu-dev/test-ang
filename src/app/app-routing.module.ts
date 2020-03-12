@@ -23,12 +23,14 @@ const routes: Routes = [
     component: CommonLayoutComponent,
     canActivate: [AuthGuard],
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
-  }, {
-    path: "vendor",
-    component: CommonLayoutComponent, 
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./vendor/vendor.module').then(m => m.VendorModule)
-  }, {
+  },
+  //  {
+  //   path: "vendor",
+  //   component: CommonLayoutComponent, 
+  //   canActivate: [AuthGuard],
+  //   loadChildren: () => import('./vendor/vendor.module').then(m => m.VendorModule)
+  // }, 
+  {
     path: "**",
     component: NotFoundComponent
   }
