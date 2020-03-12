@@ -36,7 +36,7 @@ export class TokenInterceptorService implements HttpInterceptor {
         switchMap(token => {
           const headers: { [name: string]: string | string[] } = {};
           headers["Authorization"] = "Bearer " + token['idToken'].jwtToken;
-          headers["role_id"] = this.roleId;
+          headers["role"] = this.roleId;
           const newHeader = new HttpHeaders(headers);
           const reqClone = req.clone({
             headers: newHeader

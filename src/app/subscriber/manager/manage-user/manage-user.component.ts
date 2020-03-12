@@ -67,9 +67,8 @@ export class ManageUserComponent implements OnInit {
         this.columnName = ["", "First Name", "Disable User"]
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.expandId = "";
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Disable User"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', "disabled"]
+        this.columnName = ["First Name", "Last Name", "Email", "Role", "Enrolled On", "Disable User"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
       }
     });
     this.screenWidth = window.innerWidth;
@@ -122,13 +121,14 @@ export class ManageUserComponent implements OnInit {
     this.users = [];
     this.tabName = ''
     this.tabIndex = event;
-    this.columnName[this.columnName.indexOf("Enable User")] = "Disable User";
     if (event == 0) {
+      this.columnName[this.columnName.length - 1] = "Disable User"
       this.tabName = 'activeUsers'
     } else if (event == 1) {
+      this.columnName[this.columnName.length - 1] = "Cancel Invite"
       this.tabName = 'invitedUsers'
     } else if (event == 2) {
-      this.columnName[this.columnName.indexOf("Disable User")] = "Enable User";
+      this.columnName[this.columnName.length - 1] = "Enable User"
       this.tabName = 'disabledUsers'
     }
     this.users = this.allUser[this.tabName];

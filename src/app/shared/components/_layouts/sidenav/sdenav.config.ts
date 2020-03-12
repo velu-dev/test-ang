@@ -2,18 +2,18 @@ import { SideNavInterface } from './../../../interfaces/sidenav.type';
 
 
 export const ROUTES: SideNavInterface[] = [
-    {
-        group: "Admin",
-        role_id: 1,
-        menu: [{
-            path: '/admin/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Admin",
-            role: 1
-        }]
-    },
+    // {
+    //     group: "Admin",
+    //     role_id: 1,
+    //     menu: [{
+    //         path: '/admin/dashboard',
+    //         title: 'Dashboard',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Admin",
+    //         role: 1
+    //     }]
+    // },
     {
         group: "User Management",
         role_id: 1,
@@ -59,14 +59,16 @@ export const ROUTES: SideNavInterface[] = [
     }, {
         group: "Subscriber",
         role_id: 2,
-        menu: [{
-            path: '/subscriber/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Subscriber",
-            role: 2
-        }, {
+        menu: [
+        //     {
+        //     path: '/subscriber/dashboard',
+        //     title: 'Dashboard',
+        //     icon: 'dashboard',
+        //     submenu: [],
+        //     group: "Subscriber",
+        //     role: 2
+        // },
+         {
             path: '/subscriber/users',
             title: 'Manage Users',
             icon: 'dashboard',
@@ -77,14 +79,16 @@ export const ROUTES: SideNavInterface[] = [
     }, {
         group: "Subscriber Staff manager",
         role_id: 3,
-        menu: [{
-            path: '/subscriber/manager/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Subscriber",
-            role: 3
-        }, {
+        menu: [
+        //     {
+        //     path: '/subscriber/manager/dashboard',
+        //     title: 'Dashboard',
+        //     icon: 'dashboard',
+        //     submenu: [],
+        //     group: "Subscriber",
+        //     role: 3
+        // }, 
+        {
             path: '/subscriber/manager/staff',
             title: 'Staff List',
             icon: 'dashboard',
