@@ -73,7 +73,21 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             group: "Subscriber",
             role: 2
-        }]
+        },{
+            path: '/subscriber/claiment',
+            title: 'Manage Claiments',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 2
+        },{
+            path: '/subscriber/claims',
+            title: 'Manage Claims',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 2
+        },]
     }, {
         group: "Subscriber Staff manager",
         role_id: 3,

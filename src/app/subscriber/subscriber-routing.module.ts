@@ -8,7 +8,10 @@ import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-d
 import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-settings.component';
 import { ManageUserComponent } from './manager/manage-user/manage-user.component';
 import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
-
+import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
+import { NewClaimentComponent } from './components/claims/claiment/new-claiment/new-claiment.component';
+import { ClaimentComponent } from './components/claims/claiment/claiment.component';
+import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -31,6 +34,24 @@ const routes: Routes = [{
 }, {
   path: "settings",
   component: SubscriberSettingsComponent
+}, {
+  path: "claiment",
+  children: [{
+    path: "",
+    component: ClaimentComponent
+  }, {
+    path: "new",
+    component: NewClaimentComponent
+  }]
+},{
+  path: "claims",
+  children: [{
+    path: "",
+    component: ClaimListComponent
+  }, {
+    path: "new",
+    component: NewClaimComponent
+  }]
 }, {
   path: "staff",
   children: [

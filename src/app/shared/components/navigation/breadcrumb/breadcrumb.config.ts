@@ -82,6 +82,26 @@ export const ROUTES = [
             submenu: []
         }],
     },
+    {
+        path: '/subscriber/claiment',
+        title: 'Manage Claiments',
+        icon: 'dashboard',
+        submenu: [{
+        path: '/subscriber/claiment/new',
+        title: 'New Claiments',
+        icon: 'dashboard',
+        submenu: []}],
+    },{
+        path: '/subscriber/claims',
+        title: 'Manage Claims',
+        icon: 'dashboard',
+        submenu: [
+        {path: '/subscriber/claims/new',
+        title: 'New Claims',
+        icon: 'dashboard',
+        submenu: []
+        }],
+    },  
     //Subscriber staff manager
     {
         path: '/subscriber/manager',
