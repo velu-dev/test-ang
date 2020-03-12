@@ -22,6 +22,7 @@ import { UserService } from './services/user.service';
 import { CookieService } from './services/cookie.service';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { NodataComponent } from './components/nodata/nodata.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { NodataComponent } from './components/nodata/nodata.component';
     CommonModule,
     HttpClientModule,
     SharedRoutingModule,
-    StoreModule.forFeature("breadcrumb", breadcrumbreducer)
+    StoreModule.forFeature("breadcrumb", breadcrumbreducer),
+    NgxSkeletonLoaderModule
   ],
   exports: [
     MaterialModule,
@@ -54,7 +56,8 @@ import { NodataComponent } from './components/nodata/nodata.component';
     AlertComponent,
     ErrorComponent,
     DialogueComponent,
-    NodataComponent
+    NodataComponent,
+    NgxSkeletonLoaderModule
   ],
   providers: [
     CognitoService,
