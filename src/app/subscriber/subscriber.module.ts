@@ -11,6 +11,7 @@ import { SubscriberUserService } from './service/subscriber-user.service';
 import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-settings.component';
 import { ManageUserComponent } from './manager/manage-user/manage-user.component';
 import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
+import { AppointmentComponent } from './examinor/appointment/appointment.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-use
     StaffDashboardComponent,
     ManageUserComponent,
     ManageNewUserComponent,
+    AppointmentComponent,
   ],
   imports: [
     CommonModule,

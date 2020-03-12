@@ -25,17 +25,19 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: []
         }]
-    }, {
-        path: "/admin/vendors",
-        title: "Manage Vendors",
-        icon: "settings",
-        submenu: [{
-            path: '/admin/vendors/new',
-            title: 'New Vendor',
-            icon: 'dashboard',
-            submenu: []
-        }]
-    }, {
+    },
+    //  {
+    //     path: "/admin/vendors",
+    //     title: "Manage Vendors",
+    //     icon: "settings",
+    //     submenu: [{
+    //         path: '/admin/vendors/new',
+    //         title: 'New Vendor',
+    //         icon: 'dashboard',
+    //         submenu: []
+    //     }]
+    // },
+     {
         path: "/admin/profile",
         title: "Profile",
         icon: "person",
