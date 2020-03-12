@@ -31,7 +31,13 @@ import { AppointmentComponent } from './examinor/appointment/appointment.compone
     ClaimentComponent,
     NewClaimentComponent,
     ClaimListComponent,
-    NewClaimComponent
+    NewClaimComponent,
+    ClaimentComponent,
+    NewClaimentComponent,
+    ClaimListComponent,
+    NewClaimComponent,
+    ManageUserComponent,
+    ManageNewUserComponent,
   ],
   imports: [
     CommonModule,

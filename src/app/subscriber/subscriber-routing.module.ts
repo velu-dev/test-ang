@@ -13,6 +13,7 @@ import { NewClaimentComponent } from './components/claims/claiment/new-claiment/
 import { ClaimentComponent } from './components/claims/claiment/claiment.component';
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 
+
 const routes: Routes = [{
   path: "dashboard",
   component: DashboardComponent
