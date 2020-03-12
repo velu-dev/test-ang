@@ -107,82 +107,82 @@ export const ROUTES = [
         icon: 'dashboard',
         submenu: []
     },
-    //Vendor historian Menu
-    {
-        path: '/vendor/historian/dashboard',
-        title: 'Dashboard',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    {
-        path: '/vendor/historian/users',
-        title: 'Historian users',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    {
-        path: '/vendor/historian/users/new',
-        title: 'New Staff',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    //Historian staff menu
-    {
-        path: '/vendor/historian/staff/dashboard',
-        title: 'Dashboard',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    // Summarizer menus
-    {
-        path: '/vendor/summarizer/dashboard',
-        title: 'Dashboard',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    {
-        path: '/vendor/summarizer/users',
-        title: 'Summarizer users',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    {
-        path: '/vendor/summarizer/users/new',
-        title: 'New Staff',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    //Summarizer staff menu
-    {
-        path: '/vendor/summarizer/staff/dashboard',
-        title: 'Dashboard',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    // Transcriber menus
-    {
-        path: '/vendor/transcriber/dashboard',
-        title: 'Dashboard',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    {
-        path: '/vendor/transcriber/users',
-        title: 'Transcriber users',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    {
-        path: '/vendor/transcriber/users/new',
-        title: 'New Staff',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    //Transcriber staff menu
-    {
-        path: '/vendor/transcriber/staff/dashboard',
-        title: 'Dashboard',
-        icon: 'dashboard',
-        submenu: [],
-    },
+    // //Vendor historian Menu
+    // {
+    //     path: '/vendor/historian/dashboard',
+    //     title: 'Dashboard',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // {
+    //     path: '/vendor/historian/users',
+    //     title: 'Historian users',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // {
+    //     path: '/vendor/historian/users/new',
+    //     title: 'New Staff',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // //Historian staff menu
+    // {
+    //     path: '/vendor/historian/staff/dashboard',
+    //     title: 'Dashboard',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // // Summarizer menus
+    // {
+    //     path: '/vendor/summarizer/dashboard',
+    //     title: 'Dashboard',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // {
+    //     path: '/vendor/summarizer/users',
+    //     title: 'Summarizer users',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // {
+    //     path: '/vendor/summarizer/users/new',
+    //     title: 'New Staff',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // //Summarizer staff menu
+    // {
+    //     path: '/vendor/summarizer/staff/dashboard',
+    //     title: 'Dashboard',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // // Transcriber menus
+    // {
+    //     path: '/vendor/transcriber/dashboard',
+    //     title: 'Dashboard',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // {
+    //     path: '/vendor/transcriber/users',
+    //     title: 'Transcriber users',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // {
+    //     path: '/vendor/transcriber/users/new',
+    //     title: 'New Staff',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
+    // //Transcriber staff menu
+    // {
+    //     path: '/vendor/transcriber/staff/dashboard',
+    //     title: 'Dashboard',
+    //     icon: 'dashboard',
+    //     submenu: [],
+    // },
 ]

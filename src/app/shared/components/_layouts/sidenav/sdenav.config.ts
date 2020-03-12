@@ -45,14 +45,15 @@ export const ROUTES: SideNavInterface[] = [
             }],
             group: "Admin",
             role: 1
-        }, {
-            path: '/admin/vendors',
-            title: 'Vendor',
-            icon: 'person_add',
-            submenu: [],
-            group: "Admin",
-            role: 1
-        }
+        },
+        //  {
+        //     path: '/admin/vendors',
+        //     title: 'Vendor',
+        //     icon: 'person_add',
+        //     submenu: [],
+        //     group: "Admin",
+        //     role: 1
+        // }
         ]
 
     }, {
@@ -103,95 +104,95 @@ export const ROUTES: SideNavInterface[] = [
             role: 4
         }]
     },
-    {
-        group: "Vendor Historian",
-        role_id: 5,
-        menu: [{
-            path: '/vendor/historian/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Vendor",
-            role: 5
-        }, {
-            path: '/vendor/historian/users',
-            title: 'Manage Users',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Vendor",
-            role: 5
-        }]
-    },
-    {
-        group: "Vendor Historian Staff",
-        role_id: 6,
-        menu: [{
-            path: '/vendor/historian/staff/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Vendor",
-            role: 6
-        }]
-    },
-    {
-        group: "Vendor Summarizer",
-        role_id: 7,
-        menu: [{
-            path: '/vendor/summarizer/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Vendor",
-            role: 7
-        }, {
-            path: '/vendor/summarizer/users',
-            title: 'Manage Users',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Vendor",
-            role: 7
-        }]
-    }, {
-        group: "Vendor Summarizer Staff",
-        role_id: 8,
-        menu: [{
-            path: '/vendor/summarizer/staff/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Vendor",
-            role: 8
-        }]
-    }, {
-        group: "Vendor Transcriber",
-        role_id: 9,
-        menu: [{
-            path: '/vendor/transcriber/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Vendor",
-            role: 9
-        }, {
-            path: '/vendor/transcriber/users',
-            title: 'Manage Users',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Vendor",
-            role: 9
-        }]
-    },
-    {
-        group: "Vendor Transcriber Staff",
-        role_id: 10,
-        menu: [{
-            path: '/vendor/transcriber/staff/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Vendor",
-            role: 6
-        }]
-    },
+    // {
+    //     group: "Vendor Historian",
+    //     role_id: 5,
+    //     menu: [{
+    //         path: '/vendor/historian/dashboard',
+    //         title: 'Dashboard',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Vendor",
+    //         role: 5
+    //     }, {
+    //         path: '/vendor/historian/users',
+    //         title: 'Manage Users',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Vendor",
+    //         role: 5
+    //     }]
+    // },
+    // {
+    //     group: "Vendor Historian Staff",
+    //     role_id: 6,
+    //     menu: [{
+    //         path: '/vendor/historian/staff/dashboard',
+    //         title: 'Dashboard',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Vendor",
+    //         role: 6
+    //     }]
+    // },
+    // {
+    //     group: "Vendor Summarizer",
+    //     role_id: 7,
+    //     menu: [{
+    //         path: '/vendor/summarizer/dashboard',
+    //         title: 'Dashboard',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Vendor",
+    //         role: 7
+    //     }, {
+    //         path: '/vendor/summarizer/users',
+    //         title: 'Manage Users',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Vendor",
+    //         role: 7
+    //     }]
+    // }, {
+    //     group: "Vendor Summarizer Staff",
+    //     role_id: 8,
+    //     menu: [{
+    //         path: '/vendor/summarizer/staff/dashboard',
+    //         title: 'Dashboard',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Vendor",
+    //         role: 8
+    //     }]
+    // }, {
+    //     group: "Vendor Transcriber",
+    //     role_id: 9,
+    //     menu: [{
+    //         path: '/vendor/transcriber/dashboard',
+    //         title: 'Dashboard',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Vendor",
+    //         role: 9
+    //     }, {
+    //         path: '/vendor/transcriber/users',
+    //         title: 'Manage Users',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Vendor",
+    //         role: 9
+    //     }]
+    // },
+    // {
+    //     group: "Vendor Transcriber Staff",
+    //     role_id: 10,
+    //     menu: [{
+    //         path: '/vendor/transcriber/staff/dashboard',
+    //         title: 'Dashboard',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Vendor",
+    //         role: 6
+    //     }]
+    // },
 ]
