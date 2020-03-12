@@ -25,17 +25,19 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: []
         }]
-    }, {
-        path: "/admin/vendors",
-        title: "Manage Vendors",
-        icon: "settings",
-        submenu: [{
-            path: '/admin/vendors/new',
-            title: 'New Vendor',
-            icon: 'dashboard',
-            submenu: []
-        }]
-    }, {
+    },
+    //  {
+    //     path: "/admin/vendors",
+    //     title: "Manage Vendors",
+    //     icon: "settings",
+    //     submenu: [{
+    //         path: '/admin/vendors/new',
+    //         title: 'New Vendor',
+    //         icon: 'dashboard',
+    //         submenu: []
+    //     }]
+    // },
+     {
         path: "/admin/profile",
         title: "Profile",
         icon: "person",
@@ -80,6 +82,26 @@ export const ROUTES = [
             submenu: []
         }],
     },
+    {
+        path: '/subscriber/claiment',
+        title: 'Manage Claiments',
+        icon: 'dashboard',
+        submenu: [{
+        path: '/subscriber/claiment/new',
+        title: 'New Claiments',
+        icon: 'dashboard',
+        submenu: []}],
+    },{
+        path: '/subscriber/claims',
+        title: 'Manage Claims',
+        icon: 'dashboard',
+        submenu: [
+        {path: '/subscriber/claims/new',
+        title: 'New Claims',
+        icon: 'dashboard',
+        submenu: []
+        }],
+    },  
     //Subscriber staff manager
     {
         path: '/subscriber/manager',
