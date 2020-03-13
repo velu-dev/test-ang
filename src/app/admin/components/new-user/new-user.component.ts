@@ -109,7 +109,7 @@ export class NewUserComponent implements OnInit {
 
     if (!this.isEdit) {
       this.userService.createUser(this.userForm.value).subscribe(res => {
-        this.alertService.openSnackBar("User created successful", 'success');
+        this.alertService.openSnackBar("User created successfully", 'success');
         this._location.back();
       }, error => {
         console.log(error)
@@ -117,12 +117,12 @@ export class NewUserComponent implements OnInit {
       })
     } else {
       this.userService.updateUser(this.userForm.value).subscribe(res => {
-        this.alertService.openSnackBar("User update successful", 'success');
+        this.alertService.openSnackBar("User update successfully", 'success');
         if (this.isAdmin.status) {
-          this.alertService.openSnackBar("Admin User updated successful", 'success');
+          this.alertService.openSnackBar("Admin User updated successfully", 'success');
           this.router.navigate(['/admin/admin-users'])
         } else {
-          this.alertService.openSnackBar("User updated successful", 'success');
+          this.alertService.openSnackBar("User updated successfully", 'success');
           this.router.navigate(['/admin/users'])
         }
       }, error => {

@@ -57,7 +57,7 @@ export class SubscriberSettingsComponent implements OnInit {
       return;
     }
     this.userService.updateUser(this.userForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Profile updated successful", 'success');
+      this.alertService.openSnackBar("Profile updated successfully", 'success');
       this.isSubmit = false;
       //this.router.navigate(['/admin/settings'])
     }, error => {

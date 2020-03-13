@@ -60,7 +60,7 @@ export class SettingsComponent implements OnInit {
       return;
     }
     this.userService.updateUser(this.userForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Profile updated successful", 'success');
+      this.alertService.openSnackBar("Profile updated successfully", 'success');
       this.router.navigate(['/admin/settings'])
     }, error => {
       this.alertService.openSnackBar(error.message, 'error');
