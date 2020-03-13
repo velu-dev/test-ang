@@ -95,6 +95,7 @@ export class NewUserComponent implements OnInit {
   }
 
   userSubmit() {
+    this.userForm.value.company_name = 'PPMC Ltd'
     this.isSubmitted = true;
     if (this.userForm.invalid) {
       return;
