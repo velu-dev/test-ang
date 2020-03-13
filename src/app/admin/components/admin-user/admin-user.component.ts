@@ -4,7 +4,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { ExportService } from 'src/app/shared/services/export.service';
 import * as globals from '../../../globals';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -53,7 +52,6 @@ export class AdminUserComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private title: Title,
     private breakpointObserver: BreakpointObserver,
     private exportService: ExportService,
     private spinnerService: NgxSpinnerService,
@@ -70,7 +68,6 @@ export class AdminUserComponent implements OnInit {
       }
     })
     this.isLoading = true;
-    this.title.setTitle("APP | Manage Admin");
     this.getUser([1]);
   }
   ngOnInit() {

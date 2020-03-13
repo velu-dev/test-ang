@@ -14,14 +14,14 @@ export class PageHeaderComponent implements OnInit {
     menu$: Observable<any>;
     constructor(private title: Title, private store: Store<{ breadcrumb: any }>) {
         this.menu$ = store.pipe(select('breadcrumb'));
-        this.page_title = this.title.getTitle();
+        // this.page_title = this.title.getTitle();
     }
 
     ngOnInit() {
         this.menu$.subscribe(res => {
-            if(res){
-            this.title.setTitle("APP | " + res.active_title ? res.active_title : "");
-            }
+            // if(res){
+            // this.title.setTitle("APP | " + res.active_title ? res.active_title : "");
+            // }
         })
 
     }

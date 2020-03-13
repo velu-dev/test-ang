@@ -16,3 +16,15 @@ export const emailnotverify = "Email ID is not verified!";
 export const emailalready = "Email ID is already in use!";
 export const imnotrobot = "Please fill the captcha"
 export const selectrole = "Please select a role";
+export const date_of_birth = "Please enter a valid date of birth";
+export const gender = "Please enter a select gender";
+export const caller_affiliation = "Please enter a valid caller affiliation";
+export const phone_no = "Please enter a valid phone number";
+export const email = "Please enter a valid email";
+export const address = "Please enter a valid address";
+export const city = "Please enter a valid city";
+export const state = "Please enter a valid state";
+export const zip_code = "Please enter a valid zipcode";
+export const handedness = "Please enter a valid handedness";
+export const language = "Please enter a valid language";
+

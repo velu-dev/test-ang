@@ -9,6 +9,7 @@ import * as  success from '../../../shared/messages/success'
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -43,8 +44,12 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
-    private alertService: AlertService
-  ) { }
+    private alertService: AlertService,
+    private title: Title
+  ) {
+
+    this.title.setTitle("App | Login")
+   }
 
   ngOnInit() {
     this.firstname.nativeElement.focus();

@@ -167,8 +167,8 @@ export class ManageUserComponent implements OnInit {
         data.push({
           "First Name": res.first_name,
           "Last Name": res.last_name,
-          "Email ID": res.sign_in_email_id,
-          "Role ID": res.role_name,
+          "Email": res.sign_in_email_id,
+          "Role": res.role_name,
           "Enrolled On": moment(res.createdAt).format("MM-DD-YYYY")
         })
       })

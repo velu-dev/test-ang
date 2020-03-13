@@ -18,6 +18,7 @@ export class SubscriberUserService {
   getUser(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getSubscriberUser + id)
   }
+  
   createUser(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createSubscriberUser, data)
   }

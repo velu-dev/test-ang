@@ -6,10 +6,11 @@ import { Router } from '@angular/router';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import { NgxSpinnerService } from "ngx-spinner";
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'] 
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   logo = globals.logo
@@ -18,14 +19,16 @@ export class RegisterComponent implements OnInit {
   errorMessages = errors;
   passwordFieldType: boolean;
   passwordMatchStatus: boolean = false;
-  error:any;
+  error: any;
 
   constructor(private formBuilder: FormBuilder,
     private cognitoService: CognitoService,
     private authenticationService: AuthenticationService,
     private router: Router,
     private spinnerService: NgxSpinnerService,
-  ) { }
+    private title: Title) {
+    this.title.setTitle("App | Forgot password")
+  }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -86,7 +89,7 @@ export class RegisterComponent implements OnInit {
       }, error => {
         console.log("cognitoSignUpError", error);
         this.spinnerService.hide();
-        if(error.code == 'UsernameExistsException'){
+        if (error.code == 'UsernameExistsException') {
           error.message = this.errorMessages.emailalready;
         }
         this.error = { message: error.message, action: "danger" }

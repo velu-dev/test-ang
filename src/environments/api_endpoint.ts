@@ -31,4 +31,8 @@ export const api_endpoint = {
     getSubscriberManageUsers: 'subscriber-staff-manager/users',
     getSubscriberManageRole: 'subscriber-staff-manager/roles',
     subscriberManageDisableUser: "subscriber-staff-manager/disable-user/",
+
+    //Claim Service endpoint
+    getClaimantDetails: "claimant/details",
+    createClaim: "claimant/create"
 }

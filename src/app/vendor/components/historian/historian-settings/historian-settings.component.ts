@@ -62,7 +62,7 @@ export class HistorianSettingsComponent implements OnInit {
       return;
     }
     this.userService.updateProfile(this.userForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Profile updated successful", 'success');
+      this.alertService.openSnackBar("Profile updated successfully", 'success');
       this.isSubmitted = false;
       this.router.navigate(['/vendor/settings'])
     }, error => {
