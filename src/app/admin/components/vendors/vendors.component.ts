@@ -7,7 +7,6 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { ExportService } from './../../../shared/services/export.service';
 import * as globals from '../../../globals';
 import { Role } from '../../models/role.model';
@@ -57,7 +56,6 @@ export class VendorsComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private title: Title,
     private exportService: ExportService,
     private breakpointObserver: BreakpointObserver,
     public dialog: MatDialog,
@@ -75,7 +73,6 @@ export class VendorsComponent implements OnInit {
       }
     });
     this.screenWidth = window.innerWidth;
-    this.title.setTitle("APP | Manage User");
     this.roles = [];
     this.userService.getVendorRole().subscribe(response => {
       response.data.map(role => {
