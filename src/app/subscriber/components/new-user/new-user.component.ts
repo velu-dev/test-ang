@@ -8,6 +8,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import * as  errors from '../../../shared/messages/errors'
+import { CookieService } from 'src/app/shared/services/cookie.service';
 
 @Component({
   selector: 'app-new-user',
@@ -24,6 +25,7 @@ export class NewUserComponent implements OnInit {
   roles: Role[];
   isAdminCreate: boolean = false;
   activeTitle = "";
+  user: any = {};
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -32,8 +34,10 @@ export class NewUserComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private store: Store<{ breadcrumb: any }>,
-    private _location: Location
+    private _location: Location,
+    private cookieService: CookieService,
   ) {
+    this.user = JSON.parse(this.cookieService.get('user'));
     this.userService.getRoles().subscribe(response => {
       this.roles = response.data;
     })
@@ -63,13 +67,16 @@ export class NewUserComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required])],
       last_name: ['', Validators.compose([Validators.required])],
       middle_name: [''],
-      company_name: [{ value: '', disabled: this.isEdit }],
+      company_name: [{ value: this.user.company_name, disabled: true }],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required]
     });
+
+    
   }
 
   userSubmit() {
+    this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
     if (this.userForm.invalid) {
       return;

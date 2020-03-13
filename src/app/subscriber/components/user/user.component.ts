@@ -15,7 +15,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatDialog } from '@angular/material/dialog';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
-
+import * as moment from 'moment';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -52,6 +53,7 @@ export class UserComponent implements OnInit {
   filterValue: string;
   tabIndex: number = 0;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  user = {};
   constructor(
     private userService: SubscriberUserService,
     private router: Router,
@@ -59,15 +61,17 @@ export class UserComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     public dialog: MatDialog,
     private alertService: AlertService,
+    private cookieService: CookieService,
   ) {
+    this.user = JSON.parse(this.cookieService.get('user'));
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Disable User"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
+        this.columnName = ["", "Last Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Enrolled On", "Disable User"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
+        this.columnName = ["Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
       }
     });
     this.screenWidth = window.innerWidth;
@@ -91,6 +95,7 @@ export class UserComponent implements OnInit {
     window.onresize = () => {
       this.screenWidth = window.innerWidth;
     };
+
   }
 
   ngOnInit() {
@@ -161,15 +166,18 @@ export class UserComponent implements OnInit {
   }
   exportData() {
     let data = [];
-    this.users.map(res => {
-      data.push({
-        "First Name": res.first_name,
-        "Last Name": res.last_name,
-        "Email ID": res.sign_in_email_id,
-        "Role ID": res.role_name
+    if (this.users.length > 0) {
+      this.users.map(res => {
+        data.push({
+          "First Name": res.first_name,
+          "Last Name": res.last_name,
+          "Email": res.sign_in_email_id,
+          "Role": res.role_name,
+          "Enrolled On": moment(res.createdAt).format("MM-DD-YYYY")
+        })
       })
-    })
-    this.exportService.exportExcel(data, "Non-Admin-Users")
+      this.exportService.exportExcel(data, "subscriber-users" + moment().format('MM-DD-YYYYhh:mm'))
+    }
   }
   expandId: any;
   openElement(element) {

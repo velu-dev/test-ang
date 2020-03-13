@@ -16,6 +16,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -61,11 +63,11 @@ export class UserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Disable User"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
+        this.columnName = ["", "Last Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Enrolled On", "Disable User"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
+        this.columnName = ["Last Name", "First Name", "Email", "Role", "Company", "Enrolled On", "Disable User"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', "organization_name", 'createdAt', "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -162,15 +164,19 @@ export class UserComponent implements OnInit {
   }
   exportData() {
     let data = [];
+    if(this.users.length > 0){
     this.users.map(res => {
       data.push({
-        "First Name": res.first_name,
         "Last Name": res.last_name,
-        "Email ID": res.sign_in_email_id,
-        "Role ID": res.role_name
+        "First Name": res.first_name,
+        "Email": res.sign_in_email_id,
+        "Role": res.role_name,
+        "Company": res.organization_name,
+        "Enrolled On": moment(res.createdAt).format("MM-DD-YYYY")
       })
     })
-    this.exportService.exportExcel(data, "Non-Admin-Users")
+    this.exportService.exportExcel(data, "Subscriber-Users" + moment().format('MM-DD-YYYYhh:mm'))
+    }
   }
   expandId: any;
   openElement(element) {

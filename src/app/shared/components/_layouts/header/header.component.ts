@@ -53,6 +53,7 @@ export class HeaderComponent implements OnInit {
       this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
       this.userService.getUser(this.currentUserID).subscribe(res => {
         this.user = res.data;
+        this.cookieService.set('user',JSON.stringify(this.user));
         this.isLoading = false;
         this.spinnerService.hide();
       })
