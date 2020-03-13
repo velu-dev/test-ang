@@ -3,17 +3,16 @@ import * as globals from '../../../../globals';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { Role } from 'src/app/shared/model/role.model';
 import { User } from 'src/app/shared/model/user.model';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { UserService } from 'src/app/shared/services/user.service';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { ExportService } from 'src/app/shared/services/export.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ClaimService } from 'src/app/subscriber/service/claim.service';
 
 @Component({
   selector: 'app-claim-list',
@@ -33,35 +32,33 @@ export class ClaimListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
-      map(result => result.matches ),
+      map(result => result.matches),
       shareReplay()
     );
   isMobile: boolean = false;
   checked = true;
   allUser: any;
-  filterValue : string;
+  filterValue: string;
   tabIndex: number = 0;
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private userService: UserService,
     private router: Router,
-    private title: Title,
     private exportService: ExportService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private claimService: ClaimService
   ) {
-
+    this.getUser();
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name","Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name',"edit"]
+        this.columnName = ["", "First Name", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "edit"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Date of Birth", "Claim number","Examiner","Gender","Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'date_of_birth', 'claim_number',"examiner","gender","edit"]
+        this.columnName = ["First Name", "Last Name", "Date of Birth", "Claim number", "Examiner", "Gender", "Action"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'date_of_birth', 'claim_number', "examiner", "gender", "edit"]
       }
     })
     this.screenWidth = window.innerWidth;
-    this.title.setTitle("APP | Manage User");
     this.roles = [];
 
     window.onresize = () => {
@@ -73,52 +70,46 @@ export class ClaimListComponent implements OnInit {
   }
   users = [];
   getUser() {
+    this.claimService.getClaimant().subscribe(res => {
+      console.log("response", res)
+    })
     this.users = [];
   }
   gotoEdit(data) {
     this.router.navigate(["/admin/users/" + data.id])
   }
 
-  selectedRoleId = []
-  filterByRole(value?: string) {
-    this.selectedRoleId = [];
-    this.roles.map(res => {
-      if (value) {
-        res['checked'] = !res['checked'];
-        this.selectedRoleId.push(res.id)
-      } else {
-        if (res['checked']) {
-          this.selectedRoleId.push(res.id);
-        }
-      }
-    })
-    this.getUser()
-  }
-
   tabchange(event) {
+    console.log(event)
     this.filterValue = '';
     this.dataSource = [];
     this.users = [];
     this.tabIndex = event;
-    let tabName;
-    if (event == 0) {
-      tabName = 'activeUsers'
-    } else if (event == 1) {
-      tabName = 'invitedUsers'
-    } else if (event == 2) {
-      tabName = 'disabledUsers'
-    }
-    this.allUser[tabName].map(user => {
-      user['isExpand'] = false;
-      this.users.push(user);
-    })
+    // let tabName;
+    // if (event == 0) {
+    //   tabName = 'activeUsers'
+    // } else if (event == 1) {
+    //   tabName = 'invitedUsers'
+    // } else if (event == 2) {
+    //   tabName = 'disabledUsers'
+    // }
+    // this.allUser[tabName].map(user => {
+    //   user['isExpand'] = false;
+    //   this.users.push(user);
+    // })
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
   navigate() {
-    this.router.navigate(['/admin/users/new'])
+    if (this.tabIndex == 0) {
+      this.router.navigate(['/subscriber/claims/new-claimant'])
+    } else if (this.tabIndex == 1) {
+      alert("In Progress");
+    } else if (this.tabIndex == 2) {
+      alert("In Progress");
+    }
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -144,5 +135,5 @@ export class ClaimListComponent implements OnInit {
       this.expandId = element.id;
     }
   }
- 
+
 }

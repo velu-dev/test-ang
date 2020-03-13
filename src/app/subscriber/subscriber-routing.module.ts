@@ -9,9 +9,7 @@ import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-se
 import { ManageUserComponent } from './manager/manage-user/manage-user.component';
 import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
 import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
-import { NewClaimentComponent } from './components/claims/claiment/new-claiment/new-claiment.component';
-import { ClaimentComponent } from './components/claims/claiment/claiment.component';
-import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
+import { NewClaimantComponent } from './components/claims/new-claimant/new-claimant.component';
 
 
 const routes: Routes = [{
@@ -35,23 +33,25 @@ const routes: Routes = [{
 }, {
   path: "settings",
   component: SubscriberSettingsComponent
-}, {
-  path: "claiment",
-  children: [{
-    path: "",
-    component: ClaimentComponent
-  }, {
-    path: "new",
-    component: NewClaimentComponent
-  }]
-},{
+},
+// {
+//   path: "claiment",
+//   children: [{
+//     path: "",
+//     component: ClaimentComponent
+//   }, {
+//     path: "new",
+//     component: NewClaimentComponent
+//   }]
+// },
+{
   path: "claims",
   children: [{
     path: "",
     component: ClaimListComponent
   }, {
-    path: "new",
-    component: NewClaimComponent
+    path: "new-claimant",
+    component: NewClaimantComponent
   }]
 }, {
   path: "staff",

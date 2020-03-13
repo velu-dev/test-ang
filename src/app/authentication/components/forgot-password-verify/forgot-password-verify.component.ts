@@ -8,6 +8,7 @@ import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import * as  success from '../../../shared/messages/success'
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-forgot-password-verify',
   templateUrl: './forgot-password-verify.component.html',
@@ -26,7 +27,10 @@ export class ForgotPasswordVerifyComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private router: Router,
     private spinnerService: NgxSpinnerService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private title: Title) {
+    this.title.setTitle("App | Forgot password")
+  }
 
   ngOnInit() {
     this.forgotVerifyForm = this.formBuilder.group({

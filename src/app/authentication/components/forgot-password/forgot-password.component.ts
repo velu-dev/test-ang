@@ -7,6 +7,7 @@ import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -19,7 +20,14 @@ export class ForgotPasswordComponent implements OnInit {
   logo = globals.logo;
   errorMessages = errors;
   error: any;
-  constructor(private router: Router, private authenticationService: AuthenticationService, private cognitoService: CognitoService, private formBuilder: FormBuilder, private spinnerService: NgxSpinnerService) { }
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private cognitoService: CognitoService,
+    private formBuilder: FormBuilder,
+    private spinnerService: NgxSpinnerService, private title: Title) {
+    this.title.setTitle("App | Forgot password")
+  }
 
   ngOnInit() {
     this.forgotPasswordForm = this.formBuilder.group({
