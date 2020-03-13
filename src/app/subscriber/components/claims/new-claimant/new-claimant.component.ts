@@ -26,14 +26,14 @@ export class NewClaimantComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      date_of_birth: [''],
+      // date_of_birth: [''],
       gender: ['', Validators.required],
-      caller_affiliation: ['', Validators.required],
+      // caller_affiliation: ['', Validators.required],
       phone_no_1: ['', Validators.required],
       phone_no_2: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       street1: ['', Validators.required],
-      language: ['', Validators.required],
+      // language: ['', Validators.required],
       street2: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
@@ -43,11 +43,12 @@ export class NewClaimantComponent implements OnInit {
   }
   isSubmit = false;
   submitClaim() {
+    console.log("dfdsfsfds",this.claimForm.value)
     this.isSubmit = true;
     if (this.claimForm.invalid) {
       return;
     }
-    console.log(this.claimForm.value)
+    
     this.claimService.createClaim(this.claimForm.value).subscribe(res => {
       this.alertService.openSnackBar("User updated successful", 'success');
       this._location.back();

@@ -71,9 +71,9 @@ export class ClaimListComponent implements OnInit {
   users = [];
   getUser() {
     this.claimService.getClaimant().subscribe(res => {
-      console.log("response", res)
+      this.users = res.data;
+      this.tabchange(0);
     })
-    this.users = [];
   }
   gotoEdit(data) {
     this.router.navigate(["/admin/users/" + data.id])
@@ -82,8 +82,6 @@ export class ClaimListComponent implements OnInit {
   tabchange(event) {
     console.log(event)
     this.filterValue = '';
-    this.dataSource = [];
-    this.users = [];
     this.tabIndex = event;
     // let tabName;
     // if (event == 0) {
@@ -97,6 +95,7 @@ export class ClaimListComponent implements OnInit {
     //   user['isExpand'] = false;
     //   this.users.push(user);
     // })
+    console.log(this.users)
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
