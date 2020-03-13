@@ -15,12 +15,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { StaffManagerService } from '../../service/staff-manager.service';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-manage-user',
   templateUrl: './manage-user.component.html',
   styleUrls: ['./manage-user.component.scss'],
-   animations: [
+  animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
@@ -64,11 +64,11 @@ export class ManageUserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Disable User"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
+        this.columnName = ["", "Last Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
-        this.columnName = ["First Name", "Last Name", "Email", "Role", "Enrolled On", "Disable User"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
+        this.columnName = ["Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
       }
     });
     this.screenWidth = window.innerWidth;
@@ -162,15 +162,18 @@ export class ManageUserComponent implements OnInit {
   }
   exportData() {
     let data = [];
-    this.users.map(res => {
-      data.push({
-        "First Name": res.first_name,
-        "Last Name": res.last_name,
-        "Email ID": res.sign_in_email_id,
-        "Role ID": res.role_name
+    if (this.users.length > 0) {
+      this.users.map(res => {
+        data.push({
+          "First Name": res.first_name,
+          "Last Name": res.last_name,
+          "Email ID": res.sign_in_email_id,
+          "Role ID": res.role_name,
+          "Enrolled On": moment(res.createdAt).format("MM-DD-YYYY")
+        })
       })
-    })
-    this.exportService.exportExcel(data, "Non-Admin-Users")
+      this.exportService.exportExcel(data, "subscriber-staff-users" + moment().format('MM-DD-YYYYhh:mm'))
+    }
   }
   expandId: any;
   openElement(element) {
