@@ -15,7 +15,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatDialog } from '@angular/material/dialog';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -164,9 +164,10 @@ export class UserComponent implements OnInit {
     this.users.map(res => {
       data.push({
         "First Name": res.first_name,
-        "Last Name": res.last_name,
-        "Email ID": res.sign_in_email_id,
-        "Role ID": res.role_name
+          "Last Name": res.last_name,
+          "Email": res.sign_in_email_id,
+          "Role": res.role_name,
+          "Enrolled On": moment(res.createdAt).format("MM-DD-YYYY")
       })
     })
     this.exportService.exportExcel(data, "Non-Admin-Users")

@@ -41,7 +41,7 @@
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnName[i]}} </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header><span *ngIf="columnName[i] != 'Cancel Invite'">{{columnName[i]}}</span>  </th>
 
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="i == 0 && isMobile">
@@ -54,7 +54,7 @@
                         <span *ngIf="column == 'createdAt'">{{element[column] | date:'MM-dd-yyyy'}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">                            
                             <span class="user-disable-enable" *ngIf="tabIndex != 1" (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
-                            <span class="user-disable-enable" *ngIf="tabIndex == 1"  (click)="onDisable($event, element)"> Cancel </span>
+                            <!-- <span class="user-disable-enable" *ngIf="tabIndex == 1"  (click)="onDisable($event, element)"> Cancel </span> -->
                             <!-- <span class="user-enable"> Enable</span>  -->
                         </span>
                     </td>
@@ -63,8 +63,8 @@
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="resposive-table">
-                                <div class="first_name"><span>First Name</span> {{element.first_name}} </div>
                                 <div class="last_name"><span>Last Name</span> {{element.last_name}} </div>
+                                <div class="first_name"><span>First Name</span> {{element.first_name}} </div>
                                 <div class="sign in sign_in_email_id"><span>Email ID</span>
                                     {{element.sign_in_email_id}}
                                 </div>

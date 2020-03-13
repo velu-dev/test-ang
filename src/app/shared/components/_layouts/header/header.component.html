@@ -11,14 +11,21 @@
                 <button (click)="fullScreen()" mat-icon-button class="hide-mobile">
                     <mat-icon> {{isFullScreen ? 'fullscreen_exit' : 'fullscreen' }}</mat-icon>
                 </button>
-                <button mat-icon-button [matMenuTriggerFor]="notification" class="hide-mobile">
-                    <mat-icon matBadge="7" matBadgeColor="warn">notifications_none</mat-icon>
+                <button mat-icon-button class="hide-mobile">
+                    <mat-icon matBadgeColor="warn">notifications_none</mat-icon>
                 </button>
                 <button mat-icon-button class="show-mobile">
-                    <mat-icon matBadge="7" matBadgeColor="warn">notifications_none
+                    <mat-icon matBadgeColor="warn">notifications_none
                     </mat-icon>
                 </button>
-                <mat-menu #notification="matMenu" class="">
+                <!-- <button mat-icon-button [matMenuTriggerFor]="notification" class="hide-mobile">
+                    <mat-icon matBadge="" matBadgeColor="warn">notifications_none</mat-icon>
+                </button>
+                <button mat-icon-button class="show-mobile">
+                    <mat-icon matBadge="" matBadgeColor="warn">notifications_none
+                    </mat-icon>
+                </button> -->
+                <!-- <mat-menu #notification="matMenu" class="">
                     <div class="p-t-0 notification">
                         <mat-card-header class="text-center">
                             <mat-card-title class="m-b-2">NOTIFICATIONS</mat-card-title>
@@ -41,7 +48,7 @@
                         </mat-card-footer>
 
                     </div>
-                </mat-menu>
+                </mat-menu> -->
                 <!-- <div *ngIf="isLoading">
                     <div class="gravatar">
                         <ngx-skeleton-loader appearance="circle" [theme]="{ width: '80px', height: '80px' }">
@@ -59,7 +66,7 @@
                     </div>
                 </div> -->
 
-                <div>
+                <div *ngIf="user">
                     <button mat-button [matMenuTriggerFor]="settings" class="welcome">
                         <span class="hide-mobile"><small>Welcome,</small><br />
                             {{user?.first_name}}
@@ -71,10 +78,10 @@
             </div>
         </mat-card-actions>
         <mat-menu #settings="matMenu">
-            <button routerLink="profile" mat-menu-item>
+            <!-- <button routerLink="profile" mat-menu-item>
                 <mat-icon>perm_identity</mat-icon>
                 <span>Profile</span>
-            </button>
+            </button> -->
             <button (click)="gotoSettings()" mat-menu-item>
                 <mat-icon>settings</mat-icon>
                 <span>Settings</span>
