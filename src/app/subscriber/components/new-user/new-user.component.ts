@@ -91,7 +91,6 @@ export class NewUserComponent implements OnInit {
     } else {
       this.userService.updateUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User update successful", 'success');
-        this.alertService.openSnackBar("User updated successful", 'success');
         this.router.navigate(['/subscriber/users'])
       }, error => {
         this.alertService.openSnackBar(error.message, 'error');
