@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,11 +6,10 @@ import { Title } from '@angular/platform-browser';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private title: Title) {
+  constructor() {
   }
   
   ngOnInit() {
-    this.title.setTitle("Admin Dashboard")
   };
 
 }
