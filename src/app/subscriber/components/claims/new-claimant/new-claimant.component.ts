@@ -28,6 +28,7 @@ export class NewClaimantComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      suffix: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       date_of_birth: [''],
       gender: ['', Validators.required],
       caller_affiliation: ['', Validators.required],
