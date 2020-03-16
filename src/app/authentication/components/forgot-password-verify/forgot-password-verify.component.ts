@@ -58,7 +58,7 @@ export class ForgotPasswordVerifyComponent implements OnInit {
     }
     this.authenticationService.emailVerify(this.forgotVerifyForm.value.email.toLowerCase()).subscribe(emailVerifyRes => {
       let verifyDetails: any = emailVerifyRes;
-      if (verifyDetails.message == this.errorMessages.emailnotexist || verifyDetails.message == this.errorMessages.emailnotverify) {
+      if (!verifyDetails.forgotstatus) {
         this.error = { message: verifyDetails.message, action: "danger" }
         this.spinnerService.hide();
         return;
