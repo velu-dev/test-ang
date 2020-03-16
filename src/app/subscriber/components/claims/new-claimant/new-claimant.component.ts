@@ -5,6 +5,8 @@ import * as  errors from './../../../../shared/messages/errors'
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-new-claimant',
   templateUrl: './new-claimant.component.html',
@@ -26,14 +28,14 @@ export class NewClaimantComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      // date_of_birth: [''],
+      date_of_birth: [''],
       gender: ['', Validators.required],
-      // caller_affiliation: ['', Validators.required],
-      phone_no_1: ['', Validators.required],
-      phone_no_2: ['', Validators.required],
+      caller_affiliation: ['', Validators.required],
+      phone_no_1: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
+      phone_no_2: ['',Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       street1: ['', Validators.required],
-      // language: ['', Validators.required],
+      language: ['', Validators.required],
       street2: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
@@ -43,12 +45,14 @@ export class NewClaimantComponent implements OnInit {
   }
   isSubmit = false;
   submitClaim() {
-    console.log("dfdsfsfds",this.claimForm.value)
+    
+   
     this.isSubmit = true;
     if (this.claimForm.invalid) {
+      console.log("claimForm", this.claimForm)
       return;
     }
-    
+    //this.claimForm.value.date_of_birth = moment(this.claimForm.value.date_of_birth).format("MM-DD-YYYY")
     this.claimService.createClaim(this.claimForm.value).subscribe(res => {
       this.alertService.openSnackBar("User updated successful", 'success');
       this._location.back();
@@ -56,7 +60,7 @@ export class NewClaimantComponent implements OnInit {
       this.alertService.openSnackBar(error.error, 'error');
     })
   }
-  cancle(){
+  cancle() {
     this._location.back();
   }
 }

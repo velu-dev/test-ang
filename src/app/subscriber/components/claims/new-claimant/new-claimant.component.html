@@ -25,14 +25,14 @@
         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidmiddlename}}</mat-error>
       </mat-form-field>
 
-      <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Date of Birth</mat-label>
         <input matInput placeholder="Date of Birth" formControlName="date_of_birth" autocomplete="off"
-          [matDatepicker]="date_of_birth">
+          [matDatepicker]="date_of_birth" (click)="date_of_birth.open()" disabled>
         <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
-        <mat-datepicker #date_of_birth></mat-datepicker>
+        <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
         <mat-error *ngIf="isSubmit">{{errorMessages.date_of_birth}}</mat-error>
-      </mat-form-field> -->
+      </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Sex/Gender</mat-label>
@@ -40,16 +40,22 @@
         <mat-error *ngIf="isSubmit">{{errorMessages.gender}}</mat-error>
       </mat-form-field>
 
-      <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Language</mat-label>
         <input matInput placeholder="Language" formControlName="language" autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
-      </mat-form-field> -->
+      </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Handedness</mat-label>
         <input matInput placeholder="Handedness" formControlName="handedness" autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.handedness}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Caller affiliation</mat-label>
+        <input matInput placeholder="Caller affiliation" formControlName="caller_affiliation" autocomplete="off">
+        <mat-error *ngIf="isSubmit">{{errorMessages.caller_affiliation}}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -96,7 +102,7 @@
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Zip</mat-label>
-        <input type="string" matInput placeholder="Zip" autocomplete="off" formControlName="zip_code">
+        <input matInput placeholder="Zip" autocomplete="off" formControlName="zip_code">
         <mat-error *ngIf="isSubmit">{{errorMessages.zip_code}}</mat-error>
       </mat-form-field>
 

@@ -13,11 +13,19 @@ import { Title } from '@angular/platform-browser';
 import { ExportService } from 'src/app/shared/services/export.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-claim-list',
   templateUrl: './claim-list.component.html',
-  styleUrls: ['./claim-list.component.scss']
+  styleUrls: ['./claim-list.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class ClaimListComponent implements OnInit {
   screenWidth: number;
@@ -35,11 +43,13 @@ export class ClaimListComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  isMobile: boolean = false;
+
+  isMobile = false;
   checked = true;
   allUser: any;
   filterValue: string;
   tabIndex: number = 0;
+  disabled = false;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -52,10 +62,10 @@ export class ClaimListComponent implements OnInit {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "edit"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
         this.columnName = ["First Name", "Last Name", "Date of Birth", "Claim number", "Examiner", "Gender", "Action"]
-        this.columnsToDisplay = ['first_name', 'last_name', 'date_of_birth', 'claim_number', "examiner", "gender", "edit"]
+        this.columnsToDisplay = ['first_name', 'last_name', 'date_of_birth', 'claim_number', "examiner", "gender", "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;
