@@ -39,7 +39,7 @@
         </button>
 
         <div class="user-detail">
-            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header><span *ngIf="columnName[i] != 'Cancel Invite'">{{columnName[i]}}</span>  </th>
 

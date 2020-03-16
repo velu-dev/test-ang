@@ -409,3 +409,12 @@ input:-webkit-autofill {
   -webkit-animation-name: autofill;
   -webkit-animation-fill-mode: both;
 }
+
+// ==================================
+// Button styles             ========
+// ==================================
+
+.rounded-corner {
+  border-radius: 50px;
+  box-shadow: $box-shadow-2;
+}

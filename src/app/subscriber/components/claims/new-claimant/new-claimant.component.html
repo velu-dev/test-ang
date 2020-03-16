@@ -25,14 +25,15 @@
         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidmiddlename}}</mat-error>
       </mat-form-field>
 
-      <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Date of Birth</mat-label>
         <input matInput placeholder="Date of Birth" formControlName="date_of_birth" autocomplete="off"
           [matDatepicker]="date_of_birth">
         <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
         <mat-datepicker #date_of_birth></mat-datepicker>
         <mat-error *ngIf="isSubmit">{{errorMessages.date_of_birth}}</mat-error>
-      </mat-form-field> -->
+      </mat-form-field>
+      
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Sex/Gender</mat-label>
@@ -101,7 +102,7 @@
       </mat-form-field>
 
       <div class="text-center w-100 m-t-10">
-        <button mat-raised-button color="primary" type="submit" class="m-r-10">
+        <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner">
           Submit </button>
         <button mat-raised-button (click)="cancle()" type="button">Cancel</button>
       </div>
