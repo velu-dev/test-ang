@@ -46,10 +46,7 @@ export class LoginComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private alertService: AlertService,
     private title: Title
-  ) {
-
-    this.title.setTitle("App | Login")
-   }
+  ) {   }
 
   ngOnInit() {
     this.firstname.nativeElement.focus();
