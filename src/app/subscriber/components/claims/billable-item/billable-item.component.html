@@ -1,0 +1,95 @@
+<mat-card class="m-card">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Create New Billable Item</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <form fxLayout="row wrap" class="mat-grid-form">
+            <!--  CLaim details  -->
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Exam type</div>
+            <div fxLayout="row wrap" fxFlex="100">
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Select procedure type</mat-label>
+                    <mat-select>
+                        <mat-option value="0">ML -101</mat-option>
+                        <mat-option value="1">ML -101</mat-option>
+                    </mat-select>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+     
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Modifiers</mat-label>
+                    <mat-select>
+                        <mat-option value="0">Modifiers Type Here</mat-option>
+                    </mat-select>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+              
+            </div>
+            <!--  Create appointment  -->
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Create appointment
+            </div>
+            <div fxLayout="row wrap" fxFlex="100">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Select Examiner</mat-label>
+                    <mat-select>
+                        <mat-option value="0">Examiner List Here</mat-option>
+                    </mat-select>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Date & Time</mat-label>
+                    <input matInput placeholder="Date & Time" formControlName="date_and_time" autocomplete="off"
+                    [matDatepicker]="date_and_time" (click)="date_and_time.open()">
+                  <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
+                  <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                    <mat-label>Address</mat-label>
+                    <textarea matInput placeholder="Address" autocomplete="off" ></textarea>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Status</mat-label>
+                    <mat-select>
+                        <mat-option value="0">Status List Here</mat-option>
+                    </mat-select>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Intake caller</mat-label>
+                    <input matInput placeholder="Intake caller" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Intake call date & time</mat-label>
+                    <input matInput placeholder="Intake call date & time" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Intake call note</mat-label>
+                    <input matInput placeholder="Intake call note" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+            </div>
+
+
+
+            <div class="text-center w-100 m-t-10 m-b-50">
+                <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner btn_success">
+                    Submit </button>
+                <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
+                    color="warn">Cancel</button>
+            </div>
+
+        </form>
+    </mat-card-content>
+</mat-card>

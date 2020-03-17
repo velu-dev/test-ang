@@ -11,6 +11,7 @@ import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-use
 import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
 import { NewClaimantComponent } from './components/claims/new-claimant/new-claimant.component';
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
+import { BillableItemComponent } from './components/claims/billable-item/billable-item.component';
 
 
 const routes: Routes = [{
@@ -56,6 +57,9 @@ const routes: Routes = [{
   }, {
     path: "new-claim",
     component: NewClaimComponent
+  },{
+    path: "new-billable-item",
+    component: BillableItemComponent
   }]
 }, {
   path: "staff",

@@ -117,7 +117,7 @@ export class ClaimListComponent implements OnInit {
     } else if (this.tabIndex == 1) {
       this.router.navigate(['/subscriber/claims/new-claim']);
     } else if (this.tabIndex == 2) {
-      alert("In Progress");
+      this.router.navigate(['/subscriber/claims/new-billable-item']);
     }
   }
   applyFilter(filterValue: string) {

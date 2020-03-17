@@ -49,13 +49,6 @@
         <mat-error *ngIf="isSubmit">{{errorMessages.gender}}</mat-error>
       </mat-form-field>
 
-
-      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Caller Affiliation</mat-label>
-        <input matInput placeholder="Caller Affiliation" autocomplete="off" formControlName="caller_affiliation">
-        <mat-error *ngIf="isSubmit">{{errorMessages.caller_affiliation}}</mat-error>
-      </mat-form-field>
-
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Email</mat-label>
         <input matInput placeholder="Email" autocomplete="off" formControlName="email">
@@ -91,6 +84,12 @@
           <mat-checkbox>No</mat-checkbox>
         </div>
       </div>
+
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>SSN</mat-label>
+        <input matInput type="number" placeholder="999-999-999" value="999-999-999" formControlName="ssn" autocomplete="off">
+        <mat-error *ngIf="isSubmit">{{errorMessages.ssn}}</mat-error>
+      </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Phone Number</mat-label>
@@ -134,6 +133,12 @@
         <mat-label>Zip</mat-label>
         <input matInput placeholder="Zip" autocomplete="off" formControlName="zip_code">
         <mat-error *ngIf="isSubmit">{{errorMessages.zip_code}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Zip +4</mat-label>
+        <input matInput placeholder="Zip +4" autocomplete="off" formControlName="zip_4">
+        <mat-error *ngIf="isSubmit">{{errorMessages.zip_4}}</mat-error>
       </mat-form-field>
 
 
