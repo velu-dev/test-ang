@@ -13,7 +13,7 @@ import * as moment from 'moment';
   styleUrls: ['./new-claimant.component.scss']
 })
 export class NewClaimantComponent implements OnInit {
-  claimForm: FormGroup;
+  claimantForm: FormGroup;
   errorMessages = errors;
   constructor(
     private claimService: ClaimService,
@@ -24,7 +24,7 @@ export class NewClaimantComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.claimForm = this.formBuilder.group({
+    this.claimantForm = this.formBuilder.group({
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
@@ -50,12 +50,12 @@ export class NewClaimantComponent implements OnInit {
     
    
     this.isSubmit = true;
-    if (this.claimForm.invalid) {
-      console.log("claimForm", this.claimForm)
+    if (this.claimantForm.invalid) {
+      console.log("claimantForm", this.claimantForm)
       return;
     }
-    //this.claimForm.value.date_of_birth = moment(this.claimForm.value.date_of_birth).format("MM-DD-YYYY")
-    this.claimService.createClaim(this.claimForm.value).subscribe(res => {
+    //this.claimantForm.value.date_of_birth = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY")
+    this.claimService.createClaim(this.claimantForm.value).subscribe(res => {
       this.alertService.openSnackBar("User updated successful", 'success');
       this._location.back();
     }, error => {
