@@ -10,6 +10,7 @@ import { ManageUserComponent } from './manager/manage-user/manage-user.component
 import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
 import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
 import { NewClaimantComponent } from './components/claims/new-claimant/new-claimant.component';
+import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 
 
 const routes: Routes = [{
@@ -52,6 +53,9 @@ const routes: Routes = [{
   }, {
     path: "new-claimant",
     component: NewClaimantComponent
+  }, {
+    path: "new-claim",
+    component: NewClaimComponent
   }]
 }, {
   path: "staff",

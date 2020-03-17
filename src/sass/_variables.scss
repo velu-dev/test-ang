@@ -33,6 +33,7 @@ $bg-success: rgb(76, 175, 80);
 $bg-error: rgba(255, 54, 54, 0.05);
 $bg-warning: rgba(255, 178, 54, 0.4);
 $bg-error-style-one: #ff8f8f;
+$btn_success:#00CC00;
 
 
 //class 
@@ -181,11 +182,10 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   width: 16px;
 }
 // mixins scss
-@mixin lucy-form {
-  background: $bg-light-blue;
-  height: 100%;
-  padding: 15px;
-}
+
+// ==================================
+// Authentication styles     ========
+// ==================================
 
 @mixin content-wrapper {
   padding: 20px;
@@ -287,22 +287,37 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   padding-left: 5px;
 }
 
+
+// ==================================
+// Page heading styles       ========
+// ==================================
+
 .page-heading {
   color: $text-dark;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: $font-size-4;
+  font-weight: $font-weight-bold;
 }
-
 .mat-card-header-text {
   margin: 0px !important;
-  line-height: 2;
 }
 
+.content-wrapper-main-title {
+  margin-bottom: 15px;
+  display: block;
+  font-size: $font-size-10;
+  color: $black;
+}
 .m-card {
   box-shadow: $box-shadow-2;
   min-height: calc(100vh - 240px);
 }
-// Table Scss
+
+
+// ==================================
+// Table Filter styles       ========
+// ==================================
+
+
 .table-filter {
   margin-top: 5px !important;
   margin-bottom: 5px;
@@ -331,19 +346,11 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   float: right;
   margin-top: 10px;
 }
-// .add-user {
-//   background-color: $ternary-color;
-//   width: 35px;
-//   height: 35px;
-//   .mat-button-wrapper {
-//     padding: 0px !important;
-//     .mat-icon {
-//       width:  auto;
-//       height: auto;
-//       line-height: 0px;
-//     }
-//   }
-// }
+
+// ==================================
+// Add new user styles       ========
+// ==================================
+
 .add-user {
   background-color: $ternary-color;
   float: right;
@@ -404,6 +411,10 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   }
 }
 
+// ==================================
+// vertical scrolls          ========
+// ==================================
+
 input:-webkit-autofill {
   -webkit-animation-delay: 1s; /* Safari support - any positive time runs instantly */
   -webkit-animation-name: autofill;
@@ -417,4 +428,8 @@ input:-webkit-autofill {
 .rounded-corner {
   border-radius: 50px;
   box-shadow: $box-shadow-2;
+  padding: 0px 30px;
+  &:hover {
+    box-shadow: $box-shadow-1;
+  }
 }

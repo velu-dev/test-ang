@@ -2,8 +2,14 @@
 
 mat-card {
   mat-card-content {
+    .sub-title {
+      color: $primarycolor;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-10;
+      padding: 30px 0 0 10px;
+    }
     .checkbox {
-        padding: 10px;
+      padding: 10px;
     }
     div {
       button.btn_success {

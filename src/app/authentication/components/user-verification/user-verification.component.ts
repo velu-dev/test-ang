@@ -20,7 +20,9 @@ export class UserVerificationComponent implements OnInit {
   isSubmitted = false;
   errorMessages = errors;
   error: any;
-  constructor(private formBuilder: FormBuilder, private cognitoService: CognitoService, private router: Router, private authenticationService: AuthenticationService, private alertService: AlertService, private spinnerService: NgxSpinnerService) { }
+  constructor(private formBuilder: FormBuilder, private cognitoService: CognitoService, private router: Router, private authenticationService: AuthenticationService, private alertService: AlertService, private spinnerService: NgxSpinnerService) { 
+    this.spinnerService.hide();
+  }
 
   ngOnInit() {
     this.verificationForm = this.formBuilder.group({

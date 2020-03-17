@@ -27,7 +27,6 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private spinnerService: NgxSpinnerService,
     private title: Title) {
-    this.title.setTitle("App | Forgot password")
   }
 
   ngOnInit() {
@@ -84,7 +83,6 @@ export class RegisterComponent implements OnInit {
       }
       this.cognitoService.signUp(userDetails).subscribe(signUpRes => {
         console.log(signUpRes);
-        this.spinnerService.hide();
         this.router.navigate(['/verification'])
       }, error => {
         console.log("cognitoSignUpError", error);
