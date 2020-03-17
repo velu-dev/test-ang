@@ -113,9 +113,9 @@ export class ClaimListComponent implements OnInit {
 
   navigate() {
     if (this.tabIndex == 0) {
-      this.router.navigate(['/subscriber/claims/new-claimant'])
+      this.router.navigate(['/subscriber/claims/new-claimant']);
     } else if (this.tabIndex == 1) {
-      alert("In Progress");
+      this.router.navigate(['/subscriber/claims/new-claim']);
     } else if (this.tabIndex == 2) {
       alert("In Progress");
     }
