@@ -1,1 +1,265 @@
-<p>new-claim works!</p>
+<mat-card class="m-card">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Create New Claim</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <form fxLayout="row wrap" class="mat-grid-form">
+            <!--  CLaim details  -->
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Cliam Information</div>
+            <div fxLayout="row wrap" fxFlex="100">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Claim ID</mat-label>
+                    <input matInput placeholder="Claim ID" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Date of Injury </mat-label>
+                    <input matInput placeholder="Date of Injury " autocomplete="off" [matDatepicker]="date_of_injury"
+                        (click)="date_of_injury.open()">
+                    <mat-datepicker-toggle matSuffix [for]="date_of_injury"></mat-datepicker-toggle>
+                    <mat-datepicker #date_of_injury disabled="false"></mat-datepicker>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Insurance</mat-label>
+                    <input matInput placeholder="Insurance" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Continuous Trauma (CT)</mat-label>
+                    <mat-select>
+                        <mat-option value="0">Yes</mat-option>
+                        <mat-option value="1">No</mat-option>
+                    </mat-select>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>CT Start Date</mat-label>
+                    <input matInput placeholder="CT Start date " autocomplete="off" [matDatepicker]="ct_start_date"
+                        (click)="ct_start_date.open()">
+                    <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
+                    <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>CT End Date</mat-label>
+                    <input matInput placeholder="CT End date " autocomplete="off" [matDatepicker]="ct_end_date"
+                        (click)="ct_end_date.open()">
+                    <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
+                    <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Panel Number </mat-label>
+                    <input matInput placeholder="Panel Number" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>WCAB Number </mat-label>
+                    <input matInput placeholder="WCAB Number" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Injuries </mat-label>
+                    <input matInput placeholder="Injuries" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>DEU Office </mat-label>
+                    <input matInput placeholder="DEU Office" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+
+            </div>
+            <!--  Adjuster Information  -->
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Adjuster Information
+            </div>
+            <div fxLayout="row wrap" fxFlex="100">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Insurance</mat-label>
+                    <input matInput placeholder="Insurance" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Adjuster</mat-label>
+                    <input matInput placeholder="Adjuster" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Adjuster Phone</mat-label>
+                    <input matInput placeholder="Adjuster Phone" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Adjuster Fax</mat-label>
+                    <input matInput placeholder="Adjuster Fax" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Adjuster Email</mat-label>
+                    <input matInput placeholder="Adjuster Email" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!--  Employer Information  -->
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Employer Information
+            </div>
+            <div fxLayout="row wrap" fxFlex="100">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Employer</mat-label>
+                    <input matInput placeholder="Employer" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Employer Phone</mat-label>
+                    <input matInput placeholder="Employer Phone" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Employer Address</mat-label>
+                    <input matInput placeholder="Employer Address" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Employer City</mat-label>
+                    <input matInput placeholder="Employer City" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Employer State</mat-label>
+                    <input matInput placeholder="Employer State" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Employer Zip</mat-label>
+                    <input matInput placeholder="Employer Zip" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!--  Employer Information  -->
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Attorney Information
+            </div>
+            <div fxLayout="row wrap" fxFlex="100">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Applicant Attorney (AA)</mat-label>
+                    <input matInput placeholder="Applicant Attorney (AA)" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>AA Phone</mat-label>
+                    <input matInput placeholder="AA Phone" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>AA Fax</mat-label>
+                    <input matInput placeholder="AA Fax" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>AA Email</mat-label>
+                    <input matInput placeholder="AA Email" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>AA Address</mat-label>
+                    <input matInput placeholder="AA Address" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>AA City</mat-label>
+                    <input matInput placeholder="AA City" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>AA State</mat-label>
+                    <input matInput placeholder="AA State" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>AA Zip</mat-label>
+                    <input matInput placeholder="AA Zip" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Defense Attorney (DA)</mat-label>
+                    <input matInput placeholder="Defense Attorney (DA)" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>DA Phone</mat-label>
+                    <input matInput placeholder="DA Phone" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>DA Fax</mat-label>
+                    <input matInput placeholder="DA Fax" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>DA Email</mat-label>
+                    <input matInput placeholder="DA Email" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>DA Address</mat-label>
+                    <input matInput placeholder="DA Address" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>DA City</mat-label>
+                    <input matInput placeholder="DA City" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>DA State</mat-label>
+                    <input matInput placeholder="DA State" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>DA Zip</mat-label>
+                    <input matInput placeholder="DA Zip" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+            </div>
+
+
+            <div class="text-center w-100 m-t-10 m-b-50">
+                <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner btn_success">
+                    Submit </button>
+                <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
+                    color="warn">Cancel</button>
+            </div>
+
+        </form>
+    </mat-card-content>
+</mat-card>
