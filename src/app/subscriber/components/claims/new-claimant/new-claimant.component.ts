@@ -31,7 +31,7 @@ export class NewClaimantComponent implements OnInit {
       suffix: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       date_of_birth: [''],
       gender: ['', Validators.required],
-      caller_affiliation: ['', Validators.required],
+      ssn: ['', Validators.required],
       phone_no_1: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
       phone_no_2: ['',Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -41,6 +41,7 @@ export class NewClaimantComponent implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       zip_code: ['', Validators.required],
+      zip_4: ['', Validators.required],
       handedness: ['', Validators.required],
     });
   }
