@@ -29,7 +29,6 @@ export class ForgotPasswordVerifyComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private alertService: AlertService,
     private title: Title) {
-    this.title.setTitle("App | Forgot password")
   }
 
   ngOnInit() {
