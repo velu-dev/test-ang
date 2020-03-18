@@ -298,77 +298,163 @@
     </mat-card-header>
     <mat-divider></mat-divider>
 
-    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-horizontal-stepper [linear]="isLinear" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claim">
             <form [formGroup]="claim">
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <div fxLayout="row wrap" fxFlex="100">
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Claim ID</mat-label>
-                        <input matInput placeholder="Claim ID" autocomplete="off">
-                        <mat-error>error messages here</mat-error>
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Last name" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Date of Injury </mat-label>
-                        <input matInput placeholder="Date of Injury " autocomplete="off"
-                            [matDatepicker]="date_of_injury" (click)="date_of_injury.open()">
-                        <mat-datepicker-toggle matSuffix [for]="date_of_injury"></mat-datepicker-toggle>
-                        <mat-datepicker #date_of_injury disabled="false"></mat-datepicker>
-                        <mat-error>error messages here</mat-error>
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="First name" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.entervalidfirstname}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Continuous Trauma (CT)</mat-label>
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput placeholder="Middle Name" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.entervalidmiddlename}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Suffix</mat-label>
+                        <input matInput placeholder="Suffix" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.entervalidsuffix}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Date of Birth</mat-label>
+                        <input matInput placeholder="Date of Birth" autocomplete="off"
+                            [matDatepicker]="date_of_birth" (click)="date_of_birth.open()" disabled>
+                        <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
+                        <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
+                        <mat-error *ngIf="isSubmit">{{errorMessages.date_of_birth}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Select Gender</mat-label>
                         <mat-select>
-                            <mat-option value="0">Yes</mat-option>
-                            <mat-option value="1">No</mat-option>
+                            <mat-option value="M">Male</mat-option>
+                            <mat-option value="F">Female</mat-option>
+                            <mat-option value="O">Other</mat-option>
                         </mat-select>
-                        <mat-error>error messages here</mat-error>
+                        <mat-error *ngIf="isSubmit">{{errorMessages.gender}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>CT Start Date</mat-label>
-                        <input matInput placeholder="CT Start date " autocomplete="off" [matDatepicker]="ct_start_date"
-                            (click)="ct_start_date.open()">
-                        <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
-                        <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
-                        <mat-error>error messages here</mat-error>
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.email}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>CT End Date</mat-label>
-                        <input matInput placeholder="CT End date " autocomplete="off" [matDatepicker]="ct_end_date"
-                            (click)="ct_end_date.open()">
-                        <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
-                        <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
-                        <mat-error>error messages here</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Panel Number </mat-label>
-                        <input matInput placeholder="Panel Number" autocomplete="off">
-                        <mat-error>error messages here</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>WCAB Number </mat-label>
-                        <input matInput placeholder="WCAB Number" autocomplete="off">
-                        <mat-error>error messages here</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Injuries </mat-label>
-                        <input matInput placeholder="Injuries" autocomplete="off">
-                        <mat-error>error messages here</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Body Parts</mat-label>
+                        <mat-label>Handedness</mat-label>
                         <mat-select>
-                            <mat-option value="0">Body Parts Here</mat-option>
+                            <mat-option value="R">Right</mat-option>
+                            <mat-option value="L">Left</mat-option>
+                            <mat-option value="A">Ambidexterity</mat-option>
                         </mat-select>
-                        <mat-error>error messages here</mat-error>
+                        <mat-error *ngIf="isSubmit">{{errorMessages.handedness}}</mat-error>
                     </mat-form-field>
+
+                    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
+                        <div class="p-t-30 p-l-10"> Primary Language Not English<mat-checkbox class="p-l-10"
+                                (change)="languageStatus = !languageStatus"></mat-checkbox>
+                        </div>
+                    </div>
+
+                    <mat-form-field *ngIf="languageStatus" appearance="standard" fxFlex="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Primary Language</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let language of languageList" [value]="language.language">
+                                {{language.language}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field *ngIf="claimantForm.value.language == 'Other'" appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Language</mat-label>
+                        <input matInput placeholder="language" formControlName="otherlanguage" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
+                      </mat-form-field> -->
+
+                    <div fxFlex="50" *ngIf="languageStatus" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                        class="checkbox">
+                        <div class="p-t-30  p-l-10"> Certified Interpreter Required
+                            <!-- <mat-checkbox class="p-r-10 p-l-10" [(ngModel)]='certifiedStatusYes' formControlName="certified_interpreter" (change)="certifiedStatusNo = false">yes</mat-checkbox>
+                          <mat-checkbox value="false" [(ngModel)]='certifiedStatusNo'  formControlName="certified_interpreter" (change)="certifiedStatusYes = false">No</mat-checkbox> -->
+                            <mat-radio-group aria-label="Select an option">
+                                <mat-radio-button value="true">Yes</mat-radio-button>
+                                <mat-radio-button value="false">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>SSN</mat-label>
+                        <input matInput placeholder="999-999-9999" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.ssn}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput type="number" placeholder="Phone Number" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.phone_no}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Alternate Phone Number</mat-label>
+                        <input matInput type="number" placeholder="Alternate Phone Number" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.phone_no}}</mat-error>
+                    </mat-form-field>
+
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Street Address</mat-label>
+                        <textarea matInput placeholder="Street Address" autocomplete="off"></textarea>
+                        <mat-error *ngIf="isSubmit">{{errorMessages.address}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Street Address 2</mat-label>
+                        <textarea matInput placeholder="Street Address 2" autocomplete="off"></textarea>
+                        <mat-error *ngIf="isSubmit">{{errorMessages.address}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>City</mat-label>
+                        <input matInput placeholder="City" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.city}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>State</mat-label>
+                        <!-- <input matInput placeholder="State" autocomplete="off" formControlName="state"> -->
+                        <mat-select>
+                            <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="isSubmit">{{errorMessages.state}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Zip</mat-label>
+                        <input matInput placeholder="Zip" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.zip_code}}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Zip + 4</mat-label>
+                        <input matInput placeholder="Zip +4" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.zip_4}}</mat-error>
+                    </mat-form-field>
+
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success">
@@ -377,6 +463,7 @@
                             color="warn">Cancel</button>
                     </div>
                 </div>
+
             </form>
         </mat-step>
         <mat-step [stepControl]="employer">
@@ -396,20 +483,12 @@
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Injury </mat-label>
                                 <input matInput placeholder="Date of Injury " autocomplete="off"
                                     [matDatepicker]="date_of_injury1" (click)="date_of_injury1.open()">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
-                                <mat-error>error messages here</mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Insurance</mat-label>
-                                <input matInput placeholder="Insurance" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
@@ -423,21 +502,19 @@
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
-                            <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
-                                <input matInput placeholder="CT Start date " autocomplete="off"
-                                    [matDatepicker]="ct_start_date" (click)="ct_start_date.open()">
+                                <input matInput placeholder="CT Start date " autocomplete="off" [matDatepicker]="ct_start_date"
+                                    (click)="ct_start_date.open()">
                                 <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
                                 <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
                                 <mat-error>error messages here</mat-error>
-                            </mat-form-field>
+                            </mat-form-field> -->
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
-                                <input matInput placeholder="CT End date " autocomplete="off"
-                                    [matDatepicker]="ct_end_date" (click)="ct_end_date.open()">
+                                <input matInput placeholder="CT End date " autocomplete="off" [matDatepicker]="ct_end_date"
+                                    (click)="ct_end_date.open()">
                                 <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
                                 <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
                                 <mat-error>error messages here</mat-error>
@@ -463,11 +540,12 @@
                                 <input matInput placeholder="Injuries" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
-
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>DEU Office </mat-label>
-                                <input matInput placeholder="DEU Office" autocomplete="off">
+                                <mat-label>Body Parts</mat-label>
+                                <mat-select>
+                                    <mat-option value="0">Body Parts Here</mat-option>
+                                </mat-select>
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
                         </div>
@@ -724,6 +802,31 @@
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Create Billable Item</ng-template>
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Exam Type</div>
+            <div fxLayout="row wrap" fxFlex="100">
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Procedure Type</mat-label>
+                    <mat-select>
+                        <mat-option value="0">ML -101</mat-option>
+                        <mat-option value="1">ML -101</mat-option>
+                    </mat-select>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Modifiers</mat-label>
+                    <mat-select>
+                        <mat-option value="0">Modifiers Type Here</mat-option>
+                    </mat-select>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+
+            </div>
+
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Create Appointment
+            </div>
             <div fxLayout="row wrap" fxFlex="100">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Select Examiner</mat-label>
@@ -735,8 +838,8 @@
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Date & Time</mat-label>
-                    <input matInput placeholder="Date & Time" autocomplete="off" [matDatepicker]="date_and_time"
-                        (click)="date_and_time.open()">
+                    <input matInput placeholder="Date & Time" formControlName="date_and_time" autocomplete="off"
+                        [matDatepicker]="date_and_time" (click)="date_and_time.open()">
                     <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                     <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
                     <mat-error>error messages here</mat-error>

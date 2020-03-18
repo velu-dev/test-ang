@@ -295,3 +295,9 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 .mat-form-field-outline-start {
   border-radius: 0px !important;
 }
+
+.create-claimant-stepper {
+   .mat-horizontal-content-container {
+     padding: 5px !important;
+   }
+}
