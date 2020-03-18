@@ -309,14 +309,14 @@
                         <mat-error>error messages here</mat-error>
                     </mat-form-field>
 
-                    <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Date of Injury </mat-label>
                         <input matInput placeholder="Date of Injury " autocomplete="off"
                             [matDatepicker]="date_of_injury" (click)="date_of_injury.open()">
                         <mat-datepicker-toggle matSuffix [for]="date_of_injury"></mat-datepicker-toggle>
                         <mat-datepicker #date_of_injury disabled="false"></mat-datepicker>
                         <mat-error>error messages here</mat-error>
-                    </mat-form-field> -->
+                    </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Continuous Trauma (CT)</mat-label>
@@ -327,23 +327,23 @@
                         <mat-error>error messages here</mat-error>
                     </mat-form-field>
 
-                    <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>CT Start Date</mat-label>
                         <input matInput placeholder="CT Start date " autocomplete="off" [matDatepicker]="ct_start_date"
                             (click)="ct_start_date.open()">
                         <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
                         <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
                         <mat-error>error messages here</mat-error>
-                    </mat-form-field> -->
+                    </mat-form-field>
 
-                    <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>CT End Date</mat-label>
                         <input matInput placeholder="CT End date " autocomplete="off" [matDatepicker]="ct_end_date"
                             (click)="ct_end_date.open()">
                         <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
                         <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
                         <mat-error>error messages here</mat-error>
-                    </mat-form-field> -->
+                    </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Panel Number </mat-label>
@@ -388,8 +388,6 @@
                         <mat-expansion-panel-header>
                             <div class="sub-title">Claim Information</div>
                         </mat-expansion-panel-header>
-
-
                         <div fxLayout="row wrap" fxFlex="100">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -398,15 +396,15 @@
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
-                            <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Date of Injury </mat-label>
                                 <input matInput placeholder="Date of Injury " autocomplete="off"
-                                    [matDatepicker]="date_of_injury" (click)="date_of_injury.open()">
-                                <mat-datepicker-toggle matSuffix [for]="date_of_injury"></mat-datepicker-toggle>
-                                <mat-datepicker #date_of_injury disabled="false"></mat-datepicker>
+                                    [matDatepicker]="date_of_injury1" (click)="date_of_injury1.open()">
+                                <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
+                                <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
                                 <mat-error>error messages here</mat-error>
-                            </mat-form-field> -->
+                            </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -776,8 +774,7 @@
                 </mat-form-field>
             </div>
             <div class="text-center w-100 m-t-10 m-b-50">
-                <button mat-raised-button color="primary" type="submit"
-                    class="m-r-10 rounded-corner btn_success">
+                <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner btn_success">
                     Submit </button>
                 <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
                     color="warn">Cancel</button>
