@@ -19,6 +19,15 @@
 //   }
 // }
 
+.sub-title {
+  color: $primarycolor;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-1;
+}
 mat-form-field {
   padding: 10px !important;
+}
+
+mat-horizontal-content-container {
+  padding: 0px !important;
 }
