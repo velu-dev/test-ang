@@ -7,13 +7,13 @@
     <form fxLayout="row wrap" class="mat-grid-form" [formGroup]="claimantForm" (ngSubmit)="submitClaim()">
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Last name</mat-label>
+        <mat-label>Last Name</mat-label>
         <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>First name</mat-label>
+        <mat-label>First Name</mat-label>
         <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidfirstname}}</mat-error>
       </mat-form-field>
@@ -40,7 +40,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Select Gender</mat-label>
+        <mat-label>Gender</mat-label>
         <mat-select>
           <mat-option value="0">Male</mat-option>
           <mat-option value="1">Female</mat-option>
@@ -79,8 +79,8 @@
       </mat-form-field>
 
       <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
-        <div class="p-t-30"> Certified Interpreter Required
-          <mat-checkbox class="p-r-10 p-l-10">yes</mat-checkbox>
+        <div class="p-t-30">Certified Interpreter Required
+          <mat-checkbox class="p-r-10 p-l-10">Yes</mat-checkbox>
           <mat-checkbox>No</mat-checkbox>
         </div>
       </div>
@@ -136,7 +136,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Zip +4</mat-label>
+        <mat-label>Zip + 4</mat-label>
         <input matInput placeholder="Zip +4" autocomplete="off" formControlName="zip_4">
         <mat-error *ngIf="isSubmit">{{errorMessages.zip_4}}</mat-error>
       </mat-form-field>
