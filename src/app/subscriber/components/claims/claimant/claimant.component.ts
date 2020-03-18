@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+
 import * as globals from '../../../../globals';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,20 +15,12 @@ import { ExportService } from 'src/app/shared/services/export.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-
 @Component({
-  selector: 'app-claim-list',
-  templateUrl: './claim-list.component.html',
-  styleUrls: ['./claim-list.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ]
+  selector: 'app-claimant',
+  templateUrl: './claimant.component.html',
+  styleUrls: ['./claimant.component.scss']
 })
-export class ClaimListComponent implements OnInit {
+export class ClaimantComponent implements OnInit {
   screenWidth: number;
   xls = globals.xls;
   roles: Role[];
@@ -99,9 +92,6 @@ export class ClaimListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  navigate() {
-    this.router.navigate(['/subscriber/claims/new-claim']);
-  }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {

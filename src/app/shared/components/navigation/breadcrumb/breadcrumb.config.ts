@@ -83,14 +83,23 @@ export const ROUTES = [
         }],
     },
     {
-        path: '/subscriber/claiment',
+        path: '/subscriber/claimant',
         title: 'Manage Claiments',
         icon: 'dashboard',
         submenu: [{
-        path: '/subscriber/claiment/new',
+        path: '/subscriber/claimant/new',
         title: 'New Claiments',
         icon: 'dashboard',
         submenu: []}],
+        group: "Subscriber",
+        role: 2
+    },{
+        path: '/subscriber/billable-item',
+        title: 'Manage Billable Item',
+        icon: 'dashboard',
+        submenu: [],
+        group: "Subscriber",
+        role: 2
     },{
         path: '/subscriber/claims',
         title: 'Manage Claims',

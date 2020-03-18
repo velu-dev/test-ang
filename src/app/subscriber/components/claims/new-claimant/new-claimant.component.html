@@ -7,13 +7,13 @@
     <form fxLayout="row wrap" class="mat-grid-form" [formGroup]="claimantForm" (ngSubmit)="submitClaim()">
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Last name</mat-label>
+        <mat-label>Last Name</mat-label>
         <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>First name</mat-label>
+        <mat-label>First Name</mat-label>
         <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidfirstname}}</mat-error>
       </mat-form-field>
@@ -152,7 +152,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Zip +4</mat-label>
+        <mat-label>Zip + 4</mat-label>
         <input matInput placeholder="Zip +4" autocomplete="off" formControlName="zip_4">
         <mat-error *ngIf="isSubmit">{{errorMessages.zip_4}}</mat-error>
       </mat-form-field>

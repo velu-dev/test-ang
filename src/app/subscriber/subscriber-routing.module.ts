@@ -12,6 +12,7 @@ import { ClaimListComponent } from './components/claims/claim-list/claim-list.co
 import { NewClaimantComponent } from './components/claims/new-claimant/new-claimant.component';
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 import { BillableItemComponent } from './components/claims/billable-item/billable-item.component';
+import { ClaimantComponent } from './components/claims/claimant/claimant.component';
 
 
 const routes: Routes = [{
@@ -36,16 +37,13 @@ const routes: Routes = [{
   path: "settings",
   component: SubscriberSettingsComponent
 },
-// {
-//   path: "claiment",
-//   children: [{
-//     path: "",
-//     component: ClaimentComponent
-//   }, {
-//     path: "new",
-//     component: NewClaimentComponent
-//   }]
-// },
+{
+  path: "claimant",
+  component: ClaimantComponent
+}, {
+  path: "billable-item",
+  component: BillableItemComponent
+},
 {
   path: "claims",
   children: [{
@@ -57,7 +55,7 @@ const routes: Routes = [{
   }, {
     path: "new-claim",
     component: NewClaimComponent
-  },{
+  }, {
     path: "new-billable-item",
     component: BillableItemComponent
   }]
