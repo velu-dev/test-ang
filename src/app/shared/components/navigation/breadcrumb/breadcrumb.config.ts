@@ -16,7 +16,7 @@ export const ROUTES = [
         icon: "person_add",
         submenu: [{
             path: '/admin/admin-users/new',
-            title: 'New Admin User',
+            title: 'New User',
             icon: 'dashboard',
             submenu: []
         }, {
@@ -48,7 +48,7 @@ export const ROUTES = [
         icon: 'person_add',
         submenu: [{
             path: '/admin/users/new',
-            title: 'New Subscribers',
+            title: 'New Users',
             icon: 'dashboard',
             submenu: []
         }, {
@@ -77,7 +77,7 @@ export const ROUTES = [
         icon: 'credit_card',
         submenu: [{
             path: '/subscriber/users/new',
-            title: 'New Subscriber staff',
+            title: 'New User',
             icon: 'dashboard',
             submenu: []
         }],
