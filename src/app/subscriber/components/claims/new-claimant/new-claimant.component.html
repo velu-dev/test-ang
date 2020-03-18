@@ -40,11 +40,11 @@
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Gender</mat-label>
-        <mat-select>
-          <mat-option value="0">Male</mat-option>
-          <mat-option value="1">Female</mat-option>
-          <mat-option value="2">Other</mat-option>
+        <mat-label>Select Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option value="M">Male</mat-option>
+          <mat-option value="F">Female</mat-option>
+          <mat-option value="O">Other</mat-option>
         </mat-select>
         <mat-error *ngIf="isSubmit">{{errorMessages.gender}}</mat-error>
       </mat-form-field>
@@ -57,37 +57,50 @@
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Handedness</mat-label>
-        <mat-select>
-          <mat-option value="0">Right</mat-option>
-          <mat-option value="1">Left</mat-option>
-          <mat-option value="2">Ambidexterity</mat-option>
+        <mat-select formControlName="handedness">
+          <mat-option value="R">Right</mat-option>
+          <mat-option value="L">Left</mat-option>
+          <mat-option value="A">Ambidexterity</mat-option>
         </mat-select>
         <mat-error *ngIf="isSubmit">{{errorMessages.handedness}}</mat-error>
       </mat-form-field>
 
       <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
-        <div class="p-t-30"> Primary Language Not English<mat-checkbox class="p-l-10" checked></mat-checkbox>
+        <div class="p-t-30"> Primary Language Not English<mat-checkbox formControlName="primary_language_not_english"
+            class="p-l-10" (change)="languageStatus = !languageStatus"></mat-checkbox>
         </div>
       </div>
 
-      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-form-field *ngIf="languageStatus" appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+        fxFlex.xs="100">
         <mat-label>Primary Language</mat-label>
-        <mat-select>
-          <mat-option value="0">Language List Here</mat-option>
+        <mat-select formControlName="language">
+          <mat-option *ngFor="let language of languageList" [value]="language.language">{{language.language}}
+          </mat-option>
         </mat-select>
-        <mat-error *ngIf="isSubmit">{{errorMessages.handedness}}</mat-error>
+        <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
       </mat-form-field>
 
-      <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
-        <div class="p-t-30">Certified Interpreter Required
-          <mat-checkbox class="p-r-10 p-l-10">Yes</mat-checkbox>
-          <mat-checkbox>No</mat-checkbox>
+      <!-- <mat-form-field *ngIf="claimantForm.value.language == 'Other'" appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Language</mat-label>
+        <input matInput placeholder="language" formControlName="otherlanguage" autocomplete="off">
+        <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
+      </mat-form-field> -->
+
+      <div fxFlex="50" *ngIf="languageStatus" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
+        <div class="p-t-30"> Certified Interpreter Required
+          <!-- <mat-checkbox class="p-r-10 p-l-10" [(ngModel)]='certifiedStatusYes' formControlName="certified_interpreter" (change)="certifiedStatusNo = false">yes</mat-checkbox>
+          <mat-checkbox value="false" [(ngModel)]='certifiedStatusNo'  formControlName="certified_interpreter" (change)="certifiedStatusYes = false">No</mat-checkbox> -->
+          <mat-radio-group aria-label="Select an option" formControlName="certified_interpreter">
+            <mat-radio-button value="true">Yes</mat-radio-button>
+            <mat-radio-button value="false">No</mat-radio-button>
+          </mat-radio-group>
         </div>
       </div>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>SSN</mat-label>
-        <input matInput type="number" placeholder="999-999-999" value="999-999-999" formControlName="ssn" autocomplete="off">
+        <input matInput placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.ssn}}</mat-error>
       </mat-form-field>
 
@@ -125,7 +138,10 @@
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>State</mat-label>
-        <input matInput placeholder="State" autocomplete="off" formControlName="state">
+        <!-- <input matInput placeholder="State" autocomplete="off" formControlName="state"> -->
+        <mat-select formControlName="state">
+          <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}</mat-option>
+        </mat-select>
         <mat-error *ngIf="isSubmit">{{errorMessages.state}}</mat-error>
       </mat-form-field>
 

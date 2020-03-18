@@ -299,8 +299,8 @@
     <mat-divider></mat-divider>
 
     <mat-horizontal-stepper [linear]="isLinear" #stepper>
-        <mat-step [stepControl]="firstFormGroup">
-            <form [formGroup]="firstFormGroup">
+        <mat-step [stepControl]="claim">
+            <form [formGroup]="claim">
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <div fxLayout="row wrap" fxFlex="100">
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -407,7 +407,7 @@
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Date & Time</mat-label>
-                    <input matInput placeholder="Date & Time" formControlName="date_and_time" autocomplete="off"
+                    <input matInput placeholder="Date & Time" autocomplete="off"
                         [matDatepicker]="date_and_time" (click)="date_and_time.open()">
                     <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                     <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
