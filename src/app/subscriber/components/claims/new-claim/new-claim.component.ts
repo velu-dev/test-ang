@@ -7,6 +7,19 @@ import * as  errors from './../../../../shared/messages/errors'
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent implements OnInit {
+  step = 0;
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
   claimForm: FormGroup;
   errorMessages = errors;
   claim: any;
