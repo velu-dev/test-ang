@@ -16,14 +16,15 @@ export const api_endpoint = {
     getSubscribers: "admin/subscribers",
     getvendors: "admin/vendors",
     disable_user: "admin/disable-user/",
+    resendPassword: 'admin/resend-temp-password',
 
     //Subscriber
     getSubscriberUsers: 'subscriber/users',
     getSubscriberRole: 'subscriber/roles',
     getSubscriberUser: 'subscriber/user',
     createSubscriberUser: 'subscriber/create',
-    subscriberProfileUpdate:'subscriber/profile-update/',
-    subscriberProfile : 'subscriber/profile',
+    subscriberProfileUpdate: 'subscriber/profile-update/',
+    subscriberProfile: 'subscriber/profile',
     subscriberDisableUser: "subscriber/disable-user/",
 
     /// subscriber-staff-manager

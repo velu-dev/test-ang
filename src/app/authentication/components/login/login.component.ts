@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
   ) {
 
     this.title.setTitle("App | Login")
-   }
+  }
 
   ngOnInit() {
     this.firstname.nativeElement.focus();
@@ -97,6 +97,17 @@ export class LoginComponent implements OnInit {
         })
       })
     }, error => {
+      console.log("error", error);
+      if (error.message == "Temporary password has expired and must be reset by an administrator.") {
+        this.authenticationService.passwordResend(this.loginForm.value.email.toLowerCase()).subscribe(res => {
+          console.log(res)
+          this.error = { message: success.resendpassword, action: "danger" }
+        }, error => {
+          console.log(error)
+          this.error = { message: error.error.error, action: "danger" }
+        })
+        return;
+      }
       this.error = { message: error.message, action: "danger" }
       this.spinnerService.hide()
       if (error.code == 'UserNotConfirmedException') {
