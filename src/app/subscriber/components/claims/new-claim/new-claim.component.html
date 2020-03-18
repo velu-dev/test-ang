@@ -4,20 +4,21 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
+
         <form fxLayout="row wrap" class="mat-grid-form" [formGroup]="claimForm" (ngSubmit)="submitClaim()">
          
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Claim Information</div>
-            <div fxLayout="row wrap" fxFlex="100">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claim">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Claim ID</mat-label>
-                    <input matInput placeholder="Claim ID" autocomplete="off">
+                    <input matInput placeholder="Claim ID" formControlName="claim_id" autocomplete="off">
                     <mat-error>error messages here</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Date of Injury </mat-label>
-                    <input matInput placeholder="Date of Injury " autocomplete="off" [matDatepicker]="date_of_injury"
-                        (click)="date_of_injury.open()">
+                    <input matInput placeholder="Date of Injury " formControlName="date_of_injury" autocomplete="off"
+                        [matDatepicker]="date_of_injury" (click)="date_of_injury.open()">
                     <mat-datepicker-toggle matSuffix [for]="date_of_injury"></mat-datepicker-toggle>
                     <mat-datepicker #date_of_injury disabled="false"></mat-datepicker>
                     <mat-error>error messages here</mat-error>
@@ -25,13 +26,13 @@
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Insurance</mat-label>
-                    <input matInput placeholder="Insurance" autocomplete="off">
+                    <input matInput placeholder="Insurance" formControlName="insurance" autocomplete="off">
                     <mat-error>error messages here</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Continuous Trauma (CT)</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="continuous_trauma">
                         <mat-option value="0">Yes</mat-option>
                         <mat-option value="1">No</mat-option>
                     </mat-select>
@@ -40,8 +41,8 @@
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>CT Start Date</mat-label>
-                    <input matInput placeholder="CT Start date " autocomplete="off" [matDatepicker]="ct_start_date"
-                        (click)="ct_start_date.open()">
+                    <input matInput placeholder="CT Start date " formControlName="ct_start_date" autocomplete="off"
+                        [matDatepicker]="ct_start_date" (click)="ct_start_date.open()">
                     <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
                     <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
                     <mat-error>error messages here</mat-error>
@@ -49,8 +50,8 @@
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>CT End Date</mat-label>
-                    <input matInput placeholder="CT End date " autocomplete="off" [matDatepicker]="ct_end_date"
-                        (click)="ct_end_date.open()">
+                    <input matInput placeholder="CT End date " formControlName="ct_end_date" autocomplete="off"
+                        [matDatepicker]="ct_end_date" (click)="ct_end_date.open()">
                     <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
                     <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
                     <mat-error>error messages here</mat-error>
@@ -58,25 +59,25 @@
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Panel Number </mat-label>
-                    <input matInput placeholder="Panel Number" autocomplete="off">
+                    <input matInput placeholder="Panel Number" formControlName="panel_number" autocomplete="off">
                     <mat-error>error messages here</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>WCAB Number </mat-label>
-                    <input matInput placeholder="WCAB Number" autocomplete="off">
+                    <input matInput placeholder="WCAB Number" formControlName="wcab_number" autocomplete="off">
                     <mat-error>error messages here</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Injuries </mat-label>
-                    <input matInput placeholder="Injuries" autocomplete="off">
+                    <input matInput placeholder="Injuries" formControlName="injuries" autocomplete="off">
                     <mat-error>error messages here</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>DEU Office </mat-label>
-                    <input matInput placeholder="DEU Office" autocomplete="off">
+                    <input matInput placeholder="DEU Office" formControlName="deu_office" autocomplete="off">
                     <mat-error>error messages here</mat-error>
                 </mat-form-field>
 
@@ -85,7 +86,7 @@
        
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Adjuster Information
             </div>
-            <div fxLayout="row wrap" fxFlex="100">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="adjuster">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Insurance Name</mat-label>
                     <input matInput placeholder="Insurance" autocomplete="off">
@@ -120,7 +121,7 @@
           
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Employer Information
             </div>
-            <div fxLayout="row wrap" fxFlex="100">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="employer">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Name</mat-label>
                     <input matInput placeholder="Name" autocomplete="off">
@@ -161,7 +162,7 @@
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Applicant
                 Attorney Information
             </div>
-            <div fxLayout="row wrap" fxFlex="100">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="application_attorney">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Name</mat-label>
                     <input matInput placeholder="Applicant Attorney Name" autocomplete="off">
@@ -211,7 +212,7 @@
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Defense Attorney
                 Information
             </div>
-            <div fxLayout="row wrap" fxFlex="100">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="defance_attorney">
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Name</mat-label>
