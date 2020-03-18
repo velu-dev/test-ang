@@ -304,17 +304,9 @@
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <div fxLayout="row wrap" fxFlex="100">
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <!--     <mat-label>Last Name</mat-label>
+                            <mat-label>Last Name</mat-label>
                         <input matInput placeholder="Last name" autocomplete="off">
                         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
-                    </mat-form-field> -->
-                        <input matInput placeholder="Last name" aria-label="Last NameLast name" [matAutocomplete]="auto"
-                            [formControl]="stateCtrl">
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-                                <span>{{state.name}}</span>
-                            </mat-option>
-                        </mat-autocomplete>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
