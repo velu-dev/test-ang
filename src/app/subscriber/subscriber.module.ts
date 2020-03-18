@@ -17,6 +17,7 @@ import { AppointmentComponent } from './examinor/appointment/appointment.compone
 import { ClaimService } from './service/claim.service';
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 import { BillableItemComponent } from './components/claims/billable-item/billable-item.component';
+import { ClaimantComponent } from './components/claims/claimant/claimant.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { BillableItemComponent } from './components/claims/billable-item/billabl
     ManageNewUserComponent,
     NewClaimComponent,
     BillableItemComponent,
+    ClaimantComponent,
   ],
   imports: [
     CommonModule,

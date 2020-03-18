@@ -76,14 +76,22 @@ export const ROUTES: SideNavInterface[] = [
             group: "Subscriber",
             role: 2
         },
-        // {
-        //     path: '/subscriber/claiment',
-        //     title: 'Manage Claiments',
-        //     icon: 'dashboard',
-        //     submenu: [],
-        //     group: "Subscriber",
-        //     role: 2
-        // },
+        {
+            path: '/subscriber/claimant',
+            title: 'Manage Claimants',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 2
+        },
+        {
+            path: '/subscriber/billable-item',
+            title: 'Manage Billable Item',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 2
+        },
         {
             path: '/subscriber/claims',
             title: 'Manage Claims',
