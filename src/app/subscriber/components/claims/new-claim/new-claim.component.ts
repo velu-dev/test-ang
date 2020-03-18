@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 @Component({
   selector: 'app-new-claim',
   templateUrl: './new-claim.component.html',
@@ -27,9 +29,35 @@ export class NewClaimComponent implements OnInit {
   employer: any;
   application_attorney: any;
   defance_attorney: any;
+  states = [
+    {
+      name: 'John'
+    },
+    {
+      name: 'Lee'
+    },
+    {
+      name: 'Rajan  '
+    },
+    {
+      name: 'Venkat'
+    }
+  ];
+  stateCtrl = new FormControl();
 
-  constructor(private formBuilder: FormBuilder) { }
+  filteredStates: Observable<any>;
+  constructor(private formBuilder: FormBuilder) { 
+    this.filteredStates = this.stateCtrl.valueChanges
+    .pipe(
+      startWith(''),
+      map(state => state ? this._filterStates(state) : this.states.slice())
+    );
+  }
+  private _filterStates(value: string) {
+    const filterValue = value.toLowerCase();
 
+    return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+  }
   ngOnInit() {
     // this.claimForm = this.formBuilder.group({
     this.claim = this.formBuilder.group({
