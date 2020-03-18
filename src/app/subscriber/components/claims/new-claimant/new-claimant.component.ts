@@ -15,6 +15,11 @@ import * as moment from 'moment';
 export class NewClaimantComponent implements OnInit {
   claimantForm: FormGroup;
   errorMessages = errors;
+  languageStatus: boolean = false;
+  states: any;
+  languageList: any;
+  certifiedStatusYes: boolean = false;
+  certifiedStatusNo: boolean = false;
   constructor(
     private claimService: ClaimService,
     private formBuilder: FormBuilder,
@@ -29,26 +34,41 @@ export class NewClaimantComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       suffix: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      date_of_birth: [''],
+      date_of_birth: ['', Validators.required],
       gender: ['', Validators.required],
-      ssn: ['', Validators.required],
+      ssn: [''],
       phone_no_1: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
-      phone_no_2: ['',Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
+      phone_no_2: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       street1: ['', Validators.required],
-      language: ['', Validators.required],
-      street2: ['', Validators.required],
+      language: [''],
+      street2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
       zip_code: ['', Validators.required],
-      zip_4: ['', Validators.required],
+      zip_4: [''],
       handedness: ['', Validators.required],
+      primary_language_not_english: [''],
+      certified_interpreter: [''],
+      //otherlanguage: [''],
     });
+
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.claimService.seedData('language').subscribe(response => {
+      this.languageList = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
   }
   isSubmit = false;
   submitClaim() {
-    
-   
+    console.log("claimantForm", this.claimantForm)
+
     this.isSubmit = true;
     if (this.claimantForm.invalid) {
       console.log("claimantForm", this.claimantForm)

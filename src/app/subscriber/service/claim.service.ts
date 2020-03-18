@@ -15,4 +15,8 @@ export class ClaimService {
   createClaim(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createClaim, data)
   }
+
+  seedData(data) {
+    return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
+  }
 }

@@ -48,7 +48,9 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span>{{element[column]}} </span>
+                       
+                        <span *ngIf="column != 'date_of_birth'">{{element[column]}} </span>
+                        <span *ngIf="column == 'date_of_birth'">{{element[column] | date:'MM-dd-yyyy'}} </span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
