@@ -22,8 +22,8 @@ export const api_endpoint = {
     getSubscriberRole: 'subscriber/roles',
     getSubscriberUser: 'subscriber/user',
     createSubscriberUser: 'subscriber/create',
-    subscriberProfileUpdate:'subscriber/profile-update/',
-    subscriberProfile : 'subscriber/profile',
+    subscriberProfileUpdate: 'subscriber/profile-update/',
+    subscriberProfile: 'subscriber/profile',
     subscriberDisableUser: "subscriber/disable-user/",
 
     /// subscriber-staff-manager
@@ -34,5 +34,8 @@ export const api_endpoint = {
 
     //Claim Service endpoint
     getClaimantDetails: "claimant/details",
-    createClaim: "claimant/create"
+    createClaim: "claimant/create",
+
+    //seed data
+    seedData: 'claims/seed-data/'
 }
