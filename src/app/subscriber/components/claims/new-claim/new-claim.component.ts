@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { ClaimService } from 'src/app/subscriber/service/claim.service';
 export interface Claimant {
   last_name: string;
   first_name: string;
@@ -27,6 +28,7 @@ export class NewClaimComponent implements OnInit {
   billable_item: FormGroup;
   defance_attorney: FormGroup;
   titleName = "Create New Claim";
+  callerAffliation = [];
   claimantList = [
     {
       last_name: 'John',
@@ -50,8 +52,12 @@ export class NewClaimComponent implements OnInit {
       middle_name: "BB"
     }
   ];
-  constructor(private formBuilder: FormBuilder) {
-    console.log(this.searchInput)
+  constructor(
+    private formBuilder: FormBuilder,
+    private claimService: ClaimService) {
+    this.claimService.getCallerAffliation().subscribe(res => {
+      this.callerAffliation = res.data;
+    })
     this.searchInput.valueChanges.subscribe(res => {
       if (res) {
         this.filteredStates = this._filterStates(res);

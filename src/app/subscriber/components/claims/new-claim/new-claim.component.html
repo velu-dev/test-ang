@@ -879,7 +879,7 @@
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Caller Affiliation</mat-label>
                         <mat-select>
-                            <mat-option value="0">Caller Affiliation List Here</mat-option>
+                            <mat-option *ngFor="let caller of callerAffliation" value="caller.id">{{caller.agent_type}}</mat-option>
                         </mat-select>
                         <mat-error>error messages here</mat-error>
                     </mat-form-field>
