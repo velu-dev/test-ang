@@ -143,6 +143,15 @@ export class NewClaimComponent implements OnInit {
     })
     // })
   }
+  selectionChange(event) {
+    if (event.selectedIndex == 0) {
+      this.titleName = "Create Claimant";
+    } else if (event.selectedIndex == 1) {
+      this.titleName = "Create Claim";
+    } else if (event.selectedIndex == 2) {
+      this.titleName = "Create Billable Item";
+    }
+  }
   submitClaim() {
     console.log("res", this.claimForm.value)
 
