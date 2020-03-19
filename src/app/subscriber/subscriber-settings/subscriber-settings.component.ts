@@ -37,16 +37,16 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   ngOnInit() {
     this.userPasswrdForm = this.formBuilder.group({
-      current_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
-      new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
-      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])]
+      current_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
+      new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
+      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])]
     })
     this.userForm = this.formBuilder.group({
       id: [''],
       role_id: [''],
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       company_name: [{ value: "", disabled: true }],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
