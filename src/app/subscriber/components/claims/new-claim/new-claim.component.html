@@ -1,0 +1,914 @@
+<!-- <mat-card class="m-card">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Create New Claim</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+
+        <form fxLayout="row wrap" class="mat-grid-form" [formGroup]="claimForm" (ngSubmit)="submitClaim()">
+         
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Claim Information</div>
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="claim">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Claim ID</mat-label>
+                    <input matInput placeholder="Claim ID" formControlName="claim_id" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Date of Injury </mat-label>
+                    <input matInput placeholder="Date of Injury " formControlName="date_of_injury" autocomplete="off"
+                        [matDatepicker]="date_of_injury" (click)="date_of_injury.open()">
+                    <mat-datepicker-toggle matSuffix [for]="date_of_injury"></mat-datepicker-toggle>
+                    <mat-datepicker #date_of_injury disabled="false"></mat-datepicker>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Insurance</mat-label>
+                    <input matInput placeholder="Insurance" formControlName="insurance" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Continuous Trauma (CT)</mat-label>
+                    <mat-select formControlName="continuous_trauma">
+                        <mat-option value="0">Yes</mat-option>
+                        <mat-option value="1">No</mat-option>
+                    </mat-select>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>CT Start Date</mat-label>
+                    <input matInput placeholder="CT Start date " formControlName="ct_start_date" autocomplete="off"
+                        [matDatepicker]="ct_start_date" (click)="ct_start_date.open()">
+                    <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
+                    <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>CT End Date</mat-label>
+                    <input matInput placeholder="CT End date " formControlName="ct_end_date" autocomplete="off"
+                        [matDatepicker]="ct_end_date" (click)="ct_end_date.open()">
+                    <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
+                    <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Panel Number </mat-label>
+                    <input matInput placeholder="Panel Number" formControlName="panel_number" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>WCAB Number </mat-label>
+                    <input matInput placeholder="WCAB Number" formControlName="wcab_number" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Injuries </mat-label>
+                    <input matInput placeholder="Injuries" formControlName="injuries" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>DEU Office </mat-label>
+                    <input matInput placeholder="DEU Office" formControlName="deu_office" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+
+            </div>
+       
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Adjuster Information
+            </div>
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="adjuster">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Insurance Name</mat-label>
+                    <input matInput placeholder="Insurance" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Phone</mat-label>
+                    <input matInput placeholder="Phone" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Fax</mat-label>
+                    <input matInput placeholder="Fax" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+            </div>
+
+          
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Employer Information
+            </div>
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="employer">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Name" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Phone</mat-label>
+                    <input matInput placeholder="Phone" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="City" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>State</mat-label>
+                    <input matInput placeholder="State" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Zip</mat-label>
+                    <input matInput placeholder="Zip" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+            </div>
+
+          
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Applicant
+                Attorney Information
+            </div>
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="application_attorney">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Applicant Attorney Name" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Phone</mat-label>
+                    <input matInput placeholder="Phone" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Fax</mat-label>
+                    <input matInput placeholder="Fax" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="City" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>State</mat-label>
+                    <input matInput placeholder="State" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Zip</mat-label>
+                    <input matInput placeholder="Zip" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+            </div>
+          
+            <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Defense Attorney
+                Information
+            </div>
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="defance_attorney">
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Defense Attorney Name" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Phone</mat-label>
+                    <input matInput placeholder="Phone" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Fax</mat-label>
+                    <input matInput placeholder="Fax" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Address</mat-label>
+                    <input matInput placeholder="Address" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="City" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>State</mat-label>
+                    <input matInput placeholder="State" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Zip</mat-label>
+                    <input matInput placeholder="Zip" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+            </div>
+           
+               <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">DEU Office
+            </div>
+            <div fxLayout="row wrap" fxFlex="100">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Office Name</mat-label>
+                    <input matInput placeholder="Office Name" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput placeholder="Phone Number" autocomplete="off">
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="100">
+                    <mat-label>Address</mat-label>
+                    <textarea matInput></textarea>
+                    <mat-error>error messages here</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="text-center w-100 m-t-10 m-b-50">
+                <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner btn_success">
+                    Submit </button>
+                <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
+                    color="warn">Cancel</button>
+            </div>
+
+        </form>
+    </mat-card-content>
+</mat-card> -->
+
+<mat-card class="m-card">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">{{titleName}}</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-horizontal-stepper [linear]="isLinear" (selectionChange)="selectionChange($event)" #stepper
+        class="create-claimant-stepper">
+        <mat-step [stepControl]="claimant">
+            <form [formGroup]="claimant">
+                <ng-template matStepLabel>Create Claimant</ng-template>
+                <mat-card>
+                    <div fxLayout="row wrap" fxFlex="100">
+                        <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant</div>
+                        <mat-form-field appearance="fill" fxFlex="100">
+                            <input matInput placeholder="Search by name, email, phone, etc ..."
+                                [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                            <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                <mat-option *ngFor="let option of filteredStates" (click)="changeOption(option)"
+                                    [value]="option.first_name">
+                                    {{option.first_name}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <div class="sub-title p-t-15  p-l-10" fxFlex="100">Add New Claimant</div>
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>First Name</mat-label>
+                            <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.entervalidfirstname}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput placeholder="Middle Name" formControlName="middle_name" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.entervalidmiddlename}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Suffix</mat-label>
+                            <input matInput placeholder="Suffix" autocomplete="off">
+                            <!-- <mat-error *ngIf="isSubmit">{{errorMessages.entervalidsuffix}}</mat-error> -->
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Date of Birth</mat-label>
+                            <input matInput placeholder="Date of Birth" autocomplete="off"
+                                [matDatepicker]="date_of_birth" (click)="date_of_birth.open()" disabled>
+                            <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
+                            <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
+                            <mat-error *ngIf="isSubmit">{{errorMessages.date_of_birth}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Select Gender</mat-label>
+                            <mat-select>
+                                <mat-option value="M">Male</mat-option>
+                                <mat-option value="F">Female</mat-option>
+                                <mat-option value="O">Other</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isSubmit">{{errorMessages.gender}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder="Email" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.email}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Handedness</mat-label>
+                            <mat-select>
+                                <mat-option value="R">Right</mat-option>
+                                <mat-option value="L">Left</mat-option>
+                                <mat-option value="A">Ambidexterity</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isSubmit">{{errorMessages.handedness}}</mat-error>
+                        </mat-form-field>
+
+                        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
+                            <div class="p-t-30 p-l-10"> Primary Language Not English<mat-checkbox class="p-l-10"
+                                    (change)="languageStatus = !languageStatus"></mat-checkbox>
+                            </div>
+                        </div>
+
+                        <mat-form-field *ngIf="languageStatus" appearance="standard" fxFlex="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Primary Language</mat-label>
+                            <mat-select>
+                                <mat-option *ngFor="let language of languageList" [value]="language.language">
+                                    {{language.language}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
+                        </mat-form-field>
+
+                        <!-- <mat-form-field *ngIf="claimantForm.value.language == 'Other'" appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Language</mat-label>
+                            <input matInput placeholder="language" formControlName="otherlanguage" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
+                          </mat-form-field> -->
+
+                        <div fxFlex="50" *ngIf="languageStatus" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                            class="checkbox">
+                            <div class="p-t-30  p-l-10"> Certified Interpreter Required
+                                <!-- <mat-checkbox class="p-r-10 p-l-10" [(ngModel)]='certifiedStatusYes' formControlName="certified_interpreter" (change)="certifiedStatusNo = false">yes</mat-checkbox>
+                              <mat-checkbox value="false" [(ngModel)]='certifiedStatusNo'  formControlName="certified_interpreter" (change)="certifiedStatusYes = false">No</mat-checkbox> -->
+                                <mat-radio-group aria-label="Select an option">
+                                    <mat-radio-button value="true">Yes</mat-radio-button>
+                                    <mat-radio-button value="false">No</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>SSN</mat-label>
+                            <input matInput placeholder="999-999-9999" autocomplete="off">
+                            <!-- <mat-error *ngIf="isSubmit">{{errorMessages.ssn}}</mat-error> -->
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Phone Number</mat-label>
+                            <input matInput type="number" placeholder="Phone Number" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.phone_no}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Alternate Phone Number</mat-label>
+                            <input matInput type="number" placeholder="Alternate Phone Number" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.phone_no}}</mat-error>
+                        </mat-form-field>
+
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Street Address</mat-label>
+                            <textarea matInput placeholder="Street Address" autocomplete="off"></textarea>
+                            <mat-error *ngIf="isSubmit">{{errorMessages.address}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Street Address 2</mat-label>
+                            <textarea matInput placeholder="Street Address 2" autocomplete="off"></textarea>
+                            <mat-error *ngIf="isSubmit">{{errorMessages.address}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>City</mat-label>
+                            <input matInput placeholder="City" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.city}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>State</mat-label>
+                            <!-- <input matInput placeholder="State" autocomplete="off" formControlName="state"> -->
+                            <mat-select>
+                                <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isSubmit">{{errorMessages.state}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Zip</mat-label>
+                            <input matInput placeholder="Zip" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.zip_code}}</mat-error>
+                        </mat-form-field>
+                        <!-- 
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Zip + 4</mat-label>
+                            <input matInput placeholder="Zip +4" autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages.zip_4}}</mat-error>
+                        </mat-form-field> -->
+
+                        <div class="text-center w-100 m-t-10 m-b-50">
+                            <button mat-raised-button color="primary" type="submit"
+                                class="m-r-10 rounded-corner btn_success" matStepperNext>
+                                Next </button>
+                            <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
+                                color="warn" matStepperPrevious>Back</button>
+                        </div>
+                    </div>
+                </mat-card>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="employer">
+            <form [formGroup]="employer">
+                <ng-template matStepLabel>Create Claim</ng-template>
+
+                <div class="wc_search">
+                    <div class="sub-title p-l-10">Search WCAB number from EAMS Service</div>
+                    <mat-form-field appearance="fill">
+                        <input matInput placeholder="Search WCAB # from EAMS Service" autocomplete="off">
+                        <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
+                    </mat-form-field>
+                    <!-- <div class="sub-title p-l-10" fxFlex="100">Search WCAB number from EAMS Service</div> -->
+
+                </div>
+                <mat-accordion class="p-t-15">
+                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">Claim Information</div>
+                        </mat-expansion-panel-header>
+
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>WCAB Number </mat-label>
+                                <input matInput placeholder="WCAB Number" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Claim Number</mat-label>
+                                <input matInput placeholder="Claim Number" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Date of Injury </mat-label>
+                                <input matInput placeholder="Date of Injury " autocomplete="off"
+                                    [matDatepicker]="date_of_injury1" (click)="date_of_injury1.open()">
+                                <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
+                                <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Continuous Trauma (CT)</mat-label>
+                                <mat-select>
+                                    <mat-option value="0">Yes</mat-option>
+                                    <mat-option value="1">No</mat-option>
+                                </mat-select>
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>CT Start Date</mat-label>
+                                <input matInput placeholder="CT Start date " autocomplete="off"
+                                    [matDatepicker]="ct_start_date" (click)="ct_start_date.open()">
+                                <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
+                                <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>CT End Date</mat-label>
+                                <input matInput placeholder="CT End date " autocomplete="off"
+                                    [matDatepicker]="ct_end_date" (click)="ct_end_date.open()">
+                                <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
+                                <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Panel Number </mat-label>
+                                <input matInput placeholder="Panel Number" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Injuries </mat-label>
+                                <input matInput placeholder="Injuries" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Body Parts</mat-label>
+                                <mat-select>
+                                    <mat-option value="0">Body Parts Here</mat-option>
+                                </mat-select>
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">Adjuster Information</div>
+                        </mat-expansion-panel-header>
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Insurance Name</mat-label>
+                                <input matInput placeholder="Insurance" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Name</mat-label>
+                                <input matInput placeholder="Name" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Phone</mat-label>
+                                <input matInput placeholder="Phone" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Fax</mat-label>
+                                <input matInput placeholder="Fax" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="Email" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">Employer Information</div>
+                        </mat-expansion-panel-header>
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Name</mat-label>
+                                <input matInput placeholder="Name" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Phone</mat-label>
+                                <input matInput placeholder="Phone" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Address</mat-label>
+                                <input matInput placeholder="Address" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>City</mat-label>
+                                <input matInput placeholder="City" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>State</mat-label>
+                                <input matInput placeholder="State" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Zip</mat-label>
+                                <input matInput placeholder="Zip" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">Applicant
+                                Attorney Information</div>
+                        </mat-expansion-panel-header>
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Name</mat-label>
+                                <input matInput placeholder="Applicant Attorney Name" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Phone</mat-label>
+                                <input matInput placeholder="Phone" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Fax</mat-label>
+                                <input matInput placeholder="Fax" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="Email" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Address</mat-label>
+                                <input matInput placeholder="Address" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>City</mat-label>
+                                <input matInput placeholder="City" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>State</mat-label>
+                                <input matInput placeholder="State" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Zip</mat-label>
+                                <input matInput placeholder="Zip" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">Defense Attorney
+                                Information</div>
+                        </mat-expansion-panel-header>
+                        <div fxLayout="row wrap" fxFlex="100">
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Name</mat-label>
+                                <input matInput placeholder="Defense Attorney Name" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Phone</mat-label>
+                                <input matInput placeholder="Phone" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Fax</mat-label>
+                                <input matInput placeholder="Fax" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="Email" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Address</mat-label>
+                                <input matInput placeholder="Address" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>City</mat-label>
+                                <input matInput placeholder="City" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>State</mat-label>
+                                <input matInput placeholder="State" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Zip</mat-label>
+                                <input matInput placeholder="Zip" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">DEU Office</div>
+                        </mat-expansion-panel-header>
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Office Name</mat-label>
+                                <input matInput placeholder="Office Name" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Phone Number</mat-label>
+                                <input matInput placeholder="Phone Number" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="100">
+                                <mat-label>Address</mat-label>
+                                <textarea matInput></textarea>
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-expansion-panel>
+                    <div class="text-center w-100 m-t-10 m-b-50">
+                        <button mat-raised-button color="primary" type="submit"
+                            class="m-r-10 rounded-corner btn_success" matStepperNext>
+                            Submit </button>
+                        <button mat-raised-button type="button" class="rounded-corner" color="warn"
+                            matStepperPrevious>Back</button>
+                    </div>
+                </mat-accordion>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="billable_item">
+            <ng-template matStepLabel>Create Billable Item</ng-template>
+            <mat-card fxLayout="row wrap" fxFlex="100">
+                <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Exam Type
+                </div>
+                <div fxLayout="row wrap" fxFlex="100">
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Procedure Type</mat-label>
+                        <mat-select>
+                            <mat-option value="0">ML -101</mat-option>
+                            <mat-option value="1">ML -101</mat-option>
+                        </mat-select>
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Modifiers</mat-label>
+                        <mat-select>
+                            <mat-option value="0">Modifiers Type Here</mat-option>
+                        </mat-select>
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Create
+                    Appointment
+                </div>
+                <div fxLayout="row wrap" fxFlex="100">
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Select Examiner</mat-label>
+                        <mat-select>
+                            <mat-option value="0">Examiner List Here</mat-option>
+                        </mat-select>
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Date & Time</mat-label>
+                        <input matInput placeholder="Date & Time" autocomplete="off" [matDatepicker]="date_and_time"
+                            (click)="date_and_time.open()">
+                        <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
+                        <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                        <mat-label>Address</mat-label>
+                        <textarea matInput placeholder="Address" autocomplete="off"></textarea>
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Caller Affiliation</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let caller of callerAffliation" value="caller.id">{{caller.agent_type_name}}</mat-option>
+                        </mat-select>
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Intake Caller</mat-label>
+                        <input matInput placeholder="Intake caller" autocomplete="off">
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Intake Call Date & Time</mat-label>
+                        <input matInput placeholder="Intake call date & time" autocomplete="off">
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Intake Call Note</mat-label>
+                        <input matInput placeholder="Intake call note" autocomplete="off">
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="text-center w-100 m-t-10 m-b-50">
+                    <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner btn_success">
+                        Submit </button>
+                    <button mat-raised-button (click)="stepper.reset()" type="button" class="rounded-corner"
+                        color="warn">Reset</button>
+                </div>
+            </mat-card>
+        </mat-step>
+    </mat-horizontal-stepper>
+</mat-card>

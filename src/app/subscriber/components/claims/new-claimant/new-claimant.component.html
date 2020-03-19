@@ -1,20 +1,19 @@
-<mat-card class="m-card">
+<!-- <mat-card class="m-card">
   <mat-card-header>
-    <mat-card-title class="m-0">Create New Claimant</mat-card-title>
+    <div class="m-0 content-wrapper-main-title">Create New Claimant</div>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <!--Form start-->
-    <form fxLayout="row wrap" class="mat-grid-form" [formGroup]="claimForm" (ngSubmit)="submitClaim()">
+    <form fxLayout="row wrap" class="mat-grid-form" [formGroup]="claimantForm" (ngSubmit)="submitClaim()">
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Last name</mat-label>
+        <mat-label>Last Name</mat-label>
         <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>First name</mat-label>
+        <mat-label>First Name</mat-label>
         <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidfirstname}}</mat-error>
       </mat-form-field>
@@ -25,31 +24,78 @@
         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidmiddlename}}</mat-error>
       </mat-form-field>
 
-      <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Date of Birth</mat-label>
-        <input matInput placeholder="Date of Birth" formControlName="date_of_birth" autocomplete="off"
-          [matDatepicker]="date_of_birth">
-        <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
-        <mat-datepicker #date_of_birth></mat-datepicker>
-        <mat-error *ngIf="isSubmit">{{errorMessages.date_of_birth}}</mat-error>
-      </mat-form-field> -->
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Suffix</mat-label>
+        <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
+        <mat-error *ngIf="isSubmit">{{errorMessages.entervalidsuffix}}</mat-error>
+      </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Sex/Gender</mat-label>
-        <input matInput placeholder="Sex/Gender" formControlName="gender" autocomplete="off">
+        <mat-label>Date of Birth</mat-label>
+        <input matInput placeholder="Date of Birth" formControlName="date_of_birth" autocomplete="off"
+          [matDatepicker]="date_of_birth" (click)="date_of_birth.open()" disabled>
+        <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
+        <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
+        <mat-error *ngIf="isSubmit">{{errorMessages.date_of_birth}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Select Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option value="M">Male</mat-option>
+          <mat-option value="F">Female</mat-option>
+          <mat-option value="O">Other</mat-option>
+        </mat-select>
         <mat-error *ngIf="isSubmit">{{errorMessages.gender}}</mat-error>
       </mat-form-field>
 
-      <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Language</mat-label>
-        <input matInput placeholder="Language" formControlName="language" autocomplete="off">
-        <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
-      </mat-form-field> -->
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" autocomplete="off" formControlName="email">
+        <mat-error *ngIf="isSubmit">{{errorMessages.email}}</mat-error>
+      </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Handedness</mat-label>
-        <input matInput placeholder="Handedness" formControlName="handedness" autocomplete="off">
+        <mat-select formControlName="handedness">
+          <mat-option value="R">Right</mat-option>
+          <mat-option value="L">Left</mat-option>
+          <mat-option value="A">Ambidexterity</mat-option>
+        </mat-select>
         <mat-error *ngIf="isSubmit">{{errorMessages.handedness}}</mat-error>
+      </mat-form-field>
+
+      <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
+        <div class="p-t-30"> Primary Language Not English<mat-checkbox formControlName="primary_language_not_english"
+            class="p-l-10" (change)="languageStatus = !languageStatus"></mat-checkbox>
+        </div>
+      </div>
+
+      <mat-form-field *ngIf="languageStatus" appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+        fxFlex.xs="100">
+        <mat-label>Primary Language</mat-label>
+        <mat-select formControlName="language">
+          <mat-option *ngFor="let language of languageList" [value]="language.language">{{language.language}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
+      </mat-form-field>
+
+      
+
+      <div fxFlex="50" *ngIf="languageStatus" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
+        <div class="p-t-30"> Certified Interpreter Required
+          <mat-radio-group aria-label="Select an option" formControlName="certified_interpreter">
+            <mat-radio-button value="true">Yes</mat-radio-button>
+            <mat-radio-button value="false">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>SSN</mat-label>
+        <input matInput placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
+        <mat-error *ngIf="isSubmit">{{errorMessages.ssn}}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -60,25 +106,21 @@
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Alternate Phone Number</mat-label>
-        <input matInput type="number" placeholder="Alternate Phone Number" formControlName="phone_no_2" autocomplete="off">
+        <input matInput type="number" placeholder="Alternate Phone Number" formControlName="phone_no_2"
+          autocomplete="off">
         <mat-error *ngIf="isSubmit">{{errorMessages.phone_no}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" autocomplete="off" formControlName="email">
-        <mat-error *ngIf="isSubmit">{{errorMessages.email}}</mat-error>
-      </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Street Address</mat-label>
-        <input matInput placeholder="Street Address" autocomplete="off" formControlName="street1">
+        <textarea matInput placeholder="Street Address" autocomplete="off" formControlName="street1"></textarea>
         <mat-error *ngIf="isSubmit">{{errorMessages.address}}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Street Address 2</mat-label>
-        <input matInput placeholder="Street Address 2" autocomplete="off" formControlName="street2">
+        <textarea matInput placeholder="Street Address 2" autocomplete="off" formControlName="street2"></textarea>
         <mat-error *ngIf="isSubmit">{{errorMessages.address}}</mat-error>
       </mat-form-field>
 
@@ -90,22 +132,33 @@
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>State</mat-label>
-        <input matInput placeholder="State" autocomplete="off" formControlName="state">
+        <mat-select formControlName="state">
+          <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}</mat-option>
+        </mat-select>
         <mat-error *ngIf="isSubmit">{{errorMessages.state}}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Zip</mat-label>
-        <input type="string" matInput placeholder="Zip" autocomplete="off" formControlName="zip_code">
+        <input matInput placeholder="Zip" autocomplete="off" formControlName="zip_code">
         <mat-error *ngIf="isSubmit">{{errorMessages.zip_code}}</mat-error>
       </mat-form-field>
 
-      <div class="text-center w-100 m-t-10">
-        <button mat-raised-button color="primary" type="submit" class="m-r-10">
+      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Zip + 4</mat-label>
+        <input matInput placeholder="Zip +4" autocomplete="off" formControlName="zip_4">
+        <mat-error *ngIf="isSubmit">{{errorMessages.zip_4}}</mat-error>
+      </mat-form-field>
+
+
+
+
+      <div class="text-center w-100 m-t-10 m-b-50">
+        <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner btn_success">
           Submit </button>
-        <button mat-raised-button (click)="cancle()" type="button">Cancel</button>
+        <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner" color="warn">Cancel</button>
       </div>
 
     </form>
   </mat-card-content>
-</mat-card>
+</mat-card> -->

@@ -26,7 +26,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 1
         }, {
             path: '/admin/users',
-            title: 'Subscriber',
+            title: 'Manage Susbcriber List',
             icon: 'people_alt',
             submenu: [{
                 path: '/admin/users/new',
@@ -71,23 +71,31 @@ export const ROUTES: SideNavInterface[] = [
          {
             path: '/subscriber/users',
             title: 'Manage Users',
-            icon: 'dashboard',
+            icon: 'supervised_user_circle',
             submenu: [],
             group: "Subscriber",
             role: 2
         },
-        // {
-        //     path: '/subscriber/claiment',
-        //     title: 'Manage Claiments',
-        //     icon: 'dashboard',
-        //     submenu: [],
-        //     group: "Subscriber",
-        //     role: 2
-        // },
+        {
+            path: '/subscriber/claimant',
+            title: 'Claimants',
+            icon: 'people',
+            submenu: [],
+            group: "Subscriber",
+            role: 2
+        },
         {
             path: '/subscriber/claims',
-            title: 'Manage Claims',
-            icon: 'dashboard',
+            title: 'Claims',
+            icon: 'speaker_notes',
+            submenu: [],
+            group: "Subscriber",
+            role: 2
+        },
+        {
+            path: '/subscriber/billable-item',
+            title: 'Billable Items',
+            icon: 'post_add',
             submenu: [],
             group: "Subscriber",
             role: 2
@@ -106,7 +114,7 @@ export const ROUTES: SideNavInterface[] = [
         // }, 
         {
             path: '/subscriber/manager/staff',
-            title: 'Staff List',
+            title: 'Manage Staff',
             icon: 'dashboard',
             submenu: [],
             group: "Subscriber",

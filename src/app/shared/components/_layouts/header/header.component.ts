@@ -45,7 +45,7 @@ export class HeaderComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private alertService: AlertService,
-    private userService: UserService
+    private userService: UserService,
   ) {
     this.spinnerService.show();
     this.isLoading = true;
@@ -117,10 +117,28 @@ export class HeaderComponent implements OnInit {
     }
   }
   gotoSettings() {
-    let urlSplit = this.router.url.split("/");
-    urlSplit.pop();
-    let url = urlSplit.join("/")
-    url = url + "/settings"
-    this.router.navigate([url])
+   
+    let role = this.cookieService.get('role_id')
+console.log(role)
+    switch (role) {
+        case '1':
+            this.router.navigate(["/admin/settings"]);
+            break;
+        case '2':
+            this.router.navigate(["/subscriber/settings"]);
+            break;
+        case '3':
+            this.router.navigate(["/subscriber/settings"]);
+            break;
+        case '4':
+            this.router.navigate(["/subscriber/settings"]);
+            break;
+        case '11':
+            this.router.navigate(["/subscriber/settings"]);
+            break;
+        default:
+            this.router.navigate(["/settings"]);
+            break;
+    }
   }
 }

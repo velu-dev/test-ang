@@ -15,4 +15,11 @@ export class ClaimService {
   createClaim(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createClaim, data)
   }
+
+  seedData(data): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
+  }
+  getCallerAffliation(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.callerAffliation)
+  }
 }

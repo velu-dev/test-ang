@@ -31,15 +31,16 @@ export class SubscriberSettingsComponent implements OnInit {
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
+      console.log("res obj", res)
       this.user = res.data;
       this.userForm.setValue(res.data)
     })
   }
   ngOnInit() {
     this.userPasswrdForm = this.formBuilder.group({
-      current_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
-      new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])],
-      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'), Validators.minLength(8)])]
+      current_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
+      new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
+      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])]
     })
     this.userForm = this.formBuilder.group({
       id: [''],
@@ -47,7 +48,7 @@ export class SubscriberSettingsComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      company_name: [{ value: "", disabled: true }],
+      company_name: ["", Validators.required],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
   }

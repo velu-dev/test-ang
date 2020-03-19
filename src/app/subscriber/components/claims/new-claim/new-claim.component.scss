@@ -1,0 +1,26 @@
+@import "variables";
+
+mat-card {
+  mat-horizontal-stepper {
+    .wc_search {
+      width: $width-100;
+      display: block !important;
+      mat-form-field {
+        width: $width-100;
+        padding-left: 0px !important;
+      }
+    }
+    .sub-title {
+      color: $primarycolor;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-1;
+    }
+    mat-form-field {
+      padding: 10px !important;
+    }
+
+    button.btn_success {
+      background-color: $btn_success;
+    }
+  }
+}

@@ -30,4 +30,8 @@ export class AuthenticationService {
   emailVerify(email){
     return this.http.post(environment.baseUrl + api_endpoint.emailVerify, {email_id : email}, { headers: this.headers });
   }
+
+  passwordResend(email){
+    return this.http.post(environment.baseUrl + api_endpoint.resendPassword, {email_id : email}, { headers: this.headers });
+  }
 }

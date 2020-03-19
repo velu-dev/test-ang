@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private spinnerService: NgxSpinnerService,
     private title: Title) {
-    this.title.setTitle("App | Forgot password")
+    //this.title.setTitle("App | Forgot password")
   }
 
   ngOnInit() {
@@ -37,8 +37,8 @@ export class RegisterComponent implements OnInit {
       middleInitial: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       companyName: [''],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*-]).{8,}$'), Validators.minLength(8)])],
-      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*-]).{8,}$'), Validators.minLength(8)])],
+      password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
+      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
       captcha: ['', Validators.required],
       policy: ['', Validators.required]
     });
@@ -84,7 +84,6 @@ export class RegisterComponent implements OnInit {
       }
       this.cognitoService.signUp(userDetails).subscribe(signUpRes => {
         console.log(signUpRes);
-        this.spinnerService.hide();
         this.router.navigate(['/verification'])
       }, error => {
         console.log("cognitoSignUpError", error);
