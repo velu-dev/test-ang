@@ -9,18 +9,23 @@
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>First name*</mat-label>
           <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+          <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
         </mat-form-field>
+
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Last name*</mat-label>
           <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+          <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Middle name / MI</mat-label>
           <input matInput placeholder="Middle name" formControlName="middle_name" autocomplete="off">
+          <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Company name</mat-label>
           <input matInput placeholder="Company name" formControlName="company_name" autocomplete="off">
+          <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidcompanyname}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Email ID*</mat-label>
@@ -33,6 +38,7 @@
             <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}
             </mat-option>
           </mat-select>
+          <mat-error *ngIf="isSubmitted">{{errorMessages?.selectrole}}</mat-error>
         </mat-form-field>
         <div class="text-center w-100 m-t-10">
           <button mat-raised-button color="primary" type="submit" class="m-r-10">

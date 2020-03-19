@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     private title: Title
   ) {
 
-    this.title.setTitle("App | Login")
+    //this.title.setTitle("App | Login")
   }
 
   ngOnInit() {

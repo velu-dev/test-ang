@@ -26,7 +26,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 1
         }, {
             path: '/admin/users',
-            title: 'Subscriber',
+            title: 'Manage Susbcriber List',
             icon: 'people_alt',
             submenu: [{
                 path: '/admin/users/new',
@@ -106,7 +106,7 @@ export const ROUTES: SideNavInterface[] = [
         // }, 
         {
             path: '/subscriber/manager/staff',
-            title: 'Staff List',
+            title: 'Manage Staff',
             icon: 'dashboard',
             submenu: [],
             group: "Subscriber",
