@@ -26,7 +26,7 @@ export class ForgotPasswordComponent implements OnInit {
     private cognitoService: CognitoService,
     private formBuilder: FormBuilder,
     private spinnerService: NgxSpinnerService, private title: Title) {
-    this.title.setTitle("App | Forgot password")
+    //this.title.setTitle("App | Forgot password")
   }
 
   ngOnInit() {

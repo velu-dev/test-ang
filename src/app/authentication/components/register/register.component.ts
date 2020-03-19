@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private spinnerService: NgxSpinnerService,
     private title: Title) {
-    this.title.setTitle("App | Forgot password")
+    //this.title.setTitle("App | Forgot password")
   }
 
   ngOnInit() {
