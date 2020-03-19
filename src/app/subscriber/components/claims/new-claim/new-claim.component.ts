@@ -26,7 +26,7 @@ export class NewClaimComponent implements OnInit {
   application_attorney: FormGroup;
   billable_item: FormGroup;
   defance_attorney: FormGroup;
-  titleName = "Create New Claim";
+  titleName = "Create Claimant";
   claimantList = [
     {
       last_name: 'John',

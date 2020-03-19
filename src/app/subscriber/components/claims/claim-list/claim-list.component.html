@@ -13,7 +13,7 @@
     <mat-card-content class="p-t-3  m-b-0">
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue"
-                placeholder="Search by name, email, role">
+                placeholder="Search by name, email, etc">
         </div>
         <span class="spacer"></span>
         <button mat-icon-button class="filter-icon" (click)="exportData()">
@@ -32,7 +32,7 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                       
+
                         <span *ngIf="column != 'date_of_birth'">{{element[column]}} </span>
                         <span *ngIf="column == 'date_of_birth'">{{element[column] | date:'MM-dd-yyyy'}} </span>
                     </td>

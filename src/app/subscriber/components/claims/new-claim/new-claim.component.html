@@ -487,7 +487,7 @@
                 <div class="wc_search">
                     <div class="sub-title p-l-10">Search WCAB number from EAMS Service</div>
                     <mat-form-field appearance="fill">
-                        <input matInput placeholder="Search WCAB # from EAMS Service" autocomplete="off">
+                        <input matInput placeholder="Search WCAB number from EAMS Service" autocomplete="off">
                         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
                     </mat-form-field>
                     <!-- <div class="sub-title p-l-10" fxFlex="100">Search WCAB number from EAMS Service</div> -->
@@ -602,6 +602,12 @@
                                 <input matInput placeholder="Phone" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Address</mat-label>
+                                <input matInput placeholder="Address" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -624,6 +630,7 @@
                             <div class="sub-title">Employer Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
+
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Name</mat-label>
@@ -675,8 +682,14 @@
                         <div fxLayout="row wrap" fxFlex="100">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Name</mat-label>
-                                <input matInput placeholder="Applicant Attorney Name" autocomplete="off">
+                                <mat-label>Law Firm Name</mat-label>
+                                <input matInput placeholder="Law Firm Name" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Attorney Name</mat-label>
+                                <input matInput placeholder="Attorney Name" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
@@ -737,8 +750,14 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Name</mat-label>
-                                <input matInput placeholder="Defense Attorney Name" autocomplete="off">
+                                <mat-label>Law Firm Name</mat-label>
+                                <input matInput placeholder="Law Firm Name" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Attorney Name</mat-label>
+                                <input matInput placeholder="Attorney Name" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
