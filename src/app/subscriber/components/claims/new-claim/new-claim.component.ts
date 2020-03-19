@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { ClaimService } from 'src/app/subscriber/service/claim.service';
 export interface Claimant {
   last_name: string;
   first_name: string;
@@ -15,6 +16,9 @@ export interface Claimant {
 })
 export class NewClaimComponent implements OnInit {
   step = 0;
+  isLinear = false;
+  isSubmit = false;
+  states = [];
   searchInput = new FormControl();
   filteredStates: any;
   claimForm: FormGroup;
@@ -27,6 +31,9 @@ export class NewClaimComponent implements OnInit {
   billable_item: FormGroup;
   defance_attorney: FormGroup;
   titleName = "Create Claimant";
+  languageList = [];
+  languageStatus = false;
+  callerAffliation = [];
   claimantList = [
     {
       last_name: 'John',
@@ -50,8 +57,12 @@ export class NewClaimComponent implements OnInit {
       middle_name: "BB"
     }
   ];
-  constructor(private formBuilder: FormBuilder) {
-    console.log(this.searchInput)
+  constructor(
+    private formBuilder: FormBuilder,
+    private claimService: ClaimService) {
+    this.claimService.getCallerAffliation().subscribe(res => {
+      this.callerAffliation = res.data;
+    })
     this.searchInput.valueChanges.subscribe(res => {
       if (res) {
         this.filteredStates = this._filterStates(res);
@@ -154,6 +165,8 @@ export class NewClaimComponent implements OnInit {
   }
   submitClaim() {
     console.log("res", this.claimForm.value)
-
+  }
+  cancle(){
+    
   }
 }

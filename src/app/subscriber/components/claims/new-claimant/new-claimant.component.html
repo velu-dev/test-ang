@@ -1,4 +1,4 @@
-<mat-card class="m-card">
+<!-- <mat-card class="m-card">
   <mat-card-header>
     <div class="m-0 content-wrapper-main-title">Create New Claimant</div>
   </mat-card-header>
@@ -81,16 +81,10 @@
         <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
       </mat-form-field>
 
-      <!-- <mat-form-field *ngIf="claimantForm.value.language == 'Other'" appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Language</mat-label>
-        <input matInput placeholder="language" formControlName="otherlanguage" autocomplete="off">
-        <mat-error *ngIf="isSubmit">{{errorMessages.language}}</mat-error>
-      </mat-form-field> -->
+      
 
       <div fxFlex="50" *ngIf="languageStatus" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
         <div class="p-t-30"> Certified Interpreter Required
-          <!-- <mat-checkbox class="p-r-10 p-l-10" [(ngModel)]='certifiedStatusYes' formControlName="certified_interpreter" (change)="certifiedStatusNo = false">yes</mat-checkbox>
-          <mat-checkbox value="false" [(ngModel)]='certifiedStatusNo'  formControlName="certified_interpreter" (change)="certifiedStatusYes = false">No</mat-checkbox> -->
           <mat-radio-group aria-label="Select an option" formControlName="certified_interpreter">
             <mat-radio-button value="true">Yes</mat-radio-button>
             <mat-radio-button value="false">No</mat-radio-button>
@@ -138,7 +132,6 @@
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>State</mat-label>
-        <!-- <input matInput placeholder="State" autocomplete="off" formControlName="state"> -->
         <mat-select formControlName="state">
           <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}</mat-option>
         </mat-select>
@@ -168,4 +161,4 @@
 
     </form>
   </mat-card-content>
-</mat-card>
+</mat-card> -->
