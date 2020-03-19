@@ -16,6 +16,9 @@ export interface Claimant {
 })
 export class NewClaimComponent implements OnInit {
   step = 0;
+  isLinear = true;
+  isSubmit = false;
+  states = [];
   searchInput = new FormControl();
   filteredStates: any;
   claimForm: FormGroup;
@@ -27,7 +30,9 @@ export class NewClaimComponent implements OnInit {
   application_attorney: FormGroup;
   billable_item: FormGroup;
   defance_attorney: FormGroup;
-  titleName = "Create New Claim";
+  titleName = "Create Claimant";
+  languageList = [];
+  languageStatus = false;
   callerAffliation = [];
   claimantList = [
     {
@@ -160,6 +165,8 @@ export class NewClaimComponent implements OnInit {
   }
   submitClaim() {
     console.log("res", this.claimForm.value)
-
+  }
+  cancle(){
+    
   }
 }

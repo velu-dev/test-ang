@@ -27,6 +27,7 @@ export class BillableItemComponent implements OnInit {
       shareReplay()
     );
   screenWidth: number;
+  expandId: any;
   roles: Role[];
   xls = globals.xls;
   selectedRole: any = [];
@@ -38,7 +39,7 @@ export class BillableItemComponent implements OnInit {
   checked = true;
   allUser: any;
   filterValue: string;
-  users = []
+  users = [];
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -52,7 +53,7 @@ export class BillableItemComponent implements OnInit {
         this.columnName = ["", "First Name", "Action"]
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["Last Name","First Name",  "Date of Birth", "Date of Service", "Exam Type", "Claim Numbers", "Examiner", "Status", "Action"]
+        this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Service", "Exam Type", "Claim Numbers", "Examiner", "Status", "Action"]
         this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_service', "exam_type", "claim_numbers", "examiner", "status", "action"]
       }
     })
@@ -68,6 +69,12 @@ export class BillableItemComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+  openElement(el) {
+
+  }
+  applyFilter(event) {
+
   }
   exportData() {
     let data = [];
