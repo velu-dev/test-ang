@@ -8,7 +8,7 @@
         <form fxLayout="row wrap" class="mat-grid-form" [formGroup]="claimForm" (ngSubmit)="submitClaim()">
          
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Claim Information</div>
-            <div fxLayout="row wrap" fxFlex="100" formGroupName="claim">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="claim">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Claim ID</mat-label>
                     <input matInput placeholder="Claim ID" formControlName="claim_id" autocomplete="off">
@@ -86,7 +86,7 @@
        
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Adjuster Information
             </div>
-            <div fxLayout="row wrap" fxFlex="100" formGroupName="adjuster">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="adjuster">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Insurance Name</mat-label>
                     <input matInput placeholder="Insurance" autocomplete="off">
@@ -121,7 +121,7 @@
           
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Employer Information
             </div>
-            <div fxLayout="row wrap" fxFlex="100" formGroupName="employer">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="employer">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Name</mat-label>
                     <input matInput placeholder="Name" autocomplete="off">
@@ -162,7 +162,7 @@
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Applicant
                 Attorney Information
             </div>
-            <div fxLayout="row wrap" fxFlex="100" formGroupName="application_attorney">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="application_attorney">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Name</mat-label>
                     <input matInput placeholder="Applicant Attorney Name" autocomplete="off">
@@ -212,7 +212,7 @@
             <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Defense Attorney
                 Information
             </div>
-            <div fxLayout="row wrap" fxFlex="100" formGroupName="defance_attorney">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="claimant"="defance_attorney">
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Name</mat-label>
@@ -297,34 +297,37 @@
         <div class="m-0 content-wrapper-main-title">Create New Claim</div>
     </mat-card-header>
     <mat-divider></mat-divider>
-
     <mat-horizontal-stepper [linear]="isLinear" #stepper class="create-claimant-stepper">
-        <mat-step [stepControl]="claim">
-            <form [formGroup]="claim">
+        <mat-step [stepControl]="claimant">
+            <form [formGroup]="claimant">
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
-                        <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant</div>
                         <mat-form-field appearance="fill" fxFlex="100">
-                            <input matInput placeholder="Search by name, email, phone, etc ..." autocomplete="off">
-                            <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
+                            <input matInput placeholder="Search by name, email, phone, etc ..."
+                                [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                            <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                <mat-option *ngFor="let option of filteredStates" (click)="changeOption(option)" [value]="option.first_name">
+                                    {{option.first_name}}
+                                </mat-option>
+                            </mat-autocomplete>
                         </mat-form-field>
                         <div class="sub-title p-t-15  p-l-10" fxFlex="100">Add New Claimant</div>
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Last Name</mat-label>
-                            <input matInput placeholder="Last name" autocomplete="off">
+                            <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>First Name</mat-label>
-                            <input matInput placeholder="First name" autocomplete="off">
+                            <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages.entervalidfirstname}}</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Middle Name</mat-label>
-                            <input matInput placeholder="Middle Name" autocomplete="off">
+                            <input matInput placeholder="Middle Name" formControlName="middle_name" autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages.entervalidmiddlename}}</mat-error>
                         </mat-form-field>
 
@@ -818,7 +821,7 @@
                 </mat-accordion>
             </form>
         </mat-step>
-        <mat-step>
+        <mat-step [stepControl]="billable_item">
             <ng-template matStepLabel>Create Billable Item</ng-template>
             <mat-card fxLayout="row wrap" fxFlex="100">
                 <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Exam Type
@@ -856,7 +859,7 @@
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Date & Time</mat-label>
-                        <input matInput placeholder="Date & Time" formControlName="date_and_time" autocomplete="off"
+                        <input matInput placeholder="Date & Time" autocomplete="off"
                             [matDatepicker]="date_and_time" (click)="date_and_time.open()">
                         <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                         <mat-datepicker #date_and_time disabled="false"></mat-datepicker>

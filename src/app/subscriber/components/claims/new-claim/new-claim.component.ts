@@ -3,6 +3,11 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+export interface Claimant {
+  last_name: string;
+  first_name: string;
+  middle_name: string;
+}
 @Component({
   selector: 'app-new-claim',
   templateUrl: './new-claim.component.html',
@@ -10,7 +15,8 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class NewClaimComponent implements OnInit {
   step = 0;
-
+  searchInput = new FormControl();
+  filteredStates: any;
   setStep(index: number) {
     this.step = index;
   }
@@ -24,41 +30,65 @@ export class NewClaimComponent implements OnInit {
   }
   claimForm: FormGroup;
   errorMessages = errors;
-  claim: any;
-  adjuster: any;
-  employer: any;
-  application_attorney: any;
-  defance_attorney: any;
-  states = [
+  claim: FormGroup;
+  claimant: FormGroup;
+  adjuster: FormGroup;
+  employer: FormGroup;
+  application_attorney: FormGroup;
+  billable_item: FormGroup;
+  defance_attorney: FormGroup;
+  claimantList = [
     {
-      name: 'John'
+      last_name: 'John',
+      first_name: "Abraham",
+      middle_name: "JA"
     },
     {
-      name: 'Lee'
+      last_name: 'Lee',
+      first_name: "Brues",
+      middle_name: "LB"
+
     },
     {
-      name: 'Rajan  '
+      last_name: 'Rajan',
+      first_name: "Mariyappan",
+      middle_name: "RM"
     },
     {
-      name: 'Venkat'
+      first_name: 'Banner',
+      last_name: "Brues",
+      middle_name: "BB"
     }
   ];
-  stateCtrl = new FormControl();
-
-  filteredStates: Observable<any>;
-  constructor(private formBuilder: FormBuilder) { 
-    this.filteredStates = this.stateCtrl.valueChanges
-    .pipe(
-      startWith(''),
-      map(state => state ? this._filterStates(state) : this.states.slice())
-    );
+  constructor(private formBuilder: FormBuilder) {
+    console.log(this.searchInput)
+    this.searchInput.valueChanges.subscribe(res => {
+      if (res) {
+        this.filteredStates = this._filterStates(res);
+      } else {
+        this.filteredStates = this.claimantList.slice()
+      }
+    })
+    // .pipe(
+    //   startWith(''),
+    //   map(claim => claim ? this._filterStates(claim) : this.claimantList.slice())
+    // );
+  }
+  changeOption(option){
+    this.claimant.setValue(option)
   }
   private _filterStates(value: string) {
+    console.log(value)
     const filterValue = value.toLowerCase();
 
-    return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.claimantList.filter(state => state.first_name.toLowerCase().indexOf(filterValue) === 0);
   }
   ngOnInit() {
+    this.claimant = this.formBuilder.group({
+      last_name: ["", Validators.required],
+      first_name: ["", Validators.required],
+      middle_name: ["", Validators.required],
+    })
     // this.claimForm = this.formBuilder.group({
     this.claim = this.formBuilder.group({
       claim_id: ["", Validators.required],
@@ -107,6 +137,9 @@ export class NewClaimComponent implements OnInit {
         state: ["", Validators.required],
         zip: ["", Validators.required]
       })
+    this.billable_item = this.formBuilder.group({
+
+    })
     // })
   }
   submitClaim() {
