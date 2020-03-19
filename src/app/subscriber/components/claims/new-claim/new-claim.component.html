@@ -294,7 +294,7 @@
 
 <mat-card class="m-card">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title">Create New Claim</div>
+        <div class="m-0 content-wrapper-main-title">{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-horizontal-stepper [linear]="isLinear" #stepper class="create-claimant-stepper">
@@ -468,10 +468,10 @@
 
                         <div class="text-center w-100 m-t-10 m-b-50">
                             <button mat-raised-button color="primary" type="submit"
-                                class="m-r-10 rounded-corner btn_success">
+                                class="m-r-10 rounded-corner btn_success" matStepperNext (click)="titleName = 'Create Claim'">
                                 Submit </button>
                             <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
-                                color="warn">Cancel</button>
+                                color="warn" matStepperPrevious (click)="titleName = 'Create Claimant'">Back</button>
                         </div>
                     </div>
                 </mat-card>
@@ -815,10 +815,10 @@
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success">
+                            class="m-r-10 rounded-corner btn_success" matStepperNext (click)="titleName = 'Create Billable Item'">
                             Submit </button>
-                        <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
-                            color="warn">Cancel</button>
+                        <button mat-raised-button type="button" class="rounded-corner"
+                            color="warn" matStepperPrevious (click)="titleName = 'Create Claim'">Back</button>
                     </div>
                 </mat-accordion>
             </form>
@@ -902,8 +902,8 @@
                 <div class="text-center w-100 m-t-10 m-b-50">
                     <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner btn_success">
                         Submit </button>
-                    <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
-                        color="warn">Cancel</button>
+                    <button mat-raised-button (click)="stepper.reset()" type="button" class="rounded-corner"
+                        color="warn">Reset</button>
                 </div>
             </mat-card>
         </mat-step>

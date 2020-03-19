@@ -17,17 +17,6 @@ export class NewClaimComponent implements OnInit {
   step = 0;
   searchInput = new FormControl();
   filteredStates: any;
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
   claimForm: FormGroup;
   errorMessages = errors;
   claim: FormGroup;
@@ -37,6 +26,7 @@ export class NewClaimComponent implements OnInit {
   application_attorney: FormGroup;
   billable_item: FormGroup;
   defance_attorney: FormGroup;
+  titleName = "Create New Claim";
   claimantList = [
     {
       last_name: 'John',
@@ -74,7 +64,18 @@ export class NewClaimComponent implements OnInit {
     //   map(claim => claim ? this._filterStates(claim) : this.claimantList.slice())
     // );
   }
-  changeOption(option){
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+  changeOption(option) {
     this.claimant.setValue(option)
   }
   private _filterStates(value: string) {
