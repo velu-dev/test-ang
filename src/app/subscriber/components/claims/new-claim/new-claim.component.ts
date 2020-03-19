@@ -16,7 +16,7 @@ export interface Claimant {
 })
 export class NewClaimComponent implements OnInit {
   step = 0;
-  isLinear = true;
+  isLinear = false;
   isSubmit = false;
   states = [];
   searchInput = new FormControl();
