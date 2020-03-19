@@ -475,20 +475,22 @@
                         </div>
                     </div>
                 </mat-card>
-
             </form>
         </mat-step>
         <mat-step [stepControl]="employer">
             <form [formGroup]="employer">
                 <ng-template matStepLabel>Create Claim</ng-template>
-                <mat-card style="width: 100%;">
-                    <div class="sub-title p-l-10" fxFlex="100">Search WCAB number from EAMS Service</div>
-                    <mat-form-field appearance="fill" fxFlex="100">
+
+                <div class="wc_search">
+                    <div class="sub-title p-l-10">Search WCAB number from EAMS Service</div>
+                    <mat-form-field appearance="fill">
                         <input matInput placeholder="Search WCAB # from EAMS Service" autocomplete="off">
                         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
                     </mat-form-field>
-                </mat-card>
-                <mat-accordion>
+                    <!-- <div class="sub-title p-l-10" fxFlex="100">Search WCAB number from EAMS Service</div> -->
+
+                </div>
+                <mat-accordion class="p-t-15">
                     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Claim Information</div>

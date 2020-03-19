@@ -71,7 +71,7 @@ export const ROUTES: SideNavInterface[] = [
          {
             path: '/subscriber/users',
             title: 'Manage Users',
-            icon: 'dashboard',
+            icon: 'supervised_user_circle',
             submenu: [],
             group: "Subscriber",
             role: 2
@@ -79,7 +79,7 @@ export const ROUTES: SideNavInterface[] = [
         {
             path: '/subscriber/claimant',
             title: 'Claimants',
-            icon: 'dashboard',
+            icon: 'people',
             submenu: [],
             group: "Subscriber",
             role: 2
@@ -87,7 +87,7 @@ export const ROUTES: SideNavInterface[] = [
         {
             path: '/subscriber/claims',
             title: 'Claims',
-            icon: 'dashboard',
+            icon: 'speaker_notes',
             submenu: [],
             group: "Subscriber",
             role: 2
@@ -95,7 +95,7 @@ export const ROUTES: SideNavInterface[] = [
         {
             path: '/subscriber/billable-item',
             title: 'Billable Items',
-            icon: 'dashboard',
+            icon: 'post_add',
             submenu: [],
             group: "Subscriber",
             role: 2
