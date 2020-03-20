@@ -23,6 +23,7 @@ import { CookieService } from './services/cookie.service';
 import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { NodataComponent } from './components/nodata/nodata.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { EllipsisPipe } from './pipes/ellipsis.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     AlertComponent,
     ErrorComponent,
     DialogueComponent,
-    NodataComponent
+    NodataComponent,
+    EllipsisPipe
   ],
   entryComponents: [
     AlertComponent,
@@ -57,7 +59,8 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     ErrorComponent,
     DialogueComponent,
     NodataComponent,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    EllipsisPipe
   ],
   providers: [
     CognitoService,
