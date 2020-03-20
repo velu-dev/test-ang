@@ -343,7 +343,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Date of Birth</mat-label>
                             <input matInput placeholder="Date of Birth" autocomplete="off"
-                                [matDatepicker]="date_of_birth" (click)="date_of_birth.open()" disabled>
+                                [matDatepicker]="date_of_birth" (click)="date_of_birth.open()" >
                             <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
                             <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
                             <mat-error *ngIf="isSubmit">{{errorMessages.date_of_birth}}</mat-error>
@@ -487,7 +487,7 @@
                 <div class="wc_search">
                     <div class="sub-title p-l-10">Search WCAB number from EAMS Service</div>
                     <mat-form-field appearance="fill">
-                        <input matInput placeholder="Search WCAB # from EAMS Service" autocomplete="off">
+                        <input matInput placeholder="Search WCAB number from EAMS Service" autocomplete="off">
                         <mat-error *ngIf="isSubmit">{{errorMessages.entervalidlastname}}</mat-error>
                     </mat-form-field>
                     <!-- <div class="sub-title p-l-10" fxFlex="100">Search WCAB number from EAMS Service</div> -->
@@ -605,15 +605,21 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" autocomplete="off">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="Email" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="100">
+                                <mat-label>Address</mat-label>
+                                <textarea matInput></textarea>
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Email</mat-label>
-                                <input matInput placeholder="Email" autocomplete="off">
+                                <mat-label>Fax</mat-label>
+                                <input matInput placeholder="Fax" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
                         </div>
@@ -624,6 +630,7 @@
                             <div class="sub-title">Employer Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
+
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Name</mat-label>
@@ -638,10 +645,9 @@
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Address</mat-label>
-                                <input matInput placeholder="Address" autocomplete="off">
+                                <textarea matInput></textarea>
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
@@ -675,8 +681,14 @@
                         <div fxLayout="row wrap" fxFlex="100">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Name</mat-label>
-                                <input matInput placeholder="Applicant Attorney Name" autocomplete="off">
+                                <mat-label>Law Firm Name</mat-label>
+                                <input matInput placeholder="Law Firm Name" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Attorney Name</mat-label>
+                                <input matInput placeholder="Attorney Name" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
@@ -689,24 +701,17 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" autocomplete="off">
-                                <mat-error>error messages here</mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
                                 <mat-label>Email</mat-label>
                                 <input matInput placeholder="Email" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Address</mat-label>
-                                <input matInput placeholder="Address" autocomplete="off">
+                                <textarea matInput></textarea>
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
+
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>City</mat-label>
@@ -723,6 +728,14 @@
                                 fxFlex.xs="100">
                                 <mat-label>Zip</mat-label>
                                 <input matInput placeholder="Zip" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Fax</mat-label>
+                                <input matInput placeholder="Fax" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
                         </div>
@@ -737,8 +750,14 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Name</mat-label>
-                                <input matInput placeholder="Defense Attorney Name" autocomplete="off">
+                                <mat-label>Law Firm Name</mat-label>
+                                <input matInput placeholder="Law Firm Name" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Attorney Name</mat-label>
+                                <input matInput placeholder="Attorney Name" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
@@ -749,12 +768,6 @@
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" autocomplete="off">
-                                <mat-error>error messages here</mat-error>
-                            </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -763,10 +776,9 @@
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Address</mat-label>
-                                <input matInput placeholder="Address" autocomplete="off">
+                                <textarea matInput></textarea>
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -785,6 +797,12 @@
                                 fxFlex.xs="100">
                                 <mat-label>Zip</mat-label>
                                 <input matInput placeholder="Zip" autocomplete="off">
+                                <mat-error>error messages here</mat-error>
+                            </mat-form-field>                            
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Fax</mat-label>
+                                <input matInput placeholder="Fax" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
                         </div>
@@ -862,12 +880,22 @@
                         <mat-error>error messages here</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                         <mat-label>Date & Time</mat-label>
                         <input matInput placeholder="Date & Time" autocomplete="off" [matDatepicker]="date_and_time"
                             (click)="date_and_time.open()">
                         <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                         <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
+                        <mat-error>error messages here</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
+                        <mat-label>Duration</mat-label>
+                        <mat-select>
+                            <mat-option value="0">20 Mins</mat-option>
+                            <mat-option value="0">30 Mins</mat-option>
+                            <mat-option value="0">45 Mins</mat-option>
+                            <mat-option value="0">60 Mins</mat-option>
+                        </mat-select>
                         <mat-error>error messages here</mat-error>
                     </mat-form-field>
 
@@ -877,6 +905,10 @@
                         <mat-error>error messages here</mat-error>
                     </mat-form-field>
 
+                   
+
+                    <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Intake Call Informantion
+                    </div>
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Caller Affiliation</mat-label>
                         <mat-select>
@@ -892,8 +924,11 @@
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Intake Call Date & Time</mat-label>
-                        <input matInput placeholder="Intake call date & time" autocomplete="off">
-                        <mat-error>error messages here</mat-error>
+                        <input matInput placeholder="Intake Call Date & Time" autocomplete="off" [matDatepicker]="date_and_time_intake"
+                        (click)="date_and_time_intake.open()">
+                    <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle>
+                    <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker>
+                    <mat-error>error messages here</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

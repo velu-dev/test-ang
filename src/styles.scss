@@ -165,7 +165,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 }
 
 .user-detail {
-  min-height: 62vh; //table empty space
+  min-height: 55vh; //table empty space
 }
 
 // ==================================================
@@ -297,7 +297,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 }
 
 .create-claimant-stepper {
-   .mat-horizontal-content-container {
-     padding: 5px !important;
-   }
+  .mat-horizontal-content-container {
+    padding: 5px !important;
+  }
 }

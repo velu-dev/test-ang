@@ -45,9 +45,9 @@ export class SubscriberSettingsComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       id: [''],
       role_id: [''],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       company_name: ["", Validators.required],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });

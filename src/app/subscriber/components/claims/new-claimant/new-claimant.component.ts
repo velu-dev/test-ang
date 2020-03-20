@@ -30,10 +30,10 @@ export class NewClaimantComponent implements OnInit {
 
   ngOnInit() {
     this.claimantForm = this.formBuilder.group({
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      suffix: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+      suffix: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       date_of_birth: ['', Validators.required],
       gender: ['', Validators.required],
       ssn: [''],

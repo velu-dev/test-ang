@@ -68,9 +68,9 @@
                 </div> -->
 
                 <div *ngIf="user">
-                    <button mat-button [matMenuTriggerFor]="settings" class="welcome">
+                    <button [title]="user?.first_name" mat-button [matMenuTriggerFor]="settings" class="welcome">
                         <span class="hide-mobile"><small>Welcome,</small><br />
-                            {{user?.first_name}}
+                            {{user?.first_name | ellipsis:15}}
                         </span>
                         <img [src]="profile" alt="Welcome" class="" />
                     </button>
