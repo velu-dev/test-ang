@@ -33,10 +33,9 @@ $bg-success: rgb(76, 175, 80);
 $bg-error: rgba(255, 54, 54, 0.05);
 $bg-warning: rgba(255, 178, 54, 0.4);
 $bg-error-style-one: #ff8f8f;
-$btn_success:#00CC00;
+$btn_success: #00cc00;
 
-
-//class 
+//class
 // Matero Variables
 //
 // Layout
@@ -287,7 +286,6 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   padding-left: 5px;
 }
 
-
 // ==================================
 // Page heading styles       ========
 // ==================================
@@ -312,11 +310,9 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   min-height: calc(100vh - 240px);
 }
 
-
 // ==================================
 // Table Filter styles       ========
 // ==================================
-
 
 .table-filter {
   margin-top: 5px !important;
@@ -355,6 +351,7 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   background-color: $ternary-color;
   float: right;
   z-index: 2;
+  margin-top: -5px;
   margin-bottom: -50px;
 }
 .floating-btn {

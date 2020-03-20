@@ -121,6 +121,28 @@ export class NewClaimComponent implements OnInit {
       zip: [""]
     }
   ];
+  bodyParts = new FormControl();
+  bodyPartsList: string[] = [
+    'Head',
+    'Face',
+    'Hair',
+    'Ear',
+    'Neck',
+    'Forehead',
+    'Beard',
+    'Eye',
+    'Nose',
+    'Mouth',
+    'Chin',
+    'Shoulder',
+    'Elbow',
+    'Arm',
+    'Chest',
+    'Armpit',
+    'Forearm',
+    'Wrist',
+    'Back'
+  ];
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService) {
