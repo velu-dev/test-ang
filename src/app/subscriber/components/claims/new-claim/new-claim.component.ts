@@ -38,23 +38,87 @@ export class NewClaimComponent implements OnInit {
     {
       last_name: 'John',
       first_name: "Abraham",
-      middle_name: "JA"
+      middle_name: "JA",
+      suffix: "",
+      date_of_birth: "",
+      gender: "",
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      handedness: "",
+      is_primary_lanuguage_english: "",
+      primary_language: "",
+      certified_inpreted: "",
+      ssn: "",
+      phone_number: "",
+      phone_number_1: "",
+      street_1: "",
+      street_2: "",
+      city: "",
+      state: "",
+      zip: ""
     },
     {
       last_name: 'Lee',
       first_name: "Brues",
-      middle_name: "LB"
+      middle_name: "LB",
+      suffix: "",
+      date_of_birth: "",
+      gender: "",
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      handedness: "",
+      is_primary_lanuguage_english: "",
+      primary_language: "",
+      certified_inpreted: "",
+      ssn: "",
+      phone_number: "",
+      phone_number_1: "",
+      street_1: "",
+      street_2: "",
+      city: "",
+      state: "",
+      zip: ""
 
     },
     {
       last_name: 'Rajan',
       first_name: "Mariyappan",
-      middle_name: "RM"
+      middle_name: "RM",
+      suffix: "",
+      date_of_birth: "",
+      gender: "",
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      handedness: "",
+      is_primary_lanuguage_english: "",
+      primary_language: "",
+      certified_inpreted: "",
+      ssn: "",
+      phone_number: "",
+      phone_number_1: "",
+      street_1: "",
+      street_2: "",
+      city: "",
+      state: "",
+      zip: ""
     },
     {
       first_name: 'Banner',
       last_name: "Brues",
-      middle_name: "BB"
+      middle_name: "BB",
+      suffix: [""],
+      date_of_birth: [""],
+      gender: [""],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      handedness: [""],
+      is_primary_lanuguage_english: [""],
+      primary_language: [""],
+      certified_inpreted: [""],
+      ssn: [""],
+      phone_number: [""],
+      phone_number_1: [""],
+      street_1: [""],
+      street_2: [""],
+      city: [""],
+      state: [""],
+      zip: [""]
     }
   ];
   constructor(
@@ -70,10 +134,15 @@ export class NewClaimComponent implements OnInit {
         this.filteredStates = this.claimantList.slice()
       }
     })
-    // .pipe(
-    //   startWith(''),
-    //   map(claim => claim ? this._filterStates(claim) : this.claimantList.slice())
-    // );
+  }
+  changeOption(option) {
+    this.claimant.setValue(option)
+  }
+  private _filterStates(value: string) {
+    console.log(value)
+    const filterValue = value.toLowerCase();
+
+    return this.claimantList.filter(state => state.first_name.toLowerCase().indexOf(filterValue) === 0);
   }
   setStep(index: number) {
     this.step = index;
@@ -86,70 +155,103 @@ export class NewClaimComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-  changeOption(option) {
-    this.claimant.setValue(option)
-  }
-  private _filterStates(value: string) {
-    console.log(value)
-    const filterValue = value.toLowerCase();
-
-    return this.claimantList.filter(state => state.first_name.toLowerCase().indexOf(filterValue) === 0);
-  }
   ngOnInit() {
     this.claimant = this.formBuilder.group({
-      last_name: ["", Validators.required],
-      first_name: ["", Validators.required],
-      middle_name: ["", Validators.required],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      suffix: [""],
+      date_of_birth: [""],
+      gender: [""],
+      email: ["", Validators.compose([Validators.required, Validators.email])],
+      handedness: [""],
+      is_primary_lanuguage_english: [""],
+      primary_language: [""],
+      certified_inpreted: [""],
+      ssn: [""],
+      phone_number: [""],
+      phone_number_1: [""],
+      street_1: [""],
+      street_2: [""],
+      city: [""],
+      state: [""],
+      zip: [""]
     })
+
     // this.claimForm = this.formBuilder.group({
     this.claim = this.formBuilder.group({
-      claim_id: ["", Validators.required],
-      date_of_injury: ["", Validators.required],
-      insurance: ["", Validators.required],
-      injuries: ["", Validators.required],
-      continuous_trauma: ["", Validators.required],
-      ct_start_date: ["", Validators.required],
-      ct_end_date: ["", Validators.required],
-      panel_number: ["", Validators.required],
-      wcab_number: ["", Validators.required],
-      deu_office: ["", Validators.required]
-    }),
-      this.adjuster = this.formBuilder.group({
-        adjuster: ["", Validators.required],
-        adj_insurance: ["", Validators.required],
-        adjuster_pone: ["", Validators.required],
-        adjuste_fax: ["", Validators.required],
-        adjuster_email: ["", Validators.required],
+      claim_info: this.formBuilder.group({
+        wcab_number: ["", Validators.required],
+        claim_number: ["", Validators.required],
+        date_of_injury: ["", Validators.required],
+        injuries: [""],
+        continuous_trauma: [""],
+        ct_start_date: [""],
+        ct_end_date: [""],
+        panel_number: [""],
+        body_parts: [""]
       }),
-      this.employer = this.formBuilder.group({
-        employer: ["", Validators.required],
-        phone: ["", Validators.required],
-        address: ["", Validators.required],
-        city: ["", Validators.required],
-        state: ["", Validators.required],
-        zip: ["", Validators.required],
+      adjuster: this.formBuilder.group({
+        insurance_name: [""],
+        name: [""],
+        phone: [""],
+        fax: [""],
+        email: [""],
+        address: [""],
       }),
-      this.application_attorney = this.formBuilder.group({
-        applicant_attorney: ["", Validators.required],
-        phone: ["", Validators.required],
-        fax: ["", Validators.required],
-        email: ["", Validators.required],
-        address: ["", Validators.required],
-        city: ["", Validators.required],
-        state: ["", Validators.required],
-        zip: ["", Validators.required]
+      employer: this.formBuilder.group({
+        name: [""],
+        phone: [""],
+        address: [""],
+        city: [""],
+        state: [""],
+        zip: [""],
       }),
-      this.defance_attorney = this.formBuilder.group({
-        defense_attorney: ["", Validators.required],
-        phone: ["", Validators.required],
-        fax: ["", Validators.required],
-        email: ["", Validators.required],
-        address: ["", Validators.required],
-        city: ["", Validators.required],
-        state: ["", Validators.required],
-        zip: ["", Validators.required]
+      application_attorney: this.formBuilder.group({
+        law_firm_name: [""],
+        attorney_name: [""],
+        phone: [""],
+        fax: [""],
+        email: [""],
+        address: [""],
+        city: [""],
+        state: [""],
+        zip: [""]
+      }),
+      defance_attorney: this.formBuilder.group({
+        law_firm_name: [""],
+        attorney_name: [""],
+        phone: [""],
+        fax: [""],
+        email: [""],
+        address: [""],
+        city: [""],
+        state: [""],
+        zip: [""]
+      }),
+      deo_office: this.formBuilder.group({
+        office_name: [""],
+        phone: [""],
+        address: [""]
       })
+    })
     this.billable_item = this.formBuilder.group({
+      exam_type: this.formBuilder.group({
+        procudure_type: [""],
+        modifiers: []
+      }),
+      appoinment: this.formBuilder.group({
+        examinar: [""],
+        date: [""],
+        duration: [""],
+        address: [""]
+      }),
+      intake_call_info: this.formBuilder.group({
+        caller_affliation: [""],
+        intake_caller: [""],
+        call_time: [""],
+        note: [""]
+      })
 
     })
     // })
@@ -164,9 +266,11 @@ export class NewClaimComponent implements OnInit {
     }
   }
   submitClaim() {
-    console.log("res", this.claimForm.value)
+    console.log("res1", this.claimant.value)
+    console.log("res2", this.claim.value)
+    console.log("res3", this.billable_item.value)
   }
-  cancle(){
-    
+  cancle() {
+
   }
 }
