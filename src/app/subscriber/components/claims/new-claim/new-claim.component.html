@@ -566,14 +566,19 @@
                                 <input matInput placeholder="Injuries" autocomplete="off">
                                 <mat-error>error messages here</mat-error>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <mat-form-field  appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            fxFlex.xs="100">
                                 <mat-label>Body Parts</mat-label>
-                                <mat-select>
-                                    <mat-option value="0">Body Parts Here</mat-option>
+                                <mat-select [formControl]="bodyParts" multiple>
+                                  <mat-select-trigger>
+                                    {{bodyParts.value ? bodyParts.value[0] : ''}}
+                                    <span *ngIf="bodyParts.value?.length > 1">
+                                      (+{{bodyParts.value.length - 1}} {{bodyParts.value?.length === 2 ? 'other' : 'others'}})
+                                    </span>
+                                  </mat-select-trigger>
+                                  <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts">{{bodyParts}}</mat-option>
                                 </mat-select>
-                                <mat-error>error messages here</mat-error>
-                            </mat-form-field>
+                              </mat-form-field>
                         </div>
                     </mat-expansion-panel>
 

@@ -57,6 +57,28 @@ export class NewClaimComponent implements OnInit {
       middle_name: "BB"
     }
   ];
+  bodyParts = new FormControl();
+  bodyPartsList: string[] = [
+    'Head',
+    'Face',
+    'Hair',
+    'Ear',
+    'Neck',
+    'Forehead',
+    'Beard',
+    'Eye',
+    'Nose',
+    'Mouth',
+    'Chin',
+    'Shoulder',
+    'Elbow',
+    'Arm',
+    'Chest',
+    'Armpit',
+    'Forearm',
+    'Wrist',
+    'Back'
+  ];
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService) {
@@ -166,7 +188,7 @@ export class NewClaimComponent implements OnInit {
   submitClaim() {
     console.log("res", this.claimForm.value)
   }
-  cancle(){
-    
+  cancle() {
+
   }
 }
