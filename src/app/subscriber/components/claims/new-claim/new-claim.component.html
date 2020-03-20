@@ -343,7 +343,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Date of Birth</mat-label>
                             <input matInput placeholder="Date of Birth" autocomplete="off"
-                                [matDatepicker]="date_of_birth" (click)="date_of_birth.open()" disabled>
+                                [matDatepicker]="date_of_birth" (click)="date_of_birth.open()" >
                             <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
                             <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
                             <mat-error *ngIf="isSubmit">{{errorMessages.date_of_birth}}</mat-error>
@@ -924,8 +924,11 @@
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Intake Call Date & Time</mat-label>
-                        <input matInput placeholder="Intake call date & time" autocomplete="off">
-                        <mat-error>error messages here</mat-error>
+                        <input matInput placeholder="Intake Call Date & Time" autocomplete="off" [matDatepicker]="date_and_time_intake"
+                        (click)="date_and_time_intake.open()">
+                    <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle>
+                    <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker>
+                    <mat-error>error messages here</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
