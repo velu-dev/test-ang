@@ -39,7 +39,8 @@ export class NewUserComponent implements OnInit {
     this.store.subscribe(res => {
       this.activeTitle = res.breadcrumb.active_title;
     })
-    if (this.activeTitle.split(" ").includes("Admin")) {
+    if (this.activeTitle.split(" ").includes("User")) {
+    // if (this.activeTitle.split(" ").includes("Admin")) {
       this.isAdmin.status = true;
       this.isAdmin.disabled = true;
       this.userService.getRoles().subscribe(res => {
