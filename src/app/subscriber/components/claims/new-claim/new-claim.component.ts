@@ -9,12 +9,25 @@ export interface Claimant {
   first_name: string;
   middle_name: string;
 }
+
+
+export interface claimant1 {
+  body_parts: string;
+  injury_date: string;
+  note: string;
+  diagram_url: string;
+}
+const ELEMENT_DATA: claimant1[] = [
+  { body_parts: 'Head, Face, Hand', injury_date: '03-12-2015', note: 'Note description here', diagram_url: 'https://www.google.com/' },
+];
 @Component({
   selector: 'app-new-claim',
   templateUrl: './new-claim.component.html',
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent implements OnInit {
+  displayedColumns: string[] = ['body_parts', 'injury_date', 'note', 'diagram_url'];
+  dataSource = ELEMENT_DATA;
   step = 0;
   isLinear = false;
   isSubmit = false;
@@ -287,6 +300,7 @@ export class NewClaimComponent implements OnInit {
       this.titleName = "Create Billable Item";
     }
   }
+
   submitClaim() {
     console.log("res1", this.claimant.value)
     console.log("res2", this.claim.value)
@@ -296,3 +310,4 @@ export class NewClaimComponent implements OnInit {
 
   }
 }
+
