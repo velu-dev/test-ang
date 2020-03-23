@@ -124,7 +124,7 @@ export const ROUTES = [
         submenu: [],
     }, {
         path: '/subscriber/manager/staff',
-        title: 'Staff Managment',
+        title: 'Staff Management',
         icon: 'dashboard',
         submenu: [],
     }, {
