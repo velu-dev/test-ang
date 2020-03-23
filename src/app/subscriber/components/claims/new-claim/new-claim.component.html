@@ -200,7 +200,6 @@
                         <mat-expansion-panel-header>
                             <div class="sub-title">Claim Information</div>
                         </mat-expansion-panel-header>
-
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_info">
                             <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -298,15 +297,46 @@
                                 <mat-label>Note</mat-label>
                                 <textarea matInput placeholder="Note" autocomplete="off"></textarea>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                 fxFlex.xs="100">
                                 <mat-label>Pain Diagram URL </mat-label>
                                 <input matInput placeholder="Pain Diagram URL" formControlName="Pain Diagram URL"
                                     autocomplete="off">
                             </mat-form-field>
+                            <button mat-raised-button type="button" class="rounded-corner text-center"
+                                color="primary">Submit</button>
 
+
+
+                            <table mat-table [dataSource]="dataSource" class="m-t-20" fxFlex="100">
+                                <!-- body_parts Column -->
+                                <ng-container matColumnDef="body_parts">
+                                    <th mat-header-cell *matHeaderCellDef> Body parts </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.body_parts}} </td>
+                                </ng-container>
+
+                                <!-- injury_date Column -->
+                                <ng-container matColumnDef="injury_date">
+                                    <th mat-header-cell *matHeaderCellDef> Date of injury </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.injury_date}} </td>
+                                </ng-container>
+
+                                <!-- note Column -->
+                                <ng-container matColumnDef="note">
+                                    <th mat-header-cell *matHeaderCellDef> Note </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.note}} </td>
+                                </ng-container>
+
+                                <!-- diagram_url Column -->
+                                <ng-container matColumnDef="diagram_url">
+                                    <th mat-header-cell *matHeaderCellDef> Pain Diagram URL </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.diagram_url}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
                         </div>
-
                     </mat-expansion-panel>
 
                     <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
