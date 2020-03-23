@@ -6,12 +6,6 @@
   <mat-card-content>
     <!--Form start-->
     <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userSubmit()" class="mat-grid-form">
-      
-      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>First name*</mat-label>
-        <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
-        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
-      </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Last name*</mat-label>
@@ -19,13 +13,21 @@
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+
+      <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Middle name / MI</mat-label>
         <input matInput placeholder="Middle name" formControlName="middle_name" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>First name*</mat-label>
+        <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
         <mat-label>Company name</mat-label>
         <input matInput placeholder="Company name" formControlName="company_name" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidcompanyname}}</mat-error>
