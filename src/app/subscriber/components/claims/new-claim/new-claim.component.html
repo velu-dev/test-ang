@@ -9,9 +9,10 @@
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
-                        <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant</div>
+                        <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant (or) WCAB number from EAMS
+                            Service</div>
                         <mat-form-field appearance="fill" fxFlex="100">
-                            <input matInput placeholder="Search by name, email, phone, etc ..."
+                            <input matInput placeholder="Search by name, email, phone, etc ... OR WCAB number"
                                 [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                             <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let option of filteredStates" (click)="changeOption(option)"
@@ -27,17 +28,18 @@
                             <mat-error>{{errorMessages.entervalidlastname}}</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput placeholder="Middle Name" formControlName="middle_name" autocomplete="off">
+                            <mat-error>{{errorMessages.entervalidmiddlename}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>First Name</mat-label>
                             <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
                             <mat-error>{{errorMessages.entervalidfirstname}}</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Middle Name</mat-label>
-                            <input matInput placeholder="Middle Name" formControlName="middle_name" autocomplete="off">
-                            <mat-error>{{errorMessages.entervalidmiddlename}}</mat-error>
-                        </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Suffix</mat-label>
@@ -193,14 +195,6 @@
             <form [formGroup]="claim">
                 <ng-template matStepLabel>Create Claim</ng-template>
 
-                <div class="wc_search">
-                    <div class="sub-title p-l-10">Search WCAB number from EAMS Service</div>
-                    <mat-form-field appearance="fill">
-                        <input matInput placeholder="Search WCAB number from EAMS Service" autocomplete="off">
-                    </mat-form-field>
-                    <!-- <div class="sub-title p-l-10" fxFlex="100">Search WCAB number from EAMS Service</div> -->
-
-                </div>
                 <mat-accordion class="p-t-15">
                     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
                         <mat-expansion-panel-header>
@@ -208,14 +202,14 @@
                         </mat-expansion-panel-header>
 
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_info">
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>WCAB Number </mat-label>
                                 <input matInput placeholder="WCAB Number" formControlName="wcab_number"
                                     autocomplete="off">
                                 <mat-error>Enter valid WCAB number</mat-error>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Claim Number</mat-label>
                                 <input matInput placeholder="Claim Number" formControlName="claim_number"
@@ -223,6 +217,37 @@
                                 <mat-error>Enter valid claim number</mat-error>
                             </mat-form-field>
 
+                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Panel Number </mat-label>
+                                <input matInput placeholder="Panel Number" formControlName="panel_number"
+                                    autocomplete="off">
+                            </mat-form-field>
+
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">Injury Information</div>
+                        </mat-expansion-panel-header>
+
+                        <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_info">
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Body Parts</mat-label>
+                                <mat-select formControlName="body_parts" multiple>
+                                    <mat-select-trigger>
+                                        {{bodyParts.value ? bodyParts.value[0] : ''}}
+                                        <span *ngIf="bodyParts.value?.length > 1">
+                                            (+{{bodyParts.value.length - 1}}
+                                            {{bodyParts.value?.length === 2 ? 'other' : 'others'}})
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts">
+                                        {{bodyParts}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Date of Injury </mat-label>
@@ -232,6 +257,12 @@
                                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
                                 <mat-error>Enter valid date of birth</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Injuries </mat-label>
+                                <input matInput placeholder="Injuries" formControlName="injuries" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -262,37 +293,23 @@
                                 <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                                fxFlex.xs="100">
+                                <mat-label>Note</mat-label>
+                                <textarea matInput placeholder="Note" autocomplete="off"></textarea>
+                            </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Panel Number </mat-label>
-                                <input matInput placeholder="Panel Number" formControlName="panel_number"
+                                <mat-label>Pain Diagram URL </mat-label>
+                                <input matInput placeholder="Pain Diagram URL" formControlName="Pain Diagram URL"
                                     autocomplete="off">
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Injuries </mat-label>
-                                <input matInput placeholder="Injuries" formControlName="injuries" autocomplete="off">
-                            </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Body Parts</mat-label>
-                                <mat-select formControlName="body_parts" multiple>
-                                    <mat-select-trigger>
-                                        {{bodyParts.value ? bodyParts.value[0] : ''}}
-                                        <span *ngIf="bodyParts.value?.length > 1">
-                                            (+{{bodyParts.value.length - 1}}
-                                            {{bodyParts.value?.length === 2 ? 'other' : 'others'}})
-                                        </span>
-                                    </mat-select-trigger>
-                                    <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts">
-                                        {{bodyParts}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
                         </div>
+
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Adjuster Information</div>
                         </mat-expansion-panel-header>
@@ -335,7 +352,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Employer Information</div>
                         </mat-expansion-panel-header>
@@ -377,7 +394,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
+                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Applicant
                                 Attorney Information</div>
@@ -436,7 +453,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
+                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Defense Attorney
                                 Information</div>
@@ -495,7 +512,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
+                    <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">DEU Office</div>
                         </mat-expansion-panel-header>
