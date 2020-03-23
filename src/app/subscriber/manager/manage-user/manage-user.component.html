@@ -64,8 +64,9 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="column != 'createdAt'">{{element[column]}} </span>
-                        <span *ngIf="column == 'createdAt'">{{element[column] | date:'MM-dd-yyyy'}} </span>
+                        <span *ngIf="column == 'sign_in_email_id'" [title]="element[column]">{{element[column] }}</span>
+                        <span *ngIf="column != 'createdAt' && column != 'sign_in_email_id'" [title]="element[column]">{{element[column] | ellipsis:22 }}</span>
+                        <span *ngIf="column == 'createdAt' && column != 'sign_in_email_id'">{{element[column] | date:'MM-dd-yyyy'}} </span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">
                             <span class="user-disable-enable" *ngIf="tabIndex != 1" (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
                             <!-- <span class="user-disable-enable" *ngIf="tabIndex == 1"  (click)="onDisable($event, element)"> Cancel </span> -->
