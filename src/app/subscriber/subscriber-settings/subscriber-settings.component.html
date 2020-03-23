@@ -43,7 +43,7 @@
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50" class="m-t-5 p-r-10">
                                         <mat-label>New Password</mat-label>
-                                        <input type="{{isTypePassword ? 'password': 'text'}}" matInput
+                                        <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="New Password" autocomplete="off"
                                             formControlName="new_password">
                                         <mat-icon matSuffix
@@ -55,7 +55,7 @@
                                     <mat-form-field appearance="standard" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
                                         fxFlex.sm="45" fxFlex.xl="45" class="m-t-5">
                                         <mat-label>Confirm New Password</mat-label>
-                                        <input type="{{isTypePassword ? 'password': 'text'}}" matInput
+                                        <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="Confirm New Password" autocomplete="off"
                                             formControlName="confirmPassword">
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>

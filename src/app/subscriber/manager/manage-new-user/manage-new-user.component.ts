@@ -62,7 +62,7 @@ export class ManageNewUserComponent implements OnInit {
       this.alertService.openSnackBar("User created successfully", 'success');
       this._location.back();
     }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
+      this.alertService.openSnackBar(error.error.error, 'error');
     })
   }
   cancel() {

@@ -74,9 +74,10 @@ export class SubscriberSettingsComponent implements OnInit {
   isSubmit = false;
   changePassword() {
     this.isSubmit = true;
-    console.log(this.userPasswrdForm, this.userPasswrdForm.controls.current_password.errors.required)
+    console.log(this.userPasswrdForm)
     if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
       console.log("password miss match  ")
+      this.alertService.openSnackBar(this.errorMessages.passworddidnotMatch, "error");
       return
     }
     if (this.userPasswrdForm.invalid) {
@@ -95,7 +96,10 @@ export class SubscriberSettingsComponent implements OnInit {
         })
       }, error => {
         this.spinnerService.hide();
-        this.alertService.openSnackBar(error.message, "success");
+        if(error.code == 'NotAuthorizedException'){
+          error.message = this.errorMessages.oldpasswordworng;
+        }
+        this.alertService.openSnackBar(error.message, "error");
       })
     })
   }

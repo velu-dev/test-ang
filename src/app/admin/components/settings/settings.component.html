@@ -43,7 +43,7 @@
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50" class="m-t-5 p-r-10">
                                         <mat-label>New password*</mat-label>
-                                        <input type="{{isTypePassword ? 'password': 'text'}}" matInput
+                                        <input [type]="isTypePassword ? 'password': 'text' " matInput
                                             placeholder="New password*" autocomplete="off"
                                             formControlName="new_password">
                                         <mat-icon matSuffix
@@ -54,14 +54,14 @@
                                     <mat-form-field appearance="standard" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
                                         fxFlex.sm="45" fxFlex.xl="45" class="m-t-5">
                                         <mat-label>Confirm new password*</mat-label>
-                                        <input type="{{isTypePassword ? 'password': 'text'}}" matInput
+                                        <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="Confirm new password*" autocomplete="off"
                                             formControlName="confirmPassword">
                                     </mat-form-field>
                                     <div fxFlex="10" fxFlex.md="5" fxFlex.lg="5" fxFlex.sm="5" fxFlex.xl="5"
                                         class="m-t-5">
                                         <mat-icon matSuffix (click)="changeInputType()" class="check-password p-t-25">
-                                            remove_red_eye</mat-icon>
+                                            {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
                                     </div>
 
                                     <button mat-raised-button color="primary" class="m-t-5">SAVE CHANGES </button>
