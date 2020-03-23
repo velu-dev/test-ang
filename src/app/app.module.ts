@@ -14,6 +14,7 @@ import { TokenInterceptorService } from './shared/interceptors/token-interceptor
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { MaterialModule } from './shared/material.module';
+import { NgxMaskModule } from 'ngx-mask'
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MaterialModule } from './shared/material.module';
         strictStateImmutability: true,
         strictActionImmutability: true
       }
-    })
+    }),
+    NgxMaskModule.forRoot()
   ],
   providers: [
     Title,
