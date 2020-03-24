@@ -111,8 +111,8 @@
                                 <!-- <mat-checkbox class="p-r-10 p-l-10" [(ngModel)]='certifiedStatusYes' formControlName="certified_interpreter" (change)="certifiedStatusNo = false">yes</mat-checkbox>
                               <mat-checkbox value="false" [(ngModel)]='certifiedStatusNo'  formControlName="certified_interpreter" (change)="certifiedStatusYes = false">No</mat-checkbox> -->
                                 <mat-radio-group formControlName="certified_inpreted" aria-label="Select an option">
-                                    <mat-radio-button value="true">Yes</mat-radio-button>
-                                    <mat-radio-button value="false">No</mat-radio-button>
+                                    <mat-radio-button value="true" class="p-l-15">Yes</mat-radio-button>
+                                    <mat-radio-button value="false" class="p-l-15">No</mat-radio-button>
                                 </mat-radio-group>
                             </div>
                         </div>
@@ -237,13 +237,7 @@
                                 <mat-label>Body Parts</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.body_parts" [ngModelOptions]="{standalone: true}"
                                     multiple>
-                                    <!-- <mat-select-trigger>
-                                        {{bodyParts.value ? bodyParts.value[0] : ''}}
-                                        <span *ngIf="bodyParts.value?.length > 1">
-                                            (+{{bodyParts.value.length - 1}}
-                                            {{bodyParts.value?.length === 2 ? 'other' : 'others'}})
-                                        </span>
-                                    </mat-select-trigger> -->
+
                                     <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts">
                                         {{bodyParts}}</mat-option>
                                 </mat-select>
@@ -258,15 +252,15 @@
                                 <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
                                 <mat-error>Enter valid date of birth</mat-error>
                             </mat-form-field>
-
+                            <!-- 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Injuries </mat-label>
-                                <input matInput placeholder="Injuries" [(ngModel)]="injuryInfo.injuries"
+                                <mat-label>Injury </mat-label>
+                                <input matInput placeholder="Injury" [(ngModel)]="injuryInfo.injuries"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
-                            </mat-form-field>
+                            </mat-form-field> -->
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33." fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Continuous Trauma (CT)</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.continuous_trauma"
@@ -275,8 +269,8 @@
                                     <mat-option value="0">No</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard" fxFlex="50"
-                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard"
+                                fxFlex="33.3" fxFlex.md="33." fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off"
                                     [matDatepicker]="ct_start_date" [(ngModel)]="injuryInfo.ct_start_date"
@@ -285,8 +279,8 @@
                                 <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard" fxFlex="50"
-                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard"
+                                fxFlex="33.3" fxFlex.md="33." fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.ct_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
@@ -294,22 +288,16 @@
                                 <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
                                 <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                            <mat-form-field appearance="standard" fxFlex="66.7" fxFlex.md="66.7" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Note</mat-label>
+                                <mat-label>Injury Note</mat-label>
                                 <textarea matInput [(ngModel)]="injuryInfo.note" [ngModelOptions]="{standalone: true}"
                                     placeholder="Note" autocomplete="off"></textarea>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
-                                fxFlex.xs="100">
-                                <mat-label>Pain Diagram URL </mat-label>
-                                <input matInput placeholder="Pain Diagram URL" [(ngModel)]="injuryInfo.diagram_url"
-                                    [ngModelOptions]="{standalone: true}" autocomplete="off">
-                            </mat-form-field>
-                            <button mat-raised-button (click)="addInjury()" class="rounded-corner text-center"
-                                color="primary">Add</button>
-
-
+                            <div fxFlex="100" class="p-t-10">
+                                <button mat-raised-button (click)="addInjury()" class="rounded-corner text-center"
+                                    color="primary">Add</button>
+                            </div>
 
                             <table mat-table [dataSource]="dataSource" class="m-t-20" fxFlex="100">
                                 <!-- body_parts Column -->
@@ -327,21 +315,22 @@
 
                                 <!-- note Column -->
                                 <ng-container matColumnDef="note">
-                                    <th mat-header-cell *matHeaderCellDef> Note </th>
+                                    <th mat-header-cell *matHeaderCellDef> Injury Note </th>
                                     <td mat-cell *matCellDef="let element"> {{element?.note}} </td>
                                 </ng-container>
 
-                                <!-- diagram_url Column -->
-                                <ng-container matColumnDef="diagram_url">
-                                    <th mat-header-cell *matHeaderCellDef> Pain Diagram URL </th>
-                                    <td mat-cell *matCellDef="let element"> {{element?.diagram_url}} </td>
-                                </ng-container>
                                 <ng-container matColumnDef="action">
                                     <th mat-header-cell *matHeaderCellDef> Action </th>
-                                    <td mat-cell *matCellDef="let element;let i=index"> <button
-                                            (click)="editInjury(element,i)">Edit</button> |
-                                        <button (click)="deleteInjury(element, i)">Delete</button> </td>
+                                    <td mat-cell *matCellDef="let element;let i=index">
+                                        <mat-icon (click)="editInjury(element,i)" class="edit-user" mat-raised-button
+                                            matTooltip="Edit" matTooltipPosition="right">edit
+                                        </mat-icon> |
+                                        <mat-icon (click)="deleteInjury(element, i)" class="edit-user" mat-raised-button
+                                            matTooltip="Delete" matTooltipPosition="right">delete
+                                        </mat-icon>
+                                    </td>
                                 </ng-container>
+
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             </table>
@@ -350,7 +339,47 @@
 
                     <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Adjuster Information</div>
+                            <div class="sub-title">Correspondence</div>
+                        </mat-expansion-panel-header>
+
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <div fxFlex="50">
+                                <div fxLayout="row wrap" fxFlex="100">
+                                    <div class="file-upload" fxFlex="100">
+                                        <p>Choose a file or drag it here</p>
+                                        <p class="input"> SELECT</p>
+                                    </div>
+                                    <mat-form-field appearance="standard" class="w-100">
+                                        <mat-label>Note</mat-label>
+                                        <textarea matInput placeholder="Note" autocomplete="off"></textarea>
+                                        <mat-error>error msg here</mat-error>
+                                    </mat-form-field>
+                                    <button mat-raised-button class="rounded-corner text-center"
+                                        color="primary">Add</button>
+                                </div>
+                            </div>
+                            <div fxFlex="50">
+                                <div fxLayout="row wrap" fxFlex="100">
+                                    <div class="docs_list" fxFlex="100S">
+                                        <img mat-card-image [src]="xls" alt="Profile photo">
+                                        <div>
+                                            <h4>Hi test doc.xls</h4>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry.</p>
+                                        </div>
+                                        <span class="delete-icon">
+                                            <mat-icon>close</mat-icon>
+                                        </span>
+                                    </div>
+                                    <!-- <h4 class="text-center">Uploaded Document List - In progress</h4> -->
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">Claims Administrator Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="adjuster">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -362,36 +391,36 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Name</mat-label>
+                                <mat-label>Adjuster Name</mat-label>
                                 <input matInput placeholder="Name" formControlName="name" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Phone</mat-label>
+                                <mat-label>Adjuster Phone</mat-label>
                                 <input matInput placeholder="Phone" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Email</mat-label>
+                                <mat-label>Adjuster Email</mat-label>
                                 <input matInput placeholder="Email" formControlName="email" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Adjuster Address</mat-label>
                                 <textarea matInput formControlName="address"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Fax</mat-label>
+                                <mat-label>Adjuster Fax</mat-label>
                                 <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
+                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Employer Information</div>
                         </mat-expansion-panel-header>
@@ -433,7 +462,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
+                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Applicant
                                 Attorney Information</div>
@@ -492,7 +521,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
+                    <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Defense Attorney
                                 Information</div>
@@ -551,7 +580,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
+                    <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">DEU Office</div>
                         </mat-expansion-panel-header>

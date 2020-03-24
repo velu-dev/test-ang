@@ -273,7 +273,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     color: $primarycolor;
     text-align: center;
   }
-  input {
+  .input {
     padding: 8px 25px;
     color: $white;
     background-color: $primarycolor;
@@ -281,6 +281,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     border-radius: 3px;
     text-align: center;
     margin: 0px auto;
+    max-width:50px;
     display: block;
     &:focus {
       outline: none;

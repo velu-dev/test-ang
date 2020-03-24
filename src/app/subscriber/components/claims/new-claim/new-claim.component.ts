@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatTableDataSource } from '@angular/material/table';
+import * as globals from '../../../../globals';
 export interface Claimant {
   last_name: string;
   first_name: string;
@@ -15,12 +16,10 @@ export interface Claimant {
 export interface claimant1 {
   body_parts: string,
   date_of_injury: string,
-  injuries: string,
   continuous_trauma: string,
   ct_start_date: string,
   ct_end_date: string,
-  note: string,
-  diagram_url: string
+  note: string
 }
 const ELEMENT_DATA: claimant1[] = []
 @Component({
@@ -29,7 +28,8 @@ const ELEMENT_DATA: claimant1[] = []
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent implements OnInit {
-  displayedColumns: string[] = ['body_parts', 'date_of_injury', 'note', 'diagram_url', "action"];
+  xls = globals.xls
+  displayedColumns: string[] = ['body_parts', 'date_of_injury', 'note', "action"];
   dataSource: any;
   step = 0;
   isLinear = false;
@@ -51,7 +51,7 @@ export class NewClaimComponent implements OnInit {
   languageStatus = false;
   callerAffliation = [];
   injuryInfodata: claimant1[] = []
-  injuryInfo = { body_parts: "", date_of_injury: "", injuries: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" }
+  injuryInfo = { body_parts: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" }
   claimantList = [
     {
       last_name: 'John',
@@ -227,7 +227,6 @@ export class NewClaimComponent implements OnInit {
       }),
       injury_info: this.formBuilder.group({
         date_of_injury: ["", Validators.required],
-        injuries: [""],
         continuous_trauma: [""],
         ct_start_date: [""],
         ct_end_date: [""],
@@ -319,7 +318,7 @@ export class NewClaimComponent implements OnInit {
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_parts: "", date_of_injury: "", injuries: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
+    this.injuryInfo = { body_parts: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);
