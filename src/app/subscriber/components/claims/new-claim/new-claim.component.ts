@@ -51,6 +51,8 @@ export class NewClaimComponent implements OnInit {
   languageStatus = false;
   callerAffliation = [];
   injuryInfodata: claimant1[] = []
+  searchStatus: boolean = false;
+  advanceSearch: any;
   injuryInfo = { body_parts: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" }
   claimantList = [
     {
@@ -208,6 +210,13 @@ export class NewClaimComponent implements OnInit {
     this.step--;
   }
   ngOnInit() {
+    this.advanceSearch = this.formBuilder.group({
+      last_name: [''],
+      first_name: [''],
+      date_of_birth: [''],
+      city: [""],
+      zip: [""]
+    })
     this.claimant = this.formBuilder.group({
       // last_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
       // first_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
@@ -313,6 +322,10 @@ export class NewClaimComponent implements OnInit {
 
     })
     // })
+  }
+
+  advanceSearchSubmit(){
+    console.log("advanceSearch",this.advanceSearch.value)
   }
   selectionChange(event) {
     console.log("event",event)
