@@ -72,7 +72,7 @@
                                                 </mat-form-field>
 
                                                 <div class="text-right w-100 m-t-10 m-b-50">
-                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 " (click)="searchStatus = false">
+                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 " (click)="advanceSearch.reset();searchStatus = false">
                                                         Cancel </button>
                                                     <button mat-raised-button type="button" color="primary"
                                                         class="m-r-15 btn_success" matStepperPrevious (click)="advanceSearchSubmit()">Search</button>
@@ -416,8 +416,9 @@
                             <div fxFlex="50">
                                 <div fxLayout="row wrap" fxFlex="100">
                                     <div class="file-upload" fxFlex="100">
+                                        <input type="file" multiple #uploader hidden (change)="uploadFile($event)" id="uploadFile" accept="CSV">
                                         <p>Choose a file or drag it here</p>
-                                        <p class="input"> SELECT</p>
+                                        <p class="input" (click)="uploader.click()"> SELECT</p>
                                     </div>
                                     <mat-form-field appearance="standard" class="w-100">
                                         <mat-label>Note</mat-label>
