@@ -51,6 +51,7 @@ export class NewClaimComponent implements OnInit {
   languageStatus = false;
   callerAffliation = [];
   injuryInfodata: claimant1[] = []
+  searchStatus: boolean = false;
   injuryInfo = { body_parts: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" }
   claimantList = [
     {

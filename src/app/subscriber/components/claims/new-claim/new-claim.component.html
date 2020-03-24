@@ -27,9 +27,9 @@
                                                     {{option.first_name}}
                                                 </mat-option>
                                             </mat-autocomplete>
-                                            <mat-icon matSuffix>keyboard_arrow_up</mat-icon>
+                                            <mat-icon matSuffix (click)="searchStatus = !searchStatus ">{{searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</mat-icon>
                                         </mat-form-field>
-                                        <div class="advance_search">
+                                        <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
                                                 <mat-form-field appearance="outline" fxFlex="50">
                                                     <mat-label>First Name</mat-label>
@@ -70,8 +70,7 @@
                                                 </mat-form-field>
 
                                                 <div class="text-right w-100 m-t-10 m-b-50">
-                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 "
-                                                        matStepperNext>
+                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 " (click)="searchStatus = false">
                                                         Cancel </button>
                                                     <button mat-raised-button type="button" color="primary"
                                                         class="m-r-15 btn_success" matStepperPrevious>Search</button>
