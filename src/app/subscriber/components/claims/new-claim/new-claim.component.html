@@ -3,24 +3,97 @@
         <div class="m-0 content-wrapper-main-title">{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant">
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <mat-card>
+
+
+
                     <div fxLayout="row wrap" fxFlex="100">
-                        <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant (or) WCAB number from EAMS
-                            Service</div>
-                        <mat-form-field appearance="fill" fxFlex="100">
-                            <input matInput placeholder="Search by name, email, phone, etc ... OR WCAB number"
-                                [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
-                            <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                                <mat-option *ngFor="let option of filteredStates" (click)="changeOption(option)"
-                                    [value]="option.first_name">
-                                    {{option.first_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
+                        <!-- <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant (or) WCAB number from EAMS
+                            Service</div> -->
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <div fxFlex="100">
+                                <mat-tab-group>
+                                    <mat-tab label="Search by Claimants ">
+                                        <mat-form-field appearance="fill" fxFlex="100" class="w-100">
+                                            <input matInput placeholder="Search by name, date of birth etc... "
+                                                [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                                            <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                                <mat-option *ngFor="let option of filteredStates"
+                                                    (click)="changeOption(option)" [value]="option.first_name">
+                                                    {{option.first_name}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                            <mat-icon matSuffix>keyboard_arrow_up</mat-icon>
+                                        </mat-form-field>
+                                        <div class="advance_search">
+                                            <div fxLayout="row wrap" fxFlex="100">
+                                                <mat-form-field appearance="outline" fxFlex="50">
+                                                    <mat-label>First Name</mat-label>
+                                                    <input matInput placeholder="First name" autocomplete="off">
+                                                    <mat-error>error msg here</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="50">
+                                                    <mat-label>Last Name</mat-label>
+                                                    <input matInput placeholder="Last Name" autocomplete="off">
+                                                    <mat-error>error msg here</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="33.3">
+                                                    <mat-label>Date of Birth</mat-label>
+                                                    <input matInput placeholder="Date of Birth"
+                                                        formControlName="date_of_birth_advance_search"
+                                                        autocomplete="off"
+                                                        [matDatepicker]="date_of_birth_advance_search"
+                                                        (click)="date_of_birth_advance_search.open()">
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="date_of_birth_advance_search"></mat-datepicker-toggle>
+                                                    <mat-datepicker #date_of_birth_advance_search disabled="false">
+                                                    </mat-datepicker>
+                                                    <mat-error>Enter valid date of birth</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="33.3">
+                                                    <mat-label>City</mat-label>
+                                                    <input matInput placeholder="City" autocomplete="off">
+                                                    <mat-error>error msg here</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="33.3">
+                                                    <mat-label>zip code</mat-label>
+                                                    <input matInput placeholder="zip code" autocomplete="off">
+                                                    <mat-error>error msg here</mat-error>
+                                                </mat-form-field>
+
+                                                <div class="text-right w-100 m-t-10 m-b-50">
+                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 "
+                                                        matStepperNext>
+                                                        Cancel </button>
+                                                    <button mat-raised-button type="button" color="primary"
+                                                        class="m-r-15 btn_success" matStepperPrevious>Search</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </mat-tab>
+                                    <mat-tab label="Search by WCAB Number">
+
+                                        <mat-form-field appearance="fill" fxFlex="100" class="w-100">
+                                            <mat-label>Search by WCAB Number</mat-label>
+                                            <input matInput placeholder="Search by WCAB Number" autocomplete="off">
+                                            <mat-error>error msg here</mat-error>
+                                        </mat-form-field>
+
+                                    </mat-tab>
+                                </mat-tab-group>
+                            </div>
+                        </div>
+
+
                         <div class="sub-title p-t-15  p-l-10" fxFlex="100">Add New Claimant</div>
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Last Name</mat-label>
@@ -119,14 +192,15 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>SSN</mat-label>
-                            <input matInput  mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
+                            <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn"
+                                autocomplete="off">
                             <!-- <mat-error>{{errorMessages.ssn}}</mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Phone Number</mat-label>
-                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_number" placeholder="Phone Number"
-                                autocomplete="off">
+                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_number"
+                                placeholder="Phone Number" autocomplete="off">
                             <mat-error>Enter valid phone number</mat-error>
                         </mat-form-field>
 
@@ -173,12 +247,6 @@
                             <input matInput placeholder="Zip" formControlName="zip" autocomplete="off">
                             <mat-error>Enter valid zip code</mat-error>
                         </mat-form-field>
-                        <!-- 
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Zip + 4</mat-label>
-                            <input matInput placeholder="Zip +4" autocomplete="off">
-                            <mat-error>{{errorMessages.zip_4}}</mat-error>
-                        </mat-form-field> -->
 
                         <div class="text-center w-100 m-t-10 m-b-50">
                             <button mat-raised-button color="primary" type="submit"
@@ -363,12 +431,43 @@
                                     <div class="docs_list" fxFlex="100S">
                                         <img mat-card-image [src]="xls" alt="Profile photo">
                                         <div>
-                                            <h4>Hi test doc.xls</h4>
+                                            <h4>Document_name.xls</h4>
                                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting
                                                 industry.</p>
                                         </div>
                                         <span class="delete-icon">
-                                            <mat-icon>close</mat-icon>
+                                            <button mat-icon-button color="warn"
+                                                aria-label="Example icon-button with a heart icon">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="docs_list" fxFlex="100S">
+                                        <img mat-card-image [src]="xls" alt="Profile photo">
+                                        <div>
+                                            <h4>Document_name.xls</h4>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry.</p>
+                                        </div>
+                                        <span class="delete-icon">
+                                            <button mat-icon-button color="warn"
+                                                aria-label="Example icon-button with a heart icon">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="docs_list" fxFlex="100S">
+                                        <img mat-card-image [src]="xls" alt="Profile photo">
+                                        <div>
+                                            <h4>Document_name.xls</h4>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry.</p>
+                                        </div>
+                                        <span class="delete-icon">
+                                            <button mat-icon-button color="warn"
+                                                aria-label="Example icon-button with a heart icon">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
                                         </span>
                                     </div>
                                     <!-- <h4 class="text-center">Uploaded Document List - In progress</h4> -->
@@ -398,7 +497,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Adjuster Phone</mat-label>
-                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -435,7 +535,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" type="text" mask="(000) 000-0000" formControlName="phone" autocomplete="off">
+                                <input matInput placeholder="Phone" type="text" mask="(000) 000-0000"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100">
@@ -484,7 +585,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
 
@@ -543,7 +645,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
 
@@ -595,7 +698,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone Number</mat-label>
-                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone Number" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone Number"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100">
