@@ -11,12 +11,7 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <!-- <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant (or) WCAB number from EAMS
                             Service</div> -->
-                        <div fxLayout="row wrap" fxFlex="100">
-                            <mat-form-field appearance="outline" fxFlex="50">
-                                <mat-label>Last Name</mat-label>
-                                <input matInput placeholder="Last Name" formControlName="last_name" autocomplete="off">
-                                <mat-error>{{errorMessages.entervalidlastname}}</mat-error>
-                            </mat-form-field>
+                       
                             <div fxFlex="100">
                                 <mat-tab-group>
                                     <mat-tab label="Search by Claimants ">
@@ -105,7 +100,7 @@
                                     </mat-tab>
                                 </mat-tab-group>
                             </div>
-                        </div>
+                      
 
 
                         <div class="sub-title p-t-15  p-l-10" fxFlex="100">Add New Claimant</div>
@@ -844,16 +839,16 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Communication Type</mat-label>
-                            <mat-select>
+                            <mat-select formControlName="communication_type">
                                 <mat-option value="Phone">Phone</mat-option>
                                 <mat-option value="Fax">Fax</mat-option>
                                 <mat-option value="Email">Email</mat-option>
                                 <mat-option value="Letter">Letter</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Communication Detail</mat-label>
-                            <input matInput placeholder="Communication Detail" autocomplete="off">
+                        <mat-form-field *ngIf="billable_item?.value?.intake_call_info?.communication_type != ''" appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>{{billable_item?.value?.intake_call_info?.communication_type}}</mat-label>
+                            <input matInput formControlName="communication_details" placeholder="{{billable_item?.value?.intake_call_info?.communication_type}}" autocomplete="off">
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50">

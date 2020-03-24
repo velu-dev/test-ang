@@ -164,6 +164,7 @@ export class NewClaimComponent implements OnInit {
     'Back'
   ];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  intakeComType: string;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService) {
@@ -317,6 +318,8 @@ export class NewClaimComponent implements OnInit {
       intake_call_info: this.formBuilder.group({
         caller_affliation: [""],
         intake_caller: [""],
+        communication_type: [""],
+        communication_details: [""],
         call_time: [""],
         note: [""]
       })
