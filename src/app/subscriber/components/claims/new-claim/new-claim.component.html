@@ -360,7 +360,7 @@
                                 fxFlex.xs="100">
                                 <mat-label>Injury Note</mat-label>
                                 <textarea matInput [(ngModel)]="injuryInfo.note" [ngModelOptions]="{standalone: true}"
-                                    placeholder="Note" autocomplete="off"></textarea>
+                                    placeholder="Injury Note " autocomplete="off"></textarea>
                             </mat-form-field>
                             <div fxFlex="100" class="p-t-10">
                                 <button mat-raised-button (click)="addInjury()" class="rounded-corner text-center"
@@ -768,6 +768,22 @@
                                 <mat-option value="0">60 Mins</mat-option>
                             </mat-select>
                         </mat-form-field>
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Service Location type</mat-label>
+                            <mat-select>
+                                <mat-option value="Service">Service</mat-option>
+                                <mat-option value="Primary">Primary</mat-option>
+                                <mat-option value="Office">Office</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Examination Location</mat-label>
+                            <mat-select>
+                                <mat-option value="address">List of address comes here</mat-option>
+
+                            </mat-select>
+                        </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                             fxFlex.xs="100">
@@ -809,6 +825,20 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Note</mat-label>
                             <input matInput placeholder="Intake call note" formControlName="note" autocomplete="off">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Communication Type</mat-label>
+                            <mat-select>
+                                <mat-option value="Phone">Phone</mat-option>
+                                <mat-option value="Fax">Fax</mat-option>
+                                <mat-option value="Email">Email</mat-option>
+                                <mat-option value="Letter">Letter</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Communication Detail</mat-label>
+                            <input matInput placeholder="Communication Detail" autocomplete="off">
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50">
