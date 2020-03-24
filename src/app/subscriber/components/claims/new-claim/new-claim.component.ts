@@ -197,13 +197,16 @@ export class NewClaimComponent implements OnInit {
   }
   ngOnInit() {
     this.claimant = this.formBuilder.group({
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      // last_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
+      // first_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      first_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([ Validators.pattern('[A-Za-z]+')])],
       suffix: [""],
+     // date_of_birth: ["",Validators.required],
       date_of_birth: [""],
       gender: [""],
-      email: ["", Validators.compose([Validators.required, Validators.email])],
+      email: ["", Validators.compose([Validators.email])],
       handedness: [""],
       is_primary_lanuguage_english: [""],
       primary_language: [""],
@@ -221,12 +224,15 @@ export class NewClaimComponent implements OnInit {
     // this.claimForm = this.formBuilder.group({
     this.claim = this.formBuilder.group({
       claim_info: this.formBuilder.group({
-        wcab_number: ["", Validators.required],
-        claim_number: ["", Validators.required],
+        // wcab_number: ["", Validators.required],
+        // claim_number: ["", Validators.required],
+        wcab_number: ["", ],
+        claim_number: ["",],
         panel_number: [""],
       }),
       injury_info: this.formBuilder.group({
-        date_of_injury: ["", Validators.required],
+       // date_of_injury: ["", Validators.required],
+        date_of_injury: ["",],
         injuries: [""],
         continuous_trauma: [""],
         ct_start_date: [""],
