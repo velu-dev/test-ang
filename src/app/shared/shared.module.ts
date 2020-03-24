@@ -24,7 +24,7 @@ import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { NodataComponent } from './components/nodata/nodata.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
-
+import { NgxMaskModule } from 'ngx-mask'
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -44,7 +44,8 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
     HttpClientModule,
     SharedRoutingModule,
     StoreModule.forFeature("breadcrumb", breadcrumbreducer),
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    NgxMaskModule.forRoot()
   ],
   exports: [
     MaterialModule,
@@ -60,7 +61,8 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
     DialogueComponent,
     NodataComponent,
     NgxSkeletonLoaderModule,
-    EllipsisPipe
+    EllipsisPipe,
+    NgxMaskModule
   ],
   providers: [
     CognitoService,

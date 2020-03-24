@@ -119,20 +119,20 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>SSN</mat-label>
-                            <input matInput placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
+                            <input matInput  mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
                             <!-- <mat-error>{{errorMessages.ssn}}</mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Phone Number</mat-label>
-                            <input matInput type="number" formControlName="phone_number" placeholder="Phone Number"
+                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_number" placeholder="Phone Number"
                                 autocomplete="off">
                             <mat-error>Enter valid phone number</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Alternate Phone Number</mat-label>
-                            <input matInput type="number" formControlName="phone_number_1"
+                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_number_1"
                                 placeholder="Alternate Phone Number" autocomplete="off">
                             <mat-error>Enter valid alternative phone number</mat-error>
                         </mat-form-field>
@@ -398,7 +398,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Adjuster Phone</mat-label>
-                                <input matInput placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -435,7 +435,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput placeholder="Phone" type="text" mask="(000) 000-0000" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100">
@@ -484,7 +484,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
 
@@ -543,7 +543,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
 
@@ -595,7 +595,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone Number</mat-label>
-                                <input matInput placeholder="Phone Number" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone Number" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100">
