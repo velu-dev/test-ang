@@ -174,6 +174,18 @@ export class NewClaimComponent implements OnInit {
         this.filteredStates = this.claimantList.slice()
       }
     })
+
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.claimService.seedData('language').subscribe(response => {
+      this.languageList = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
   }
   changeOption(option) {
     this.claimant.setValue(option)
@@ -303,6 +315,7 @@ export class NewClaimComponent implements OnInit {
     // })
   }
   selectionChange(event) {
+    console.log("event",event)
     if (event.selectedIndex == 0) {
       this.titleName = "Create Claimant";
     } else if (event.selectedIndex == 1) {
