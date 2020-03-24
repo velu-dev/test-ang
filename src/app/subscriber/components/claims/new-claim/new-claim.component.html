@@ -12,11 +12,7 @@
                         <!-- <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant (or) WCAB number from EAMS
                             Service</div> -->
                         <div fxLayout="row wrap" fxFlex="100">
-                            <mat-form-field appearance="outline" fxFlex="50">
-                                <mat-label>Last Name</mat-label>
-                                <input matInput placeholder="Last Name" formControlName="last_name" autocomplete="off">
-                                <mat-error>{{errorMessages.entervalidlastname}}</mat-error>
-                            </mat-form-field>
+
                             <div fxFlex="100">
                                 <mat-tab-group>
                                     <mat-tab label="Search by Claimants ">
@@ -283,6 +279,10 @@
                             <div class="sub-title">Claim Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_info">
+                            <mat-form-field appearance="standard" fxFlex="100">
+                                <mat-label>Claimant name comes here </mat-label>
+                                <input matInput placeholder="Claimant name" value="Claimant name comes here" disabled>
+                            </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>WCAB Number </mat-label>
