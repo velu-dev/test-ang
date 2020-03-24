@@ -27,5 +27,6 @@ export const state = "Please enter a valid state";
 export const zip_code = "Please enter a valid zipcode";
 export const handedness = "Please enter a valid handedness";
 export const language = "Please enter a valid language";
-export const userdisable = "User is disabled."
+export const userdisable = "User is disabled.";
+export const oldpasswordworng = "Incorrect old password";
 

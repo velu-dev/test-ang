@@ -3,23 +3,97 @@
         <div class="m-0 content-wrapper-main-title">{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant">
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <mat-card>
+
+
+
                     <div fxLayout="row wrap" fxFlex="100">
-                        <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant</div>
-                        <mat-form-field appearance="fill" fxFlex="100">
-                            <input matInput placeholder="Search by name, email, phone, etc ..."
-                                [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
-                            <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                                <mat-option *ngFor="let option of filteredStates" (click)="changeOption(option)"
-                                    [value]="option.first_name">
-                                    {{option.first_name}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
+                        <!-- <div class="sub-title p-l-10" fxFlex="100">Search Existing Claimant (or) WCAB number from EAMS
+                            Service</div> -->
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <div fxFlex="100">
+                                <mat-tab-group>
+                                    <mat-tab label="Search by Claimants ">
+                                        <mat-form-field appearance="fill" fxFlex="100" class="w-100">
+                                            <input matInput placeholder="Search by name, date of birth etc... "
+                                                [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                                            <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                                <mat-option *ngFor="let option of filteredStates"
+                                                    (click)="changeOption(option)" [value]="option.first_name">
+                                                    {{option.first_name}}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                            <mat-icon matSuffix>keyboard_arrow_up</mat-icon>
+                                        </mat-form-field>
+                                        <div class="advance_search">
+                                            <div fxLayout="row wrap" fxFlex="100">
+                                                <mat-form-field appearance="outline" fxFlex="50">
+                                                    <mat-label>First Name</mat-label>
+                                                    <input matInput placeholder="First name" autocomplete="off">
+                                                    <mat-error>error msg here</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="50">
+                                                    <mat-label>Last Name</mat-label>
+                                                    <input matInput placeholder="Last Name" autocomplete="off">
+                                                    <mat-error>error msg here</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="33.3">
+                                                    <mat-label>Date of Birth</mat-label>
+                                                    <input matInput placeholder="Date of Birth"
+                                                        formControlName="date_of_birth_advance_search"
+                                                        autocomplete="off"
+                                                        [matDatepicker]="date_of_birth_advance_search"
+                                                        (click)="date_of_birth_advance_search.open()">
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="date_of_birth_advance_search"></mat-datepicker-toggle>
+                                                    <mat-datepicker #date_of_birth_advance_search disabled="false">
+                                                    </mat-datepicker>
+                                                    <mat-error>Enter valid date of birth</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="33.3">
+                                                    <mat-label>City</mat-label>
+                                                    <input matInput placeholder="City" autocomplete="off">
+                                                    <mat-error>error msg here</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="33.3">
+                                                    <mat-label>zip code</mat-label>
+                                                    <input matInput placeholder="zip code" autocomplete="off">
+                                                    <mat-error>error msg here</mat-error>
+                                                </mat-form-field>
+
+                                                <div class="text-right w-100 m-t-10 m-b-50">
+                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 "
+                                                        matStepperNext>
+                                                        Cancel </button>
+                                                    <button mat-raised-button type="button" color="primary"
+                                                        class="m-r-15 btn_success" matStepperPrevious>Search</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </mat-tab>
+                                    <mat-tab label="Search by WCAB Number">
+
+                                        <mat-form-field appearance="fill" fxFlex="100" class="w-100">
+                                            <mat-label>Search by WCAB Number</mat-label>
+                                            <input matInput placeholder="Search by WCAB Number" autocomplete="off">
+                                            <mat-error>error msg here</mat-error>
+                                        </mat-form-field>
+
+                                    </mat-tab>
+                                </mat-tab-group>
+                            </div>
+                        </div>
+
+
                         <div class="sub-title p-t-15  p-l-10" fxFlex="100">Add New Claimant</div>
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Last Name</mat-label>
@@ -27,17 +101,18 @@
                             <mat-error>{{errorMessages.entervalidlastname}}</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput placeholder="Middle Name" formControlName="middle_name" autocomplete="off">
+                            <mat-error>{{errorMessages.entervalidmiddlename}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>First Name</mat-label>
                             <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
                             <mat-error>{{errorMessages.entervalidfirstname}}</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Middle Name</mat-label>
-                            <input matInput placeholder="Middle Name" formControlName="middle_name" autocomplete="off">
-                            <mat-error>{{errorMessages.entervalidmiddlename}}</mat-error>
-                        </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Suffix</mat-label>
@@ -109,28 +184,29 @@
                                 <!-- <mat-checkbox class="p-r-10 p-l-10" [(ngModel)]='certifiedStatusYes' formControlName="certified_interpreter" (change)="certifiedStatusNo = false">yes</mat-checkbox>
                               <mat-checkbox value="false" [(ngModel)]='certifiedStatusNo'  formControlName="certified_interpreter" (change)="certifiedStatusYes = false">No</mat-checkbox> -->
                                 <mat-radio-group formControlName="certified_inpreted" aria-label="Select an option">
-                                    <mat-radio-button value="true">Yes</mat-radio-button>
-                                    <mat-radio-button value="false">No</mat-radio-button>
+                                    <mat-radio-button value="true" class="p-l-15">Yes</mat-radio-button>
+                                    <mat-radio-button value="false" class="p-l-15">No</mat-radio-button>
                                 </mat-radio-group>
                             </div>
                         </div>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>SSN</mat-label>
-                            <input matInput placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
+                            <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn"
+                                autocomplete="off">
                             <!-- <mat-error>{{errorMessages.ssn}}</mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Phone Number</mat-label>
-                            <input matInput type="number" formControlName="phone_number" placeholder="Phone Number"
-                                autocomplete="off">
+                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_number"
+                                placeholder="Phone Number" autocomplete="off">
                             <mat-error>Enter valid phone number</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Alternate Phone Number</mat-label>
-                            <input matInput type="number" formControlName="phone_number_1"
+                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_number_1"
                                 placeholder="Alternate Phone Number" autocomplete="off">
                             <mat-error>Enter valid alternative phone number</mat-error>
                         </mat-form-field>
@@ -171,12 +247,6 @@
                             <input matInput placeholder="Zip" formControlName="zip" autocomplete="off">
                             <mat-error>Enter valid zip code</mat-error>
                         </mat-form-field>
-                        <!-- 
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Zip + 4</mat-label>
-                            <input matInput placeholder="Zip +4" autocomplete="off">
-                            <mat-error>{{errorMessages.zip_4}}</mat-error>
-                        </mat-form-field> -->
 
                         <div class="text-center w-100 m-t-10 m-b-50">
                             <button mat-raised-button color="primary" type="submit"
@@ -193,29 +263,20 @@
             <form [formGroup]="claim">
                 <ng-template matStepLabel>Create Claim</ng-template>
 
-                <div class="wc_search">
-                    <div class="sub-title p-l-10">Search WCAB number from EAMS Service</div>
-                    <mat-form-field appearance="fill">
-                        <input matInput placeholder="Search WCAB number from EAMS Service" autocomplete="off">
-                    </mat-form-field>
-                    <!-- <div class="sub-title p-l-10" fxFlex="100">Search WCAB number from EAMS Service</div> -->
-
-                </div>
                 <mat-accordion class="p-t-15">
                     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Claim Information</div>
                         </mat-expansion-panel-header>
-
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_info">
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>WCAB Number </mat-label>
                                 <input matInput placeholder="WCAB Number" formControlName="wcab_number"
                                     autocomplete="off">
                                 <mat-error>Enter valid WCAB number</mat-error>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Claim Number</mat-label>
                                 <input matInput placeholder="Claim Number" formControlName="claim_number"
@@ -223,78 +284,201 @@
                                 <mat-error>Enter valid claim number</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Date of Injury </mat-label>
-                                <input matInput placeholder="Date of Injury " autocomplete="off"
-                                    [matDatepicker]="date_of_injury1" formControlName="date_of_injury"
-                                    (click)="date_of_injury1.open()">
-                                <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
-                                <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
-                                <mat-error>Enter valid date of birth</mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Continuous Trauma (CT)</mat-label>
-                                <mat-select formControlName="continuous_trauma">
-                                    <mat-option value="0">Yes</mat-option>
-                                    <mat-option value="1">No</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>CT Start Date</mat-label>
-                                <input matInput placeholder="CT Start date " autocomplete="off"
-                                    [matDatepicker]="ct_start_date" formControlName="ct_start_date"
-                                    (click)="ct_start_date.open()">
-                                <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
-                                <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>CT End Date</mat-label>
-                                <input matInput placeholder="CT End date " formControlName="ct_end_date"
-                                    autocomplete="off" [matDatepicker]="ct_end_date" (click)="ct_end_date.open()">
-                                <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
-                                <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Panel Number </mat-label>
                                 <input matInput placeholder="Panel Number" formControlName="panel_number"
                                     autocomplete="off">
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Injuries </mat-label>
-                                <input matInput placeholder="Injuries" formControlName="injuries" autocomplete="off">
-                            </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Body Parts</mat-label>
-                                <mat-select formControlName="body_parts" multiple>
-                                    <mat-select-trigger>
-                                        {{bodyParts.value ? bodyParts.value[0] : ''}}
-                                        <span *ngIf="bodyParts.value?.length > 1">
-                                            (+{{bodyParts.value.length - 1}}
-                                            {{bodyParts.value?.length === 2 ? 'other' : 'others'}})
-                                        </span>
-                                    </mat-select-trigger>
-                                    <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts">
-                                        {{bodyParts}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
                         </div>
                     </mat-expansion-panel>
 
                     <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Adjuster Information</div>
+                            <div class="sub-title">Injury Information</div>
+                        </mat-expansion-panel-header>
+
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Body Parts</mat-label>
+                                <mat-select [(ngModel)]="injuryInfo.body_parts" [ngModelOptions]="{standalone: true}"
+                                    multiple>
+
+                                    <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts">
+                                        {{bodyParts}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Date of Injury </mat-label>
+                                <input matInput placeholder="Date of Injury " autocomplete="off"
+                                    [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury"
+                                    [ngModelOptions]="{standalone: true}" (click)="date_of_injury1.open()">
+                                <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
+                                <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
+                                <mat-error>Enter valid date of birth</mat-error>
+                            </mat-form-field>
+                            <!-- 
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Injury </mat-label>
+                                <input matInput placeholder="Injury" [(ngModel)]="injuryInfo.injuries"
+                                    [ngModelOptions]="{standalone: true}" autocomplete="off">
+                            </mat-form-field> -->
+
+                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33." fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Continuous Trauma (CT)</mat-label>
+                                <mat-select [(ngModel)]="injuryInfo.continuous_trauma"
+                                    [ngModelOptions]="{standalone: true}">
+                                    <mat-option value="1">Yes</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard"
+                                fxFlex="33.3" fxFlex.md="33." fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>CT Start Date</mat-label>
+                                <input matInput placeholder="CT Start date " autocomplete="off"
+                                    [matDatepicker]="ct_start_date" [(ngModel)]="injuryInfo.ct_start_date"
+                                    [ngModelOptions]="{standalone: true}" (click)="ct_start_date.open()">
+                                <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
+                                <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard"
+                                fxFlex="33.3" fxFlex.md="33." fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>CT End Date</mat-label>
+                                <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.ct_end_date"
+                                    [ngModelOptions]="{standalone: true}" autocomplete="off"
+                                    [matDatepicker]="ct_end_date" (click)="ct_end_date.open()">
+                                <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
+                                <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="66.7" fxFlex.md="66.7" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Injury Note</mat-label>
+                                <textarea matInput [(ngModel)]="injuryInfo.note" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Note" autocomplete="off"></textarea>
+                            </mat-form-field>
+                            <div fxFlex="100" class="p-t-10">
+                                <button mat-raised-button (click)="addInjury()" class="rounded-corner text-center"
+                                    color="primary">Add</button>
+                            </div>
+
+                            <table mat-table [dataSource]="dataSource" class="m-t-20" fxFlex="100">
+                                <!-- body_parts Column -->
+                                <ng-container matColumnDef="body_parts">
+                                    <th mat-header-cell *matHeaderCellDef> Body parts </th>
+                                    <td mat-cell *matCellDef="let element"> {{element?.body_parts}} </td>
+                                </ng-container>
+
+                                <!-- injury_date Column -->
+                                <ng-container matColumnDef="date_of_injury">
+                                    <th mat-header-cell *matHeaderCellDef> Date of injury </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element?.date_of_injury | date:'MM-dd-yyyy'}} </td>
+                                </ng-container>
+
+                                <!-- note Column -->
+                                <ng-container matColumnDef="note">
+                                    <th mat-header-cell *matHeaderCellDef> Injury Note </th>
+                                    <td mat-cell *matCellDef="let element"> {{element?.note}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let element;let i=index">
+                                        <mat-icon (click)="editInjury(element,i)" class="edit-user" mat-raised-button
+                                            matTooltip="Edit" matTooltipPosition="right">edit
+                                        </mat-icon> |
+                                        <mat-icon (click)="deleteInjury(element, i)" class="edit-user" mat-raised-button
+                                            matTooltip="Delete" matTooltipPosition="right">delete
+                                        </mat-icon>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">Correspondence</div>
+                        </mat-expansion-panel-header>
+
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <div fxFlex="50">
+                                <div fxLayout="row wrap" fxFlex="100">
+                                    <div class="file-upload" fxFlex="100">
+                                        <p>Choose a file or drag it here</p>
+                                        <p class="input"> SELECT</p>
+                                    </div>
+                                    <mat-form-field appearance="standard" class="w-100">
+                                        <mat-label>Note</mat-label>
+                                        <textarea matInput placeholder="Note" autocomplete="off"></textarea>
+                                        <mat-error>error msg here</mat-error>
+                                    </mat-form-field>
+                                    <button mat-raised-button class="rounded-corner text-center"
+                                        color="primary">Add</button>
+                                </div>
+                            </div>
+                            <div fxFlex="50">
+                                <div fxLayout="row wrap" fxFlex="100">
+                                    <div class="docs_list" fxFlex="100S">
+                                        <img mat-card-image [src]="xls" alt="Profile photo">
+                                        <div>
+                                            <h4>Document_name.xls</h4>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry.</p>
+                                        </div>
+                                        <span class="delete-icon">
+                                            <button mat-icon-button color="warn"
+                                                aria-label="Example icon-button with a heart icon">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="docs_list" fxFlex="100S">
+                                        <img mat-card-image [src]="xls" alt="Profile photo">
+                                        <div>
+                                            <h4>Document_name.xls</h4>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry.</p>
+                                        </div>
+                                        <span class="delete-icon">
+                                            <button mat-icon-button color="warn"
+                                                aria-label="Example icon-button with a heart icon">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="docs_list" fxFlex="100S">
+                                        <img mat-card-image [src]="xls" alt="Profile photo">
+                                        <div>
+                                            <h4>Document_name.xls</h4>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry.</p>
+                                        </div>
+                                        <span class="delete-icon">
+                                            <button mat-icon-button color="warn"
+                                                aria-label="Example icon-button with a heart icon">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <!-- <h4 class="text-center">Uploaded Document List - In progress</h4> -->
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
+                        <mat-expansion-panel-header>
+                            <div class="sub-title">Claims Administrator Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="adjuster">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -306,36 +490,37 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Name</mat-label>
+                                <mat-label>Adjuster Name</mat-label>
                                 <input matInput placeholder="Name" formControlName="name" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <mat-label>Adjuster Phone</mat-label>
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Email</mat-label>
+                                <mat-label>Adjuster Email</mat-label>
                                 <input matInput placeholder="Email" formControlName="email" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Adjuster Address</mat-label>
                                 <textarea matInput formControlName="address"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Fax</mat-label>
+                                <mat-label>Adjuster Fax</mat-label>
                                 <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
+                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Employer Information</div>
                         </mat-expansion-panel-header>
@@ -350,7 +535,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput placeholder="Phone" type="text" mask="(000) 000-0000"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100">
@@ -377,7 +563,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
+                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Applicant
                                 Attorney Information</div>
@@ -399,7 +585,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
 
@@ -436,7 +623,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
+                    <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Defense Attorney
                                 Information</div>
@@ -458,7 +645,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
 
@@ -495,7 +683,7 @@
                         </div>
                     </mat-expansion-panel>
 
-                    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
+                    <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">DEU Office</div>
                         </mat-expansion-panel-header>
@@ -510,7 +698,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone Number</mat-label>
-                                <input matInput placeholder="Phone Number" formControlName="phone" autocomplete="off">
+                                <input matInput type="text" mask="(000) 000-0000" placeholder="Phone Number"
+                                    formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100">

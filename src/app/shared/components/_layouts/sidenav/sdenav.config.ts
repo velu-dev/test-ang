@@ -101,7 +101,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 2
         },]
     }, {
-        group: "Subscriber Staff manager",
+        group: "Subscriber Staff Manager",
         role_id: 3,
         menu: [
         //     {

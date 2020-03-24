@@ -46,7 +46,7 @@ export class ManageNewUserComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      company_name: [{ value: this.user.company_name, disabled: true }],
+      company_name: [{ value: this.user.company_name, disabled: true },Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required]
     });
@@ -62,7 +62,7 @@ export class ManageNewUserComponent implements OnInit {
       this.alertService.openSnackBar("User created successfully", 'success');
       this._location.back();
     }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
+      this.alertService.openSnackBar(error.error.error, 'error');
     })
   }
   cancel() {

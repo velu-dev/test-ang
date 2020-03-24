@@ -67,7 +67,7 @@ export class NewUserComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      company_name: [{ value: this.user.company_name, disabled: true }],
+      company_name: [{ value: this.user.company_name, disabled: true }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required]
     });
@@ -86,7 +86,7 @@ export class NewUserComponent implements OnInit {
         this.alertService.openSnackBar("User created successfully", 'success');
         this.router.navigate(['/subscriber/users'])
       }, error => {
-        this.alertService.openSnackBar(error.error.message, 'error');
+        this.alertService.openSnackBar(error.error.error, 'error');
       })
     } else {
       this.userService.updateUser(this.userForm.value).subscribe(res => {

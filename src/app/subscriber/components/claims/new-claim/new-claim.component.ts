@@ -4,17 +4,33 @@ import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
+import { MatTableDataSource } from '@angular/material/table';
+import * as globals from '../../../../globals';
 export interface Claimant {
   last_name: string;
   first_name: string;
   middle_name: string;
 }
+
+
+export interface claimant1 {
+  body_parts: string,
+  date_of_injury: string,
+  continuous_trauma: string,
+  ct_start_date: string,
+  ct_end_date: string,
+  note: string
+}
+const ELEMENT_DATA: claimant1[] = []
 @Component({
   selector: 'app-new-claim',
   templateUrl: './new-claim.component.html',
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent implements OnInit {
+  xls = globals.xls
+  displayedColumns: string[] = ['body_parts', 'date_of_injury', 'note', "action"];
+  dataSource: any;
   step = 0;
   isLinear = false;
   isSubmit = false;
@@ -34,6 +50,8 @@ export class NewClaimComponent implements OnInit {
   languageList = [];
   languageStatus = false;
   callerAffliation = [];
+  injuryInfodata: claimant1[] = []
+  injuryInfo = { body_parts: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" }
   claimantList = [
     {
       last_name: 'John',
@@ -42,7 +60,7 @@ export class NewClaimComponent implements OnInit {
       suffix: "",
       date_of_birth: "",
       gender: "",
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: "",
       handedness: "",
       is_primary_lanuguage_english: "",
       primary_language: "",
@@ -63,7 +81,7 @@ export class NewClaimComponent implements OnInit {
       suffix: "",
       date_of_birth: "",
       gender: "",
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: "",
       handedness: "",
       is_primary_lanuguage_english: "",
       primary_language: "",
@@ -85,7 +103,7 @@ export class NewClaimComponent implements OnInit {
       suffix: "",
       date_of_birth: "",
       gender: "",
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: "",
       handedness: "",
       is_primary_lanuguage_english: "",
       primary_language: "",
@@ -106,7 +124,7 @@ export class NewClaimComponent implements OnInit {
       suffix: [""],
       date_of_birth: [""],
       gender: [""],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: "",
       handedness: [""],
       is_primary_lanuguage_english: [""],
       primary_language: [""],
@@ -156,6 +174,18 @@ export class NewClaimComponent implements OnInit {
         this.filteredStates = this.claimantList.slice()
       }
     })
+
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.claimService.seedData('language').subscribe(response => {
+      this.languageList = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
   }
   changeOption(option) {
     this.claimant.setValue(option)
@@ -179,13 +209,16 @@ export class NewClaimComponent implements OnInit {
   }
   ngOnInit() {
     this.claimant = this.formBuilder.group({
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      // last_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
+      // first_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      first_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([ Validators.pattern('[A-Za-z]+')])],
       suffix: [""],
+     // date_of_birth: ["",Validators.required],
       date_of_birth: [""],
       gender: [""],
-      email: ["", Validators.compose([Validators.required, Validators.email])],
+      email: ["", Validators.compose([Validators.email])],
       handedness: [""],
       is_primary_lanuguage_english: [""],
       primary_language: [""],
@@ -203,14 +236,17 @@ export class NewClaimComponent implements OnInit {
     // this.claimForm = this.formBuilder.group({
     this.claim = this.formBuilder.group({
       claim_info: this.formBuilder.group({
-        wcab_number: ["", Validators.required],
-        claim_number: ["", Validators.required],
+        // wcab_number: ["", Validators.required],
+        // claim_number: ["", Validators.required],
+        wcab_number: ["", ],
+        claim_number: ["",],
+        panel_number: [""],
+      }),
+      injury_info: this.formBuilder.group({
         date_of_injury: ["", Validators.required],
-        injuries: [""],
         continuous_trauma: [""],
         ct_start_date: [""],
         ct_end_date: [""],
-        panel_number: [""],
         body_parts: [""]
       }),
       adjuster: this.formBuilder.group({
@@ -279,6 +315,7 @@ export class NewClaimComponent implements OnInit {
     // })
   }
   selectionChange(event) {
+    console.log("event",event)
     if (event.selectedIndex == 0) {
       this.titleName = "Create Claimant";
     } else if (event.selectedIndex == 1) {
@@ -287,6 +324,7 @@ export class NewClaimComponent implements OnInit {
       this.titleName = "Create Billable Item";
     }
   }
+
   submitClaim() {
     console.log("res1", this.claimant.value)
     console.log("res2", this.claim.value)
@@ -295,4 +333,19 @@ export class NewClaimComponent implements OnInit {
   cancle() {
 
   }
+  addInjury() {
+    this.injuryInfodata.push(this.injuryInfo)
+    this.dataSource = new MatTableDataSource(this.injuryInfodata)
+    this.injuryInfo = { body_parts: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
+  }
+  deleteInjury(data, index) {
+    this.injuryInfodata.splice(index, 1);
+    this.dataSource = new MatTableDataSource(this.injuryInfodata)
+  }
+  editInjury(element, index) {
+    this.injuryInfo = element;
+    this.injuryInfodata.splice(index, 1);
+    this.dataSource = new MatTableDataSource(this.injuryInfodata)
+  }
 }
+

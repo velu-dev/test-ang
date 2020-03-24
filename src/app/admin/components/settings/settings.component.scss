@@ -18,7 +18,7 @@
     }
     mat-card-subtitle {
       color: $white;
-      opacity: .8;
+      opacity: 0.8;
     }
   }
   .profile-upload {
@@ -37,16 +37,16 @@
       background: $primarycolor;
       border: 2px solid transparent;
       box-shadow: $box-shadow-3;
-      color:$white;
+      color: $white;
       border-radius: 50px;
       cursor: pointer;
     }
     img {
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    box-shadow: $box-shadow-3;
-    padding: 2px;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      box-shadow: $box-shadow-3;
+      padding: 2px;
     }
   }
   mat-card-content {
@@ -54,7 +54,10 @@
   }
 }
 
+mat-form-field {
+  padding: 10px !important;
+}
+
 .shadow {
   box-shadow: $box-shadow-5;
-
 }

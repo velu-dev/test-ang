@@ -51,7 +51,7 @@ export class SettingsComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      company_name: [{ value: "", disabled: true }, Validators.compose([Validators.required])],
+      company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
   }
@@ -74,6 +74,7 @@ export class SettingsComponent implements OnInit {
     this.isSubmitted = true;
     if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
       console.log("password miss match  ")
+      this.alertService.openSnackBar(this.errorMessages.passworddidnotMatch, "error");
       return
     }
     if (this.userPasswrdForm.invalid) {
@@ -90,7 +91,10 @@ export class SettingsComponent implements OnInit {
         })
       }, error => {
         this.spinnerService.hide();
-        this.alertService.openSnackBar(error.message, "success");
+        if(error.code == 'NotAuthorizedException'){
+          error.message = this.errorMessages.oldpasswordworng;
+        }
+        this.alertService.openSnackBar(error.message, "error");
       })
     })
   }

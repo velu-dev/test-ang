@@ -88,7 +88,7 @@ export const ROUTES = [
         icon: 'dashboard',
         submenu: [{
         path: '/subscriber/claimant/new',
-        title: 'New Claimants',
+        title: 'New Claimant',
         icon: 'dashboard',
         submenu: []}],
         group: "Subscriber",
@@ -124,12 +124,12 @@ export const ROUTES = [
         submenu: [],
     }, {
         path: '/subscriber/manager/staff',
-        title: 'Staff Managment',
+        title: 'Staff Management',
         icon: 'dashboard',
         submenu: [],
     }, {
         path: '/subscriber/manager/staff/new',
-        title: 'New Staff',
+        title: 'New User',
         icon: 'dashboard',
         submenu: []
     }, {
