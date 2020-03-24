@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
@@ -163,6 +163,7 @@ export class NewClaimComponent implements OnInit {
     'Wrist',
     'Back'
   ];
+  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService) {
@@ -359,6 +360,15 @@ export class NewClaimComponent implements OnInit {
     this.injuryInfo = element;
     this.injuryInfodata.splice(index, 1);
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
+  }
+  selectedFile: File;
+  uploadFile(event) {
+    this.selectedFile = event.target.files[0];
+    console.log(" this.selectedFile", this.selectedFile);
+    let formData = new FormData()
+    formData.append('file', this.selectedFile)
+    console.log("formData", formData)
+
   }
 }
 
