@@ -11,7 +11,7 @@
                     <div fxLayout="row wrap" fxFlex="100">
 
                         <div fxFlex="100">
-                            <mat-tab-group>
+                            <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
                                 <mat-tab label="Search by Claimants ">
                                     <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <input matInput placeholder="Search by name, date of birth "
@@ -92,13 +92,84 @@
                                     </form>
                                 </mat-tab>
                                 <mat-tab label="Search by WCAB Number">
-
                                     <mat-form-field appearance="fill" fxFlex="100" class="w-100">
-                                        <mat-label>Search by WCAB Number</mat-label>
-                                        <input matInput placeholder="Search by WCAB Number" autocomplete="off">
-                                        <mat-error>error msg here</mat-error>
+                                        <input matInput placeholder="Search by WCAB Number"
+                                            [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                                        <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredStates"
+                                                (click)="changeOption(option)" [value]="option.first_name">
+                                                {{option.first_name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-icon matSuffix (click)="searchStatus = !searchStatus ">
+                                            {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+                                        </mat-icon>
                                     </mat-form-field>
+                                 
+                                    <form [formGroup]="advanceSearch">
+                                        <div class="advance_search" *ngIf="searchStatus">
+                                            <div fxLayout="row wrap" fxFlex="100">
 
+                                                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50"
+                                                    fxFlex.sm="50" fxFlex.xs="100">
+                                                    <mat-label>First Name</mat-label>
+                                                    <input matInput placeholder="First name"
+                                                        formControlName="first_name" autocomplete="off">
+                                                    <mat-error>{{errorMessages.entervalidfirstname}}</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50"
+                                                    fxFlex.sm="50" fxFlex.xs="100">
+                                                    <mat-label>Last Name</mat-label>
+                                                    <input matInput placeholder="Last Name" formControlName="last_name"
+                                                        autocomplete="off">
+                                                    <mat-error>{{errorMessages.entervalidlastname}}</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
+                                                    fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
+                                                    <mat-label>Date of Birth</mat-label>
+                                                    <input matInput placeholder="Date of Birth"
+                                                        formControlName="date_of_birth_advance_search"
+                                                        autocomplete="off" formControlName="date_of_birth"
+                                                        [matDatepicker]="date_of_birth_advance_search"
+                                                        (click)="date_of_birth_advance_search.open()">
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="date_of_birth_advance_search">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #date_of_birth_advance_search disabled="false">
+                                                    </mat-datepicker>
+                                                    <mat-error>Enter valid date of birth</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
+                                                    fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
+                                                    <mat-label>City</mat-label>
+                                                    <input matInput formControlName="city" placeholder="City"
+                                                        autocomplete="off">
+                                                    <mat-error>Enter valid city</mat-error>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
+                                                    fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
+                                                    <mat-label>Zip Code</mat-label>
+                                                    <input matInput formControlName="zip" placeholder="zip code"
+                                                        autocomplete="off">
+                                                    <mat-error>Enter valid zip code</mat-error>
+                                                </mat-form-field>
+
+                                                <div class="text-right w-100 m-t-10 m-b-50">
+                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 "
+                                                        (click)="advanceSearch.reset();searchStatus = false">
+                                                        Cancel </button>
+                                                    <button mat-raised-button type="button" color="primary"
+                                                        class="m-r-15 btn_success" matStepperPrevious
+                                                        (click)="advanceSearchSubmit()">Search</button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
                                 </mat-tab>
                             </mat-tab-group>
                         </div>
