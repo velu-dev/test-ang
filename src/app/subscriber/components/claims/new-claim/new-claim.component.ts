@@ -175,8 +175,8 @@ export class NewClaimComponent implements OnInit {
     })
   }
 
-  advanceTabChanged(event){
-     this.searchStatus = false;
+  advanceTabChanged(event) {
+    this.searchStatus = false;
   }
   changeOption(option) {
     this.claimant.setValue(option)
@@ -214,9 +214,9 @@ export class NewClaimComponent implements OnInit {
       middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       suffix: [""],
       // date_of_birth: ["",Validators.required],
-      date_of_birth: [""],
+      date_of_birth: ["", Validators.required],
       gender: [""],
-      email: ["", Validators.compose([Validators.required, Validators.email])],
+      email: ["", Validators.compose([Validators.email])],
       handedness: [""],
       is_primary_lanuguage_english: [""],
       primary_language: [""],
