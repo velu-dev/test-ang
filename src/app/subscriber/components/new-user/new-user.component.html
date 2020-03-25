@@ -6,19 +6,19 @@
   <mat-card-content>
     <!--Form start-->
     <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userSubmit()" class="mat-grid-form">
-      <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3"  fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>First name*</mat-label>
         <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
+      <mat-form-field appearance="standard"  fxFlex="100" fxFlex.md="33.3"  fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Middle name / MI</mat-label>
         <input matInput placeholder="Middle name" formControlName="middle_name" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
+      <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3"  fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Last name*</mat-label>
         <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
@@ -44,7 +44,7 @@
         <mat-error *ngIf="isSubmitted">{{errorMessages?.selectrole}}</mat-error>
       </mat-form-field>
       <div class="text-center w-100 m-t-10">
-        <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner btn_success">
+        <button mat-raised-button  type="submit" class="m-r-10 rounded-corner btn_success">
           Submit </button>
         <button mat-raised-button type="button" (click)="cancel()" color="warn" class="rounded-corner">Cancel</button>
       </div>
