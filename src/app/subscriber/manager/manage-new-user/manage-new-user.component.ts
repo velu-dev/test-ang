@@ -35,6 +35,13 @@ export class ManageNewUserComponent implements OnInit {
     private cookieService: CookieService,
   ) {
     this.user = JSON.parse(this.cookieService.get('user'));
+    if(this.user.organization_type == 'INDV'){
+      this.user.company_name = '';
+    }
+    delete this.user.organization_type;
+    delete this.user.business_nature;
+    delete this.user.logo;
+    
     this.userService.getRoles().subscribe(response => {
       this.roles = response.data;
     })
@@ -48,7 +55,7 @@ export class ManageNewUserComponent implements OnInit {
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       company_name: [{ value: this.user.company_name, disabled: true },Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      role_id: [{ value: '', disabled: this.isEdit }, Validators.required]
+      role_id: [{ value: 4, disabled: this.isEdit }, Validators.required]
     });
   }
 

@@ -35,6 +35,9 @@ export class SettingsComponent implements OnInit {
       this.userService.getUser(this.currentUser['custom:Postgres_UserID']).subscribe(res => {
         // this.spinnerService.hide();
         this.user = res.data;
+        delete res.data.organization_type;
+        delete res.data.business_nature;
+        delete res.data.logo;
         this.userForm.setValue(res.data)
       })
     })
@@ -56,7 +59,9 @@ export class SettingsComponent implements OnInit {
     });
   }
   userformSubmit() {
+  
     if (this.userForm.invalid) {
+      console.log(this.userForm)
       return;
     }
     this.userService.updateUser(this.userForm.value).subscribe(res => {

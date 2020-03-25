@@ -166,6 +166,9 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 
 .user-detail {
   min-height: 55vh; //table empty space
+  width: 100%;//table harizontal scroll
+  display: block; 
+  overflow-x: auto;
 }
 
 // ==================================================
@@ -281,7 +284,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     border-radius: 3px;
     text-align: center;
     margin: 0px auto;
-    max-width:50px;
+    max-width: 50px;
     display: block;
     &:focus {
       outline: none;
