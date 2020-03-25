@@ -7,9 +7,9 @@
     <!--Form start-->
     <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userSubmit()" class="mat-grid-form">
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-        <mat-label>Last name*</mat-label>
-        <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
-        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
+        <mat-label>First name*</mat-label>
+        <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
@@ -19,9 +19,9 @@
       </mat-form-field>
 
       <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
-        <mat-label>First name*</mat-label>
-        <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
-        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
+        <mat-label>Last name*</mat-label>
+        <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
       </mat-form-field>
 
 

@@ -1,7 +1,7 @@
 // File globals.ts
 
-export const logo = '/assets/images/lucy-logo.svg'
-export const logo_white = '/assets/images/lucy-logo-white.svg'
+export const logo = '/assets/images/auth-logo.svg'
+export const simplexam_logo = '/assets/images/logo.svg'
 export const profile_bg = '/assets/images/profile.jpg'
 export const xls = '/assets/images/xls.svg'
 export const profile = '/assets/images/profile.svg'
