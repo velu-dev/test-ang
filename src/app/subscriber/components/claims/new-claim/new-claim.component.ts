@@ -236,10 +236,10 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         // wcab_number: ["", Validators.required],
         // claim_number: ["", Validators.required],
-        wcab_number: [Number],
+        wcab_number: [''],
         claim_number: ["",],
-        panel_number: [Number],
-        claimant_id: ["1"]
+        panel_number: [''],
+        claimant_id: [1]
       }),
       claim_injuries: [],
       InsuranceAdjuster: this.formBuilder.group({

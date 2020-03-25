@@ -104,7 +104,7 @@
                                             {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
                                         </mat-icon>
                                     </mat-form-field>
-                                 
+
                                     <form [formGroup]="advanceSearch">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
@@ -433,7 +433,7 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma==1" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off"
@@ -443,8 +443,8 @@
                                 <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
-                                fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard"
+                                fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.ct_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
