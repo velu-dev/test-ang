@@ -39,5 +39,6 @@ export const api_endpoint = {
     callerAffliation: "claims/seed-data/agent_type",
 
     //seed data
-    seedData: 'claims/seed-data/'
+    seedData: 'claims/seed-data/',
+    bodyParts: "seed-data/body_part"
 }
