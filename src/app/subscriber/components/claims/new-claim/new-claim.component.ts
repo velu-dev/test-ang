@@ -174,6 +174,10 @@ export class NewClaimComponent implements OnInit {
       console.log("error", error)
     })
   }
+
+  advanceTabChanged(event){
+     this.searchStatus = false;
+  }
   changeOption(option) {
     this.claimant.setValue(option)
   }

@@ -47,7 +47,7 @@ export class UserComponent implements OnInit {
     );
   isMobile: boolean = false;
   checked = true;
-  filterAll = false;
+  filterAll = true;
   selectedFile: File = null;
   allUser: any;
   filterValue: string;
@@ -84,7 +84,8 @@ export class UserComponent implements OnInit {
         }
       })
       this.tabName = 'activeUsers'
-      this.getUser(this.selectedRoleId, this.tabName);
+      //this.getUser(this.selectedRoleId, this.tabName);
+      this.filterByRole('all')
       this.roles.map(function (el) {
         var o = Object.assign({}, el);
         o['checked'] = false;
@@ -99,6 +100,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+   
   }
   users = [];
   getUser(roles, status) {
@@ -142,12 +144,20 @@ export class UserComponent implements OnInit {
   }
 
   selectedRoleId = []
+  filterStatus:boolean;
   filterByRole(value?: string) {
     this.selectedRoleId = [];
-    this.roles.map(res => {
+    this.roles.map((res, index) => {
       if (value) {
         this.filterAll ? res['checked'] = true : res['checked'] = false
+        if(!this.filterAll){
+          if(index == 0){
+            res['checked'] = true
+            this.selectedRoleId.push(res.id)
+          }      
+        }else{ 
         this.selectedRoleId.push(res.id)
+        }
       } else {
         this.filterAll = false;
         if (res['checked']) {
@@ -155,7 +165,13 @@ export class UserComponent implements OnInit {
         }
       }
     })
+    if(this.selectedRoleId.length == 0) {
+      this.users = [];
+      this.allUser = [];
+      this.dataSource = new MatTableDataSource()
+    }else{ 
     this.getUser(this.selectedRoleId, this.tabName)
+    }
   }
 
   applyFilter(filterValue: string) {
