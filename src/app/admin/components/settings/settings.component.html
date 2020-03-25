@@ -40,6 +40,7 @@
                                             autocomplete="off" formControlName="current_password">
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
                                     </mat-form-field>
+
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50" class="m-t-5 p-r-10">
                                         <mat-label>New password*</mat-label>
@@ -51,6 +52,7 @@
                                             matTooltipPosition="above">error_outline</mat-icon>
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
                                     </mat-form-field>
+
                                     <mat-form-field appearance="standard" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
                                         fxFlex.sm="45" fxFlex.xl="45" class="m-t-5">
                                         <mat-label>Confirm new password*</mat-label>
@@ -58,6 +60,7 @@
                                             placeholder="Confirm new password*" autocomplete="off"
                                             formControlName="confirmPassword">
                                     </mat-form-field>
+
                                     <div fxFlex="10" fxFlex.md="5" fxFlex.lg="5" fxFlex.sm="5" fxFlex.xl="5"
                                         class="m-t-5">
                                         <mat-icon matSuffix (click)="changeInputType()" class="check-password p-t-25">
@@ -82,8 +85,8 @@
                                 <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
-                                        <mat-label>Last Name</mat-label>
-                                        <input matInput placeholder="Last Name" formControlName="last_name"
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput placeholder="First Name" formControlName="first_name"
                                             autocomplete="off">
                                     </mat-form-field>
 
@@ -96,11 +99,10 @@
 
                                     <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.lg="30"
                                         fxFlex.sm="100" fxFlex.xl="100" class="m-t-5">
-                                        <mat-label>First Name</mat-label>
-                                        <input matInput placeholder="First Name" formControlName="first_name"
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput placeholder="Last Name" formControlName="last_name"
                                             autocomplete="off">
                                     </mat-form-field>
-
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
                                         fxFlex.sm="100" fxFlex.xl="100" class="m-t-5 ">

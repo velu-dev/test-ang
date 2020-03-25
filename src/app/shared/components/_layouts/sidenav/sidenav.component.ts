@@ -28,7 +28,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 })
 export class SidenavComponent implements OnInit {
   screenWidth: number;
-  logo_white = globals.logo_white;
+  simplexam_logo = globals.simplexam_logo;
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
   public menuItems: any;
   expanded: boolean = false;
