@@ -38,6 +38,7 @@ export class SubscriberSettingsComponent implements OnInit {
       }
       delete res.data.organization_type;
       delete res.data.business_nature;
+      delete res.data.logo;
       this.userForm.setValue(res.data)
     })
   }
