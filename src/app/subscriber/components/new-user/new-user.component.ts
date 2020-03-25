@@ -38,6 +38,13 @@ export class NewUserComponent implements OnInit {
     private cookieService: CookieService,
   ) {
     this.user = JSON.parse(this.cookieService.get('user'));
+    if(this.user.organization_type == 'INDV'){
+      this.user.company_name = '';
+    }
+    delete this.user.organization_type;
+    delete this.user.business_nature;
+    delete this.user.logo;
+    
     this.userService.getRoles().subscribe(response => {
       this.roles = response.data;
     })

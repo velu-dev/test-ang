@@ -33,6 +33,11 @@ export class SubscriberSettingsComponent implements OnInit {
       // this.spinnerService.hide();
       console.log("res obj", res)
       this.user = res.data;
+      if(res.data.organization_type == 'INDV'){
+        res.data.company_name = '';
+      }
+      delete res.data.organization_type;
+      delete res.data.business_nature;
       this.userForm.setValue(res.data)
     })
   }
