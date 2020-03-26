@@ -71,6 +71,7 @@ export class AdminUserComponent implements OnInit {
     this.getUser([1]);
   }
   ngOnInit() {
+    
   }
   getUser(roles) {
     this.userService.getUsers(roles).subscribe(response => {
@@ -102,6 +103,7 @@ export class AdminUserComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.isLoading = false;
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
