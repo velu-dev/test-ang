@@ -45,23 +45,26 @@ export class BreadcrumbComponent implements OnInit {
             case '4':
                 this.router.navigate(["/subscriber/staff"]);
                 break;
-            case '5':
-                this.router.navigate(["/vendor/historian"]);
-                break;
-            case '6':
-                this.router.navigate(["/vendor/historian/staff"]);
-                break;
-            case '7':
-                this.router.navigate(["/vendor/summarizer"]);
-                break;
-            case '8':
-                this.router.navigate(["/vendor/summarizer/staff"]);
-                break;
-            case '9':
-                this.router.navigate(["/vendor/transcriber"]);
-                break;
-            case '10':
-                this.router.navigate(["/vendor/transcriber/staff"]);
+            // case '5':
+            //     this.router.navigate(["/vendor/historian"]);
+            //     break;
+            // case '6':
+            //     this.router.navigate(["/vendor/historian/staff"]);
+            //     break;
+            // case '7':
+            //     this.router.navigate(["/vendor/summarizer"]);
+            //     break;
+            // case '8':
+            //     this.router.navigate(["/vendor/summarizer/staff"]);
+            //     break;
+            // case '9':
+            //     this.router.navigate(["/vendor/transcriber"]);
+            //     break;
+            // case '10':
+            //     this.router.navigate(["/vendor/transcriber/staff"]);
+            //     break;
+            case '11':
+                this.router.navigate(["/subscriber/examiner"]);
                 break;
             default:
                 this.router.navigate(["/"]);
