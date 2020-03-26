@@ -8,12 +8,41 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from 'src/app/shared/model/user.model';
 import * as globals from '../../../globals'
 import * as  errors from '../../../shared/messages/errors'
+export interface Section {
+  name: string;
+  updated: Date;
+}
 @Component({
   selector: 'app-examiner-setting',
   templateUrl: './examiner-setting.component.html',
   styleUrls: ['./examiner-setting.component.scss']
 })
 export class ExaminerSettingComponent implements OnInit {
+
+  folders: Section[] = [
+    {
+      name: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+      updated: new Date('1/1/16'),
+    },
+    {
+      name: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+      updated: new Date('1/17/16'),
+    },
+    {
+      name: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+      updated: new Date('1/28/16'),
+    }
+  ];
+  notes: Section[] = [
+    {
+      name: 'Vacation Itinerary',
+      updated: new Date('2/20/16'),
+    },
+    {
+      name: 'Kitchen Remodel',
+      updated: new Date('1/18/16'),
+    }
+  ];
   profile_bg = globals.profile_bg;
   user: User;
   currentUser = {};

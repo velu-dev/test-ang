@@ -1,37 +1,15 @@
 @import "variables";
 
-.profile {
-  padding: 0px;
-  border-radius: 2px;
-  width: 100%;
-  box-shadow: $box-shadow-5;
-  mat-card-header {
-    background-color: $ternary-color;
-    position: relative;
-    text-align: center !important;
-    display: block;
-    padding: 20px 0px 30px 0px;
-    mat-card-title {
-      font-size: $font-size-h6 !important;
-      color: $white;
-      margin-bottom: 5px !important;
-    }
-    mat-card-subtitle {
-      color: $light-gray;
-    }
-  }
-  img {
-    position: absolute;
-    top: 90px;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    left: 44%;
-    box-shadow: $box-shadow-3;
-    padding: 2px;
-  }
-  mat-card-content {
-    @include text;
+.edit-profile {
+  .manage-btn {
+    border: 1px dashed $primarylightcolor;
+    border-radius: 3px;
+    background-color: $bg-light-blue;
+    color: $primarycolor;
+    font-size: $font-size-1;
+    font-size: $font-weight-medium;
+    padding: 10px 5px;
+    cursor: pointer;
   }
 }
 
