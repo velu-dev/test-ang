@@ -16,7 +16,7 @@
                                 <!--Form start-->
                                 <form fxLayout="row wrap" [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
                                     <mat-form-field class="m-t-5" appearance="standard" fxFlex="100">
-                                        <mat-label>Current Password</mat-label>
+                                        <mat-label>Current Password*</mat-label>
                                         <input type="password" matInput placeholder="Current Password"
                                             autocomplete="off" formControlName="current_password">
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
@@ -25,7 +25,7 @@
                                     </mat-form-field>
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50" class="m-t-5 p-r-10">
-                                        <mat-label>New Password</mat-label>
+                                        <mat-label>New Password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="New Password" autocomplete="off"
                                             formControlName="new_password">
@@ -37,7 +37,7 @@
                                     </mat-form-field>
                                     <mat-form-field appearance="standard" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
                                         fxFlex.sm="45" fxFlex.xl="45" class="m-t-5">
-                                        <mat-label>Confirm New Password</mat-label>
+                                        <mat-label>Confirm New Password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="Confirm New Password" autocomplete="off"
                                             formControlName="confirmPassword">
@@ -66,9 +66,9 @@
                                 <!--Form start-->
                                 <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
-                                        <mat-label>First Name</mat-label>
+                                    <mat-form-field appearance="standard"  fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                    fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
+                                        <mat-label>First Name*</mat-label>
                                         <input matInput placeholder="First Name" formControlName="first_name"
                                             autocomplete="off">
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidfirstname}}</mat-error>
@@ -82,9 +82,9 @@
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidmiddlename}}</mat-error>
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="100" class=" m-t-5">
-                                        <mat-label>Last Name</mat-label>
+                                    <mat-form-field  appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                    fxFlex.sm="50" fxFlex.xl="100" class=" m-t-5">
+                                        <mat-label>Last Name*</mat-label>
                                         <input matInput placeholder="Last Name" formControlName="last_name"
                                             autocomplete="off">
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidlastname}}</mat-error>
@@ -98,7 +98,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="50" class="m-t-5  p-r-10">
-                                        <mat-label>Email ID</mat-label>
+                                        <mat-label>Email ID*</mat-label>
                                         <input matInput placeholder="Email ID" formControlName="sign_in_email_id"
                                             autocomplete="off">
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>

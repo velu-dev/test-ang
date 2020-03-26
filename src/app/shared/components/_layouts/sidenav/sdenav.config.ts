@@ -26,7 +26,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 1
         }, {
             path: '/admin/users',
-            title: 'Manage Susbcriber List',
+            title: 'Manage Subscriber List',
             icon: 'people_alt',
             submenu: [{
                 path: '/admin/users/new',
@@ -131,18 +131,19 @@ export const ROUTES: SideNavInterface[] = [
             group: "Subscriber",
             role: 4
         }]
-    }, {
-        group: "Examiner",
-        role_id: 11,
-        menu: [{
-            path: '/subscriber/examiner/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-            group: "Subscriber",
-            role: 11
-        }]
-    },
+    }, 
+    // {
+    //     group: "Examiner",
+    //     role_id: 11,
+    //     menu: [{
+    //         path: '/subscriber/examiner/',
+    //         title: 'Dashboard',
+    //         icon: 'dashboard',
+    //         submenu: [],
+    //         group: "Subscriber",
+    //         role: 11
+    //     }]
+    // },
     // {
     //     group: "Vendor Historian",
     //     role_id: 5,

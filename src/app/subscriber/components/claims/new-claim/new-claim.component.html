@@ -90,9 +90,9 @@
                                         </div>
                                     </form>
                                 </mat-tab>
-                                <mat-tab label="Search by WCAB Number">
+                                <mat-tab label="Search EAMS">
                                     <mat-form-field appearance="fill" fxFlex="100" class="w-100">
-                                        <input matInput placeholder="Search by WCAB Number"
+                                        <input matInput placeholder="Search EAMS"
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                             <mat-option *ngFor="let option of filteredStates"
@@ -240,7 +240,7 @@
                         </mat-form-field>
 
                         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
-                            <div class="p-t-30 p-l-10"> Primary Language Not English<mat-checkbox class="p-l-10"
+                            <div class="p-t-30 p-l-10">Certified Interpreter Required<mat-checkbox class="p-l-10"
                                     (change)="languageStatus = !languageStatus"></mat-checkbox>
                             </div>
                         </div>
@@ -256,23 +256,15 @@
                             <mat-error>Select valid primary language</mat-error>
                         </mat-form-field>
 
-                        <!-- <mat-form-field *ngIf="claimantForm.value.language == 'Other'" appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Language</mat-label>
-                            <input matInput placeholder="language" formControlName="otherlanguage" autocomplete="off">
-                            <mat-error>{{errorMessages.language}}</mat-error>
-                          </mat-form-field> -->
-
-                        <div fxFlex="50" *ngIf="languageStatus" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                        <!-- <div fxFlex="50" *ngIf="languageStatus" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                             class="checkbox">
-                            <div class="p-t-30  p-l-10"> Certified Interpreter Required
-                                <!-- <mat-checkbox class="p-r-10 p-l-10" [(ngModel)]='certifiedStatusYes' formControlName="certified_interpreter" (change)="certifiedStatusNo = false">yes</mat-checkbox>
-                              <mat-checkbox value="false" [(ngModel)]='certifiedStatusNo'  formControlName="certified_interpreter" (change)="certifiedStatusYes = false">No</mat-checkbox> -->
+                            <div class="p-t-30  p-l-10"> Certified Interpreter Required                             
                                 <mat-radio-group formControlName="certified_inpreted" aria-label="Select an option">
                                     <mat-radio-button value="true" class="p-l-15">Yes</mat-radio-button>
                                     <mat-radio-button value="false" class="p-l-15">No</mat-radio-button>
                                 </mat-radio-group>
                             </div>
-                        </div>
+                        </div> -->
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>SSN</mat-label>
