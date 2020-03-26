@@ -131,6 +131,17 @@ export const ROUTES: SideNavInterface[] = [
             group: "Subscriber",
             role: 4
         }]
+    }, {
+        group: "Examiner",
+        role_id: 11,
+        menu: [{
+            path: '/subscriber/examiner/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 11
+        }]
     },
     // {
     //     group: "Vendor Historian",

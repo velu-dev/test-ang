@@ -138,6 +138,18 @@ export const ROUTES = [
         icon: 'dashboard',
         submenu: []
     },
+    {
+        path: '/subscriber/examiner/settings',
+        title: 'Settings',
+        icon: 'dashboard',
+        submenu: []
+    },
+    {
+        path: '/subscriber/examiner/',
+        title: 'Examiner',
+        icon: 'dashboard',
+        submenu: []
+    },
     // //Vendor historian Menu
     // {
     //     path: '/vendor/historian/dashboard',
