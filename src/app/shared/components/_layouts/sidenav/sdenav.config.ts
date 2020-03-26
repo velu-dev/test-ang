@@ -26,7 +26,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 1
         }, {
             path: '/admin/users',
-            title: 'Manage Susbcriber List',
+            title: 'Manage Subscriber List',
             icon: 'people_alt',
             submenu: [{
                 path: '/admin/users/new',

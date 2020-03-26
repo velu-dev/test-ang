@@ -3,13 +3,12 @@
         <div class="m-0 content-wrapper-main-title">{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant">
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
-
                         <div fxFlex="100">
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
                                 <mat-tab label="Search by Claimants ">
@@ -73,8 +72,8 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Zip Code</mat-label>
-                                                    <input matInput formControlName="zip" placeholder="zip code"
-                                                        autocomplete="off">
+                                                    <input matInput type="number" formControlName="zipcode"
+                                                        placeholder="zip code" autocomplete="off">
                                                     <mat-error>Enter valid zip code</mat-error>
                                                 </mat-form-field>
 
@@ -319,16 +318,17 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Zip</mat-label>
-                            <input matInput placeholder="Zip" formControlName="zip" autocomplete="off">
+                            <input matInput type="number" placeholder="Zip" formControlName="zipcode"
+                                autocomplete="off">
                             <mat-error>Enter valid zip code</mat-error>
                         </mat-form-field>
 
                         <div class="text-center w-100 m-t-10 m-b-50">
                             <button mat-raised-button color="primary" type="submit"
-                                class="m-r-10 rounded-corner btn_success" matStepperNext>
-                                Next </button>
-                            <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
-                                color="warn" matStepperPrevious>Back</button>
+                                class="m-r-10 rounded-corner btn_success">
+                                Save </button>
+                            <button mat-raised-button type="submit" class="rounded-corner" color="primary"
+                                matStepperNext>Next</button>
                         </div>
                     </div>
                 </mat-card>
@@ -343,7 +343,7 @@
                         <mat-expansion-panel-header>
                             <div class="sub-title">Claim Information</div>
                         </mat-expansion-panel-header>
-                        <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_info">
+                        <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_details">
                             <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Claimant name </mat-label>
                                 <input matInput placeholder="Claimant name" value="Claimant name comes here" disabled>
@@ -352,7 +352,7 @@
                             <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>WCAB Number </mat-label>
-                                <input matInput placeholder="WCAB Number" formControlName="wcab_number"
+                                <input matInput type="number" placeholder="WCAB Number" formControlName="wcab_number"
                                     autocomplete="off">
                                 <mat-error>Enter valid WCAB number</mat-error>
                             </mat-form-field>
@@ -368,7 +368,7 @@
                             <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Panel Number </mat-label>
-                                <input matInput placeholder="Panel Number" formControlName="panel_number"
+                                <input matInput type="number" placeholder="Panel Number" formControlName="panel_number"
                                     autocomplete="off">
                             </mat-form-field>
                         </div>
@@ -385,9 +385,8 @@
                                 <mat-label>Body Parts</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.body_parts" [ngModelOptions]="{standalone: true}"
                                     multiple>
-
-                                    <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts">
-                                        {{bodyParts}}</mat-option>
+                                    <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts.id">
+                                        {{bodyParts.body_part_name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
@@ -426,7 +425,7 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma==1" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off"
@@ -436,8 +435,8 @@
                                 <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
-                                fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard"
+                                fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.ct_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
@@ -566,7 +565,7 @@
                         <mat-expansion-panel-header>
                             <div class="sub-title">Claims Administrator Information</div>
                         </mat-expansion-panel-header>
-                        <div fxLayout="row wrap" fxFlex="100" formGroupName="adjuster">
+                        <div fxLayout="row wrap" fxFlex="100" formGroupName="InsuranceAdjuster">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
@@ -610,7 +609,7 @@
                         <mat-expansion-panel-header>
                             <div class="sub-title">Employer Information</div>
                         </mat-expansion-panel-header>
-                        <div fxLayout="row wrap" fxFlex="100" formGroupName="employer">
+                        <div fxLayout="row wrap" fxFlex="100" formGroupName="Employer">
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -644,7 +643,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip</mat-label>
-                                <input matInput placeholder="Zip" formControlName="zip" autocomplete="off">
+                                <input matInput type="number" placeholder="Zip" formControlName="zipcode"
+                                    autocomplete="off">
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -654,7 +654,7 @@
                             <div class="sub-title">Applicant
                                 Attorney Information</div>
                         </mat-expansion-panel-header>
-                        <div fxLayout="row wrap" fxFlex="100" formGroupName="application_attorney">
+                        <div fxLayout="row wrap" fxFlex="100" formGroupName="ApplicantAttorney">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
@@ -699,7 +699,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip</mat-label>
-                                <input matInput placeholder="Zip" formControlName="zip" autocomplete="off">
+                                <input matInput type="number" placeholder="Zip" formControlName="zipcode"
+                                    autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -714,7 +715,7 @@
                             <div class="sub-title">Defense Attorney
                                 Information</div>
                         </mat-expansion-panel-header>
-                        <div fxLayout="row wrap" fxFlex="100" formGroupName="defance_attorney">
+                        <div fxLayout="row wrap" fxFlex="100" formGroupName="DefenseAttorney">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
@@ -759,7 +760,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip</mat-label>
-                                <input matInput placeholder="Zip" formControlName="zip" autocomplete="off">
+                                <input matInput type="number" placeholder="Zip" formControlName="zipcode"
+                                    autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -773,7 +775,7 @@
                         <mat-expansion-panel-header>
                             <div class="sub-title">DEU Office</div>
                         </mat-expansion-panel-header>
-                        <div fxLayout="row wrap" fxFlex="100" formGroupName="deo_office">
+                        <div fxLayout="row wrap" fxFlex="100" formGroupName="DEU">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Office Name</mat-label>
@@ -795,6 +797,9 @@
                         </div>
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50">
+                        <button mat-raised-button color="primary" type="submit"
+                            class="m-r-10 rounded-corner btn_success">
+                            Save </button>
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success" matStepperNext>
                             Next </button>
@@ -934,8 +939,8 @@
                         <button (click)="submitClaim()" mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success">
                             Submit </button>
-                        <button mat-raised-button (click)="stepper.reset()" type="button" class="rounded-corner"
-                            color="warn">Reset</button>
+                        <button mat-raised-button type="button" class="rounded-corner" color="warn"
+                            matStepperPrevious>Back</button>
                     </div>
                 </mat-card>
             </form>

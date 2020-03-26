@@ -74,7 +74,7 @@ export class NewClaimComponent implements OnInit {
       street_2: "",
       city: "",
       state: "",
-      zip: ""
+      zipcode: ""
     },
     {
       last_name: 'Lee',
@@ -95,7 +95,7 @@ export class NewClaimComponent implements OnInit {
       street_2: "",
       city: "",
       state: "",
-      zip: ""
+      zipcode: ""
 
     },
     {
@@ -117,7 +117,7 @@ export class NewClaimComponent implements OnInit {
       street_2: "",
       city: "",
       state: "",
-      zip: ""
+      zipcode: ""
     },
     {
       first_name: 'Banner',
@@ -138,36 +138,19 @@ export class NewClaimComponent implements OnInit {
       street_2: [""],
       city: [""],
       state: [""],
-      zip: [""]
+      zipcode: [""]
     }
   ];
   bodyParts = new FormControl();
-  bodyPartsList: string[] = [
-    'Head',
-    'Face',
-    'Hair',
-    'Ear',
-    'Neck',
-    'Forehead',
-    'Beard',
-    'Eye',
-    'Nose',
-    'Mouth',
-    'Chin',
-    'Shoulder',
-    'Elbow',
-    'Arm',
-    'Chest',
-    'Armpit',
-    'Forearm',
-    'Wrist',
-    'Back'
-  ];
+  bodyPartsList = [];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService) {
+    this.claimService.seedData('body_part').subscribe(res => {
+      this.bodyPartsList = res.data;
+    })
     this.claimService.getCallerAffliation().subscribe(res => {
       this.callerAffliation = res.data;
     })
@@ -192,8 +175,8 @@ export class NewClaimComponent implements OnInit {
     })
   }
 
-  advanceTabChanged(event){
-     this.searchStatus = false;
+  advanceTabChanged(event) {
+    this.searchStatus = false;
   }
   changeOption(option) {
     this.claimant.setValue(option)
@@ -221,17 +204,17 @@ export class NewClaimComponent implements OnInit {
       first_name: [''],
       date_of_birth: [''],
       city: [""],
-      zip: [""]
+      zipcode: [""]
     })
     this.claimant = this.formBuilder.group({
       // last_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
       // first_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
-      last_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      first_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([ Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       suffix: [""],
-     // date_of_birth: ["",Validators.required],
-      date_of_birth: [""],
+      // date_of_birth: ["",Validators.required],
+      date_of_birth: ["", Validators.required],
       gender: [""],
       email: ["", Validators.compose([Validators.email])],
       handedness: [""],
@@ -245,26 +228,21 @@ export class NewClaimComponent implements OnInit {
       street_2: [""],
       city: [""],
       state: [""],
-      zip: [""]
+      zipcode: [Number]
     })
 
     // this.claimForm = this.formBuilder.group({
     this.claim = this.formBuilder.group({
-      claim_info: this.formBuilder.group({
+      claim_details: this.formBuilder.group({
         // wcab_number: ["", Validators.required],
         // claim_number: ["", Validators.required],
-        wcab_number: ["", ],
+        wcab_number: [''],
         claim_number: ["",],
-        panel_number: [""],
+        panel_number: [''],
+        claimant_id: [1]
       }),
-      injury_info: this.formBuilder.group({
-        date_of_injury: ["", Validators.required],
-        continuous_trauma: [""],
-        ct_start_date: [""],
-        ct_end_date: [""],
-        body_parts: [""]
-      }),
-      adjuster: this.formBuilder.group({
+      claim_injuries: [],
+      InsuranceAdjuster: this.formBuilder.group({
         insurance_name: [""],
         name: [""],
         phone: [""],
@@ -272,15 +250,15 @@ export class NewClaimComponent implements OnInit {
         email: [""],
         address: [""],
       }),
-      employer: this.formBuilder.group({
+      Employer: this.formBuilder.group({
         name: [""],
         phone: [""],
         address: [""],
         city: [""],
         state: [""],
-        zip: [""],
+        zipcode: [Number],
       }),
-      application_attorney: this.formBuilder.group({
+      ApplicantAttorney: this.formBuilder.group({
         law_firm_name: [""],
         attorney_name: [""],
         phone: [""],
@@ -289,9 +267,9 @@ export class NewClaimComponent implements OnInit {
         address: [""],
         city: [""],
         state: [""],
-        zip: [""]
+        zipcode: [Number]
       }),
-      defance_attorney: this.formBuilder.group({
+      DefenseAttorney: this.formBuilder.group({
         law_firm_name: [""],
         attorney_name: [""],
         phone: [""],
@@ -300,9 +278,9 @@ export class NewClaimComponent implements OnInit {
         address: [""],
         city: [""],
         state: [""],
-        zip: [""]
+        zipcode: [Number]
       }),
-      deo_office: this.formBuilder.group({
+      DEU: this.formBuilder.group({
         office_name: [""],
         phone: [""],
         address: [""]
@@ -332,11 +310,11 @@ export class NewClaimComponent implements OnInit {
     // })
   }
 
-  advanceSearchSubmit(){
-    console.log("advanceSearch",this.advanceSearch.value)
+  advanceSearchSubmit() {
+    console.log("advanceSearch", this.advanceSearch.value)
   }
   selectionChange(event) {
-    console.log("event",event)
+    console.log("event", event)
     if (event.selectedIndex == 0) {
       this.titleName = "Create Claimant";
     } else if (event.selectedIndex == 1) {
@@ -347,9 +325,13 @@ export class NewClaimComponent implements OnInit {
   }
 
   submitClaim() {
-    console.log("res1", this.claimant.value)
-    console.log("res2", this.claim.value)
-    console.log("res3", this.billable_item.value)
+    let claim = this.claim.value;
+    claim['claim_injuries'] = this.injuryInfodata;
+    // let data = { ...this.claimant.value, ...claim };
+    // console.log("data", data);
+    this.claimService.createClaim(claim).subscribe(res => {
+      console.log("Response", res)
+    })
   }
   cancle() {
 
