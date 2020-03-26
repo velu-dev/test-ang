@@ -1,1 +1,133 @@
-<p>examiner-setting works!</p>
+<div fxLayout="column" fxLayoutGap="25px">
+    <div fxLayout="row wrap" class="d-cards">
+        <!-- loop over the cardList and show the cards -->
+        <!-- <div fxFlex="30" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" style="padding: 5px;">
+            <mat-card class="profile">
+                <mat-card-header matRipple>
+                    <mat-card-title class="m-0">{{user?.first_name}} {{user?.last_name}}</mat-card-title>
+                    <mat-card-subtitle>Dental Public Health</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="profile_bg" alt="Profile photo">
+                <mat-card-content class="p-t-50 text-center p-b-50">
+                    <div class="p-l-5 p-r-5"><i class="fas fa-map-marker-alt"></i> 3141 Doctors Drive,<br /> Los
+                        Angeles,
+                        California, 90017</div>
+                    <div class="p-t-10 p-l-5 p-r-5"><i class="fas fa-phone-alt"></i> (+00) 00000000000</div>
+                </mat-card-content>
+            </mat-card>
+        </div> -->
+
+        <!-- loop over the cardList and show the cards -->
+        <div fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100" fxLayout="column">
+            <mat-card class="shadow p-t-15">
+
+                <mat-tab-group>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon p-r-5"> security </mat-icon>
+                            Security Settings
+                        </ng-template>
+                        <!-- cards here -->
+                        <div class="edit-profile  m-t-10">
+                            <mat-card-content>
+                                <!--Form start-->
+                                <form fxLayout="row wrap" [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
+                                    <mat-form-field class="m-t-5" appearance="standard" fxFlex="100">
+                                        <mat-label>Current Password</mat-label>
+                                        <input type="password" matInput placeholder="Current Password"
+                                            autocomplete="off" formControlName="current_password">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
+                                        <!-- <mat-error *ngIf="userPasswrdForm.controls.current_password.errors.required">Password field does not empty</mat-error> -->
+                                        <!-- <mat-error *ngIf="userPasswrdForm.controls.current_password.errors.pattern">Password field does not valid</mat-error> -->
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5 p-r-10">
+                                        <mat-label>New Password</mat-label>
+                                        <input [type]="isTypePassword ? 'password': 'text'" matInput
+                                            placeholder="New Password" autocomplete="off"
+                                            formControlName="new_password">
+                                        <mat-icon matSuffix
+                                            matTooltip="Password must contain at least 8 characters, including UPPER/lowercase, special character and numbers."
+                                            matTooltipPosition="above">error_outline</mat-icon>
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
+
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
+                                        fxFlex.sm="45" fxFlex.xl="45" class="m-t-5">
+                                        <mat-label>Confirm New Password</mat-label>
+                                        <input [type]="isTypePassword ? 'password': 'text'" matInput
+                                            placeholder="Confirm New Password" autocomplete="off"
+                                            formControlName="confirmPassword">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
+                                    </mat-form-field>
+                                    <div fxFlex="10" fxFlex.md="5" fxFlex.lg="5" fxFlex.sm="5" fxFlex.xl="5"
+                                        class="m-t-5">
+                                        <mat-icon matSuffix (click)="changeInputType()" class="check-password p-t-25">
+                                            {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+                                    </div>
+
+                                    <button mat-raised-button color="primary" class="m-t-5">Save Changes </button>
+                                </form>
+                            </mat-card-content>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon p-r-5"> account_box </mat-icon>
+                            Account Settings
+                        </ng-template>
+                        <!-- Edit profile -->
+                        <div class="edit-profile m-t-10">
+                            <mat-card-content>
+                                <!--Form start-->
+                                <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
+
+                                    <mat-form-field appearance="standard"  fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                    fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
+                                        <mat-label>First Name</mat-label>
+                                        <input matInput placeholder="First Name" formControlName="first_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidfirstname}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                    fxFlex.sm="50" fxFlex.xl="100" class=" m-t-5">
+                                        <mat-label>Middle Name</mat-label>
+                                        <input matInput placeholder="Middle Name" formControlName="middle_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidmiddlename}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field  appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                    fxFlex.sm="50" fxFlex.xl="100" class=" m-t-5">
+                                        <mat-label>Last Name</mat-label>
+                                        <input matInput placeholder="Last Name" formControlName="last_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidlastname}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="standard" fxFlex="50" class=" m-t-5 p-r-10">
+                                        <mat-label>Company Name</mat-label>
+                                        <input matInput placeholder="Company Name" formControlName="company_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidcompanyname}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="standard" fxFlex="50" class="m-t-5  p-r-10">
+                                        <mat-label>Email ID</mat-label>
+                                        <input matInput placeholder="Email ID" formControlName="sign_in_email_id"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
+                                    </mat-form-field>
+
+                                    <button mat-raised-button color="primary" class="m-t-5">Save Changes</button>
+                                </form>
+                            </mat-card-content>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card>
+        </div>
+    </div>
+</div>
