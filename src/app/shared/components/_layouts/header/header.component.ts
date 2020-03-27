@@ -134,7 +134,7 @@ console.log(role)
             this.router.navigate(["/subscriber/settings"]);
             break;
         case '11':
-            this.router.navigate(["/subscriber/settings"]);
+            this.router.navigate(["/subscriber/examiner/settings"]);
             break;
         default:
             this.router.navigate(["/settings"]);

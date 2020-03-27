@@ -10,8 +10,34 @@
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
                         <div fxFlex="100">
+
+
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
-                                <mat-tab label="Search by Claimants ">
+                                <mat-tab label="Search Claimants ">
+                                    <mat-form-field appearance="fill" fxFlex="100"
+                                        hideRequiredMarker="hideRequiredControl.auto"
+                                        floatLabel="floatLabelControl.auto" class="advanced_search w-100">
+                                        <div matPrefix (click)="searchStatus = !searchStatus ">
+                                            <span>Advanced Search</span>
+                                            <mat-icon class="expand-icon icons">
+                                                {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+                                            </mat-icon>
+                                        </div>
+                                        <input matInput placeholder="Search by name, date of birth "
+                                            [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                                        <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredStates"
+                                                (click)="changeOption(option)" [value]="option.first_name">
+                                                {{option.first_name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <span matSuffix class="search-icon icons">
+                                            <mat-icon>search</mat-icon>
+                                        </span>
+                                    </mat-form-field>
+
+
+                                    <!-- 
                                     <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <input matInput placeholder="Search by name, date of birth "
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
@@ -24,10 +50,11 @@
                                         <mat-icon matSuffix (click)="searchStatus = !searchStatus ">
                                             {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
                                         </mat-icon>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
                                     <form [formGroup]="advanceSearch">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
+                                                <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced search</div>
 
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50"
                                                     fxFlex.sm="50" fxFlex.xs="100">
@@ -90,8 +117,9 @@
                                         </div>
                                     </form>
                                 </mat-tab>
+
                                 <mat-tab label="Search EAMS">
-                                    <mat-form-field appearance="fill" fxFlex="100" class="w-100">
+                                    <!-- <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <input matInput placeholder="Search EAMS"
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
@@ -103,11 +131,32 @@
                                         <mat-icon matSuffix (click)="searchStatus = !searchStatus ">
                                             {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
                                         </mat-icon>
+                                    </mat-form-field> -->
+                                    <mat-form-field appearance="fill" fxFlex="100"
+                                        hideRequiredMarker="hideRequiredControl.auto"
+                                        floatLabel="floatLabelControl.auto" class="advanced_search w-100">
+                                        <div matPrefix (click)="searchStatus = !searchStatus ">
+                                            <span>Advanced Search</span>
+                                            <mat-icon class="expand-icon icons">
+                                                {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+                                            </mat-icon>
+                                        </div>
+                                        <input matInput placeholder="Search EAMS"
+                                            [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                                        <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredStates"
+                                                (click)="changeOption(option)" [value]="option.first_name">
+                                                {{option.first_name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <span matSuffix class="search-icon icons">
+                                            <mat-icon>search</mat-icon>
+                                        </span>
                                     </mat-form-field>
-
                                     <form [formGroup]="advanceSearch">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
+                                                <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced search</div>
 
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50"
                                                     fxFlex.sm="50" fxFlex.xs="100">

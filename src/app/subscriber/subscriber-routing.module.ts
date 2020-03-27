@@ -13,7 +13,9 @@ import { NewClaimantComponent } from './components/claims/new-claimant/new-claim
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 import { BillableItemComponent } from './components/claims/billable-item/billable-item.component';
 import { ClaimantComponent } from './components/claims/claimant/claimant.component';
-
+import { ExaminerDashboardComponent } from './examiner/examiner-dashboard/examiner-dashboard.component';
+import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-setting.component';
+import { AppointmentComponent } from './examiner/appointment/appointment.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -92,6 +94,22 @@ const routes: Routes = [{
   }, {
     path: "settings",
     component: SubscriberSettingsComponent
+  }]
+}, {
+  path: "examiner",
+  children: [{
+    path: "",
+    component: ExaminerDashboardComponent
+  }, {
+    path: "dashboard",
+    component: ExaminerDashboardComponent
+  },
+  {
+    path: "appointment",
+    component: AppointmentComponent
+  }, {
+    path: "settings",
+    component: ExaminerSettingComponent
   }]
 }
 ];

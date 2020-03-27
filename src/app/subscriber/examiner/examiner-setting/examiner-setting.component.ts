@@ -3,26 +3,50 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { SubscriberUserService } from '../service/subscriber-user.service';
+import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from 'src/app/shared/model/user.model';
-import * as globals from '../../globals'
-import * as  errors from '../../shared/messages/errors'
-import { CookieService } from 'src/app/shared/services/cookie.service';
+import * as globals from '../../../globals'
+import * as  errors from '../../../shared/messages/errors'
+import { ClaimService } from '../../service/claim.service';
+export interface Section {
+  type: string;
+  name: string;
+  address: string;
 
+}
 @Component({
-  selector: 'app-subscribersettings',
-  templateUrl: './subscriber-settings.component.html',
-  styleUrls: ['./subscriber-settings.component.scss']
+  selector: 'app-examiner-setting',
+  templateUrl: './examiner-setting.component.html',
+  styleUrls: ['./examiner-setting.component.scss']
 })
-export class SubscriberSettingsComponent implements OnInit {
+export class ExaminerSettingComponent implements OnInit {
+
+  addresss: Section[] = [
+    {
+      type: 'primary',
+      name: 'Venkatesan',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    },
+    {
+      type: 'office',
+      name: 'Sarath',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    },
+    {
+      type: 'service',
+      name: 'Velusamy',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    }
+  ];
   profile_bg = globals.profile_bg;
   user: User;
   currentUser = {};
   userForm: FormGroup;
   userPasswrdForm: FormGroup;
-  errorMessages = errors
-  disableCompany: boolean = true;
+  addressForm: FormGroup;
+  errorMessages = errors;
+  states: any;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -30,10 +54,9 @@ export class SubscriberSettingsComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private cognitoService: CognitoService,
-    private cookieService: CookieService
+    private claimService: ClaimService,
   ) {
     this.userService.getProfile().subscribe(res => {
-      // this.spinnerService.hide();
       console.log("res obj", res)
       this.user = res.data;
       if (res.data.organization_type == 'INDV') {
@@ -46,10 +69,6 @@ export class SubscriberSettingsComponent implements OnInit {
     })
   }
   ngOnInit() {
-  let user = JSON.parse(this.cookieService.get('user'));
-  if (user.role_id == 2) {
-    this.disableCompany = false;
-  }
     this.userPasswrdForm = this.formBuilder.group({
       current_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
       new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
@@ -61,9 +80,26 @@ export class SubscriberSettingsComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      company_name: [{ value: "", disabled: this.disableCompany }, Validators.compose([Validators.maxLength(100)])],
+      company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
+
+    this.addressForm = this.formBuilder.group({
+      id: [""],
+      location_type: ['', Validators.compose([Validators.required])],
+      phone_number: ['', Validators.compose([Validators.required])],
+      address: ['', Validators.compose([Validators.required])],
+      address1: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zip: ['', Validators.required]
+    });
+
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
   }
   userformSubmit() {
     this.isSubmit = true;
@@ -73,7 +109,6 @@ export class SubscriberSettingsComponent implements OnInit {
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       this.isSubmit = false;
-      //this.router.navigate(['/admin/settings'])
     }, error => {
       this.isSubmit = false;
       console.log(error.message)
@@ -112,5 +147,14 @@ export class SubscriberSettingsComponent implements OnInit {
         this.alertService.openSnackBar(error.message, "error");
       })
     })
+  }
+
+  addressIsSubmitted: boolean = false;
+  addressformSubmit() {
+    this.addressIsSubmitted = true;
+    if (this.addressForm.invalid) {
+      console.log(this.addressForm.value)
+      return;
+    }
   }
 }

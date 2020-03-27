@@ -18,12 +18,9 @@ export interface claimant1 {
   body_part_id: string,
   date_of_injury: string,
   continuous_trauma: string,
-  continuous_trauma_start_date: string,
-  continuous_trauma_end_date: string,
-  panel_number: number,
-  wcab_number: number,
-  note: string,
-  diagram_url: string
+  ct_start_date: string,
+  ct_end_date: string,
+  note: string
 }
 const ELEMENT_DATA: claimant1[] = []
 @Component({
@@ -260,11 +257,9 @@ export class NewClaimComponent implements OnInit {
         zipcode: []
       }),
       DEU: this.formBuilder.group({
-        name: [""],
+        office_name: [""],
         phone: [""],
-        address: [""],
-        street1: [""],
-        street2: [""],
+        address: [""]
       })
     })
     this.billable_item = this.formBuilder.group({
@@ -322,7 +317,7 @@ export class NewClaimComponent implements OnInit {
   createClaimant() {
     let data = this.claimant.value;
     data['primary_language_not_english'] = this.languageStatus;
-    this.claimService.createClaimant(this.claimant.value).subscribe(res => {
+    this.claimService.createClaim(this.claimant.value).subscribe(res => {
       this.claim.patchValue({
         claim_details: {
           claimant_id: res.data.id
@@ -337,7 +332,7 @@ export class NewClaimComponent implements OnInit {
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", panel_number: 23421, wcab_number: 23, note: "", diagram_url: "" };
+    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);

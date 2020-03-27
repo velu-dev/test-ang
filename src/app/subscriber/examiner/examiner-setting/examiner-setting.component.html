@@ -1,0 +1,238 @@
+<div fxLayout="column" fxLayoutGap="25px">
+    <div fxLayout="row wrap" class="d-cards">
+        <!-- loop over the cardList and show the cards -->
+        <div fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100" fxLayout="column">
+            <mat-card class="shadow p-t-15">
+
+                <mat-tab-group>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon p-r-5"> security </mat-icon>
+                            Security Settings
+                        </ng-template>
+                        <!-- cards here -->
+                        <div class="edit-profile  m-t-10">
+                            <mat-card-content>
+                                <!--Form start-->
+                                <form fxLayout="row wrap" [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
+                                    <mat-form-field class="m-t-5" appearance="standard" fxFlex="100">
+                                        <mat-label>Current Password*</mat-label>
+                                        <input type="password" matInput placeholder="Current Password"
+                                            autocomplete="off" formControlName="current_password">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
+                                        <!-- <mat-error *ngIf="userPasswrdForm.controls.current_password.errors.required">Password field does not empty</mat-error> -->
+                                        <!-- <mat-error *ngIf="userPasswrdForm.controls.current_password.errors.pattern">Password field does not valid</mat-error> -->
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5 p-r-10">
+                                        <mat-label>New Password*</mat-label>
+                                        <input [type]="isTypePassword ? 'password': 'text'" matInput
+                                            placeholder="New Password" autocomplete="off"
+                                            formControlName="new_password">
+                                        <mat-icon matSuffix
+                                            matTooltip="Password must contain at least 8 characters, including UPPER/lowercase, special character and numbers."
+                                            matTooltipPosition="above">error_outline</mat-icon>
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
+
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
+                                        fxFlex.sm="45" fxFlex.xl="45" class="m-t-5">
+                                        <mat-label>Confirm New Password*</mat-label>
+                                        <input [type]="isTypePassword ? 'password': 'text'" matInput
+                                            placeholder="Confirm New Password" autocomplete="off"
+                                            formControlName="confirmPassword">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
+                                    </mat-form-field>
+                                    <div fxFlex="10" fxFlex.md="5" fxFlex.lg="5" fxFlex.sm="5" fxFlex.xl="5"
+                                        class="m-t-5">
+                                        <mat-icon matSuffix (click)="changeInputType()" class="check-password p-t-25">
+                                            {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+                                    </div>
+
+                                    <button mat-raised-button color="primary" class="m-t-5">Save Changes </button>
+                                </form>
+                            </mat-card-content>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon p-r-5"> account_box </mat-icon>
+                            Account Settings
+                        </ng-template>
+                        <!-- Edit profile -->
+                        <div class="edit-profile m-t-10">
+                            <mat-card-content>
+                                <!--Form start-->
+                                <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
+
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                        fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
+                                        <mat-label>First Name*</mat-label>
+                                        <input matInput placeholder="First Name" formControlName="first_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidfirstname}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                        fxFlex.sm="50" fxFlex.xl="100" class=" m-t-5">
+                                        <mat-label>Middle Name</mat-label>
+                                        <input matInput placeholder="Middle Name" formControlName="middle_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidmiddlename}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                        fxFlex.sm="50" fxFlex.xl="100" class=" m-t-5">
+                                        <mat-label>Last Name*</mat-label>
+                                        <input matInput placeholder="Last Name" formControlName="last_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidlastname}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="standard" fxFlex="50" class=" m-t-5 p-r-10">
+                                        <mat-label>Company Name</mat-label>
+                                        <input matInput placeholder="Company Name" formControlName="company_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidcompanyname}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="standard" fxFlex="50" class="m-t-5  p-r-10">
+                                        <mat-label>Email ID*</mat-label>
+                                        <input matInput placeholder="Email ID" formControlName="sign_in_email_id"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
+                                    </mat-form-field>
+
+                                    <button mat-raised-button color="primary" class="m-t-5">Save Changes</button>
+                                </form>
+                            </mat-card-content>
+                        </div>
+                    </mat-tab>
+
+
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon p-r-5"> add_location </mat-icon>
+                            Manage address
+                        </ng-template>
+                        <!-- Edit profile -->
+                        <div class="edit-profile m-t-10">
+                            <mat-card-header>
+                                <div fxLayout="row wrap">
+                                    <div fxFlex="100">
+                                        <div class="p-t-10 content-wrapper-main-title">Manage address </div>
+                                    </div>
+                                </div>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="manage-btn" (click)="addAddress = !addAddress "> <span
+                                        class="fa fa-plus"></span> ADD A NEW ADDRESS</div>
+                                <div class="manage-address-form" *ngIf="addAddress">
+                                    <form [formGroup]="addressForm" (ngSubmit)="addressformSubmit()">
+                                        <div fxLayout="row wrap" fxFlex="100">
+
+                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                                                fxFlex.sm="50" fxFlex.xs="100">
+                                                <mat-label>Service Location Type</mat-label>
+                                                <mat-select formControlName="location_type">
+                                                    <mat-option value="Service">Service</mat-option>
+                                                    <mat-option value="Primary">Primary</mat-option>
+                                                    <mat-option value="Office">Office</mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="addressIsSubmitted">Select valid service location type</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                                                fxFlex.sm="50" fxFlex.xs="100">
+                                                <mat-label>Phone Number</mat-label>
+                                                <input matInput formControlName="phone_number" mask="(000) 000-0000" placeholder="Phone Number" autocomplete="off">
+                                                <mat-error *ngIf="addressIsSubmitted">Enter valid phone number</mat-error>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                                                fxFlex.sm="50" fxFlex.xs="100">
+                                                <mat-label>Address </mat-label>
+                                                <textarea matInput formControlName="address" placeholder="Address"></textarea>
+                                                <mat-error *ngIf="addressIsSubmitted">Enter valid address</mat-error>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                                                fxFlex.sm="50" fxFlex.xs="100">
+                                                <mat-label>Address 1</mat-label>
+                                                <textarea matInput formControlName="address1" placeholder="Address"></textarea>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                                                fxFlex.sm="50" fxFlex.xs="100">
+                                                <mat-label>City</mat-label>
+                                                <input matInput formControlName="city" placeholder="City" autocomplete="off">
+                                                <mat-error *ngIf="addressIsSubmitted">Enter valid city</mat-error>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                                                fxFlex.sm="50" fxFlex.xs="100">
+                                                <mat-label>State</mat-label>
+                                                <mat-select formControlName="state">
+                                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="addressIsSubmitted">Enter valid state</mat-error>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                                                fxFlex.sm="50" fxFlex.xs="100">
+                                                <mat-label>Zip code</mat-label>
+                                                <input matInput formControlName="zip" placeholder="Zip code" autocomplete="off">
+                                                <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
+                                            </mat-form-field>
+
+
+
+                                            <div class="text-center w-100 m-t-10 m-b-10">
+                                                <button mat-raised-button color="warn" class="m-r-10 " (click)="addressForm.reset();addAddress = false">
+                                                    Cancel </button>
+                                                <button mat-raised-button type="submit" color="primary"
+                                                    class="m-r-15 btn_success">Add</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="manage-address">
+                                    <mat-card *ngFor="let address of addresss" class="address-list">
+                                        <mat-card-header>
+                                            <div class="label">{{address.type}}</div>
+                                            <div class="spacer"></div>
+                                            <button mat-icon-button [matMenuTriggerFor]="menu"
+                                                aria-label="Example icon-button with a menu">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item>
+                                                    <mat-icon>location_on</mat-icon>
+                                                    <span>Set primary</span>
+                                                </button>
+                                                <button mat-menu-item>
+                                                    <mat-icon>edit</mat-icon>
+                                                    <span>Edit</span>
+                                                </button>
+                                                <button mat-menu-item>
+                                                    <mat-icon>delete</mat-icon>
+                                                    <span>Delete</span>
+                                                </button>
+                                            </mat-menu>
+                                        </mat-card-header>
+                                        <mat-divider></mat-divider>
+                                        <mat-card-content>
+                                            <div class="name"><strong>{{address.name}}</strong> </div>
+                                            <div class="address"> {{address.address }} </div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                            </mat-card-content>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card>
+        </div>
+    </div>
+</div>

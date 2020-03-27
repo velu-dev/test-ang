@@ -151,6 +151,36 @@ export const ROUTES = [
         icon: 'dashboard',
         submenu: []
     },
+    {
+        path: 'subscriber/examiner',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [
+            {
+                path: '/subscriber/examiner',
+                title: 'Dashboard',
+                icon: 'dashboard',
+                submenu: []
+            }, {
+                path: '/subscriber/examiner/dashboard',
+                title: 'Dashboard',
+                icon: 'dashboard',
+                submenu: []
+            },
+            {
+                path: '/subscriber/examiner/appointment',
+                title: 'Appointments',
+                icon: 'dashboard',
+                submenu: []
+            },
+            {
+                path: '/subscriber/examiner/settings',
+                title: 'Settings',
+                icon: 'dashboard',
+                submenu: []
+            },]
+    },
+
     // //Vendor historian Menu
     // {
     //     path: '/vendor/historian/dashboard',
