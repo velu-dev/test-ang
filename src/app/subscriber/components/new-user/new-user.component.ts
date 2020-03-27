@@ -39,6 +39,7 @@ export class NewUserComponent implements OnInit {
     }
   ];
   userForm: FormGroup;
+  addressForm: FormGroup;
   isSubmitted = false;
   isEdit: boolean = false;
   userData: any;
@@ -101,6 +102,16 @@ export class NewUserComponent implements OnInit {
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required]
     });
 
+    this.addressForm = this.formBuilder.group({
+      id: [""],
+      location_type: ['', Validators.compose([Validators.required])],
+      phone_number: ['', Validators.compose([Validators.required])],
+      address: ['', Validators.compose([Validators.required])],
+      address1: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zip: ['', Validators.required]
+    });
 
   }
 
@@ -128,5 +139,14 @@ export class NewUserComponent implements OnInit {
   }
   cancel() {
     this._location.back();
+  }
+
+  addressIsSubmitted: boolean = false;
+  addressformSubmit() {
+    this.addressIsSubmitted = true;
+    if (this.addressForm.invalid) {
+      console.log(this.addressForm.value)
+      return;
+    }
   }
 }
