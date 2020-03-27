@@ -9,13 +9,35 @@ import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import * as  errors from '../../../shared/messages/errors'
 import { CookieService } from 'src/app/shared/services/cookie.service';
+export interface Section {
+  type:string;
+  name: string;
+  address: string;
 
+}
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
   styleUrls: ['./new-user.component.scss']
 })
 export class NewUserComponent implements OnInit {
+  addresss: Section[] = [
+    {
+      type: 'primary',
+      name: 'Venkatesan',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    },
+    {
+      type: 'office',      
+      name: 'Sarath',
+      address:  '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    },
+    {
+      type: 'service',
+      name: 'Velusamy',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    }
+  ];
   userForm: FormGroup;
   isSubmitted = false;
   isEdit: boolean = false;

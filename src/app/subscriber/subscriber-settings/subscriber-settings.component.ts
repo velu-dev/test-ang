@@ -48,7 +48,6 @@ export class SubscriberSettingsComponent implements OnInit {
   ngOnInit() {
   let user = JSON.parse(this.cookieService.get('user'));
   if (user.role_id == 2) {
-    alert(user.role_id)
     this.disableCompany = false;
   }
     this.userPasswrdForm = this.formBuilder.group({
