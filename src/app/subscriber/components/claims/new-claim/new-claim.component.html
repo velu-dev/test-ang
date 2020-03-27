@@ -425,7 +425,7 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma==1" appearance="standard" fxFlex="33.3"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma=='1'" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off"
@@ -435,7 +435,7 @@
                                 <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == '1'" appearance="standard"
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.ct_end_date"
@@ -842,7 +842,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Modifiers</mat-label>
                             <mat-select formControlName="modifiers">
-                                <mat-option *ngFor="let modifier of modifiers" value="modifier.name">{{modifiers.name}}
+                                <mat-option *ngFor="let modifier of modifiers" value="modifier">{{modifiers}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
