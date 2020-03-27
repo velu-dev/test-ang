@@ -132,18 +132,27 @@ export const ROUTES: SideNavInterface[] = [
             role: 4
         }]
     }, 
-    // {
-    //     group: "Examiner",
-    //     role_id: 11,
-    //     menu: [{
-    //         path: '/subscriber/examiner/',
-    //         title: 'Dashboard',
-    //         icon: 'dashboard',
-    //         submenu: [],
-    //         group: "Subscriber",
-    //         role: 11
-    //     }]
-    // },
+    {
+        group: "Examiner",
+        role_id: 11,
+        menu: [
+        //     {
+        //     path: '/subscriber/examiner/',
+        //     title: 'Dashboard',
+        //     icon: 'dashboard',
+        //     submenu: [],
+        //     group: "Subscriber",
+        //     role: 11
+        // },
+        {
+            path: '/subscriber/examiner/appointment',
+            title: 'Appointments',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 11
+        }]
+    },
     // {
     //     group: "Vendor Historian",
     //     role_id: 5,

@@ -8,8 +8,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from 'src/app/shared/model/user.model';
 import * as globals from '../../../globals'
 import * as  errors from '../../../shared/messages/errors'
+import { ClaimService } from '../../service/claim.service';
 export interface Section {
-  type:string;
+  type: string;
   name: string;
   address: string;
 
@@ -28,9 +29,9 @@ export class ExaminerSettingComponent implements OnInit {
       address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
-      type: 'office',      
+      type: 'office',
       name: 'Sarath',
-      address:  '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
       type: 'service',
@@ -43,14 +44,17 @@ export class ExaminerSettingComponent implements OnInit {
   currentUser = {};
   userForm: FormGroup;
   userPasswrdForm: FormGroup;
-  errorMessages = errors
+  addressForm: FormGroup;
+  errorMessages = errors;
+  states: any;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private router: Router,
-    private cognitoService: CognitoService
+    private cognitoService: CognitoService,
+    private claimService: ClaimService,
   ) {
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)
@@ -79,6 +83,23 @@ export class ExaminerSettingComponent implements OnInit {
       company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
+
+    this.addressForm = this.formBuilder.group({
+      id: [""],
+      location_type: ['', Validators.compose([Validators.required])],
+      phone_number: ['', Validators.compose([Validators.required])],
+      address: ['', Validators.compose([Validators.required])],
+      address1: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zip: ['', Validators.required]
+    });
+
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
   }
   userformSubmit() {
     this.isSubmit = true;
@@ -129,5 +150,14 @@ export class ExaminerSettingComponent implements OnInit {
         this.alertService.openSnackBar(error.message, "error");
       })
     })
+  }
+
+  addressIsSubmitted: boolean = false;
+  addressformSubmit() {
+    this.addressIsSubmitted = true;
+    if (this.addressForm.invalid) {
+      console.log(this.addressForm.value)
+      return;
+    }
   }
 }

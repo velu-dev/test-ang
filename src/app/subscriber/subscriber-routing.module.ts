@@ -15,6 +15,7 @@ import { BillableItemComponent } from './components/claims/billable-item/billabl
 import { ClaimantComponent } from './components/claims/claimant/claimant.component';
 import { ExaminerDashboardComponent } from './examiner/examiner-dashboard/examiner-dashboard.component';
 import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-setting.component';
+import { AppointmentComponent } from './examiner/appointment/appointment.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -94,7 +95,7 @@ const routes: Routes = [{
     path: "settings",
     component: SubscriberSettingsComponent
   }]
-},{
+}, {
   path: "examiner",
   children: [{
     path: "",
@@ -102,6 +103,10 @@ const routes: Routes = [{
   }, {
     path: "dashboard",
     component: ExaminerDashboardComponent
+  },
+  {
+    path: "appointment",
+    component: AppointmentComponent
   }, {
     path: "settings",
     component: ExaminerSettingComponent
