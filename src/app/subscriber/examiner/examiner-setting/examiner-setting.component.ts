@@ -9,8 +9,10 @@ import { User } from 'src/app/shared/model/user.model';
 import * as globals from '../../../globals'
 import * as  errors from '../../../shared/messages/errors'
 export interface Section {
+  type:string;
   name: string;
-  updated: Date;
+  address: string;
+
 }
 @Component({
   selector: 'app-examiner-setting',
@@ -19,28 +21,21 @@ export interface Section {
 })
 export class ExaminerSettingComponent implements OnInit {
 
-  folders: Section[] = [
+  addresss: Section[] = [
     {
-      name: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-      updated: new Date('1/1/16'),
+      type: 'primary',
+      name: 'Venkatesan',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
-      name: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-      updated: new Date('1/17/16'),
+      type: 'office',      
+      name: 'Sarath',
+      address:  '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
-      name: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-      updated: new Date('1/28/16'),
-    }
-  ];
-  notes: Section[] = [
-    {
-      name: 'Vacation Itinerary',
-      updated: new Date('2/20/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
+      type: 'service',
+      name: 'Velusamy',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     }
   ];
   profile_bg = globals.profile_bg;
