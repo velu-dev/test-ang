@@ -15,7 +15,7 @@ export interface Claimant {
 
 
 export interface claimant1 {
-  body_parts: string,
+  body_part_id: string,
   date_of_injury: string,
   continuous_trauma: string,
   ct_start_date: string,
@@ -410,7 +410,7 @@ export class NewClaimComponent implements OnInit {
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_parts: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
+    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);
