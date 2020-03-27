@@ -52,7 +52,7 @@ export class NewClaimComponent implements OnInit {
   injuryInfodata: claimant1[] = []
   searchStatus: boolean = false;
   advanceSearch: any;
-  injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", note: "", diagram_url: "" }
+  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: null, continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null }
   claimantList = [];
   bodyParts = new FormControl();
   bodyPartsList = [];
@@ -189,22 +189,28 @@ export class NewClaimComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      suffix: [""],
-      // date_of_birth: ["",Validators.required],
-      date_of_birth: ["", Validators.required],
-      gender: [""],
+      suffix: [],
+      salutation: [],
+      organization_id: [],
+      created_by: [],
+      modified_by: [],
+      createdAt: [],
+      updatedAt: [],
+      zip_code_plus_4: [],
+      date_of_birth: [null, Validators.required],
+      gender: [],
       email: ["", Validators.compose([Validators.email])],
-      handedness: [""],
-      primary_language_spoken: [1],
-      certified_interpreter_required: [false],
-      ssn: [""],
-      phone_no_1: [""],
-      phone_no_2: [""],
-      street1: [""],
-      street2: [""],
-      city: [""],
-      state: [""],
-      zip_code: [Number]
+      handedness: [],
+      primary_language_spoken: [],
+      certified_interpreter_required: [],
+      ssn: [],
+      phone_no_1: [],
+      phone_no_2: [],
+      street1: [],
+      street2: [],
+      city: [],
+      state: [],
+      zip_code: []
     })
 
     // this.claimForm = this.formBuilder.group({
@@ -212,74 +218,77 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         // wcab_number: ["", Validators.required],
         // claim_number: ["", Validators.required],
+        claimant_name: [],
         wcab_number: [''],
         claim_number: ["",],
         panel_number: [''],
-        claimant_id: [1]
+        claimant_id: []
       }),
       claim_injuries: [],
       InsuranceAdjuster: this.formBuilder.group({
-        insurance_name: [""],
-        name: [""],
-        phone: [""],
-        fax: [""],
-        email: [""],
-        address: [""],
+        insurance_name: [],
+        name: [],
+        phone: [],
+        fax: [],
+        email: [],
+        address: [],
       }),
       Employer: this.formBuilder.group({
-        name: [""],
-        phone: [""],
-        address: [""],
-        city: [""],
-        state: [""],
+        name: [],
+        phone: [],
+        address: [],
+        city: [],
+        state: [],
         zipcode: [],
       }),
       ApplicantAttorney: this.formBuilder.group({
-        law_firm_name: [""],
-        attorney_name: [""],
-        phone: [""],
-        fax: [""],
-        email: [""],
-        address: [""],
-        city: [""],
-        state: [""],
+        law_firm_name: [],
+        attorney_name: [],
+        phone: [],
+        fax: [],
+        email: [],
+        address: [],
+        city: [],
+        state: [],
         zipcode: []
       }),
       DefenseAttorney: this.formBuilder.group({
-        law_firm_name: [""],
-        attorney_name: [""],
-        phone: [""],
-        fax: [""],
-        email: [""],
-        address: [""],
-        city: [""],
-        state: [""],
+        law_firm_name: [],
+        attorney_name: [],
+        phone: [],
+        fax: [],
+        email: [],
+        address: [],
+        city: [],
+        state: [],
         zipcode: []
       }),
       DEU: this.formBuilder.group({
-        office_name: [""],
-        phone: [""],
-        address: [""]
+        name: [],
+        phone: [],
+        address: [],
+        street1: [],
+        street2: []
       })
     })
     this.billable_item = this.formBuilder.group({
       exam_type: this.formBuilder.group({
-        procudure_type: [""],
+        procudure_type: [],
         modifiers: []
       }),
       appoinment: this.formBuilder.group({
-        examinar: [""],
-        date: [""],
-        duration: [""],
-        address: [""]
+        examinar: [],
+        date: [],
+        duration: [],
+        address: []
       }),
       intake_call_info: this.formBuilder.group({
-        caller_affliation: [""],
-        intake_caller: [""],
-        communication_type: [""],
-        communication_details: [""],
-        call_time: [""],
-        note: [""]
+        caller_affliation: [],
+        intake_caller: [],
+        communication_type: [],
+        communication_details: [],
+        call_time: [],
+        note: []
       })
 
     })
@@ -306,7 +315,7 @@ export class NewClaimComponent implements OnInit {
     // let data = { ...this.claimant.value, ...claim };
     // console.log("data", data);
     this.claimService.createClaim(claim).subscribe(res => {
-      console.log("Response", res)
+      this.alertService.openSnackBar(res.message, 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.error, 'error');
     })
@@ -314,25 +323,27 @@ export class NewClaimComponent implements OnInit {
   cancle() {
 
   }
+  claimant_name = "";
   createClaimant() {
     let data = this.claimant.value;
     data['primary_language_not_english'] = this.languageStatus;
-    this.claimService.createClaim(this.claimant.value).subscribe(res => {
+    this.claimService.createClaimant(this.claimant.value).subscribe(res => {
+      this.alertService.openSnackBar(res.message, "success");
+      this.claimant_name = res.data.first_name + "  " + res.data.last_name
       this.claim.patchValue({
         claim_details: {
           claimant_id: res.data.id
         }
       });
-      this.alertService.openSnackBar("success", res.message);
     }, error => {
       console.log(error)
-      this.alertService.openSnackBar('error', error.error.error);
+      this.alertService.openSnackBar(error.error.error, 'error');
     })
   }
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", note: "", diagram_url: "" };
+    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: null, continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);

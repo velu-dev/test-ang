@@ -394,7 +394,8 @@
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_details">
                             <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Claimant name </mat-label>
-                                <input matInput placeholder="Claimant name" value="Claimant name comes here" disabled>
+                                <input matInput placeholder="Claimant name" [(ngModel)]="claimant_name"
+                                    [ngModelOptions]="{standalone: true}" disabled>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
@@ -480,19 +481,24 @@
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off"
-                                    [matDatepicker]="continuous_trauma_start_date" [(ngModel)]="injuryInfo.continuous_trauma_start_date"
+                                    [matDatepicker]="continuous_trauma_start_date"
+                                    [(ngModel)]="injuryInfo.continuous_trauma_start_date"
                                     [ngModelOptions]="{standalone: true}" (click)="continuous_trauma_start_date.open()">
-                                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date"></mat-datepicker-toggle>
+                                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
+                                </mat-datepicker-toggle>
                                 <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma == '1'" appearance="standard"
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
-                                <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.continuous_trauma_end_date"
+                                <input matInput placeholder="CT End date "
+                                    [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
-                                    [matDatepicker]="continuous_trauma_end_date" (click)="continuous_trauma_end_date.open()">
-                                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date"></mat-datepicker-toggle>
+                                    [matDatepicker]="continuous_trauma_end_date"
+                                    (click)="continuous_trauma_end_date.open()">
+                                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
+                                </mat-datepicker-toggle>
                                 <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
@@ -872,7 +878,7 @@
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success">
+                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()">
                             Save </button>
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success" matStepperNext>
@@ -1011,7 +1017,7 @@
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50">
-                        <button (click)="submitClaim()" mat-raised-button color="primary" type="submit"
+                        <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success">
                             Submit </button>
                         <button mat-raised-button type="button" class="rounded-corner" color="warn"
