@@ -9,14 +9,38 @@ import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import * as  errors from '../../../shared/messages/errors'
 import { CookieService } from 'src/app/shared/services/cookie.service';
+export interface Section {
+  type:string;
+  name: string;
+  address: string;
 
+}
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
   styleUrls: ['./new-user.component.scss']
 })
 export class NewUserComponent implements OnInit {
+  addAddress: boolean = true;
+  addresss: Section[] = [
+    {
+      type: 'primary',
+      name: 'Venkatesan',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    },
+    {
+      type: 'office',      
+      name: 'Sarath',
+      address:  '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    },
+    {
+      type: 'service',
+      name: 'Velusamy',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    }
+  ];
   userForm: FormGroup;
+  addressForm: FormGroup;
   isSubmitted = false;
   isEdit: boolean = false;
   userData: any;
@@ -26,6 +50,7 @@ export class NewUserComponent implements OnInit {
   isAdminCreate: boolean = false;
   activeTitle = "";
   user: any = {};
+  states = [];
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -79,6 +104,16 @@ export class NewUserComponent implements OnInit {
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required]
     });
 
+    this.addressForm = this.formBuilder.group({
+      id: [""],
+      location_type: ['', Validators.compose([Validators.required])],
+      phone_number: ['', Validators.compose([Validators.required])],
+      address: ['', Validators.compose([Validators.required])],
+      address1: [''],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      zip: ['', Validators.required]
+    });
 
   }
 
@@ -106,5 +141,14 @@ export class NewUserComponent implements OnInit {
   }
   cancel() {
     this._location.back();
+  }
+
+  addressIsSubmitted: boolean = false;
+  addressformSubmit() {
+    this.addressIsSubmitted = true;
+    if (this.addressForm.invalid) {
+      console.log(this.addressForm.value)
+      return;
+    }
   }
 }

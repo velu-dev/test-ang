@@ -13,11 +13,13 @@ import { SubscriberUserService } from './service/subscriber-user.service';
 import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-settings.component';
 import { ManageUserComponent } from './manager/manage-user/manage-user.component';
 import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
-import { AppointmentComponent } from './examinor/appointment/appointment.component';
+import { AppointmentComponent } from './examiner/appointment/appointment.component';
 import { ClaimService } from './service/claim.service';
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
 import { BillableItemComponent } from './components/claims/billable-item/billable-item.component';
 import { ClaimantComponent } from './components/claims/claimant/claimant.component';
+import { ExaminerDashboardComponent } from './examiner/examiner-dashboard/examiner-dashboard.component';
+import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-setting.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { ClaimantComponent } from './components/claims/claimant/claimant.compone
     NewClaimComponent,
     BillableItemComponent,
     ClaimantComponent,
+    ExaminerDashboardComponent,
+    ExaminerSettingComponent,
   ],
   imports: [
     CommonModule,

@@ -10,8 +10,34 @@
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
                         <div fxFlex="100">
+
+
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
-                                <mat-tab label="Search by Claimants ">
+                                <mat-tab label="Search Claimants ">
+                                    <mat-form-field appearance="fill" fxFlex="100"
+                                        hideRequiredMarker="hideRequiredControl.auto"
+                                        floatLabel="floatLabelControl.auto" class="advanced_search w-100">
+                                        <div matPrefix (click)="searchStatus = !searchStatus ">
+                                            <span>Advanced Search</span>
+                                            <mat-icon class="expand-icon icons">
+                                                {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+                                            </mat-icon>
+                                        </div>
+                                        <input matInput placeholder="Search by name, date of birth "
+                                            [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                                        <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredStates"
+                                                (click)="changeOption(option)" [value]="option.first_name">
+                                                {{option.first_name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <span matSuffix class="search-icon icons">
+                                            <mat-icon>search</mat-icon>
+                                        </span>
+                                    </mat-form-field>
+
+
+                                    <!-- 
                                     <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <input matInput placeholder="Search by name, date of birth "
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
@@ -24,10 +50,11 @@
                                         <mat-icon matSuffix (click)="searchStatus = !searchStatus ">
                                             {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
                                         </mat-icon>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
                                     <form [formGroup]="advanceSearch">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
+                                                <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced Search</div>
 
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50"
                                                     fxFlex.sm="50" fxFlex.xs="100">
@@ -90,8 +117,9 @@
                                         </div>
                                     </form>
                                 </mat-tab>
+
                                 <mat-tab label="Search EAMS">
-                                    <mat-form-field appearance="fill" fxFlex="100" class="w-100">
+                                    <!-- <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <input matInput placeholder="Search EAMS"
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
@@ -103,11 +131,32 @@
                                         <mat-icon matSuffix (click)="searchStatus = !searchStatus ">
                                             {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
                                         </mat-icon>
+                                    </mat-form-field> -->
+                                    <mat-form-field appearance="fill" fxFlex="100"
+                                        hideRequiredMarker="hideRequiredControl.auto"
+                                        floatLabel="floatLabelControl.auto" class="advanced_search w-100">
+                                        <div matPrefix (click)="searchStatus = !searchStatus ">
+                                            <span>Advanced Search</span>
+                                            <mat-icon class="expand-icon icons">
+                                                {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+                                            </mat-icon>
+                                        </div>
+                                        <input matInput placeholder="Search EAMS"
+                                            [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                                        <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredStates"
+                                                (click)="changeOption(option)" [value]="option.first_name">
+                                                {{option.first_name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <span matSuffix class="search-icon icons">
+                                            <mat-icon>search</mat-icon>
+                                        </span>
                                     </mat-form-field>
-
                                     <form [formGroup]="advanceSearch">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
+                                                <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced Search</div>
 
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50"
                                                     fxFlex.sm="50" fxFlex.xs="100">
@@ -289,14 +338,14 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address</mat-label>
-                            <textarea matInput placeholder="Street Address" formControlName="street_1"
+                            <textarea matInput placeholder="Street Address" formControlName="street1"
                                 autocomplete="off"></textarea>
                             <mat-error>Enter valid street address</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address 2</mat-label>
-                            <textarea matInput placeholder="Street Address 2" formControlName="street_2"
+                            <textarea matInput placeholder="Street Address 2" formControlName="street2"
                                 autocomplete="off"></textarea>
                             <mat-error>Enter valid street address</mat-error>
                         </mat-form-field>
@@ -325,7 +374,7 @@
 
                         <div class="text-center w-100 m-t-10 m-b-50">
                             <button mat-raised-button color="primary" type="submit"
-                                class="m-r-10 rounded-corner btn_success" (click)="createClaim()">
+                                class="m-r-10 rounded-corner btn_success" (click)="createClaimant()">
                                 Save </button>
                             <button mat-raised-button type="submit" class="rounded-corner" color="primary"
                                 matStepperNext>Next</button>
@@ -337,12 +386,11 @@
         <mat-step [stepControl]="claim">
             <form [formGroup]="claim">
                 <ng-template matStepLabel>Create Claim</ng-template>
-
-                <mat-accordion class="p-t-15">
-                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
-                        <mat-expansion-panel-header>
-                            <div class="sub-title">Claim Information</div>
-                        </mat-expansion-panel-header>
+                <mat-card>
+                    <mat-card-header>
+                        <div class="sub-title">Claim Information</div>
+                    </mat-card-header>
+                    <mat-card-content>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_details">
                             <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Claimant name </mat-label>
@@ -372,7 +420,10 @@
                                     autocomplete="off">
                             </mat-form-field>
                         </div>
-                    </mat-expansion-panel>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-accordion class="p-t-15">
 
                     <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
                         <mat-expansion-panel-header>
@@ -425,24 +476,24 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma=='1'" appearance="standard" fxFlex="33.3"
-                                fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma=='1'" appearance="standard"
+                                fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off"
-                                    [matDatepicker]="ct_start_date" [(ngModel)]="injuryInfo.ct_start_date"
-                                    [ngModelOptions]="{standalone: true}" (click)="ct_start_date.open()">
-                                <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
-                                <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
+                                    [matDatepicker]="continuous_trauma_start_date" [(ngModel)]="injuryInfo.continuous_trauma_start_date"
+                                    [ngModelOptions]="{standalone: true}" (click)="continuous_trauma_start_date.open()">
+                                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date"></mat-datepicker-toggle>
+                                <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma == '1'" appearance="standard"
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
-                                <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.ct_end_date"
+                                <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
-                                    [matDatepicker]="ct_end_date" (click)="ct_end_date.open()">
-                                <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
-                                <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
+                                    [matDatepicker]="continuous_trauma_end_date" (click)="continuous_trauma_end_date.open()">
+                                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date"></mat-datepicker-toggle>
+                                <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
                             <div fxFlex="100" class="p-t-10">
@@ -452,9 +503,9 @@
 
                             <table mat-table [dataSource]="dataSource" class="m-t-20" fxFlex="100">
                                 <!-- body_parts Column -->
-                                <ng-container matColumnDef="body_parts">
+                                <ng-container matColumnDef="body_part_id">
                                     <th mat-header-cell *matHeaderCellDef> Body parts </th>
-                                    <td mat-cell *matCellDef="let element"> {{element?.body_parts}} </td>
+                                    <td mat-cell *matCellDef="let element"> {{element?.body_part_id}} </td>
                                 </ng-container>
 
                                 <!-- injury_date Column -->
@@ -462,6 +513,11 @@
                                     <th mat-header-cell *matHeaderCellDef> Date of injury </th>
                                     <td mat-cell *matCellDef="let element">
                                         {{element?.date_of_injury | date:'MM-dd-yyyy'}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="continuous_trauma">
+                                    <th mat-header-cell *matHeaderCellDef> continuous_trauma </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element?.continuous_trauma}} </td>
                                 </ng-container>
 
                                 <!-- note Column -->
@@ -794,8 +850,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Office Name</mat-label>
-                                <input matInput placeholder="Office Name" formControlName="office_name"
-                                    autocomplete="off">
+                                <input matInput placeholder="Office Name" formControlName="name" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -806,8 +861,12 @@
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100">
-                                <mat-label>Address</mat-label>
-                                <textarea matInput formControlName="address"></textarea>
+                                <mat-label>Street 1</mat-label>
+                                <textarea matInput formControlName="street1"></textarea>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="100">
+                                <mat-label>Street 2</mat-label>
+                                <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -904,7 +963,7 @@
 
                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                         Intake
-                        Call Informantion
+                        Call Information
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call_info">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

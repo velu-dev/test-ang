@@ -18,8 +18,8 @@ export interface claimant1 {
   body_part_id: string,
   date_of_injury: string,
   continuous_trauma: string,
-  ct_start_date: string,
-  ct_end_date: string,
+  continuous_trauma_start_date: string,
+  continuous_trauma_end_date: string,
   note: string
 }
 const ELEMENT_DATA: claimant1[] = []
@@ -30,7 +30,7 @@ const ELEMENT_DATA: claimant1[] = []
 })
 export class NewClaimComponent implements OnInit {
   xls = globals.xls
-  displayedColumns: string[] = ['body_parts', 'date_of_injury', 'note', "action"];
+  displayedColumns: string[] = ['body_part_id', 'date_of_injury', 'continuous_trauma', 'note', "action"];
   dataSource: any;
   step = 0;
   isLinear = false;
@@ -52,94 +52,8 @@ export class NewClaimComponent implements OnInit {
   injuryInfodata: claimant1[] = []
   searchStatus: boolean = false;
   advanceSearch: any;
-  injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" }
-  claimantList = [
-    {
-      last_name: 'John',
-      first_name: "Abraham",
-      middle_name: "JA",
-      suffix: "",
-      date_of_birth: "",
-      gender: "",
-      email: "",
-      handedness: "",
-      is_primary_lanuguage_english: "",
-      primary_language: "",
-      certified_inpreted: "",
-      ssn: "",
-      phone_number: "",
-      phone_number_1: "",
-      street_1: "",
-      street_2: "",
-      city: "",
-      state: "",
-      zipcode: ""
-    },
-    {
-      last_name: 'Lee',
-      first_name: "Brues",
-      middle_name: "LB",
-      suffix: "",
-      date_of_birth: "",
-      gender: "",
-      email: "",
-      handedness: "",
-      is_primary_lanuguage_english: "",
-      primary_language: "",
-      certified_inpreted: "",
-      ssn: "",
-      phone_number: "",
-      phone_number_1: "",
-      street_1: "",
-      street_2: "",
-      city: "",
-      state: "",
-      zipcode: ""
-
-    },
-    {
-      last_name: 'Rajan',
-      first_name: "Mariyappan",
-      middle_name: "RM",
-      suffix: "",
-      date_of_birth: "",
-      gender: "",
-      email: "",
-      handedness: "",
-      is_primary_lanuguage_english: "",
-      primary_language: "",
-      certified_inpreted: "",
-      ssn: "",
-      phone_number: "",
-      phone_number_1: "",
-      street_1: "",
-      street_2: "",
-      city: "",
-      state: "",
-      zipcode: ""
-    },
-    {
-      first_name: 'Banner',
-      last_name: "Brues",
-      middle_name: "BB",
-      suffix: [""],
-      date_of_birth: [""],
-      gender: [""],
-      email: "",
-      handedness: [""],
-      is_primary_lanuguage_english: [""],
-      primary_language: [""],
-      certified_inpreted: [""],
-      ssn: [""],
-      phone_number: [""],
-      phone_number_1: [""],
-      street_1: [""],
-      street_2: [""],
-      city: [""],
-      state: [""],
-      zipcode: [""]
-    }
-  ];
+  injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", note: "", diagram_url: "" }
+  claimantList = [];
   bodyParts = new FormControl();
   bodyPartsList = [];
   states = [];
@@ -165,6 +79,9 @@ export class NewClaimComponent implements OnInit {
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService) {
+    this.claimService.searchClaimant("").subscribe(res => {
+      this.claimantList = res.data;
+    })
     this.ALL_SEED_DATA.map(seed => {
       this.claimService.seedData(seed).subscribe(res => {
         switch (seed) {
@@ -234,7 +151,13 @@ export class NewClaimComponent implements OnInit {
     this.searchStatus = false;
   }
   changeOption(option) {
-    this.claimant.setValue(option)
+    console.log(option)
+    this.claim.patchValue({
+      claim_details: {
+        claimant_id: option.id
+      }
+    });
+    this.claimant.setValue(option);
   }
   private _filterStates(value: string) {
     console.log(value)
@@ -262,8 +185,7 @@ export class NewClaimComponent implements OnInit {
       zipcode: [""]
     })
     this.claimant = this.formBuilder.group({
-      // last_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
-      // first_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
+      id: [""],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
@@ -278,8 +200,8 @@ export class NewClaimComponent implements OnInit {
       ssn: [""],
       phone_no_1: [""],
       phone_no_2: [""],
-      street_1: [""],
-      street_2: [""],
+      street1: [""],
+      street2: [""],
       city: [""],
       state: [""],
       zip_code: [Number]
@@ -392,7 +314,7 @@ export class NewClaimComponent implements OnInit {
   cancle() {
 
   }
-  createClaim() {
+  createClaimant() {
     let data = this.claimant.value;
     data['primary_language_not_english'] = this.languageStatus;
     this.claimService.createClaim(this.claimant.value).subscribe(res => {
@@ -410,7 +332,7 @@ export class NewClaimComponent implements OnInit {
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
+    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", note: "", diagram_url: "" };
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);
