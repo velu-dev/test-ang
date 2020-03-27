@@ -6,6 +6,7 @@ import { startWith, map } from 'rxjs/operators';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as globals from '../../../../globals';
+import { AlertService } from 'src/app/shared/services/alert.service';
 export interface Claimant {
   last_name: string;
   first_name: string;
@@ -14,7 +15,7 @@ export interface Claimant {
 
 
 export interface claimant1 {
-  body_parts: string,
+  body_part_id: string,
   date_of_injury: string,
   continuous_trauma: string,
   ct_start_date: string,
@@ -34,7 +35,6 @@ export class NewClaimComponent implements OnInit {
   step = 0;
   isLinear = false;
   isSubmit = false;
-  states = [];
   searchInput = new FormControl();
   filteredStates: any;
   claimForm: FormGroup;
@@ -47,13 +47,12 @@ export class NewClaimComponent implements OnInit {
   billable_item: FormGroup;
   defance_attorney: FormGroup;
   titleName = "Create Claimant";
-  languageList = [];
   languageStatus = false;
   callerAffliation = [];
   injuryInfodata: claimant1[] = []
   searchStatus: boolean = false;
   advanceSearch: any;
-  injuryInfo = { body_parts: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" }
+  injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" }
   claimantList = [
     {
       last_name: 'John',
@@ -143,13 +142,81 @@ export class NewClaimComponent implements OnInit {
   ];
   bodyParts = new FormControl();
   bodyPartsList = [];
+  states = [];
+  modifiers = [];
+  roles = [];
+  addressTypes = [];
+  agentTypes = [];
+  contactTypes = [];
+  examTypes = [];
+  languageList = [];
+  objectTypes = [];
+  procuderalCodes = [];
+  roleLevels = [];
+  specialityList = [];
+  userAccountStatus = [];
+  userRoles = [];
+  ALL_SEED_DATA = ["address_type", "agent_type", "body_part",
+    "contact_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
+    "user_account_status", "user_roles"]
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
   constructor(
     private formBuilder: FormBuilder,
-    private claimService: ClaimService) {
-    this.claimService.seedData('body_part').subscribe(res => {
-      this.bodyPartsList = res.data;
+    private claimService: ClaimService,
+    private alertService: AlertService) {
+    this.ALL_SEED_DATA.map(seed => {
+      this.claimService.seedData(seed).subscribe(res => {
+        switch (seed) {
+          case "address_type":
+            this.addressTypes = res.data;
+            break;
+          case "agent_type":
+            this.agentTypes = res.data;
+            break;
+          case "body_part":
+            this.bodyPartsList = res.data;
+            break;
+          case "contact_type":
+            this.contactTypes = res.data;
+            break;
+          case "exam_type":
+            this.examTypes = res.data;
+            break;
+          case "language":
+            this.languageList = res.data;
+            break;
+          case "modifier":
+            this.modifiers = res.data;
+            break;
+          case "object_type":
+            this.objectTypes = res.data;
+            break;
+          case "procedural_code":
+            this.procuderalCodes = res.data;
+            break;
+          case "role_level":
+            this.roleLevels = res.data;
+            break;
+          case "roles":
+            this.roles = res.data;
+            break;
+          case "speciality":
+            this.specialityList = res.data;
+            break;
+          case "state":
+            this.states = res.data;
+            break;
+          case "user_account_status":
+            this.userAccountStatus = res.data;
+            break;
+          case "user_roles":
+            this.userRoles = res.data;
+            break;
+          default:
+            break;
+        }
+      })
     })
     this.claimService.getCallerAffliation().subscribe(res => {
       this.callerAffliation = res.data;
@@ -160,18 +227,6 @@ export class NewClaimComponent implements OnInit {
       } else {
         this.filteredStates = this.claimantList.slice()
       }
-    })
-
-    this.claimService.seedData('state').subscribe(response => {
-      this.states = response['data'];
-    }, error => {
-      console.log("error", error)
-    })
-
-    this.claimService.seedData('language').subscribe(response => {
-      this.languageList = response['data'];
-    }, error => {
-      console.log("error", error)
     })
   }
 
@@ -211,24 +266,23 @@ export class NewClaimComponent implements OnInit {
       // first_name: ['', Validators.compose([Validators.required,Validators.pattern('[A-Za-z]+')])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       suffix: [""],
       // date_of_birth: ["",Validators.required],
       date_of_birth: ["", Validators.required],
       gender: [""],
       email: ["", Validators.compose([Validators.email])],
       handedness: [""],
-      is_primary_lanuguage_english: [""],
-      primary_language: [""],
-      certified_inpreted: [""],
+      primary_language_spoken: [1],
+      certified_interpreter_required: [false],
       ssn: [""],
-      phone_number: [""],
-      phone_number_1: [""],
+      phone_no_1: [""],
+      phone_no_2: [""],
       street_1: [""],
       street_2: [""],
       city: [""],
       state: [""],
-      zipcode: [Number]
+      zip_code: [Number]
     })
 
     // this.claimForm = this.formBuilder.group({
@@ -256,7 +310,7 @@ export class NewClaimComponent implements OnInit {
         address: [""],
         city: [""],
         state: [""],
-        zipcode: [Number],
+        zipcode: [],
       }),
       ApplicantAttorney: this.formBuilder.group({
         law_firm_name: [""],
@@ -267,7 +321,7 @@ export class NewClaimComponent implements OnInit {
         address: [""],
         city: [""],
         state: [""],
-        zipcode: [Number]
+        zipcode: []
       }),
       DefenseAttorney: this.formBuilder.group({
         law_firm_name: [""],
@@ -278,7 +332,7 @@ export class NewClaimComponent implements OnInit {
         address: [""],
         city: [""],
         state: [""],
-        zipcode: [Number]
+        zipcode: []
       }),
       DEU: this.formBuilder.group({
         office_name: [""],
@@ -331,15 +385,32 @@ export class NewClaimComponent implements OnInit {
     // console.log("data", data);
     this.claimService.createClaim(claim).subscribe(res => {
       console.log("Response", res)
+    }, error => {
+      this.alertService.openSnackBar(error.error.error, 'error');
     })
   }
   cancle() {
 
   }
+  createClaim() {
+    let data = this.claimant.value;
+    data['primary_language_not_english'] = this.languageStatus;
+    this.claimService.createClaim(this.claimant.value).subscribe(res => {
+      this.claim.patchValue({
+        claim_details: {
+          claimant_id: res.data.id
+        }
+      });
+      this.alertService.openSnackBar("success", res.message);
+    }, error => {
+      console.log(error)
+      this.alertService.openSnackBar('error', error.error.error);
+    })
+  }
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_parts: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
+    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);

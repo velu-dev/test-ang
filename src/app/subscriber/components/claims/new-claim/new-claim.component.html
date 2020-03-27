@@ -274,14 +274,14 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Phone Number</mat-label>
-                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_number"
+                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_no_1"
                                 placeholder="Phone Number" autocomplete="off">
                             <mat-error>Enter valid phone number</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Alternate Phone Number</mat-label>
-                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_number_1"
+                            <input matInput type="text" mask="(000) 000-0000" formControlName="phone_no_2"
                                 placeholder="Alternate Phone Number" autocomplete="off">
                             <mat-error>Enter valid alternative phone number</mat-error>
                         </mat-form-field>
@@ -310,7 +310,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>State</mat-label>
                             <mat-select formControlName="state">
-                                <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
                                 </mat-option>
                             </mat-select>
                             <mat-error>Enter valid state</mat-error>
@@ -318,14 +318,14 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Zip</mat-label>
-                            <input matInput type="number" placeholder="Zip" formControlName="zipcode"
+                            <input matInput type="number" placeholder="Zip" formControlName="zip_code"
                                 autocomplete="off">
                             <mat-error>Enter valid zip code</mat-error>
                         </mat-form-field>
 
                         <div class="text-center w-100 m-t-10 m-b-50">
                             <button mat-raised-button color="primary" type="submit"
-                                class="m-r-10 rounded-corner btn_success">
+                                class="m-r-10 rounded-corner btn_success" (click)="createClaim()">
                                 Save </button>
                             <button mat-raised-button type="submit" class="rounded-corner" color="primary"
                                 matStepperNext>Next</button>
@@ -383,10 +383,10 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Body Parts</mat-label>
-                                <mat-select [(ngModel)]="injuryInfo.body_parts" [ngModelOptions]="{standalone: true}"
+                                <mat-select [(ngModel)]="injuryInfo.body_part_id" [ngModelOptions]="{standalone: true}"
                                     multiple>
                                     <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts.id">
-                                        {{bodyParts.body_part_name}}</mat-option>
+                                        {{bodyParts.body_part}} - {{bodyParts.body_part_name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
@@ -425,7 +425,7 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma==1" appearance="standard" fxFlex="33.3"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma=='1'" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off"
@@ -435,7 +435,7 @@
                                 <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 1" appearance="standard"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == '1'" appearance="standard"
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.ct_end_date"
@@ -635,10 +635,15 @@
                                 <input matInput placeholder="City" formControlName="city" autocomplete="off">
                             </mat-form-field>
 
+
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <input matInput placeholder="State" formControlName="state" autocomplete="off">
+                                <mat-select formControlName="state">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -691,10 +696,15 @@
                                 <mat-label>City</mat-label>
                                 <input matInput placeholder="City" formControlName="city" autocomplete="off">
                             </mat-form-field>
+
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <input matInput placeholder="State" formControlName="state" autocomplete="off">
+                                <mat-select formControlName="state">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -752,10 +762,15 @@
                                 <mat-label>City</mat-label>
                                 <input matInput placeholder="City" formControlName="city" autocomplete="off">
                             </mat-form-field>
+
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <input matInput placeholder="State" formControlName="state" autocomplete="off">
+                                <mat-select formControlName="state">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -827,7 +842,8 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Modifiers</mat-label>
                             <mat-select formControlName="modifiers">
-                                <mat-option value="0">Modifiers Type Here</mat-option>
+                                <mat-option *ngFor="let modifier of modifiers" value="modifier">{{modifiers}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
