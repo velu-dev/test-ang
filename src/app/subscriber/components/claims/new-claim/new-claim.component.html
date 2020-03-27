@@ -480,20 +480,20 @@
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off"
-                                    [matDatepicker]="ct_start_date" [(ngModel)]="injuryInfo.ct_start_date"
-                                    [ngModelOptions]="{standalone: true}" (click)="ct_start_date.open()">
-                                <mat-datepicker-toggle matSuffix [for]="ct_start_date"></mat-datepicker-toggle>
-                                <mat-datepicker #ct_start_date disabled="false"></mat-datepicker>
+                                    [matDatepicker]="continuous_trauma_start_date" [(ngModel)]="injuryInfo.continuous_trauma_start_date"
+                                    [ngModelOptions]="{standalone: true}" (click)="continuous_trauma_start_date.open()">
+                                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date"></mat-datepicker-toggle>
+                                <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma == '1'" appearance="standard"
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
-                                <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.ct_end_date"
+                                <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
-                                    [matDatepicker]="ct_end_date" (click)="ct_end_date.open()">
-                                <mat-datepicker-toggle matSuffix [for]="ct_end_date"></mat-datepicker-toggle>
-                                <mat-datepicker #ct_end_date disabled="false"></mat-datepicker>
+                                    [matDatepicker]="continuous_trauma_end_date" (click)="continuous_trauma_end_date.open()">
+                                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date"></mat-datepicker-toggle>
+                                <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
                             <div fxFlex="100" class="p-t-10">

@@ -18,8 +18,8 @@ export interface claimant1 {
   body_part_id: string,
   date_of_injury: string,
   continuous_trauma: string,
-  ct_start_date: string,
-  ct_end_date: string,
+  continuous_trauma_start_date: string,
+  continuous_trauma_end_date: string,
   note: string
 }
 const ELEMENT_DATA: claimant1[] = []
@@ -30,7 +30,7 @@ const ELEMENT_DATA: claimant1[] = []
 })
 export class NewClaimComponent implements OnInit {
   xls = globals.xls
-  displayedColumns: string[] = ['body_part_id', 'date_of_injury','continuous_trauma', 'note', "action"];
+  displayedColumns: string[] = ['body_part_id', 'date_of_injury', 'continuous_trauma', 'note', "action"];
   dataSource: any;
   step = 0;
   isLinear = false;
@@ -52,7 +52,7 @@ export class NewClaimComponent implements OnInit {
   injuryInfodata: claimant1[] = []
   searchStatus: boolean = false;
   advanceSearch: any;
-  injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", panel_number: 23421, wcab_number: 23, note: "", diagram_url: "" }
+  injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", note: "", diagram_url: "" }
   claimantList = [];
   bodyParts = new FormControl();
   bodyPartsList = [];
@@ -332,7 +332,7 @@ export class NewClaimComponent implements OnInit {
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", ct_start_date: "", ct_end_date: "", note: "", diagram_url: "" };
+    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", note: "", diagram_url: "" };
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);
