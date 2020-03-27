@@ -60,21 +60,23 @@ mat-card {
   }
 }
 
-// .advanced_search {
-//   .expand-icon {
-//     background-color: $primarycolor;
-//     color: $white;
-//     padding: 15px;
-//     display: block;
-//     margin-right: 10px;
-//     cursor: pointer;
-    
-//   }
-//   .search-icon {
-//     background-color: $primarycolor;
-//     color: $white;
-//     padding: 12px;
-//     display: block;
-//     cursor: pointer;
-//   }
-// }
+.advanced_search {
+  div {
+    padding: 22px 12px 7px 12px;
+    display: inline-flex;
+    cursor: pointer;
+    border-right: 1px solid $light-gray;
+    background-color: $bg-light-blue;
+    margin-right: 10px;
+    mat-icon {
+      margin-top: -4px !important;
+    }
+  }
+  .search-icon {
+    background-color: $primarycolor;
+    color: $white;
+    padding: 12px;
+    display: block;
+    cursor: pointer;
+  }
+}
