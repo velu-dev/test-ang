@@ -77,13 +77,12 @@ export class SettingsComponent implements OnInit {
   }
   changePassword() {
     this.isSubmitted = true;
-    if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
-      console.log("password miss match  ")
-      this.alertService.openSnackBar(this.errorMessages.passworddidnotMatch, "error");
-      return
-    }
     if (this.userPasswrdForm.invalid) {
       return;
+    }
+    if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
+      this.alertService.openSnackBar(this.errorMessages.passworddidnotMatch, "error");
+      return
     }
     this.spinnerService.show();
     this.cognitoService.getCurrentUser().subscribe(user => {
