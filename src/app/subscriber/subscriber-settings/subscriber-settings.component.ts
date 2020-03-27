@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from 'src/app/shared/model/user.model';
 import * as globals from '../../globals'
 import * as  errors from '../../shared/messages/errors'
+import { CookieService } from 'src/app/shared/services/cookie.service';
 
 @Component({
   selector: 'app-subscribersettings',
@@ -21,19 +22,21 @@ export class SubscriberSettingsComponent implements OnInit {
   userForm: FormGroup;
   userPasswrdForm: FormGroup;
   errorMessages = errors
+  disableCompany: boolean = true;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private router: Router,
-    private cognitoService: CognitoService
+    private cognitoService: CognitoService,
+    private cookieService: CookieService
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
       console.log("res obj", res)
       this.user = res.data;
-      if(res.data.organization_type == 'INDV'){
+      if (res.data.organization_type == 'INDV') {
         res.data.company_name = '';
       }
       delete res.data.organization_type;
@@ -43,6 +46,10 @@ export class SubscriberSettingsComponent implements OnInit {
     })
   }
   ngOnInit() {
+  let user = JSON.parse(this.cookieService.get('user'));
+  if (user.role_id == 2) {
+    this.disableCompany = false;
+  }
     this.userPasswrdForm = this.formBuilder.group({
       current_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
       new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
@@ -54,7 +61,7 @@ export class SubscriberSettingsComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      company_name: ["", Validators.compose([Validators.maxLength(100)])],
+      company_name: [{ value: "", disabled: this.disableCompany }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
   }
@@ -102,7 +109,7 @@ export class SubscriberSettingsComponent implements OnInit {
         })
       }, error => {
         this.spinnerService.hide();
-        if(error.code == 'NotAuthorizedException'){
+        if (error.code == 'NotAuthorizedException') {
           error.message = this.errorMessages.oldpasswordworng;
         }
         this.alertService.openSnackBar(error.message, "error");

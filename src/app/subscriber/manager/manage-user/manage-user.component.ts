@@ -135,6 +135,7 @@ export class ManageUserComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }
 
   selectedRoleId = []
