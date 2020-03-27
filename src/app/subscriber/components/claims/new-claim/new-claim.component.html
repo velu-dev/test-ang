@@ -13,31 +13,7 @@
 
 
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
-                                <mat-tab label="Search by Claimants ">
-                                    <!-- <mat-form-field appearance="fill" fxFlex="100" hideRequiredMarker="hideRequiredControl.auto"
-                                    floatLabel="floatLabelControl.auto" class="advanced_search w-100">
-                                   <div matPrefix (click)="searchStatus = !searchStatus ">
-                                       <span>Advanced Search</span>
-                                    <mat-icon  class="expand-icon icons">
-                                        {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}} 
-                                     </mat-icon>
-                                   </div> 
-                                   <span matPrefix class="expand-icon icons" >Advanced Search
-                                    
-                                   </span>
-                                    <input matInput placeholder="Search by name, date of birth "
-                                    [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
-                                    <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                                        <mat-option *ngFor="let option of filteredStates"
-                                            (click)="changeOption(option)" [value]="option.first_name">
-                                            {{option.first_name}}
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                    <span matSuffix class="search-icon icons">
-                                        <mat-icon>search</mat-icon>
-                                    </span>
-                                </mat-form-field> -->
-
+                                <mat-tab label="Search Claimants ">
                                     <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <input matInput placeholder="Search by name, date of birth "
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">

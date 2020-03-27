@@ -50,7 +50,7 @@
 
 
 
-      <div class="edit-profile m-t-10 " fxFlex="100">
+      <div class="edit-profile m-t-10 " fxFlex="100" *ngIf="userForm.value.role_id == 11">
         <mat-card-header>
           <div fxLayout="row wrap">
             <div fxFlex="100">
@@ -62,59 +62,73 @@
           <div class="manage-btn" (click)="addAddress = !addAddress "> <span class="fa fa-plus"></span> ADD A NEW
             ADDRESS</div>
           <div class="manage-address-form" *ngIf="addAddress">
-            <form>
+            <form [formGroup]="addressForm" (ngSubmit)="addressformSubmit()">
               <div fxLayout="row wrap" fxFlex="100">
 
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                  <mat-label>Service Location Type</mat-label>
-                  <mat-select>
-                    <mat-option value="Service">Service</mat-option>
-                    <mat-option value="Primary">Primary</mat-option>
-                    <mat-option value="Office">Office</mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                  <mat-label>Phone Number</mat-label>
-                  <input matInput placeholder="Phone Number" autocomplete="off">
-                  <mat-error>error msg here</mat-error>
-                </mat-form-field>
+                  <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                      fxFlex.sm="50" fxFlex.xs="100">
+                      <mat-label>Service Location Type</mat-label>
+                      <mat-select formControlName="location_type">
+                          <mat-option value="Service">Service</mat-option>
+                          <mat-option value="Primary">Primary</mat-option>
+                          <mat-option value="Office">Office</mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="addressIsSubmitted">Select valid service location type</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                      fxFlex.sm="50" fxFlex.xs="100">
+                      <mat-label>Phone Number</mat-label>
+                      <input matInput formControlName="phone_number" mask="(000) 000-0000" placeholder="Phone Number" autocomplete="off">
+                      <mat-error *ngIf="addressIsSubmitted">Enter valid phone number</mat-error>
+                  </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                  <mat-label>Address </mat-label>
-                  <textarea matInput placeholder="Address"></textarea>
-                </mat-form-field>
+                  <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                      fxFlex.sm="50" fxFlex.xs="100">
+                      <mat-label>Address </mat-label>
+                      <textarea matInput formControlName="address" placeholder="Address"></textarea>
+                      <mat-error *ngIf="addressIsSubmitted">Enter valid address</mat-error>
+                  </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                  <mat-label>Address 1</mat-label>
-                  <textarea matInput placeholder="Address"></textarea>
-                </mat-form-field>
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                  <mat-label>City</mat-label>
-                  <input matInput placeholder="City" autocomplete="off">
-                  <mat-error>error msg here</mat-error>
-                </mat-form-field>
+                  <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                      fxFlex.sm="50" fxFlex.xs="100">
+                      <mat-label>Address 1</mat-label>
+                      <textarea matInput formControlName="address1" placeholder="Address"></textarea>
+                  </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                  <mat-label>State</mat-label>
-                  <input matInput placeholder="State" autocomplete="off">
-                  <mat-error>error msg here</mat-error>
-                </mat-form-field>
+                  <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                      fxFlex.sm="50" fxFlex.xs="100">
+                      <mat-label>City</mat-label>
+                      <input matInput formControlName="city" placeholder="City" autocomplete="off">
+                      <mat-error *ngIf="addressIsSubmitted">Enter valid city</mat-error>
+                  </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                  <mat-label>Zip code</mat-label>
-                  <input matInput placeholder="Zip code" autocomplete="off">
-                  <mat-error>error msg here</mat-error>
-                </mat-form-field>
+                  <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                      fxFlex.sm="50" fxFlex.xs="100">
+                      <mat-label>State</mat-label>
+                      <mat-select formControlName="state">
+                          <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                          </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="addressIsSubmitted">Enter valid state</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                      fxFlex.sm="50" fxFlex.xs="100">
+                      <mat-label>Zip code</mat-label>
+                      <input matInput formControlName="zip" placeholder="Zip code" autocomplete="off">
+                      <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
+                  </mat-form-field>
 
 
 
-                <div class="text-center w-100 m-t-10 m-b-10">
-                  <button mat-raised-button type="button" class="m-r-15 rounded-corner btn_success">Add</button>
-                  <button mat-raised-button color="warn" type="button" class="m-r-10 rounded-corner">
-                    Cancel </button>
-                </div>
+                  <div class="text-center w-100 m-t-10 m-b-10">
+                      <button mat-raised-button color="warn" class="m-r-10 " (click)="addAddress = false">
+                          Cancel </button>
+                      <button mat-raised-button type="submit" color="primary"
+                          class="m-r-15 btn_success">Add</button>
+                  </div>
               </div>
-            </form>
+          </form>
           </div>
           <div class="manage-address">
             <mat-card *ngFor="let address of addresss" class="address-list">
