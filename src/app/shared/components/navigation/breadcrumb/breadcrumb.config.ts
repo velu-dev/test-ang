@@ -5,6 +5,11 @@ export const ROUTES = [
         title: 'Dashboard',
         icon: 'dashboard',
         submenu: []
+    },{
+        path: '/admin',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: []
     }, {
         path: "/admin/settings",
         title: "Settings",
@@ -37,7 +42,7 @@ export const ROUTES = [
     //         submenu: []
     //     }]
     // },
-     {
+    {
         path: "/admin/profile",
         title: "Profile",
         icon: "person",
@@ -60,6 +65,12 @@ export const ROUTES = [
         ]
     },
     //Subscriber Menu
+    {
+        path: '/subscriber',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    },
     {
         path: '/subscriber/dashboard',
         title: 'Dashboard',
@@ -87,30 +98,32 @@ export const ROUTES = [
         title: 'Manage Claimants',
         icon: 'dashboard',
         submenu: [{
-        path: '/subscriber/claimant/new',
-        title: 'New Claimant',
-        icon: 'dashboard',
-        submenu: []}],
+            path: '/subscriber/claimant/new',
+            title: 'New Claimant',
+            icon: 'dashboard',
+            submenu: []
+        }],
         group: "Subscriber",
         role: 2
-    },{
+    }, {
         path: '/subscriber/billable-item',
         title: 'Manage Billable Item',
         icon: 'dashboard',
         submenu: [],
         group: "Subscriber",
         role: 2
-    },{
+    }, {
         path: '/subscriber/claims',
         title: 'Manage Claims',
         icon: 'dashboard',
         submenu: [
-        {path: '/subscriber/claims/new',
-        title: 'New Claims',
-        icon: 'dashboard',
-        submenu: []
-        }],
-    },  
+            {
+                path: '/subscriber/claims/new',
+                title: 'New Claims',
+                icon: 'dashboard',
+                submenu: []
+            }],
+    },
     //Subscriber staff manager
     {
         path: '/subscriber/manager',
