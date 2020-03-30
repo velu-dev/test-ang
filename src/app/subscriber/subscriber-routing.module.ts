@@ -16,6 +16,7 @@ import { ClaimantComponent } from './components/claims/claimant/claimant.compone
 import { ExaminerDashboardComponent } from './examiner/examiner-dashboard/examiner-dashboard.component';
 import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-setting.component';
 import { AppointmentComponent } from './examiner/appointment/appointment.component';
+import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/examiner-manage-address.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -70,6 +71,10 @@ const routes: Routes = [{
     }, {
       path: "dashboard",
       component: StaffDashboardComponent
+    },
+    {
+      path: "manage-address",
+      component: ExaminerManageAddressComponent
     }, {
       path: "settings",
       component: SubscriberSettingsComponent

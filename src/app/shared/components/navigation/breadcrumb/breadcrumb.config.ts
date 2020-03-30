@@ -140,6 +140,28 @@ export const ROUTES = [
         icon: 'dashboard',
         submenu: []
     },
+      //Subscriber staff
+      {
+        path: '/subscriber/staff',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [{
+            path: '/subscriber/staff/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+        }, {
+            path: '/subscriber/staff/manage-address',
+            title: 'Manage Address',
+            icon: 'dashboard',
+            submenu: [],
+        }, {
+            path: '/subscriber/manager/settings',
+            title: 'Settings',
+            icon: 'dashboard',
+            submenu: []
+        },],
+    },
     {
         path: 'subscriber/examiner',
         title: 'Dashboard',

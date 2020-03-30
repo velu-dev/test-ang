@@ -20,6 +20,7 @@ import { BillableItemComponent } from './components/claims/billable-item/billabl
 import { ClaimantComponent } from './components/claims/claimant/claimant.component';
 import { ExaminerDashboardComponent } from './examiner/examiner-dashboard/examiner-dashboard.component';
 import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-setting.component';
+import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/examiner-manage-address.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-s
     ClaimantComponent,
     ExaminerDashboardComponent,
     ExaminerSettingComponent,
+    ExaminerManageAddressComponent,
   ],
   imports: [
     CommonModule,
