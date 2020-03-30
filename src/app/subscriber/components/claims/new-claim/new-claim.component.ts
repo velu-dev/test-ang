@@ -164,13 +164,13 @@ export class NewClaimComponent implements OnInit {
   private _filterStates(value: string) {
     console.log(value)
     const filterValue = value.toLowerCase();
-    // let data: any;
-    // data = this.advanceSearch.value
-    // data['basic_search'] = value;
-    // data['isadvanced'] = this.searchStatus;
-    // this.claimService.searchClaimant(data).subscribe(res => {
-    //   this.claimantList = res.data;
-    // })
+    let data: any;
+    data = this.advanceSearch.value
+    data['basic_search'] = value;
+    data['isadvanced'] = this.searchStatus;
+    this.claimService.searchClaimant(data).subscribe(res => {
+      this.claimantList = res.data;
+    })
     return this.claimantList.filter(state => state.first_name.toLowerCase().indexOf(filterValue) === 0);
   }
   setStep(index: number) {
