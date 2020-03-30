@@ -10,6 +10,8 @@
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
                         <div fxFlex="100">
+
+
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
                                 <mat-tab label="Search Claimants ">
                                     <mat-form-field appearance="fill" fxFlex="100" class="w-100">
@@ -28,6 +30,7 @@
                                     <form [formGroup]="advanceSearch">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
+                                                <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced search</div>
 
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50"
                                                     fxFlex.sm="50" fxFlex.xs="100">

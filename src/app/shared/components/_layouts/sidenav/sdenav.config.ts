@@ -130,6 +130,13 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             group: "Subscriber",
             role: 4
+        },{
+            path: '/subscriber/staff/manage-address',
+            title: 'Manage Address',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 4
         }]
     }, 
     {

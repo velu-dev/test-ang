@@ -87,15 +87,12 @@ export class SubscriberSettingsComponent implements OnInit {
   isSubmit = false;
   changePassword() {
     this.isSubmit = true;
-    console.log(this.userPasswrdForm)
+    if (this.userPasswrdForm.invalid) {
+      return;
+    }
     if (!(this.userPasswrdForm.value.new_password == this.userPasswrdForm.value.confirmPassword)) {
-      console.log("password miss match  ")
       this.alertService.openSnackBar(this.errorMessages.passworddidnotMatch, "error");
       return
-    }
-    if (this.userPasswrdForm.invalid) {
-      console.log("Not valid form ")
-      return;
     }
     this.spinnerService.show();
     this.cognitoService.getCurrentUser().subscribe(user => {
