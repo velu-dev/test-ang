@@ -5,6 +5,11 @@ export const ROUTES = [
         title: 'Dashboard',
         icon: 'dashboard',
         submenu: []
+    },{
+        path: '/admin',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: []
     }, {
         path: "/admin/settings",
         title: "Settings",
@@ -60,6 +65,12 @@ export const ROUTES = [
         ]
     },
     //Subscriber Menu
+    {
+        path: '/subscriber',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    },
     {
         path: '/subscriber/dashboard',
         title: 'Dashboard',

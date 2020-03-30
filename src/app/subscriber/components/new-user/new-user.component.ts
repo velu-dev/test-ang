@@ -21,6 +21,7 @@ export interface Section {
   styleUrls: ['./new-user.component.scss']
 })
 export class NewUserComponent implements OnInit {
+  addAddress: boolean = true;
   addresss: Section[] = [
     {
       type: 'primary',
@@ -49,6 +50,7 @@ export class NewUserComponent implements OnInit {
   isAdminCreate: boolean = false;
   activeTitle = "";
   user: any = {};
+  states = [];
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,

@@ -39,6 +39,7 @@ export class ExaminerSettingComponent implements OnInit {
       address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     }
   ];
+  addAddress: boolean = false;
   profile_bg = globals.profile_bg;
   user: User;
   currentUser = {};
