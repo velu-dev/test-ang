@@ -140,32 +140,38 @@
                                                     <mat-option value="Primary">Primary</mat-option>
                                                     <mat-option value="Office">Office</mat-option>
                                                 </mat-select>
-                                                <mat-error *ngIf="addressIsSubmitted">Select valid service location type</mat-error>
+                                                <mat-error *ngIf="addressIsSubmitted">Select valid service location type
+                                                </mat-error>
                                             </mat-form-field>
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>Phone Number</mat-label>
-                                                <input matInput formControlName="phone_number" mask="(000) 000-0000" placeholder="Phone Number" autocomplete="off">
-                                                <mat-error *ngIf="addressIsSubmitted">Enter valid phone number</mat-error>
+                                                <input matInput formControlName="phone_number" mask="(000) 000-0000"
+                                                    placeholder="Phone Number" autocomplete="off">
+                                                <mat-error *ngIf="addressIsSubmitted">Enter valid phone number
+                                                </mat-error>
                                             </mat-form-field>
 
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>Address </mat-label>
-                                                <textarea matInput formControlName="address" placeholder="Address"></textarea>
+                                                <textarea matInput formControlName="address"
+                                                    placeholder="Address"></textarea>
                                                 <mat-error *ngIf="addressIsSubmitted">Enter valid address</mat-error>
                                             </mat-form-field>
 
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>Address 1</mat-label>
-                                                <textarea matInput formControlName="address1" placeholder="Address"></textarea>
+                                                <textarea matInput formControlName="address1"
+                                                    placeholder="Address"></textarea>
                                             </mat-form-field>
 
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>City</mat-label>
-                                                <input matInput formControlName="city" placeholder="City" autocomplete="off">
+                                                <input matInput formControlName="city" placeholder="City"
+                                                    autocomplete="off">
                                                 <mat-error *ngIf="addressIsSubmitted">Enter valid city</mat-error>
                                             </mat-form-field>
 
@@ -173,7 +179,8 @@
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>State</mat-label>
                                                 <mat-select formControlName="state">
-                                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                                    <mat-option *ngFor="let state of states" [value]="state.id">
+                                                        {{state.state}}
                                                     </mat-option>
                                                 </mat-select>
                                                 <mat-error *ngIf="addressIsSubmitted">Enter valid state</mat-error>
@@ -182,14 +189,16 @@
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>Zip code</mat-label>
-                                                <input matInput formControlName="zip" placeholder="Zip code" autocomplete="off">
+                                                <input matInput formControlName="zip" placeholder="Zip code"
+                                                    autocomplete="off">
                                                 <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
                                             </mat-form-field>
 
 
 
                                             <div class="text-center w-100 m-t-10 m-b-10">
-                                                <button mat-raised-button color="warn" class="m-r-10 " (click)="addressForm.reset();addAddress = false">
+                                                <button mat-raised-button color="warn" class="m-r-10 "
+                                                    (click)="addressForm.reset();addAddress = false">
                                                     Cancel </button>
                                                 <button mat-raised-button type="submit" color="primary"
                                                     class="m-r-15 btn_success">Add</button>
@@ -200,7 +209,10 @@
                                 <div class="manage-address">
                                     <mat-card *ngFor="let address of addresss" class="address-list">
                                         <mat-card-header>
-                                            <div class="label">{{address.type}}</div>
+                                            <div class="label primary_label m-r-2">Primary</div>
+                                            <div class="label service_label m-r-2">Service</div>
+                                            <div class="label office_label m-r-2" color="warn">Office</div>
+                                            <div class="label m-r-2">{{address.type}}</div>
                                             <div class="spacer"></div>
                                             <button mat-icon-button [matMenuTriggerFor]="menu"
                                                 aria-label="Example icon-button with a menu">
