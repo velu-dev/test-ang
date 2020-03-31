@@ -131,8 +131,8 @@ export const ROUTES: SideNavInterface[] = [
             group: "Subscriber",
             role: 4
         },{
-            path: '/subscriber/staff/manage-address',
-            title: 'Manage Address',
+            path: '/subscriber/staff/examiner-list',
+            title: 'Manage Examiner',
             icon: 'dashboard',
             submenu: [],
             group: "Subscriber",

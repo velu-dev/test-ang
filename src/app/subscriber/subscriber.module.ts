@@ -21,6 +21,7 @@ import { ClaimantComponent } from './components/claims/claimant/claimant.compone
 import { ExaminerDashboardComponent } from './examiner/examiner-dashboard/examiner-dashboard.component';
 import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-setting.component';
 import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/examiner-manage-address.component';
+import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/
     ExaminerDashboardComponent,
     ExaminerSettingComponent,
     ExaminerManageAddressComponent,
+    ExaminerListComponent,
   ],
   imports: [
     CommonModule,
