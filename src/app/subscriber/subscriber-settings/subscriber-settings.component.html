@@ -41,7 +41,7 @@
                                         <!-- <mat-error *ngIf="userPasswrdForm.controls.current_password.errors.pattern">Password field does not valid</mat-error> -->
                                     </mat-form-field>
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
-                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5 p-r-10">
+                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
                                         <mat-label>New Password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="New Password" autocomplete="off"
@@ -52,20 +52,17 @@
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
 
                                     </mat-form-field>
-                                    <mat-form-field appearance="standard" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
-                                        fxFlex.sm="45" fxFlex.xl="45" class="m-t-5">
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
                                         <mat-label>Confirm New Password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="Confirm New Password" autocomplete="off"
                                             formControlName="confirmPassword">
+                                            <mat-icon matSuffix (click)="changeInputType()">
+                                                {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
                                     </mat-form-field>
-                                    <div fxFlex="10" fxFlex.md="5" fxFlex.lg="5" fxFlex.sm="5" fxFlex.xl="5"
-                                        class="m-t-5">
-                                        <mat-icon matSuffix (click)="changeInputType()" class="check-password p-t-25">
-                                            {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-                                    </div>
-
+                                   
                                     <button mat-raised-button color="primary" class="m-t-5">Save Changes </button>
                                 </form>
                             </mat-card-content>

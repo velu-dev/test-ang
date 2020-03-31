@@ -18,9 +18,7 @@
     margin: 10px 5px;
     box-shadow: $box-shadow-5;
 
-    mat-form-field {
-      padding: 10px !important;
-    }
+ 
 
     button.btn_success {
       background-color: $btn_success;
@@ -66,4 +64,7 @@
       }
     }
   }
+}
+mat-form-field {
+  padding: 10px !important;
 }
