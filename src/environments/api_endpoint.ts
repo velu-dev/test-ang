@@ -43,6 +43,6 @@ export const api_endpoint = {
     getClaim: "claim",
 
     //seed data
-    seedData: 'claims/seed-data/',
+    seedData: 'claim/seed-data/',
     bodyParts: "seed-data/body_part"
 }

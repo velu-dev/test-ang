@@ -346,6 +346,7 @@ export class NewClaimComponent implements OnInit {
     this.claimService.createClaimant(this.claimant.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
       this.claimant_name = res.data.first_name + "  " + res.data.last_name
+      console.log("claimant_name", this.claimant_name)
       this.claim.patchValue({
         claim_details: {
           claimant_id: res.data.id
