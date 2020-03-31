@@ -5,19 +5,7 @@
     <mat-divider></mat-divider>
     <mat-card-content>
         <div class="search-container p-t-10">
-            <form fxLayout="row wrap">
-                <!-- <mat-form-field appearance="fill" fxFlex="50">
-                    <mat-label>Select Examiner</mat-label>
-                    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                            {{option.name}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-            -->
-
-            </form>
+           
             <div fxLayout="row wrap">
                 <mat-form-field appearance="fill" fxFlex="100" hideRequiredMarker="hideRequiredControl.auto"
                     floatLabel="floatLabelControl.auto" class="advanced_search w-100">
@@ -28,7 +16,7 @@
                         </mat-icon>
                     </div>
                     <input matInput placeholder="Search Existing Address" [matAutocomplete]="claimantAutocomplete"
-                        [formControl]="searchInput">
+                        [formControl]="myControl">
                     <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                         <mat-option *ngFor="let option of filteredStates" (click)="changeOption(option)"
                             [value]="option.first_name">
@@ -84,57 +72,61 @@
         </div>
 
         <div class="manage-address-form" *ngIf="addAddress">
-            <form>
+            <form [formGroup]="addressForm">
                 <div fxLayout="row wrap" fxFlex="100">
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Service Location Type</mat-label>
-                        <mat-select>
-                            <mat-option value="Service">Service</mat-option>
-                            <mat-option value="Primary">Primary</mat-option>
-                            <mat-option value="Office">Office</mat-option>
-                        </mat-select>
-                        <mat-error>Select valid service location type
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Phone Number</mat-label>
-                        <input matInput mask="(000) 000-0000" placeholder="Phone Number" autocomplete="off">
-                        <mat-error>Enter valid phone number
-                        </mat-error>
-                    </mat-form-field>
+                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Service Location Type</mat-label>
+                    <mat-select formControlName="location_type">
+                        <mat-option value="Service">Service</mat-option>
+                        <mat-option value="Primary">Primary</mat-option>
+                        <mat-option value="Office">Office</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addressIsSubmitted">Select valid service location type</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput formControlName="phone_number" mask="(000) 000-0000" placeholder="Phone Number" autocomplete="off">
+                    <mat-error *ngIf="addressIsSubmitted">Enter valid phone number</mat-error>
+                </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Address </mat-label>
-                        <textarea matInput placeholder="Address"></textarea>
-                        <mat-error>Enter valid address</mat-error>
-                    </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Address </mat-label>
+                    <textarea matInput formControlName="address" placeholder="Address"></textarea>
+                    <mat-error *ngIf="addressIsSubmitted">Enter valid address</mat-error>
+                </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Address 1</mat-label>
-                        <textarea matInput placeholder="Address"></textarea>
-                    </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Address 1</mat-label>
+                    <textarea matInput formControlName="address1" placeholder="Address"></textarea>
+                </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>City</mat-label>
-                        <input matInput placeholder="City" autocomplete="off">
-                        <mat-error>Enter valid city</mat-error>
-                    </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>City</mat-label>
+                    <input matInput formControlName="city" placeholder="City" autocomplete="off">
+                    <mat-error *ngIf="addressIsSubmitted">Enter valid city</mat-error>
+                </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>State</mat-label>
-                        <mat-select>
-                            <mat-option *ngFor="let state of states" [value]="state.id">
-                                {{state.state}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Enter valid state</mat-error>
-                    </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>State</mat-label>
+                    <mat-select formControlName="state">
+                        <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="addressIsSubmitted">Enter valid state</mat-error>
+                </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Zip code</mat-label>
-                        <input matInput placeholder="Zip code" autocomplete="off">
-                        <mat-error>Enter valid zip code</mat-error>
-                    </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Zip code</mat-label>
+                    <input matInput formControlName="zip" placeholder="Zip code" autocomplete="off">
+                    <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
+                </mat-form-field>
 
 
 
@@ -142,7 +134,7 @@
                         <button mat-raised-button color="warn" class="m-r-10 "
                             (click)="addressForm.reset();addAddress = false">
                             Cancel </button>
-                        <button mat-raised-button type="submit" color="primary" class="m-r-15 btn_success">Add</button>
+                        <button mat-raised-button (click)="addressformSubmit()" color="primary" class="m-r-15 btn_success">Add</button>
                     </div>
                 </div>
             </form>

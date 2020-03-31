@@ -22,6 +22,7 @@ import { ExaminerDashboardComponent } from './examiner/examiner-dashboard/examin
 import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-setting.component';
 import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/examiner-manage-address.component';
 import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
+import { ExaminerService } from './service/examiner.service';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,6 @@ import { ExaminerListComponent } from './staff/examiner-list/examiner-list.compo
     SubscriberRoutingModule,
     SharedModule
   ],
-  providers: [SubscriberUserService, ClaimService]
+  providers: [SubscriberUserService, ClaimService, ExaminerService]
 })
 export class SubscriberModule { }

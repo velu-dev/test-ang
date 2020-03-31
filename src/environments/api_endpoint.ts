@@ -44,5 +44,9 @@ export const api_endpoint = {
 
     //seed data
     seedData: 'claim/seed-data/',
-    bodyParts: "seed-data/body_part"
+    bodyParts: "seed-data/body_part",
+
+    //manage-address
+    addAddress: 'subscriber/examiner/add-address',
+    getAddress: 'subscriber/examiner/get-address'
 }
