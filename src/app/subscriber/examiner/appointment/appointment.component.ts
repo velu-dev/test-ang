@@ -31,6 +31,9 @@ export class AppointmentComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  filterValue = "";
+  filterAll = "";
+  roles = [];
 
   constructor() {
     // Create 100 users
@@ -52,6 +55,12 @@ export class AppointmentComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  exportData() {
+
+  }
+  filterByRole(name?) {
+
   }
 }
 
