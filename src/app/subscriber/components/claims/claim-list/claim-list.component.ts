@@ -43,7 +43,6 @@ export class ClaimListComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-
   isMobile = false;
   checked = true;
   allUser: any;
@@ -57,7 +56,7 @@ export class ClaimListComponent implements OnInit {
     public dialog: MatDialog,
     private claimService: ClaimService
   ) {
-    this.getUser();
+    this.getclaims();
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -65,7 +64,7 @@ export class ClaimListComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
         this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Injury", "Injury", "Claim number", "Examiner", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth','date_of_injury', 'injury', 'claim_number', "examiner", "disabled"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_injury', 'injury', 'claim_number', "examiner", "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -78,25 +77,17 @@ export class ClaimListComponent implements OnInit {
 
   ngOnInit() {
   }
-  users = [];
-  getUser() {
-    this.claimService.getClaimant().subscribe(res => {
-      this.users = res.data;
-      this.tabchange(0);
+  claims = [];
+  getclaims() {
+    this.claimService.getClaims().subscribe(res => {
+      this.claims = res.data;
+      this.dataSource = new MatTableDataSource(this.claims)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     })
   }
   gotoEdit(data) {
     this.router.navigate(["/admin/users/" + data.id])
-  }
-
-  tabchange(event) {
-    console.log(event)
-    this.filterValue = '';
-    this.tabIndex = event;
-    console.log(this.users)
-    this.dataSource = new MatTableDataSource(this.users)
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   navigate() {
@@ -110,7 +101,7 @@ export class ClaimListComponent implements OnInit {
   }
   exportData() {
     let data = [];
-    this.users.map(res => {
+    this.claims.map(res => {
       data.push({
         "First Name": res.first_name,
         "Last Name": res.last_name,
@@ -122,8 +113,9 @@ export class ClaimListComponent implements OnInit {
   }
   expandId: any;
   openElement(element) {
+    console.log(element)
     if (this.isMobile) {
-      this.expandId = element.id;
+      this.expandId = element.claim_id;
     }
   }
 
