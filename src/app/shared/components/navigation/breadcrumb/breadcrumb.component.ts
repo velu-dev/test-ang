@@ -36,6 +36,7 @@ export class BreadcrumbComponent implements OnInit {
         switch (this.role) {
             case '1':
                 this.router.navigate(["/admin"]);
+                break;
             case '2':
                 this.router.navigate(["/subscriber"]);
                 break;
