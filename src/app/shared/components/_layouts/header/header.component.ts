@@ -13,6 +13,12 @@ import Auth from '@aws-amplify/auth';
 import { UserService } from 'src/app/admin/services/user.service';
 import { User } from 'src/app/admin/models/user.model';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import * as headerActions from "./../../../../shared/store/header.actions";
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -37,7 +43,8 @@ export class HeaderComponent implements OnInit {
   currentUserID = "";
   user: User;
   isOpen: any
-  isLoading:  boolean = false;
+  isLoading: boolean = false;
+  user$: Observable<any>;
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
@@ -46,6 +53,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private alertService: AlertService,
     private userService: UserService,
+    private store: Store<{ header: any }>
   ) {
     this.spinnerService.show();
     this.isLoading = true;
@@ -53,9 +61,11 @@ export class HeaderComponent implements OnInit {
       this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
       this.userService.getUser(this.currentUserID).subscribe(res => {
         this.user = res.data;
-        this.cookieService.set('user',JSON.stringify(this.user));
+        this.store.dispatch(new headerActions.HeaderAdd(this.user));
+        this.cookieService.set('user', JSON.stringify(this.user));
         this.isLoading = false;
         this.spinnerService.hide();
+        this.user$ = store.pipe(select('header'));
       })
     })
   }
@@ -117,28 +127,28 @@ export class HeaderComponent implements OnInit {
     }
   }
   gotoSettings() {
-   
+
     let role = this.cookieService.get('role_id')
-console.log(role)
+    console.log(role)
     switch (role) {
-        case '1':
-            this.router.navigate(["/admin/settings"]);
-            break;
-        case '2':
-            this.router.navigate(["/subscriber/settings"]);
-            break;
-        case '3':
-            this.router.navigate(["/subscriber/settings"]);
-            break;
-        case '4':
-            this.router.navigate(["/subscriber/settings"]);
-            break;
-        case '11':
-            this.router.navigate(["/subscriber/examiner/settings"]);
-            break;
-        default:
-            this.router.navigate(["/settings"]);
-            break;
+      case '1':
+        this.router.navigate(["/admin/settings"]);
+        break;
+      case '2':
+        this.router.navigate(["/subscriber/settings"]);
+        break;
+      case '3':
+        this.router.navigate(["/subscriber/settings"]);
+        break;
+      case '4':
+        this.router.navigate(["/subscriber/settings"]);
+        break;
+      case '11':
+        this.router.navigate(["/subscriber/examiner/settings"]);
+        break;
+      default:
+        this.router.navigate(["/settings"]);
+        break;
     }
   }
 }

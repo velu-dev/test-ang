@@ -4,7 +4,7 @@
             mat-icon-button (click)="openSidenav()">
             <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
         </button>
-      
+
         <mat-card-title class="p-t-15 show-mobile"> Simplexam</mat-card-title>
         <span flex class="spacer"></span>
         <mat-card-actions>
@@ -66,11 +66,10 @@
                         </div>
                     </div>
                 </div> -->
-
-                <div *ngIf="user">
+                <div>
                     <button [title]="user?.first_name" mat-button [matMenuTriggerFor]="settings" class="welcome">
                         <span class="hide-mobile"><small>Welcome,</small><br />
-                            {{user?.first_name | ellipsis:15}}
+                            {{(user$| async)?.user?.first_name | ellipsis:15}}
                         </span>
                         <img [src]="profile" alt="Welcome" class="" />
                     </button>

@@ -9,6 +9,8 @@ import { User } from 'src/app/shared/model/user.model';
 import * as globals from '../../globals'
 import * as  errors from '../../shared/messages/errors'
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { Store } from '@ngrx/store';
+import * as headerActions from "./../../shared/store/header.actions";
 
 @Component({
   selector: 'app-subscribersettings',
@@ -30,7 +32,8 @@ export class SubscriberSettingsComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private cognitoService: CognitoService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private store: Store<{ count: number }>
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
@@ -46,10 +49,10 @@ export class SubscriberSettingsComponent implements OnInit {
     })
   }
   ngOnInit() {
-  let user = JSON.parse(this.cookieService.get('user'));
-  if (user.role_id == 2) {
-    this.disableCompany = false;
-  }
+    let user = JSON.parse(this.cookieService.get('user'));
+    if (user.role_id == 2) {
+      this.disableCompany = false;
+    }
     this.userPasswrdForm = this.formBuilder.group({
       current_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
       new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
@@ -73,6 +76,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       this.isSubmit = false;
+      this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
       //this.router.navigate(['/admin/settings'])
     }, error => {
       this.isSubmit = false;

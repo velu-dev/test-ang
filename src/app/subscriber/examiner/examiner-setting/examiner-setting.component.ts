@@ -9,6 +9,9 @@ import { User } from 'src/app/shared/model/user.model';
 import * as globals from '../../../globals'
 import * as  errors from '../../../shared/messages/errors'
 import { ClaimService } from '../../service/claim.service';
+import { Store } from '@ngrx/store';
+import * as headerActions from "./../../../shared/store/header.actions";
+
 export interface Section {
   type: string;
   name: string;
@@ -56,6 +59,7 @@ export class ExaminerSettingComponent implements OnInit {
     private router: Router,
     private cognitoService: CognitoService,
     private claimService: ClaimService,
+    private store: Store<{ header: any }>
   ) {
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)
@@ -109,6 +113,8 @@ export class ExaminerSettingComponent implements OnInit {
     }
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
+      this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
+
       this.isSubmit = false;
     }, error => {
       this.isSubmit = false;
