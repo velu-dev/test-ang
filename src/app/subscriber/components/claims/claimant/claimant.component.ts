@@ -82,21 +82,13 @@ export class ClaimantComponent implements OnInit {
   getUser() {
     this.claimService.getClaimant().subscribe(res => {
       this.users = res.data;
-      this.tabchange(0);
+      this.dataSource = new MatTableDataSource(this.users)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     })
   }
   gotoEdit(data) {
     this.router.navigate(["/admin/users/" + data.id])
-  }
-
-  tabchange(event) {
-    console.log(event)
-    this.filterValue = '';
-    this.tabIndex = event;
-    console.log(this.users)
-    this.dataSource = new MatTableDataSource(this.users)
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {

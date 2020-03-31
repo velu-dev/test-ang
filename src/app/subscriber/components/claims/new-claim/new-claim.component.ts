@@ -164,13 +164,13 @@ export class NewClaimComponent implements OnInit {
   private _filterStates(value: string) {
     console.log(value)
     const filterValue = value.toLowerCase();
-    // let data: any;
-    // data = this.advanceSearch.value
-    // data['basic_search'] = value;
-    // data['isadvanced'] = this.searchStatus;
-    // this.claimService.searchClaimant(data).subscribe(res => {
-    //   this.claimantList = res.data;
-    // })
+    let data: any;
+    data = this.advanceSearch.value
+    data['basic_search'] = value;
+    data['isadvanced'] = this.searchStatus;
+    this.claimService.searchClaimant(data).subscribe(res => {
+      this.claimantList = res.data;
+    })
     return this.claimantList.filter(state => state.first_name.toLowerCase().indexOf(filterValue) === 0);
   }
   setStep(index: number) {
@@ -346,6 +346,7 @@ export class NewClaimComponent implements OnInit {
     this.claimService.createClaimant(this.claimant.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
       this.claimant_name = res.data.first_name + "  " + res.data.last_name
+      console.log("claimant_name", this.claimant_name)
       this.claim.patchValue({
         claim_details: {
           claimant_id: res.data.id

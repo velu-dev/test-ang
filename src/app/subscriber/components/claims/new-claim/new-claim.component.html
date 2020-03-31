@@ -360,8 +360,8 @@
                             <button mat-raised-button color="primary" type="submit"
                                 class="m-r-10 rounded-corner btn_success">
                                 Save </button>
-                            <button mat-raised-button type="submit" class="rounded-corner" color="primary"
-                                matStepperNext>Next</button>
+                            <button mat-raised-button (click)="createClaimant()" type="submit" class="rounded-corner"
+                                color="primary" matStepperNext>Next</button>
                         </div>
                     </div>
                 </mat-card>
@@ -865,7 +865,7 @@
                             class="m-r-10 rounded-corner btn_success">
                             Save </button>
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" matStepperNext>
+                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()" matStepperNext>
                             Next </button>
                         <button mat-raised-button type="button" class="rounded-corner" color="warn"
                             matStepperPrevious>Back</button>
