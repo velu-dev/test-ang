@@ -39,6 +39,7 @@ export class SidenavComponent implements OnInit {
       shareReplay()
     );
   isMobile: boolean = false;
+  role: any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -71,5 +72,29 @@ export class SidenavComponent implements OnInit {
       this.sidenav.toggle();
     }
   }
+
+  mainPage() {
+    this.role = this.cookieService.get('role_id')
+    switch (this.role) {
+        case '1':
+            this.router.navigate(["/admin"]);
+            break;
+        case '2':
+            this.router.navigate(["/subscriber"]);
+            break;
+        case '3':
+            this.router.navigate(["/subscriber/manager"]);
+            break;
+        case '4':
+            this.router.navigate(["/subscriber/staff"]);
+            break;
+        case '11':
+            this.router.navigate(["/subscriber/examiner"]);
+            break;
+        default:
+            this.router.navigate(["/"]);
+            break;
+    }
+}
 
 }

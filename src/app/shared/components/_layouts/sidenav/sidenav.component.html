@@ -2,7 +2,7 @@
     <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
 
-        <mat-toolbar> <img mat-card-image [src]="simplexam_logo" alt="Lucy logo" class="logo-white"> <span
+        <mat-toolbar style="cursor: pointer;" (click)="mainPage()"> <img mat-card-image [src]="simplexam_logo" alt="Lucy logo" class="logo-white"> <span
                 class="p-l-4"> Simplexam</span></mat-toolbar>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
