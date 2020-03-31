@@ -17,6 +17,7 @@ export class SessionGuard implements CanActivate {
         switch (role) {
             case '1':
                 this.router.navigate(["/admin"]);
+                break;
             case '2':
                 this.router.navigate(["/subscriber"]);
                 break;
