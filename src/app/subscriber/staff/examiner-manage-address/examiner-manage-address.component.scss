@@ -7,6 +7,7 @@
     }
     .manage-btn {
       width: 200px;
+      text-align: center;
     }
   }
   mat-card-content {
@@ -45,13 +46,13 @@
         background-color: $bg-light-blue;
         mat-card-header {
           .label {
-            padding: 3px 6px !important;
+            padding: 3px 10px !important;
             color: $white;
-            height: 15px;
-            margin-top: 10px;
+            line-height: 2;
+            margin-bottom: 5px;
             border-radius: 2px;
             background-color: $primarycolor;
-            font-size: $font-size-22;
+            font-size: $font-size-1;
             font-weight: $font-weight-medium;
           }
           .primary_label {
@@ -85,6 +86,10 @@
   overflow: auto;
   mat-list {
     mat-list-item {
+      cursor: pointer;
+      &:hover {
+        background-color: $bg-light-blue;
+      }
       .name {
         font-weight: $font-weight-bold;
       }
@@ -96,4 +101,29 @@
       }
     }
   }
+}
+
+.advanced_search {
+  div {
+    padding: 22px 12px 7px 12px;
+    display: inline-flex;
+    cursor: pointer;
+    border-right: 1px solid $light-gray;
+    background-color: $bg-light-blue;
+    margin-right: 10px;
+    mat-icon {
+      margin-top: -4px !important;
+    }
+  }
+  .search-icon {
+    background-color: $primarycolor;
+    color: $white;
+    padding: 12px;
+    display: block;
+    cursor: pointer;
+  }
+}
+
+button.btn_success {
+  background-color: $btn_success;
 }
