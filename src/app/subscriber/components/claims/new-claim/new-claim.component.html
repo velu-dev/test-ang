@@ -7,7 +7,6 @@
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (ngSubmit)="createClaimant()">
                 <ng-template matStepLabel>Create Claimant</ng-template>
-                {{filteredStates?.data | json}}
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
                         <div fxFlex="100">

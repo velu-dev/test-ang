@@ -70,6 +70,7 @@ export class NewClaimComponent implements OnInit {
   specialityList = [];
   userAccountStatus = [];
   userRoles = [];
+  claimList = [];
   ALL_SEED_DATA = ["address_type", "agent_type", "body_part",
     "contact_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
     "user_account_status", "user_roles"]
