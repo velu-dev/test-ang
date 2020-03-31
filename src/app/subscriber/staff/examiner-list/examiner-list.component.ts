@@ -8,6 +8,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import * as globals from '../../../globals';
 @Component({
   selector: 'app-examiner-list',
   templateUrl: './examiner-list.component.html',
@@ -21,8 +22,11 @@ import { Router } from '@angular/router';
   ]
 })
 export class ExaminerListComponent implements OnInit {
+xls = globals.xls;
   data = [
-    { id: 1, first_name: 'Hydrogen', last_name: 'sarath', sign_in_email_id: 'ss@gmail.com' },
+    { id: 1, first_name: 'Sarath.s', last_name: 'sarath', sign_in_email_id: 'sarath.s@auriss.com' },
+    { id: 1, first_name: 'Venkatesan', last_name: 'Mariyappan', sign_in_email_id: 'venkatesan.m@auriss.com' },
+    { id: 1, first_name: 'Rajan', last_name: 'M', sign_in_email_id: 'rajan.s@auriss.com' },
   ];
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource: any;

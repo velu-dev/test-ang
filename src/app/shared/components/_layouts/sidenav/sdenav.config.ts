@@ -133,7 +133,7 @@ export const ROUTES: SideNavInterface[] = [
         },{
             path: '/subscriber/staff/examiner-list',
             title: 'Manage Examiner',
-            icon: 'dashboard',
+            icon: 'people',
             submenu: [],
             group: "Subscriber",
             role: 4

@@ -1,5 +1,6 @@
 @import "variables";
 @import "table";
+@import "tabs";
 .m-card {
   .search-container {
     mat-form-field {
@@ -45,6 +46,9 @@
         box-shadow: $box-shadow-5;
         background-color: $bg-light-blue;
         mat-card-header {
+          .edit {
+            color: $btn_success !important ;
+          }
           .label {
             padding: 3px 10px !important;
             color: $white;
