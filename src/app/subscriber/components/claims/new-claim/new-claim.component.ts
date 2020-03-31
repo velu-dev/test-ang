@@ -36,7 +36,7 @@ export class NewClaimComponent implements OnInit {
   isLinear = false;
   isSubmit = false;
   searchInput = new FormControl();
-  filteredStates: any;
+  filteredStates: Observable<any[]>;
   claimForm: FormGroup;
   errorMessages = errors;
   claim: FormGroup;
@@ -52,8 +52,8 @@ export class NewClaimComponent implements OnInit {
   injuryInfodata: claimant1[] = []
   searchStatus: boolean = false;
   advanceSearch: any;
-  injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", note: "", diagram_url: "" }
-  claimantList = [];
+  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: null, continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null }
+  claimantList = [{ "id": 1, "first_name": "Velusamy", "last_name": "v", "middle_name": "v", "suffix": "v", "salutation": null, "date_of_birth": "2020-03-18", "gender": "M", "phone_no_1": "1223343234", "phone_no_2": "3253434243", "email": "sfdsfdsfddfd@samdhashd", "street1": null, "street2": null, "city": "rfdsfdsf", "state": 1, "zip_code": 213424423, "zip_code_plus_4": null, "handedness": "R", "primary_language_spoken": 1, "certified_interpreter_required": false, "ssn": "1111111111", "organization_id": 33, "created_by": null, "modified_by": null, "createdAt": "2020-03-26T09:55:41.244Z", "updatedAt": "2020-03-26T09:55:41.244Z" }, { "id": 5, "first_name": "Velusamy", "last_name": "v", "middle_name": "v", "suffix": "v", "salutation": null, "date_of_birth": "2020-03-01", "gender": "M", "phone_no_1": "6556576576", "phone_no_2": "8787575757", "email": "vvvveevveev@vv.com", "street1": null, "street2": null, "city": "city 2", "state": 44, "zip_code": 656757, "zip_code_plus_4": null, "handedness": "L", "primary_language_spoken": 1, "certified_interpreter_required": false, "ssn": "5655556666", "organization_id": 33, "created_by": null, "modified_by": null, "createdAt": "2020-03-27T07:08:22.084Z", "updatedAt": "2020-03-27T07:08:22.084Z" }, { "id": 8, "first_name": "velusay", "last_name": "sfvbhj", "middle_name": "sdfhvdh", "suffix": "hsbf<s", "salutation": null, "date_of_birth": "2020-03-09", "gender": "F", "phone_no_1": "3746237467", "phone_no_2": "3264263874", "email": "velusamy.v@auriss.com", "street1": null, "street2": null, "city": "city 1", "state": 3, "zip_code": 789645, "zip_code_plus_4": null, "handedness": "R", "primary_language_spoken": 1, "certified_interpreter_required": false, "ssn": "4637846746", "organization_id": 33, "created_by": null, "modified_by": null, "createdAt": "2020-03-27T08:10:22.498Z", "updatedAt": "2020-03-27T08:10:22.498Z" }, { "id": 4, "first_name": "Velusamy", "last_name": "V", "middle_name": "V", "suffix": "V", "salutation": null, "date_of_birth": "2020-01-21", "gender": "M", "phone_no_1": "3243434324", "phone_no_2": "3432434324", "email": "dsvvdvdvsdv@sdfdsf.dsfdsf", "street1": null, "street2": null, "city": "city 1", "state": 5, "zip_code": 789645, "zip_code_plus_4": null, "handedness": "R", "primary_language_spoken": 1, "certified_interpreter_required": false, "ssn": "2343242434", "organization_id": 33, "created_by": null, "modified_by": null, "createdAt": "2020-03-27T05:55:02.983Z", "updatedAt": "2020-03-27T05:55:02.983Z" }, { "id": 9, "first_name": "velusamyvn", "last_name": "vvv", "middle_name": "", "suffix": "vv", "salutation": null, "date_of_birth": "2020-02-12", "gender": "M", "phone_no_1": "3532535253", "phone_no_2": "5253532532", "email": "velusamy.v@auriss.com", "street1": "street 2", "street2": "street 2", "city": "city 1", "state": 15, "zip_code": 789633, "zip_code_plus_4": null, "handedness": "R", "primary_language_spoken": 1, "certified_interpreter_required": false, "ssn": "2432535523", "organization_id": 33, "created_by": null, "modified_by": null, "createdAt": "2020-03-27T13:26:06.881Z", "updatedAt": "2020-03-27T13:26:06.881Z" }, { "id": 6, "first_name": "Velu", "last_name": "v", "middle_name": "v", "suffix": "v", "salutation": null, "date_of_birth": "2020-03-16", "gender": "M", "phone_no_1": "", "phone_no_2": "", "email": "velusamy.v@auriss.com", "street1": null, "street2": null, "city": "city 1", "state": 6, "zip_code": 7896454, "zip_code_plus_4": null, "handedness": "R", "primary_language_spoken": 1, "certified_interpreter_required": false, "ssn": "4534554354", "organization_id": 33, "created_by": null, "modified_by": null, "createdAt": "2020-03-27T07:13:44.534Z", "updatedAt": "2020-03-27T07:13:44.534Z" }];
   bodyParts = new FormControl();
   bodyPartsList = [];
   states = [];
@@ -79,9 +79,6 @@ export class NewClaimComponent implements OnInit {
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService) {
-    this.claimService.searchClaimant("").subscribe(res => {
-      this.claimantList = res.data;
-    })
     this.ALL_SEED_DATA.map(seed => {
       this.claimService.seedData(seed).subscribe(res => {
         switch (seed) {
@@ -138,13 +135,18 @@ export class NewClaimComponent implements OnInit {
     this.claimService.getCallerAffliation().subscribe(res => {
       this.callerAffliation = res.data;
     })
-    this.searchInput.valueChanges.subscribe(res => {
-      if (res) {
-        this.filteredStates = this._filterStates(res);
-      } else {
-        this.filteredStates = this.claimantList.slice()
-      }
-    })
+    // this.searchInput.valueChanges.subscribe(res => {
+    //   if (res) {
+    //     this.filteredStates = this._filterStates(res);
+    //   } else {
+    //     this.filteredStates = this.claimantList.slice()
+    //   }
+    // })
+    this.filteredStates = this.searchInput.valueChanges
+      .pipe(
+        startWith(''),
+        map(state => state ? this._filterStates(state) : this.claimantList.slice())
+      );
   }
 
   advanceTabChanged(event) {
@@ -162,7 +164,13 @@ export class NewClaimComponent implements OnInit {
   private _filterStates(value: string) {
     console.log(value)
     const filterValue = value.toLowerCase();
-
+    let data: any;
+    data = this.advanceSearch.value
+    data['basic_search'] = value;
+    data['isadvanced'] = this.searchStatus;
+    this.claimService.searchClaimant(data).subscribe(res => {
+      this.claimantList = res.data;
+    })
     return this.claimantList.filter(state => state.first_name.toLowerCase().indexOf(filterValue) === 0);
   }
   setStep(index: number) {
@@ -178,33 +186,39 @@ export class NewClaimComponent implements OnInit {
   }
   ngOnInit() {
     this.advanceSearch = this.formBuilder.group({
-      last_name: [''],
-      first_name: [''],
-      date_of_birth: [''],
-      city: [""],
-      zipcode: [""]
+      first_name: [],
+      last_name: [],
+      date_of_birth: [],
+      city: [],
+      zip_code: []
     })
     this.claimant = this.formBuilder.group({
       id: [""],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      suffix: [""],
-      // date_of_birth: ["",Validators.required],
-      date_of_birth: ["", Validators.required],
-      gender: [""],
+      suffix: [],
+      salutation: [],
+      organization_id: [],
+      created_by: [],
+      modified_by: [],
+      createdAt: [],
+      updatedAt: [],
+      zip_code_plus_4: [],
+      date_of_birth: [null, Validators.required],
+      gender: [],
       email: ["", Validators.compose([Validators.email])],
-      handedness: [""],
-      primary_language_spoken: [1],
-      certified_interpreter_required: [false],
-      ssn: [""],
-      phone_no_1: [""],
-      phone_no_2: [""],
-      street1: [""],
-      street2: [""],
-      city: [""],
-      state: [""],
-      zip_code: [Number]
+      handedness: [],
+      primary_language_spoken: [],
+      certified_interpreter_required: [],
+      ssn: [],
+      phone_no_1: [],
+      phone_no_2: [],
+      street1: [],
+      street2: [],
+      city: [],
+      state: [],
+      zip_code: []
     })
 
     // this.claimForm = this.formBuilder.group({
@@ -212,74 +226,77 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         // wcab_number: ["", Validators.required],
         // claim_number: ["", Validators.required],
+        claimant_name: [],
         wcab_number: [''],
         claim_number: ["",],
         panel_number: [''],
-        claimant_id: [1]
+        claimant_id: []
       }),
       claim_injuries: [],
       InsuranceAdjuster: this.formBuilder.group({
-        insurance_name: [""],
-        name: [""],
-        phone: [""],
-        fax: [""],
-        email: [""],
-        address: [""],
+        insurance_name: [],
+        name: [],
+        phone: [],
+        fax: [],
+        email: [],
+        address: [],
       }),
       Employer: this.formBuilder.group({
-        name: [""],
-        phone: [""],
-        address: [""],
-        city: [""],
-        state: [""],
+        name: [],
+        phone: [],
+        address: [],
+        city: [],
+        state: [],
         zipcode: [],
       }),
       ApplicantAttorney: this.formBuilder.group({
-        law_firm_name: [""],
-        attorney_name: [""],
-        phone: [""],
-        fax: [""],
-        email: [""],
-        address: [""],
-        city: [""],
-        state: [""],
+        law_firm_name: [],
+        attorney_name: [],
+        phone: [],
+        fax: [],
+        email: [],
+        address: [],
+        city: [],
+        state: [],
         zipcode: []
       }),
       DefenseAttorney: this.formBuilder.group({
-        law_firm_name: [""],
-        attorney_name: [""],
-        phone: [""],
-        fax: [""],
-        email: [""],
-        address: [""],
-        city: [""],
-        state: [""],
+        law_firm_name: [],
+        attorney_name: [],
+        phone: [],
+        fax: [],
+        email: [],
+        address: [],
+        city: [],
+        state: [],
         zipcode: []
       }),
       DEU: this.formBuilder.group({
-        office_name: [""],
-        phone: [""],
-        address: [""]
+        name: [],
+        phone: [],
+        address: [],
+        street1: [],
+        street2: []
       })
     })
     this.billable_item = this.formBuilder.group({
       exam_type: this.formBuilder.group({
-        procudure_type: [""],
+        procudure_type: [],
         modifiers: []
       }),
       appoinment: this.formBuilder.group({
-        examinar: [""],
-        date: [""],
-        duration: [""],
-        address: [""]
+        examinar: [],
+        date: [],
+        duration: [],
+        address: []
       }),
       intake_call_info: this.formBuilder.group({
-        caller_affliation: [""],
-        intake_caller: [""],
-        communication_type: [""],
-        communication_details: [""],
-        call_time: [""],
-        note: [""]
+        caller_affliation: [],
+        intake_caller: [],
+        communication_type: [],
+        communication_details: [],
+        call_time: [],
+        note: []
       })
 
     })
@@ -301,12 +318,16 @@ export class NewClaimComponent implements OnInit {
   }
 
   submitClaim() {
+    if (this.claim.invalid) {
+      console.log("claim", this.claim)
+      return;
+    }
     let claim = this.claim.value;
     claim['claim_injuries'] = this.injuryInfodata;
     // let data = { ...this.claimant.value, ...claim };
     // console.log("data", data);
     this.claimService.createClaim(claim).subscribe(res => {
-      console.log("Response", res)
+      this.alertService.openSnackBar(res.message, 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.error, 'error');
     })
@@ -314,25 +335,32 @@ export class NewClaimComponent implements OnInit {
   cancle() {
 
   }
+  claimant_name = "";
   createClaimant() {
+    if (this.claimant.invalid) {
+      console.log("claimant", this.claimant)
+      return;
+    }
     let data = this.claimant.value;
     data['primary_language_not_english'] = this.languageStatus;
-    this.claimService.createClaim(this.claimant.value).subscribe(res => {
+    this.claimService.createClaimant(this.claimant.value).subscribe(res => {
+      this.alertService.openSnackBar(res.message, "success");
+      this.claimant_name = res.data.first_name + "  " + res.data.last_name
+      console.log("claimant_name", this.claimant_name)
       this.claim.patchValue({
         claim_details: {
           claimant_id: res.data.id
         }
       });
-      this.alertService.openSnackBar("success", res.message);
     }, error => {
       console.log(error)
-      this.alertService.openSnackBar('error', error.error.error);
+      this.alertService.openSnackBar(error.error.error, 'error');
     })
   }
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_part_id: "", date_of_injury: "", continuous_trauma: "", continuous_trauma_start_date: "", continuous_trauma_end_date: "", note: "", diagram_url: "" };
+    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: null, continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);

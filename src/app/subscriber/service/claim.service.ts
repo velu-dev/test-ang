@@ -12,6 +12,12 @@ export class ClaimService {
   getClaimant(): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.getClaimantDetails, {})
   }
+  getClaims(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getClaims)
+  }
+  getClaim(id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getClaim + "/" + id)
+  }
   searchClaimant(claimant): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.searchClaimant, claimant)
   }

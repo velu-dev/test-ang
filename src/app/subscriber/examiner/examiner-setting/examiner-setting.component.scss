@@ -44,6 +44,15 @@
           font-size: $font-size-22;
           font-weight: $font-weight-medium;
         }
+        .primary_label {
+          background-color: $primarycolor;
+        }
+        .service_label {
+          background-color: red;
+        }
+        .office_label {
+          background-color: orange;
+        }
       }
       mat-card-content {
         .name {

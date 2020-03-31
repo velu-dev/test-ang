@@ -5,7 +5,7 @@ export const ROUTES = [
         title: 'Dashboard',
         icon: 'dashboard',
         submenu: []
-    },{
+    }, {
         path: '/admin',
         title: 'Dashboard',
         icon: 'dashboard',
@@ -129,27 +129,51 @@ export const ROUTES = [
         path: '/subscriber/manager',
         title: 'Dashboard',
         icon: 'dashboard',
-        submenu: [],
-    }, {
-        path: '/subscriber/manager/dashboard',
+        submenu: [{
+            path: '/subscriber/manager/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+        }, {
+            path: '/subscriber/manager/staff',
+            title: 'Staff Management',
+            icon: 'dashboard',
+            submenu: [],
+        }, {
+            path: '/subscriber/manager/staff/new',
+            title: 'New User',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/subscriber/manager/settings',
+            title: 'Settings',
+            icon: 'dashboard',
+            submenu: []
+        }],
+    },
+    //Subscriber staff
+    {
+        path: '/subscriber/staff',
         title: 'Dashboard',
         icon: 'dashboard',
-        submenu: [],
-    }, {
-        path: '/subscriber/manager/staff',
-        title: 'Staff Management',
-        icon: 'dashboard',
-        submenu: [],
-    }, {
-        path: '/subscriber/manager/staff/new',
-        title: 'New User',
-        icon: 'dashboard',
-        submenu: []
-    }, {
-        path: '/subscriber/manager/settings',
-        title: 'Settings',
-        icon: 'dashboard',
-        submenu: []
+        submenu: [{
+            path: '/subscriber/staff/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+        }, {
+            path: '/subscriber/staff/manage-address',
+            title: 'Manage Address',
+            icon: 'dashboard',
+            submenu: [],
+        }
+        // , {
+        //     path: '/subscriber/manager/settings',
+        //     title: 'Settings',
+        //     icon: 'dashboard',
+        //     submenu: []
+        // },
+    ],
     },
     {
         path: 'subscriber/examiner',
