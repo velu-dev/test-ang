@@ -163,7 +163,7 @@ export const ROUTES = [
             submenu: [],
         }, {
             path: '/subscriber/staff/manage-address',
-            title: 'Manage Address',
+            title: 'Manage Locations',
             icon: 'dashboard',
             submenu: [],
         }, {
