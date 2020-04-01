@@ -41,6 +41,7 @@ export const api_endpoint = {
     searchClaimant: "claimant/search",
     getClaims: "claim",
     getClaim: "claim",
+    searchEams: "claim/eams-wcab-search/",
 
     //seed data
     seedData: 'claim/seed-data/',

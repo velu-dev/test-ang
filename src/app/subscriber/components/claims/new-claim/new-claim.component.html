@@ -82,7 +82,7 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Zip Code</mat-label>
-                                                    <input matInput type="number" formControlName="zipcode"
+                                                    <input matInput mask="000000" formControlName="zipcode"
                                                         placeholder="zip code" autocomplete="off">
                                                     <mat-error>Enter valid zip code</mat-error>
                                                 </mat-form-field>
@@ -128,20 +128,27 @@
                                 <mat-error>{{errorMessages.entervalidfirstname}}</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Middle Name</mat-label>
-                                <input matInput placeholder="Middle Name" formControlName="middle_name"
-                                    autocomplete="off">
-                                <mat-error>{{errorMessages.entervalidmiddlename}}</mat-error>
-                            </mat-form-field>
+                        <div class="sub-title p-t-15  p-l-10" fxFlex="100">Add New Claimant</div>
+                        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>First Name*</mat-label>
+                            <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+                            <mat-error>{{errorMessages.entervalidfirstname}}</mat-error>
+                        </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Last Name</mat-label>
-                                <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
-                                <mat-error>{{errorMessages.entervalidlastname}}</mat-error>
-                            </mat-form-field>
+                        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput placeholder="Middle Name" formControlName="middle_name" autocomplete="off">
+                            <mat-error>{{errorMessages.entervalidmiddlename}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Last Name*</mat-label>
+                            <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+                            <mat-error>{{errorMessages.entervalidlastname}}</mat-error>
+                        </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.sm="50" fxFlex.xs="100">
@@ -150,26 +157,14 @@
                                 <mat-error>Enter valid suffix</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Date of Birth</mat-label>
-                                <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
-                                    autocomplete="off" [matDatepicker]="date_of_birth" (click)="date_of_birth.open()">
-                                <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
-                                <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
-                                <mat-error>Enter valid date of birth</mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Select Gender</mat-label>
-                                <mat-select formControlName="gender">
-                                    <mat-option value="M">Male</mat-option>
-                                    <mat-option value="F">Female</mat-option>
-                                    <mat-option value="O">Other</mat-option>
-                                </mat-select>
-                                <mat-error>Select valid gender</mat-error>
-                            </mat-form-field>
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Date of Birth*</mat-label>
+                            <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
+                                autocomplete="off" [matDatepicker]="date_of_birth" (click)="date_of_birth.open()">
+                            <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
+                            <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
+                            <mat-error>Enter valid date of birth</mat-error>
+                        </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -273,21 +268,19 @@
                                 <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Zip</mat-label>
-                                <input matInput type="number" placeholder="Zip" formControlName="zip_code"
-                                    autocomplete="off">
-                                <mat-error>Enter valid zip code</mat-error>
-                            </mat-form-field>
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Zip Code</mat-label>
+                            <input matInput mask="000000" placeholder="Zip" formControlName="zip_code"
+                                autocomplete="off">
+                            <mat-error>Enter valid zip code</mat-error>
+                        </mat-form-field>
 
-                            <div class="text-center w-100 m-t-10 m-b-50">
-                                <button mat-raised-button color="primary" type="submit"
-                                    class="m-r-10 rounded-corner btn_success" (click)="createClaimant()">
-                                    Save </button>
-                                <button mat-raised-button type="submit" class="rounded-corner" color="primary"
-                                    matStepperNext>Next</button>
-                            </div>
+                        <div class="text-center w-100 m-t-10 m-b-50">
+                            <button mat-raised-button color="primary" type="submit"
+                                class="m-r-10 rounded-corner btn_success" [disabled]="!isClaimantCreated" (click)="createClaimant()">
+                                Save </button>
+                            <button [disabled]="!(!claimant.invalid && isClaimantCreated)" mat-raised-button
+                                type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
                         </div>
                     </div>
                 </mat-card>
@@ -304,14 +297,14 @@
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_details">
                             <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Claimant name </mat-label>
-                                <input matInput placeholder="Claimant name" [(ngModel)]="claimant_name"
-                                    [ngModelOptions]="{standalone: true}" disabled>
+                                <input matInput type="text" placeholder="Claimant name" formControlName="claimant_name"
+                                    disabled>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>WCAB Number </mat-label>
-                                <input matInput type="number" placeholder="WCAB Number" formControlName="wcab_number"
+                                <input matInput placeholder="WCAB Number" formControlName="wcab_number"
                                     autocomplete="off">
                                 <mat-error>Enter valid WCAB number</mat-error>
                             </mat-form-field>
@@ -327,7 +320,7 @@
                             <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Panel Number </mat-label>
-                                <input matInput type="number" placeholder="Panel Number" formControlName="panel_number"
+                                <input matInput type="number" mask="0000000" placeholder="Panel Number" formControlName="panel_number"
                                     autocomplete="off">
                             </mat-form-field>
                         </div>
@@ -619,8 +612,8 @@
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Zip</mat-label>
-                                <input matInput type="number" placeholder="Zip" formControlName="zipcode"
+                                <mat-label>Zip Code</mat-label>
+                                <input matInput mask="000000" placeholder="Zip" formControlName="zipcode"
                                     autocomplete="off">
                             </mat-form-field>
                         </div>
@@ -632,11 +625,21 @@
                                 Attorney Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="ApplicantAttorney">
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
+                                fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
                                 <input matInput placeholder="Law Firm Name" formControlName="law_firm_name"
                                     autocomplete="off">
+                            </mat-form-field>
+                            <mat-form-field *ngIf="attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
+                                fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Law Firm Name</mat-label>
+                                <mat-select formControlName="law_firm_name">
+                                    <mat-option *ngFor="let attroney of attroneylist" [value]="attroney.name">
+                                        {{attroney.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>Enter valid attroney</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -680,8 +683,8 @@
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Zip</mat-label>
-                                <input matInput type="number" placeholder="Zip" formControlName="zipcode"
+                                <mat-label>Zip Code</mat-label>
+                                <input matInput mask="000000" placeholder="Zip" formControlName="zipcode"
                                     autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -698,11 +701,21 @@
                                 Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="DefenseAttorney">
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
+                                fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
                                 <input matInput placeholder="Law Firm Name" formControlName="law_firm_name"
                                     autocomplete="off">
+                            </mat-form-field>
+                            <mat-form-field *ngIf="attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
+                                fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Law Firm Name</mat-label>
+                                <mat-select formControlName="law_firm_name">
+                                    <mat-option *ngFor="let attroney of attroneylist" [value]="attroney.name">
+                                        {{attroney.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>Enter valid attroney</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -746,8 +759,8 @@
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Zip</mat-label>
-                                <input matInput type="number" placeholder="Zip" formControlName="zipcode"
+                                <mat-label>Zip Code</mat-label>
+                                <input matInput mask="000000" placeholder="Zip" formControlName="zipcode"
                                     autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -788,10 +801,11 @@
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()">
+                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()" [disabled]="!isClaimCreated">
                             Save </button>
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" matStepperNext>
+                            class="m-r-10 rounded-corner btn_success" matStepperNext
+                            [disabled]="!(!claim.invalid && isClaimCreated)">
                             Next </button>
                         <button mat-raised-button type="button" class="rounded-corner" color="warn"
                             matStepperPrevious>Back</button>

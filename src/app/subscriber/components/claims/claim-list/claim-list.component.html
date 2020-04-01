@@ -9,8 +9,8 @@
     <mat-divider></mat-divider>
     <mat-card-content class="p-t-3 m-b-0">
         <div class="table-filter">
-            <input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue"
-                placeholder="Search by name, email, etc">
+            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+                placeholder="Search by name, claim number, etc">
         </div>
         <span class="spacer"></span>
         <button mat-icon-button class="filter-icon" (click)="exportData()">
