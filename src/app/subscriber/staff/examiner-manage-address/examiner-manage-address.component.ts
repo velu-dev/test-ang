@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ClaimService } from '../../service/claim.service';
 import { ExaminerService } from '../../service/examiner.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-examiner-manage-address',
@@ -56,10 +57,12 @@ export class ExaminerManageAddressComponent implements OnInit {
   addressForm: FormGroup;
   states: any;
   addressList: any;
-  addressType:any;
-  addAddress:boolean = false;
+  addressType: any;
+  addAddress: boolean = false;
+  billingSearch;
+  serviceSearch;
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
-    private examinerService: ExaminerService
+    private examinerService: ExaminerService,private alertService: AlertService,
   ) { }
 
   ngOnInit() {
@@ -71,7 +74,8 @@ export class ExaminerManageAddressComponent implements OnInit {
       street2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
+      zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      examiner_name:['']
     });
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
@@ -92,14 +96,16 @@ export class ExaminerManageAddressComponent implements OnInit {
       console.log("error", error)
     })
 
+   this.getAddressDetails()
+  }
+
+  getAddressDetails(){
     this.examinerService.getExaminerAddress().subscribe(response => {
       this.addressList = response['data'];
       console.log(response)
     }, error => {
       console.log(error)
     })
-
-
   }
 
   displayFn(user): string {
@@ -119,23 +125,29 @@ export class ExaminerManageAddressComponent implements OnInit {
       console.log(this.addressForm.value)
       return;
     }
-    this.examinerService.postExaminerAddress(this.addressForm.value).subscribe(response => {
-      console.log(response)
-    }, error => {
-      console.log(error)
-    })
+
+    if (this.addressForm.value.id == null) {
+      this.examinerService.postExaminerAddress(this.addressForm.value).subscribe(response => {
+        console.log(response)
+        this.getAddressDetails();
+        this.addAddress = false;
+        this.alertService.openSnackBar("Location created successfully", 'success');
+
+      }, error => {
+        console.log(error)
+      })
+    } else {
+
+    }
   }
 
-  editAddress(details){
+  editAddress(details) {
     console.log(details);
-    details.id = 1;
-    details.address_type_id = 1;
-    details.street2 = '';
     this.addAddress = true;
     this.addressForm.setValue(details)
   }
 
-  deleteAddress(){
+  deleteAddress() {
 
   }
 }
