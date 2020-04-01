@@ -14,7 +14,7 @@ export class ExaminerService {
     return this.http.get(environment.baseUrl + api_endpoint.getAddress, {})
   }
 
-  postExaminerAddress(): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.addAddress, {})
+  postExaminerAddress(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.addAddress, data)
   }
 }
