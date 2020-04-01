@@ -57,6 +57,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   states: any;
   addressList: any;
   addressType:any;
+  addAddress:boolean = false;
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService
   ) { }
@@ -92,6 +93,7 @@ export class ExaminerManageAddressComponent implements OnInit {
     })
 
     this.examinerService.getExaminerAddress().subscribe(response => {
+      this.addressList = response['data'];
       console.log(response)
     }, error => {
       console.log(error)
@@ -122,5 +124,18 @@ export class ExaminerManageAddressComponent implements OnInit {
     }, error => {
       console.log(error)
     })
+  }
+
+  editAddress(details){
+    console.log(details);
+    details.id = 1;
+    details.address_type_id = 1;
+    details.street2 = '';
+    this.addAddress = true;
+    this.addressForm.setValue(details)
+  }
+
+  deleteAddress(){
+
   }
 }

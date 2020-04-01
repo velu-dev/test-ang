@@ -142,9 +142,9 @@
 <mat-card class="m-card m-t-25">
     <mat-card-content>
         <div class="manage-address">
-            <mat-card *ngFor="let address of addresss" class="address-list">
+            <mat-card class="address-list">
                 <mat-card-header>
-                    <div class="label m-r-2">{{address.type}}</div>
+                    <div class="label m-r-2">Primary</div>
                     <div class="spacer"></div>
                     <span class="spacer"></span>
                     <button mat-icon-button class="edit">
@@ -157,8 +157,8 @@
                 </mat-card-header>
                 <mat-divider></mat-divider>
                 <mat-card-content>
-                    <div class="name"><strong>{{address.name}}</strong> </div>
-                    <div class="address"> {{address.address }} </div>
+                    <div class="name"><strong>{{addressList?.Primary[0]?.name}}</strong> </div>
+                    <div class="address">{{addressList?.Primary[0]?.phone }}  {{addressList?.Primary[0]?.street1 }} {{addressList?.Primary[0]?.street2 }} {{addressList?.Primary[0]?.city }} {{addressList?.Primary[0]?.state }}  {{addressList?.Primary[0]?.zipcode }}</div>
                 </mat-card-content>
             </mat-card>
 
@@ -174,11 +174,11 @@
                             <input matInput>
                           </mat-form-field>
                         <mat-list>
-                            <mat-list-item *ngFor="let folder of folders">
-                                <div mat-line class="name">{{folder.name}}</div>
-                                <div mat-line class="address"> {{folder.address}} </div>
+                            <mat-list-item *ngFor="let Service of addressList?.Service">
+                                <div mat-line class="name">{{Service.name}}</div>
+                                <div mat-line class="address"> {{Service?.phone }}  {{Service?.street1 }} {{Service?.street2 }} {{Service?.city}} {{Service?.state }}  {{Service?.zipcode }} </div>
                                 <span class="spacer"></span>
-                                <button mat-icon-button class="edit" matTooltip="Edit" matTooltipPosition="before">
+                                <button mat-icon-button (click)="editAddress(Service)" class="edit" matTooltip="Edit" matTooltipPosition="before">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                                 <button mat-icon-button color="warn" matTooltip="Delete" matTooltipPosition="after">
@@ -193,7 +193,7 @@
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon class="p-r-5">place</mat-icon>
-                        Office Locations
+                        Billing Locations
                     </ng-template>
                     <div class="service_locations">
                         <mat-form-field appearance="standard" class="w-100 p-t-5">
@@ -201,11 +201,11 @@
                             <input matInput>
                           </mat-form-field>
                         <mat-list>
-                            <mat-list-item *ngFor="let folder of folders">
-                                <div mat-line class="name">{{folder.name}}</div>
-                                <div mat-line class="address"> {{folder.address}} </div>
+                            <mat-list-item *ngFor="let Billing of addressList?.Billing">
+                                <div mat-line class="name">{{Billing?.name}}</div>
+                                <div mat-line class="address"> {{Billing?.phone }}  {{Billing?.street1 }} {{Billing?.street2 }} {{Billing?.city}} {{Billing?.state }}  {{Billing?.zipcode }} </div>
                                 <span class="spacer"></span>
-                                <button mat-icon-button class="edit">
+                                <button mat-icon-button class="edit" (click)="editAddress(Billing)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
                                 <button mat-icon-button color="warn">
