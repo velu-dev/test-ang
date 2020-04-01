@@ -56,7 +56,12 @@ export class ExaminerManageAddressComponent implements OnInit {
   addressForm: FormGroup;
   states: any;
   addressList: any;
-  addressType:any;
+  addressType: any;
+  advanceSearch: any;
+  searchStatus;
+  addAddress: boolean = false;
+  advancedSearch;
+  filteredStates;
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService
   ) { }
@@ -96,7 +101,13 @@ export class ExaminerManageAddressComponent implements OnInit {
     }, error => {
       console.log(error)
     })
-
+    this.advanceSearch = this.formBuilder.group({
+      first_name: [],
+      last_name: [],
+      date_of_birth: [],
+      city: [],
+      zip_code: []
+    })
 
   }
 
@@ -122,5 +133,9 @@ export class ExaminerManageAddressComponent implements OnInit {
     }, error => {
       console.log(error)
     })
+  }
+
+  advanceSearchSubmit() {
+    console.log("advanceSearch", this.advanceSearch.value)
   }
 }

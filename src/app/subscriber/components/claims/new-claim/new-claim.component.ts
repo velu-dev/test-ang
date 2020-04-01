@@ -76,6 +76,7 @@ export class NewClaimComponent implements OnInit {
     "user_account_status", "user_roles"]
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
+  addNewClaimant:boolean;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
