@@ -111,7 +111,11 @@
                                                 {{option.first_name}}
                                             </mat-option>
                                         </mat-autocomplete>
+                                        <span matSuffix class="search-icon icons" (click)="searchEAMS()">
+                                            <mat-icon>search</mat-icon>
+                                        </span>
                                     </mat-form-field>
+                                    
                                 </mat-tab>
                             </mat-tab-group>
                         </div>
@@ -120,15 +124,7 @@
                             <span class="fa fa-plus"></span> Add New Claimant
                         </div>
                         <div fxLayout="row wrap" fxFlex="100" *ngIf="addNewClaimant">
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>First Name</mat-label>
-                                <input matInput placeholder="First name" formControlName="first_name"
-                                    autocomplete="off">
-                                <mat-error>{{errorMessages.entervalidfirstname}}</mat-error>
-                            </mat-form-field>
-
-                        <div class="sub-title p-t-15  p-l-10" fxFlex="100">Add New Claimant</div>
+                          
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>First Name*</mat-label>
@@ -278,7 +274,7 @@
 
                         <div class="text-center w-100 m-t-10 m-b-50">
                             <button mat-raised-button color="primary" type="submit"
-                                class="m-r-10 rounded-corner btn_success" [disabled]="!isClaimantCreated" (click)="createClaimant()">
+                                class="m-r-10 rounded-corner btn_success"  (click)="createClaimant()">
                                 Save </button>
                             <button [disabled]="!(!claimant.invalid && isClaimantCreated)" mat-raised-button
                                 type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
