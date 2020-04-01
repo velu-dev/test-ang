@@ -12,6 +12,28 @@
     }
   }
   mat-card-content {
+    .search-container {
+      .advanced_search {
+        div {
+          padding: 22px 12px 7px 12px;
+          display: inline-flex;
+          cursor: pointer;
+          border-right: 1px solid $light-gray;
+          background-color: $bg-light-blue;
+          margin-right: 10px;
+          mat-icon {
+            margin-top: -4px !important;
+          }
+        }
+        .search-icon {
+          background-color: $primarycolor;
+          color: $white;
+          padding: 12px;
+          display: block;
+          cursor: pointer;
+        }
+      }
+    }
     .manage-btn {
       border: 1px dashed $primarylightcolor;
       border-radius: 3px;
@@ -81,50 +103,6 @@
         }
       }
     }
-  }
-}
-
-.service_locations {
-  box-shadow: $box-shadow-3;
-  height: 400px;
-  overflow: auto;
-  mat-list {
-    mat-list-item {
-      cursor: pointer;
-      &:hover {
-        background-color: $bg-light-blue;
-      }
-      .name {
-        font-weight: $font-weight-bold;
-      }
-      .address {
-        @include text;
-      }
-      .edit {
-        color: $btn_success !important ;
-      }
-    }
-  }
-}
-
-.advanced_search {
-  div {
-    padding: 22px 12px 7px 12px;
-    display: inline-flex;
-    cursor: pointer;
-    border-right: 1px solid $light-gray;
-    background-color: $bg-light-blue;
-    margin-right: 10px;
-    mat-icon {
-      margin-top: -4px !important;
-    }
-  }
-  .search-icon {
-    background-color: $primarycolor;
-    color: $white;
-    padding: 12px;
-    display: block;
-    cursor: pointer;
   }
 }
 

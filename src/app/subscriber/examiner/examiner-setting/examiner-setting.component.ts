@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -25,23 +25,46 @@ export interface Section {
 })
 export class ExaminerSettingComponent implements OnInit {
 
-  addresss: Section[] = [
+  addresss: any[] = [
     {
-      type: 'primary',
+      type: 'Primary',
       name: 'Venkatesan',
       address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+    }
+  ];
+  myControl = new FormControl();
+  options: any[] = [
+    { name: 'Mary' },
+    { name: 'Shelley' },
+    { name: 'Igor' },
+    { name: 'Mary' },
+    { name: 'Shelley' },
+    { name: 'Igor' },
+    { name: 'Mary' },
+    { name: 'Shelley' },
+    { name: 'Igor' },
+    { name: 'Mary' },
+  ];
+
+  folders: any[] = [
+    {
+      name: 'Venkatesan Mariyappan',
+      address: '30A, Auriss Technologies,  Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
-      type: 'office',
-      name: 'Sarath',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+      name: 'Rajan',
+      address: '30A,hirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
-      type: 'service',
+      name: 'Sarat',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Tamil Nadu - 641002',
+    },
+    {
       name: 'Velusamy',
       address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     }
   ];
+  addressList: any;
   addAddress: boolean = false;
   profile_bg = globals.profile_bg;
   user: User;

@@ -14,7 +14,7 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   addresss: any[] = [
     {
-      type: 'primary',
+      type: 'Primary',
       name: 'Venkatesan',
       address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     }
