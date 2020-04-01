@@ -157,6 +157,7 @@
                                 <mat-error>Enter valid suffix</mat-error>
                             </mat-form-field>
 
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Date of Birth*</mat-label>
                             <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
@@ -282,6 +283,7 @@
                             <button [disabled]="!(!claimant.invalid && isClaimantCreated)" mat-raised-button
                                 type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
                         </div>
+                    </div>
                     </div>
                 </mat-card>
             </form>
