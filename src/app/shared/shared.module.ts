@@ -15,6 +15,7 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
 import { AlertService } from './services/alert.service';
 import { StoreModule } from '@ngrx/store';
 import { breadcrumbreducer } from './store/breadcrumb.reducer';
+import { headerreducer } from './store/header.reducer';
 import { ExportService } from './services/export.service';
 import { ErrorComponent } from './components/error/error.component';
 import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
@@ -44,6 +45,7 @@ import { NgxMaskModule } from 'ngx-mask'
     HttpClientModule,
     SharedRoutingModule,
     StoreModule.forFeature("breadcrumb", breadcrumbreducer),
+    StoreModule.forFeature("header", headerreducer),
     NgxSkeletonLoaderModule,
     NgxMaskModule.forRoot()
   ],

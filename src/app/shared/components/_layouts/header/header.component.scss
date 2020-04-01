@@ -1,7 +1,7 @@
 @import "variables";
 .opened {
   margin-left: 240px;
-  transition-delay: .1s;
+  transition-delay: 0.1s;
   @media only screen and (max-width: 568px) {
     margin-left: 0;
   }
@@ -34,19 +34,11 @@ mat-toolbar-row {
         margin-right: 0px;
       }
     }
-    .welcome {
-      line-height: 0px !important;
+    .welcome_t {
+      display: inline-flex;
       text-align: left;
-      padding-right: 5px;
       span {
-        top: 12px;
-        position: relative;
-      }
-      img {
-        padding-left: 20px;
-        @media only screen and (max-width: 568px) {
-          padding-left: 0px;
-        }
+        line-height: 1.5;
       }
     }
   }

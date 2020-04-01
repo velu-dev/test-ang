@@ -5,17 +5,19 @@
     <mat-divider></mat-divider>
     <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
-            <form [formGroup]="claimant" (ngSubmit)="createClaimant()">
+            <form [formGroup]="claimant">
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
                         <div fxFlex="100">
+
+
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
                                 <mat-tab label="Search Claimants ">
                                     <mat-form-field appearance="fill" fxFlex="100"
                                         hideRequiredMarker="hideRequiredControl.auto"
                                         floatLabel="floatLabelControl.auto" class="advanced_search w-100">
-                                        <div matPrefix (click)="searchStatus = !searchStatus">
+                                        <div matPrefix (click)="searchStatus = !searchStatus ">
                                             <span>Advanced Search</span>
                                             <mat-icon class="expand-icon icons">
                                                 {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
@@ -24,18 +26,31 @@
                                         <input matInput placeholder="Search by name, date of birth "
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                                            <!-- <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option> -->
-                                            <!-- <ng-container *ngIf="!isLoading"> -->
-                                            <mat-option *ngFor="let option of filteredStates | async"
+                                            <mat-option *ngFor="let option of filteredStates"
                                                 (click)="changeOption(option)" [value]="option.first_name">
                                                 {{option.first_name}}
                                             </mat-option>
-                                            <!-- </ng-container> -->
                                         </mat-autocomplete>
                                         <span matSuffix class="search-icon icons">
                                             <mat-icon>search</mat-icon>
                                         </span>
                                     </mat-form-field>
+
+
+                                    <!-- 
+                                    <mat-form-field appearance="fill" fxFlex="100" class="w-100">
+                                        <input matInput placeholder="Search by name, date of birth "
+                                            [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                                        <mat-autocomplete #claimantAutocomplete="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredStates"
+                                                (click)="changeOption(option)" [value]="option.first_name">
+                                                {{option.first_name}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-icon matSuffix (click)="searchStatus = !searchStatus ">
+                                            {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+                                        </mat-icon>
+                                    </mat-form-field> -->
                                     <form [formGroup]="advanceSearch">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
@@ -61,12 +76,14 @@
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Date of Birth</mat-label>
                                                     <input matInput placeholder="Date of Birth"
-                                                        formControlName="date_of_birth" autocomplete="off"
-                                                        formControlName="date_of_birth" [matDatepicker]="date_of_birth"
-                                                        (click)="date_of_birth.open()">
-                                                    <mat-datepicker-toggle matSuffix [for]="date_of_birth">
+                                                        formControlName="date_of_birth_advance_search"
+                                                        autocomplete="off" formControlName="date_of_birth"
+                                                        [matDatepicker]="date_of_birth_advance_search"
+                                                        (click)="date_of_birth_advance_search.open()">
+                                                    <mat-datepicker-toggle matSuffix
+                                                        [for]="date_of_birth_advance_search">
                                                     </mat-datepicker-toggle>
-                                                    <mat-datepicker #date_of_birth disabled="false">
+                                                    <mat-datepicker #date_of_birth_advance_search disabled="false">
                                                     </mat-datepicker>
                                                     <mat-error>Enter valid date of birth</mat-error>
                                                 </mat-form-field>
@@ -82,7 +99,7 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Zip Code</mat-label>
-                                                    <input matInput type="number" formControlName="zip_code"
+                                                    <input matInput type="number" formControlName="zipcode"
                                                         placeholder="zip code" autocomplete="off">
                                                     <mat-error>Enter valid zip code</mat-error>
                                                 </mat-form-field>
@@ -127,8 +144,8 @@
                                         <input matInput placeholder="Search EAMS"
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                                            <mat-option *ngFor="let option of claimList" (click)="changeOption(option)"
-                                                [value]="option.first_name">
+                                            <mat-option *ngFor="let option of filteredStates"
+                                                (click)="changeOption(option)" [value]="option.first_name">
                                                 {{option.first_name}}
                                             </mat-option>
                                         </mat-autocomplete>
@@ -184,7 +201,7 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Zip Code</mat-label>
-                                                    <input matInput formControlName="zip_code" placeholder="zip code"
+                                                    <input matInput formControlName="zip" placeholder="zip code"
                                                         autocomplete="off">
                                                     <mat-error>Enter valid zip code</mat-error>
                                                 </mat-form-field>
@@ -357,17 +374,17 @@
 
                         <div class="text-center w-100 m-t-10 m-b-50">
                             <button mat-raised-button color="primary" type="submit"
-                                class="m-r-10 rounded-corner btn_success">
+                                class="m-r-10 rounded-corner btn_success" (click)="createClaimant()">
                                 Save </button>
-                            <button mat-raised-button (click)="createClaimant()" type="submit" class="rounded-corner"
-                                color="primary" matStepperNext>Next</button>
+                            <button mat-raised-button type="submit" class="rounded-corner" color="primary"
+                                matStepperNext>Next</button>
                         </div>
                     </div>
                 </mat-card>
             </form>
         </mat-step>
         <mat-step [stepControl]="claim">
-            <form [formGroup]="claim" (ngSubmit)="submitClaim()">
+            <form [formGroup]="claim">
                 <ng-template matStepLabel>Create Claim</ng-template>
                 <mat-card>
                     <mat-card-header>
@@ -861,10 +878,10 @@
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success">
+                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()">
                             Save </button>
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()" matStepperNext>
+                            class="m-r-10 rounded-corner btn_success" matStepperNext>
                             Next </button>
                         <button mat-raised-button type="button" class="rounded-corner" color="warn"
                             matStepperPrevious>Back</button>
