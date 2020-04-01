@@ -56,6 +56,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   addressForm: FormGroup;
   states: any;
   addressList: any;
+  addressType:any;
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService
   ) { }
@@ -63,13 +64,13 @@ export class ExaminerManageAddressComponent implements OnInit {
   ngOnInit() {
     this.addressForm = this.formBuilder.group({
       id: [""],
-      location_type: ['', Validators.compose([Validators.required])],
-      phone_number: ['', Validators.compose([Validators.required])],
-      address: ['', Validators.compose([Validators.required])],
-      address1: [''],
+      address_type_id: ['', Validators.compose([Validators.required])],
+      phone: ['', Validators.compose([Validators.required])],
+      street1: ['', Validators.compose([Validators.required])],
+      street2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zip: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
+      zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
     });
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
@@ -80,6 +81,12 @@ export class ExaminerManageAddressComponent implements OnInit {
 
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.claimService.seedData('address_type').subscribe(response => {
+      this.addressType = response['data'];
     }, error => {
       console.log("error", error)
     })
@@ -110,5 +117,10 @@ export class ExaminerManageAddressComponent implements OnInit {
       console.log(this.addressForm.value)
       return;
     }
+    this.examinerService.postExaminerAddress(this.addressForm.value).subscribe(response => {
+      console.log(response)
+    }, error => {
+      console.log(error)
+    })
   }
 }
