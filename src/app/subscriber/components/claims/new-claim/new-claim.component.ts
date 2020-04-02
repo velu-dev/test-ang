@@ -35,7 +35,8 @@ export class NewClaimComponent implements OnInit {
   step = 0;
   isLinear = false;
   isSubmit = false;
-  searchInput = new FormControl();
+  emasSearchInput = new FormControl();
+  searchInput = new FormControl("");
   filteredStates: Observable<any[]>;
   claimForm: FormGroup;
   errorMessages = errors;
@@ -76,7 +77,7 @@ export class NewClaimComponent implements OnInit {
     "user_account_status", "user_roles"]
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
-  addNewClaimant:boolean;
+  addNewClaimant: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -389,17 +390,20 @@ export class NewClaimComponent implements OnInit {
 
   }
   searchEAMS() {
-    this.claimService.searchbyEams(this.searchInput.value).subscribe(res => {
-      this.claimant.patchValue(res.data.claimant)
-      this.claim.patchValue({
-        claim_details: res.data.claim,
-        Employer: res.data.employer
-      });
-      this.injuryInfodata = res.data.injuryInfodata;
-      this.dataSource = new MatTableDataSource(this.injuryInfodata)
-      if (res.data.attroney.length != 0) {
-        this.attroneylist = res.data.attroney;
-        this.attroneySelect = true;
+    this.claimService.searchbyEams(this.emasSearchInput.value).subscribe(res => {
+      if (res.status) {
+        this.addNewClaimant = true;
+        this.claimant.patchValue(res.data.claimant)
+        this.claim.patchValue({
+          claim_details: res.data.claim,
+          Employer: res.data.employer
+        });
+        this.injuryInfodata = res.data.injuryInfodata;
+        this.dataSource = new MatTableDataSource(this.injuryInfodata)
+        if (res.data.attroney.length != 0) {
+          this.attroneylist = res.data.attroney;
+          this.attroneySelect = true;
+        }
       }
     })
   }
