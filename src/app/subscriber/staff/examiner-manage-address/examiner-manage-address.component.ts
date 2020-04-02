@@ -6,6 +6,7 @@ import { ClaimService } from '../../service/claim.service';
 import { ExaminerService } from '../../service/examiner.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import * as  errors from '../../../shared/messages/errors'
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-examiner-manage-address',
   templateUrl: './examiner-manage-address.component.html',
@@ -40,9 +41,13 @@ export class ExaminerManageAddressComponent implements OnInit {
   advancedSearch;
   filteredStates;
   errorMessages = errors;
+  examinerId:number;
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
-  ) { }
+    private route: ActivatedRoute
+  ) { 
+    this.route.params.subscribe( params => this.examinerId = params.id );
+  }
 
   ngOnInit() {
     this.addressForm = this.formBuilder.group({
@@ -75,16 +80,19 @@ export class ExaminerManageAddressComponent implements OnInit {
       console.log("error", error)
     })
 
-    this.getAddressDetails()
+    this.getAddressDetails();
+  
   }
 
   getAddressDetails() {
-    this.examinerService.getExaminerAddress().subscribe(response => {
+
+    this.examinerService.getsingleExAddress(this.examinerId).subscribe(response => {
       this.addressList = response['data'];
       console.log(response)
     }, error => {
       console.log(error)
     })
+   
     this.advanceSearch = this.formBuilder.group({
       city: [],
       state: [],
