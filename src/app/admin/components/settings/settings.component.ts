@@ -8,6 +8,9 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import * as  errors from '../../../shared/messages/errors'
+import { Store } from '@ngrx/store';
+import * as headerActions from "./../../../shared/store/header.actions";
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -27,7 +30,8 @@ export class SettingsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private router: Router,
-    private cognitoService: CognitoService
+    private cognitoService: CognitoService,
+    private store: Store<{ header: any }>
   ) {
     // this.spinnerService.show();
     this.cognitoService.currentSession().subscribe(token => {
@@ -59,13 +63,14 @@ export class SettingsComponent implements OnInit {
     });
   }
   userformSubmit() {
-  
+
     if (this.userForm.invalid) {
       console.log(this.userForm)
       return;
     }
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
+      this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
       this.router.navigate(['/admin/settings'])
     }, error => {
       this.alertService.openSnackBar(error.message, 'error');
@@ -95,7 +100,7 @@ export class SettingsComponent implements OnInit {
         })
       }, error => {
         this.spinnerService.hide();
-        if(error.code == 'NotAuthorizedException'){
+        if (error.code == 'NotAuthorizedException') {
           error.message = this.errorMessages.oldpasswordworng;
         }
         this.alertService.openSnackBar(error.message, "error");

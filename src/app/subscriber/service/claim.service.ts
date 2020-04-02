@@ -19,6 +19,7 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.getClaim + "/" + id)
   }
   searchClaimant(claimant): Observable<any> {
+    console.log(claimant)
     return this.http.post(environment.baseUrl + api_endpoint.searchClaimant, claimant)
   }
   createClaim(data): Observable<any> {
@@ -33,5 +34,8 @@ export class ClaimService {
   }
   getCallerAffliation(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.callerAffliation)
+  }
+  searchbyEams(eams_number): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.searchEams + eams_number)
   }
 }

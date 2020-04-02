@@ -42,7 +42,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
-                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5 p-r-10">
+                                        fxFlex.sm="50" fxFlex.xl="50">
                                         <mat-label>New password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text' " matInput
                                             placeholder="New password*" autocomplete="off"
@@ -53,19 +53,17 @@
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
-                                        fxFlex.sm="45" fxFlex.xl="45" class="m-t-5">
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                        fxFlex.sm="50" fxFlex.xl="50">
                                         <mat-label>Confirm new password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="Confirm new password*" autocomplete="off"
                                             formControlName="confirmPassword">
+                                            <mat-icon matSuffix (click)="changeInputType()">
+                                                {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
                                     </mat-form-field>
 
-                                    <div fxFlex="10" fxFlex.md="5" fxFlex.lg="5" fxFlex.sm="5" fxFlex.xl="5"
-                                        class="m-t-5">
-                                        <mat-icon matSuffix (click)="changeInputType()" class="check-password p-t-25">
-                                            {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-                                    </div>
+                                    
 
                                     <button mat-raised-button color="primary" class="m-t-5">Save Changes </button>
                                 </form>

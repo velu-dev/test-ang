@@ -1,0 +1,133 @@
+@import "variables";
+@import "table";
+@import "tabs";
+.m-card {
+  .search-container {
+    mat-form-field {
+      padding: 10px !important;
+    }
+    .manage-btn {
+      width: 200px;
+      text-align: center;
+    }
+  }
+  mat-card-content {
+    .manage-btn {
+      border: 1px dashed $primarylightcolor;
+      border-radius: 3px;
+      background-color: $bg-light-blue;
+      color: $primarycolor;
+      font-size: $font-size-1;
+      font-size: $font-weight-medium;
+      padding: 10px 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .manage-address-form {
+      padding: 10px;
+      border-radius: 3px;
+      margin: 10px 5px;
+      box-shadow: $box-shadow-5;
+
+      mat-form-field {
+        padding: 10px !important;
+      }
+
+      button.btn_success {
+        background-color: $btn_success;
+      }
+    }
+
+    .manage-address {
+      padding: 5px;
+      mat-card.address-list {
+        padding: 10px !important;
+        margin: 10px 0;
+        box-shadow: $box-shadow-5;
+        background-color: $bg-light-blue;
+        mat-card-header {
+          .edit {
+            color: $btn_success !important ;
+          }
+          .label {
+            padding: 3px 10px !important;
+            color: $white;
+            line-height: 2;
+            margin-bottom: 5px;
+            border-radius: 2px;
+            background-color: $primarycolor;
+            font-size: $font-size-1;
+            font-weight: $font-weight-medium;
+          }
+          .primary_label {
+            background-color: $primarycolor;
+          }
+          .service_label {
+            background-color: red;
+          }
+          .office_label {
+            background-color: orange;
+          }
+        }
+        mat-card-content {
+          .name {
+            font-size: $font-size-1;
+            font-size: $font-weight-medium;
+            padding: 10px 5px 5px 5px;
+          }
+          .address {
+            padding: 5px 5px 5px 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.service_locations {
+  box-shadow: $box-shadow-3;
+  height: 400px;
+  overflow: auto;
+  mat-list {
+    mat-list-item {
+      cursor: pointer;
+      &:hover {
+        background-color: $bg-light-blue;
+      }
+      .name {
+        font-weight: $font-weight-bold;
+      }
+      .address {
+        @include text;
+      }
+      .edit {
+        color: $btn_success !important ;
+      }
+    }
+  }
+}
+
+.advanced_search {
+  div {
+    padding: 22px 12px 7px 12px;
+    display: inline-flex;
+    cursor: pointer;
+    border-right: 1px solid $light-gray;
+    background-color: $bg-light-blue;
+    margin-right: 10px;
+    mat-icon {
+      margin-top: -4px !important;
+    }
+  }
+  .search-icon {
+    background-color: $primarycolor;
+    color: $white;
+    padding: 12px;
+    display: block;
+    cursor: pointer;
+  }
+}
+
+button.btn_success {
+  background-color: $btn_success;
+}
