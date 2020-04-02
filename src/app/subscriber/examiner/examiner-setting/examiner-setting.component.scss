@@ -221,10 +221,6 @@
       margin: 10px 5px;
       box-shadow: $box-shadow-5;
 
-      mat-form-field {
-        padding: 10px !important;
-      }
-
       button.btn_success {
         background-color: $btn_success;
       }
@@ -264,8 +260,31 @@
         mat-card-content {
           .name {
             font-size: $font-size-1;
-            font-size: $font-weight-medium;
+            font-size: $font-weight-bold;
             padding: 10px 5px 5px 5px;
+            width: $width-100;
+            div {
+              min-width: 150px;
+              float: left;
+              @media only screen and (max-width: 568px) {
+                min-width: auto;
+                margin-bottom: 10px;
+                float: none;
+                display: block;
+              }
+              i {
+                opacity: 0.5;
+                padding-right: 10px;
+              }
+            }
+            span {
+              text-align: left;
+              font-weight: $font-weight-medium;
+              i {
+                padding: 5px;
+                opacity: 0.5;
+              }
+            }
           }
           .address {
             padding: 5px 5px 5px 5px;
@@ -282,4 +301,46 @@ button.btn_success {
 
 .edit {
   color: $btn_success !important ;
+}
+
+// mat-form-field {
+//   padding: 10px !important;
+// }
+
+mat-list-item {
+  &:hover {
+    background-color: $bg-light-blue;
+    cursor: pointer;
+  }
+  .name {
+    font-size: $font-size-1;
+    font-size: $font-weight-bold;
+    padding: 10px 5px 5px 5px;
+    width: $width-100;
+    div {
+      min-width: 150px;
+      float: left;
+      @media only screen and (max-width: 568px) {
+        min-width: auto;
+        margin-bottom: 10px;
+        float: none;
+        display: block;
+      }
+      i {
+        opacity: 0.5;
+        padding-right: 10px;
+      }
+    }
+    span {
+      text-align: left;
+      font-weight: $font-weight-medium;
+      i {
+        padding: 5px;
+        opacity: 0.5;
+      }
+    }
+  }
+  .address {
+    color: $text-gray;
+  }
 }

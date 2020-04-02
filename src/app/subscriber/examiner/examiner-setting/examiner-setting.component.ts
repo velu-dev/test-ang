@@ -14,8 +14,9 @@ import * as headerActions from "./../../../shared/store/header.actions";
 
 export interface Section {
   type: string;
-  name: string;
+  city: string;
   address: string;
+  phone: string;
 
 }
 @Component({
@@ -28,7 +29,7 @@ export class ExaminerSettingComponent implements OnInit {
   addresss: any[] = [
     {
       type: 'Primary',
-      name: 'Venkatesan',
+      city: 'Coimbatore',
       address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     }
   ];
@@ -48,19 +49,23 @@ export class ExaminerSettingComponent implements OnInit {
 
   folders: any[] = [
     {
-      name: 'Venkatesan Mariyappan',
+      city: 'Coimbatore',
+      phone: '(123)-45-6789',
       address: '30A, Auriss Technologies,  Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
-      name: 'Rajan',
+      city: 'Chennai',
+      phone: '(235)-86-4579',
       address: '30A,hirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
-      name: 'Sarat',
+      city: 'kerala',
+      phone: '(756)-74-8645',
       address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Tamil Nadu - 641002',
     },
     {
-      name: 'Velusamy',
+      city: 'Coimbatore',
+      phone: '(693)-75-8568',
       address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     }
   ];

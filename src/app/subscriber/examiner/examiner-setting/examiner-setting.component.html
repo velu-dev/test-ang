@@ -41,9 +41,9 @@
                                         <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="Confirm New Password" autocomplete="off"
                                             formControlName="confirmPassword">
-                                            <mat-icon matSuffix (click)="changeInputType()">
-                                                {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-                                        
+                                        <mat-icon matSuffix (click)="changeInputType()">
+                                            {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
                                     </mat-form-field>
                                     <button mat-raised-button color="primary" class="m-t-5">Save Changes </button>
@@ -276,7 +276,12 @@
                                             </mat-card-header>
                                             <mat-divider></mat-divider>
                                             <mat-card-content>
-                                                <div class="name"><strong>{{address.name}}</strong> </div>
+                                                <div class="name">
+                                                    <div><strong>
+                                                            <i class="fa fa-building-o"></i>{{address.city}}
+                                                        </strong></div>
+                                                    <span><i class="fa fa-phone-alt"></i>(978)-61-78889</span>
+                                                </div>
                                                 <div class="address"> {{address.address }} </div>
                                             </mat-card-content>
                                         </mat-card>
@@ -294,8 +299,14 @@
                                                     </mat-form-field>
                                                     <mat-list>
                                                         <mat-list-item *ngFor="let folder of folders">
-                                                            <div mat-line class="name">{{folder.name}}</div>
-                                                            <div mat-line class="address"> {{folder.address}} </div>
+                                                            <div class="name" mat-line>
+                                                                <div><strong>
+                                                                        <i class="fa fa-building-o"></i>{{folder.city}}
+                                                                    </strong></div>
+                                                                <span><i
+                                                                        class="fa fa-phone-alt"></i>{{folder.phone}}</span>
+                                                            </div>
+                                                            <div class="address" mat-line> {{folder.address }} </div>
                                                             <span class="spacer"></span>
                                                             <button mat-icon-button class="edit" matTooltip="Edit"
                                                                 matTooltipPosition="before">
