@@ -35,7 +35,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   addAddress: boolean = false;
   billingSearch;
   serviceSearch;
-  advanceSearch: any;
+  advanceSearch: FormGroup;
   searchStatus;
   advancedSearch;
   filteredStates;

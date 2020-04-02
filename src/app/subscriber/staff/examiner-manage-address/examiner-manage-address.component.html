@@ -137,7 +137,7 @@
 <mat-card class="m-card m-t-25">
     <mat-card-content>
         <div class="manage-address">
-            <mat-card class="address-list" *ngIf="addressList?.Primary.length > 0">
+            <mat-card class="address-list" *ngIf="addressList?.Primary.length != 0">
                 <mat-card-header>
                     <div class="label m-r-2">Primary</div>
                     <div class="spacer"></div>
@@ -145,7 +145,7 @@
                 </mat-card-header>
                 <mat-divider></mat-divider>
                 <mat-card-content>
-                    <div class="name"><strong>{{addressList?.Primary[0]?.examiner_name}}</strong> </div>
+                    <div class="name"><strong>{{addressList?.Primary[0]?.city}}</strong> </div>
                     <div class="address">{{addressList?.Primary[0]?.phone }}  {{addressList?.Primary[0]?.street1 }} {{addressList?.Primary[0]?.street2 }} {{addressList?.Primary[0]?.city }} {{addressList?.Primary[0]?.state }}  {{addressList?.Primary[0]?.zipcode }}</div>
                 </mat-card-content>
             </mat-card>

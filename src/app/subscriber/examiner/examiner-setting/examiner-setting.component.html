@@ -181,7 +181,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="manage-btn" (click)="addAddress = !addAddress "> <span
+                                    <div class="manage-btn" (click)="addAddress = !addAddress;addressForm.reset()"> <span
                                             class="fa fa-plus"></span> ADD A NEW
                                         ADDRESS
                                     </div>
@@ -193,10 +193,9 @@
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>Service Location Type</mat-label>
-                                                <mat-select formControlName="location_type">
-                                                    <mat-option value="Service">Service</mat-option>
-                                                    <mat-option value="Primary">Primary</mat-option>
-                                                    <mat-option value="Office">Office</mat-option>
+                                                <mat-select formControlName="address_type_id">
+                                                    <mat-option *ngFor="let address of addressType"
+                                                        [value]="address.id">{{address.address_type_name}}</mat-option>
                                                 </mat-select>
                                                 <mat-error *ngIf="addressIsSubmitted">Select valid service location type
                                                 </mat-error>
@@ -204,7 +203,7 @@
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>Phone Number</mat-label>
-                                                <input matInput formControlName="phone_number" mask="(000) 000-0000"
+                                                <input matInput formControlName="phone" mask="(000) 000-0000"
                                                     placeholder="Phone Number" autocomplete="off">
                                                 <mat-error *ngIf="addressIsSubmitted">Enter valid phone number
                                                 </mat-error>
@@ -213,7 +212,7 @@
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>Address </mat-label>
-                                                <textarea matInput formControlName="address"
+                                                <textarea matInput formControlName="street1"
                                                     placeholder="Address"></textarea>
                                                 <mat-error *ngIf="addressIsSubmitted">Enter valid address</mat-error>
                                             </mat-form-field>
@@ -221,7 +220,7 @@
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>Address 1</mat-label>
-                                                <textarea matInput formControlName="address1"
+                                                <textarea matInput formControlName="street2"
                                                     placeholder="Address"></textarea>
                                             </mat-form-field>
 
@@ -237,7 +236,7 @@
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>State</mat-label>
                                                 <mat-select formControlName="state">
-                                                    <mat-option *ngFor="let state of states" [value]="state.id">
+                                                    <mat-option *ngFor="let state of states" [value]="state.state">
                                                         {{state.state}}
                                                     </mat-option>
                                                 </mat-select>
@@ -247,7 +246,7 @@
                                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                                 fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>Zip code</mat-label>
-                                                <input matInput formControlName="zip" placeholder="Zip code"
+                                                <input matInput formControlName="zipcode" placeholder="Zip code"
                                                     autocomplete="off">
                                                 <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
                                             </mat-form-field>
@@ -267,10 +266,10 @@
                             </mat-card-content>
                             <mat-card class="m-card m-t-25">
                                 <mat-card-content>
-                                    <div class="manage-address">
-                                        <mat-card *ngFor="let address of addresss" class="address-list">
+                                    <div class="manage-address" *ngIf="addressList?.Primary.length != 0">
+                                        <mat-card  class="address-list">
                                             <mat-card-header>
-                                                <div class="label m-r-2">{{address.type}}</div>
+                                                <div class="label m-r-2">Primary</div>
                                                 <div class="spacer"></div>
 
                                             </mat-card-header>
@@ -278,11 +277,11 @@
                                             <mat-card-content>
                                                 <div class="name">
                                                     <div><strong>
-                                                            <i class="fa fa-building-o"></i>{{address.city}}
+                                                            <i class="fa fa-building-o"></i>{{addressList?.Primary[0]?.city}}
                                                         </strong></div>
-                                                    <span><i class="fa fa-phone-alt"></i>(978)-61-78889</span>
+                                                    <span><i class="fa fa-phone-alt"></i>{{addressList?.Primary[0]?.phone}}</span>
                                                 </div>
-                                                <div class="address"> {{address.address }} </div>
+                                                <div class="address">{{addressList?.Primary[0]?.street1 }} {{addressList?.Primary[0]?.street2 }} {{addressList?.Primary[0]?.city }} {{addressList?.Primary[0]?.state }}  {{addressList?.Primary[0]?.zipcode }}</div>
                                             </mat-card-content>
                                         </mat-card>
 
@@ -295,25 +294,25 @@
                                                 <div class="service_locations">
                                                     <mat-form-field appearance="standard" class="w-100 p-t-5">
                                                         <mat-label>Search Location</mat-label>
-                                                        <input matInput>
+                                                        <input matInput [(ngModel)]="serviceSearch">
                                                     </mat-form-field>
                                                     <mat-list>
-                                                        <mat-list-item *ngFor="let folder of folders">
+                                                        <mat-list-item *ngFor="let Service of addressList?.Service | filter:serviceSearch">
                                                             <div class="name" mat-line>
                                                                 <div><strong>
-                                                                        <i class="fa fa-building-o"></i>{{folder.city}}
+                                                                        <i class="fa fa-building-o"></i>{{Service.city}}
                                                                     </strong></div>
                                                                 <span><i
-                                                                        class="fa fa-phone-alt"></i>{{folder.phone}}</span>
+                                                                        class="fa fa-phone-alt"></i> {{Service?.phone}}</span>
                                                             </div>
-                                                            <div class="address" mat-line> {{folder.address }} </div>
+                                                            <div class="address" mat-line> {{Service?.street1 }} {{Service?.street2 }} {{Service?.city}} {{Service?.state }}  {{Service?.zipcode }} </div>
                                                             <span class="spacer"></span>
                                                             <button mat-icon-button class="edit" matTooltip="Edit"
-                                                                matTooltipPosition="before">
+                                                                matTooltipPosition="before" (click)="editAddress(Service)">
                                                                 <mat-icon>edit</mat-icon>
                                                             </button>
                                                             <button mat-icon-button color="warn" matTooltip="Delete"
-                                                                matTooltipPosition="after">
+                                                                matTooltipPosition="after" (click)="deleteAddress(Service.id)">
                                                                 <mat-icon>delete</mat-icon>
                                                             </button>
                                                             <mat-divider></mat-divider>
@@ -325,17 +324,17 @@
                                             <mat-tab>
                                                 <ng-template mat-tab-label>
                                                     <mat-icon class="p-r-5">place</mat-icon>
-                                                    Office Locations
+                                                    Billing Locations
                                                 </ng-template>
                                                 <div class="service_locations">
                                                     <mat-form-field appearance="standard" class="w-100 p-t-5">
                                                         <mat-label>Search Location</mat-label>
-                                                        <input matInput>
+                                                        <input matInput [(ngModel)]="billingSearch">
                                                     </mat-form-field>
                                                     <mat-list>
-                                                        <mat-list-item *ngFor="let folder of folders">
-                                                            <div mat-line class="name">{{folder.name}}</div>
-                                                            <div mat-line class="address"> {{folder.address}} </div>
+                                                        <mat-list-item *ngFor="let Billing of addressList?.Billing | filter:billingSearch">
+                                                            <div mat-line class="name">{{Billing?.city}}</div>
+                                                            <div mat-line class="address"> {{Billing?.phone }}  {{Billing?.street1 }} {{Billing?.street2 }} {{Billing?.city}} {{Billing?.state }}  {{Billing?.zipcode }} </div>
                                                             <span class="spacer"></span>
                                                             <button mat-icon-button class="edit">
                                                                 <mat-icon>edit</mat-icon>
@@ -352,122 +351,6 @@
                                     </div>
                                 </mat-card-content>
                             </mat-card>
-                            <!-- <mat-card-content>
-                                <div class="manage-btn" (click)="addAddress = !addAddress "> <span
-                                        class="fa fa-plus"></span> ADD A NEW ADDRESS</div>
-                                <div class="manage-address-form" *ngIf="addAddress">
-                                    <form [formGroup]="addressForm" (ngSubmit)="addressformSubmit()">
-                                        <div fxLayout="row wrap" fxFlex="100">
-
-                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
-                                                fxFlex.sm="50" fxFlex.xs="100">
-                                                <mat-label>Service Location Type</mat-label>
-                                                <mat-select formControlName="location_type">
-                                                    <mat-option value="Service">Service</mat-option>
-                                                    <mat-option value="Primary">Primary</mat-option>
-                                                    <mat-option value="Office">Office</mat-option>
-                                                </mat-select>
-                                                <mat-error *ngIf="addressIsSubmitted">Select valid service location type
-                                                </mat-error>
-                                            </mat-form-field>
-                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
-                                                fxFlex.sm="50" fxFlex.xs="100">
-                                                <mat-label>Phone Number</mat-label>
-                                                <input matInput formControlName="phone_number" mask="(000) 000-0000"
-                                                    placeholder="Phone Number" autocomplete="off">
-                                                <mat-error *ngIf="addressIsSubmitted">Enter valid phone number
-                                                </mat-error>
-                                            </mat-form-field>
-
-                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
-                                                fxFlex.sm="50" fxFlex.xs="100">
-                                                <mat-label>Address </mat-label>
-                                                <textarea matInput formControlName="address"
-                                                    placeholder="Address"></textarea>
-                                                <mat-error *ngIf="addressIsSubmitted">Enter valid address</mat-error>
-                                            </mat-form-field>
-
-                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
-                                                fxFlex.sm="50" fxFlex.xs="100">
-                                                <mat-label>Address 1</mat-label>
-                                                <textarea matInput formControlName="address1"
-                                                    placeholder="Address"></textarea>
-                                            </mat-form-field>
-
-                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
-                                                fxFlex.sm="50" fxFlex.xs="100">
-                                                <mat-label>City</mat-label>
-                                                <input matInput formControlName="city" placeholder="City"
-                                                    autocomplete="off">
-                                                <mat-error *ngIf="addressIsSubmitted">Enter valid city</mat-error>
-                                            </mat-form-field>
-
-                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
-                                                fxFlex.sm="50" fxFlex.xs="100">
-                                                <mat-label>State</mat-label>
-                                                <mat-select formControlName="state">
-                                                    <mat-option *ngFor="let state of states" [value]="state.id">
-                                                        {{state.state}}
-                                                    </mat-option>
-                                                </mat-select>
-                                                <mat-error *ngIf="addressIsSubmitted">Enter valid state</mat-error>
-                                            </mat-form-field>
-
-                                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
-                                                fxFlex.sm="50" fxFlex.xs="100">
-                                                <mat-label>Zip code</mat-label>
-                                                <input matInput formControlName="zip" placeholder="Zip code"
-                                                    autocomplete="off">
-                                                <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
-                                            </mat-form-field>
-
-
-
-                                            <div class="text-center w-100 m-t-10 m-b-10">
-                                                <button mat-raised-button color="warn" class="m-r-10 "
-                                                    (click)="addressForm.reset();addAddress = false">
-                                                    Cancel </button>
-                                                <button mat-raised-button type="submit" color="primary"
-                                                    class="m-r-15 btn_success">Add</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="manage-address">
-                                    <mat-card *ngFor="let address of addresss" class="address-list">
-                                        <mat-card-header>
-                                            <div class="label primary_label m-r-2">Primary</div>
-                                            <div class="label service_label m-r-2">Service</div>
-                                            <div class="label office_label m-r-2" color="warn">Office</div>
-                                            <div class="label m-r-2">{{address.type}}</div>
-                                            <div class="spacer"></div>
-                                            <button mat-icon-button [matMenuTriggerFor]="menu"
-                                                aria-label="Example icon-button with a menu">
-                                                <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                            <mat-menu #menu="matMenu">
-                                                <button mat-menu-item>
-                                                    <mat-icon>location_on</mat-icon>
-                                                    <span>Set primary</span>
-                                                </button>
-                                                <button mat-menu-item>
-                                                    <mat-icon>edit</mat-icon>
-                                                    <span>Edit</span>
-                                                </button>
-                                                <button mat-menu-item>
-                                                    <mat-icon>delete</mat-icon>
-                                                    <span>Delete</span>
-                                                </button>
-                                            </mat-menu>
-                                        </mat-card-header>
-                                        <mat-divider></mat-divider>
-                                        <mat-card-content>
-                                            <div class="name"><strong>{{address.name}}</strong> </div>
-                                            <div class="address"> {{address.address }} </div>
-                                        </mat-card-content>
-                                    </mat-card>
-                                </div>
-                            </mat-card-content> -->
                         </div>
                     </mat-tab>
                 </mat-tab-group>

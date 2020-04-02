@@ -11,6 +11,7 @@ import * as  errors from '../../../shared/messages/errors'
 import { ClaimService } from '../../service/claim.service';
 import { Store } from '@ngrx/store';
 import * as headerActions from "./../../../shared/store/header.actions";
+import { ExaminerService } from '../../service/examiner.service';
 
 export interface Section {
   type: string;
@@ -79,6 +80,9 @@ export class ExaminerSettingComponent implements OnInit {
   addressForm: FormGroup;
   errorMessages = errors;
   states: any;
+  advanceSearch;
+  addressType;
+  serviceSearch;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -87,6 +91,7 @@ export class ExaminerSettingComponent implements OnInit {
     private router: Router,
     private cognitoService: CognitoService,
     private claimService: ClaimService,
+    private examinerService: ExaminerService,
     private store: Store<{ header: any }>
   ) {
     this.userService.getProfile().subscribe(res => {
@@ -119,19 +124,36 @@ export class ExaminerSettingComponent implements OnInit {
 
     this.addressForm = this.formBuilder.group({
       id: [""],
-      location_type: ['', Validators.compose([Validators.required])],
-      phone_number: ['', Validators.compose([Validators.required])],
-      address: ['', Validators.compose([Validators.required])],
-      address1: [''],
+      address_type_id: ['', Validators.compose([Validators.required])],
+      phone: ['', Validators.compose([Validators.required])],
+      street1: ['', Validators.compose([Validators.required])],
+      street2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zip: ['', Validators.required]
+      zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
 
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
     }, error => {
       console.log("error", error)
+    })
+
+    this.claimService.seedData('address_type').subscribe(response => {
+      this.addressType = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.getAddressDetails()
+  }
+
+  getAddressDetails() {
+    this.examinerService.getExaminerAddress().subscribe(response => {
+      this.addressList = response['data'];
+      console.log(response)
+    }, error => {
+      console.log(error)
     })
   }
   userformSubmit() {
@@ -187,9 +209,57 @@ export class ExaminerSettingComponent implements OnInit {
   addressIsSubmitted: boolean = false;
   addressformSubmit() {
     this.addressIsSubmitted = true;
+    console.log(this.addressForm.value)
     if (this.addressForm.invalid) {
       console.log(this.addressForm.value)
       return;
     }
+
+    if (this.addressForm.value.id == '' || this.addressForm.value.id == null) {
+      this.examinerService.postExaminerAddress(this.addressForm.value).subscribe(response => {
+        console.log(response)
+        this.getAddressDetails();
+        this.addAddress = false;
+        this.alertService.openSnackBar("Location created successfully", 'success');
+
+      }, error => {
+        console.log(error);
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    } else {
+      this.examinerService.updateExaminerAddress(this.addressForm.value).subscribe(response => {
+        console.log(response)
+        this.getAddressDetails();
+        this.addAddress = false;
+        this.alertService.openSnackBar("Location updated successfully", 'success');
+
+      }, error => {
+        console.log(error);
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    }
+  }
+
+  editAddress(details) {
+    console.log(details);
+    this.addAddress = true;
+    this.addressForm.setValue(details)
+  }
+
+  deleteAddress(id) {
+    this.examinerService.deleteExaminerAddress(id).subscribe(response => {
+      console.log(response)
+      this.getAddressDetails();
+      this.addAddress = false;
+      this.alertService.openSnackBar("Location deleted successfully", 'success');
+
+    }, error => {
+      console.log(error)
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
+
+  advanceSearchSubmit() {
+    console.log("advanceSearch", this.advanceSearch.value)
   }
 }
