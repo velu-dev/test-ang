@@ -345,6 +345,7 @@ export class NewClaimComponent implements OnInit {
       });
       this.isClaimantCreated = true;
     }, error => {
+      console.log(error)
       this.isClaimantCreated = false;
       this.alertService.openSnackBar(error.error.error, 'error');
     })
