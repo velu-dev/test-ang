@@ -29,7 +29,7 @@
                 </mat-form-field>
 
                 <form class="w-100">
-                    <div class="advance_search" *ngIf="advanceSearch">
+                    <div class="advance_search" *ngIf="advancedSearch">
                         <div fxLayout="row wrap" fxFlex="100">
                             <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced Search</div>
 
@@ -163,19 +163,20 @@
                         </mat-form-field>
                         <mat-list>
                             <mat-list-item *ngFor="let Service of addressList?.Service | filter:serviceSearch">
-                                <div mat-line class="name">{{Service.examiner_name}}</div>
+                                <div mat-line class="name">{{Service.city}}</div>
                                 <div mat-line class="address"> {{Service?.phone }}  {{Service?.street1 }} {{Service?.street2 }} {{Service?.city}} {{Service?.state }}  {{Service?.zipcode }} </div>
                                 <span class="spacer"></span>
                                 <button mat-icon-button (click)="editAddress(Service)" class="edit" matTooltip="Edit" matTooltipPosition="before">
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <button mat-icon-button color="warn" matTooltip="Delete" matTooltipPosition="after">
+                                <button mat-icon-button color="warn" matTooltip="Delete" matTooltipPosition="after" (click)="deleteAddress(Service.id)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                                 <mat-divider></mat-divider>
                             </mat-list-item>
                         </mat-list>
                     </div>
+                    <app-nodata *ngIf="addressList?.Service?.length == 0 || (addressList?.Service | filter:serviceSearch)?.length == 0"></app-nodata>
                 </mat-tab>
 
                 <mat-tab>
@@ -186,23 +187,24 @@
                     <div class="service_locations">
                         <mat-form-field appearance="standard" class="w-100 p-t-5">
                             <mat-label>Search Location</mat-label>
-                            <input [(ngModel)]="billingSearch" matInput>
+                            <input matInput [(ngModel)]="billingSearch" >
                         </mat-form-field>
                         <mat-list>
                             <mat-list-item *ngFor="let Billing of addressList?.Billing | filter:billingSearch">
-                                <div mat-line class="name">{{Billing?.examiner_name}}</div>
+                                <div mat-line class="name">{{Billing?.city}}</div>
                                 <div mat-line class="address"> {{Billing?.phone }}  {{Billing?.street1 }} {{Billing?.street2 }} {{Billing?.city}} {{Billing?.state }}  {{Billing?.zipcode }} </div>
                                 <span class="spacer"></span>
                                 <button mat-icon-button class="edit" (click)="editAddress(Billing)">
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                                <button mat-icon-button color="warn">
+                                <button mat-icon-button color="warn" (click)="deleteAddress(Billing.id)">
                                     <mat-icon>delete</mat-icon>
                                 </button>
                                 <mat-divider></mat-divider>
                             </mat-list-item>
                         </mat-list>
                     </div>
+                    <app-nodata *ngIf="addressList?.Billing?.length == 0 || (addressList?.Billing | filter:billingSearch)?.length == 0"></app-nodata>
                 </mat-tab>
             </mat-tab-group>
         </div>

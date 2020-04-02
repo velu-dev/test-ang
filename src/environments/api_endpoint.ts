@@ -49,5 +49,7 @@ export const api_endpoint = {
 
     //manage-address
     addAddress: 'subscriber/examiner/add-address',
-    getAddress: 'subscriber/examiner/get-address'
+    getAddress: 'subscriber/examiner/get-address',
+    updateAddress: 'subscriber/examiner/update-address',
+    deleteAddress: 'subscriber/examiner/delete-address/'
 }

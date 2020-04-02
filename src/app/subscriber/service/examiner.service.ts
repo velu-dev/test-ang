@@ -17,4 +17,12 @@ export class ExaminerService {
   postExaminerAddress(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.addAddress, data)
   }
+
+  updateExaminerAddress(data){
+    return this.http.put(environment.baseUrl + api_endpoint.updateAddress, data)
+  }
+
+  deleteExaminerAddress(id){
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteAddress + id)
+  }
 }

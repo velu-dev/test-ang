@@ -5,7 +5,7 @@ import { startWith, map } from 'rxjs/operators';
 import { ClaimService } from '../../service/claim.service';
 import { ExaminerService } from '../../service/examiner.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
-
+import * as  errors from '../../../shared/messages/errors'
 @Component({
   selector: 'app-examiner-manage-address',
   templateUrl: './examiner-manage-address.component.html',
@@ -13,13 +13,6 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 })
 export class ExaminerManageAddressComponent implements OnInit {
 
-  addresss: any[] = [
-    {
-      type: 'Primary',
-      name: 'Venkatesan',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    }
-  ];
   myControl = new FormControl();
   options: any[] = [
     { name: 'Mary' },
@@ -34,25 +27,6 @@ export class ExaminerManageAddressComponent implements OnInit {
     { name: 'Mary' },
   ];
 
-  folders: any[] = [
-    {
-      name: 'Venkatesan Mariyappan',
-      address: '30A, Auriss Technologies,  Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    },
-    {
-      name: 'Rajan',
-      address: '30A,hirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    },
-    {
-      name: 'Sarat',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Tamil Nadu - 641002',
-    },
-    {
-      name: 'Velusamy',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    }
-  ];
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
   filteredOptions: Observable<any[]>;
   addressForm: FormGroup;
   states: any;
@@ -65,8 +39,9 @@ export class ExaminerManageAddressComponent implements OnInit {
   searchStatus;
   advancedSearch;
   filteredStates;
+  errorMessages = errors;
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
-    private examinerService: ExaminerService,private alertService: AlertService,
+    private examinerService: ExaminerService, private alertService: AlertService,
   ) { }
 
   ngOnInit() {
@@ -79,7 +54,6 @@ export class ExaminerManageAddressComponent implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      examiner_name:['']
     });
     this.filteredOptions = this.myControl.valueChanges
       .pipe(
@@ -96,14 +70,15 @@ export class ExaminerManageAddressComponent implements OnInit {
 
     this.claimService.seedData('address_type').subscribe(response => {
       this.addressType = response['data'];
+      this.addressType.splice(this.addressType.findIndex(o => o.address_type_name === 'Primary'), 1)
     }, error => {
       console.log("error", error)
     })
 
-   this.getAddressDetails()
+    this.getAddressDetails()
   }
 
-  getAddressDetails(){
+  getAddressDetails() {
     this.examinerService.getExaminerAddress().subscribe(response => {
       this.addressList = response['data'];
       console.log(response)
@@ -111,17 +86,11 @@ export class ExaminerManageAddressComponent implements OnInit {
       console.log(error)
     })
     this.advanceSearch = this.formBuilder.group({
-      first_name: [],
-      last_name: [],
-      date_of_birth: [],
       city: [],
+      state: [],
       zip_code: []
     })
 
-  }
-
-  displayFn(user): string {
-    return user && user.name ? user.name : '';
   }
 
   private _filter(name: string): any[] {
@@ -129,6 +98,7 @@ export class ExaminerManageAddressComponent implements OnInit {
 
     return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
+
   addressIsSubmitted: boolean = false;
   addressformSubmit() {
     this.addressIsSubmitted = true;
@@ -138,7 +108,7 @@ export class ExaminerManageAddressComponent implements OnInit {
       return;
     }
 
-    if (this.addressForm.value.id == null) {
+    if (this.addressForm.value.id == '' || this.addressForm.value.id == null) {
       this.examinerService.postExaminerAddress(this.addressForm.value).subscribe(response => {
         console.log(response)
         this.getAddressDetails();
@@ -146,10 +116,20 @@ export class ExaminerManageAddressComponent implements OnInit {
         this.alertService.openSnackBar("Location created successfully", 'success');
 
       }, error => {
-        console.log(error)
+        console.log(error);
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
+      this.examinerService.updateExaminerAddress(this.addressForm.value).subscribe(response => {
+        console.log(response)
+        this.getAddressDetails();
+        this.addAddress = false;
+        this.alertService.openSnackBar("Location updated successfully", 'success');
 
+      }, error => {
+        console.log(error);
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
     }
   }
 
@@ -159,8 +139,17 @@ export class ExaminerManageAddressComponent implements OnInit {
     this.addressForm.setValue(details)
   }
 
-  deleteAddress() {
+  deleteAddress(id) {
+    this.examinerService.deleteExaminerAddress(id).subscribe(response => {
+      console.log(response)
+      this.getAddressDetails();
+      this.addAddress = false;
+      this.alertService.openSnackBar("Location deleted successfully", 'success');
 
+    }, error => {
+      console.log(error)
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
 
   advanceSearchSubmit() {
