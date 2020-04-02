@@ -19,6 +19,7 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.getClaim + "/" + id)
   }
   searchClaimant(claimant): Observable<any> {
+    console.log(claimant)
     return this.http.post(environment.baseUrl + api_endpoint.searchClaimant, claimant)
   }
   createClaim(data): Observable<any> {
