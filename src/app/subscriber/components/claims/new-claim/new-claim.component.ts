@@ -82,10 +82,6 @@ export class NewClaimComponent implements OnInit {
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService) {
-    this.claimService.searchClaimant("").subscribe(res => {
-      console.log(res)
-      this.claimantList = res.data;
-    })
     this.ALL_SEED_DATA.map(seed => {
       this.claimService.seedData(seed).subscribe(res => {
         switch (seed) {
