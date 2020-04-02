@@ -17,7 +17,7 @@
                                     <mat-form-field appearance="fill" fxFlex="100"
                                         hideRequiredMarker="hideRequiredControl.auto"
                                         floatLabel="floatLabelControl.auto" class="advanced_search w-100">
-                                        <div matPrefix (click)="searchStatus = !searchStatus ">
+                                        <div matPrefix (click)="searchStatus = !searchStatus " class="hide-mobile">
                                             <span>Advanced Search</span>
                                             <mat-icon class="expand-icon icons">
                                                 {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
@@ -119,7 +119,7 @@
                                 </mat-tab>
                             </mat-tab-group>
                         </div>
-                        <div class="sub-title add_new text-center"
+                        <div class="add_new text-center"
                             (click)="addNewClaimant = !addNewClaimant ">
                             <span class="fa fa-plus"></span> Add New Claimant
                         </div>
@@ -146,14 +146,14 @@
                             <mat-error>{{errorMessages.entervalidlastname}}</mat-error>
                         </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Suffix</mat-label>
                                 <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
                                 <mat-error>Enter valid suffix</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Date of Birth*</mat-label>
                             <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
