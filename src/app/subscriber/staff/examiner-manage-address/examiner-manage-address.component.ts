@@ -61,6 +61,10 @@ export class ExaminerManageAddressComponent implements OnInit {
   addAddress: boolean = false;
   billingSearch;
   serviceSearch;
+  advanceSearch: any;
+  searchStatus;
+  advancedSearch;
+  filteredStates;
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService,private alertService: AlertService,
   ) { }
@@ -106,6 +110,14 @@ export class ExaminerManageAddressComponent implements OnInit {
     }, error => {
       console.log(error)
     })
+    this.advanceSearch = this.formBuilder.group({
+      first_name: [],
+      last_name: [],
+      date_of_birth: [],
+      city: [],
+      zip_code: []
+    })
+
   }
 
   displayFn(user): string {
@@ -149,5 +161,9 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   deleteAddress() {
 
+  }
+
+  advanceSearchSubmit() {
+    console.log("advanceSearch", this.advanceSearch.value)
   }
 }
