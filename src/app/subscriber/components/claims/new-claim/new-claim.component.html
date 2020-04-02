@@ -26,7 +26,7 @@
                                         <input matInput placeholder="Search by name, date of birth "
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                                            <mat-option *ngFor="let option of filteredStates"
+                                            <mat-option *ngFor="let option of (filteredClaimant | async)?.data"
                                                 (click)="changeOption(option)" [value]="option.first_name">
                                                 {{option.first_name}}
                                             </mat-option>
@@ -82,7 +82,7 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Zip Code</mat-label>
-                                                    <input matInput mask="000000" formControlName="zipcode"
+                                                    <input matInput mask="00000" formControlName="zipcode"
                                                         placeholder="zip code" autocomplete="off">
                                                     <mat-error>Enter valid zip code</mat-error>
                                                 </mat-form-field>
@@ -118,8 +118,7 @@
                                         <div matPrefix>
                                             <span>ADJ</span>
                                         </div>
-                                        <input matInput placeholder="Search EAMS"
-                                            [matAutocomplete]="claimantAutocomplete" [formControl]="emasSearchInput">
+                                        <input matInput placeholder="Search EAMS" [formControl]="emasSearchInput">
                                         <span (click)="searchEAMS()" matSuffix class="search-icon icons">
                                             <mat-icon>search</mat-icon>
                                         </span>
@@ -278,7 +277,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput mask="000000" placeholder="Zip" formControlName="zip_code"
+                                <input matInput mask="00000" placeholder="Zip" formControlName="zip_code"
                                     autocomplete="off">
                                 <mat-error>Enter valid zip code</mat-error>
                             </mat-form-field>
@@ -622,7 +621,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput mask="000000" placeholder="Zip" formControlName="zipcode"
+                                <input matInput mask="00000" placeholder="Zip" formControlName="zipcode"
                                     autocomplete="off">
                             </mat-form-field>
                         </div>
@@ -693,7 +692,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput mask="000000" placeholder="Zip" formControlName="zipcode"
+                                <input matInput mask="00000" placeholder="Zip" formControlName="zipcode"
                                     autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -769,7 +768,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput mask="000000" placeholder="Zip" formControlName="zipcode"
+                                <input matInput mask="00000" placeholder="Zip" formControlName="zipcode"
                                     autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
