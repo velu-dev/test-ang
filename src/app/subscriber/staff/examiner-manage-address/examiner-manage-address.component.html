@@ -18,7 +18,7 @@
                     <input matInput placeholder="Search Existing Address" [matAutocomplete]="claimantAutocomplete"
                         [formControl]="myControl">
                     <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredStates" (click)="changeOption(option)"
+                        <mat-option *ngFor="let option of filteredStates" 
                             [value]="option.first_name">
                             {{option.first_name}}
                         </mat-option>
@@ -29,7 +29,7 @@
                 </mat-form-field>
 
                 <form class="w-100">
-                    <div class="advance_search" *ngIf="advancedSearch">
+                    <div class="advance_search" *ngIf="advanceSearch">
                         <div fxLayout="row wrap" fxFlex="100">
                             <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced Search</div>
 

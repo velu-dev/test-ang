@@ -37,6 +37,9 @@ xls = globals.xls;
   expandedElement: any | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  tabIndex;
+  applyFilter;
+  filterValue;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),

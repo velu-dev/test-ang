@@ -10,10 +10,23 @@ mat-card {
         padding-left: 0px !important;
       }
     }
+    .add_new {
+      border: 1px dashed $primarylightcolor;
+      border-radius: 3px;
+      background-color: $bg-light-blue;
+      color: $primarycolor;
+      font-size: $font-size-1;
+      font-weight: $font-weight-medium;
+      padding: 10px 5px;
+      cursor: pointer;
+      margin: 5px;
+      width: 200px;
+    }
     .sub-title {
       color: $primarycolor;
-      font-weight: $font-weight-bold;
       font-size: $font-size-1;
+      font-weight: $font-weight-medium;
+     
     }
     mat-form-field {
       padding: 10px !important;

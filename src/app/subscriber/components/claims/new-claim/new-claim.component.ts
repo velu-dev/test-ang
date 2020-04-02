@@ -35,7 +35,8 @@ export class NewClaimComponent implements OnInit {
   step = 0;
   isLinear = false;
   isSubmit = false;
-  searchInput = new FormControl();
+  emasSearchInput = new FormControl();
+  searchInput = new FormControl("");
   filteredStates: Observable<any[]>;
   claimForm: FormGroup;
   errorMessages = errors;
@@ -76,6 +77,7 @@ export class NewClaimComponent implements OnInit {
     "user_account_status", "user_roles"]
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
+  addNewClaimant: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -227,10 +229,10 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         // wcab_number: ["", Validators.required],
         // claim_number: ["", Validators.required],
-        claimant_name: [],
-        wcab_number: [''],
-        claim_number: ["",],
-        panel_number: [''],
+        claimant_name: [{ value: "", disabled: true }],
+        wcab_number: [],
+        claim_number: [],
+        panel_number: [""],
         claimant_id: []
       }),
       claim_injuries: [],
@@ -308,7 +310,6 @@ export class NewClaimComponent implements OnInit {
     console.log("advanceSearch", this.advanceSearch.value)
   }
   selectionChange(event) {
-    console.log("event", event)
     if (event.selectedIndex == 0) {
       this.titleName = "Create Claimant";
     } else if (event.selectedIndex == 1) {
@@ -317,7 +318,7 @@ export class NewClaimComponent implements OnInit {
       this.titleName = "Create Billable Item";
     }
   }
-
+  isClaimCreated = false;
   submitClaim() {
     if (this.claim.invalid) {
       console.log("claim", this.claim)
@@ -328,8 +329,11 @@ export class NewClaimComponent implements OnInit {
     // let data = { ...this.claimant.value, ...claim };
     // console.log("data", data);
     this.claimService.createClaim(claim).subscribe(res => {
+      this.isClaimCreated = true;
       this.alertService.openSnackBar(res.message, 'success');
     }, error => {
+      console.log(error)
+      this.isClaimCreated = false;
       this.alertService.openSnackBar(error.error.error, 'error');
     })
   }
@@ -337,6 +341,7 @@ export class NewClaimComponent implements OnInit {
 
   }
   claimant_name = "";
+  isClaimantCreated = false;
   createClaimant() {
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
@@ -350,11 +355,13 @@ export class NewClaimComponent implements OnInit {
       console.log("claimant_name", this.claimant_name)
       this.claim.patchValue({
         claim_details: {
-          claimant_id: res.data.id
+          claimant_id: res.data.id,
+          claimant_name: this.claimant_name
         }
       });
+      this.isClaimantCreated = true;
     }, error => {
-      console.log(error)
+      this.isClaimantCreated = false;
       this.alertService.openSnackBar(error.error.error, 'error');
     })
   }
@@ -368,6 +375,7 @@ export class NewClaimComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
   }
   editInjury(element, index) {
+    console.log(element)
     this.injuryInfo = element;
     this.injuryInfodata.splice(index, 1);
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
@@ -380,6 +388,32 @@ export class NewClaimComponent implements OnInit {
     formData.append('file', this.selectedFile)
     console.log("formData", formData)
 
+  }
+  searchEAMS() {
+    this.claimService.searchbyEams(this.emasSearchInput.value).subscribe(res => {
+      if (res.status) {
+        this.addNewClaimant = true;
+        this.claimant.patchValue(res.data.claimant)
+        this.claim.patchValue({
+          claim_details: res.data.claim,
+          Employer: res.data.employer
+        });
+        this.injuryInfodata = res.data.injuryInfodata;
+        this.dataSource = new MatTableDataSource(this.injuryInfodata)
+        if (res.data.attroney.length != 0) {
+          this.attroneylist = res.data.attroney;
+          this.attroneySelect = true;
+        }
+      }
+    })
+  }
+  attroneySelect = false;
+  attroneylist = []
+  bodyPartId(id) {
+    let data = "";
+    this.bodyPartsList.map(res => {
+      // id.include
+    })
   }
 }
 
