@@ -41,12 +41,13 @@ export class ExaminerManageAddressComponent implements OnInit {
   advancedSearch;
   filteredStates;
   errorMessages = errors;
-  examinerId:number;
+  examinerId: number;
+  examinerName: string;
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
     private route: ActivatedRoute
-  ) { 
-    this.route.params.subscribe( params => this.examinerId = params.id );
+  ) {
+    this.route.params.subscribe(params => this.examinerId = params.id);
   }
 
   ngOnInit() {
@@ -81,18 +82,20 @@ export class ExaminerManageAddressComponent implements OnInit {
     })
 
     this.getAddressDetails();
-  
+
   }
 
   getAddressDetails() {
 
     this.examinerService.getsingleExAddress(this.examinerId).subscribe(response => {
       this.addressList = response['data'];
+      this.examinerName =  response['data'].examiner_name;
       console.log(response)
     }, error => {
       console.log(error)
+      this.examinerName =  error.error.examiner_name;
     })
-   
+
     this.advanceSearch = this.formBuilder.group({
       city: [],
       state: [],
@@ -117,7 +120,7 @@ export class ExaminerManageAddressComponent implements OnInit {
     }
 
     if (this.addressForm.value.id == '' || this.addressForm.value.id == null) {
-      this.examinerService.postExaminerAddressOther(this.addressForm.value,this.examinerId).subscribe(response => {
+      this.examinerService.postExaminerAddressOther(this.addressForm.value, this.examinerId).subscribe(response => {
         console.log(response)
         this.getAddressDetails();
         this.addAddress = false;
