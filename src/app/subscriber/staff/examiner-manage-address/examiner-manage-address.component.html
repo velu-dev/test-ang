@@ -1,6 +1,7 @@
 <mat-card class="m-card" style="min-height:auto !important">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title">Use Existing or Add New Address for <strong>{{addressList?.examiner_name}}</strong></div>
+        <div class="m-0 content-wrapper-main-title">Use Existing or Add New Address for
+            <strong>{{addressList?.examiner_name}}</strong></div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="multiple-address">
@@ -143,10 +144,21 @@
                 </mat-card-header>
                 <mat-divider></mat-divider>
                 <mat-card-content>
-                    <div class="name"><strong>{{addressList?.Primary[0]?.city}}</strong> </div>
-                    <div class="address">{{addressList?.Primary[0]?.phone }} {{addressList?.Primary[0]?.street1 }}
-                        {{addressList?.Primary[0]?.street2 }} {{addressList?.Primary[0]?.city }}
-                        {{addressList?.Primary[0]?.state }} {{addressList?.Primary[0]?.zipcode }}</div>
+                    <mat-list>
+                        <mat-list-item>
+                            <div class="name" mat-line>
+                                <div><strong>
+                                        <i class="fa fa-building-o"></i>{{addressList?.Primary[0]?.city}}
+                                    </strong></div>
+                                <span><i class="fa fa-phone-alt"></i>
+                                    {{addressList?.Primary[0]?.phone}}</span>
+                            </div>
+                            <div class="address" mat-line> {{addressList?.Primary[0]?.street1 }}
+                                {{addressList?.Primary[0]?.street2 }} {{addressList?.Primary[0]?.city}}
+                                {{addressList?.Primary[0]?.state }}
+                                {{addressList?.Primary[0]?.zipcode }} </div>
+                        </mat-list-item>
+                    </mat-list>
                 </mat-card-content>
             </mat-card>
 

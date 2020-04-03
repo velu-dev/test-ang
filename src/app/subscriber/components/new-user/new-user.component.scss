@@ -1,6 +1,38 @@
 @import "variables";
-.m-card {
-  .edit-profile {
+.multiple-address {
+  .search-container {
+    mat-form-field {
+      padding: 10px !important;
+    }
+    .advanced_search {
+      div {
+        padding: 22px 12px 7px 12px;
+        display: inline-flex;
+        cursor: pointer;
+        border-right: 1px solid $light-gray;
+        background-color: $bg-light-blue;
+        margin-right: 10px;
+        mat-icon {
+          margin-top: -4px !important;
+        }
+      }
+
+      .search-icon {
+        background-color: $primarycolor;
+        color: $white;
+        padding: 12px;
+        display: block;
+        cursor: pointer;
+      }
+    }
+
+    mat-form-field {
+      padding: 10px !important;
+    }
+    .btn_success {
+      background-color: $btn_success;
+    }
+
     .manage-btn {
       border: 1px dashed $primarylightcolor;
       border-radius: 3px;
@@ -11,55 +43,21 @@
       padding: 10px 5px;
       cursor: pointer;
       margin: 5px;
-    }
-    .manage-address-form {
-      padding: 10px;
-      border-radius: 3px;
-      margin: 10px 5px;
-      box-shadow: $box-shadow-5;
-
-      mat-form-field {
-        padding: 10px !important;
-      }
-
-      button.btn_success {
-        background-color: $btn_success;
-        color: $black;
-      }
-    }
-
-    .manage-address {
-      padding: 5px;
-      mat-card.address-list {
-        padding: 10px !important;
-        margin: 10px 0;
-        box-shadow: $box-shadow-5;
-        mat-card-header {
-          .label {
-            padding: 3px 6px !important;
-            color: $white;
-            height: 15px;
-            margin-top: 10px;
-            border-radius: 2px;
-            background-color: $primarycolor;
-            font-size: $font-size-22;
-            font-weight: $font-weight-medium;
-          }
-        }
-        mat-card-content {
-          .name {
-            font-size: $font-size-1;
-            font-size: $font-weight-medium;
-            padding: 10px 5px 5px 5px;
-          }
-          .address {
-            padding: 5px 5px 5px 5px;
-          }
-        }
-      }
+      width: 200px;
+      text-align: center;
     }
   }
-  button.btn_success {
-    background-color: $btn_success;
+  .manage-address-form {
+    padding: 10px;
+    border-radius: 3px;
+    margin: 10px 5px;
+    box-shadow: $box-shadow-5;
+
+    mat-form-field {
+      padding: 10px !important;
+    }
+    button.btn_success {
+      background-color: $btn_success;
+    }
   }
 }
