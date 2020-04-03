@@ -319,6 +319,7 @@
                                                         </mat-list-item>
                                                     </mat-list>
                                                 </div>
+                                                <app-nodata *ngIf="addressList?.Service?.length == 0 || (addressList?.Service | filter:serviceSearch)?.length == 0"></app-nodata>
                                             </mat-tab>
 
                                             <mat-tab>
@@ -333,8 +334,14 @@
                                                     </mat-form-field>
                                                     <mat-list>
                                                         <mat-list-item *ngFor="let Billing of addressList?.Billing | filter:billingSearch">
-                                                            <div mat-line class="name">{{Billing?.city}}</div>
-                                                            <div mat-line class="address"> {{Billing?.phone }}  {{Billing?.street1 }} {{Billing?.street2 }} {{Billing?.city}} {{Billing?.state }}  {{Billing?.zipcode }} </div>
+                                                            <div class="name" mat-line>
+                                                                <div><strong>
+                                                                        <i class="fa fa-building-o"></i>{{Billing.city}}
+                                                                    </strong></div>
+                                                                <span><i
+                                                                        class="fa fa-phone-alt"></i> {{Billing?.phone}}</span>
+                                                            </div>
+                                                            <div mat-line class="address"> {{Billing?.street1 }} {{Billing?.street2 }} {{Billing?.city}} {{Billing?.state }}  {{Billing?.zipcode }} </div>
                                                             <span class="spacer"></span>
                                                             <button mat-icon-button class="edit">
                                                                 <mat-icon>edit</mat-icon>
@@ -346,6 +353,7 @@
                                                         </mat-list-item>
                                                     </mat-list>
                                                 </div>
+                                                <app-nodata *ngIf="addressList?.Billing?.length == 0 || (addressList?.Billing | filter:billingSearch)?.length == 0"></app-nodata>
                                             </mat-tab>
                                         </mat-tab-group>
                                     </div>

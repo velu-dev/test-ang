@@ -117,7 +117,7 @@ export class ExaminerManageAddressComponent implements OnInit {
     }
 
     if (this.addressForm.value.id == '' || this.addressForm.value.id == null) {
-      this.examinerService.postExaminerAddress(this.addressForm.value).subscribe(response => {
+      this.examinerService.postExaminerAddressOther(this.addressForm.value,this.examinerId).subscribe(response => {
         console.log(response)
         this.getAddressDetails();
         this.addAddress = false;
