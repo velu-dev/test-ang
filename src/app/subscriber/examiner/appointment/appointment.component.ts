@@ -36,6 +36,7 @@ export class AppointmentComponent implements OnInit {
   isMobile = false;
   expandedElement: any | null;
   disabled = false;
+  filterValue;
   constructor(private breakpointObserver: BreakpointObserver,private router:Router) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
