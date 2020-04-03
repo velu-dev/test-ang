@@ -277,11 +277,11 @@
                                                 {{addressList?.Primary[0]?.zipcode }} </div>
                                             <span class="spacer"></span>
                                             <button mat-icon-button class="edit" matTooltip="Edit"
-                                                matTooltipPosition="before">
+                                                matTooltipPosition="before" (click)="editAddress(addressList?.Primary[0])">
                                                 <mat-icon>edit</mat-icon>
                                             </button>
                                             <button mat-icon-button color="warn" matTooltip="Delete"
-                                                matTooltipPosition="after">
+                                                matTooltipPosition="after"  (click)="deleteAddress(addressList?.Primary[0]?.id)">
                                                 <mat-icon>delete</mat-icon>
                                             </button>
                                         </mat-list-item>
@@ -326,6 +326,9 @@
                                             </mat-list-item>
                                         </mat-list>
                                     </div>
+                                    <app-nodata
+                                        *ngIf="addressList?.Service?.length == 0 || (addressList?.Service | filter:serviceSearch)?.length == 0">
+                                    </app-nodata>
                                 </mat-tab>
 
                                 <mat-tab>
@@ -364,6 +367,9 @@
                                             </mat-list-item>
                                         </mat-list>
                                     </div>
+                                    <app-nodata
+                                    *ngIf="addressList?.Billing?.length == 0 || (addressList?.Billing | filter:billingSearch)?.length == 0">
+                                </app-nodata>
                                 </mat-tab>
                             </mat-tab-group>
                         </div>

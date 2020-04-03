@@ -119,6 +119,13 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             group: "Subscriber",
             role: 3
+        },{
+            path: '/subscriber/staff/examiner-list',
+            title: 'Manage Examiner',
+            icon: 'people',
+            submenu: [],
+            group: "Subscriber",
+            role: 3
         }]
     }, {
         group: "Subscriber Staff",
