@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Role } from 'src/app/shared/model/role.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubscriberUserService } from '../../service/subscriber-user.service';
@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import * as  errors from '../../../shared/messages/errors'
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { Observable } from 'rxjs';
 export interface Section {
   type:string;
   name: string;
@@ -21,7 +22,6 @@ export interface Section {
   styleUrls: ['./new-user.component.scss']
 })
 export class NewUserComponent implements OnInit {
-  addAddress: boolean = true;
   addresss: Section[] = [
     {
       type: 'primary',
@@ -51,6 +51,17 @@ export class NewUserComponent implements OnInit {
   activeTitle = "";
   user: any = {};
   states = [];
+  filteredOptions: Observable<any[]>;
+  addressList: any;
+  addressType: any;
+  addAddress: boolean = false;
+  billingSearch;
+  serviceSearch;
+  advanceSearch: FormGroup;
+  searchStatus;
+  advancedSearch;
+  filteredStates;
+  myControl = new FormControl();
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -74,7 +85,7 @@ export class NewUserComponent implements OnInit {
       this.roles = response.data;
     })
     this.store.subscribe(res => {
-      if (res.breadcrumb.active_title.includes("Admin")) {
+      if (res.breadcrumb && res.breadcrumb.active_title.includes("Admin")) {
         this.isAdminCreate = true;
         this.activeTitle = res.breadcrumb.active_title;
       }
@@ -106,13 +117,13 @@ export class NewUserComponent implements OnInit {
 
     this.addressForm = this.formBuilder.group({
       id: [""],
-      location_type: ['', Validators.compose([Validators.required])],
-      phone_number: ['', Validators.compose([Validators.required])],
-      address: ['', Validators.compose([Validators.required])],
-      address1: [''],
+      address_type_id: ['', Validators.compose([Validators.required])],
+      phone: ['', Validators.compose([Validators.required])],
+      street1: ['', Validators.compose([Validators.required])],
+      street2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zip: ['', Validators.required]
+      zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
 
   }
