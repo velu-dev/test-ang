@@ -148,7 +148,7 @@ export class NewClaimComponent implements OnInit {
     this.searchStatus = false;
   }
   changeOption(option) {
-    console.log(option)
+    this.claimant.reset();
     this.addNewClaimant = true;
     this.claimant_name = option.first_name + "  " + option.last_name
     console.log("claimant_name", this.claimant_name)
@@ -315,6 +315,7 @@ export class NewClaimComponent implements OnInit {
     this.claimService.createClaim(claim).subscribe(res => {
       this.isClaimCreated = true;
       this.alertService.openSnackBar(res.message, 'success');
+      this.claim.reset();
     }, error => {
       console.log(error)
       this.isClaimCreated = false;
@@ -355,6 +356,16 @@ export class NewClaimComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
     this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: null, continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
   }
+  bodyPart(element) {
+    console.log(this.bodyPartsList, element);
+    let data = [];
+    element.body_part_id.map(res => {
+      let iii = this.bodyPartsList.find(element => element.id == res)
+      data.push(iii.body_part + " - " + iii.body_part_name);
+    })
+    console.log(data)
+    return data.join(",")
+  }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
@@ -375,6 +386,7 @@ export class NewClaimComponent implements OnInit {
 
   }
   searchEAMS() {
+    this.claimant.reset();
     this.claimService.searchbyEams("ADJ" + this.emasSearchInput.value).subscribe(res => {
       if (res.status) {
         this.addNewClaimant = true;

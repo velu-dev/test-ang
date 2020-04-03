@@ -49,6 +49,7 @@ export class ClaimListComponent implements OnInit {
   filterValue: string;
   tabIndex: number = 0;
   disabled = false;
+  bodyPartsList = [];
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -56,6 +57,9 @@ export class ClaimListComponent implements OnInit {
     public dialog: MatDialog,
     private claimService: ClaimService
   ) {
+    this.claimService.seedData("body_part").subscribe(res => {
+      this.bodyPartsList = res.data;
+    });
     this.getclaims();
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -64,7 +68,7 @@ export class ClaimListComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
         this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Injury", "Injury", "Claim number", "Examiner", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_injury', 'injury', 'claim_number', "examiner", "disabled"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_injury', 'claim_injuries', 'claim_number', "examiner", "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -76,6 +80,16 @@ export class ClaimListComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  claimList(claim, element) {
+    let bodyParts = [];
+    claim.map(res => {
+      res.body_part_id.map(id => {
+        let body_part = this.bodyPartsList.find(element => element.id == id);
+        bodyParts.push(body_part ? body_part.body_part_name : "");
+      })
+    })
+    return bodyParts;
   }
   claims = [];
   getclaims() {
