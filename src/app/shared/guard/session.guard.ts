@@ -14,6 +14,7 @@ export class SessionGuard implements CanActivate {
       return Auth.currentSession().then(session => {
         let role = this.cookieService.get('role_id')
         if (role) {
+          console.log('session')
         switch (role) {
             case '1':
                 this.router.navigate(["/admin"]);

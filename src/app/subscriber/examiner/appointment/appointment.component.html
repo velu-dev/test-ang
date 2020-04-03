@@ -1,99 +1,32 @@
-<mat-card class="m-card appointments">
-
-    <mat-tab-group>
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="p-r-10">date_range</mat-icon>
-                Today
-            </ng-template>
-        </mat-tab>
-
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="p-r-10">thumb_up</mat-icon>
-                Upcoming
-            </ng-template>
-        </mat-tab>
-
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="p-r-10">thumb_up</mat-icon>
-                Waiting To Be Billed
-            </ng-template>
-        </mat-tab>
-
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="p-r-10">thumb_up</mat-icon>
-                Collections
-            </ng-template>
-        </mat-tab>
-
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="p-r-10">thumb_up</mat-icon>
-                Archive
-            </ng-template>
-        </mat-tab>
-    </mat-tab-group>
-
+<mat-card class="m-card">
     <mat-card-content class="p-t-3  m-b-0">
         <div class="table-filter">
             <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                 placeholder="Search by name, email, role">
         </div>
         <span class="spacer"></span>
-        <button mat-icon-button class="filter-icon" (click)="exportData()">
-            <img class="icon-16" [src]="xls" alt="export" />
-        </button>
-        <button mat-icon-button class="filter-icon p-t-0" [matMenuTriggerFor]="filter">
-            <mat-icon mat-icon-button aria-hidden="false" material-icons aria-label="home icon">filter_list</mat-icon>
-        </button>
-        <mat-menu #filter="matMenu">
-            <mat-list role="list">
-                <mat-list-item role="listitem">
-                    <mat-checkbox (change)="filterByRole('all')" [(ngModel)]="filterAll">All</mat-checkbox>
-                </mat-list-item>
-                <mat-list-item role="listitem" *ngFor="let role of roles">
-                    <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}</mat-checkbox>
-                </mat-list-item>
-            </mat-list>
-        </mat-menu>
+        <div class="user-detail">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
+                   
+                    <th mat-header-cell *matHeaderCellDef ><span mat-sort-header>{{columnName[i]}}</span>  </th>
+
+                    <td mat-cell *matCellDef="let element" >
+                        <span>{{element[column] }}</span>
+                    </td>
+                </ng-container>
+               
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr  mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                    class="row" (click)="openElement(element)">
+                </tr>
+               
+
+            </table>
+            <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
+        </div>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
 
     </mat-card-content>
-
-    <div class="user-detail">
-        <table mat-table [dataSource]="dataSource" matSort class="w-100">
-
-            <!-- ID Column -->
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-            </ng-container>
-
-            <!-- Progress Column -->
-            <ng-container matColumnDef="progress">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-            </ng-container>
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-            </ng-container>
-
-            <!-- Color Column -->
-            <ng-container matColumnDef="color">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-                <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-            </tr>
-        </table>
-    </div>
-
-    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
 </mat-card>

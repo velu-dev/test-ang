@@ -26,14 +26,6 @@ export interface Section {
   styleUrls: ['./examiner-setting.component.scss']
 })
 export class ExaminerSettingComponent implements OnInit {
-
-  addresss: any[] = [
-    {
-      type: 'Primary',
-      city: 'Coimbatore',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    }
-  ];
   myControl = new FormControl();
   options: any[] = [
     { name: 'Mary' },
@@ -46,29 +38,6 @@ export class ExaminerSettingComponent implements OnInit {
     { name: 'Shelley' },
     { name: 'Igor' },
     { name: 'Mary' },
-  ];
-
-  folders: any[] = [
-    {
-      city: 'Coimbatore',
-      phone: '(123)-45-6789',
-      address: '30A, Auriss Technologies,  Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    },
-    {
-      city: 'Chennai',
-      phone: '(235)-86-4579',
-      address: '30A,hirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    },
-    {
-      city: 'kerala',
-      phone: '(756)-74-8645',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Tamil Nadu - 641002',
-    },
-    {
-      city: 'Coimbatore',
-      phone: '(693)-75-8568',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    }
   ];
   addressList: any;
   addAddress: boolean = false;
