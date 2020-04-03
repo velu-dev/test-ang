@@ -52,6 +52,10 @@ export class ExaminerSettingComponent implements OnInit {
   advanceSearch;
   addressType;
   serviceSearch;
+  searchStatus;
+  billingSearch;
+  advancedSearch;
+  filteredStates;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,

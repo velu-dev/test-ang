@@ -121,7 +121,7 @@
                                 <input matInput placeholder="Search Existing Address"
                                     [matAutocomplete]="claimantAutocomplete" [formControl]="myControl">
                                 <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                                    <mat-option *ngFor="let option of filteredStates" (click)="changeOption(option)"
+                                    <mat-option *ngFor="let option of filteredStates"
                                         [value]="option.first_name">
                                         {{option.first_name}}
                                     </mat-option>
