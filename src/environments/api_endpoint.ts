@@ -51,5 +51,10 @@ export const api_endpoint = {
     addAddress: 'subscriber/examiner/add-address',
     getAddress: 'subscriber/examiner/get-address',
     updateAddress: 'subscriber/examiner/update-address',
-    deleteAddress: 'subscriber/examiner/delete-address/'
+    deleteAddress: 'subscriber/examiner/remove-address/',
+
+    //examiner
+
+    getExaminerList: 'subscriber/examiner/examiner-list',
+    getSingleExaminer: 'subscriber/examiner/get-address/'
 }

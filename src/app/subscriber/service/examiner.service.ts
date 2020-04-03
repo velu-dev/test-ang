@@ -14,6 +14,10 @@ export class ExaminerService {
     return this.http.get(environment.baseUrl + api_endpoint.getAddress, {})
   }
 
+  postExaminerAddressOther(data,id): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.addAddress + '/'+ id, data)
+  }
+
   postExaminerAddress(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.addAddress, data)
   }
@@ -24,5 +28,13 @@ export class ExaminerService {
 
   deleteExaminerAddress(id){
     return this.http.delete(environment.baseUrl + api_endpoint.deleteAddress + id)
+  }
+
+  getExaminerList(){
+    return this.http.get(environment.baseUrl + api_endpoint.getExaminerList)
+  }
+
+  getsingleExAddress(id){
+    return this.http.get(environment.baseUrl + api_endpoint.getSingleExaminer + id)
   }
 }

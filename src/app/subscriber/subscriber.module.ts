@@ -23,6 +23,7 @@ import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-s
 import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/examiner-manage-address.component';
 import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 import { ExaminerService } from './service/examiner.service';
+import { AppointmentDetailsComponent } from './examiner/appointment-details/appointment-details.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { ExaminerService } from './service/examiner.service';
     ExaminerSettingComponent,
     ExaminerManageAddressComponent,
     ExaminerListComponent,
+    AppointmentDetailsComponent,
   ],
   imports: [
     CommonModule,

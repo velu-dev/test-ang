@@ -198,6 +198,12 @@ export const ROUTES = [
             },
             {
                 path: '/subscriber/examiner/appointment',
+                title: 'Manage Appointments',
+                icon: 'dashboard',
+                submenu: []
+            },
+            {
+                path: '/subscriber/examiner/appointment-details',
                 title: 'Appointments',
                 icon: 'dashboard',
                 submenu: []
