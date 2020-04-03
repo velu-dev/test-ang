@@ -102,7 +102,18 @@
                                 </mat-tab>
 
                                 <mat-tab label="Search EAMS">
-                                    <mat-form-field appearance="fill" fxFlex="100"
+                                    <mat-form-field  appearance="fill" fxFlex="100" class="w-100">
+                                        <span matPrefix>ADJ &nbsp;</span>
+                                        <input matInput placeholder="Enter ADJ number"
+                                        [matAutocomplete]="claimantAutocomplete" [formControl]="emasSearchInput">
+                                    <span (click)="searchEAMS()" matSuffix class="search-icon icons">
+                                        <mat-icon>search</mat-icon>
+                                    </span>
+                                      </mat-form-field>
+
+
+
+                                    <!-- <mat-form-field appearance="fill" fxFlex="100"
                                         class="advanced_search w-100 w-100 p-b-0">
                                         <div matPrefix>
                                             <span>ADJ</span>
@@ -111,7 +122,7 @@
                                         <span (click)="searchEAMS()" matSuffix class="search-icon icons">
                                             <mat-icon>search</mat-icon>
                                         </span>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
 
                                 </mat-tab>
                             </mat-tab-group>
@@ -798,8 +809,7 @@
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()"
-                            [disabled]="!isClaimCreated">
+                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()">
                             Save </button>
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success" matStepperNext
