@@ -81,7 +81,7 @@ export class ClaimListComponent implements OnInit {
 
   ngOnInit() {
   }
-  claimList(claim, element) {
+  claimList(claim) {
     let bodyParts = [];
     claim.map(res => {
       res.body_part_id.map(id => {
