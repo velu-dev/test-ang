@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, debounceTime, switchMap } from 'rxjs/operators';
 import { ClaimService } from '../../service/claim.service';
 import { ExaminerService } from '../../service/examiner.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -14,21 +14,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ExaminerManageAddressComponent implements OnInit {
 
-  myControl = new FormControl();
-  options: any[] = [
-    { name: 'Mary' },
-    { name: 'Shelley' },
-    { name: 'Igor' },
-    { name: 'Mary' },
-    { name: 'Shelley' },
-    { name: 'Igor' },
-    { name: 'Mary' },
-    { name: 'Shelley' },
-    { name: 'Igor' },
-    { name: 'Mary' },
-  ];
-
-  filteredOptions: Observable<any[]>;
+  addresssearch = new FormControl();
+  
+  filteredOptions:  Observable<any>;
   addressForm: FormGroup;
   states: any;
   addressList: any;
@@ -48,6 +36,11 @@ export class ExaminerManageAddressComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.params.subscribe(params => this.examinerId = params.id);
+
+    this.filteredOptions = this.addresssearch.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap(value => this.examinerService.searchAddress({ basic_search: value, isadvanced: false })));
   }
 
   ngOnInit() {
@@ -61,12 +54,6 @@ export class ExaminerManageAddressComponent implements OnInit {
       state: ['', Validators.required],
       zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
-    this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => typeof value === 'string' ? value : value.name),
-        map(name => name ? this._filter(name) : this.options.slice())
-      );
 
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
@@ -102,12 +89,6 @@ export class ExaminerManageAddressComponent implements OnInit {
       zip_code: []
     })
 
-  }
-
-  private _filter(name: string): any[] {
-    const filterValue = name.toLowerCase();
-
-    return this.options.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
   addressIsSubmitted: boolean = false;
@@ -165,5 +146,14 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   advanceSearchSubmit() {
     console.log("advanceSearch", this.advanceSearch.value)
+  }
+
+  searchAddress(){
+    let data = {}
+    this.examinerService.searchAddress(data).subscribe(res=>{
+
+    },error =>{
+
+    })
   }
 }

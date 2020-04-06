@@ -23,23 +23,6 @@ export interface Section {
   styleUrls: ['./new-user.component.scss']
 })
 export class NewUserComponent implements OnInit {
-  addresss: Section[] = [
-    {
-      type: 'primary',
-      name: 'Venkatesan',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    },
-    {
-      type: 'office',
-      name: 'Sarath',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    },
-    {
-      type: 'service',
-      name: 'Velusamy',
-      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
-    }
-  ];
   userForm: FormGroup;
   addressForm: FormGroup;
   isSubmitted = false;
@@ -53,11 +36,6 @@ export class NewUserComponent implements OnInit {
   user: any = {};
   states = [];
   filteredOptions: Observable<any[]>;
-  addressList: any = { Primary: [], Billing: [], Service: [] };
-  addressType: any;
-  addAddress: boolean = false;
-  billingSearch;
-  serviceSearch;
   advanceSearch: FormGroup;
   searchStatus;
   advancedSearch;
@@ -118,14 +96,12 @@ export class NewUserComponent implements OnInit {
     });
 
     this.addressForm = this.formBuilder.group({
-      id: [""],
-      address_type_id: ['', Validators.compose([Validators.required])],
-      phone: ['', Validators.compose([Validators.required])],
-      street1: ['', Validators.compose([Validators.required])],
+      phone: [''],
+      street1: [''],
       street2: [''],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      city: [''],
+      state: [''],
+      zipcode: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
 
     this.claimService.seedData('state').subscribe(response => {
@@ -134,11 +110,11 @@ export class NewUserComponent implements OnInit {
       console.log("error", error)
     })
 
-    this.claimService.seedData('address_type').subscribe(response => {
-      this.addressType = response['data'];
-    }, error => {
-      console.log("error", error)
-    })
+    // this.claimService.seedData('address_type').subscribe(response => {
+    //   this.addressType = response['data'];
+    // }, error => {
+    //   console.log("error", error)
+    // })
 
   }
 
@@ -168,66 +144,5 @@ export class NewUserComponent implements OnInit {
     this._location.back();
   }
 
-  addressIsSubmitted: boolean = false;
-  id: number = 1;
-  addressAll = [];
-  addressformSubmit() {
-    this.addressIsSubmitted = true;
-    if (this.addressForm.invalid) {
-      console.log(this.addressForm.value)
-      return;
-    }
-
-    if (this.addressForm.value.id == '' || this.addressForm.value.id == null) {
-      this.addressForm.value.id = this.id++
-      this.alertService.openSnackBar("Location created successfully", 'success');
-      this.addressAll.push(this.addressForm.value)
-
-    } else {
-      let index = this.addressAll.findIndex(o => o.id === this.addressForm.value.id)
-      this.addressAll.splice(index, 1)
-      this.alertService.openSnackBar("Location updated successfully", 'success');
-      this.addressAll.push(this.addressForm.value)
-    }
-
-    this.addressList = { Primary: [], Billing: [], Service: [] };
-    this.addressAll.map(data => {
-      let addname;
-      if (data.address_type_id == 1) {
-        addname = "Service"
-      } else if (data.address_type_id == 2) {
-        addname = "Billing"
-      } else if (data.address_type_id == 3) {
-        addname = "Primary"
-      }
-
-      this.addressList[addname].push(data)
-    })
-    this.addAddress = false;
-  }
-
-  editAddress(details) {
-    this.addAddress = true;
-    this.addressForm.setValue(details)
-  }
-
-  deleteAddress(id) {
-    let index = this.addressAll.findIndex(o => o.id === this.addressForm.value.id)
-    this.alertService.openSnackBar("Location deleted successfully", 'success');
-    this.addressAll.splice(index, 1);
-
-    this.addressList = { Primary: [], Billing: [], Service: [] };
-    this.addressAll.map(data => {
-      let addname;
-      if (data.address_type_id == 1) {
-        addname = "Service"
-      } else if (data.address_type_id == 2) {
-        addname = "Billing"
-      } else if (data.address_type_id == 3) {
-        addname = "Primary"
-      }
-     
-      this.addressList[addname].push(data)
-    })
-  }
+ 
 }

@@ -37,4 +37,7 @@ export class ExaminerService {
   getsingleExAddress(id){
     return this.http.get(environment.baseUrl + api_endpoint.getSingleExaminer + id)
   }
+  searchAddress(data){
+    return this.http.post(environment.baseUrl + api_endpoint.searchAddress, data)
+  }
 }
