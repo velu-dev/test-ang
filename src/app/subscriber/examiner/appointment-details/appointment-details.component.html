@@ -1,1 +1,188 @@
-<p>appointment-details works!</p>
+<div class="appointment-deatils">
+    <!-- ###~~~~~ Status Tracker  ~~~~~###-->
+    <div class="status_tracker" fxLayout="row wrap">
+        <div fxFlex="100" class="p-5">
+            <mat-card>
+                <mat-card-header>
+                    <div class="content-wrapper-main-title p-t-5">Progress</div>
+                </mat-card-header>
+                <mat-card-content>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+    <div fxLayout="row wrap" class="claim_details">
+        <!-- ###~~~~~ Claimant Information  ~~~~~###-->
+        <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
+            <mat-card>
+                <mat-card-header>
+                    <div class="content-wrapper-main-title p-t-5">Claimant</div>
+                    <span class="spacer"></span>
+                    <button mat-icon-button>
+                        <mat-icon>fullscreen</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Last Name</div>
+                            <div>First Name</div>
+                            <div>Middle Name</div>
+                            <div>Date of Birth</div>
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>Venkatesan</div>
+                            <div>Mariyappan</div>
+                            <div>M</div>
+                            <div>06-11-1996</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- ###~~~~~ Claim Information  ~~~~~###-->
+        <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
+            <mat-card>
+                <mat-card-header>
+                    <div class="content-wrapper-main-title p-t-5">Claim</div>
+                    <span class="spacer"></span>
+                    <button mat-icon-button>
+                        <mat-icon>fullscreen</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Claim ID</div>
+                            <div>Date of Injury</div>
+                            <div>Insurance</div>
+                            <div>Injuries</div>
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>47895XXX</div>
+                            <div>06-06-2010</div>
+                            <div>Corvel</div>
+                            <div>Arm L, Shoulder L</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!-- ###~~~~~ Billable Item Information  ~~~~~###-->
+        <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
+            <mat-card>
+                <mat-card-header>
+                    <div class="content-wrapper-main-title p-t-5">Billable Item</div>
+                    <span class="spacer"></span>
+                    <button mat-icon-button>
+                        <mat-icon>fullscreen</mat-icon>
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Status</div>
+                            <div>Address</div>
+                            <div>Date</div>
+                            <div>Time</div>
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>Not Confirmed</div>
+                            <div>Address comes here</div>
+                            <div>02-02-2020</div>
+                            <div>10.30 AM</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <!-- ###~~~~~ Examiner Details ~~~~~###-->
+    <div class="examiner_details" fxLayout="row wrap">
+        <div fxFlex="100" class="p-5">
+            <mat-card>
+                <mat-card-header>
+                    <div class="content-wrapper-main-title p-t-5">Examiner</div>
+                    <span class="spacer"></span>
+                    <button mat-icon-button>
+                        <mat-icon>expand_more</mat-icon>
+                    </button>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <!-- ###~~~~~ Documents section ~~~~~###-->
+    <div class="documents_section" fxLayout="row wrap">
+        <div fxFlex="100" class="p-5">
+            <mat-card>
+                <mat-card-header>
+                    <div class="content-wrapper-main-title p-t-5">Report Templates</div>
+                    <span class="spacer"></span>
+                    <button mat-icon-button>
+                        <mat-icon>expand_more</mat-icon>
+                    </button>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="p-5 upload-doc">
+                            <mat-card-header>
+                                <mat-card-title class="content-wrapper-main-title">Upload Document</mat-card-title>
+                                <mat-card-subtitle class="m-b-0">Upload Completed Transcription Template here
+                                </mat-card-subtitle>
+                                <span class="spacer"></span>
+                                <button [matMenuTriggerFor]="doclist">Document Type <span
+                                        class="fa fa-arrow-down"></span></button>
+                                <mat-menu #doclist="matMenu">
+                                    <button mat-menu-item>Item 1</button>
+                                    <button mat-menu-item>Item 2</button>
+                                </mat-menu>
+                            </mat-card-header>
+                            <div class="file-upload">
+                                <input type="file" multiple #uploader hidden (change)="uploadFile($event)"
+                                    id="uploadFile" accept="CSV">
+                                <p>Choose a file or drag it here</p>
+                                <p class="input" (click)="uploader.click()"> SELECT</p>
+                            </div>
+                        </div>
+
+                        <div fxFlex="50" class="p-5">
+                            <mat-card-header>Upload Document </mat-card-header>
+                            <mat-card-subtitle>Upload Completed Transcription Template here</mat-card-subtitle>
+                            <div class="file-upload">
+                                <input type="file" multiple #uploader hidden (change)="uploadFile($event)"
+                                    id="uploadFile" accept="CSV">
+                                <p>Choose a file or drag it here</p>
+                                <p class="input" (click)="uploader.click()"> SELECT</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+
+</div>

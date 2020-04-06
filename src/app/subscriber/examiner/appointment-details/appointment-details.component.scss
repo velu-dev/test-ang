@@ -1,0 +1,87 @@
+@import "variables";
+
+.appointment-deatils {
+    .status_tracker {
+        padding: 5px;
+        mat-card {
+            box-shadow: $box-shadow-2;
+            &:hover {
+                box-shadow: $box-shadow-1;
+            }
+        }
+    }
+    .claim_details {
+        div.p-5 {
+            padding: 5px;
+            mat-card {
+                box-shadow: $box-shadow-2;
+                &:hover {
+                    box-shadow: $box-shadow-1;
+                }
+                mat-card-content {
+                    padding-top: 10px;
+                    .claim_label {
+                        width: $width-100;
+                        div {
+                            font-weight: $font-weight-bold;
+                            font-size: $font-size-1;
+                            padding-top: 10px;
+                            color: $text-gray;
+                            &::after {
+                                content: ":";
+                                display: inline-block;
+                                float: right;
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                    .claim_value {
+                        width: $width-100;
+                        div {
+                            font-size: $font-size-1;
+                            padding-top: 10px;
+                            color: $text-gray;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .examiner_details {
+        padding: 5px;
+        mat-card {
+            box-shadow: $box-shadow-2;
+            &:hover {
+                box-shadow: $box-shadow-1;
+            }
+        }
+    }
+    .documents_section {
+        div {
+            padding: 5px;
+            mat-card {
+                box-shadow: $box-shadow-2;
+                &:hover {
+                    box-shadow: $box-shadow-1;
+                }
+                mat-card-content {
+                    div {
+                        .upload-doc {
+                            padding: 5px;
+                            background-color: $bg-light-blue;
+                            mat-card-header {
+                                button {
+                                    color: $primarydarkcolor;
+                                    background-color: $primarylightcolor 0.5;
+                                    padding: 5px 10px;
+                                    height: 40px;
+                                    font-size: $font-size-7;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
