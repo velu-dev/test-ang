@@ -10,8 +10,9 @@ import { Location } from '@angular/common';
 import * as  errors from '../../../shared/messages/errors'
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { Observable } from 'rxjs';
+import { ClaimService } from '../../service/claim.service';
 export interface Section {
-  type:string;
+  type: string;
   name: string;
   address: string;
 
@@ -29,9 +30,9 @@ export class NewUserComponent implements OnInit {
       address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
-      type: 'office',      
+      type: 'office',
       name: 'Sarath',
-      address:  '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
+      address: '30A, Auriss Technologies, Thirumurthi Layout Road, Lawley Road Area, Coimbatore, Tamil Nadu - 641002',
     },
     {
       type: 'service',
@@ -52,7 +53,7 @@ export class NewUserComponent implements OnInit {
   user: any = {};
   states = [];
   filteredOptions: Observable<any[]>;
-  addressList: any;
+  addressList: any = { Primary: [], Billing: [], Service: [] };
   addressType: any;
   addAddress: boolean = false;
   billingSearch;
@@ -72,15 +73,16 @@ export class NewUserComponent implements OnInit {
     private store: Store<{ breadcrumb: any }>,
     private _location: Location,
     private cookieService: CookieService,
+    private claimService: ClaimService
   ) {
     this.user = JSON.parse(this.cookieService.get('user'));
-    if(this.user.organization_type == 'INDV'){
+    if (this.user.organization_type == 'INDV') {
       this.user.company_name = '';
     }
     delete this.user.organization_type;
     delete this.user.business_nature;
     delete this.user.logo;
-    
+
     this.userService.getRoles().subscribe(response => {
       this.roles = response.data;
     })
@@ -126,6 +128,18 @@ export class NewUserComponent implements OnInit {
       zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
 
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.claimService.seedData('address_type').subscribe(response => {
+      this.addressType = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
   }
 
   userSubmit() {
@@ -155,11 +169,65 @@ export class NewUserComponent implements OnInit {
   }
 
   addressIsSubmitted: boolean = false;
+  id: number = 1;
+  addressAll = [];
   addressformSubmit() {
     this.addressIsSubmitted = true;
     if (this.addressForm.invalid) {
       console.log(this.addressForm.value)
       return;
     }
+
+    if (this.addressForm.value.id == '' || this.addressForm.value.id == null) {
+      this.addressForm.value.id = this.id++
+      this.alertService.openSnackBar("Location created successfully", 'success');
+      this.addressAll.push(this.addressForm.value)
+
+    } else {
+      let index = this.addressAll.findIndex(o => o.id === this.addressForm.value.id)
+      this.addressAll.splice(index, 1)
+      this.alertService.openSnackBar("Location updated successfully", 'success');
+      this.addressAll.push(this.addressForm.value)
+    }
+
+    this.addressList = { Primary: [], Billing: [], Service: [] };
+    this.addressAll.map(data => {
+      let addname;
+      if (data.address_type_id == 1) {
+        addname = "Service"
+      } else if (data.address_type_id == 2) {
+        addname = "Billing"
+      } else if (data.address_type_id == 3) {
+        addname = "Primary"
+      }
+
+      this.addressList[addname].push(data)
+    })
+    this.addAddress = false;
+  }
+
+  editAddress(details) {
+    this.addAddress = true;
+    this.addressForm.setValue(details)
+  }
+
+  deleteAddress(id) {
+    let index = this.addressAll.findIndex(o => o.id === this.addressForm.value.id)
+    this.alertService.openSnackBar("Location deleted successfully", 'success');
+    this.addressAll.splice(index, 1);
+
+    this.addressList = { Primary: [], Billing: [], Service: [] };
+    this.addressAll.map(data => {
+      let addname;
+      if (data.address_type_id == 1) {
+        addname = "Service"
+      } else if (data.address_type_id == 2) {
+        addname = "Billing"
+      } else if (data.address_type_id == 3) {
+        addname = "Primary"
+      }
+     
+      this.addressList[addname].push(data)
+    })
   }
 }
