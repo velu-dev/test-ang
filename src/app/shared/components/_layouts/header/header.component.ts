@@ -65,12 +65,12 @@ export class HeaderComponent implements OnInit {
         this.cookieService.set('user', JSON.stringify(this.user));
         this.isLoading = false;
         this.spinnerService.hide();
-        this.user$ = store.pipe(select('header'));
       })
     })
   }
 
   ngOnInit() {
+    this.user$ = this.store.pipe(select('header'));
     this.elem = document.documentElement;
     this.isOpen = this.inputSideNav.opened;
   }

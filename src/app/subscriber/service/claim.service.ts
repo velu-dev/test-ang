@@ -28,8 +28,14 @@ export class ClaimService {
   createClaimant(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createClaimant, data)
   }
-
+  createBillableItem(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.create_billable_item, data)
+  }
+  listExaminar(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.examinar_type)
+  }
   seedData(data): Observable<any> {
+    console.log(data)
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
   getCallerAffliation(): Observable<any> {
