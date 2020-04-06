@@ -42,6 +42,8 @@ export const api_endpoint = {
     getClaims: "claim",
     getClaim: "claim",
     searchEams: "claim/eams-wcab-search/",
+    examinar_type: "subscriber/examiner/examiner-list",
+    create_billable_item: "billable-item/create",
 
     //seed data
     seedData: 'claim/seed-data/',

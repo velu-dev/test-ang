@@ -12,15 +12,12 @@ export function headerreducer(
 ): State {
   switch (action['type']) {
     case headerAction.HeaderActions.LIST_HEADER: {
-      console.log("state", state)
       return {
         ...state
       }
     }
     case headerAction.HeaderActions.ADD_HEADER: {
-      console.log("add", action['payload'])
       return {
-        ...state,
         user: action['payload']
       }
     }
