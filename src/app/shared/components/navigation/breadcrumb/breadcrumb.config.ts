@@ -171,6 +171,12 @@ export const ROUTES = [
             title: 'Manage Examiner',
             icon: 'dashboard',
             submenu: [],
+        },
+        {
+            path: '/subscriber/staff/manage-location',
+            title: 'Manage Locations',
+            icon: 'map',
+            submenu: [],
         }
         // , {
         //     path: '/subscriber/manager/settings',

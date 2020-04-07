@@ -7,16 +7,42 @@ import { ExaminerService } from '../../service/examiner.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import * as  errors from '../../../shared/messages/errors'
 import { Router, ActivatedRoute } from '@angular/router';
+import * as globals from '../../../globals';
+
+
+export interface PeriodicElement {
+  type: string;
+  address: string;
+  phone: string;
+}
+const ELEMENT_DATA: PeriodicElement[] = [
+  { type: 'Pharmacy', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+  { type: 'Telehealth', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+  { type: 'Homeless Shelter', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+  { type: 'Tribal 638 Free-standing Facility', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+  { type: 'Temporary Lodging', address: '2723  Mandan Road, California, MO, Missouri, 6501 82723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+  { type: 'Urgent Care Facility', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+  { type: 'Birthing Center', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+];
 @Component({
   selector: 'app-examiner-manage-address',
   templateUrl: './examiner-manage-address.component.html',
   styleUrls: ['./examiner-manage-address.component.scss']
 })
+
+
 export class ExaminerManageAddressComponent implements OnInit {
 
+  xls = globals.xls
+
+  displayedColumns =
+    ['type', 'address', 'phone', 'action'];
+  dataSource = ELEMENT_DATA;
+
+
   addresssearch = new FormControl();
-  
-  filteredOptions:  Observable<any>;
+
+  filteredOptions: Observable<any>;
   addressForm: FormGroup;
   states: any;
   addressList: any;
@@ -76,11 +102,11 @@ export class ExaminerManageAddressComponent implements OnInit {
 
     this.examinerService.getsingleExAddress(this.examinerId).subscribe(response => {
       this.addressList = response['data'];
-      this.examinerName =  response['data'].examiner_name;
+      this.examinerName = response['data'].examiner_name;
       console.log(response)
     }, error => {
       console.log(error)
-      this.examinerName =  error.error.examiner_name;
+      this.examinerName = error.error.examiner_name;
     })
 
     this.advanceSearch = this.formBuilder.group({
@@ -148,11 +174,11 @@ export class ExaminerManageAddressComponent implements OnInit {
     console.log("advanceSearch", this.advanceSearch.value)
   }
 
-  searchAddress(){
+  searchAddress() {
     let data = {}
-    this.examinerService.searchAddress(data).subscribe(res=>{
+    this.examinerService.searchAddress(data).subscribe(res => {
 
-    },error =>{
+    }, error => {
 
     })
   }

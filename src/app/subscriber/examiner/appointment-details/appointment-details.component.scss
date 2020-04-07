@@ -68,14 +68,51 @@
                     div {
                         .upload-doc {
                             padding: 5px;
-                            background-color: $bg-light-blue;
                             mat-card-header {
                                 button {
+                                    margin-top: 5px;
                                     color: $primarydarkcolor;
-                                    background-color: $primarylightcolor 0.5;
+                                    background-color: $btn-light-color;
                                     padding: 5px 10px;
                                     height: 40px;
                                     font-size: $font-size-7;
+                                    border: none;
+                                    outline: none;
+                                    cursor: pointer;
+                                }
+                            }
+                            .file-upload {
+                                padding: 50px;
+                            }
+                        }
+                        .uploaded-doc-list {
+                            padding: 5px;
+                            mat-card-content {
+                                margin-top: 10px;
+                                max-height: 240px;
+                                overflow: auto;
+                                .doc-list-item {
+                                    padding: 10px;
+                                    display: inline-block;
+                                    width: $width-95;
+                                    border: 1px solid $bg-light-blue;
+                                    box-shadow: $box-shadow-2;
+                                    margin-bottom: 5px;
+                                    &:hover {
+                                        box-shadow: $box-shadow-3;
+                                    }
+                                    img {
+                                        width: 25px;
+                                        float: left;
+                                        padding-right: 10px;
+                                        height: auto;
+                                    }
+                                    .doc-name {
+                                        font-size: $font-size-1;
+                                        vertical-align: middle;
+                                        padding: 5px;
+                                        font-weight: $font-weight-bold;
+                                    }
                                 }
                             }
                         }
@@ -101,12 +138,8 @@
     vertical-align: middle;
     padding: 10px 0 10px 55px;
     background: #f46b45; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #eea849, #f46b45); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(
-        to right,
-        #eea849,
-        #f46b45
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: transparent linear-gradient(132deg, #b595f2 0%, #380f86 100%) 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
 
     position: relative;
     display: block;
