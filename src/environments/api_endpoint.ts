@@ -56,5 +56,6 @@ export const api_endpoint = {
     //examiner
 
     getExaminerList: 'subscriber/examiner/examiner-list',
-    getSingleExaminer: 'subscriber/examiner/get-address/'
+    getSingleExaminer: 'subscriber/examiner/get-address/',
+    searchAddress: 'subscriber/examiner/search-address'
 }

@@ -15,11 +15,12 @@
                             {{!advancedSearch ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
                         </mat-icon>
                     </div>
-                    <input matInput placeholder="Search Existing Address" [matAutocomplete]="claimantAutocomplete"
-                        [formControl]="myControl">
-                    <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredStates" [value]="option.first_name">
-                            {{option.first_name}}
+                    <input matInput placeholder="Search Existing Address" [matAutocomplete]="addressAutocomplete"
+                        [formControl]="addresssearch">
+                    <mat-autocomplete #addressAutocomplete="matAutocomplete">
+                        <mat-option *ngFor="let option of (filteredOptions | async)?.data"
+                            (click)="changeOption(option)" [value]="option.first_name">
+                            {{option.city}}
                         </mat-option>
                     </mat-autocomplete>
                     <span matSuffix class="search-icon icons">

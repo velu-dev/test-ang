@@ -29,7 +29,8 @@
                                 {{ expandId == element.claim_id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span>{{element[column]}} </span>
+                        <span *ngIf="column == 'claim_injuries'">{{claimList(element[column])}} </span>
+                        <span *ngIf="column != 'claim_injuries'">{{element[column]}} </span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
