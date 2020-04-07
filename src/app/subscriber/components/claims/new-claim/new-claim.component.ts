@@ -74,12 +74,13 @@ export class NewClaimComponent implements OnInit {
   userRoles = [];
   claimList = [];
   ALL_SEED_DATA = ["address_type", "body_part",
-    "contact_type","agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
+    "contact_type", "agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
     "user_account_status", "user_roles", "procedural_codes"];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
   addNewClaimant: boolean;
   examinarList: any = [];
+  examinarAddress = [];
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -281,22 +282,21 @@ export class NewClaimComponent implements OnInit {
       claimant_id: [],
       exam_type: this.formBuilder.group({
         procudure_type: [],
-        modifiers: []
+        modifier_id: []
       }),
       appoinment: this.formBuilder.group({
         examiner_id: [],
         appointment_scheduled_date_time: [],
         duration: [],
-        examination_location_id: []
+        examination_location_id: [1]
       }),
       intake_call: this.formBuilder.group({
         caller_affliation: [],
         caller_name: [],
-        call_date:[],
+        call_date: [],
         call_type: [],
         call_type_detail: [],
-        call_time: [],
-        note: []
+        notes: []
       })
 
     })
@@ -336,6 +336,19 @@ export class NewClaimComponent implements OnInit {
       console.log(error)
       this.isClaimCreated = false;
       this.alertService.openSnackBar(error.error.error, 'error');
+    })
+  }
+  examinarId: any;
+  examinarChange(examinar) {
+    this.examinarId = examinar.id;
+  }
+  addressTypeChange(address) {
+    let data = {
+      "examiner_id": this.examinarId,
+      "address_type_id": address.id
+    }
+    this.claimService.getExaminar(data).subscribe(res => {
+      console.log(res)
     })
   }
   submitBillableItem() {
