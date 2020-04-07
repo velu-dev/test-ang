@@ -19,6 +19,7 @@ import { AppointmentComponent } from './examiner/appointment/appointment.compone
 import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/examiner-manage-address.component';
 import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 import { AppointmentDetailsComponent } from './examiner/appointment-details/appointment-details.component';
+import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -77,6 +78,11 @@ const routes: Routes = [{
     {
       path: "manage-address/:id",
       component: ExaminerManageAddressComponent
+    },
+
+    {
+      path: "manage-location",
+      component: ManageLocationComponent
     },
     {
       path: "examiner-list",

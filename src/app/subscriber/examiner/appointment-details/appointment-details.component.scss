@@ -68,14 +68,51 @@
                     div {
                         .upload-doc {
                             padding: 5px;
-                            background-color: $bg-light-blue;
                             mat-card-header {
                                 button {
+                                    margin-top: 5px;
                                     color: $primarydarkcolor;
-                                    background-color: $primarylightcolor 0.5;
+                                    background-color: $btn-light-color;
                                     padding: 5px 10px;
                                     height: 40px;
                                     font-size: $font-size-7;
+                                    border: none;
+                                    outline: none;
+                                    cursor: pointer;
+                                }
+                            }
+                            .file-upload {
+                                padding: 50px;
+                            }
+                        }
+                        .uploaded-doc-list {
+                            padding: 5px;
+                            mat-card-content {
+                                margin-top: 10px;
+                                max-height: 240px;
+                                overflow: auto;
+                                .doc-list-item {
+                                    padding: 10px;
+                                    display: inline-block;
+                                    width: $width-95;
+                                    border: 1px solid $bg-light-blue;
+                                    box-shadow: $box-shadow-2;
+                                    margin-bottom: 5px;
+                                    &:hover {
+                                        box-shadow: $box-shadow-3;
+                                    }
+                                    img {
+                                        width: 25px;
+                                        float: left;
+                                        padding-right: 10px;
+                                        height: auto;
+                                    }
+                                    .doc-name {
+                                        font-size: $font-size-1;
+                                        vertical-align: middle;
+                                        padding: 5px;
+                                        font-weight: $font-weight-bold;
+                                    }
                                 }
                             }
                         }
@@ -85,3 +122,73 @@
         }
     }
 }
+
+.breadcrumb {
+    list-style: none;
+    overflow: hidden;
+    padding: 0;
+}
+.breadcrumb li {
+    float: left;
+    box-shadow: $box-shadow-1;
+}
+.breadcrumb li a {
+    color: white;
+    text-decoration: none;
+    vertical-align: middle;
+    padding: 10px 0 10px 55px;
+    background: #f46b45; /* fallback for old browsers */
+    background: transparent linear-gradient(132deg, #b595f2 0%, #380f86 100%) 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+
+    position: relative;
+    display: block;
+    float: left;
+    box-shadow: $box-shadow-1;
+}
+.breadcrumb li a:after {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+    border-bottom: 50px solid transparent;
+    border-left: 30px solid #f46b45;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    left: 100%;
+    z-index: 2;
+}
+.breadcrumb li a:before {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+    border-bottom: 50px solid transparent;
+    border-left: 30px solid white;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    margin-left: 1px;
+    left: 100%;
+    z-index: 1;
+}
+.breadcrumb li:first-child a {
+    padding-left: 10px;
+}
+//   .breadcrumb li:nth-child(2) a       { background:        hsla(34,85%,45%,1); }
+//   .breadcrumb li:nth-child(2) a:after { border-left-color: hsla(34,85%,45%,1); }
+//   .breadcrumb li:nth-child(3) a       { background:        hsla(34,85%,55%,1); }
+//   .breadcrumb li:nth-child(3) a:after { border-left-color: hsla(34,85%,55%,1); }
+//   .breadcrumb li:nth-child(4) a       { background:        hsla(34,85%,65%,1); }
+//   .breadcrumb li:nth-child(4) a:after { border-left-color: hsla(34,85%,65%,1); }
+//   .breadcrumb li:nth-child(5) a       { background:        hsla(34,85%,75%,1); }
+//   .breadcrumb li:nth-child(5) a:after { border-left-color: hsla(34,85%,75%,1); }
+//   .breadcrumb li:last-child a {
+//     background: transparent !important;
+//     color: black;
+//     pointer-events: none;
+//     cursor: default;
+//   }

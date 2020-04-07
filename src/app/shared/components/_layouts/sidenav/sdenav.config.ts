@@ -144,6 +144,14 @@ export const ROUTES: SideNavInterface[] = [
             submenu: [],
             group: "Subscriber",
             role: 4
+        },
+        {
+            path: '/subscriber/staff/manage-location',
+            title: 'Manage Location',
+            icon: 'map',
+            submenu: [],
+            group: "Subscriber",
+            role: 4
         }]
     }, 
     {

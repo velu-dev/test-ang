@@ -1,11 +1,26 @@
 <mat-card class="m-card" style="min-height:auto !important">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title">Use Existing or Add New Address for
-            <strong>{{addressList?.examiner_name}}</strong></div>
+        <div class="m-0 content-wrapper-main-title">Manage Locations</div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="multiple-address">
+
         <div class="search-container p-t-10">
+            <div fxLayout="row wrap">
+                <div fxFlex="100">
+                    <form fxFlex="100">
+                        <mat-form-field fxFlex="100" fxFlex.md="100" fxFlex.lg="100" appearance="fill">
+                            <mat-label>Select Examiner</mat-label>
+                            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                    {{option.name}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </form>
+                </div>
+            </div>
             <div fxLayout="row wrap">
                 <mat-form-field appearance="fill" fxFlex="100" hideRequiredMarker="hideRequiredControl.auto"
                     floatLabel="floatLabelControl.auto" class="advanced_search w-100">
@@ -134,10 +149,10 @@
         </div>
     </mat-card-content>
 </mat-card>
-<mat-card class="multiple_locations m-t-25">
+<!-- <mat-card class="multiple_locations m-t-25">
     <mat-card-content>
-        <div class="manage-address">
-            <mat-card class="address-list" *ngIf="addressList?.Primary.length != 0">
+        <div class="manage-address"> -->
+<!-- <mat-card class="address-list" *ngIf="addressList?.Primary.length != 0">
                 <mat-card-header>
                     <div class="label m-r-2">Primary</div>
                     <div class="spacer"></div>
@@ -161,9 +176,9 @@
                         </mat-list-item>
                     </mat-list>
                 </mat-card-content>
-            </mat-card>
+            </mat-card> -->
 
-            <mat-tab-group class="w-100 m-t-20 tab-background-color">
+<!-- <mat-tab-group class="w-100 m-t-20 tab-background-color">
                 <mat-tab>
                     <ng-template mat-tab-label>
                         <mat-icon class="p-r-5">my_location</mat-icon>
@@ -243,7 +258,79 @@
                         *ngIf="addressList?.Billing?.length == 0 || (addressList?.Billing | filter:billingSearch)?.length == 0">
                     </app-nodata>
                 </mat-tab>
-            </mat-tab-group>
+            </mat-tab-group> -->
+<!-- </div>
+    </mat-card-content>
+</mat-card> -->
+
+
+
+
+
+<mat-card class="m-t-10">
+    <mat-card-header>
+        <div class="content-wrapper-main-title p-t-10">Manage Locations</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="p-t-10">
+        <div class="table-filter">
+            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+                placeholder="Search by name, email, etc">
+        </div>
+        <span class="spacer"></span>
+        <button mat-icon-button class="filter-icon" (click)="exportData()">
+            <img class="icon-16" [src]="xls" alt="export" />
+        </button>
+        <div>
+            <table mat-table [dataSource]="dataSource" class="user-table">
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="type" sticky>
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="address">
+                    <th mat-header-cell *matHeaderCellDef> Address </th>
+                    <td mat-cell *matCellDef="let element"> <span class="fa fa-map-marker"></span>&nbsp;
+                        {{element.address}}
+                    </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="phone">
+                    <th mat-header-cell *matHeaderCellDef> Phone </th>
+                    <td mat-cell *matCellDef="let element"><span class="fa fa-mobile"></span> &nbsp;
+                        {{element.phone}}
+                    </td>
+                </ng-container>
+
+                <!-- Star Column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                                <mat-icon>edit</mat-icon>
+                                <span>Edit</span>
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>delete</mat-icon>
+                                <span>Remove</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
         </div>
     </mat-card-content>
 </mat-card>

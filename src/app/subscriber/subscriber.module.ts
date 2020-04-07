@@ -24,6 +24,7 @@ import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/
 import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 import { ExaminerService } from './service/examiner.service';
 import { AppointmentDetailsComponent } from './examiner/appointment-details/appointment-details.component';
+import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { AppointmentDetailsComponent } from './examiner/appointment-details/appo
     ExaminerManageAddressComponent,
     ExaminerListComponent,
     AppointmentDetailsComponent,
+    ManageLocationComponent,
   ],
   imports: [
     CommonModule,
