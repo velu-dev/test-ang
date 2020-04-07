@@ -41,7 +41,7 @@
             <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                 fxFlex.xs="100">
                 <mat-label>Select a Role</mat-label>
-                <mat-select formControlName="role_id">
+                <mat-select formControlName="role_id" (selectionChange)="clearChangeValue($event)">
                     <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}
                     </mat-option>
                 </mat-select>
@@ -49,53 +49,67 @@
             </mat-form-field>
 
             <div fxFlex="100" fxLayout="row wrap" *ngIf="userForm.value.role_id == 11">
-                <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
-                    <mat-label>W9 number</mat-label>
-                    <input matInput placeholder="W9 number">
-                    <mat-error>Error Message here</mat-error>
-                </mat-form-field>
+                <form fxLayout="row wrap" [formGroup]="userExaminerForm" class="mat-grid-form">
+                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
+                        fxFlex.xs="100">
+                        <mat-label>W9 number</mat-label>
+                        <input matInput type="number" placeholder="W9 number" formControlName="w9_number">
+                        <mat-error>Error Message here</mat-error>
+                    </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
-                    <mat-label>National Provider Identifier (NPI) number</mat-label>
-                    <input matInput placeholder="National Provider Identifier (NPI) number">
-                    <mat-error>Error Message here</mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
+                        fxFlex.xs="100">
+                        <mat-label>National Provider Identifier (NPI) number</mat-label>
+                        <input matInput formControlName="national_provider_identifier"
+                            placeholder="National Provider Identifier (NPI) number">
+                        <mat-error>Error Message here</mat-error>
+                    </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
-                    <mat-label>Specialty</mat-label>
-                    <input matInput placeholder="Specialty">
-                    <mat-error>Error Message here</mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
+                        fxFlex.xs="100">
+                        <mat-label>Specialty</mat-label>
+                        <mat-select formControlName="specialty" multiple>
+                            <mat-option *ngFor="let specialty of specialtyList" [value]="specialty.id">
+                                {{specialty?.specialty}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Error Message here</mat-error>
+                    </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
-                    <mat-label>License Number</mat-label>
-                    <input matInput placeholder="License Number">
-                    <mat-error>Error Message here</mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
+                        fxFlex.xs="100">
+                        <mat-label>License Number</mat-label>
+                        <input matInput formControlName="state_license_number" placeholder="License Number">
+                        <mat-error>Error Message here</mat-error>
+                    </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
-                    <mat-label>License State</mat-label>
-                    <input matInput placeholder="License State">
-                    <mat-error>Error Message here</mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
+                        fxFlex.xs="100">
+                        <mat-label>License State</mat-label>
+                        <mat-select formControlName="state_of_license_id">
+                            <mat-option *ngFor="let state of states" [value]="state.id">
+                                {{state.state}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Error Message here</mat-error>
+                    </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
-                    <mat-label>Taxonomy code</mat-label>
-                    <input matInput placeholder="Taxonomy code">
-                    <mat-error>Error Message here</mat-error>
-                </mat-form-field>
-
+                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
+                        fxFlex.xs="100">
+                        <mat-label>Taxonomy code</mat-label>
+                        <mat-select formControlName="taxonomy_id" multiple>
+                            <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
+                                {{taxonomy.taxonomy_name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Error Message here</mat-error>
+                    </mat-form-field>
+                </form>
 
                 <div class="m-0 content-wrapper-main-title p-l-10 p-t-10">Examiner's Primary Address</div>
 
                 <div class="multiple-address">
-                    <div class="search-container">
+                    <!-- <div class="search-container">
                         <div fxLayout="row wrap">
                             <mat-form-field appearance="fill" fxFlex="100" hideRequiredMarker="hideRequiredControl.auto"
                                 floatLabel="floatLabelControl.auto" class="advanced_search w-100">
@@ -117,7 +131,7 @@
                                 </span>
                             </mat-form-field>
 
-                            <form class="w-100">
+                             <form class="w-100">
                                 <div class="advance_search" *ngIf="advancedSearch">
                                     <div fxLayout="row wrap" fxFlex="100">
                                         <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced Search</div>
@@ -154,9 +168,9 @@
                                     </div>
 
                                 </div>
-                            </form>
+                            </form> 
                         </div>
-                    </div>
+                    </div> -->
 
                     <form [formGroup]="addressForm">
                         <div fxLayout="row wrap" fxFlex="100">
@@ -165,7 +179,7 @@
                                 fxFlex.xs="100">
                                 <mat-label>Address </mat-label>
                                 <textarea matInput formControlName="street1" placeholder="Address"></textarea>
-                                <mat-error *ngIf="addressIsSubmitted">Enter valid address</mat-error>
+                                <mat-error *ngIf="isSubmitted">Enter valid address</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -179,14 +193,14 @@
                                 <mat-label>Phone Number</mat-label>
                                 <input matInput formControlName="phone" mask="(000) 000-0000" placeholder="Phone Number"
                                     autocomplete="off">
-                                <mat-error *ngIf="addressIsSubmitted">Enter valid phone number</mat-error>
+                                <mat-error *ngIf="isSubmitted">Enter valid phone number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>City</mat-label>
                                 <input matInput formControlName="city" placeholder="City" autocomplete="off">
-                                <mat-error *ngIf="addressIsSubmitted">Enter valid city</mat-error>
+                                <mat-error *ngIf="isSubmitted">Enter valid city</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -197,25 +211,27 @@
                                         {{state.state}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="addressIsSubmitted">Enter valid state</mat-error>
+                                <mat-error *ngIf="isSubmitted">Enter valid state</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip code</mat-label>
                                 <input matInput formControlName="zipcode" placeholder="Zip code" autocomplete="off">
-                                <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
+                                <mat-error *ngIf="isSubmitted">Enter valid zip code</mat-error>
                             </mat-form-field>
 
                         </div>
                     </form>
                 </div>
             </div>
+
+            <div class="text-center w-100 m-t-10">
+                <button mat-raised-button class="m-r-10 rounded-corner btn_success" (click)="userSubmit()">
+                    Submit </button>
+                <button mat-raised-button type="button" (click)="cancel()" color="warn"
+                    class="rounded-corner">Cancel</button>
+            </div>
         </form>
     </mat-card-content>
-    <div class="text-center w-100 m-t-10">
-        <button mat-raised-button class="m-r-10 rounded-corner btn_success" (click)="userSubmit()">
-            Submit </button>
-        <button mat-raised-button type="button" (click)="cancel()" color="warn" class="rounded-corner">Cancel</button>
-    </div>
 </mat-card>
