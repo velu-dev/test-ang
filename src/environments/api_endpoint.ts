@@ -37,7 +37,7 @@ export const api_endpoint = {
     getClaimantDetails: "claimant/details",
     createClaim: "claim/create",
     createClaimant: "claimant/create",
-    callerAffliation: "claims/seed-data/agent_type",
+    // callerAffliation: "claims/seed-data/agent_type",
     searchClaimant: "claimant/search",
     getClaims: "claim",
     getClaim: "claim",
