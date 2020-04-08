@@ -1,9 +1,10 @@
 <mat-sidenav-container class="sidenav-container ">
     <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-
+       
         <mat-toolbar style="cursor: pointer;" (click)="mainPage()"> <img mat-card-image [src]="simplexam_logo" alt="Lucy logo" class="logo-white"> <span
                 class="p-l-4"> Simplexam</span></mat-toolbar>
+                <a mat-raised-button routerLink="." class="text-center switched_account" ><mat-icon>loop</mat-icon> Switch to Examiner</a>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
                 <a class="menu-card-title">{{menuItem.group}}</a>
