@@ -7,6 +7,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { runInThisContext } from 'vm';
 export interface Claimant {
   last_name: string;
   first_name: string;
@@ -30,7 +31,7 @@ const ELEMENT_DATA: claimant1[] = []
 })
 export class NewClaimComponent implements OnInit {
   xls = globals.xls
-  displayedColumns: string[] = ['body_part_id', 'date_of_injury', 'continuous_trauma', 'note', "action"];
+  displayedColumns: string[] = ['body_part_id', 'date_of_injury', "action"];
   dataSource: any;
   step = 0;
   isLinear = false;
@@ -50,10 +51,10 @@ export class NewClaimComponent implements OnInit {
   titleName = "Create Claimant";
   languageStatus = false;
   callerAffliation = [];
-  injuryInfodata: claimant1[] = []
+  injuryInfodata = []
   searchStatus: boolean = false;
   advanceSearch: any;
-  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: null, continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null }
+  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: "false", continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null }
   claimantList = [];
   bodyParts = new FormControl();
   bodyPartsList = [];
@@ -73,24 +74,29 @@ export class NewClaimComponent implements OnInit {
   userRoles = [];
   claimList = [];
   ALL_SEED_DATA = ["address_type", "body_part",
-    "contact_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
-    "user_account_status", "user_roles"]
+    "contact_type", "agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
+    "user_account_status", "user_roles", "procedural_codes"];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
   addNewClaimant: boolean;
+  examinarList: any = [];
+  examinarAddress = [];
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService) {
+    this.claimService.listExaminar().subscribe(res => {
+      this.examinarList = res.data;
+    })
     this.ALL_SEED_DATA.map(seed => {
       this.claimService.seedData(seed).subscribe(res => {
         switch (seed) {
           case "address_type":
             this.addressTypes = res.data;
             break;
-          // case "agent_type":
-          //   this.agentTypes = res.data;
-          //   break;
+          case "agent_type":
+            this.callerAffliation = res.data;
+            break;
           case "body_part":
             this.bodyPartsList = res.data;
             break;
@@ -109,7 +115,7 @@ export class NewClaimComponent implements OnInit {
           case "object_type":
             this.objectTypes = res.data;
             break;
-          case "procedural_code":
+          case "procedural_codes":
             this.procuderalCodes = res.data;
             break;
           case "role_level":
@@ -135,9 +141,9 @@ export class NewClaimComponent implements OnInit {
         }
       })
     })
-    this.claimService.getCallerAffliation().subscribe(res => {
-      this.callerAffliation = res.data;
-    })
+    // this.claimService.getCallerAffliation().subscribe(res => {
+    //   this.callerAffliation = res.data;
+    // })
     this.filteredClaimant = this.searchInput.valueChanges
       .pipe(
         debounceTime(300),
@@ -147,9 +153,10 @@ export class NewClaimComponent implements OnInit {
   advanceTabChanged(event) {
     this.searchStatus = false;
   }
-  changeOption(option) {
+  selectClaimant(option) {
     this.claimant.reset();
     this.addNewClaimant = true;
+    this.isClaimantCreated = true;
     this.claimant_name = option.first_name + "  " + option.last_name
     console.log("claimant_name", this.claimant_name)
     this.claim.patchValue({
@@ -158,6 +165,9 @@ export class NewClaimComponent implements OnInit {
         claimant_name: this.claimant_name
       }
     });
+    this.billable_item.patchValue({
+      claimant_id: option.id
+    })
     this.claimant.setValue(option);
   }
   setStep(index: number) {
@@ -216,7 +226,8 @@ export class NewClaimComponent implements OnInit {
         claimant_name: [{ value: "", disabled: true }],
         wcab_number: [],
         claim_number: [],
-        panel_number: [""],
+        panel_number: [],
+        exam_type: [],
         claimant_id: []
       }),
       claim_injuries: [],
@@ -267,23 +278,25 @@ export class NewClaimComponent implements OnInit {
       })
     })
     this.billable_item = this.formBuilder.group({
+      claim_id: [],
+      claimant_id: [],
       exam_type: this.formBuilder.group({
         procudure_type: [],
-        modifiers: []
+        modifier_id: []
       }),
       appoinment: this.formBuilder.group({
-        examinar: [],
-        date: [],
+        examiner_id: [],
+        appointment_scheduled_date_time: [],
         duration: [],
-        address: []
+        examination_location_id: [1]
       }),
-      intake_call_info: this.formBuilder.group({
+      intake_call: this.formBuilder.group({
         caller_affliation: [],
-        intake_caller: [],
-        communication_type: [],
-        communication_details: [],
-        call_time: [],
-        note: []
+        caller_name: [],
+        call_date: [],
+        call_type: [],
+        call_type_detail: [],
+        notes: []
       })
 
     })
@@ -311,15 +324,36 @@ export class NewClaimComponent implements OnInit {
     let claim = this.claim.value;
     claim['claim_injuries'] = this.injuryInfodata;
     // let data = { ...this.claimant.value, ...claim };
-    // console.log("data", data);
+    console.log("claim details", claim);
     this.claimService.createClaim(claim).subscribe(res => {
       this.isClaimCreated = true;
+      this.billable_item.patchValue({
+        claim_id: res.data.claim_id
+      })
       this.alertService.openSnackBar(res.message, 'success');
       this.claim.reset();
     }, error => {
       console.log(error)
       this.isClaimCreated = false;
       this.alertService.openSnackBar(error.error.error, 'error');
+    })
+  }
+  examinarId: any;
+  examinarChange(examinar) {
+    this.examinarId = examinar.id;
+  }
+  addressTypeChange(address) {
+    let data = {
+      "examiner_id": this.examinarId,
+      "address_type_id": address.id
+    }
+    this.claimService.getExaminar(data).subscribe(res => {
+      console.log(res)
+    })
+  }
+  submitBillableItem() {
+    this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
+      console.log(res.data)
     })
   }
   cancle() {
@@ -344,6 +378,9 @@ export class NewClaimComponent implements OnInit {
           claimant_name: this.claimant_name
         }
       });
+      this.billable_item.patchValue({
+        claimant_id: res.data.id
+      })
       this.isClaimantCreated = true;
     }, error => {
       console.log(error)
@@ -354,16 +391,14 @@ export class NewClaimComponent implements OnInit {
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: null, continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
+    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: "false", continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
   }
   bodyPart(element) {
-    console.log(this.bodyPartsList, element);
     let data = [];
     element.body_part_id.map(res => {
       let iii = this.bodyPartsList.find(element => element.id == res)
       data.push(iii.body_part + " - " + iii.body_part_name);
     })
-    console.log(data)
     return data.join(",")
   }
   deleteInjury(data, index) {

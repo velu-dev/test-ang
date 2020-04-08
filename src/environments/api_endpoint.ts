@@ -37,11 +37,14 @@ export const api_endpoint = {
     getClaimantDetails: "claimant/details",
     createClaim: "claim/create",
     createClaimant: "claimant/create",
-    callerAffliation: "claims/seed-data/agent_type",
+    // callerAffliation: "claims/seed-data/agent_type",
     searchClaimant: "claimant/search",
     getClaims: "claim",
     getClaim: "claim",
     searchEams: "claim/eams-wcab-search/",
+    examinar_type: "subscriber/examiner/examiner-list",
+    create_billable_item: "billable-item/create",
+    get_examinar_address: "billable-item/location-dropdown/",
 
     //seed data
     seedData: 'claim/seed-data/',

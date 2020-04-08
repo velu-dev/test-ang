@@ -41,8 +41,10 @@ export class ExaminerManageAddressComponent implements OnInit {
 
 
   addresssearch = new FormControl();
+  examinerSearch = new FormControl();
 
   filteredOptions: Observable<any>;
+  examinerFilteredOptions:Observable<any>;
   addressForm: FormGroup;
   states: any;
   addressList: any;
@@ -181,5 +183,9 @@ export class ExaminerManageAddressComponent implements OnInit {
     }, error => {
 
     })
+  }
+
+  addressOnChange(data){
+    console.log(data)
   }
 }

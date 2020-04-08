@@ -11,9 +11,10 @@
                     <form fxFlex="100">
                         <mat-form-field fxFlex="100" fxFlex.md="100" fxFlex.lg="100" appearance="fill">
                             <mat-label>Select Examiner</mat-label>
-                            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
-                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            <input type="text" matInput [formControl]="examinerSearch"
+                                [matAutocomplete]="examinerAutocomplete">
+                            <mat-autocomplete #examinerAutocomplete="matAutocomplete" [displayWith]="displayFn">
+                                <mat-option *ngFor="let option of examinerFilteredOptions | async" [value]="option">
                                     {{option.name}}
                                 </mat-option>
                             </mat-autocomplete>
@@ -44,15 +45,15 @@
                                         [matAutocomplete]="addressAutocomplete" [formControl]="addresssearch">
                                     <mat-autocomplete #addressAutocomplete="matAutocomplete">
                                         <mat-option *ngFor="let option of (filteredOptions | async)?.data"
-                                            (click)="changeOption(option)" [value]="option.first_name">
-                                            {{option.city}}
+                                            (click)="addressOnChange(option)" [value]="option.city">
+                                            {{option?.street1 }} {{option?.street2 }} {{option?.city}}
+                                            {{option?.state }} {{option?.zipcode }}
                                         </mat-option>
                                     </mat-autocomplete>
                                     <span matSuffix class="search-icon icons">
                                         <mat-icon>search</mat-icon>
                                     </span>
                                 </mat-form-field>
-
                                 <form class="w-100">
                                     <div class="advance_search" *ngIf="advancedSearch">
                                         <div fxLayout="row wrap" fxFlex="100">
