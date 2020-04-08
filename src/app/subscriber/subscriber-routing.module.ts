@@ -76,7 +76,7 @@ const routes: Routes = [{
       component: StaffDashboardComponent
     },
     {
-      path: "manage-address/:id",
+      path: "manage-address",
       component: ExaminerManageAddressComponent
     },
 

@@ -70,7 +70,7 @@
                         <mat-label>Specialty</mat-label>
                         <mat-select formControlName="specialty" multiple>
                             <mat-option *ngFor="let specialty of specialtyList" [value]="specialty.id">
-                                {{specialty?.specialty}}
+                                {{specialty?.specialty_code}}-{{specialty?.specialty}}
                             </mat-option>
                         </mat-select>
                         <mat-error>Error Message here</mat-error>
@@ -99,7 +99,7 @@
                         <mat-label>Taxonomy code</mat-label>
                         <mat-select formControlName="taxonomy_id" multiple>
                             <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
-                                {{taxonomy.taxonomy_name}}
+                                {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
                             </mat-option>
                         </mat-select>
                         <mat-error>Error Message here</mat-error>
