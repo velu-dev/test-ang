@@ -27,7 +27,7 @@
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                             <mat-option *ngFor="let option of (filteredClaimant | async)?.data"
-                                                (click)="changeOption(option)" [value]="option.first_name">
+                                                (click)="selectClaimant(option)" [value]="option.first_name">
                                                 {{option.first_name}}
                                             </mat-option>
                                         </mat-autocomplete>
@@ -312,11 +312,19 @@
                             <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>WCAB Number </mat-label>
-                                <input matInput placeholder="WCAB Number" formControlName="wcab_number"
+                                <input type="number" matInput placeholder="WCAB Number" formControlName="wcab_number"
                                     autocomplete="off">
                                 <mat-error>Enter valid WCAB number</mat-error>
                             </mat-form-field>
-
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Exam Type</mat-label>
+                                <mat-select formControlName="exam_type">
+                                    <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
+                                        {{examType.exam_type_code}} - {{examType.exam_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Claim Number</mat-label>
@@ -383,8 +391,8 @@
                                 <mat-label>Continuous Trauma (CT)</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.continuous_trauma"
                                     [ngModelOptions]="{standalone: true}">
-                                    <mat-option value="1">Yes</mat-option>
-                                    <mat-option value="0">No</mat-option>
+                                    <mat-option value="true">Yes</mat-option>
+                                    <mat-option value="false">No</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
@@ -430,17 +438,6 @@
                                     <th mat-header-cell *matHeaderCellDef> Date of injury </th>
                                     <td mat-cell *matCellDef="let element">
                                         {{element?.date_of_injury | date:'MM-dd-yyyy'}} </td>
-                                </ng-container>
-                                <ng-container matColumnDef="continuous_trauma">
-                                    <th mat-header-cell *matHeaderCellDef> Continuous Trauma </th>
-                                    <td mat-cell *matCellDef="let element">
-                                        {{element?.continuous_trauma == 0 ? 'No' : 'Yes'}} </td>
-                                </ng-container>
-
-                                <!-- note Column -->
-                                <ng-container matColumnDef="note">
-                                    <th mat-header-cell *matHeaderCellDef> Injury Note </th>
-                                    <td mat-cell *matCellDef="let element"> {{element?.note}} </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="action">
@@ -823,23 +820,27 @@
         </mat-step>
         <mat-step [stepControl]="billable_item">
             <form [formGroup]="billable_item">
+
                 <ng-template matStepLabel>Create Billable Item</ng-template>
                 <mat-card fxLayout="row wrap" fxFlex="100">
+                    <p>{{billable_item.value | json}}</p>
                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Exam Type
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Procedure Type</mat-label>
                             <mat-select formControlName="procudure_type">
-                                <mat-option value="0">ML -101</mat-option>
-                                <mat-option value="1">ML -101</mat-option>
+                                <mat-option *ngFor="let procuderalCode of procuderalCodes" [value]="procuderalCode.id">
+                                    {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Modifiers</mat-label>
-                            <mat-select formControlName="modifiers">
-                                <mat-option *ngFor="let modifier of modifiers" value="modifier">{{modifiers}}
+                            <mat-select formControlName="modifier_id">
+                                <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
+                                    {{modifier.modifier_code}} - {{modifier.modifier}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -851,40 +852,42 @@
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="appoinment">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Select Examiner</mat-label>
-                            <mat-select formControlName="examinar">
-                                <mat-option value="0">Examiner List Here</mat-option>
+                            <mat-select formControlName="examiner_id">
+                                <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)" [value]="examinar.id">
+                                    {{examinar.first_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
-                            <input matInput placeholder="Date & Time" formControlName="date" autocomplete="off"
-                                [matDatepicker]="date_and_time" (click)="date_and_time.open()">
+                            <input matInput placeholder="Date & Time" formControlName="appointment_scheduled_date_time"
+                                autocomplete="off" [matDatepicker]="date_and_time" (click)="date_and_time.open()">
                             <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                             <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
                             <mat-select formControlName="duration">
-                                <mat-option value="0">20 Mins</mat-option>
-                                <mat-option value="0">30 Mins</mat-option>
-                                <mat-option value="0">45 Mins</mat-option>
-                                <mat-option value="0">60 Mins</mat-option>
+                                <mat-option value="20">20 Mins</mat-option>
+                                <mat-option value="30">30 Mins</mat-option>
+                                <mat-option value="45">45 Mins</mat-option>
+                                <mat-option value="60">60 Mins</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Service Location Type</mat-label>
                             <mat-select>
-                                <mat-option value="Service">Service</mat-option>
-                                <mat-option value="Primary">Primary</mat-option>
-                                <mat-option value="Office">Office</mat-option>
+                                <mat-option *ngFor="let addressType of addressTypes"
+                                    (click)="addressTypeChange(addressType)" [value]="addressType.id">
+                                    {{addressType.address_type_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Examination Location</mat-label>
-                            <mat-select>
-                                <mat-option value="address">List of address comes here</mat-option>
+                            <mat-select formControlName="examination_location_id">
+                                <mat-option *ngFor="let address of examinarAddress" [value]="address.id">
+                                    {{address | json}}</mat-option>
 
                             </mat-select>
                         </mat-form-field>
@@ -892,8 +895,7 @@
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                             fxFlex.xs="100">
                             <mat-label>Address</mat-label>
-                            <textarea matInput placeholder="Address" formControlName="address"
-                                autocomplete="off"></textarea>
+                            <textarea matInput placeholder="Address" autocomplete="off"></textarea>
                         </mat-form-field>
 
 
@@ -903,23 +905,23 @@
                         Intake
                         Call Information
                     </div>
-                    <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call_info">
+                    <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Caller Affiliation</mat-label>
                             <mat-select formControlName="caller_affliation">
-                                <mat-option *ngFor="let caller of callerAffliation" value="caller.id">
+                                <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                     {{caller.agent_type_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Caller</mat-label>
-                            <input matInput placeholder="Intake caller" formControlName="intake_caller"
+                            <input matInput placeholder="Intake caller" formControlName="caller_name"
                                 autocomplete="off">
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
-                            <input matInput placeholder="Intake Call Date & Time" formControlName="call_time"
+                            <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
                                 autocomplete="off" [matDatepicker]="date_and_time_intake"
                                 (click)="date_and_time_intake.open()">
                             <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle>
@@ -928,29 +930,26 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Note</mat-label>
-                            <input matInput placeholder="Intake call note" formControlName="note" autocomplete="off">
+                            <input matInput placeholder="Intake call note" formControlName="notes" autocomplete="off">
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Communication Type</mat-label>
-                            <mat-select formControlName="communication_type">
-                                <mat-option value="Phone">Phone</mat-option>
-                                <mat-option value="Fax">Fax</mat-option>
-                                <mat-option value="Email">Email</mat-option>
-                                <mat-option value="Letter">Letter</mat-option>
+                            <mat-select formControlName="call_type">
+                                <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.id">{{contactType.contact_type_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field *ngIf="billable_item?.value?.intake_call_info?.communication_type != ''"
                             appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>{{billable_item?.value?.intake_call_info?.communication_type}}</mat-label>
-                            <input matInput formControlName="communication_details"
+                            <input matInput formControlName="call_type_detail"
                                 placeholder="{{billable_item?.value?.intake_call_info?.communication_type}}"
                                 autocomplete="off">
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50">
-                        <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success">
+                        <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
+                            (click)="submitBillableItem()">
                             Submit </button>
                         <button mat-raised-button type="button" class="rounded-corner" color="warn"
                             matStepperPrevious>Back</button>

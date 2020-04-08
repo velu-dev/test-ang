@@ -118,7 +118,7 @@ export const ROUTES = [
         icon: 'dashboard',
         submenu: [
             {
-                path: '/subscriber/claims/new',
+                path: '/subscriber/claims/new-claim',
                 title: 'New Claims',
                 icon: 'dashboard',
                 submenu: []
