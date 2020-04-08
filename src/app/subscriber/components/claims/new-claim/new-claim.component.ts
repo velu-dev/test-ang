@@ -442,6 +442,8 @@ export class NewClaimComponent implements OnInit {
           this.attroneylist = res.data.attroney;
           this.attroneySelect = true;
         }
+      } else {
+        this.alertService.openSnackBar("EAMS Number Not Found", "error")
       }
     })
   }
