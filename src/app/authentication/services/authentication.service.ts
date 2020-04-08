@@ -34,4 +34,8 @@ export class AuthenticationService {
   passwordResend(email){
     return this.http.post(environment.baseUrl + api_endpoint.resendPassword, {email_id : email}, { headers: this.headers });
   }
+
+  verifySubscriberStatus(email){
+    return this.http.post(environment.baseUrl + api_endpoint.verifySubscriberStatus, {email_id : email}, { headers: this.headers });
+  }
 }
