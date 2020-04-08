@@ -155,6 +155,7 @@ export class NewClaimComponent implements OnInit {
   }
   selectClaimant(option) {
     this.claimant.reset();
+    this.claim.reset();
     this.addNewClaimant = true;
     this.isClaimantCreated = true;
     this.claimant_name = option.first_name + "  " + option.last_name
