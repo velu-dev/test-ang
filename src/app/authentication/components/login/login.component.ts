@@ -108,7 +108,8 @@ export class LoginComponent implements OnInit {
 
       if (error.message == 'User is disabled.') {
         this.authenticationService.verifySubscriberStatus(this.loginForm.value.email.toLowerCase()).subscribe(verifyRes => {
-          console.log(verifyRes)
+          console.log(verifyRes["message"])
+          this.error = { message: verifyRes["message"], action: "danger" }
         }, error => {
           console.log(error)
         })
