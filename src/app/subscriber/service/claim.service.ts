@@ -38,8 +38,11 @@ export class ClaimService {
     console.log(data)
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
-  getCallerAffliation(): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.callerAffliation)
+  // getCallerAffliation(): Observable<any> {
+  //   return this.http.get(environment.baseUrl + api_endpoint.callerAffliation)
+  // }
+  getExaminar(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.get_examinar_address, data)
   }
   searchbyEams(eams_number): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.searchEams + eams_number)
