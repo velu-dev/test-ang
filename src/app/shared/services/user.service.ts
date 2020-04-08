@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { api_endpoint } from 'src/environments/api_endpoint';
 
 @Injectable({
     providedIn: 'root'
@@ -17,5 +18,8 @@ export class UserService {
     }
     getRoles(): Observable<any> {
         return this.http.get(environment.baseUrl + "admin-api/admin/roles")
+    }
+    changeRole(): Observable<any> {
+        return this.http.get(environment.baseUrl + api_endpoint.changeRole)
     }
 }

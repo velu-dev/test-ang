@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { ROUTES } from './shared/components/navigation/breadcrumb/breadcrumb.config';
 import * as breadcrumbActions from "./shared/store/breadcrumb.actions";
 import * as fromBreadcrumb from "./shared/store/breadcrumb.reducer";
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 Auth.configure(environment.Amplify);
 @Component({
   selector: 'app-root',
@@ -16,9 +17,9 @@ export class AppComponent {
   breadcrumbList: Array<any> = [];
   menu: Array<any> = [];
   name: string;
-
-  constructor(private _router: Router, private store: Store<{ count: number }>) {
-
+  menu$: Observable<any>;
+  constructor(private _router: Router, private store: Store<{ breadcrumb: any }>) {
+    this.menu$ = store.pipe(select('breadcrumb'));
   }
   ngOnInit() {
     this.listenRouting();
@@ -68,6 +69,11 @@ export class AppComponent {
           })
         })
         let breadcrumb = this.breadcrumbList
+        this.menu$.subscribe(res => {
+          if (res == undefined) {
+            this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
+          }
+        })
         if (breadcrumb.length != 0) {
           this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
         }

@@ -127,7 +127,7 @@
                                 </mat-tab>
                             </mat-tab-group>
                         </div>
-                        <div class="add_new text-center" (click)="addNewClaimant = !addNewClaimant ">
+                        <div class="add_new text-center" (click)="newClaimant()">
                             <span class="fa fa-plus"></span> Add New Claimant
                         </div>
                         <div fxLayout="row wrap" fxFlex="100" *ngIf="addNewClaimant">
@@ -849,7 +849,7 @@
                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Create
                         Appointment
                     </div>
-                    <div fxLayout="row wrap" fxFlex="100" formGroupName="appoinment">
+                    <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Select Examiner</mat-label>
                             <mat-select formControlName="examiner_id">

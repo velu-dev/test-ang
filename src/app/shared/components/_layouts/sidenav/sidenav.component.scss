@@ -11,6 +11,16 @@ mat-sidenav-container {
       color: $white;
       box-shadow: $box-shadow-3;
     }
+    .switched_account {
+      font-size: $font-size-7;
+      margin:15px 0 15px 10px;
+      width: $width-90;
+      text-align: center;
+      mat-icon {
+        font-size: $font-size-9;
+      }
+    
+    }
     mat-nav-list {
       .menu-card-title {
         margin-top: 10px;
