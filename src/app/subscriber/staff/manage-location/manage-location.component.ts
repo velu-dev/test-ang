@@ -6,6 +6,7 @@ import { startWith, map } from 'rxjs/operators';
 
 
 export interface PeriodicElement {
+  name: string;
   type: string;
   address: string;
   phone: string;
@@ -14,9 +15,9 @@ export interface User {
   name: string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  { type: 'Pharmacy', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
-  { type: 'Telehealth', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
-  { type: 'Homeless Shelter', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+  { name: 'SarathExaminer', type: 'Pharmacy', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+  { name: 'VenkatesnExaminer', type: 'Telehealth', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
+  { name: 'RajanExaminer', type: 'Homeless Shelter', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
 ];
 @Component({
   selector: 'app-manage-location',
@@ -27,7 +28,7 @@ export class ManageLocationComponent implements OnInit {
 
   xls = globals.xls
   displayedColumns =
-    ['type', 'address', 'phone', 'action'];
+    ['name', 'type', 'address', 'phone', 'action'];
   dataSource = ELEMENT_DATA;
 
   myControl = new FormControl();

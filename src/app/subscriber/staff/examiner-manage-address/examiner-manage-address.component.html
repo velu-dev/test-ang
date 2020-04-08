@@ -1,4 +1,4 @@
-<mat-card class="m-card" style="min-height:auto !important">
+<mat-card class="m-card">
     <mat-card-header>
         <div class="m-0 content-wrapper-main-title">Manage Locations</div>
     </mat-card-header>
@@ -11,7 +11,8 @@
                     <form fxFlex="100">
                         <mat-form-field fxFlex="100" fxFlex.md="100" fxFlex.lg="100" appearance="fill">
                             <mat-label>Select Examiner</mat-label>
-                            <input type="text" matInput [formControl]="examinerSearch" [matAutocomplete]="examinerAutocomplete">
+                            <input type="text" matInput [formControl]="examinerSearch"
+                                [matAutocomplete]="examinerAutocomplete">
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete" [displayWith]="displayFn">
                                 <mat-option *ngFor="let option of examinerFilteredOptions | async" [value]="option">
                                     {{option.name}}
@@ -22,316 +23,262 @@
                 </div>
             </div>
             <div fxLayout="row wrap">
-                <mat-form-field appearance="fill" fxFlex="100" hideRequiredMarker="hideRequiredControl.auto"
-                    floatLabel="floatLabelControl.auto" class="advanced_search w-100">
-                    <div matPrefix (click)="advancedSearch = !advancedSearch ">
-                        <span>Advanced Search</span>
-                        <mat-icon class="expand-icon icons">
-                            {{!advancedSearch ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
-                        </mat-icon>
-                    </div>
-                    <input matInput placeholder="Search Existing Address" [matAutocomplete]="addressAutocomplete"
-                        [formControl]="addresssearch">
-                    <mat-autocomplete #addressAutocomplete="matAutocomplete">
-                        <mat-option *ngFor="let option of (filteredOptions | async)?.data"
-                            (click)="addressOnChange(option)" [value]="option.city">
-                            {{option?.street1 }} {{option?.street2 }} {{option?.city}}
-                            {{option?.state }} {{option?.zipcode }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <span matSuffix class="search-icon icons">
-                        <mat-icon>search</mat-icon>
-                    </span>
-                </mat-form-field>
+                <div fxFlex="100">
+                    <mat-tab-group class="user-list">
+                        <!-- ######~~~~~ Searching and assign Existing Location ~~~~~##### -->
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon class="p-r-5"> assignment_ind </mat-icon>
+                                <span> Searching and assign Existing Location</span>
+                            </ng-template>
+                            <div fxLayout="row wrap">
+                                <mat-form-field appearance="fill" fxFlex="100"
+                                    hideRequiredMarker="hideRequiredControl.auto" floatLabel="floatLabelControl.auto"
+                                    class="advanced_search w-100">
+                                    <div matPrefix (click)="advancedSearch = !advancedSearch ">
+                                        <span>Advanced Search</span>
+                                        <mat-icon class="expand-icon icons">
+                                            {{!advancedSearch ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+                                        </mat-icon>
+                                    </div>
+                                    <input matInput placeholder="Search Existing Address"
+                                        [matAutocomplete]="addressAutocomplete" [formControl]="addresssearch">
+                                    <mat-autocomplete #addressAutocomplete="matAutocomplete">
+                                        <mat-option *ngFor="let option of (filteredOptions | async)?.data"
+                                            (click)="addressOnChange(option)" [value]="option.city">
+                                            {{option?.street1 }} {{option?.street2 }} {{option?.city}}
+                                            {{option?.state }} {{option?.zipcode }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                    <span matSuffix class="search-icon icons">
+                                        <mat-icon>search</mat-icon>
+                                    </span>
+                                </mat-form-field>
+                                <form class="w-100">
+                                    <div class="advance_search" *ngIf="advancedSearch">
+                                        <div fxLayout="row wrap" fxFlex="100">
+                                            <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced Search</div>
 
-                <form class="w-100">
-                    <div class="advance_search" *ngIf="advancedSearch">
-                        <div fxLayout="row wrap" fxFlex="100">
-                            <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced Search</div>
+                                            <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.md="33.3"
+                                                fxFlex.sm="50" fxFlex.xs="100">
+                                                <mat-label>City</mat-label>
+                                                <input matInput placeholder="City" autocomplete="off">
+                                                <mat-error>error msg here</mat-error>
+                                            </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>City</mat-label>
-                                <input matInput placeholder="City" autocomplete="off">
-                                <mat-error>error msg here</mat-error>
-                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
+                                                fxFlex.sm="50" fxFlex.lg="33.3" fxFlex.xs="100">
+                                                <mat-label>State</mat-label>
+                                                <input matInput placeholder="State" autocomplete="off">
+                                                <mat-error>Enter valid city</mat-error>
+                                            </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3" fxFlex.sm="50"
-                                fxFlex.lg="33.3" fxFlex.xs="100">
-                                <mat-label>State</mat-label>
-                                <input matInput placeholder="State" autocomplete="off">
-                                <mat-error>Enter valid city</mat-error>
-                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
+                                                fxFlex.sm="50" fxFlex.lg="33.3" fxFlex.xs="100">
+                                                <mat-label>ZIP Code</mat-label>
+                                                <input matInput placeholder="ZIP Code" autocomplete="off">
+                                                <mat-error>Enter valid city</mat-error>
+                                            </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3" fxFlex.sm="50"
-                                fxFlex.lg="33.3" fxFlex.xs="100">
-                                <mat-label>ZIP Code</mat-label>
-                                <input matInput placeholder="ZIP Code" autocomplete="off">
-                                <mat-error>Enter valid city</mat-error>
-                            </mat-form-field>
+                                            <div class="text-right w-100 m-t-10 m-b-10">
+                                                <button mat-raised-button color="warn" type="button" class="m-r-10 "
+                                                    (click)="advanceSearch.reset();searchStatus = false">
+                                                    Cancel </button>
+                                                <button mat-raised-button type="button" color="primary"
+                                                    class="m-r-15 btn_success"
+                                                    (click)="advanceSearchSubmit()">Search</button>
+                                            </div>
+                                        </div>
 
-                            <div class="text-right w-100 m-t-10 m-b-10">
-                                <button mat-raised-button color="warn" type="button" class="m-r-10 "
-                                    (click)="advanceSearch.reset();searchStatus = false">
+                                    </div>
+                                </form>
+                            </div>
+                            <mat-card-content class="address-list">
+                                <mat-list>
+                                    <mat-list-item>
+                                        <div class="name" mat-line>
+                                            <div><strong>
+                                                    <i class="fa fa-building-o"></i>Location Name
+                                                </strong></div>
+                                            <span><i class="fa fa-phone-alt"></i>
+                                                Number Here</span>
+                                        </div>
+                                        <div class="address" mat-line>Address, city, state, pincode content comes here
+                                            ......</div>
+                                        <span class="spacer"></span>
+                                        <button mat-icon-button class="edit" matTooltip="Edit"
+                                            matTooltipPosition="before">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="warn" matTooltip="Remove"
+                                            matTooltipPosition="after">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                    <mat-list-item>
+                                        <div class="name" mat-line>
+                                            <div><strong>
+                                                    <i class="fa fa-building-o"></i>Location Name
+                                                </strong></div>
+                                            <span><i class="fa fa-phone-alt"></i>
+                                                Number Here</span>
+                                        </div>
+                                        <div class="address" mat-line>Address, city, state, pincode content comes here
+                                            ......</div>
+                                        <span class="spacer"></span>
+                                        <button mat-icon-button class="edit" matTooltip="Edit"
+                                            matTooltipPosition="before">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="warn" matTooltip="Remove"
+                                            matTooltipPosition="after">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                </mat-list>
+                            </mat-card-content>
+                            <div class="text-center w-100 m-t-10 m-b-10">
+                                <button mat-raised-button color="warn" class="m-r-10 ">
                                     Cancel </button>
-                                <button mat-raised-button type="button" color="primary" class="m-r-15 btn_success"
-                                    (click)="advanceSearchSubmit()">Search</button>
+                                <button mat-raised-button color="primary" class="m-r-15 btn_success">Submit</button>
                             </div>
-                        </div>
 
-                    </div>
-                </form>
-            </div>
-            <div class="manage-btn" (click)="addAddress = !addAddress;addressForm.reset()"> <span
-                    class="fa fa-plus"></span> ADD A NEW
-                ADDRESS
-            </div>
-        </div>
+                        </mat-tab>
+                        <!-- ######~~~~~ Add a New Location ~~~~~##### -->
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                <mat-icon class="p-r-5"> person_add </mat-icon>
+                                <span> Add a New Location </span>
+                            </ng-template>
+                            <div class="manage-address-form">
+                                <form [formGroup]="addressForm">
+                                    <div fxLayout="row wrap" fxFlex="100">
 
-        <div class="manage-address-form" *ngIf="addAddress">
-            <form [formGroup]="addressForm">
-                <div fxLayout="row wrap" fxFlex="100">
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Service Location Type</mat-label>
-                        <mat-select formControlName="address_type_id">
-                            <mat-option *ngFor="let address of addressType" [value]="address.id">
-                                {{address.address_type_name}}</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="addressIsSubmitted">Select valid service location type</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Phone Number</mat-label>
-                        <input matInput formControlName="phone" mask="(000) 000-0000" placeholder="Phone Number"
-                            autocomplete="off">
-                        <mat-error *ngIf="addressIsSubmitted">Enter valid phone number</mat-error>
-                    </mat-form-field>
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Examiner Name</mat-label>
+                                            <input matInput placeholder="Examiner Name" value="Examiner Name"
+                                                autocomplete="off" disabled>
+                                            <mat-error *ngIf="addressIsSubmitted">Enter valid phone number</mat-error>
+                                        </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Address </mat-label>
-                        <textarea matInput formControlName="street1" placeholder="Address"></textarea>
-                        <mat-error *ngIf="addressIsSubmitted">Enter valid address</mat-error>
-                    </mat-form-field>
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Service Location Type</mat-label>
+                                            <mat-select formControlName="address_type_id">
+                                                <mat-option *ngFor="let address of addressType" [value]="address.id">
+                                                    {{address.address_type_name}}</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="addressIsSubmitted">Select valid service location type
+                                            </mat-error>
+                                        </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Address 1</mat-label>
-                        <textarea matInput formControlName="street2" placeholder="Address"></textarea>
-                    </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>City</mat-label>
-                        <input matInput formControlName="city" placeholder="City" autocomplete="off">
-                        <mat-error *ngIf="addressIsSubmitted">Enter valid city</mat-error>
-                    </mat-form-field>
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Address </mat-label>
+                                            <textarea matInput formControlName="street1"
+                                                placeholder="Address"></textarea>
+                                            <mat-error *ngIf="addressIsSubmitted">Enter valid address</mat-error>
+                                        </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>State</mat-label>
-                        <mat-select formControlName="state">
-                            <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="addressIsSubmitted">Enter valid state</mat-error>
-                    </mat-form-field>
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Address 1</mat-label>
+                                            <textarea matInput formControlName="street2"
+                                                placeholder="Address"></textarea>
+                                        </mat-form-field>
 
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Zip code</mat-label>
-                        <input matInput formControlName="zipcode" placeholder="Zip code" autocomplete="off">
-                        <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
-                    </mat-form-field>
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Land Line 1</mat-label>
+                                            <input matInput placeholder="Land Line 1" autocomplete="off">
+                                            <mat-error>error msg here</mat-error>
+                                        </mat-form-field>
 
-                    <div class="text-center w-100 m-t-10 m-b-10">
-                        <button mat-raised-button color="warn" class="m-r-10 "
-                            (click)="addressForm.reset();addAddress = false">
-                            Cancel </button>
-                        <button mat-raised-button (click)="addressformSubmit()" color="primary"
-                            class="m-r-15 btn_success">Add</button>
-                    </div>
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Land Line 2</mat-label>
+                                            <input matInput placeholder="Land Line 2" autocomplete="off">
+                                            <mat-error>error msg here</mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Mobile 1</mat-label>
+                                            <input matInput placeholder="Mobile 1" autocomplete="off">
+                                            <mat-error>error msg here</mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Mobile 2</mat-label>
+                                            <input matInput placeholder="Mobile 2" autocomplete="off">
+                                            <mat-error>error msg here</mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Fax 1</mat-label>
+                                            <input matInput placeholder="Fax 1" autocomplete="off">
+                                            <mat-error>error msg here</mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Fax 1</mat-label>
+                                            <input matInput placeholder="Fax 2" autocomplete="off">
+                                            <mat-error>error msg here</mat-error>
+                                        </mat-form-field>
+
+
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>City</mat-label>
+                                            <input matInput formControlName="city" placeholder="City"
+                                                autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted">Enter valid city</mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>State</mat-label>
+                                            <mat-select formControlName="state">
+                                                <mat-option *ngFor="let state of states" [value]="state.state">
+                                                    {{state.state}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="addressIsSubmitted">Enter valid state</mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100">
+                                            <mat-label>Zip code</mat-label>
+                                            <input matInput formControlName="zipcode" placeholder="Zip code"
+                                                autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
+                                        </mat-form-field>
+
+                                        <div class="text-center w-100 m-t-10 m-b-10">
+                                            <button mat-raised-button color="warn" class="m-r-10 "
+                                                (click)="addressForm.reset();addAddress = false">
+                                                Cancel </button>
+                                            <button mat-raised-button (click)="addressformSubmit()" color="primary"
+                                                class="m-r-15 btn_success">Add</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </mat-tab>
+
+                    </mat-tab-group>
                 </div>
-            </form>
+            </div>
+
         </div>
-    </mat-card-content>
-</mat-card>
-<!-- <mat-card class="multiple_locations m-t-25">
-    <mat-card-content>
-        <div class="manage-address"> -->
-<!-- <mat-card class="address-list" *ngIf="addressList?.Primary.length != 0">
-                <mat-card-header>
-                    <div class="label m-r-2">Primary</div>
-                    <div class="spacer"></div>
-
-                </mat-card-header>
-                <mat-divider></mat-divider>
-                <mat-card-content>
-                    <mat-list>
-                        <mat-list-item>
-                            <div class="name" mat-line>
-                                <div><strong>
-                                        <i class="fa fa-building-o"></i>{{addressList?.Primary[0]?.city}}
-                                    </strong></div>
-                                <span><i class="fa fa-phone-alt"></i>
-                                    {{addressList?.Primary[0]?.phone}}</span>
-                            </div>
-                            <div class="address" mat-line> {{addressList?.Primary[0]?.street1 }}
-                                {{addressList?.Primary[0]?.street2 }} {{addressList?.Primary[0]?.city}}
-                                {{addressList?.Primary[0]?.state }}
-                                {{addressList?.Primary[0]?.zipcode }} </div>
-                        </mat-list-item>
-                    </mat-list>
-                </mat-card-content>
-            </mat-card> -->
-
-<!-- <mat-tab-group class="w-100 m-t-20 tab-background-color">
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon class="p-r-5">my_location</mat-icon>
-                        Service Locations
-                    </ng-template>
-                    <div class="service_locations">
-                        <mat-form-field appearance="standard" class="w-100 p-t-5">
-                            <mat-label>Search Location</mat-label>
-                            <input matInput [(ngModel)]="serviceSearch">
-                        </mat-form-field>
-                        <mat-list>
-                            <mat-list-item *ngFor="let Service of addressList?.Service | filter:serviceSearch">
-                                <div class="name" mat-line>
-                                    <div><strong>
-                                            <i class="fa fa-building-o"></i>{{Service.city}}
-                                        </strong></div>
-                                    <span><i class="fa fa-phone-alt"></i>
-                                        {{Service?.phone}}</span>
-                                </div>
-                                <div class="address" mat-line> {{Service?.street1 }}
-                                    {{Service?.street2 }} {{Service?.city}}
-                                    {{Service?.state }} {{Service?.zipcode }} </div>
-                                <span class="spacer"></span>
-                                <button mat-icon-button class="edit" matTooltip="Edit" matTooltipPosition="before"
-                                    (click)="editAddress(Service)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button mat-icon-button color="warn" matTooltip="Delete" matTooltipPosition="after"
-                                    (click)="deleteAddress(Service.id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                                <mat-divider></mat-divider>
-                            </mat-list-item>
-                        </mat-list>
-                    </div>
-                    <app-nodata
-                        *ngIf="addressList?.Service?.length == 0 || (addressList?.Service | filter:serviceSearch)?.length == 0">
-                    </app-nodata>
-                </mat-tab>
-
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <mat-icon class="p-r-5">place</mat-icon>
-                        Billing Locations
-                    </ng-template>
-                    <div class="service_locations">
-                        <mat-form-field appearance="standard" class="w-100 p-t-5">
-                            <mat-label>Search Location</mat-label>
-                            <input matInput [(ngModel)]="billingSearch">
-                        </mat-form-field>
-                        <mat-list>
-                            <mat-list-item *ngFor="let Billing of addressList?.Billing | filter:billingSearch">
-                                <div class="name" mat-line>
-                                    <div><strong>
-                                            <i class="fa fa-building-o"></i>{{Billing?.city}}
-                                        </strong></div>
-                                    <span><i class="fa fa-phone-alt"></i>
-                                        {{Billing?.phone }}</span>
-                                </div>
-                                <div class="address" mat-line> {{Billing?.street1 }}
-                                    {{Billing?.street2 }} {{Billing?.city}}
-                                    {{Billing?.state }} {{Billing?.zipcode }} </div>
-                                <span class="spacer"></span>
-                                <button mat-icon-button class="edit" matTooltip="Edit" matTooltipPosition="before"
-                                    (click)="editAddress(Billing)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button mat-icon-button color="warn" matTooltip="Delete" matTooltipPosition="after"
-                                    (click)="deleteAddress(Billing.id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                                <mat-divider></mat-divider>
-                            </mat-list-item>
-                        </mat-list>
-                    </div>
-                    <app-nodata
-                        *ngIf="addressList?.Billing?.length == 0 || (addressList?.Billing | filter:billingSearch)?.length == 0">
-                    </app-nodata>
-                </mat-tab>
-            </mat-tab-group> -->
-<!-- </div>
-    </mat-card-content>
-</mat-card> -->
 
 
-
-
-
-<mat-card class="m-t-10">
-    <mat-card-header>
-        <div class="content-wrapper-main-title p-t-10">Manage Locations</div>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content class="p-t-10">
-        <div class="table-filter">
-            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by name, email, etc">
-        </div>
-        <span class="spacer"></span>
-        <button mat-icon-button class="filter-icon" (click)="exportData()">
-            <img class="icon-16" [src]="xls" alt="export" />
-        </button>
-        <div>
-            <table mat-table [dataSource]="dataSource" class="user-table">
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="type" sticky>
-                    <th mat-header-cell *matHeaderCellDef> Type </th>
-                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="address">
-                    <th mat-header-cell *matHeaderCellDef> Address </th>
-                    <td mat-cell *matCellDef="let element"> <span class="fa fa-map-marker"></span>&nbsp;
-                        {{element.address}}
-                    </td>
-                </ng-container>
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="phone">
-                    <th mat-header-cell *matHeaderCellDef> Phone </th>
-                    <td mat-cell *matCellDef="let element"><span class="fa fa-mobile"></span> &nbsp;
-                        {{element.phone}}
-                    </td>
-                </ng-container>
-
-                <!-- Star Column -->
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef>Action</th>
-                    <td mat-cell *matCellDef="let element">
-                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                            <mat-icon>more_vert</mat-icon>
-                        </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item>
-                                <mat-icon>edit</mat-icon>
-                                <span>Edit</span>
-                            </button>
-                            <button mat-menu-item>
-                                <mat-icon>delete</mat-icon>
-                                <span>Remove</span>
-                            </button>
-                        </mat-menu>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-            </mat-paginator>
-        </div>
     </mat-card-content>
 </mat-card>

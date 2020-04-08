@@ -166,11 +166,14 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 
 .user-detail {
   min-height: 55vh; //table empty space
-  width: 100%;//table harizontal scroll
-  display: block; 
+  width: 100%; //table harizontal scroll
+  display: block;
   overflow-x: auto;
 }
 
+.edit {
+  color: $btn_success;
+}
 // ==================================================
 // NOTIFICATION STYLE
 // ==================================================

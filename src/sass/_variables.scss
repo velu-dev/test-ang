@@ -35,13 +35,11 @@ $bg-warning: rgba(255, 178, 54, 0.4);
 $bg-error-style-one: #ff8f8f;
 $btn_success: #00cc00;
 
-// Tab background color 
-$tab-bg-1:#3c3cff1f ;
+// Tab background color
+$tab-bg-1: #3c3cff1f;
 
-
-//btn light color 
-$btn-light-color:#E3E3FA;
-
+//btn light color
+$btn-light-color: #e3e3fa;
 
 //class
 // Matero Variables
@@ -115,7 +113,7 @@ $breakpoints: (
   small: 600px,
   medium: 960px,
   large: 1280px,
-  xlarge: 1920px
+  xlarge: 1920px,
 ) !default;
 
 //Width
@@ -137,7 +135,7 @@ $box-shadow-2: 3px 0 10px 0 rgba(183, 192, 206, 0.2); // Using navebar
 $box-shadow-3: 0px 3px 6px #00000029;
 $box-shadow-4: 0px 3px 6px #00000029; // Using logo toolbar
 $box-shadow-5: 0px 3px 6px #448aff38; //using table header
-$box-shadow-6: 0px 7px 25px rgba(18,38,63,0.1);
+$box-shadow-6: 0px 7px 25px rgba(18, 38, 63, 0.1);
 
 //button Shadow
 $btn-primary-shadow: 0px 3px 5px #2e5eaf;
@@ -312,7 +310,7 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
 .content-wrapper-main-title {
   margin-bottom: 15px;
   display: block;
-  font-size:$font-size-2;
+  font-size: $font-size-2;
   // font-size: $font-size-10;
   color: $black;
 }
@@ -431,16 +429,14 @@ input:-webkit-autofill {
   -webkit-animation-fill-mode: both;
 }
 
-
 // ==================================
 // selection custom css      ========
 // ==================================
 
-
 // ::-moz-selection { /* Code for Firefox */
 //   background: transparent; //background transparent color
 //   }
-  
+
 //   ::selection {
 //   background: transparent; //background transparent color
 
