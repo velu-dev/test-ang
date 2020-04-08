@@ -284,7 +284,7 @@ export class NewClaimComponent implements OnInit {
         procudure_type: [],
         modifier_id: []
       }),
-      appoinment: this.formBuilder.group({
+      appointment: this.formBuilder.group({
         examiner_id: [],
         appointment_scheduled_date_time: [],
         duration: [],
@@ -301,6 +301,11 @@ export class NewClaimComponent implements OnInit {
 
     })
     // })
+  }
+  newClaimant() {
+    this.addNewClaimant = true;
+    this.claimant.reset();
+    this.claim.reset();
   }
 
   advanceSearchSubmit() {
