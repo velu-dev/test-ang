@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private alertService: AlertService,
     private title: Title
-  ) {   }
+  ) { }
 
   ngOnInit() {
     this.firstname.nativeElement.focus();
@@ -102,6 +102,16 @@ export class LoginComponent implements OnInit {
         }, error => {
           console.log(error)
           this.error = { message: error.error.error, action: "danger" }
+        })
+        return;
+      }
+
+      if (error.message == 'User is disabled.') {
+        this.authenticationService.verifySubscriberStatus(this.loginForm.value.email.toLowerCase()).subscribe(verifyRes => {
+          console.log(verifyRes["message"])
+          this.error = { message: verifyRes["message"], action: "danger" }
+        }, error => {
+          console.log(error)
         })
         return;
       }
