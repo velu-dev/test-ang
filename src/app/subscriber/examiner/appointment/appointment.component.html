@@ -1,4 +1,5 @@
-<mat-card class="m-card">
+<mat-card class="m-card appointments">
+
     <mat-card-content class="p-t-3  m-b-0">
         <div class="table-filter">
             <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
@@ -61,7 +62,11 @@
                 </td>
             </ng-container>
 
-            <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+            </tr>
+        </table>
+    </div>
 
-            </mat-card-content>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
 </mat-card>
