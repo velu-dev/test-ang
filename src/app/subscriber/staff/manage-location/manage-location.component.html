@@ -11,7 +11,7 @@
     <mat-card-content class="p-t-10">
 
         <div class="table-filter">
-            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+            <input matInput (keyup)="applyFilter($event)"
                 placeholder="Search by name, email, etc">
         </div>
 
@@ -62,7 +62,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
-        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
     </mat-card-content>
 </mat-card>
