@@ -64,7 +64,11 @@
 
     <div class="user-detail">
         <table mat-table [dataSource]="dataSource" matSort class="w-100">
-
+            <!-- ID Column -->
+            <ng-container matColumnDef="act">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                <td mat-cell *matCellDef="let row"> <button>X</button> </td>
+            </ng-container>
             <!-- ID Column -->
             <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
@@ -84,9 +88,15 @@
             </ng-container>
 
             <!-- Color Column -->
-            <ng-container matColumnDef="color">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                 <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
+            </ng-container>
+            <ng-container matColumnDef="review">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Review Documents </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon">more_vert</mat-icon>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

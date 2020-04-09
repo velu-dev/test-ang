@@ -26,7 +26,7 @@ const NAMES: string[] = [
 })
 export class AppointmentComponent implements OnInit {
   xls = globals.xls
-  displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
+  displayedColumns: string[] = ['act', 'id', 'name', 'progress', 'status', 'review'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
