@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="35" viewBox="0 0 35 35">
+  <defs>
+    <clipPath id="clip-Examiner_Appointment_-Calender_view_2">
+      <rect width="35" height="35"/>
+    </clipPath>
+  </defs>
+  <g id="Examiner_Appointment_-Calender_view_2" data-name="Examiner Appointment -Calender view – 2" clip-path="url(#clip-Examiner_Appointment_-Calender_view_2)">
+    <rect width="35" height="35" fill="rgba(224,232,243,0)"/>
+    <path id="Path_1034" data-name="Path 1034" d="M16.633,33.273q-.637,0-1.275-.049a16.633,16.633,0,1,1,14.8-6.891.65.65,0,0,1-1.055-.759A15.338,15.338,0,1,0,25.576,29.1a.65.65,0,1,1,.759,1.056A16.635,16.635,0,0,1,16.633,33.273Zm0,0" transform="translate(1.339 1.339)" fill="#35ba5f"/>
+    <path id="check" d="M5.227,76.348l-5-5a.769.769,0,0,1,0-1.088l1.088-1.088a.769.769,0,0,1,1.088,0l3.369,3.369,7.216-7.216a.769.769,0,0,1,1.088,0l1.088,1.088a.769.769,0,0,1,0,1.088L6.315,76.348a.769.769,0,0,1-1.088,0Z" transform="translate(10.759 -52.682)" fill="#35ba5f"/>
+  </g>
+</svg>

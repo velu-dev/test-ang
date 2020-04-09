@@ -26,39 +26,76 @@
     </mat-card-content>
 
     <div class="user-detail">
-        <table mat-table [dataSource]="dataSource" matSort class="w-100">
-            <!-- ID Column -->
+        <table mat-table [dataSource]="dataSource" matSort class="w-100 user-table">
+            <!-- act Column -->
             <ng-container matColumnDef="act">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-                <td mat-cell *matCellDef="let row"> <button>X</button> </td>
+                <td mat-cell *matCellDef="let row">
+                    <img [src]="completed" alt="completed">
+                </td>
             </ng-container>
-            <!-- ID Column -->
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-            </ng-container>
-
-            <!-- Progress Column -->
-            <ng-container matColumnDef="progress">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-                <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-            </ng-container>
-
-            <!-- Name Column -->
+            <!-- name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
                 <td mat-cell *matCellDef="let row"> {{row.name}} </td>
             </ng-container>
 
-            <!-- Color Column -->
+            <!-- claim_number Column -->
+            <ng-container matColumnDef="claim_number">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Claim Number </th>
+                <td mat-cell *matCellDef="let row"> {{row.claim_number}} </td>
+            </ng-container>
+
+            <!-- exam_type Column -->
+            <ng-container matColumnDef="exam_type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Exam Type </th>
+                <td mat-cell *matCellDef="let row"> {{row.exam_type}} </td>
+            </ng-container>
+            <!-- location Column -->
+            <ng-container matColumnDef="location">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+                <td mat-cell *matCellDef="let row"> {{row.location}} </td>
+            </ng-container>
+
+            <!-- date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                <td mat-cell *matCellDef="let row"> {{row.date}} <span class="time"><i class="fa fa-clock-o"></i>9.00
+                        AM</span></td>
+            </ng-container>
+
+
+            <!-- Status Column -->
             <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
+                <td mat-cell *matCellDef="let row" [style.color]="row.status"> <span
+                        class="confirmed">{{row.status}}</span> </td>
             </ng-container>
-            <ng-container matColumnDef="review">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Review Documents </th>
-                <td mat-cell *matCellDef="let row">
-                    <mat-icon aria-hidden="false" aria-label="Example home icon">more_vert</mat-icon>
+            <ng-container matColumnDef="data">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="text-align:center !important"> Review
+                    Documents </th>
+                <td mat-cell *matCellDef="let row" class="text-center">
+                    <button mat-icon-button [matMenuTriggerFor]="review_doc">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #review_doc="matMenu">
+                        <button mat-menu-item>
+                            <span>Cover Letter
+                            </span>
+                        </button>
+                        <button mat-menu-item>
+                            <span>History
+                            </span>
+                        </button>
+                        <button mat-menu-item>
+                            <span>Record Summary
+                            </span>
+                        </button>
+
+                        <button mat-menu-item>
+                            <span>Report Template</span>
+                        </button>
+                    </mat-menu>
                 </td>
             </ng-container>
 

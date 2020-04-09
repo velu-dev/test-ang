@@ -23,9 +23,10 @@ import { Router } from '@angular/router';
 })
 export class AppointmentComponent implements OnInit {
   xls = globals.xls
+  completed = globals.completed
   columnName = []
   columnsToDisplay = [];
-  displayedColumns: string[] = ['act', 'id', 'name', 'progress', 'status', 'review'];
+  displayedColumns: string[] = ["act", 'name', 'claim_number', 'exam_type', 'location', 'date', "status", "data"];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -53,7 +54,14 @@ export class AppointmentComponent implements OnInit {
   }
 
   ngOnInit() {
-    let data = [{ 'name': 'sarath', 'claim_number': '123446', 'exam_type': 'QME', 'location': 'US', 'date': '03-23-2019', "status": 'Pending', "data": '' }]
+    let data = [
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Confirmed', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Not Confirmed', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Left Voicemail', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Confirmed', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Not Confirmed', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Left Voicemail', "data": '' }
+    ]
     this.dataSource = new MatTableDataSource(data)
     this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
 
