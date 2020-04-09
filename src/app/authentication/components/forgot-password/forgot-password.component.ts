@@ -51,8 +51,15 @@ export class ForgotPasswordComponent implements OnInit {
         return;
       }
       if (!verifyDetails.isactive) {
-        this.error = { message: this.errorMessages.userdisable, action: "danger" }
-        this.spinnerService.hide();
+        // this.error = { message: this.errorMessages.userdisable, action: "danger" }
+        // this.spinnerService.hide();
+        // return;
+        this.authenticationService.verifySubscriberStatus(this.forgotPasswordForm.value.email.toLowerCase()).subscribe(verifyRes => {
+          console.log(verifyRes["message"])
+          this.error = { message: verifyRes["message"], action: "danger" }
+        }, error => {
+          console.log(error)
+        })
         return;
       }
       this.cognitoService.forgotPassword(this.forgotPasswordForm.value.email.toLowerCase()).subscribe(forgotRes => {
