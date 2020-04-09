@@ -23,9 +23,12 @@ import { Router } from '@angular/router';
 })
 export class AppointmentComponent implements OnInit {
   xls = globals.xls
-  dataSource: any;
+  completed = globals.completed
   columnName = []
   columnsToDisplay = [];
+  displayedColumns: string[] = ["act", 'name', 'claim_number', 'exam_type', 'location', 'date', "status", "data"];
+  dataSource: MatTableDataSource<any>;
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -37,23 +40,30 @@ export class AppointmentComponent implements OnInit {
   expandedElement: any | null;
   disabled = false;
   filterValue;
-  constructor(private breakpointObserver: BreakpointObserver,private router:Router) {
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Name", "Claim Numbers","Status"]
+        this.columnName = ["", "Name", "Claim Numbers", "Status"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
-        this.columnName = ["Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status","Review Documents"]
-        this.columnsToDisplay = ['name', 'claim_number', 'exam_type', 'location', 'date', "status","data"]
+        this.columnName = ["Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status", "Review Documents"]
+        this.columnsToDisplay = ['name', 'claim_number', 'exam_type', 'location', 'date', "status", "data"]
       }
     })
   }
 
   ngOnInit() {
-    let data = [{'name':'sarath', 'claim_number':'123446', 'exam_type':'QME', 'location':'US', 'date':'03-23-2019', "status":'Pending',"data":''}]
+    let data = [
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Confirmed', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Not Confirmed', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Left Voicemail', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Confirmed', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Not Confirmed', "data": '' },
+      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Left Voicemail', "data": '' }
+    ]
     this.dataSource = new MatTableDataSource(data)
-    this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
 
   }
 
@@ -66,6 +76,7 @@ export class AppointmentComponent implements OnInit {
 
   expandId: any;
   openElement(element) {
+    console.log(element)
     this.router.navigate(['/subscriber/examiner/appointment-details'])
     if (this.isMobile) {
       this.expandId = element.id;
@@ -73,5 +84,7 @@ export class AppointmentComponent implements OnInit {
     }
   }
 
-
+  click() {
+    this.router.navigate(['/subscriber/examiner/appointment-details'])
+  }
 }

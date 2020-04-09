@@ -11,5 +11,8 @@ export const no_data = '/assets/images/no_data.svg'
 export const notification_user = '/assets/images/user.jpg'
 export const table_no_data = '/assets/images/no_data_avaliable.svg'
 export const docx = '/assets/images/docx.svg'
+export const completed = '/assets/images/success.svg'
+export const incompleted = '/assets/images/incompeted.svg'
+export const left_voicemail = '/assets/images/left_voice.svg'
 export const roles = [{}, {}]
 

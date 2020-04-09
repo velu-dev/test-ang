@@ -76,7 +76,8 @@ export class SidenavComponent implements OnInit {
     if (this.roleId == 2) {
       this.userService.changeRole().subscribe(res => {
         if (res.status) {
-          this.cookieService.set("role_id", res.data[0].role_id);
+          console.log(res.data.role_id)
+          this.cookieService.set("role_id", res.data.role_id);
           window.location.reload();
         }
       })

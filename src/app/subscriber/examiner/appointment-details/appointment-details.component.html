@@ -8,12 +8,15 @@
                 </mat-card-header>
                 <mat-card-content class="p-b-15">
                     <ul class="breadcrumb m-0">
-                        <li><a href="#"><i class="fa fa-phone"></i>Appointment
-                                <br />Scheduled</a></li>
-                        <li><a href="#">Forms
-                                <br />Submitted</a></li>
-                        <li><a href="#">Appointment (44) <br />&nbsp;</a></li>
-                        <li><a href="#">Billing <br />&nbsp;</a></li>
+                        <li><a href="#"><i class="fa fa-calendar-week"></i><span>Appointment
+                                    <br />Scheduled</span></a></li>
+                        <li><a href="#"><i class="fa fa-clipboard"></i><span>Forms
+                                    <br />Submitted</span></a></li>
+                        <li><a href="#"><i class="fa fa-calendar-week"></i><span>Appointment (44)
+                                </span></a></li>
+                        <li><a href="#"><i class="fa fa-sticky-note"></i><span class="p-t-10 p-b-11">Billing </span></a>
+                        </li>
+
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -27,7 +30,7 @@
                 <mat-card-header>
                     <div class="content-wrapper-main-title p-t-5">Claimant</div>
                     <span class="spacer"></span>
-                    <button mat-icon-button>
+                    <button (click)="openClaimant()" mat-icon-button>
                         <mat-icon>fullscreen</mat-icon>
                     </button>
                     <button mat-icon-button>
@@ -35,7 +38,7 @@
                     </button>
                 </mat-card-header>
                 <mat-divider></mat-divider>
-                <mat-card-content>
+                <mat-card-content class="p-b-20">
                     <div fxLayout="row wrap">
                         <div fxFlex="50" class="claim_label">
                             <div>Last Name</div>
@@ -60,7 +63,7 @@
                 <mat-card-header>
                     <div class="content-wrapper-main-title p-t-5">Claim</div>
                     <span class="spacer"></span>
-                    <button mat-icon-button>
+                    <button (click)="openClaim()" mat-icon-button>
                         <mat-icon>fullscreen</mat-icon>
                     </button>
                     <button mat-icon-button>
@@ -68,7 +71,7 @@
                     </button>
                 </mat-card-header>
                 <mat-divider></mat-divider>
-                <mat-card-content>
+                <mat-card-content class="p-b-20">
                     <div fxLayout="row wrap">
                         <div fxFlex="50" class="claim_label">
                             <div>Claim ID</div>
@@ -93,7 +96,7 @@
                 <mat-card-header>
                     <div class="content-wrapper-main-title p-t-5">Billable Item</div>
                     <span class="spacer"></span>
-                    <button mat-icon-button>
+                    <button (click)="openBillableItem()" mat-icon-button>
                         <mat-icon>fullscreen</mat-icon>
                     </button>
                     <button mat-icon-button>
@@ -101,7 +104,7 @@
                     </button>
                 </mat-card-header>
                 <mat-divider></mat-divider>
-                <mat-card-content>
+                <mat-card-content class="p-b-20">
                     <div fxLayout="row wrap">
                         <div fxFlex="50" class="claim_label">
                             <div>Status</div>
@@ -250,3 +253,4 @@
 
 
 </div>
+

@@ -26,7 +26,6 @@ mat-card {
       color: $primarycolor;
       font-size: $font-size-1;
       font-weight: $font-weight-medium;
-     
     }
     mat-form-field {
       padding: 10px !important;
@@ -90,10 +89,10 @@ mat-card {
     color: $white;
     padding: 12px;
     display: block;
-    cursor: pointer ;
+    cursor: pointer;
   }
 }
- 
+
 .search-icon {
   cursor: pointer;
 }
