@@ -17,6 +17,8 @@ export const api_endpoint = {
     getvendors: "admin/vendors",
     disable_user: "admin/disable-user/",
     resendPassword: 'admin/resend-temp-password',
+    verifySubscriberStatus: 'auth/verify-subscriber-status',
+    changeRole: "subscriber/switch-to-examiner/",
 
     //Subscriber
     getSubscriberUsers: 'subscriber/users',

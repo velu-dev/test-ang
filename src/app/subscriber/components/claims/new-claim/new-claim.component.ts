@@ -155,6 +155,7 @@ export class NewClaimComponent implements OnInit {
   }
   selectClaimant(option) {
     this.claimant.reset();
+    this.claim.reset();
     this.addNewClaimant = true;
     this.isClaimantCreated = true;
     this.claimant_name = option.first_name + "  " + option.last_name
@@ -284,7 +285,7 @@ export class NewClaimComponent implements OnInit {
         procudure_type: [],
         modifier_id: []
       }),
-      appoinment: this.formBuilder.group({
+      appointment: this.formBuilder.group({
         examiner_id: [],
         appointment_scheduled_date_time: [],
         duration: [],
@@ -301,6 +302,11 @@ export class NewClaimComponent implements OnInit {
 
     })
     // })
+  }
+  newClaimant() {
+    this.addNewClaimant = true;
+    this.claimant.reset();
+    this.claim.reset();
   }
 
   advanceSearchSubmit() {
@@ -436,6 +442,8 @@ export class NewClaimComponent implements OnInit {
           this.attroneylist = res.data.attroney;
           this.attroneySelect = true;
         }
+      } else {
+        this.alertService.openSnackBar("EAMS Number Not Found", "error")
       }
     })
   }

@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import * as headerActions from "./../../../../shared/store/header.actions";
+import * as breadcrumbActions from "./../../../../shared/store/breadcrumb.actions";
 
 @Component({
   selector: 'app-header',
@@ -89,6 +90,7 @@ export class HeaderComponent implements OnInit {
       this.spinnerService.hide();
       this.cookieService.deleteAll();
       this.router.navigate(['/'])
+      this.store.dispatch(new breadcrumbActions.ResetBreadcrumb());
     }, error => {
       this.alertService.openSnackBar(error.logoutSuccess, "error")
       this.spinnerService.hide()

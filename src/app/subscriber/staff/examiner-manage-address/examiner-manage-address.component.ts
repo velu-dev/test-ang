@@ -44,7 +44,8 @@ export class ExaminerManageAddressComponent implements OnInit {
   examinerSearch = new FormControl();
 
   filteredOptions: Observable<any>;
-  examinerFilteredOptions:Observable<any>;
+  examinerFilteredOptions: Observable<any>;
+  examinerOptions: any;
   addressForm: FormGroup;
   states: any;
   addressList: any;
@@ -59,23 +60,37 @@ export class ExaminerManageAddressComponent implements OnInit {
   errorMessages = errors;
   examinerId: number;
   examinerName: string;
+  addAddressDetails = [];
+  addressId: number = 1;
+  addressIsSubmitted: boolean = false;
+  searchAddressDetails = [];
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
     private route: ActivatedRoute
   ) {
-    this.route.params.subscribe(params => this.examinerId = params.id);
+    // this.route.params.subscribe(params => this.examinerId = params.id);
 
     this.filteredOptions = this.addresssearch.valueChanges
       .pipe(
         debounceTime(300),
         switchMap(value => this.examinerService.searchAddress({ basic_search: value, isadvanced: false })));
+
+    this.examinerFilteredOptions = this.examinerSearch.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap(value => this.examinerService.getExaminerList()));
   }
 
   ngOnInit() {
     this.addressForm = this.formBuilder.group({
       id: [""],
       address_type_id: ['', Validators.compose([Validators.required])],
-      phone: ['', Validators.compose([Validators.required])],
+      land_line1: [''],
+      land_line2: [''],
+      mobile1: [''],
+      mobile2: [''],
+      fax1: [''],
+      fax2: [''],
       street1: ['', Validators.compose([Validators.required])],
       street2: [''],
       city: ['', Validators.required],
@@ -83,13 +98,19 @@ export class ExaminerManageAddressComponent implements OnInit {
       zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
 
+    // this.examinerService.getExaminerList().subscribe(response => {
+    //   this.examinerOptions = response['data'];
+    // }, error => {
+
+    // })
+
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
     }, error => {
       console.log("error", error)
     })
 
-    this.claimService.seedData('address_type').subscribe(response => {
+    this.claimService.seedData('service_code').subscribe(response => {
       this.addressType = response['data'];
       this.addressType.splice(this.addressType.findIndex(o => o.address_type_name === 'Primary'), 1)
     }, error => {
@@ -97,19 +118,19 @@ export class ExaminerManageAddressComponent implements OnInit {
     })
 
     this.getAddressDetails();
-
   }
+
 
   getAddressDetails() {
 
-    this.examinerService.getsingleExAddress(this.examinerId).subscribe(response => {
-      this.addressList = response['data'];
-      this.examinerName = response['data'].examiner_name;
-      console.log(response)
-    }, error => {
-      console.log(error)
-      this.examinerName = error.error.examiner_name;
-    })
+    // this.examinerService.getsingleExAddress(this.examinerId).subscribe(response => {
+    //   this.addressList = response['data'];
+    //   this.examinerName = response['data'].examiner_name;
+    //   console.log(response)
+    // }, error => {
+    //   console.log(error)
+    //   this.examinerName = error.error.examiner_name;
+    // })
 
     this.advanceSearch = this.formBuilder.group({
       city: [],
@@ -119,7 +140,7 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   }
 
-  addressIsSubmitted: boolean = false;
+ 
   addressformSubmit() {
     this.addressIsSubmitted = true;
     console.log(this.addressForm.value)
@@ -128,64 +149,78 @@ export class ExaminerManageAddressComponent implements OnInit {
       return;
     }
 
+
     if (this.addressForm.value.id == '' || this.addressForm.value.id == null) {
-      this.examinerService.postExaminerAddressOther(this.addressForm.value, this.examinerId).subscribe(response => {
-        console.log(response)
-        this.getAddressDetails();
-        this.addAddress = false;
-        this.alertService.openSnackBar("Location created successfully", 'success');
+      this.addressForm.value.id = this.addressId++
+      this.addAddressDetails.push(this.addressForm.value)
 
-      }, error => {
-        console.log(error);
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
+      // this.examinerService.postExaminerAddressOther(this.addressForm.value, this.examinerId).subscribe(response => {
+      //   console.log(response)
+      //   this.getAddressDetails();
+      //   this.addAddress = false;
+      //   this.alertService.openSnackBar("Location created successfully", 'success');
+
+      // }, error => {
+      //   console.log(error);
+      //   this.alertService.openSnackBar(error.error.message, 'error');
+      // })
+      this.addressForm.reset();
+      this.addressIsSubmitted = false;
     } else {
-      this.examinerService.updateExaminerAddress(this.addressForm.value).subscribe(response => {
-        console.log(response)
-        this.getAddressDetails();
-        this.addAddress = false;
-        this.alertService.openSnackBar("Location updated successfully", 'success');
+      let index = this.addAddressDetails.findIndex(o => o.id === this.addressForm.value.id);
+      this.addAddressDetails.splice(index, 1);
+      this.addAddressDetails.push(this.addressForm.value)
+      // this.examinerService.updateExaminerAddress(this.addressForm.value).subscribe(response => {
+      //   console.log(response)
+      //   this.getAddressDetails();
+      //   this.addAddress = false;
+      //   this.alertService.openSnackBar("Location updated successfully", 'success');
 
-      }, error => {
-        console.log(error);
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
+      // }, error => {
+      //   console.log(error);
+      //   this.alertService.openSnackBar(error.error.message, 'error');
+      // })
     }
+    console.log(this.addAddressDetails)
   }
 
   editAddress(details) {
     console.log(details);
-    this.addAddress = true;
     this.addressForm.setValue(details)
   }
 
-  deleteAddress(id) {
-    this.examinerService.deleteExaminerAddress(id).subscribe(response => {
-      console.log(response)
-      this.getAddressDetails();
-      this.addAddress = false;
-      this.alertService.openSnackBar("Location deleted successfully", 'success');
+  deleteAddress(index) {
+    this.addAddressDetails.splice(index,1)
+    // this.examinerService.deleteExaminerAddress(id).subscribe(response => {
+    //   console.log(response)
+    //   this.getAddressDetails();
+    //   this.addAddress = false;
+    //   this.alertService.openSnackBar("Location deleted successfully", 'success');
 
-    }, error => {
-      console.log(error)
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
+    // }, error => {
+    //   console.log(error)
+    //   this.alertService.openSnackBar(error.error.message, 'error');
+    // })
+  }
+
+  searchDeleteAddress(index){
+    console.log(index)
+    this.searchAddressDetails.splice(index,1)
   }
 
   advanceSearchSubmit() {
     console.log("advanceSearch", this.advanceSearch.value)
   }
 
-  searchAddress() {
-    let data = {}
-    this.examinerService.searchAddress(data).subscribe(res => {
-
-    }, error => {
-
-    })
-  }
-
-  addressOnChange(data){
+  addressOnChange(data) {
     console.log(data)
+    this.searchAddressDetails.push(data)
   }
+
+  examinerOnChange(data) {
+    console.log(data)
+  this.examinerName = data.first_name + ' ' + data.last_name
+   
+  }
+
 }

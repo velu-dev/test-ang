@@ -1,6 +1,6 @@
 <mat-card class="m-card">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title">Manage Locations</div>
+        <div class="m-0 content-wrapper-main-title">Add Location</div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="multiple-address">
@@ -14,8 +14,8 @@
                             <input type="text" matInput [formControl]="examinerSearch"
                                 [matAutocomplete]="examinerAutocomplete">
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete" [displayWith]="displayFn">
-                                <mat-option *ngFor="let option of examinerFilteredOptions | async" [value]="option">
-                                    {{option.name}}
+                                <mat-option *ngFor="let option of (examinerFilteredOptions | async)?.data" [value]="option.first_name + ' '+ option.last_name" (click)="examinerOnChange(option)">
+                                    {{option.first_name}} {{option.last_name}}
                                 </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
@@ -94,52 +94,30 @@
                                 </form>
                             </div>
                             <mat-card-content class="address-list">
-                                <mat-list>
+                                <mat-list *ngFor="let address of searchAddressDetails;let i = index">
                                     <mat-list-item>
                                         <div class="name" mat-line>
                                             <div><strong>
-                                                    <i class="fa fa-building-o"></i>Location Name
+                                                    <i class="fa fa-building-o"></i>{{address?.address_type_name}}
                                                 </strong></div>
                                             <span><i class="fa fa-phone-alt"></i>
-                                                Number Here</span>
+                                                {{address?.mobile1}}</span>
                                         </div>
-                                        <div class="address" mat-line>Address, city, state, pincode content comes here
-                                            ......</div>
+                                        <div class="address" mat-line>{{address?.street1}} {{address?.street2}} {{address?.city}} {{address?.state}} - {{address?.zipcode}}</div>
                                         <span class="spacer"></span>
-                                        <button mat-icon-button class="edit" matTooltip="Edit"
-                                            matTooltipPosition="before">
+                                        <!-- <button mat-icon-button class="edit" matTooltip="Edit"
+                                            matTooltipPosition="before" (click)="editAddress(address)">
                                             <mat-icon>edit</mat-icon>
-                                        </button>
+                                        </button> -->
                                         <button mat-icon-button color="warn" matTooltip="Remove"
-                                            matTooltipPosition="after">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </mat-list-item>
-                                    <mat-divider></mat-divider>
-                                    <mat-list-item>
-                                        <div class="name" mat-line>
-                                            <div><strong>
-                                                    <i class="fa fa-building-o"></i>Location Name
-                                                </strong></div>
-                                            <span><i class="fa fa-phone-alt"></i>
-                                                Number Here</span>
-                                        </div>
-                                        <div class="address" mat-line>Address, city, state, pincode content comes here
-                                            ......</div>
-                                        <span class="spacer"></span>
-                                        <button mat-icon-button class="edit" matTooltip="Edit"
-                                            matTooltipPosition="before">
-                                            <mat-icon>edit</mat-icon>
-                                        </button>
-                                        <button mat-icon-button color="warn" matTooltip="Remove"
-                                            matTooltipPosition="after">
+                                            matTooltipPosition="after" (click)="searchDeleteAddress(i)">
                                             <mat-icon>delete</mat-icon>
                                         </button>
                                     </mat-list-item>
                                     <mat-divider></mat-divider>
                                 </mat-list>
                             </mat-card-content>
-                            <div class="text-center w-100 m-t-10 m-b-10">
+                            <div class="text-center w-100 m-t-10 m-b-10" *ngIf="searchAddressDetails?.length > 0">
                                 <button mat-raised-button color="warn" class="m-r-10 ">
                                     Cancel </button>
                                 <button mat-raised-button color="primary" class="m-r-15 btn_success">Submit</button>
@@ -159,17 +137,17 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Examiner Name</mat-label>
-                                            <input matInput placeholder="Examiner Name" value="Examiner Name"
+                                            <input matInput placeholder="Examiner Name" [value]="examinerName"
                                                 autocomplete="off" disabled>
                                             <mat-error *ngIf="addressIsSubmitted">Enter valid phone number</mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
-                                            <mat-label>Service Location Type</mat-label>
+                                            <mat-label>Service Type</mat-label>
                                             <mat-select formControlName="address_type_id">
-                                                <mat-option *ngFor="let address of addressType" [value]="address.id">
-                                                    {{address.address_type_name}}</mat-option>
+                                                <mat-option *ngFor="let address of addressType" [value]="address.service_name">
+                                                    {{address?.service_code}} - {{address?.service_name}}</mat-option>
                                             </mat-select>
                                             <mat-error *ngIf="addressIsSubmitted">Select valid service location type
                                             </mat-error>
@@ -194,43 +172,43 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Land Line 1</mat-label>
-                                            <input matInput placeholder="Land Line 1" autocomplete="off">
-                                            <mat-error>error msg here</mat-error>
+                                            <input matInput placeholder="Land Line 1" mask="(000) 000-0000" formControlName="land_line1" autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted" >Enter valid land line number</mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Land Line 2</mat-label>
-                                            <input matInput placeholder="Land Line 2" autocomplete="off">
-                                            <mat-error>error msg here</mat-error>
+                                            <input matInput placeholder="Land Line 2" mask="(000) 000-0000" formControlName="land_line2" autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted" >Enter valid land line number</mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Mobile 1</mat-label>
-                                            <input matInput placeholder="Mobile 1" autocomplete="off">
-                                            <mat-error>error msg here</mat-error>
+                                            <input matInput placeholder="Mobile 1" mask="(000) 000-0000" formControlName="mobile1" autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted">Enter valid mobile number</mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Mobile 2</mat-label>
-                                            <input matInput placeholder="Mobile 2" autocomplete="off">
-                                            <mat-error>error msg here</mat-error>
+                                            <input matInput placeholder="Mobile 2" mask="(000) 000-0000" formControlName="mobile2" autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted">Enter valid mobile number</mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Fax 1</mat-label>
-                                            <input matInput placeholder="Fax 1" autocomplete="off">
-                                            <mat-error>error msg here</mat-error>
+                                            <input matInput placeholder="Fax 1" formControlName="fax1" autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted">error msg here</mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Fax 1</mat-label>
-                                            <input matInput placeholder="Fax 2" autocomplete="off">
-                                            <mat-error>error msg here</mat-error>
+                                            <input matInput placeholder="Fax 2" formControlName="fax2" autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted">error msg here</mat-error>
                                         </mat-form-field>
 
 
@@ -263,13 +241,43 @@
 
                                         <div class="text-center w-100 m-t-10 m-b-10">
                                             <button mat-raised-button color="warn" class="m-r-10 "
-                                                (click)="addressForm.reset();addAddress = false">
+                                                (click)="addressForm.reset()">
                                                 Cancel </button>
                                             <button mat-raised-button (click)="addressformSubmit()" color="primary"
                                                 class="m-r-15 btn_success">Add</button>
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+
+                            <mat-card-content class="address-list">
+                                <mat-list *ngFor="let address of addAddressDetails;let i = index">
+                                    <mat-list-item>
+                                        <div class="name" mat-line>
+                                            <div><strong>
+                                                    <i class="fa fa-building-o"></i>{{address?.address_type_id}}
+                                                </strong></div>
+                                            <span><i class="fa fa-phone-alt"></i>
+                                                {{address?.mobile1}}</span>
+                                        </div>
+                                        <div class="address" mat-line>{{address?.street1}} {{address?.street2}} {{address?.city}} {{address?.state}} - {{address?.zipcode}}</div>
+                                        <span class="spacer"></span>
+                                        <button mat-icon-button class="edit" matTooltip="Edit"
+                                            matTooltipPosition="before" (click)="editAddress(address)">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="warn" matTooltip="Remove"
+                                            matTooltipPosition="after" (click)="deleteAddress(i)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>
+                                </mat-list>
+                            </mat-card-content>
+                            <div class="text-center w-100 m-t-10 m-b-10" *ngIf="addAddressDetails?.length > 0">
+                                <button mat-raised-button color="warn" class="m-r-10 ">
+                                    Cancel </button>
+                                <button mat-raised-button color="primary" class="m-r-15 btn_success">Submit</button>
                             </div>
                         </mat-tab>
 
