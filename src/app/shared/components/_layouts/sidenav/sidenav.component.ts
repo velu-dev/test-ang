@@ -72,29 +72,43 @@ export class SidenavComponent implements OnInit {
       this.sidenav.toggle();
     }
   }
+  changeRole() {
+    if (this.roleId == 2) {
+      this.userService.changeRole().subscribe(res => {
+        if (res.status) {
+          this.cookieService.set("role_id", res.data[0].role_id);
+          window.location.reload();
+        }
+      })
+    }
+    if (this.roleId == 11) {
+      this.cookieService.set("role_id", 2);
+      window.location.reload();
+    }
+  }
 
   mainPage() {
     this.role = this.cookieService.get('role_id')
     switch (this.role) {
-        case '1':
-            this.router.navigate(["/admin"]);
-            break;
-        case '2':
-            this.router.navigate(["/subscriber"]);
-            break;
-        case '3':
-            this.router.navigate(["/subscriber/manager"]);
-            break;
-        case '4':
-            this.router.navigate(["/subscriber/staff"]);
-            break;
-        case '11':
-            this.router.navigate(["/subscriber/examiner"]);
-            break;
-        default:
-            this.router.navigate(["/"]);
-            break;
+      case '1':
+        this.router.navigate(["/admin"]);
+        break;
+      case '2':
+        this.router.navigate(["/subscriber"]);
+        break;
+      case '3':
+        this.router.navigate(["/subscriber/manager"]);
+        break;
+      case '4':
+        this.router.navigate(["/subscriber/staff"]);
+        break;
+      case '11':
+        this.router.navigate(["/subscriber/examiner"]);
+        break;
+      default:
+        this.router.navigate(["/"]);
+        break;
     }
-}
+  }
 
 }
