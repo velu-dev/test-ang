@@ -68,6 +68,7 @@ export class AppointmentComponent implements OnInit {
 
   expandId: any;
   openElement(element) {
+    console.log(element)
     this.router.navigate(['/subscriber/examiner/appointment-details'])
     if (this.isMobile) {
       this.expandId = element.id;
@@ -75,5 +76,7 @@ export class AppointmentComponent implements OnInit {
     }
   }
 
-
+  click() {
+    this.router.navigate(['/subscriber/examiner/appointment-details'])
+  }
 }
