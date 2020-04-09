@@ -22,7 +22,7 @@
                     </form>
                 </div>
             </div>
-            <div fxLayout="row wrap">
+            <div fxLayout="row wrap" *ngIf="examinerId">
                 <div fxFlex="100">
                     <mat-tab-group class="user-list">
                         <!-- ######~~~~~ Searching and assign Existing Location ~~~~~##### -->
@@ -118,7 +118,7 @@
                                 </mat-list>
                             </mat-card-content>
                             <div class="text-center w-100 m-t-10 m-b-10" *ngIf="searchAddressDetails?.length > 0">
-                                <button mat-raised-button color="warn" class="m-r-10 ">
+                                <button mat-raised-button color="warn" class="m-r-10 " [routerLink]="['/subscriber/staff/manage-location']">
                                     Cancel </button>
                                 <button mat-raised-button color="primary" class="m-r-15 btn_success">Submit</button>
                             </div>
@@ -172,14 +172,14 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Land Line 1</mat-label>
-                                            <input matInput placeholder="Land Line 1" mask="(000) 000-0000" formControlName="land_line1" autocomplete="off">
+                                            <input matInput placeholder="Land Line 1" mask="(000) 000-0000" formControlName="phone1" autocomplete="off">
                                             <mat-error *ngIf="addressIsSubmitted" >Enter valid land line number</mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Land Line 2</mat-label>
-                                            <input matInput placeholder="Land Line 2" mask="(000) 000-0000" formControlName="land_line2" autocomplete="off">
+                                            <input matInput placeholder="Land Line 2" mask="(000) 000-0000" formControlName="phone2" autocomplete="off">
                                             <mat-error *ngIf="addressIsSubmitted" >Enter valid land line number</mat-error>
                                         </mat-form-field>
 
@@ -275,9 +275,9 @@
                                 </mat-list>
                             </mat-card-content>
                             <div class="text-center w-100 m-t-10 m-b-10" *ngIf="addAddressDetails?.length > 0">
-                                <button mat-raised-button color="warn" class="m-r-10 ">
+                                <button mat-raised-button color="warn" class="m-r-10 " [routerLink]="['/subscriber/staff/manage-location']">
                                     Cancel </button>
-                                <button mat-raised-button color="primary" class="m-r-15 btn_success">Submit</button>
+                                <button mat-raised-button color="primary" class="m-r-15 btn_success" (click)="newAddressBlukSubmit()">Submit</button>
                             </div>
                         </mat-tab>
 

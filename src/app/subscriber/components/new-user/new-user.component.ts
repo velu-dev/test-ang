@@ -110,14 +110,12 @@ export class NewUserComponent implements OnInit {
 
     this.claimService.seedData('taxonomy').subscribe(response => {
       this.taxonomyList = response['data'];
-      console.log(this.taxonomyList)
     }, error => {
       console.log("error", error)
     })
 
     this.claimService.seedData('specialty').subscribe(response => {
       this.specialtyList = response['data'];
-      console.log(this.specialtyList)
     }, error => {
       console.log("error", error)
     })
@@ -143,7 +141,12 @@ export class NewUserComponent implements OnInit {
     });
 
     this.addressForm = this.formBuilder.group({
-      phone: [''],
+      phone1: [''],
+      phone2: [''],
+      fax1: [''],
+      fax2: [''],
+      mobile1: [''],
+      mobile2: [''],
       street1: [''],
       street2: [''],
       city: [''],
@@ -153,7 +156,6 @@ export class NewUserComponent implements OnInit {
   }
 
   clearChangeValue(event) {
-    console.log(event.value)
     if (event.value == 11) {
       this.isExaminer = true
     } else {
@@ -173,7 +175,7 @@ export class NewUserComponent implements OnInit {
       return;
     }
 
-    if(this.isExaminer){
+    if (this.isExaminer) {
       this.userForm.value.w9_number = this.userExaminerForm.value.w9_number;
       this.userForm.value.national_provider_identifier = this.userExaminerForm.value.national_provider_identifier;
       this.userForm.value.specialty = this.userExaminerForm.value.specialty;
@@ -183,10 +185,6 @@ export class NewUserComponent implements OnInit {
       this.userForm.value.address_details = this.addressForm.value;
     }
 
-    console.log(this.userForm.value)
-    console.log(this.addressForm.value)
-    console.log(this.userExaminerForm.value)
-
     this.userService.createUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("User created successfully", 'success');
       this.router.navigate(['/subscriber/users'])
@@ -194,7 +192,7 @@ export class NewUserComponent implements OnInit {
       this.alertService.openSnackBar(error.error.error, 'error');
     })
     // if (!this.isEdit) {
-      
+
     // } 
     // else {
     //   this.userService.updateUser(this.userForm.value).subscribe(res => {

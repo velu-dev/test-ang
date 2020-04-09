@@ -66,7 +66,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   searchAddressDetails = [];
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,private router: Router
   ) {
     // this.route.params.subscribe(params => this.examinerId = params.id);
 
@@ -85,8 +85,8 @@ export class ExaminerManageAddressComponent implements OnInit {
     this.addressForm = this.formBuilder.group({
       id: [""],
       address_type_id: ['', Validators.compose([Validators.required])],
-      land_line1: [''],
-      land_line2: [''],
+      phone1: [''],
+      phone2: [''],
       mobile1: [''],
       mobile2: [''],
       fax1: [''],
@@ -140,7 +140,7 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   }
 
- 
+
   addressformSubmit() {
     this.addressIsSubmitted = true;
     console.log(this.addressForm.value)
@@ -154,16 +154,7 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.addressForm.value.id = this.addressId++
       this.addAddressDetails.push(this.addressForm.value)
 
-      // this.examinerService.postExaminerAddressOther(this.addressForm.value, this.examinerId).subscribe(response => {
-      //   console.log(response)
-      //   this.getAddressDetails();
-      //   this.addAddress = false;
-      //   this.alertService.openSnackBar("Location created successfully", 'success');
 
-      // }, error => {
-      //   console.log(error);
-      //   this.alertService.openSnackBar(error.error.message, 'error');
-      // })
       this.addressForm.reset();
       this.addressIsSubmitted = false;
     } else {
@@ -184,13 +175,33 @@ export class ExaminerManageAddressComponent implements OnInit {
     console.log(this.addAddressDetails)
   }
 
+  newAddressBlukSubmit() {
+    if(this.addAddressDetails.length > 0){
+      this.addAddressDetails.map(data=>{
+        data.address_type_id = 1
+        delete data.id
+      })
+      console.log(this.addAddressDetails)
+    this.examinerService.postExaminerAddressOther(this.addAddressDetails,this.examinerId).subscribe(response => {
+      console.log(response)
+      this.alertService.openSnackBar("Location created successfully", 'success');
+      this.router.navigate(['/subscriber/staff/manage-location'])
+    }, error => {
+      console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }else{
+    this.alertService.openSnackBar("No data to submit", 'error');
+  }
+  }
+
   editAddress(details) {
     console.log(details);
     this.addressForm.setValue(details)
   }
 
   deleteAddress(index) {
-    this.addAddressDetails.splice(index,1)
+    this.addAddressDetails.splice(index, 1)
     // this.examinerService.deleteExaminerAddress(id).subscribe(response => {
     //   console.log(response)
     //   this.getAddressDetails();
@@ -203,9 +214,9 @@ export class ExaminerManageAddressComponent implements OnInit {
     // })
   }
 
-  searchDeleteAddress(index){
+  searchDeleteAddress(index) {
     console.log(index)
-    this.searchAddressDetails.splice(index,1)
+    this.searchAddressDetails.splice(index, 1)
   }
 
   advanceSearchSubmit() {
@@ -219,8 +230,9 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   examinerOnChange(data) {
     console.log(data)
-  this.examinerName = data.first_name + ' ' + data.last_name
-   
+    this.examinerName = data.first_name + ' ' + data.last_name
+    this.examinerId = data.id;
+
   }
 
 }

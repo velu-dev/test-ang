@@ -40,4 +40,8 @@ export class ExaminerService {
   searchAddress(data){
     return this.http.post(environment.baseUrl + api_endpoint.searchAddress, data)
   }
+
+  getAllExaminerAddress(){
+    return this.http.get(environment.baseUrl + api_endpoint.allExaminerAddress)
+  }
 }
