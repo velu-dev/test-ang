@@ -502,3 +502,39 @@ input:-webkit-autofill {
   padding: 2px 10px;
   font-size: $font-size-7;
 }
+
+.claim_popup {
+  padding-top: 10px;
+  .claim_label {
+    width: $width-100;
+    div {
+      font-weight: $font-weight-bold;
+      font-size: $font-size-1;
+      padding-top: 10px;
+      color: $text-gray;
+      &::after {
+        content: ":";
+        display: inline-block;
+        float: right;
+        padding-right: 10px;
+      }
+    }
+  }
+  .claim_value {
+    width: $width-100;
+    div {
+      font-size: $font-size-1;
+      padding-top: 10px;
+      color: $text-gray;
+    }
+  }
+}
+
+.sub-title {
+  color: $primarycolor;
+  font-size: $font-size-1;
+  font-weight: $font-weight-medium;
+}
+.br-bottom {
+  border-bottom: 1px solid $light-gray;
+}

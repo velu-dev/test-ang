@@ -21,7 +21,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
-      width: '250px',
+      width: '800px',
       data: { name: "", animal: "" }
     });
 
@@ -31,7 +31,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   openClaim(): void {
     const dialogRef = this.dialog.open(ClaimPopupComponent, {
-      width: '250px',
+      width: '800px',
       data: { name: "", animal: "" }
     });
 
@@ -41,7 +41,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   openBillableItem() {
     const dialogRef = this.dialog.open(BillableitemPopupComponent, {
-      width: '250px',
+      width: '800px',
       data: { name: "", animal: "" }
     });
 
