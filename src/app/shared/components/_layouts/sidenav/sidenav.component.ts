@@ -40,6 +40,7 @@ export class SidenavComponent implements OnInit {
     );
   isMobile: boolean = false;
   role: any;
+  is_subscriber: any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -48,6 +49,7 @@ export class SidenavComponent implements OnInit {
     private userService: UserService,
     private cookieService: CookieService
   ) {
+    this.is_subscriber = this.cookieService.get('is_subscriber');
     this.loaderService.show();
     this.screenWidth = window.innerWidth;
     this.roleId = this.cookieService.get("role_id");
