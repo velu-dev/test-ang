@@ -14,7 +14,7 @@ export class AppointmentDetailsComponent implements OnInit {
   xls_1 = globals.xls_1
   docx = globals.docx
   pdf = globals.pdf
-
+  uploadFile:any;
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -92,6 +92,10 @@ export class BillableitemPopupComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  uploadFile(event){
+
   }
 
 }

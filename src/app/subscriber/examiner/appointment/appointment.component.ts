@@ -40,6 +40,8 @@ export class AppointmentComponent implements OnInit {
   expandedElement: any | null;
   disabled = false;
   filterValue;
+  filterAll;
+  roles
   constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -86,5 +88,13 @@ export class AppointmentComponent implements OnInit {
 
   click() {
     this.router.navigate(['/subscriber/examiner/appointment-details'])
+  }
+
+  exportData(){
+
+  }
+  
+  filterByRole(value?: string) {
+
   }
 }

@@ -64,6 +64,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   addressId: number = 1;
   addressIsSubmitted: boolean = false;
   searchAddressDetails = [];
+  options: any[];
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
     private route: ActivatedRoute,private router: Router
@@ -75,10 +76,12 @@ export class ExaminerManageAddressComponent implements OnInit {
         debounceTime(300),
         switchMap(value => this.examinerService.searchAddress({ basic_search: value, isadvanced: false })));
 
-    this.examinerFilteredOptions = this.examinerSearch.valueChanges
-      .pipe(
-        debounceTime(300),
-        switchMap(value => this.examinerService.getExaminerList()));
+    // this.examinerFilteredOptions = this.examinerSearch.valueChanges
+    //   .pipe(
+    //     debounceTime(300),
+    //     switchMap(value => this.examinerService.getExaminerList()));
+
+        
   }
 
   ngOnInit() {
@@ -98,11 +101,16 @@ export class ExaminerManageAddressComponent implements OnInit {
       zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
 
-    // this.examinerService.getExaminerList().subscribe(response => {
-    //   this.examinerOptions = response['data'];
-    // }, error => {
+    this.examinerService.getExaminerList().subscribe(response => {
+      this.options = response['data'];
+      this.examinerFilteredOptions = this.examinerSearch.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        );
+    }, error => {
 
-    // })
+    })
 
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
@@ -138,6 +146,12 @@ export class ExaminerManageAddressComponent implements OnInit {
       zip_code: []
     })
 
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.first_name.toLowerCase().includes(filterValue));
   }
 
 

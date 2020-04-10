@@ -24,9 +24,9 @@
                 </ng-container>
 
                 <!-- Name Column -->
-                <ng-container matColumnDef="organization_name">
+                <ng-container matColumnDef="service_name">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Service Type </th>
-                    <td mat-cell *matCellDef="let element"> {{element.organization_name}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.service_name}} </td>
                 </ng-container>
 
                 <!-- Weight Column -->
@@ -38,7 +38,7 @@
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="phone">
+                <ng-container matColumnDef="contact_info">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
                     <td mat-cell *matCellDef="let element"><span class="fa fa-mobile"></span> &nbsp;
                         {{element.contact_info}}
