@@ -74,9 +74,7 @@ export class AppointmentComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  filterByRole(a?) {
-
-  }
+  
   expandId: any;
   openElement(element) {
     console.log(element)
@@ -86,10 +84,15 @@ export class AppointmentComponent implements OnInit {
       // element.isExpand = !element.isExpand;
     }
   }
-  exportData() {
-
-  }
   click() {
     this.router.navigate(['/subscriber/examiner/appointment-details'])
+  }
+
+  exportData(){
+
+  }
+  
+  filterByRole(value?: string) {
+
   }
 }
