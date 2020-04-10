@@ -44,4 +44,8 @@ export class ExaminerService {
   getAllExaminerAddress(){
     return this.http.get(environment.baseUrl + api_endpoint.allExaminerAddress)
   }
+
+  postExistAddress(data){
+    return this.http.post(environment.baseUrl + api_endpoint.addExistAddress, data)
+  }
 }

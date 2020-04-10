@@ -1,69 +1,192 @@
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" class="claim_details_model">
     <div fxFlex="100">
         <mat-card-header>
             <div class="content-wrapper-main-title p-t-5">Claim </div>
             <span class="spacer"></span>
             <button mat-icon-button>
-                <mat-icon>fullscreen</mat-icon>
+                <mat-icon>fullscreen_exit</mat-icon>
             </button>
             <button mat-icon-button>
                 <mat-icon>more_vert</mat-icon>
             </button>
         </mat-card-header>
         <mat-divider></mat-divider>
-        <div fxLayout="row wrap">
-            <div class="sub-title br-bottom p-t-20 p-b-5" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Claim Details</div>
+        <div fxLayout="row wrap" class="scroll_">
+            <div class="sub-title br-bottom p-t-20 p-b-5" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                Claim Details</div>
             <mat-divider></mat-divider>
             <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
-                <mat-card-content class="p-b-20 claim_popup">
+                <mat-card-content class="claim_popup m-b-0">
                     <div fxLayout="row wrap">
                         <div fxFlex="50" class="claim_label">
-                            <div> Last Name </div>
-                            <div> First Name </div>
-                            <div> Middle Name</div>
-                            <div> Date of Birth</div>
-                            <div> Sex/Gender</div>
-                            <div> Language</div>
-                            <div> Handedness</div>
+                            <div>Claim ID </div>
+                            <div>Date of Injury </div>
+                            <div>Insurance </div>
+                            <div>Injuries </div>
+                            <div>Continuous Trauma (CT)</div>
                         </div>
                         <div fxFlex="50" class="claim_value">
-                            <div>Murry</div>
-                            <div>Ratrick</div>
-                            <div>Buford</div>
-                            <div>12 Mar 1982</div>
-                            <div>Male</div>
-                            <div>English</div>
-                            <div>Right</div>
+                            <div>50504949</div>
+                            <div>8 Jun 2015</div>
+                            <div>Corvel</div>
+                            <div>Arm L, Shoulder L</div>
+                            <div>No</div>
                         </div>
                     </div>
                 </mat-card-content>
             </div>
             <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
-                <mat-card-content class="p-b-20 claim_popup">
+                <mat-card-content class="claim_popup m-b-0">
                     <div fxLayout="row wrap">
                         <div fxFlex="50" class="claim_label">
-                            <div>Phone Number</div>
-                            <div>Alternate Phone Number</div>
-                            <div>Email</div>
-                            <div>Street Address</div>
-                            <div>Street Address 2</div>
-                            <div>City</div>
-                            <div>State</div>
-                            <div>Zip</div>
+                            <div>CT Start Date</div>
+                            <div>CT End Date</div>
+                            <div>Panel Number</div>
+                            <div>WCAB Number</div>
+                            <div>DEU Office</div>
                         </div>
                         <div fxFlex="50" class="claim_value">
-                            <div>(555) 555-5555</div>
-                            <div>(666) 666-6666</div>
-                            <div>marie.calendar@hotmail.com</div>
-                            <div>1223 Boulevard blvd.</div>
-                            <div>Suite 33</div>
-                            <div>La Feyetteville</div>
-                            <div>LA</div>
-                            <div>123456</div>
+                            <div>-</div>
+                            <div>-</div>
+                            <div>QME123456</div>
+                            <div>xyz123-wwr3</div>
+                            <div>Fresno, CA</div>
                         </div>
                     </div>
                 </mat-card-content>
             </div>
 
+
+
+            <div class="sub-title br-bottom p-t-20 p-b-5" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                Adjuster Details</div>
+            <mat-divider></mat-divider>
+            <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
+                <mat-card-content class="claim_popup m-b-0">
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Adjuster</div>
+                            <div> Adjuster Phone</div>
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>-</div>
+                            <div>-</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
+            <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
+                <mat-card-content class="claim_popup m-b-0">
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Adjuster Fax</div>
+                            <div>Adjuster Email</div>
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>-</div>
+                            <div>-</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
+
+            <div class="sub-title br-bottom p-t-20 p-b-5" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                Employee Details</div>
+            <mat-divider></mat-divider>
+            <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
+                <mat-card-content class="claim_popup m-b-0">
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Employer</div>
+                            <div>Employer Phone </div>
+                            <div>Employer Address</div>
+
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
+            <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
+                <mat-card-content class="claim_popup m-b-0">
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Employer City</div>
+                            <div>Employer State</div>
+                            <div>Employer Zip</div>
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
+
+
+            <div class="sub-title br-bottom p-t-20 p-b-5" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                Attorney Details</div>
+            <mat-divider></mat-divider>
+            <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
+                <mat-card-content class="claim_popup m-b-0">
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Applicant Attorney (AA)</div>
+                            <div>AA Phone</div>
+                            <div>AA Fax</div>
+                            <div>AA Email</div>
+                            <div>AA Address</div>
+                            <div>AA City</div>
+                            <div>AA State</div>
+                            <div>AA Zip</div>
+
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>Tuna Tuna & Lettuce</div>
+                            <div>8 Jun 2015</div>
+                            <div>Corvel</div>
+                            <div>Arm L, Shoulder L</div>
+                            <div>14 Dec 2016</div>
+                            <div> Ralphs</div>
+                            <div>-</div>
+                            <div>-</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
+            <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
+                <mat-card-content class="claim_popup m-b-0">
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Defense Attorney (DA)</div>
+                            <div>DA Phone</div>
+                            <div>DA Fax</div>
+                            <div> DA Email</div>
+                            <div>DA Address</div>
+                            <div>DA City</div>
+                            <div>DA State</div>
+                            <div>DA Zip</div>
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
         </div>
+        <mat-card-footer>
+            <a class="close_btn">Close</a>
+        </mat-card-footer>
     </div>
+</div>
