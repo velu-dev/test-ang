@@ -9,21 +9,6 @@ import * as  errors from '../../../shared/messages/errors'
 import { Router, ActivatedRoute } from '@angular/router';
 import * as globals from '../../../globals';
 
-
-export interface PeriodicElement {
-  type: string;
-  address: string;
-  phone: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { type: 'Pharmacy', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
-  { type: 'Telehealth', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
-  { type: 'Homeless Shelter', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
-  { type: 'Tribal 638 Free-standing Facility', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
-  { type: 'Temporary Lodging', address: '2723  Mandan Road, California, MO, Missouri, 6501 82723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
-  { type: 'Urgent Care Facility', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
-  { type: 'Birthing Center', address: '2723  Mandan Road, California, MO, Missouri, 65018', phone: '816-269-6918' },
-];
 @Component({
   selector: 'app-examiner-manage-address',
   templateUrl: './examiner-manage-address.component.html',
@@ -34,12 +19,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class ExaminerManageAddressComponent implements OnInit {
 
   xls = globals.xls
-
-  displayedColumns =
-    ['type', 'address', 'phone', 'action'];
-  dataSource = ELEMENT_DATA;
-
-
   addresssearch = new FormControl();
   examinerSearch = new FormControl();
 
@@ -64,10 +43,9 @@ export class ExaminerManageAddressComponent implements OnInit {
   addressId: number = 1;
   addressIsSubmitted: boolean = false;
   searchAddressDetails = [];
-  options: any[];
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
-    private route: ActivatedRoute,private router: Router
+    private route: ActivatedRoute, private router: Router
   ) {
     // this.route.params.subscribe(params => this.examinerId = params.id);
 
@@ -81,13 +59,13 @@ export class ExaminerManageAddressComponent implements OnInit {
     //     debounceTime(300),
     //     switchMap(value => this.examinerService.getExaminerList()));
 
-        
+
   }
 
   ngOnInit() {
     this.addressForm = this.formBuilder.group({
       id: [""],
-      address_type_id: ['', Validators.compose([Validators.required])],
+      service_code_id: ['', Validators.compose([Validators.required])],
       phone1: [''],
       phone2: [''],
       mobile1: [''],
@@ -99,10 +77,11 @@ export class ExaminerManageAddressComponent implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      service_name: ['']
     });
 
     this.examinerService.getExaminerList().subscribe(response => {
-      this.options = response['data'];
+      this.examinerOptions = response['data'];
       this.examinerFilteredOptions = this.examinerSearch.valueChanges
         .pipe(
           startWith(''),
@@ -120,7 +99,7 @@ export class ExaminerManageAddressComponent implements OnInit {
 
     this.claimService.seedData('service_code').subscribe(response => {
       this.addressType = response['data'];
-      this.addressType.splice(this.addressType.findIndex(o => o.address_type_name === 'Primary'), 1)
+      //this.addressType.splice(this.addressType.findIndex(o => o.address_type_name === 'Primary'), 1)
     }, error => {
       console.log("error", error)
     })
@@ -130,16 +109,6 @@ export class ExaminerManageAddressComponent implements OnInit {
 
 
   getAddressDetails() {
-
-    // this.examinerService.getsingleExAddress(this.examinerId).subscribe(response => {
-    //   this.addressList = response['data'];
-    //   this.examinerName = response['data'].examiner_name;
-    //   console.log(response)
-    // }, error => {
-    //   console.log(error)
-    //   this.examinerName = error.error.examiner_name;
-    // })
-
     this.advanceSearch = this.formBuilder.group({
       city: [],
       state: [],
@@ -150,11 +119,10 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.first_name.toLowerCase().includes(filterValue));
+    return this.examinerOptions.filter(option => option.first_name.toLowerCase().includes(filterValue));
   }
 
-
+  sevice_name = [];
   addressformSubmit() {
     this.addressIsSubmitted = true;
     console.log(this.addressForm.value)
@@ -163,50 +131,43 @@ export class ExaminerManageAddressComponent implements OnInit {
       return;
     }
 
-
+    let servcie_index = this.addressType.findIndex(o => o.id == this.addressForm.value.service_code_id)
     if (this.addressForm.value.id == '' || this.addressForm.value.id == null) {
+
+      this.sevice_name.push(this.addressType[servcie_index].service_name)
       this.addressForm.value.id = this.addressId++
       this.addAddressDetails.push(this.addressForm.value)
-
-
       this.addressForm.reset();
       this.addressIsSubmitted = false;
     } else {
       let index = this.addAddressDetails.findIndex(o => o.id === this.addressForm.value.id);
       this.addAddressDetails.splice(index, 1);
-      this.addAddressDetails.push(this.addressForm.value)
-      // this.examinerService.updateExaminerAddress(this.addressForm.value).subscribe(response => {
-      //   console.log(response)
-      //   this.getAddressDetails();
-      //   this.addAddress = false;
-      //   this.alertService.openSnackBar("Location updated successfully", 'success');
-
-      // }, error => {
-      //   console.log(error);
-      //   this.alertService.openSnackBar(error.error.message, 'error');
-      // })
+      this.sevice_name.splice(index, 1)
+      this.sevice_name.push(this.addressType[servcie_index].service_name)
+      this.addAddressDetails.push(this.addressForm.value);
+      this.addressForm.reset();
     }
-    console.log(this.addAddressDetails)
   }
 
   newAddressBlukSubmit() {
-    if(this.addAddressDetails.length > 0){
-      this.addAddressDetails.map(data=>{
+    if (this.addAddressDetails.length > 0) {
+      let addressDetails = this.addAddressDetails;
+      addressDetails.map(data => {
         data.address_type_id = 1
         delete data.id
       })
-      console.log(this.addAddressDetails)
-    this.examinerService.postExaminerAddressOther(this.addAddressDetails,this.examinerId).subscribe(response => {
-      console.log(response)
-      this.alertService.openSnackBar("Location created successfully", 'success');
-      this.router.navigate(['/subscriber/staff/manage-location'])
-    }, error => {
-      console.log(error);
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
-  }else{
-    this.alertService.openSnackBar("No data to submit", 'error');
-  }
+      console.log(addressDetails)
+      this.examinerService.postExaminerAddressOther(addressDetails, this.examinerId).subscribe(response => {
+        console.log(response)
+        this.alertService.openSnackBar("Location created successfully", 'success');
+        this.router.navigate(['/subscriber/staff/manage-location'])
+      }, error => {
+        console.log(error);
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    } else {
+      this.alertService.openSnackBar("No data to submit", 'error');
+    }
   }
 
   editAddress(details) {

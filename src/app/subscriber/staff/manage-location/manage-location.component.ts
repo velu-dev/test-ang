@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ExaminerService } from '../../service/examiner.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 const ELEMENT_DATA: any[] = [
   {first_name: 1, type: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -33,7 +34,7 @@ export class ManageLocationComponent implements OnInit {
   dataSource: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private examinerService: ExaminerService) {
+  constructor(private examinerService: ExaminerService,private alertService: AlertService) {
 
   }
 
@@ -53,6 +54,17 @@ export class ManageLocationComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  deleteAddress(id) {
+    this.examinerService.deleteExaminerAddress(id).subscribe(response => {
+      console.log(response)
+      this.alertService.openSnackBar("Location deleted successfully", 'success');
+
+    }, error => {
+      console.log(error)
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
 
 
