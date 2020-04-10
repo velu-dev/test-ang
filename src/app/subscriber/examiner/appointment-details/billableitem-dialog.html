@@ -1,16 +1,79 @@
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" class="billableiten_details_model">
     <div fxFlex="100">
         <mat-card-header>
-            <div class="content-wrapper-main-title p-t-5">Billable Item </div>
+            <div class="content-wrapper-main-title p-t-5">Appointment</div>
             <span class="spacer"></span>
             <button mat-icon-button>
-                <mat-icon>fullscreen</mat-icon>
+                <mat-icon>fullscreen_exit</mat-icon>
             </button>
             <button mat-icon-button>
                 <mat-icon>more_vert</mat-icon>
             </button>
         </mat-card-header>
         <mat-divider></mat-divider>
-    
+        <div fxLayout="row wrap" class="scroll_">
+            <div class="sub-title br-bottom p-t-20 p-b-5" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                Claim Details</div>
+            <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
+                <mat-card-content class="p-b-20 claim_popup">
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div> Address </div>
+                            <div> Date </div>
+                            <div> Time </div>
+                            <div> Status</div>
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
+            <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
+                <mat-card-content class="p-b-20 claim_popup">
+                    <div fxLayout="row wrap">
+                        <div fxFlex="50" class="claim_label">
+                            <div>Intake Caller </div>
+                            <div>Date </div>
+                            <div>Time</div>
+                        </div>
+                        <div fxFlex="50" class="claim_value">
+                            <div>-</div>
+                            <div>-</div>
+                            <div>-</div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </div>
+            <div fxLayout="row wrap" fxFlex="100">
+                <div class="p-t-10" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.xs="100">
+                    <div class="sub-title br-bottom ">Appointment notes </div>
+                    <p class="des_">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                        Ipsum has been
+                        the industry’s standard dummy text</p>
+                    <div class="sub-title br-bottom p-t-10">Claim notes </div>
+                    <p class="des_">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                        Ipsum has been
+                        the industry’s standard dummy text</p>
+                </div>
+                <div class="p-t-10" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.xs="100">
+                    <div class="map">
+                        <p class="des_ m-t-0"><strong>Appointment Location:</strong> 66 b Avenue Ave. Fresno, CA 99302
+                        </p>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d861993.9440777752!2d-121.30643632838286!3d37.79833630016179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb9fe5f285e3d%3A0x8b5109a227086f55!2sCalifornia%2C%20USA!5e0!3m2!1sen!2sin!4v1586504224333!5m2!1sen!2sin"
+                            width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen=""
+                            aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+        <mat-card-footer>
+            <a class="close_btn">Close</a>
+        </mat-card-footer>
+    </div>
 </div>

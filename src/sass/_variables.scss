@@ -34,6 +34,7 @@ $bg-error: rgba(255, 54, 54, 0.05);
 $bg-warning: rgba(255, 178, 54, 0.4);
 $bg-error-style-one: #ff8f8f;
 $btn_success: #00cc00;
+$btn_close: #ebebf2;
 
 // Tab background color
 $tab-bg-1: #3c3cff1f;
@@ -469,72 +470,4 @@ input:-webkit-autofill {
     margin-bottom: 0px !important;
     padding-bottom: 0px !important;
   }
-}
-
-// ADVANCE SEARCH CUSTOM SCSS
-
-.advanced_search {
-  .mat-form-field-flex {
-    padding: 0px !important;
-  }
-}
-
-// action buttons
-.confirmed {
-  border: 1px solid $secondaryarkcolor;
-  box-shadow: $box-shadow-2;
-  border-radius: 3px;
-  padding: 2px 10px;
-  font-size: $font-size-7;
-}
-
-.not_confirmed {
-  border: 1px solid $danger;
-  box-shadow: $box-shadow-2;
-  border-radius: 3px;
-  padding: 2px 10px;
-  font-size: $font-size-7;
-}
-.left_voicemail {
-  border: 1px solid $warning;
-  box-shadow: $box-shadow-2;
-  border-radius: 3px;
-  padding: 2px 10px;
-  font-size: $font-size-7;
-}
-
-.claim_popup {
-  padding-top: 10px;
-  .claim_label {
-    width: $width-100;
-    div {
-      font-weight: $font-weight-bold;
-      font-size: $font-size-1;
-      padding-top: 10px;
-      color: $text-gray;
-      &::after {
-        content: ":";
-        display: inline-block;
-        float: right;
-        padding-right: 10px;
-      }
-    }
-  }
-  .claim_value {
-    width: $width-100;
-    div {
-      font-size: $font-size-1;
-      padding-top: 10px;
-      color: $text-gray;
-    }
-  }
-}
-
-.sub-title {
-  color: $primarycolor;
-  font-size: $font-size-1;
-  font-weight: $font-weight-medium;
-}
-.br-bottom {
-  border-bottom: 1px solid $light-gray;
 }
