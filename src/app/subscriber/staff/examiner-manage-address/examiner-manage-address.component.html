@@ -13,7 +13,7 @@
                             <mat-label>Select Examiner</mat-label>
                             <input type="text" matInput [formControl]="examinerSearch"
                                 [matAutocomplete]="examinerAutocomplete">
-                            <mat-autocomplete #examinerAutocomplete="matAutocomplete" [displayWith]="displayFn">
+                            <mat-autocomplete #examinerAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let option of (examinerFilteredOptions | async)?.data" [value]="option.first_name + ' '+ option.last_name" (click)="examinerOnChange(option)">
                                     {{option.first_name}} {{option.last_name}}
                                 </mat-option>
