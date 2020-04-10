@@ -163,13 +163,19 @@ export const ROUTES = [
             submenu: [],
         }, {
             path: '/subscriber/staff/manage-address',
-            title: 'Manage Address',
+            title: 'Add Location',
             icon: 'dashboard',
             submenu: [],
         }, {
             path: '/subscriber/staff/examiner-list',
             title: 'Manage Examiner',
             icon: 'dashboard',
+            submenu: [],
+        },
+        {
+            path: '/subscriber/staff/manage-location',
+            title: 'Manage Locations',
+            icon: 'map',
             submenu: [],
         }
         // , {
@@ -198,6 +204,12 @@ export const ROUTES = [
             },
             {
                 path: '/subscriber/examiner/appointment',
+                title: 'Manage Appointments',
+                icon: 'dashboard',
+                submenu: []
+            },
+            {
+                path: '/subscriber/examiner/appointment-details',
                 title: 'Appointments',
                 icon: 'dashboard',
                 submenu: []

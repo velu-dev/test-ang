@@ -25,7 +25,8 @@ import { DialogueComponent } from './components/dialogue/dialogue.component';
 import { NodataComponent } from './components/nodata/nodata.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
-import { NgxMaskModule } from 'ngx-mask'
+import { NgxMaskModule } from 'ngx-mask';
+import { FilterPipe } from './pipes/filter.pipe'
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -33,7 +34,8 @@ import { NgxMaskModule } from 'ngx-mask'
     ErrorComponent,
     DialogueComponent,
     NodataComponent,
-    EllipsisPipe
+    EllipsisPipe,
+    FilterPipe
   ],
   entryComponents: [
     AlertComponent,
@@ -64,7 +66,8 @@ import { NgxMaskModule } from 'ngx-mask'
     NodataComponent,
     NgxSkeletonLoaderModule,
     EllipsisPipe,
-    NgxMaskModule
+    NgxMaskModule,
+    FilterPipe
   ],
   providers: [
     CognitoService,

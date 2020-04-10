@@ -9,6 +9,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import * as globals from '../../../globals';
+import { ExaminerService } from '../../service/examiner.service';
 @Component({
   selector: 'app-examiner-list',
   templateUrl: './examiner-list.component.html',
@@ -22,13 +23,7 @@ import * as globals from '../../../globals';
   ]
 })
 export class ExaminerListComponent implements OnInit {
-xls = globals.xls;
-  data = [
-    { id: 1, first_name: 'Sarath.s', last_name: 'sarath', sign_in_email_id: 'sarath.s@auriss.com' },
-    { id: 1, first_name: 'Venkatesan', last_name: 'Mariyappan', sign_in_email_id: 'venkatesan.m@auriss.com' },
-    { id: 1, first_name: 'Rajan', last_name: 'M', sign_in_email_id: 'rajan.s@auriss.com' },
-  ];
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  xls = globals.xls;
   dataSource: any;
   columnName = []
   columnsToDisplay = [];
@@ -40,12 +35,13 @@ xls = globals.xls;
   tabIndex;
   applyFilter;
   filterValue;
+  examinerList: any;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
-  constructor(private breakpointObserver: BreakpointObserver,private router: Router, ) {
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router, private examinerService: ExaminerService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -53,14 +49,19 @@ xls = globals.xls;
         this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
         this.columnName = ["Last Name", "First Name", "Email", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'action']
+        this.columnsToDisplay = ['last_name', 'first_name', 'email', 'action']
       }
     })
-    this.dataSource = new MatTableDataSource(this.data);
 
   }
 
   ngOnInit() {
+    this.examinerService.getExaminerList().subscribe(response => {
+      this.dataSource = new MatTableDataSource(response['data']);
+    }, error => {
+
+    })
+
   }
 
   expandId: any;
@@ -72,7 +73,7 @@ xls = globals.xls;
   }
 
   onDisable(data, user) {
-    this.router.navigate(['/subscriber/staff/manage-address'])
+    this.router.navigate(['/subscriber/staff/manage-address',user.id])
   }
 
 }

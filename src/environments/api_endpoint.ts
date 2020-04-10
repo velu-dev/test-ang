@@ -54,5 +54,14 @@ export const api_endpoint = {
 
     //manage-address
     addAddress: 'subscriber/examiner/add-address',
-    getAddress: 'subscriber/examiner/get-address'
+    getAddress: 'subscriber/examiner/get-address',
+    updateAddress: 'subscriber/examiner/update-address',
+    deleteAddress: 'subscriber/examiner/remove-address/',
+    allExaminerAddress: 'subscriber/examiner/all-address',
+
+    //examiner
+
+    getExaminerList: 'subscriber/examiner/examiner-list',
+    getSingleExaminer: 'subscriber/examiner/get-address/',
+    searchAddress: 'subscriber/examiner/search-address'
 }

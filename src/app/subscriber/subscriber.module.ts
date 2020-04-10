@@ -23,6 +23,8 @@ import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-s
 import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/examiner-manage-address.component';
 import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 import { ExaminerService } from './service/examiner.service';
+import { AppointmentDetailsComponent, ClaimantPopupComponent, ClaimPopupComponent, BillableitemPopupComponent } from './examiner/appointment-details/appointment-details.component';
+import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,16 @@ import { ExaminerService } from './service/examiner.service';
     ExaminerSettingComponent,
     ExaminerManageAddressComponent,
     ExaminerListComponent,
+    AppointmentDetailsComponent,
+    ManageLocationComponent,
+    ClaimantPopupComponent,
+    ClaimPopupComponent,
+    BillableitemPopupComponent
+  ],
+  entryComponents: [
+    ClaimantPopupComponent,
+    ClaimPopupComponent,
+    BillableitemPopupComponent
   ],
   imports: [
     CommonModule,

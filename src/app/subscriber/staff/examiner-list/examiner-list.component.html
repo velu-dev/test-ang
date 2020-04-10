@@ -10,7 +10,7 @@
                 placeholder="Search by name, email, etc">
         </div>
         <span class="spacer"></span>
-        <button mat-icon-button class="filter-icon" >
+        <button mat-icon-button class="filter-icon">
             <img class="icon-16" [src]="xls" alt="export" />
         </button>
 
@@ -30,9 +30,9 @@
                         </span>
                         <span [title]="element[column]">{{element[column] }}</span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">
-                            <span *ngIf="tabIndex != 1" (click)="onDisable($event, element)">
+                            <span *ngIf="tabIndex != 1">
                                 <mat-icon class="edit-user" matTooltip="Edit {{element.first_name}} "
-                                    matTooltipPosition="right">edit</mat-icon>
+                                    matTooltipPosition="right">remove_red_eye</mat-icon>
                             </span>
                             <!-- <span class="user-disable-enable" *ngIf="tabIndex == 1"  (click)="onDisable($event, element)"> Cancel </span> -->
                             <!-- <span class="user-enable"> Enable</span>  -->
