@@ -8,6 +8,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import * as  errors from '../../../shared/messages/errors'
 import { Router, ActivatedRoute } from '@angular/router';
 import * as globals from '../../../globals';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 
 @Component({
   selector: 'app-examiner-manage-address',
@@ -43,12 +44,19 @@ export class ExaminerManageAddressComponent implements OnInit {
   addressId: number = 1;
   addressIsSubmitted: boolean = false;
   searchAddressDetails = [];
+  searchAddressSubmitDetails = [];
+  user: any;
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
-    private route: ActivatedRoute, private router: Router
+    private route: ActivatedRoute, private router: Router, private cookieService: CookieService
   ) {
     // this.route.params.subscribe(params => this.examinerId = params.id);
-
+    this.user = JSON.parse(this.cookieService.get('user'));
+    if(this.user.role_id == 11){
+      this.examinerId = this.user.id
+      this.examinerName = this.user.first_name + ' ' + this.user.last_name
+      this.examinerSearch = new FormControl({value:  this.examinerName, disabled: true})
+    }
     this.filteredOptions = this.addresssearch.valueChanges
       .pipe(
         debounceTime(300),
@@ -170,6 +178,23 @@ export class ExaminerManageAddressComponent implements OnInit {
     }
   }
 
+  existAddressBlukSubmit() {
+    if (this.searchAddressDetails.length > 0) {
+      console.log(this.searchAddressSubmitDetails)
+      this.examinerService.postExistAddress(this.searchAddressSubmitDetails).subscribe(response => {
+        console.log(response)
+        this.alertService.openSnackBar("Location added successfully", 'success');
+        this.router.navigate(['/subscriber/staff/manage-location'])
+      }, error => {
+        console.log(error);
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    } else {
+      this.alertService.openSnackBar("No data to submit", 'error');
+    }
+
+  }
+
   editAddress(details) {
     console.log(details);
     this.addressForm.setValue(details)
@@ -192,6 +217,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   searchDeleteAddress(index) {
     console.log(index)
     this.searchAddressDetails.splice(index, 1)
+    this.searchAddressSubmitDetails.splice(index, 1)
   }
 
   advanceSearchSubmit() {
@@ -199,8 +225,9 @@ export class ExaminerManageAddressComponent implements OnInit {
   }
 
   addressOnChange(data) {
-    console.log(data)
+    let details = { user_id: this.examinerId, address_id: data.id }
     this.searchAddressDetails.push(data)
+    this.searchAddressSubmitDetails.push(details)
   }
 
   examinerOnChange(data) {

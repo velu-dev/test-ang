@@ -12,7 +12,7 @@
                         <mat-form-field fxFlex="100" fxFlex.md="100" fxFlex.lg="100" appearance="fill">
                             <mat-label>Select Examiner</mat-label>
                             <input type="text" matInput [formControl]="examinerSearch"
-                                [matAutocomplete]="examinerAutocomplete">
+                                [matAutocomplete]="examinerAutocomplete" >
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let option of (examinerFilteredOptions | async)" [value]="option.first_name + ' '+ option.last_name" (click)="examinerOnChange(option)">
                                     {{option.first_name}} {{option.last_name}}
@@ -100,7 +100,7 @@
                                             <div><strong>
                                                     <i class="fa fa-building-o"></i>{{address?.address_type_name}}
                                                 </strong></div>
-                                            <span><i class="fa fa-phone-alt"></i>
+                                            <span *ngIf="address?.mobile1"><i class="fa fa-phone-alt"></i>
                                                 {{address?.mobile1}}</span>
                                         </div>
                                         <div class="address" mat-line>{{address?.street1}} {{address?.street2}} {{address?.city}} {{address?.state}} - {{address?.zipcode}}</div>
@@ -120,7 +120,7 @@
                             <div class="text-center w-100 m-t-10 m-b-10" *ngIf="searchAddressDetails?.length > 0">
                                 <button mat-raised-button color="warn" class="m-r-10 " [routerLink]="['/subscriber/staff/manage-location']">
                                     Cancel </button>
-                                <button mat-raised-button color="primary" class="m-r-15 btn_success">Submit</button>
+                                <button mat-raised-button color="primary" class="m-r-15 btn_success" (click)="existAddressBlukSubmit()">Submit</button>
                             </div>
 
                         </mat-tab>
@@ -257,7 +257,7 @@
                                             <div><strong>
                                                     <i class="fa fa-building-o"></i>{{sevice_name[i]}}
                                                 </strong></div>
-                                            <span><i class="fa fa-phone-alt"></i>
+                                            <span *ngIf="address?.mobile1"><i class="fa fa-phone-alt"></i>
                                                 {{address?.mobile1}}</span>
                                         </div>
                                         <div class="address" mat-line>{{address?.street1}} {{address?.street2}} {{address?.city}} {{address?.state}} - {{address?.zipcode}}</div>
