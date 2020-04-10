@@ -56,8 +56,12 @@ export class ManageLocationComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  deleteAddress(id) {
-    this.examinerService.deleteExaminerAddress(id).subscribe(response => {
+  deleteAddress(data) {
+    let details= {
+      user_id: data.examiner_id,
+      address_id: data.address_id
+    }
+    this.examinerService.PostDeleteExaminerAddress(details).subscribe(response => {
       console.log(response)
       this.alertService.openSnackBar("Location deleted successfully", 'success');
 
