@@ -178,7 +178,16 @@
                                 <input matInput placeholder="Email" formControlName="email" autocomplete="off">
                                 <mat-error>Enter valid email</mat-error>
                             </mat-form-field>
-
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Gender</mat-label>
+                                <mat-select formControlName="gender">
+                                    <mat-option value="male">Male</mat-option>
+                                    <mat-option value="female">Female</mat-option>
+                                    <mat-option value="other">Other</mat-option>
+                                </mat-select>
+                                <mat-error>Enter valid state</mat-error>
+                            </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Handedness</mat-label>
@@ -852,7 +861,8 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Select Examiner</mat-label>
                             <mat-select formControlName="examiner_id">
-                                <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)" [value]="examinar.id">
+                                <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
+                                    [value]="examinar.id">
                                     {{examinar.first_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -935,7 +945,8 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Communication Type</mat-label>
                             <mat-select formControlName="call_type">
-                                <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.id">{{contactType.contact_type_name}}</mat-option>
+                                <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.id">
+                                    {{contactType.contact_type_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field *ngIf="billable_item?.value?.intake_call_info?.communication_type != ''"
