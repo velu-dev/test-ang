@@ -62,6 +62,9 @@ const routes: Routes = [{
     path: "new-claim",
     component: NewClaimComponent
   }, {
+    path: ":id",
+    component: NewClaimComponent
+  }, {
     path: "new-billable-item",
     component: BillableItemComponent
   }]
@@ -120,13 +123,13 @@ const routes: Routes = [{
   }, {
     path: "dashboard",
     component: ExaminerDashboardComponent
-  },{
+  }, {
     path: "appointment",
     component: AppointmentComponent
-  },{
+  }, {
     path: "appointment-details",
     component: AppointmentDetailsComponent
-  },{
+  }, {
     path: "settings",
     component: ExaminerSettingComponent
   }]

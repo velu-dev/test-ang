@@ -69,11 +69,11 @@ export class AppComponent {
           })
         })
         let breadcrumb = this.breadcrumbList
-        this.menu$.subscribe(res => {
-          if (res == undefined) {
-            this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
-          }
-        })
+        // this.menu$.subscribe(res => {
+        //   if (res == undefined) {
+        //     this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
+        //   }
+        // })
         if (breadcrumb.length != 0) {
           this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
         }

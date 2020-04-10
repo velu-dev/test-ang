@@ -50,7 +50,6 @@ export class SidenavComponent implements OnInit {
     private cookieService: CookieService
   ) {
     this.is_subscriber = this.cookieService.get('is_subscriber');
-    this.loaderService.show();
     this.screenWidth = window.innerWidth;
     this.roleId = this.cookieService.get("role_id");
     // console.log(this.roleId)

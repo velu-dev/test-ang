@@ -1,5 +1,6 @@
 import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as breadcrumActions from './breadcrumb.actions';
+import { stat } from 'fs';
 export interface State {
   menu: any[],
   // active_menu: "",
@@ -37,9 +38,9 @@ export function breadcrumbreducer(
       }
     }
     case breadcrumActions.BreadcrumActions.RESET: {
+
       return {
         ...state,
-        menu: initialState.menu
       }
     }
 
