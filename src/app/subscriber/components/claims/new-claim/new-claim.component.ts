@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { runInThisContext } from 'vm';
+import { ActivatedRoute } from '@angular/router';
 export interface Claimant {
   last_name: string;
   first_name: string;
@@ -84,7 +85,15 @@ export class NewClaimComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private route: ActivatedRoute) {
+    this.route.params.subscribe(param => {
+      if (param.id) {
+        this.claimService.getClaim(param.id).subscribe(res => {
+          console.log(res)
+        })
+      }
+    })
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
     })

@@ -4,12 +4,14 @@
 
         <mat-toolbar style="cursor: pointer;" (click)="mainPage()"> <img mat-card-image [src]="simplexam_logo"
                 alt="Lucy logo" class="logo-white"> <span class="p-l-4"> Simplexam</span></mat-toolbar>
-        <a mat-raised-button *ngIf="roleId == 2" (click)="changeRole()" class="text-center switched_account">
-            <mat-icon>loop</mat-icon> Switch to Examiner
-        </a>
-        <a mat-raised-button *ngIf="roleId == 11" (click)="changeRole()" class="text-center switched_account">
-            <mat-icon>loop</mat-icon> Switch to Subscriber
-        </a>
+        <span *ngIf="is_subscriber == 'true'">
+            <a mat-raised-button *ngIf="roleId == 2" (click)="changeRole()" class="text-center switched_account">
+                <mat-icon>loop</mat-icon> Switch to Examiner
+            </a>
+            <a mat-raised-button *ngIf="roleId == 11" (click)="changeRole()" class="text-center switched_account">
+                <mat-icon>loop</mat-icon> Switch to Subscriber
+            </a>
+        </span>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
                 <a class="menu-card-title">{{menuItem.group}}</a>
