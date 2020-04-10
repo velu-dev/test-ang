@@ -14,14 +14,12 @@ export class AppointmentDetailsComponent implements OnInit {
   xls_1 = globals.xls_1
   docx = globals.docx
   pdf = globals.pdf
-  uploadFile:any;
+  uploadFile: any;
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
-  uploadFile(e){
 
-  }
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
       width: '800px',
@@ -97,8 +95,9 @@ export class BillableitemPopupComponent {
     this.dialogRef.close();
   }
 
-  uploadFile(event){
+  uploadFile(event) {
 
   }
+
 
 }

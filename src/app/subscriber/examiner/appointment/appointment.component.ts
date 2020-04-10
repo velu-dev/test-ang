@@ -41,8 +41,6 @@ export class AppointmentComponent implements OnInit {
   expandedElement: any | null;
   disabled = false;
   filterValue;
-  filterAll;
-  roles
   constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -76,9 +74,7 @@ export class AppointmentComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  filterByRole(a?) {
-
-  }
+  
   expandId: any;
   openElement(element) {
     console.log(element)
@@ -87,9 +83,6 @@ export class AppointmentComponent implements OnInit {
       this.expandId = element.id;
       // element.isExpand = !element.isExpand;
     }
-  }
-  exportData() {
-
   }
   click() {
     this.router.navigate(['/subscriber/examiner/appointment-details'])
