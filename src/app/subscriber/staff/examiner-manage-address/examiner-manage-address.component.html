@@ -13,8 +13,8 @@
                             <mat-label>Select Examiner</mat-label>
                             <input type="text" matInput [formControl]="examinerSearch"
                                 [matAutocomplete]="examinerAutocomplete">
-                            <mat-autocomplete #examinerAutocomplete="matAutocomplete" [displayWith]="displayFn">
-                                <mat-option *ngFor="let option of (examinerFilteredOptions | async)?.data" [value]="option.first_name + ' '+ option.last_name" (click)="examinerOnChange(option)">
+                            <mat-autocomplete #examinerAutocomplete="matAutocomplete">
+                                <mat-option *ngFor="let option of (examinerFilteredOptions | async)" [value]="option.first_name + ' '+ option.last_name" (click)="examinerOnChange(option)">
                                     {{option.first_name}} {{option.last_name}}
                                 </mat-option>
                             </mat-autocomplete>
@@ -145,8 +145,8 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Service Type</mat-label>
-                                            <mat-select formControlName="address_type_id">
-                                                <mat-option *ngFor="let address of addressType" [value]="address.service_name">
+                                            <mat-select formControlName="service_code_id">
+                                                <mat-option *ngFor="let address of addressType" [value]="address.id">
                                                     {{address?.service_code}} - {{address?.service_name}}</mat-option>
                                             </mat-select>
                                             <mat-error *ngIf="addressIsSubmitted">Select valid service location type
@@ -255,7 +255,7 @@
                                     <mat-list-item>
                                         <div class="name" mat-line>
                                             <div><strong>
-                                                    <i class="fa fa-building-o"></i>{{address?.address_type_id}}
+                                                    <i class="fa fa-building-o"></i>{{sevice_name[i]}}
                                                 </strong></div>
                                             <span><i class="fa fa-phone-alt"></i>
                                                 {{address?.mobile1}}</span>
