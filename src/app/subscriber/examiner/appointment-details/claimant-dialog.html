@@ -1,17 +1,17 @@
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" class="claimant_details_model">
     <div fxFlex="100">
         <mat-card-header>
             <div class="content-wrapper-main-title p-t-5">Claimant </div>
             <span class="spacer"></span>
             <button mat-icon-button>
-                <mat-icon>fullscreen</mat-icon>
+                <mat-icon>fullscreen_exit</mat-icon>
             </button>
             <button mat-icon-button>
                 <mat-icon>more_vert</mat-icon>
             </button>
         </mat-card-header>
         <mat-divider></mat-divider>
-        <div fxLayout="row wrap">
+        <div fxLayout="row wrap" class="scroll_">
             <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="p-5">
                 <mat-card-content class="p-b-20 claim_popup">
                     <div fxLayout="row wrap">
@@ -62,9 +62,9 @@
                     </div>
                 </mat-card-content>
             </div>
-
         </div>
+        <mat-card-footer>
+            <a class="close_btn">Close</a>
+        </mat-card-footer>
     </div>
-
-
 </div>
