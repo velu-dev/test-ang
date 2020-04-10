@@ -19,6 +19,9 @@ export class AppointmentDetailsComponent implements OnInit {
 
   ngOnInit() {
   }
+  uploadFile(e){
+
+  }
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
       width: '800px',

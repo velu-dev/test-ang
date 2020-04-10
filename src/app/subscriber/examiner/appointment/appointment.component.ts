@@ -28,7 +28,8 @@ export class AppointmentComponent implements OnInit {
   columnsToDisplay = [];
   displayedColumns: string[] = ["act", 'name', 'claim_number', 'exam_type', 'location', 'date', "status", "data"];
   dataSource: MatTableDataSource<any>;
-
+  filterAll: any;
+  roles = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -75,7 +76,9 @@ export class AppointmentComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+  filterByRole(a?) {
 
+  }
   expandId: any;
   openElement(element) {
     console.log(element)
@@ -85,7 +88,9 @@ export class AppointmentComponent implements OnInit {
       // element.isExpand = !element.isExpand;
     }
   }
+  exportData() {
 
+  }
   click() {
     this.router.navigate(['/subscriber/examiner/appointment-details'])
   }
