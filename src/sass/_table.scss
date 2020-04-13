@@ -11,7 +11,7 @@
     }
     td {
       color: $dark-gray;
-      padding: 0px 10px !important;
+      padding: 5px 10px !important;
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
     &:hover {
@@ -23,6 +23,9 @@
     height: 50px !important;
   }
 }
+
+
+
 // ==================================
 // Table Responsive styles   ========
 // ==================================
@@ -61,4 +64,16 @@ tr.detail-row {
   padding-top: 8px;
   color:$primarylightcolor;
   font-size: $font-size-4;
+}
+
+// ==================================
+// Table data no wrap scss   ========
+// ==================================
+
+.no-wrap-td {
+  white-space: pre;
+}
+
+.width-150 {
+  min-width: 150px;
 }
