@@ -1,0 +1,15 @@
+@import 'variables';
+mat-card {
+    .manage-address-form {
+        form {
+            div {
+                mat-form-field {
+                    padding: 10px;
+                }
+                .btn_success {
+                    background-color: $btn-success;
+                }
+            }
+        }
+    }
+}
