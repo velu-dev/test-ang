@@ -167,6 +167,11 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: [],
         }, {
+            path: '/subscriber/staff/edit-address',
+            title: 'Edit Location',
+            icon: 'dashboard',
+            submenu: [],
+        },{
             path: '/subscriber/staff/examiner-list',
             title: 'Manage Examiner',
             icon: 'dashboard',

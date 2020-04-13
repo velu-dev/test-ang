@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { ExaminerService } from '../../service/examiner.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-location',
@@ -22,11 +23,18 @@ export class ManageLocationComponent implements OnInit {
   dataSource: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private examinerService: ExaminerService, private alertService: AlertService) {
+  constructor(private examinerService: ExaminerService,
+    private router: Router,
+    private alertService: AlertService) {
 
   }
 
   ngOnInit() {
+    this.getAddressDetails();
+
+  }
+
+  getAddressDetails() {
     this.examinerService.getAllExaminerAddress().subscribe(response => {
       this.dataSource = new MatTableDataSource(response['data']);
       this.dataSource.sort = this.sort;
@@ -36,7 +44,6 @@ export class ManageLocationComponent implements OnInit {
     }, error => {
       console.log(error)
     })
-
   }
 
   applyFilter(event: Event) {
@@ -49,18 +56,20 @@ export class ManageLocationComponent implements OnInit {
       user_id: data.examiner_id,
       address_id: data.address_id
     }
-    console.log(index)
     this.examinerService.PostDeleteExaminerAddress(details).subscribe(response => {
       console.log(response)
-      let tabledata = this.dataSource._data.value;
-      tabledata.splice(index, 1)
-      this.dataSource = new MatTableDataSource(tabledata);
+      this.getAddressDetails();
       this.alertService.openSnackBar("Location deleted successfully", 'success');
 
     }, error => {
       console.log(error)
       this.alertService.openSnackBar(error.error.message, 'error');
     })
+  }
+
+  editAddress(data) {
+    console.log(data)
+    this.router.navigate(['/subscriber/staff/edit-address',data.examiner_id])
   }
 
 
