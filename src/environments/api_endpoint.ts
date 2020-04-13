@@ -56,9 +56,9 @@ export const api_endpoint = {
     addAddress: 'subscriber/examiner/add-address',
     getAddress: 'subscriber/examiner/get-address',
     updateAddress: 'subscriber/examiner/update-address',
-    deleteAddress: 'subscriber/examiner/remove-address/',
+    deleteAddress: 'subscriber/examiner/remove-address',
     allExaminerAddress: 'subscriber/examiner/all-address',
-    addExistAddress: '/subscriber/examiner/add-exist-address',
+    addExistAddress: 'subscriber/examiner/add-exist-address',
 
     //examiner
 

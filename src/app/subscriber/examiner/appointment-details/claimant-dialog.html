@@ -6,9 +6,6 @@
             <button mat-icon-button>
                 <mat-icon>fullscreen_exit</mat-icon>
             </button>
-            <button mat-icon-button>
-                <mat-icon>more_vert</mat-icon>
-            </button>
         </mat-card-header>
         <mat-divider></mat-divider>
         <div fxLayout="row wrap" class="scroll_">
@@ -64,7 +61,7 @@
             </div>
         </div>
         <mat-card-footer>
-            <a class="close_btn">Close</a>
+            <a (click)="cancleClick()" class="close_btn">Close</a>
         </mat-card-footer>
     </div>
 </div>

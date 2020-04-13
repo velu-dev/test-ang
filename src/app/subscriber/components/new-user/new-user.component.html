@@ -50,12 +50,17 @@
 
             <div fxFlex="100" fxLayout="row wrap" *ngIf="userForm.value.role_id == 11">
                 <form fxLayout="row wrap" [formGroup]="userExaminerForm" class="mat-grid-form">
-                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
-                        fxFlex.xs="100">
-                        <mat-label>W9 number</mat-label>
-                        <input matInput type="number" placeholder="W9 number" formControlName="w9_number">
-                        <mat-error>Error Message here</mat-error>
-                    </mat-form-field>
+                <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"  fxFlex.xs="100">                    
+                    <mat-radio-group aria-label="Select an option" fxFlex="30" class="p-t-30 p-l-10">
+                        <mat-radio-button value="1">EIN</mat-radio-button>
+                        <mat-radio-button value="2" class="p-l-10">SSN</mat-radio-button>
+                      </mat-radio-group>
+                    <mat-form-field appearance="standard"  fxFlex="70">
+                    <mat-label>W9 number</mat-label>
+                    <input matInput type="number" placeholder="W9 number" formControlName="w9_number">
+                    <mat-error>Error Message here</mat-error>
+                </mat-form-field>
+                </div>
 
                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                         fxFlex.xs="100">
@@ -251,7 +256,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip code</mat-label>
-                                <input matInput formControlName="zipcode" placeholder="Zip code" autocomplete="off">
+                                <input matInput formControlName="zip_code" placeholder="Zip code" autocomplete="off">
                                 <mat-error *ngIf="isSubmitted">Enter valid zip code</mat-error>
                             </mat-form-field>
 

@@ -52,7 +52,7 @@ export class SessionGuard implements CanActivate {
         }
           return false;
         } else {
-          return true;
+          return false;
         }
       }, error => {
         return true;

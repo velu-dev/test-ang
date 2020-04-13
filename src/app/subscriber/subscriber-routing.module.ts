@@ -20,6 +20,7 @@ import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/
 import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 import { AppointmentDetailsComponent } from './examiner/appointment-details/appointment-details.component';
 import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
+import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -82,7 +83,29 @@ const routes: Routes = [{
       path: "manage-address",
       component: ExaminerManageAddressComponent
     },
-
+    {
+      path: "claimant",
+      component: ClaimantComponent
+    }, {
+      path: "billable-item",
+      component: BillableItemComponent
+    },
+    {
+      path: "claims",
+      children: [{
+        path: "",
+        component: ClaimListComponent
+      }, {
+        path: "new-claimant",
+        component: NewClaimantComponent
+      }, {
+        path: "new-claim",
+        component: NewClaimComponent
+      }, {
+        path: ":id",
+        component: NewClaimComponent
+      }]
+    },
     {
       path: "manage-location",
       component: ManageLocationComponent
@@ -93,7 +116,10 @@ const routes: Routes = [{
     }, {
       path: "settings",
       component: SubscriberSettingsComponent
-    }]
+    }, {
+      path: "edit-address/:id",
+      component: EditAddressComponent
+    },]
 }, {
   path: "manager",
   children: [{
@@ -103,6 +129,37 @@ const routes: Routes = [{
     path: "dashboard",
     component: ManagerDashboardComponent
   }, {
+    path: "claimant",
+    component: ClaimantComponent
+  }, {
+    path: "billable-item",
+    component: BillableItemComponent
+  }, {
+    path: "claims",
+    children: [{
+      path: "",
+      component: ClaimListComponent
+    }, {
+      path: "new-claimant",
+      component: NewClaimantComponent
+    }, {
+      path: "new-claim",
+      component: NewClaimComponent
+    }, {
+      path: ":id",
+      component: NewClaimComponent
+    }, {
+      path: "new-billable-item",
+      component: BillableItemComponent
+    }]
+  }, {
+    path: "manage-location",
+    component: ManageLocationComponent
+  },
+  {
+    path: "examiner-list",
+    component: ExaminerListComponent
+  }, {
     path: "staff",
     children: [{
       path: "",
@@ -110,6 +167,30 @@ const routes: Routes = [{
     }, {
       path: "new",
       component: ManageNewUserComponent
+    }]
+  }, {
+    path: "claimant",
+    component: ClaimantComponent
+  }, {
+    path: "billable-item",
+    component: BillableItemComponent
+  }, {
+    path: "claims",
+    children: [{
+      path: "",
+      component: ClaimListComponent
+    }, {
+      path: "new-claimant",
+      component: NewClaimantComponent
+    }, {
+      path: "new-claim",
+      component: NewClaimComponent
+    }, {
+      path: ":id",
+      component: NewClaimComponent
+    }, {
+      path: "new-billable-item",
+      component: BillableItemComponent
     }]
   }, {
     path: "settings",
@@ -130,9 +211,37 @@ const routes: Routes = [{
     path: "appointment-details",
     component: AppointmentDetailsComponent
   }, {
+    path: "claimant",
+    component: ClaimantComponent
+  }, {
+    path: "billable-item",
+    component: BillableItemComponent
+  }, {
+    path: "claims",
+    children: [{
+      path: "",
+      component: ClaimListComponent
+    }, {
+      path: "new-claimant",
+      component: NewClaimantComponent
+    }, {
+      path: "new-claim",
+      component: NewClaimComponent
+    }, {
+      path: ":id",
+      component: NewClaimComponent
+    }, {
+      path: "new-billable-item",
+      component: BillableItemComponent
+    }]
+  }, {
     path: "settings",
     component: ExaminerSettingComponent
-  }]
+  },
+  {
+    path: "manage-location",
+    component: ManageLocationComponent
+  },]
 }
 ];
 
