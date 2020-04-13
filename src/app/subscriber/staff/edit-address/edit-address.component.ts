@@ -14,6 +14,8 @@ export class EditAddressComponent implements OnInit {
   states: any;
   addressType: any;
   examinerId: number;
+  examinerName: string;
+  addressIsSubmitted: boolean = false;
   constructor(private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -37,7 +39,7 @@ export class EditAddressComponent implements OnInit {
       street2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      zip_code: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
 
     this.claimService.seedData('state').subscribe(response => {
@@ -61,6 +63,10 @@ export class EditAddressComponent implements OnInit {
     }, error => {
 
     })
+  }
+
+  addressformSubmit() {
+
   }
 
 }

@@ -151,7 +151,7 @@ export class NewUserComponent implements OnInit {
       street2: [''],
       city: [''],
       state: [''],
-      zipcode: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
   }
 
