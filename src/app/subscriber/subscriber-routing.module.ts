@@ -149,6 +149,13 @@ const routes: Routes = [{
       component: BillableItemComponent
     }]
   }, {
+    path: "manage-location",
+    component: ManageLocationComponent
+  },
+  {
+    path: "examiner-list",
+    component: ExaminerListComponent
+  }, {
     path: "staff",
     children: [{
       path: "",
