@@ -25,6 +25,7 @@ import { ExaminerListComponent } from './staff/examiner-list/examiner-list.compo
 import { ExaminerService } from './service/examiner.service';
 import { AppointmentDetailsComponent, ClaimantPopupComponent, ClaimPopupComponent, BillableitemPopupComponent } from './examiner/appointment-details/appointment-details.component';
 import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
+import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ManageLocationComponent } from './staff/manage-location/manage-location
     ManageLocationComponent,
     ClaimantPopupComponent,
     ClaimPopupComponent,
-    BillableitemPopupComponent
+    BillableitemPopupComponent,
+    EditAddressComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,
