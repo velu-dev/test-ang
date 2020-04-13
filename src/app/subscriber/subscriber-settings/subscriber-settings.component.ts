@@ -33,7 +33,7 @@ export class SubscriberSettingsComponent implements OnInit {
     private router: Router,
     private cognitoService: CognitoService,
     private cookieService: CookieService,
-    private store: Store<{ count: number }>
+    // private store: Store<{ count: number }>
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
@@ -75,8 +75,9 @@ export class SubscriberSettingsComponent implements OnInit {
     }
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
+      window.location.reload();
       this.isSubmit = false;
-      this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
+      // this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
       //this.router.navigate(['/admin/settings'])
     }, error => {
       this.isSubmit = false;

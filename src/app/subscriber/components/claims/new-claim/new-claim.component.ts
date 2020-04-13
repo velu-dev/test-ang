@@ -82,6 +82,8 @@ export class NewClaimComponent implements OnInit {
   addNewClaimant: boolean;
   examinarList: any = [];
   examinarAddress = [];
+  claimInfo: any;
+  isEdit: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -89,8 +91,33 @@ export class NewClaimComponent implements OnInit {
     private route: ActivatedRoute) {
     this.route.params.subscribe(param => {
       if (param.id) {
+        this.isEdit = true;
         this.claimService.getClaim(param.id).subscribe(res => {
-          console.log(res)
+          this.claimInfo = res.data;
+          this.addNewClaimant = true;
+          this.isClaimantCreated = true;
+          console.log(res.data);
+          this.claimant.patchValue(res.data.claimant_details)
+          this.claimant_name = res.data.claimant_details.first_name + "  " + res.data.claimant_details.last_name
+          this.claim.patchValue({
+            claim_details: {
+              claimant_name: this.claimant_name
+            }
+          });
+          this.claim.patchValue({
+            claim_details: res.data.claim_details,
+            InsuranceAdjuster: res.data.agent_details.InsuranceAdjuster,
+            Employer: res.data.agent_details.Employer,
+            ApplicantAttorney: res.data.agent_details.ApplicantAttorney,
+            DefenseAttorney: res.data.agent_details.DefenseAttorney,
+            DEU: res.data.agent_details.DEU,
+          });
+          this.injuryInfodata = res.data.claim_injuries;
+          this.dataSource = new MatTableDataSource(this.injuryInfodata);
+          this.billable_item.patchValue({
+            intake_call: res.data.intake_calls,
+            appointment: res.data.appointments
+          })
         })
       }
     })
@@ -205,12 +232,6 @@ export class NewClaimComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       suffix: [],
-      salutation: [],
-      organization_id: [],
-      created_by: [],
-      modified_by: [],
-      createdAt: [],
-      updatedAt: [],
       zip_code_plus_4: [],
       date_of_birth: [null, Validators.required],
       gender: [],
@@ -346,7 +367,6 @@ export class NewClaimComponent implements OnInit {
         claim_id: res.data.claim_id
       })
       this.alertService.openSnackBar(res.message, 'success');
-      this.claim.reset();
     }, error => {
       console.log(error)
       this.isClaimCreated = false;

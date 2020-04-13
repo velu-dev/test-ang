@@ -294,7 +294,7 @@
                             <div class="text-center w-100 m-t-10 m-b-50">
                                 <button mat-raised-button color="primary" type="submit"
                                     class="m-r-10 rounded-corner btn_success" (click)="createClaimant()">
-                                    Save </button>
+                                    {{isEdit ? 'Update' : 'Save'}} </button>
                                 <button [disabled]="!(!claimant.invalid && isClaimantCreated)" mat-raised-button
                                     type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
                             </div>
@@ -816,7 +816,7 @@
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success" (click)="submitClaim()">
-                            Save </button>
+                            {{isEdit ? 'Update' : 'Save'}} </button>
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success" matStepperNext
                             [disabled]="!(!claim.invalid && isClaimCreated)">
@@ -960,7 +960,7 @@
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
                             (click)="submitBillableItem()">
-                            Submit </button>
+                            {{isEdit ? 'Update' : 'Submit'}} </button>
                         <button mat-raised-button type="button" class="rounded-corner" color="warn"
                             matStepperPrevious>Back</button>
                     </div>
