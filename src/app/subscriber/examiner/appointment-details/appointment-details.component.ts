@@ -14,11 +14,12 @@ export class AppointmentDetailsComponent implements OnInit {
   xls_1 = globals.xls_1
   docx = globals.docx
   pdf = globals.pdf
-  uploadFile:any;
+  uploadFile: any;
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
+
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
       width: '800px',
@@ -60,7 +61,7 @@ export class ClaimantPopupComponent {
     public dialogRef: MatDialogRef<ClaimantPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  onNoClick(): void {
+  cancleClick(): void {
     this.dialogRef.close();
   }
 
@@ -75,7 +76,7 @@ export class ClaimPopupComponent {
     public dialogRef: MatDialogRef<ClaimPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  onNoClick(): void {
+  cancleClick(): void {
     this.dialogRef.close();
   }
 
@@ -90,12 +91,13 @@ export class BillableitemPopupComponent {
     public dialogRef: MatDialogRef<BillableitemPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  onNoClick(): void {
+  cancleClick(): void {
     this.dialogRef.close();
   }
 
-  uploadFile(event){
+  uploadFile(event) {
 
   }
+
 
 }

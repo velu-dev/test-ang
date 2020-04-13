@@ -101,7 +101,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 2
         },{
             path: '/subscriber/staff/manage-location',
-            title: 'Examiner Address',
+            title: 'Location',
             icon: 'map',
             submenu: [],
             group: "Subscriber",
@@ -135,7 +135,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 3
         },{
             path: '/subscriber/staff/manage-location',
-            title: 'Examiner Address',
+            title: 'Location',
             icon: 'map',
             submenu: [],
             group: "Subscriber",
@@ -161,7 +161,7 @@ export const ROUTES: SideNavInterface[] = [
         },
         {
             path: '/subscriber/staff/manage-location',
-            title: 'Examiner Address',
+            title: 'Location',
             icon: 'map',
             submenu: [],
             group: "Subscriber",
@@ -189,7 +189,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 11
         }, {
             path: '/subscriber/staff/manage-location',
-            title: 'Examiner Address',
+            title: 'Location',
             icon: 'map',
             submenu: [],
             group: "Subscriber",
