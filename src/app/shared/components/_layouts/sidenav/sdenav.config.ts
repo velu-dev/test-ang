@@ -101,7 +101,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 2
             }, {
                 path: '/subscriber/staff/manage-location',
-                title: 'Location',
+                title: 'Examiner Address',
                 icon: 'map',
                 submenu: [],
                 group: "Subscriber",
@@ -127,7 +127,7 @@ export const ROUTES: SideNavInterface[] = [
                 group: "Subscriber",
                 role: 3
             }, {
-                path: '/subscriber/staff/examiner-list',
+                path: '/subscriber/manager/examiner-list',
                 title: 'Manage Examiner',
                 icon: 'people',
                 submenu: [],
@@ -135,7 +135,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 3
             },
             {
-                path: '/subscriber/claimant',
+                path: '/subscriber/manager/claimant',
                 title: 'Claimants',
                 icon: 'people',
                 submenu: [],
@@ -143,7 +143,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 3
             },
             {
-                path: '/subscriber/claims',
+                path: '/subscriber/manager/claims',
                 title: 'Claims',
                 icon: 'speaker_notes',
                 submenu: [],
@@ -151,15 +151,15 @@ export const ROUTES: SideNavInterface[] = [
                 role: 3
             },
             {
-                path: '/subscriber/billable-item',
+                path: '/subscriber/manager/billable-item',
                 title: 'Billable Items',
                 icon: 'post_add',
                 submenu: [],
                 group: "Subscriber",
                 role: 3
             }, {
-                path: '/subscriber/staff/manage-location',
-                title: 'Location',
+                path: '/subscriber/manager/manage-location',
+                title: 'Examiner Address',
                 icon: 'map',
                 submenu: [],
                 group: "Subscriber",
@@ -168,16 +168,14 @@ export const ROUTES: SideNavInterface[] = [
     }, {
         group: "Subscriber Staff",
         role_id: 4,
-        menu: [
-        //     {
-        //     path: '/subscriber/staff/dashboard',
-        //     title: 'Dashboard',
-        //     icon: 'dashboard',
-        //     submenu: [],
-        //     group: "Subscriber",
-        //     role: 4
-        // },
-         {
+        menu: [{
+            path: '/subscriber/staff/dashboard',
+            title: 'Dashboard',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 4
+        }, {
             path: '/subscriber/staff/examiner-list',
             title: 'Manage Examiner',
             icon: 'people',
@@ -185,7 +183,7 @@ export const ROUTES: SideNavInterface[] = [
             group: "Subscriber",
             role: 4
         }, {
-            path: '/subscriber/claimant',
+            path: '/subscriber/staff/claimant',
             title: 'Claimants',
             icon: 'people',
             submenu: [],
@@ -193,7 +191,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 4
         },
         {
-            path: '/subscriber/claims',
+            path: '/subscriber/staff/claims',
             title: 'Claims',
             icon: 'speaker_notes',
             submenu: [],
@@ -201,7 +199,7 @@ export const ROUTES: SideNavInterface[] = [
             role: 4
         },
         {
-            path: '/subscriber/billable-item',
+            path: '/subscriber/staff/billable-item',
             title: 'Billable Items',
             icon: 'post_add',
             submenu: [],
@@ -237,7 +235,7 @@ export const ROUTES: SideNavInterface[] = [
                 group: "Subscriber",
                 role: 11
             }, {
-                path: '/subscriber/claimant',
+                path: '/subscriber/examiner/claimant',
                 title: 'Claimants',
                 icon: 'people',
                 submenu: [],
@@ -245,7 +243,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 11
             },
             {
-                path: '/subscriber/claims',
+                path: '/subscriber/examiner/claims',
                 title: 'Claims',
                 icon: 'speaker_notes',
                 submenu: [],
@@ -253,15 +251,15 @@ export const ROUTES: SideNavInterface[] = [
                 role: 11
             },
             {
-                path: '/subscriber/billable-item',
+                path: '/subscriber/examiner/billable-item',
                 title: 'Billable Items',
                 icon: 'post_add',
                 submenu: [],
                 group: "Subscriber",
                 role: 11
             }, {
-                path: '/subscriber/staff/manage-location',
-                title: 'Location',
+                path: '/subscriber/examiner/manage-location',
+                title: 'Examiner Address',
                 icon: 'map',
                 submenu: [],
                 group: "Subscriber",

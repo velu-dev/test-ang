@@ -237,7 +237,11 @@ const routes: Routes = [{
   }, {
     path: "settings",
     component: ExaminerSettingComponent
-  }]
+  },
+  {
+    path: "manage-location",
+    component: ManageLocationComponent
+  },]
 }
 ];
 
