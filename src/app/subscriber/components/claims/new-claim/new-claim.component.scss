@@ -96,3 +96,20 @@ mat-card {
 .search-icon {
   cursor: pointer;
 }
+
+
+
+.adj_filter {
+  .search-icon {
+    background-color: $primarycolor;
+    color: $white;
+    padding: 12px;
+    display: block;
+    cursor: pointer;
+  }
+}
+
+.search-icon {
+  cursor: pointer;
+}
+

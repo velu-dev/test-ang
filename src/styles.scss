@@ -311,7 +311,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 
 // ADVANCE SEARCH CUSTOM SCSS
 
-.advanced_search {
+.advanced_search, .adj_filter {
   .mat-form-field-flex {
     padding: 0px !important;
   }
