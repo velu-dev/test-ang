@@ -131,9 +131,9 @@ export class NewUserComponent implements OnInit {
   formInit() {
 
     this.userExaminerForm = this.formBuilder.group({
-      w9_number: [''],
-      w9_type:['0'],
-      national_provider_identifier: [''],
+      w9_number: ['',Validators.maxLength(15)],
+      w9_type: ['0'],
+      national_provider_identifier: ['',Validators.maxLength(10)],
       specialty: [''],
       state_license_number: [''],
       state_of_license_id: [''],
@@ -153,6 +153,10 @@ export class NewUserComponent implements OnInit {
       city: [''],
       state: [''],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      note: [''],
+      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      contact_person: ['']
     });
   }
 

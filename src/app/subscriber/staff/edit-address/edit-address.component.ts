@@ -40,6 +40,10 @@ export class EditAddressComponent implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       zip_code: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      note: [''],
+      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      contact_person: ['']
     });
 
     this.claimService.seedData('state').subscribe(response => {

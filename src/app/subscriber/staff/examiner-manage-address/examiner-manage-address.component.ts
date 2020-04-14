@@ -52,10 +52,10 @@ export class ExaminerManageAddressComponent implements OnInit {
   ) {
     // this.route.params.subscribe(params => this.examinerId = params.id);
     this.user = JSON.parse(this.cookieService.get('user'));
-    if(this.user.role_id == 11){
+    if (this.user.role_id == 11) {
       this.examinerId = this.user.id
       this.examinerName = this.user.first_name + ' ' + this.user.last_name
-      this.examinerSearch = new FormControl({value:  this.examinerName, disabled: true})
+      this.examinerSearch = new FormControl({ value: this.examinerName, disabled: true })
     }
     this.filteredOptions = this.addresssearch.valueChanges
       .pipe(
@@ -85,6 +85,10 @@ export class ExaminerManageAddressComponent implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       zip_code: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      note: [''],
+      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      contact_person: ['']
     });
 
     this.examinerService.getExaminerList().subscribe(response => {
