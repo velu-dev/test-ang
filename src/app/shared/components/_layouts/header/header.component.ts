@@ -9,7 +9,6 @@ import * as success from './../../../messages/success';
 import * as error from './../../../messages/errors';
 import { AlertService } from "./../../../services/alert.service"
 import * as globals from './../../../../globals';
-import Auth from '@aws-amplify/auth';
 import { UserService } from 'src/app/admin/services/user.service';
 import { User } from 'src/app/admin/models/user.model';
 import { CookieService } from 'src/app/shared/services/cookie.service';
@@ -58,7 +57,7 @@ export class HeaderComponent implements OnInit {
   ) {
     this.spinnerService.show();
     this.isLoading = true;
-    Auth.currentSession().then(token => {
+    this.cognitoService.session().then(token => {
       this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
       this.userService.getUser(this.currentUserID).subscribe(res => {
         this.user = res.data;

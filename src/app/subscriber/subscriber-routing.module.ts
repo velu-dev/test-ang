@@ -20,6 +20,7 @@ import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/
 import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 import { AppointmentDetailsComponent } from './examiner/appointment-details/appointment-details.component';
 import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
+import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -115,7 +116,10 @@ const routes: Routes = [{
     }, {
       path: "settings",
       component: SubscriberSettingsComponent
-    }]
+    }, {
+      path: "edit-address/:id",
+      component: EditAddressComponent
+    },]
 }, {
   path: "manager",
   children: [{
@@ -233,7 +237,11 @@ const routes: Routes = [{
   }, {
     path: "settings",
     component: ExaminerSettingComponent
-  }]
+  },
+  {
+    path: "manage-location",
+    component: ManageLocationComponent
+  },]
 }
 ];
 

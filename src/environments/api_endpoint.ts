@@ -38,7 +38,9 @@ export const api_endpoint = {
     //Claim Service endpoint
     getClaimantDetails: "claimant/details",
     createClaim: "claim/create",
+    updateClaim: "claim/update/",
     createClaimant: "claimant/create",
+    updateClaimant: "claimant/update/",
     // callerAffliation: "claims/seed-data/agent_type",
     searchClaimant: "claimant/search",
     getClaims: "claim",
@@ -56,9 +58,9 @@ export const api_endpoint = {
     addAddress: 'subscriber/examiner/add-address',
     getAddress: 'subscriber/examiner/get-address',
     updateAddress: 'subscriber/examiner/update-address',
-    deleteAddress: 'subscriber/examiner/remove-address/',
+    deleteAddress: 'subscriber/examiner/remove-address',
     allExaminerAddress: 'subscriber/examiner/all-address',
-    addExistAddress: '/subscriber/examiner/add-exist-address',
+    addExistAddress: 'subscriber/examiner/add-exist-address',
 
     //examiner
 

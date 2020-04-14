@@ -132,6 +132,7 @@ export class NewUserComponent implements OnInit {
 
     this.userExaminerForm = this.formBuilder.group({
       w9_number: [''],
+      w9_type:['0'],
       national_provider_identifier: [''],
       specialty: [''],
       state_license_number: [''],
@@ -151,7 +152,7 @@ export class NewUserComponent implements OnInit {
       street2: [''],
       city: [''],
       state: [''],
-      zipcode: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
   }
 
@@ -174,7 +175,6 @@ export class NewUserComponent implements OnInit {
     if (this.addressForm.invalid) {
       return;
     }
-
     if (this.isExaminer) {
       this.userForm.value.w9_number = this.userExaminerForm.value.w9_number;
       this.userForm.value.national_provider_identifier = this.userExaminerForm.value.national_provider_identifier;

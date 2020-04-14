@@ -96,3 +96,95 @@ mat-card {
 .search-icon {
   cursor: pointer;
 }
+
+.adj_filter {
+  .search-icon {
+    background-color: $primarycolor;
+    color: $white;
+    padding: 12px;
+    display: block;
+    cursor: pointer;
+  }
+}
+
+.search-icon {
+  cursor: pointer;
+}
+
+.address-list {
+  .name {
+    font-size: $font-size-1;
+    font-size: $font-weight-bold;
+    padding: 10px 5px 5px 5px;
+    width: $width-100;
+    div {
+      min-width: 150px;
+      float: left;
+      @media only screen and (max-width: 568px) {
+        min-width: auto;
+        margin-bottom: 10px;
+        float: none;
+        display: block;
+      }
+      i {
+        opacity: 0.5;
+        padding-right: 10px;
+      }
+    }
+    span {
+      text-align: left;
+      font-weight: $font-weight-medium;
+      i {
+        padding: 5px;
+        opacity: 0.5;
+      }
+    }
+  }
+  .address {
+    padding: 5px 5px 5px 5px;
+  }
+
+  mat-list-item {
+    background-color: $bg-light-blue;
+    box-shadow: $box-shadow-3;
+    &:hover {
+      background-color: $bg-light-blue;
+      cursor: pointer;
+    }
+    .name {
+      font-size: $font-size-1;
+      font-size: $font-weight-bold;
+      padding: 10px 5px 5px 5px;
+      width: $width-100;
+      div {
+        min-width: 150px;
+        float: left;
+        @media only screen and (max-width: 568px) {
+          min-width: auto;
+          margin-bottom: 10px;
+          float: none;
+          display: block;
+        }
+        i {
+          opacity: 0.5;
+          padding-right: 10px;
+        }
+      }
+      span {
+        text-align: left;
+        font-weight: $font-weight-medium;
+        i {
+          padding: 5px;
+          opacity: 0.5;
+        }
+      }
+    }
+    .address {
+      color: $text-gray;
+      padding: 0 0 5px 5px;
+    }
+    .edit {
+      color: $btn_success;
+    }
+  }
+}

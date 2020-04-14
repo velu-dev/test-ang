@@ -84,8 +84,7 @@ export class ExaminerManageAddressComponent implements OnInit {
       street2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      service_name: ['']
+      zip_code: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     });
 
     this.examinerService.getExaminerList().subscribe(response => {

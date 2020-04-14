@@ -14,7 +14,7 @@
                             <input type="text" matInput [formControl]="examinerSearch"
                                 [matAutocomplete]="examinerAutocomplete">
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete">
-                                <mat-option *ngFor="let option of (examinerFilteredOptions | async)?.data" [value]="option.first_name + ' '+ option.last_name" (click)="examinerOnChange(option)">
+                                <mat-option *ngFor="let option of (examinerFilteredOptions | async)" [value]="option.first_name + ' '+ option.last_name" (click)="examinerOnChange(option)">
                                     {{option.first_name}} {{option.last_name}}
                                 </mat-option>
                             </mat-autocomplete>
@@ -47,7 +47,7 @@
                                         <mat-option *ngFor="let option of (filteredOptions | async)?.data"
                                             (click)="addressOnChange(option)" [value]="option.city">
                                             {{option?.street1 }} {{option?.street2 }} {{option?.city}}
-                                            {{option?.state }} {{option?.zipcode }}
+                                            {{option?.state }} {{option?.zip_code }}
                                         </mat-option>
                                     </mat-autocomplete>
                                     <span matSuffix class="search-icon icons">
@@ -103,7 +103,7 @@
                                             <span *ngIf="address?.mobile1"><i class="fa fa-phone-alt"></i>
                                                 {{address?.mobile1}}</span>
                                         </div>
-                                        <div class="address" mat-line>{{address?.street1}} {{address?.street2}} {{address?.city}} {{address?.state}} - {{address?.zipcode}}</div>
+                                        <div class="address" mat-line>{{address?.street1}} {{address?.street2}} {{address?.city}} {{address?.state}} - {{address?.zip_code}}</div>
                                         <span class="spacer"></span>
                                         <!-- <button mat-icon-button class="edit" matTooltip="Edit"
                                             matTooltipPosition="before" (click)="editAddress(address)">
@@ -234,7 +234,7 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Zip code</mat-label>
-                                            <input matInput formControlName="zipcode" placeholder="Zip code"
+                                            <input matInput [dropSpecialCharacters]="false" mask="00000-0000" formControlName="zip_code" placeholder="Zip code"
                                                 autocomplete="off">
                                             <mat-error *ngIf="addressIsSubmitted">Enter valid zip code</mat-error>
                                         </mat-form-field>
@@ -260,7 +260,7 @@
                                             <span *ngIf="address?.mobile1"><i class="fa fa-phone-alt"></i>
                                                 {{address?.mobile1}}</span>
                                         </div>
-                                        <div class="address" mat-line>{{address?.street1}} {{address?.street2}} {{address?.city}} {{address?.state}} - {{address?.zipcode}}</div>
+                                        <div class="address" mat-line>{{address?.street1}} {{address?.street2}} {{address?.city}} {{address?.state}} - {{address?.zip_code}}</div>
                                         <span class="spacer"></span>
                                         <button mat-icon-button class="edit" matTooltip="Edit"
                                             matTooltipPosition="before" (click)="editAddress(address)">

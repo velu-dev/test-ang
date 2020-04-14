@@ -14,38 +14,42 @@ export class ExaminerService {
     return this.http.get(environment.baseUrl + api_endpoint.getAddress, {})
   }
 
-  postExaminerAddressOther(data,id): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.addAddress + '/'+ id, data)
+  postExaminerAddressOther(data, id): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.addAddress + '/' + id, data)
   }
 
   postExaminerAddress(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.addAddress, data)
   }
 
-  updateExaminerAddress(data){
+  updateExaminerAddress(data) {
     return this.http.put(environment.baseUrl + api_endpoint.updateAddress, data)
   }
 
-  deleteExaminerAddress(id){
+  deleteExaminerAddress(id) {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteAddress + id)
   }
 
-  getExaminerList(){
+  getExaminerList() {
     return this.http.get(environment.baseUrl + api_endpoint.getExaminerList)
   }
 
-  getsingleExAddress(id){
+  getsingleExAddress(id) {
     return this.http.get(environment.baseUrl + api_endpoint.getSingleExaminer + id)
   }
-  searchAddress(data){
+  searchAddress(data) {
     return this.http.post(environment.baseUrl + api_endpoint.searchAddress, data)
   }
 
-  getAllExaminerAddress(){
+  getAllExaminerAddress() {
     return this.http.get(environment.baseUrl + api_endpoint.allExaminerAddress)
   }
 
-  postExistAddress(data){
+  postExistAddress(data) {
     return this.http.post(environment.baseUrl + api_endpoint.addExistAddress, data)
+  }
+
+  PostDeleteExaminerAddress(data) {
+    return this.http.post(environment.baseUrl + api_endpoint.deleteAddress, data)
   }
 }
