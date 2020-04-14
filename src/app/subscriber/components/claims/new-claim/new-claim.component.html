@@ -11,11 +11,12 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div fxFlex="100">
 
-                            <button mat-mini-fab
-                                [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user"  (click)="newClaimant()">
+                            <button mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}"
+                                class="add-user" (click)="newClaimant()">
                                 <mat-icon>add</mat-icon>
                             </button>
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
+
                                 <mat-tab label="Search Claimants ">
                                     <mat-form-field appearance="fill" fxFlex="100"
                                         hideRequiredMarker="hideRequiredControl.auto"
@@ -102,8 +103,35 @@
 
                                         </div>
                                     </form>
+                                </mat-tab>
 
-                                    <!-- <div class="add_new text-center" (click)="newClaimant()">
+                                <mat-tab label="Search EAMS">
+                                    <mat-form-field appearance="fill" fxFlex="100"
+                                        hideRequiredMarker="hideRequiredControl.auto"
+                                        floatLabel="floatLabelControl.auto" class="adj_filter w-100">
+                                        <div matPrefix>
+                                            <span matPrefix> &nbsp; ADJ &nbsp;</span>
+                                        </div>
+                                        <input matInput placeholder="Enter ADJ number"
+                                            [matAutocomplete]="claimantAutocomplete" [formControl]="emasSearchInput">
+                                        <span matSuffix class="search-icon icons" (click)="searchEAMS()">
+                                            <mat-icon>search</mat-icon>
+                                        </span>
+                                    </mat-form-field>
+
+
+                                    <!-- <mat-form-field appearance="fill" fxFlex="100" class="w-100">
+                                        <span matPrefix>ADJ &nbsp;</span>
+                                        <input matInput placeholder="Enter ADJ number"
+                                            [matAutocomplete]="claimantAutocomplete" [formControl]="emasSearchInput">
+                                        <span (click)="searchEAMS()" matSuffix class="search-icon icons">
+                                            <mat-icon>search</mat-icon>
+                                        </span>
+                                    </mat-form-field> -->
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+                        <!-- <div class="add_new text-center" (click)="newClaimant()">
                             <span class="fa fa-plus"></span> Add New Claimant
                         </div> -->
                         <div fxLayout="row wrap" fxFlex="100" *ngIf="addNewClaimant">
@@ -192,6 +220,8 @@
                                 <mat-error>Select valid primary language</mat-error>
                             </mat-form-field>
 
+
+
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>SSN</mat-label>
@@ -265,35 +295,6 @@
                                     type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
                             </div>
                         </div>
-                                </mat-tab>
-
-                                <mat-tab label="Search EAMS">
-                                    <mat-form-field appearance="fill" fxFlex="100"
-                                        hideRequiredMarker="hideRequiredControl.auto"
-                                        floatLabel="floatLabelControl.auto" class="adj_filter w-100">
-                                        <div matPrefix>
-                                            <span matPrefix> &nbsp; ADJ &nbsp;</span>
-                                        </div>
-                                        <input matInput placeholder="Enter ADJ number"
-                                            [matAutocomplete]="claimantAutocomplete" [formControl]="emasSearchInput">
-                                        <span matSuffix class="search-icon icons" (click)="searchEAMS()">
-                                            <mat-icon>search</mat-icon>
-                                        </span>
-                                    </mat-form-field>
-
-
-                                    <!-- <mat-form-field appearance="fill" fxFlex="100" class="w-100">
-                                        <span matPrefix>ADJ &nbsp;</span>
-                                        <input matInput placeholder="Enter ADJ number"
-                                            [matAutocomplete]="claimantAutocomplete" [formControl]="emasSearchInput">
-                                        <span (click)="searchEAMS()" matSuffix class="search-icon icons">
-                                            <mat-icon>search</mat-icon>
-                                        </span>
-                                    </mat-form-field> -->
-                                </mat-tab>
-                            </mat-tab-group>
-                        </div>
-                       
                     </div>
                 </mat-card>
             </form>
@@ -313,7 +314,7 @@
                                     disabled>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>WCAB Number </mat-label>
                                 <input type="number" matInput placeholder="WCAB Number" formControlName="wcab_number"
@@ -329,7 +330,7 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Claim Number</mat-label>
                                 <input matInput placeholder="Claim Number" formControlName="claim_number"
@@ -337,7 +338,7 @@
                                 <mat-error>Enter valid claim number</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Panel Number </mat-label>
                                 <input matInput type="number" mask="0000000" placeholder="Panel Number"
@@ -878,30 +879,55 @@
                                 <mat-option value="60">60 Mins</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Service Location Type</mat-label>
                             <mat-select>
                                 <mat-option *ngFor="let addressType of addressTypes"
                                     (click)="addressTypeChange(addressType)" [value]="addressType.id">
                                     {{addressType.address_type_name}}</mat-option>
                             </mat-select>
+                        </mat-form-field> -->
+                        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                            fxFlex.xs="100">
+                            <mat-label>Examination Location</mat-label>
+                            <input type="text" placeholder="Examination Location" matInput [formControl]="myControl"
+                                [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option value="option">
+                                    Options
+                                </mat-option>
+                            </mat-autocomplete>
                         </mat-form-field>
 
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Examination Location</mat-label>
                             <mat-select formControlName="examination_location_id">
                                 <mat-option *ngFor="let address of examinarAddress" [value]="address.id">
                                     {{address | json}}</mat-option>
-
                             </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> 
 
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                             fxFlex.xs="100">
                             <mat-label>Address</mat-label>
                             <textarea matInput placeholder="Address" autocomplete="off"></textarea>
-                        </mat-form-field>
-
+                        </mat-form-field>-->
+                        <div fxFlex="100">
+                            <mat-card-content class="address-list">
+                                <mat-list>
+                                    <mat-list-item>
+                                        <div class="name" mat-line>
+                                            <div><strong>
+                                                    <i class="fa fa-building-o"></i>155 - Service Name
+                                                </strong></div>
+                                            <span><i class="fa fa-phone-alt"></i>
+                                                Phone Number</span>
+                                        </div>
+                                        <div class="address" mat-line>Address comes here ...</div>
+                                    </mat-list-item>
+                                </mat-list>
+                            </mat-card-content>
+                        </div>
 
                     </div>
 
