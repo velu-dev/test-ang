@@ -81,14 +81,26 @@ export class NewClaimComponent implements OnInit {
   intakeComType: string;
   addNewClaimant: boolean;
   examinarList: any = [];
-  examinarAddress = [];
   claimInfo: any;
   isEdit: boolean = false;
+  addressCtrl = new FormControl();
+  address = [];
+  examinarAddress: Observable<any[]>;
+  private _filterAddress(value: string): any[] {
+    let val = value.replace(",", "")//.toLowerCase();
+    const filterValue = val.replace(" ", "")
+    return this.address.filter(add => add.street1.indexOf(filterValue.toLowerCase()) === 0);
+  }
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute) {
+    this.examinarAddress = this.addressCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(address => address ? this._filterAddress(address) : this.address.slice())
+      );
     this.route.params.subscribe(param => {
       if (param.id) {
         this.isEdit = true;
@@ -376,16 +388,15 @@ export class NewClaimComponent implements OnInit {
   examinarId: any;
   examinarChange(examinar) {
     this.examinarId = examinar.id;
-  }
-  addressTypeChange(address) {
-    let data = {
-      "examiner_id": this.examinarId,
-      "address_type_id": address.id
-    }
-    this.claimService.getExaminar(data).subscribe(res => {
-      console.log(res)
+    this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
+      this.address = res.data;
     })
   }
+  // addressTypeChange(address) {
+  //   this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
+  //     this.examinarAddress = res.data;
+  //   })
+  // }
   submitBillableItem() {
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       console.log(res.data)
