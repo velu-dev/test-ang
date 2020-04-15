@@ -9,7 +9,7 @@
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
-                        <div fxFlex="100">
+                        <div *ngIf="!isEdit" fxFlex="100">
 
                             <button *ngIf="tabIndex == 0" mat-mini-fab
                                 [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user"
@@ -936,7 +936,7 @@
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Caller Affiliation</mat-label>
-                            <mat-select formControlName="caller_affliation">
+                            <mat-select formControlName="caller_affiliation">
                                 <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                     {{caller.agent_type_name}}</mat-option>
                             </mat-select>

@@ -32,6 +32,7 @@ const ELEMENT_DATA: claimant1[] = []
 })
 export class NewClaimComponent implements OnInit {
   today = new Date();
+  isMobile = false;
   xls = globals.xls
   displayedColumns: string[] = ['body_part_id', 'date_of_injury', "action"];
   dataSource: any;
@@ -111,6 +112,7 @@ export class NewClaimComponent implements OnInit {
           this.claimInfo = res.data;
           this.addNewClaimant = true;
           this.isClaimantCreated = true;
+          this.isClaimCreated = true;
           console.log(res.data);
           this.claimant.patchValue(res.data.claimant_details)
           this.claimant_name = res.data.claimant_details.first_name + "  " + res.data.claimant_details.last_name
@@ -130,6 +132,8 @@ export class NewClaimComponent implements OnInit {
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
           this.billable_item.patchValue({
+            claim_id: res.data.claim_details.id,
+            claimant_id: res.data.claimant_details.id,
             intake_call: res.data.intake_calls,
             appointment: res.data.appointments
           })
@@ -275,10 +279,10 @@ export class NewClaimComponent implements OnInit {
 
     // this.claimForm = this.formBuilder.group({
     this.claim = this.formBuilder.group({
-      id: [],
       claim_details: this.formBuilder.group({
         // wcab_number: ["", Validators.required],
         // claim_number: ["", Validators.required],
+        id: [],
         claimant_name: [{ value: "", disabled: true }],
         wcab_number: [],
         claim_number: [],
@@ -288,6 +292,7 @@ export class NewClaimComponent implements OnInit {
       }),
       claim_injuries: [],
       InsuranceAdjuster: this.formBuilder.group({
+        id: [],
         insurance_name: [],
         name: [],
         phone: [],
@@ -296,6 +301,7 @@ export class NewClaimComponent implements OnInit {
         address: [],
       }),
       Employer: this.formBuilder.group({
+        id: [],
         name: [],
         phone: [],
         address: [],
@@ -304,6 +310,7 @@ export class NewClaimComponent implements OnInit {
         zipcode: [],
       }),
       ApplicantAttorney: this.formBuilder.group({
+        id: [],
         law_firm_name: [],
         attorney_name: [],
         phone: [],
@@ -315,6 +322,7 @@ export class NewClaimComponent implements OnInit {
         zipcode: []
       }),
       DefenseAttorney: this.formBuilder.group({
+        id: [],
         law_firm_name: [],
         attorney_name: [],
         phone: [],
@@ -326,6 +334,7 @@ export class NewClaimComponent implements OnInit {
         zipcode: []
       }),
       DEU: this.formBuilder.group({
+        id: [],
         name: [],
         phone: [],
         address: [],
@@ -344,10 +353,10 @@ export class NewClaimComponent implements OnInit {
         examiner_id: [],
         appointment_scheduled_date_time: [],
         duration: [],
-        examination_location_id: [1]
+        examination_location_id: []
       }),
       intake_call: this.formBuilder.group({
-        caller_affliation: [],
+        caller_affiliation: [],
         caller_name: [],
         call_date: [],
         call_type: [],
@@ -418,9 +427,19 @@ export class NewClaimComponent implements OnInit {
   //   })
   // }
   submitBillableItem() {
-    this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
-      console.log(res.data)
-    })
+    if (!this.isEdit) {
+      this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
+        this.alertService.openSnackBar(res.message, "success");
+      }, error => {
+        this.alertService.openSnackBar(error.error.error, 'error');
+      })
+    } else {
+      this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
+        this.alertService.openSnackBar(res.message, "success");
+      }, error => {
+        this.alertService.openSnackBar(error.error.error, 'error');
+      })
+    }
   }
   cancle() {
 
@@ -472,7 +491,8 @@ export class NewClaimComponent implements OnInit {
     let data = [];
     element.body_part_id.map(res => {
       let iii = this.bodyPartsList.find(element => element.id == res)
-      data.push(iii.body_part + " - " + iii.body_part_name);
+      if (iii)
+        data.push(iii.body_part + " - " + iii.body_part_name);
     })
     return data.join(",")
   }
