@@ -51,19 +51,19 @@
             <div fxFlex="100" fxLayout="row wrap" *ngIf="userForm.value.role_id == 11">
                 <form fxLayout="row wrap" [formGroup]="userExaminerForm" class="mat-grid-form">
                     <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-radio-group formControlName="w9_type" aria-label="Select an option" fxFlex="30"
+                        <mat-radio-group formControlName="w9_number_type" aria-label="Select an option" fxFlex="30"
                             class="p-t-30 p-l-10" (change)="userExaminerForm.controls['w9_number'].setValue('')">
-                            <mat-radio-button value="0">EIN</mat-radio-button>
-                            <mat-radio-button value="1" class="p-l-10">SSN</mat-radio-button>
+                            <mat-radio-button value="EIN">EIN</mat-radio-button>
+                            <mat-radio-button value="SSN" class="p-l-10">SSN</mat-radio-button>
                         </mat-radio-group>
-                        <mat-form-field *ngIf="userExaminerForm.value.w9_type == 0" appearance="standard" fxFlex="70">
+                        <mat-form-field *ngIf="userExaminerForm.value.w9_number_type == 'EIN'" appearance="standard" fxFlex="70">
                             <mat-label>W9 number</mat-label>
                             <input matInput [dropSpecialCharacters]="false" mask="00-0000000" placeholder="W9 number"
                                 formControlName="w9_number">
                             <mat-error>Enter vaild W9 number</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field *ngIf="userExaminerForm.value.w9_type == 1" appearance="standard" fxFlex="70">
+                        <mat-form-field *ngIf="userExaminerForm.value.w9_number_type == 'SSN'" appearance="standard" fxFlex="70">
                             <mat-label>W9 number</mat-label>
                             <input matInput [dropSpecialCharacters]="false" mask="000-00-0000" placeholder="W9 number"
                                 formControlName="w9_number">
@@ -172,13 +172,7 @@
                                     autocomplete="off">
                                 <mat-error *ngIf="isSubmitted">Enter valid notes</mat-error>
                             </mat-form-field>
-                            <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                               
-                            </mat-form-field> -->
-
-
-
+                           
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Land Line 1</mat-label>
@@ -244,7 +238,7 @@
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                 fxFlex.xs="100">
                                 <mat-label>Notes</mat-label>
-                                <textarea matInput formControlName="note" placeholder="Notes"></textarea>
+                                <textarea matInput formControlName="notes" placeholder="Notes"></textarea>
                                 <mat-error *ngIf="isSubmitted">Enter valid notes</mat-error>
                             </mat-form-field>
 

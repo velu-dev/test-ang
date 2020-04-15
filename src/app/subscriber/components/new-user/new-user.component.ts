@@ -132,7 +132,7 @@ export class NewUserComponent implements OnInit {
 
     this.userExaminerForm = this.formBuilder.group({
       w9_number: ['',Validators.maxLength(15)],
-      w9_type: ['0'],
+      w9_number_type: [''],
       national_provider_identifier: ['',Validators.maxLength(10)],
       specialty: [''],
       state_license_number: [''],
@@ -153,7 +153,7 @@ export class NewUserComponent implements OnInit {
       city: [''],
       state: [''],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      note: [''],
+      notes: [''],
       email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       contact_person: ['']
@@ -181,6 +181,7 @@ export class NewUserComponent implements OnInit {
     }
     if (this.isExaminer) {
       this.userForm.value.w9_number = this.userExaminerForm.value.w9_number;
+      this.userForm.value.w9_number_type = this.userExaminerForm.value.w9_number_type;
       this.userForm.value.national_provider_identifier = this.userExaminerForm.value.national_provider_identifier;
       this.userForm.value.specialty = this.userExaminerForm.value.specialty;
       this.userForm.value.state_license_number = this.userExaminerForm.value.state_license_number;
