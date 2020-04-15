@@ -9,7 +9,6 @@ import * as success from './../../../messages/success';
 import * as error from './../../../messages/errors';
 import { AlertService } from "./../../../services/alert.service"
 import * as globals from './../../../../globals';
-import Auth from '@aws-amplify/auth';
 import { UserService } from 'src/app/admin/services/user.service';
 import { User } from 'src/app/admin/models/user.model';
 import { CookieService } from 'src/app/shared/services/cookie.service';
@@ -58,11 +57,11 @@ export class HeaderComponent implements OnInit {
   ) {
     this.spinnerService.show();
     this.isLoading = true;
-    Auth.currentSession().then(token => {
+    this.cognitoService.session().then(token => {
       this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
       this.userService.getUser(this.currentUserID).subscribe(res => {
         this.user = res.data;
-        this.store.dispatch(new headerActions.HeaderAdd(this.user));
+        // this.store.dispatch(new headerActions.HeaderAdd(this.user));
         this.cookieService.set('user', JSON.stringify(this.user));
         this.isLoading = false;
         this.spinnerService.hide();
@@ -71,7 +70,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user$ = this.store.pipe(select('header'));
+    // this.user$ = this.store.pipe(select('header'));
     this.elem = document.documentElement;
     this.isOpen = this.inputSideNav.opened;
   }
@@ -86,11 +85,11 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.spinnerService.show();
     this.cognitoService.logOut().subscribe(response => {
+      // this.store.dispatch(new breadcrumbActions.ResetBreadcrumb());
       this.alertService.openSnackBar(success.logoutSuccess, "success")
       this.spinnerService.hide();
       this.cookieService.deleteAll();
       this.router.navigate(['/'])
-      this.store.dispatch(new breadcrumbActions.ResetBreadcrumb());
     }, error => {
       this.alertService.openSnackBar(error.logoutSuccess, "error")
       this.spinnerService.hide()

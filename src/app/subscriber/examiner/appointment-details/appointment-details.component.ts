@@ -3,12 +3,22 @@ import * as globals from '../../../globals';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 
+export interface PeriodicElement {
+  doc_image: string;
+  doc_type: string;
+  doc_name: string;
+  date: Date;
+  action: string;
+}
 @Component({
   selector: 'app-appointment-details',
   templateUrl: './appointment-details.component.html',
   styleUrls: ['./appointment-details.component.scss']
 })
 export class AppointmentDetailsComponent implements OnInit {
+
+  displayedColumns = ['doc_image', 'doc_type', 'doc_name', 'date', 'action'];
+  dataSource = ELEMENT_DATA;
 
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -101,3 +111,11 @@ export class BillableitemPopupComponent {
 
 
 }
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { doc_image: 'xls', doc_type: 'Record Set', doc_name: 'Venkatesan Mariyappan.xls', date: new Date(), action: '' },
+  { doc_image: 'docx', doc_type: 'Report Template', doc_name: 'Rajan Mariappan.docx', date: new Date(), action: '' },
+  { doc_image: 'pdf', doc_type: 'Cover Letter', doc_name: 'Ganesan Marappa.pdf', date: new Date(), action: '' },
+  { doc_image: 'pdf', doc_type: 'Cover Letter', doc_name: 'Velusamy Venkataramanan.pdf', date: new Date(), action: '' },
+  { doc_image: 'xls', doc_type: 'Record Set', doc_name: 'Sarath Selvaraj.xls', date: new Date(), action: '' },
+];

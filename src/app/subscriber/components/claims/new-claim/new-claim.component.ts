@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
@@ -31,6 +31,8 @@ const ELEMENT_DATA: claimant1[] = []
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent implements OnInit {
+  today = new Date();
+  isMobile = false;
   xls = globals.xls
   displayedColumns: string[] = ['body_part_id', 'date_of_injury', "action"];
   dataSource: any;
@@ -81,16 +83,60 @@ export class NewClaimComponent implements OnInit {
   intakeComType: string;
   addNewClaimant: boolean;
   examinarList: any = [];
-  examinarAddress = [];
+  claimInfo: any;
+  isEdit: boolean = false;
+  addressCtrl = new FormControl();
+  address = [];
+  examinarAddress: Observable<any[]>;
+  claimId: any;
+  private _filterAddress(value: string): any[] {
+    let val = value.replace(",", "")//.toLowerCase();
+    const filterValue = val.replace(" ", "")
+    return this.address.filter(add => add.street1.indexOf(filterValue.toLowerCase()) === 0);
+  }
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute) {
+    this.examinarAddress = this.addressCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(address => address ? this._filterAddress(address) : this.address.slice())
+      );
     this.route.params.subscribe(param => {
       if (param.id) {
+        this.claimId = param.id;
+        this.isEdit = true;
         this.claimService.getClaim(param.id).subscribe(res => {
-          console.log(res)
+          this.claimInfo = res.data;
+          this.addNewClaimant = true;
+          this.isClaimantCreated = true;
+          this.isClaimCreated = true;
+          console.log(res.data);
+          this.claimant.patchValue(res.data.claimant_details)
+          this.claimant_name = res.data.claimant_details.first_name + "  " + res.data.claimant_details.last_name
+          this.claim.patchValue({
+            claim_details: {
+              claimant_name: this.claimant_name
+            }
+          });
+          this.claim.patchValue({
+            claim_details: res.data.claim_details,
+            InsuranceAdjuster: res.data.agent_details.InsuranceAdjuster,
+            Employer: res.data.agent_details.Employer,
+            ApplicantAttorney: res.data.agent_details.ApplicantAttorney,
+            DefenseAttorney: res.data.agent_details.DefenseAttorney,
+            DEU: res.data.agent_details.DEU,
+          });
+          this.injuryInfodata = res.data.claim_injuries;
+          this.dataSource = new MatTableDataSource(this.injuryInfodata);
+          this.billable_item.patchValue({
+            claim_id: res.data.claim_details.id,
+            claimant_id: res.data.claimant_details.id,
+            intake_call: res.data.intake_calls,
+            appointment: res.data.appointments
+          })
         })
       }
     })
@@ -125,7 +171,14 @@ export class NewClaimComponent implements OnInit {
             this.objectTypes = res.data;
             break;
           case "procedural_codes":
-            this.procuderalCodes = res.data;
+            res.data.map(proc => {
+              if (!this.isEdit) {
+                if (proc.procedural_code != "ML100")
+                  this.procuderalCodes.push(proc);
+              } else {
+                this.procuderalCodes.push(proc)
+              }
+            })
             break;
           case "role_level":
             this.roleLevels = res.data;
@@ -159,7 +212,9 @@ export class NewClaimComponent implements OnInit {
         switchMap(value => this.claimService.searchClaimant({ basic_search: value, isadvanced: this.searchStatus })));
   }
   isLoading = false;
+  tabIndex = 0;
   advanceTabChanged(event) {
+    this.tabIndex = event.index;
     this.searchStatus = false;
   }
   selectClaimant(option) {
@@ -205,12 +260,6 @@ export class NewClaimComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       suffix: [],
-      salutation: [],
-      organization_id: [],
-      created_by: [],
-      modified_by: [],
-      createdAt: [],
-      updatedAt: [],
       zip_code_plus_4: [],
       date_of_birth: [null, Validators.required],
       gender: [],
@@ -233,6 +282,7 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         // wcab_number: ["", Validators.required],
         // claim_number: ["", Validators.required],
+        id: [],
         claimant_name: [{ value: "", disabled: true }],
         wcab_number: [],
         claim_number: [],
@@ -242,6 +292,7 @@ export class NewClaimComponent implements OnInit {
       }),
       claim_injuries: [],
       InsuranceAdjuster: this.formBuilder.group({
+        id: [],
         insurance_name: [],
         name: [],
         phone: [],
@@ -250,6 +301,7 @@ export class NewClaimComponent implements OnInit {
         address: [],
       }),
       Employer: this.formBuilder.group({
+        id: [],
         name: [],
         phone: [],
         address: [],
@@ -258,6 +310,7 @@ export class NewClaimComponent implements OnInit {
         zipcode: [],
       }),
       ApplicantAttorney: this.formBuilder.group({
+        id: [],
         law_firm_name: [],
         attorney_name: [],
         phone: [],
@@ -269,6 +322,7 @@ export class NewClaimComponent implements OnInit {
         zipcode: []
       }),
       DefenseAttorney: this.formBuilder.group({
+        id: [],
         law_firm_name: [],
         attorney_name: [],
         phone: [],
@@ -280,6 +334,7 @@ export class NewClaimComponent implements OnInit {
         zipcode: []
       }),
       DEU: this.formBuilder.group({
+        id: [],
         name: [],
         phone: [],
         address: [],
@@ -298,10 +353,10 @@ export class NewClaimComponent implements OnInit {
         examiner_id: [],
         appointment_scheduled_date_time: [],
         duration: [],
-        examination_location_id: [1]
+        examination_location_id: []
       }),
       intake_call: this.formBuilder.group({
-        caller_affliation: [],
+        caller_affiliation: [],
         caller_name: [],
         call_date: [],
         call_type: [],
@@ -338,38 +393,53 @@ export class NewClaimComponent implements OnInit {
     }
     let claim = this.claim.value;
     claim['claim_injuries'] = this.injuryInfodata;
-    // let data = { ...this.claimant.value, ...claim };
-    console.log("claim details", claim);
-    this.claimService.createClaim(claim).subscribe(res => {
-      this.isClaimCreated = true;
-      this.billable_item.patchValue({
-        claim_id: res.data.claim_id
+    if (!this.isEdit) {
+      this.claimService.createClaim(claim).subscribe(res => {
+        this.isClaimCreated = true;
+        this.billable_item.patchValue({
+          claim_id: res.data.claim_id
+        })
+        this.alertService.openSnackBar(res.message, 'success');
+      }, error => {
+        console.log(error)
+        this.isClaimCreated = false;
+        this.alertService.openSnackBar(error.error.error, 'error');
       })
-      this.alertService.openSnackBar(res.message, 'success');
-      this.claim.reset();
-    }, error => {
-      console.log(error)
-      this.isClaimCreated = false;
-      this.alertService.openSnackBar(error.error.error, 'error');
-    })
+    } else {
+      this.claimService.updateClaim(this.claim.value, this.claimId).subscribe(res => {
+        this.alertService.openSnackBar(res.message, 'success');
+      }, error => {
+        this.isClaimCreated = false;
+        this.alertService.openSnackBar(error.error.error, 'error');
+      })
+    }
   }
   examinarId: any;
   examinarChange(examinar) {
     this.examinarId = examinar.id;
-  }
-  addressTypeChange(address) {
-    let data = {
-      "examiner_id": this.examinarId,
-      "address_type_id": address.id
-    }
-    this.claimService.getExaminar(data).subscribe(res => {
-      console.log(res)
+    this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
+      this.address = res.data;
     })
   }
+  // addressTypeChange(address) {
+  //   this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
+  //     this.examinarAddress = res.data;
+  //   })
+  // }
   submitBillableItem() {
-    this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
-      console.log(res.data)
-    })
+    if (!this.isEdit) {
+      this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
+        this.alertService.openSnackBar(res.message, "success");
+      }, error => {
+        this.alertService.openSnackBar(error.error.error, 'error');
+      })
+    } else {
+      this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
+        this.alertService.openSnackBar(res.message, "success");
+      }, error => {
+        this.alertService.openSnackBar(error.error.error, 'error');
+      })
+    }
   }
   cancle() {
 
@@ -383,25 +453,34 @@ export class NewClaimComponent implements OnInit {
     }
     let data = this.claimant.value;
     data['primary_language_not_english'] = this.languageStatus;
-    this.claimService.createClaimant(this.claimant.value).subscribe(res => {
-      this.alertService.openSnackBar(res.message, "success");
-      this.claimant_name = res.data.first_name + "  " + res.data.last_name
-      console.log("claimant_name", this.claimant_name)
-      this.claim.patchValue({
-        claim_details: {
-          claimant_id: res.data.id,
-          claimant_name: this.claimant_name
-        }
-      });
-      this.billable_item.patchValue({
-        claimant_id: res.data.id
+    if (!this.isEdit) {
+      this.claimService.createClaimant(this.claimant.value).subscribe(res => {
+        this.alertService.openSnackBar(res.message, "success");
+        this.claimant_name = res.data.first_name + "  " + res.data.last_name
+        console.log("claimant_name", this.claimant_name)
+        this.claim.patchValue({
+          claim_details: {
+            claimant_id: res.data.id,
+            claimant_name: this.claimant_name
+          }
+        });
+        this.billable_item.patchValue({
+          claimant_id: res.data.id
+        })
+        this.isClaimantCreated = true;
+      }, error => {
+        console.log(error)
+        this.isClaimantCreated = false;
+        this.alertService.openSnackBar(error.error.error, 'error');
       })
-      this.isClaimantCreated = true;
-    }, error => {
-      console.log(error)
-      this.isClaimantCreated = false;
-      this.alertService.openSnackBar(error.error.error, 'error');
-    })
+    } else {
+      this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
+        this.alertService.openSnackBar(res.message, "success");
+      }, error => {
+        this.isClaimantCreated = false;
+        this.alertService.openSnackBar(error.error.error, 'error');
+      })
+    }
   }
   addInjury() {
     this.injuryInfodata.push(this.injuryInfo)
@@ -412,7 +491,8 @@ export class NewClaimComponent implements OnInit {
     let data = [];
     element.body_part_id.map(res => {
       let iii = this.bodyPartsList.find(element => element.id == res)
-      data.push(iii.body_part + " - " + iii.body_part_name);
+      if (iii)
+        data.push(iii.body_part + " - " + iii.body_part_name);
     })
     return data.join(",")
   }
@@ -463,6 +543,12 @@ export class NewClaimComponent implements OnInit {
     this.bodyPartsList.map(res => {
       // id.include
     })
+  }
+  isAddressSelected = false;
+  selectedExaminarAddress: any = {};
+  changeExaminarAddress(address) {
+    this.isAddressSelected = true;
+    this.selectedExaminarAddress = address;
   }
 }
 

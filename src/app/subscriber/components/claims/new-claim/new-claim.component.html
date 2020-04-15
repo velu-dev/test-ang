@@ -9,10 +9,15 @@
                 <ng-template matStepLabel>Create Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
-                        <div fxFlex="100">
+                        <div *ngIf="!isEdit" fxFlex="100">
 
-
+                            <button *ngIf="tabIndex == 0" mat-mini-fab
+                                [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user"
+                                type="button" (click)="newClaimant()">
+                                <mat-icon>add</mat-icon>
+                            </button>
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
+
                                 <mat-tab label="Search Claimants ">
                                     <mat-form-field appearance="fill" fxFlex="100"
                                         hideRequiredMarker="hideRequiredControl.auto"
@@ -60,7 +65,7 @@
                                                     <mat-label>Date of Birth</mat-label>
                                                     <input matInput placeholder="Date of Birth"
                                                         formControlName="date_of_birth_advance_search"
-                                                        autocomplete="off" formControlName="date_of_birth"
+                                                        autocomplete="off" formControlName="date_of_birth" [max]="today"
                                                         [matDatepicker]="date_of_birth_advance_search"
                                                         (click)="date_of_birth_advance_search.open()">
                                                     <mat-datepicker-toggle matSuffix
@@ -102,34 +107,34 @@
                                 </mat-tab>
 
                                 <mat-tab label="Search EAMS">
-                                    <mat-form-field appearance="fill" fxFlex="100" class="w-100">
+                                    <mat-form-field appearance="fill" fxFlex="100"
+                                        hideRequiredMarker="hideRequiredControl.auto"
+                                        floatLabel="floatLabelControl.auto" class="adj_filter w-100">
+                                        <div matPrefix>
+                                            <span matPrefix> &nbsp; ADJ &nbsp;</span>
+                                        </div>
+                                        <input matInput placeholder="Enter ADJ number"
+                                            [matAutocomplete]="claimantAutocomplete" [formControl]="emasSearchInput">
+                                        <span matSuffix class="search-icon icons" (click)="searchEAMS()">
+                                            <mat-icon>search</mat-icon>
+                                        </span>
+                                    </mat-form-field>
+
+
+                                    <!-- <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <span matPrefix>ADJ &nbsp;</span>
                                         <input matInput placeholder="Enter ADJ number"
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="emasSearchInput">
                                         <span (click)="searchEAMS()" matSuffix class="search-icon icons">
                                             <mat-icon>search</mat-icon>
                                         </span>
-                                    </mat-form-field>
-
-
-
-                                    <!-- <mat-form-field appearance="fill" fxFlex="100"
-                                        class="advanced_search w-100 w-100 p-b-0">
-                                        <div matPrefix>
-                                            <span>ADJ</span>
-                                        </div>
-                                        <input matInput placeholder="Search EAMS" [formControl]="emasSearchInput">
-                                        <span (click)="searchEAMS()" matSuffix class="search-icon icons">
-                                            <mat-icon>search</mat-icon>
-                                        </span>
                                     </mat-form-field> -->
-
                                 </mat-tab>
                             </mat-tab-group>
                         </div>
-                        <div class="add_new text-center" (click)="newClaimant()">
+                        <!-- <div class="add_new text-center" (click)="newClaimant()">
                             <span class="fa fa-plus"></span> Add New Claimant
-                        </div>
+                        </div> -->
                         <div fxLayout="row wrap" fxFlex="100" *ngIf="addNewClaimant">
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
@@ -166,7 +171,8 @@
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth*</mat-label>
                                 <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
-                                    autocomplete="off" [matDatepicker]="date_of_birth" (click)="date_of_birth.open()">
+                                    autocomplete="off" [max]="today" [matDatepicker]="date_of_birth"
+                                    (click)="date_of_birth.open()">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
                                 <mat-error>Enter valid date of birth</mat-error>
@@ -182,9 +188,9 @@
                                 fxFlex.xs="100">
                                 <mat-label>Gender</mat-label>
                                 <mat-select formControlName="gender">
-                                    <mat-option value="male">Male</mat-option>
-                                    <mat-option value="female">Female</mat-option>
-                                    <mat-option value="other">Other</mat-option>
+                                    <mat-option value="M">Male</mat-option>
+                                    <mat-option value="F">Female</mat-option>
+                                    <mat-option value="O">Other</mat-option>
                                 </mat-select>
                                 <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
@@ -216,15 +222,7 @@
                                 <mat-error>Select valid primary language</mat-error>
                             </mat-form-field>
 
-                            <!-- <div fxFlex="50" *ngIf="languageStatus" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
-                            class="checkbox">
-                            <div class="p-t-30  p-l-10"> Certified Interpreter Required                             
-                                <mat-radio-group formControlName="certified_inpreted" aria-label="Select an option">
-                                    <mat-radio-button value="true" class="p-l-15">Yes</mat-radio-button>
-                                    <mat-radio-button value="false" class="p-l-15">No</mat-radio-button>
-                                </mat-radio-group>
-                            </div>
-                        </div> -->
+
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -294,7 +292,7 @@
                             <div class="text-center w-100 m-t-10 m-b-50">
                                 <button mat-raised-button color="primary" type="submit"
                                     class="m-r-10 rounded-corner btn_success" (click)="createClaimant()">
-                                    Save </button>
+                                    {{isEdit ? 'Update' : 'Save'}} </button>
                                 <button [disabled]="!(!claimant.invalid && isClaimantCreated)" mat-raised-button
                                     type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
                             </div>
@@ -318,7 +316,7 @@
                                     disabled>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>WCAB Number </mat-label>
                                 <input type="number" matInput placeholder="WCAB Number" formControlName="wcab_number"
@@ -334,7 +332,7 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Claim Number</mat-label>
                                 <input matInput placeholder="Claim Number" formControlName="claim_number"
@@ -342,7 +340,7 @@
                                 <mat-error>Enter valid claim number</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Panel Number </mat-label>
                                 <input matInput type="number" mask="0000000" placeholder="Panel Number"
@@ -373,7 +371,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Date of Injury </mat-label>
-                                <input matInput placeholder="Date of Injury " autocomplete="off"
+                                <input matInput placeholder="Date of Injury " autocomplete="off" [max]="today"
                                     [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury"
                                     [ngModelOptions]="{standalone: true}" (click)="date_of_injury1.open()">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
@@ -405,10 +403,10 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma=='1'" appearance="standard"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma=='true'" appearance="standard"
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
-                                <input matInput placeholder="CT Start date " autocomplete="off"
+                                <input matInput placeholder="CT Start date " autocomplete="off" [max]="today"
                                     [matDatepicker]="continuous_trauma_start_date"
                                     [(ngModel)]="injuryInfo.continuous_trauma_start_date"
                                     [ngModelOptions]="{standalone: true}" (click)="continuous_trauma_start_date.open()">
@@ -417,12 +415,12 @@
                                 <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == '1'" appearance="standard"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 'true'" appearance="standard"
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date "
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
-                                    [ngModelOptions]="{standalone: true}" autocomplete="off"
+                                    [ngModelOptions]="{standalone: true}" autocomplete="off" [max]="today"
                                     [matDatepicker]="continuous_trauma_end_date"
                                     (click)="continuous_trauma_end_date.open()">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
@@ -816,7 +814,7 @@
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success" (click)="submitClaim()">
-                            Save </button>
+                            {{isEdit ? 'Update' : 'Save'}} </button>
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success" matStepperNext
                             [disabled]="!(!claim.invalid && isClaimCreated)">
@@ -870,7 +868,8 @@
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="Date & Time" formControlName="appointment_scheduled_date_time"
-                                autocomplete="off" [matDatepicker]="date_and_time" (click)="date_and_time.open()">
+                                autocomplete="off" [max]="today" [matDatepicker]="date_and_time"
+                                (click)="date_and_time.open()">
                             <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                             <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
                         </mat-form-field>
@@ -883,30 +882,50 @@
                                 <mat-option value="60">60 Mins</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Service Location Type</mat-label>
                             <mat-select>
-                                <mat-option *ngFor="let addressType of addressTypes"
-                                    (click)="addressTypeChange(addressType)" [value]="addressType.id">
+                                <mat-option *ngFor="let addressType of addressTypes" [value]="addressType.id">
                                     {{addressType.address_type_name}}</mat-option>
                             </mat-select>
-                        </mat-form-field>
-
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Examination Location</mat-label>
-                            <mat-select formControlName="examination_location_id">
-                                <mat-option *ngFor="let address of examinarAddress" [value]="address.id">
-                                    {{address | json}}</mat-option>
-
-                            </mat-select>
-                        </mat-form-field>
+                        </mat-form-field> -->
 
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                             fxFlex.xs="100">
-                            <mat-label>Address</mat-label>
-                            <textarea matInput placeholder="Address" autocomplete="off"></textarea>
+                            <mat-label>Examination Location</mat-label>
+                            <input matInput placeholder="Address" aria-label="State" [matAutocomplete]="examinarAuto"
+                                [formControl]="addressCtrl">
+                            <mat-autocomplete #examinarAuto="matAutocomplete">
+                                <mat-option *ngFor="let address of examinarAddress | async"
+                                    (click)="changeExaminarAddress(address)" [value]="address.street1">
+                                    {{address.street1}}
+                                    <!-- <small>Population: {{state.population}}</small> -->
+                                </mat-option>
+                            </mat-autocomplete>
                         </mat-form-field>
-
+                        <div fxFlex="100">
+                            <mat-card-content class="address-list">
+                                <mat-list *ngIf="isAddressSelected">
+                                    <mat-list-item>
+                                        <div class="name" mat-line>
+                                            <div><strong>
+                                                    <i
+                                                        class="fa fa-building-o"></i>{{selectedExaminarAddress.service_code}}
+                                                    - {{selectedExaminarAddress.service_name}}
+                                                </strong></div>
+                                            <!-- <span><i class="fa fa-phone-alt"></i>
+                                                {{selectedExaminarAddress.}}</span> -->
+                                        </div>
+                                        <div class="address" mat-line>{{selectedExaminarAddress.street1}}</div>
+                                    </mat-list-item>
+                                </mat-list>
+                                <mat-list *ngIf="!isAddressSelected">
+                                    <mat-list-item>
+                                        No Address Selected
+                                    </mat-list-item>
+                                </mat-list>
+                            </mat-card-content>
+                        </div>
 
                     </div>
 
@@ -917,7 +936,7 @@
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Caller Affiliation</mat-label>
-                            <mat-select formControlName="caller_affliation">
+                            <mat-select formControlName="caller_affiliation">
                                 <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                     {{caller.agent_type_name}}</mat-option>
                             </mat-select>
@@ -931,7 +950,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
-                                autocomplete="off" [matDatepicker]="date_and_time_intake"
+                                autocomplete="off" [max]="today" [matDatepicker]="date_and_time_intake"
                                 (click)="date_and_time_intake.open()">
                             <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle>
                             <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker>
@@ -960,7 +979,7 @@
                     <div class="text-center w-100 m-t-10 m-b-50">
                         <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
                             (click)="submitBillableItem()">
-                            Submit </button>
+                            {{isEdit ? 'Update' : 'Submit'}} </button>
                         <button mat-raised-button type="button" class="rounded-corner" color="warn"
                             matStepperPrevious>Back</button>
                     </div>

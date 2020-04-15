@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ClaimService } from '../../service/claim.service';
 import { ExaminerService } from '../../service/examiner.service';
-
+import * as  errors from '../../../shared/messages/errors'
 @Component({
   selector: 'app-edit-address',
   templateUrl: './edit-address.component.html',
@@ -16,18 +16,25 @@ export class EditAddressComponent implements OnInit {
   examinerId: number;
   examinerName: string;
   addressIsSubmitted: boolean = false;
+  address_id: number;
+  isSubmitted:boolean =false;
+  errorMessages = errors;
   constructor(private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private examinerService: ExaminerService,
   ) {
-    this.route.params.subscribe(params => this.examinerId = params.id);
+    this.route.params.subscribe(params => {
+      console.log(params)
+      this.examinerId = params.examiner_id;
+      this.address_id = params.address_id;
+    });
   }
 
   ngOnInit() {
     this.addressForm = this.formBuilder.group({
-      id: [""],
+      id: ["1"],
       service_code_id: ['', Validators.compose([Validators.required])],
       phone1: [''],
       phone2: [''],
@@ -40,6 +47,10 @@ export class EditAddressComponent implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       zip_code: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      notes: [''],
+      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      contact_person: ['']
     });
 
     this.claimService.seedData('state').subscribe(response => {
@@ -58,8 +69,13 @@ export class EditAddressComponent implements OnInit {
   }
 
   getAddress() {
-    this.examinerService.getsingleExAddress(this.examinerId).subscribe(res => {
-      console.log(res)
+    this.examinerService.getsingleExAddress(this.examinerId,this.address_id).subscribe(res => {
+      console.log(res);
+      res['data'].id = this.address_id
+      res['data'].service_code_id = this.address_id;
+      res['data'].fax1 = this.address_id
+      res['data'].fax2 = this.address_id
+      this.addressForm.setValue(res['data'])
     }, error => {
 
     })

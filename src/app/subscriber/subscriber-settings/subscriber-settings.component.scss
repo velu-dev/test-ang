@@ -38,3 +38,11 @@
 mat-form-field {
   padding: 10px !important;
 }
+
+.sub-title {
+  color: $primarycolor;
+  font-size: $font-size-1;
+  font-weight: $font-weight-medium;
+  border-bottom: 1px solid #efefef;
+  padding: 10px 0;
+}

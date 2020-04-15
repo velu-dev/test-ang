@@ -14,6 +14,7 @@ import { ExportService } from 'src/app/shared/services/export.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
   selector: 'app-claim-list',
@@ -55,8 +56,12 @@ export class ClaimListComponent implements OnInit {
     private router: Router,
     private exportService: ExportService,
     public dialog: MatDialog,
-    private claimService: ClaimService
+    private claimService: ClaimService,
+    private logger: NGXLogger
   ) {
+    this.logger.debug('Your log message goes here');
+    this.logger.debug('Multiple', 'Argument', 'support');
+    this.logger.error('Error message');
     this.claimService.seedData("body_part").subscribe(res => {
       this.bodyPartsList = res.data;
     });
@@ -67,8 +72,8 @@ export class ClaimListComponent implements OnInit {
         this.columnName = ["", "First Name", "Action"]
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Injury", "Injury", "Claim number", "Examiner", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_injury', 'claim_injuries', 'claim_number', "examiner", "disabled"]
+        this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Injury", "Claim number", "Examiner", "Action"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_injury', 'claim_number', "examiner", "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;

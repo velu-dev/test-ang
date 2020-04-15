@@ -37,6 +37,11 @@ export class CognitoService {
     return from(Auth.currentSession());
   }
 
+  session() {
+    const currentSession = Auth.currentSession();
+    return currentSession;
+  }
+
   currentUserInfo() {
     return from(Auth.currentUserInfo());
   }

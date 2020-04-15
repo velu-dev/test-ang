@@ -89,11 +89,12 @@
                                 padding: 50px;
                             }
                         }
+
                         .uploaded-doc-list {
                             padding: 5px;
                             mat-card-content {
                                 margin-top: 10px;
-                                max-height: 240px;
+                                max-height: 270px;
                                 overflow: auto;
                                 .doc-list-item {
                                     padding: 10px;
@@ -123,6 +124,18 @@
                     }
                 }
             }
+        }
+        button.doc_type {
+            margin-top: 5px;
+            color: $primarydarkcolor;
+            background-color: $btn-light-color !important;
+            padding: 5px 10px;
+            height: 40px;
+            font-size: $font-size-7;
+            border: none;
+            margin-right: 10px;
+            outline: none;
+            cursor: pointer;
         }
     }
     .paymant_details {
@@ -232,5 +245,3 @@
 .breadcrumb li:nth-child(5) a:after {
     border-left-color: #801a33;
 }
-
-
