@@ -11,6 +11,7 @@ import * as  errors from '../../shared/messages/errors'
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { Store } from '@ngrx/store';
 import * as headerActions from "./../../shared/store/header.actions";
+import { ClaimService } from '../service/claim.service';
 
 @Component({
   selector: 'app-subscribersettings',
@@ -25,6 +26,7 @@ export class SubscriberSettingsComponent implements OnInit {
   userPasswrdForm: FormGroup;
   errorMessages = errors
   disableCompany: boolean = true;
+  taxonomyList: any;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -33,7 +35,8 @@ export class SubscriberSettingsComponent implements OnInit {
     private router: Router,
     private cognitoService: CognitoService,
     private cookieService: CookieService,
-    private store: Store<{ count: number }>
+    private store: Store<{ count: number }>,
+    private claimService: ClaimService
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
@@ -50,6 +53,7 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   ngOnInit() {
     let user = JSON.parse(this.cookieService.get('user'));
+    this.currentUser = user;
     if (user.role_id == 2) {
       this.disableCompany = false;
     }
@@ -58,15 +62,40 @@ export class SubscriberSettingsComponent implements OnInit {
       new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])]
     })
-    this.userForm = this.formBuilder.group({
-      id: [''],
-      role_id: [''],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      company_name: [{ value: "", disabled: this.disableCompany }, Validators.compose([Validators.maxLength(100)])],
-      sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
-    });
+
+    if (user.role_id == 2) {
+      this.userForm = this.formBuilder.group({
+        id: [''],
+        role_id: [''],
+        first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+        last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+        middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+        company_name: [{ value: "", disabled: this.disableCompany }, Validators.compose([Validators.maxLength(100)])],
+        sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+        w9_number: ['', Validators.maxLength(15)],
+        w9_type: ['0'],
+        ind_national_provider_identifier: ['', Validators.maxLength(10)],
+        taxonomy_id: [''],
+        company_w9_number: ['', Validators.maxLength(15)],
+        company_national_provider_identifier: ['', Validators.maxLength(10)],
+      });
+    } else {
+      this.userForm = this.formBuilder.group({
+        id: [''],
+        role_id: [''],
+        first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+        last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+        middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+        company_name: [{ value: "", disabled: this.disableCompany }, Validators.compose([Validators.maxLength(100)])],
+        sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
+      });
+    }
+
+    this.claimService.seedData('taxonomy').subscribe(response => {
+      this.taxonomyList = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
   }
   userformSubmit() {
     this.isSubmit = true;
@@ -117,4 +146,6 @@ export class SubscriberSettingsComponent implements OnInit {
       })
     })
   }
+
+
 }
