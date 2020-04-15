@@ -21,7 +21,7 @@ import { ClaimService } from '../service/claim.service';
 export class SubscriberSettingsComponent implements OnInit {
   profile_bg = globals.profile_bg;
   user: User;
-  currentUser = {};
+  currentUser:any;
   userForm: FormGroup;
   userPasswrdForm: FormGroup;
   errorMessages = errors

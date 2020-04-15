@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ClaimService } from '../../service/claim.service';
 import { ExaminerService } from '../../service/examiner.service';
-
+import * as  errors from '../../../shared/messages/errors'
 @Component({
   selector: 'app-edit-address',
   templateUrl: './edit-address.component.html',
@@ -17,6 +17,8 @@ export class EditAddressComponent implements OnInit {
   examinerName: string;
   addressIsSubmitted: boolean = false;
   address_id: number;
+  isSubmitted:boolean =false;
+  errorMessages = errors;
   constructor(private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
