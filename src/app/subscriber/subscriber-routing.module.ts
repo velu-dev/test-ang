@@ -117,7 +117,7 @@ const routes: Routes = [{
       path: "settings",
       component: SubscriberSettingsComponent
     }, {
-      path: "edit-address/:id",
+      path: "edit-address/:examiner_id/:address_id",
       component: EditAddressComponent
     },]
 }, {
