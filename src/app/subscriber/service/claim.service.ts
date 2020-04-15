@@ -25,8 +25,14 @@ export class ClaimService {
   createClaim(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createClaim, data)
   }
+  updateClaim(data, id): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updateClaim + id, data)
+  }
   createClaimant(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createClaimant, data)
+  }
+  updateClaimant(data): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updateClaimant + data.id, data)
   }
   createBillableItem(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.create_billable_item, data)
@@ -41,8 +47,8 @@ export class ClaimService {
   // getCallerAffliation(): Observable<any> {
   //   return this.http.get(environment.baseUrl + api_endpoint.callerAffliation)
   // }
-  getExaminar(data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.get_examinar_address, data)
+  getExaminarAddress(id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.get_examinar_address + id)
   }
   searchbyEams(eams_number): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.searchEams + eams_number)

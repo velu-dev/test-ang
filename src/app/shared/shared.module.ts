@@ -26,7 +26,9 @@ import { NodataComponent } from './components/nodata/nodata.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { NgxMaskModule } from 'ngx-mask';
-import { FilterPipe } from './pipes/filter.pipe'
+import { FilterPipe } from './pipes/filter.pipe';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -49,6 +51,7 @@ import { FilterPipe } from './pipes/filter.pipe'
     StoreModule.forFeature("breadcrumb", breadcrumbreducer),
     StoreModule.forFeature("header", headerreducer),
     NgxSkeletonLoaderModule,
+    LoggerModule.forRoot({ serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR }),
     NgxMaskModule.forRoot()
   ],
   exports: [
@@ -67,6 +70,7 @@ import { FilterPipe } from './pipes/filter.pipe'
     NgxSkeletonLoaderModule,
     EllipsisPipe,
     NgxMaskModule,
+    LoggerModule,
     FilterPipe
   ],
   providers: [
