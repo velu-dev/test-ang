@@ -73,10 +73,16 @@ export class ExaminerSettingComponent implements OnInit {
       if (res.data.organization_type == 'INDV') {
         res.data.company_name = '';
       }
-      delete res.data.organization_type;
-      delete res.data.business_nature;
-      delete res.data.logo;
-      this.userForm.setValue(res.data)
+      let userDetails = {
+        id: res.data.id,
+        role_id: res.data.role_id,
+        first_name: res.data.first_name,
+        last_name: res.data.last_name,
+        middle_name: res.data.middle_name,
+        company_name: res.data.company_name,
+        sign_in_email_id: res.data.sign_in_email_id,
+      }
+      this.userForm.setValue(userDetails)
     })
   }
   ngOnInit() {
