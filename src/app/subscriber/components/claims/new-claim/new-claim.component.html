@@ -1,12 +1,12 @@
 <mat-card class="m-card">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title">{{titleName}}</div>
+        <div class="m-0 content-wrapper-main-title">{{isEdit ? 'Update' : 'Create'}}{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant">
-                <ng-template matStepLabel>Create Claimant</ng-template>
+                <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
                         <div *ngIf="!isEdit" fxFlex="100">
@@ -87,7 +87,7 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Zip Code</mat-label>
-                                                    <input matInput mask="00000" formControlName="zipcode"
+                                                    <input matInput mask="00000" formControlName="zip_code"
                                                         placeholder="zip code" autocomplete="off">
                                                     <mat-error>Enter valid zip code</mat-error>
                                                 </mat-form-field>
@@ -113,8 +113,7 @@
                                         <div matPrefix>
                                             <span matPrefix> &nbsp; ADJ &nbsp;</span>
                                         </div>
-                                        <input matInput placeholder="Enter ADJ number"
-                                            [matAutocomplete]="claimantAutocomplete" [formControl]="emasSearchInput">
+                                        <input matInput placeholder="Enter ADJ number" (keyup.enter)="searchEAMS()" [formControl]="emasSearchInput">
                                         <span matSuffix class="search-icon icons" (click)="searchEAMS()">
                                             <mat-icon>search</mat-icon>
                                         </span>
@@ -303,7 +302,7 @@
         </mat-step>
         <mat-step [stepControl]="claim">
             <form [formGroup]="claim">
-                <ng-template matStepLabel>Create Claim</ng-template>
+                <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claim</ng-template>
                 <mat-card>
                     <mat-card-header>
                         <div class="sub-title">Claim Information</div>
@@ -571,7 +570,7 @@
 
                             <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Adjuster Address</mat-label>
-                                <textarea matInput formControlName="address"></textarea>
+                                <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -603,7 +602,7 @@
 
                             <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Address</mat-label>
-                                <textarea matInput formControlName="address"></textarea>
+                                <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -625,7 +624,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput mask="00000" placeholder="Zip" formControlName="zipcode"
+                                <input matInput mask="00000" placeholder="Zip" formControlName="zip_code"
                                     autocomplete="off">
                             </mat-form-field>
                         </div>
@@ -676,7 +675,7 @@
 
                             <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Address</mat-label>
-                                <textarea matInput formControlName="address"></textarea>
+                                <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -696,7 +695,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput mask="00000" placeholder="Zip" formControlName="zipcode"
+                                <input matInput mask="00000" placeholder="Zip" formControlName="zip_code"
                                     autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -752,7 +751,7 @@
 
                             <mat-form-field appearance="standard" fxFlex="100">
                                 <mat-label>Address</mat-label>
-                                <textarea matInput formControlName="address"></textarea>
+                                <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -772,7 +771,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput mask="00000" placeholder="Zip" formControlName="zipcode"
+                                <input matInput mask="00000" placeholder="Zip" formControlName="zip_code"
                                     autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -828,7 +827,7 @@
         <mat-step [stepControl]="billable_item">
             <form [formGroup]="billable_item">
 
-                <ng-template matStepLabel>Create Billable Item</ng-template>
+                <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Billable Item</ng-template>
                 <mat-card fxLayout="row wrap" fxFlex="100">
                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Exam Type
                     </div>
@@ -852,7 +851,8 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Create
+                    <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                        {{isEdit ? 'Update' : 'Create'}}
                         Appointment
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
