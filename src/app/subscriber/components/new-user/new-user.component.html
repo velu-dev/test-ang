@@ -165,6 +165,13 @@
                                 <mat-error *ngIf="isSubmitted">Enter valid zip code</mat-error>
                             </mat-form-field>
 
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                                fxFlex.xs="100">
+                                <mat-label>Location Contact Person</mat-label>
+                                <input matInput formControlName="contact_person" placeholder="Location Contact Person"
+                                    autocomplete="off">
+                                <mat-error *ngIf="isSubmitted">Enter valid notes</mat-error>
+                            </mat-form-field>
                             <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                
@@ -232,15 +239,9 @@
                                 <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Location Contact Person</mat-label>
-                                <input matInput formControlName="contact_person" placeholder="Location Contact Person"
-                                    autocomplete="off">
-                                <mat-error *ngIf="isSubmitted">Enter valid notes</mat-error>
-                            </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                 fxFlex.xs="100">
                                 <mat-label>Notes</mat-label>
                                 <textarea matInput formControlName="note" placeholder="Notes"></textarea>

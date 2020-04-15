@@ -24,8 +24,6 @@
   }
 }
 
-
-
 // ==================================
 // Table Responsive styles   ========
 // ==================================
@@ -54,15 +52,14 @@ tr.detail-row {
   }
 }
 
-
 .table-expand {
   padding-top: 8px;
-  color:$text-error;
+  color: $text-error;
   font-size: $font-size-4;
 }
 .expand-close {
   padding-top: 8px;
-  color:$primarylightcolor;
+  color: $primarylightcolor;
   font-size: $font-size-4;
 }
 
@@ -76,4 +73,35 @@ tr.detail-row {
 
 .width-150 {
   min-width: 150px;
+}
+
+// ==================================
+// Basic Details   ========
+// ==================================
+
+.basic-table {
+  padding: 0px !important;
+  table {
+    width: $width-100;
+    tr {
+      th {
+        padding: 0px 10px !important;
+        color: $white !important;
+        font-size: $font-size-1;
+        background-color: $ternary-color;
+      }
+      td {
+        color: $dark-gray;
+        padding: 0px 10px !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      &:hover {
+        background-color: $bg-light-blue;
+        cursor: pointer;
+      }
+    }
+    .mat-header-row {
+      height: 50px !important;
+    }
+  }
 }
