@@ -51,7 +51,7 @@ export class NewClaimComponent implements OnInit {
   application_attorney: FormGroup;
   billable_item: FormGroup;
   defance_attorney: FormGroup;
-  titleName = "Create Claimant";
+  titleName = " Claimant";
   languageStatus = false;
   callerAffliation = [];
   injuryInfodata = []
@@ -131,6 +131,8 @@ export class NewClaimComponent implements OnInit {
           });
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
+          let ex = { id: res.data.appointments.examiner_id }
+          this.examinarChange(ex)
           this.billable_item.patchValue({
             claim_id: res.data.claim_details.id,
             claimant_id: res.data.claimant_details.id,
@@ -150,7 +152,11 @@ export class NewClaimComponent implements OnInit {
             this.addressTypes = res.data;
             break;
           case "agent_type":
-            this.callerAffliation = res.data;
+            res.data.map(caller => {
+              if (caller.id != 5 && caller.id != 6 && caller.id != 7) {
+                this.callerAffliation.push(caller);
+              }
+            })
             break;
           case "body_part":
             this.bodyPartsList = res.data;
@@ -269,9 +275,11 @@ export class NewClaimComponent implements OnInit {
       certified_interpreter_required: [],
       ssn: [],
       phone_no_1: [],
+      organization_id: [],
       phone_no_2: [],
       street1: [],
       street2: [],
+      salutation: [],
       city: [],
       state: [],
       zip_code: []
@@ -298,16 +306,16 @@ export class NewClaimComponent implements OnInit {
         phone: [],
         fax: [],
         email: [],
-        address: [],
+        street1: [],
       }),
       Employer: this.formBuilder.group({
         id: [],
         name: [],
         phone: [],
-        address: [],
+        street1: [],
         city: [],
         state: [],
-        zipcode: [],
+        zip_code: [],
       }),
       ApplicantAttorney: this.formBuilder.group({
         id: [],
@@ -316,10 +324,10 @@ export class NewClaimComponent implements OnInit {
         phone: [],
         fax: [],
         email: [],
-        address: [],
+        street1: [],
         city: [],
         state: [],
-        zipcode: []
+        zip_code: []
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [],
@@ -328,16 +336,15 @@ export class NewClaimComponent implements OnInit {
         phone: [],
         fax: [],
         email: [],
-        address: [],
+        street1: [],
         city: [],
         state: [],
-        zipcode: []
+        zip_code: []
       }),
       DEU: this.formBuilder.group({
         id: [],
         name: [],
         phone: [],
-        address: [],
         street1: [],
         street2: []
       })
@@ -547,6 +554,12 @@ export class NewClaimComponent implements OnInit {
   isAddressSelected = false;
   selectedExaminarAddress: any = {};
   changeExaminarAddress(address) {
+    console.log(address)
+    this.billable_item.patchValue({
+      appointment: {
+        examination_location_id: address.address_id
+      }
+    })
     this.isAddressSelected = true;
     this.selectedExaminarAddress = address;
   }
