@@ -868,7 +868,7 @@
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="Date & Time" formControlName="appointment_scheduled_date_time"
-                                autocomplete="off" [max]="today" [matDatepicker]="date_and_time"
+                                autocomplete="off" [matDatepicker]="date_and_time"
                                 (click)="date_and_time.open()">
                             <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                             <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
@@ -876,10 +876,7 @@
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
                             <mat-select formControlName="duration">
-                                <mat-option value="20">20 Mins</mat-option>
-                                <mat-option value="30">30 Mins</mat-option>
-                                <mat-option value="45">45 Mins</mat-option>
-                                <mat-option value="60">60 Mins</mat-option>
+                                <mat-option *ngFor="let data of duration" [value]="data.id">{{data.value}} Mins</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

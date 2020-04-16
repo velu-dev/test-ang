@@ -17,6 +17,7 @@ import { MaterialModule } from './shared/material.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -52,10 +53,9 @@ import { environment } from '../environments/environment'
       useClass: TokenInterceptorService,
       multi: true
     },
-    // {
-    //   provide: RECAPTCHA_V3_SITE_KEY,
-    //   useValue: '6LcKp9oUAAAAAPA16aG4vWRMkKCIkTMr8xKLKiu5'
-    // },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    // { provide: MAT_DATE_FORMATS, useValue: MAT_ },
+    // { provide: DateAdapter, useClass: MomentUtcDateAdapter },
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {

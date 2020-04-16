@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Optional, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { runInThisContext } from 'vm';
 import { ActivatedRoute } from '@angular/router';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 export interface Claimant {
   last_name: string;
   first_name: string;
@@ -76,6 +77,7 @@ export class NewClaimComponent implements OnInit {
   userAccountStatus = [];
   userRoles = [];
   claimList = [];
+  duration = [{ id: 20, value: "20" }, { id: 30, value: "30" }, { id: 45, value: "45" }, { id: 60, value: "60" }]
   ALL_SEED_DATA = ["address_type", "body_part",
     "contact_type", "agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
     "user_account_status", "user_roles", "procedural_codes"];
@@ -95,10 +97,12 @@ export class NewClaimComponent implements OnInit {
     return this.address.filter(add => add.street1.indexOf(filterValue.toLowerCase()) === 0);
   }
   constructor(
+    @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string,
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute) {
+    // super(dateLocale);
     this.examinarAddress = this.addressCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -131,14 +135,16 @@ export class NewClaimComponent implements OnInit {
           });
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
-          let ex = { id: res.data.appointments.examiner_id }
-          this.examinarChange(ex)
           this.billable_item.patchValue({
             claim_id: res.data.claim_details.id,
             claimant_id: res.data.claimant_details.id,
+            exam_type: res.data.exam_type,
             intake_call: res.data.intake_calls,
             appointment: res.data.appointments
           })
+          console.log("examinar location")
+          let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
+          this.examinarChange(ex)
         })
       }
     })
@@ -425,6 +431,14 @@ export class NewClaimComponent implements OnInit {
   examinarChange(examinar) {
     this.examinarId = examinar.id;
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
+      if (examinar.address_id) {
+        res.data.map(addr => {
+          if (addr.address_id == examinar.address_id) {
+            this.isAddressSelected = true;
+            this.selectedExaminarAddress = addr;
+          }
+        })
+      }
       this.address = res.data;
     })
   }
@@ -554,7 +568,6 @@ export class NewClaimComponent implements OnInit {
   isAddressSelected = false;
   selectedExaminarAddress: any = {};
   changeExaminarAddress(address) {
-    console.log(address)
     this.billable_item.patchValue({
       appointment: {
         examination_location_id: address.address_id
