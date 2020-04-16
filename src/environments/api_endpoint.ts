@@ -38,7 +38,9 @@ export const api_endpoint = {
     //Claim Service endpoint
     getClaimantDetails: "claimant/details",
     createClaim: "claim/create",
+    updateClaim: "claim/update/",
     createClaimant: "claimant/create",
+    updateClaimant: "claimant/update/",
     // callerAffliation: "claims/seed-data/agent_type",
     searchClaimant: "claimant/search",
     getClaims: "claim",
@@ -46,7 +48,8 @@ export const api_endpoint = {
     searchEams: "claim/eams-wcab-search/",
     examinar_type: "subscriber/examiner/examiner-list",
     create_billable_item: "billable-item/create",
-    get_examinar_address: "billable-item/location-dropdown/",
+    update_billable_item: "billable-item/update/",
+    get_examinar_address: "subscriber/examiner/service-locations/",
 
     //seed data
     seedData: 'claim/seed-data/',
@@ -55,7 +58,7 @@ export const api_endpoint = {
     //manage-address
     addAddress: 'subscriber/examiner/add-address',
     getAddress: 'subscriber/examiner/get-address',
-    updateAddress: 'subscriber/examiner/update-address',
+    updateAddress: 'subscriber/examiner/update-address/',
     deleteAddress: 'subscriber/examiner/remove-address',
     allExaminerAddress: 'subscriber/examiner/all-address',
     addExistAddress: 'subscriber/examiner/add-exist-address',

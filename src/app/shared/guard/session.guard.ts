@@ -60,7 +60,8 @@ export class SessionGuard implements CanActivate {
           }
       
       }, error => {
-        console.log(error)
+        console.log(error);
+        this.cookieService.deleteAll()
         return true;
       })
 

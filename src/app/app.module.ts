@@ -14,7 +14,9 @@ import { TokenInterceptorService } from './shared/interceptors/token-interceptor
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { MaterialModule } from './shared/material.module';
-import { NgxMaskModule } from 'ngx-mask'
+import { NgxMaskModule } from 'ngx-mask';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment'
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { NgxMaskModule } from 'ngx-mask'
         strictActionImmutability: true
       }
     }),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [
     Title,

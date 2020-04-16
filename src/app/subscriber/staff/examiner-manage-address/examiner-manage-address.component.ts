@@ -85,7 +85,7 @@ export class ExaminerManageAddressComponent implements OnInit {
       city: ['', Validators.required],
       state: ['', Validators.required],
       zip_code: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      note: [''],
+      notes: [''],
       email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       contact_person: ['']
@@ -138,6 +138,7 @@ export class ExaminerManageAddressComponent implements OnInit {
     this.addressIsSubmitted = true;
     console.log(this.addressForm.value)
     if (this.addressForm.invalid) {
+      window.scrollTo(10, 10)
       console.log(this.addressForm.value)
       return;
     }
@@ -158,6 +159,7 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.addAddressDetails.push(this.addressForm.value);
       this.addressForm.reset();
     }
+    
   }
 
   newAddressBlukSubmit() {
@@ -228,9 +230,16 @@ export class ExaminerManageAddressComponent implements OnInit {
   }
 
   addressOnChange(data) {
-    let details = { user_id: this.examinerId, address_id: data.id }
-    this.searchAddressDetails.push(data)
-    this.searchAddressSubmitDetails.push(details)
+    let existData = this.searchAddressSubmitDetails.some(deatils=>deatils.address_id === data.id)
+    console.log(existData)
+    if(!existData){
+      let details = { user_id: this.examinerId, address_id: data.id }
+      this.searchAddressDetails.push(data)
+      this.searchAddressSubmitDetails.push(details)
+    }else{
+      this.alertService.openSnackBar("Location already added", 'error');
+    }
+    
   }
 
   examinerOnChange(data) {

@@ -22,8 +22,8 @@ export class ExaminerService {
     return this.http.post(environment.baseUrl + api_endpoint.addAddress, data)
   }
 
-  updateExaminerAddress(data) {
-    return this.http.put(environment.baseUrl + api_endpoint.updateAddress, data)
+  updateExaminerAddress(data,id) {
+    return this.http.put(environment.baseUrl + api_endpoint.updateAddress + id, data)
   }
 
   deleteExaminerAddress(id) {
@@ -34,8 +34,8 @@ export class ExaminerService {
     return this.http.get(environment.baseUrl + api_endpoint.getExaminerList)
   }
 
-  getsingleExAddress(id) {
-    return this.http.get(environment.baseUrl + api_endpoint.getSingleExaminer + id)
+  getsingleExAddress(exam_id,address_id) {
+    return this.http.get(environment.baseUrl + api_endpoint.getSingleExaminer + exam_id +'/'+address_id)
   }
   searchAddress(data) {
     return this.http.post(environment.baseUrl + api_endpoint.searchAddress, data)
@@ -52,4 +52,5 @@ export class ExaminerService {
   PostDeleteExaminerAddress(data) {
     return this.http.post(environment.baseUrl + api_endpoint.deleteAddress, data)
   }
+
 }
