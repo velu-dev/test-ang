@@ -206,7 +206,7 @@ export class ExaminerSettingComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
-      this.examinerService.updateExaminerAddress(this.addressForm.value).subscribe(response => {
+      this.examinerService.updateExaminerAddress(this.addressForm.value,'').subscribe(response => {
         console.log(response)
         this.getAddressDetails();
         this.addAddress = false;

@@ -40,7 +40,7 @@
             </mat-form-field>
             <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                 fxFlex.xs="100">
-                <mat-label>Select a Role</mat-label>
+                <mat-label>Select a Role*</mat-label>
                 <mat-select formControlName="role_id" (selectionChange)="clearChangeValue($event)">
                     <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}
                     </mat-option>
@@ -112,9 +112,16 @@
                         fxFlex.xs="100">
                         <mat-label>Taxonomy code</mat-label>
                         <mat-select formControlName="taxonomy_id" multiple>
-                            <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
+                            <!-- <mat-select-trigger>
+                                {{userExaminerForm?.value?.taxonomy_id ? userExaminerForm?.value?.taxonomy_id[0] : ''}}
+                                <span *ngIf="userExaminerForm?.value?.taxonomy_id?.length > 1" class="example-additional-selection">
+                                  (+{{userExaminerForm?.value?.taxonomy_id?.length - 1}} {{userExaminerForm?.value?.taxonomy_id?.length === 2 ? 'other' : 'others'}})
+                                </span>
+                              </mat-select-trigger> -->
+                            <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy">
                                 {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
                             </mat-option>
+                            
                         </mat-select>
                         <mat-error>Error Message here</mat-error>
                     </mat-form-field>

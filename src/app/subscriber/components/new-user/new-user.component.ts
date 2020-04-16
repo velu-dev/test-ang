@@ -135,7 +135,7 @@ export class NewUserComponent implements OnInit {
       w9_number_type: ['EIN'],
       national_provider_identifier: ['',Validators.maxLength(10)],
       specialty: [''],
-      state_license_number: [''],
+      state_license_number: ['',Validators.maxLength(15)],
       state_of_license_id: [''],
       taxonomy_id: ['']
 
@@ -174,6 +174,7 @@ export class NewUserComponent implements OnInit {
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
     if (this.userForm.invalid) {
+      window.scrollTo(10, 10)
       return;
     }
     if (this.addressForm.invalid) {
