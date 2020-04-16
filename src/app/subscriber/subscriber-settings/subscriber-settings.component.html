@@ -75,7 +75,7 @@
                             Account Settings
                         </ng-template>
                         <!-- Edit profile -->
-                        <div class="edit-profile m-t-10" *ngIf="currentUser?.role_id != 2">
+                        <div class="edit-profile m-t-10" *ngIf="user?.role_id != 2">
                             <mat-card-content>
                                 <!--Form start-->
                                 <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
@@ -126,7 +126,7 @@
 
 
 
-                        <div class="edit-profile m-t-10" *ngIf="currentUser?.role_id == 2">
+                        <div class="edit-profile m-t-10" *ngIf="user?.role_id == 2">
                             <mat-card-content>
                                 <!--Form start-->
                                 <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
@@ -165,31 +165,35 @@
                                     </mat-form-field>
 
                                     <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                        <mat-radio-group formControlName="w9_type" aria-label="Select an option" fxFlex="30"
-                                        class="p-t-30 p-l-10" (change)="userForm.controls['w9_number'].setValue('')">
-                                        <mat-radio-button value="0">EIN</mat-radio-button>
-                                        <mat-radio-button value="1" class="p-l-10">SSN</mat-radio-button>
-                                    </mat-radio-group>
-                                    <mat-form-field *ngIf="userForm.value.w9_type == 0" appearance="standard" fxFlex="70">
-                                        <mat-label>W9 number</mat-label>
-                                        <input matInput [dropSpecialCharacters]="false" mask="00-0000000" placeholder="W9 number"
-                                            formControlName="w9_number">
-                                        <mat-error>Enter vaild W9 number</mat-error>
-                                    </mat-form-field>
-            
-                                    <mat-form-field *ngIf="userForm.value.w9_type == 1" appearance="standard" fxFlex="70">
-                                        <mat-label>W9 number</mat-label>
-                                        <input matInput [dropSpecialCharacters]="false" mask="000-00-0000" placeholder="W9 number"
-                                            formControlName="w9_number">
-                                        <mat-error>Enter vaild W9 number</mat-error>
-                                    </mat-form-field>
+                                        <mat-radio-group formControlName="individual_w9_number_type"
+                                            aria-label="Select an option" fxFlex="30" class="p-t-30 p-l-10"
+                                            (change)="userForm.controls['individual_w9_number'].setValue('')">
+                                            <mat-radio-button value="EIN">EIN</mat-radio-button>
+                                            <mat-radio-button value="SSN" class="p-l-10">SSN</mat-radio-button>
+                                        </mat-radio-group>
+                                        <mat-form-field *ngIf="userForm.value.individual_w9_number_type == 'EIN'"
+                                            appearance="standard" fxFlex="70">
+                                            <mat-label>W9 number</mat-label>
+                                            <input matInput [dropSpecialCharacters]="false" mask="00-0000000"
+                                                placeholder="W9 number" formControlName="individual_w9_number">
+                                            <mat-error>Enter vaild W9 number</mat-error>
+                                        </mat-form-field>
+
+                                        <mat-form-field *ngIf="userForm.value.individual_w9_number_type == 'SSN'"
+                                            appearance="standard" fxFlex="70">
+                                            <mat-label>W9 number</mat-label>
+                                            <input matInput [dropSpecialCharacters]="false" mask="000-00-0000"
+                                                placeholder="W9 number" formControlName="individual_w9_number">
+                                            <mat-error>Enter vaild W9 number</mat-error>
+                                        </mat-form-field>
                                     </div>
 
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
                                         <mat-label>Individual NPI Number</mat-label>
-                                        <input matInput formControlName="ind_national_provider_identifier" placeholder="Individual W9 Number" autocomplete="off">
+                                        <input matInput formControlName="individual_npi_number"
+                                            placeholder="Individual W9 Number" autocomplete="off">
                                         <mat-error>Enter vaild NPI number</mat-error>
                                     </mat-form-field>
 
@@ -200,16 +204,17 @@
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
                                         <mat-label>Company Name</mat-label>
-                                        <input matInput formControlName="company_name" placeholder="Company Name" autocomplete="off"
-                                            value="Company Name">
-                                            <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidcompanyname}}</mat-error>
+                                        <input matInput formControlName="company_name" placeholder="Company Name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidcompanyname}}</mat-error>
                                     </mat-form-field>
 
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
                                         <mat-label>Company NPI Number</mat-label>
-                                        <input matInput formControlName="company_national_provider_identifier" placeholder="Company NPI Number" autocomplete="off">
+                                        <input matInput formControlName="company_npi_number" mask="0000000000"
+                                            placeholder="Company NPI Number" autocomplete="off">
                                         <mat-error>Enter vaild NPI number</mat-error>
                                     </mat-form-field>
 
@@ -217,14 +222,15 @@
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
                                         <mat-label>Company W9 Number</mat-label>
-                                        <input matInput formControlName="company_w9_number" placeholder="Company W9 Number" autocomplete="off">
+                                        <input matInput formControlName="company_w9_number"
+                                            placeholder="Company W9 Number" autocomplete="off">
                                         <mat-error>Enter vaild W9 number</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
                                         <mat-label>Company Taxonomy Code</mat-label>
-                                        <mat-select formControlName="taxonomy_id">
+                                        <mat-select formControlName="company_taxonomy_id">
                                             <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
                                                 {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
                                             </mat-option>
