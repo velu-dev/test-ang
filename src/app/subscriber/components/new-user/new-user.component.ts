@@ -131,7 +131,7 @@ export class NewUserComponent implements OnInit {
   formInit() {
 
     this.userExaminerForm = this.formBuilder.group({
-      w9_number: ['',Validators.maxLength(15)],
+      w9_number: [''],
       w9_number_type: ['EIN'],
       national_provider_identifier: ['',Validators.maxLength(10)],
       specialty: [''],

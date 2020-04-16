@@ -9,6 +9,8 @@ import { ExaminerService } from '../../service/examiner.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router } from '@angular/router';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-manage-location',
@@ -25,6 +27,7 @@ export class ManageLocationComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(private examinerService: ExaminerService,
     private router: Router,
+    public dialog: MatDialog,
     private alertService: AlertService) {
 
   }
@@ -72,5 +75,11 @@ export class ManageLocationComponent implements OnInit {
     this.router.navigate(['/subscriber/staff/edit-address',data.examiner_id,data.address_id])
   }
 
+  openDialog(dialogue, user) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue }
+    });
+  }
 
 }

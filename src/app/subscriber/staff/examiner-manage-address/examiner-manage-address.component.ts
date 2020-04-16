@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map, debounceTime, switchMap } from 'rxjs/operators';
@@ -46,6 +46,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   searchAddressDetails = [];
   searchAddressSubmitDetails = [];
   user: any;
+
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
     private route: ActivatedRoute, private router: Router, private cookieService: CookieService
@@ -58,9 +59,10 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.examinerSearch = new FormControl({ value: this.examinerName, disabled: true })
     }
     this.filteredOptions = this.addresssearch.valueChanges
-      .pipe(
-        debounceTime(300),
-        switchMap(value => this.examinerService.searchAddress({ basic_search: value, isadvanced: false })));
+    .pipe(
+      debounceTime(300),
+      switchMap(value => this.examinerService.searchAddress({ basic_search: value, isadvanced: false })));
+
 
     // this.examinerFilteredOptions = this.examinerSearch.valueChanges
     //   .pipe(
@@ -69,6 +71,7 @@ export class ExaminerManageAddressComponent implements OnInit {
 
 
   }
+
 
   ngOnInit() {
     this.addressForm = this.formBuilder.group({
@@ -118,12 +121,20 @@ export class ExaminerManageAddressComponent implements OnInit {
     this.getAddressDetails();
   }
 
+  getSearchAddress(event) {
+    this.filteredOptions = this.examinerService.searchAddress({
+      basic_search: '', isadvanced: this.advancedSearch, state: this.advanceSearch.value.state, city: this.advanceSearch.value.city, zip_code: this.advanceSearch.value.zip_code
+    })
+    event.openPanel();
+    this.advancedSearch = false;
+  }
+
 
   getAddressDetails() {
     this.advanceSearch = this.formBuilder.group({
-      city: [],
-      state: [],
-      zip_code: []
+      city: [''],
+      state: [''],
+      zip_code: ['']
     })
 
   }
@@ -159,7 +170,7 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.addAddressDetails.push(this.addressForm.value);
       this.addressForm.reset();
     }
-    
+
   }
 
   newAddressBlukSubmit() {
@@ -230,16 +241,16 @@ export class ExaminerManageAddressComponent implements OnInit {
   }
 
   addressOnChange(data) {
-    let existData = this.searchAddressSubmitDetails.some(deatils=>deatils.address_id === data.id)
+    let existData = this.searchAddressSubmitDetails.some(deatils => deatils.address_id === data.id)
     console.log(existData)
-    if(!existData){
+    if (!existData) {
       let details = { user_id: this.examinerId, address_id: data.id }
       this.searchAddressDetails.push(data)
       this.searchAddressSubmitDetails.push(details)
-    }else{
+    } else {
       this.alertService.openSnackBar("Location already added", 'error');
     }
-    
+
   }
 
   examinerOnChange(data) {
