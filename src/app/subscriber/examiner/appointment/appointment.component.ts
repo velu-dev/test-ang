@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
 export class AppointmentComponent implements OnInit {
   xls = globals.xls
   completed = globals.completed
+  left_voicemail = globals.left_voicemail
   columnName = []
   columnsToDisplay = [];
   displayedColumns: string[] = ["act", 'name', 'claim_number', 'exam_type', 'location', 'date', "status", "data"];
