@@ -79,7 +79,7 @@ tr.detail-row {
 // Basic Details   ========
 // ==================================
 
-.basic-table {
+.basic-table.document_list {
   padding: 0px !important;
   table {
     width: $width-100;
@@ -89,11 +89,19 @@ tr.detail-row {
         color: $white !important;
         font-size: $font-size-1;
         background-color: $ternary-color;
+        &:first-child {
+          width: 25px;
+        }
       }
       td {
         color: $dark-gray;
         padding: 0px 10px !important;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        &:first-child {
+          img {
+            width: 23px;
+          }
+        }
       }
       &:hover {
         background-color: $bg-light-blue;
