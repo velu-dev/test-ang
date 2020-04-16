@@ -28,6 +28,7 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { NgxMaskModule } from 'ngx-mask';
 import { FilterPipe } from './pipes/filter.pipe';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     ExportService,
     UserService,
     CookieService,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
