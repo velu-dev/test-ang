@@ -63,6 +63,8 @@ export const api_endpoint = {
     deleteAddress: 'subscriber/examiner/remove-address',
     allExaminerAddress: 'subscriber/examiner/all-address',
     addExistAddress: 'subscriber/examiner/add-exist-address',
+    updatePrimaryAddress: 'update/primary-billing-locations/',
+    getPrimaryAddress: 'subscriber/primary-billing-locations',
 
     //examiner
 
