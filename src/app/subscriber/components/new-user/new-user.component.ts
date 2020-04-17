@@ -177,9 +177,6 @@ export class NewUserComponent implements OnInit {
       window.scrollTo(10, 10)
       return;
     }
-    if (this.userExaminerForm.invalid) {
-      return;
-    }
     if (this.addressForm.invalid) {
       return;
     }
