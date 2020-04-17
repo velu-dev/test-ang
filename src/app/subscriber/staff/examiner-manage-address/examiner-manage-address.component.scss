@@ -140,3 +140,15 @@
     }
   }
 }
+
+div.advanced_search_expand {
+  margin-top: 10px;
+  padding: 15px 12px 7px 12px;
+  display: inline-flex;
+  cursor: pointer;
+  border-right: 1px solid $light-gray;
+  background-color: $bg-light-blue;
+  margin-right: 10px;
+  height: 48px;
+  border-bottom: 1px solid $light-gray;
+}
