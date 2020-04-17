@@ -1,13 +1,13 @@
 <mat-card class="m-card">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title">Manage Claimants</div>
+        <div class="m-0 content-wrapper-main-title">Claimant Management</div>
         <span class="spacer"></span>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="p-t-3 m-b-0">
         <div class="table-filter" >
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by name, email, etc">
+                placeholder="Search by name, etc">
         </div>
         <span class="spacer"></span>
         <button mat-icon-button class="filter-icon" (click)="exportData()">

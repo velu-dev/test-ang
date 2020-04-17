@@ -91,6 +91,9 @@ export class NewClaimComponent implements OnInit {
   address = [];
   examinarAddress: Observable<any[]>;
   claimId: any;
+  isClaimSubmited: boolean = false;
+  isClaimantSubmited: boolean = false;
+  isBillSubmited: boolean = false;
   private _filterAddress(value: string): any[] {
     let val = value.replace(",", "")//.toLowerCase();
     const filterValue = val.replace(" ", "")
@@ -117,9 +120,9 @@ export class NewClaimComponent implements OnInit {
           this.addNewClaimant = true;
           this.isClaimantCreated = true;
           this.isClaimCreated = true;
-          console.log(res.data);
+          this.languageStatus = res.data.claimant_details.certified_interpreter_required;
           this.claimant.patchValue(res.data.claimant_details)
-          this.claimant_name = res.data.claimant_details.first_name + "  " + res.data.claimant_details.last_name
+          this.claimant_name = res.data.claimant_details.first_name + " " + res.data.claimant_details.last_name
           this.claim.patchValue({
             claim_details: {
               claimant_name: this.claimant_name
@@ -184,11 +187,8 @@ export class NewClaimComponent implements OnInit {
             break;
           case "procedural_codes":
             res.data.map(proc => {
-              if (!this.isEdit) {
-                if (proc.procedural_code != "ML100")
-                  this.procuderalCodes.push(proc);
-              } else {
-                this.procuderalCodes.push(proc)
+              if (proc.procedural_code != "ML100") {
+                this.procuderalCodes.push(proc);
               }
             })
             break;
@@ -234,7 +234,7 @@ export class NewClaimComponent implements OnInit {
     this.claim.reset();
     this.addNewClaimant = true;
     this.isClaimantCreated = true;
-    this.claimant_name = option.first_name + "  " + option.last_name
+    this.claimant_name = option.first_name + " " + option.last_name
     console.log("claimant_name", this.claimant_name)
     this.claim.patchValue({
       claim_details: {
@@ -298,10 +298,10 @@ export class NewClaimComponent implements OnInit {
         // claim_number: ["", Validators.required],
         id: [],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [],
-        claim_number: [],
+        wcab_number: [null, Validators.required],
+        claim_number: [null, Validators.required],
         panel_number: [],
-        exam_type: [],
+        exam_type: [null, Validators.required],
         claimant_id: []
       }),
       claim_injuries: [],
@@ -359,7 +359,7 @@ export class NewClaimComponent implements OnInit {
       claim_id: [],
       claimant_id: [],
       exam_type: this.formBuilder.group({
-        procudure_type: [],
+        procudure_type: [null, Validators.required],
         modifier_id: []
       }),
       appointment: this.formBuilder.group({
@@ -400,6 +400,7 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimCreated = false;
   submitClaim() {
+    this.isClaimSubmited = true;
     if (this.claim.invalid) {
       console.log("claim", this.claim)
       return;
@@ -448,6 +449,10 @@ export class NewClaimComponent implements OnInit {
   //   })
   // }
   submitBillableItem() {
+    this.isBillSubmited = true;
+    if (this.billable_item.invalid) {
+      return;
+    }
     if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
@@ -468,12 +473,13 @@ export class NewClaimComponent implements OnInit {
   claimant_name = "";
   isClaimantCreated = false;
   createClaimant() {
+    this.isClaimantSubmited = true;
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
       return;
     }
     let data = this.claimant.value;
-    data['primary_language_not_english'] = this.languageStatus;
+    data['certified_interpreter_required'] = this.languageStatus;
     if (!this.isEdit) {
       this.claimService.createClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
@@ -537,25 +543,30 @@ export class NewClaimComponent implements OnInit {
 
   }
   searchEAMS() {
-    this.claimant.reset();
-    this.claimService.searchbyEams("ADJ" + this.emasSearchInput.value).subscribe(res => {
-      if (res.status) {
-        this.addNewClaimant = true;
-        this.claimant.patchValue(res.data.claimant)
-        this.claim.patchValue({
-          claim_details: res.data.claim,
-          Employer: res.data.employer
-        });
-        this.injuryInfodata = res.data.injuryInfodata;
-        this.dataSource = new MatTableDataSource(this.injuryInfodata)
-        if (res.data.attroney.length != 0) {
-          this.attroneylist = res.data.attroney;
-          this.attroneySelect = true;
+    console.log(this.emasSearchInput.value != "", this.emasSearchInput.value)
+    if (this.emasSearchInput.value != "") {
+      this.claimant.reset();
+      this.claimService.searchbyEams("ADJ" + this.emasSearchInput.value).subscribe(res => {
+        if (res.status) {
+          this.addNewClaimant = true;
+          this.claimant.patchValue(res.data.claimant)
+          this.claim.patchValue({
+            claim_details: res.data.claim,
+            Employer: res.data.employer
+          });
+          this.injuryInfodata = res.data.injuryInfodata;
+          this.dataSource = new MatTableDataSource(this.injuryInfodata)
+          if (res.data.attroney.length != 0) {
+            this.attroneylist = res.data.attroney;
+            this.attroneySelect = true;
+          }
+        } else {
+          this.alertService.openSnackBar("EAMS Number Not Found", "error")
         }
-      } else {
-        this.alertService.openSnackBar("EAMS Number Not Found", "error")
-      }
-    })
+      })
+    } else {
+      this.alertService.openSnackBar("Please enter EAMS Number", "error")
+    }
   }
   attroneySelect = false;
   attroneylist = []
