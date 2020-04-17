@@ -554,6 +554,11 @@ export class NewClaimComponent implements OnInit {
             claim_details: res.data.claim,
             Employer: res.data.employer
           });
+          // this.claim.patchValue({
+          //   claim_details: {
+          //     wcab_number: res.data.claim.wcab_number.substr(3)
+          //   }
+          // })
           this.injuryInfodata = res.data.injuryInfodata;
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {

@@ -657,8 +657,8 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <mat-select formControlName="law_firm_name">
                                     <mat-option (click)="appAttorney(attroney)" *ngFor="let attroney of attroneylist"
-                                        [value]="attroney.name">
-                                        {{attroney.name}}
+                                        [value]="attroney.attorney_name">
+                                        {{attroney.attorney_name}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Enter valid attroney</mat-error>
@@ -734,8 +734,8 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <mat-select formControlName="law_firm_name">
                                     <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of attroneylist"
-                                        [value]="attroney.name">
-                                        {{attroney.name}}
+                                        [value]="attroney.attorney_name">
+                                        {{attroney.attorney_name}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Enter valid attroney</mat-error>
