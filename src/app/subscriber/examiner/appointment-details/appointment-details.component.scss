@@ -53,9 +53,35 @@
         padding: 5px;
         mat-card {
             box-shadow: $box-shadow-2;
-            padding-bottom: 0px;
             &:hover {
                 box-shadow: $box-shadow-1;
+            }
+            div {
+                div {
+                    font-size: $font-size-1;
+                    color: $text-gray;
+                    display: inherit;
+                    span {
+                        font-weight: $font-weight-bold;
+                        font-size: $font-size-1;
+                        min-width: 150px;
+                        display: inline-block;
+                        color: $text-gray;
+                        &::after {
+                            content: ":";
+                            display: inline-block;
+                            float: right;
+                            padding-right: 10px;
+                        }
+                    }
+                    ul {
+                        list-style: none;
+                        display: inline;
+                        li {
+                            padding-top: 5px;
+                        }
+                    }
+                }
             }
         }
     }
@@ -125,17 +151,17 @@
                 }
             }
         }
-        button.doc_type {
-            margin-top: 5px;
-            color: $primarydarkcolor;
-            background-color: $btn-light-color !important;
-            padding: 5px 10px;
-            height: 40px;
-            font-size: $font-size-7;
-            border: none;
-            margin-right: 10px;
-            outline: none;
-            cursor: pointer;
+        .upload_btn {
+            border-radius: 2px;
+            box-shadow: $box-shadow-2;
+            padding: 3px 10px;
+            background-color: $tab-active;
+            span {
+                padding: 8px 0px 10px 10px;
+            }
+            &:hover {
+                box-shadow: $box-shadow-5;
+            }
         }
     }
     .paymant_details {
@@ -166,6 +192,7 @@
     padding: 0;
     li {
         float: left;
+
         a {
             color: $white;
             width: 120px;

@@ -9,6 +9,8 @@ import { ExaminerService } from '../../service/examiner.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router } from '@angular/router';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-manage-location',
@@ -25,6 +27,7 @@ export class ManageLocationComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(private examinerService: ExaminerService,
     private router: Router,
+    public dialog: MatDialog,
     private alertService: AlertService) {
 
   }
@@ -52,25 +55,38 @@ export class ManageLocationComponent implements OnInit {
   }
 
   deleteAddress(data, index) {
-    let details = {
-      user_id: data.examiner_id,
-      address_id: data.address_id
-    }
-    this.examinerService.PostDeleteExaminerAddress(details).subscribe(response => {
-      console.log(response)
-      this.getAddressDetails();
-      this.alertService.openSnackBar("Location deleted successfully", 'success');
-
-    }, error => {
-      console.log(error)
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
+    this.openDialog('delete', data);
   }
 
   editAddress(data) {
     console.log(data)
-    this.router.navigate(['/subscriber/staff/edit-address',data.examiner_id,data.address_id])
+    this.router.navigate(['/subscriber/staff/edit-address', data.examiner_id, data.address_id])
   }
 
+  openDialog(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        let details = {
+          user_id: data.examiner_id,
+          address_id: data.address_id
+        }
+        this.examinerService.PostDeleteExaminerAddress(details).subscribe(response => {
+          console.log(response)
+          this.getAddressDetails();
+          this.alertService.openSnackBar("Location deleted successfully", 'success');
+
+        }, error => {
+          console.log(error)
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    })
+
+
+  }
 
 }

@@ -102,12 +102,12 @@ export class SubscriberSettingsComponent implements OnInit {
         middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
         company_name: [{ value: "", disabled: false }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-        individual_w9_number: ['', Validators.maxLength(15)],
+        individual_w9_number: [''],
         individual_w9_number_type: ['0'],
-        individual_npi_number: ['', Validators.maxLength(10)],
+        individual_npi_number: ['', Validators.maxLength(15)],
         company_taxonomy_id: [''],
-        company_w9_number: ['', Validators.maxLength(15)],
-        company_npi_number: ['', Validators.maxLength(10)],
+        company_w9_number: [''],
+        company_npi_number: ['', Validators.maxLength(15)],
       });
     } else {
       this.userForm = this.formBuilder.group({
