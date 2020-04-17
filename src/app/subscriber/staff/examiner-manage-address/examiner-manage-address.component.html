@@ -36,7 +36,39 @@
                                 <span> Searching and assign Existing Location</span>
                             </ng-template>
                             <div fxLayout="row wrap">
-                                <mat-form-field appearance="fill" fxFlex="100"
+
+                                <div fxLayout="row wrap" fxFlex="100">
+                                    <div class="advanced_search_expand  m-r-0 p-r-0" matPrefix fxFlex="100"
+                                        fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15" fxFlex.sm="15"
+                                        (click)="advancedSearch = !advancedSearch ">
+                                        <span>Advanced Search</span>
+                                        <mat-icon class="expand-icon icons">
+                                            {{!advancedSearch ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+                                        </mat-icon>
+                                    </div>
+                                    <mat-form-field appearance="fill" fxFlex="100" fxFlex.md="85" fxFlex.lg="85"
+                                        fxFlex.xl="85" fxFlex.sm="85" hideRequiredMarker="hideRequiredControl.auto"
+                                        floatLabel="floatLabelControl.auto" class="advanced_search w-100"
+                                        style="padding-left: 0px !important;">
+
+                                        <input matInput placeholder="Search Existing Address"
+                                            [matAutocomplete]="addressAutocomplete" [formControl]="addresssearch"
+                                            class="p-l-10">
+                                        <mat-autocomplete #addressAutocomplete="matAutocomplete">
+                                            <mat-option *ngFor="let option of (filteredOptions | async)?.data"
+                                                (click)="addressOnChange(option)" [value]="option.city">
+                                                {{option?.street1 }} {{option?.street2 }} {{option?.city}}
+                                                {{option?.state }} {{option?.zip_code }}
+                                            </mat-option>
+                                            <mat-option *ngIf="(filteredOptions | async)?.data?.length == 0">Not found
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <span matSuffix class="search-icon icons">
+                                            <mat-icon>search</mat-icon>
+                                        </span>
+                                    </mat-form-field>
+                                </div>
+                                <!-- <mat-form-field appearance="fill" fxFlex="100"
                                     hideRequiredMarker="hideRequiredControl.auto" floatLabel="floatLabelControl.auto"
                                     class="advanced_search w-100">
                                     <div matPrefix (click)="advancedSearch = !advancedSearch ">
@@ -59,7 +91,7 @@
                                     <span matSuffix class="search-icon icons">
                                         <mat-icon>search</mat-icon>
                                     </span>
-                                </mat-form-field>
+                                </mat-form-field> -->
                                 <form class="w-100">
                                     <div class="advance_search" *ngIf="advancedSearch">
                                         <div fxLayout="row wrap" fxFlex="100">
@@ -218,7 +250,8 @@
                                             <mat-label>Land Line 1</mat-label>
                                             <input matInput formControlName="phone1" mask="(000) 000-0000"
                                                 placeholder="Land Line 1" autocomplete="off">
-                                            <mat-error *ngIf="addressIsSubmitted">Enter valid land line number</mat-error>
+                                            <mat-error *ngIf="addressIsSubmitted">Enter valid land line number
+                                            </mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -226,7 +259,8 @@
                                             <mat-label>Land Line 2</mat-label>
                                             <input matInput formControlName="phone2" mask="(000) 000-0000"
                                                 placeholder="Land Line 2" autocomplete="off">
-                                            <mat-error *ngIf="addressIsSubmitted">Enter valid land line number</mat-error>
+                                            <mat-error *ngIf="addressIsSubmitted">Enter valid land line number
+                                            </mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -290,8 +324,8 @@
                                             <button mat-raised-button color="warn" class="m-r-10 "
                                                 (click)="addressForm.reset()">
                                                 Cancel </button>
-                                            <button mat-raised-button (click)="addressformSubmit()"
-                                                color="primary" class="m-r-15 btn_success">Add</button>
+                                            <button mat-raised-button (click)="addressformSubmit()" color="primary"
+                                                class="m-r-15 btn_success">Add</button>
                                         </div>
                                     </div>
                                 </form>

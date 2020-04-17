@@ -53,9 +53,35 @@
         padding: 5px;
         mat-card {
             box-shadow: $box-shadow-2;
-            padding-bottom: 0px;
             &:hover {
                 box-shadow: $box-shadow-1;
+            }
+            div {
+                div {
+                    font-size: $font-size-1;
+                    color: $text-gray;
+                    display: inherit;
+                    span {
+                        font-weight: $font-weight-bold;
+                        font-size: $font-size-1;
+                        min-width: 150px;
+                        display: inline-block;
+                        color: $text-gray;
+                        &::after {
+                            content: ":";
+                            display: inline-block;
+                            float: right;
+                            padding-right: 10px;
+                        }
+                    }
+                    ul {
+                        list-style: none;
+                        display: inline;
+                        li {
+                            padding-top: 5px;
+                        }
+                    }
+                }
             }
         }
     }
