@@ -133,9 +133,9 @@ export class NewUserComponent implements OnInit {
     this.userExaminerForm = this.formBuilder.group({
       w9_number: [''],
       w9_number_type: ['EIN'],
-      national_provider_identifier: ['',Validators.maxLength(10)],
+      national_provider_identifier: ['',Validators.compose([Validators.required,Validators.maxLength(15)])],
       specialty: [''],
-      state_license_number: ['',Validators.maxLength(15)],
+      state_license_number: ['',Validators.compose([Validators.maxLength(15)])],
       state_of_license_id: [''],
       taxonomy_id: ['']
 
@@ -175,6 +175,9 @@ export class NewUserComponent implements OnInit {
     this.isSubmitted = true;
     if (this.userForm.invalid) {
       window.scrollTo(10, 10)
+      return;
+    }
+    if (this.userExaminerForm.invalid) {
       return;
     }
     if (this.addressForm.invalid) {

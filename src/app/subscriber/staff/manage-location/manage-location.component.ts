@@ -55,31 +55,38 @@ export class ManageLocationComponent implements OnInit {
   }
 
   deleteAddress(data, index) {
-    let details = {
-      user_id: data.examiner_id,
-      address_id: data.address_id
-    }
-    this.examinerService.PostDeleteExaminerAddress(details).subscribe(response => {
-      console.log(response)
-      this.getAddressDetails();
-      this.alertService.openSnackBar("Location deleted successfully", 'success');
-
-    }, error => {
-      console.log(error)
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
+    this.openDialog('delete', data);
   }
 
   editAddress(data) {
     console.log(data)
-    this.router.navigate(['/subscriber/staff/edit-address',data.examiner_id,data.address_id])
+    this.router.navigate(['/subscriber/staff/edit-address', data.examiner_id, data.address_id])
   }
 
-  openDialog(dialogue, user) {
+  openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue }
+      data: { name: dialogue, status: 'address' }
     });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        let details = {
+          user_id: data.examiner_id,
+          address_id: data.address_id
+        }
+        this.examinerService.PostDeleteExaminerAddress(details).subscribe(response => {
+          console.log(response)
+          this.getAddressDetails();
+          this.alertService.openSnackBar("Location deleted successfully", 'success');
+
+        }, error => {
+          console.log(error)
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    })
+
+
   }
 
 }

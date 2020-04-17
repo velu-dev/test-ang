@@ -242,7 +242,6 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   addressOnChange(data) {
     let existData = this.searchAddressSubmitDetails.some(deatils => deatils.address_id === data.id)
-    console.log(existData)
     if (!existData) {
       let details = { user_id: this.examinerId, address_id: data.id }
       this.searchAddressDetails.push(data)

@@ -49,7 +49,7 @@
             </mat-form-field>
 
             <div fxFlex="100" fxLayout="row wrap" *ngIf="userForm.value.role_id == 11">
-                <form fxLayout="row wrap" [formGroup]="userExaminerForm" class="mat-grid-form">
+                <form fxLayout="row wrap" [formGroup]="userExaminerForm" class="mat-grid-form" (ngSubmit)="userSubmit()">
                     <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-radio-group formControlName="w9_number_type" aria-label="Select an option" fxFlex="30"
                             class="p-t-30 p-l-10" (change)="userExaminerForm.controls['w9_number'].setValue('')">
@@ -60,16 +60,16 @@
                             <mat-label>W9 number</mat-label>
                             <input matInput [dropSpecialCharacters]="false" [mask]="userExaminerForm.value.w9_number_type == 'SSN' ? '000-00-0000' : '00-0000000'" placeholder="W9 number"
                                 formControlName="w9_number">
-                            <mat-error *ngIf="isSubmitted">Enter vaild W9 number</mat-error>
+                            <mat-error *ngIf="isSubmitted">Enter valid W9 number</mat-error>
                         </mat-form-field>
                     </div>
 
                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                         fxFlex.xs="100">
                         <mat-label>National Provider Identifier (NPI) number</mat-label>
-                        <input matInput formControlName="national_provider_identifier"
+                        <input matInput type="number" formControlName="national_provider_identifier"
                             placeholder="National Provider Identifier (NPI) number">
-                        <mat-error *ngIf="isSubmitted">Enter vaild NPI number</mat-error>
+                        <mat-error *ngIf="isSubmitted">Enter valid NPI number</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
@@ -87,7 +87,7 @@
                         fxFlex.xs="100">
                         <mat-label>License Number</mat-label>
                         <input matInput formControlName="state_license_number" placeholder="License Number">
-                        <mat-error *ngIf="isSubmitted">Error Message here</mat-error>
+                        <mat-error *ngIf="isSubmitted">Enter valid License Number</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
@@ -98,7 +98,7 @@
                                 {{state.state}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="isSubmitted">Error Message here</mat-error>
+                        <mat-error *ngIf="isSubmitted">Select valid License State</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
@@ -111,7 +111,7 @@
                                   (+{{userExaminerForm?.value?.taxonomy_id?.length - 1}} {{userExaminerForm?.value?.taxonomy_id?.length === 2 ? 'other' : 'others'}})
                                 </span>
                               </mat-select-trigger> -->
-                            <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy">
+                            <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
                                 {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
                             </mat-option>
                             
@@ -208,14 +208,14 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax 1</mat-label>
-                                <input matInput formControlName="fax1" placeholder="Fax 1" autocomplete="off">
+                                <input matInput formControlName="fax1" mask="000-000-0000" placeholder="Fax 1" autocomplete="off">
                                 <mat-error *ngIf="isSubmitted">Enter valid fax number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax 2</mat-label>
-                                <input matInput formControlName="fax2" placeholder="Fax 2" autocomplete="off">
+                                <input matInput formControlName="fax2" mask="000-000-0000"  placeholder="Fax 2" autocomplete="off">
                                 <mat-error *ngIf="isSubmitted">Enter valid fax number</mat-error>
                             </mat-form-field>
 
