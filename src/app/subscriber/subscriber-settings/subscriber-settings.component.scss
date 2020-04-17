@@ -43,6 +43,33 @@ mat-form-field {
   color: $primarycolor;
   font-size: $font-size-1;
   font-weight: $font-weight-medium;
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid $border-light;
   padding: 10px 0;
+}
+
+.billing-address {
+  .checkbox {
+    background-color: $bg-light-blue;
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: max-content;
+    display: block;
+    border: 1px solid $border-light;
+    float: left;
+    margin-right: 10px;
+    &:hover {
+      box-shadow: $box-shadow-4;
+    }
+  }
+  .new-address {
+    float: left;
+    padding: 5px 10px;
+  }
+  
+}
+
+button.btn_success {
+  background-color: $btn_success;
+  color: $black;
 }
