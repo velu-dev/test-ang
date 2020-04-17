@@ -56,6 +56,7 @@ export class ExaminerSettingComponent implements OnInit {
   billingSearch;
   advancedSearch;
   filteredStates;
+  billing_address:boolean = false;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,

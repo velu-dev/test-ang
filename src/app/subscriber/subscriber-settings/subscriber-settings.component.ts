@@ -27,6 +27,7 @@ export class SubscriberSettingsComponent implements OnInit {
   errorMessages = errors
   disableCompany: boolean = true;
   taxonomyList: any;
+  billing_address:boolean = false;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
