@@ -312,7 +312,8 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 
 // ADVANCE SEARCH CUSTOM SCSS
 
-.advanced_search, .adj_filter {
+.advanced_search,
+.adj_filter {
   .mat-form-field-flex {
     padding: 0px !important;
   }
@@ -415,4 +416,12 @@ $sides: (top, bottom, left, right); // Leave this variable alone
       }
     }
   }
+}
+
+.mat-step-label-selected {
+  color: $btn_success !important;
+  font-weight: bold !important;
+}
+.mat-step-icon-selected {
+  background-color: $btn_success !important;
 }

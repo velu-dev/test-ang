@@ -113,7 +113,8 @@
                                         <div matPrefix>
                                             <span matPrefix> &nbsp; ADJ &nbsp;</span>
                                         </div>
-                                        <input matInput placeholder="Enter ADJ number" (keyup.enter)="searchEAMS()" [formControl]="emasSearchInput">
+                                        <input matInput placeholder="Enter ADJ number" (keyup.enter)="searchEAMS()"
+                                            [formControl]="emasSearchInput">
                                         <span matSuffix class="search-icon icons" (click)="searchEAMS()">
                                             <mat-icon>search</mat-icon>
                                         </span>
@@ -317,9 +318,10 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>WCAB Number </mat-label>
-                                <input type="number" matInput placeholder="WCAB Number" formControlName="wcab_number"
-                                    autocomplete="off">
+                                <span matPrefix>&nbsp; ADJ &nbsp;</span>
+                                <mat-label>Enter ADJ Number </mat-label>
+                                <input type="number" matInput placeholder="Enter ADJ Number"
+                                    formControlName="wcab_number" autocomplete="off">
                                 <mat-error>Enter valid WCAB number</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -442,18 +444,18 @@
                                 <!-- injury_date Column -->
                                 <ng-container matColumnDef="date_of_injury">
                                     <th mat-header-cell *matHeaderCellDef> Date of injury </th>
-                                    <td mat-cell *matCellDef="let element">
+                                    <td mat-cell *matCellDef="let element" class="no-wrap-td">
                                         {{element?.date_of_injury | date:'MM-dd-yyyy'}} </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="action">
-                                    <th mat-header-cell *matHeaderCellDef> Action </th>
-                                    <td mat-cell *matCellDef="let element;let i=index">
+                                    <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
+                                    <td mat-cell *matCellDef="let element;let i=index" class="no-wrap-td">
                                         <mat-icon (click)="editInjury(element,i)" class="edit-user" mat-raised-button
                                             matTooltip="Edit" matTooltipPosition="right">edit
                                         </mat-icon> |
                                         <mat-icon (click)="deleteInjury(element, i)" class="edit-user" mat-raised-button
-                                            matTooltip="Delete" matTooltipPosition="right">delete
+                                            matTooltip="Delete" matTooltipPosition="right" color="warn">delete
                                         </mat-icon>
                                     </td>
                                 </ng-container>
@@ -868,15 +870,15 @@
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="Date & Time" formControlName="appointment_scheduled_date_time"
-                                autocomplete="off" [matDatepicker]="date_and_time"
-                                (click)="date_and_time.open()">
+                                autocomplete="off" [matDatepicker]="date_and_time" (click)="date_and_time.open()">
                             <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                             <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
                             <mat-select formControlName="duration">
-                                <mat-option *ngFor="let data of duration" [value]="data.id">{{data.value}} Mins</mat-option>
+                                <mat-option *ngFor="let data of duration" [value]="data.id">{{data.value}} Mins
+                                </mat-option>
                             </mat-select>
                         </mat-form-field>
                         <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
