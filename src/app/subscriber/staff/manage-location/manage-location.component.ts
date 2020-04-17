@@ -66,7 +66,7 @@ export class ManageLocationComponent implements OnInit {
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, status: 'address' }
+      data: { name: dialogue, address: true }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
