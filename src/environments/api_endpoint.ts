@@ -50,6 +50,7 @@ export const api_endpoint = {
     create_billable_item: "billable-item/create",
     update_billable_item: "billable-item/update/",
     get_examinar_address: "subscriber/examiner/service-locations/",
+    getBillItem : 'billable-item/details',
 
     //seed data
     seedData: 'claim/seed-data/',

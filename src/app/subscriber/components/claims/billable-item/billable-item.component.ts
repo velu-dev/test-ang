@@ -16,7 +16,14 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-billable-item',
   templateUrl: './billable-item.component.html',
-  styleUrls: ['./billable-item.component.scss']
+  styleUrls: ['./billable-item.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class BillableItemComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -27,7 +34,7 @@ export class BillableItemComponent implements OnInit {
       shareReplay()
     );
   screenWidth: number;
-  expandId: any;
+  expandId: any = 0;
   roles: Role[];
   xls = globals.xls;
   selectedRole: any = [];
@@ -40,6 +47,7 @@ export class BillableItemComponent implements OnInit {
   allUser: any;
   filterValue: string;
   users = [];
+  disabled = false;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -54,7 +62,7 @@ export class BillableItemComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
         this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Service", "Exam Type", "Claim Numbers", "Examiner", "Status", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_service', "exam_type", "claim_numbers", "examiner", "status", "action"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_service', "exam_type", "claim_number", "examiner_name", "status", "action"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -66,12 +74,22 @@ export class BillableItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.users)
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-  openElement(el) {
+   
+    this.claimService.getBillableItemList().subscribe(res=>{
+      console.log(res)
+      this.dataSource = new MatTableDataSource(res['data'])
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+  
+    },error =>{
 
+    })
+  }
+  openElement(element) {
+    if (this.isMobile) {
+      this.expandId = element.claim_id;
+      // element.isExpand = !element.isExpand;
+    }
   }
   applyFilter(event) {
 
