@@ -24,6 +24,7 @@ export class AppointmentDetailsComponent implements OnInit {
   docx = globals.docx
   pdf = globals.pdf
   uploadFile: any;
+  isMobile:boolean;
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
