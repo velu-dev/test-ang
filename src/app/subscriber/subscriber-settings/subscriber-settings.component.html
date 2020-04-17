@@ -232,12 +232,12 @@
                             </mat-card-content>
                         </div>
                     </mat-tab>
-                    <mat-tab>
+                    <mat-tab *ngIf="user?.role_id == 2 || user?.role_id == 11">
                         <ng-template mat-tab-label>
                             <mat-icon class="example-tab-icon p-r-5"> gps_fixed </mat-icon>
                             Primary Address
                         </ng-template>
-                        <div class="m-0 sub-title p-l-10 p-t-25">Examiner's Primary Address</div>
+                        <div class="m-0 sub-title p-l-10 p-t-25">Primary Address</div>
                         <div class="primary-address">
                             <form [formGroup]="addressForm">
                                 <div fxLayout="row wrap" fxFlex="100">
@@ -487,7 +487,7 @@
                         </div>
                         <div class="text-center w-100 m-t-50 m-b-10">
                             <button mat-raised-button color="primary"
-                                class="m-r-10 btn_success rounded-corner">Submit</button>
+                                class="m-r-10 btn_success rounded-corner" (click)="addressFormSubmit()">Submit</button>
                             <button mat-raised-button color="warn" class="rounded-corner m-l-10">
                                 Cancel </button>
 
