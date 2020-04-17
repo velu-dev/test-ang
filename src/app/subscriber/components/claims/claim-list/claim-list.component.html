@@ -28,7 +28,9 @@
                                 [ngClass]="{'table-expand': expandId == element.claim_id, 'expand-close': !(expandId == element.claim_id)}">
                                 {{ expandId == element.claim_id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
-                        </span>{{element[column]}}
+                        </span>
+                        <span *ngIf="column != 'date_of_injury'">{{element[column]}}</span>
+                        <span *ngIf="column == 'date_of_injury'">{{element.claim_injuries[0] != null ? element.claim_injuries[0].date_of_injury : "" }}</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
