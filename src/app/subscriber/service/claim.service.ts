@@ -56,4 +56,8 @@ export class ClaimService {
   searchbyEams(eams_number): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.searchEams + eams_number)
   }
+
+  getBillableItemList(){
+    return this.http.get(environment.baseUrl + api_endpoint.getBillItem)
+  }
 }

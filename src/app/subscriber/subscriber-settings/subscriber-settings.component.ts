@@ -27,6 +27,10 @@ export class SubscriberSettingsComponent implements OnInit {
   errorMessages = errors
   disableCompany: boolean = true;
   taxonomyList: any;
+  billing_address: boolean = false;
+  addressForm: FormGroup;
+  billingForm: FormGroup;
+  states: any;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -121,11 +125,61 @@ export class SubscriberSettingsComponent implements OnInit {
       });
     }
 
+    this.addressForm = this.formBuilder.group({
+      phone1: [''],
+      phone2: [''],
+      fax1: [''],
+      fax2: [''],
+      mobile1: [''],
+      mobile2: [''],
+      street1: [''],
+      street2: [''],
+      city: [''],
+      state: [''],
+      zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      notes: [''],
+      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      contact_person: ['']
+    });
+    this.billingInit();
     this.claimService.seedData('taxonomy').subscribe(response => {
       this.taxonomyList = response['data'];
     }, error => {
       console.log("error", error)
     })
+
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    if(user.role_id == 2 || user.role_id == 11){
+      this.userService.getPrimarAddress().subscribe(data=>{
+        console.log(data);
+      })
+    }
+  }
+
+  billingInit() {
+    this.billingForm = this.formBuilder.group({
+      phone1: [''],
+      phone2: [''],
+      fax1: [''],
+      fax2: [''],
+      mobile1: [''],
+      mobile2: [''],
+      street1: [''],
+      street2: [''],
+      city: [''],
+      state: [''],
+      zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      notes: [''],
+      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      contact_person: ['']
+    });
   }
   userformSubmit() {
     this.isSubmit = true;
@@ -176,6 +230,28 @@ export class SubscriberSettingsComponent implements OnInit {
         this.alertService.openSnackBar(error.message, "error");
       })
     })
+  }
+
+  isBillingStatus:boolean = false;
+
+  primaryAsBill(){
+    console.log(this.isBillingStatus)
+    if(this.isBillingStatus){
+      this.billingForm.setValue(this.addressForm.value);
+      this.billing_address = true
+    }else{
+      this.billingInit();
+      this.billing_address = false;
+    }
+  }
+
+  addressFormSubmit(){
+    if (this.addressForm.invalid) {
+      return;
+    }
+    if (this.billingForm.invalid) {
+      return;
+    }
   }
 
 

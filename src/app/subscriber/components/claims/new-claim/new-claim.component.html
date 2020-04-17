@@ -142,7 +142,7 @@
                                 <mat-label>First Name*</mat-label>
                                 <input matInput placeholder="First name" formControlName="first_name"
                                     autocomplete="off">
-                                <mat-error>{{errorMessages.entervalidfirstname}}</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidfirstname}}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
@@ -150,24 +150,30 @@
                                 <mat-label>Middle Name</mat-label>
                                 <input matInput placeholder="Middle Name" formControlName="middle_name"
                                     autocomplete="off">
-                                <mat-error>{{errorMessages.entervalidmiddlename}}</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidmiddlename}}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Last Name*</mat-label>
                                 <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
-                                <mat-error>{{errorMessages.entervalidlastname}}</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidlastname}}</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Suffix</mat-label>
                                 <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
-                                <mat-error>Enter valid suffix</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Enter valid suffix</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Salutation</mat-label>
+                                <input matInput placeholder="Salutation" formControlName="salutation"
+                                    autocomplete="off">
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth*</mat-label>
                                 <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
@@ -175,7 +181,7 @@
                                     (click)="date_of_birth.open()">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
-                                <mat-error>Enter valid date of birth</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Enter valid date of birth</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -206,16 +212,17 @@
                             </mat-form-field>
 
                             <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
-                                <div class="p-t-30 p-l-10">Certified Interpreter Required<mat-checkbox class="p-l-10"
-                                        (change)="languageStatus = !languageStatus"></mat-checkbox>
+                                <div class="p-t-30 p-l-10">Certified Interpreter Required
+                                    <mat-checkbox class="p-l-10" (change)="languageStatus = !languageStatus"
+                                        formControlName="certified_interpreter_required"></mat-checkbox>
                                 </div>
                             </div>
 
                             <mat-form-field *ngIf="languageStatus" appearance="standard" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Primary Language</mat-label>
-                                <mat-select formControlName="primary_language">
-                                    <mat-option *ngFor="let language of languageList" [value]="language.language">
+                                <mat-select formControlName="primary_language_spoken">
+                                    <mat-option *ngFor="let language of languageList" [value]="language.id">
                                         {{language.language}}
                                     </mat-option>
                                 </mat-select>
@@ -319,33 +326,34 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <span matPrefix>&nbsp; ADJ &nbsp;</span>
-                                <mat-label>Enter ADJ Number </mat-label>
-                                <input type="number" matInput placeholder="Enter ADJ Number"
-                                    formControlName="wcab_number" autocomplete="off">
-                                <mat-error>Enter valid WCAB number</mat-error>
+                                <mat-label>Enter ADJ Number*</mat-label>
+                                <input type="text" matInput placeholder="Enter ADJ Number" formControlName="wcab_number"
+                                    autocomplete="off">
+                                <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Exam Type</mat-label>
+                                <mat-label>Exam Type*</mat-label>
                                 <mat-select formControlName="exam_type">
                                     <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
                                         {{examType.exam_type_code}} - {{examType.exam_name}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error *ngIf="isClaimSubmited">Select exam type</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Claim Number</mat-label>
+                                <mat-label>Claim Number*</mat-label>
                                 <input matInput placeholder="Claim Number" formControlName="claim_number"
                                     autocomplete="off">
-                                <mat-error>Enter valid claim number</mat-error>
+                                <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Panel Number </mat-label>
-                                <input matInput type="number" mask="0000000" placeholder="Panel Number"
-                                    formControlName="panel_number" autocomplete="off">
+                                <input matInput placeholder="Panel Number" formControlName="panel_number"
+                                    autocomplete="off">
                             </mat-form-field>
                         </div>
                     </mat-card-content>
@@ -841,11 +849,12 @@
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                                 </mat-option>
                             </mat-select>
+                            <mat-error *ngIf="isBillSubmited">Select procuderal type</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Modifiers</mat-label>
-                            <mat-select formControlName="modifier_id">
+                            <mat-select formControlName="modifier_id" multiple>
                                 <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
                                     {{modifier.modifier_code}} - {{modifier.modifier}}
                                 </mat-option>

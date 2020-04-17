@@ -31,4 +31,11 @@ export class SubscriberUserService {
   disableUser(id, status): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.subscriberDisableUser + id, { status: status })
   }
+
+  getPrimarAddress(){
+    return this.http.get(environment.baseUrl + api_endpoint.getPrimaryAddress);
+  }
+  updatePrimaryAddress(data){
+    return this.http.put(environment.baseUrl + api_endpoint.updatePrimaryAddress + data.id, data)
+  }
 }

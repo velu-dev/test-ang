@@ -50,6 +50,7 @@ export const api_endpoint = {
     create_billable_item: "billable-item/create",
     update_billable_item: "billable-item/update/",
     get_examinar_address: "subscriber/examiner/service-locations/",
+    getBillItem : 'billable-item/details',
 
     //seed data
     seedData: 'claim/seed-data/',
@@ -62,6 +63,8 @@ export const api_endpoint = {
     deleteAddress: 'subscriber/examiner/remove-address',
     allExaminerAddress: 'subscriber/examiner/all-address',
     addExistAddress: 'subscriber/examiner/add-exist-address',
+    updatePrimaryAddress: 'update/primary-billing-locations/',
+    getPrimaryAddress: 'subscriber/primary-billing-locations',
 
     //examiner
 
