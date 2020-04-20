@@ -30,7 +30,8 @@
                             </mat-icon>
                         </span>
                         <span *ngIf="column != 'date_of_injury'">{{element[column]}}</span>
-                        <span *ngIf="column == 'date_of_injury'">{{element.claim_injuries[0] != null ? element.claim_injuries[0].date_of_injury : "" }}</span>
+                        <span
+                            *ngIf="column == 'date_of_injury'">{{element.claim_injuries != null ? element.claim_injuries[0].date_of_injury : "" }}</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">

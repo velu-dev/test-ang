@@ -298,8 +298,8 @@ export class NewClaimComponent implements OnInit {
         // claim_number: ["", Validators.required],
         id: [],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [null, Validators.required],
-        claim_number: [null, Validators.required],
+        wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
+        claim_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
         panel_number: [],
         exam_type: [null, Validators.required],
         claimant_id: []
@@ -554,6 +554,11 @@ export class NewClaimComponent implements OnInit {
             claim_details: res.data.claim,
             Employer: res.data.employer
           });
+          // this.claim.patchValue({
+          //   claim_details: {
+          //     wcab_number: res.data.claim.wcab_number.substr(3)
+          //   }
+          // })
           this.injuryInfodata = res.data.injuryInfodata;
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
@@ -586,6 +591,16 @@ export class NewClaimComponent implements OnInit {
     })
     this.isAddressSelected = true;
     this.selectedExaminarAddress = address;
+  }
+  appAttorney(attroney) {
+    this.claim.patchValue({
+      ApplicantAttorney: attroney
+    })
+  }
+  defAttornety(attroney) {
+    this.claim.patchValue({
+      DefenseAttorney: attroney
+    })
   }
 }
 
