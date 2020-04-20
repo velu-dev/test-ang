@@ -519,7 +519,7 @@ export class NewClaimComponent implements OnInit {
     element.body_part_id.map(res => {
       let iii = this.bodyPartsList.find(element => element.id == res)
       if (iii)
-        data.push(iii.body_part + " - " + iii.body_part_name);
+        data.push(iii.body_part_code + " - " + iii.body_part_name);
     })
     return data.join(",")
   }

@@ -373,7 +373,7 @@
                                 <mat-select [(ngModel)]="injuryInfo.body_part_id" [ngModelOptions]="{standalone: true}"
                                     multiple>
                                     <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts.id">
-                                        {{bodyParts.body_part}} - {{bodyParts.body_part_name}}</mat-option>
+                                        {{bodyParts.body_part_code}} - {{bodyParts.body_part_name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
@@ -385,7 +385,7 @@
                                     [ngModelOptions]="{standalone: true}" (click)="date_of_injury1.open()">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
-                                <mat-error>Enter valid date of birth</mat-error>
+                                <mat-error>Enter valid date of injury</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
