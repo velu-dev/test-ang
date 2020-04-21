@@ -32,7 +32,7 @@
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                             <mat-option *ngFor="let option of (filteredClaimant | async)?.data"
-                                                (click)="selectClaimant(option)" [value]="option.first_name">
+                                                (click)="selectClaimant(option)">
                                                 {{option.first_name}}
                                             </mat-option>
                                         </mat-autocomplete>
@@ -844,7 +844,7 @@
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Procedure Type</mat-label>
+                            <mat-label>Procedure Type*</mat-label>
                             <mat-select formControlName="procudure_type">
                                 <mat-option *ngFor="let procuderalCode of procuderalCodes" [value]="procuderalCode.id">
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
@@ -879,8 +879,9 @@
 
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
-                            <input matInput placeholder="Date & Time" formControlName="appointment_scheduled_date_time"
-                                autocomplete="off" [matDatepicker]="date_and_time" (click)="date_and_time.open()">
+                            <input matInput placeholder="Date & Time" [min]="today"
+                                formControlName="appointment_scheduled_date_time" autocomplete="off"
+                                [matDatepicker]="date_and_time" (click)="date_and_time.open()">
                             <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                             <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
                         </mat-form-field>
