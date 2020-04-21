@@ -137,6 +137,7 @@ export class NewClaimComponent implements OnInit {
             DefenseAttorney: res.data.agent_details.DefenseAttorney,
             DEU: res.data.agent_details.DEU,
           });
+          console.log("fsdhfgdsfdhfdshu", res.data.claim_injuries)
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
           this.billable_item.patchValue({
@@ -394,11 +395,11 @@ export class NewClaimComponent implements OnInit {
   }
   selectionChange(event) {
     if (event.selectedIndex == 0) {
-      this.titleName = "Create Claimant";
+      this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
-      this.titleName = "Create Claim";
+      this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
-      this.titleName = "Create Billable Item";
+      this.titleName = " Billable Item";
     }
   }
   isClaimCreated = false;
@@ -525,6 +526,7 @@ export class NewClaimComponent implements OnInit {
       })
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+      this.isInjuryEdit = false;
     } else {
       this.injuryInfodata.push(this.injuryInfo);
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
@@ -619,6 +621,35 @@ export class NewClaimComponent implements OnInit {
     this.claim.patchValue({
       DefenseAttorney: attroney
     })
+  }
+  contactMask: any;
+  changeCommunicationType(contact) {
+    switch (contact.contact_type) {
+      case "E1":
+        this.contactMask = "";
+        break;
+      case "E2":
+        this.contactMask = "";
+        break;
+      case "M1":
+        this.contactMask = "";
+        break;
+      case "M2":
+        this.contactMask = "";
+        break;
+      case "L1":
+        this.contactMask = "";
+        break;
+      case "L2":
+        this.contactMask = "";
+        break;
+      case "F1":
+        this.contactMask = "";
+        break;
+      case "F2":
+        this.contactMask = "";
+        break;
+    }
   }
 }
 

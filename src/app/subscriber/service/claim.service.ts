@@ -10,7 +10,7 @@ export class ClaimService {
 
   constructor(private http: HttpClient) { }
   getClaimant(): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.getClaimantDetails, {})
+    return this.http.get(environment.baseUrl + api_endpoint.getClaimantDetails, {})
   }
   getClaims(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getClaims)
