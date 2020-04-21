@@ -20,7 +20,7 @@ export interface Claimant {
 export interface claimant1 {
   body_part_id: string,
   date_of_injury: string,
-  continuous_trauma: string,
+  continuous_trauma: boolean,
   continuous_trauma_start_date: string,
   continuous_trauma_end_date: string,
   note: string
@@ -58,7 +58,7 @@ export class NewClaimComponent implements OnInit {
   injuryInfodata = []
   searchStatus: boolean = false;
   advanceSearch: any;
-  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: "false", continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null }
+  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   claimantList = [];
   bodyParts = new FormControl();
   bodyPartsList = [];
@@ -524,11 +524,11 @@ export class NewClaimComponent implements OnInit {
         index = index + 1;
       })
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
-      this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: "false", continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
+      this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     } else {
       this.injuryInfodata.push(this.injuryInfo);
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
-      this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: "false", continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
+      this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     }
   }
   bodyPart(val) {
