@@ -250,6 +250,7 @@ export class NewClaimComponent implements OnInit {
       claimant_id: option.id
     })
     this.claimant.setValue(option);
+    this.searchInput.value.reset();
   }
   setStep(index: number) {
     this.step = index;
@@ -304,7 +305,7 @@ export class NewClaimComponent implements OnInit {
         claimant_name: [{ value: "", disabled: true }],
         wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
         claim_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
-        panel_number: [],
+        panel_number: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         exam_type_id: [null, Validators.required],
         claimant_id: []
       }),
@@ -385,6 +386,7 @@ export class NewClaimComponent implements OnInit {
     // })
   }
   newClaimant() {
+    this.searchInput.reset();
     this.addNewClaimant = true;
     this.claimant.reset();
     this.claim.reset();
@@ -488,8 +490,10 @@ export class NewClaimComponent implements OnInit {
     if (!this.isClaimantEdit) {
       this.claimService.createClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
-        this.claimant_name = res.data.first_name + "  " + res.data.last_name
-        console.log("claimant_name", this.claimant_name)
+        this.claimant_name = res.data.first_name + " " + res.data.last_name
+        this.claimant.patchValue({
+          id: res.data.id
+        })
         this.claim.patchValue({
           claim_details: {
             claimant_id: res.data.id,
@@ -500,6 +504,7 @@ export class NewClaimComponent implements OnInit {
           claimant_id: res.data.id
         })
         this.isClaimantCreated = true;
+        this.isClaimantEdit = true;
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
@@ -516,6 +521,11 @@ export class NewClaimComponent implements OnInit {
   }
   isInjuryEdit = false;
   addInjury() {
+    console.log(this.injuryInfo)
+    if (!this.injuryInfo.body_part_id) {
+      this.alertService.openSnackBar("Please fill the injury information", "error")
+      return;
+    }
     if (this.isInjuryEdit) {
       let index = 0;
       this.injuryInfodata.map(res => {

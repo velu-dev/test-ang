@@ -73,7 +73,7 @@ export class ClaimListComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
         this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Injury", "Claim number", "Examiner", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_injury', 'claim_number', "examiner", "disabled"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_injury', 'claim_number', "examiner_name", "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;
