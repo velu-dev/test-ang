@@ -305,7 +305,7 @@ export class NewClaimComponent implements OnInit {
         wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
         claim_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
         panel_number: [],
-        exam_type: [null, Validators.required],
+        exam_type_id: [null, Validators.required],
         claimant_id: []
       }),
       claim_injuries: [],
@@ -564,7 +564,7 @@ export class NewClaimComponent implements OnInit {
   }
   searchEAMS() {
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value)
-    if (this.emasSearchInput.value != "") {
+    if (this.emasSearchInput.value) {
       this.claimant.reset();
       this.claimService.searchbyEams("ADJ" + this.emasSearchInput.value).subscribe(res => {
         if (res.status) {
@@ -622,32 +622,33 @@ export class NewClaimComponent implements OnInit {
       DefenseAttorney: attroney
     })
   }
-  contactMask: any;
+  contactMask = { type: "", mask: "" }
   changeCommunicationType(contact) {
     switch (contact.contact_type) {
       case "E1":
-        this.contactMask = "";
+        this.contactMask.mask = "";
+        this.contactMask.type = "email";
         break;
       case "E2":
-        this.contactMask = "";
+        this.contactMask.mask = "email";
         break;
       case "M1":
-        this.contactMask = "";
+        this.contactMask.mask = "(000) 000-0000";
         break;
       case "M2":
-        this.contactMask = "";
+        this.contactMask.mask = "(000) 000-0000";
         break;
       case "L1":
-        this.contactMask = "";
+        this.contactMask.mask = "(000) 000-0000";
         break;
       case "L2":
-        this.contactMask = "";
+        this.contactMask.mask = "(000) 000-0000";
         break;
       case "F1":
-        this.contactMask = "";
+        this.contactMask.mask = "000-000-0000";
         break;
       case "F2":
-        this.contactMask = "";
+        this.contactMask.mask = "000-000-0000";
         break;
     }
   }
