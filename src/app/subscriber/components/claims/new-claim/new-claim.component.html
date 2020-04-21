@@ -299,7 +299,7 @@
                             <div class="text-center w-100 m-t-10 m-b-50">
                                 <button mat-raised-button color="primary" type="submit"
                                     class="m-r-10 rounded-corner btn_success" (click)="createClaimant()">
-                                    {{isEdit ? 'Update' : 'Save'}} </button>
+                                    {{(isEdit || isClaimantEdit) ? 'Update' : 'Save'}} </button>
                                 <button [disabled]="!(!claimant.invalid && isClaimantCreated)" mat-raised-button
                                     type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
                             </div>
@@ -373,7 +373,7 @@
                                 <mat-select [(ngModel)]="injuryInfo.body_part_id" [ngModelOptions]="{standalone: true}"
                                     multiple>
                                     <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts.id">
-                                        {{bodyParts.body_part}} - {{bodyParts.body_part_name}}</mat-option>
+                                        {{bodyParts.body_part_code}} - {{bodyParts.body_part_name}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
@@ -385,13 +385,13 @@
                                     [ngModelOptions]="{standalone: true}" (click)="date_of_injury1.open()">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
-                                <mat-error>Enter valid date of birth</mat-error>
+                                <mat-error>Enter valid date of injury</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                 fxFlex.xs="100">
                                 <mat-label>Injury Note</mat-label>
-                                <textarea matInput [(ngModel)]="injuryInfo.note" [ngModelOptions]="{standalone: true}"
+                                <textarea matInput [(ngModel)]="injuryInfo.injury_notes" [ngModelOptions]="{standalone: true}"
                                     placeholder="Injury Note " autocomplete="off"></textarea>
                             </mat-form-field>
                             <!-- 
@@ -407,12 +407,12 @@
                                 <mat-label>Continuous Trauma (CT)</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.continuous_trauma"
                                     [ngModelOptions]="{standalone: true}">
-                                    <mat-option value="true">Yes</mat-option>
-                                    <mat-option value="false">No</mat-option>
+                                    <mat-option [value]="true">Yes</mat-option>
+                                    <mat-option [value]="false">No</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma=='true'" appearance="standard"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard"
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off" [max]="today"
@@ -424,7 +424,7 @@
                                 <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma == 'true'" appearance="standard"
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard"
                                 fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date "
@@ -438,7 +438,7 @@
                             </mat-form-field>
 
                             <div fxFlex="100" class="p-t-10">
-                                <button mat-raised-button (click)="addInjury()" class="rounded-corner text-center"
+                                <button mat-raised-button type="button" (click)="addInjury()" class="rounded-corner text-center"
                                     color="primary">Add</button>
                             </div>
 
@@ -666,7 +666,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Attorney Name</mat-label>
-                                <input matInput formControlName="attorney_name" placeholder="Attorney Name"
+                                <input matInput formControlName="name" placeholder="Attorney Name"
                                     autocomplete="off">
                             </mat-form-field>
 
@@ -743,7 +743,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Attorney Name</mat-label>
-                                <input matInput formControlName="attorney_name" placeholder="Attorney Name"
+                                <input matInput formControlName="name" placeholder="Attorney Name"
                                     autocomplete="off">
                             </mat-form-field>
 
@@ -906,7 +906,7 @@
                             <input matInput placeholder="Address" aria-label="State" [matAutocomplete]="examinarAuto"
                                 [formControl]="addressCtrl">
                             <mat-autocomplete #examinarAuto="matAutocomplete">
-                                <mat-option *ngFor="let address of examinarAddress | async"
+                                <mat-option *ngFor="let address of (examinarAddress | async)"
                                     (click)="changeExaminarAddress(address)" [value]="address.street1">
                                     {{address.street1}}
                                     <!-- <small>Population: {{state.population}}</small> -->
