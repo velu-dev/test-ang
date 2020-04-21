@@ -658,8 +658,8 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <mat-select formControlName="law_firm_name">
                                     <mat-option (click)="appAttorney(attroney)" *ngFor="let attroney of attroneylist"
-                                        [value]="attroney.attorney_name">
-                                        {{attroney.attorney_name}}
+                                        [value]="attroney.name">
+                                        {{attroney.name}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Enter valid attroney</mat-error>
@@ -734,8 +734,8 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <mat-select formControlName="law_firm_name">
                                     <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of attroneylist"
-                                        [value]="attroney.attorney_name">
-                                        {{attroney.attorney_name}}
+                                        [value]="attroney.name">
+                                        {{attroney.name}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Enter valid attroney</mat-error>
@@ -981,10 +981,11 @@
                         <mat-form-field *ngIf="billable_item?.value?.intake_call_info?.communication_type != ''"
                             appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>{{billable_item?.value?.intake_call_info?.communication_type}}</mat-label>
-                            <input matInput [type]="contactMask.type" [mask]="contactMask.mask" formControlName="call_type_detail"
+                            <input matInput [type]="contactMask.type" [mask]="contactMask.mask"
+                                formControlName="call_type_detail"
                                 placeholder="{{billable_item?.value?.intake_call_info?.communication_type}}"
                                 autocomplete="off">
-                                <mat-error>Enter Valid contact information</mat-error>
+                            <mat-error>Enter Valid contact information</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50">
