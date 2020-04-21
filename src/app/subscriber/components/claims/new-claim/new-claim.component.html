@@ -299,7 +299,7 @@
                             <div class="text-center w-100 m-t-10 m-b-50">
                                 <button mat-raised-button color="primary" type="submit"
                                     class="m-r-10 rounded-corner btn_success" (click)="createClaimant()">
-                                    {{isEdit ? 'Update' : 'Save'}} </button>
+                                    {{(isEdit || isClaimantEdit) ? 'Update' : 'Save'}} </button>
                                 <button [disabled]="!(!claimant.invalid && isClaimantCreated)" mat-raised-button
                                     type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
                             </div>
@@ -666,7 +666,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Attorney Name</mat-label>
-                                <input matInput formControlName="attorney_name" placeholder="Attorney Name"
+                                <input matInput formControlName="name" placeholder="Attorney Name"
                                     autocomplete="off">
                             </mat-form-field>
 
@@ -743,7 +743,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Attorney Name</mat-label>
-                                <input matInput formControlName="attorney_name" placeholder="Attorney Name"
+                                <input matInput formControlName="name" placeholder="Attorney Name"
                                     autocomplete="off">
                             </mat-form-field>
 
@@ -906,7 +906,7 @@
                             <input matInput placeholder="Address" aria-label="State" [matAutocomplete]="examinarAuto"
                                 [formControl]="addressCtrl">
                             <mat-autocomplete #examinarAuto="matAutocomplete">
-                                <mat-option *ngFor="let address of examinarAddress | async"
+                                <mat-option *ngFor="let address of (examinarAddress | async)"
                                     (click)="changeExaminarAddress(address)" [value]="address.street1">
                                     {{address.street1}}
                                     <!-- <small>Population: {{state.population}}</small> -->

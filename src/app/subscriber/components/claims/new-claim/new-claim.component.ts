@@ -115,6 +115,7 @@ export class NewClaimComponent implements OnInit {
       if (param.id) {
         this.claimId = param.id;
         this.isEdit = true;
+        this.isClaimantEdit = true;
         this.claimService.getClaim(param.id).subscribe(res => {
           this.claimInfo = res.data;
           this.addNewClaimant = true;
@@ -229,7 +230,9 @@ export class NewClaimComponent implements OnInit {
     this.tabIndex = event.index;
     this.searchStatus = false;
   }
+  isClaimantEdit = false;
   selectClaimant(option) {
+    this.isClaimantEdit = true;
     this.claimant.reset();
     this.claim.reset();
     this.addNewClaimant = true;
@@ -326,7 +329,7 @@ export class NewClaimComponent implements OnInit {
       ApplicantAttorney: this.formBuilder.group({
         id: [],
         law_firm_name: [],
-        attorney_name: [],
+        name: [],
         phone: [],
         fax: [],
         email: [],
@@ -338,7 +341,7 @@ export class NewClaimComponent implements OnInit {
       DefenseAttorney: this.formBuilder.group({
         id: [],
         law_firm_name: [],
-        attorney_name: [],
+        name: [],
         phone: [],
         fax: [],
         email: [],
@@ -407,6 +410,7 @@ export class NewClaimComponent implements OnInit {
     }
     let claim = this.claim.value;
     claim['claim_injuries'] = this.injuryInfodata;
+    console.log("!this.isEdit ||  !this.isClaimantEdit", !this.isEdit || !this.isClaimantEdit)
     if (!this.isEdit) {
       this.claimService.createClaim(claim).subscribe(res => {
         this.isClaimCreated = true;
@@ -480,7 +484,7 @@ export class NewClaimComponent implements OnInit {
     }
     let data = this.claimant.value;
     data['certified_interpreter_required'] = this.languageStatus;
-    if (!this.isEdit) {
+    if (!this.isClaimantEdit) {
       this.claimService.createClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
         this.claimant_name = res.data.first_name + "  " + res.data.last_name
@@ -509,15 +513,28 @@ export class NewClaimComponent implements OnInit {
       })
     }
   }
+  isInjuryEdit = false;
   addInjury() {
-    this.injuryInfodata.push(this.injuryInfo)
-    this.dataSource = new MatTableDataSource(this.injuryInfodata)
-    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: "false", continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
+    if (this.isInjuryEdit) {
+      let index = 0;
+      this.injuryInfodata.map(res => {
+        if (res.body_part_id == this.injuryInfo.body_part_id) {
+          this.injuryInfodata[index] = this.injuryInfo;
+        }
+        index = index + 1;
+      })
+      this.dataSource = new MatTableDataSource(this.injuryInfodata)
+      this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: "false", continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
+    } else {
+      this.injuryInfodata.push(this.injuryInfo);
+      this.dataSource = new MatTableDataSource(this.injuryInfodata)
+      this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: "false", continuous_trauma_start_date: null, continuous_trauma_end_date: null, note: null, diagram_url: null };
+    }
   }
-  bodyPart(element) {
+  bodyPart(val) {
     let data = [];
-    element.body_part_id.map(res => {
-      let iii = this.bodyPartsList.find(element => element.id == res)
+    val.body_part_id.map(res => {
+      let iii = this.bodyPartsList.find(val => val.id == res)
       if (iii)
         data.push(iii.body_part_code + " - " + iii.body_part_name);
     })
@@ -528,9 +545,10 @@ export class NewClaimComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
   }
   editInjury(element, index) {
+    this.isInjuryEdit = true;
     console.log(element)
     this.injuryInfo = element;
-    this.injuryInfodata.splice(index, 1);
+    // this.injuryInfodata.splice(index, 1);
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
   }
   selectedFile: File;
