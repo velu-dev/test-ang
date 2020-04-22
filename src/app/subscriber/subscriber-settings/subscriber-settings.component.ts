@@ -198,13 +198,13 @@ export class SubscriberSettingsComponent implements OnInit {
 
             })
           }
-          console.log(formData)
-          console.log(Object.keys(formData.B).length === 0)
-          console.log(Object.keys(formData.P).length === 0)
-          if (!(Object.keys(formData.P).length === 0)) {
+          console.log(formData['P'])
+          // console.log(Object.keys(formData.B).length === 0)
+          //  console.log(Object.keys(formData.P).length === 0)
+          if (formData.P && !(Object.keys(formData.P).length === 0)) {
             this.addressForm.setValue(formData.P);
           }
-          if (!(Object.keys(formData.B).length === 0)) {
+          if (formData.B && !(Object.keys(formData.B).length === 0)) {
             this.billingForm.setValue(formData.B);
           }
         }
@@ -297,20 +297,28 @@ export class SubscriberSettingsComponent implements OnInit {
 
   addressFormSubmit() {
     console.log(this.addressForm.value);
-    console.log(this.billingForm.value)
+    console.log(this.billingForm.value);
+
     if (this.addressForm.invalid) {
       console.log(this.addressForm)
+      return;
+    }
+
+    if (this.billingForm.invalid) {
       return;
     }
     let updateData = [this.addressForm.value, this.billingForm.value]
     updateData[0].address_type_id = 3;
     updateData[1].address_type_id = 2;
+
     this.userService.updatePrimaryAddress(updateData, this.user.id).subscribe(res => {
-      console.log(res)
+      console.log(res);
+      this.alertService.openSnackBar("Location updated successfully", "success");
+    },error =>{
+      console.log(error);
+      this.alertService.openSnackBar(error.message, "error");
     })
-    // if (this.billingForm.invalid) {
-    //   return;
-    // }
+
   }
 
 
