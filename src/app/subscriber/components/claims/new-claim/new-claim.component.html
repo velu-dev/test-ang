@@ -32,7 +32,7 @@
                                             [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                             <mat-option *ngFor="let option of (filteredClaimant | async)?.data"
-                                                (click)="selectClaimant(option)" [value]="option.first_name">
+                                                (click)="selectClaimant(option)">
                                                 {{option.first_name}}
                                             </mat-option>
                                         </mat-autocomplete>
@@ -326,7 +326,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <span matPrefix>&nbsp; ADJ &nbsp;</span>
-                                <mat-label>Enter ADJ Number*</mat-label>
+                                <mat-label>ADJ Number*</mat-label>
                                 <input type="text" matInput placeholder="Enter ADJ Number" formControlName="wcab_number"
                                     autocomplete="off">
                                 <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
@@ -334,7 +334,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Exam Type*</mat-label>
-                                <mat-select formControlName="exam_type">
+                                <mat-select formControlName="exam_type_id">
                                     <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
                                         {{examType.exam_type_code}} - {{examType.exam_name}}
                                     </mat-option>
@@ -391,8 +391,9 @@
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                 fxFlex.xs="100">
                                 <mat-label>Injury Note</mat-label>
-                                <textarea matInput [(ngModel)]="injuryInfo.injury_notes" [ngModelOptions]="{standalone: true}"
-                                    placeholder="Injury Note " autocomplete="off"></textarea>
+                                <textarea matInput [(ngModel)]="injuryInfo.injury_notes"
+                                    [ngModelOptions]="{standalone: true}" placeholder="Injury Note "
+                                    autocomplete="off"></textarea>
                             </mat-form-field>
                             <!-- 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -412,8 +413,8 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard"
-                                fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
+                                fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
                                 <input matInput placeholder="CT Start date " autocomplete="off" [max]="today"
                                     [matDatepicker]="continuous_trauma_start_date"
@@ -424,8 +425,8 @@
                                 <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard"
-                                fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
+                                fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date "
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
@@ -438,8 +439,8 @@
                             </mat-form-field>
 
                             <div fxFlex="100" class="p-t-10">
-                                <button mat-raised-button type="button" (click)="addInjury()" class="rounded-corner text-center"
-                                    color="primary">Add</button>
+                                <button mat-raised-button type="button" (click)="addInjury()"
+                                    class="rounded-corner text-center" color="primary">Add</button>
                             </div>
 
                             <table mat-table [dataSource]="dataSource" class="m-t-20" fxFlex="100">
@@ -586,7 +587,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Adjuster Fax</mat-label>
-                                <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
+                                <input matInput mask="000-000-0000" placeholder="Fax" formControlName="fax"
+                                    autocomplete="off">
+                                <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -657,8 +660,8 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <mat-select formControlName="law_firm_name">
                                     <mat-option (click)="appAttorney(attroney)" *ngFor="let attroney of attroneylist"
-                                        [value]="attroney.attorney_name">
-                                        {{attroney.attorney_name}}
+                                        [value]="attroney.name">
+                                        {{attroney.name}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Enter valid attroney</mat-error>
@@ -666,8 +669,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Attorney Name</mat-label>
-                                <input matInput formControlName="name" placeholder="Attorney Name"
-                                    autocomplete="off">
+                                <input matInput formControlName="name" placeholder="Attorney Name" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -712,7 +714,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
+                                <input matInput placeholder="Fax" mask="000-000-0000" formControlName="fax"
+                                    autocomplete="off">
+                                <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -734,8 +738,8 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <mat-select formControlName="law_firm_name">
                                     <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of attroneylist"
-                                        [value]="attroney.attorney_name">
-                                        {{attroney.attorney_name}}
+                                        [value]="attroney.name">
+                                        {{attroney.name}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Enter valid attroney</mat-error>
@@ -743,8 +747,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Attorney Name</mat-label>
-                                <input matInput formControlName="name" placeholder="Attorney Name"
-                                    autocomplete="off">
+                                <input matInput formControlName="name" placeholder="Attorney Name" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -789,7 +792,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
+                                <input matInput placeholder="Fax" mask="000-000-0000" formControlName="fax"
+                                    autocomplete="off">
+                                <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -845,7 +850,7 @@
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Procedure Type</mat-label>
+                            <mat-label>Procedure Type*</mat-label>
                             <mat-select formControlName="procudure_type">
                                 <mat-option *ngFor="let procuderalCode of procuderalCodes" [value]="procuderalCode.id">
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
@@ -880,8 +885,9 @@
 
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
-                            <input matInput placeholder="Date & Time" formControlName="appointment_scheduled_date_time"
-                                autocomplete="off" [matDatepicker]="date_and_time" (click)="date_and_time.open()">
+                            <input matInput placeholder="Date & Time" [min]="today"
+                                formControlName="appointment_scheduled_date_time" autocomplete="off"
+                                [matDatepicker]="date_and_time" (click)="date_and_time.open()">
                             <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                             <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
                         </mat-form-field>
@@ -974,16 +980,19 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Communication Type</mat-label>
                             <mat-select formControlName="call_type">
-                                <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.id">
+                                <mat-option (change)="changeCommunicationType(contactType)"
+                                    *ngFor="let contactType of contactTypes" [value]="contactType.id">
                                     {{contactType.contact_type_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field *ngIf="billable_item?.value?.intake_call_info?.communication_type != ''"
                             appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>{{billable_item?.value?.intake_call_info?.communication_type}}</mat-label>
-                            <input matInput formControlName="call_type_detail"
+                            <input matInput [type]="contactMask.type" [mask]="contactMask.mask"
+                                formControlName="call_type_detail"
                                 placeholder="{{billable_item?.value?.intake_call_info?.communication_type}}"
                                 autocomplete="off">
+                            <mat-error>Enter Valid contact information</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50">

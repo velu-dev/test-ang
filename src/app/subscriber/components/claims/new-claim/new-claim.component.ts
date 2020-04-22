@@ -137,6 +137,7 @@ export class NewClaimComponent implements OnInit {
             DefenseAttorney: res.data.agent_details.DefenseAttorney,
             DEU: res.data.agent_details.DEU,
           });
+          console.log("fsdhfgdsfdhfdshu", res.data.claim_injuries)
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
           this.billable_item.patchValue({
@@ -249,6 +250,7 @@ export class NewClaimComponent implements OnInit {
       claimant_id: option.id
     })
     this.claimant.setValue(option);
+    this.searchInput.value.reset();
   }
   setStep(index: number) {
     this.step = index;
@@ -282,16 +284,16 @@ export class NewClaimComponent implements OnInit {
       handedness: [],
       primary_language_spoken: [],
       certified_interpreter_required: [],
-      ssn: [],
-      phone_no_1: [],
+      ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_no_1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       organization_id: [],
-      phone_no_2: [],
+      phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       street1: [],
       street2: [],
       salutation: [],
       city: [],
       state: [],
-      zip_code: []
+      zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
     })
 
     // this.claimForm = this.formBuilder.group({
@@ -303,8 +305,8 @@ export class NewClaimComponent implements OnInit {
         claimant_name: [{ value: "", disabled: true }],
         wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
         claim_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
-        panel_number: [],
-        exam_type: [null, Validators.required],
+        panel_number: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        exam_type_id: [null, Validators.required],
         claimant_id: []
       }),
       claim_injuries: [],
@@ -312,43 +314,43 @@ export class NewClaimComponent implements OnInit {
         id: [],
         insurance_name: [],
         name: [],
-        phone: [],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [],
-        email: [],
+        email: [null, Validators.compose([Validators.email])],
         street1: [],
       }),
       Employer: this.formBuilder.group({
         id: [],
         name: [],
-        phone: [],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         street1: [],
         city: [],
         state: [],
-        zip_code: [],
+        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       ApplicantAttorney: this.formBuilder.group({
         id: [],
         law_firm_name: [],
         name: [],
-        phone: [],
-        fax: [],
-        email: [],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        email: [null, Validators.compose([Validators.email])],
         street1: [],
         city: [],
         state: [],
-        zip_code: []
+        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [],
         law_firm_name: [],
         name: [],
-        phone: [],
-        fax: [],
-        email: [],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        email: [null, Validators.compose([Validators.email])],
         street1: [],
         city: [],
         state: [],
-        zip_code: []
+        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
       DEU: this.formBuilder.group({
         id: [],
@@ -384,6 +386,8 @@ export class NewClaimComponent implements OnInit {
     // })
   }
   newClaimant() {
+    this.searchInput.reset();
+    this.emasSearchInput.reset();
     this.addNewClaimant = true;
     this.claimant.reset();
     this.claim.reset();
@@ -394,11 +398,11 @@ export class NewClaimComponent implements OnInit {
   }
   selectionChange(event) {
     if (event.selectedIndex == 0) {
-      this.titleName = "Create Claimant";
+      this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
-      this.titleName = "Create Claim";
+      this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
-      this.titleName = "Create Billable Item";
+      this.titleName = " Billable Item";
     }
   }
   isClaimCreated = false;
@@ -487,8 +491,10 @@ export class NewClaimComponent implements OnInit {
     if (!this.isClaimantEdit) {
       this.claimService.createClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
-        this.claimant_name = res.data.first_name + "  " + res.data.last_name
-        console.log("claimant_name", this.claimant_name)
+        this.claimant_name = res.data.first_name + " " + res.data.last_name
+        this.claimant.patchValue({
+          id: res.data.id
+        })
         this.claim.patchValue({
           claim_details: {
             claimant_id: res.data.id,
@@ -499,6 +505,7 @@ export class NewClaimComponent implements OnInit {
           claimant_id: res.data.id
         })
         this.isClaimantCreated = true;
+        this.isClaimantEdit = true;
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
@@ -515,6 +522,11 @@ export class NewClaimComponent implements OnInit {
   }
   isInjuryEdit = false;
   addInjury() {
+    console.log(this.injuryInfo)
+    if (!this.injuryInfo.body_part_id) {
+      this.alertService.openSnackBar("Please fill the injury information", "error")
+      return;
+    }
     if (this.isInjuryEdit) {
       let index = 0;
       this.injuryInfodata.map(res => {
@@ -525,6 +537,7 @@ export class NewClaimComponent implements OnInit {
       })
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+      this.isInjuryEdit = false;
     } else {
       this.injuryInfodata.push(this.injuryInfo);
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
@@ -542,6 +555,7 @@ export class NewClaimComponent implements OnInit {
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);
+    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
   }
   editInjury(element, index) {
@@ -562,7 +576,7 @@ export class NewClaimComponent implements OnInit {
   }
   searchEAMS() {
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value)
-    if (this.emasSearchInput.value != "") {
+    if (this.emasSearchInput.value) {
       this.claimant.reset();
       this.claimService.searchbyEams("ADJ" + this.emasSearchInput.value).subscribe(res => {
         if (res.status) {
@@ -619,6 +633,41 @@ export class NewClaimComponent implements OnInit {
     this.claim.patchValue({
       DefenseAttorney: attroney
     })
+  }
+  contactMask = { type: "", mask: "" }
+  changeCommunicationType(contact) {
+    this.billable_item.patchValue({
+      intake_call: {
+        call_type_detail: ""
+      }
+    })
+    switch (contact.contact_type) {
+      case "E1":
+        this.contactMask.mask = "";
+        this.contactMask.type = "email";
+        break;
+      case "E2":
+        this.contactMask.mask = "email";
+        break;
+      case "M1":
+        this.contactMask.mask = "(000) 000-0000";
+        break;
+      case "M2":
+        this.contactMask.mask = "(000) 000-0000";
+        break;
+      case "L1":
+        this.contactMask.mask = "(000) 000-0000";
+        break;
+      case "L2":
+        this.contactMask.mask = "(000) 000-0000";
+        break;
+      case "F1":
+        this.contactMask.mask = "000-000-0000";
+        break;
+      case "F2":
+        this.contactMask.mask = "000-000-0000";
+        break;
+    }
   }
 }
 
