@@ -587,7 +587,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Adjuster Fax</mat-label>
-                                <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
+                                <input matInput mask="000-000-0000" placeholder="Fax" formControlName="fax"
+                                    autocomplete="off">
+                                <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -712,7 +714,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
+                                <input matInput placeholder="Fax" mask="000-000-0000" formControlName="fax"
+                                    autocomplete="off">
+                                <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -788,7 +792,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
+                                <input matInput placeholder="Fax" mask="000-000-0000" formControlName="fax"
+                                    autocomplete="off">
+                                <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -974,7 +980,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Communication Type</mat-label>
                             <mat-select formControlName="call_type">
-                                <mat-option (click)="changeCommunicationType(contactType)"
+                                <mat-option (change)="changeCommunicationType(contactType)"
                                     *ngFor="let contactType of contactTypes" [value]="contactType.id">
                                     {{contactType.contact_type_name}}</mat-option>
                             </mat-select>
