@@ -35,6 +35,8 @@
                                                 (click)="selectClaimant(option)">
                                                 {{option.first_name}}
                                             </mat-option>
+                                            <mat-option *ngIf="(filteredClaimant | async)?.data.length == 0">No Data
+                                                Found</mat-option>
                                         </mat-autocomplete>
                                         <span matSuffix class="search-icon icons">
                                             <mat-icon>search</mat-icon>
@@ -65,7 +67,8 @@
                                                     <mat-label>Date of Birth</mat-label>
                                                     <input matInput placeholder="Date of Birth"
                                                         formControlName="date_of_birth_advance_search"
-                                                        autocomplete="off" formControlName="date_of_birth" [max]="today"
+                                                        autocomplete="off" formControlName="date_of_birth"
+                                                        [max]="dateOfbirthEndValue" utc="true"
                                                         [matDatepicker]="date_of_birth_advance_search"
                                                         (click)="date_of_birth_advance_search.open()">
                                                     <mat-datepicker-toggle matSuffix
@@ -94,7 +97,7 @@
 
                                                 <div class="text-right w-100 m-t-10 m-b-50">
                                                     <button mat-raised-button color="warn" type="button" class="m-r-10 "
-                                                        (click)="advanceSearch.reset();searchStatus = false">
+                                                        (click)="searchStatus = false">
                                                         Cancel </button>
                                                     <button mat-raised-button type="button" color="primary"
                                                         class="m-r-15 btn_success" matStepperPrevious
@@ -175,7 +178,7 @@
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Date of Birth*</mat-label>
+                                <mat-label>Date of Birth*{{claimant.value.date_of_birth}}</mat-label>
                                 <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
                                     autocomplete="off" [max]="today" [matDatepicker]="date_of_birth"
                                     (click)="date_of_birth.open()">
@@ -980,7 +983,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Communication Type</mat-label>
                             <mat-select formControlName="call_type">
-                                <mat-option (change)="changeCommunicationType(contactType)"
+                                <mat-option (click)="changeCommunicationType(contactType)"
                                     *ngFor="let contactType of contactTypes" [value]="contactType.id">
                                     {{contactType.contact_type_name}}</mat-option>
                             </mat-select>

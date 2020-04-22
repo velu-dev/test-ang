@@ -48,7 +48,7 @@ export class NewClaimantComponent implements OnInit {
       zip_code: ['', Validators.required],
       zip_4: [''],
       handedness: ['', Validators.required],
-      primary_language_not_english: [''],
+      // primary_language_not_english: [''],
       certified_interpreter: [''],
       //otherlanguage: [''],
     });
