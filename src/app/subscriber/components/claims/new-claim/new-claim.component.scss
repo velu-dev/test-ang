@@ -30,6 +30,15 @@ mat-card {
     mat-form-field {
       padding: 10px !important;
     }
+    .fixied_adj {
+      span {
+        width: 60px;
+      }
+      mat-form-field {
+        width: calc(100% - 50px);
+        padding-left: 0px !important;
+      }
+    }
 
     button.btn_success {
       background-color: $btn_success;
