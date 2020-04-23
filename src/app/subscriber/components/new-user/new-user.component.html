@@ -57,10 +57,10 @@
                             <mat-radio-button value="SSN" class="p-l-10">SSN</mat-radio-button>
                         </mat-radio-group>
                         <mat-form-field appearance="standard" fxFlex="70">
-                            <mat-label>W9 number</mat-label>
-                            <input matInput [dropSpecialCharacters]="false" [mask]="userExaminerForm.value.w9_number_type == 'SSN' ? '000-00-0000' : '00-0000000'" placeholder="W9 number"
+                            <mat-label>Tax ID</mat-label>
+                            <input matInput [dropSpecialCharacters]="false" [mask]="userExaminerForm.value.w9_number_type == 'SSN' ? '000-00-0000' : '00-0000000'" placeholder="Tax ID"
                                 formControlName="w9_number">
-                            <mat-error *ngIf="isSubmitted">Enter valid W9 number</mat-error>
+                            <mat-error *ngIf="isSubmitted">Enter valid Tax ID</mat-error>
                         </mat-form-field>
                     </div>
 
