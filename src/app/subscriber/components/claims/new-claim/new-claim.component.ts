@@ -533,10 +533,10 @@ export class NewClaimComponent implements OnInit {
   isInjuryEdit = false;
   addInjury() {
     if (this.injuryInfo.continuous_trauma) {
-      if (this.injuryInfo.continuous_trauma_end_date && this.injuryInfo.continuous_trauma_start_date) {
+      if (this.injuryInfo.continuous_trauma_start_date) {
 
       } else {
-        this.alertService.openSnackBar("Please select start date and end date", "error")
+        this.alertService.openSnackBar("Please select start date", "error")
         return;
       }
     }
