@@ -74,14 +74,14 @@ export class BillableItemComponent implements OnInit {
   }
 
   ngOnInit() {
-   
-    this.claimService.getBillableItemList().subscribe(res=>{
+
+    this.claimService.getBillableItemList().subscribe(res => {
       console.log(res)
       this.dataSource = new MatTableDataSource(res['data'])
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-  
-    },error =>{
+
+    }, error => {
 
     })
   }
@@ -91,8 +91,11 @@ export class BillableItemComponent implements OnInit {
       // element.isExpand = !element.isExpand;
     }
   }
-  applyFilter(event) {
-
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
   exportData() {
     let data = [];

@@ -434,7 +434,7 @@ export class NewClaimComponent implements OnInit {
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.claimService.updateClaim(this.claim.value, this.claimId).subscribe(res => {
@@ -601,7 +601,8 @@ export class NewClaimComponent implements OnInit {
           this.claimant.patchValue(res.data.claimant)
           this.claim.patchValue({
             claim_details: res.data.claim,
-            Employer: res.data.employer
+            Employer: res.data.employer,
+            InsuranceAdjuster: res.data.claims_administrator
           });
           // this.claim.patchValue({
           //   claim_details: {
