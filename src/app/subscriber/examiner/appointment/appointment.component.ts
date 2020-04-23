@@ -43,6 +43,7 @@ export class AppointmentComponent implements OnInit {
   expandedElement: any | null;
   disabled = false;
   filterValue;
+  tabIndex;
   constructor(private breakpointObserver: BreakpointObserver, private router: Router,
     private examinerService: ExaminerService
   ) {
