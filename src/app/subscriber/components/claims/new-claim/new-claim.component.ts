@@ -140,7 +140,6 @@ export class NewClaimComponent implements OnInit {
             DefenseAttorney: res.data.agent_details.DefenseAttorney,
             DEU: res.data.agent_details.DEU,
           });
-          console.log("fsdhfgdsfdhfdshu", res.data.claim_injuries)
           this.dateOfbirthEndValue = res.data.claim_injuries[0].date_of_injury;
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
@@ -533,7 +532,14 @@ export class NewClaimComponent implements OnInit {
   }
   isInjuryEdit = false;
   addInjury() {
-    console.log(this.injuryInfo)
+    if (this.injuryInfo.continuous_trauma) {
+      if (this.injuryInfo.continuous_trauma_end_date && this.injuryInfo.continuous_trauma_start_date) {
+
+      } else {
+        this.alertService.openSnackBar("Please select start date and end date", "error")
+        return;
+      }
+    }
     if (!this.injuryInfo.body_part_id) {
       this.alertService.openSnackBar("Please fill the injury information", "error")
       return;
@@ -647,6 +653,7 @@ export class NewClaimComponent implements OnInit {
   }
   contactMask = { type: "", mask: "" }
   changeCommunicationType(contact) {
+    console.log(contact)
     this.billable_item.patchValue({
       intake_call: {
         call_type_detail: ""
