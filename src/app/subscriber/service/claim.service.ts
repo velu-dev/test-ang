@@ -19,8 +19,8 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.getClaim + "/" + id)
   }
   searchClaimant(claimant): Observable<any> {
-    console.log(claimant)
-    return this.http.post(environment.baseUrl + api_endpoint.searchClaimant, claimant)
+    if (claimant.basic_search != "")
+      return this.http.post(environment.baseUrl + api_endpoint.searchClaimant, claimant)
   }
   createClaim(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createClaim, data)
@@ -29,6 +29,7 @@ export class ClaimService {
     return this.http.put(environment.baseUrl + api_endpoint.updateClaim + id, data)
   }
   createClaimant(data): Observable<any> {
+    console.log("service console", data);
     return this.http.post(environment.baseUrl + api_endpoint.createClaimant, data)
   }
   updateClaimant(data): Observable<any> {
@@ -57,7 +58,7 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.searchEams + eams_number)
   }
 
-  getBillableItemList(){
+  getBillableItemList() {
     return this.http.get(environment.baseUrl + api_endpoint.getBillItem)
   }
 }
