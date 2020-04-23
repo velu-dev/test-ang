@@ -155,9 +155,59 @@ export class SubscriberSettingsComponent implements OnInit {
       console.log("error", error)
     })
 
-    if(user.role_id == 2 || user.role_id == 11){
-      this.userService.getPrimarAddress().subscribe(data=>{
-        console.log(data);
+    if (user.role_id == 2 || user.role_id == 11) {
+      this.userService.getPrimarAddress().subscribe(res => {
+        console.log(res);
+        if (res['data'].length > 0) {
+          var formData: any = [];
+          for (let i in res['data']) {
+            formData[res['data'][i].address_type] = {}
+            formData[res['data'][i].address_type].street1 = res['data'][i].street1;
+            formData[res['data'][i].address_type].street2 = res['data'][i].street2;
+            formData[res['data'][i].address_type].city = res['data'][i].city;
+            formData[res['data'][i].address_type].state = res['data'][i].state;
+            formData[res['data'][i].address_type].zip_code = res['data'][i].zip_code;
+            formData[res['data'][i].address_type].notes = res['data'][i].notes;
+            formData[res['data'][i].address_type].contact_person = res['data'][i].contact_person;
+            res['data'][i].contacts.map(contact => {
+              if (contact.contact_type == 'L1') {
+                formData[res['data'][i].address_type].phone1 = contact.contact_info
+              }
+              if (contact.contact_type == 'L2') {
+                formData[res['data'][i].address_type].phone2 = contact.contact_info
+              }
+              if (contact.contact_type == 'M1') {
+                formData[res['data'][i].address_type].mobile1 = contact.contact_info
+              }
+              if (contact.contact_type == 'M1') {
+                formData[res['data'][i].address_type].mobile2 = contact.contact_info
+              }
+              if (contact.contact_type == 'F1') {
+                formData[res['data'][i].address_type].fax1 = contact.contact_info
+              }
+              if (contact.contact_type == 'F2') {
+                formData[res['data'][i].address_type].fax2 = contact.contact_info
+              }
+              if (contact.contact_type == 'E1') {
+                formData[res['data'][i].address_type].email1 = contact.contact_info
+              }
+              if (contact.contact_type == 'E2') {
+                formData[res['data'][i].address_type].email2 = contact.contact_info
+              }
+
+
+            })
+          }
+          console.log(formData['P'])
+          // console.log(Object.keys(formData.B).length === 0)
+          //  console.log(Object.keys(formData.P).length === 0)
+          if (formData.P && !(Object.keys(formData.P).length === 0)) {
+            this.addressForm.setValue(formData.P);
+          }
+          if (formData.B && !(Object.keys(formData.B).length === 0)) {
+            this.billingForm.setValue(formData.B);
+          }
+        }
       })
     }
   }
@@ -232,26 +282,43 @@ export class SubscriberSettingsComponent implements OnInit {
     })
   }
 
-  isBillingStatus:boolean = false;
+  isBillingStatus: boolean = false;
 
-  primaryAsBill(){
+  primaryAsBill() {
     console.log(this.isBillingStatus)
-    if(this.isBillingStatus){
+    if (this.isBillingStatus) {
       this.billingForm.setValue(this.addressForm.value);
       this.billing_address = true
-    }else{
+    } else {
       this.billingInit();
       this.billing_address = false;
     }
   }
 
-  addressFormSubmit(){
+  addressFormSubmit() {
+    console.log(this.addressForm.value);
+    console.log(this.billingForm.value);
+
     if (this.addressForm.invalid) {
+      console.log(this.addressForm)
       return;
     }
+
     if (this.billingForm.invalid) {
       return;
     }
+    let updateData = [this.addressForm.value, this.billingForm.value]
+    updateData[0].address_type_id = 3;
+    updateData[1].address_type_id = 2;
+
+    this.userService.updatePrimaryAddress(updateData, this.user.id).subscribe(res => {
+      console.log(res);
+      this.alertService.openSnackBar("Location updated successfully", "success");
+    },error =>{
+      console.log(error);
+      this.alertService.openSnackBar(error.message, "error");
+    })
+
   }
 
 

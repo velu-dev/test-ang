@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { User } from 'src/app/shared/model/user.model';
 import * as globals from '../../../globals'
 import * as  errors from '../../../shared/messages/errors'
 import { ClaimService } from '../../service/claim.service';
@@ -13,50 +12,22 @@ import { Store } from '@ngrx/store';
 import * as headerActions from "./../../../shared/store/header.actions";
 import { ExaminerService } from '../../service/examiner.service';
 
-export interface Section {
-  type: string;
-  city: string;
-  address: string;
-  phone: string;
-
-}
 @Component({
   selector: 'app-examiner-setting',
   templateUrl: './examiner-setting.component.html',
   styleUrls: ['./examiner-setting.component.scss']
 })
 export class ExaminerSettingComponent implements OnInit {
-  myControl = new FormControl();
-  options: any[] = [
-    { name: 'Mary' },
-    { name: 'Shelley' },
-    { name: 'Igor' },
-    { name: 'Mary' },
-    { name: 'Shelley' },
-    { name: 'Igor' },
-    { name: 'Mary' },
-    { name: 'Shelley' },
-    { name: 'Igor' },
-    { name: 'Mary' },
-  ];
-  addressList: any;
-  addAddress: boolean = false;
   profile_bg = globals.profile_bg;
-  user: User;
+  user: any;
   currentUser = {};
   userForm: FormGroup;
   userPasswrdForm: FormGroup;
   addressForm: FormGroup;
   errorMessages = errors;
   states: any;
-  advanceSearch;
-  addressType;
-  serviceSearch;
-  searchStatus;
-  billingSearch;
-  advancedSearch;
-  filteredStates;
-  billing_address:boolean = false;
+  billing_address: boolean = false;
+  billingForm: FormGroup;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -103,14 +74,21 @@ export class ExaminerSettingComponent implements OnInit {
     });
 
     this.addressForm = this.formBuilder.group({
-      id: [""],
-      address_type_id: ['', Validators.compose([Validators.required])],
-      phone: ['', Validators.compose([Validators.required])],
-      street1: ['', Validators.compose([Validators.required])],
+      phone1: [''],
+      phone2: [''],
+      fax1: [''],
+      fax2: [''],
+      mobile1: [''],
+      mobile2: [''],
+      street1: [''],
       street2: [''],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zipcode: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      city: [''],
+      state: [''],
+      zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      notes: [''],
+      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      contact_person: ['']
     });
 
     this.claimService.seedData('state').subscribe(response => {
@@ -119,23 +97,81 @@ export class ExaminerSettingComponent implements OnInit {
       console.log("error", error)
     })
 
-    this.claimService.seedData('address_type').subscribe(response => {
-      this.addressType = response['data'];
-    }, error => {
-      console.log("error", error)
-    })
+    // this.claimService.seedData('address_type').subscribe(response => {
+    //   this.addressType = response['data'];
+    // }, error => {
+    //   console.log("error", error)
+    // })
 
-    this.getAddressDetails()
+    //this.getAddressDetails();
+
+    //if (this.user.role_id == 2 || this.user.role_id == 11) {
+    this.userService.getPrimarAddress().subscribe(res => {
+      console.log(res);
+      if (res['data'].length > 0) {
+        var formData: any = [];
+        for (let i in res['data']) {
+          formData[res['data'][i].address_type] = {}
+          formData[res['data'][i].address_type].street1 = res['data'][i].street1;
+          formData[res['data'][i].address_type].street2 = res['data'][i].street2;
+          formData[res['data'][i].address_type].city = res['data'][i].city;
+          formData[res['data'][i].address_type].state = res['data'][i].state;
+          formData[res['data'][i].address_type].zip_code = res['data'][i].zip_code;
+          formData[res['data'][i].address_type].notes = res['data'][i].notes;
+          formData[res['data'][i].address_type].contact_person = res['data'][i].contact_person;
+          res['data'][i].contacts.map(contact => {
+            if (contact.contact_type == 'L1') {
+              formData[res['data'][i].address_type].phone1 = contact.contact_info
+            }
+            if (contact.contact_type == 'L2') {
+              formData[res['data'][i].address_type].phone2 = contact.contact_info
+            }
+            if (contact.contact_type == 'M1') {
+              formData[res['data'][i].address_type].mobile1 = contact.contact_info
+            }
+            if (contact.contact_type == 'M1') {
+              formData[res['data'][i].address_type].mobile2 = contact.contact_info
+            }
+            if (contact.contact_type == 'F1') {
+              formData[res['data'][i].address_type].fax1 = contact.contact_info
+            }
+            if (contact.contact_type == 'F2') {
+              formData[res['data'][i].address_type].fax2 = contact.contact_info
+            }
+            if (contact.contact_type == 'E1') {
+              formData[res['data'][i].address_type].email1 = contact.contact_info
+            }
+            if (contact.contact_type == 'E2') {
+              formData[res['data'][i].address_type].email2 = contact.contact_info
+            }
+
+
+          })
+        }
+        console.log(formData['P'])
+        // console.log(Object.keys(formData.B).length === 0)
+        //  console.log(Object.keys(formData.P).length === 0)
+        if (formData.P && !(Object.keys(formData.P).length === 0)) {
+          this.addressForm.setValue(formData.P);
+        }
+        if (formData.B && !(Object.keys(formData.B).length === 0)) {
+          this.billingForm.setValue(formData.B);
+        }
+      }
+    })
+    // }
+
+    this.billingInit()
   }
 
-  getAddressDetails() {
-    this.examinerService.getExaminerAddress().subscribe(response => {
-      this.addressList = response['data'];
-      console.log(response)
-    }, error => {
-      console.log(error)
-    })
-  }
+  // getAddressDetails() {
+  //   this.examinerService.getExaminerAddress().subscribe(response => {
+  //     this.addressList = response['data'];
+  //     console.log(response)
+  //   }, error => {
+  //     console.log(error)
+  //   })
+  // }
   userformSubmit() {
     this.isSubmit = true;
     if (this.userForm.invalid) {
@@ -186,60 +222,62 @@ export class ExaminerSettingComponent implements OnInit {
     })
   }
 
-  addressIsSubmitted: boolean = false;
-  addressformSubmit() {
-    this.addressIsSubmitted = true;
-    console.log(this.addressForm.value)
+  billingInit() {
+    this.billingForm = this.formBuilder.group({
+      phone1: [''],
+      phone2: [''],
+      fax1: [''],
+      fax2: [''],
+      mobile1: [''],
+      mobile2: [''],
+      street1: [''],
+      street2: [''],
+      city: [''],
+      state: [''],
+      zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      notes: [''],
+      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      contact_person: ['']
+    });
+  }
+
+  isBillingStatus: boolean = false;
+
+  primaryAsBill() {
+    console.log(this.isBillingStatus)
+    if (this.isBillingStatus) {
+      this.billingForm.setValue(this.addressForm.value);
+      this.billing_address = true
+    } else {
+      this.billingInit();
+      this.billing_address = false;
+    }
+  }
+
+  addressFormSubmit() {
+    console.log(this.addressForm.value);
+    console.log(this.billingForm.value);
+
     if (this.addressForm.invalid) {
-      console.log(this.addressForm.value)
+      console.log(this.addressForm)
       return;
     }
 
-    if (this.addressForm.value.id == '' || this.addressForm.value.id == null) {
-      this.examinerService.postExaminerAddress(this.addressForm.value).subscribe(response => {
-        console.log(response)
-        this.getAddressDetails();
-        this.addAddress = false;
-        this.alertService.openSnackBar("Location created successfully", 'success');
-
-      }, error => {
-        console.log(error);
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
-    } else {
-      this.examinerService.updateExaminerAddress(this.addressForm.value,'').subscribe(response => {
-        console.log(response)
-        this.getAddressDetails();
-        this.addAddress = false;
-        this.alertService.openSnackBar("Location updated successfully", 'success');
-
-      }, error => {
-        console.log(error);
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
+    if (this.billingForm.invalid) {
+      return;
     }
-  }
+    let updateData = [this.addressForm.value, this.billingForm.value]
+    updateData[0].address_type_id = 3;
+    updateData[1].address_type_id = 2;
 
-  editAddress(details) {
-    console.log(details);
-    this.addAddress = true;
-    this.addressForm.setValue(details)
-  }
-
-  deleteAddress(id) {
-    this.examinerService.deleteExaminerAddress(id).subscribe(response => {
-      console.log(response)
-      this.getAddressDetails();
-      this.addAddress = false;
-      this.alertService.openSnackBar("Location deleted successfully", 'success');
-
+    this.userService.updatePrimaryAddress(updateData, this.user.id).subscribe(res => {
+      console.log(res);
+      this.alertService.openSnackBar("Location updated successfully", "success");
     }, error => {
-      console.log(error)
-      this.alertService.openSnackBar(error.error.message, 'error');
+      console.log(error);
+      this.alertService.openSnackBar(error.message, "error");
     })
-  }
 
-  advanceSearchSubmit() {
-    console.log("advanceSearch", this.advanceSearch.value)
   }
 }

@@ -35,6 +35,8 @@
                                                 (click)="selectClaimant(option)">
                                                 {{option.first_name}}
                                             </mat-option>
+                                            <mat-option *ngIf="(filteredClaimant | async)?.data.length == 0">No Data
+                                                Found</mat-option>
                                         </mat-autocomplete>
                                         <span matSuffix class="search-icon icons">
                                             <mat-icon>search</mat-icon>
@@ -65,7 +67,8 @@
                                                     <mat-label>Date of Birth</mat-label>
                                                     <input matInput placeholder="Date of Birth"
                                                         formControlName="date_of_birth_advance_search"
-                                                        autocomplete="off" formControlName="date_of_birth" [max]="today"
+                                                        autocomplete="off" formControlName="date_of_birth"
+                                                        [max]="dateOfbirthEndValue" utc="true"
                                                         [matDatepicker]="date_of_birth_advance_search"
                                                         (click)="date_of_birth_advance_search.open()">
                                                     <mat-datepicker-toggle matSuffix
@@ -94,7 +97,7 @@
 
                                                 <div class="text-right w-100 m-t-10 m-b-50">
                                                     <button mat-raised-button color="warn" type="button" class="m-r-10 "
-                                                        (click)="advanceSearch.reset();searchStatus = false">
+                                                        (click)="searchStatus = false">
                                                         Cancel </button>
                                                     <button mat-raised-button type="button" color="primary"
                                                         class="m-r-15 btn_success" matStepperPrevious
@@ -419,9 +422,9 @@
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
-                                <input matInput placeholder="CT Start date " autocomplete="off" [max]="today"
+                                <input matInput placeholder="CT Start date " autocomplete="off"
                                     [matDatepicker]="continuous_trauma_start_date"
-                                    [(ngModel)]="injuryInfo.continuous_trauma_start_date"
+                                    [(ngModel)]="injuryInfo.continuous_trauma_start_date" [max]="today"
                                     [ngModelOptions]="{standalone: true}" (click)="continuous_trauma_start_date.open()">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                                 </mat-datepicker-toggle>
@@ -433,8 +436,9 @@
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date "
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
-                                    [ngModelOptions]="{standalone: true}" autocomplete="off" [max]="today"
+                                    [ngModelOptions]="{standalone: true}" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_end_date"
+                                    [min]="injuryInfo.continuous_trauma_start_date" [max]="today"
                                     (click)="continuous_trauma_end_date.open()">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
                                 </mat-datepicker-toggle>
@@ -591,7 +595,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Adjuster Fax</mat-label>
-                                <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
+                                <input matInput mask="000-000-0000" placeholder="Fax" formControlName="fax"
+                                    autocomplete="off">
+                                <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -716,7 +722,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
+                                <input matInput placeholder="Fax" mask="000-000-0000" formControlName="fax"
+                                    autocomplete="off">
+                                <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -792,7 +800,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" formControlName="fax" autocomplete="off">
+                                <input matInput placeholder="Fax" mask="000-000-0000" formControlName="fax"
+                                    autocomplete="off">
+                                <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -884,10 +894,12 @@
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="Date & Time" [min]="today"
-                                formControlName="appointment_scheduled_date_time" autocomplete="off"
-                                [matDatepicker]="date_and_time" (click)="date_and_time.open()">
-                            <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
-                            <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
+                                formControlName="appointment_scheduled_date_time" autocomplete="off" [owlDateTime]="appointment"
+                                [owlDateTimeTrigger]="appointment">
+                            <owl-date-time #appointment></owl-date-time>
+
+                            <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
+                            <mat-datepicker #date_and_time disabled="false"></mat-datepicker> -->
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
@@ -964,10 +976,10 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
-                                autocomplete="off" [max]="today" [matDatepicker]="date_and_time_intake"
-                                (click)="date_and_time_intake.open()">
-                            <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle>
-                            <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker>
+                                autocomplete="off" [max]="today" [owlDateTime]="intake" [owlDateTimeTrigger]="intake">
+                            <owl-date-time #intake></owl-date-time>
+                            <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle> -->
+                            <!-- <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker> -->
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -978,7 +990,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Communication Type</mat-label>
                             <mat-select formControlName="call_type">
-                                <mat-option (click)="changeCommunicationType(contactType)"
+                                <mat-option (change)="changeCommunicationType(contactType)"
                                     *ngFor="let contactType of contactTypes" [value]="contactType.id">
                                     {{contactType.contact_type_name}}</mat-option>
                             </mat-select>

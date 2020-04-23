@@ -5,6 +5,8 @@
 @import "./sass/variables";
 @import "./sass/table";
 @import "./sass/tabs";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!

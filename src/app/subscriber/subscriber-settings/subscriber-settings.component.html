@@ -168,11 +168,11 @@
                                             <mat-radio-button value="SSN" class="p-l-10">SSN</mat-radio-button>
                                         </mat-radio-group>
                                         <mat-form-field appearance="standard" fxFlex="70">
-                                            <mat-label>W9 number</mat-label>
+                                            <mat-label>Tax ID</mat-label>
                                             <input matInput [dropSpecialCharacters]="false"
                                                 [mask]="userForm.value.individual_w9_number_type == 'SSN' ? '000-00-0000' : '00-0000000'"
-                                                placeholder="W9 number" formControlName="individual_w9_number">
-                                            <mat-error>Enter valid W9 number</mat-error>
+                                                placeholder="Tax ID" formControlName="individual_w9_number">
+                                            <mat-error>Enter valid Tax ID</mat-error>
                                         </mat-form-field>
 
                                     </div>
@@ -182,7 +182,7 @@
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
                                         <mat-label>Individual NPI Number</mat-label>
                                         <input matInput formControlName="individual_npi_number"
-                                            placeholder="Individual W9 Number" autocomplete="off">
+                                            placeholder="Individual NPI Number" autocomplete="off">
                                         <mat-error>Enter valid NPI number</mat-error>
                                     </mat-form-field>
 
@@ -210,11 +210,11 @@
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
-                                        <mat-label>Company W9 Number</mat-label>
+                                        <mat-label>Company Tax ID</mat-label>
                                         <input matInput formControlName="company_w9_number"
-                                            placeholder="Company W9 Number" [dropSpecialCharacters]="false"
+                                            placeholder="Company Tax ID" [dropSpecialCharacters]="false"
                                             mask="00-0000000" autocomplete="off">
-                                        <mat-error>Enter valid W9 number</mat-error>
+                                        <mat-error>Enter valid Tax ID</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
@@ -232,7 +232,7 @@
                             </mat-card-content>
                         </div>
                     </mat-tab>
-                    <mat-tab>
+                    <mat-tab *ngIf="user?.role_id == 2 || user?.role_id == 11">
                         <ng-template mat-tab-label>
                             <mat-icon class="example-tab-icon p-r-5"> gps_fixed </mat-icon>
                             Primary Address
@@ -483,7 +483,7 @@
                         </div>
                         <div class="text-center w-100 m-t-30 m-b-10">
                             <button mat-raised-button color="primary"
-                                class="m-r-10 btn_success rounded-corner">Submit</button>
+                                class="m-r-10 btn_success rounded-corner" (click)="addressFormSubmit()">Submit</button>
                             <button mat-raised-button color="warn" class="rounded-corner m-l-10">
                                 Cancel </button>
 

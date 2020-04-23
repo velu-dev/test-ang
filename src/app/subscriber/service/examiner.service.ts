@@ -53,4 +53,7 @@ export class ExaminerService {
     return this.http.post(environment.baseUrl + api_endpoint.deleteAddress, data)
   }
 
+  getExaminationDetails(){
+    return this.http.get(environment.baseUrl + api_endpoint.getExamination)
+  }
 }
