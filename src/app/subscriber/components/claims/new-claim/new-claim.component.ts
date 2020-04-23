@@ -282,7 +282,8 @@ export class NewClaimComponent implements OnInit {
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       suffix: [],
       zip_code_plus_4: [],
-      date_of_birth: [new Date(), Validators.required],
+      date_of_birth: [null, Validators.required],
+      // date_of_birth: [new Date()],
       gender: [],
       email: ["", Validators.compose([Validators.email])],
       handedness: [],
@@ -497,7 +498,7 @@ export class NewClaimComponent implements OnInit {
     }
     let data = this.claimant.value;
     data['certified_interpreter_required'] = this.languageStatus;
-    console.log("Component", this.claimant.value.date_of_birth)
+    data['date_of_birth'] = this.claimant.value.date_of_birth.toDateString();
     if (!this.isClaimantEdit) {
       this.claimService.createClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ExaminerService } from '../../service/examiner.service';
 
 @Component({
   selector: 'app-appointment',
@@ -42,31 +43,30 @@ export class AppointmentComponent implements OnInit {
   expandedElement: any | null;
   disabled = false;
   filterValue;
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router,
+    private examinerService: ExaminerService
+  ) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "Name", "Claim Numbers", "Status"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
-        this.columnName = ["Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status", "Review Documents"]
-        this.columnsToDisplay = ['name', 'claim_number', 'exam_type', 'location', 'date', "status", "data"]
+        this.columnName = ["","Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status", "Review Documents"]
+        this.columnsToDisplay = ['image','claimant_name', 'claim_number', 'exam_type', 'location', 'appointment_scheduled_date_time', "status", "data"]
       }
     })
   }
 
   ngOnInit() {
-    let data = [
-      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Confirmed', "data": '' },
-      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Not Confirmed', "data": '' },
-      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Left Voicemail', "data": '' },
-      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Confirmed', "data": '' },
-      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Not Confirmed', "data": '' },
-      { 'name': 'Sanchez, Jorge T ', 'claim_number': '123xyz45', 'exam_type': 'QME', 'location': '23 Big blvd. Riverside, CA 99302', 'date': '03-25-2020', "status": 'Left Voicemail', "data": '' }
-    ]
-    this.dataSource = new MatTableDataSource(data)
-    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-
+    
+    this.examinerService.getExaminationDetails().subscribe(res => {
+      console.log(res)
+      this.dataSource = new MatTableDataSource(res['data'])
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    }, error => {
+      console.log(error)
+    })
   }
 
   applyFilter(filterValue: string) {
@@ -75,7 +75,7 @@ export class AppointmentComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  
+
   expandId: any;
   openElement(element) {
     console.log(element)
@@ -89,10 +89,10 @@ export class AppointmentComponent implements OnInit {
     this.router.navigate(['/subscriber/examiner/appointment-details'])
   }
 
-  exportData(){
+  exportData() {
 
   }
-  
+
   filterByRole(value?: string) {
 
   }

@@ -229,7 +229,7 @@ export const ROUTES: SideNavInterface[] = [
             // },
             {
                 path: '/subscriber/examiner/appointment',
-                title: 'Appointments',
+                title: 'Examination',
                 icon: 'dashboard',
                 submenu: [],
                 group: "Subscriber",

@@ -35,7 +35,7 @@ export class SubscriberUserService {
   getPrimarAddress(){
     return this.http.get(environment.baseUrl + api_endpoint.getPrimaryAddress);
   }
-  updatePrimaryAddress(data){
-    return this.http.put(environment.baseUrl + api_endpoint.updatePrimaryAddress + data.id, data)
+  updatePrimaryAddress(data,id){
+    return this.http.post(environment.baseUrl + api_endpoint.updatePrimaryAddress + id, data)
   }
 }
