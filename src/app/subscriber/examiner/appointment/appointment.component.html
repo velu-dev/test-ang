@@ -112,7 +112,7 @@
                         </mat-icon>
                     </span>
                     <span (click)="navigate(element)" *ngIf="columnName[i] != 'Date'">{{element[column] }}</span>
-                    <span (click)="navigate()" *ngIf="columnName[i] == 'Date'">{{element[column] | date:'MM-dd-yyyy'}}</span>
+                    <span (click)="navigate(element)" *ngIf="columnName[i] == 'Date'">{{element[column] | date:'MM-dd-yyyy'}}</span>
                     <span *ngIf="i == (columnsToDisplay.length-1)">
                         <span class="user-disable-enable" *ngIf="tabIndex != 1" >  <button mat-icon-button [matMenuTriggerFor]="review_doc">
                             <mat-icon>more_vert</mat-icon>
