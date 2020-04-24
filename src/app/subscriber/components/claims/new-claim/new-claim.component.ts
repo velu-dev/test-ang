@@ -473,6 +473,9 @@ export class NewClaimComponent implements OnInit {
   }
   examinarId: any;
   examinarChange(examinar) {
+    this.addressCtrl.setValue('');
+    this.selectedExaminarAddress = '';
+    this.isAddressSelected = false;
     this.examinarId = examinar.id;
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
       this.examinerOptions = []
