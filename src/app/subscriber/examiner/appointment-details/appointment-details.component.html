@@ -44,10 +44,10 @@
                             <div>Date of Birth</div>
                         </div>
                         <div fxFlex="50" class="claim_value">
-                            <div>Venkatesan</div>
-                            <div>Mariyappan</div>
-                            <div>M</div>
-                            <div>06-11-1996</div>
+                            <div>{{examinationDetails?.claimant_details?.last_name}}</div>
+                            <div>{{examinationDetails?.claimant_details?.first_name}}</div>
+                            <div>{{examinationDetails?.claimant_details?.middle_name}}</div>
+                            <div>{{examinationDetails?.claimant_details?.date_of_birth | date:'MM-dd-yyyy'}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -74,10 +74,10 @@
                             <div>Injuries</div>
                         </div>
                         <div fxFlex="50" class="claim_value">
-                            <div>47895XXX</div>
-                            <div>06-06-2010</div>
+                            <div>{{examinationDetails?.claim_details?.claim_number}}</div>
+                            <div>{{examinationDetails?.claim_injuries[0]?.date_of_injury | date:'MM-dd-yyyy'}}</div>
                             <div>Corvel</div>
-                            <div>Arm L, Shoulder L</div>
+                            <div>{{examinationDetails?.claim_injuries[0]?.body_part_id}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -88,7 +88,7 @@
         <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
             <mat-card>
                 <mat-card-header>
-                    <div class="content-wrapper-main-title p-t-5">Billable Item</div>
+                    <div class="content-wrapper-main-title p-t-5">Examination</div>
                     <span class="spacer"></span>
                     <button (click)="openBillableItem()" mat-icon-button>
                         <mat-icon>fullscreen</mat-icon>

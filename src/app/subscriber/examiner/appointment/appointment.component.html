@@ -9,7 +9,7 @@
         <button mat-icon-button class="filter-icon" (click)="exportData()">
             <img class="icon-16" [src]="xls" alt="export" />
         </button>
-        <button mat-icon-button class="filter-icon p-t-0" [matMenuTriggerFor]="filter">
+        <!-- <button mat-icon-button class="filter-icon p-t-0" [matMenuTriggerFor]="filter">
             <mat-icon mat-icon-button aria-hidden="false" material-icons aria-label="home icon">filter_list</mat-icon>
         </button>
         <mat-menu #filter="matMenu">
@@ -21,7 +21,7 @@
                     <mat-checkbox (change)="filterByRole()" [(ngModel)]="role.checked">{{role.role_name}}</mat-checkbox>
                 </mat-list-item>
             </mat-list>
-        </mat-menu>
+        </mat-menu> -->
 
     </mat-card-content>
 
@@ -111,7 +111,7 @@
                             {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                         </mat-icon>
                     </span>
-                    <span (click)="navigate()" *ngIf="columnName[i] != 'Date'">{{element[column] }}</span>
+                    <span (click)="navigate(element)" *ngIf="columnName[i] != 'Date'">{{element[column] }}</span>
                     <span (click)="navigate()" *ngIf="columnName[i] == 'Date'">{{element[column] | date:'MM-dd-yyyy'}}</span>
                     <span *ngIf="i == (columnsToDisplay.length-1)">
                         <span class="user-disable-enable" *ngIf="tabIndex != 1" >  <button mat-icon-button [matMenuTriggerFor]="review_doc">
