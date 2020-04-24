@@ -3,7 +3,7 @@
         <div class="m-0 content-wrapper-main-title">{{isEdit ? 'Update' : 'Create'}}{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant">
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claimant</ng-template>
@@ -487,70 +487,67 @@
                         <mat-expansion-panel-header>
                             <div class="sub-title">Correspondence</div>
                         </mat-expansion-panel-header>
-
                         <div fxLayout="row wrap" fxFlex="100">
-                            <div fxFlex="50">
-                                <div fxLayout="row wrap" fxFlex="100">
-                                    <div class="file-upload" fxFlex="100">
-                                        <input type="file" multiple #uploader hidden (change)="uploadFile($event)"
-                                            id="uploadFile" accept="CSV">
-                                        <p>Choose a file or drag it here</p>
-                                        <p class="input" (click)="uploader.click()"> SELECT</p>
-                                    </div>
-                                    <mat-form-field appearance="standard" class="w-100">
-                                        <mat-label>Note</mat-label>
-                                        <textarea matInput placeholder="Note" autocomplete="off"></textarea>
-                                        <mat-error>error msg here</mat-error>
-                                    </mat-form-field>
-                                    <button mat-raised-button class="rounded-corner text-center"
-                                        color="primary">Add</button>
-                                </div>
+                            <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
+                                appearance="standard" hideRequiredMarker="hideRequiredControl.auto"
+                                floatLabel="floatLabelControl.auto">
+                                <input matInput placeholder="No file chosen" required>
+                                <span matSuffix>File Upload</span>
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
+                                appearance="standard">
+                                <mat-label>Note</mat-label>
+                                <input matInput #message maxlength="256" placeholder="Ex. I need help with...">
+                                <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
+                            </mat-form-field>
+                            <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+                                <button mat-stroked-button color="primary" class="m-t-15 upload_btn p-r-20">Add
+                                </button>
                             </div>
-                            <div fxFlex="50">
-                                <div fxLayout="row wrap" fxFlex="100">
-                                    <div class="docs_list" fxFlex="100S">
-                                        <img mat-card-image [src]="xls" alt="Profile photo">
-                                        <div>
-                                            <h4>Document_name.xls</h4>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry.</p>
-                                        </div>
-                                        <span class="delete-icon">
-                                            <button mat-icon-button color="warn"
-                                                aria-label="Example icon-button with a heart icon">
-                                                <mat-icon>close</mat-icon>
-                                            </button>
-                                        </span>
-                                    </div>
-                                    <div class="docs_list" fxFlex="100S">
-                                        <img mat-card-image [src]="xls" alt="Profile photo">
-                                        <div>
-                                            <h4>Document_name.xls</h4>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry.</p>
-                                        </div>
-                                        <span class="delete-icon">
-                                            <button mat-icon-button color="warn"
-                                                aria-label="Example icon-button with a heart icon">
-                                                <mat-icon>close</mat-icon>
-                                            </button>
-                                        </span>
-                                    </div>
-                                    <div class="docs_list" fxFlex="100S">
-                                        <img mat-card-image [src]="xls" alt="Profile photo">
-                                        <div>
-                                            <h4>Document_name.xls</h4>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry.</p>
-                                        </div>
-                                        <span class="delete-icon">
-                                            <button mat-icon-button color="warn"
-                                                aria-label="Example icon-button with a heart icon">
-                                                <mat-icon>close</mat-icon>
-                                            </button>
-                                        </span>
-                                    </div>
-                                    <!-- <h4 class="text-center">Uploaded Document List - In progress</h4> -->
+
+                            <div fxFlex="100">
+                                <div class="basic-table document_list w-100">
+                                    <table mat-table [dataSource]="dataSource1">
+
+                                        <ng-container matColumnDef="doc_image">
+                                            <th mat-header-cell *matHeaderCellDef> </th>
+                                            <td mat-cell *matCellDef="let element"> <img [src]="docx" alt="docx"></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="doc_name">
+                                            <th mat-header-cell *matHeaderCellDef> Name</th>
+                                            <td mat-cell *matCellDef="let element"> <b
+                                                    class="p-t-5">{{element.doc_name}}</b><br />
+                                                <small>Note : Lorem Ipsum is simply dummy text of the printing and
+                                                    typesetting industry. Lorem Ipsum has been the industry's standard
+                                                    dummy text ever since the 1500s</small></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="date">
+                                            <th mat-header-cell *matHeaderCellDef> Uploaded On </th>
+                                            <td mat-cell *matCellDef="let element" class="no-wrap-td">
+                                                {{element.date |  date }} <small class="p-l-10"><span
+                                                        class="fa fa-clock-o"></span>
+                                                    {{element.date |  date:'shortTime' }} </small></td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
+                                            <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
+                                                <button mat-icon-button color="primary" matTooltip="Download"
+                                                    matTooltipPosition="before">
+                                                    <span class="fa fa-download"></span>
+                                                </button>
+                                                <button mat-icon-button color="warn" matTooltip="Delete"
+                                                    matTooltipPosition="after">
+                                                    <mat-icon>delete_outline</mat-icon>
+                                                </button> </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns_1; sticky: true"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns_1;"></tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -894,8 +891,8 @@
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="Date & Time" [min]="today"
-                                formControlName="appointment_scheduled_date_time" autocomplete="off" [owlDateTime]="appointment"
-                                [owlDateTimeTrigger]="appointment">
+                                formControlName="appointment_scheduled_date_time" autocomplete="off"
+                                [owlDateTime]="appointment" [owlDateTimeTrigger]="appointment">
                             <owl-date-time #appointment></owl-date-time>
 
                             <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
