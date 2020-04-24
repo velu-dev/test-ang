@@ -82,7 +82,7 @@ export class BillableItemComponent implements OnInit {
       this.dataSource.sort = this.sort;
 
     }, error => {
-
+      this.dataSource = new MatTableDataSource([])
     })
   }
   openElement(element) {

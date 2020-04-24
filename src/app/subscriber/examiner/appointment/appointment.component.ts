@@ -50,8 +50,8 @@ export class AppointmentComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Name", "Claim Numbers", "Status"]
-        this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
+        this.columnName = ["", "Name", "Name", "Status"]
+        this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
         this.columnName = ["","Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status", "Review Documents"]
         this.columnsToDisplay = ['image','claimant_name', 'claim_number', 'exam_type', 'location', 'appointment_scheduled_date_time', "status", "data"]
@@ -66,7 +66,8 @@ export class AppointmentComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res['data'])
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     }, error => {
-      console.log(error)
+      console.log(error);
+      this.dataSource = new MatTableDataSource([])
     })
   }
 
@@ -80,13 +81,13 @@ export class AppointmentComponent implements OnInit {
   expandId: any;
   openElement(element) {
     console.log(element)
-    this.router.navigate(['/subscriber/examiner/appointment-details'])
+    //this.router.navigate(['/subscriber/examiner/appointment-details'])
     if (this.isMobile) {
       this.expandId = element.id;
       // element.isExpand = !element.isExpand;
     }
   }
-  click() {
+  navigate() {
     this.router.navigate(['/subscriber/examiner/appointment-details'])
   }
 

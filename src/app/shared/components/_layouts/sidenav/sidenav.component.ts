@@ -79,13 +79,20 @@ export class SidenavComponent implements OnInit {
         if (res.status) {
           console.log(res.data.role_id)
           this.cookieService.set("role_id", res.data.role_id);
-          window.location.reload();
+          this.router.navigate(["/"]);
+          setTimeout(data=>{
+            window.location.reload();
+          },500)
+          
         }
       })
     }
     if (this.roleId == 11) {
       this.cookieService.set("role_id", 2);
-      window.location.reload();
+      this.router.navigate(["/"]);
+      setTimeout(data=>{
+        window.location.reload();
+      },500)
     }
   }
 

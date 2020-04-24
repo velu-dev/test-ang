@@ -123,6 +123,11 @@ export const ROUTES = [
                 icon: 'dashboard',
                 submenu: []
             }],
+    },{
+        path: '/subscriber/manage-location',
+        title: 'Manage Locations',
+        icon: 'map',
+        submenu: [],
     },
     //Subscriber staff manager
     {
@@ -149,6 +154,41 @@ export const ROUTES = [
             title: 'Settings',
             icon: 'dashboard',
             submenu: []
+        },{
+            path: '/subscriber/manager/claimant',
+            title: 'Manage Claimants',
+            icon: 'dashboard',
+            submenu: [{
+                path: '/subscriber/manager/claimant/new',
+                title: 'New Claimant',
+                icon: 'dashboard',
+                submenu: []
+            }],
+            group: "Subscriber",
+            role: 2
+        }, {
+            path: '/subscriber/manager/billable-item',
+            title: 'Manage Billable Item',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 2
+        }, {
+            path: '/subscriber/manager/claims',
+            title: 'Manage Claims',
+            icon: 'dashboard',
+            submenu: [
+                {
+                    path: '/subscriber/manager/claims/new-claim',
+                    title: 'New Claims',
+                    icon: 'dashboard',
+                    submenu: []
+                }],
+        },{
+            path: '/subscriber/manager/manage-location',
+            title: 'Manage Locations',
+            icon: 'map',
+            submenu: [],
         }],
     },
     //Subscriber staff
@@ -182,6 +222,36 @@ export const ROUTES = [
             title: 'Manage Locations',
             icon: 'map',
             submenu: [],
+        },{
+            path: '/subscriber/staff/claimant',
+            title: 'Manage Claimants',
+            icon: 'dashboard',
+            submenu: [{
+                path: '/subscriber/staff/claimant/new',
+                title: 'New Claimant',
+                icon: 'dashboard',
+                submenu: []
+            }],
+            group: "Subscriber",
+            role: 2
+        }, {
+            path: '/subscriber/staff/billable-item',
+            title: 'Manage Billable Item',
+            icon: 'dashboard',
+            submenu: [],
+            group: "Subscriber",
+            role: 2
+        }, {
+            path: '/subscriber/staff/claims',
+            title: 'Manage Claims',
+            icon: 'dashboard',
+            submenu: [
+                {
+                    path: '/subscriber/staff/claims/new-claim',
+                    title: 'New Claims',
+                    icon: 'dashboard',
+                    submenu: []
+                }],
         }
         // , {
         //     path: '/subscriber/manager/settings',
@@ -224,7 +294,42 @@ export const ROUTES = [
                 title: 'Settings',
                 icon: 'dashboard',
                 submenu: []
-            },]
+            },{
+                path: '/subscriber/examiner/claimant',
+                title: 'Manage Claimants',
+                icon: 'dashboard',
+                submenu: [{
+                    path: '/subscriber/examiner/claimant/new',
+                    title: 'New Claimant',
+                    icon: 'dashboard',
+                    submenu: []
+                }],
+                group: "Subscriber",
+                role: 2
+            }, {
+                path: '/subscriber/examiner/billable-item',
+                title: 'Manage Billable Item',
+                icon: 'dashboard',
+                submenu: [],
+                group: "Subscriber",
+                role: 2
+            }, {
+                path: '/subscriber/examiner/claims',
+                title: 'Manage Claims',
+                icon: 'dashboard',
+                submenu: [
+                    {
+                        path: '/subscriber/examiner/claims/new-claim',
+                        title: 'New Claims',
+                        icon: 'dashboard',
+                        submenu: []
+                    }],
+            }, {
+                path: '/subscriber/examiner/manage-location',
+                title: 'Manage Locations',
+                icon: 'map',
+                submenu: [],
+            }]
     },
 
     // //Vendor historian Menu
