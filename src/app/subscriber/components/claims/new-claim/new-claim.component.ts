@@ -125,7 +125,7 @@ export class NewClaimComponent implements OnInit {
     private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute) {
-  
+
     this.route.params.subscribe(param => {
       if (param.id) {
         this.claimId = param.id;
@@ -152,7 +152,6 @@ export class NewClaimComponent implements OnInit {
             DefenseAttorney: res.data.agent_details.DefenseAttorney,
             DEU: res.data.agent_details.DEU,
           });
-          this.dateOfbirthEndValue = res.data.claim_injuries[0].date_of_injury;
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
           this.billable_item.patchValue({
@@ -335,50 +334,51 @@ export class NewClaimComponent implements OnInit {
         id: [],
         insurance_name: [],
         name: [],
+        street1: [],
+        zip_code: [],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [],
         email: [null, Validators.compose([Validators.email])],
-        street1: [],
       }),
       Employer: this.formBuilder.group({
         id: [],
         name: [],
-        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         street1: [],
         city: [],
         state: [],
         zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       ApplicantAttorney: this.formBuilder.group({
         id: [],
         law_firm_name: [],
         name: [],
-        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         email: [null, Validators.compose([Validators.email])],
         street1: [],
         city: [],
         state: [],
-        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])]
+        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [],
         law_firm_name: [],
         name: [],
-        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         email: [null, Validators.compose([Validators.email])],
         street1: [],
         city: [],
         state: [],
-        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])]
+        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DEU: this.formBuilder.group({
         id: [],
         name: [],
-        phone: [],
         street1: [],
-        street2: []
+        street2: [],
+        phone: [],
       })
     })
     this.billable_item = this.formBuilder.group({
@@ -464,11 +464,11 @@ export class NewClaimComponent implements OnInit {
       this.examinerOptions = []
       this.examinerOptions = res['data'];
       this.examinarAddress = this.addressCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterAddress(value))
-      );
-     
+        .pipe(
+          startWith(''),
+          map(value => this._filterAddress(value))
+        );
+
       if (examinar.address_id) {
         res.data.map(addr => {
           if (addr.address_id == examinar.address_id) {
@@ -564,8 +564,8 @@ export class NewClaimComponent implements OnInit {
       this.alertService.openSnackBar("Please fill the injury information", "error")
       return;
       if (!this.injuryInfo.date_of_injury)
-      this.alertService.openSnackBar("Please fill the injury date", "error")
-        return
+        this.alertService.openSnackBar("Please fill the injury date", "error")
+      return
     }
     if (this.isInjuryEdit) {
       let index = 0;
