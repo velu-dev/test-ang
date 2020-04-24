@@ -100,7 +100,7 @@ export const ROUTES: SideNavInterface[] = [
                 group: "Subscriber",
                 role: 2
             }, {
-                path: '/subscriber/staff/manage-location',
+                path: '/subscriber/manage-location',
                 title: 'Location',
                 icon: 'map',
                 submenu: [],
