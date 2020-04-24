@@ -178,7 +178,7 @@
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Date of Birth*{{claimant.value.date_of_birth}}</mat-label>
+                                <mat-label>Date of Birth*</mat-label>
                                 <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
                                     autocomplete="off" [max]="today" [matDatepicker]="date_of_birth"
                                     (click)="date_of_birth.open()">
@@ -325,15 +325,18 @@
                                 <input matInput type="text" placeholder="Claimant name" formControlName="claimant_name"
                                     disabled>
                             </mat-form-field>
+                            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
+                                <span> &nbsp; ADJ
+                                    &nbsp;</span>
+                                <mat-form-field appearance="standard">
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <span matPrefix>&nbsp; ADJ &nbsp;</span>
-                                <mat-label>ADJ Number*</mat-label>
-                                <input type="text" matInput placeholder="Enter ADJ Number" formControlName="wcab_number"
-                                    autocomplete="off">
-                                <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
-                            </mat-form-field>
+                                    <mat-label>ADJ Number*</mat-label>
+                                    <input type="text" matInput placeholder="Enter ADJ Number"
+                                        formControlName="wcab_number" autocomplete="off">
+                                    <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
+                                </mat-form-field>
+                            </div>
+
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Exam Type*</mat-label>
@@ -419,9 +422,9 @@
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
-                                <input matInput placeholder="CT Start date " autocomplete="off" [max]="today"
+                                <input matInput placeholder="CT Start date " autocomplete="off"
                                     [matDatepicker]="continuous_trauma_start_date"
-                                    [(ngModel)]="injuryInfo.continuous_trauma_start_date"
+                                    [(ngModel)]="injuryInfo.continuous_trauma_start_date" [max]="today"
                                     [ngModelOptions]="{standalone: true}" (click)="continuous_trauma_start_date.open()">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                                 </mat-datepicker-toggle>
@@ -433,8 +436,9 @@
                                 <mat-label>CT End Date</mat-label>
                                 <input matInput placeholder="CT End date "
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
-                                    [ngModelOptions]="{standalone: true}" autocomplete="off" [max]="today"
+                                    [ngModelOptions]="{standalone: true}" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_end_date"
+                                    [min]="injuryInfo.continuous_trauma_start_date" [max]="today"
                                     (click)="continuous_trauma_end_date.open()">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
                                 </mat-datepicker-toggle>
@@ -446,7 +450,7 @@
                                     class="rounded-corner text-center" color="primary">Add</button>
                             </div>
 
-                            <table mat-table [dataSource]="dataSource" class="m-t-20" fxFlex="100">
+                            <table mat-table [dataSource]="dataSource" class="m-t-20 w-100" fxFlex="100">
                                 <!-- body_parts Column -->
                                 <ng-container matColumnDef="body_part_id">
                                     <th mat-header-cell *matHeaderCellDef> Body parts </th>
@@ -457,17 +461,18 @@
                                 <ng-container matColumnDef="date_of_injury">
                                     <th mat-header-cell *matHeaderCellDef> Date of injury </th>
                                     <td mat-cell *matCellDef="let element" class="no-wrap-td">
-                                        {{element?.date_of_injury | date:'MM-dd-yyyy'}} </td>
+                                        {{element?.date_of_injury | date:'dd-MM-yyyy'}} </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="action">
                                     <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
-                                    <td mat-cell *matCellDef="let element;let i=index" class="no-wrap-td">
+                                    <td mat-cell *matCellDef="let element;let i=index" class="no-wrap-td text-center">
                                         <mat-icon (click)="editInjury(element,i)" class="edit-user" mat-raised-button
                                             matTooltip="Edit" matTooltipPosition="right">edit
                                         </mat-icon> |
-                                        <mat-icon (click)="deleteInjury(element, i)" class="edit-user" mat-raised-button
-                                            matTooltip="Delete" matTooltipPosition="right" color="warn">delete
+                                        <mat-icon (click)="deleteInjury(element, i)" class="delete-user"
+                                            mat-raised-button matTooltip="Delete" matTooltipPosition="right"
+                                            color="warn">delete
                                         </mat-icon>
                                     </td>
                                 </ng-container>
@@ -889,10 +894,12 @@
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="Date & Time" [min]="today"
-                                formControlName="appointment_scheduled_date_time" autocomplete="off"
-                                [matDatepicker]="date_and_time" (click)="date_and_time.open()">
-                            <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
-                            <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
+                                formControlName="appointment_scheduled_date_time" autocomplete="off" [owlDateTime]="appointment"
+                                [owlDateTimeTrigger]="appointment">
+                            <owl-date-time #appointment></owl-date-time>
+
+                            <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
+                            <mat-datepicker #date_and_time disabled="false"></mat-datepicker> -->
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
@@ -969,10 +976,10 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
-                                autocomplete="off" [max]="today" [matDatepicker]="date_and_time_intake"
-                                (click)="date_and_time_intake.open()">
-                            <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle>
-                            <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker>
+                                autocomplete="off" [max]="today" [owlDateTime]="intake" [owlDateTimeTrigger]="intake">
+                            <owl-date-time #intake></owl-date-time>
+                            <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle> -->
+                            <!-- <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker> -->
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -983,7 +990,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Communication Type</mat-label>
                             <mat-select formControlName="call_type">
-                                <mat-option (click)="changeCommunicationType(contactType)"
+                                <mat-option (change)="changeCommunicationType(contactType)"
                                     *ngFor="let contactType of contactTypes" [value]="contactType.id">
                                     {{contactType.contact_type_name}}</mat-option>
                             </mat-select>

@@ -29,6 +29,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { FilterPipe } from './pipes/filter.pipe';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     StoreModule.forFeature("header", headerreducer),
     NgxSkeletonLoaderModule,
     LoggerModule.forRoot({ serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR }),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    OwlDateTimeModule, OwlNativeDateTimeModule
   ],
   exports: [
     MaterialModule,
@@ -72,7 +74,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     EllipsisPipe,
     NgxMaskModule,
     LoggerModule,
-    FilterPipe
+    FilterPipe,
+    OwlDateTimeModule, OwlNativeDateTimeModule
   ],
   providers: [
     CognitoService,

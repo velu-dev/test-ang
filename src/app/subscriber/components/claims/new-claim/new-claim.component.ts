@@ -140,7 +140,6 @@ export class NewClaimComponent implements OnInit {
             DefenseAttorney: res.data.agent_details.DefenseAttorney,
             DEU: res.data.agent_details.DEU,
           });
-          console.log("fsdhfgdsfdhfdshu", res.data.claim_injuries)
           this.dateOfbirthEndValue = res.data.claim_injuries[0].date_of_injury;
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
@@ -435,7 +434,7 @@ export class NewClaimComponent implements OnInit {
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.claimService.updateClaim(this.claim.value, this.claimId).subscribe(res => {
@@ -533,7 +532,14 @@ export class NewClaimComponent implements OnInit {
   }
   isInjuryEdit = false;
   addInjury() {
-    console.log(this.injuryInfo)
+    if (this.injuryInfo.continuous_trauma) {
+      if (this.injuryInfo.continuous_trauma_start_date) {
+
+      } else {
+        this.alertService.openSnackBar("Please select start date", "error")
+        return;
+      }
+    }
     if (!this.injuryInfo.body_part_id) {
       this.alertService.openSnackBar("Please fill the injury information", "error")
       return;
@@ -595,7 +601,8 @@ export class NewClaimComponent implements OnInit {
           this.claimant.patchValue(res.data.claimant)
           this.claim.patchValue({
             claim_details: res.data.claim,
-            Employer: res.data.employer
+            Employer: res.data.employer,
+            InsuranceAdjuster: res.data.claims_administrator
           });
           // this.claim.patchValue({
           //   claim_details: {
@@ -647,6 +654,7 @@ export class NewClaimComponent implements OnInit {
   }
   contactMask = { type: "", mask: "" }
   changeCommunicationType(contact) {
+    console.log(contact)
     this.billable_item.patchValue({
       intake_call: {
         call_type_detail: ""
