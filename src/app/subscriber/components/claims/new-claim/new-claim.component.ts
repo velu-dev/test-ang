@@ -373,7 +373,7 @@ export class NewClaimComponent implements OnInit {
       claim_id: [],
       claimant_id: [],
       exam_type: this.formBuilder.group({
-        procudure_type: [null, Validators.required],
+        procedure_type: [null, Validators.required],
         modifier_id: []
       }),
       appointment: this.formBuilder.group({
@@ -441,7 +441,7 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(res.message, 'success');
       }, error => {
         this.isClaimCreated = false;
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
   }
@@ -474,13 +474,13 @@ export class NewClaimComponent implements OnInit {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
       }, error => {
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
       }, error => {
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
   }
@@ -519,14 +519,14 @@ export class NewClaimComponent implements OnInit {
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
       }, error => {
         this.isClaimantCreated = false;
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
   }
@@ -543,6 +543,9 @@ export class NewClaimComponent implements OnInit {
     if (!this.injuryInfo.body_part_id) {
       this.alertService.openSnackBar("Please fill the injury information", "error")
       return;
+      if (!this.injuryInfo.date_of_injury)
+      this.alertService.openSnackBar("Please fill the injury date", "error")
+        return
     }
     if (this.isInjuryEdit) {
       let index = 0;
@@ -687,6 +690,7 @@ export class NewClaimComponent implements OnInit {
         this.contactMask.mask = "000-000-0000";
         break;
     }
+
   }
 }
 

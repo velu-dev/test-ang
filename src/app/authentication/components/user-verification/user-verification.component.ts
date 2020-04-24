@@ -58,7 +58,7 @@ export class UserVerificationComponent implements OnInit {
             error => {
               this.spinnerService.hide()
               console.log("Error", error);
-              this.error = { message: error.error.error, action: "danger" }
+              this.error = { message: error.error.message, action: "danger" }
             })
         }
       }, error => {
