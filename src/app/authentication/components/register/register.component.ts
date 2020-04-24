@@ -97,7 +97,7 @@ export class RegisterComponent implements OnInit {
     }, error => {
       console.log("signup", error);
       this.spinnerService.hide();
-      this.error = { message: error.error.error, action: "danger" }
+      this.error = { message: error.error.message, action: "danger" }
     })
   }
 

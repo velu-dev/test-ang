@@ -225,7 +225,7 @@ export class VendorsComponent implements OnInit {
     }, error => {
       console.log('error', error)
       this.fileUpload.nativeElement.value = "";
-      this.alertService.openSnackBar(error.error.error, 'error');
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
 
   }

@@ -52,6 +52,10 @@ const routes: Routes = [{
   component: BillableItemComponent
 },
 {
+  path: "manage-location",
+  component: ManageLocationComponent
+},
+{
   path: "claims",
   children: [{
     path: "",
@@ -68,7 +72,8 @@ const routes: Routes = [{
   }, {
     path: "new-billable-item",
     component: BillableItemComponent
-  }]
+  }
+  ]
 }, {
   path: "staff",
   children: [

@@ -62,6 +62,7 @@ export class HeaderComponent implements OnInit {
       this.userService.getUser(this.currentUserID).subscribe(res => {
         this.user = res.data;
         // this.store.dispatch(new headerActions.HeaderAdd(this.user));
+        this.user.role_id =  this.cookieService.get('role_id') ? this.cookieService.get('role_id') : res.data.role_id;
         this.cookieService.set('user', JSON.stringify(this.user));
         this.isLoading = false;
         this.spinnerService.hide();

@@ -488,3 +488,18 @@ input:-webkit-autofill {
     padding-bottom: 0px !important;
   }
 }
+
+
+// Upload Button 
+.upload_btn {
+  border-radius: 2px;
+  box-shadow: $box-shadow-2;
+  padding: 3px 10px;
+  background-color: $tab-active;
+  span {
+      padding: 8px 0px 10px 10px;
+  }
+  &:hover {
+      box-shadow: $box-shadow-5;
+  }
+}

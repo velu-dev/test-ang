@@ -18,6 +18,12 @@ export interface Claimant {
   middle_name: string;
 }
 
+export interface PeriodicElement {
+  doc_image: string;
+  doc_name: string;
+  date: Date;
+  action: string;
+}
 
 export interface claimant1 {
   body_part_id: string,
@@ -34,9 +40,19 @@ const ELEMENT_DATA: claimant1[] = []
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent implements OnInit {
+
+  displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
+  dataSource1 = ELEMENT_DATA1;
+
+  xls = globals.xls
+  xls_1 = globals.xls_1
+  docx = globals.docx
+  pdf = globals.pdf
+
+
+
   today = new Date();
   isMobile = false;
-  xls = globals.xls
   displayedColumns: string[] = ['body_part_id', 'date_of_injury', "action"];
   dataSource: any;
   step = 0;
@@ -96,11 +112,12 @@ export class NewClaimComponent implements OnInit {
   isClaimSubmited: boolean = false;
   isClaimantSubmited: boolean = false;
   isBillSubmited: boolean = false;
-  private _filterAddress(value: string): any[] {
-    let val = value.replace(",", "")//.toLowerCase();
-    const filterValue = val.replace(" ", "")
-    return this.address.filter(add => add.street1.indexOf(filterValue.toLowerCase()) === 0);
+  examinerOptions: any = [];
+  private _filterAddress(value: string): any {
+    const filterValue = value.toLowerCase();
+    return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
   }
+
   dateOfbirthEndValue = new Date();
   constructor(
     @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string,
@@ -108,12 +125,7 @@ export class NewClaimComponent implements OnInit {
     private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute) {
-    // super(dateLocale);
-    this.examinarAddress = this.addressCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(address => address ? this._filterAddress(address) : this.address.slice())
-      );
+  
     this.route.params.subscribe(param => {
       if (param.id) {
         this.claimId = param.id;
@@ -373,7 +385,7 @@ export class NewClaimComponent implements OnInit {
       claim_id: [],
       claimant_id: [],
       exam_type: this.formBuilder.group({
-        procudure_type: [null, Validators.required],
+        procedure_type: [null, Validators.required],
         modifier_id: []
       }),
       appointment: this.formBuilder.group({
@@ -441,7 +453,7 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(res.message, 'success');
       }, error => {
         this.isClaimCreated = false;
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
   }
@@ -449,6 +461,14 @@ export class NewClaimComponent implements OnInit {
   examinarChange(examinar) {
     this.examinarId = examinar.id;
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
+      this.examinerOptions = []
+      this.examinerOptions = res['data'];
+      this.examinarAddress = this.addressCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filterAddress(value))
+      );
+     
       if (examinar.address_id) {
         res.data.map(addr => {
           if (addr.address_id == examinar.address_id) {
@@ -474,13 +494,13 @@ export class NewClaimComponent implements OnInit {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
       }, error => {
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
       }, error => {
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
   }
@@ -519,14 +539,14 @@ export class NewClaimComponent implements OnInit {
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
       }, error => {
         this.isClaimantCreated = false;
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
   }
@@ -543,6 +563,9 @@ export class NewClaimComponent implements OnInit {
     if (!this.injuryInfo.body_part_id) {
       this.alertService.openSnackBar("Please fill the injury information", "error")
       return;
+      if (!this.injuryInfo.date_of_injury)
+      this.alertService.openSnackBar("Please fill the injury date", "error")
+        return
     }
     if (this.isInjuryEdit) {
       let index = 0;
@@ -687,6 +710,15 @@ export class NewClaimComponent implements OnInit {
         this.contactMask.mask = "000-000-0000";
         break;
     }
+
   }
 }
 
+
+const ELEMENT_DATA1: PeriodicElement[] = [
+  { doc_image: 'xls', doc_name: 'Phasellus aliquam turpis.xls', date: new Date(), action: '' },
+  { doc_image: 'docx', doc_name: 'Rajan Mariappan.docx', date: new Date(), action: '' },
+  { doc_image: 'pdf', doc_name: 'Ganesan Marappa.pdf', date: new Date(), action: '' },
+  { doc_image: 'pdf', doc_name: 'Eiusmod tempor incididunt ut labore et.pdf', date: new Date(), action: '' },
+  { doc_image: 'xls', doc_name: 'Sarath Selvaraj.xls', date: new Date(), action: '' },
+];

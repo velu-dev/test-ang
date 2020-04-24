@@ -195,7 +195,7 @@ export class NewUserComponent implements OnInit {
       this.alertService.openSnackBar("User created successfully", 'success');
       this.router.navigate(['/subscriber/users'])
     }, error => {
-      this.alertService.openSnackBar(error.error.error, 'error');
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
     // if (!this.isEdit) {
 
