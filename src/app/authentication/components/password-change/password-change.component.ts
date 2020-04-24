@@ -67,7 +67,7 @@ export class PasswordChangeComponent implements OnInit {
     }, error => {
       console.log(error)
       this.spinnerService.hide()
-      this.error = { message: error.error.error, action: "danger" }
+      this.error = { message: error.error.message, action: "danger" }
     })
   }
 }
