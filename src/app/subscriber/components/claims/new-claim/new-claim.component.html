@@ -438,7 +438,7 @@
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_end_date"
-                                    [min]="injuryInfo.continuous_trauma_start_date" [max]="today"
+                                    [min]="injuryInfo.continuous_trauma_start_date"
                                     (click)="continuous_trauma_end_date.open()">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
                                 </mat-datepicker-toggle>
@@ -461,7 +461,7 @@
                                 <ng-container matColumnDef="date_of_injury">
                                     <th mat-header-cell *matHeaderCellDef> Date of injury </th>
                                     <td mat-cell *matCellDef="let element" class="no-wrap-td">
-                                        {{element?.date_of_injury | date:'dd-MM-yyyy'}} </td>
+                                        {{element?.date_of_injury | date:'MM-dd-yyyy'}} </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="action">
@@ -580,28 +580,31 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Address 1</mat-label>
-                                <textarea matInput></textarea>
+                                <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>City</mat-label>
-                                <input matInput type="text" placeholder="city" autocomplete="off">
+                                <input matInput type="text" placeholder="city" formControlName="city"
+                                    autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <mat-select>
-                                    <mat-option>Option here
+                                <mat-select formControlName="state">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput type="text" placeholder="Zip Code" autocomplete="off">
+                                <input matInput mask="00000" placeholder="Zip Code" formControlName="zip_code"
+                                    autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -648,7 +651,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Address 1</mat-label>
-                                <textarea matInput></textarea>
+                                <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -685,13 +688,14 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Email</mat-label>
-                                <input matInput type="text" placeholder="Email" autocomplete="off">
+                                <input matInput type="text" placeholder="Email" formControlName="email"
+                                    autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput type="text" placeholder="Fax" autocomplete="off">
+                                <input matInput mask="000-000-0000" placeholder="Fax" formControlName="fax" autocomplete="off">
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
@@ -733,7 +737,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Address 1</mat-label>
-                                <textarea matInput></textarea>
+                                <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -820,7 +824,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Address 1</mat-label>
-                                <textarea matInput></textarea>
+                                <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -894,22 +898,25 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>City</mat-label>
-                                <input matInput type="text" placeholder="city" autocomplete="off">
+                                <input matInput type="text" placeholder="city" formControlName="city"
+                                    autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <mat-select>
-                                    <mat-option>Option here
+                                <mat-select formControlName="state">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput type="text" placeholder="Zip Code" autocomplete="off">
+                                <input matInput mask="00000" formControlName="zip_code" placeholder="Zip Code"
+                                    autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -921,13 +928,14 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Email</mat-label>
-                                <input matInput placeholder="Email" autocomplete="off">
+                                <input matInput placeholder="Email" formControlName="email" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" mask="000-000-0000" autocomplete="off">
+                                <input matInput placeholder="Fax" formControlName="fax" mask="000-000-0000"
+                                    autocomplete="off">
                                 <mat-error>Enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
@@ -1036,7 +1044,7 @@
                                             <div><strong>
                                                     <i
                                                         class="fa fa-building-o"></i>{{selectedExaminarAddress.service_code}}
-                                                    - {{selectedExaminarAddress.service_name}}
+                                                    - {{selectedExaminarAddress.address_type_name}}
                                                 </strong></div>
                                             <!-- <span><i class="fa fa-phone-alt"></i>
                                                 {{selectedExaminarAddress.}}</span> -->

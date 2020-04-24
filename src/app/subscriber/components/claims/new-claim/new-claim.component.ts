@@ -335,6 +335,9 @@ export class NewClaimComponent implements OnInit {
         insurance_name: [],
         name: [],
         street1: [],
+        street2: [],
+        city:[],
+        state:[],
         zip_code: [],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [],
@@ -344,21 +347,26 @@ export class NewClaimComponent implements OnInit {
         id: [],
         name: [],
         street1: [],
+        street2: [],
         city: [],
         state: [],
         zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        fax: [],
+        email: [null, Validators.compose([Validators.email])],
+
       }),
       ApplicantAttorney: this.formBuilder.group({
         id: [],
         law_firm_name: [],
         name: [],
-        email: [null, Validators.compose([Validators.email])],
         street1: [],
+        street2: [],
         city: [],
         state: [],
         zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        email: [null, Validators.compose([Validators.email])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DefenseAttorney: this.formBuilder.group({
@@ -367,6 +375,7 @@ export class NewClaimComponent implements OnInit {
         name: [],
         email: [null, Validators.compose([Validators.email])],
         street1: [],
+        street2: [],
         city: [],
         state: [],
         zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
@@ -378,7 +387,12 @@ export class NewClaimComponent implements OnInit {
         name: [],
         street1: [],
         street2: [],
-        phone: [],
+        city: [],
+        state: [],
+        zip_code: [],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        email: [null, Validators.compose([Validators.email])],
+        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       })
     })
     this.billable_item = this.formBuilder.group({
@@ -657,6 +671,7 @@ export class NewClaimComponent implements OnInit {
   isAddressSelected = false;
   selectedExaminarAddress: any = {};
   changeExaminarAddress(address) {
+    console.log(address)
     this.billable_item.patchValue({
       appointment: {
         examination_location_id: address.address_id
