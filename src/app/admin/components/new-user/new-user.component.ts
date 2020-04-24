@@ -114,7 +114,7 @@ export class NewUserComponent implements OnInit {
         this._location.back();
       }, error => {
         console.log(error)
-        this.alertService.openSnackBar(error.error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.userService.updateUser(this.userForm.value).subscribe(res => {

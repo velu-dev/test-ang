@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit {
           this.error = { message: success.resendpassword, action: "danger" }
         }, error => {
           console.log(error)
-          this.error = { message: error.error.error, action: "danger" }
+          this.error = { message: error.error.message, action: "danger" }
         })
         return;
       }
