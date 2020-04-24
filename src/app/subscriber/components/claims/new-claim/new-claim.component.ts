@@ -96,11 +96,12 @@ export class NewClaimComponent implements OnInit {
   isClaimSubmited: boolean = false;
   isClaimantSubmited: boolean = false;
   isBillSubmited: boolean = false;
-  private _filterAddress(value: string): any[] {
-    let val = value.replace(",", "")//.toLowerCase();
-    const filterValue = val.replace(" ", "")
-    return this.address.filter(add => add.street1.indexOf(filterValue.toLowerCase()) === 0);
+  examinerOptions: any = [];
+  private _filterAddress(value: string): any {
+    const filterValue = value.toLowerCase();
+    return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
   }
+
   dateOfbirthEndValue = new Date();
   constructor(
     @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string,
@@ -108,12 +109,7 @@ export class NewClaimComponent implements OnInit {
     private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute) {
-    // super(dateLocale);
-    this.examinarAddress = this.addressCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(address => address ? this._filterAddress(address) : this.address.slice())
-      );
+  
     this.route.params.subscribe(param => {
       if (param.id) {
         this.claimId = param.id;
@@ -449,6 +445,14 @@ export class NewClaimComponent implements OnInit {
   examinarChange(examinar) {
     this.examinarId = examinar.id;
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
+      this.examinerOptions = []
+      this.examinerOptions = res['data'];
+      this.examinarAddress = this.addressCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filterAddress(value))
+      );
+     
       if (examinar.address_id) {
         res.data.map(addr => {
           if (addr.address_id == examinar.address_id) {

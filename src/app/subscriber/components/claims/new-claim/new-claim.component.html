@@ -927,6 +927,8 @@
                                     {{address.street1}}
                                     <!-- <small>Population: {{state.population}}</small> -->
                                 </mat-option>
+                                <mat-option *ngIf="(examinarAddress | async)?.length == 0" disabled>Location not found
+                                </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
                         <div fxFlex="100">
