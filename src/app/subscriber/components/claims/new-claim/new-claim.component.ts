@@ -18,6 +18,12 @@ export interface Claimant {
   middle_name: string;
 }
 
+export interface PeriodicElement {
+  doc_image: string;
+  doc_name: string;
+  date: Date;
+  action: string;
+}
 
 export interface claimant1 {
   body_part_id: string,
@@ -34,9 +40,19 @@ const ELEMENT_DATA: claimant1[] = []
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent implements OnInit {
+
+  displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
+  dataSource1 = ELEMENT_DATA1;
+
+  xls = globals.xls
+  xls_1 = globals.xls_1
+  docx = globals.docx
+  pdf = globals.pdf
+
+
+
   today = new Date();
   isMobile = false;
-  xls = globals.xls
   displayedColumns: string[] = ['body_part_id', 'date_of_injury', "action"];
   dataSource: any;
   step = 0;
@@ -698,3 +714,11 @@ export class NewClaimComponent implements OnInit {
   }
 }
 
+
+const ELEMENT_DATA1: PeriodicElement[] = [
+  { doc_image: 'xls', doc_name: 'Phasellus aliquam turpis.xls', date: new Date(), action: '' },
+  { doc_image: 'docx', doc_name: 'Rajan Mariappan.docx', date: new Date(), action: '' },
+  { doc_image: 'pdf', doc_name: 'Ganesan Marappa.pdf', date: new Date(), action: '' },
+  { doc_image: 'pdf', doc_name: 'Eiusmod tempor incididunt ut labore et.pdf', date: new Date(), action: '' },
+  { doc_image: 'xls', doc_name: 'Sarath Selvaraj.xls', date: new Date(), action: '' },
+];
