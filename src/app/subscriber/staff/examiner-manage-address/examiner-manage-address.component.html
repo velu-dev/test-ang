@@ -15,11 +15,11 @@
                                 [matAutocomplete]="examinerAutocomplete">
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let option of (examinerFilteredOptions | async)"
-                                    [value]="option.first_name + ' '+ option.last_name"
+                                    [value]="option.full_name"
                                     (click)="examinerOnChange(option)">
                                     {{option.first_name}} {{option.last_name}}
                                 </mat-option>
-                                <mat-option *ngIf="(examinerFilteredOptions | async)?.length == 0">Not found
+                                <mat-option *ngIf="(examinerFilteredOptions | async)?.length == 0">No Result Found
                                 </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
