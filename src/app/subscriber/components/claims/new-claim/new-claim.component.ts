@@ -730,6 +730,9 @@ export class NewClaimComponent implements OnInit {
     }
 
   }
+  pickerOpened(){
+    this.today = new Date();
+  }
 }
 
 

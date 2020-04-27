@@ -1001,7 +1001,7 @@
                             <input matInput placeholder="Date & Time" [min]="today"
                                 formControlName="appointment_scheduled_date_time" autocomplete="off"
                                 [owlDateTime]="appointment" [owlDateTimeTrigger]="appointment">
-                            <owl-date-time #appointment></owl-date-time>
+                            <owl-date-time #appointment (afterPickerOpen)="pickerOpened()"></owl-date-time>
 
                             <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
                             <mat-datepicker #date_and_time disabled="false"></mat-datepicker> -->
@@ -1084,7 +1084,7 @@
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
                                 autocomplete="off" [max]="today" [owlDateTime]="intake" [owlDateTimeTrigger]="intake">
-                            <owl-date-time #intake></owl-date-time>
+                            <owl-date-time (afterPickerOpen)="pickerOpened()" #intake></owl-date-time>
                             <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle> -->
                             <!-- <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker> -->
                         </mat-form-field>
