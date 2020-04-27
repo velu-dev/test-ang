@@ -15,7 +15,7 @@
                                 [matAutocomplete]="examinerAutocomplete">
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let option of (examinerFilteredOptions | async)"
-                                    [value]="option.first_name + ' '+ option.last_name"
+                                    [value]="option.full_name"
                                     (click)="examinerOnChange(option)">
                                     {{option.first_name}} {{option.last_name}}
                                 </mat-option>
