@@ -53,7 +53,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     StoreModule.forFeature("breadcrumb", breadcrumbreducer),
     StoreModule.forFeature("header", headerreducer),
     NgxSkeletonLoaderModule,
-    LoggerModule.forRoot({ serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR }),
+    LoggerModule.forRoot({ serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG,serverLogLevel: NgxLoggerLevel.OFF}),
     NgxMaskModule.forRoot(),
     OwlDateTimeModule, OwlNativeDateTimeModule
   ],
