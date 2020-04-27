@@ -14,5 +14,7 @@ export const docx = '/assets/images/docx.svg'
 export const completed = '/assets/images/success.svg'
 export const incompleted = '/assets/images/incompeted.svg'
 export const left_voicemail = '/assets/images/left_voice.svg'
+export const page_not_found = '/assets/images/page_not_found.png'
+
 export const roles = [{}, {}]
 

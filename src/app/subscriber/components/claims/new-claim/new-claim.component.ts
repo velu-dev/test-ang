@@ -18,6 +18,12 @@ export interface Claimant {
   middle_name: string;
 }
 
+export interface PeriodicElement {
+  doc_image: string;
+  doc_name: string;
+  date: Date;
+  action: string;
+}
 
 export interface claimant1 {
   body_part_id: string,
@@ -34,9 +40,19 @@ const ELEMENT_DATA: claimant1[] = []
   styleUrls: ['./new-claim.component.scss']
 })
 export class NewClaimComponent implements OnInit {
+
+  displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
+  dataSource1 = ELEMENT_DATA1;
+
+  xls = globals.xls
+  xls_1 = globals.xls_1
+  docx = globals.docx
+  pdf = globals.pdf
+
+
+
   today = new Date();
   isMobile = false;
-  xls = globals.xls
   displayedColumns: string[] = ['body_part_id', 'date_of_injury', "action"];
   dataSource: any;
   step = 0;
@@ -109,7 +125,7 @@ export class NewClaimComponent implements OnInit {
     private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute) {
-  
+
     this.route.params.subscribe(param => {
       if (param.id) {
         this.claimId = param.id;
@@ -136,7 +152,6 @@ export class NewClaimComponent implements OnInit {
             DefenseAttorney: res.data.agent_details.DefenseAttorney,
             DEU: res.data.agent_details.DEU,
           });
-          this.dateOfbirthEndValue = res.data.claim_injuries[0].date_of_injury;
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
           this.billable_item.patchValue({
@@ -319,50 +334,65 @@ export class NewClaimComponent implements OnInit {
         id: [],
         insurance_name: [],
         name: [],
+        street1: [],
+        street2: [],
+        city:[],
+        state:[],
+        zip_code: [],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [],
         email: [null, Validators.compose([Validators.email])],
-        street1: [],
       }),
       Employer: this.formBuilder.group({
         id: [],
         name: [],
-        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         street1: [],
+        street2: [],
         city: [],
         state: [],
         zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        fax: [],
+        email: [null, Validators.compose([Validators.email])],
+
       }),
       ApplicantAttorney: this.formBuilder.group({
         id: [],
         law_firm_name: [],
         name: [],
-        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        email: [null, Validators.compose([Validators.email])],
         street1: [],
+        street2: [],
         city: [],
         state: [],
-        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])]
+        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        email: [null, Validators.compose([Validators.email])],
+        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [],
         law_firm_name: [],
         name: [],
-        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         email: [null, Validators.compose([Validators.email])],
         street1: [],
+        street2: [],
         city: [],
         state: [],
-        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])]
+        zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DEU: this.formBuilder.group({
         id: [],
         name: [],
-        phone: [],
         street1: [],
-        street2: []
+        street2: [],
+        city: [],
+        state: [],
+        zip_code: [],
+        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        email: [null, Validators.compose([Validators.email])],
+        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       })
     })
     this.billable_item = this.formBuilder.group({
@@ -451,11 +481,11 @@ export class NewClaimComponent implements OnInit {
       this.examinerOptions = []
       this.examinerOptions = res['data'];
       this.examinarAddress = this.addressCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterAddress(value))
-      );
-     
+        .pipe(
+          startWith(''),
+          map(value => this._filterAddress(value))
+        );
+
       if (examinar.address_id) {
         res.data.map(addr => {
           if (addr.address_id == examinar.address_id) {
@@ -551,8 +581,8 @@ export class NewClaimComponent implements OnInit {
       this.alertService.openSnackBar("Please fill the injury information", "error")
       return;
       if (!this.injuryInfo.date_of_injury)
-      this.alertService.openSnackBar("Please fill the injury date", "error")
-        return
+        this.alertService.openSnackBar("Please fill the injury date", "error")
+      return
     }
     if (this.isInjuryEdit) {
       let index = 0;
@@ -644,6 +674,7 @@ export class NewClaimComponent implements OnInit {
   isAddressSelected = false;
   selectedExaminarAddress: any = {};
   changeExaminarAddress(address) {
+    console.log(address)
     this.billable_item.patchValue({
       appointment: {
         examination_location_id: address.address_id
@@ -701,3 +732,11 @@ export class NewClaimComponent implements OnInit {
   }
 }
 
+
+const ELEMENT_DATA1: PeriodicElement[] = [
+  { doc_image: 'xls', doc_name: 'Phasellus aliquam turpis.xls', date: new Date(), action: '' },
+  { doc_image: 'docx', doc_name: 'Rajan Mariappan.docx', date: new Date(), action: '' },
+  { doc_image: 'pdf', doc_name: 'Ganesan Marappa.pdf', date: new Date(), action: '' },
+  { doc_image: 'pdf', doc_name: 'Eiusmod tempor incididunt ut labore et.pdf', date: new Date(), action: '' },
+  { doc_image: 'xls', doc_name: 'Sarath Selvaraj.xls', date: new Date(), action: '' },
+];

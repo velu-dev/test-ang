@@ -1,0 +1,46 @@
+@import 'variables';
+.bg {
+    // background-image: url(../../../../assets/images/page_not_found_bg.svg);
+    // background-position: bottom right;
+    // background-size: cover;
+    // height: 100vh;
+}
+.not_found {
+    max-width: 700px;
+    margin: 0px auto;   
+    img {
+        max-width: 600px;
+        width: 100%;
+        margin: 0px auto;
+        display: block;
+    }
+    h5 {
+        font-size: 35px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin: 10px 0;
+    }
+    p {
+        color: rgb(107, 119, 140) !important;
+        font-size: 0.938rem;
+    }
+    button {
+        background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
+        box-shadow: $btn-primary-shadow;
+        border-radius: 2px;
+        opacity: 1;
+        width: 250px;
+        color: #ffffff;
+        font-size: 14px;
+        padding: 15px 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        margin-top: 20px;
+
+        i {
+            float: left;
+            padding: 3px;
+           
+        }
+    }
+}
