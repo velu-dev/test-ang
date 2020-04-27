@@ -213,7 +213,7 @@ const routes: Routes = [{
     path: "appointment",
     component: AppointmentComponent
   }, {
-    path: "appointment-details",
+    path: "appointment-details/:id",
     component: AppointmentDetailsComponent
   }, {
     path: "claimant",

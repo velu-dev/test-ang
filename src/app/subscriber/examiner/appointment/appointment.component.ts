@@ -9,6 +9,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ExaminerService } from '../../service/examiner.service';
+import { ExportService } from 'src/app/shared/services/export.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-appointment',
@@ -45,7 +47,7 @@ export class AppointmentComponent implements OnInit {
   filterValue;
   tabIndex;
   constructor(private breakpointObserver: BreakpointObserver, private router: Router,
-    private examinerService: ExaminerService
+    private examinerService: ExaminerService, private exportService: ExportService
   ) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -53,18 +55,19 @@ export class AppointmentComponent implements OnInit {
         this.columnName = ["", "Name", "Name", "Status"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["","Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status", "Review Documents"]
-        this.columnsToDisplay = ['image','claimant_name', 'claim_number', 'exam_type', 'location', 'appointment_scheduled_date_time', "status", "data"]
+        this.columnName = ["", "Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status", "Review Documents"]
+        this.columnsToDisplay = ['image', 'claimant_name', 'claim_number', 'exam_type', 'location', 'appointment_scheduled_date_time', "status", "data"]
       }
     })
   }
 
   ngOnInit() {
-    
+
     this.examinerService.getExaminationDetails().subscribe(res => {
       console.log(res)
       this.dataSource = new MatTableDataSource(res['data'])
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      console.log(this.dataSource['_data']['_value'])
     }, error => {
       console.log(error);
       this.dataSource = new MatTableDataSource([])
@@ -87,11 +90,25 @@ export class AppointmentComponent implements OnInit {
       // element.isExpand = !element.isExpand;
     }
   }
-  navigate() {
-    this.router.navigate(['/subscriber/examiner/appointment-details'])
+  navigate(element) {
+    this.router.navigate(['/subscriber/examiner/appointment-details', element.claim_id])
   }
 
   exportData() {
+    let data = []
+    let details = this.dataSource['_data']['_value'];
+    details.map(res => {
+      data.push({
+        "Name": res.claimant_name,
+        "Claim Numbers": res.claim_number,
+        "Exam Type": res.exam_type,
+        "Location": res.location,
+        "Date": moment(res.appointment_scheduled_date_time).format("MM-DD-YYYY"),
+        "Status": res.state,
+      })
+
+    })
+    this.exportService.exportExcel(data, "Examination" + moment().format('MM-DD-YYYYhh:mm'))
 
   }
 

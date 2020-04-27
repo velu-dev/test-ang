@@ -180,7 +180,7 @@ export class ExaminerSettingComponent implements OnInit {
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
-
+      window.location.reload();
       this.isSubmit = false;
     }, error => {
       this.isSubmit = false;
