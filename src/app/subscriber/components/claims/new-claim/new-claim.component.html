@@ -562,7 +562,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
-                                <input matInput placeholder="Insurance" formControlName="insurance_name"
+                                <input matInput placeholder="Insurance" formControlName="company_name"
                                     autocomplete="off">
                             </mat-form-field>
 
@@ -711,13 +711,13 @@
                             <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
-                                <input matInput placeholder="Law Firm Name" formControlName="law_firm_name"
+                                <input matInput placeholder="Law Firm Name" formControlName="company_name"
                                     autocomplete="off">
                             </mat-form-field>
                             <mat-form-field *ngIf="attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
-                                <mat-select formControlName="law_firm_name">
+                                <mat-select formControlName="company_name">
                                     <mat-option (click)="appAttorney(attroney)" *ngFor="let attroney of attroneylist"
                                         [value]="attroney.name">
                                         {{attroney.name}}
@@ -797,13 +797,13 @@
                             <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
-                                <input matInput placeholder="Law Firm Name" formControlName="law_firm_name"
+                                <input matInput placeholder="Law Firm Name" formControlName="company_name"
                                     autocomplete="off">
                             </mat-form-field>
                             <mat-form-field *ngIf="attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
-                                <mat-select formControlName="law_firm_name">
+                                <mat-select formControlName="company_name">
                                     <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of attroneylist"
                                         [value]="attroney.name">
                                         {{attroney.name}}
@@ -965,9 +965,10 @@
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Procedure Type*</mat-label>
+                            <mat-label>procedural Type*</mat-label>
                             <mat-select formControlName="procedure_type">
-                                <mat-option *ngFor="let procuderalCode of procuderalCodes" [value]="procuderalCode.id">
+                                <mat-option (click)="procedure_type()" *ngFor="let procuderalCode of procuderalCodes"
+                                    [value]="procuderalCode.id">
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                                 </mat-option>
                             </mat-select>
@@ -1099,7 +1100,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Communication Type</mat-label>
                             <mat-select formControlName="call_type">
-                                <mat-option (click)="changeCommunicationType(contactType)"
+                                <mat-option (click)="changeCommunicationType(contactType, 'man')"
                                     *ngFor="let contactType of contactTypes" [value]="contactType.id">
                                     {{contactType.contact_type_name}}</mat-option>
                             </mat-select>

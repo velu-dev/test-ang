@@ -7,11 +7,31 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { runInThisContext } from 'vm';
 import { ActivatedRoute } from '@angular/router';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { Moment } from 'moment';
-import * as moment from 'moment';
+import {
+  NativeDateAdapter, DateAdapter,
+  MAT_DATE_FORMATS
+} from '@angular/material';
+import { formatDate } from '@angular/common';
+
+export const PICK_FORMATS = {
+  parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
+  display: {
+    dateInput: 'input',
+    monthYearLabel: { year: 'numeric', month: 'short' },
+    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+    monthYearA11yLabel: { year: 'numeric', month: 'long' }
+  }
+};
+class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'MM-dd-yyyy', this.locale);;
+    } else {
+      return date.toDateString();
+    }
+  }
+}
 export interface Claimant {
   last_name: string;
   first_name: string;
@@ -37,7 +57,11 @@ const ELEMENT_DATA: claimant1[] = []
 @Component({
   selector: 'app-new-claim',
   templateUrl: './new-claim.component.html',
-  styleUrls: ['./new-claim.component.scss']
+  styleUrls: ['./new-claim.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: PickDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
+  ]
 })
 export class NewClaimComponent implements OnInit {
 
@@ -113,6 +137,7 @@ export class NewClaimComponent implements OnInit {
   isClaimantSubmited: boolean = false;
   isBillSubmited: boolean = false;
   examinerOptions: any = [];
+  contactType: any;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -120,7 +145,6 @@ export class NewClaimComponent implements OnInit {
 
   dateOfbirthEndValue = new Date();
   constructor(
-    @Optional() @Inject(MAT_DATE_LOCALE) dateLocale: string,
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -154,6 +178,7 @@ export class NewClaimComponent implements OnInit {
           });
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
+          this.contactType = res.data.intake_calls.call_type
           this.billable_item.patchValue({
             claim_id: res.data.claim_details.id,
             claimant_id: res.data.claimant_details.id,
@@ -188,6 +213,10 @@ export class NewClaimComponent implements OnInit {
             break;
           case "contact_type":
             this.contactTypes = res.data;
+            if (this.isEdit) {
+              let type = this.contactTypes.find(element => element.id == this.contactType)
+              this.changeCommunicationType(type, 'auto')
+            }
             break;
           case "exam_type":
             this.examTypes = res.data;
@@ -329,7 +358,7 @@ export class NewClaimComponent implements OnInit {
       claim_injuries: [],
       InsuranceAdjuster: this.formBuilder.group({
         id: [],
-        insurance_name: [],
+        company_name: [],
         name: [],
         street1: [],
         street2: [],
@@ -355,7 +384,7 @@ export class NewClaimComponent implements OnInit {
       }),
       ApplicantAttorney: this.formBuilder.group({
         id: [],
-        law_firm_name: [],
+        company_name: [],
         name: [],
         street1: [],
         street2: [],
@@ -368,7 +397,7 @@ export class NewClaimComponent implements OnInit {
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [],
-        law_firm_name: [],
+        company_name: [],
         name: [],
         email: [null, Validators.compose([Validators.email])],
         street1: [],
@@ -418,6 +447,8 @@ export class NewClaimComponent implements OnInit {
     // })
   }
   newClaimant() {
+    this.isEdit = false;
+    this.isClaimantCreated = false;
     this.searchInput.reset();
     this.emasSearchInput.reset();
     this.addNewClaimant = true;
@@ -531,7 +562,7 @@ export class NewClaimComponent implements OnInit {
     }
     let data = this.claimant.value;
     data['certified_interpreter_required'] = this.languageStatus;
-    data['date_of_birth'] = this.claimant.value.date_of_birth.toDateString();
+    data['date_of_birth'] = new Date(this.claimant.value.date_of_birth).toDateString();
     if (!this.isClaimantEdit) {
       this.claimService.createClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
@@ -577,9 +608,11 @@ export class NewClaimComponent implements OnInit {
     if (!this.injuryInfo.body_part_id) {
       this.alertService.openSnackBar("Please fill the injury information", "error")
       return;
-      if (!this.injuryInfo.date_of_injury)
+    } else {
+      if (!this.injuryInfo.date_of_injury) {
         this.alertService.openSnackBar("Please fill the injury date", "error")
-      return
+        return
+      }
     }
     if (this.isInjuryEdit) {
       let index = 0;
@@ -691,13 +724,14 @@ export class NewClaimComponent implements OnInit {
     })
   }
   contactMask = { type: "", mask: "" }
-  changeCommunicationType(contact) {
+  changeCommunicationType(contact, type) {
     console.log(contact)
-    this.billable_item.patchValue({
-      intake_call: {
-        call_type_detail: ""
-      }
-    })
+    if (type == "man")
+      this.billable_item.patchValue({
+        intake_call: {
+          call_type_detail: ""
+        }
+      })
     switch (contact.contact_type) {
       case "E1":
         this.contactMask.mask = "";
@@ -741,6 +775,11 @@ export class NewClaimComponent implements OnInit {
       }
     }
     return errorCount;
+  }
+  procedure_type() {
+    this.billable_item.patchValue({
+      exam_type: []
+    })
   }
 }
 
