@@ -42,7 +42,7 @@ const ELEMENT_DATA: claimant1[] = []
 export class NewClaimComponent implements OnInit {
 
   displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
-  dataSource1 = ELEMENT_DATA1;
+  dataSource1 = [];
 
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -231,7 +231,6 @@ export class NewClaimComponent implements OnInit {
         }
       })
     })
-    // this.filteredClaimant = this.searchInput.valueChanges.subscribe()
     this.filteredClaimant = this.searchInput.valueChanges
       .pipe(
         debounceTime(300),
@@ -245,7 +244,6 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimantEdit = false;
   selectClaimant(option) {
-    console.log(option)
     this.isClaimantEdit = true;
     this.claimant.reset();
     this.claim.reset();
@@ -263,8 +261,7 @@ export class NewClaimComponent implements OnInit {
       claimant_id: option.id
     })
     this.claimant.setValue(option);
-    this.searchInput.value.reset();
-    this.filteredClaimant.subscribe();
+    this.filteredClaimant = new Observable<[]>();
   }
   setStep(index: number) {
     this.step = index;
@@ -336,8 +333,8 @@ export class NewClaimComponent implements OnInit {
         name: [],
         street1: [],
         street2: [],
-        city:[],
-        state:[],
+        city: [],
+        state: [],
         zip_code: [],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [],
@@ -730,13 +727,22 @@ export class NewClaimComponent implements OnInit {
     }
 
   }
+  pickerOpened() {
+    this.today = new Date();
+  }
+  getErrorCount(container: FormGroup): number {
+    let errorCount = 0;
+    for (let controlKey in container.controls) {
+      if (container.controls.hasOwnProperty(controlKey)) {
+        if (container.controls[controlKey].errors) {
+          errorCount += Object.keys(container.controls[controlKey].errors).length;
+          console.log(errorCount);
+        }
+      }
+    }
+    return errorCount;
+  }
 }
 
 
-const ELEMENT_DATA1: PeriodicElement[] = [
-  { doc_image: 'xls', doc_name: 'Phasellus aliquam turpis.xls', date: new Date(), action: '' },
-  { doc_image: 'docx', doc_name: 'Rajan Mariappan.docx', date: new Date(), action: '' },
-  { doc_image: 'pdf', doc_name: 'Ganesan Marappa.pdf', date: new Date(), action: '' },
-  { doc_image: 'pdf', doc_name: 'Eiusmod tempor incididunt ut labore et.pdf', date: new Date(), action: '' },
-  { doc_image: 'xls', doc_name: 'Sarath Selvaraj.xls', date: new Date(), action: '' },
-];
+const ELEMENT_DATA1: PeriodicElement[] = [];
