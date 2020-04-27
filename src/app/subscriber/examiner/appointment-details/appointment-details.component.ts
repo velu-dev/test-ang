@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import * as globals from '../../../globals';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { ExaminerService } from '../../service/examiner.service';
+import { ActivatedRoute } from '@angular/router';
 
 export interface PeriodicElement {
   doc_image: string;
@@ -24,16 +26,27 @@ export class AppointmentDetailsComponent implements OnInit {
   docx = globals.docx
   pdf = globals.pdf
   uploadFile: any;
-  isMobile:boolean;
-  constructor(public dialog: MatDialog) { }
+  isMobile: boolean;
+  claim_id: number;
+  examinationDetails: any;
+  constructor(public dialog: MatDialog, private examinerService: ExaminerService,
+    private route: ActivatedRoute) {
+    this.route.params.subscribe(params => this.claim_id = params.id);
+  }
 
   ngOnInit() {
+    this.examinerService.getAllExamination(this.claim_id).subscribe(response => {
+      console.log(response);
+      this.examinationDetails = response['data']
+    }, error => {
+      console.log(error);
+    })
   }
 
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
       width: '800px',
-      data: { name: "", animal: "" }
+      data: { data: this.examinationDetails }
     });
 
     dialogRef.afterClosed().subscribe(result => {

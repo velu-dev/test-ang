@@ -56,4 +56,8 @@ export class ExaminerService {
   getExaminationDetails(){
     return this.http.get(environment.baseUrl + api_endpoint.getExamination)
   }
+
+  getAllExamination(id){
+    return this.http.get(environment.baseUrl + api_endpoint.getAllExamination + id)
+  }
 }
