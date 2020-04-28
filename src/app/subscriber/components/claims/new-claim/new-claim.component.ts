@@ -126,7 +126,7 @@ export class NewClaimComponent implements OnInit {
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
   addNewClaimant: boolean;
-  examinarList: any = [];
+  Eams: any = [];
   claimInfo: any;
   isEdit: boolean = false;
   addressCtrl = new FormControl();
@@ -139,6 +139,7 @@ export class NewClaimComponent implements OnInit {
   examinerOptions: any = [];
   contactType: any;
   correspondForm: FormGroup;
+  employerList = [];
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -194,7 +195,7 @@ export class NewClaimComponent implements OnInit {
       }
     })
     this.claimService.listExaminar().subscribe(res => {
-      this.examinarList = res.data;
+      this.Eams = res.data;
     })
     this.ALL_SEED_DATA.map(seed => {
       this.claimService.seedData(seed).subscribe(res => {
@@ -675,6 +676,8 @@ export class NewClaimComponent implements OnInit {
             InsuranceAdjuster: res.data.claims_administrator
           });
           this.injuryInfodata = res.data.injuryInfodata;
+          this.Eams
+          this.employerList = res.data.employer;
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
             this.attroneylist = res.data.attroney;
@@ -689,7 +692,7 @@ export class NewClaimComponent implements OnInit {
     }
   }
   attroneySelect = false;
-  attroneylist = []
+  attroneylist = [];
   bodyPartId(id) {
     let data = "";
     this.bodyPartsList.map(res => {
@@ -786,6 +789,11 @@ export class NewClaimComponent implements OnInit {
   }
   correspondFormSubmit() {
     console.log(this.correspondForm.value)
+  }
+  appEmployer(employer) {
+    this.claim.patchValue({
+      Employer: employer
+    })
   }
 }
 
