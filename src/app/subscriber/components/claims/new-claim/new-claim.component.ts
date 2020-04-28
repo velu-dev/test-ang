@@ -7,7 +7,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   NativeDateAdapter, DateAdapter,
   MAT_DATE_FORMATS
@@ -150,7 +150,8 @@ export class NewClaimComponent implements OnInit {
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
 
     this.route.params.subscribe(param => {
       if (param.id) {
@@ -180,7 +181,8 @@ export class NewClaimComponent implements OnInit {
           });
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
-          this.contactType = res.data.intake_calls.call_type
+          if (res.data.intake_calls)
+            this.contactType = res.data.intake_calls.call_type
           this.billable_item.patchValue({
             claim_id: res.data.claim_details.id,
             claimant_id: res.data.claimant_details.id,
@@ -188,9 +190,10 @@ export class NewClaimComponent implements OnInit {
             intake_call: res.data.intake_calls,
             appointment: res.data.appointments
           })
-          console.log("examinar location")
-          let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
-          this.examinarChange(ex)
+          if (res.data.appointments) {
+            let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
+            this.examinarChange(ex)
+          }
         })
       }
     })
@@ -216,8 +219,10 @@ export class NewClaimComponent implements OnInit {
           case "contact_type":
             this.contactTypes = res.data;
             if (this.isEdit) {
-              let type = this.contactTypes.find(element => element.id == this.contactType)
-              this.changeCommunicationType(type, 'auto')
+              if (this.contactType) {
+                let type = this.contactTypes.find(element => element.id == this.contactType)
+                this.changeCommunicationType(type, 'auto');
+              }
             }
             break;
           case "exam_type":
@@ -545,12 +550,15 @@ export class NewClaimComponent implements OnInit {
     if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
+        this.router.navigate(['/subscriber/claims'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
+        this.router.navigate(['/subscriber/claims'])
+
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -722,13 +730,13 @@ export class NewClaimComponent implements OnInit {
   }
   contactMask = { type: "", mask: "" }
   changeCommunicationType(contact, type) {
-    console.log(contact)
-    if (type == "man")
-      this.billable_item.patchValue({
-        intake_call: {
-          call_type_detail: ""
-        }
-      })
+    if (contact)
+      if (type == "man")
+        this.billable_item.patchValue({
+          intake_call: {
+            call_type_detail: ""
+          }
+        })
     switch (contact.contact_type) {
       case "E1":
         this.contactMask.mask = "";
