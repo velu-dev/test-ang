@@ -21,7 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class ManageLocationComponent implements OnInit {
 
   xls = globals.xls
-  displayedColumns = ['first_name', 'service_name', 'street1', 'contact_info', 'action'];
+  displayedColumns = ['first_name', 'service_name', 'street1', 'contact', 'action'];
   dataSource: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -40,6 +40,14 @@ export class ManageLocationComponent implements OnInit {
   getAddressDetails() {
     this.examinerService.getAllExaminerAddress().subscribe(response => {
       this.dataSource = new MatTableDataSource(response['data']);
+      response['data'].map(details=>{
+        details.contacts.reverse().map((data,i)=>{
+        if(data.contact_type != 'E1' && data.contact_type != 'E2' && data.contact_type != 'F1' && data.contact_type != 'F2' && data.contact_info != ''){
+          details.contact = data.contact_info;
+          console.log( details.contact)
+        }
+      })
+    })
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
