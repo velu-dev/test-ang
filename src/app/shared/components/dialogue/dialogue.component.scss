@@ -16,6 +16,10 @@
       &:hover {
         box-shadow: $box-shadow-1;
       }
+      &:focus, &::-moz-focus-inner {
+        outline: none !important;
+        border: none !important;
+      }
     }
     .no {
       background-color: $white;
