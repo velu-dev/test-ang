@@ -349,7 +349,7 @@ export class NewClaimComponent implements OnInit {
         // claim_number: ["", Validators.required],
         id: [],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
+        wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(15)])],
         claim_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
         panel_number: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         exam_type_id: [null, Validators.required],
