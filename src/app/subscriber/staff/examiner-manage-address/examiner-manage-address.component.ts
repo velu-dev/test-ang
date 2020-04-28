@@ -153,7 +153,11 @@ export class ExaminerManageAddressComponent implements OnInit {
     console.log(this.addressForm.value)
     if (this.addressForm.invalid) {
       window.scrollTo(10, 10)
-      console.log(this.addressForm.value)
+      this.addressForm.get('service_code_id').markAsTouched();
+      this.addressForm.get('street1').markAsTouched();
+      this.addressForm.get('city').markAsTouched();
+      this.addressForm.get('state').markAsTouched();
+      this.addressForm.get('zip_code').markAsTouched();
       return;
     }
 

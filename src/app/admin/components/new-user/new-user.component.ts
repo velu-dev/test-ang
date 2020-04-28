@@ -89,14 +89,14 @@ export class NewUserComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      company_name: [{ value: 'PPMC Ltd', disabled: true },Validators.compose([Validators.maxLength(100)])],
+      company_name: [{ value: 'Simplexam', disabled: true },Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: role_id, disabled: disabled }, Validators.required]
     });
   }
 
   userSubmit() {
-    this.userForm.value.company_name = 'PPMC Ltd'
+    this.userForm.value.company_name = 'Simplexam'
     this.isSubmitted = true;
     if (this.userForm.invalid) {
       return;
