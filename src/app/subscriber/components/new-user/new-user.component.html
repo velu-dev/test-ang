@@ -49,17 +49,19 @@
             </mat-form-field>
 
             <div fxFlex="100" fxLayout="row wrap" *ngIf="userForm.value.role_id == 11">
-                <form fxLayout="row wrap" [formGroup]="userExaminerForm" class="mat-grid-form" (ngSubmit)="userSubmit()">
+                <form fxLayout="row wrap" [formGroup]="userExaminerForm" class="mat-grid-form"
+                    (ngSubmit)="userSubmit()">
                     <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-radio-group formControlName="w9_number_type" aria-label="Select an option" fxFlex="30"
-                            class="p-t-30 p-l-10" (change)="userExaminerForm.controls['w9_number'].setValue('')">
+                            class="p-t-35 p-l-10" (change)="userExaminerForm.controls['w9_number'].setValue('')">
                             <mat-radio-button value="EIN">EIN</mat-radio-button>
                             <mat-radio-button value="SSN" class="p-l-10">SSN</mat-radio-button>
                         </mat-radio-group>
                         <mat-form-field appearance="standard" fxFlex="70">
                             <mat-label>Tax ID</mat-label>
-                            <input matInput [dropSpecialCharacters]="false" [mask]="userExaminerForm.value.w9_number_type == 'SSN' ? '000-00-0000' : '00-0000000'" placeholder="Tax ID"
-                                formControlName="w9_number">
+                            <input matInput [dropSpecialCharacters]="false"
+                                [mask]="userExaminerForm.value.w9_number_type == 'SSN' ? '000-00-0000' : '00-0000000'"
+                                placeholder="Tax ID" formControlName="w9_number">
                             <mat-error *ngIf="isSubmitted">Enter valid Tax ID</mat-error>
                         </mat-form-field>
                     </div>
@@ -114,7 +116,7 @@
                             <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
                                 {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
                             </mat-option>
-                            
+
                         </mat-select>
                         <mat-error *ngIf="isSubmitted">Error Message here</mat-error>
                     </mat-form-field>
@@ -172,7 +174,7 @@
                                     autocomplete="off">
                                 <mat-error *ngIf="isSubmitted">Enter valid notes</mat-error>
                             </mat-form-field>
-                           
+
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Land Line 1</mat-label>
@@ -208,14 +210,16 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax 1</mat-label>
-                                <input matInput formControlName="fax1" mask="000-000-0000" placeholder="Fax 1" autocomplete="off">
+                                <input matInput formControlName="fax1" mask="000-000-0000" placeholder="Fax 1"
+                                    autocomplete="off">
                                 <mat-error *ngIf="isSubmitted">Enter valid fax number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax 2</mat-label>
-                                <input matInput formControlName="fax2" mask="000-000-0000"  placeholder="Fax 2" autocomplete="off">
+                                <input matInput formControlName="fax2" mask="000-000-0000" placeholder="Fax 2"
+                                    autocomplete="off">
                                 <mat-error *ngIf="isSubmitted">Enter valid fax number</mat-error>
                             </mat-form-field>
 

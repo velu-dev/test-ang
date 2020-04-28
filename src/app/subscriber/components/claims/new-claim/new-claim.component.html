@@ -488,24 +488,26 @@
                             <div class="sub-title">Correspondence</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
+                            <form  [formGroup]="correspondForm" fxFlex="100">
                             <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
                                 appearance="standard" hideRequiredMarker="hideRequiredControl.auto"
                                 floatLabel="floatLabelControl.auto">
-                                <input matInput placeholder="No file chosen" required>
-                                <span matSuffix>File Upload</span>
+                                <input matInput formControlName="file" readonly [value]="selectedFile?.name" placeholder="No file chosen">
+                                <input type="file" formControlName="file"  #uploader hidden (change)="uploadFile($event)" id="uploadFile" accept="CSV">
+                                <span matSuffix (click)="uploader.click()">File Upload</span>
                             </mat-form-field>
 
                             <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
                                 appearance="standard">
                                 <mat-label>Note</mat-label>
-                                <input matInput #message maxlength="256" placeholder="Ex. I need help with...">
+                                <input matInput formControlName="note" placeholder="Note">
                                 <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
                             </mat-form-field>
                             <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                                <button mat-stroked-button color="primary" class="m-t-15 upload_btn p-r-20">Add
+                                <button mat-stroked-button (click)="correspondFormSubmit();" color="primary" class="m-t-15 upload_btn p-r-20">Add
                                 </button>
                             </div>
-
+                        </form>
                             <div fxFlex="100">
                                 <div class="basic-table document_list w-100">
                                     <table mat-table [dataSource]="dataSource1">
@@ -961,12 +963,13 @@
 
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Billable Item</ng-template>
                 <mat-card fxLayout="row wrap" fxFlex="100">
-                    <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Exam Type
+                    <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Billable
+                        Item
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>procedural Type*</mat-label>
-                            <mat-select formControlName="procedure_type">
+                            <mat-label>Procedural Type*</mat-label>
+                            <mat-select formControlName="procedure_type" (selectionChange)="procedure_type()">
                                 <mat-option (click)="procedure_type()" *ngFor="let procuderalCode of procuderalCodes"
                                     [value]="procuderalCode.id">
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
@@ -987,7 +990,7 @@
 
                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                         {{isEdit ? 'Update' : 'Create'}}
-                        Appointment
+                        Examination
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -1004,10 +1007,8 @@
                             <input matInput placeholder="Date & Time" [min]="today"
                                 formControlName="appointment_scheduled_date_time" autocomplete="off"
                                 [owlDateTime]="appointment" [owlDateTimeTrigger]="appointment">
+                            <mat-datepicker-toggle matSuffix [for]="appointment"></mat-datepicker-toggle>
                             <owl-date-time #appointment (afterPickerOpen)="pickerOpened()"></owl-date-time>
-
-                            <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
-                            <mat-datepicker #date_and_time disabled="false"></mat-datepicker> -->
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
@@ -1087,9 +1088,8 @@
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
                                 autocomplete="off" [max]="today" [owlDateTime]="intake" [owlDateTimeTrigger]="intake">
+                            <mat-datepicker-toggle matSuffix [for]="intake"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened()" #intake></owl-date-time>
-                            <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle> -->
-                            <!-- <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker> -->
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
