@@ -778,8 +778,10 @@ export class NewClaimComponent implements OnInit {
   }
   procedure_type() {
     this.billable_item.patchValue({
-      exam_type: []
+      exam_type: {modifier_id: []}
+      
     })
+    console.log( this.billable_item)
   }
 }
 
