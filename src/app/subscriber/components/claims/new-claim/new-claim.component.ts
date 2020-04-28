@@ -448,7 +448,7 @@ export class NewClaimComponent implements OnInit {
   }
   newClaimant() {
     this.isEdit = false;
-    this.isClaimantCreated = false;
+    this.isClaimantEdit = false;
     this.searchInput.reset();
     this.emasSearchInput.reset();
     this.addNewClaimant = true;
@@ -667,6 +667,8 @@ export class NewClaimComponent implements OnInit {
       this.claimant.reset();
       this.claimService.searchbyEams("ADJ" + this.emasSearchInput.value).subscribe(res => {
         if (res.status) {
+          this.isEdit = false;
+          this.isClaimantEdit = false;
           this.addNewClaimant = true;
           this.claimant.patchValue(res.data.claimant)
           this.claim.patchValue({
@@ -674,11 +676,6 @@ export class NewClaimComponent implements OnInit {
             Employer: res.data.employer,
             InsuranceAdjuster: res.data.claims_administrator
           });
-          // this.claim.patchValue({
-          //   claim_details: {
-          //     wcab_number: res.data.claim.wcab_number.substr(3)
-          //   }
-          // })
           this.injuryInfodata = res.data.injuryInfodata;
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
@@ -778,7 +775,7 @@ export class NewClaimComponent implements OnInit {
   }
   procedure_type() {
     this.billable_item.patchValue({
-      exam_type: []
+      exam_type: { modifier_id: [] }
     })
   }
 }
