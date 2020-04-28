@@ -1008,8 +1008,8 @@
                                 [owlDateTime]="appointment" [owlDateTimeTrigger]="appointment">
                             <owl-date-time #appointment (afterPickerOpen)="pickerOpened()"></owl-date-time>
 
-                            <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
-                            <mat-datepicker #date_and_time disabled="false"></mat-datepicker> -->
+                            <mat-datepicker-toggle matSuffix [for]="date_and_time"></mat-datepicker-toggle>
+                            <mat-datepicker #date_and_time disabled="false"></mat-datepicker>
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
@@ -1090,8 +1090,8 @@
                             <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
                                 autocomplete="off" [max]="today" [owlDateTime]="intake" [owlDateTimeTrigger]="intake">
                             <owl-date-time (afterPickerOpen)="pickerOpened()" #intake></owl-date-time>
-                            <!-- <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle> -->
-                            <!-- <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker> -->
+                            <mat-datepicker-toggle matSuffix [for]="date_and_time_intake"></mat-datepicker-toggle>
+                            <mat-datepicker #date_and_time_intake disabled="false"></mat-datepicker>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
