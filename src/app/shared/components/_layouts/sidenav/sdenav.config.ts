@@ -15,18 +15,18 @@ export const ROUTES: SideNavInterface[] = [
     //     }]
     // },
     {
-        group: "User Management",
+        group: "Platform",
         role_id: 1,
         menu: [{
             path: "/admin/admin-users",
-            title: "Platform Admin",
+            title: "Admins",
             icon: "person",
             submenu: [],
             group: "Admin",
             role: 1
         }, {
             path: '/admin/users',
-            title: 'Manage Subscriber List',
+            title: 'Subscribers',
             icon: 'people_alt',
             submenu: [{
                 path: '/admin/users/new',
