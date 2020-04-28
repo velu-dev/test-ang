@@ -96,6 +96,9 @@ export class ExaminerManageAddressComponent implements OnInit {
 
     this.examinerService.getExaminerList().subscribe(response => {
       this.examinerOptions = response['data'];
+      this.examinerOptions.map(data=>{
+        data.full_name = data.first_name +' '+ data.last_name;
+      })
       this.examinerFilteredOptions = this.examinerSearch.valueChanges
         .pipe(
           startWith(''),
@@ -141,7 +144,7 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.examinerOptions.filter(option => option.first_name.toLowerCase().includes(filterValue));
+    return this.examinerOptions.filter(option => option.full_name.toLowerCase().includes(filterValue));
   }
 
   sevice_name = [];

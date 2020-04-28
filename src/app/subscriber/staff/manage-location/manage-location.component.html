@@ -11,7 +11,7 @@
     <mat-card-content class="p-t-10">
 
         <div class="table-filter">
-            <input matInput (keyup)="applyFilter($event)" placeholder="Search by name, email, etc">
+            <input matInput (keyup)="applyFilter($event)" placeholder="Search by name, type, location etc">
         </div>
 
         <div class="user-detail">
@@ -63,7 +63,7 @@
                             </button>
                         </div>
                         <div class="no-wrap-td" *ngIf="element.address_type_id == 3">
-                            <button mat-icon-button  matTooltip="Primary address not edit"
+                            <button mat-icon-button  matTooltip="Primary address not editable"
                             matTooltipPosition="before">
                             <mat-icon>info</mat-icon>
                         </button>

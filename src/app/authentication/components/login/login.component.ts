@@ -100,31 +100,46 @@ export class LoginComponent implements OnInit {
       })
     }, error => {
       console.log("error", error);
-      if (error.message == "Temporary password has expired and must be reset by an administrator.") {
-        this.authenticationService.passwordResend(this.loginForm.value.email.toLowerCase()).subscribe(res => {
-          console.log(res)
-          this.error = { message: success.resendpassword, action: "danger" }
-        }, error => {
-          console.log(error)
-          this.error = { message: error.error.message, action: "danger" }
-        })
-        return;
-      }
+      this.authenticationService.emailVerify(this.loginForm.value.email.toLowerCase()).subscribe(emailVerifyRes => {
+        if (error.message == "Temporary password has expired and must be reset by an administrator.") {
+          this.authenticationService.passwordResend(this.loginForm.value.email.toLowerCase()).subscribe(res => {
+            console.log(res)
+            this.error = { message: success.resendpassword, action: "danger" }
+          }, error => {
+            console.log(error)
+            this.error = { message: error.error.message, action: "danger" }
+          })
+          this.spinnerService.hide();
+          return;
+        }
 
-      if (error.message == 'User is disabled.') {
-        this.authenticationService.verifySubscriberStatus(this.loginForm.value.email.toLowerCase()).subscribe(verifyRes => {
-          console.log(verifyRes["message"])
-          this.error = { message: verifyRes["message"], action: "danger" }
-        }, error => {
-          console.log(error)
-        })
-        return;
-      }
-      this.error = { message: error.message, action: "danger" }
-      this.spinnerService.hide()
-      if (error.code == 'UserNotConfirmedException') {
-        this.router.navigate(['/verification']);
-      }
+        if (error.message == 'User is disabled.') {
+          this.authenticationService.verifySubscriberStatus(this.loginForm.value.email.toLowerCase()).subscribe(verifyRes => {
+            this.error = { message: verifyRes["message"], action: "danger" }
+          }, error => {
+            console.log(error)
+          })
+          this.spinnerService.hide();
+          return;
+        }
+
+        let verifyDetails: any = emailVerifyRes;
+
+        if (verifyDetails.message == 'Email ID is not verified!') {
+          this.error = { message: verifyDetails.message, action: "danger" }
+          this.spinnerService.hide();
+          return;
+        }
+
+        this.error = { message: error.message, action: "danger" }
+        this.spinnerService.hide()
+        if (error.code == 'UserNotConfirmedException') {
+          this.router.navigate(['/verification']);
+        }
+      }, verifyError => {
+        this.error = { message: error.message, action: "danger" }
+        this.spinnerService.hide()
+      })
     })
   }
 
