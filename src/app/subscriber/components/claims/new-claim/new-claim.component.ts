@@ -126,7 +126,7 @@ export class NewClaimComponent implements OnInit {
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
   addNewClaimant: boolean;
-  Eams: any = [];
+  examinarList: any = [];
   claimInfo: any;
   isEdit: boolean = false;
   addressCtrl = new FormControl();
@@ -195,7 +195,7 @@ export class NewClaimComponent implements OnInit {
       }
     })
     this.claimService.listExaminar().subscribe(res => {
-      this.Eams = res.data;
+      this.examinarList = res.data;
     })
     this.ALL_SEED_DATA.map(seed => {
       this.claimService.seedData(seed).subscribe(res => {
@@ -676,7 +676,6 @@ export class NewClaimComponent implements OnInit {
             InsuranceAdjuster: res.data.claims_administrator
           });
           this.injuryInfodata = res.data.injuryInfodata;
-          this.Eams
           this.employerList = res.data.employer;
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {

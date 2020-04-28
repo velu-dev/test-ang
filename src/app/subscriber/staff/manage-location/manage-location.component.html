@@ -38,12 +38,12 @@
                 </ng-container>
 
                 <!-- Symbol Column -->
-                <ng-container matColumnDef="contact_info">
+                <ng-container matColumnDef="contact">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
                     <td mat-cell *matCellDef="let element">
                         <div class="no-wrap-td">
                             <span class="fa fa-mobile"></span> &nbsp;
-                            {{element?.contacts[0]?.contact_info}}
+                            {{element?.contact ? element?.contact : '-'}}
                         </div>
                     </td>
                 </ng-container>
