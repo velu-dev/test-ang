@@ -126,7 +126,7 @@ export class NewClaimComponent implements OnInit {
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
   addNewClaimant: boolean;
-  examinarList: any = [];
+  Eams: any = [];
   claimInfo: any;
   isEdit: boolean = false;
   addressCtrl = new FormControl();
@@ -139,6 +139,7 @@ export class NewClaimComponent implements OnInit {
   examinerOptions: any = [];
   contactType: any;
   correspondForm: FormGroup;
+  employerList = [];
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -194,7 +195,7 @@ export class NewClaimComponent implements OnInit {
       }
     })
     this.claimService.listExaminar().subscribe(res => {
-      this.examinarList = res.data;
+      this.Eams = res.data;
     })
     this.ALL_SEED_DATA.map(seed => {
       this.claimService.seedData(seed).subscribe(res => {
@@ -350,7 +351,7 @@ export class NewClaimComponent implements OnInit {
         // claim_number: ["", Validators.required],
         id: [],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+'),Validators.maxLength(15)])],
+        wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(15)])],
         claim_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
         panel_number: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         exam_type_id: [null, Validators.required],
@@ -447,14 +448,14 @@ export class NewClaimComponent implements OnInit {
     })
     // })
 
-    this.correspondForm =  this.formBuilder.group({
-         file:['', Validators.compose([Validators.required])],
-         note:['', Validators.compose([Validators.required])]
+    this.correspondForm = this.formBuilder.group({
+      file: ['', Validators.compose([Validators.required])],
+      note: ['', Validators.compose([Validators.required])]
     })
   }
   newClaimant() {
     this.isEdit = false;
-    this.isClaimantCreated = false;
+    this.isClaimantEdit = false;
     this.searchInput.reset();
     this.emasSearchInput.reset();
     this.addNewClaimant = true;
@@ -658,13 +659,15 @@ export class NewClaimComponent implements OnInit {
     // this.injuryInfodata.splice(index, 1);
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
   }
- 
+
   searchEAMS() {
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value)
     if (this.emasSearchInput.value) {
       this.claimant.reset();
       this.claimService.searchbyEams("ADJ" + this.emasSearchInput.value).subscribe(res => {
         if (res.status) {
+          this.isEdit = false;
+          this.isClaimantEdit = false;
           this.addNewClaimant = true;
           this.claimant.patchValue(res.data.claimant)
           this.claim.patchValue({
@@ -672,12 +675,9 @@ export class NewClaimComponent implements OnInit {
             Employer: res.data.employer,
             InsuranceAdjuster: res.data.claims_administrator
           });
-          // this.claim.patchValue({
-          //   claim_details: {
-          //     wcab_number: res.data.claim.wcab_number.substr(3)
-          //   }
-          // })
           this.injuryInfodata = res.data.injuryInfodata;
+          this.Eams
+          this.employerList = res.data.employer;
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
             this.attroneylist = res.data.attroney;
@@ -692,7 +692,7 @@ export class NewClaimComponent implements OnInit {
     }
   }
   attroneySelect = false;
-  attroneylist = []
+  attroneylist = [];
   bodyPartId(id) {
     let data = "";
     this.bodyPartsList.map(res => {
@@ -776,11 +776,9 @@ export class NewClaimComponent implements OnInit {
   }
   procedure_type() {
     this.billable_item.patchValue({
-      exam_type: {modifier_id: []}
-      
+      exam_type: { modifier_id: [] }
     })
   }
-
   selectedFile: File;
   uploadFile(event) {
     this.selectedFile = event.target.files[0];
@@ -788,11 +786,14 @@ export class NewClaimComponent implements OnInit {
     let formData = new FormData()
     formData.append('file', this.selectedFile)
     console.log("formData", formData)
-
   }
-
-  correspondFormSubmit(){
+  correspondFormSubmit() {
     console.log(this.correspondForm.value)
+  }
+  appEmployer(employer) {
+    this.claim.patchValue({
+      Employer: employer
+    })
   }
 }
 
