@@ -61,4 +61,8 @@ export class ClaimService {
   getBillableItemList() {
     return this.http.get(environment.baseUrl + api_endpoint.getBillItem)
   }
+
+  postcorrespondence(data){
+    return this.http.post(environment.baseUrl + api_endpoint.correspondenceUpload, data)
+  }
 }

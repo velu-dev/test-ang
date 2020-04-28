@@ -495,7 +495,7 @@
                                     <input matInput formControlName="file" readonly [value]="selectedFile?.name"
                                         placeholder="No file chosen">
                                     <input type="file" formControlName="file" #uploader hidden
-                                        (change)="uploadFile($event)" id="uploadFile" accept="CSV">
+                                        (change)="uploadFile($event)" id="uploadFile" accept=".pdf, .doc, .docx, .excel, .csv">
                                     <span matSuffix (click)="uploader.click()">File Upload</span>
                                 </mat-form-field>
 
@@ -989,7 +989,7 @@
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="isBillSubmited">Select procuderal type</mat-error>
+                            <mat-error *ngIf="isBillSubmited">Select Procuderal Type</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

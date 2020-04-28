@@ -7,7 +7,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   NativeDateAdapter, DateAdapter,
   MAT_DATE_FORMATS
@@ -150,7 +150,8 @@ export class NewClaimComponent implements OnInit {
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router) {
 
     this.route.params.subscribe(param => {
       if (param.id) {
@@ -180,7 +181,8 @@ export class NewClaimComponent implements OnInit {
           });
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
-          this.contactType = res.data.intake_calls.call_type
+          if (res.data.intake_calls)
+            this.contactType = res.data.intake_calls.call_type
           this.billable_item.patchValue({
             claim_id: res.data.claim_details.id,
             claimant_id: res.data.claimant_details.id,
@@ -188,9 +190,10 @@ export class NewClaimComponent implements OnInit {
             intake_call: res.data.intake_calls,
             appointment: res.data.appointments
           })
-          console.log("examinar location")
-          let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
-          this.examinarChange(ex)
+          if (res.data.appointments) {
+            let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
+            this.examinarChange(ex)
+          }
         })
       }
     })
@@ -216,8 +219,10 @@ export class NewClaimComponent implements OnInit {
           case "contact_type":
             this.contactTypes = res.data;
             if (this.isEdit) {
-              let type = this.contactTypes.find(element => element.id == this.contactType)
-              this.changeCommunicationType(type, 'auto')
+              if (this.contactType) {
+                let type = this.contactTypes.find(element => element.id == this.contactType)
+                this.changeCommunicationType(type, 'auto');
+              }
             }
             break;
           case "exam_type":
@@ -318,30 +323,30 @@ export class NewClaimComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
-      suffix: [],
-      zip_code_plus_4: [],
+      suffix: [null],
+      zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       // date_of_birth: [new Date()],
-      gender: [],
+      gender: [null],
       email: ["", Validators.compose([Validators.email])],
-      handedness: [],
-      primary_language_not_english: [],
-      primary_language_spoken: [],
-      certified_interpreter_required: [],
+      handedness: [null],
+      primary_language_not_english: [null],
+      primary_language_spoken: [null],
+      certified_interpreter_required: [null],
       ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_no_1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      organization_id: [],
+      organization_id: [null],
       phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      street1: [],
-      street2: [],
-      salutation: [],
-      city: [],
-      state: [],
+      street1: [null],
+      street2: [null],
+      salutation: [null],
+      city: [null],
+      state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      created_by: [],
-      modified_by: [],
-      createdAt: [],
-      updatedAt: []
+      created_by: [null],
+      modified_by: [null],
+      createdAt: [null],
+      updatedAt: [null]
     })
 
     // this.claimForm = this.formBuilder.group({
@@ -349,100 +354,100 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         // wcab_number: ["", Validators.required],
         // claim_number: ["", Validators.required],
-        id: [],
+        id: [null],
         claimant_name: [{ value: "", disabled: true }],
         wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(15)])],
         claim_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
         panel_number: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         exam_type_id: [null, Validators.required],
-        claimant_id: []
+        claimant_id: [null]
       }),
-      claim_injuries: [],
+      claim_injuries: [null],
       InsuranceAdjuster: this.formBuilder.group({
-        id: [],
-        company_name: [],
-        name: [],
-        street1: [],
-        street2: [],
-        city: [],
-        state: [],
-        zip_code: [],
+        id: [null],
+        company_name: [null],
+        name: [null],
+        street1: [null],
+        street2: [null],
+        city: [null],
+        state: [null],
+        zip_code: [null],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        fax: [],
+        fax: [null],
         email: [null, Validators.compose([Validators.email])],
       }),
       Employer: this.formBuilder.group({
-        id: [],
-        name: [],
-        street1: [],
-        street2: [],
-        city: [],
-        state: [],
+        id: [null],
+        name: [null],
+        street1: [null],
+        street2: [null],
+        city: [null],
+        state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        fax: [],
+        fax: [null],
         email: [null, Validators.compose([Validators.email])],
 
       }),
       ApplicantAttorney: this.formBuilder.group({
-        id: [],
-        company_name: [],
-        name: [],
-        street1: [],
-        street2: [],
-        city: [],
-        state: [],
+        id: [null],
+        company_name: [null],
+        name: [null],
+        street1: [null],
+        street2: [null],
+        city: [null],
+        state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         email: [null, Validators.compose([Validators.email])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DefenseAttorney: this.formBuilder.group({
-        id: [],
-        company_name: [],
-        name: [],
+        id: [null],
+        company_name: [null],
+        name: [null],
         email: [null, Validators.compose([Validators.email])],
-        street1: [],
-        street2: [],
-        city: [],
-        state: [],
+        street1: [null],
+        street2: [null],
+        city: [null],
+        state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DEU: this.formBuilder.group({
-        id: [],
-        name: [],
-        street1: [],
-        street2: [],
-        city: [],
-        state: [],
-        zip_code: [],
+        id: [null],
+        name: [null],
+        street1: [null],
+        street2: [null],
+        city: [null],
+        state: [null],
+        zip_code: [null],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         email: [null, Validators.compose([Validators.email])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       })
     })
     this.billable_item = this.formBuilder.group({
-      claim_id: [],
-      claimant_id: [],
+      claim_id: [null],
+      claimant_id: [null],
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
-        modifier_id: []
+        modifier_id: [null]
       }),
       appointment: this.formBuilder.group({
-        examiner_id: [],
-        appointment_scheduled_date_time: [],
-        duration: [],
-        examination_location_id: []
+        examiner_id: [null],
+        appointment_scheduled_date_time: [null],
+        duration: [null],
+        examination_location_id: [null]
       }),
       intake_call: this.formBuilder.group({
-        caller_affiliation: [],
-        caller_name: [],
-        call_date: [],
-        call_type: [],
-        call_type_detail: [],
-        notes: []
+        caller_affiliation: [null],
+        caller_name: [null],
+        call_date: [null],
+        call_type: [null],
+        call_type_detail: [null],
+        notes: [null]
       })
 
     })
@@ -545,12 +550,15 @@ export class NewClaimComponent implements OnInit {
     if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
+        this.router.navigate(['/subscriber/claims'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
+        this.router.navigate(['/subscriber/claims'])
+
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -722,13 +730,13 @@ export class NewClaimComponent implements OnInit {
   }
   contactMask = { type: "", mask: "" }
   changeCommunicationType(contact, type) {
-    console.log(contact)
-    if (type == "man")
-      this.billable_item.patchValue({
-        intake_call: {
-          call_type_detail: ""
-        }
-      })
+    if (contact)
+      if (type == "man")
+        this.billable_item.patchValue({
+          intake_call: {
+            call_type_detail: ""
+          }
+        })
     switch (contact.contact_type) {
       case "E1":
         this.contactMask.mask = "";
@@ -782,12 +790,24 @@ export class NewClaimComponent implements OnInit {
   uploadFile(event) {
     this.selectedFile = event.target.files[0];
     console.log(" this.selectedFile", this.selectedFile);
-    let formData = new FormData()
-    formData.append('file', this.selectedFile)
-    console.log("formData", formData)
+
   }
   correspondFormSubmit() {
     console.log(this.correspondForm.value)
+    if (this.correspondForm.invalid) {
+      return;
+    }
+    let formData = new FormData()
+    formData.append('file', this.selectedFile);
+    formData.append('notes', this.correspondForm.value.note)
+    console.log("formData", formData);
+    //let dat = {'form-data':formData}
+
+    this.claimService.postcorrespondence(formData).subscribe(data => {
+      console.log(data)
+    }, error => {
+      console.log(error)
+    })
   }
   appEmployer(employer) {
     this.claim.patchValue({
