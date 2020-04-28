@@ -782,12 +782,24 @@ export class NewClaimComponent implements OnInit {
   uploadFile(event) {
     this.selectedFile = event.target.files[0];
     console.log(" this.selectedFile", this.selectedFile);
-    let formData = new FormData()
-    formData.append('file', this.selectedFile)
-    console.log("formData", formData)
+  
   }
   correspondFormSubmit() {
     console.log(this.correspondForm.value)
+    if (this.correspondForm.invalid) {
+      return;
+    }
+    let formData = new FormData()
+    formData.append('file', this.selectedFile);
+    formData.append('notes', this.correspondForm.value.note)
+    console.log("formData", formData);
+    //let dat = {'form-data':formData}
+
+    this.claimService.postcorrespondence(formData).subscribe(data=>{
+      console.log(data)
+    },error=>{
+      console.log(error)
+    })
   }
   appEmployer(employer) {
     this.claim.patchValue({
