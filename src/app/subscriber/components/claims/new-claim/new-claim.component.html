@@ -488,24 +488,26 @@
                             <div class="sub-title">Correspondence</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
+                            <form  [formGroup]="correspondForm" fxFlex="100">
                             <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
                                 appearance="standard" hideRequiredMarker="hideRequiredControl.auto"
                                 floatLabel="floatLabelControl.auto">
-                                <input matInput placeholder="No file chosen" required>
-                                <span matSuffix>File Upload</span>
+                                <input matInput formControlName="file" readonly [value]="selectedFile?.name" placeholder="No file chosen">
+                                <input type="file" formControlName="file"  #uploader hidden (change)="uploadFile($event)" id="uploadFile" accept="CSV">
+                                <span matSuffix (click)="uploader.click()">File Upload</span>
                             </mat-form-field>
 
                             <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
                                 appearance="standard">
                                 <mat-label>Note</mat-label>
-                                <input matInput #message maxlength="256" placeholder="Ex. I need help with...">
+                                <input matInput formControlName="note" placeholder="Note">
                                 <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
                             </mat-form-field>
                             <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                                <button mat-stroked-button color="primary" class="m-t-15 upload_btn p-r-20">Add
+                                <button mat-stroked-button (click)="correspondFormSubmit();" color="primary" class="m-t-15 upload_btn p-r-20">Add
                                 </button>
                             </div>
-
+                        </form>
                             <div fxFlex="100">
                                 <div class="basic-table document_list w-100">
                                     <table mat-table [dataSource]="dataSource1">
