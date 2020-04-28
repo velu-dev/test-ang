@@ -138,6 +138,7 @@ export class NewClaimComponent implements OnInit {
   isBillSubmited: boolean = false;
   examinerOptions: any = [];
   contactType: any;
+  correspondForm: FormGroup;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -445,6 +446,11 @@ export class NewClaimComponent implements OnInit {
 
     })
     // })
+
+    this.correspondForm = this.formBuilder.group({
+      file: ['', Validators.compose([Validators.required])],
+      note: ['', Validators.compose([Validators.required])]
+    })
   }
   newClaimant() {
     this.isEdit = false;
@@ -652,15 +658,7 @@ export class NewClaimComponent implements OnInit {
     // this.injuryInfodata.splice(index, 1);
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
   }
-  selectedFile: File;
-  uploadFile(event) {
-    this.selectedFile = event.target.files[0];
-    console.log(" this.selectedFile", this.selectedFile);
-    let formData = new FormData()
-    formData.append('file', this.selectedFile)
-    console.log("formData", formData)
 
-  }
   searchEAMS() {
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value)
     if (this.emasSearchInput.value) {
@@ -777,6 +775,17 @@ export class NewClaimComponent implements OnInit {
     this.billable_item.patchValue({
       exam_type: { modifier_id: [] }
     })
+  }
+  selectedFile: File;
+  uploadFile(event) {
+    this.selectedFile = event.target.files[0];
+    console.log(" this.selectedFile", this.selectedFile);
+    let formData = new FormData()
+    formData.append('file', this.selectedFile)
+    console.log("formData", formData)
+  }
+  correspondFormSubmit() {
+    console.log(this.correspondForm.value)
   }
 }
 
