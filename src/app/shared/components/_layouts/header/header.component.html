@@ -81,7 +81,7 @@
         <mat-menu #settings="matMenu">
             <div class="company_profile">
                 <div class="ca_">Company Account</div>
-                <div class="cn_">1113-0110-1226</div>
+                <div class="cn_">{{user?.account_no | mask: '0000-0000-0000'}}</div>
             </div>
             <mat-divider></mat-divider>
             <button (click)="gotoSettings()" mat-menu-item>
