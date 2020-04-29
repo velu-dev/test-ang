@@ -2,8 +2,8 @@
 
 mat-card {
   mat-card-content {
-    .checkbox {
-        padding: 10px;
+    mat-form-field {
+      padding: 10px !important;
     }
     div {
       button.btn_success {
