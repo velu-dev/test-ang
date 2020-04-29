@@ -66,7 +66,7 @@ const ELEMENT_DATA: claimant1[] = []
 export class NewClaimComponent implements OnInit {
 
   displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
-  dataSource1 = [];
+  correspondenceSource = [];
 
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -788,25 +788,35 @@ export class NewClaimComponent implements OnInit {
   }
   selectedFile: File;
   uploadFile(event) {
-    this.selectedFile = event.target.files[0];
+   
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls','xlsx', 'csv']
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      this.selectedFile = event.target.files[0];
     console.log(" this.selectedFile", this.selectedFile);
+    } else {
+      this.selectedFile = null;
+      //this.errorMessage = 'This file type is not accepted';
+    }
 
   }
   correspondFormSubmit() {
     console.log(this.correspondForm.value)
+    console.log(this.claim.value.claim_details.id)
     if (this.correspondForm.invalid) {
       return;
     }
     let formData = new FormData()
     formData.append('file', this.selectedFile);
-    formData.append('notes', this.correspondForm.value.note)
+    formData.append('notes', this.correspondForm.value.note);
+    formData.append('claim_id',this.claim.value.claim_details.id)
     console.log("formData", formData);
-    //let dat = {'form-data':formData}
-
     this.claimService.postcorrespondence(formData).subscribe(data => {
-      console.log(data)
+      console.log(data);
+      this.fileUpload.nativeElement.value = "";
     }, error => {
-      console.log(error)
+      console.log(error);
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
     })
   }
   appEmployer(employer) {
@@ -815,6 +825,3 @@ export class NewClaimComponent implements OnInit {
     })
   }
 }
-
-
-const ELEMENT_DATA1: PeriodicElement[] = [];
