@@ -61,7 +61,7 @@ export class BillableItemComponent implements OnInit {
         this.columnName = ["", "First Name", "Action"]
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Service", "Exam Type", "Claim Numbers", "Examiner", "Status", "Action"]
+        this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Service", "Exam Type", "Claim Number", "Examiner", "Status", "Action"]
         this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_service', "exam_type", "claim_number", "examiner_name", "status", "action"]
       }
     })
