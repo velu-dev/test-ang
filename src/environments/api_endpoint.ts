@@ -19,6 +19,7 @@ export const api_endpoint = {
     resendPassword: 'admin/resend-temp-password',
     verifySubscriberStatus: 'auth/verify-subscriber-status',
     changeRole: "subscriber/switch-to-examiner/",
+    updateSignup: 'auth/update-signup-register',
 
     //Subscriber
     getSubscriberUsers: 'subscriber/users',
@@ -51,7 +52,7 @@ export const api_endpoint = {
     update_billable_item: "billable-item/update/",
     get_examinar_address: "subscriber/examiner/service-locations/",
     getBillItem: 'billable-item/details',
-    correspondenceUpload:'claim/claims-correspondence-upload',
+    correspondenceUpload: 'claim/claims-correspondence-upload',
     getClaimant: 'claimant/',
 
     //seed data
