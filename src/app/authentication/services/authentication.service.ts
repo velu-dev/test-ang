@@ -38,4 +38,8 @@ export class AuthenticationService {
   verifySubscriberStatus(email){
     return this.http.post(environment.baseUrl + api_endpoint.verifySubscriberStatus, {email_id : email}, { headers: this.headers });
   }
+
+  updateSignup(data){
+    return this.http.post(environment.baseUrl + api_endpoint.updateSignup, data, { headers: this.headers });
+  }
 }

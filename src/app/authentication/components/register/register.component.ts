@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
       firstName: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       lastName: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
       middleInitial: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      companyName: ['',Validators.compose([Validators.maxLength(100)])],
+      companyName: ['', Validators.compose([Validators.maxLength(100)])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
@@ -84,7 +84,19 @@ export class RegisterComponent implements OnInit {
       }
       this.cognitoService.signUp(userDetails).subscribe(signUpRes => {
         console.log(signUpRes);
-        this.router.navigate(['/verification'])
+        let verificationDetails = {
+          Organization_ID:  signupRes.data.Organization_ID.toString(),
+          Postgres_User_ID: signupRes.data.Postgres_User_ID.toString(),
+          sign_in_email_id: this.registerForm.value.email.toLowerCase()
+        }
+        this.authenticationService.updateSignup(verificationDetails).subscribe(updateRes =>{
+          this.router.navigate(['/verification']);
+          this.spinnerService.hide();
+        },error=>{
+          console.log(error);
+          this.spinnerService.hide();
+        })
+       
       }, error => {
         console.log("cognitoSignUpError", error);
         this.spinnerService.hide();
