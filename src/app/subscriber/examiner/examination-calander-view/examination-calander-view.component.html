@@ -1,0 +1,9 @@
+<div class="card app-calendar">
+    <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="dateChanged()"
+        style="visibility: hidden;">
+    <mat-datepicker #picker></mat-datepicker>
+    <full-calendar #calendar *ngIf="options" [themeSystem]="'bootstrap'" [bootstrapFontAwesome]="true"
+        [businessHours]="options.businessHours" [editable]="true" [events]="calendarEvents" [header]="options.header"
+        [customButtons]="options.customButtons" [plugins]="options.plugins" (dateClick)="handleDateClick($event)">
+    </full-calendar>
+</div>
