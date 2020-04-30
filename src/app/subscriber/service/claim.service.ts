@@ -65,4 +65,8 @@ export class ClaimService {
   postcorrespondence(data){
     return this.http.post(environment.baseUrl + api_endpoint.correspondenceUpload, data)
   }
+
+  getSingleClaimant(id){
+    return this.http.get(environment.baseUrl + api_endpoint.getClaimant + id)
+  }
 }

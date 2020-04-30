@@ -44,14 +44,12 @@ export class ManageLocationComponent implements OnInit {
         details.contacts.reverse().map((data,i)=>{
         if(data.contact_type != 'E1' && data.contact_type != 'E2' && data.contact_type != 'F1' && data.contact_type != 'F2' && data.contact_info != ''){
           details.contact = data.contact_info;
-          console.log( details.contact)
         }
       })
     })
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-      console.log(response['data'])
     }, error => {
       console.log(error)
     })

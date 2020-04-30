@@ -3,7 +3,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
 
@@ -20,38 +20,54 @@ export class NewClaimantComponent implements OnInit {
   languageList: any;
   certifiedStatusYes: boolean = false;
   certifiedStatusNo: boolean = false;
+  isClaimantSubmited: boolean = false;
+  claimantId: number;
+  today : any;
+  claimNumber: any = '';
   constructor(
     private claimService: ClaimService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private router: Router,
-    private _location: Location
-  ) { }
+    private _location: Location,
+    private route: ActivatedRoute,
+  ) {
+
+    this.route.params.subscribe(param => this.claimantId = param.id)
+  }
 
   ngOnInit() {
     this.claimantForm = this.formBuilder.group({
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      suffix: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      date_of_birth: ['', Validators.required],
-      gender: ['', Validators.required],
-      ssn: [''],
-      phone_no_1: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
-      phone_no_2: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      street1: ['', Validators.required],
-      language: [''],
-      street2: [''],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zip_code: ['', Validators.required],
-      zip_4: [''],
-      handedness: ['', Validators.required],
-      // primary_language_not_english: [''],
-      certified_interpreter: [''],
-      //otherlanguage: [''],
-    });
+      id: [""],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      suffix: [null],
+     // zip_code_plus_4: [null],
+      date_of_birth: [null, Validators.required],
+      gender: [null],
+      email: ["", Validators.compose([Validators.email])],
+      handedness: [null],
+      primary_language_not_english: [null],
+      primary_language_spoken: [null],
+      certified_interpreter_required: [null],
+      ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_no_1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      organization_id: [null],
+      phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      street1: [null],
+      street2: [null],
+      salutation: [null],
+      city: [null],
+      state: [null],
+      zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      created_by: [null],
+      modified_by: [null],
+      createdAt: [null],
+      updatedAt: [null],
+      claim_numbers:[],
+      examiners_name:[]
+    })
 
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
@@ -64,18 +80,27 @@ export class NewClaimantComponent implements OnInit {
     }, error => {
       console.log("error", error)
     })
-  }
-  isSubmit = false;
-  submitClaim() {
-    console.log("claimantForm", this.claimantForm)
 
-    this.isSubmit = true;
+    this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
+      console.log(res);
+      this.languageStatus = res['data'][0].certified_interpreter_required;
+      this.claimNumber = res['data'][0].claim_numbers.map(data=> data.claim_number )
+      this.claimantForm.setValue(res['data'][0])
+    }, error => {
+
+    })
+
+    this.today = new Date();
+  }
+  createClaimant() {
+    this.isClaimantSubmited = true;
+    this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
     if (this.claimantForm.invalid) {
       console.log("claimantForm", this.claimantForm)
       return;
     }
     //this.claimantForm.value.date_of_birth = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY")
-    this.claimService.createClaim(this.claimantForm.value).subscribe(res => {
+    this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
       this.alertService.openSnackBar("User updated successful", 'success');
       this._location.back();
     }, error => {

@@ -386,9 +386,10 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Date of Injury </mat-label>
-                                <input matInput placeholder="Date of Injury " autocomplete="off" [max]="today"
-                                    [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury"
-                                    [ngModelOptions]="{standalone: true}" (click)="date_of_injury1.open()">
+                                <input matInput placeholder="Date of Injury " autocomplete="off"
+                                    [min]="claimant.value.date_of_birth" [max]="today" [matDatepicker]="date_of_injury1"
+                                    [(ngModel)]="injuryInfo.date_of_injury" [ngModelOptions]="{standalone: true}"
+                                    (click)="date_of_injury1.open()">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
                                 <mat-error>Enter valid date of injury</mat-error>
@@ -422,9 +423,10 @@
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
-                                <input matInput placeholder="CT Start date " autocomplete="off"
+                                <input matInput placeholder="CT Start date" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_start_date"
-                                    [(ngModel)]="injuryInfo.continuous_trauma_start_date" [max]="today"
+                                    [(ngModel)]="injuryInfo.continuous_trauma_start_date"
+                                    [min]="injuryInfo.date_of_injury" [max]="injuryInfo.date_of_injury"
                                     [ngModelOptions]="{standalone: true}" (click)="continuous_trauma_start_date.open()">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                                 </mat-datepicker-toggle>
@@ -495,7 +497,8 @@
                                     <input matInput formControlName="file" readonly [value]="selectedFile?.name"
                                         placeholder="No file chosen">
                                     <input type="file" formControlName="file" #uploader hidden
-                                        (change)="uploadFile($event)" id="uploadFile" accept=".pdf, .doc, .docx, .excel, .csv">
+                                        (change)="uploadFile($event)" id="uploadFile"
+                                        accept=".pdf, .doc, .docx, .excel, .csv">
                                     <span matSuffix (click)="uploader.click()">File Upload</span>
                                     <mat-error>Select valid file</mat-error>
                                 </mat-form-field>
@@ -1020,11 +1023,11 @@
 
                         <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
-                            <input matInput placeholder="Date & Time" [min]="today"
+                            <input matInput placeholder="Date & Time" [min]="todayDate.appointment"
                                 formControlName="appointment_scheduled_date_time" autocomplete="off"
                                 [owlDateTime]="appointment" [owlDateTimeTrigger]="appointment">
-                            <mat-datepicker-toggle matSuffix [for]="appointment"></mat-datepicker-toggle>
-                            <owl-date-time #appointment (afterPickerOpen)="pickerOpened()"></owl-date-time>
+                            <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
+                            <owl-date-time (afterPickerOpen)="pickerOpened()" #appointment></owl-date-time>
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
@@ -1103,8 +1106,9 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
-                                autocomplete="off" [max]="today" [owlDateTime]="intake" [owlDateTimeTrigger]="intake">
-                            <mat-datepicker-toggle matSuffix [for]="intake"></mat-datepicker-toggle>
+                                autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake"
+                                [owlDateTimeTrigger]="intake">
+                            <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened()" #intake></owl-date-time>
                         </mat-form-field>
 
