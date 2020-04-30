@@ -52,6 +52,7 @@ export const api_endpoint = {
     get_examinar_address: "subscriber/examiner/service-locations/",
     getBillItem: 'billable-item/details',
     correspondenceUpload:'claim/claims-correspondence-upload',
+    getClaimant: 'claimant/',
 
     //seed data
     seedData: 'claim/seed-data/',

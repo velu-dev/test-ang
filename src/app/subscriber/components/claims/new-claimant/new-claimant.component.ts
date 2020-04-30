@@ -3,7 +3,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
 
@@ -20,14 +20,21 @@ export class NewClaimantComponent implements OnInit {
   languageList: any;
   certifiedStatusYes: boolean = false;
   certifiedStatusNo: boolean = false;
-  isClaimantSubmited:boolean = false;
+  isClaimantSubmited: boolean = false;
+  claimantId: number;
+  today : any;
+  claimNumber: any = '';
   constructor(
     private claimService: ClaimService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private router: Router,
-    private _location: Location
-  ) { }
+    private _location: Location,
+    private route: ActivatedRoute,
+  ) {
+
+    this.route.params.subscribe(param => this.claimantId = param.id)
+  }
 
   ngOnInit() {
     this.claimantForm = this.formBuilder.group({
@@ -36,7 +43,7 @@ export class NewClaimantComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
       middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
       suffix: [null],
-      zip_code_plus_4: [null],
+     // zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       gender: [null],
       email: ["", Validators.compose([Validators.email])],
@@ -57,7 +64,9 @@ export class NewClaimantComponent implements OnInit {
       created_by: [null],
       modified_by: [null],
       createdAt: [null],
-      updatedAt: [null]
+      updatedAt: [null],
+      claim_numbers:[],
+      examiners_name:[]
     })
 
     this.claimService.seedData('state').subscribe(response => {
@@ -71,17 +80,27 @@ export class NewClaimantComponent implements OnInit {
     }, error => {
       console.log("error", error)
     })
+
+    this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
+      console.log(res);
+      this.languageStatus = res['data'][0].certified_interpreter_required;
+      this.claimNumber = res['data'][0].claim_numbers.map(data=> data.claim_number )
+      this.claimantForm.setValue(res['data'][0])
+    }, error => {
+
+    })
+
+    this.today = new Date();
   }
   createClaimant() {
-    console.log("claimantForm", this.claimantForm)
-
     this.isClaimantSubmited = true;
+    this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
     if (this.claimantForm.invalid) {
       console.log("claimantForm", this.claimantForm)
       return;
     }
     //this.claimantForm.value.date_of_birth = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY")
-    this.claimService.createClaim(this.claimantForm.value).subscribe(res => {
+    this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
       this.alertService.openSnackBar("User updated successful", 'success');
       this._location.back();
     }, error => {
