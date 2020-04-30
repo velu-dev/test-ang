@@ -29,9 +29,11 @@
                                 {{ expandId == element.claim_id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="column != 'date_of_injury'">{{element[column]}}</span>
+                        <span *ngIf="column != 'date_of_injury' && column != 'date_of_birth'">{{element[column]}}</span>
                         <span
-                            *ngIf="column == 'date_of_injury'">{{element.claim_injuries != null ? (element.claim_injuries[0].date_of_injury | date: 'yyyy-MM-dd') : "" }}</span>
+                            *ngIf="column == 'date_of_injury'">{{element.claim_injuries != null ? (element.claim_injuries[0].date_of_injury | date: 'MM-dd-yyyy') : "" }}</span>
+                        <span
+                            *ngIf="column == 'date_of_birth'">{{element.date_of_birth != null ? (element.date_of_birth | date: 'MM-dd-yyyy') : "" }}</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
