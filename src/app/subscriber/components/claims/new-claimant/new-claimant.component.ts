@@ -20,6 +20,7 @@ export class NewClaimantComponent implements OnInit {
   languageList: any;
   certifiedStatusYes: boolean = false;
   certifiedStatusNo: boolean = false;
+  isClaimantSubmited:boolean = false;
   constructor(
     private claimService: ClaimService,
     private formBuilder: FormBuilder,
@@ -30,28 +31,34 @@ export class NewClaimantComponent implements OnInit {
 
   ngOnInit() {
     this.claimantForm = this.formBuilder.group({
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      suffix: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-      date_of_birth: ['', Validators.required],
-      gender: ['', Validators.required],
-      ssn: [''],
-      phone_no_1: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
-      phone_no_2: ['', Validators.compose([Validators.required, Validators.pattern("^[0-9_-]{10}")])],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      street1: ['', Validators.required],
-      language: [''],
-      street2: [''],
-      city: ['', Validators.required],
-      state: ['', Validators.required],
-      zip_code: ['', Validators.required],
-      zip_4: [''],
-      handedness: ['', Validators.required],
-      // primary_language_not_english: [''],
-      certified_interpreter: [''],
-      //otherlanguage: [''],
-    });
+      id: [""],
+      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
+      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      suffix: [null],
+      zip_code_plus_4: [null],
+      date_of_birth: [null, Validators.required],
+      gender: [null],
+      email: ["", Validators.compose([Validators.email])],
+      handedness: [null],
+      primary_language_not_english: [null],
+      primary_language_spoken: [null],
+      certified_interpreter_required: [null],
+      ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_no_1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      organization_id: [null],
+      phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      street1: [null],
+      street2: [null],
+      salutation: [null],
+      city: [null],
+      state: [null],
+      zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      created_by: [null],
+      modified_by: [null],
+      createdAt: [null],
+      updatedAt: [null]
+    })
 
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
@@ -65,11 +72,10 @@ export class NewClaimantComponent implements OnInit {
       console.log("error", error)
     })
   }
-  isSubmit = false;
-  submitClaim() {
+  createClaimant() {
     console.log("claimantForm", this.claimantForm)
 
-    this.isSubmit = true;
+    this.isClaimantSubmited = true;
     if (this.claimantForm.invalid) {
       console.log("claimantForm", this.claimantForm)
       return;

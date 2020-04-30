@@ -86,8 +86,8 @@ export class ClaimantComponent implements OnInit {
       this.dataSource.sort = this.sort;
     })
   }
-  gotoEdit(data) {
-    this.router.navigate(["/admin/users/" + data.id])
+  gotoEdit() {
+    this.router.navigate(["/subscriber/claims/new-claimant/"])
   }
 
   applyFilter(filterValue: string) {
@@ -102,11 +102,11 @@ export class ClaimantComponent implements OnInit {
       data.push({
         "First Name": res.first_name,
         "Last Name": res.last_name,
-        "Email ID": res.sign_in_email_id,
-        "Role ID": res.role_name
+        "Date of Birth": res.date_of_birth,
+        "Gender": res.gender
       })
     })
-    this.exportService.exportExcel(data, "Non-Admin-Users")
+    this.exportService.exportExcel(data, "Claimant")
   }
   expandId: any;
   openElement(element) {

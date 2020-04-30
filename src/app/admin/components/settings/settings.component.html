@@ -59,11 +59,11 @@
                                         <input [type]="isTypePassword ? 'password': 'text'" matInput
                                             placeholder="Confirm new password*" autocomplete="off"
                                             formControlName="confirmPassword">
-                                            <mat-icon matSuffix (click)="changeInputType()">
-                                                {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+                                        <mat-icon matSuffix (click)="changeInputType()">
+                                            {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
                                     </mat-form-field>
 
-                                    
+
 
                                     <button mat-raised-button color="primary" class="m-t-5">Save Changes </button>
                                 </form>
@@ -102,12 +102,23 @@
                                             autocomplete="off">
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
-                                        fxFlex.sm="50" fxFlex.xl="100" class="m-t-5 ">
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
+                                        <mat-label>Account Number</mat-label>
+                                        <input matInput placeholder="Account Number"
+                                            value="{{this.user?.account_no | mask: '0000-0000-0000'}}"
+                                            autocomplete="off" disabled>
+                                        <mat-error>error msg here</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
                                         <mat-label>Email ID*</mat-label>
                                         <input matInput placeholder="Email ID" formControlName="sign_in_email_id"
                                             autocomplete="off">
                                     </mat-form-field>
+
+
 
                                     <button mat-raised-button color="primary" class="m-t-5">Save Changes</button>
                                 </form>

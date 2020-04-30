@@ -500,6 +500,7 @@
                                         (change)="uploadFile($event)" id="uploadFile"
                                         accept=".pdf, .doc, .docx, .excel, .csv">
                                     <span matSuffix (click)="uploader.click()">File Upload</span>
+                                    <mat-error>Select valid file</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40"
@@ -507,6 +508,7 @@
                                     <mat-label>Note</mat-label>
                                     <input matInput formControlName="note" placeholder="Note">
                                     <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
+                                    <mat-error>Enter valid notes</mat-error>
                                 </mat-form-field>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                                     <button mat-stroked-button (click)="correspondFormSubmit();" color="primary"
@@ -516,7 +518,7 @@
                             </form>
                             <div fxFlex="100">
                                 <div class="basic-table document_list w-100">
-                                    <table mat-table [dataSource]="dataSource1">
+                                    <table mat-table [dataSource]="correspondenceSource">
 
                                         <ng-container matColumnDef="doc_image">
                                             <th mat-header-cell *matHeaderCellDef> </th>
@@ -992,7 +994,7 @@
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="isBillSubmited">Select Procuderal Type</mat-error>
+                            <mat-error *ngIf="isBillSubmited">Select Procedural Type</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
