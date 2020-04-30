@@ -109,4 +109,8 @@ export class BillableItemComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "BIllable Items")
   }
+
+  navigate(element) {
+    this.router.navigate(['/subscriber/examiner/appointment-details', element.claim_id])
+  }
 }

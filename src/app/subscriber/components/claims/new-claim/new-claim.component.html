@@ -1027,7 +1027,7 @@
                                 formControlName="appointment_scheduled_date_time" autocomplete="off"
                                 [owlDateTime]="appointment" [owlDateTimeTrigger]="appointment">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
-                            <owl-date-time (afterPickerOpen)="pickerOpened()" #appointment></owl-date-time>
+                            <owl-date-time (afterPickerOpen)="pickerOpened('')" #appointment></owl-date-time>
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
@@ -1109,7 +1109,7 @@
                                 autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake"
                                 [owlDateTimeTrigger]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
-                            <owl-date-time (afterPickerOpen)="pickerOpened()" #intake></owl-date-time>
+                            <owl-date-time (afterPickerOpen)="pickerOpened('')" #intake></owl-date-time>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
