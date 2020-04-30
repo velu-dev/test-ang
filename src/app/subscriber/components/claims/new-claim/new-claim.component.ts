@@ -13,6 +13,7 @@ import {
   MAT_DATE_FORMATS
 } from '@angular/material';
 import { formatDate } from '@angular/common';
+import { Location } from '@angular/common';
 
 export const PICK_FORMATS = {
   parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -151,7 +152,8 @@ export class NewClaimComponent implements OnInit {
     private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private _location: Location) {
 
     this.route.params.subscribe(param => {
       if (param.id) {
@@ -349,16 +351,13 @@ export class NewClaimComponent implements OnInit {
       updatedAt: [null]
     })
 
-    // this.claimForm = this.formBuilder.group({
     this.claim = this.formBuilder.group({
       claim_details: this.formBuilder.group({
-        // wcab_number: ["", Validators.required],
-        // claim_number: ["", Validators.required],
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(15)])],
-        claim_number: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
-        panel_number: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(15)])],
+        claim_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
+        panel_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.pattern('[0-9]+')])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
       }),
@@ -550,7 +549,7 @@ export class NewClaimComponent implements OnInit {
     if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
-        this.router.navigate(['/subscriber/claims'])
+        this._location.back();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -558,7 +557,7 @@ export class NewClaimComponent implements OnInit {
       this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
         this.router.navigate(['/subscriber/claims'])
-
+        this._location.back();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -766,8 +765,13 @@ export class NewClaimComponent implements OnInit {
     }
 
   }
-  pickerOpened() {
-    this.today = new Date();
+  todayDate = { appointment: new Date(), intake: new Date() }
+  pickerOpened(type) {
+    if (type = 'intake') {
+      this.todayDate.intake = new Date();
+    } else {
+      this.todayDate.appointment = new Date();
+    }
   }
   getErrorCount(container: FormGroup): number {
     let errorCount = 0;
