@@ -415,8 +415,10 @@
                                 <mat-label>Continuous Trauma (CT)</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.continuous_trauma"
                                     [ngModelOptions]="{standalone: true}">
-                                    <mat-option [value]="true">Yes</mat-option>
-                                    <mat-option [value]="false">No</mat-option>
+                                    <mat-option [disabled]="injuryInfo.date_of_injury == null" (click)="ctChange()"
+                                        [value]="true">
+                                        Yes</mat-option>
+                                    <mat-option (click)="ctChange()" [value]="false">No</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
@@ -509,8 +511,8 @@
                                     <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
                                 </mat-form-field>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                                    <button mat-stroked-button type="button" (click)="correspondFormSubmit();" color="primary"
-                                        class="m-t-15 upload_btn p-r-20">Add
+                                    <button mat-stroked-button type="button" (click)="correspondFormSubmit();"
+                                        color="primary" class="m-t-15 upload_btn p-r-20">Add
                                     </button>
                                 </div>
                             </form>
@@ -542,11 +544,13 @@
                                             <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                                             <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
                                                 <a mat-icon-button color="primary" matTooltip="Download"
-                                                    matTooltipPosition="before" [href]="element?.exam_report_file_url" download>
+                                                    matTooltipPosition="before" [href]="element?.exam_report_file_url"
+                                                    download>
                                                     <span class="fa fa-download"></span>
-                                            </a>
+                                                </a>
                                                 <button mat-icon-button color="warn" matTooltip="Delete"
-                                                    matTooltipPosition="after" (click)="deletecorrespondence(element?.id)">
+                                                    matTooltipPosition="after"
+                                                    (click)="deletecorrespondence(element?.id)">
                                                     <mat-icon>delete_outline</mat-icon>
                                                 </button> </td>
                                         </ng-container>
