@@ -51,7 +51,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
     private route: ActivatedRoute, private router: Router, private cookieService: CookieService,
-    private _location: Location
+    public _location: Location
   ) {
     // this.route.params.subscribe(params => this.examinerId = params.id);
     this.user = JSON.parse(this.cookieService.get('user'));
@@ -61,9 +61,9 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.examinerSearch = new FormControl({ value: this.examinerName, disabled: true })
     }
     this.filteredOptions = this.addresssearch.valueChanges
-    .pipe(
-      debounceTime(300),
-      switchMap(value => this.examinerService.searchAddress({ basic_search: value, isadvanced: false })));
+      .pipe(
+        debounceTime(300),
+        switchMap(value => this.examinerService.searchAddress({ basic_search: value, isadvanced: false })));
 
 
     // this.examinerFilteredOptions = this.examinerSearch.valueChanges
@@ -98,8 +98,8 @@ export class ExaminerManageAddressComponent implements OnInit {
 
     this.examinerService.getExaminerList().subscribe(response => {
       this.examinerOptions = response['data'];
-      this.examinerOptions.map(data=>{
-        data.full_name = data.first_name +' '+ data.last_name;
+      this.examinerOptions.map(data => {
+        data.full_name = data.first_name + ' ' + data.last_name;
       })
       this.examinerFilteredOptions = this.examinerSearch.valueChanges
         .pipe(

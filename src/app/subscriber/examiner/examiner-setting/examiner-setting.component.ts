@@ -39,7 +39,7 @@ export class ExaminerSettingComponent implements OnInit {
     private claimService: ClaimService,
     private examinerService: ExaminerService,
     private store: Store<{ header: any }>,
-    private _location: Location
+    public _location: Location
   ) {
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)

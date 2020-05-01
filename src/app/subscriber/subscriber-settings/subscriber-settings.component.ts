@@ -42,7 +42,7 @@ export class SubscriberSettingsComponent implements OnInit {
     private cookieService: CookieService,
     //private store: Store<{ count: number }>,
     private claimService: ClaimService,
-    private _location: Location
+    public _location: Location
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
@@ -316,7 +316,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.userService.updatePrimaryAddress(updateData, this.user.id).subscribe(res => {
       console.log(res);
       this.alertService.openSnackBar("Location updated successfully", "success");
-    },error =>{
+    }, error => {
       console.log(error);
       this.alertService.openSnackBar(error.message, "error");
     })
