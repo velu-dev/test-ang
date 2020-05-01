@@ -26,6 +26,8 @@ import { ExaminerService } from './service/examiner.service';
 import { AppointmentDetailsComponent, ClaimantPopupComponent, ClaimPopupComponent, BillableitemPopupComponent } from './examiner/appointment-details/appointment-details.component';
 import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
+import { ExaminationCalanderViewComponent } from './examiner/examination-calander-view/examination-calander-view.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { EditAddressComponent } from './staff/edit-address/edit-address.componen
     ClaimantPopupComponent,
     ClaimPopupComponent,
     BillableitemPopupComponent,
-    EditAddressComponent
+    EditAddressComponent,
+    ExaminationCalanderViewComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -65,7 +68,8 @@ import { EditAddressComponent } from './staff/edit-address/edit-address.componen
   imports: [
     CommonModule,
     SubscriberRoutingModule,
-    SharedModule
+    SharedModule,
+    FullCalendarModule
   ],
   providers: [SubscriberUserService, ClaimService, ExaminerService]
 })

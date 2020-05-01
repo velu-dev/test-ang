@@ -25,6 +25,7 @@ import * as moment from 'moment';
   ]
 })
 export class AppointmentComponent implements OnInit {
+  isCalenderVIew = false;
   xls = globals.xls
   completed = globals.completed
   left_voicemail = globals.left_voicemail
