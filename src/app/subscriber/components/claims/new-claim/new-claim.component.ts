@@ -67,7 +67,7 @@ const ELEMENT_DATA: claimant1[] = []
 export class NewClaimComponent implements OnInit {
 
   displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
-  correspondenceSource = [];
+  correspondenceSource:any = [];
 
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -196,6 +196,13 @@ export class NewClaimComponent implements OnInit {
             let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
             this.examinarChange(ex)
           }
+
+          this.claimService.getcorrespondence(res.data.claim_details.id).subscribe(correspondRes => {
+            console.log(correspondRes);
+            this.correspondenceSource = new MatTableDataSource(correspondRes['data'])
+          }, error => {
+            console.log(error);
+          })
         })
       }
     })
@@ -792,11 +799,11 @@ export class NewClaimComponent implements OnInit {
   }
   selectedFile: File;
   uploadFile(event) {
-   
-    let fileTypes = ['pdf', 'doc', 'docx', 'xls','xlsx', 'csv']
+
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       this.selectedFile = event.target.files[0];
-    console.log(" this.selectedFile", this.selectedFile);
+      console.log(" this.selectedFile", this.selectedFile);
     } else {
       this.selectedFile = null;
       //this.errorMessage = 'This file type is not accepted';
@@ -812,10 +819,11 @@ export class NewClaimComponent implements OnInit {
     let formData = new FormData()
     formData.append('file', this.selectedFile);
     formData.append('notes', this.correspondForm.value.note);
-    formData.append('claim_id',this.claim.value.claim_details.id)
+    formData.append('claim_id', this.claim.value.claim_details.id)
     console.log("formData", formData);
     this.claimService.postcorrespondence(formData).subscribe(data => {
       console.log(data);
+      this.dataSource.data.push(data);
       this.fileUpload.nativeElement.value = "";
     }, error => {
       console.log(error);
