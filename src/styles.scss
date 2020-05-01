@@ -438,3 +438,81 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     display: inherit !important;
   }
 }
+
+// custom calender css
+.fc-toolbar {
+  button {
+    background-color: $white;
+    border: 1px solid $light-gray;
+    color: $text-gray;
+    &:hover {
+      background-color: $white !important;
+      border: 1px solid $light-gray !important;
+      color: $primarycolor !important;
+    }
+    &:focus {
+      box-shadow: none !important;
+      outline: none !important;
+    }
+  }
+  button.active {
+    background-color: $white !important;
+    border: 1px solid $light-gray !important;
+    color: $primarycolor !important;
+  }
+}
+.fc-head {
+  background-color: #f5f6fa;
+  tr {
+    th {
+      padding: 10px 15px;
+      font-size: $font-size-5;
+      color: #a3a6b4;
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.fc-view th,
+.fc-view td,
+.fc-view thead,
+.fc-view tbody,
+.fc-view .fc-divider,
+.fc-view .fc-row,
+.fc-view .fc-content,
+.fc-view .fc-popover,
+.fc-view .fc-list-view,
+.fc-view .fc-list-heading td {
+  border-color: #eaf0f4;
+}
+.fc-bgevent-skeleton {
+  td {
+    padding: 10px;
+  }
+}
+.fc-today {
+  background: #f5f6fa !important;
+}
+
+.fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
+  padding: 5px;
+}
+// tbody {
+//   tr {
+//     td:first-child {
+      
+//       background-color: $white;
+//       border-bottom: 1px solid;
+//       border-left: 1px solid;
+//       border-color: transparent;
+//     }
+//     td:last-child {
+//       background-color: $white;
+//       border-bottom: 1px solid;
+//       border-left: 1px solid;      
+//       border-color: transparent;
+      
+//     }
+//   }
+// }
