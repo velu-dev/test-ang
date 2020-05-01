@@ -61,7 +61,7 @@ const routes: Routes = [{
     path: "",
     component: ClaimListComponent
   }, {
-    path: "new-claimant",
+    path: "new-claimant/:id",
     component: NewClaimantComponent
   }, {
     path: "new-claim",
@@ -101,7 +101,7 @@ const routes: Routes = [{
         path: "",
         component: ClaimListComponent
       }, {
-        path: "new-claimant",
+        path: "new-claimant/:id",
         component: NewClaimantComponent
       }, {
         path: "new-claim",
@@ -145,7 +145,7 @@ const routes: Routes = [{
       path: "",
       component: ClaimListComponent
     }, {
-      path: "new-claimant",
+      path: "new-claimant/:id",
       component: NewClaimantComponent
     }, {
       path: "new-claim",
@@ -185,7 +185,7 @@ const routes: Routes = [{
       path: "",
       component: ClaimListComponent
     }, {
-      path: "new-claimant",
+      path: "new-claimant/:id",
       component: NewClaimantComponent
     }, {
       path: "new-claim",
@@ -227,7 +227,7 @@ const routes: Routes = [{
       path: "",
       component: ClaimListComponent
     }, {
-      path: "new-claimant",
+      path: "new-claimant/:id",
       component: NewClaimantComponent
     }, {
       path: "new-claim",

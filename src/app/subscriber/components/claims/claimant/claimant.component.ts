@@ -86,8 +86,8 @@ export class ClaimantComponent implements OnInit {
       this.dataSource.sort = this.sort;
     })
   }
-  gotoEdit() {
-    this.router.navigate(["/subscriber/claims/new-claimant/"])
+  gotoEdit(e) {
+    this.router.navigate(["/subscriber/claims/new-claimant/",e.id])
   }
 
   applyFilter(filterValue: string) {
