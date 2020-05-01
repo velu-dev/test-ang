@@ -9,7 +9,7 @@
       <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimantForm">
         <mat-form-field appearance="standard" fxFlex="100">
           <mat-label>Claim Number</mat-label>
-          <input matInput placeholder="Claim Number" value="2456589" autocomplete="off" disabled>
+          <input matInput placeholder="Claim Number" [value]="claimNumber" autocomplete="off" disabled>
           <mat-error>error msg here</mat-error>
         </mat-form-field>
 
@@ -103,6 +103,7 @@
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>SSN</mat-label>
           <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
+          <mat-error>Enter valid SSN</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -156,7 +157,7 @@
         <div class="text-center w-100 m-t-10 m-b-50">
           <button mat-raised-button color="primary" type="submit" (click)="createClaimant()" class="m-r-10 rounded-corner btn_success">
             Update </button>
-          <button mat-raised-button type="submit" class="rounded-corner" color="warn">Cancel</button>
+          <button mat-raised-button (click)="cancle()" class="rounded-corner" color="warn">Cancel</button>
 
         </div>
       </form>
