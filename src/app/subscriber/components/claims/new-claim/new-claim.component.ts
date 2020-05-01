@@ -143,6 +143,7 @@ export class NewClaimComponent implements OnInit {
   contactType: any;
   correspondForm: FormGroup;
   employerList = [];
+  dataSource1 = [];
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
