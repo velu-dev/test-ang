@@ -12,6 +12,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { Store } from '@ngrx/store';
 import * as headerActions from "./../../shared/store/header.actions";
 import { ClaimService } from '../service/claim.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-subscribersettings',
@@ -40,7 +41,8 @@ export class SubscriberSettingsComponent implements OnInit {
     private cognitoService: CognitoService,
     private cookieService: CookieService,
     //private store: Store<{ count: number }>,
-    private claimService: ClaimService
+    private claimService: ClaimService,
+    private _location: Location
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
@@ -92,9 +94,9 @@ export class SubscriberSettingsComponent implements OnInit {
     let user = JSON.parse(this.cookieService.get('user'));
     this.currentUser = user;
     this.userPasswrdForm = this.formBuilder.group({
-      current_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
-      new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])],
-      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[-=_~/`#?!@$%._^&*()"-,:;><|}{]).{8,}$'), Validators.minLength(8)])]
+      current_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
+      new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
+      confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])]
     })
 
     if (user.role_id == 2) {

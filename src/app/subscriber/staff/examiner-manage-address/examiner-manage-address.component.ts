@@ -9,6 +9,7 @@ import * as  errors from '../../../shared/messages/errors'
 import { Router, ActivatedRoute } from '@angular/router';
 import * as globals from '../../../globals';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-examiner-manage-address',
@@ -49,7 +50,8 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   constructor(private claimService: ClaimService, private formBuilder: FormBuilder,
     private examinerService: ExaminerService, private alertService: AlertService,
-    private route: ActivatedRoute, private router: Router, private cookieService: CookieService
+    private route: ActivatedRoute, private router: Router, private cookieService: CookieService,
+    private _location: Location
   ) {
     // this.route.params.subscribe(params => this.examinerId = params.id);
     this.user = JSON.parse(this.cookieService.get('user'));

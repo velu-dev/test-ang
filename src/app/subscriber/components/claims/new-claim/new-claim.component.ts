@@ -67,7 +67,7 @@ const ELEMENT_DATA: claimant1[] = []
 export class NewClaimComponent implements OnInit {
 
   displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
-  correspondenceSource = [];
+  correspondenceSource:any = [];
 
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -197,6 +197,13 @@ export class NewClaimComponent implements OnInit {
             let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
             this.examinarChange(ex)
           }
+
+          this.claimService.getcorrespondence(res.data.claim_details.id).subscribe(correspondRes => {
+            console.log(correspondRes);
+            this.correspondenceSource = new MatTableDataSource(correspondRes['data'])
+          }, error => {
+            console.log(error);
+          })
         })
       }
     })
@@ -821,6 +828,7 @@ export class NewClaimComponent implements OnInit {
     console.log("formData", formData);
     this.claimService.postcorrespondence(formData).subscribe(data => {
       console.log(data);
+      this.dataSource.data.push(data);
       this.fileUpload.nativeElement.value = "";
     }, error => {
       console.log(error);
