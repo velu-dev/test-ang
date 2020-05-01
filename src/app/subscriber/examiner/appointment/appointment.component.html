@@ -1,17 +1,36 @@
 <mat-card class="m-card appointments">
-    <mat-card-content class="p-t-3  m-b-0">
-        <div class="table-filter">
-            <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by name, email, role">
+    <mat-card-header class="p-b-3">
+        <div fxLayout="row wrap" fxFlex="100">
+            <div fxFlex="50">
+                <div class="m-0 content-wrapper-main-title p-t-3">Examinations</div>
+            </div>
+            <div fxFlex="50" class="floating-button">
+                <span class="spacer"></span>
+                <button (click)="isCalenderVIew = true" mat-icon-button [ngClass]="{'active': isCalenderVIew}">
+                    <span class="fa fa-calendar-day"></span>
+                </button>
+                <button (click)="isCalenderVIew = false" mat-icon-button [ngClass]="{'active': !isCalenderVIew}">
+                    <span class="fa fa-th-list"></span>
+                </button>
+
+
+            </div>
         </div>
-        <span class="spacer"></span>
-        <button (click)="isCalenderVIew = !isCalenderVIew">C</button>
-        <button mat-icon-button class="filter-icon" (click)="exportData()">
-            <img class="icon-16" [src]="xls" alt="export" />
-        </button>
-    </mat-card-content>
+
+    </mat-card-header>
+    <mat-divider></mat-divider>
     <div *ngIf="!isCalenderVIew">
 
+        <mat-card-content class="p-t-3  m-b-0">
+            <div class="table-filter">
+                <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+                    placeholder="Search by name, email, role">
+            </div>
+            <span class="spacer"></span>
+            <button mat-icon-button class="filter-icon" (click)="exportData()">
+                <img class="icon-16" [src]="xls" alt="export" />
+            </button>
+        </mat-card-content>
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
                 matSort>
@@ -80,7 +99,12 @@
         </div>
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
     </div>
-    <div *ngIf="isCalenderVIew">
-        <app-examination-calander-view></app-examination-calander-view>
+
+    <div flLayout="row wrap">
+        <div fxFlex="100">
+            <div *ngIf="isCalenderVIew">
+                <app-examination-calander-view></app-examination-calander-view>
+            </div>
+        </div>
     </div>
 </mat-card>
