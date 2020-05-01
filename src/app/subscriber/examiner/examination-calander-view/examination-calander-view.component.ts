@@ -20,72 +20,72 @@ export class ExaminationCalanderViewComponent implements OnInit {
       title: "Will Smith",
       start: "2020-05-15T04:00:00.453Z",
       end: "2020-05-15T04:30:00.453Z",
-      backgroundColor: "#c3c4b1"
+      backgroundColor: "#FFC400"
     },
     {
       title: "Anthony Hopkins",
       start: "2020-05-16T05:00:00.453Z",
       end: "2020-05-16T06:30:00.453Z",
-      backgroundColor: "#c3c4b1"
+      backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
       start: "2020-05-18T07:00:00.453Z",
       end: "2020-05-18T07:30:00.453Z",
-      backgroundColor: "#c3c4b1"
+      backgroundColor: "#FFC400"
     },
     {
       title: "Charles Chaplin",
       start: "2020-05-20T08:00:00.453Z",
       end: "2020-05-20T08:30:00.453Z",
-      backgroundColor: "#c3c4b1"
+      backgroundColor: "#FFC400"
     },
     {
       title: "Johnny Depp",
       start: "2020-05-01T09:00:00.453Z",
       end: "2020-05-01T09:30:00.453Z",
-      backgroundColor: "#c3c4b1"
+      backgroundColor: "#FFC400"
     },
     {
       title: "James Cagney",
       start: "2020-05-03T10:00:00.453Z",
       end: "2020-05-03T10:30:00.453Z",
-      backgroundColor: "#c3c4b1"
+      backgroundColor: "#FFC400"
     },
     {
       title: "Morgan Freeman",
       start: "2020-05-04T05:00:00.453Z",
       end: "2020-05-04T05:30:00.453Z",
-      backgroundColor: "#c3c4b1"
+      backgroundColor: "#FFC400"
     }, {
       title: "Henry Fonda",
       start: "2020-05-05T04:23:55.453Z",
-      backgroundColor: "#9bc4bb"
+      backgroundColor: "#72E396"
     },
     {
       title: "Bruce Lee",
       start: "2020-05-05T05:23:55.453Z",
-      backgroundColor: "#9bc4bb"
+      backgroundColor: "#72E396"
     },
     {
       title: "Steve McQueen",
       start: "2020-05-05T06:23:55.453Z",
-      backgroundColor: "#9bc4bb"
+      backgroundColor: "#72E396"
     },
     {
       title: "James Stewart",
       start: "2020-05-06T07:23:55.453Z",
-      backgroundColor: "#9bc4bb"
+      backgroundColor: "#72E396"
     },
     {
       title: "Laurence Olivier",
       start: "2020-05-07T08:23:55.453Z",
-      backgroundColor: "#9bc4bb"
+      backgroundColor: "#72E396"
     },
     {
       title: "Cary Grant",
       start: "2020-05-08T09:23:55.453Z",
-      backgroundColor: "#9bc4bb"
+      backgroundColor: "#72E396"
     },
     {
       start: '2020-02-09',
@@ -97,31 +97,31 @@ export class ExaminationCalanderViewComponent implements OnInit {
     {
       title: "Spencer Tracy",
       start: "2020-05-10T10:23:55.453Z",
-      backgroundColor: "#9bc4bb"
+      backgroundColor: "#72E396"
     }, {
       title: "Shah Rukh Khan",
       start: "2020-05-11T09:23:55.453Z",
-      backgroundColor: "#dbd18f"
+      backgroundColor: "#FF3366"
     },
     {
       title: "Leonardo DiCaprio",
       start: "2020-05-12T09:23:55.453Z",
-      backgroundColor: "#dbd18f"
+      backgroundColor: "#FF3366"
     },
     {
       title: "Gregory Peck",
       start: "2020-05-13T09:23:55.453Z",
-      backgroundColor: "#dbd18f"
+      backgroundColor: "#FF3366"
     },
     {
       title: "Sidney Poitier",
       start: "2020-05-14T09:23:55.453Z",
-      backgroundColor: "#dbd18f"
+      backgroundColor: "#FF3366"
     },
     {
       title: "Daniel Day-Lewis",
       start: "2020-05-15T09:23:55.453Z",
-      backgroundColor: "#dbd18f"
+      backgroundColor: "#FF3366"
     },
     {
       start: '2020-02-16',
@@ -133,12 +133,12 @@ export class ExaminationCalanderViewComponent implements OnInit {
     {
       title: "Humphrey Bogart",
       start: "2020-05-16T09:23:55.453Z",
-      backgroundColor: "#dbd18f"
+      backgroundColor: "#FF3366"
     },
     {
       title: "Tom Hanks",
       start: "2020-05-16T09:23:55.453Z",
-      backgroundColor: "#dbd18f"
+      backgroundColor: "#FF3366"
     }]
   calendarVisible = true;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];

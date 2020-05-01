@@ -100,9 +100,16 @@
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
     </div>
 
-    <div flLayout="row wrap">
+    <div flLayout="row wrap" class="fc_calender">
         <div fxFlex="100">
             <div *ngIf="isCalenderVIew">
+                <div class="exa_status">
+                    <p class="float-right">
+                        <span> <i class="fa fa-circle p-r-5 lv"></i> Left Voicemail</span>
+                        <span> <i class="fa fa-circle p-r-5 con"></i> Confirmed</span>
+                        <span> <i class="fa fa-circle p-r-5 not_con"></i> Not Confirmed</span>
+                    </p>
+                </div>
                 <app-examination-calander-view></app-examination-calander-view>
             </div>
         </div>

@@ -455,7 +455,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
       outline: none !important;
     }
   }
-  button.active {
+  button.fc-button-active {
     background-color: $white !important;
     border: 1px solid $light-gray !important;
     color: $primarycolor !important;
@@ -498,10 +498,15 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 .fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
   padding: 5px;
 }
+.fc-event,
+.fc-event:hover {
+  border: none !important;
+  padding: 5px;
+}
 // tbody {
 //   tr {
 //     td:first-child {
-      
+
 //       background-color: $white;
 //       border-bottom: 1px solid;
 //       border-left: 1px solid;
@@ -510,9 +515,9 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 //     td:last-child {
 //       background-color: $white;
 //       border-bottom: 1px solid;
-//       border-left: 1px solid;      
+//       border-left: 1px solid;
 //       border-color: transparent;
-      
+
 //     }
 //   }
 // }
