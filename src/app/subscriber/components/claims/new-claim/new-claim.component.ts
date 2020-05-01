@@ -902,7 +902,8 @@ export class NewClaimComponent implements OnInit {
         this.claimService.deleteCorrespondence(data).subscribe(deleteRes => {
           let type = this.correspondenceSource.data.findIndex(element => element.id == data);
           const tabledata = this.correspondenceSource.data;
-          tabledata.splice(type, 1)
+          tabledata.splice(type, 1);
+          this.documents_ids.splice(type,1)
           this.correspondenceSource = new MatTableDataSource(tabledata);
           this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
