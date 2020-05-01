@@ -516,7 +516,7 @@
                             </form>
                             <div fxFlex="100">
                                 <div class="basic-table document_list w-100">
-                                    <table mat-table [dataSource]="dataSource1">
+                                    <table mat-table [dataSource]="correspondenceSource">
 
                                         <ng-container matColumnDef="doc_image">
                                             <th mat-header-cell *matHeaderCellDef> </th>
@@ -565,13 +565,13 @@
                             <div class="sub-title">Claims Administrator Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="InsuranceAdjuster">
-                            <mat-form-field *ngIf="claimAdminList.length == 0" appearance="standard" fxFlex="50"
+                            <mat-form-field *ngIf="claimAdminList?.length == 0" appearance="standard" fxFlex="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
                                 <input matInput placeholder="Insurance" formControlName="company_name"
                                     autocomplete="off">
                             </mat-form-field>
-                            <mat-form-field *ngIf="claimAdminList.length != 0" appearance="standard" fxFlex="50"
+                            <mat-form-field *ngIf="claimAdminList?.length != 0" appearance="standard" fxFlex="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
                                 <mat-select formControlName="company_name">
