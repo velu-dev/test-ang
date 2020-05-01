@@ -10,10 +10,12 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   NativeDateAdapter, DateAdapter,
-  MAT_DATE_FORMATS
+  MAT_DATE_FORMATS,
+  MatDialog
 } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 
 export const PICK_FORMATS = {
   parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -67,7 +69,7 @@ const ELEMENT_DATA: claimant1[] = []
 export class NewClaimComponent implements OnInit {
 
   displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
-  correspondenceSource:any = [];
+  correspondenceSource: any = [];
 
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -153,6 +155,7 @@ export class NewClaimComponent implements OnInit {
     private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
+    public dialog: MatDialog,
     private _location: Location) {
 
     this.route.params.subscribe(param => {
@@ -197,12 +200,6 @@ export class NewClaimComponent implements OnInit {
             this.examinarChange(ex)
           }
 
-          this.claimService.getcorrespondence(res.data.claim_details.id).subscribe(correspondRes => {
-            console.log(correspondRes);
-            this.correspondenceSource = new MatTableDataSource(correspondRes['data'])
-          }, error => {
-            console.log(error);
-          })
         })
       }
     })
@@ -463,6 +460,7 @@ export class NewClaimComponent implements OnInit {
       file: ['', Validators.compose([Validators.required])],
       note: ['', Validators.compose([Validators.required])]
     })
+
   }
   newClaimant() {
     this.isEdit = false;
@@ -482,9 +480,19 @@ export class NewClaimComponent implements OnInit {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
       this.titleName = " Claim";
+      if (this.claim.value.claim_details.id) {
+        this.claimService.getcorrespondence(this.claim.value.claim_details.id).subscribe(correspondRes => {
+          console.log(correspondRes);
+          this.correspondenceSource = new MatTableDataSource(correspondRes['data'])
+        }, error => {
+          console.log(error);
+        })
+      }
     } else if (event.selectedIndex == 2) {
       this.titleName = " Billable Item";
     }
+
+
   }
   isClaimCreated = false;
   submitClaim() {
@@ -495,6 +503,9 @@ export class NewClaimComponent implements OnInit {
     }
     let claim = this.claim.value;
     claim['claim_injuries'] = this.injuryInfodata;
+    if (this.documents_ids.length > 0) {
+      claim['claim_details'].documents_ids = this.documents_ids;
+    }
     console.log("!this.isEdit ||  !this.isClaimantEdit", !this.isEdit || !this.isClaimantEdit)
     if (!this.isEdit) {
       this.claimService.createClaim(claim).subscribe(res => {
@@ -801,39 +812,91 @@ export class NewClaimComponent implements OnInit {
   uploadFile(event) {
 
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
+
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+      if (FileSize > 30) {
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
       this.selectedFile = event.target.files[0];
       console.log(" this.selectedFile", this.selectedFile);
     } else {
       this.selectedFile = null;
       //this.errorMessage = 'This file type is not accepted';
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
 
   }
+
+  documents_ids = [];
   correspondFormSubmit() {
     console.log(this.correspondForm.value)
     console.log(this.claim.value.claim_details.id)
     if (this.correspondForm.invalid) {
+      this.correspondForm.get('note').markAsTouched();
+      this.correspondForm.get('file').markAsTouched();
       return;
     }
     let formData = new FormData()
     formData.append('file', this.selectedFile);
     formData.append('notes', this.correspondForm.value.note);
-    formData.append('claim_id', this.claim.value.claim_details.id)
-    console.log("formData", formData);
+    if (this.claim.value.claim_details.id) {
+      formData.append('claim_id', this.claim.value.claim_details.id)
+    }
     this.claimService.postcorrespondence(formData).subscribe(data => {
-      console.log(data);
-      this.dataSource.data.push(data);
+      let details = {
+        id: data['data'].id,
+        file_name: data['data'].file_name,
+        notes: this.correspondForm.value.note,
+        updatedAt: data['data'].createdAt,
+        exam_report_file_url: data['data'].exam_report_file_url
+      }
+      const tabledata = this.correspondenceSource.data ? this.correspondenceSource.data : this.correspondenceSource.data = [];
+      tabledata.push(details);
+      this.correspondenceSource = new MatTableDataSource(tabledata);
+      if (!this.claim.value.claim_details.id) {
+        this.documents_ids.push(data['data'].documents_id)
+      }
+      console.log(this.documents_ids);
       this.fileUpload.nativeElement.value = "";
+      this.selectedFile = null;
+      this.correspondForm.reset();
+      this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       console.log(error);
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
+  }
+
+  deletecorrespondence(id) {
+    this.openDialog('delete', id);
   }
   appEmployer(employer) {
     this.claim.patchValue({
       Employer: employer
+    })
+  }
+
+  openDialog(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.claimService.deleteCorrespondence(data).subscribe(deleteRes => {
+          let type = this.correspondenceSource.data.findIndex(element => element.id == data);
+          const tabledata = this.correspondenceSource.data;
+          tabledata.splice(type, 1)
+          this.correspondenceSource = new MatTableDataSource(tabledata);
+          this.alertService.openSnackBar("File deleted successfully", 'success');
+        }, error => {
+          console.log(error);
+        })
+      }
     })
   }
 }
