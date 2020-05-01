@@ -75,7 +75,7 @@ export class NewClaimComponent implements OnInit {
   pdf = globals.pdf
 
 
-
+  claimAdminList = [];
   today = new Date();
   isMobile = false;
   displayedColumns: string[] = ['body_part_id', 'date_of_injury', "action"];
@@ -181,6 +181,7 @@ export class NewClaimComponent implements OnInit {
             DefenseAttorney: res.data.agent_details.DefenseAttorney,
             DEU: res.data.agent_details.DEU,
           });
+          this.claimAdminList = res.data.claims_administrator;
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
           if (res.data.intake_calls)
@@ -679,11 +680,10 @@ export class NewClaimComponent implements OnInit {
           this.claimant.patchValue(res.data.claimant)
           this.claim.patchValue({
             claim_details: res.data.claim,
-            Employer: res.data.employer,
-            InsuranceAdjuster: res.data.claims_administrator
           });
           this.injuryInfodata = res.data.injuryInfodata;
           this.employerList = res.data.employer;
+          this.claimAdminList = res.data.claims_administrator;
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
             this.attroneylist = res.data.attroney;
@@ -725,6 +725,11 @@ export class NewClaimComponent implements OnInit {
   defAttornety(attroney) {
     this.claim.patchValue({
       DefenseAttorney: attroney
+    })
+  }
+  appClaimAdmin(claimadmin) {
+    this.claim.patchValue({
+      InsuranceAdjuster: claimadmin
     })
   }
   contactMask = { type: "", mask: "" }
@@ -792,11 +797,11 @@ export class NewClaimComponent implements OnInit {
   }
   selectedFile: File;
   uploadFile(event) {
-   
-    let fileTypes = ['pdf', 'doc', 'docx', 'xls','xlsx', 'csv']
+
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       this.selectedFile = event.target.files[0];
-    console.log(" this.selectedFile", this.selectedFile);
+      console.log(" this.selectedFile", this.selectedFile);
     } else {
       this.selectedFile = null;
       //this.errorMessage = 'This file type is not accepted';
@@ -812,7 +817,7 @@ export class NewClaimComponent implements OnInit {
     let formData = new FormData()
     formData.append('file', this.selectedFile);
     formData.append('notes', this.correspondForm.value.note);
-    formData.append('claim_id',this.claim.value.claim_details.id)
+    formData.append('claim_id', this.claim.value.claim_details.id)
     console.log("formData", formData);
     this.claimService.postcorrespondence(formData).subscribe(data => {
       console.log(data);

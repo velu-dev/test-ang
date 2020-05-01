@@ -569,11 +569,22 @@
                             <div class="sub-title">Claims Administrator Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="InsuranceAdjuster">
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <mat-form-field *ngIf="claimAdminList.length == 0" appearance="standard" fxFlex="50"
+                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
                                 <input matInput placeholder="Insurance" formControlName="company_name"
                                     autocomplete="off">
+                            </mat-form-field>
+                            <mat-form-field *ngIf="claimAdminList.length != 0" appearance="standard" fxFlex="50"
+                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Insurance Name</mat-label>
+                                <mat-select formControlName="company_name">
+                                    <mat-option (click)="appClaimAdmin(admin)" *ngFor="let admin of claimAdminList"
+                                        [value]="admin.company_name">
+                                        {{admin.company_name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>Enter valid attroney</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
