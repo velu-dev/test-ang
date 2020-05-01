@@ -500,7 +500,6 @@
                                         (change)="uploadFile($event)" id="uploadFile"
                                         accept=".pdf, .doc, .docx, .excel, .csv">
                                     <span matSuffix (click)="uploader.click()">File Upload</span>
-                                    <mat-error>Select valid file</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40"
@@ -508,17 +507,16 @@
                                     <mat-label>Note</mat-label>
                                     <input matInput formControlName="note" placeholder="Note">
                                     <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
-                                    <mat-error>Enter valid notes</mat-error>
                                 </mat-form-field>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                                    <button mat-stroked-button (click)="correspondFormSubmit();" color="primary"
+                                    <button mat-stroked-button type="button" (click)="correspondFormSubmit();" color="primary"
                                         class="m-t-15 upload_btn p-r-20">Add
                                     </button>
                                 </div>
                             </form>
                             <div fxFlex="100">
                                 <div class="basic-table document_list w-100">
-                                    <table mat-table [dataSource]="correspondenceSource">
+                                    <table mat-table [dataSource]="dataSource1">
 
                                         <ng-container matColumnDef="doc_image">
                                             <th mat-header-cell *matHeaderCellDef> </th>
@@ -537,18 +535,18 @@
                                             <td mat-cell *matCellDef="let element" class="no-wrap-td">
                                                 {{element.date |  date }} <small class="p-l-10"><span
                                                         class="fa fa-clock-o"></span>
-                                                    {{element.date |  date:'shortTime' }} </small></td>
+                                                    {{element?.updatedAt |  date:'MM-dd-yyyy HH:MM a' }} </small></td>
                                         </ng-container>
 
                                         <ng-container matColumnDef="action">
                                             <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                                             <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
-                                                <button mat-icon-button color="primary" matTooltip="Download"
-                                                    matTooltipPosition="before">
+                                                <a mat-icon-button color="primary" matTooltip="Download"
+                                                    matTooltipPosition="before" [href]="element?.exam_report_file_url" download>
                                                     <span class="fa fa-download"></span>
-                                                </button>
+                                            </a>
                                                 <button mat-icon-button color="warn" matTooltip="Delete"
-                                                    matTooltipPosition="after">
+                                                    matTooltipPosition="after" (click)="deletecorrespondence(element?.id)">
                                                     <mat-icon>delete_outline</mat-icon>
                                                 </button> </td>
                                         </ng-container>
@@ -1003,7 +1001,7 @@
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="isBillSubmited">Select Procedural Type</mat-error>
+                            <mat-error *ngIf="isBillSubmited">Select Procuderal Type</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

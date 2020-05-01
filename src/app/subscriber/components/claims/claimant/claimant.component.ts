@@ -87,7 +87,7 @@ export class ClaimantComponent implements OnInit {
     })
   }
   gotoEdit(e) {
-    this.router.navigate(["/subscriber/claims/new-claimant/",e.id])
+    this.router.navigate(["/subscriber/claimant/new-claimant/",e.id])
   }
 
   applyFilter(filterValue: string) {

@@ -1,14 +1,36 @@
 @import "variables";
 @import "table";
 
-.time {
-    color: $text-gray;
-    font-size: $font-size-12;
-    padding-left: 1px;
-    font-weight: $font-weight-bold;
-    i {
-        @extend .time;
-        padding-right: 3px;
-        font-weight: $font-weight-medium !important;
+.appointments {
+    .floating-button {
+        button {
+            float: right;
+        }
+        button.active {
+            background-color: #e3fcec;
+            color: $btn_success;
+        }
+    }
+    .fc_calender {
+        margin-top: 20px;
+        padding: 10px;
+        box-shadow: $box-shadow-1;
+        .exa_status {
+            float: right;
+            p {
+                .lv {
+                    color: #ffc400;
+                    padding-left: 10px;
+                }
+                .con {
+                    color: #009688;
+                    padding-left: 10px;
+                }
+                .not_con {
+                    color: #ff3366;
+                    padding-left: 10px;
+                }
+            }
+        }
     }
 }

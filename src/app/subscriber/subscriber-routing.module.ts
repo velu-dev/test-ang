@@ -46,7 +46,13 @@ const routes: Routes = [{
 },
 {
   path: "claimant",
-  component: ClaimantComponent
+  children: [{
+    path: "",
+    component: ClaimantComponent
+  }, {
+    path: "new-claimant/:id",
+    component: NewClaimantComponent
+  }]
 }, {
   path: "billable-item",
   component: BillableItemComponent
@@ -60,9 +66,6 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: ClaimListComponent
-  }, {
-    path: "new-claimant/:id",
-    component: NewClaimantComponent
   }, {
     path: "new-claim",
     component: NewClaimComponent
@@ -90,7 +93,13 @@ const routes: Routes = [{
     },
     {
       path: "claimant",
-      component: ClaimantComponent
+      children: [{
+        path: "",
+        component: ClaimantComponent
+      }, {
+        path: "new-claimant/:id",
+        component: NewClaimantComponent
+      }]
     }, {
       path: "billable-item",
       component: BillableItemComponent
@@ -100,9 +109,6 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: ClaimListComponent
-      }, {
-        path: "new-claimant/:id",
-        component: NewClaimantComponent
       }, {
         path: "new-claim",
         component: NewClaimComponent
@@ -135,7 +141,13 @@ const routes: Routes = [{
     component: ManagerDashboardComponent
   }, {
     path: "claimant",
-    component: ClaimantComponent
+    children: [{
+      path: "",
+      component: ClaimantComponent
+    }, {
+      path: "new-claimant/:id",
+      component: NewClaimantComponent
+    }]
   }, {
     path: "billable-item",
     component: BillableItemComponent
@@ -144,9 +156,6 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: ClaimListComponent
-    }, {
-      path: "new-claimant/:id",
-      component: NewClaimantComponent
     }, {
       path: "new-claim",
       component: NewClaimComponent
@@ -175,7 +184,13 @@ const routes: Routes = [{
     }]
   }, {
     path: "claimant",
-    component: ClaimantComponent
+    children: [{
+      path: "",
+      component: ClaimantComponent
+    }, {
+      path: "new-claimant/:id",
+      component: NewClaimantComponent
+    }]
   }, {
     path: "billable-item",
     component: BillableItemComponent
@@ -184,10 +199,7 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: ClaimListComponent
-    }, {
-      path: "new-claimant/:id",
-      component: NewClaimantComponent
-    }, {
+    },{
       path: "new-claim",
       component: NewClaimComponent
     }, {
@@ -217,7 +229,13 @@ const routes: Routes = [{
     component: AppointmentDetailsComponent
   }, {
     path: "claimant",
-    component: ClaimantComponent
+    children: [{
+      path: "",
+      component: ClaimantComponent
+    }, {
+      path: "new-claimant/:id",
+      component: NewClaimantComponent
+    }]
   }, {
     path: "billable-item",
     component: BillableItemComponent
@@ -226,9 +244,6 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: ClaimListComponent
-    }, {
-      path: "new-claimant/:id",
-      component: NewClaimantComponent
     }, {
       path: "new-claim",
       component: NewClaimComponent
