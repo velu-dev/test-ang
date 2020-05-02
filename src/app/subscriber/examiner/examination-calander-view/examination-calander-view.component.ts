@@ -11,7 +11,7 @@ import { EventInput } from '@fullcalendar/core';
   styleUrls: ['./examination-calander-view.component.scss']
 })
 export class ExaminationCalanderViewComponent implements OnInit {
-  options = {};
+  options:any = {};
   @ViewChild("calendar", { static: false }) calendar: FullCalendarComponent;
   @ViewChild("picker", { static: false }) picker;
   calendarComponent: FullCalendarComponent;
@@ -191,5 +191,12 @@ export class ExaminationCalanderViewComponent implements OnInit {
     //   // });
     // });
     this.calendarEvents = this.events;
+  }
+
+  handleDateClick(e){
+
+  }
+  dateChanged(){
+    
   }
 }
