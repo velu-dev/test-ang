@@ -28,6 +28,7 @@ import { ManageLocationComponent } from './staff/manage-location/manage-location
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 import { ExaminationCalanderViewComponent } from './examiner/examination-calander-view/examination-calander-view.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ClaimPopupComponent,
     BillableitemPopupComponent,
     EditAddressComponent,
-    ExaminationCalanderViewComponent
+    ExaminationCalanderViewComponent,
+    EditClaimComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,

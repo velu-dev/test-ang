@@ -21,6 +21,7 @@ import { ExaminerListComponent } from './staff/examiner-list/examiner-list.compo
 import { AppointmentDetailsComponent } from './examiner/appointment-details/appointment-details.component';
 import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
+import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -60,6 +61,9 @@ const routes: Routes = [{
 {
   path: "manage-location",
   component: ManageLocationComponent
+},{
+  path: "edit-claim",
+  component: EditClaimComponent
 },
 {
   path: "claims",
