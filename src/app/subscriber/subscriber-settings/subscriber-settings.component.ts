@@ -12,6 +12,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { Store } from '@ngrx/store';
 import * as headerActions from "./../../shared/store/header.actions";
 import { ClaimService } from '../service/claim.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-subscribersettings',
@@ -40,7 +41,8 @@ export class SubscriberSettingsComponent implements OnInit {
     private cognitoService: CognitoService,
     private cookieService: CookieService,
     //private store: Store<{ count: number }>,
-    private claimService: ClaimService
+    private claimService: ClaimService,
+    public _location: Location
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
@@ -314,7 +316,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.userService.updatePrimaryAddress(updateData, this.user.id).subscribe(res => {
       console.log(res);
       this.alertService.openSnackBar("Location updated successfully", "success");
-    },error =>{
+    }, error => {
       console.log(error);
       this.alertService.openSnackBar(error.message, "error");
     })

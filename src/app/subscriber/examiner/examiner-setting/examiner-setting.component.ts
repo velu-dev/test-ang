@@ -11,6 +11,7 @@ import { ClaimService } from '../../service/claim.service';
 import { Store } from '@ngrx/store';
 import * as headerActions from "./../../../shared/store/header.actions";
 import { ExaminerService } from '../../service/examiner.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-examiner-setting',
@@ -37,7 +38,8 @@ export class ExaminerSettingComponent implements OnInit {
     private cognitoService: CognitoService,
     private claimService: ClaimService,
     private examinerService: ExaminerService,
-    private store: Store<{ header: any }>
+    private store: Store<{ header: any }>,
+    public _location: Location
   ) {
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)

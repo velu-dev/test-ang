@@ -415,8 +415,10 @@
                                 <mat-label>Continuous Trauma (CT)</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.continuous_trauma"
                                     [ngModelOptions]="{standalone: true}">
-                                    <mat-option [value]="true">Yes</mat-option>
-                                    <mat-option [value]="false">No</mat-option>
+                                    <mat-option [disabled]="injuryInfo.date_of_injury == null" (click)="ctChange()"
+                                        [value]="true">
+                                        Yes</mat-option>
+                                    <mat-option (click)="ctChange()" [value]="false">No</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
@@ -500,7 +502,6 @@
                                         (change)="uploadFile($event)" id="uploadFile"
                                         accept=".pdf, .doc, .docx, .excel, .csv">
                                     <span matSuffix (click)="uploader.click()">File Upload</span>
-                                    <mat-error>Select valid file</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40"
@@ -508,11 +509,10 @@
                                     <mat-label>Note</mat-label>
                                     <input matInput formControlName="note" placeholder="Note">
                                     <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
-                                    <mat-error>Enter valid notes</mat-error>
                                 </mat-form-field>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                                    <button mat-stroked-button (click)="correspondFormSubmit();" color="primary"
-                                        class="m-t-15 upload_btn p-r-20">Add
+                                    <button mat-stroked-button type="button" (click)="correspondFormSubmit();"
+                                        color="primary" class="m-t-15 upload_btn p-r-20">Add
                                     </button>
                                 </div>
                             </form>
@@ -527,38 +527,38 @@
 
                                         <ng-container matColumnDef="doc_name">
                                             <th mat-header-cell *matHeaderCellDef> Name</th>
-                                            <!-- <td mat-cell *matCellDef="let element"> <b
-                                                    class="p-t-5">{{element.doc_name}}</b><br />
-                                                <small>Note : Lorem Ipsum is simply dummy text of the printing and
-                                                    typesetting industry. Lorem Ipsum has been the industry's standard
-                                                    dummy text ever since the 1500s</small></td> -->
+                                            <td mat-cell *matCellDef="let element"> <b
+                                                    class="p-t-5">{{element?.file_name}}</b><br />
+                                                <small>Note : {{element?.notes}}</small></td>
                                         </ng-container>
 
                                         <ng-container matColumnDef="date">
                                             <th mat-header-cell *matHeaderCellDef> Uploaded On </th>
-                                            <!-- <td mat-cell *matCellDef="let element" class="no-wrap-td">
+                                            <td mat-cell *matCellDef="let element" class="no-wrap-td">
                                                 {{element.date |  date }} <small class="p-l-10"><span
                                                         class="fa fa-clock-o"></span>
-                                                    {{element.date |  date:'shortTime' }} </small></td> -->
+                                                    {{element?.updatedAt |  date:'MM-dd-yyyy HH:MM a' }} </small></td>
                                         </ng-container>
 
                                         <ng-container matColumnDef="action">
                                             <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
-                                            <!-- <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
-                                                <button mat-icon-button color="primary" matTooltip="Download"
-                                                    matTooltipPosition="before">
+                                            <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
+                                                <a mat-icon-button color="primary" matTooltip="Download"
+                                                    matTooltipPosition="before" [href]="element?.exam_report_file_url"
+                                                    download>
                                                     <span class="fa fa-download"></span>
-                                                </button>
+                                                </a>
                                                 <button mat-icon-button color="warn" matTooltip="Delete"
-                                                    matTooltipPosition="after">
+                                                    matTooltipPosition="after"
+                                                    (click)="deletecorrespondence(element?.id)">
                                                     <mat-icon>delete_outline</mat-icon>
-                                                </button> </td> -->
+                                                </button> </td>
                                         </ng-container>
 
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns_1; sticky: true"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns_1;"></tr>
                                     </table>
-                                    <app-nodata></app-nodata>
+                                    <app-nodata *ngIf="correspondenceSource?.filteredData?.length == 0"></app-nodata>
                                 </div>
                             </div>
                         </div>
@@ -569,11 +569,22 @@
                             <div class="sub-title">Claims Administrator Information</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="InsuranceAdjuster">
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
+                            <mat-form-field *ngIf="claimAdminList?.length == 0" appearance="standard" fxFlex="50"
+                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
                                 <input matInput placeholder="Insurance" formControlName="company_name"
                                     autocomplete="off">
+                            </mat-form-field>
+                            <mat-form-field *ngIf="claimAdminList?.length != 0" appearance="standard" fxFlex="50"
+                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Insurance Name</mat-label>
+                                <mat-select formControlName="company_name">
+                                    <mat-option (click)="appClaimAdmin(admin)" *ngFor="let admin of claimAdminList"
+                                        [value]="admin.company_name">
+                                        {{admin.company_name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>Enter valid attroney</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -994,7 +1005,7 @@
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="isBillSubmited">Select Procedural Type</mat-error>
+                            <mat-error *ngIf="isBillSubmited">Select Procuderal Type</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

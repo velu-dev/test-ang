@@ -69,4 +69,12 @@ export class ClaimService {
   getSingleClaimant(id){
     return this.http.get(environment.baseUrl + api_endpoint.getClaimant + id)
   }
+
+  getcorrespondence(id){
+    return this.http.get(environment.baseUrl + api_endpoint.getcorrespondence + id)
+  }
+
+  deleteCorrespondence(id){
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteCorrespondence + id)
+  }
 }
