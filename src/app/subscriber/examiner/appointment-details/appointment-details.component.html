@@ -4,17 +4,29 @@
         <div fxFlex="100" class="p-5">
             <mat-card>
                 <mat-card-header>
-                    <div class="content-wrapper-main-title p-t-5">Progress</div>
+                    <div class="content-wrapper-main-title p-t-5">Billable Item category: Examination - Status </div>
                 </mat-card-header>
                 <mat-card-content class="p-b-15">
-                    <ul class="breadcrumb m-0">
-                        <li><a href="#"><i class="fa fa-calendar-week"></i><span>Appointment
-                                    <br />Scheduled</span></a></li>
-                        <li><a href="#"><i class="fa fa-clipboard"></i><span>Forms
-                                    <br />Submitted</span></a></li>
-                        <li><a href="#"><i class="fa fa-calendar-week"></i><span>Appointment (44)
+                    <ul class="breadcrumb m-0 m-l-20">
+                        
+                        <li><a href="#"  class="p-l-30"><i class="fa fa-calendar-week p-l-10"></i><span>Forms
+                                    <br />Status</span></a></li>
+                                    
+                        <li><a href="#"><i class="fa fa-clipboard"></i><span>History
+                                    <br />Status</span></a></li>
+                        <li><a href="#"><i class="fa fa-calendar-week"></i><span>Records
+                                    <br /> Status
                                 </span></a></li>
-                        <li><a href="#"><i class="fa fa-sticky-note"></i><span class="p-t-10 p-b-11">Billing </span></a>
+                        <li><a href="#"><i class="fa fa-sticky-note"></i><span>Examination (30)
+                                    <br /> Status </span></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-exchange-alt"></i><span>Transcription
+                                    <br /> Status </span></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-notes-medical"></i><span>Report
+                                    <br /> Status </span></a>
+                        <li><a href="#"><i class="fa fa-sticky-note"></i><span>Billing (59)
+                                    <br /> Status </span></a>
                         </li>
 
                     </ul>
@@ -153,30 +165,6 @@
                 <mat-divider></mat-divider>
                 <mat-card-content>
                     <div fxLayout="row wrap">
-                        <!-- <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
-                            class="p-5 upload-doc">
-                            <mat-card-header>
-                                <mat-card-title class="content-wrapper-main-title">Upload Document</mat-card-title>
-                                <mat-card-subtitle class="m-b-0">Upload Template here
-                                </mat-card-subtitle>
-                                <span class="spacer"></span>
-                                <button [matMenuTriggerFor]="doclist">Document Type <span
-                                        class="fa fa-angle-down p-l-5"></span></button>
-                                <mat-menu #doclist="matMenu">
-                                    <button mat-menu-item>Cover Letter</button>
-                                    <button mat-menu-item>Report Template</button>
-                                    <button mat-menu-item>Record Set</button>
-                                </mat-menu>
-                            </mat-card-header>
-                            <div class="file-upload">
-                                <input type="file" multiple #uploader hidden (change)="uploadFile($event)"
-                                    id="uploadFile" accept="CSV">
-                                <p>Choose a file or drag it here</p>
-                                <p class="text-center">OR</p>
-                                <p class="input" (click)="uploader.click()"> SELECT</p>
-                            </div>
-                        </div> -->
-
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="">
                             <mat-card-content class="m-b-0">
                                 <div fxFlex="100" class="p-t-20" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30"
@@ -188,6 +176,7 @@
                                             <option value="History">History</option>
                                             <option value="Records">Records</option>
                                             <option value="Report">Reports</option>
+                                            <option value="Transcription">Transcription</option>
                                         </select>
                                     </mat-form-field>
                                 </div>
@@ -236,7 +225,7 @@
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-5">
                             <button mat-raised-button color="primary"
                                 [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user m-t-5">
-                                <mat-icon>receipt</mat-icon> Billing
+                                <mat-icon>receipt</mat-icon>View Billing
                             </button>
                             <mat-tab-group class="m-b-10 doc-list">
                                 <!-- ######~~~~~ Active Users ~~~~~##### -->
@@ -262,11 +251,18 @@
                                     </ng-template>
                                 </mat-tab>
 
-                                <!-- ######~~~~~ Disabled Users ~~~~~##### -->
+                                <!-- ######~~~~~ Reports ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> assignment </mat-icon>
                                         <span>Reports <span class="record-count">(42)</span></span>
+                                    </ng-template>
+                                </mat-tab>
+                                <!-- ######~~~~~ Transcription  ~~~~~##### -->
+                                <mat-tab>
+                                    <ng-template mat-tab-label>
+                                        <mat-icon class="p-r-5"> compare_arrows </mat-icon>
+                                        <span>Transcription <span class="record-count">(42)</span></span>
                                     </ng-template>
                                 </mat-tab>
                             </mat-tab-group>
@@ -308,6 +304,7 @@
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
+                                <app-nodata></app-nodata>
                             </div>
                         </div>
                     </div>
@@ -317,12 +314,12 @@
         </div>
     </div>
 
-    <!-- ###~~~~~ Paymant Details ~~~~~###-->
-    <div class="paymant_details" fxLayout="row wrap">
+    <!-- ###~~~~~ Note Details ~~~~~###-->
+    <div class="note_details" fxLayout="row wrap">
         <div fxFlex="100" class="p-5">
             <mat-card>
                 <mat-card-header>
-                    <div class="content-wrapper-main-title p-t-5">Payment Status </div>
+                    <div class="content-wrapper-main-title p-t-5">Notes </div>
                     <span class="spacer"></span>
                     <button mat-icon-button>
                         <mat-icon>expand_more</mat-icon>
@@ -334,25 +331,5 @@
             </mat-card>
         </div>
     </div>
-
-    <!-- ###~~~~~ Issue Details ~~~~~###-->
-    <div class="issues_details" fxLayout="row wrap">
-        <div fxFlex="100" class="p-5">
-            <mat-card>
-                <mat-card-header>
-                    <div class="content-wrapper-main-title p-t-5">Issues / Problems </div>
-                    <span class="spacer"></span>
-                    <button mat-icon-button>
-                        <mat-icon>expand_more</mat-icon>
-                    </button>
-                </mat-card-header>
-                <mat-divider></mat-divider>
-                <mat-card-content>
-                </mat-card-content>
-            </mat-card>
-        </div>
-    </div>
-
-
 
 </div>
