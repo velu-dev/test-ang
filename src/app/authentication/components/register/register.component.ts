@@ -79,7 +79,8 @@ export class RegisterComponent implements OnInit {
           'middle_name': this.registerForm.value.middleInitial,
           'custom:Organization_ID': signupRes.data.Organization_ID.toString(),
           'custom:Postgres_UserID': signupRes.data.Postgres_User_ID.toString(),
-          'custom:isPlatformAdmin': "0"
+          "custom:Account_Number" : signupRes.data.Account_Number.toString(),
+          'custom:isPlatformAdmin': "0",
         }
       }
       this.cognitoService.signUp(userDetails).subscribe(signUpRes => {

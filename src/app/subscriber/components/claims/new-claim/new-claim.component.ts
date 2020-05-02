@@ -885,7 +885,14 @@ export class NewClaimComponent implements OnInit {
       Employer: employer
     })
   }
-
+  ctChange() {
+    if (this.injuryInfo.date_of_injury) {
+      this.injuryInfo.continuous_trauma = false;
+      return
+    } else {
+      this.alertService.openSnackBar("Please Select Injury Date", "error");
+    }
+  }
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
@@ -896,7 +903,8 @@ export class NewClaimComponent implements OnInit {
         this.claimService.deleteCorrespondence(data).subscribe(deleteRes => {
           let type = this.correspondenceSource.data.findIndex(element => element.id == data);
           const tabledata = this.correspondenceSource.data;
-          tabledata.splice(type, 1)
+          tabledata.splice(type, 1);
+          this.documents_ids.splice(type,1)
           this.correspondenceSource = new MatTableDataSource(tabledata);
           this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
