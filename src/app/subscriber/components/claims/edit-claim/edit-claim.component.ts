@@ -14,8 +14,6 @@ export interface PeriodicElement {
 
 
 export class EditClaimComponent implements OnInit {
-  displayedColumns: string[] = ['billable_item', 'examiner', 'd_o_s', 'status'];
-  dataSource = ELEMENT_DATA;
   panelOpenState = false;
   constructor() { }
 
@@ -24,10 +22,5 @@ export class EditClaimComponent implements OnInit {
 
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { billable_item: 'AME Examination', examiner: 'Dr. Martin', d_o_s: '30 Mar 2019', status: 'Paid' },
-  { billable_item: 'Supplemental', examiner: 'Dr. Martin', d_o_s: '30 Mar 2019', status: 'Paid' },
-  { billable_item: 'AME Reevaluation', examiner: 'Dr. Martin', d_o_s: '-', status: 'Awaiting Date' },
-];
 
 

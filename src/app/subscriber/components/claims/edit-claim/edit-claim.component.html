@@ -8,35 +8,7 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <div fxFlex="row wrap">
-                    <div flFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-                        <div fxLayout="row wrap">
-                            <div fxFlex="50" class="claimant_label">
-                                <div>First Name</div>
-                                <div>Middle Name</div>
-                                <div>Last Name</div>
-                            </div>
-                            <div fxFlex="50" class="claimant_value">
-                                <div>Ratrick</div>
-                                <div>Brian</div>
-                                <div>Murray</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div flFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-                        <div fxLayout="row wrap">
-                            <div fxFlex="50" class="claimant_label">
-                                <div>Date of Birth</div>
-                                <div>Phone Number</div>
-                            </div>
-                            <div fxFlex="50" class="claimant_value">
-                                <div>24 March 1983</div>
-                                <div>9874563210</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <app-claimant-details></app-claimant-details>
             </mat-card-content>
         </mat-card>
     </div>
@@ -56,45 +28,7 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <div fxLayout="row wrap" fxFlex="100">
-                    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
-                        <span> &nbsp; ADJ
-                            &nbsp;</span>
-                        <mat-form-field appearance="standard">
-                            <mat-label>ADJ Number*</mat-label>
-                            <input type="text" matInput placeholder="Enter ADJ Number" value="1245862"
-                                formControlName="wcab_number" autocomplete="off">
-                            <mat-error>Enter valid WCAB number</mat-error>
-                        </mat-form-field>
-                    </div>
-
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Exam Type*</mat-label>
-                        <mat-select>
-                            <mat-option selected>
-                                Option Here...
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>Select exam type</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Claim Number*</mat-label>
-                        <input matInput placeholder="Claim Number" value="456789456" autocomplete="off">
-                        <mat-error>Enter valid claim number</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Panel Number </mat-label>
-                        <input matInput placeholder="Panel Number" value="455445" autocomplete="off">
-                    </mat-form-field>
-                    <div class="text-center w-100 m-t-10 m-b-20">
-                        <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success">
-                            Update </button>
-                        <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
-                            color="warn">Cancel</button>
-                    </div>
-                </div>
+                <app-claim></app-claim>
             </mat-card-content>
         </mat-card>
     </div>
@@ -113,39 +47,11 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <div class="m-t-10">
-                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 user-table">
-
-                        <ng-container matColumnDef="billable_item">
-                            <th mat-header-cell *matHeaderCellDef> Billable Item </th>
-                            <td mat-cell *matCellDef="let element"> <a href="#">{{element.billable_item}} </a></td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="examiner">
-                            <th mat-header-cell *matHeaderCellDef> Examiner </th>
-                            <td mat-cell *matCellDef="let element"> {{element.examiner}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="d_o_s">
-                            <th mat-header-cell *matHeaderCellDef> Date of Service </th>
-                            <td mat-cell *matCellDef="let element"> {{element.d_o_s}} </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="status">
-                            <th mat-header-cell *matHeaderCellDef> Status </th>
-                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                </div>
+                <app-billable-item></app-billable-item>
             </mat-card-content>
         </mat-card>
     </div>
 </div>
-
-
 
 <mat-accordion class="m-t-20">
     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
@@ -159,20 +65,7 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxFlex="row wrap">
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-        </div>
-
+        <app-correspondance></app-correspondance>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -185,20 +78,7 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxFlex="row wrap">
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-        </div>
-
+        <app-claim-admin></app-claim-admin>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -211,20 +91,7 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxFlex="row wrap">
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-        </div>
-
+        <app-employer></app-employer>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -237,20 +104,7 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxFlex="row wrap">
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-        </div>
-
+        <app-application-attorney></app-application-attorney>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -263,20 +117,7 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxFlex="row wrap">
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-        </div>
-
+        <app-defense-attorney></app-defense-attorney>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -289,20 +130,7 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <div fxFlex="row wrap">
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Mat label</mat-label>
-                <input matInput placeholder="Mat placeholder" value="Mat Value" autocomplete="off">
-                <mat-error>Err Msg Here</mat-error>
-            </mat-form-field>
-        </div>
-
+        <app-deo></app-deo>
     </mat-expansion-panel>
 
 </mat-accordion>

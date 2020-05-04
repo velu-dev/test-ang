@@ -1,0 +1,41 @@
+<mat-card-content class="p-b-15">
+    <div fxLayout="row wrap" fxFlex="100">
+        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
+            <span> &nbsp; ADJ
+                &nbsp;</span>
+            <mat-form-field appearance="standard">
+                <mat-label>ADJ Number*</mat-label>
+                <input type="text" matInput placeholder="Enter ADJ Number" value="1245862"
+                    formControlName="wcab_number" autocomplete="off">
+                <mat-error>Enter valid WCAB number</mat-error>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+            <mat-label>Exam Type*</mat-label>
+            <mat-select>
+                <mat-option selected>
+                    Option Here...
+                </mat-option>
+            </mat-select>
+            <mat-error>Select exam type</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+            <mat-label>Claim Number*</mat-label>
+            <input matInput placeholder="Claim Number" value="456789456" autocomplete="off">
+            <mat-error>Enter valid claim number</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+            <mat-label>Panel Number </mat-label>
+            <input matInput placeholder="Panel Number" value="455445" autocomplete="off">
+        </mat-form-field>
+        <div class="text-center w-100 m-t-10 m-b-20">
+            <button mat-raised-button color="primary" type="submit"
+                class="m-r-10 rounded-corner btn_success">
+                Update </button>
+            <button mat-raised-button (click)="cancle()" type="button" class="rounded-corner"
+                color="warn">Cancel</button>
+        </div>
+    </div>
+</mat-card-content>
