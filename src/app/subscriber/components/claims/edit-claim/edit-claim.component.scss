@@ -9,7 +9,7 @@ div {
             box-shadow: $box-shadow-1;
         }
     }
-    .Bill_info {
+    .Bill_info, .injury_info {
         mat-card {
             box-shadow: $box-shadow-2;
             padding-bottom: 0px;
@@ -37,5 +37,9 @@ mat-accordion {
         mat-panel-title {
             padding-top: 10px;
         }
+    }
+    .float-right {
+        float: right;
+        margin-bottom: 10px;
     }
 }

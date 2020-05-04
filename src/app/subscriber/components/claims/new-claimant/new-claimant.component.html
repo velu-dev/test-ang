@@ -8,91 +8,94 @@
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <div fxLayout="row wrap" fxFlex="100" class="p-t-10" *ngIf="!editStatus">
+    <div fxLayout="row wrap" fxFlex="100" class="p-t-15"  *ngIf="!editStatus">
       <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-        <table class="pro_details">
-          <tr>
-            <td>First Name</td>
-            <td>{{claimantForm?.value.first_name}}</td>
-          </tr>
-          <tr>
-            <td>Middle Name</td>
-            <td>{{claimantForm?.value.middle_name}}</td>
-          </tr>
-          <tr>
-            <td>Last Name</td>
-            <td>{{claimantForm?.value.last_name}}</td>
-          </tr>
-          <tr>
-            <td>Suffix</td>
-            <td>{{claimantForm?.value.suffix}}</td>
-          </tr>
-          <tr>
-            <td>Salutation</td>
-            <td>{{claimantForm?.value.salutation}}</td>
-          </tr>
-          <tr>
-            <td>Date of Birth</td>
-            <td>{{claimantForm?.value.date_of_birth | date:'MM-dd-yyyy'}}</td>
-          </tr>
-          <tr>
-            <td>Email</td>
-            <td>{{claimantForm?.value.email}}</td>
-          </tr>
-          <tr>
-            <td>Gender</td>
-            <td>{{gender(claimantForm?.value.gender)}}</td>
-          </tr>
-          <tr>
-            <td>Handedness</td>
-            <td>{{claimantForm?.value.handedness}}</td>
-          </tr>
-          <tr>
-            <td>Certified Interpreter Required</td>
-            <td>{{claimantForm?.value.certified_interpreter_required}}</td>
-          </tr>
-
-        </table>
+        <div class="grid-list">
+          <div>First Name</div>
+          <div>{{claimantForm?.value.first_name}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Middle Name</div>
+          <div>{{claimantForm?.value.middle_name}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Last Name</div>
+          <div>{{claimantForm?.value.last_name}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Suffix</div>
+          <div>{{claimantForm?.value.suffix}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Salutation</div>
+          <div>{{claimantForm?.value.salutation}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Date of Birth</div>
+          <div>{{claimantForm?.value.date_of_birth | date:'MM-dd-yyyy'}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Email</div>
+          <div>{{claimantForm?.value.email}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Gender</div>
+          <div>{{gender(claimantForm?.value.gender)}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Handedness</div>
+          <div>{{claimantForm?.value.handedness}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Certified Interpreter Required</div>
+          <div>{{claimantForm?.value.certified_interpreter_required}}</div>
+        </div>
       </div>
       <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-        <table class="pro_details">
-          <tr>
-            <td>Primary Language</td>
-            <td>{{language(claimantForm?.value.primary_language_spoken)}}</td>
-          </tr>
-          <tr>
-            <td>SSN</td>
-            <td>{{claimantForm?.value.ssn | mask:'000-000-0000'}}</td>
-          </tr>
-          <tr>
-            <td>Phone Number</td>
-            <td>{{claimantForm?.value.phone_no_1 | mask:'(000) 000-0000'}}</td>
-          </tr>
-          <tr>
-            <td>Alternate Phone Number</td>
-            <td>{{claimantForm?.value.phone_no_2 | mask:'(000) 000-0000'}}</td>
-          </tr>
-          <tr>
-            <td>Street Address</td>
-            <td>{{claimantForm?.value.street1}}</td>
-          </tr>
-          <tr>
-            <td>Street Address 2</td>
-            <td>{{claimantForm?.value.street2}}</td>
-          </tr>
-          <tr>
-            <td>City</td>
-            <td>{{claimantForm?.value.city}}</td>
-          </tr>
-          <tr>
-            <td>state</td>
-            <td>{{state(claimantForm?.value.state)}}</td>
-          </tr>
-          <tr>
-            <td>Zip Code</td>
-            <td>{{claimantForm?.value.zip_code}}</td>
-          </tr>
-        </table>
+        <div class="grid-list">
+          <div>Primary Language</div>
+          <div>{{language(claimantForm?.value.primary_language_spoken)}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>SSN</div>
+          <div>{{claimantForm?.value.ssn | mask:'000-000-0000'}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Phone Number</div>
+          <div>{{claimantForm?.value.phone_no_1 | mask:'(000) 000-0000'}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Alternate Phone Number</div>
+          <div>{{claimantForm?.value.phone_no_2 | mask:'(000) 000-0000'}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Street Address</div>
+          <div>{{claimantForm?.value.street1}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Street Address 2</div>
+          <div>{{claimantForm?.value.street2}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Cite</div>
+          <div>{{claimantForm?.value.city}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>State</div>
+          <div>{{state(claimantForm?.value.state)}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Zip Code</div>
+          <div>{{claimantForm?.value.zip_code}}</div>
+        </div>
       </div>
     </div>
 

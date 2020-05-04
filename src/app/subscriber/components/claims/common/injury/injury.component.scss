@@ -1,0 +1,19 @@
+@import "variables";
+
+div {
+    table {
+        .action {
+            th {
+                text-align: center !important;
+                display: block;
+            }
+            td {
+                .delete-user {
+                    :hover {
+                        color: $white;
+                    }
+                }
+            }
+        }
+    }
+}

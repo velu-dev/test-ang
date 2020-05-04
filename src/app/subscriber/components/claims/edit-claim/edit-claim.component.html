@@ -33,8 +33,21 @@
     </div>
 </div>
 
+
 <mat-accordion class="m-t-20">
     <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Injury
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-divider></mat-divider>
+        <button mat-raised-button color="primary" class="m-t-5 float-right">
+            Add
+        </button>
+        <app-injury></app-injury>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Correspondance
