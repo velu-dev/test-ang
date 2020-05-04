@@ -1,75 +1,25 @@
 @import "variables";
 
-.claimant_info {
+div {
     mat-card {
         box-shadow: $box-shadow-2;
+        padding-top: 5px;
         padding-bottom: 0px;
         &:hover {
             box-shadow: $box-shadow-1;
         }
-        mat-card-content {
-            .claimant_label {
-                width: $width-100;
-                div {
-                    font-weight: $font-weight-bold;
-                    font-size: $font-size-1;
-                    padding-top: 10px;
-                    color: $text-gray;
-                    &::after {
-                        content: ":";
-                        display: inline-block;
-                        float: right;
-                        padding-right: 10px;
-                    }
-                }
-            }
-            .claimant_value {
-                width: $width-100;
-                div {
-                    font-size: $font-size-1;
-                    padding-top: 10px;
-                    color: $text-gray;
-                }
+    }
+    .Bill_info {
+        mat-card {
+            box-shadow: $box-shadow-2;
+            padding-bottom: 0px;
+            &:hover {
+                box-shadow: $box-shadow-1;
             }
         }
     }
 }
-.claim_info {
-    mat-card {
-        box-shadow: $box-shadow-2;
-        padding-bottom: 0px;
-        &:hover {
-            box-shadow: $box-shadow-1;
-        }
-        mat-card-content {
-            mat-form-field {
-                padding: 10px !important;
-            }
-            .fixied_adj {
-                span {
-                    width: 60px;
-                }
-                mat-form-field {
-                    width: calc(100% - 50px);
-                    padding-left: 0px !important;
-                }
-            }
 
-            button.btn_success {
-                background-color: $btn_success;
-            }
-        }
-    }
-}
-.Bill_info {
-    mat-card {
-        box-shadow: $box-shadow-2;
-        padding-bottom: 0px;
-        &:hover {
-            box-shadow: $box-shadow-1;
-        }
-    }
-}
 
 .mat-expansion-panel-header-description {
     flex-grow: 0 !important;

@@ -1,18 +1,104 @@
 <mat-card class="m-card">
   <mat-card-header>
-    <div class="m-0 content-wrapper-main-title">Edit Claimant </div>
+    <div class="m-0 content-wrapper-main-title">Claimant </div>
     <span class="spacer"></span>
+    <button mat-raised-button color="primary" class="m-b-5">
+      Edit
+    </button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <div fxLayout="row wrap" fxFlex="100">
-      <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimantForm">
-        <!-- <mat-form-field appearance="standard" fxFlex="100">
-          <mat-label>Claim Number</mat-label>
-          <input matInput placeholder="Claim Number" [value]="claimNumber" autocomplete="off" disabled>
-          <mat-error>error msg here</mat-error>
-        </mat-form-field> -->
+    <div fxLayout="row wrap" fxFlex="100" class="p-t-10">
+      <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+        <table class="pro_details">
+          <tr>
+            <td>First Name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Middle Name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Last Name</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Suffix</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Salutation</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Date of Birth</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Gender</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Handedness</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Certified Interpreter Required</td>
+            <td></td>
+          </tr>
 
+        </table>
+      </div>
+      <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+        <table class="pro_details">
+          <tr>
+            <td>Primary Language</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>SSN</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Phone Number</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Alternate Phone Number</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Street Address</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Street Address 2</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Cite</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>state</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Zip Code</td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- <div fxLayout="row wrap" fxFlex="100">
+      <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimantForm">
+       
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
           <mat-label>First Name*</mat-label>
@@ -161,6 +247,6 @@
 
         </div>
       </form>
-    </div>
+    </div> -->
   </mat-card-content>
 </mat-card>
