@@ -61,8 +61,8 @@ const routes: Routes = [{
 {
   path: "manage-location",
   component: ManageLocationComponent
-},{
-  path: "edit-claim",
+}, {
+  path: "edit-claim/:id",
   component: EditClaimComponent
 },
 {
@@ -203,7 +203,7 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: ClaimListComponent
-    },{
+    }, {
       path: "new-claim",
       component: NewClaimComponent
     }, {
