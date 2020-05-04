@@ -22,6 +22,8 @@ export class EditClaimComponent implements OnInit {
   claimId: any;
   claimantDetail = {};
   claimDetail = {};
+  claimAdminEdit = false;
+  employerEdit = false;
   constructor(private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,

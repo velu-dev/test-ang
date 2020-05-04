@@ -1,28 +1,38 @@
-<mat-card-content class="p-b-15 claim_info">
-    <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-        <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-            <div class="grid-list">
-                <div>ADJ Number</div>
-                <div>{{claimDetail.wcab_number}}</div>
+<mat-card>
+    <mat-card-header>
+        <div class="content-wrapper-main-title p-t-10 m-b-10">Claim </div>
+        <span class="spacer"></span>
+        <button mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="p-b-15 claim_info">
+        <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
+            <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+                <div class="grid-list">
+                    <div>ADJ Number</div>
+                    <div>{{claimDetail.wcab_number}}</div>
+                </div>
+                <div class="grid-list">
+                    <div>Exam Type</div>
+                    <div>{{claimDetail.exam_type_id}}</div>
+                </div>
             </div>
-            <div class="grid-list">
-                <div>Exam Type</div>
-                <div>{{claimDetail.exam_type_id}}</div>
+            <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+                <div class="grid-list">
+                    <div>Claim Number</div>
+                    <div>{{claimDetail.claim_number}}</div>
+                </div>
+                <div class="grid-list">
+                    <div>Panel Number</div>
+                    <div>{{claimDetail.panel_number}}</div>
+                </div>
             </div>
         </div>
-        <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-            <div class="grid-list">
-                <div>Claim Number</div>
-                <div>{{claimDetail.claim_number}}</div>
-            </div>
-            <div class="grid-list">
-                <div>Panel Number</div>
-                <div>{{claimDetail.panel_number}}</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- <div fxLayout="row wrap" fxFlex="100" class="p-t-10">
+    </mat-card-content>
+</mat-card>
+<!-- <div fxLayout="row wrap" fxFlex="100" class="p-t-10">
         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
             <span> &nbsp; ADJ
                 &nbsp;</span>
@@ -61,4 +71,3 @@
                 color="warn">Cancel</button>
         </div>
     </div> -->
-</mat-card-content>

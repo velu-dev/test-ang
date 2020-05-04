@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-employer',
@@ -6,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./employer.component.scss']
 })
 export class EmployerComponent implements OnInit {
-
-  constructor() { }
+  @Input('edit') isEdit;
+  employer: FormGroup;
+  employerList = [];
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.employer = this.formBuilder.group({
+      name: [''],
+      street1: [''],
+      street2: [''],
+      city: [''],
+      state: [''],
+      zip_code: [''],
+      phone: [''],
+      email: [''],
+      fax: [''],
+    });
   }
 
 }
