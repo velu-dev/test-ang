@@ -1,12 +1,12 @@
 <mat-divider></mat-divider>
 <div fxLayout="row wrap" fxFlex="100">
-    <form fxFlex="100"  [formGroup]="correspondance">
+    <form fxFlex="100" [formGroup]="correspondForm">
         <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" appearance="standard"
             hideRequiredMarker="hideRequiredControl.auto" floatLabel="floatLabelControl.auto">
-            <input matInput formControlName="file" readonly placeholder="No file chosen">
-            <input type="file" formControlName="file" #uploader hidden id="uploadFile"
+            <input matInput formControlName="file" readonly [value]="selectedFile?.name" placeholder="No file chosen">
+            <input type="file" formControlName="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
                 accept=".pdf, .doc, .docx, .excel, .csv">
-            <span matSuffix>File Upload</span>
+            <span matSuffix (click)="uploader.click()">File Upload</span>
         </mat-form-field>
 
         <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" appearance="standard">
@@ -14,40 +14,49 @@
             <input matInput formControlName="note" placeholder="Note">
 
         </mat-form-field>
-        <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-            <button mat-stroked-button type="button" color="primary" class="m-t-15 upload_btn p-r-20">Add
+        <div *ngIf="!correspondForm.invalid" fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+            <button mat-stroked-button type="button" (click)="correspondFormSubmit();" color="primary" class="m-t-15 upload_btn p-r-20">Add
             </button>
         </div>
     </form>
     <div fxFlex="100">
-        <table mat-table [dataSource]="dataSource" class="user-table">
+        <table mat-table [dataSource]="correspondenceSource" class="user-table">
 
+           
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                <th mat-header-cell *matHeaderCellDef> Name</th>
+                <td mat-cell *matCellDef="let element"> <b
+                        class="p-t-5">{{element?.file_name}}</b><br />
+                    <small>Note : {{element?.notes}}</small></td>
             </ng-container>
 
             <ng-container matColumnDef="uploaded_on">
                 <th mat-header-cell *matHeaderCellDef> Uploaded On </th>
-                <td mat-cell *matCellDef="let element"> {{element.uploaded_on}} </td>
+                <td mat-cell *matCellDef="let element" class="no-wrap-td">
+                    {{element.date |  date }} <small class="p-l-10"><span
+                            class="fa fa-clock-o"></span>
+                        {{element?.updatedAt |  date:'MM-dd-yyyy HH:MM a' }} </small></td>
             </ng-container>
 
-            <ng-container matColumnDef="action" class="action">
-                <th mat-header-cell *matHeaderCellDef> Action </th>
-                <td mat-cell *matCellDef="let element">
-                    <a mat-icon-button color="primary" matTooltip="Download" matTooltipPosition="before" download>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
+                <td mat-cell *matCellDef="let element" class="no-wrap-td">
+                    <a mat-icon-button color="primary" matTooltip="Download"
+                        matTooltipPosition="before" target="_self" (click)="download(element)">
                         <span class="fa fa-download"></span>
                     </a>
-                    <button mat-icon-button color="warn" matTooltip="Delete" matTooltipPosition="after">
+                    <button mat-icon-button color="warn" matTooltip="Delete"
+                        matTooltipPosition="after"
+                        (click)="deletecorrespondence(element?.id)">
                         <mat-icon>delete_outline</mat-icon>
-                    </button>
-                </td>
+                    </button> </td>
             </ng-container>
 
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <app-nodata></app-nodata>
+        <app-nodata *ngIf="correspondenceSource?.filteredData?.length == 0"></app-nodata>
+       
     </div>
 </div>

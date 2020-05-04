@@ -482,14 +482,6 @@ export class NewClaimComponent implements OnInit {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
       this.titleName = " Claim";
-      if (this.claim.value.claim_details.id) {
-        this.claimService.getcorrespondence(this.claim.value.claim_details.id).subscribe(correspondRes => {
-          console.log(correspondRes);
-          this.correspondenceSource = new MatTableDataSource(correspondRes['data'])
-        }, error => {
-          console.log(error);
-        })
-      }
     } else if (event.selectedIndex == 2) {
       this.titleName = " Billable Item";
     }
