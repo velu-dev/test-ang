@@ -8,7 +8,7 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <app-claimant-details></app-claimant-details>
+                <app-claimant-details [claimant]="claimantDetail"></app-claimant-details>
             </mat-card-content>
         </mat-card>
     </div>
@@ -28,7 +28,7 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <app-claim></app-claim>
+                <app-claim [claim]="claimDetail"></app-claim>
             </mat-card-content>
         </mat-card>
     </div>
@@ -47,7 +47,7 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <app-billable-item></app-billable-item>
+                <app-update-billable-item></app-update-billable-item>
             </mat-card-content>
         </mat-card>
     </div>

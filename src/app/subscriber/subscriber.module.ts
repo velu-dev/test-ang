@@ -38,6 +38,7 @@ import { DefenseAttorneyComponent } from './components/claims/common/defense-att
 import { DeoComponent } from './components/claims/common/deo/deo.component';
 import { CorrespondanceComponent } from './components/claims/common/correspondance/correspondance.component';
 import { ClaimantDetailsComponent } from './components/claims/common/claimant-details/claimant-details.component';
+import { UpdateBillableItemComponent } from './components/claims/common/update-billable-item/update-billable-item.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { ClaimantDetailsComponent } from './components/claims/common/claimant-de
     DefenseAttorneyComponent,
     DeoComponent,
     CorrespondanceComponent,
-    ClaimantDetailsComponent
+    ClaimantDetailsComponent,
+    UpdateBillableItemComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,
