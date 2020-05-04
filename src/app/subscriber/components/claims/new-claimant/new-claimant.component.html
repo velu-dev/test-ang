@@ -2,106 +2,103 @@
   <mat-card-header>
     <div class="m-0 content-wrapper-main-title">Claimant </div>
     <span class="spacer"></span>
-    <button mat-raised-button color="primary" class="m-b-5">
+    <button mat-raised-button color="primary" class="m-b-5" (click)="edit()">
       Edit
     </button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
+    <div fxLayout="row wrap" fxFlex="100" class="p-t-10" *ngIf="!editStatus">
       <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-        <div class="grid-list">
-          <div>First Name</div>
-          <div></div>
-        </div>
-        <div class="grid-list">
-          <div>Middle Name</div>
-          <div></div>
-        </div>
-        <div class="grid-list">
-          <div>Last Name</div>
-          <div></div>
-        </div>
-        <div class="grid-list">
-          <div>Suffix</div>
-          <div></div>
-        </div>
-        <div class="grid-list">
-          <div>Salutation</div>
-          <div></div>
-        </div>
-        <div class="grid-list">
-          <div>Date of Birth</div>
-          <div></div>
-        </div>
-        <div class="grid-list">
-          <div>Email</div>
-          <div></div>
-        </div>
-        <div class="grid-list">
-          <div>Gender</div>
-          <div></div>
-        </div>
-        <div class="grid-list">
-          <div>Handedness</div>
-          <div></div>
-        </div>
-        <div class="grid-list">
-          <div>Certified Interpreter Required</div>
-          <div></div>
-        </div>
+        <table class="pro_details">
+          <tr>
+            <td>First Name</td>
+            <td>{{claimantForm?.value.first_name}}</td>
+          </tr>
+          <tr>
+            <td>Middle Name</td>
+            <td>{{claimantForm?.value.middle_name}}</td>
+          </tr>
+          <tr>
+            <td>Last Name</td>
+            <td>{{claimantForm?.value.last_name}}</td>
+          </tr>
+          <tr>
+            <td>Suffix</td>
+            <td>{{claimantForm?.value.suffix}}</td>
+          </tr>
+          <tr>
+            <td>Salutation</td>
+            <td>{{claimantForm?.value.salutation}}</td>
+          </tr>
+          <tr>
+            <td>Date of Birth</td>
+            <td>{{claimantForm?.value.date_of_birth | date:'MM-dd-yyyy'}}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{{claimantForm?.value.email}}</td>
+          </tr>
+          <tr>
+            <td>Gender</td>
+            <td>{{gender(claimantForm?.value.gender)}}</td>
+          </tr>
+          <tr>
+            <td>Handedness</td>
+            <td>{{claimantForm?.value.handedness}}</td>
+          </tr>
+          <tr>
+            <td>Certified Interpreter Required</td>
+            <td>{{claimantForm?.value.certified_interpreter_required}}</td>
+          </tr>
+
+        </table>
       </div>
       <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-        <div class="grid-list">
-          <div>Primary Language</div>
-          <div></div>
-        </div>
-
-        <div class="grid-list">
-          <div>SSN</div>
-          <div></div>
-        </div>
-
-        <div class="grid-list">
-          <div>Phone Number</div>
-          <div></div>
-        </div>
-
-        <div class="grid-list">
-          <div>Alternate Phone Number</div>
-          <div></div>
-        </div>
-
-        <div class="grid-list">
-          <div>Street Address</div>
-          <div></div>
-        </div>
-
-        <div class="grid-list">
-          <div>Street Address 2</div>
-          <div></div>
-        </div>
-
-        <div class="grid-list">
-          <div>Cite</div>
-          <div></div>
-        </div>
-
-        <div class="grid-list">
-          <div>State</div>
-          <div></div>
-        </div>
-
-        <div class="grid-list">
-          <div>Zip Code</div>
-          <div></div>
-        </div>
+        <table class="pro_details">
+          <tr>
+            <td>Primary Language</td>
+            <td>{{language(claimantForm?.value.primary_language_spoken)}}</td>
+          </tr>
+          <tr>
+            <td>SSN</td>
+            <td>{{claimantForm?.value.ssn | mask:'000-000-0000'}}</td>
+          </tr>
+          <tr>
+            <td>Phone Number</td>
+            <td>{{claimantForm?.value.phone_no_1 | mask:'(000) 000-0000'}}</td>
+          </tr>
+          <tr>
+            <td>Alternate Phone Number</td>
+            <td>{{claimantForm?.value.phone_no_2 | mask:'(000) 000-0000'}}</td>
+          </tr>
+          <tr>
+            <td>Street Address</td>
+            <td>{{claimantForm?.value.street1}}</td>
+          </tr>
+          <tr>
+            <td>Street Address 2</td>
+            <td>{{claimantForm?.value.street2}}</td>
+          </tr>
+          <tr>
+            <td>City</td>
+            <td>{{claimantForm?.value.city}}</td>
+          </tr>
+          <tr>
+            <td>state</td>
+            <td>{{state(claimantForm?.value.state)}}</td>
+          </tr>
+          <tr>
+            <td>Zip Code</td>
+            <td>{{claimantForm?.value.zip_code}}</td>
+          </tr>
+        </table>
       </div>
     </div>
 
-    <!-- <div fxLayout="row wrap" fxFlex="100">
+    <div fxLayout="row wrap" fxFlex="100" *ngIf="editStatus">
       <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimantForm">
-       
+
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
           <mat-label>First Name*</mat-label>
@@ -244,12 +241,13 @@
         </mat-form-field>
 
         <div class="text-center w-100 m-t-10 m-b-50">
-          <button mat-raised-button color="primary" type="submit" (click)="createClaimant()" class="m-r-10 rounded-corner btn_success">
+          <button mat-raised-button color="primary" type="submit" (click)="createClaimant()"
+            class="m-r-10 rounded-corner btn_success">
             Update </button>
           <button mat-raised-button (click)="cancle()" class="rounded-corner" color="warn">Cancel</button>
 
         </div>
       </form>
-    </div> -->
+    </div>
   </mat-card-content>
 </mat-card>

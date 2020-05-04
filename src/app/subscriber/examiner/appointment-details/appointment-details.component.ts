@@ -36,8 +36,9 @@ export class AppointmentDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.examinerService.getAllExamination(this.claim_id).subscribe(response => {
-      console.log(response);
+      
       this.examinationDetails = response['data']
+      console.log(this.examinationDetails);
     }, error => {
       console.log(error);
     })
@@ -46,7 +47,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
       width: '800px',
-      data: { data: this.examinationDetails }
+      data: this.examinationDetails 
     });
 
     dialogRef.afterClosed().subscribe(result => {
