@@ -525,3 +525,22 @@ input:-webkit-autofill {
     }
   }
 }
+.grid-list {
+  width: 100%;
+  display: flex;
+  div {
+    padding:5px;
+    -ms-flex: 1; /* IE 10 */
+    flex: 1;
+    &:first-child {
+      font-weight: $font-weight-bold;
+      font-size: $font-size-1;
+      color: $text-gray;
+      &::after {
+        content: ":";
+        display: inline-flex;
+        float: right;
+      }
+    }
+  }
+}
