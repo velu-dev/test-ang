@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 export interface PeriodicElement {
@@ -14,9 +15,14 @@ export interface PeriodicElement {
 export class CorrespondanceComponent implements OnInit {
   displayedColumns: string[] = ['name', 'uploaded_on', 'action'];
   dataSource = ELEMENT_DATA;
-  constructor() { }
+  correspondance: FormGroup;
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.correspondance = this.formBuilder.group({
+      file: ['', Validators.compose([Validators.required])],
+      note: ['']
+    });
   }
 
 }

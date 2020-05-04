@@ -24,6 +24,9 @@ export class EditClaimComponent implements OnInit {
   claimDetail = {};
   claimAdminEdit = false;
   employerEdit = false;
+  aaEdit = false;
+  daEdit = false;
+  deoEdit = false;
   constructor(private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -36,7 +39,7 @@ export class EditClaimComponent implements OnInit {
         this.claimService.getClaim(param.id).subscribe(res => {
           console.log("cliam", res.data)
           this.claimantDetail = res.data.claimant_details;
-          this.claimDetail= res.data.claim_details;
+          this.claimDetail = res.data.claim_details;
         })
       }
     })

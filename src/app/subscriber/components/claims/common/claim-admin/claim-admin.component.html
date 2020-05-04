@@ -55,7 +55,7 @@
     </div>
 </div>
 <div fxLayout="row wrap" *ngIf="isEdit">
-    <form [formGroup]="claimAdminForm">
+    <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimAdminForm">
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Insurance Name</mat-label>
             <mat-select formControlName="company_name">

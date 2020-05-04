@@ -46,7 +46,7 @@
     </div>
 </div>
 <div fxLayout="row wrap" fxFlex="100" *ngIf="isEdit">
-    <form [formGroup]="employer">
+    <form fxLayout="row wrap" fxFlex="100" [formGroup]="employer">
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Employer Name</mat-label>
             <mat-select formControlName="name">
