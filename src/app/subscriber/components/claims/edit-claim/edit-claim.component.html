@@ -58,7 +58,7 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-correspondance *ngIf="!isLoading" [state]="states"></app-correspondance>
+        <app-correspondance *ngIf="!isLoading" [claimId]="claimId" [state]="states"></app-correspondance>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
