@@ -46,7 +46,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="isEdit">
+<div *ngIf="isEdit" class="deu_info">
     <form fxLayout="row wrap" fxFlex="100" [formGroup]="DEU">
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>Office Name</mat-label>
@@ -96,11 +96,10 @@
             <mat-error>Enter valid fax number</mat-error>
         </mat-form-field>
         <div class="text-center w-100 m-t-10 m-b-50">
-            <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
-                (click)="updateDEU()">
+            <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success" (click)="updateDEU()">
                 Update </button>
             <button mat-raised-button type="button" (click)="isEdit = false" class="rounded-corner"
-                color="warn">Cancle</button>
+                color="warn">Cancel</button>
         </div>
     </form>
 </div>

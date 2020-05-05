@@ -1,51 +1,46 @@
-<mat-divider></mat-divider>
-<div fxLayout="row wrap" *ngIf="!isEdit">
-    <div fxFlex="100">
-        <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-            <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-                <div class="grid-list">
-                    <div>Name</div>
-                    <div>{{employerDetail.name}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Address</div>
-                    <div>{{employerDetail.street1}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Address 1</div>
-                    <div>{{employerDetail.street2}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>City</div>
-                    <div>{{employerDetail.city}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>State</div>
-                    <div>{{employerDetail.state}}</div>
-                </div>
-            </div>
-            <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-                <div class="grid-list">
-                    <div>Zip Code</div>
-                    <div>{{employerDetail.zip_code}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Phone</div>
-                    <div>{{employerDetail.phone}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Email</div>
-                    <div>{{employerDetail.email}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Fax</div>
-                    <div>{{employerDetail.fax}}</div>
-                </div>
-            </div>
+<div fxLayout="row wrap" fxFlex="100" class="p-t-15" *ngIf="!isEdit">
+    <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div class="grid-list">
+            <div>Name</div>
+            <div>{{employerDetail.name}}</div>
+        </div>
+        <div class="grid-list">
+            <div>Address</div>
+            <div>{{employerDetail.street1}}</div>
+        </div>
+        <div class="grid-list">
+            <div>Address 1</div>
+            <div>{{employerDetail.street2}}</div>
+        </div>
+        <div class="grid-list">
+            <div>City</div>
+            <div>{{employerDetail.city}}</div>
+        </div>
+        <div class="grid-list">
+            <div>State</div>
+            <div>{{employerDetail.state}}</div>
+        </div>
+    </div>
+    <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div class="grid-list">
+            <div>Zip Code</div>
+            <div>{{employerDetail.zip_code}}</div>
+        </div>
+        <div class="grid-list">
+            <div>Phone</div>
+            <div>{{employerDetail.phone}}</div>
+        </div>
+        <div class="grid-list">
+            <div>Email</div>
+            <div>{{employerDetail.email}}</div>
+        </div>
+        <div class="grid-list">
+            <div>Fax</div>
+            <div>{{employerDetail.fax}}</div>
         </div>
     </div>
 </div>
-<div fxLayout="row wrap" fxFlex="100" *ngIf="isEdit">
+<div fxLayout="row wrap" fxFlex="100" *ngIf="isEdit" class="employer_info">
     <form fxLayout="row wrap" fxFlex="100" [formGroup]="employer">
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>Name</mat-label>
@@ -97,12 +92,12 @@
             <mat-label>Fax</mat-label>
             <input matInput mask="000-000-0000" placeholder="Fax" formControlName="fax" autocomplete="off">
         </mat-form-field>
-        <div class="text-center w-100 m-t-10 m-b-50">
+        <div class="text-center w-100 m-t-10 m-b-10">
             <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
                 (click)="updateEmployer()">
                 Update </button>
             <button mat-raised-button type="button" (click)="isEdit = false" class="rounded-corner"
-                color="warn">Cancle</button>
+                color="warn">Cancel</button>
         </div>
     </form>
 </div>
