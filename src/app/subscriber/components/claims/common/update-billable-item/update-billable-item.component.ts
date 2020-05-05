@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 export interface PeriodicElement {
   billable_item: string;
   examiner: string;
@@ -13,7 +13,7 @@ export interface PeriodicElement {
 export class UpdateBillableItemComponent implements OnInit {
   displayedColumns: string[] = ['billable_item', 'examiner', 'd_o_s', 'status'];
   dataSource = ELEMENT_DATA;
-
+  @Input('state') states;
   constructor() { }
 
   ngOnInit() {

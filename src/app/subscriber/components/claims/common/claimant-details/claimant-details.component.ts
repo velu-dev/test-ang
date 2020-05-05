@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ClaimantDetailsComponent implements OnInit {
   @Input('claimant') claimantDetailsclaiman;
-
+  @Input('state') states;
   constructor() { }
 
   ngOnInit() {

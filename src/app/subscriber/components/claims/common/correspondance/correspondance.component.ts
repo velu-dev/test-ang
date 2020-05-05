@@ -19,6 +19,8 @@ export interface PeriodicElement {
 })
 export class CorrespondanceComponent implements OnInit {
   displayedColumns: string[] = ['name', 'uploaded_on', 'action'];
+  correspondance: FormGroup;
+  @Input('state') states;
   correspondForm: FormGroup;
   correspondenceSource: any = [];
   @Input('claimId') claimId;
@@ -29,7 +31,7 @@ export class CorrespondanceComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     public dialog: MatDialog,
-   ) { }
+  ) { }
 
   ngOnInit() {
     this.correspondForm = this.formBuilder.group({
@@ -37,12 +39,12 @@ export class CorrespondanceComponent implements OnInit {
       note: ['', Validators.compose([Validators.required])]
     });
 
-      this.claimService.getcorrespondence(this.claimId).subscribe(correspondRes => {
-        console.log(correspondRes);
-        this.correspondenceSource = new MatTableDataSource(correspondRes['data'])
-      }, error => {
-        console.log(error);
-      })
+    this.claimService.getcorrespondence(this.claimId).subscribe(correspondRes => {
+      console.log(correspondRes);
+      this.correspondenceSource = new MatTableDataSource(correspondRes['data'])
+    }, error => {
+      console.log(error);
+    })
   }
 
   selectedFile: File;
@@ -65,7 +67,7 @@ export class CorrespondanceComponent implements OnInit {
     }
 
   }
-  
+
   correspondFormSubmit() {
     console.log(this.correspondForm.value)
     console.log(this.claimId)
@@ -128,7 +130,7 @@ export class CorrespondanceComponent implements OnInit {
     })
   }
 
-  download(data){
-    saveAs(data.exam_report_file_url, data.file_name);
+  download(data) {
+    saveAs(data.exam_report_file_url, "data.file_name");
   }
 }

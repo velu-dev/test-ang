@@ -2,7 +2,7 @@
 <!-- ###~~~~~ Claimant section  ~~~~~###-->
 <div class="claimant_info" fxLayout="row wrap">
     <div fxFlex="100">
-        <app-claimant-details [claimant]="claimantDetail"></app-claimant-details>
+        <app-claimant-details *ngIf="!isLoading" [state]="states" [claimant]="claimantDetail"></app-claimant-details>
     </div>
 </div>
 
@@ -10,7 +10,7 @@
 <!-- ###~~~~~ Claim section  ~~~~~###-->
 <div class="claim_info m-t-10" fxLayout="row wrap">
     <div fxFlex="100">
-        <app-claim [claim]="claimDetail"></app-claim>
+        <app-claim *ngIf="!isLoading" [state]="states" [claim]="claimDetail"></app-claim>
     </div>
 </div>
 
@@ -27,7 +27,7 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <app-update-billable-item></app-update-billable-item>
+                <app-update-billable-item *ngIf="!isLoading" [state]="states"></app-update-billable-item>
             </mat-card-content>
         </mat-card>
     </div>
@@ -45,7 +45,7 @@
         <button mat-raised-button color="primary" class="m-t-5 float-right">
             Add
         </button>
-        <app-injury></app-injury>
+        <app-injury *ngIf="!isLoading" [state]="states"></app-injury>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -58,7 +58,7 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-correspondance [claimId]="claimId"></app-correspondance>
+        <app-correspondance *ngIf="!isLoading" [claimId]="claimId" [state]="states"></app-correspondance>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -73,7 +73,8 @@
             </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-divider></mat-divider>
-        <app-claim-admin [edit]="claimAdminEdit"></app-claim-admin>
+        <app-claim-admin *ngIf="!isLoading" [state]="states" [claim_admin]="claimAdminDetail" [edit]="claimAdminEdit">
+        </app-claim-admin>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -86,7 +87,8 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-employer [edit]="employerEdit"></app-employer>
+        <app-employer *ngIf="!isLoading" [state]="states" [employer]="employeDetail" [edit]="employerEdit">
+        </app-employer>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -99,7 +101,8 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-application-attorney [edit]="aaEdit"></app-application-attorney>
+        <app-application-attorney *ngIf="!isLoading" [state]="states" [aattorney]="aAttorneyDetail" [edit]="aaEdit">
+        </app-application-attorney>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -112,7 +115,8 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-defense-attorney [edit]="daEdit"></app-defense-attorney>
+        <app-defense-attorney *ngIf="!isLoading" [state]="states" [dattroney]="dAttorneyDetail" [edit]="daEdit">
+        </app-defense-attorney>
     </mat-expansion-panel>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -125,7 +129,7 @@
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-deo [edit]="deoEdit"></app-deo>
+        <app-deo *ngIf="!isLoading" [state]="states" [deu]="deuDetail" [edit]="deoEdit"></app-deo>
     </mat-expansion-panel>
 
 </mat-accordion>
