@@ -83,6 +83,7 @@ export class NewClaimantComponent implements OnInit {
     })
     this.today = new Date();
     this.getSingleClaimant()
+    this.claimantForm.disable();
   }
   getSingleClaimant() {
     this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
@@ -107,6 +108,7 @@ export class NewClaimantComponent implements OnInit {
       //this._location.back();
       this.getSingleClaimant()
       this.editStatus = false;
+      this.claimantForm.disable();
     }, error => {
       this.alertService.openSnackBar(error.error, 'error');
     })
@@ -139,10 +141,13 @@ export class NewClaimantComponent implements OnInit {
 
   cancle() {
     //this._location.back();
+    this.getSingleClaimant()
     this.editStatus = false;
+    this.claimantForm.disable();
   }
 
   edit() {
     this.editStatus = true;
+    this.claimantForm.enable();
   }
 }
