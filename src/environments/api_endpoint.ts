@@ -54,8 +54,8 @@ export const api_endpoint = {
     getBillItem: 'billable-item/details',
     correspondenceUpload: 'claim/claims-correspondence-upload',
     getClaimant: 'claimant/',
-    getcorrespondence:'claim/correspondence-details/',
-    deleteCorrespondence:'claim/correspondence-remove/',
+    getcorrespondence: 'claim/correspondence-details/',
+    deleteCorrespondence: 'claim/correspondence-remove/',
 
     //seed data
     seedData: 'claim/seed-data/',
@@ -70,6 +70,7 @@ export const api_endpoint = {
     addExistAddress: 'subscriber/examiner/add-exist-address',
     updatePrimaryAddress: 'subscriber/update/primary-billing-locations/',
     getPrimaryAddress: 'subscriber/primary-billing-locations',
+    updateAgents: 'claim/update-agents/',
 
     //examiner
 
@@ -79,5 +80,5 @@ export const api_endpoint = {
 
     //examination
     getExamination: 'examinations/details',
-    getAllExamination: 'examinations/'
+    getAllExamination: 'examinations/',
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 export interface PeriodicElement {
   body_part: string;
   d_o_i: string;
@@ -12,6 +12,7 @@ export interface PeriodicElement {
 export class InjuryComponent implements OnInit {
   displayedColumns: string[] = ['body_part', 'd_o_i', 'action'];
   dataSource = ELEMENT_DATA;
+  @Input('state') states;
   constructor() { }
 
   ngOnInit() {

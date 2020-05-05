@@ -5,42 +5,42 @@
             <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
                 <div class="grid-list">
                     <div>Office Name</div>
-                    <div></div>
+                    <div>{{deuDetail.name}}</div>
                 </div>
                 <div class="grid-list">
                     <div>Address</div>
-                    <div></div>
+                    <div>{{deuDetail.street1}}</div>
                 </div>
                 <div class="grid-list">
                     <div>Address1</div>
-                    <div></div>
+                    <div>{{deuDetail.street2}}</div>
                 </div>
                 <div class="grid-list">
                     <div>City</div>
-                    <div></div>
+                    <div>{{deuDetail.city}}</div>
                 </div>
                 <div class="grid-list">
                     <div>State</div>
-                    <div></div>
+                    <div>{{deuDetail.state}}</div>
                 </div>
             </div>
             <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
 
                 <div class="grid-list">
                     <div>Zip Code</div>
-                    <div></div>
+                    <div>{{deuDetail.zip_code}}</div>
                 </div>
                 <div class="grid-list">
                     <div>Phone</div>
-                    <div></div>
+                    <div>{{deuDetail.phone}}</div>
                 </div>
                 <div class="grid-list">
                     <div>Email</div>
-                    <div></div>
+                    <div>{{deuDetail.email}}</div>
                 </div>
                 <div class="grid-list">
                     <div>Fax</div>
-                    <div></div>
+                    <div>{{deuDetail.fax}}</div>
                 </div>
             </div>
         </div>
@@ -95,5 +95,12 @@
             <input matInput placeholder="Fax" formControlName="fax" mask="000-000-0000" autocomplete="off">
             <mat-error>Enter valid fax number</mat-error>
         </mat-form-field>
+        <div class="text-center w-100 m-t-10 m-b-50">
+            <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
+                (click)="updateDEU()">
+                Update </button>
+            <button mat-raised-button type="button" (click)="isEdit = false" class="rounded-corner"
+                color="warn">Cancle</button>
+        </div>
     </form>
 </div>

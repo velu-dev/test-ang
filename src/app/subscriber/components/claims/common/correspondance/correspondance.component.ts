@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
@@ -16,6 +16,7 @@ export class CorrespondanceComponent implements OnInit {
   displayedColumns: string[] = ['name', 'uploaded_on', 'action'];
   dataSource = ELEMENT_DATA;
   correspondance: FormGroup;
+  @Input('state') states;
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
