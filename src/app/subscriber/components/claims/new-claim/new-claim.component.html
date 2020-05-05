@@ -113,10 +113,10 @@
                                     <mat-form-field appearance="fill" fxFlex="100"
                                         hideRequiredMarker="hideRequiredControl.auto"
                                         floatLabel="floatLabelControl.auto" class="adj_filter w-100">
-                                        <div matPrefix>
+                                        <!-- <div matPrefix>
                                             <span matPrefix> &nbsp; ADJ &nbsp;</span>
-                                        </div>
-                                        <input matInput placeholder="Enter ADJ number" (keyup.enter)="searchEAMS()"
+                                        </div> -->
+                                        <input matInput placeholder="Enter WCAB number" (keyup.enter)="searchEAMS()"
                                             [formControl]="emasSearchInput">
                                         <span matSuffix class="search-icon icons" (click)="searchEAMS()">
                                             <mat-icon>search</mat-icon>
@@ -199,7 +199,7 @@
                                 <mat-select formControlName="gender">
                                     <mat-option value="M">Male</mat-option>
                                     <mat-option value="F">Female</mat-option>
-                                    <mat-option value="O">Other</mat-option>
+                                    <!-- <mat-option value="O">Other</mat-option> -->
                                 </mat-select>
                                 <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
@@ -209,7 +209,7 @@
                                 <mat-select formControlName="handedness">
                                     <mat-option value="R">Right</mat-option>
                                     <mat-option value="L">Left</mat-option>
-                                    <mat-option value="A">Ambidexterity</mat-option>
+                                    <mat-option value="A">Ambidextrous</mat-option>
                                 </mat-select>
                                 <mat-error>Enter valid handedness</mat-error>
                             </mat-form-field>
@@ -260,8 +260,8 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Street Address</mat-label>
-                                <textarea matInput placeholder="Street Address" formControlName="street1"
+                                <mat-label>Street Address 1</mat-label>
+                                <textarea matInput placeholder="Street Address 1" formControlName="street1"
                                     autocomplete="off"></textarea>
                                 <mat-error>Enter valid street address</mat-error>
                             </mat-form-field>
@@ -325,17 +325,17 @@
                                 <input matInput type="text" placeholder="Claimant name" formControlName="claimant_name"
                                     disabled>
                             </mat-form-field>
-                            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
-                                <span> &nbsp; ADJ
-                                    &nbsp;</span>
-                                <mat-form-field appearance="standard">
-
-                                    <mat-label>ADJ Number*</mat-label>
-                                    <input type="text" matInput placeholder="Enter ADJ Number"
+                            <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj"> -->
+                                <!-- <span> &nbsp; ADJ
+                                    &nbsp;</span> -->
+                                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                    <mat-label>WCAB Number*</mat-label>
+                                    <input type="text" matInput placeholder="Enter WCAB Number"
                                         formControlName="wcab_number" autocomplete="off">
                                     <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
                                 </mat-form-field>
-                            </div>
+                            <!-- </div> -->
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -595,13 +595,13 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Street Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address 1</mat-label>
+                                <mat-label>Street Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
 
@@ -677,13 +677,13 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Street Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address 1</mat-label>
+                                <mat-label>Street Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
 
@@ -765,12 +765,12 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Street Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address 1</mat-label>
+                                <mat-label>Street Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -851,13 +851,13 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Street Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address 1</mat-label>
+                                <mat-label>Street Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
 
@@ -921,12 +921,12 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Street Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address1</mat-label>
+                                <mat-label>Street Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1028,7 +1028,7 @@
                             <mat-select formControlName="examiner_id">
                                 <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
                                     [value]="examinar.id">
-                                    {{examinar.first_name}}</mat-option>
+                                    {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
 

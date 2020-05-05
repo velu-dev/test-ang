@@ -328,9 +328,9 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimant = this.formBuilder.group({
       id: [""],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.required])],
+      first_name: ['', Validators.compose([Validators.required])],
+      middle_name: ['',],
       suffix: [null],
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
@@ -683,7 +683,7 @@ export class NewClaimComponent implements OnInit {
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value)
     if (this.emasSearchInput.value) {
       this.claimant.reset();
-      this.claimService.searchbyEams("ADJ" + this.emasSearchInput.value).subscribe(res => {
+      this.claimService.searchbyEams(this.emasSearchInput.value).subscribe(res => {
         if (res.status) {
           this.isEdit = false;
           this.isClaimantEdit = false;

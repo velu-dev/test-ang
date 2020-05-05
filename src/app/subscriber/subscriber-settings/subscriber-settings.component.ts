@@ -103,9 +103,9 @@ export class SubscriberSettingsComponent implements OnInit {
       this.userForm = this.formBuilder.group({
         id: [''],
         role_id: [''],
-        first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-        last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-        middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+        first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+        last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+        middle_name: ['', Validators.compose([Validators.maxLength(50)])],
         company_name: [{ value: "", disabled: false }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         individual_w9_number: [''],
@@ -119,9 +119,9 @@ export class SubscriberSettingsComponent implements OnInit {
       this.userForm = this.formBuilder.group({
         id: [''],
         role_id: [''],
-        first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-        last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
-        middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+'), Validators.maxLength(50)])],
+        first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+        last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+        middle_name: ['', Validators.compose([Validators.maxLength(50)])],
         company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
       });

@@ -1,42 +1,47 @@
-<div fxLayout="row wrap" fxFlex="100" class="p-t-15" *ngIf="!isEdit">
-    <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-        <div class="grid-list">
-            <div>Name</div>
-            <div>{{employerDetail.name}}</div>
-        </div>
-        <div class="grid-list">
-            <div>Address</div>
-            <div>{{employerDetail.street1}}</div>
-        </div>
-        <div class="grid-list">
-            <div>Address 1</div>
-            <div>{{employerDetail.street2}}</div>
-        </div>
-        <div class="grid-list">
-            <div>City</div>
-            <div>{{employerDetail.city}}</div>
-        </div>
-        <div class="grid-list">
-            <div>State</div>
-            <div>{{employerDetail.state}}</div>
-        </div>
-    </div>
-    <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-        <div class="grid-list">
-            <div>Zip Code</div>
-            <div>{{employerDetail.zip_code}}</div>
-        </div>
-        <div class="grid-list">
-            <div>Phone</div>
-            <div>{{employerDetail.phone}}</div>
-        </div>
-        <div class="grid-list">
-            <div>Email</div>
-            <div>{{employerDetail.email}}</div>
-        </div>
-        <div class="grid-list">
-            <div>Fax</div>
-            <div>{{employerDetail.fax}}</div>
+<mat-divider></mat-divider>
+<div fxLayout="row wrap" *ngIf="!isEdit">
+    <div fxFlex="100">
+        <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
+            <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+                <div class="grid-list">
+                    <div>Name</div>
+                    <div>{{employerDetail.name}}</div>
+                </div>
+                <div class="grid-list">
+                    <div>Street Address 1</div>
+                    <div>{{employerDetail.street1}}</div>
+                </div>
+                <div class="grid-list">
+                    <div>Street Address 2</div>
+                    <div>{{employerDetail.street2}}</div>
+                </div>
+                <div class="grid-list">
+                    <div>City</div>
+                    <div>{{employerDetail.city}}</div>
+                </div>
+                <div class="grid-list">
+                    <div>State</div>
+                    <div>{{employerDetail.state}}</div>
+                </div>
+            </div>
+            <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+                <div class="grid-list">
+                    <div>Zip Code</div>
+                    <div>{{employerDetail.zip_code}}</div>
+                </div>
+                <div class="grid-list">
+                    <div>Phone</div>
+                    <div>{{employerDetail.phone}}</div>
+                </div>
+                <div class="grid-list">
+                    <div>Email</div>
+                    <div>{{employerDetail.email}}</div>
+                </div>
+                <div class="grid-list">
+                    <div>Fax</div>
+                    <div>{{employerDetail.fax}}</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -48,12 +53,12 @@
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-            <mat-label>Address</mat-label>
+            <mat-label>Street Address 1</mat-label>
             <textarea matInput formControlName="street1"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-            <mat-label>Address 1</mat-label>
+            <mat-label>Street Address 2</mat-label>
             <textarea matInput formControlName="street2"></textarea>
         </mat-form-field>
 

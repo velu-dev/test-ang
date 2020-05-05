@@ -40,9 +40,9 @@ export class NewClaimantComponent implements OnInit {
   ngOnInit() {
     this.claimantForm = this.formBuilder.group({
       id: [""],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.required])],
+      first_name: ['', Validators.compose([Validators.required,])],
+      middle_name: [''],
       suffix: [null],
       // zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
@@ -117,10 +117,8 @@ export class NewClaimantComponent implements OnInit {
       return 'Male'
     } else if (code == 'F') {
       return 'Female'
-    } else if (code == 'O') {
-      return 'Other'
     } else {
-      return '-'
+      return ''
     }
   }
 

@@ -14,7 +14,7 @@
         <div fxLayout="row wrap" fxFlex="100" class="p-t-15" *ngIf="!isEdit">
             <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
                 <div class="grid-list">
-                    <div>ADJ Number</div>
+                    <div>WCAB Number</div>
                     <div>{{claimDetail.wcab_number}}</div>
                 </div>
                 <div class="grid-list">
@@ -33,20 +33,21 @@
                 </div>
             </div>
         </div>
+    </mat-card-content>
+</mat-card>
+<div *ngIf="isEdit">
+    <form fxLayout="row wrap" fxFlex="100" class="p-t-10" [formGroup]="claim">
+        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
+            <!-- <span> &nbsp; ADJ
+                &nbsp;</span> -->
+            <mat-form-field appearance="standard">
 
-        <div *ngIf="isEdit" fxLayout="row wrap" fxFlex="100">
-            <form fxLayout="row wrap" fxFlex="100" class="p-t-10" [formGroup]="claim">
-                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
-                    <span> &nbsp; ADJ
-                        &nbsp;</span>
-                    <mat-form-field appearance="standard">
-
-                        <mat-label>ADJ Number*</mat-label>
-                        <input type="text" matInput placeholder="Enter ADJ Number" formControlName="wcab_number"
-                            autocomplete="off">
-                        <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
-                    </mat-form-field>
-                </div>
+                <mat-label>WCAB Number*</mat-label>
+                <input type="text" matInput placeholder="Enter WCAB Number" formControlName="wcab_number"
+                    autocomplete="off">
+                <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
+            </mat-form-field>
+        </div>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Exam Type*</mat-label>
