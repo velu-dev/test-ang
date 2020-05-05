@@ -113,10 +113,10 @@
                                     <mat-form-field appearance="fill" fxFlex="100"
                                         hideRequiredMarker="hideRequiredControl.auto"
                                         floatLabel="floatLabelControl.auto" class="adj_filter w-100">
-                                        <div matPrefix>
+                                        <!-- <div matPrefix>
                                             <span matPrefix> &nbsp; ADJ &nbsp;</span>
-                                        </div>
-                                        <input matInput placeholder="Enter ADJ number" (keyup.enter)="searchEAMS()"
+                                        </div> -->
+                                        <input matInput placeholder="Enter WCAB number" (keyup.enter)="searchEAMS()"
                                             [formControl]="emasSearchInput">
                                         <span matSuffix class="search-icon icons" (click)="searchEAMS()">
                                             <mat-icon>search</mat-icon>
@@ -199,7 +199,7 @@
                                 <mat-select formControlName="gender">
                                     <mat-option value="M">Male</mat-option>
                                     <mat-option value="F">Female</mat-option>
-                                    <mat-option value="O">Other</mat-option>
+                                    <!-- <mat-option value="O">Other</mat-option> -->
                                 </mat-select>
                                 <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
@@ -325,17 +325,17 @@
                                 <input matInput type="text" placeholder="Claimant name" formControlName="claimant_name"
                                     disabled>
                             </mat-form-field>
-                            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
-                                <span> &nbsp; ADJ
-                                    &nbsp;</span>
-                                <mat-form-field appearance="standard">
-
-                                    <mat-label>ADJ Number*</mat-label>
-                                    <input type="text" matInput placeholder="Enter ADJ Number"
+                            <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj"> -->
+                                <!-- <span> &nbsp; ADJ
+                                    &nbsp;</span> -->
+                                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                    <mat-label>WCAB Number*</mat-label>
+                                    <input type="text" matInput placeholder="Enter WCAB Number"
                                         formControlName="wcab_number" autocomplete="off">
                                     <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
                                 </mat-form-field>
-                            </div>
+                            <!-- </div> -->
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">

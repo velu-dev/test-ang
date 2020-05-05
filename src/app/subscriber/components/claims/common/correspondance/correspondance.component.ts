@@ -129,6 +129,6 @@ export class CorrespondanceComponent implements OnInit {
   }
 
   download(data){
-    saveAs(data.exam_report_file_url, "data.file_name");
+    saveAs(data.exam_report_file_url, data.file_name);
   }
 }

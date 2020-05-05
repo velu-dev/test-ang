@@ -117,10 +117,8 @@ export class NewClaimantComponent implements OnInit {
       return 'Male'
     } else if (code == 'F') {
       return 'Female'
-    } else if (code == 'O') {
-      return 'Other'
     } else {
-      return '-'
+      return ''
     }
   }
 
