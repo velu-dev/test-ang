@@ -27,13 +27,13 @@
             <input matInput formControlName="note" placeholder="Note">
 
         </mat-form-field>
-        <div *ngIf="!correspondForm.invalid" fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-            <button mat-stroked-button type="button" (click)="correspondFormSubmit();" color="primary"
+        <div  fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+            <button mat-stroked-button type="button" [disabled]="correspondForm.invalid" (click)="correspondFormSubmit();" color="primary"
                 class="m-t-15 upload_btn p-r-20">Add
             </button>
         </div>
     </form>
-    <!-- <div fxFlex="100">
+    <div fxFlex="100">
         <table mat-table [dataSource]="correspondenceSource" class="user-table">           
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name</th>
@@ -70,5 +70,5 @@
         </table>
         <app-nodata *ngIf="correspondenceSource?.filteredData?.length == 0"></app-nodata>
        
-    </div> -->
+    </div>
 </div>
