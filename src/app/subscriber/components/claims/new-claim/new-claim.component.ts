@@ -328,9 +328,9 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimant = this.formBuilder.group({
       id: [""],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.required])],
+      first_name: ['', Validators.compose([Validators.required])],
+      middle_name: ['',],
       suffix: [null],
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
