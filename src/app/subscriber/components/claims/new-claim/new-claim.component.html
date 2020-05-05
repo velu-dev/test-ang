@@ -316,7 +316,7 @@
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claim</ng-template>
                 <mat-card>
                     <mat-card-header>
-                        <div class="sub-title">Claim Information</div>
+                        <div class="sub-title">Claim</div>
                     </mat-card-header>
                     <mat-card-content>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_details">
@@ -328,6 +328,14 @@
                             <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj"> -->
                                 <!-- <span> &nbsp; ADJ
                                     &nbsp;</span> -->
+                                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                    fxFlex.xs="100">
+                                    <mat-label>Claim Number</mat-label>
+                                    <input matInput placeholder="Claim Number" formControlName="claim_number"
+                                        autocomplete="off">
+                                    <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
+                                </mat-form-field>
+
                                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                     <mat-label>WCAB Number*</mat-label>
@@ -347,13 +355,7 @@
                                 </mat-select>
                                 <mat-error *ngIf="isClaimSubmited">Select exam type</mat-error>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Claim Number*</mat-label>
-                                <input matInput placeholder="Claim Number" formControlName="claim_number"
-                                    autocomplete="off">
-                                <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
-                            </mat-form-field>
+                           
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -369,7 +371,7 @@
 
                     <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Injury Information</div>
+                            <div class="sub-title">Injury</div>
                         </mat-expansion-panel-header>
 
                         <div fxLayout="row wrap" fxFlex="100">
@@ -451,7 +453,7 @@
 
                             <div fxFlex="100" class="p-t-10">
                                 <button mat-raised-button type="button" (click)="addInjury()"
-                                    class="rounded-corner text-center" color="primary">Add</button>
+                                    class="rounded-corner text-center" color="primary">Save</button>
                             </div>
 
                             <table mat-table [dataSource]="dataSource" class="m-t-20 w-100" fxFlex="100">
@@ -566,7 +568,7 @@
 
                     <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Claims Administrator Information</div>
+                            <div class="sub-title">Claims Administrator</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="InsuranceAdjuster">
                             <mat-form-field *ngIf="claimAdminList?.length == 0" appearance="standard" fxFlex="50"
@@ -654,7 +656,7 @@
 
                     <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Employer Information</div>
+                            <div class="sub-title">Employer</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="Employer">
 
@@ -737,7 +739,7 @@
                     <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Applicant
-                                Attorney Information</div>
+                                Attorney</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="ApplicantAttorney">
                             <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
@@ -823,7 +825,7 @@
                     <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Defense Attorney
-                                Information</div>
+                                </div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="DefenseAttorney">
                             <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
@@ -1098,7 +1100,7 @@
 
                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                         Intake
-                        Call Information
+                        Call
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

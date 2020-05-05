@@ -328,13 +328,15 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimant = this.formBuilder.group({
       id: [""],
-      last_name: ['', Validators.compose([Validators.required])],
-      first_name: ['', Validators.compose([Validators.required])],
+      // last_name: ['', Validators.compose([Validators.required])],
+      // first_name: ['', Validators.compose([Validators.required])],
+      last_name: [''],
+      first_name: [''],
       middle_name: ['',],
       suffix: [null],
       zip_code_plus_4: [null],
-      date_of_birth: [null, Validators.required],
-      // date_of_birth: [new Date()],
+      //date_of_birth: [null, Validators.required],
+      date_of_birth: [new Date()],
       gender: [null],
       email: ["", Validators.compose([Validators.email])],
       handedness: [null],
@@ -361,8 +363,8 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(15)])],
-        claim_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
+        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.required, Validators.maxLength(18)])],
+        claim_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(25)])],
         panel_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.pattern('[0-9]+')])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
@@ -648,11 +650,43 @@ export class NewClaimComponent implements OnInit {
         }
         index = index + 1;
       })
+      // let arrData = [];
+      // for (var i in this.injuryInfo['body_part_id']) {
+      //   var part = {
+      //     body_part_id: [this.injuryInfo['body_part_id'][i]],
+      //     date_of_injury: this.injuryInfo['date_of_injury'],
+      //     continuous_trauma: this.injuryInfo['continuous_trauma'],
+      //     continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
+      //     continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
+      //     injury_notes: this.injuryInfo['injury_notes'],
+      //     diagram_url: this.injuryInfo['diagram_url'],
+      //   };
+      //   arrData.push(part)
+      // }
+      // for(var j in arrData){
+      //   this.injuryInfodata.push(arrData[j])
+      // }
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
       this.isInjuryEdit = false;
     } else {
-      this.injuryInfodata.push(this.injuryInfo);
+      let arrData = [];
+      for (var i in this.injuryInfo['body_part_id']) {
+        var part = {
+          body_part_id: [this.injuryInfo['body_part_id'][i]],
+          date_of_injury: this.injuryInfo['date_of_injury'],
+          continuous_trauma: this.injuryInfo['continuous_trauma'],
+          continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
+          continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
+          injury_notes: this.injuryInfo['injury_notes'],
+          diagram_url: this.injuryInfo['diagram_url'],
+        };
+        arrData.push(part)
+      }
+      for(var j in arrData){
+        this.injuryInfodata.push(arrData[j])
+      }
+      console.log("injuryInfodata",this.injuryInfodata)
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     }
@@ -664,7 +698,7 @@ export class NewClaimComponent implements OnInit {
       if (iii)
         data.push(iii.body_part_code + " - " + iii.body_part_name);
     })
-    return data.join(",")
+    return data
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);
@@ -896,7 +930,7 @@ export class NewClaimComponent implements OnInit {
           let type = this.correspondenceSource.data.findIndex(element => element.id == data);
           const tabledata = this.correspondenceSource.data;
           tabledata.splice(type, 1);
-          this.documents_ids.splice(type,1)
+          this.documents_ids.splice(type, 1)
           this.correspondenceSource = new MatTableDataSource(tabledata);
           this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
