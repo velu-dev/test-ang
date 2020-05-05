@@ -50,14 +50,15 @@
     <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
-                Correspondance
+                Correspondence
             </mat-panel-title>
             <mat-panel-description>
-                <button mat-icon-button color="primary">
-                    <mat-icon>edit</mat-icon>
+                <button mat-raised-button color="primary" class="m-b-5">
+                    Edit
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
+        <mat-divider></mat-divider>
         <app-correspondance *ngIf="!isLoading" [claimId]="claimId" [state]="states"></app-correspondance>
     </mat-expansion-panel>
     <mat-expansion-panel>
@@ -66,9 +67,9 @@
                 Claims Administrator
             </mat-panel-title>
             <mat-panel-description>
-                <button (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit" mat-icon-button
-                    color="primary">
-                    <mat-icon>edit</mat-icon>
+                <button mat-raised-button (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit"
+                    color="primary" class="m-b-5">
+                    Edit
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -82,11 +83,13 @@
                 Employer
             </mat-panel-title>
             <mat-panel-description>
-                <button (click)="$event.stopPropagation();employerEdit = !employerEdit" mat-icon-button color="primary">
-                    <mat-icon>edit</mat-icon>
+                <button mat-raised-button (click)="$event.stopPropagation();employerEdit = !employerEdit"
+                    color="primary" class="m-b-5">
+                    Edit
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
+        <mat-divider></mat-divider>
         <app-employer *ngIf="!isLoading" [state]="states" [employer]="employeDetail" [edit]="employerEdit">
         </app-employer>
     </mat-expansion-panel>
@@ -96,8 +99,9 @@
                 Applicant Attorney
             </mat-panel-title>
             <mat-panel-description>
-                <button (click)="$event.stopPropagation();aaEdit = !aaEdit" mat-icon-button color="primary">
-                    <mat-icon>edit</mat-icon>
+                <button mat-raised-button (click)="$event.stopPropagation();aaEdit = !aaEdit" color="primary"
+                    class="m-b-5">
+                    Edit
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -110,8 +114,9 @@
                 Defense Attorney
             </mat-panel-title>
             <mat-panel-description>
-                <button (click)="$event.stopPropagation();daEdit = !daEdit" mat-icon-button color="primary">
-                    <mat-icon>edit</mat-icon>
+                <button mat-raised-button (click)="$event.stopPropagation();daEdit = !daEdit" color="primary"
+                    class="m-b-5">
+                    Edit
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -124,8 +129,9 @@
                 DEU Office
             </mat-panel-title>
             <mat-panel-description>
-                <button (click)="$event.stopPropagation();deoEdit = !deoEdit" mat-icon-button color="primary">
-                    <mat-icon>edit</mat-icon>
+                <button mat-raised-button (click)="$event.stopPropagation();deoEdit = !deoEdit" color="primary"
+                    class="m-b-5">
+                    Edit
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>

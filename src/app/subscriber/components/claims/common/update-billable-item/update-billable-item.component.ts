@@ -21,7 +21,7 @@ export class UpdateBillableItemComponent implements OnInit {
 
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  { billable_item: 'AME Examination', examiner: 'Dr. Martin', d_o_s: '30 Mar 2019', status: 'Paid' },
-  { billable_item: 'Supplemental', examiner: 'Dr. Martin', d_o_s: '30 Mar 2019', status: 'Paid' },
-  { billable_item: 'AME Reevaluation', examiner: 'Dr. Martin', d_o_s: '-', status: 'Awaiting Date' },
+  // { billable_item: 'AME Examination', examiner: 'Dr. Martin', d_o_s: '30 Mar 2019', status: 'Paid' },
+  // { billable_item: 'Supplemental', examiner: 'Dr. Martin', d_o_s: '30 Mar 2019', status: 'Paid' },
+  // { billable_item: 'AME Reevaluation', examiner: 'Dr. Martin', d_o_s: '-', status: 'Awaiting Date' },
 ];
