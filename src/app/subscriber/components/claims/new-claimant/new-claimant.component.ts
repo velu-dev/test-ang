@@ -104,7 +104,7 @@ export class NewClaimantComponent implements OnInit {
     }
     //this.claimantForm.value.date_of_birth = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY")
     this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
-      this.alertService.openSnackBar("User updated successful", 'success');
+      this.alertService.openSnackBar("Claimant updated successful", 'success');
       //this._location.back();
       this.getSingleClaimant()
       this.editStatus = false;
@@ -127,14 +127,14 @@ export class NewClaimantComponent implements OnInit {
   language(id) {
     if (id) {
       let index = this.languageList.findIndex(e=>e.id == id)
-      return this.languageList[index].language ? this.languageList[index].language : '-';
+      return this.languageList[index].language ? this.languageList[index].language : '';
     }
   }
 
   state(id) {
     if (id) {
       let index = this.states.findIndex(e=>e.id == id)
-      return this.states[index].state ? this.states[index].state : '-';
+      return this.states[index].state ? this.states[index].state : '';
     }
   }
 

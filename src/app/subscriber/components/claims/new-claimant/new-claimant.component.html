@@ -246,7 +246,7 @@
           <mat-error>Enter valid zip code</mat-error>
         </mat-form-field>
 
-        <div class="text-center w-100 m-t-10 m-b-50">
+        <div class="text-center w-100 m-t-10 m-b-50" *ngIf="editStatus">
           <button mat-raised-button color="primary" type="submit" (click)="createClaimant()"
             class="m-r-10 rounded-corner btn_success">
             Save </button>

@@ -1,0 +1,136 @@
+<mat-card class="m-card">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Billable Item</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+        <form fxLayout="row wrap" fxFlex="100">
+            <div fxLayout="row wrap" fxFlex="100">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Procedural Type*</mat-label>
+                    <mat-select>
+                        <mat-option>
+                            option here
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Select Procuderal Type</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Modifiers</mat-label>
+                    <mat-select multiple>
+                        <mat-option>
+                            option here
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                Examination
+            </div>
+            <div fxLayout="row wrap" fxFlex="100">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Select Examiner</mat-label>
+                    <mat-select>
+                        <mat-option> option here </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
+                    <mat-label>Date & Time</mat-label>
+                    <input matInput placeholder="Date & Time" autocomplete="off" [owlDateTime]="appointment"
+                        [owlDateTimeTrigger]="appointment">
+                    <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
+                    <owl-date-time (afterPickerOpen)="pickerOpened('app')" #appointment></owl-date-time>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
+                    <mat-label>Duration</mat-label>
+                    <mat-select>
+                        <mat-option>Option here
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                    <mat-label>Examination Location</mat-label>
+                    <input matInput placeholder="Address" aria-label="State" [matAutocomplete]="examinarAuto">
+                    <mat-autocomplete #examinarAuto="matAutocomplete">
+                        <mat-option>
+                            option here
+                        </mat-option>
+                        <mat-option disabled>Location not found
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <div fxFlex="100">
+                    <mat-card-content class="address-list">
+                        <mat-list>
+                            <mat-list-item>
+                                <div class="name" mat-line>
+                                    <div><strong>
+                                            <i class="fa fa-building-o"></i>address type
+                                        </strong></div>
+                                </div>
+                                <div class="address" mat-line>Address here</div>
+                            </mat-list-item>
+                        </mat-list>
+                        <!-- <mat-list>
+                            <mat-list-item>
+                                No Address Selected
+                            </mat-list-item>
+                        </mat-list> -->
+                    </mat-card-content>
+                </div>
+            </div>
+
+            <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                Intake
+                Call
+            </div>
+            <div fxLayout="row wrap" fxFlex="100">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Caller Affiliation</mat-label>
+                    <mat-select>
+                        <mat-option> option here</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Intake Caller</mat-label>
+                    <input matInput placeholder="Intake caller" autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Intake Call Date & Time</mat-label>
+                    <input matInput placeholder="Intake Call Date & Time" autocomplete="off" [owlDateTime]="intake"
+                        [owlDateTimeTrigger]="intake">
+                    <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
+                    <owl-date-time (afterPickerOpen)="pickerOpened('intake')" #intake></owl-date-time>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Intake Call Note</mat-label>
+                    <input matInput placeholder="Intake call note" autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Communication Type</mat-label>
+                    <mat-select>
+                        <mat-option>option here</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <!-- <mat-label>{{billable_item?.value?.intake_call_info?.communication_type}}</mat-label> -->
+                    <input matInput autocomplete="off">
+                    <mat-error>Enter Valid contact information</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="text-center w-100 m-t-10 m-b-50">
+                <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success">
+                    Save </button>
+                <button mat-raised-button type="button" class="rounded-corner" color="warn">Cancel</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
