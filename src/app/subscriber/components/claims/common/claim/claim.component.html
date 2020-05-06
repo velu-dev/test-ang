@@ -5,8 +5,12 @@
         <!-- <button  mat-icon-button color="primary">
             <mat-icon>edit</mat-icon>
         </button> -->
-        <button mat-raised-button color="primary" (click)="editClick()" class="m-b-5">
+        <button *ngIf="!isEdit" mat-raised-button color="primary" (click)="editClick()" class="m-b-5">
             Edit
+        </button>
+        <button *ngIf="isEdit" (click)="updateClaim()" mat-raised-button color="primary" (click)="editClick()"
+            class="m-b-5">
+            Save
         </button>
     </mat-card-header>
     <mat-divider></mat-divider>
@@ -36,22 +40,18 @@
 
         <div>
             <form fxLayout="row wrap" fxFlex="100" class="p-t-10" [formGroup]="claim">
-                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
-                    <!-- <span> &nbsp; ADJ
-                &nbsp;</span> -->
-                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Claim Number*</mat-label>
-                        <input matInput placeholder="Claim Number" formControlName="claim_number" autocomplete="off">
-                        <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="standard">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Claim Number*</mat-label>
+                    <input matInput placeholder="Claim Number" formControlName="claim_number" autocomplete="off">
+                    <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
 
-                        <mat-label>WCAB Number*</mat-label>
-                        <input type="text" matInput placeholder="Enter WCAB Number" formControlName="wcab_number"
-                            autocomplete="off">
-                        <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
-                    </mat-form-field>
-                </div>
+                    <mat-label>WCAB Number*</mat-label>
+                    <input type="text" matInput placeholder="Enter WCAB Number" formControlName="wcab_number"
+                        autocomplete="off">
+                    <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
+                </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Exam Type*</mat-label>
@@ -62,16 +62,16 @@
                     </mat-select>
                     <mat-error *ngIf="isClaimSubmited">Select exam type</mat-error>
                 </mat-form-field>
-                
+
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Panel Number </mat-label>
                     <input matInput placeholder="Panel Number" formControlName="panel_number" autocomplete="off">
                 </mat-form-field>
-                <div class="text-center w-100 m-t-10 m-b-10">
+                <div class="text-center w-100 m-t-10 m-b-10" *ngIf="isEdit">
                     <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
                         (click)="updateClaim()">
                         Save </button>
-                    <button mat-raised-button type="button" (click)="isEdit = false" class="rounded-corner"
+                    <button mat-raised-button type="button" (click)="cancel();isEdit = false" class="rounded-corner"
                         color="warn">Cancel</button>
                 </div>
             </form>

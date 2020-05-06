@@ -530,9 +530,11 @@ input:-webkit-autofill {
   display: flex;
   div {
     padding:5px;
-    -ms-flex: 1; /* IE 10 */
-    flex: 1;
+   
     &:first-child {
+      min-width: 120px;
+      width: 100%;
+      max-width: 120px;
       font-weight: $font-weight-bold;
       font-size: $font-size-1;
       color: $text-gray;
@@ -542,5 +544,12 @@ input:-webkit-autofill {
         float: right;
       }
     }
+  }
+}
+
+
+.add_injury {
+  mat-form-field {
+      padding: 5px !important;
   }
 }
