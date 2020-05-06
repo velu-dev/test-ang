@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" *ngIf="!isEdit">
+<!-- <div fxLayout="row wrap" *ngIf="!isEdit">
     <div fxFlex="100">
         <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
             <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
@@ -54,7 +54,8 @@
         </div>
     </div>
 </div>
-<div fxLayout="row wrap" *ngIf="isEdit" class="claim_admin">
+<div fxLayout="row wrap" *ngIf="isEdit" class="claim_admin"> -->
+<div fxLayout="row wrap" class="claim_admin">
     <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimAdminForm">
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Insurance Name</mat-label>
@@ -113,7 +114,7 @@
         </mat-form-field>
         <div class="text-center w-100 m-t-10 m-b-10">
             <button mat-raised-button class="m-r-10 rounded-corner btn_success" (click)="updateClaimAdmin()">
-                Update </button>
+                Save </button>
             <button mat-raised-button type="button" (click)="isEdit = false" class="rounded-corner"
                 color="warn">Cancel</button>
         </div>

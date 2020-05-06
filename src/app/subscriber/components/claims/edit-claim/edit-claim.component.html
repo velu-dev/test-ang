@@ -42,7 +42,7 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-divider></mat-divider>
-        <app-injury *ngIf="!isLoading" [injury]="injuryDetails" [state]="states"></app-injury>
+        <app-injury *ngIf="!isLoading" [claim_id]="claimId" [state]="states"></app-injury>
     </mat-expansion-panel>
     <mat-expansion-panel (opened)="expandedSection = 1">
         <mat-expansion-panel-header>

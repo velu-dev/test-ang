@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -17,22 +17,29 @@ export class ClaimAdminComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimAdminForm = this.formBuilder.group({
       id: [],
-      company_name: [''],
-      name: [''],
-      street1: [''],
-      street2: [''],
-      city: [''],
-      state: [''],
-      zip_code: [''],
-      phone: [''],
-      email: [''],
-      fax: [null],
+      company_name: [{ value: null, disabled: true }],
+      name: [{ value: null, disabled: true }],
+      street1: [{ value: null, disabled: true }],
+      street2: [{ value: null, disabled: true }],
+      city: [{ value: null, disabled: true }],
+      state: [{ value: null, disabled: true }],
+      zip_code: [{ value: null, disabled: true }],
+      phone: [{ value: null, disabled: true }],
+      email: [{ value: null, disabled: true }],
+      fax: [{ value: null, disabled: true }],
     });
   }
 
   ngOnInit() {
-    console.log(this.claimAdmin)
     this.claimAdminForm.patchValue(this.claimAdmin)
+  }
+  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    this.isEdit = changes.isEdit.currentValue;
+    if (this.isEdit) {
+      Object.keys(this.claimAdminForm.controls).map(key => {
+        this.claimAdminForm.controls[key].enable()
+      })
+    }
   }
   appClaimAdmin(aa) {
 

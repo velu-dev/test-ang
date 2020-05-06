@@ -17,17 +17,27 @@ export class InjuryComponent implements OnInit {
   dataSource: any;
   bodyPartsList = [];
   claim_id: any = "";
+  @Input('claim_id') claimId;
   @Input('state') states;
-  @Input('injury') injuryDetails;
+  injuryDetails = [];
   constructor(public dialog: MatDialog, private claimService: ClaimService) {
 
   }
 
   ngOnInit() {
+    this.getInjury();
+  }
+  getInjury() {
+    this.claimService.getInjury(this.claimId).subscribe(res => {
+      this.injuryDetails = res.data;
+      this.injuryParser();
+    })
+  }
+  injuryParser() {
     this.claimService.seedData("body_part").subscribe(res => {
       this.bodyPartsList = res.data;
-      let data = []
-      console.log(this.injuryDetails, this.bodyPartsList)
+
+      let data = [];
       this.injuryDetails.map(res => {
         this.claim_id = res.claim_id;
         let bpart = [];
@@ -59,6 +69,7 @@ export class InjuryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
       console.log('The dialog was closed');
     });
   }
@@ -69,6 +80,7 @@ export class InjuryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit()
       console.log('The dialog was closed');
     });
   }

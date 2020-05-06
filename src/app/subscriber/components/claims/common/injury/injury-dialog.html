@@ -56,6 +56,6 @@
 
     <div fxFlex="100" class="p-t-10">
         <button mat-raised-button type="button" (click)="addInjury()" class="rounded-corner text-center"
-            color="primary">Add</button>
+            color="primary">{{isEdit ? 'Update' : 'Add'}}</button>
     </div>
 </div>

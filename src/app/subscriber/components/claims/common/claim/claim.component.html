@@ -11,7 +11,7 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="p-b-15 claim_info">
-        <div fxLayout="row wrap" fxFlex="100" class="p-t-15" *ngIf="!isEdit">
+        <!-- <div fxLayout="row wrap" fxFlex="100" class="p-t-15" *ngIf="!isEdit">
             <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
                 <div class="grid-list">
                     <div>WCAB Number</div>
@@ -32,9 +32,9 @@
                     <div>{{claimDetail.panel_number}}</div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div *ngIf="isEdit">
+        <div>
             <form fxLayout="row wrap" fxFlex="100" class="p-t-10" [formGroup]="claim">
                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
                     <!-- <span> &nbsp; ADJ
@@ -70,7 +70,7 @@
                 <div class="text-center w-100 m-t-10 m-b-10">
                     <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
                         (click)="updateClaim()">
-                        Update </button>
+                        Save </button>
                     <button mat-raised-button type="button" (click)="isEdit = false" class="rounded-corner"
                         color="warn">Cancel</button>
                 </div>

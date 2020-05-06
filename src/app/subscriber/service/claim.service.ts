@@ -83,4 +83,7 @@ export class ClaimService {
   updateInjury(data, claim_id) {
     return this.http.put(environment.baseUrl + api_endpoint.updateInjury + claim_id, data)
   }
+  getInjury(claim_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getInjury + claim_id)
+  }
 }
