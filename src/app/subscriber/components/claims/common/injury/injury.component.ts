@@ -16,6 +16,7 @@ export class InjuryComponent implements OnInit {
   displayedColumns: string[] = ['body_part', 'date_of_injury', 'action'];
   dataSource: any;
   bodyPartsList = [];
+  claim_id: any = "";
   @Input('state') states;
   @Input('injury') injuryDetails;
   constructor(public dialog: MatDialog, private claimService: ClaimService) {
@@ -28,6 +29,7 @@ export class InjuryComponent implements OnInit {
       let data = []
       console.log(this.injuryDetails, this.bodyPartsList)
       this.injuryDetails.map(res => {
+        this.claim_id = res.claim_id;
         let bpart = [];
         res.body_part_id.map(bp => {
           let iii = this.bodyPartsList.find(val => val.id == bp)
@@ -53,7 +55,7 @@ export class InjuryComponent implements OnInit {
   openDialog(injury): void {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '550px',
-      data: { isEdit: true, data: injury }
+      data: { isEdit: true, data: injury, claim_id: this.claim_id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -63,7 +65,7 @@ export class InjuryComponent implements OnInit {
   addInjury() {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '550px',
-      data: { isEdit: false }
+      data: { isEdit: false, claim_id: this.claim_id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -78,8 +80,8 @@ export class InjuryComponent implements OnInit {
   templateUrl: 'injury-dialog.html',
 })
 export class InjuryPopup {
-  injuryInfo: any;
-  // injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+  claim_id: any = "";
+  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   today = new Date();
   bodyPartsList = [];
   isEdit: any;
@@ -88,8 +90,12 @@ export class InjuryPopup {
     private claimService: ClaimService,
     public dialogRef: MatDialogRef<InjuryPopup>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    this.injuryInfo = data['data'];
+    this.claim_id = data['claim_id']
     this.isEdit = data['isEdit']
+    if (this.isEdit) {
+      this.injuryInfo = data['data'];
+
+    }
     this.claimService.seedData("body_part").subscribe(res => {
       this.bodyPartsList = res.data;
     })
@@ -102,7 +108,7 @@ export class InjuryPopup {
 
   }
   addInjury() {
-    this.claimService.updateInjury(this.injuryInfo, this.injuryInfo.claim_id).subscribe(res => {
+    this.claimService.updateInjury(this.injuryInfo, this.claim_id).subscribe(res => {
       console.log("res", res)
     })
   }

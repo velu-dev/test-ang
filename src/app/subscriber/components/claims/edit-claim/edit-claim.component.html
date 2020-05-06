@@ -44,13 +44,13 @@
         <mat-divider></mat-divider>
         <app-injury *ngIf="!isLoading" [injury]="injuryDetails" [state]="states"></app-injury>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="expandedSection = 1">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Correspondence
             </mat-panel-title>
             <mat-panel-description>
-                <button mat-raised-button color="primary" class="m-b-5">
+                <button *ngIf="expandedSection == 1" mat-raised-button color="primary" class="m-b-5">
                     Edit
                 </button>
             </mat-panel-description>
@@ -58,14 +58,14 @@
         <mat-divider></mat-divider>
         <app-correspondance *ngIf="!isLoading" [claimId]="claimId" [state]="states"></app-correspondance>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="expandedSection = 2">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Claims Administrator
             </mat-panel-title>
             <mat-panel-description>
-                <button mat-raised-button (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit"
-                    color="primary" class="m-b-5">
+                <button *ngIf="expandedSection == 2" mat-raised-button
+                    (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
             </mat-panel-description>
@@ -74,14 +74,14 @@
         <app-claim-admin *ngIf="!isLoading" [state]="states" [claim_admin]="claimAdminDetail" [edit]="claimAdminEdit">
         </app-claim-admin>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="expandedSection = 3">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Employer
             </mat-panel-title>
             <mat-panel-description>
-                <button mat-raised-button (click)="$event.stopPropagation();employerEdit = !employerEdit"
-                    color="primary" class="m-b-5">
+                <button *ngIf="expandedSection == 3" mat-raised-button
+                    (click)="$event.stopPropagation();employerEdit = !employerEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
             </mat-panel-description>
@@ -90,14 +90,14 @@
         <app-employer *ngIf="!isLoading" [state]="states" [employer]="employeDetail" [edit]="employerEdit">
         </app-employer>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="expandedSection = 4">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Applicant Attorney
             </mat-panel-title>
             <mat-panel-description>
-                <button mat-raised-button (click)="$event.stopPropagation();aaEdit = !aaEdit" color="primary"
-                    class="m-b-5">
+                <button *ngIf="expandedSection == 4" mat-raised-button
+                    (click)="$event.stopPropagation();aaEdit = !aaEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
             </mat-panel-description>
@@ -105,14 +105,14 @@
         <app-application-attorney *ngIf="!isLoading" [state]="states" [aattorney]="aAttorneyDetail" [edit]="aaEdit">
         </app-application-attorney>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="expandedSection = 5">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Defense Attorney
             </mat-panel-title>
             <mat-panel-description>
-                <button mat-raised-button (click)="$event.stopPropagation();daEdit = !daEdit" color="primary"
-                    class="m-b-5">
+                <button *ngIf="expandedSection == 5" mat-raised-button
+                    (click)="$event.stopPropagation();daEdit = !daEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
             </mat-panel-description>
@@ -120,14 +120,14 @@
         <app-defense-attorney *ngIf="!isLoading" [state]="states" [dattroney]="dAttorneyDetail" [edit]="daEdit">
         </app-defense-attorney>
     </mat-expansion-panel>
-    <mat-expansion-panel>
+    <mat-expansion-panel (opened)="expandedSection = 6">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 DEU Office
             </mat-panel-title>
             <mat-panel-description>
-                <button mat-raised-button (click)="$event.stopPropagation();deoEdit = !deoEdit" color="primary"
-                    class="m-b-5">
+                <button *ngIf="expandedSection == 6" mat-raised-button
+                    (click)="$event.stopPropagation();deoEdit = !deoEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
             </mat-panel-description>

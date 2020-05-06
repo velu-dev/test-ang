@@ -19,6 +19,7 @@ export interface PeriodicElement {
 
 
 export class EditClaimComponent implements OnInit {
+  expandedSection = 0;
   panelOpenState = false;
   claimId: any;
   claimantDetail = {};
@@ -65,6 +66,9 @@ export class EditClaimComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  open(){
+    alert("hi")
   }
   setStep(a){
 
