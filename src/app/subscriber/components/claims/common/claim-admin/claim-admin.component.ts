@@ -55,5 +55,9 @@ export class ClaimAdminComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
-
+  cancle() {
+    Object.keys(this.claimAdminForm.controls).map(key => {
+      this.claimAdminForm.controls[key].disable()
+    })
+  }
 }

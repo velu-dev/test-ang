@@ -48,4 +48,9 @@ export class ClaimComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
+  cancel(){
+    Object.keys(this.claim.controls).map(key => {
+      this.claim.controls[key].disable()
+    })
+  }
 }

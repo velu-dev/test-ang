@@ -53,5 +53,9 @@ export class DeoComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
-
+  cancle() {
+    Object.keys(this.DEU.controls).map(key => {
+      this.DEU.controls[key].disable()
+    })
+  }
 }
