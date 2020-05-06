@@ -47,7 +47,10 @@ export class ClaimAdminComponent implements OnInit {
   updateClaimAdmin() {
     this.claimService.updateAgent(this.claimAdminForm.value.id, { InsuranceAdjuster: this.claimAdminForm.value }).subscribe(res => {
       this.isEdit = false;
-      this.alertService.openSnackBar("Claim Administrator updated successfully", 'success')
+      this.alertService.openSnackBar("Claim Administrator updated successfully", 'success');
+      Object.keys(this.claimAdminForm.controls).map(key => {
+        this.claimAdminForm.controls[key].enable()
+      })
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })

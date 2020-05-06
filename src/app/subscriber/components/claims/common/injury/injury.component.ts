@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 export interface PeriodicElement {
   body_part: string;
   d_o_i: string;
@@ -101,7 +102,8 @@ export class InjuryPopup {
   constructor(
     private claimService: ClaimService,
     public dialogRef: MatDialogRef<InjuryPopup>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private alertService: AlertService) {
     this.claim_id = data['claim_id']
     this.isEdit = data['isEdit']
     if (this.isEdit) {
@@ -121,7 +123,10 @@ export class InjuryPopup {
   }
   addInjury() {
     this.claimService.updateInjury(this.injuryInfo, this.claim_id).subscribe(res => {
-      console.log("res", res)
+      this.alertService.openSnackBar("Claim injurt updated successfully", 'success')
+      this.dialogRef.close();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error")
     })
   }
 }

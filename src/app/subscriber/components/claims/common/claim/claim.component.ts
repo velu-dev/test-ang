@@ -20,7 +20,7 @@ export class ClaimComponent implements OnInit {
       wcab_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(15)])],
       claim_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
       panel_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.pattern('[0-9]+')])],
-      exam_type_id: [{value: null, disabled: !this.isEdit}, Validators.required],
+      exam_type_id: [{ value: null, disabled: !this.isEdit }, Validators.required],
       claimant_id: [null]
     })
     this.claimService.seedData('exam_type').subscribe(res => {
@@ -40,6 +40,9 @@ export class ClaimComponent implements OnInit {
   updateClaim() {
     this.claimService.updateClaim(this.claim.value, this.claim.value.id).subscribe(res => {
       this.isEdit = false;
+      Object.keys(this.claim.controls).map(key => {
+        this.claim.controls[key].disable()
+      })
       this.alertService.openSnackBar("Claim updated successfully", 'success')
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")

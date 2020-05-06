@@ -43,9 +43,6 @@ export class EditClaimComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private _location: Location) {
-    this.claimService.seedData('state').subscribe(res => {
-      this.states = res.data;
-    })
     this.route.params.subscribe(param => {
       if (param.id) {
         this.claimId = param.id;
@@ -66,14 +63,13 @@ export class EditClaimComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.claimService.seedData('state').subscribe(res => {
+      this.states = res.data;
+    })
   }
-  open(){
-    alert("hi")
-  }
-  setStep(a){
+  setStep(a) {
 
   }
-
 }
 
 

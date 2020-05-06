@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -17,18 +17,25 @@ export class DeoComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.DEU = this.formBuilder.group({
       id: [null],
-      name: [null],
-      street1: [null],
-      street2: [null],
-      city: [null],
-      state: [null],
-      zip_code: [null],
-      phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      email: [null, Validators.compose([Validators.email])],
-      fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      name: [{ value: null, disabled: true }],
+      street1: [{ value: null, disabled: true }],
+      street2: [{ value: null, disabled: true }],
+      city: [{ value: null, disabled: true }],
+      state: [{ value: null, disabled: true }],
+      zip_code: [{ value: null, disabled: true }],
+      phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+      email: [{ value: null, disabled: true }, Validators.compose([Validators.email])],
+      fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
   }
-
+  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    this.isEdit = changes.isEdit.currentValue;
+    if (this.isEdit) {
+      Object.keys(this.DEU.controls).map(key => {
+        this.DEU.controls[key].enable()
+      })
+    }
+  }
   ngOnInit() {
     this.DEU.patchValue(this.deuDetail)
   }
@@ -38,7 +45,10 @@ export class DeoComponent implements OnInit {
   updateDEU() {
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
       this.isEdit = false;
-      this.alertService.openSnackBar("DEU updated successfully", 'success')
+      this.alertService.openSnackBar("DEU updated successfully", 'success');
+      Object.keys(this.DEU.controls).map(key => {
+        this.DEU.controls[key].enable()
+      })
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })

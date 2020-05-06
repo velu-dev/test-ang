@@ -1,5 +1,5 @@
 <mat-divider></mat-divider>
-<div fxLayout="row wrap" *ngIf="!isEdit">
+<!-- <div fxLayout="row wrap" *ngIf="!isEdit">
     <div fxFlex="100">
         <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
             <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
@@ -49,7 +49,8 @@
         </div>
     </div>
 </div>
-<div *ngIf="isEdit" class="def_attorney_info">
+<div *ngIf="isEdit" class="def_attorney_info"> -->
+<div class="def_attorney_info">
     <form fxLayout="row wrap" fxFlex="100" [formGroup]="DefanceAttorney">
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Law Firm Name</mat-label>
@@ -114,3 +115,4 @@
         </div>
     </form>
 </div>
+<!-- </div> -->
