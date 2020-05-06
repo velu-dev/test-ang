@@ -104,7 +104,7 @@ export class NewClaimantComponent implements OnInit {
     }
     //this.claimantForm.value.date_of_birth = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY")
     this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
-      this.alertService.openSnackBar("User updated successful", 'success');
+      this.alertService.openSnackBar("Claimant updated successful", 'success');
       //this._location.back();
       this.getSingleClaimant()
       this.editStatus = false;
