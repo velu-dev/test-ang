@@ -11,6 +11,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 export class DefenseAttorneyComponent implements OnInit {
   @Input('edit') isEdit;
   @Input('dattroney') dattorneyDetail;
+  @Input('save') isSave = false;
   DefanceAttorney: FormGroup;
   attroneylist = [];
   @Input('state') states;
@@ -30,11 +31,16 @@ export class DefenseAttorneyComponent implements OnInit {
     });
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    this.isEdit = changes.isEdit.currentValue;
+    if (changes.isEdit)
+      this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       Object.keys(this.DefanceAttorney.controls).map(key => {
         this.DefanceAttorney.controls[key].enable()
       })
+    }
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateDAttorney()
     }
   }
   ngOnInit() {
@@ -48,7 +54,7 @@ export class DefenseAttorneyComponent implements OnInit {
       this.isEdit = false;
       this.alertService.openSnackBar("Defence Attorney updated successfully", 'success');
       Object.keys(this.DefanceAttorney.controls).map(key => {
-        this.DefanceAttorney.controls[key].enable()
+        this.DefanceAttorney.controls[key].disable()
       })
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")

@@ -11,6 +11,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 export class ClaimAdminComponent implements OnInit {
   @Input('edit') isEdit;
   @Input('claim_admin') claimAdmin;
+  @Input('save') isSave = false;
   claimAdminForm: FormGroup;
   claimAdminList = []
   @Input('state') states;
@@ -34,11 +35,16 @@ export class ClaimAdminComponent implements OnInit {
     this.claimAdminForm.patchValue(this.claimAdmin)
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    this.isEdit = changes.isEdit.currentValue;
+    if (changes.isEdit)
+      this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       Object.keys(this.claimAdminForm.controls).map(key => {
         this.claimAdminForm.controls[key].enable()
       })
+    }
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateClaimAdmin()
     }
   }
   appClaimAdmin(aa) {
@@ -49,7 +55,7 @@ export class ClaimAdminComponent implements OnInit {
       this.isEdit = false;
       this.alertService.openSnackBar("Claim Administrator updated successfully", 'success');
       Object.keys(this.claimAdminForm.controls).map(key => {
-        this.claimAdminForm.controls[key].enable()
+        this.claimAdminForm.controls[key].disable()
       })
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")

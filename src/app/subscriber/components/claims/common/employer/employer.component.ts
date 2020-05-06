@@ -14,6 +14,7 @@ export class EmployerComponent implements OnInit {
   employer: FormGroup;
   employerList = [];
   @Input('state') states;
+  @Input('save') isSave = false;
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.employer = this.formBuilder.group({
       id: [],
@@ -29,11 +30,16 @@ export class EmployerComponent implements OnInit {
     });
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    this.isEdit = changes.isEdit.currentValue;
+    if (changes.isEdit)
+      this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       Object.keys(this.employer.controls).map(key => {
         this.employer.controls[key].enable()
       })
+    }
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateEmployer()
     }
   }
   ngOnInit() {
@@ -44,7 +50,7 @@ export class EmployerComponent implements OnInit {
       this.isEdit = false;
       this.alertService.openSnackBar("Employer updated successfully", 'success');
       Object.keys(this.employer.controls).map(key => {
-        this.employer.controls[key].enable()
+        this.employer.controls[key].disable()
       })
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")

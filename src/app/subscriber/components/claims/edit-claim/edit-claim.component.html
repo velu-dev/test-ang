@@ -66,17 +66,20 @@
             </mat-panel-title>
             <mat-panel-description>
                 <button *ngIf="!claimAdminEdit && expandedSection == 2" mat-raised-button
-                    (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit" color="primary" class="m-b-5">
+                    (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit;saveClick.claimAdmin = false"
+                    color="primary" class="m-b-5">
                     Edit
                 </button>
                 <button *ngIf="claimAdminEdit" mat-raised-button
-                    (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit" color="primary" class="m-b-5">
+                    (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit;saveClick.claimAdmin = true"
+                    color="primary" class="m-b-5">
                     Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-divider></mat-divider>
-        <app-claim-admin *ngIf="!isLoading" [state]="states" [claim_admin]="claimAdminDetail" [edit]="claimAdminEdit">
+        <app-claim-admin *ngIf="!isLoading" [save]="saveClick.claimAdmin" [state]="states"
+            [claim_admin]="claimAdminDetail" [edit]="claimAdminEdit">
         </app-claim-admin>
     </mat-expansion-panel>
     <mat-expansion-panel (opened)="expandedSection = 3">
@@ -86,17 +89,20 @@
             </mat-panel-title>
             <mat-panel-description>
                 <button *ngIf="!employerEdit && expandedSection == 3" mat-raised-button
-                    (click)="$event.stopPropagation();employerEdit = !employerEdit" color="primary" class="m-b-5">
+                    (click)="$event.stopPropagation();employerEdit = !employerEdit;saveClick.employer = false"
+                    color="primary" class="m-b-5">
                     Edit
                 </button>
                 <button *ngIf="employerEdit" mat-raised-button
-                    (click)="$event.stopPropagation();employerEdit = !employerEdit" color="primary" class="m-b-5">
+                    (click)="$event.stopPropagation();employerEdit = !employerEdit;saveClick.employer = true"
+                    color="primary" class="m-b-5">
                     Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-divider></mat-divider>
-        <app-employer *ngIf="!isLoading" [state]="states" [employer]="employeDetail" [edit]="employerEdit">
+        <app-employer *ngIf="!isLoading" [save]="saveClick.employer" [state]="states" [employer]="employeDetail"
+            [edit]="employerEdit">
         </app-employer>
     </mat-expansion-panel>
     <mat-expansion-panel (opened)="expandedSection = 4">
@@ -109,13 +115,15 @@
                     (click)="$event.stopPropagation();aaEdit = !aaEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="aaEdit" mat-raised-button (click)="$event.stopPropagation();aaEdit = !aaEdit"
-                    color="primary" class="m-b-5">
+                <button *ngIf="aaEdit" mat-raised-button
+                    (click)="$event.stopPropagation();aaEdit = !aaEdit;saveClick.aa = true" color="primary"
+                    class="m-b-5">
                     Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-application-attorney *ngIf="!isLoading" [state]="states" [aattorney]="aAttorneyDetail" [edit]="aaEdit">
+        <app-application-attorney *ngIf="!isLoading" [save]="saveClick.aa" [state]="states"
+            [aattorney]="aAttorneyDetail" [edit]="aaEdit">
         </app-application-attorney>
     </mat-expansion-panel>
     <mat-expansion-panel (opened)="expandedSection = 5">
@@ -128,13 +136,15 @@
                     (click)="$event.stopPropagation();daEdit = !daEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="daEdit" mat-raised-button (click)="$event.stopPropagation();daEdit = !daEdit"
-                    color="primary" class="m-b-5">
+                <button *ngIf="daEdit" mat-raised-button
+                    (click)="$event.stopPropagation();daEdit = !daEdit;saveClick.da = true" color="primary"
+                    class="m-b-5">
                     Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-defense-attorney *ngIf="!isLoading" [state]="states" [dattroney]="dAttorneyDetail" [edit]="daEdit">
+        <app-defense-attorney *ngIf="!isLoading" [save]="saveClick.da" [state]="states" [dattroney]="dAttorneyDetail"
+            [edit]="daEdit">
         </app-defense-attorney>
     </mat-expansion-panel>
     <mat-expansion-panel (opened)="expandedSection = 6">
@@ -148,12 +158,14 @@
                     Edit
                 </button>
                 <button *ngIf="deoEdit  && expandedSection == 6" mat-raised-button
-                    (click)="$event.stopPropagation();deoEdit = !deoEdit" color="primary" class="m-b-5">
+                    (click)="$event.stopPropagation();deoEdit = !deoEdit;saveClick.deu = true" color="primary"
+                    class="m-b-5">
                     Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-deo *ngIf="!isLoading" [state]="states" [deu]="deuDetail" [edit]="deoEdit"></app-deo>
+        <app-deo *ngIf="!isLoading" [save]="saveClick.deu" [state]="states" [deu]="deuDetail" [edit]="deoEdit">
+        </app-deo>
     </mat-expansion-panel>
 
 </mat-accordion>

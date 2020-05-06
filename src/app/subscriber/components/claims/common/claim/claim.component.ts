@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -48,7 +48,7 @@ export class ClaimComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
-  cancel(){
+  cancel() {
     Object.keys(this.claim.controls).map(key => {
       this.claim.controls[key].disable()
     })

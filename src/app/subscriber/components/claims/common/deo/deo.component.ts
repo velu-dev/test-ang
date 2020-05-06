@@ -14,6 +14,7 @@ export class DeoComponent implements OnInit {
   DEU: FormGroup;
   attroneylist = [];
   @Input('state') states;
+  @Input('save') isSave = false;
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.DEU = this.formBuilder.group({
       id: [null],
@@ -29,11 +30,16 @@ export class DeoComponent implements OnInit {
     });
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    this.isEdit = changes.isEdit.currentValue;
+    if (changes.isEdit)
+      this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       Object.keys(this.DEU.controls).map(key => {
         this.DEU.controls[key].enable()
       })
+    }
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateDEU()
     }
   }
   ngOnInit() {
@@ -47,7 +53,7 @@ export class DeoComponent implements OnInit {
       this.isEdit = false;
       this.alertService.openSnackBar("DEU updated successfully", 'success');
       Object.keys(this.DEU.controls).map(key => {
-        this.DEU.controls[key].enable()
+        this.DEU.controls[key].disable()
       })
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")

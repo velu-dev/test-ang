@@ -12,6 +12,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   @Input('edit') isEdit;
   @Input('aattorney') aattorneyDetail;
   @Input('state') states;
+  @Input('save') isSave;
   ApplicantAttorney: FormGroup;
   attroneylist = [];
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
@@ -35,6 +36,10 @@ export class ApplicationAttorneyComponent implements OnInit {
       Object.keys(this.ApplicantAttorney.controls).map(key => {
         this.ApplicantAttorney.controls[key].enable()
       })
+    }
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateAAttorney()
     }
   }
   ngOnInit() {

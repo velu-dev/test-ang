@@ -32,6 +32,7 @@ export class EditClaimComponent implements OnInit {
   injuryDetails = [];
   claimAdminEdit = false;
   employerEdit = false;
+  saveClick = { claimAdmin: false, employer: false, aa: false, da: false, deu: false };
   aaEdit = false;
   daEdit = false;
   deoEdit = false;
