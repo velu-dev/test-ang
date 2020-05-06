@@ -54,4 +54,9 @@ export class DefenseAttorneyComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
+  cancle() {
+    Object.keys(this.DefanceAttorney.controls).map(key => {
+      this.DefanceAttorney.controls[key].disable()
+    })
+  }
 }

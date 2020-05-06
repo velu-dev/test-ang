@@ -50,4 +50,9 @@ export class EmployerComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
+  cancle() {
+    Object.keys(this.employer.controls).map(key => {
+      this.employer.controls[key].disable()
+    })
+  }
 }

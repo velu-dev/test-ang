@@ -5,8 +5,12 @@
         <!-- <button  mat-icon-button color="primary">
             <mat-icon>edit</mat-icon>
         </button> -->
-        <button mat-raised-button color="primary" (click)="editClick()" class="m-b-5">
+        <button *ngIf="!isEdit" mat-raised-button color="primary" (click)="editClick()" class="m-b-5">
             Edit
+        </button>
+        <button *ngIf="isEdit" (click)="updateClaim()" mat-raised-button color="primary" (click)="editClick()"
+            class="m-b-5">
+            Save
         </button>
     </mat-card-header>
     <mat-divider></mat-divider>
@@ -67,7 +71,7 @@
                     <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
                         (click)="updateClaim()">
                         Save </button>
-                    <button mat-raised-button type="button" (click)="isEdit = false" class="rounded-corner"
+                    <button mat-raised-button type="button" (click)="cancel();isEdit = false" class="rounded-corner"
                         color="warn">Cancel</button>
                 </div>
             </form>

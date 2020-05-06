@@ -21,7 +21,8 @@
             <mat-card-header>
                 <div class="content-wrapper-main-title p-t-10 m-b-10">Billable Items </div>
                 <span class="spacer"></span>
-                <button mat-raised-button [routerLink]="['/subscriber/new-billable-item']" color="primary" class="m-b-5">
+                <button mat-raised-button [routerLink]="['/subscriber/new-billable-item']" color="primary"
+                    class="m-b-5">
                     New Billable item
                 </button>
             </mat-card-header>
@@ -64,9 +65,13 @@
                 Claims Administrator
             </mat-panel-title>
             <mat-panel-description>
-                <button *ngIf="expandedSection == 2" mat-raised-button
+                <button *ngIf="!claimAdminEdit && expandedSection == 2" mat-raised-button
                     (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit" color="primary" class="m-b-5">
                     Edit
+                </button>
+                <button *ngIf="claimAdminEdit" mat-raised-button
+                    (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit" color="primary" class="m-b-5">
+                    Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -80,9 +85,13 @@
                 Employer
             </mat-panel-title>
             <mat-panel-description>
-                <button *ngIf="expandedSection == 3" mat-raised-button
+                <button *ngIf="!employerEdit && expandedSection == 3" mat-raised-button
                     (click)="$event.stopPropagation();employerEdit = !employerEdit" color="primary" class="m-b-5">
                     Edit
+                </button>
+                <button *ngIf="employerEdit" mat-raised-button
+                    (click)="$event.stopPropagation();employerEdit = !employerEdit" color="primary" class="m-b-5">
+                    Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -96,9 +105,13 @@
                 Applicant Attorney
             </mat-panel-title>
             <mat-panel-description>
-                <button *ngIf="expandedSection == 4" mat-raised-button
+                <button *ngIf="!aaEdit && expandedSection == 4" mat-raised-button
                     (click)="$event.stopPropagation();aaEdit = !aaEdit" color="primary" class="m-b-5">
                     Edit
+                </button>
+                <button *ngIf="aaEdit" mat-raised-button (click)="$event.stopPropagation();aaEdit = !aaEdit"
+                    color="primary" class="m-b-5">
+                    Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -111,9 +124,13 @@
                 Defense Attorney
             </mat-panel-title>
             <mat-panel-description>
-                <button *ngIf="expandedSection == 5" mat-raised-button
+                <button *ngIf="!daEdit && expandedSection == 5" mat-raised-button
                     (click)="$event.stopPropagation();daEdit = !daEdit" color="primary" class="m-b-5">
                     Edit
+                </button>
+                <button *ngIf="daEdit" mat-raised-button (click)="$event.stopPropagation();daEdit = !daEdit"
+                    color="primary" class="m-b-5">
+                    Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
@@ -126,9 +143,13 @@
                 DEU Office
             </mat-panel-title>
             <mat-panel-description>
-                <button *ngIf="expandedSection == 6" mat-raised-button
+                <button *ngIf="!deoEdit && expandedSection == 6" mat-raised-button
                     (click)="$event.stopPropagation();deoEdit = !deoEdit" color="primary" class="m-b-5">
                     Edit
+                </button>
+                <button *ngIf="deoEdit  && expandedSection == 6" mat-raised-button
+                    (click)="$event.stopPropagation();deoEdit = !deoEdit" color="primary" class="m-b-5">
+                    Save
                 </button>
             </mat-panel-description>
         </mat-expansion-panel-header>
