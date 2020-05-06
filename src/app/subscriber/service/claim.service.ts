@@ -80,4 +80,7 @@ export class ClaimService {
   updateAgent(id, value): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.updateAgents + id, value)
   }
+  updateInjury(data, claim_id) {
+    return this.http.put(environment.baseUrl + api_endpoint.updateInjury + claim_id, data)
+  }
 }

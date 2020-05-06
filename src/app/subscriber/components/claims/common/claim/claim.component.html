@@ -37,6 +37,11 @@
         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
             <!-- <span> &nbsp; ADJ
                 &nbsp;</span> -->
+            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Claim Number*</mat-label>
+                <input matInput placeholder="Claim Number" formControlName="claim_number" autocomplete="off">
+                <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
+            </mat-form-field>
             <mat-form-field appearance="standard">
 
                 <mat-label>WCAB Number*</mat-label>
@@ -54,11 +59,6 @@
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="isClaimSubmited">Select exam type</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-            <mat-label>Claim Number*</mat-label>
-            <input matInput placeholder="Claim Number" formControlName="claim_number" autocomplete="off">
-            <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

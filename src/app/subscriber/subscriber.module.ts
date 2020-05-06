@@ -30,7 +30,7 @@ import { ExaminationCalanderViewComponent } from './examiner/examination-calande
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
 import { ClaimComponent } from './components/claims/common/claim/claim.component';
-import { InjuryComponent } from './components/claims/common/injury/injury.component';
+import { InjuryComponent, InjuryPopup } from './components/claims/common/injury/injury.component';
 import { ClaimAdminComponent } from './components/claims/common/claim-admin/claim-admin.component';
 import { EmployerComponent } from './components/claims/common/employer/employer.component';
 import { ApplicationAttorneyComponent } from './components/claims/common/application-attorney/application-attorney.component';
@@ -80,12 +80,14 @@ import { UpdateBillableItemComponent } from './components/claims/common/update-b
     DeoComponent,
     CorrespondanceComponent,
     ClaimantDetailsComponent,
-    UpdateBillableItemComponent
+    UpdateBillableItemComponent,
+    InjuryPopup
   ],
   entryComponents: [
     ClaimantPopupComponent,
     ClaimPopupComponent,
-    BillableitemPopupComponent
+    BillableitemPopupComponent,
+    InjuryPopup
   ],
   imports: [
     CommonModule,

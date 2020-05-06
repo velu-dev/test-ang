@@ -652,7 +652,12 @@ export class NewClaimComponent implements OnInit {
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
       this.isInjuryEdit = false;
     } else {
-      this.injuryInfodata.push(this.injuryInfo);
+      let data = [];
+      console.log(this.injuryInfo.body_part_id)
+      this.injuryInfo.body_part_id.map(res => {
+        data.push({ body_part_id: res, date_of_injury: this.injuryInfo.date_of_injury, continuous_trauma: this.injuryInfo.continuous_trauma, continuous_trauma_start_date: this.injuryInfo.continuous_trauma_start_date, continuous_trauma_end_date: this.injuryInfo.continuous_trauma_end_date, injury_notes: this.injuryInfo.injury_notes, diagram_url: this.injuryInfo.diagram_url })
+      })
+      this.injuryInfodata.push(data);
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     }
@@ -896,7 +901,7 @@ export class NewClaimComponent implements OnInit {
           let type = this.correspondenceSource.data.findIndex(element => element.id == data);
           const tabledata = this.correspondenceSource.data;
           tabledata.splice(type, 1);
-          this.documents_ids.splice(type,1)
+          this.documents_ids.splice(type, 1)
           this.correspondenceSource = new MatTableDataSource(tabledata);
           this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {

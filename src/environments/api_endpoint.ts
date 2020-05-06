@@ -71,6 +71,7 @@ export const api_endpoint = {
     updatePrimaryAddress: 'subscriber/update/primary-billing-locations/',
     getPrimaryAddress: 'subscriber/primary-billing-locations',
     updateAgents: 'claim/update-agents/',
+    updateInjury: 'claim/update-injuries/',
 
     //examiner
 

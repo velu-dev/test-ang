@@ -28,6 +28,7 @@ export class EditClaimComponent implements OnInit {
   dAttorneyDetail = {};
   deuDetail = {};
   employeDetail = {};
+  injuryDetails = [];
   claimAdminEdit = false;
   employerEdit = false;
   aaEdit = false;
@@ -56,6 +57,7 @@ export class EditClaimComponent implements OnInit {
           this.aAttorneyDetail = res.data.agent_details.ApplicantAttorney;
           this.dAttorneyDetail = res.data.agent_details.DefenseAttorney;
           this.deuDetail = res.data.agent_details.DEU;
+          this.injuryDetails = res.data.claim_injuries;
           this.isLoading = false;
         })
       }
@@ -63,6 +65,9 @@ export class EditClaimComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  setStep(a){
+
   }
 
 }
