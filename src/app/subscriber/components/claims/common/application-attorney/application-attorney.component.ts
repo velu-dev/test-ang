@@ -31,7 +31,8 @@ export class ApplicationAttorneyComponent implements OnInit {
     });
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    this.isEdit = changes.isEdit.currentValue;
+    if (changes.isEdit)
+      this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       Object.keys(this.ApplicantAttorney.controls).map(key => {
         this.ApplicantAttorney.controls[key].enable()
