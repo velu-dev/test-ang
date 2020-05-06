@@ -86,4 +86,9 @@ export class ClaimService {
   getInjury(claim_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getInjury + claim_id)
   }
+
+  getbillableItem(claim_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.billableItemList + claim_id)
+  }
+
 }

@@ -22,7 +22,7 @@ export class EditClaimComponent implements OnInit {
   expandedSection = 0;
   panelOpenState = false;
   claimId: any;
-  claimantDetail = {};
+  claimantDetail:any = {};
   claimDetail = {};
   claimAdminDetail = {};
   aAttorneyDetail = {};
@@ -71,6 +71,11 @@ export class EditClaimComponent implements OnInit {
   setStep(a) {
 
   }
+
+  navigateBillable(){
+    this.router.navigate(['/subscriber/new-billable-item',this.claimId,this.claimantDetail.id])
+  }
+
 }
 
 

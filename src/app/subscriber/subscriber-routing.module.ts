@@ -70,7 +70,10 @@ const routes: Routes = [{
   path: "new-billable-item",
   component: NewBillableItemComponent
 },{
-  path: "new-billable-item/:id",
+  path: "new-billable-item/:claim/:claimant",
+  component: NewBillableItemComponent
+},{
+  path: "new-billable-item/:claim/:claimant/:billable",
   component: NewBillableItemComponent
 },
 {
