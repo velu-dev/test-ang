@@ -70,7 +70,7 @@
                     color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="claimAdminEdit" mat-raised-button
+                <button *ngIf="claimAdminEdit && expandedSection == 2" mat-raised-button
                     (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit;saveClick.claimAdmin = true"
                     color="primary" class="m-b-5">
                     Save
@@ -93,7 +93,7 @@
                     color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="employerEdit" mat-raised-button
+                <button *ngIf="employerEdit && expandedSection == 3" mat-raised-button
                     (click)="$event.stopPropagation();employerEdit = !employerEdit;saveClick.employer = true"
                     color="primary" class="m-b-5">
                     Save
@@ -115,7 +115,7 @@
                     (click)="$event.stopPropagation();aaEdit = !aaEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="aaEdit" mat-raised-button
+                <button *ngIf="aaEdit && expandedSection == 4" mat-raised-button
                     (click)="$event.stopPropagation();aaEdit = !aaEdit;saveClick.aa = true" color="primary"
                     class="m-b-5">
                     Save
@@ -136,7 +136,7 @@
                     (click)="$event.stopPropagation();daEdit = !daEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="daEdit" mat-raised-button
+                <button *ngIf="daEdit && expandedSection == 5" mat-raised-button
                     (click)="$event.stopPropagation();daEdit = !daEdit;saveClick.da = true" color="primary"
                     class="m-b-5">
                     Save
