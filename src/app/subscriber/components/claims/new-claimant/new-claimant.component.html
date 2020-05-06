@@ -2,13 +2,16 @@
   <mat-card-header>
     <div class="m-0 content-wrapper-main-title">Claimant </div>
     <span class="spacer"></span>
-    <button mat-raised-button color="primary" class="m-b-5" (click)="edit()">
+    <button mat-raised-button color="primary" *ngIf="!editStatus" class="m-b-5" (click)="edit()">
       Edit
+    </button>
+    <button mat-raised-button color="primary" *ngIf="editStatus" class="m-b-5" (click)="createClaimant()">
+      Save
     </button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <div fxLayout="row wrap" fxFlex="100" class="p-t-15"  *ngIf="!editStatus">
+    <!-- <div fxLayout="row wrap" fxFlex="100" class="p-t-15"  *ngIf="!editStatus">
       <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
         <div class="grid-list">
           <div>First Name</div>
@@ -97,9 +100,9 @@
           <div>{{claimantForm?.value.zip_code}}</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div fxLayout="row wrap" fxFlex="100" *ngIf="editStatus">
+    <div fxLayout="row wrap" fxFlex="100">
       <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimantForm">
 
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
@@ -246,7 +249,7 @@
         <div class="text-center w-100 m-t-10 m-b-50">
           <button mat-raised-button color="primary" type="submit" (click)="createClaimant()"
             class="m-r-10 rounded-corner btn_success">
-            Update </button>
+            Save </button>
           <button mat-raised-button (click)="cancle()" class="rounded-corner" color="warn">Cancel</button>
 
         </div>

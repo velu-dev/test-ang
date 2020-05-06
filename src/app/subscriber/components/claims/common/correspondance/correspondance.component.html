@@ -1,28 +1,40 @@
-<mat-divider></mat-divider>
 <div fxLayout="row wrap" fxFlex="100">
     <form fxFlex="100" [formGroup]="correspondForm">
-        <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" appearance="standard"
+
+
+        <div fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="Upload_">
+            <button (click)="uploader.click()" mat-stroked-button color="primary"> 
+                Select File<i class="fa fa-upload p-l-5"></i></button>
+            <mat-form-field appearance="standard">
+                <input matInput formControlName="file" readonly [value]="selectedFile?.name"
+                    placeholder="No file chosen">
+                <input type="file" formControlName="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
+                    accept=".pdf, .doc, .docx, .excel, .csv">
+            </mat-form-field>
+        </div>
+
+        <!-- <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" appearance="standard"
             hideRequiredMarker="hideRequiredControl.auto" floatLabel="floatLabelControl.auto">
+           
             <input matInput formControlName="file" readonly [value]="selectedFile?.name" placeholder="No file chosen">
             <input type="file" formControlName="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
                 accept=".pdf, .doc, .docx, .excel, .csv">
-            <span matSuffix (click)="uploader.click()">File Upload</span>
-        </mat-form-field>
+           
+        </mat-form-field> -->
 
         <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" appearance="standard">
             <mat-label>Note</mat-label>
             <input matInput formControlName="note" placeholder="Note">
 
         </mat-form-field>
-        <div *ngIf="!correspondForm.invalid" fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-            <button mat-stroked-button type="button" (click)="correspondFormSubmit();" color="primary" class="m-t-15 upload_btn p-r-20">Add
+        <div  fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+            <button mat-stroked-button type="button" [disabled]="correspondForm.invalid" (click)="correspondFormSubmit();" color="primary"
+                class="m-t-15 upload_btn p-r-20">Add
             </button>
         </div>
     </form>
     <div fxFlex="100">
-        <table mat-table [dataSource]="correspondenceSource" class="user-table">
-
-           
+        <table mat-table [dataSource]="correspondenceSource" class="user-table">           
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name</th>
                 <td mat-cell *matCellDef="let element"> <b
