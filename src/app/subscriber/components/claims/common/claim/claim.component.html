@@ -41,13 +41,13 @@
         <div>
             <form fxLayout="row wrap" fxFlex="100" class="p-t-10" [formGroup]="claim">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Claim Number*</mat-label>
+                    <mat-label>Claim Number</mat-label>
                     <input matInput placeholder="Claim Number" formControlName="claim_number" autocomplete="off">
                     <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
 
-                    <mat-label>WCAB Number*</mat-label>
+                    <mat-label>WCAB Number</mat-label>
                     <input type="text" matInput placeholder="Enter WCAB Number" formControlName="wcab_number"
                         autocomplete="off">
                     <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>

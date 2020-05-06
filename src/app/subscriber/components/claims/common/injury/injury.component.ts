@@ -37,8 +37,8 @@ export class InjuryComponent implements OnInit {
   injuryParser() {
     this.claimService.seedData("body_part").subscribe(res => {
       this.bodyPartsList = res.data;
-
       let data = [];
+      console.log(this.bodyPartsList, this.injuryDetails)
       this.injuryDetails.map(res => {
         this.claim_id = res.claim_id;
         let bpart = [];
@@ -85,6 +85,10 @@ export class InjuryComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+  deleteInjury(data, index) {
+    this.injuryDetails.splice(index, 1);
+    this.injuryParser();
+  }
 
 }
 
@@ -122,11 +126,35 @@ export class InjuryPopup {
 
   }
   addInjury() {
-    this.claimService.updateInjury(this.injuryInfo, this.claim_id).subscribe(res => {
-      this.alertService.openSnackBar("Claim injurt updated successfully", 'success')
-      this.dialogRef.close();
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, "error")
-    })
+    if (this.isEdit) {
+      this.claimService.updateInjury(this.injuryInfo, this.claim_id).subscribe(res => {
+        this.alertService.openSnackBar("Claim injurt updated successfully", 'success')
+        this.dialogRef.close();
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, "error")
+      })
+    } else {
+      let arrData = [];
+      for (var i in this.injuryInfo['body_part_id']) {
+        var part = {
+          body_part_id: [this.injuryInfo['body_part_id'][i]],
+          date_of_injury: this.injuryInfo['date_of_injury'],
+          continuous_trauma: this.injuryInfo['continuous_trauma'],
+          continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
+          continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
+          injury_notes: this.injuryInfo['injury_notes'],
+          diagram_url: this.injuryInfo['diagram_url'],
+        };
+        arrData.push(part)
+      }
+      arrData.map(row => {
+        this.claimService.updateInjury(row, this.claim_id).subscribe(res => {
+          this.alertService.openSnackBar("Claim injurt updated successfully", 'success')
+          this.dialogRef.close();
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, "error")
+        })
+      })
+    }
   }
 }

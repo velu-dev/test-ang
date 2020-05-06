@@ -38,9 +38,7 @@ export class ClaimAdminComponent implements OnInit {
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
-      Object.keys(this.claimAdminForm.controls).map(key => {
-        this.claimAdminForm.controls[key].enable()
-      })
+      this.claimAdminForm.enable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
@@ -54,16 +52,12 @@ export class ClaimAdminComponent implements OnInit {
     this.claimService.updateAgent(this.claimAdminForm.value.id, { InsuranceAdjuster: this.claimAdminForm.value }).subscribe(res => {
       this.isEdit = false;
       this.alertService.openSnackBar("Claim Administrator updated successfully", 'success');
-      Object.keys(this.claimAdminForm.controls).map(key => {
-        this.claimAdminForm.controls[key].disable()
-      })
+      this.claimAdminForm.disable();
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancle() {
-    Object.keys(this.claimAdminForm.controls).map(key => {
-      this.claimAdminForm.controls[key].disable()
-    })
+    this.claimAdminForm.disable();
   }
 }

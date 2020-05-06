@@ -33,9 +33,7 @@ export class DeoComponent implements OnInit {
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
-      Object.keys(this.DEU.controls).map(key => {
-        this.DEU.controls[key].enable()
-      })
+      this.DEU.enable()
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
@@ -52,16 +50,12 @@ export class DeoComponent implements OnInit {
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
       this.isEdit = false;
       this.alertService.openSnackBar("DEU updated successfully", 'success');
-      Object.keys(this.DEU.controls).map(key => {
-        this.DEU.controls[key].disable()
-      })
+      this.DEU.disable();
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancle() {
-    Object.keys(this.DEU.controls).map(key => {
-      this.DEU.controls[key].disable()
-    })
+    this.DEU.disable();
   }
 }

@@ -96,7 +96,7 @@
             <input matInput placeholder="Fax" formControlName="fax" mask="000-000-0000" autocomplete="off">
             <mat-error>Enter valid fax number</mat-error>
         </mat-form-field>
-        <div class="text-center w-100 m-t-10 m-b-50">
+        <div *ngIf="isEdit" class="text-center w-100 m-t-10 m-b-50">
             <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success" (click)="updateDEU()">
                 Save </button>
             <button mat-raised-button type="button" (click)="cancle();isEdit = false" class="rounded-corner"

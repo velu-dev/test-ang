@@ -34,9 +34,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
-      Object.keys(this.ApplicantAttorney.controls).map(key => {
-        this.ApplicantAttorney.controls[key].enable()
-      })
+      this.ApplicantAttorney.enable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
@@ -53,17 +51,13 @@ export class ApplicationAttorneyComponent implements OnInit {
     this.claimService.updateAgent(this.ApplicantAttorney.value.id, { ApplicantAttorney: this.ApplicantAttorney.value }).subscribe(res => {
       this.isEdit = false;
       this.aattorneyDetail = this.ApplicantAttorney.value;
-      Object.keys(this.ApplicantAttorney.controls).map(key => {
-        this.ApplicantAttorney.controls[key].disable()
-      })
+      this.ApplicantAttorney.disable();
       this.alertService.openSnackBar("Application Attorney updated successfully", 'success')
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancle() {
-    Object.keys(this.ApplicantAttorney.controls).map(key => {
-      this.ApplicantAttorney.controls[key].disable()
-    })
+    this.ApplicantAttorney.disable();
   }
 }

@@ -40,17 +40,14 @@ export class ClaimComponent implements OnInit {
   updateClaim() {
     this.claimService.updateClaim(this.claim.value, this.claim.value.id).subscribe(res => {
       this.isEdit = false;
-      Object.keys(this.claim.controls).map(key => {
-        this.claim.controls[key].disable()
-      })
+      this.claim.patchValue(res.data)
+        this.claim.disable()
       this.alertService.openSnackBar("Claim updated successfully", 'success')
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancel() {
-    Object.keys(this.claim.controls).map(key => {
-      this.claim.controls[key].disable()
-    })
+      this.claim.disable()
   }
 }
