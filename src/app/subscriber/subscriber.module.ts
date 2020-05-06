@@ -39,6 +39,7 @@ import { DeoComponent } from './components/claims/common/deo/deo.component';
 import { CorrespondanceComponent } from './components/claims/common/correspondance/correspondance.component';
 import { ClaimantDetailsComponent } from './components/claims/common/claimant-details/claimant-details.component';
 import { UpdateBillableItemComponent } from './components/claims/common/update-billable-item/update-billable-item.component';
+import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { UpdateBillableItemComponent } from './components/claims/common/update-b
     CorrespondanceComponent,
     ClaimantDetailsComponent,
     UpdateBillableItemComponent,
-    InjuryPopup
+    InjuryPopup,
+    NewBillableItemComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,

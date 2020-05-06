@@ -22,6 +22,7 @@ import { AppointmentDetailsComponent } from './examiner/appointment-details/appo
 import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
+import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -66,6 +67,13 @@ const routes: Routes = [{
   component: EditClaimComponent
 },
 {
+  path: "new-billable-item",
+  component: NewBillableItemComponent
+},{
+  path: "new-billable-item/:id",
+  component: NewBillableItemComponent
+},
+{
   path: "claims",
   children: [{
     path: "",
@@ -76,9 +84,6 @@ const routes: Routes = [{
   }, {
     path: ":id",
     component: NewClaimComponent
-  }, {
-    path: "new-billable-item",
-    component: BillableItemComponent
   }
   ]
 }, {
@@ -166,9 +171,6 @@ const routes: Routes = [{
     }, {
       path: ":id",
       component: NewClaimComponent
-    }, {
-      path: "new-billable-item",
-      component: BillableItemComponent
     }]
   }, {
     path: "manage-location",
@@ -209,9 +211,6 @@ const routes: Routes = [{
     }, {
       path: ":id",
       component: NewClaimComponent
-    }, {
-      path: "new-billable-item",
-      component: BillableItemComponent
     }]
   }, {
     path: "settings",
@@ -254,10 +253,8 @@ const routes: Routes = [{
     }, {
       path: ":id",
       component: NewClaimComponent
-    }, {
-      path: "new-billable-item",
-      component: BillableItemComponent
-    }]
+    }
+  ]
   }, {
     path: "settings",
     component: ExaminerSettingComponent

@@ -127,14 +127,14 @@ export class NewClaimantComponent implements OnInit {
   language(id) {
     if (id) {
       let index = this.languageList.findIndex(e=>e.id == id)
-      return this.languageList[index].language ? this.languageList[index].language : '-';
+      return this.languageList[index].language ? this.languageList[index].language : '';
     }
   }
 
   state(id) {
     if (id) {
       let index = this.states.findIndex(e=>e.id == id)
-      return this.states[index].state ? this.states[index].state : '-';
+      return this.states[index].state ? this.states[index].state : '';
     }
   }
 
