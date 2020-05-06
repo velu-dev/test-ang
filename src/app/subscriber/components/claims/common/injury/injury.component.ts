@@ -65,7 +65,7 @@ export class InjuryComponent implements OnInit {
   }
   openDialog(injury): void {
     const dialogRef = this.dialog.open(InjuryPopup, {
-      width: '550px',
+      width: '800px',
       data: { isEdit: true, data: injury, claim_id: this.claim_id }
     });
 
@@ -76,7 +76,7 @@ export class InjuryComponent implements OnInit {
   }
   addInjury() {
     const dialogRef = this.dialog.open(InjuryPopup, {
-      width: '550px',
+      width: '800px',
       data: { isEdit: false, claim_id: this.claim_id }
     });
 
