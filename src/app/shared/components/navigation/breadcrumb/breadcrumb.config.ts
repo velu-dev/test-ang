@@ -135,6 +135,12 @@ export const ROUTES = [
         icon: 'dashboard',
         submenu: [],
     },
+    {
+        path: '/subscriber/edit-claim',
+        title: 'Edit Claim',
+        icon: 'dashboard',
+        submenu: [],
+    },
     //Subscriber staff manager
     {
         path: '/subscriber/manager',

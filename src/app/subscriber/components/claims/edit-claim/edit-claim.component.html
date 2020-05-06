@@ -21,13 +21,13 @@
             <mat-card-header>
                 <div class="content-wrapper-main-title p-t-10 m-b-10">Billable Items </div>
                 <span class="spacer"></span>
-                <button mat-raised-button [routerLink]="['/subscriber/new-billable-item']" color="primary" class="m-b-5">
+                <button mat-raised-button (click)="navigateBillable()"  color="primary" class="m-b-5">
                     New Billable item
                 </button>
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <app-update-billable-item *ngIf="!isLoading" [state]="states"></app-update-billable-item>
+                <app-update-billable-item *ngIf="!isLoading" [claim_id]="claimId" [state]="states"></app-update-billable-item>
             </mat-card-content>
         </mat-card>
     </div>

@@ -56,6 +56,7 @@ export const api_endpoint = {
     getClaimant: 'claimant/',
     getcorrespondence: 'claim/correspondence-details/',
     deleteCorrespondence: 'claim/correspondence-remove/',
+    billableItemList: 'claim/billable-item-list/',
 
     //seed data
     seedData: 'claim/seed-data/',
@@ -72,7 +73,7 @@ export const api_endpoint = {
     getPrimaryAddress: 'subscriber/primary-billing-locations',
     updateAgents: 'claim/update-agents/',
     updateInjury: 'claim/update-injuries/',
-    getInjury : "claim/injuries-list/", 
+    getInjury: "claim/injuries-list/",
 
     //examiner
 
