@@ -565,13 +565,13 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
-      this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
-        this.alertService.openSnackBar(res.message, "success");
-        this.router.navigate(['/subscriber/claims'])
-        this._location.back();
-      }, error => {
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
+      // this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
+      //   this.alertService.openSnackBar(res.message, "success");
+      //   this.router.navigate(['/subscriber/claims'])
+      //   this._location.back();
+      // }, error => {
+      //   this.alertService.openSnackBar(error.error.message, 'error');
+      // })
     }
   }
   cancle() {

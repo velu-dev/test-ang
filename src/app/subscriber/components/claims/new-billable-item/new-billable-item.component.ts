@@ -30,6 +30,7 @@ export class NewBillableItemComponent implements OnInit {
   isBillSubmited: boolean = false;
   isEdit: boolean;
   billableId: number;
+  contactType: any
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -43,12 +44,23 @@ export class NewBillableItemComponent implements OnInit {
       if (param.billable) {
         this.isEdit = true
         this.billableId = param.billable;
+        this.claimService.getBillableItemSingle(param.billable).subscribe(res => {
+          console.log(res);
+          this.billable_item.setValue(res['data'])
+          //this.examinarChange(res['data'].)
+          if (res['data'].appointment) {
+            let ex = { value: res['data'].appointment.examiner_id, address_id: res['data'].appointment.examination_location_id }
+            this.examinarChange(ex)
+          }
+          this.contactType = res['data'].intake_call.call_type
+        })
       }
     })
   }
 
   ngOnInit() {
     this.billable_item = this.formBuilder.group({
+      id: [{ value: '', disable: true }],
       claim_id: [this.claimId],
       claimant_id: [this.claimantId],
       exam_type: this.formBuilder.group({
@@ -92,12 +104,12 @@ export class NewBillableItemComponent implements OnInit {
 
     this.claimService.seedData("contact_type").subscribe(res => {
       this.contactTypes = res.data;
-      // if (this.isEdit) {
-      //   if (this.contactType) {
-      //     let type = this.contactTypes.find(element => element.id == this.contactType)
-      //     this.changeCommunicationType(type, 'auto');
-      //   }
-      // }
+      if (this.isEdit) {
+        if (this.contactType) {
+          let type = this.contactTypes.find(element => element.id == this.contactType)
+          this.changeCommunicationType(type, 'auto');
+        }
+      }
     })
 
     this.claimService.listExaminar().subscribe(res => {
@@ -134,10 +146,11 @@ export class NewBillableItemComponent implements OnInit {
   }
 
   examinarChange(examinar) {
+    console.log(this.billable_item.value)
     this.addressCtrl.setValue('');
     this.selectedExaminarAddress = '';
     this.isAddressSelected = false;
-    this.examinarId = examinar.id;
+    this.examinarId = examinar.value;
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
       this.examinerOptions = []
       this.examinerOptions = res['data'];
@@ -216,7 +229,7 @@ export class NewBillableItemComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
-      this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
+      this.claimService.updateBillableItem(this.billable_item.value, this.billableId).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
         //this.router.navigate(['/subscriber/claims'])
         this._location.back();
@@ -224,6 +237,10 @@ export class NewBillableItemComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
+  }
+
+  cancel() {
+    this._location.back();
   }
 
 }

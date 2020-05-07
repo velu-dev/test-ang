@@ -34,8 +34,8 @@
             <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Select Examiner</mat-label>
-                    <mat-select formControlName="examiner_id">
-                        <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
+                    <mat-select formControlName="examiner_id" (selectionChange)="examinarChange($event)">
+                        <mat-option *ngFor="let examinar of examinarList" 
                             [value]="examinar.id">
                             {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}</mat-option>
                     </mat-select>
@@ -149,7 +149,7 @@
             <div class="text-center w-100 m-t-10 m-b-50">
                 <button mat-raised-button color="primary" (click)="submitBillableItem()" class="m-r-10 rounded-corner btn_success">
                     Save </button>
-                <button mat-raised-button type="button" class="rounded-corner" color="warn">Cancel</button>
+                <button mat-raised-button type="button" (click)="cancel()" class="rounded-corner" color="warn">Cancel</button>
             </div>
         </form>
     </mat-card-content>
