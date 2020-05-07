@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -15,6 +15,7 @@ export class EmployerComponent implements OnInit {
   employerList = [];
   @Input('state') states;
   @Input('save') isSave = false;
+  @Output() isEditComplete = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.employer = this.formBuilder.group({
       id: [],
@@ -49,16 +50,14 @@ export class EmployerComponent implements OnInit {
     this.claimService.updateAgent(this.employer.value.id, { Employer: this.employer.value }).subscribe(res => {
       this.isEdit = false;
       this.alertService.openSnackBar("Employer updated successfully", 'success');
-      Object.keys(this.employer.controls).map(key => {
-        this.employer.controls[key].disable()
-      })
+      this.employer.disable();
+      this.isEditComplete.emit(true);
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancle() {
-    Object.keys(this.employer.controls).map(key => {
-      this.employer.controls[key].disable()
-    })
+    this.isEditComplete.emit(true);
+    this.employer.disable();
   }
 }

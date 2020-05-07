@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -15,6 +15,7 @@ export class ClaimAdminComponent implements OnInit {
   claimAdminForm: FormGroup;
   claimAdminList = []
   @Input('state') states;
+  @Output() isEditComplete = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimAdminForm = this.formBuilder.group({
       id: [],
@@ -48,16 +49,21 @@ export class ClaimAdminComponent implements OnInit {
   appClaimAdmin(aa) {
 
   }
+  claimUpdated = false;
   updateClaimAdmin() {
     this.claimService.updateAgent(this.claimAdminForm.value.id, { InsuranceAdjuster: this.claimAdminForm.value }).subscribe(res => {
       this.isEdit = false;
+      this.claimAdminForm.patchValue(res.data)
       this.alertService.openSnackBar("Claim Administrator updated successfully", 'success');
       this.claimAdminForm.disable();
+      this.claimUpdated = true;
+      this.isEditComplete.emit(true);
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancle() {
     this.claimAdminForm.disable();
+    this.isEditComplete.emit(true);
   }
 }

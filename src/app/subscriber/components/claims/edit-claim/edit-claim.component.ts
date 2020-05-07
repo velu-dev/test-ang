@@ -22,7 +22,7 @@ export class EditClaimComponent implements OnInit {
   expandedSection = 0;
   panelOpenState = false;
   claimId: any;
-  claimantDetail:any = {};
+  claimantDetail: any = {};
   claimDetail = {};
   claimAdminDetail = {};
   aAttorneyDetail = {};
@@ -71,9 +71,22 @@ export class EditClaimComponent implements OnInit {
   setStep(a) {
 
   }
-
-  navigateBillable(){
-    this.router.navigate(['/subscriber/new-billable-item',this.claimId,this.claimantDetail.id])
+  isEditChange(event, type) {
+    console.log(event)
+    if (type == "ca") {
+      this.claimAdminEdit = false;
+    } else if (type == "emp") {
+      this.employerEdit = false;
+    } else if (type == "aa") {
+      this.aaEdit = false;
+    } else if (type == "da") {
+      this.daEdit = false;
+    } else {
+      this.deoEdit = false;
+    }
+  }
+  navigateBillable() {
+    this.router.navigate(['/subscriber/new-billable-item', this.claimId, this.claimantDetail.id])
   }
 
 }

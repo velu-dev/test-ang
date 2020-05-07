@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -15,9 +15,10 @@ export class DefenseAttorneyComponent implements OnInit {
   DefanceAttorney: FormGroup;
   attroneylist = [];
   @Input('state') states;
+  @Output() isEditComplete = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.DefanceAttorney = this.formBuilder.group({
-      company_name: [],
+      company_name: [{ value: null, disabled: true }],
       id: [],
       name: [{ value: null, disabled: true }],
       street1: [{ value: null, disabled: true }],
@@ -52,17 +53,16 @@ export class DefenseAttorneyComponent implements OnInit {
   updateDAttorney() {
     this.claimService.updateAgent(this.DefanceAttorney.value.id, { DefenseAttorney: this.DefanceAttorney.value }).subscribe(res => {
       this.isEdit = false;
+      this.DefanceAttorney.patchValue(res.data);
       this.alertService.openSnackBar("Defence Attorney updated successfully", 'success');
-      Object.keys(this.DefanceAttorney.controls).map(key => {
-        this.DefanceAttorney.controls[key].disable()
-      })
+      this.DefanceAttorney.disable();
+      this.isEditComplete.emit(true);
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancle() {
-    Object.keys(this.DefanceAttorney.controls).map(key => {
-      this.DefanceAttorney.controls[key].disable()
-    })
+    this.DefanceAttorney.disable();
+    this.isEditComplete.emit(true);
   }
 }
