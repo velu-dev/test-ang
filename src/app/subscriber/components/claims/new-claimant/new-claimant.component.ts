@@ -139,7 +139,7 @@ export class NewClaimantComponent implements OnInit {
   }
 
 
-  cancle() {
+  cancel() {
     //this._location.back();
     this.getSingleClaimant()
     this.editStatus = false;

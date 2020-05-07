@@ -16,11 +16,11 @@
 
         <ng-container matColumnDef="action" class="action">
             <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element; let i = index">
                 <mat-icon (click)="openDialog(element)" class="edit-user" mat-raised-button matTooltip="Edit"
                     matTooltipPosition="right">edit
                 </mat-icon> |
-                <mat-icon (click)="deleteInjury(element, i)" class="delete-user" mat-raised-button matTooltip="Delete"
+                <mat-icon (click)="deleteInjury(element,i )" class="delete-user" mat-raised-button matTooltip="Delete"
                     matTooltipPosition="right" color="warn">delete
                 </mat-icon>
             </td>

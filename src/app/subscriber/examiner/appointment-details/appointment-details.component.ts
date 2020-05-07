@@ -85,7 +85,7 @@ export class ClaimantPopupComponent {
     public dialogRef: MatDialogRef<ClaimantPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  cancleClick(): void {
+  cancelClick(): void {
     this.dialogRef.close();
   }
 
@@ -100,7 +100,7 @@ export class ClaimPopupComponent {
     public dialogRef: MatDialogRef<ClaimPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  cancleClick(): void {
+  cancelClick(): void {
     this.dialogRef.close();
   }
 
@@ -115,7 +115,7 @@ export class BillableitemPopupComponent {
     public dialogRef: MatDialogRef<BillableitemPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  cancleClick(): void {
+  cancelClick(): void {
     this.dialogRef.close();
   }
 

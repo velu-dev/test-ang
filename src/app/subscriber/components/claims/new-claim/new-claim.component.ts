@@ -593,7 +593,7 @@ export class NewClaimComponent implements OnInit {
       // })
     }
   }
-  cancle() {
+  cancel() {
 
   }
   claimant_name = "";

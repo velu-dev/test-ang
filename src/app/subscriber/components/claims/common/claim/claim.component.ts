@@ -14,6 +14,7 @@ export class ClaimComponent implements OnInit {
   isEdit = false;
   claim: FormGroup;
   examTypes = [];
+  isClaimSubmited: boolean = false;
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claim = this.formBuilder.group({
       id: [null],

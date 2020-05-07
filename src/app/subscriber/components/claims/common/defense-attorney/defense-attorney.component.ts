@@ -61,7 +61,7 @@ export class DefenseAttorneyComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
-  cancle() {
+  cancel() {
     this.DefanceAttorney.disable();
     this.isEditComplete.emit(true);
     this.DefanceAttorney.patchValue(this.dattorneyDetail)

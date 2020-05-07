@@ -58,7 +58,7 @@ export class DeoComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
-  cancle() {
+  cancel() {
     this.DEU.disable();
     this.isEditComplete.emit(true);
     this.DEU.patchValue(this.deuDetail)

@@ -56,7 +56,7 @@ export class EmployerComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
-  cancle() {
+  cancel() {
     this.isEditComplete.emit(true);
     this.employer.disable();
     this.employer.patchValue(this.employerDetail)

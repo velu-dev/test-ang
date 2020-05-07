@@ -70,8 +70,8 @@ export class InjuryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.ngOnInit();
-      console.log('The dialog was closed');
+      if (result != 'no')
+        this.ngOnInit();
     });
   }
   addInjury() {
@@ -81,8 +81,8 @@ export class InjuryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.ngOnInit()
-      console.log('The dialog was closed', result);
+      if (result != 'no')
+        this.ngOnInit()
     });
   }
   deleteInjury(data, index) {
@@ -165,7 +165,7 @@ export class InjuryPopup {
       })
     }
   }
-  cancle() {
-    this.dialogRef.close();
+  cancel() {
+    this.dialogRef.close('no');
   }
 }

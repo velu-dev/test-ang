@@ -59,7 +59,7 @@ export class ApplicationAttorneyComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
-  cancle() {
+  cancel() {
     this.isEditComplete.emit(true);
     this.ApplicantAttorney.disable();
   }
