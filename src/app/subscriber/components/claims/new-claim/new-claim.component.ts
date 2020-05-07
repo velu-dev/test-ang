@@ -143,6 +143,10 @@ export class NewClaimComponent implements OnInit {
   contactType: any;
   correspondForm: FormGroup;
   employerList = [];
+  dataSource1 = [];
+  deuDetails = [];
+  filteredDeu: Observable<any[]>;
+  deuCtrl = new FormControl();
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -157,6 +161,14 @@ export class NewClaimComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private _location: Location) {
+    this.claimService.getDeuDetails().subscribe(res => {
+      this.deuDetails = res.data;
+      this.filteredDeu = this.deuCtrl.valueChanges
+        .pipe(
+          startWith(''),
+          map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
+        );
+    })
 
     this.route.params.subscribe(param => {
       if (param.id) {
@@ -214,24 +226,20 @@ export class NewClaimComponent implements OnInit {
             this.addressTypes = res.data;
             break;
           case "agent_type":
-            res.data.map(caller => {
-              if (caller.id != 5 && caller.id != 6 && caller.id != 7) {
-                this.callerAffliation.push(caller);
-              }
-            })
+            this.callerAffliation = res.data;
             break;
           case "body_part":
             this.bodyPartsList = res.data;
             break;
-          case "contact_type":
-            this.contactTypes = res.data;
-            if (this.isEdit) {
-              if (this.contactType) {
-                let type = this.contactTypes.find(element => element.id == this.contactType)
-                this.changeCommunicationType(type, 'auto');
-              }
-            }
-            break;
+          // case "contact_type":
+          //   // this.contactTypes = res.data;
+          //   if (this.isEdit) {
+          //     if (this.contactType) {
+          //       let type = this.contactTypes.find(element => element.id == this.contactType)
+          //       this.changeCommunicationType(type, 'auto');
+          //     }
+          //   }
+          //   break;
           case "exam_type":
             this.examTypes = res.data;
             break;
@@ -274,10 +282,22 @@ export class NewClaimComponent implements OnInit {
         }
       })
     })
+    this.claimService.intakeCallList().subscribe(res => {
+      this.contactTypes = res.data;
+      if (this.contactType) {
+        let type = this.contactTypes.find(element => element.id == this.contactType)
+        this.changeCommunicationType(type, 'auto');
+      }
+    })
     this.filteredClaimant = this.searchInput.valueChanges
       .pipe(
         debounceTime(300),
         switchMap(value => this.claimService.searchClaimant({ basic_search: value, isadvanced: this.searchStatus })));
+  }
+  private _filteDeu(value: string): any[] {
+    const filterValue = value.toLowerCase();
+
+    return this.deuDetails.filter(deu => deu.deu_office.toLowerCase().indexOf(filterValue) === 0);
   }
   isLoading = false;
   tabIndex = 0;
@@ -327,13 +347,12 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimant = this.formBuilder.group({
       id: [""],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.required])],
+      first_name: ['', Validators.compose([Validators.required])],
+      middle_name: ['',],
       suffix: [null],
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
-      // date_of_birth: [new Date()],
       gender: [null],
       email: ["", Validators.compose([Validators.email])],
       handedness: [null],
@@ -360,9 +379,9 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(15)])],
-        claim_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
-        panel_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.pattern('[0-9]+')])],
+        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(18)])],
+        claim_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(25)])],
+        panel_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
       }),
@@ -481,14 +500,6 @@ export class NewClaimComponent implements OnInit {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
       this.titleName = " Claim";
-      if (this.claim.value.claim_details.id) {
-        this.claimService.getcorrespondence(this.claim.value.claim_details.id).subscribe(correspondRes => {
-          console.log(correspondRes);
-          this.correspondenceSource = new MatTableDataSource(correspondRes['data'])
-        }, error => {
-          console.log(error);
-        })
-      }
     } else if (event.selectedIndex == 2) {
       this.titleName = " Billable Item";
     }
@@ -573,16 +584,16 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
-      this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
-        this.alertService.openSnackBar(res.message, "success");
-        this.router.navigate(['/subscriber/claims'])
-        this._location.back();
-      }, error => {
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
+      // this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
+      //   this.alertService.openSnackBar(res.message, "success");
+      //   this.router.navigate(['/subscriber/claims'])
+      //   this._location.back();
+      // }, error => {
+      //   this.alertService.openSnackBar(error.error.message, 'error');
+      // })
     }
   }
-  cancle() {
+  cancel() {
 
   }
   claimant_name = "";
@@ -655,11 +666,43 @@ export class NewClaimComponent implements OnInit {
         }
         index = index + 1;
       })
+      // let arrData = [];
+      // for (var i in this.injuryInfo['body_part_id']) {
+      //   var part = {
+      //     body_part_id: [this.injuryInfo['body_part_id'][i]],
+      //     date_of_injury: this.injuryInfo['date_of_injury'],
+      //     continuous_trauma: this.injuryInfo['continuous_trauma'],
+      //     continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
+      //     continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
+      //     injury_notes: this.injuryInfo['injury_notes'],
+      //     diagram_url: this.injuryInfo['diagram_url'],
+      //   };
+      //   arrData.push(part)
+      // }
+      // for(var j in arrData){
+      //   this.injuryInfodata.push(arrData[j])
+      // }
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
       this.isInjuryEdit = false;
     } else {
-      this.injuryInfodata.push(this.injuryInfo);
+      let arrData = [];
+      for (var i in this.injuryInfo['body_part_id']) {
+        var part = {
+          body_part_id: [this.injuryInfo['body_part_id'][i]],
+          date_of_injury: this.injuryInfo['date_of_injury'],
+          continuous_trauma: this.injuryInfo['continuous_trauma'],
+          continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
+          continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
+          injury_notes: this.injuryInfo['injury_notes'],
+          diagram_url: this.injuryInfo['diagram_url'],
+        };
+        arrData.push(part)
+      }
+      for (var j in arrData) {
+        this.injuryInfodata.push(arrData[j])
+      }
+      console.log("injuryInfodata", this.injuryInfodata)
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     }
@@ -671,7 +714,7 @@ export class NewClaimComponent implements OnInit {
       if (iii)
         data.push(iii.body_part_code + " - " + iii.body_part_name);
     })
-    return data.join(",")
+    return data
   }
   deleteInjury(data, index) {
     this.injuryInfodata.splice(index, 1);
@@ -690,7 +733,7 @@ export class NewClaimComponent implements OnInit {
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value)
     if (this.emasSearchInput.value) {
       this.claimant.reset();
-      this.claimService.searchbyEams("ADJ" + this.emasSearchInput.value).subscribe(res => {
+      this.claimService.searchbyEams(this.emasSearchInput.value).subscribe(res => {
         if (res.status) {
           this.isEdit = false;
           this.isClaimantEdit = false;
@@ -903,12 +946,22 @@ export class NewClaimComponent implements OnInit {
           let type = this.correspondenceSource.data.findIndex(element => element.id == data);
           const tabledata = this.correspondenceSource.data;
           tabledata.splice(type, 1);
-          this.documents_ids.splice(type,1)
+          this.documents_ids.splice(type, 1)
           this.correspondenceSource = new MatTableDataSource(tabledata);
           this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
           console.log(error);
         })
+      }
+    })
+  }
+  deuSelect(deu) {
+    this.claim.patchValue({
+      DEU: deu
+    })
+    this.claim.patchValue({
+      DEU: {
+        name: this.deuCtrl.value
       }
     })
   }

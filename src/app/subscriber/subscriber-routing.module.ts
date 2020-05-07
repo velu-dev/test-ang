@@ -21,6 +21,8 @@ import { ExaminerListComponent } from './staff/examiner-list/examiner-list.compo
 import { AppointmentDetailsComponent } from './examiner/appointment-details/appointment-details.component';
 import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
+import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
+import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -60,6 +62,19 @@ const routes: Routes = [{
 {
   path: "manage-location",
   component: ManageLocationComponent
+}, {
+  path: "edit-claim/:id",
+  component: EditClaimComponent
+},
+{
+  path: "new-billable-item",
+  component: NewBillableItemComponent
+},{
+  path: "new-billable-item/:claim/:claimant",
+  component: NewBillableItemComponent
+},{
+  path: "new-billable-item/:claim/:claimant/:billable",
+  component: NewBillableItemComponent
 },
 {
   path: "claims",
@@ -72,9 +87,6 @@ const routes: Routes = [{
   }, {
     path: ":id",
     component: NewClaimComponent
-  }, {
-    path: "new-billable-item",
-    component: BillableItemComponent
   }
   ]
 }, {
@@ -162,9 +174,6 @@ const routes: Routes = [{
     }, {
       path: ":id",
       component: NewClaimComponent
-    }, {
-      path: "new-billable-item",
-      component: BillableItemComponent
     }]
   }, {
     path: "manage-location",
@@ -199,15 +208,12 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: ClaimListComponent
-    },{
+    }, {
       path: "new-claim",
       component: NewClaimComponent
     }, {
       path: ":id",
       component: NewClaimComponent
-    }, {
-      path: "new-billable-item",
-      component: BillableItemComponent
     }]
   }, {
     path: "settings",
@@ -250,10 +256,8 @@ const routes: Routes = [{
     }, {
       path: ":id",
       component: NewClaimComponent
-    }, {
-      path: "new-billable-item",
-      component: BillableItemComponent
-    }]
+    }
+  ]
   }, {
     path: "settings",
     component: ExaminerSettingComponent

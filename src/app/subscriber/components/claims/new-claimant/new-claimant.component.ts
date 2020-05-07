@@ -22,8 +22,9 @@ export class NewClaimantComponent implements OnInit {
   certifiedStatusNo: boolean = false;
   isClaimantSubmited: boolean = false;
   claimantId: number;
-  today : any;
+  today: any;
   claimNumber: any = '';
+  editStatus: boolean = false;
   constructor(
     private claimService: ClaimService,
     private formBuilder: FormBuilder,
@@ -39,11 +40,11 @@ export class NewClaimantComponent implements OnInit {
   ngOnInit() {
     this.claimantForm = this.formBuilder.group({
       id: [""],
-      last_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      first_name: ['', Validators.compose([Validators.required, Validators.pattern('[A-Za-z]+')])],
-      middle_name: ['', Validators.compose([Validators.pattern('[A-Za-z]+')])],
+      last_name: ['', Validators.compose([Validators.required])],
+      first_name: ['', Validators.compose([Validators.required,])],
+      middle_name: [''],
       suffix: [null],
-     // zip_code_plus_4: [null],
+      // zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       gender: [null],
       email: ["", Validators.compose([Validators.email])],
@@ -65,8 +66,8 @@ export class NewClaimantComponent implements OnInit {
       modified_by: [null],
       createdAt: [null],
       updatedAt: [null],
-      claim_numbers:[],
-      examiners_name:[]
+      claim_numbers: [],
+      examiners_name: []
     })
 
     this.claimService.seedData('state').subscribe(response => {
@@ -80,17 +81,19 @@ export class NewClaimantComponent implements OnInit {
     }, error => {
       console.log("error", error)
     })
-
+    this.today = new Date();
+    this.getSingleClaimant()
+    this.claimantForm.disable();
+  }
+  getSingleClaimant() {
     this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
       console.log(res);
       this.languageStatus = res['data'][0].certified_interpreter_required;
-      this.claimNumber = res['data'][0].claim_numbers.map(data=> data.claim_number )
+      this.claimNumber = res['data'][0].claim_numbers.map(data => data.claim_number)
       this.claimantForm.setValue(res['data'][0])
     }, error => {
 
     })
-
-    this.today = new Date();
   }
   createClaimant() {
     this.isClaimantSubmited = true;
@@ -101,13 +104,50 @@ export class NewClaimantComponent implements OnInit {
     }
     //this.claimantForm.value.date_of_birth = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY")
     this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
-      this.alertService.openSnackBar("User updated successful", 'success');
-      this._location.back();
+      this.alertService.openSnackBar("Claimant updated successful", 'success');
+      //this._location.back();
+      this.getSingleClaimant()
+      this.editStatus = false;
+      this.claimantForm.disable();
     }, error => {
       this.alertService.openSnackBar(error.error, 'error');
     })
   }
-  cancle() {
-    this._location.back();
+
+  gender(code) {
+    if (code == 'M') {
+      return 'Male'
+    } else if (code == 'F') {
+      return 'Female'
+    } else {
+      return ''
+    }
+  }
+
+  language(id) {
+    if (id) {
+      let index = this.languageList.findIndex(e=>e.id == id)
+      return this.languageList[index].language ? this.languageList[index].language : '';
+    }
+  }
+
+  state(id) {
+    if (id) {
+      let index = this.states.findIndex(e=>e.id == id)
+      return this.states[index].state ? this.states[index].state : '';
+    }
+  }
+
+
+  cancel() {
+    //this._location.back();
+    this.getSingleClaimant()
+    this.editStatus = false;
+    this.claimantForm.disable();
+  }
+
+  edit() {
+    this.editStatus = true;
+    this.claimantForm.enable();
   }
 }

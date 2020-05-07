@@ -1,17 +1,109 @@
 <mat-card class="m-card">
   <mat-card-header>
-    <div class="m-0 content-wrapper-main-title">Edit Claimant </div>
+    <div class="m-0 content-wrapper-main-title">Claimant </div>
     <span class="spacer"></span>
+    <button mat-raised-button color="primary" *ngIf="!editStatus" class="m-b-5" (click)="edit()">
+      Edit
+    </button>
+    <button mat-raised-button color="primary" *ngIf="editStatus" class="m-b-5" (click)="createClaimant()">
+      Save
+    </button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
+    <!-- <div fxLayout="row wrap" fxFlex="100" class="p-t-15"  *ngIf="!editStatus">
+      <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div class="grid-list">
+          <div>First Name</div>
+          <div>{{claimantForm?.value.first_name}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Middle Name</div>
+          <div>{{claimantForm?.value.middle_name}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Last Name</div>
+          <div>{{claimantForm?.value.last_name}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Suffix</div>
+          <div>{{claimantForm?.value.suffix}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Salutation</div>
+          <div>{{claimantForm?.value.salutation}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Date of Birth</div>
+          <div>{{claimantForm?.value.date_of_birth | date:'MM-dd-yyyy'}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Email</div>
+          <div>{{claimantForm?.value.email}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Gender</div>
+          <div>{{gender(claimantForm?.value.gender)}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Handedness</div>
+          <div>{{claimantForm?.value.handedness}}</div>
+        </div>
+        <div class="grid-list">
+          <div>Certified Interpreter Required</div>
+          <div>{{claimantForm?.value.certified_interpreter_required}}</div>
+        </div>
+      </div>
+      <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
+        <div class="grid-list">
+          <div>Primary Language</div>
+          <div>{{language(claimantForm?.value.primary_language_spoken)}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>SSN</div>
+          <div>{{claimantForm?.value.ssn | mask:'000-000-0000'}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Phone Number</div>
+          <div>{{claimantForm?.value.phone_no_1 | mask:'(000) 000-0000'}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Alternate Phone Number</div>
+          <div>{{claimantForm?.value.phone_no_2 | mask:'(000) 000-0000'}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Address 1</div>
+          <div>{{claimantForm?.value.street1}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Address 2</div>
+          <div>{{claimantForm?.value.street2}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Cite</div>
+          <div>{{claimantForm?.value.city}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>State</div>
+          <div>{{state(claimantForm?.value.state)}}</div>
+        </div>
+
+        <div class="grid-list">
+          <div>Zip Code</div>
+          <div>{{claimantForm?.value.zip_code}}</div>
+        </div>
+      </div>
+    </div> -->
+
     <div fxLayout="row wrap" fxFlex="100">
       <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimantForm">
-        <mat-form-field appearance="standard" fxFlex="100">
-          <mat-label>Claim Number</mat-label>
-          <input matInput placeholder="Claim Number" [value]="claimNumber" autocomplete="off" disabled>
-          <mat-error>error msg here</mat-error>
-        </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
@@ -66,7 +158,7 @@
           <mat-select formControlName="gender">
             <mat-option value="M">Male</mat-option>
             <mat-option value="F">Female</mat-option>
-            <mat-option value="O">Other</mat-option>
+            <!-- <mat-option value="O">Other</mat-option> -->
           </mat-select>
           <mat-error>Enter valid state</mat-error>
         </mat-form-field>
@@ -75,7 +167,7 @@
           <mat-select formControlName="handedness">
             <mat-option value="R">Right</mat-option>
             <mat-option value="L">Left</mat-option>
-            <mat-option value="A">Ambidexterity</mat-option>
+            <mat-option value="A">Ambidextrous</mat-option>
           </mat-select>
           <mat-error>Enter valid handedness</mat-error>
         </mat-form-field>
@@ -122,15 +214,15 @@
 
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Street Address</mat-label>
-          <textarea matInput placeholder="Street Address" formControlName="street1" autocomplete="off"></textarea>
-          <mat-error>Enter valid street address</mat-error>
+          <mat-label>Address 1</mat-label>
+          <textarea matInput placeholder="Address 1" formControlName="street1" autocomplete="off"></textarea>
+          <mat-error>Enter valid address</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Street Address 2</mat-label>
-          <textarea matInput placeholder="Street Address 2" formControlName="street2" autocomplete="off"></textarea>
-          <mat-error>Enter valid street address</mat-error>
+          <mat-label>Address 2</mat-label>
+          <textarea matInput placeholder="Address 2" formControlName="street2" autocomplete="off"></textarea>
+          <mat-error>Enter valid address</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -154,10 +246,11 @@
           <mat-error>Enter valid zip code</mat-error>
         </mat-form-field>
 
-        <div class="text-center w-100 m-t-10 m-b-50">
-          <button mat-raised-button color="primary" type="submit" (click)="createClaimant()" class="m-r-10 rounded-corner btn_success">
-            Update </button>
-          <button mat-raised-button (click)="cancle()" class="rounded-corner" color="warn">Cancel</button>
+        <div class="text-center w-100 m-t-10 m-b-50" *ngIf="editStatus">
+          <button mat-raised-button color="primary" type="submit" (click)="createClaimant()"
+            class="m-r-10 rounded-corner btn_success">
+            Save </button>
+          <button mat-raised-button (click)="cancel()" class="rounded-corner" color="warn">Cancel</button>
 
         </div>
       </form>

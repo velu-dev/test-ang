@@ -1,0 +1,62 @@
+<div fxLayout="row wrap" fxFlex="100" class="add_injury">
+    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Body Parts</mat-label>
+        <mat-select [(ngModel)]="injuryInfo.body_part_id" multiple>
+            <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts.id">
+                {{bodyParts.body_part_code}} - {{bodyParts.body_part_name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Date of Injury </mat-label>
+        <input matInput placeholder="Date of Injury " autocomplete="off" [max]="today" [matDatepicker]="date_of_injury1"
+            [(ngModel)]="injuryInfo.date_of_injury" (click)="date_of_injury1.open()">
+        <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
+        <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
+        <mat-error>Enter valid date of injury</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-label>Injury Note</mat-label>
+        <textarea matInput [(ngModel)]="injuryInfo.injury_notes" placeholder="Injury Note "
+            autocomplete="off"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
+        fxFlex.xs="100">
+        <mat-label>Continuous Trauma (CT)</mat-label>
+        <mat-select [(ngModel)]="injuryInfo.continuous_trauma">
+            <mat-option [disabled]="injuryInfo.date_of_injury == null" (click)="ctChange()" [value]="true">
+                Yes</mat-option>
+            <mat-option (click)="ctChange()" [value]="false">No</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3" fxFlex.md="33."
+        fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>CT Start Date</mat-label>
+        <input matInput placeholder="CT Start date" autocomplete="off" [matDatepicker]="continuous_trauma_start_date"
+            [(ngModel)]="injuryInfo.continuous_trauma_start_date" [min]="injuryInfo.date_of_injury"
+            [max]="injuryInfo.date_of_injury" (click)="continuous_trauma_start_date.open()">
+        <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
+        </mat-datepicker-toggle>
+        <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3" fxFlex.md="33."
+        fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>CT End Date</mat-label>
+        <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.continuous_trauma_end_date"
+            autocomplete="off" [matDatepicker]="continuous_trauma_end_date"
+            [min]="injuryInfo.continuous_trauma_start_date" (click)="continuous_trauma_end_date.open()">
+        <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
+        </mat-datepicker-toggle>
+        <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
+    </mat-form-field>
+
+    <div fxFlex="100" class="p-t-10">
+        <button mat-raised-button type="button" (click)="addInjury()" class="rounded-corner text-center"
+            color="primary">{{isEdit ? 'Update' : 'Save'}}</button>
+        <button mat-raised-button type="button" (click)="cancel()" class="rounded-corner">Cancel</button>
+    </div>
+</div>

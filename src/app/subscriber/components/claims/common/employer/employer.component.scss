@@ -1,0 +1,11 @@
+@import "variables";
+
+.employer_info {
+    mat-form-field {
+        padding: 10px !important;
+    }
+    .btn_success {
+        background-color: $btn_success;
+        color: $white;
+    }
+}

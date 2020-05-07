@@ -22,13 +22,13 @@
                             <div> Handedness</div>
                         </div>
                         <div fxFlex="50" class="claim_value">
-                            <div></div>
-                            <div>Ratrick</div>
-                            <div>Buford</div>
-                            <div>12 Mar 1982</div>
-                            <div>Male</div>
-                            <div>English</div>
-                            <div>Right</div>
+                            <div>{{data?.claimant_details?.last_name}}</div>
+                            <div>{{data?.claimant_details?.first_name}}</div>
+                            <div>{{data?.claimant_details?.middle_name}}</div>
+                            <div>{{data?.claimant_details?.date_of_birth}}</div>
+                            <div>{{data?.claimant_details?.gender}}</div>
+                            <div>{{data?.claimant_details?.primary_language_spoken}}</div>
+                            <div>{{data?.claimant_details?.handedness}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -40,28 +40,28 @@
                             <div>Phone Number</div>
                             <div>Alternate Phone Number</div>
                             <div>Email</div>
-                            <div>Street Address</div>
-                            <div>Street Address 2</div>
+                            <div>Address 1</div>
+                            <div>Address 2</div>
                             <div>City</div>
                             <div>State</div>
                             <div>Zip</div>
                         </div>
                         <div fxFlex="50" class="claim_value">
-                            <div>(555) 555-5555</div>
-                            <div>(666) 666-6666</div>
-                            <div>marie.calendar@hotmail.com</div>
-                            <div>1223 Boulevard blvd.</div>
-                            <div>Suite 33</div>
-                            <div>La Feyetteville</div>
-                            <div>LA</div>
-                            <div>123456</div>
+                            <div>{{data?.claimant_details?.phone_no_1}}</div>
+                            <div>{{data?.claimant_details?.phone_no_2}}</div>
+                            <div>{{data?.claimant_details?.email}}</div>
+                            <div>{{data?.claimant_details?.street1}}</div>
+                            <div>{{data?.claimant_details?.street2}}</div>
+                            <div>{{data?.claimant_details?.city}}</div>
+                            <div>{{data?.claimant_details?.state}}</div>
+                            <div>{{data?.claimant_details?.zip_code}} {{data?.claimant_details?.zip_code_plus_4}}</div>
                         </div>
                     </div>
                 </mat-card-content>
             </div>
         </div>
         <mat-card-footer>
-            <a (click)="cancleClick()" class="close_btn">Close</a>
+            <a (click)="cancelClick()" class="close_btn">Close</a>
         </mat-card-footer>
     </div>
 </div>

@@ -113,10 +113,10 @@
                                     <mat-form-field appearance="fill" fxFlex="100"
                                         hideRequiredMarker="hideRequiredControl.auto"
                                         floatLabel="floatLabelControl.auto" class="adj_filter w-100">
-                                        <div matPrefix>
+                                        <!-- <div matPrefix>
                                             <span matPrefix> &nbsp; ADJ &nbsp;</span>
-                                        </div>
-                                        <input matInput placeholder="Enter ADJ number" (keyup.enter)="searchEAMS()"
+                                        </div> -->
+                                        <input matInput placeholder="Enter WCAB number" (keyup.enter)="searchEAMS()"
                                             [formControl]="emasSearchInput">
                                         <span matSuffix class="search-icon icons" (click)="searchEAMS()">
                                             <mat-icon>search</mat-icon>
@@ -199,7 +199,7 @@
                                 <mat-select formControlName="gender">
                                     <mat-option value="M">Male</mat-option>
                                     <mat-option value="F">Female</mat-option>
-                                    <mat-option value="O">Other</mat-option>
+                                    <!-- <mat-option value="O">Other</mat-option> -->
                                 </mat-select>
                                 <mat-error>Enter valid state</mat-error>
                             </mat-form-field>
@@ -209,7 +209,7 @@
                                 <mat-select formControlName="handedness">
                                     <mat-option value="R">Right</mat-option>
                                     <mat-option value="L">Left</mat-option>
-                                    <mat-option value="A">Ambidexterity</mat-option>
+                                    <mat-option value="A">Ambidextrous</mat-option>
                                 </mat-select>
                                 <mat-error>Enter valid handedness</mat-error>
                             </mat-form-field>
@@ -260,18 +260,18 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Street Address</mat-label>
-                                <textarea matInput placeholder="Street Address" formControlName="street1"
+                                <mat-label>Address 1</mat-label>
+                                <textarea matInput placeholder="Address 1" formControlName="street1"
                                     autocomplete="off"></textarea>
-                                <mat-error>Enter valid street address</mat-error>
+                                <mat-error>Enter valid address</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Street Address 2</mat-label>
-                                <textarea matInput placeholder="Street Address 2" formControlName="street2"
+                                <mat-label>Address 2</mat-label>
+                                <textarea matInput placeholder="Address 2" formControlName="street2"
                                     autocomplete="off"></textarea>
-                                <mat-error>Enter valid street address</mat-error>
+                                <mat-error>Enter valid address</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -316,7 +316,7 @@
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claim</ng-template>
                 <mat-card>
                     <mat-card-header>
-                        <div class="sub-title">Claim Information</div>
+                        <div class="sub-title">Claim</div>
                     </mat-card-header>
                     <mat-card-content>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_details">
@@ -325,17 +325,25 @@
                                 <input matInput type="text" placeholder="Claimant name" formControlName="claimant_name"
                                     disabled>
                             </mat-form-field>
-                            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj">
-                                <span> &nbsp; ADJ
-                                    &nbsp;</span>
-                                <mat-form-field appearance="standard">
+                            <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj"> -->
+                            <!-- <span> &nbsp; ADJ
+                                    &nbsp;</span> -->
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Claim Number</mat-label>
+                                <input matInput placeholder="Claim Number" formControlName="claim_number"
+                                    autocomplete="off">
+                                <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
+                            </mat-form-field>
 
-                                    <mat-label>ADJ Number*</mat-label>
-                                    <input type="text" matInput placeholder="Enter ADJ Number"
-                                        formControlName="wcab_number" autocomplete="off">
-                                    <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
-                                </mat-form-field>
-                            </div>
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>WCAB Number</mat-label>
+                                <input type="text" matInput placeholder="Enter WCAB Number"
+                                    formControlName="wcab_number" autocomplete="off">
+                                <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
+                            </mat-form-field>
+                            <!-- </div> -->
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -347,13 +355,7 @@
                                 </mat-select>
                                 <mat-error *ngIf="isClaimSubmited">Select exam type</mat-error>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Claim Number*</mat-label>
-                                <input matInput placeholder="Claim Number" formControlName="claim_number"
-                                    autocomplete="off">
-                                <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
-                            </mat-form-field>
+
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -369,7 +371,7 @@
 
                     <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Injury Information</div>
+                            <div class="sub-title">Injury</div>
                         </mat-expansion-panel-header>
 
                         <div fxLayout="row wrap" fxFlex="100">
@@ -451,7 +453,7 @@
 
                             <div fxFlex="100" class="p-t-10">
                                 <button mat-raised-button type="button" (click)="addInjury()"
-                                    class="rounded-corner text-center" color="primary">Add</button>
+                                    class="rounded-corner text-center" color="primary">Save</button>
                             </div>
 
                             <table mat-table [dataSource]="dataSource" class="m-t-20 w-100" fxFlex="100">
@@ -566,7 +568,7 @@
 
                     <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Claims Administrator Information</div>
+                            <div class="sub-title">Claims Administrator</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="InsuranceAdjuster">
                             <mat-form-field *ngIf="claimAdminList?.length == 0" appearance="standard" fxFlex="50"
@@ -595,13 +597,13 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address 1</mat-label>
+                                <mat-label>Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
 
@@ -654,7 +656,7 @@
 
                     <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Employer Information</div>
+                            <div class="sub-title">Employer</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="Employer">
 
@@ -677,13 +679,13 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address 1</mat-label>
+                                <mat-label>Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
 
@@ -737,7 +739,7 @@
                     <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Applicant
-                                Attorney Information</div>
+                                Attorney</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="ApplicantAttorney">
                             <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
@@ -765,12 +767,12 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address 1</mat-label>
+                                <mat-label>Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -823,7 +825,7 @@
                     <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Defense Attorney
-                                Information</div>
+                            </div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="DefenseAttorney">
                             <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
@@ -851,13 +853,13 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address 1</mat-label>
+                                <mat-label>Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
 
@@ -916,17 +918,22 @@
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                 fxFlex.xs="100">
                                 <mat-label>Office Name</mat-label>
-                                <input matInput placeholder="Office Name" formControlName="name" autocomplete="off">
+                                <input matInput placeholder="Select office name" aria-label="Office Name"
+                                    [matAutocomplete]="deuAuto" [formControl]="deuCtrl">
+                                <mat-autocomplete #deuAuto="matAutocomplete">
+                                    <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)" [value]="deu.deu_office">
+                                        <span>{{deu.code}} - {{deu.deu_office}}</span>
+                                    </mat-option>
+                                </mat-autocomplete>
                             </mat-form-field>
-
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address</mat-label>
+                                <mat-label>Address 1</mat-label>
                                 <textarea matInput formControlName="street1"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Address1</mat-label>
+                                <mat-label>Address 2</mat-label>
                                 <textarea matInput formControlName="street2"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1028,7 +1035,7 @@
                             <mat-select formControlName="examiner_id">
                                 <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
                                     [value]="examinar.id">
-                                    {{examinar.first_name}}</mat-option>
+                                    {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
 
@@ -1098,7 +1105,7 @@
 
                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                         Intake
-                        Call Information
+                        Call
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -1133,7 +1140,7 @@
                             <mat-select formControlName="call_type">
                                 <mat-option (click)="changeCommunicationType(contactType, 'man')"
                                     *ngFor="let contactType of contactTypes" [value]="contactType.id">
-                                    {{contactType.contact_type_name}}</mat-option>
+                                    {{contactType.display_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field *ngIf="billable_item?.value?.intake_call_info?.communication_type != ''"

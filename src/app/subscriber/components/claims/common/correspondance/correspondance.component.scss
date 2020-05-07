@@ -1,0 +1,18 @@
+@import "variables";
+
+mat-form-field {
+    padding: 10px !important;
+}
+
+.Upload_ {
+    button {
+        width: 120px;
+    }
+    mat-form-field {
+        width: calc(100% - 150px);
+    }
+}
+.upload-btn {
+    background-color: $primarylightcolor;
+    color: $white;
+}

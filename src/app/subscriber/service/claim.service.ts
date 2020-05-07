@@ -38,8 +38,8 @@ export class ClaimService {
   createBillableItem(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.create_billable_item, data)
   }
-  updateBillableItem(data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.update_billable_item, data)
+  updateBillableItem(data,id): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.update_billable_item + id, data)
   }
   listExaminar(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.examinar_type)
@@ -62,19 +62,46 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.getBillItem)
   }
 
-  postcorrespondence(data){
+  postcorrespondence(data) {
     return this.http.post(environment.baseUrl + api_endpoint.correspondenceUpload, data)
   }
 
-  getSingleClaimant(id){
+  getSingleClaimant(id) {
     return this.http.get(environment.baseUrl + api_endpoint.getClaimant + id)
   }
 
-  getcorrespondence(id){
+  getcorrespondence(id) {
     return this.http.get(environment.baseUrl + api_endpoint.getcorrespondence + id)
   }
 
-  deleteCorrespondence(id){
+  deleteCorrespondence(id) {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteCorrespondence + id)
   }
+  updateAgent(id, value): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updateAgents + id, value)
+  }
+  updateInjury(data, claim_id) {
+    return this.http.put(environment.baseUrl + api_endpoint.updateInjury + claim_id, data)
+  }
+  deleteInjury(id): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteInjury + id)
+  }
+  getInjury(claim_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getInjury + claim_id)
+  }
+
+  getbillableItem(claim_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.billableItemList + claim_id)
+  }
+  getDeuDetails(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.deuList)
+  }
+  intakeCallList(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.listIntakeCall)
+  }
+
+  getBillableItemSingle(id){
+    return this.http.get(environment.baseUrl + api_endpoint.billableItemSingle + id)
+  }
+
 }

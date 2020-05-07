@@ -1,0 +1,48 @@
+@import "variables";
+
+div {
+    mat-card {
+        box-shadow: $box-shadow-2;
+        padding-top: 5px;
+        padding-bottom: 0px;
+        &:hover {
+            box-shadow: $box-shadow-1;
+        }
+    }
+    .Bill_info,
+    .injury_info {
+        mat-card {
+            box-shadow: $box-shadow-2;
+            padding-bottom: 0px;
+            &:hover {
+                box-shadow: $box-shadow-1;
+            }
+        }
+    }
+}
+
+.mat-expansion-panel-header-description {
+    flex-grow: 0 !important;
+}
+mat-accordion {
+    mat-form-field {
+        padding: 10px;
+    }
+    mat-expansion-panel {
+        box-shadow: $box-shadow-2;
+        margin-bottom: 10px;
+        &:hover {
+            box-shadow: $box-shadow-1;
+        }
+        mat-panel-title {
+            padding-top: 10px;
+        }
+        button {
+            padding: 0px;
+        }
+    }
+    .float-right {
+        float: right;
+        margin-bottom: 10px;
+    }
+}

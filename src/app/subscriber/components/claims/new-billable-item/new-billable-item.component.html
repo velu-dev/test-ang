@@ -1,0 +1,156 @@
+<mat-card class="m-card">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Billable Item</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+        <form fxLayout="row wrap" fxFlex="100" [formGroup]="billable_item">
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Procedural Type*</mat-label>
+                    <mat-select formControlName="procedure_type" (selectionChange)="procedure_type()">
+                        <mat-option (click)="procedure_type()" *ngFor="let procuderalCode of procuderalCodes"
+                            [value]="procuderalCode.id">
+                            {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="isBillSubmited">Select Procuderal Type</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Modifiers</mat-label>
+                    <mat-select formControlName="modifier_id" multiple>
+                        <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
+                            {{modifier.modifier_code}} - {{modifier.modifier}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                Examination
+            </div>
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Select Examiner</mat-label>
+                    <mat-select formControlName="examiner_id" (selectionChange)="examinarChange($event)">
+                        <mat-option *ngFor="let examinar of examinarList" 
+                            [value]="examinar.id">
+                            {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
+                    <mat-label>Date & Time</mat-label>
+                    <input matInput placeholder="Date & Time" [min]="todayDate.appointment"
+                        formControlName="appointment_scheduled_date_time" autocomplete="off"
+                        [owlDateTime]="appointment" [owlDateTimeTrigger]="appointment">
+                    <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
+                    <owl-date-time (afterPickerOpen)="pickerOpened('app')" #appointment></owl-date-time>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
+                    <mat-label>Duration</mat-label>
+                    <mat-select formControlName="duration">
+                        <mat-option *ngFor="let data of duration" [value]="data.id">{{data.value}} Mins
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                fxFlex.xs="100">
+                <mat-label>Examination Location</mat-label>
+                <input matInput placeholder="Address" aria-label="State" [matAutocomplete]="examinarAuto"
+                    [formControl]="addressCtrl">
+                <mat-autocomplete #examinarAuto="matAutocomplete">
+                    <mat-option *ngFor="let address of (examinarAddress | async)"
+                        (click)="changeExaminarAddress(address)" [value]="address.street1">
+                        {{address.street1}}
+                        <!-- <small>Population: {{state.population}}</small> -->
+                    </mat-option>
+                    <mat-option *ngIf="(examinarAddress | async)?.length == 0" disabled>Location not found
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <div fxFlex="100">
+                <mat-card-content class="address-list">
+                    <mat-list *ngIf="isAddressSelected">
+                        <mat-list-item>
+                            <div class="name" mat-line>
+                                <div><strong>
+                                        <i
+                                            class="fa fa-building-o"></i>{{selectedExaminarAddress.service_code}}
+                                        - {{selectedExaminarAddress.address_type_name}}
+                                    </strong></div>
+                                <!-- <span><i class="fa fa-phone-alt"></i>
+                                    {{selectedExaminarAddress.}}</span> -->
+                            </div>
+                            <div class="address" mat-line>{{selectedExaminarAddress.street1}}</div>
+                        </mat-list-item>
+                    </mat-list>
+                    <mat-list *ngIf="!isAddressSelected">
+                        <mat-list-item>
+                            No Address Selected
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </div>
+            </div>
+
+            <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                Intake
+                Call
+            </div>
+            <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Caller Affiliation</mat-label>
+                    <mat-select formControlName="caller_affiliation">
+                        <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
+                            {{caller.agent_type_name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Intake Caller</mat-label>
+                    <input matInput placeholder="Intake caller" formControlName="caller_name"
+                        autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Intake Call Date & Time</mat-label>
+                    <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
+                        autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake"
+                        [owlDateTimeTrigger]="intake">
+                    <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
+                    <owl-date-time (afterPickerOpen)="pickerOpened('intake')" #intake></owl-date-time>
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Intake Call Note</mat-label>
+                    <input matInput placeholder="Intake call note" formControlName="notes" autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Communication Type</mat-label>
+                    <mat-select formControlName="call_type">
+                        <mat-option (click)="changeCommunicationType(contactType, 'man')"
+                            *ngFor="let contactType of contactTypes" [value]="contactType.id">
+                            {{contactType?.display_name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field *ngIf="billable_item?.value?.intake_call_info?.communication_type != ''"
+                    appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>{{billable_item?.value?.intake_call_info?.communication_type}}</mat-label>
+                    <input matInput [type]="contactMask.type" [mask]="contactMask.mask"
+                        formControlName="call_type_detail"
+                        placeholder="{{billable_item?.value?.intake_call_info?.communication_type}}"
+                        autocomplete="off">
+                    <mat-error>Enter Valid contact information</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="text-center w-100 m-t-10 m-b-50">
+                <button mat-raised-button color="primary" (click)="submitBillableItem()" class="m-r-10 rounded-corner btn_success">
+                    Save </button>
+                <button mat-raised-button type="button" (click)="cancel()" class="rounded-corner" color="warn">Cancel</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

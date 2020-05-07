@@ -139,6 +139,6 @@ export class ClaimListComponent implements OnInit {
   }
   editClaim(element) {
     console.log(element)
-    this.router.navigate(['/subscriber/claims/', element.claim_id])
+    this.router.navigate(['/subscriber/edit-claim', element.claim_id])
   }
 }

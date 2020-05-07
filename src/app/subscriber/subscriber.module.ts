@@ -28,6 +28,18 @@ import { ManageLocationComponent } from './staff/manage-location/manage-location
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 import { ExaminationCalanderViewComponent } from './examiner/examination-calander-view/examination-calander-view.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
+import { ClaimComponent } from './components/claims/common/claim/claim.component';
+import { InjuryComponent, InjuryPopup } from './components/claims/common/injury/injury.component';
+import { ClaimAdminComponent } from './components/claims/common/claim-admin/claim-admin.component';
+import { EmployerComponent } from './components/claims/common/employer/employer.component';
+import { ApplicationAttorneyComponent } from './components/claims/common/application-attorney/application-attorney.component';
+import { DefenseAttorneyComponent } from './components/claims/common/defense-attorney/defense-attorney.component';
+import { DeoComponent } from './components/claims/common/deo/deo.component';
+import { CorrespondanceComponent } from './components/claims/common/correspondance/correspondance.component';
+import { ClaimantDetailsComponent } from './components/claims/common/claimant-details/claimant-details.component';
+import { UpdateBillableItemComponent } from './components/claims/common/update-billable-item/update-billable-item.component';
+import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
 
 @NgModule({
   declarations: [
@@ -58,12 +70,26 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ClaimPopupComponent,
     BillableitemPopupComponent,
     EditAddressComponent,
-    ExaminationCalanderViewComponent
+    ExaminationCalanderViewComponent,
+    EditClaimComponent,
+    ClaimComponent,
+    InjuryComponent,
+    ClaimAdminComponent,
+    EmployerComponent,
+    ApplicationAttorneyComponent,
+    DefenseAttorneyComponent,
+    DeoComponent,
+    CorrespondanceComponent,
+    ClaimantDetailsComponent,
+    UpdateBillableItemComponent,
+    InjuryPopup,
+    NewBillableItemComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,
     ClaimPopupComponent,
-    BillableitemPopupComponent
+    BillableitemPopupComponent,
+    InjuryPopup
   ],
   imports: [
     CommonModule,

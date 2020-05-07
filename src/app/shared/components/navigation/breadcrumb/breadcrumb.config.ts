@@ -129,6 +129,18 @@ export const ROUTES = [
         icon: 'map',
         submenu: [],
     },
+    {
+        path: '/subscriber/new-billable-item',
+        title: 'Manage Billable Item',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/subscriber/edit-claim',
+        title: 'Edit Claim',
+        icon: 'dashboard',
+        submenu: [],
+    },
     //Subscriber staff manager
     {
         path: '/subscriber/manager',

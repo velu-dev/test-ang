@@ -17,7 +17,6 @@ export interface PeriodicElement {
   styleUrls: ['./appointment-details.component.scss']
 })
 export class AppointmentDetailsComponent implements OnInit {
-
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource = ELEMENT_DATA;
 
@@ -36,8 +35,9 @@ export class AppointmentDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.examinerService.getAllExamination(this.claim_id).subscribe(response => {
-      console.log(response);
+      
       this.examinationDetails = response['data']
+      console.log(this.examinationDetails);
     }, error => {
       console.log(error);
     })
@@ -46,7 +46,8 @@ export class AppointmentDetailsComponent implements OnInit {
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
       width: '800px',
-      data: { data: this.examinationDetails }
+      data: this.examinationDetails,
+      
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -82,9 +83,9 @@ export class ClaimantPopupComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ClaimantPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  cancleClick(): void {
+  cancelClick(): void {
     this.dialogRef.close();
   }
 
@@ -99,7 +100,7 @@ export class ClaimPopupComponent {
     public dialogRef: MatDialogRef<ClaimPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  cancleClick(): void {
+  cancelClick(): void {
     this.dialogRef.close();
   }
 
@@ -114,7 +115,7 @@ export class BillableitemPopupComponent {
     public dialogRef: MatDialogRef<BillableitemPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
-  cancleClick(): void {
+  cancelClick(): void {
     this.dialogRef.close();
   }
 
@@ -126,9 +127,9 @@ export class BillableitemPopupComponent {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { doc_image: 'xls', doc_name: 'Phasellus aliquam turpis sit amet sem eleifend pretium.xls', date: new Date(), action: '' },
-  { doc_image: 'docx', doc_name: 'Rajan Mariappan.docx', date: new Date(), action: '' },
-  { doc_image: 'pdf', doc_name: 'Ganesan Marappa.pdf', date: new Date(), action: '' },
-  { doc_image: 'pdf', doc_name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.pdf', date: new Date(), action: '' },
-  { doc_image: 'xls', doc_name: 'Sarath Selvaraj.xls', date: new Date(), action: '' },
+  // { doc_image: 'xls', doc_name: 'Phasellus aliquam turpis sit amet sem eleifend pretium.xls', date: new Date(), action: '' },
+  // { doc_image: 'docx', doc_name: 'Rajan Mariappan.docx', date: new Date(), action: '' },
+  // { doc_image: 'pdf', doc_name: 'Ganesan Marappa.pdf', date: new Date(), action: '' },
+  // { doc_image: 'pdf', doc_name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.pdf', date: new Date(), action: '' },
+  // { doc_image: 'xls', doc_name: 'Sarath Selvaraj.xls', date: new Date(), action: '' },
 ];

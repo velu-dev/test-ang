@@ -54,8 +54,12 @@ export const api_endpoint = {
     getBillItem: 'billable-item/details',
     correspondenceUpload: 'claim/claims-correspondence-upload',
     getClaimant: 'claimant/',
-    getcorrespondence:'claim/correspondence-details/',
-    deleteCorrespondence:'claim/correspondence-remove/',
+    getcorrespondence: 'claim/correspondence-details/',
+    deleteCorrespondence: 'claim/correspondence-remove/',
+    billableItemList: 'claim/billable-item-list/',
+    deuList: 'claim/seed-data/deu_office_details',
+    listIntakeCall: "claim/seed-data/intake_contact_type",
+    billableItemSingle:'claim/billable-item/',
 
     //seed data
     seedData: 'claim/seed-data/',
@@ -70,6 +74,10 @@ export const api_endpoint = {
     addExistAddress: 'subscriber/examiner/add-exist-address',
     updatePrimaryAddress: 'subscriber/update/primary-billing-locations/',
     getPrimaryAddress: 'subscriber/primary-billing-locations',
+    updateAgents: 'claim/update-agents/',
+    updateInjury: 'claim/update-injuries/',
+    deleteInjury: 'claim/injuries-remove/',
+    getInjury: "claim/injuries-list/",
 
     //examiner
 
@@ -79,5 +87,5 @@ export const api_endpoint = {
 
     //examination
     getExamination: 'examinations/details',
-    getAllExamination: 'examinations/'
+    getAllExamination: 'examinations/',
 }
