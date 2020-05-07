@@ -95,14 +95,10 @@ export class NewBillableItemComponent implements OnInit {
       })
     })
     this.claimService.seedData("agent_type").subscribe(res => {
-      res.data.map(caller => {
-        if (caller.id != 5 && caller.id != 6 && caller.id != 7) {
-          this.callerAffliation.push(caller);
-        }
-      })
+      this.callerAffliation = res.data;
     })
 
-    this.claimService.seedData("contact_type").subscribe(res => {
+    this.claimService.seedData("intake_contact_type").subscribe(res => {
       this.contactTypes = res.data;
       if (this.isEdit) {
         if (this.contactType) {
@@ -191,26 +187,19 @@ export class NewBillableItemComponent implements OnInit {
         this.contactMask.mask = "";
         this.contactMask.type = "email";
         break;
-      case "E2":
-        this.contactMask.mask = "email";
-        break;
-      case "M1":
-        this.contactMask.mask = "(000) 000-0000";
-        break;
-      case "M2":
-        this.contactMask.mask = "(000) 000-0000";
-        break;
       case "L1":
-        this.contactMask.mask = "(000) 000-0000";
-        break;
-      case "L2":
         this.contactMask.mask = "(000) 000-0000";
         break;
       case "F1":
         this.contactMask.mask = "000-000-0000";
         break;
-      case "F2":
-        this.contactMask.mask = "000-000-0000";
+      case "LE":
+        this.contactMask.mask = "";
+        this.contactMask.type = "text";
+        break;
+      default:
+        this.contactMask.mask = "";
+        this.contactMask.type = "text";
         break;
     }
 
