@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -15,6 +15,7 @@ export class DeoComponent implements OnInit {
   attroneylist = [];
   @Input('state') states;
   @Input('save') isSave = false;
+  @Output() isEditComplete = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.DEU = this.formBuilder.group({
       id: [null],
@@ -49,13 +50,16 @@ export class DeoComponent implements OnInit {
   updateDEU() {
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
       this.isEdit = false;
+      this.DEU.patchValue(res.data)
       this.alertService.openSnackBar("DEU updated successfully", 'success');
       this.DEU.disable();
+      this.isEditComplete.emit(true);
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancle() {
     this.DEU.disable();
+    this.isEditComplete.emit(true);
   }
 }

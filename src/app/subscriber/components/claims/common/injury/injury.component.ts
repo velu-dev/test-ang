@@ -157,4 +157,7 @@ export class InjuryPopup {
       })
     }
   }
+  cancle() {
+    this.dialogRef.close();
+  }
 }
