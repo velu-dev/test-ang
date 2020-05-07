@@ -28,8 +28,8 @@ export class UpdateBillableItemComponent implements OnInit {
   }
 
 
-  navigateBillableEdit(){
-    this.router.navigate(['/subscriber/new-billable-item',this.claimId,this.claimantId,''])
+  navigateBillableEdit(e){
+    this.router.navigate(['/subscriber/new-billable-item',this.claimId,this.claimantId,e.id])
   }
 
 

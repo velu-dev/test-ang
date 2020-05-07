@@ -38,8 +38,8 @@ export class ClaimService {
   createBillableItem(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.create_billable_item, data)
   }
-  updateBillableItem(data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.update_billable_item, data)
+  updateBillableItem(data,id): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.update_billable_item + id, data)
   }
   listExaminar(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.examinar_type)
@@ -99,4 +99,9 @@ export class ClaimService {
   intakeCallList(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.listIntakeCall)
   }
+
+  getBillableItemSingle(id){
+    return this.http.get(environment.baseUrl + api_endpoint.billableItemSingle + id)
+  }
+
 }

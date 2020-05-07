@@ -59,6 +59,8 @@ export const api_endpoint = {
     billableItemList: 'claim/billable-item-list/',
     deuList: 'claim/seed-data/deu_office_details',
     listIntakeCall: "claim/seed-data/intake_contact_type",
+    billableItemSingle:'claim/billable-item/',
+
     //seed data
     seedData: 'claim/seed-data/',
     bodyParts: "seed-data/body_part",
