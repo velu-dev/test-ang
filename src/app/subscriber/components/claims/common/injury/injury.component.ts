@@ -21,7 +21,7 @@ export class InjuryComponent implements OnInit {
   @Input('claim_id') claimId;
   @Input('state') states;
   injuryDetails = [];
-  constructor(public dialog: MatDialog, private claimService: ClaimService) {
+  constructor(public dialog: MatDialog, private claimService: ClaimService, public alertService: AlertService) {
 
   }
 
@@ -52,7 +52,7 @@ export class InjuryComponent implements OnInit {
             continuous_trauma_end_date: res.continuous_trauma_end_date,
             continuous_trauma_start_date: res.continuous_trauma_start_date,
             date_of_injury: res.date_of_injury,
-            id: 37,
+            id: res.id,
             injury_notes: res.injury_notes,
             body_part_id: [bp],
             body_part: bpart.join(",")
@@ -86,8 +86,16 @@ export class InjuryComponent implements OnInit {
     });
   }
   deleteInjury(data, index) {
-    this.injuryDetails.splice(index, 1);
-    this.injuryParser();
+    console.log(data)
+    this.claimService.deleteInjury(data.id).subscribe(res => {
+      this.alertService.openSnackBar("Injury deleted Successful", "success")
+      this.getInjury();
+      this.injuryDetails.splice(index, 1);
+      this.dataSource = new MatTableDataSource(this.injuryDetails)
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error")
+    })
+
   }
 
 }
@@ -107,7 +115,7 @@ export class InjuryPopup {
     private claimService: ClaimService,
     public dialogRef: MatDialogRef<InjuryPopup>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private alertService: AlertService) {
+    public alertService: AlertService) {
     this.claim_id = data['claim_id']
     this.isEdit = data['isEdit']
     if (this.isEdit) {
