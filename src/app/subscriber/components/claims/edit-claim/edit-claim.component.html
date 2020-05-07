@@ -27,7 +27,7 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <app-update-billable-item *ngIf="!isLoading" [claim_id]="claimId" [state]="states"></app-update-billable-item>
+                <app-update-billable-item *ngIf="!isLoading" [claim_id]="claimId" [claimant_id]="claimantDetail?.id" [state]="states"></app-update-billable-item>
             </mat-card-content>
         </mat-card>
     </div>

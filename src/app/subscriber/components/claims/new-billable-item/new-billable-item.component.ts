@@ -27,6 +27,9 @@ export class NewBillableItemComponent implements OnInit {
   contactTypes: any;
   claimId: number;
   claimantId: number;
+  isBillSubmited: boolean = false;
+  isEdit: boolean;
+  billableId: number;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -37,13 +40,17 @@ export class NewBillableItemComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.claimId = param.claim;
       this.claimantId = param.claimant;
+      if (param.billable) {
+        this.isEdit = true
+        this.billableId = param.billable;
+      }
     })
   }
 
   ngOnInit() {
     this.billable_item = this.formBuilder.group({
       claim_id: [this.claimId],
-      claimant_id: [ this.claimantId],
+      claimant_id: [this.claimantId],
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
         modifier_id: [null]
@@ -195,8 +202,7 @@ export class NewBillableItemComponent implements OnInit {
     }
 
   }
-  isBillSubmited: boolean = false;
-  isEdit: boolean;
+
   submitBillableItem() {
     this.isBillSubmited = true;
     if (this.billable_item.invalid) {
