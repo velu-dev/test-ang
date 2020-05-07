@@ -17,7 +17,6 @@ export interface PeriodicElement {
   styleUrls: ['./appointment-details.component.scss']
 })
 export class AppointmentDetailsComponent implements OnInit {
-
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource = ELEMENT_DATA;
 
@@ -47,7 +46,8 @@ export class AppointmentDetailsComponent implements OnInit {
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
       width: '800px',
-      data: this.examinationDetails 
+      data: this.examinationDetails,
+      
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -83,7 +83,7 @@ export class ClaimantPopupComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ClaimantPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   cancelClick(): void {
     this.dialogRef.close();
