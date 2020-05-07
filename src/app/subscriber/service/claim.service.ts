@@ -93,5 +93,10 @@ export class ClaimService {
   getbillableItem(claim_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.billableItemList + claim_id)
   }
-
+  getDeuDetails(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.deuList)
+  }
+  intakeCallList(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.listIntakeCall)
+  }
 }

@@ -144,6 +144,9 @@ export class NewClaimComponent implements OnInit {
   correspondForm: FormGroup;
   employerList = [];
   dataSource1 = [];
+  deuDetails = [];
+  filteredDeu: Observable<any[]>;
+  deuCtrl = new FormControl();
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -158,6 +161,14 @@ export class NewClaimComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private _location: Location) {
+    this.claimService.getDeuDetails().subscribe(res => {
+      this.deuDetails = res.data;
+      this.filteredDeu = this.deuCtrl.valueChanges
+        .pipe(
+          startWith(''),
+          map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
+        );
+    })
 
     this.route.params.subscribe(param => {
       if (param.id) {
@@ -215,24 +226,20 @@ export class NewClaimComponent implements OnInit {
             this.addressTypes = res.data;
             break;
           case "agent_type":
-            res.data.map(caller => {
-              if (caller.id != 5 && caller.id != 6 && caller.id != 7) {
-                this.callerAffliation.push(caller);
-              }
-            })
+            this.callerAffliation = res.data;
             break;
           case "body_part":
             this.bodyPartsList = res.data;
             break;
-          case "contact_type":
-            this.contactTypes = res.data;
-            if (this.isEdit) {
-              if (this.contactType) {
-                let type = this.contactTypes.find(element => element.id == this.contactType)
-                this.changeCommunicationType(type, 'auto');
-              }
-            }
-            break;
+          // case "contact_type":
+          //   // this.contactTypes = res.data;
+          //   if (this.isEdit) {
+          //     if (this.contactType) {
+          //       let type = this.contactTypes.find(element => element.id == this.contactType)
+          //       this.changeCommunicationType(type, 'auto');
+          //     }
+          //   }
+          //   break;
           case "exam_type":
             this.examTypes = res.data;
             break;
@@ -275,10 +282,22 @@ export class NewClaimComponent implements OnInit {
         }
       })
     })
+    this.claimService.intakeCallList().subscribe(res => {
+      this.contactTypes = res.data;
+      if (this.contactType) {
+        let type = this.contactTypes.find(element => element.id == this.contactType)
+        this.changeCommunicationType(type, 'auto');
+      }
+    })
     this.filteredClaimant = this.searchInput.valueChanges
       .pipe(
         debounceTime(300),
         switchMap(value => this.claimService.searchClaimant({ basic_search: value, isadvanced: this.searchStatus })));
+  }
+  private _filteDeu(value: string): any[] {
+    const filterValue = value.toLowerCase();
+
+    return this.deuDetails.filter(deu => deu.deu_office.toLowerCase().indexOf(filterValue) === 0);
   }
   isLoading = false;
   tabIndex = 0;
@@ -360,9 +379,9 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.required, Validators.maxLength(18)])],
+        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(18)])],
         claim_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(25)])],
-        panel_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.pattern('[0-9]+')])],
+        panel_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
       }),
@@ -933,6 +952,16 @@ export class NewClaimComponent implements OnInit {
         }, error => {
           console.log(error);
         })
+      }
+    })
+  }
+  deuSelect(deu) {
+    this.claim.patchValue({
+      DEU: deu
+    })
+    this.claim.patchValue({
+      DEU: {
+        name: this.deuCtrl.value
       }
     })
   }

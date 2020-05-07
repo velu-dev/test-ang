@@ -64,5 +64,6 @@ export class DefenseAttorneyComponent implements OnInit {
   cancle() {
     this.DefanceAttorney.disable();
     this.isEditComplete.emit(true);
+    this.DefanceAttorney.patchValue(this.dattorneyDetail)
   }
 }

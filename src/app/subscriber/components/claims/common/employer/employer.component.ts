@@ -59,5 +59,6 @@ export class EmployerComponent implements OnInit {
   cancle() {
     this.isEditComplete.emit(true);
     this.employer.disable();
+    this.employer.patchValue(this.employerDetail)
   }
 }

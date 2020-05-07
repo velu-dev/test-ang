@@ -65,5 +65,6 @@ export class ClaimAdminComponent implements OnInit {
   cancle() {
     this.claimAdminForm.disable();
     this.isEditComplete.emit(true);
+    this.claimAdminForm.patchValue(this.claimAdmin)
   }
 }

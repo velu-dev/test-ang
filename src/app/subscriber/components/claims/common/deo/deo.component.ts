@@ -61,5 +61,6 @@ export class DeoComponent implements OnInit {
   cancle() {
     this.DEU.disable();
     this.isEditComplete.emit(true);
+    this.DEU.patchValue(this.deuDetail)
   }
 }

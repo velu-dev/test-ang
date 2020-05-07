@@ -19,7 +19,7 @@ export interface PeriodicElement {
 
 
 export class EditClaimComponent implements OnInit {
-  expandedSection = 0;
+  step = 0;
   panelOpenState = false;
   claimId: any;
   claimantDetail: any = {};
@@ -32,12 +32,13 @@ export class EditClaimComponent implements OnInit {
   injuryDetails = [];
   claimAdminEdit = false;
   employerEdit = false;
-  saveClick = { claimAdmin: false, employer: false, aa: false, da: false, deu: false };
   aaEdit = false;
   daEdit = false;
   deoEdit = false;
+  saveClick = { claimAdmin: false, employer: false, aa: false, da: false, deu: false };
   isLoading = true;
   states = [];
+  isSectionOpen: boolean = false;
   constructor(private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -68,8 +69,42 @@ export class EditClaimComponent implements OnInit {
       this.states = res.data;
     })
   }
-  setStep(a) {
-
+  isStepOpen = false;
+  setStep(event) {
+    console.log("at open", this.isClosed, this.isStepOpen)
+    this.isStepOpen = true;
+    this.step = event;
+    if (event == 2) {
+      this.isClosed.ca = true;
+    } else if (event == 3) {
+      this.isClosed.emp = true;
+    } else if (event == 4) {
+      this.isClosed.aa = true;
+    } else if (event == 5) {
+      this.isClosed.da = true;
+    } else if (event == 6) {
+      this.isClosed.deu = true;
+    }
+  }
+  isClosed = { aa: false, ca: false, da: false, deu: false, emp: false };
+  closed(event) {
+    this.claimAdminEdit = false;
+    this.employerEdit = false;
+    this.aaEdit = false;
+    this.daEdit = false;
+    this.deoEdit = false;
+    this.isStepOpen = false;
+    if (event == "ca") {
+      this.isClosed.ca = false;
+    } else if (event == "emp") {
+      this.isClosed.emp = false;
+    } else if (event == "aa") {
+      this.isClosed.aa = false;
+    } else if (event == "da") {
+      this.isClosed.da = false;
+    } else {
+      this.isClosed.deu = false;
+    }
   }
   isEditChange(event, type) {
     console.log(event)

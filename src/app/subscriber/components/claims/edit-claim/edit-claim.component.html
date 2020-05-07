@@ -1,4 +1,4 @@
-<div class="m-0 content-wrapper-main-title">Page Status :</div>
+<div class="m-0 content-wrapper-main-title">Page Status : {{step}}</div>
 <!-- ###~~~~~ Claimant section  ~~~~~###-->
 <div class="claimant_info" fxLayout="row wrap">
     <div fxFlex="100">
@@ -36,7 +36,7 @@
 
 
 <mat-accordion class="m-t-20">
-    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+    <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Injury
@@ -45,7 +45,7 @@
         <mat-divider></mat-divider>
         <app-injury *ngIf="!isLoading" [claim_id]="claimId" [state]="states"></app-injury>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="expandedSection = 1">
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Correspondence
@@ -56,18 +56,18 @@
         <mat-divider></mat-divider>
         <app-correspondance *ngIf="!isLoading" [claimId]="claimId" [state]="states"></app-correspondance>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="expandedSection = 2" (closed)="expandedSection = 0">
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" (closed)="closed('ca')">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Claims Administrator
             </mat-panel-title>
-            <mat-panel-description>
-                <button *ngIf="!claimAdminEdit && expandedSection == 2" mat-raised-button
+            <mat-panel-description *ngIf="isClosed.ca">
+                <button *ngIf="!claimAdminEdit && step == 2 " mat-raised-button
                     (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit;saveClick.claimAdmin = false"
                     color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="claimAdminEdit && expandedSection == 2" mat-raised-button
+                <button *ngIf="claimAdminEdit && step == 2 " mat-raised-button
                     (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit;saveClick.claimAdmin = true"
                     color="primary" class="m-b-5">
                     Save
@@ -79,18 +79,18 @@
             [state]="states" [claim_admin]="claimAdminDetail" [edit]="claimAdminEdit">
         </app-claim-admin>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="expandedSection = 3" (closed)="expandedSection = 0">
+    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" (closed)="closed('emp')">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Employer
             </mat-panel-title>
-            <mat-panel-description>
-                <button *ngIf="!employerEdit && expandedSection == 3" mat-raised-button
+            <mat-panel-description *ngIf="isClosed.emp">
+                <button *ngIf="!employerEdit && step == 3" mat-raised-button
                     (click)="$event.stopPropagation();employerEdit = !employerEdit;saveClick.employer = false"
                     color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="employerEdit && expandedSection == 3" mat-raised-button
+                <button *ngIf="employerEdit && step == 3" mat-raised-button
                     (click)="$event.stopPropagation();employerEdit = !employerEdit;saveClick.employer = true"
                     color="primary" class="m-b-5">
                     Save
@@ -102,17 +102,17 @@
             [state]="states" [employer]="employeDetail" [edit]="employerEdit">
         </app-employer>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="expandedSection = 4" (closed)="expandedSection = 0">
+    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" (closed)="closed('aa')">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Applicant Attorney
             </mat-panel-title>
-            <mat-panel-description>
-                <button *ngIf="!aaEdit && expandedSection == 4" mat-raised-button
+            <mat-panel-description *ngIf="isClosed.aa">
+                <button *ngIf="!aaEdit && step == 4" mat-raised-button
                     (click)="$event.stopPropagation();aaEdit = !aaEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="aaEdit && expandedSection == 4" mat-raised-button
+                <button *ngIf="aaEdit && step == 4" mat-raised-button
                     (click)="$event.stopPropagation();aaEdit = !aaEdit;saveClick.aa = true" color="primary"
                     class="m-b-5">
                     Save
@@ -123,17 +123,17 @@
             [state]="states" [aattorney]="aAttorneyDetail" [edit]="aaEdit">
         </app-application-attorney>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="expandedSection = 5" (closed)="expandedSection = 0">
+    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" (closed)="closed('da')">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Defense Attorney
             </mat-panel-title>
-            <mat-panel-description>
-                <button *ngIf="!daEdit && expandedSection == 5" mat-raised-button
+            <mat-panel-description *ngIf="isClosed.da">
+                <button *ngIf="!daEdit && step == 5" mat-raised-button
                     (click)="$event.stopPropagation();daEdit = !daEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="daEdit && expandedSection == 5" mat-raised-button
+                <button *ngIf="daEdit && step == 5" mat-raised-button
                     (click)="$event.stopPropagation();daEdit = !daEdit;saveClick.da = true" color="primary"
                     class="m-b-5">
                     Save
@@ -144,17 +144,17 @@
             [state]="states" [dattroney]="dAttorneyDetail" [edit]="daEdit">
         </app-defense-attorney>
     </mat-expansion-panel>
-    <mat-expansion-panel (opened)="expandedSection = 6" (closed)="expandedSection = 0">
+    <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)" (closed)="closed('deu')">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 DEU Office
             </mat-panel-title>
-            <mat-panel-description>
-                <button *ngIf="!deoEdit && expandedSection == 6" mat-raised-button
+            <mat-panel-description *ngIf="isClosed.deu">
+                <button *ngIf="!deoEdit && step == 6" mat-raised-button
                     (click)="$event.stopPropagation();deoEdit = !deoEdit" color="primary" class="m-b-5">
                     Edit
                 </button>
-                <button *ngIf="deoEdit  && expandedSection == 6" mat-raised-button
+                <button *ngIf="deoEdit  && step == 6" mat-raised-button
                     (click)="$event.stopPropagation();deoEdit = !deoEdit;saveClick.deu = true" color="primary"
                     class="m-b-5">
                     Save

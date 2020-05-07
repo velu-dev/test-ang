@@ -41,13 +41,14 @@ export class ClaimComponent implements OnInit {
     this.claimService.updateClaim(this.claim.value, this.claim.value.id).subscribe(res => {
       this.isEdit = false;
       this.claim.patchValue(res.data)
-        this.claim.disable()
+      this.claim.disable()
       this.alertService.openSnackBar("Claim updated successfully", 'success')
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancel() {
-      this.claim.disable()
+    this.claim.disable();
+    this.claim.patchValue(this.claimDetail)
   }
 }

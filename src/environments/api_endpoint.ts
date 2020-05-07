@@ -57,7 +57,8 @@ export const api_endpoint = {
     getcorrespondence: 'claim/correspondence-details/',
     deleteCorrespondence: 'claim/correspondence-remove/',
     billableItemList: 'claim/billable-item-list/',
-
+    deuList: 'claim/seed-data/deu_office_details',
+    listIntakeCall: "claim/seed-data/intake_contact_type",
     //seed data
     seedData: 'claim/seed-data/',
     bodyParts: "seed-data/body_part",

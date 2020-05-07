@@ -326,23 +326,23 @@
                                     disabled>
                             </mat-form-field>
                             <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="fixied_adj"> -->
-                                <!-- <span> &nbsp; ADJ
+                            <!-- <span> &nbsp; ADJ
                                     &nbsp;</span> -->
-                                    <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                    fxFlex.xs="100">
-                                    <mat-label>Claim Number</mat-label>
-                                    <input matInput placeholder="Claim Number" formControlName="claim_number"
-                                        autocomplete="off">
-                                    <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                    <mat-label>WCAB Number</mat-label>
-                                    <input type="text" matInput placeholder="Enter WCAB Number"
-                                        formControlName="wcab_number" autocomplete="off">
-                                    <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
-                                </mat-form-field>
+                                <mat-label>Claim Number</mat-label>
+                                <input matInput placeholder="Claim Number" formControlName="claim_number"
+                                    autocomplete="off">
+                                <mat-error *ngIf="isClaimSubmited">Enter valid claim number</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>WCAB Number</mat-label>
+                                <input type="text" matInput placeholder="Enter WCAB Number"
+                                    formControlName="wcab_number" autocomplete="off">
+                                <mat-error *ngIf="isClaimSubmited">Enter valid WCAB number</mat-error>
+                            </mat-form-field>
                             <!-- </div> -->
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -355,7 +355,7 @@
                                 </mat-select>
                                 <mat-error *ngIf="isClaimSubmited">Select exam type</mat-error>
                             </mat-form-field>
-                           
+
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -825,7 +825,7 @@
                     <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
                         <mat-expansion-panel-header>
                             <div class="sub-title">Defense Attorney
-                                </div>
+                            </div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="DefenseAttorney">
                             <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
@@ -918,9 +918,14 @@
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                 fxFlex.xs="100">
                                 <mat-label>Office Name</mat-label>
-                                <input matInput placeholder="Office Name" formControlName="name" autocomplete="off">
+                                <input matInput placeholder="Select office name" aria-label="Office Name"
+                                    [matAutocomplete]="deuAuto" [formControl]="deuCtrl">
+                                <mat-autocomplete #deuAuto="matAutocomplete">
+                                    <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)" [value]="deu.deu_office">
+                                        <span>{{deu.code}} - {{deu.deu_office}}</span>
+                                    </mat-option>
+                                </mat-autocomplete>
                             </mat-form-field>
-
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Address 1</mat-label>
