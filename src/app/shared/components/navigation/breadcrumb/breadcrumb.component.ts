@@ -17,11 +17,18 @@ export class BreadcrumbComponent implements OnInit {
     roleId: any;
     role: any;
     routeUrl: string;
+    isname: string = 'false';
+    name: string = "";
     constructor(private router: Router, private store: Store<{ breadcrumb: any }>, private cookieService: CookieService) {
         this.menu$ = store.pipe(select('breadcrumb'));
+        this.menu$.subscribe(res => {
+            this.isname = localStorage.getItem("isName")
+            this.name = localStorage.getItem("name")
+        })
     }
 
     ngOnInit() {
+
         this.store.dispatch(new breadcrumbActions.ListBreadcrumb());
     }
     breadCrumb(menu, index) {

@@ -941,12 +941,13 @@ export class NewClaimComponent implements OnInit {
     })
   }
   ctChange() {
-    if (this.injuryInfo.date_of_injury) {
-      this.injuryInfo.continuous_trauma = false;
-      return
-    } else {
-      this.alertService.openSnackBar("Please Select Injury Date", "error");
-    }
+
+    // if (this.injuryInfo.date_of_injury) {
+    //   this.injuryInfo.continuous_trauma = false;
+    //   return
+    // } else {
+    //   this.alertService.openSnackBar("Please Select Injury Date", "error");
+    // }
   }
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
