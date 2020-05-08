@@ -326,6 +326,7 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimant.setValue(option);
     this.filteredClaimant = new Observable<[]>();
+    
   }
   setStep(index: number) {
     this.step = index;
@@ -380,9 +381,9 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(18),Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
-        claim_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(25)])],
-        panel_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
+        wcab_number: [{ value: null }, Validators.compose([Validators.maxLength(18),Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
+        claim_number: [{ value: null }, Validators.compose([Validators.maxLength(25)])],
+        panel_number: [{ value: null }, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
       }),
@@ -737,10 +738,11 @@ export class NewClaimComponent implements OnInit {
   }
   eamsStatus: boolean = false;
   searchEAMS() {
+    this.eamsStatus = true;
     if(this.emasSearchInput.invalid){
       return;
     }
-    this.eamsStatus = true;
+   
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value);
     if (this.emasSearchInput.value != "") {
       var adjValue = this.emasSearchInput.value.replace(/\s/g, '');
