@@ -11,7 +11,7 @@ import { EventInput } from '@fullcalendar/core';
   styleUrls: ['./examination-calander-view.component.scss']
 })
 export class ExaminationCalanderViewComponent implements OnInit {
-  options:any = {
+  options: any = {
     businessHours: {
       // days of week. an array of zero-based day of week integers (0=Sunday)
       daysOfWeek: [1, 2, 3, 4, 5], // Monday - Thursday
@@ -31,7 +31,9 @@ export class ExaminationCalanderViewComponent implements OnInit {
       left: 'title',
       center: 'myCustomButton dayGridMonth,timeGridWeek,timeGridDay'
     },
+    eventLimit: true,
     views: {
+      timeGrid: { eventLimit: 4 },
       timeGridFourDay: {
         type: 'timeGrid',
         duration: { days: 4 },
@@ -55,6 +57,36 @@ export class ExaminationCalanderViewComponent implements OnInit {
       title: "Anthony Hopkins",
       start: "2020-05-16T05:00:00.453Z",
       end: "2020-05-16T06:30:00.453Z",
+      backgroundColor: "#FFC400"
+    },
+    {
+      title: "Paul Newman",
+      start: "2020-05-18T07:00:00.453Z",
+      end: "2020-05-18T07:30:00.453Z",
+      backgroundColor: "#FFC400"
+    },
+    {
+      title: "Paul Newman",
+      start: "2020-05-18T07:00:00.453Z",
+      end: "2020-05-18T07:30:00.453Z",
+      backgroundColor: "#FFC400"
+    },
+    {
+      title: "Paul Newman",
+      start: "2020-05-18T07:00:00.453Z",
+      end: "2020-05-18T07:30:00.453Z",
+      backgroundColor: "#FFC400"
+    },
+    {
+      title: "Paul Newman",
+      start: "2020-05-18T07:00:00.453Z",
+      end: "2020-05-18T07:30:00.453Z",
+      backgroundColor: "#FFC400"
+    },
+    {
+      title: "Paul Newman",
+      start: "2020-05-18T07:00:00.453Z",
+      end: "2020-05-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
@@ -193,10 +225,10 @@ export class ExaminationCalanderViewComponent implements OnInit {
     this.calendarEvents = this.events;
   }
 
-  handleDateClick(e){
+  handleDateClick(e) {
 
   }
-  dateChanged(){
-    
+  dateChanged() {
+
   }
 }
