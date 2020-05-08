@@ -147,6 +147,7 @@ export class NewClaimComponent implements OnInit {
   deuDetails = [];
   filteredDeu: Observable<any[]>;
   deuCtrl = new FormControl();
+  iseams_entry:boolean = false;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -379,7 +380,7 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(18)])],
+        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(18),Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
         claim_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(25)])],
         panel_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
@@ -481,6 +482,8 @@ export class NewClaimComponent implements OnInit {
       note: ['', Validators.compose([Validators.required])]
     })
 
+    this.correspondenceSource = new MatTableDataSource([]);
+
   }
   newClaimant() {
     this.isEdit = false;
@@ -490,6 +493,7 @@ export class NewClaimComponent implements OnInit {
     this.addNewClaimant = true;
     this.claimant.reset();
     this.claim.reset();
+    this.iseams_entry = false;
   }
 
   advanceSearchSubmit() {
@@ -517,6 +521,9 @@ export class NewClaimComponent implements OnInit {
     claim['claim_injuries'] = this.injuryInfodata;
     if (this.documents_ids.length > 0) {
       claim['claim_details'].documents_ids = this.documents_ids;
+    }
+    if(this.iseams_entry){
+      claim['claim_details'].iseams_entry = this.iseams_entry;
     }
     console.log("!this.isEdit ||  !this.isClaimantEdit", !this.isEdit || !this.isClaimantEdit)
     if (!this.isEdit) {
@@ -733,13 +740,14 @@ export class NewClaimComponent implements OnInit {
     if(this.emasSearchInput.invalid){
       return;
     }
-    this.eamsStatus = false;
+    this.eamsStatus = true;
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value);
     if (this.emasSearchInput.value != "") {
       var adjValue = this.emasSearchInput.value.replace(/\s/g, '');
       if (adjValue.substring(0, 3).toLowerCase() == 'adj') {
         console.log(adjValue);
       } else {
+        this.alertService.openSnackBar("EAMS Number Not Valid", "error")
         this.eamsStatus = true;
         return
       }
@@ -763,9 +771,12 @@ export class NewClaimComponent implements OnInit {
             this.attroneylist = res.data.attroney;
             this.attroneySelect = true;
           }
+          this.iseams_entry = true;
         } else {
           this.alertService.openSnackBar("EAMS Number Not Found", "error")
         }
+      },error=>{
+        this.alertService.openSnackBar( error.error.message, "error")
       })
     } else {
       this.alertService.openSnackBar("Please enter EAMS Number", "error")

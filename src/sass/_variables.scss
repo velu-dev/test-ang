@@ -479,19 +479,25 @@ input:-webkit-autofill {
   background-color: $btn_success !important;
   color: $white !important;
 }
-
-.close-model {
-  background-color: $border-light;
-  color: $text-dark;
-  border: 1px solid $light-gray;
-  font-weight: $font-weight-bold;
-  padding: 5px 10px;
-  border-radius: 50px;
-  cursor: pointer;
-  outline: none;
-  &:hover,
-  &:focus {
+.model-header {
+  .content-wrapper-main-title {
+    color: $primarycolor;
+    font-weight: $font-weight-bold ;
+  }
+  .close-model {
+    background-color: $border-light;
+    color: $text-dark;
+    border: 1px solid $light-gray;
+    font-weight: $font-weight-bold;
+    padding: 5px 10px;
+    border-radius: 50px;
+    height: 25px;
+    cursor: pointer;
     outline: none;
+    &:hover,
+    &:focus {
+      outline: none;
+    }
   }
 }
 
