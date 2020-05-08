@@ -30,6 +30,9 @@ export class AppComponent {
       this.menu.push(menuData)
     })
   }
+  onActivate(event) {
+    window.scroll(0, 0);
+  }
   listenRouting() {
     let routerUrl: string, target: any;
     this._router.events.subscribe((router: any) => {
@@ -40,6 +43,8 @@ export class AppComponent {
         let routerSplit = routerUrl.split("/")
         if (!routerSplit.includes("edit-claim")) {
           localStorage.removeItem("isName")
+          localStorage.removeItem("exam_type")
+          localStorage.removeItem("claim_number")
           localStorage.removeItem("name")
         }
         routerSplit.shift();
@@ -54,20 +59,17 @@ export class AppComponent {
                 this.breadcrumbList.push(menu_name)
               }
               menu_name.submenu.map(sub => {
-                console.log("dsdsd", sub)
                 if (!isNaN(Number(res))) {
                   let mm = menu_join.split("/")
                   mm.shift();
                   mm.pop();
                   let menu = '/' + mm.join('/') + '/update'
                   if (menu == sub.path) {
-
                     this.breadcrumbList.push(sub)
                   }
                 }
 
                 if (sub.path == menu_join) {
-                  console.log("dsdsd", sub)
                   this.breadcrumbList.push(sub)
                 }
               })

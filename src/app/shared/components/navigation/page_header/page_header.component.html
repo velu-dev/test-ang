@@ -1,6 +1,7 @@
 <mat-toolbar class="p-l-0">
     <mat-toolbar-row class="p-l-0 p-r-0">
-        <span class="page-heading">{{(menu$ | async)?.active_title}}</span>
+        <span class="page-heading" *ngIf="!isname">{{(menu$ | async)?.active_title}}</span>
+        <span class="page-heading" *ngIf="isname == 'true'">{{exam_type}} - Claim Number - {{claim_number}}</span>
         <span class="spacer"></span>
         <app-breadcrumb class="hide-mobile"></app-breadcrumb>
     </mat-toolbar-row>
