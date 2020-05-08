@@ -34,9 +34,9 @@ export class EmployerComponent implements OnInit {
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
-      Object.keys(this.employer.controls).map(key => {
-        this.employer.controls[key].enable()
-      })
+      this.employer.enable();
+    } else {
+      this.employer.disable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
