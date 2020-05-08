@@ -117,13 +117,13 @@
                                             <span matPrefix> &nbsp; ADJ &nbsp;</span>
                                         </div> -->
                                         <input matInput placeholder="Enter WCAB number" (keyup.enter)="searchEAMS()"
-                                            [formControl]="emasSearchInput" autocomplete="off">
+                                            [formControl]="emasSearchInput" autocomplete="off" class="p-l-10">
                                         <span matSuffix class="search-icon icons" (click)="searchEAMS()">
                                             <mat-icon>search</mat-icon>
                                         </span>
-                                      
+                                        <mat-error *ngIf="eamsStatus">
+                                            <span>Enter valid WCAB number</span></mat-error>
                                     </mat-form-field>
-                                    <span *ngIf="eamsStatus">Enter valid WCAB number</span>
 
                                     <!-- <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <span matPrefix>ADJ &nbsp;</span>
@@ -922,7 +922,8 @@
                                 <input matInput placeholder="Select office name" aria-label="Office Name"
                                     [matAutocomplete]="deuAuto" [formControl]="deuCtrl">
                                 <mat-autocomplete #deuAuto="matAutocomplete">
-                                    <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)" [value]="deu.deu_office">
+                                    <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)"
+                                        [value]="deu.deu_office">
                                         <span>{{deu.code}} - {{deu.deu_office}}</span>
                                     </mat-option>
                                 </mat-autocomplete>
