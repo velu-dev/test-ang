@@ -34,7 +34,7 @@ $bg-success: rgb(76, 175, 80);
 $bg-error: rgba(255, 54, 54, 0.05);
 $bg-warning: rgba(255, 178, 54, 0.4);
 $bg-error-style-one: #ff8f8f;
-$btn_success: #00cc00;
+$btn_success: #00cc00 !default;
 $btn_close: #ebebf2;
 
 // Tab background color
@@ -468,11 +468,30 @@ input:-webkit-autofill {
 // ==================================
 
 .rounded-corner {
-  border-radius: 50px;
-  box-shadow: $box-shadow-2;
-  padding: 0px 30px;
+  border-radius: 50px !important;
+  box-shadow: $box-shadow-2 !important;
+  padding: 0px 30px !important;
   &:hover {
-    box-shadow: $box-shadow-1;
+    box-shadow: $box-shadow-1 !important;
+  }
+}
+.btn_success {
+  background-color: $btn_success !important;
+  color: $white !important;
+}
+
+.close-model {
+  background-color: $border-light;
+  color: $text-dark;
+  border: 1px solid $light-gray;
+  font-weight: $font-weight-bold;
+  padding: 5px 10px;
+  border-radius: 50px;
+  cursor: pointer;
+  outline: none;
+  &:hover,
+  &:focus {
+    outline: none;
   }
 }
 
@@ -529,8 +548,8 @@ input:-webkit-autofill {
   width: 100%;
   display: flex;
   div {
-    padding:5px;
-   
+    padding: 5px;
+
     &:first-child {
       min-width: 120px;
       width: 100%;
@@ -547,9 +566,8 @@ input:-webkit-autofill {
   }
 }
 
-
 .add_injury {
   mat-form-field {
-      padding: 5px !important;
+    padding: 5px !important;
   }
 }
