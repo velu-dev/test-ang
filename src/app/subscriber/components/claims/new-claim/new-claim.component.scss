@@ -39,44 +39,51 @@ mat-card {
         padding-left: 0px !important;
       }
     }
-
+  }
+  .Upload_ {
+    button {
+      width: 120px;
+    }
+    mat-form-field {
+      width: calc(100% - 150px);
+    }
   }
 }
 
-.docs_list {
-  padding: 20px;
-  width: $width-100;
-  margin-left: 10px;
-  box-shadow: $box-shadow-4 !important;
-  height: 90px;
-  img {
-    width: 25px !important ;
-    height: auto;
-    margin: 0px;
-    display: inline-block;
-  }
-  div {
-    padding-left: 15px;
-    max-width: 83%;
-    display: inline-block;
-    h4 {
-      margin-bottom: 0px !important;
-      margin-top: 0px !important;
-      padding-bottom: 0px !important;
-      color: $primarycolor;
-    }
-    p {
-      margin-top: 0px !important;
-      margin-bottom: 0;
-      color: $light-gray;
-      font-size: $font-size-1;
-    }
-  }
-  .delete-icon {
-    float: right;
-    padding-top: 12px;
-  }
-}
+// .docs_list {
+//   padding: 20px;
+//   width: $width-100;
+//   margin-left: 10px;
+//   box-shadow: $box-shadow-4 !important;
+//   height: 90px;
+//   img {
+//     width: 25px !important ;
+//     height: auto;
+//     margin: 0px;
+//     display: inline-block;
+//   }
+//   div {
+//     padding-left: 15px;
+//     max-width: 83%;
+//     display: inline-block;
+//     h4 {
+//       margin-bottom: 0px !important;
+//       margin-top: 0px !important;
+//       padding-bottom: 0px !important;
+//       color: $primarycolor;
+//     }
+//     p {
+//       margin-top: 0px !important;
+//       margin-bottom: 0;
+//       color: $light-gray;
+//       font-size: $font-size-1;
+//     }
+//   }
+//   .delete-icon {
+//     float: right;
+//     padding-top: 12px;
+//   }
+// }
 
 .advanced_search {
   div {
@@ -150,47 +157,6 @@ mat-card {
     padding: 5px 5px 5px 5px;
   }
 
-  mat-list-item {
-    background-color: $bg-light-blue;
-    box-shadow: $box-shadow-3;
-    &:hover {
-      background-color: $bg-light-blue;
-      cursor: pointer;
-    }
-    .name {
-      font-size: $font-size-1;
-      font-size: $font-weight-bold;
-      padding: 10px 5px 5px 5px;
-      width: $width-100;
-      div {
-        min-width: 150px;
-        float: left;
-        @media only screen and (max-width: 568px) {
-          min-width: auto;
-          margin-bottom: 10px;
-          float: none;
-          display: block;
-        }
-        i {
-          opacity: 0.5;
-          padding-right: 10px;
-        }
-      }
-      span {
-        text-align: left;
-        font-weight: $font-weight-medium;
-        i {
-          padding: 5px;
-          opacity: 0.5;
-        }
-      }
-    }
-    .address {
-      color: $text-gray;
-      padding: 0 0 5px 5px;
-    }
-    .edit {
-      color: $btn_success;
-    }
-  }
 }
+
+
