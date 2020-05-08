@@ -85,7 +85,7 @@ export class NewClaimComponent implements OnInit {
   step = 0;
   isLinear = false;
   isSubmit = false;
-  emasSearchInput = new FormControl();
+  emasSearchInput = new FormControl('', Validators.compose([Validators.maxLength(18),Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')]));
   searchInput = new FormControl();
   filteredClaimant: Observable<any[]>;
   claimForm: FormGroup;
@@ -728,13 +728,26 @@ export class NewClaimComponent implements OnInit {
     // this.injuryInfodata.splice(index, 1);
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
   }
-
+  eamsStatus: boolean = false;
   searchEAMS() {
-    console.log(this.emasSearchInput.value != "", this.emasSearchInput.value)
+    if(this.emasSearchInput.invalid){
+      return;
+    }
+    this.eamsStatus = false;
+    console.log(this.emasSearchInput.value != "", this.emasSearchInput.value);
+    if (this.emasSearchInput.value != "") {
+      var adjValue = this.emasSearchInput.value.replace(/\s/g, '');
+      if (adjValue.substring(0, 3).toLowerCase() == 'adj') {
+        console.log(adjValue);
+      } else {
+        this.eamsStatus = true;
+        return
+      }
+    }
     if (this.emasSearchInput.value) {
       this.claimant.reset();
-      this.claimService.searchbyEams(this.emasSearchInput.value).subscribe(res => {
-        if (res.status) {
+      this.claimService.searchbyEams(this.emasSearchInput.value.replace(/\s/g, '')).subscribe(res => {
+        if (res.data) {
           this.isEdit = false;
           this.isClaimantEdit = false;
           this.addNewClaimant = true;
@@ -928,12 +941,13 @@ export class NewClaimComponent implements OnInit {
     })
   }
   ctChange() {
-    if (this.injuryInfo.date_of_injury) {
-      this.injuryInfo.continuous_trauma = false;
-      return
-    } else {
-      this.alertService.openSnackBar("Please Select Injury Date", "error");
-    }
+
+    // if (this.injuryInfo.date_of_injury) {
+    //   this.injuryInfo.continuous_trauma = false;
+    //   return
+    // } else {
+    //   this.alertService.openSnackBar("Please Select Injury Date", "error");
+    // }
   }
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {

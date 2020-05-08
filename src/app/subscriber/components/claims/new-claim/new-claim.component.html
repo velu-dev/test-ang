@@ -117,12 +117,13 @@
                                             <span matPrefix> &nbsp; ADJ &nbsp;</span>
                                         </div> -->
                                         <input matInput placeholder="Enter WCAB number" (keyup.enter)="searchEAMS()"
-                                            [formControl]="emasSearchInput">
+                                            [formControl]="emasSearchInput" autocomplete="off">
                                         <span matSuffix class="search-icon icons" (click)="searchEAMS()">
                                             <mat-icon>search</mat-icon>
                                         </span>
+                                      
                                     </mat-form-field>
-
+                                    <span *ngIf="eamsStatus">Enter valid WCAB number</span>
 
                                     <!-- <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <span matPrefix>ADJ &nbsp;</span>
@@ -408,7 +409,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Injury </mat-label>
-                                <input matInput placeholder="Injury" [(ngModel)]="injuryInfo.injuries"
+                                <input matInput placeholder="Injury" [disabled]="injuryInfo.date_of_injury == null"  [(ngModel)]="injuryInfo.injuries"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off">
                             </mat-form-field> -->
 
@@ -417,7 +418,7 @@
                                 <mat-label>Continuous Trauma (CT)</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.continuous_trauma"
                                     [ngModelOptions]="{standalone: true}">
-                                    <mat-option [disabled]="injuryInfo.date_of_injury == null" (click)="ctChange()"
+                                    <mat-option (click)="ctChange()"
                                         [value]="true">
                                         Yes</mat-option>
                                     <mat-option (click)="ctChange()" [value]="false">No</mat-option>

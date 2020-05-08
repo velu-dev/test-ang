@@ -37,9 +37,6 @@
     mat-form-field {
       padding: 10px !important;
     }
-    .btn_success {
-      background-color: $btn_success;
-    }
 
     .manage-btn {
       border: 1px dashed $primarylightcolor;
@@ -63,9 +60,6 @@
 
     mat-form-field {
       padding: 10px !important;
-    }
-    button.btn_success {
-      background-color: $btn_success;
     }
   }
   .multiple_locations {
@@ -205,11 +199,6 @@
     padding: 5px 10px;
   }
   
-}
-
-button.btn_success {
-  background-color: $btn_success;
-  color: $black;
 }
 
 mat-form-field {
