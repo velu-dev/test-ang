@@ -1,5 +1,5 @@
 <mat-card-header class="model-header">
-    <div class="content-wrapper-main-title">Add Injury</div>
+    <div class="content-wrapper-main-title">{{isEdit ? 'Update' : 'Add'}} Injury</div>
     <span class="spacer"></span>
     <button class="close-model" (click)="cancel()" color="warn"> <i class="fa fa-close"></i> close </button>
 </mat-card-header>
@@ -65,7 +65,7 @@
 
         <div fxFlex="100" class="p-t-10 text-center">
             <button mat-raised-button type="button" (click)="addInjury()"
-                class="rounded-corner btn_success text-center m-r-5">{{isEdit ? 'Update' : 'Save'}}</button>
+                class="rounded-corner btn_success text-center m-r-5">Save</button>
             <button mat-raised-button type="button" (click)="cancel()" class="rounded-corner"
                 color="warn">Cancel</button>
         </div>

@@ -30,6 +30,9 @@ export class AppComponent {
       this.menu.push(menuData)
     })
   }
+  onActivate(event) {
+    window.scroll(0, 0);
+  }
   listenRouting() {
     let routerUrl: string, target: any;
     this._router.events.subscribe((router: any) => {

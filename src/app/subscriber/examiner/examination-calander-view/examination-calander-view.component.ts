@@ -34,7 +34,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     eventLimit: true,
     views: {
       month: {
-        eventLimit: 3
+        eventLimit: 1
       },
       timeGrid: { eventLimit: 4 },
       timeGridFourDay: {
