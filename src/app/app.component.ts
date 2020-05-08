@@ -40,6 +40,7 @@ export class AppComponent {
         let routerSplit = routerUrl.split("/")
         if (!routerSplit.includes("edit-claim")) {
           localStorage.removeItem("isName")
+          localStorage.removeItem("exam_type")
           localStorage.removeItem("claim_number")
           localStorage.removeItem("name")
         }
