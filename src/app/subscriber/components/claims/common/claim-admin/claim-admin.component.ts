@@ -26,9 +26,9 @@ export class ClaimAdminComponent implements OnInit {
       city: [{ value: null, disabled: true }],
       state: [{ value: null, disabled: true }],
       zip_code: [{ value: null, disabled: true }],
-      phone: [{ value: null, disabled: true }],
-      email: [{ value: null, disabled: true }],
-      fax: [{ value: null, disabled: true }],
+      phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+      email: [{ value: null, disabled: true }, Validators.compose([Validators.email])],
+      fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
   }
 
@@ -40,6 +40,8 @@ export class ClaimAdminComponent implements OnInit {
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       this.claimAdminForm.enable();
+    } else {
+      this.claimAdminForm.disable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
@@ -51,6 +53,9 @@ export class ClaimAdminComponent implements OnInit {
   }
   claimUpdated = false;
   updateClaimAdmin() {
+    if (this.claimAdminForm.invalid) {
+      return;
+    }
     this.claimService.updateAgent(this.claimAdminForm.value.id, { InsuranceAdjuster: this.claimAdminForm.value }).subscribe(res => {
       this.isEdit = false;
       this.claimAdminForm.patchValue(res.data)

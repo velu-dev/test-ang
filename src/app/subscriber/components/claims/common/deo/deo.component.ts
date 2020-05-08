@@ -35,6 +35,8 @@ export class DeoComponent implements OnInit {
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       this.DEU.enable()
+    } else {
+      this.DEU.disable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
@@ -48,6 +50,9 @@ export class DeoComponent implements OnInit {
 
   }
   updateDEU() {
+    if (this.DEU.invalid) {
+      return;
+    }
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
       this.isEdit = false;
       this.DEU.patchValue(res.data)

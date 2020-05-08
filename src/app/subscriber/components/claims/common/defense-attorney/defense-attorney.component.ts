@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SimpleChange, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
@@ -26,18 +26,18 @@ export class DefenseAttorneyComponent implements OnInit {
       city: [{ value: null, disabled: true }],
       state: [{ value: null, disabled: true }],
       zip_code: [{ value: null, disabled: true }],
-      phone: [{ value: null, disabled: true }],
-      email: [{ value: null, disabled: true }],
-      fax: [{ value: null, disabled: true }],
+      phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+      email: [{ value: null, disabled: true }, Validators.compose([Validators.email])],
+      fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
-      Object.keys(this.DefanceAttorney.controls).map(key => {
-        this.DefanceAttorney.controls[key].enable()
-      })
+      this.DefanceAttorney.enable()
+    } else {
+      this.DefanceAttorney.disable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
@@ -51,6 +51,9 @@ export class DefenseAttorneyComponent implements OnInit {
 
   }
   updateDAttorney() {
+    if (this.DefanceAttorney.invalid) {
+      return;
+    }
     this.claimService.updateAgent(this.DefanceAttorney.value.id, { DefenseAttorney: this.DefanceAttorney.value }).subscribe(res => {
       this.isEdit = false;
       this.DefanceAttorney.patchValue(res.data);

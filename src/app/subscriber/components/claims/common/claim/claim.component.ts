@@ -39,6 +39,9 @@ export class ClaimComponent implements OnInit {
     this.claim.patchValue(this.claimDetail);
   }
   updateClaim() {
+    if (this.claim.invalid) {
+      return;
+    }
     this.claimService.updateClaim(this.claim.value, this.claim.value.id).subscribe(res => {
       this.isEdit = false;
       this.claim.patchValue(res.data)

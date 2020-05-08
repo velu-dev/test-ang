@@ -25,18 +25,18 @@ export class EmployerComponent implements OnInit {
       city: [{ value: null, disabled: true }],
       state: [{ value: null, disabled: true }],
       zip_code: [{ value: null, disabled: true }],
-      phone: [{ value: null, disabled: true }],
-      email: [{ value: null, disabled: true }],
-      fax: [{ value: null, disabled: true }],
+      phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+      email: [{ value: null, disabled: true }, Validators.compose([Validators.email])],
+      fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
-      Object.keys(this.employer.controls).map(key => {
-        this.employer.controls[key].enable()
-      })
+      this.employer.enable();
+    } else {
+      this.employer.disable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
@@ -47,6 +47,9 @@ export class EmployerComponent implements OnInit {
     this.employer.patchValue(this.employerDetail)
   }
   updateEmployer() {
+    if (this.employer.invalid) {
+      return;
+    }
     this.claimService.updateAgent(this.employer.value.id, { Employer: this.employer.value }).subscribe(res => {
       this.isEdit = false;
       this.alertService.openSnackBar("Employer updated successfully", 'success');

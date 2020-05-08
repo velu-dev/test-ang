@@ -134,6 +134,23 @@ export class InjuryPopup {
 
   }
   addInjury() {
+    if (this.injuryInfo.continuous_trauma) {
+      if (this.injuryInfo.continuous_trauma_start_date) {
+
+      } else {
+        this.alertService.openSnackBar("Please select start date", "error")
+        return;
+      }
+    }
+    if (!this.injuryInfo.body_part_id) {
+      this.alertService.openSnackBar("Please fill the injury information", "error")
+      return;
+    } else {
+      if (!this.injuryInfo.date_of_injury) {
+        this.alertService.openSnackBar("Please fill the injury date", "error")
+        return
+      }
+    }
     if (this.isEdit) {
       this.claimService.updateInjury(this.injuryInfo, this.claim_id).subscribe(res => {
         this.alertService.openSnackBar("Claim injurt updated successfully", 'success')
