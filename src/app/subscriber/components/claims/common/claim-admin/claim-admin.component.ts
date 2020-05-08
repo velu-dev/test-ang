@@ -40,6 +40,8 @@ export class ClaimAdminComponent implements OnInit {
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       this.claimAdminForm.enable();
+    } else {
+      this.claimAdminForm.disable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)

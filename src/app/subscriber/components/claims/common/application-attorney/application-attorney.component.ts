@@ -36,6 +36,8 @@ export class ApplicationAttorneyComponent implements OnInit {
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       this.ApplicantAttorney.enable();
+    } else {
+      this.ApplicantAttorney.disable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)

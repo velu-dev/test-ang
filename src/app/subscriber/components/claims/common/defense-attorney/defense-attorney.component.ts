@@ -35,9 +35,9 @@ export class DefenseAttorneyComponent implements OnInit {
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
-      Object.keys(this.DefanceAttorney.controls).map(key => {
-        this.DefanceAttorney.controls[key].enable()
-      })
+      this.DefanceAttorney.enable()
+    } else {
+      this.DefanceAttorney.disable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)

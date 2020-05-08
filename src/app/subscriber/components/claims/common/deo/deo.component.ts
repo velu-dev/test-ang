@@ -35,6 +35,8 @@ export class DeoComponent implements OnInit {
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
       this.DEU.enable()
+    } else {
+      this.DEU.disable();
     }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
