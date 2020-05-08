@@ -48,6 +48,9 @@ export class DeoComponent implements OnInit {
 
   }
   updateDEU() {
+    if (this.DEU.invalid) {
+      return;
+    }
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
       this.isEdit = false;
       this.DEU.patchValue(res.data)
