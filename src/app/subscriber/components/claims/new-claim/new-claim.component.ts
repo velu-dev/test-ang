@@ -482,6 +482,8 @@ export class NewClaimComponent implements OnInit {
       note: ['', Validators.compose([Validators.required])]
     })
 
+    this.correspondenceSource = new MatTableDataSource([]);
+
   }
   newClaimant() {
     this.isEdit = false;
