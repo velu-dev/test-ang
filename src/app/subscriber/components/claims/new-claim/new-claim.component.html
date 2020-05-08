@@ -117,12 +117,13 @@
                                             <span matPrefix> &nbsp; ADJ &nbsp;</span>
                                         </div> -->
                                         <input matInput placeholder="Enter WCAB number" (keyup.enter)="searchEAMS()"
-                                            [formControl]="emasSearchInput">
+                                            [formControl]="emasSearchInput" autocomplete="off">
                                         <span matSuffix class="search-icon icons" (click)="searchEAMS()">
                                             <mat-icon>search</mat-icon>
                                         </span>
+                                      
                                     </mat-form-field>
-
+                                    <span *ngIf="eamsStatus">Enter valid WCAB number</span>
 
                                     <!-- <mat-form-field appearance="fill" fxFlex="100" class="w-100">
                                         <span matPrefix>ADJ &nbsp;</span>
