@@ -85,7 +85,7 @@ export class NewClaimComponent implements OnInit {
   step = 0;
   isLinear = false;
   isSubmit = false;
-  emasSearchInput = new FormControl('', Validators.compose([Validators.maxLength(18),Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')]));
+  emasSearchInput = new FormControl('', Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')]));
   searchInput = new FormControl();
   filteredClaimant: Observable<any[]>;
   claimForm: FormGroup;
@@ -147,7 +147,7 @@ export class NewClaimComponent implements OnInit {
   deuDetails = [];
   filteredDeu: Observable<any[]>;
   deuCtrl = new FormControl();
-  iseams_entry:boolean = false;
+  iseams_entry: boolean = false;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -326,7 +326,7 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimant.setValue(option);
     this.filteredClaimant = new Observable<[]>();
-    
+
   }
   setStep(index: number) {
     this.step = index;
@@ -381,9 +381,9 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [{ value: null }, Validators.compose([Validators.maxLength(18),Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
-        claim_number: [{ value: null }, Validators.compose([Validators.maxLength(25)])],
-        panel_number: [{ value: null }, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
+        wcab_number: [null, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
+        claim_number: [null, Validators.compose([Validators.maxLength(25)])],
+        panel_number: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
       }),
@@ -523,7 +523,7 @@ export class NewClaimComponent implements OnInit {
     if (this.documents_ids.length > 0) {
       claim['claim_details'].documents_ids = this.documents_ids;
     }
-    if(this.iseams_entry){
+    if (this.iseams_entry) {
       claim['claim_details'].iseams_entry = this.iseams_entry;
     }
     console.log("!this.isEdit ||  !this.isClaimantEdit", !this.isEdit || !this.isClaimantEdit)
@@ -739,10 +739,10 @@ export class NewClaimComponent implements OnInit {
   eamsStatus: boolean = false;
   searchEAMS() {
     this.eamsStatus = true;
-    if(this.emasSearchInput.invalid){
+    if (this.emasSearchInput.invalid) {
       return;
     }
-   
+
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value);
     if (this.emasSearchInput.value != "") {
       var adjValue = this.emasSearchInput.value.replace(/\s/g, '');
@@ -762,6 +762,7 @@ export class NewClaimComponent implements OnInit {
           this.isClaimantEdit = false;
           this.addNewClaimant = true;
           this.claimant.patchValue(res.data.claimant)
+
           this.claim.patchValue({
             claim_details: res.data.claim,
           });
@@ -777,8 +778,8 @@ export class NewClaimComponent implements OnInit {
         } else {
           this.alertService.openSnackBar("EAMS Number Not Found", "error")
         }
-      },error=>{
-        this.alertService.openSnackBar( error.error.message, "error")
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, "error")
       })
     } else {
       this.alertService.openSnackBar("Please enter EAMS Number", "error")
