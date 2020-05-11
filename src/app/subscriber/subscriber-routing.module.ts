@@ -23,6 +23,7 @@ import { ManageLocationComponent } from './staff/manage-location/manage-location
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
 import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
+import { BillingComponent } from './components/billing/billing.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -45,6 +46,9 @@ const routes: Routes = [{
 }, {
   path: "settings",
   component: SubscriberSettingsComponent
+}, {
+  path: "billing",
+  component: BillingComponent
 },
 {
   path: "claimant",
@@ -69,12 +73,16 @@ const routes: Routes = [{
 {
   path: "new-billable-item",
   component: NewBillableItemComponent
-},{
+}, {
   path: "new-billable-item/:claim/:claimant",
   component: NewBillableItemComponent
-},{
+}, {
   path: "new-billable-item/:claim/:claimant/:billable",
   component: NewBillableItemComponent
+},
+{
+  path: "billing",
+  component: BillingComponent
 },
 {
   path: "claims",
@@ -102,6 +110,10 @@ const routes: Routes = [{
     {
       path: "manage-address",
       component: ExaminerManageAddressComponent
+    },
+    {
+      path: "billing",
+      component: BillingComponent
     },
     {
       path: "claimant",
@@ -161,6 +173,9 @@ const routes: Routes = [{
       component: NewClaimantComponent
     }]
   }, {
+    path: "billing",
+    component: BillingComponent
+  }, {
     path: "billable-item",
     component: BillableItemComponent
   }, {
@@ -204,6 +219,9 @@ const routes: Routes = [{
     path: "billable-item",
     component: BillableItemComponent
   }, {
+    path: "billing",
+    component: BillingComponent
+  }, {
     path: "claims",
     children: [{
       path: "",
@@ -234,6 +252,9 @@ const routes: Routes = [{
     path: "appointment-details/:id",
     component: AppointmentDetailsComponent
   }, {
+    path: "billing",
+    component: BillingComponent
+  }, {
     path: "claimant",
     children: [{
       path: "",
@@ -257,7 +278,7 @@ const routes: Routes = [{
       path: ":id",
       component: NewClaimComponent
     }
-  ]
+    ]
   }, {
     path: "settings",
     component: ExaminerSettingComponent

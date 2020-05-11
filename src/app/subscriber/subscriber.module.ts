@@ -40,6 +40,7 @@ import { CorrespondanceComponent } from './components/claims/common/correspondan
 import { ClaimantDetailsComponent } from './components/claims/common/claimant-details/claimant-details.component';
 import { UpdateBillableItemComponent } from './components/claims/common/update-billable-item/update-billable-item.component';
 import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
+import { BillingComponent } from './components/billing/billing.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { NewBillableItemComponent } from './components/claims/new-billable-item/
     ClaimantDetailsComponent,
     UpdateBillableItemComponent,
     InjuryPopup,
-    NewBillableItemComponent
+    NewBillableItemComponent,
+    BillingComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,
