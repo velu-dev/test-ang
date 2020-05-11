@@ -46,7 +46,7 @@
                         <span (click)="navigate(element)" *ngIf="columnName[i] != 'Date'">{{element[column] }}</span>
                         <span (click)="navigate(element)"
                             *ngIf="columnName[i] == 'Date'">{{element[column] | date:'MM-dd-yyyy'}}</span>
-                        <span *ngIf="i == (columnsToDisplay.length-1)">
+                        <!-- <span *ngIf="i == (columnsToDisplay.length-1)">
                             <span class="user-disable-enable" *ngIf="tabIndex != 1"> <button mat-icon-button
                                     [matMenuTriggerFor]="review_doc">
                                     <mat-icon>more_vert</mat-icon>
@@ -70,9 +70,7 @@
                                     </button>
                                 </mat-menu>
                             </span>
-                            <!-- <span class="user-disable-enable" *ngIf="tabIndex == 1"  (click)="onDisable($event, element)"> Cancel </span> -->
-                            <!-- <span class="user-enable"> Enable</span>  -->
-                        </span>
+                        </span> -->
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
