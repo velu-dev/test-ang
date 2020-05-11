@@ -684,6 +684,7 @@ export class NewClaimComponent implements OnInit {
         console.log(error)
         this.isClaimantCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
+        this.stepper.previous();
       })
     } else {
       this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
