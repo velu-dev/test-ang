@@ -303,13 +303,13 @@
 
                             <div class="text-center w-100 m-t-10 m-b-50">
 
-                                <button mat-raised-button color="primary" type="submit"
-                                    class="m-r-10 rounded-corner btn_success" (click)="createClaimant('close')">
+                                <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner"
+                                    (click)="createClaimant('close')">
                                     {{(isEdit || isClaimantEdit) ? 'Update & Close' : 'Save & Close'}} </button>
-                                <button mat-raised-button type="submit" class="m-r-10 rounded-corner"
-                                    (click)="createClaimant('next')" color="primary">
+                                <button mat-raised-button type="submit" class="m-r-10 rounded-corner btn_success"
+                                    (click)="createClaimant('next')">
                                     {{(isEdit || isClaimantEdit) ? 'Update & Next' : 'Save & Next'}}</button>
-                                <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
+                                <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
                                     (click)="cancel()">Cancel</button>
 
                             </div>
@@ -992,15 +992,15 @@
                         </div>
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50">
-                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
                             matStepperPrevious>Previous</button>
-                        <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim('save')">
+                        <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner "
+                            (click)="submitClaim('save')">
                             {{isEdit ? 'Update & Close' : 'Save & Close'}} </button>
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success"
                             (click)="submitClaim('next')">{{isEdit ? 'Update & Next' : 'Save & Next'}} </button>
-                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
                             (click)="cancel()">Cancel</button>
                     </div>
                 </mat-accordion>
@@ -1165,14 +1165,14 @@
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50">
-                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
                             matStepperPrevious>Previous</button>
 
-                        <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
+                        <button mat-raised-button color="primary" class="m-r-10 rounded-corner" color="accent"
                             (click)="submitBillableItem()">
                             {{isEdit ? 'Update & Close' : 'Save & Close'}} </button>
-                        
-                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
+
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
                             (click)="cancel()">Cancel</button>
                     </div>
                 </mat-card>
