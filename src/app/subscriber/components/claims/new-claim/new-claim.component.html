@@ -116,8 +116,9 @@
                                         <!-- <div matPrefix>
                                             <span matPrefix> &nbsp; ADJ &nbsp;</span>
                                         </div> -->
-                                        <input matInput placeholder="Enter WCAB number (e.g. ADJ11111111)" (keyup.enter)="searchEAMS()"
-                                            [formControl]="emasSearchInput" autocomplete="off" class="p-l-10">
+                                        <input matInput placeholder="Enter WCAB number (e.g. ADJ11111111)"
+                                            (keyup.enter)="searchEAMS()" [formControl]="emasSearchInput"
+                                            autocomplete="off" class="p-l-10">
                                         <span matSuffix class="search-icon icons" (click)="searchEAMS()">
                                             <mat-icon>search</mat-icon>
                                         </span>
@@ -301,11 +302,16 @@
                             </mat-form-field>
 
                             <div class="text-center w-100 m-t-10 m-b-50">
-                                <button mat-raised-button color="primary" type="submit"
-                                    class="m-r-10 rounded-corner btn_success" (click)="createClaimant()">
-                                    {{(isEdit || isClaimantEdit) ? 'Update' : 'Save'}} </button>
-                                <button [disabled]="!(!claimant.invalid && isClaimantCreated)" mat-raised-button
-                                    type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
+
+                                <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner"
+                                    (click)="createClaimant('close')">
+                                   Save & Close</button>
+                                <button mat-raised-button type="submit" class="m-r-10 rounded-corner btn_success"
+                                    (click)="createClaimant('next')">
+                                    Save & Next</button>
+                                <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                                    (click)="cancel()">Cancel</button>
+
                             </div>
                         </div>
                     </div>
@@ -418,8 +424,7 @@
                                 <mat-label>Continuous Trauma (CT)</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.continuous_trauma"
                                     [ngModelOptions]="{standalone: true}">
-                                    <mat-option (click)="ctChange()"
-                                        [value]="true">
+                                    <mat-option (click)="ctChange()" [value]="true">
                                         Yes</mat-option>
                                     <mat-option (click)="ctChange()" [value]="false">No</mat-option>
                                 </mat-select>
@@ -496,13 +501,15 @@
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
                             <form [formGroup]="correspondForm" fxFlex="100">
-                                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="Upload_">
-                                    <button type="button" (click)="uploader.click()" mat-stroked-button color="primary"> 
+                                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
+                                    class="Upload_">
+                                    <button type="button" (click)="uploader.click()" mat-stroked-button color="primary">
                                         Select File<i class="fa fa-upload p-l-5"></i></button>
                                     <mat-form-field appearance="standard">
-                                        <input matInput formControlName="file" [title]="selectedFile?.name" readonly [value]="selectedFile?.name | ellipsis:30"
-                                            placeholder="No file chosen">
-                                        <input type="file" formControlName="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
+                                        <input matInput formControlName="file" [title]="selectedFile?.name" readonly
+                                            [value]="selectedFile?.name | ellipsis:30" placeholder="No file chosen">
+                                        <input type="file" formControlName="file" #uploader hidden
+                                            (change)="uploadFile($event)" id="uploadFile"
                                             accept=".pdf, .doc, .docx, .excel, .csv">
                                     </mat-form-field>
                                 </div>
@@ -514,8 +521,9 @@
                                     <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
                                 </mat-form-field>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                                    <button mat-stroked-button type="button" [disabled]="correspondForm.invalid" (click)="correspondFormSubmit();"
-                                        color="primary" class="m-t-15 upload_btn p-r-20">Add
+                                    <button mat-stroked-button type="button" [disabled]="correspondForm.invalid"
+                                        (click)="correspondFormSubmit();" color="primary"
+                                        class="m-t-15 upload_btn p-r-20">Add
                                     </button>
                                 </div>
                             </form>
@@ -984,15 +992,16 @@
                         </div>
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50">
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
+                            matStepperPrevious>Previous</button>
+                        <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner "
+                            (click)="submitClaim('save')">
+                           Save & Close</button>
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()">
-                            {{isEdit ? 'Update' : 'Save'}} </button>
-                        <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" matStepperNext
-                            [disabled]="!(!claim.invalid && isClaimCreated)">
-                            Next </button>
-                        <button mat-raised-button type="button" class="rounded-corner" color="warn"
-                            matStepperPrevious>Back</button>
+                            class="m-r-10 rounded-corner btn_success"
+                            (click)="submitClaim('next')">Save & Next </button>
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                            (click)="cancel()">Cancel</button>
                     </div>
                 </mat-accordion>
             </form>
@@ -1156,11 +1165,15 @@
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50">
-                        <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
+                            matStepperPrevious>Previous</button>
+
+                        <button mat-raised-button color="primary" class="m-r-10 rounded-corner" color="accent"
                             (click)="submitBillableItem()">
-                            {{isEdit ? 'Update' : 'Submit'}} </button>
-                        <button mat-raised-button type="button" class="rounded-corner" color="warn"
-                            matStepperPrevious>Back</button>
+                            Save & Close </button>
+
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                            (click)="cancel()">Cancel</button>
                     </div>
                 </mat-card>
             </form>

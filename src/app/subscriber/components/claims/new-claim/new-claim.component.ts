@@ -11,7 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   NativeDateAdapter, DateAdapter,
   MAT_DATE_FORMATS,
-  MatDialog
+  MatDialog,
+  MatStepper
 } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
@@ -67,6 +68,8 @@ const ELEMENT_DATA: claimant1[] = []
   ]
 })
 export class NewClaimComponent implements OnInit {
+
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
   displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
   correspondenceSource: any = [];
@@ -154,6 +157,8 @@ export class NewClaimComponent implements OnInit {
   }
 
   dateOfbirthEndValue = new Date();
+  claimantChanges: boolean = false;
+  claimChanges: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -484,7 +489,19 @@ export class NewClaimComponent implements OnInit {
     })
 
     this.correspondenceSource = new MatTableDataSource([]);
+    this.claimant.valueChanges.subscribe(
+      value => {
+        // console.log(JSON.stringify(value));
+        this.claimantChanges = true;
+      }
+    );
 
+    this.claim.valueChanges.subscribe(
+      value => {
+        // console.log(JSON.stringify(value));
+        this.claimChanges = true;
+      }
+    );
   }
   newClaimant() {
     this.isEdit = false;
@@ -500,19 +517,33 @@ export class NewClaimComponent implements OnInit {
   advanceSearchSubmit() {
     console.log("advanceSearch", this.advanceSearch.value)
   }
+
   selectionChange(event) {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
+      this.createClaimant('tab')
+
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
+      this.submitClaim('tab')
       this.titleName = " Billable Item";
     }
 
 
   }
   isClaimCreated = false;
-  submitClaim() {
+  submitClaim(status) {
+    if (!this.claimChanges) {
+      if (status == 'next') {
+        this.stepper.next();
+      } else if (status == 'save') {
+        this._location.back();
+      }
+      return;
+    }
+
+    this.claimChanges = false;
     this.isClaimSubmited = true;
     if (this.claim.invalid) {
       console.log("claim", this.claim)
@@ -534,6 +565,12 @@ export class NewClaimComponent implements OnInit {
           claim_id: res.data.claim_id
         })
         this.alertService.openSnackBar(res.message, 'success');
+        if (status == 'next') {
+          this.stepper.next();
+        } else if (status == 'save') {
+          this._location.back();
+        }
+        this.claimChanges = false;
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
@@ -542,6 +579,11 @@ export class NewClaimComponent implements OnInit {
     } else {
       this.claimService.updateClaim(this.claim.value, this.claimId).subscribe(res => {
         this.alertService.openSnackBar(res.message, 'success');
+        if (status == 'next') {
+          this.stepper.next();
+        } else if (status == 'save') {
+          this._location.back();
+        }
       }, error => {
         this.isClaimCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -602,11 +644,21 @@ export class NewClaimComponent implements OnInit {
     }
   }
   cancel() {
-
+    this._location.back()
   }
   claimant_name = "";
   isClaimantCreated = false;
-  createClaimant() {
+  createClaimant(status) {
+
+    if (!this.claimantChanges) {
+      if (status == 'next') {
+        this.stepper.next();
+      } else if (status == 'save') {
+        this._location.back();
+      }
+      return;
+    }
+    this.claimantChanges = false;
     this.isClaimantSubmited = true;
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
@@ -633,14 +685,26 @@ export class NewClaimComponent implements OnInit {
         })
         this.isClaimantCreated = true;
         this.isClaimantEdit = true;
+        if (status == 'next') {
+          this.stepper.next();
+        } else if (status == 'save') {
+          this._location.back();
+        }
+        this.claimantChanges = false;
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
+        this.stepper.previous();
       })
     } else {
       this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
+        if (status == 'next') {
+          this.stepper.next();
+        } else if (status == 'save') {
+          this._location.back();
+        }
       }, error => {
         this.isClaimantCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');

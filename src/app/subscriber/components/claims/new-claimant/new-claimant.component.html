@@ -103,7 +103,7 @@
     </div> -->
 
     <div fxLayout="row wrap" fxFlex="100">
-      <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimantForm">
+      <form fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.preventDefault()" [formGroup]="claimantForm">
 
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
