@@ -302,11 +302,16 @@
                             </mat-form-field>
 
                             <div class="text-center w-100 m-t-10 m-b-50">
-                                <button mat-raised-button color="primary" type="submit"
-                                    class="m-r-10 rounded-corner btn_success" (click)="createClaimant()">
-                                    {{(isEdit || isClaimantEdit) ? 'Update' : 'Save'}} </button>
-                                <button [disabled]="!(!claimant.invalid && isClaimantCreated)" mat-raised-button
-                                    type="submit" class="rounded-corner" color="primary" matStepperNext>Next</button>
+
+                                <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner"
+                                    (click)="createClaimant('close')">
+                                   Save & Close</button>
+                                <button mat-raised-button type="submit" class="m-r-10 rounded-corner btn_success"
+                                    (click)="createClaimant('next')">
+                                    Save & Next</button>
+                                <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                                    (click)="cancel()">Cancel</button>
+
                             </div>
                         </div>
                     </div>
@@ -988,15 +993,16 @@
                         </div>
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50">
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
+                            matStepperPrevious>Previous</button>
+                        <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner "
+                            (click)="submitClaim('save')">
+                           Save & Close</button>
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim()">
-                            {{isEdit ? 'Update' : 'Save'}} </button>
-                        <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" matStepperNext
-                            [disabled]="!(!claim.invalid && isClaimCreated)">
-                            Next </button>
-                        <button mat-raised-button type="button" class="rounded-corner" color="warn"
-                            matStepperPrevious>Back</button>
+                            class="m-r-10 rounded-corner btn_success"
+                            (click)="submitClaim('next')">Save & Next </button>
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                            (click)="cancel()">Cancel</button>
                     </div>
                 </mat-accordion>
             </form>
@@ -1160,11 +1166,15 @@
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50">
-                        <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
+                            matStepperPrevious>Previous</button>
+
+                        <button mat-raised-button color="primary" class="m-r-10 rounded-corner" color="accent"
                             (click)="submitBillableItem()">
-                            {{isEdit ? 'Update' : 'Submit'}} </button>
-                        <button mat-raised-button type="button" class="rounded-corner" color="warn"
-                            matStepperPrevious>Back</button>
+                            Save & Close </button>
+
+                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                            (click)="cancel()">Cancel</button>
                     </div>
                 </mat-card>
             </form>
