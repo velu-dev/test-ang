@@ -305,10 +305,10 @@
 
                                 <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner"
                                     (click)="createClaimant('close')">
-                                    {{(isEdit || isClaimantEdit) ? 'Update & Close' : 'Save & Close'}} </button>
+                                   Save & Close</button>
                                 <button mat-raised-button type="submit" class="m-r-10 rounded-corner btn_success"
                                     (click)="createClaimant('next')">
-                                    {{(isEdit || isClaimantEdit) ? 'Update & Next' : 'Save & Next'}}</button>
+                                    Save & Next</button>
                                 <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
                                     (click)="cancel()">Cancel</button>
 
@@ -996,10 +996,10 @@
                             matStepperPrevious>Previous</button>
                         <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner "
                             (click)="submitClaim('save')">
-                            {{isEdit ? 'Update & Close' : 'Save & Close'}} </button>
+                           Save & Close</button>
                         <button mat-raised-button color="primary" type="submit"
                             class="m-r-10 rounded-corner btn_success"
-                            (click)="submitClaim('next')">{{isEdit ? 'Update & Next' : 'Save & Next'}} </button>
+                            (click)="submitClaim('next')">Save & Next </button>
                         <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
                             (click)="cancel()">Cancel</button>
                     </div>
@@ -1170,7 +1170,7 @@
 
                         <button mat-raised-button color="primary" class="m-r-10 rounded-corner" color="accent"
                             (click)="submitBillableItem()">
-                            {{isEdit ? 'Update & Close' : 'Save & Close'}} </button>
+                            Save & Close </button>
 
                         <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
                             (click)="cancel()">Cancel</button>
