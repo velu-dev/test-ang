@@ -157,6 +157,8 @@ export class NewClaimComponent implements OnInit {
   }
 
   dateOfbirthEndValue = new Date();
+  claimantChanges: boolean = false;
+  claimChanges: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -487,7 +489,19 @@ export class NewClaimComponent implements OnInit {
     })
 
     this.correspondenceSource = new MatTableDataSource([]);
+    this.claimant.valueChanges.subscribe(
+      value => {
+       // console.log(JSON.stringify(value));
+        this.claimantChanges = true;
+      }
+    );
 
+    this.claim.valueChanges.subscribe(
+      value => {
+       // console.log(JSON.stringify(value));
+        this.claimChanges = true;
+      }
+    );
   }
   newClaimant() {
     this.isEdit = false;
@@ -503,14 +517,16 @@ export class NewClaimComponent implements OnInit {
   advanceSearchSubmit() {
     console.log("advanceSearch", this.advanceSearch.value)
   }
+  
   selectionChange(event) {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
-      //this.createClaimant('next') 
+      this.createClaimant('tab') 
+    
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
-      //this.submitClaim('next') 
+      this.submitClaim('tab') 
       this.titleName = " Billable Item";
     }
 
@@ -518,6 +534,10 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimCreated = false;
   submitClaim(status) {
+    if (!this.claimChanges) {
+      return;
+    }
+    this.claimChanges = false;
     this.isClaimSubmited = true;
     if (this.claim.invalid) {
       console.log("claim", this.claim)
@@ -541,9 +561,10 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(res.message, 'success');
         if (status == 'next') {
           this.stepper.next();
-        } else {
+        } else if(status == 'save') {
           this._location.back();
         }
+        this.claimChanges = false;
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
@@ -554,7 +575,7 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(res.message, 'success');
         if (status == 'next') {
           this.stepper.next();
-        } else {
+        } else if(status == 'save') {
           this._location.back();
         }
       }, error => {
@@ -622,6 +643,11 @@ export class NewClaimComponent implements OnInit {
   claimant_name = "";
   isClaimantCreated = false;
   createClaimant(status) {
+  
+    if (!this.claimantChanges) {
+      return;
+    }
+    this.claimantChanges = false;
     this.isClaimantSubmited = true;
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
@@ -650,9 +676,10 @@ export class NewClaimComponent implements OnInit {
         this.isClaimantEdit = true;
         if (status == 'next') {
           this.stepper.next();
-        } else {
+        } else if(status == 'save') {
           this._location.back();
         }
+        this.claimantChanges = false;
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
@@ -663,7 +690,7 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(res.message, "success");
         if (status == 'next') {
           this.stepper.next();
-        } else {
+        } else if(status == 'save') {
           this._location.back();
         }
       }, error => {
