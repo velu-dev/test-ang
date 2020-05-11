@@ -11,7 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   NativeDateAdapter, DateAdapter,
   MAT_DATE_FORMATS,
-  MatDialog
+  MatDialog,
+  MatStepper
 } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
@@ -68,6 +69,8 @@ const ELEMENT_DATA: claimant1[] = []
 })
 export class NewClaimComponent implements OnInit {
 
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+
   displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
   correspondenceSource: any = [];
 
@@ -85,7 +88,7 @@ export class NewClaimComponent implements OnInit {
   step = 0;
   isLinear = false;
   isSubmit = false;
-  emasSearchInput = new FormControl('', Validators.compose([Validators.maxLength(18),Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')]));
+  emasSearchInput = new FormControl('', Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')]));
   searchInput = new FormControl();
   filteredClaimant: Observable<any[]>;
   claimForm: FormGroup;
@@ -147,7 +150,7 @@ export class NewClaimComponent implements OnInit {
   deuDetails = [];
   filteredDeu: Observable<any[]>;
   deuCtrl = new FormControl();
-  iseams_entry:boolean = false;
+  iseams_entry: boolean = false;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -326,6 +329,7 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimant.setValue(option);
     this.filteredClaimant = new Observable<[]>();
+
   }
   setStep(index: number) {
     this.step = index;
@@ -380,9 +384,9 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
-        wcab_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(18),Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
-        claim_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.maxLength(25)])],
-        panel_number: [{ value: null, disabled: this.isEdit }, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
+        wcab_number: [null, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
+        claim_number: [null, Validators.compose([Validators.maxLength(25)])],
+        panel_number: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
       }),
@@ -503,15 +507,17 @@ export class NewClaimComponent implements OnInit {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
+      //this.createClaimant('next') 
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
+      //this.submitClaim('next') 
       this.titleName = " Billable Item";
     }
 
 
   }
   isClaimCreated = false;
-  submitClaim() {
+  submitClaim(status) {
     this.isClaimSubmited = true;
     if (this.claim.invalid) {
       console.log("claim", this.claim)
@@ -522,7 +528,7 @@ export class NewClaimComponent implements OnInit {
     if (this.documents_ids.length > 0) {
       claim['claim_details'].documents_ids = this.documents_ids;
     }
-    if(this.iseams_entry){
+    if (this.iseams_entry) {
       claim['claim_details'].iseams_entry = this.iseams_entry;
     }
     console.log("!this.isEdit ||  !this.isClaimantEdit", !this.isEdit || !this.isClaimantEdit)
@@ -533,6 +539,11 @@ export class NewClaimComponent implements OnInit {
           claim_id: res.data.claim_id
         })
         this.alertService.openSnackBar(res.message, 'success');
+        if (status == 'next') {
+          this.stepper.next();
+        } else {
+          this._location.back();
+        }
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
@@ -541,6 +552,11 @@ export class NewClaimComponent implements OnInit {
     } else {
       this.claimService.updateClaim(this.claim.value, this.claimId).subscribe(res => {
         this.alertService.openSnackBar(res.message, 'success');
+        if (status == 'next') {
+          this.stepper.next();
+        } else {
+          this._location.back();
+        }
       }, error => {
         this.isClaimCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -601,11 +617,11 @@ export class NewClaimComponent implements OnInit {
     }
   }
   cancel() {
-
+    this._location.back()
   }
   claimant_name = "";
   isClaimantCreated = false;
-  createClaimant() {
+  createClaimant(status) {
     this.isClaimantSubmited = true;
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
@@ -632,6 +648,11 @@ export class NewClaimComponent implements OnInit {
         })
         this.isClaimantCreated = true;
         this.isClaimantEdit = true;
+        if (status == 'next') {
+          this.stepper.next();
+        } else {
+          this._location.back();
+        }
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
@@ -640,6 +661,11 @@ export class NewClaimComponent implements OnInit {
     } else {
       this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
+        if (status == 'next') {
+          this.stepper.next();
+        } else {
+          this._location.back();
+        }
       }, error => {
         this.isClaimantCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -737,10 +763,11 @@ export class NewClaimComponent implements OnInit {
   }
   eamsStatus: boolean = false;
   searchEAMS() {
-    if(this.emasSearchInput.invalid){
+    this.eamsStatus = true;
+    if (this.emasSearchInput.invalid) {
       return;
     }
-    this.eamsStatus = true;
+
     console.log(this.emasSearchInput.value != "", this.emasSearchInput.value);
     if (this.emasSearchInput.value != "") {
       var adjValue = this.emasSearchInput.value.replace(/\s/g, '');
@@ -775,8 +802,8 @@ export class NewClaimComponent implements OnInit {
         } else {
           this.alertService.openSnackBar("EAMS Number Not Found", "error")
         }
-      },error=>{
-        this.alertService.openSnackBar( error.error.message, "error")
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, "error")
       })
     } else {
       this.alertService.openSnackBar("Please enter EAMS Number", "error")

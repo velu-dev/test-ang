@@ -30,6 +30,9 @@ export class AppComponent {
       this.menu.push(menuData)
     })
   }
+  onActivate(event) {
+    window.scroll(0, 0);
+  }
   listenRouting() {
     let routerUrl: string, target: any;
     this._router.events.subscribe((router: any) => {
@@ -40,6 +43,7 @@ export class AppComponent {
         let routerSplit = routerUrl.split("/")
         if (!routerSplit.includes("edit-claim")) {
           localStorage.removeItem("isName")
+          localStorage.removeItem("exam_type")
           localStorage.removeItem("claim_number")
           localStorage.removeItem("name")
         }
