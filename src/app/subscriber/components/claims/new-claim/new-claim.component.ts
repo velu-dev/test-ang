@@ -11,7 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   NativeDateAdapter, DateAdapter,
   MAT_DATE_FORMATS,
-  MatDialog
+  MatDialog,
+  MatStepper
 } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
@@ -67,6 +68,8 @@ const ELEMENT_DATA: claimant1[] = []
   ]
 })
 export class NewClaimComponent implements OnInit {
+
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
 
   displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
   correspondenceSource: any = [];
@@ -504,15 +507,17 @@ export class NewClaimComponent implements OnInit {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
+      //this.createClaimant('next') 
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
+      //this.submitClaim('next') 
       this.titleName = " Billable Item";
     }
 
 
   }
   isClaimCreated = false;
-  submitClaim() {
+  submitClaim(status) {
     this.isClaimSubmited = true;
     if (this.claim.invalid) {
       console.log("claim", this.claim)
@@ -534,6 +539,11 @@ export class NewClaimComponent implements OnInit {
           claim_id: res.data.claim_id
         })
         this.alertService.openSnackBar(res.message, 'success');
+        if (status == 'next') {
+          this.stepper.next();
+        } else {
+          this._location.back();
+        }
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
@@ -542,6 +552,11 @@ export class NewClaimComponent implements OnInit {
     } else {
       this.claimService.updateClaim(this.claim.value, this.claimId).subscribe(res => {
         this.alertService.openSnackBar(res.message, 'success');
+        if (status == 'next') {
+          this.stepper.next();
+        } else {
+          this._location.back();
+        }
       }, error => {
         this.isClaimCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -602,11 +617,11 @@ export class NewClaimComponent implements OnInit {
     }
   }
   cancel() {
-
+    this._location.back()
   }
   claimant_name = "";
   isClaimantCreated = false;
-  createClaimant() {
+  createClaimant(status) {
     this.isClaimantSubmited = true;
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
@@ -633,6 +648,11 @@ export class NewClaimComponent implements OnInit {
         })
         this.isClaimantCreated = true;
         this.isClaimantEdit = true;
+        if (status == 'next') {
+          this.stepper.next();
+        } else {
+          this._location.back();
+        }
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
@@ -641,6 +661,11 @@ export class NewClaimComponent implements OnInit {
     } else {
       this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
+        if (status == 'next') {
+          this.stepper.next();
+        } else {
+          this._location.back();
+        }
       }, error => {
         this.isClaimantCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
