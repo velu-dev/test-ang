@@ -1,0 +1,28 @@
+@import "variables";
+
+mat-card {
+    .billing_list {
+        table {
+            td {
+                span.paid {
+                    border: 1px solid $btn_success;
+                    font-size: $font-size-7;
+                    padding: 3px 10px;
+                    border-radius: 3px;
+                }
+                span.par_paid {
+                    border: 1px solid $warning;
+                    font-size: $font-size-7;
+                    padding: 3px 10px;
+                    border-radius: 3px;
+                }
+                span.rejected {
+                    border: 1px solid $danger;
+                    font-size: $font-size-7;
+                    padding: 3px 10px;
+                    border-radius: 3px;
+                }
+            }
+        }
+    }
+}

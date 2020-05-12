@@ -155,31 +155,6 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   color: $text-warning;
 }
 
-.empty-data {
-  top: 45%;
-  width: 100%;
-  text-align: center;
-  position: absolute;
-  h3 {
-    color: $light-gray;
-  }
-}
-
-.table-empty-data {
-  width: 100%;
-  text-align: center;
-}
-
-.user-detail {
-  min-height: 55vh; //table empty space
-  width: 100%; //table harizontal scroll
-  display: block;
-  overflow-x: auto;
-}
-
-.edit {
-  color: $btn_success;
-}
 // ==================================================
 // NOTIFICATION STYLE
 // ==================================================
@@ -503,21 +478,3 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   border: none !important;
   padding: 5px;
 }
-// tbody {
-//   tr {
-//     td:first-child {
-
-//       background-color: $white;
-//       border-bottom: 1px solid;
-//       border-left: 1px solid;
-//       border-color: transparent;
-//     }
-//     td:last-child {
-//       background-color: $white;
-//       border-bottom: 1px solid;
-//       border-left: 1px solid;
-//       border-color: transparent;
-
-//     }
-//   }
-// }
