@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
 export interface PeriodicElement {
   bill_no: string;
   claim_no: string;
@@ -19,11 +22,19 @@ export class BillingComponent implements OnInit {
   dataSource: MatTableDataSource<[]>;
   dataSource1 = ELEMENT_DATA;
   filterValue: string;
-
+  isMobile = false;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor() {
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+    })
     this.dataSource = new MatTableDataSource([]);
   }
 
