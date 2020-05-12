@@ -10,17 +10,17 @@ import { Router } from '@angular/router';
 })
 export class UpdateBillableItemComponent implements OnInit {
   displayedColumns: string[] = ['billable_item', 'examiner', 'd_o_s', 'status'];
-  dataSource:any ;
+  dataSource: any;
   @Input('state') states;
   @Input('claim_id') claimId;
   @Input('claimant_id') claimantId;
 
-  
-  constructor(private claimService: ClaimService,private router:Router) { }
+
+  constructor(private claimService: ClaimService, private router: Router) { }
 
   ngOnInit() {
     this.claimService.getbillableItem(this.claimId).subscribe(billRes => {
-      console.log(billRes)
+      console.log("billRes", billRes)
       this.dataSource = new MatTableDataSource(billRes['data'])
     }, error => {
       this.dataSource = new MatTableDataSource([])
@@ -28,8 +28,8 @@ export class UpdateBillableItemComponent implements OnInit {
   }
 
 
-  navigateBillableEdit(e){
-    this.router.navigate(['/subscriber/new-billable-item',this.claimId,this.claimantId,e.id])
+  navigateBillableEdit(e) {
+    this.router.navigate(['/subscriber/new-billable-item', this.claimId, this.claimantId, e.id])
   }
 
 

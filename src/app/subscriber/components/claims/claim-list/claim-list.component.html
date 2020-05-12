@@ -42,7 +42,7 @@
                             <div class="resposive-table">
                                 <div><span>First Name</span> {{element.first_name}} </div>
                                 <div><span>Last Name</span> {{element.last_name}} </div>
-                                <div><span>Date Of Birth</span> {{element.date_of_birth}} </div>
+                                <div><span>Date Of Birth</span> {{element.date_of_birth | date: 'MM-dd-yyyy'}} </div>
                             </div>
                         </div>
                     </td>

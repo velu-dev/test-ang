@@ -22,7 +22,7 @@ export class InjuryComponent implements OnInit {
   @Input('state') states;
   injuryDetails = [];
   constructor(public dialog: MatDialog, private claimService: ClaimService, public alertService: AlertService) {
-
+    console.log("clcikmmd", this.claimId)
   }
 
   ngOnInit() {
@@ -66,7 +66,7 @@ export class InjuryComponent implements OnInit {
   openDialog(injury): void {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '800px',
-      data: { isEdit: true, data: injury, claim_id: this.claim_id }
+      data: { isEdit: true, data: injury, claim_id: this.claimId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -77,7 +77,7 @@ export class InjuryComponent implements OnInit {
   addInjury() {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '800px',
-      data: { isEdit: false, claim_id: this.claim_id }
+      data: { isEdit: false, claim_id: this.claimId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -173,6 +173,7 @@ export class InjuryPopup {
         arrData.push(part)
       }
       arrData.map(row => {
+        console.log(this.claim_id)
         this.claimService.updateInjury(row, this.claim_id).subscribe(res => {
           this.alertService.openSnackBar("Claim injurt updated successfully", 'success')
           this.dialogRef.close();

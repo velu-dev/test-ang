@@ -45,7 +45,6 @@
             <mat-label>CT Start Date</mat-label>
             <input matInput placeholder="CT Start date" autocomplete="off"
                 [matDatepicker]="continuous_trauma_start_date" [(ngModel)]="injuryInfo.continuous_trauma_start_date"
-                [min]="injuryInfo.date_of_injury" [max]="injuryInfo.date_of_injury"
                 (click)="continuous_trauma_start_date.open()">
             <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
             </mat-datepicker-toggle>
