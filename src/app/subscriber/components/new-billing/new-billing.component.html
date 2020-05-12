@@ -1,0 +1,210 @@
+<mat-card class="m-card">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Select a Claim Number</div>
+        <span class="spacer"></span>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div fxLayout="row wrap" fxFlex="100" class="p-t-20">
+            <div fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.sm="100" fxFlex.xs="100" fxFlex.xl="50">
+                <form fxFlex="100">
+                    <mat-form-field fxFlex="100" class="select-user">
+                        <input type="text" placeholder="Select a Claim Number" aria-label="Number" matInput
+                            [formControl]="myControl" [matAutocomplete]="auto">
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                <span class="cn_"><b> Claim Number:</b> {{option}} </span> <span class="cl_"><b>Claimant
+                                        :</b>{{option}}</span> <span class="ex_"> <b>Examiner :</b> {{option}}</span>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<div fxLayout="row" class="w-100 billing_status">
+    <div fxLayout="100">
+        <ul class="bill_status p-l-0 m-l-0">
+            <li><a href="#">Bill Submissions <br /></a></li>
+            <li><a href="#"> <br /></a></li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- ###~~~~~ Examiner Details ~~~~~###-->
+<mat-card class="m-card m-t-20 examiner_details">
+    <mat-card-header>
+        <div fxLayout="row wrap" fxFlex="100">
+            <div class="p-t-5" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.sm="100" fxFlex.xs="100"
+                fxFlex.xl="50">
+                <span><b>Examiner :</b> </span> Eugene Levy M.D.
+            </div>
+            <div class="p-r-5 p-t-5" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.sm="100" fxFlex.xs="100"
+                fxFlex.xl="50">
+                <span><b>Place of service address:</b> 897 Avenue st., Suite 4, Los Angeles, CA 99999-7777 </span>
+            </div>
+        </div>
+        <span class="spacer"></span>
+        <button mat-icon-button>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+</mat-card>
+
+<mat-card class="m-card billing-provider m-t-20">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Billing Provider</div>
+        <span class="spacer"></span>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div fxLayout="row wrap" fxFlex="100" class="p-t-20">
+            <div fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.sm="100" fxFlex.xs="100" fxFlex.xl="50">
+                <form fxFlex="100">
+                    <mat-form-field fxFlex="100" class="select-user">
+                        <input type="text" placeholder="Select a Billing Provider" aria-label="Number" matInput
+                            [matAutocomplete]="auto1">
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+                            <mat-option>
+                                Option here
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<div fxLayout="row wrap" class="m-t-20 service_">
+    <!-- ###~~~~~ Service Information  ~~~~~###-->
+    <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
+        <mat-card class="m-r-10">
+            <mat-card-header>
+                <div class="content-wrapper-main-title p-t-5">Service</div>
+
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="p-b-20">
+                <div fxLayout="row wrap" fxFlex="100">
+                    <div class="grid-list">
+                        <div>Date of service</div>
+                        <div>5/14/2020</div>
+                    </div>
+                    <div class="grid-list">
+                        <div>Charge</div>
+                        <div>$ 2200.00</div>
+                    </div>
+                    <div class="grid-list">
+                        <div>Procedure codes</div>
+                        <div>ML 101</div>
+                    </div>
+                    <div class="grid-list">
+                        <div>Modifiers</div>
+                        <div>-</div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- ###~~~~~ Claimant Demographics Information  ~~~~~###-->
+    <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
+        <mat-card class="m-r-10">
+            <mat-card-header>
+                <div class="content-wrapper-main-title p-t-5">Claimant Demographics</div>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="p-b-20">
+                <div fxLayout="row wrap" fxFlex="100">
+                    <div class="grid-list">
+                        <div>Name</div>
+                        <div>Steve S. Steveson </div>
+                    </div>
+
+                    <div class="grid-list">
+                        <div>Date of birth</div>
+                        <div>3/3/1991 </div>
+                    </div>
+
+                    <div class="grid-list">
+                        <div>SSN</div>
+                        <div>575-89-1234</div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- ###~~~~~ Claim Information Information  ~~~~~###-->
+    <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
+        <mat-card>
+            <mat-card-header>
+                <div class="content-wrapper-main-title p-t-5">Claim Information - #567839</div>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="p-b-20">
+                <div fxLayout="row wrap" fxFlex="100">
+                    <div class="grid-list">
+                        <div>Injury</div>
+                        <div>R Arm fracture</div>
+                    </div>
+
+                    <div class="grid-list">
+                        <div>Date of injury</div>
+                        <div>4/21/2017</div>
+                    </div>
+
+                    <div class="grid-list">
+                        <div>Claims administrator</div>
+                        <div>Corvel</div>
+                    </div>
+
+                    <div class="grid-list">
+                        <div>Claim status</div>
+                        <div>-</div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- ###~~~~~ Claim Information Information  ~~~~~###-->
+    <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
+        <mat-card class="m-t-10 m-r-10">
+            <mat-card-header>
+                <div class="content-wrapper-main-title p-t-5">Diagnosis Codes</div>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="p-b-20">
+                <div fxLayout="row wrap" fxFlex="100">
+                    <div class="grid-list">
+                        <div>ICD version</div>
+                        <div>
+                            <select name="" id="">
+                                <option value="ICD 9">ICD 9</option>
+                                <option value="ICD 9">ICD 10</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid-list">
+                        <div>Code search</div>
+                        <div>
+                            <input type="text" fxFlex="100">
+                        </div>
+                    </div>
+
+                    <div class="grid-list">
+                        <div>Diagnosis codes</div>
+                        <div>S42.301A</div>
+                    </div>
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

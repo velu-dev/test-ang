@@ -24,6 +24,8 @@ import { EditAddressComponent } from './staff/edit-address/edit-address.componen
 import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
 import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
 import { BillingComponent } from './components/billing/billing.component';
+import { NewBillingComponent } from './components/new-billing/new-billing.component';
+import { EditBillingComponent } from './components/edit-billing/edit-billing.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -83,6 +85,12 @@ const routes: Routes = [{
 {
   path: "billing",
   component: BillingComponent
+}, {
+  path: "new-billing",
+  component: NewBillingComponent
+}, {
+  path: "edit-billing",
+  component: EditBillingComponent
 },
 {
   path: "claims",

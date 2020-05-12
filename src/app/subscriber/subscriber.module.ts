@@ -41,6 +41,8 @@ import { ClaimantDetailsComponent } from './components/claims/common/claimant-de
 import { UpdateBillableItemComponent } from './components/claims/common/update-billable-item/update-billable-item.component';
 import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
 import { BillingComponent } from './components/billing/billing.component';
+import { NewBillingComponent } from './components/new-billing/new-billing.component';
+import { EditBillingComponent } from './components/edit-billing/edit-billing.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +87,9 @@ import { BillingComponent } from './components/billing/billing.component';
     UpdateBillableItemComponent,
     InjuryPopup,
     NewBillableItemComponent,
-    BillingComponent
+    BillingComponent,
+    NewBillingComponent,
+    EditBillingComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,

@@ -1,0 +1,31 @@
+@import "variables";
+@import "progress";
+
+.m-card {
+    min-height: auto;
+}
+
+// Select User
+.cn_,
+.cl_,
+.ex_ {
+    min-width: 150px !important;
+    width: 100%;
+    display: table-cell;
+    padding-left: 10px;
+    font-size: $font-size-7;
+}
+
+.examiner_details {
+    padding: 5px 10px 0px 10px;
+}
+.service_ {
+    mat-card {
+        box-shadow: $box-shadow-2;
+        padding-bottom: 0px;
+        min-height: 210px;
+        &:hover {
+            box-shadow: $box-shadow-1;
+        }
+    }
+}

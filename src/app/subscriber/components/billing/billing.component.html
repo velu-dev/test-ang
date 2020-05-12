@@ -2,7 +2,7 @@
     <mat-card-header>
         <div class="m-0 content-wrapper-main-title">Manage Billing</div>
         <span class="spacer"></span>
-        <button mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user">
+        <button mat-mini-fab [routerLink]="['/subscriber/new-billing/']" routerLinkActive="router-link-active"  [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user">
             <mat-icon>add</mat-icon>
         </button>
     </mat-card-header>
