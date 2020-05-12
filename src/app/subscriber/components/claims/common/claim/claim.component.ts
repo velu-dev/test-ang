@@ -33,8 +33,7 @@ export class ClaimComponent implements OnInit {
     this.claim.patchValue(this.claimDetail);
   }
   editClick() {
-    this.claim.controls['panel_number'].enable();
-    this.claim.controls['exam_type_id'].enable();
+    this.claim.enable();
     this.isEdit = !this.isEdit;
     this.claim.patchValue(this.claimDetail);
   }

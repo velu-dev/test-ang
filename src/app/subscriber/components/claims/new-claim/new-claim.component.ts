@@ -1048,6 +1048,7 @@ export class NewClaimComponent implements OnInit {
     })
   }
   deuSelect(deu) {
+    deu.id = "";
     this.claim.patchValue({
       DEU: deu
     })

@@ -15,7 +15,7 @@
                             {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="isBillSubmited">Select Procuderal Type</mat-error>
+                    <mat-error *ngIf="isBillSubmited">Select Procudural Type</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -35,8 +35,7 @@
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Select Examiner</mat-label>
                     <mat-select formControlName="examiner_id" (selectionChange)="examinarChange($event)">
-                        <mat-option *ngFor="let examinar of examinarList" 
-                            [value]="examinar.id">
+                        <mat-option *ngFor="let examinar of examinarList" [value]="examinar.id">
                             {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -44,8 +43,8 @@
                 <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
                     <mat-label>Date & Time</mat-label>
                     <input matInput placeholder="Date & Time" [min]="todayDate.appointment"
-                        formControlName="appointment_scheduled_date_time" autocomplete="off"
-                        [owlDateTime]="appointment" [owlDateTimeTrigger]="appointment">
+                        formControlName="appointment_scheduled_date_time" autocomplete="off" [owlDateTime]="appointment"
+                        [owlDateTimeTrigger]="appointment">
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
                     <owl-date-time (afterPickerOpen)="pickerOpened('app')" #appointment></owl-date-time>
                 </mat-form-field>
@@ -56,44 +55,42 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
-                fxFlex.xs="100">
-                <mat-label>Examination Location</mat-label>
-                <input matInput placeholder="Address" aria-label="State" [matAutocomplete]="examinarAuto"
-                    [formControl]="addressCtrl">
-                <mat-autocomplete #examinarAuto="matAutocomplete">
-                    <mat-option *ngFor="let address of (examinarAddress | async)"
-                        (click)="changeExaminarAddress(address)" [value]="address.street1">
-                        {{address.street1}}
-                        <!-- <small>Population: {{state.population}}</small> -->
-                    </mat-option>
-                    <mat-option *ngIf="(examinarAddress | async)?.length == 0" disabled>Location not found
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-            <div fxFlex="100">
-                <mat-card-content class="address-list">
-                    <mat-list *ngIf="isAddressSelected">
-                        <mat-list-item>
-                            <div class="name" mat-line>
-                                <div><strong>
-                                        <i
-                                            class="fa fa-building-o"></i>{{selectedExaminarAddress.service_code}}
-                                        - {{selectedExaminarAddress.address_type_name}}
-                                    </strong></div>
-                                <!-- <span><i class="fa fa-phone-alt"></i>
+                <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                    <mat-label>Examination Location</mat-label>
+                    <input matInput placeholder="Address" aria-label="State" [matAutocomplete]="examinarAuto"
+                        [formControl]="addressCtrl">
+                    <mat-autocomplete #examinarAuto="matAutocomplete">
+                        <mat-option *ngFor="let address of (examinarAddress | async)"
+                            (click)="changeExaminarAddress(address)" [value]="address.street1">
+                            {{address.street1}}
+                            <!-- <small>Population: {{state.population}}</small> -->
+                        </mat-option>
+                        <mat-option *ngIf="(examinarAddress | async)?.length == 0" disabled>Location not found
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <div fxFlex="100">
+                    <mat-card-content class="address-list">
+                        <mat-list *ngIf="isAddressSelected">
+                            <mat-list-item>
+                                <div class="name" mat-line>
+                                    <div><strong>
+                                            <i class="fa fa-building-o"></i>{{selectedExaminarAddress.service_code}}
+                                            - {{selectedExaminarAddress.address_type_name}}
+                                        </strong></div>
+                                    <!-- <span><i class="fa fa-phone-alt"></i>
                                     {{selectedExaminarAddress.}}</span> -->
-                            </div>
-                            <div class="address" mat-line>{{selectedExaminarAddress.street1}}</div>
-                        </mat-list-item>
-                    </mat-list>
-                    <mat-list *ngIf="!isAddressSelected">
-                        <mat-list-item>
-                            No Address Selected
-                        </mat-list-item>
-                    </mat-list>
-                </mat-card-content>
-            </div>
+                                </div>
+                                <div class="address" mat-line>{{selectedExaminarAddress.street1}}</div>
+                            </mat-list-item>
+                        </mat-list>
+                        <mat-list *ngIf="!isAddressSelected">
+                            <mat-list-item>
+                                No Address Selected
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-card-content>
+                </div>
             </div>
 
             <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
@@ -110,15 +107,13 @@
                 </mat-form-field>
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Intake Caller</mat-label>
-                    <input matInput placeholder="Intake caller" formControlName="caller_name"
-                        autocomplete="off">
+                    <input matInput placeholder="Intake caller" formControlName="caller_name" autocomplete="off">
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Intake Call Date & Time</mat-label>
-                    <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
-                        autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake"
-                        [owlDateTimeTrigger]="intake">
+                    <input matInput placeholder="Intake Call Date & Time" formControlName="call_date" autocomplete="off"
+                        [max]="todayDate.intake" [owlDateTime]="intake" [owlDateTimeTrigger]="intake">
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                     <owl-date-time (afterPickerOpen)="pickerOpened('intake')" #intake></owl-date-time>
                 </mat-form-field>
@@ -141,15 +136,16 @@
                     <mat-label>{{billable_item?.value?.intake_call_info?.communication_type}}</mat-label>
                     <input matInput [type]="contactMask.type" [mask]="contactMask.mask"
                         formControlName="call_type_detail"
-                        placeholder="{{billable_item?.value?.intake_call_info?.communication_type}}"
-                        autocomplete="off">
+                        placeholder="{{billable_item?.value?.intake_call_info?.communication_type}}" autocomplete="off">
                     <mat-error>Enter Valid contact information</mat-error>
                 </mat-form-field>
             </div>
             <div class="text-center w-100 m-t-10 m-b-50">
-                <button mat-raised-button color="primary" (click)="submitBillableItem()" class="m-r-10 rounded-corner btn_success">
+                <button mat-raised-button color="primary" (click)="submitBillableItem()"
+                    class="m-r-10 rounded-corner btn_success">
                     Save </button>
-                <button mat-raised-button type="button" (click)="cancel()" class="rounded-corner" color="warn">Cancel</button>
+                <button mat-raised-button type="button" (click)="cancel()" class="rounded-corner"
+                    color="warn">Cancel</button>
             </div>
         </form>
     </mat-card-content>
