@@ -65,22 +65,11 @@ tr.detail-row {
 }
 
 // ==================================
-// Table data no wrap scss   ========
-// ==================================
-
-.no-wrap-td {
-  white-space: pre;
-}
-
-.width-150 {
-  min-width: 150px;
-}
-
-// ==================================
 // Basic Details   ========
 // ==================================
 
-.basic-table.document_list {
+.basic-table.document_list,
+.billing_list {
   padding: 0px !important;
   table {
     width: $width-100;
@@ -94,7 +83,6 @@ tr.detail-row {
         &:first-child {
           width: 25px;
         }
-       
       }
       td {
         color: $dark-gray;
@@ -115,4 +103,43 @@ tr.detail-row {
       height: 50px !important;
     }
   }
+}
+
+// ==================================
+// Table data no wrap scss   ========
+// ==================================
+
+.no-wrap-td {
+  white-space: pre;
+}
+
+.width-150 {
+  min-width: 150px;
+}
+
+.empty-data {
+  top: 45%;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  h3 {
+    color: $light-gray;
+  }
+}
+
+.table-empty-data {
+  width: 100%;
+  text-align: center;
+}
+
+.user-detail,
+.billing_list {
+  min-height: 55vh; //table empty space
+  width: 100%; //table harizontal scroll
+  display: block;
+  overflow-x: auto;
+}
+
+.edit {
+  color: $btn_success;
 }

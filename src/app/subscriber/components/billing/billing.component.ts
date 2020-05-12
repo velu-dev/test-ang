@@ -1,19 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
+export interface PeriodicElement {
+  bill_no: string;
+  claim_no: string;
+  claimant_name: string;
+  examinar: string;
+  bill_total: string;
+  status: string;
 }
-const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
 
 @Component({
   selector: 'app-billing',
@@ -23,6 +17,7 @@ const NAMES: string[] = [
 export class BillingComponent implements OnInit {
   displayedColumns: string[] = ['bill_no', 'claim_no', 'claimant_name', 'examinar', 'bill_total', 'status', 'action'];
   dataSource: MatTableDataSource<[]>;
+  dataSource1 = ELEMENT_DATA;
   filterValue: string;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -45,3 +40,12 @@ export class BillingComponent implements OnInit {
     }
   }
 }
+
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Paid' },
+  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Partially Paid' },
+  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Rejected' },
+  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Paid' },
+  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Rejected' },
+];
