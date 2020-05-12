@@ -655,6 +655,8 @@ export class NewClaimComponent implements OnInit {
         this.stepper.next();
       } else if (status == 'save') {
         this._location.back();
+      } else if (status == 'close') {
+        this._location.back();
       }
       return;
     }
@@ -688,6 +690,8 @@ export class NewClaimComponent implements OnInit {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
+          this._location.back();
+        } else if (status == 'close') {
           this._location.back();
         }
         this.claimantChanges = false;
