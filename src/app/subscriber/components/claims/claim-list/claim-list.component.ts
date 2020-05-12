@@ -140,7 +140,7 @@ export class ClaimListComponent implements OnInit {
   editClaim(element) {
     console.log(element)
     localStorage.setItem("isName", "true");
-    localStorage.setItem("exam_type", element.exam_type);
+    localStorage.setItem("exam_type", element.exam_type_name);
     localStorage.setItem("name", element.first_name + " " + element.last_name)
     localStorage.setItem("claim_number", element.claim_number)
     this.router.navigate(['/subscriber/edit-claim', element.claim_id])

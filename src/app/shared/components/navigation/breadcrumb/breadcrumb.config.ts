@@ -123,7 +123,7 @@ export const ROUTES = [
                 icon: 'dashboard',
                 submenu: []
             }],
-    },{
+    }, {
         path: '/subscriber/manage-location',
         title: 'Manage Locations',
         icon: 'map',
@@ -132,6 +132,12 @@ export const ROUTES = [
     {
         path: '/subscriber/new-billable-item',
         title: 'Manage Billable Item',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/subscriber/billing',
+        title: 'Manage Billing',
         icon: 'dashboard',
         submenu: [],
     },
@@ -162,11 +168,16 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: []
         }, {
+            path: '/subscriber/manager/billing',
+            title: 'Manage Billing',
+            icon: 'dashboard',
+            submenu: [],
+        }, {
             path: '/subscriber/manager/settings',
             title: 'Settings',
             icon: 'dashboard',
             submenu: []
-        },{
+        }, {
             path: '/subscriber/manager/claimant',
             title: 'Manage Claimants',
             icon: 'dashboard',
@@ -196,7 +207,7 @@ export const ROUTES = [
                     icon: 'dashboard',
                     submenu: []
                 }],
-        },{
+        }, {
             path: '/subscriber/manager/manage-location',
             title: 'Manage Locations',
             icon: 'map',
@@ -219,11 +230,16 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: [],
         }, {
+            path: '/subscriber/staff/billing',
+            title: 'Manage Billing',
+            icon: 'dashboard',
+            submenu: [],
+        }, {
             path: '/subscriber/staff/edit-address',
             title: 'Edit Location',
             icon: 'dashboard',
             submenu: [],
-        },{
+        }, {
             path: '/subscriber/staff/examiner-list',
             title: 'Manage Examiner',
             icon: 'dashboard',
@@ -234,7 +250,7 @@ export const ROUTES = [
             title: 'Manage Locations',
             icon: 'map',
             submenu: [],
-        },{
+        }, {
             path: '/subscriber/staff/claimant',
             title: 'Manage Claimants',
             icon: 'dashboard',
@@ -265,13 +281,13 @@ export const ROUTES = [
                     submenu: []
                 }],
         }
-        // , {
-        //     path: '/subscriber/manager/settings',
-        //     title: 'Settings',
-        //     icon: 'dashboard',
-        //     submenu: []
-        // },
-    ],
+            // , {
+            //     path: '/subscriber/manager/settings',
+            //     title: 'Settings',
+            //     icon: 'dashboard',
+            //     submenu: []
+            // },
+        ],
     },
     {
         path: 'subscriber/examiner',
@@ -296,6 +312,12 @@ export const ROUTES = [
                 submenu: []
             },
             {
+                path: '/subscriber/examiner/billing',
+                title: 'Manage Billing',
+                icon: 'dashboard',
+                submenu: [],
+            },
+            {
                 path: '/subscriber/examiner/appointment-details',
                 title: 'Examination',
                 icon: 'dashboard',
@@ -306,7 +328,7 @@ export const ROUTES = [
                 title: 'Settings',
                 icon: 'dashboard',
                 submenu: []
-            },{
+            }, {
                 path: '/subscriber/examiner/claimant',
                 title: 'Manage Claimants',
                 icon: 'dashboard',

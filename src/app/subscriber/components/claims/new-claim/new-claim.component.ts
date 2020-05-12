@@ -826,6 +826,7 @@ export class NewClaimComponent implements OnInit {
           this.isClaimantEdit = false;
           this.addNewClaimant = true;
           this.claimant.patchValue(res.data.claimant)
+
           this.claim.patchValue({
             claim_details: res.data.claim,
           });
