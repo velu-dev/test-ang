@@ -29,3 +29,24 @@
         }
     }
 }
+.service-line {
+    box-shadow: $box-shadow-2;
+    padding-bottom: 0px;
+    &:hover {
+        box-shadow: $box-shadow-1;
+    }
+    .billing_list {
+        min-height: auto;
+    }
+}
+
+.document-section{
+    box-shadow: $box-shadow-2;
+    padding-bottom: 0px;
+    &:hover {
+        box-shadow: $box-shadow-1;
+    }
+    .billing_list {
+        min-height: auto;
+    }
+}

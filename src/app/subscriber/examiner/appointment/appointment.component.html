@@ -78,7 +78,7 @@
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="resposive-table">
                                 <div><span>Claim Numbers</span> {{element?.claim_number}} </div>
-                                <div><span>Exam Type</span> {{element?.exam_type}} </div>
+                                <div><span>Exam Type</span> {{element?.exam_type_code}} </div>
                                 <div><span>Location</span> {{element?.location}} </div>
                                 <div><span>Date</span> {{element?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}
                                 </div>

@@ -26,7 +26,7 @@
 
 <div fxLayout="row" class="w-100 billing_status">
     <div fxLayout="100">
-        <ul class="bill_status p-l-0 m-l-0">
+        <ul class="bill-status p-l-0 m-l-0">
             <li><a href="#">Bill Submissions <br /></a></li>
             <li><a href="#"> <br /></a></li>
         </ul>
@@ -218,3 +218,96 @@
         </mat-card>
     </div>
 </div>
+
+<mat-card class="service-line m-t-20">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Billing Provider</div>
+        <span class="spacer"></span>
+        <button mat-stroked-button color="primary" class="m-b-5"> <span class="fa fa-plus"> </span> Add New
+            Line</button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="m-t-10 p-b-20">
+        <div class="billing_list">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <!-- Item Column -->
+                <ng-container matColumnDef="item">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Item </th>
+                    <td mat-cell *matCellDef="let element" class="no-wrap-td"> {{element.item}} </td>
+                </ng-container>
+
+                <!-- Procedure code Column -->
+                <ng-container matColumnDef="procedure_code">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Procedure code </th>
+                    <td mat-cell *matCellDef="let element" class="no-wrap-td"> {{element.procedure_code}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="modifer">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Modifer </th>
+                    <td mat-cell *matCellDef="let element">
+                        <select name="" id="">
+                            <option value="93">93</option>
+                        </select> </td>
+                </ng-container>
+
+                <!-- Units Column -->
+                <ng-container matColumnDef="units">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Units </th>
+                    <td mat-cell *matCellDef="let element">
+                        <input type="text" name="" id="">
+                    </td>
+                </ng-container>
+
+                <!-- Units Column -->
+                <ng-container matColumnDef="charge">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Charge </th>
+                    <td mat-cell *matCellDef="let element"> {{element.charge}} </td>
+                </ng-container>
+
+                <!-- Units Column -->
+                <ng-container matColumnDef="fee_schedule">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Expected fee schedule </th>
+                    <td mat-cell *matCellDef="let element"> {{element.fee_schedule}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="document-section m-t-20">
+    <mat-card-header>
+        <div class="m-0 p-t-5 content-wrapper-main-title">Documents</div>
+        <span class="spacer"></span>
+        <button mat-icon-button>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="m-t-10 p-b-20">
+        <div class="billing_list">
+            <table mat-table [dataSource]="dataSource1" matSort>
+
+                <!-- Item Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let element" class="no-wrap-td"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Procedure code Column -->
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type</th>
+                    <td mat-cell *matCellDef="let element" class="no-wrap-td"> {{element.type}} </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./update-billable-item.component.scss']
 })
 export class UpdateBillableItemComponent implements OnInit {
-  displayedColumns: string[] = ['billable_item', 'examiner', 'd_o_s', 'status'];
+  displayedColumns: string[] = ['billable_item', 'examiner', 'd_o_s', 'status','action'];
   dataSource: any;
   @Input('state') states;
   @Input('claim_id') claimId;
