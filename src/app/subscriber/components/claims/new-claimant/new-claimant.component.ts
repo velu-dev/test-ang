@@ -61,7 +61,7 @@ export class NewClaimantComponent implements OnInit {
       salutation: [null],
       city: [null],
       state: [null],
-      zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       created_by: [null],
       modified_by: [null],
       createdAt: [null],
