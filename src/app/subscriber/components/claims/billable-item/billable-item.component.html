@@ -126,7 +126,14 @@
                         <div (click)="navigate(element)">
                             <span *ngIf="column != 'date_of_birth'">{{element[column]}} </span>
                             <span *ngIf="column == 'date_of_birth'">{{element[column] | date:'MM-dd-yyyy'}} </span>
-                        </div>
+                        </div>    
+                            <span (click)="navigateBillableEdit(element)" *ngIf="column == 'action'">
+                                <button mat-icon-button class="edit" matTooltip="Edit"
+                                matTooltipPosition="before">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            </span>
+                        
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
