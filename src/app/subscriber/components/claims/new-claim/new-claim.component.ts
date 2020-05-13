@@ -463,7 +463,8 @@ export class NewClaimComponent implements OnInit {
       claimant_id: [null],
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
-        modifier_id: [null]
+        modifier_id: [null],
+        is_psychiatric:[false]
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
