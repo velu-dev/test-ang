@@ -153,7 +153,7 @@ export class InjuryPopup {
     }
     if (this.isEdit) {
       this.claimService.updateInjury(this.injuryInfo, this.claim_id).subscribe(res => {
-        this.alertService.openSnackBar("Claim injurt updated successfully", 'success')
+        this.alertService.openSnackBar("Claim Injury updated successfully", 'success')
         this.dialogRef.close();
       }, error => {
         this.alertService.openSnackBar(error.error.message, "error")

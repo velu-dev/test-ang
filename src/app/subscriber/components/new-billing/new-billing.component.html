@@ -194,7 +194,17 @@
                     <div class="grid-list">
                         <div>Code search</div>
                         <div>
-                            <input type="text" fxFlex="100">
+                            <form>
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Search ICD" aria-label="State"
+                                        [matAutocomplete]="ICDAuto" [formControl]="icdCtrl">
+                                    <mat-autocomplete #ICDAuto="matAutocomplete">
+                                        <mat-option *ngFor="let icd of (filteredICD | async)" [value]="icd[1]">
+                                            {{icd[1] | json}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </form>
                         </div>
                     </div>
 
