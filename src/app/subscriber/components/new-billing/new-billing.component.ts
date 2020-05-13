@@ -11,6 +11,11 @@ export interface PeriodicElement {
   charge: string;
   fee_schedule: string;
 }
+export interface DocList {
+  name: string;
+  type: string;
+ 
+}
 @Component({
   selector: 'app-new-billing',
   templateUrl: './new-billing.component.html',
@@ -18,7 +23,9 @@ export interface PeriodicElement {
 })
 export class NewBillingComponent implements OnInit {
   displayedColumns: string[] = ['item', 'procedure_code', 'modifer', 'units', 'charge', 'fee_schedule'];
+  displayedColumns1: string[] = ['name', 'type'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   myControl = new FormControl();
   options: string[] = ['123456', 'M Venkat', 'M Rajan'];
@@ -43,4 +50,8 @@ export class NewBillingComponent implements OnInit {
 const ELEMENT_DATA: PeriodicElement[] = [
   { item: 'QME Examination', procedure_code: '', modifer: '', units: '', charge: '$ 2200.00', fee_schedule: '$ 2200.00', },
   { item: 'Report pages', procedure_code: '', modifer: '', units: '', charge: '$ 2200.00', fee_schedule: '$ 2200.00', }
+];
+
+const ELEMENT_DATA1: DocList[] = [
+  { name:'gdgd', type:'dfdfdfdf' },
 ];
