@@ -34,7 +34,13 @@
                             *ngIf="column == 'date_of_injury'">{{element?.claim_injuries != null ? (element?.claim_injuries[0]?.date_of_injury | date: 'MM-dd-yyyy') : "" }}</span>
                         <span
                             *ngIf="column == 'date_of_birth'">{{element?.date_of_birth != null ? (element?.date_of_birth | date: 'MM-dd-yyyy') : "" }}</span>
-                    </td>
+                            <span *ngIf="column == 'disabled'">
+                                <button mat-icon-button class="edit" matTooltip="Edit"
+                                matTooltipPosition="before">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            </span>
+                        </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">

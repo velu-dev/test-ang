@@ -38,9 +38,3 @@
     </table>
     <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
 </div>
-
-<span (click)="gotoEdit(element)" *ngIf="column == 'disabled'">
-    <button mat-icon-button class="edit" matTooltip="Edit" matTooltipPosition="before">
-        <mat-icon>edit</mat-icon>
-    </button>
-</span>
