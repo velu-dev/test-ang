@@ -305,7 +305,7 @@
 
                                 <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner"
                                     (click)="createClaimant('close')">
-                                   Save & Close</button>
+                                    Save & Close</button>
                                 <button mat-raised-button type="submit" class="m-r-10 rounded-corner btn_success"
                                     (click)="createClaimant('next')">
                                     Save & Next</button>
@@ -997,10 +997,10 @@
                             matStepperPrevious>Previous</button>
                         <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner "
                             (click)="submitClaim('save')">
-                           Save & Close</button>
+                            Save & Close</button>
                         <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success"
-                            (click)="submitClaim('next')">Save & Next </button>
+                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim('next')">Save & Next
+                        </button>
                         <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
                             (click)="cancel()">Cancel</button>
                     </div>
@@ -1027,14 +1027,19 @@
                             <mat-error *ngIf="isBillSubmited">Select Procuderal Type</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Modifiers</mat-label>
-                            <mat-select formControlName="modifier_id" multiple>
-                                <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
-                                    {{modifier.modifier_code}} - {{modifier.modifier}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <div fxLayout="row wrap" fxFlex="100" class="fixed-checkbox">
+                                <mat-checkbox class="p-t-40 p-l-20">Psychiatric</mat-checkbox>
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Modifiers</mat-label>
+                                    <mat-select formControlName="modifier_id" multiple>
+                                        <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
+                                            {{modifier.modifier_code}} - {{modifier.modifier}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">

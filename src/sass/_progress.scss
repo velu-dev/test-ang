@@ -134,58 +134,73 @@
 
 // Style -1 
 
-
-.billing_status {
-    .bill_status { 
-    list-style: none; 
-    overflow: hidden; 
-    font: 18px Helvetica, Arial, Sans-Serif;
-    margin: 40px;
+.bill-status {
+    list-style: none;
+    overflow: hidden;
     padding: 0;
-  }
-  .bill_status li { 
-    float: left; 
-  }
-  .bill_status li a {
-    color: #000;
-    text-decoration: none; 
-    padding: 10px 0 10px 55px;
-    background: brown; /* fallback color */
-    background: #fff; 
-    position: relative; 
-    display: block;
-    float: left;
-  }
-  .bill_status li a:after { 
-    content: " "; 
-    display: block; 
-    width: 0; 
-    height: 0;
-    border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
-    border-bottom: 50px solid transparent;
-    border-left: 30px solid #fff;
-    position: absolute;
-    top: 50%;
-    margin-top: -50px; 
-    left: 100%;
-    z-index: 2; 
-  }	
-  .bill_status li a:before { 
-    content: " "; 
-    display: block; 
-    width: 0; 
-    height: 0;
-    border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
-    border-bottom: 50px solid transparent;
-    border-left: 30px solid white;
-    position: absolute;
-    top: 50%;
-    margin-top: -50px; 
-    margin-left: 1px;
-    left: 100%;
-    z-index: 1; 
-  }	
-  .bill_status li:first-child a {
-    padding-left: 10px;
-  }
+    li {
+        float: left;
+
+        a {
+            color: $black;
+            width: auto;
+            font-size: $font-size-7;
+            min-width: 85px;
+            text-decoration: none;
+            display: inline-flex !important;
+            padding: 10px 10px 10px 45px;
+            display: block;
+            background: #f2f7fe;
+            background: transparent linear-gradient(135deg, #f2f7fe 0%, #f2f7fe 80%) 0% 0% no-repeat padding-box;
+            position: relative;
+            display: block;
+            float: left;
+            &::after {
+                content: " ";
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+                border-bottom: 50px solid transparent;
+                border-left: 30px solid #f2f7fe;
+                position: absolute;
+                top: 50%;
+                margin-top: -50px;
+                left: 100%;
+                z-index: 2;
+            }
+            &::before {
+                content: " ";
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+                border-bottom: 50px solid transparent;
+                border-left: 30px solid white;
+                position: absolute;
+                top: 50%;
+                margin-top: -50px;
+                margin-left: 1px;
+                left: 100%;
+                z-index: 1;
+            }
+            i {
+                padding-top: 17px;
+                padding-right: 10px;
+            }
+            span.p-b-11 {
+                padding-bottom: 11px;
+            }
+        }
+        &:first-child a {
+            padding-left: 10px;
+        }
+    }
+}
+.bill-status li:nth-child(1) a:after {
+    border-left-color: #ffffff;
+}
+
+.bill-status li:nth-child(1) a {
+    background: #fff
 }
