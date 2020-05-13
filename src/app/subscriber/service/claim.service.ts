@@ -38,7 +38,7 @@ export class ClaimService {
   createBillableItem(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.create_billable_item, data)
   }
-  updateBillableItem(data,id): Observable<any> {
+  updateBillableItem(data, id): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.update_billable_item + id, data)
   }
   listExaminar(): Observable<any> {
@@ -100,8 +100,12 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.listIntakeCall)
   }
 
-  getBillableItemSingle(id){
+  getBillableItemSingle(id) {
     return this.http.get(environment.baseUrl + api_endpoint.billableItemSingle + id)
   }
-
+  getICD10(term): Observable<any> {
+    let data: any;
+    data = this.http.get("https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&authenticity_token=&terms=" + term)
+    return data;
+  }
 }
