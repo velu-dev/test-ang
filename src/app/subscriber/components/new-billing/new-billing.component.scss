@@ -40,7 +40,69 @@
     }
 }
 
-.document-section{
+.cms_btn {
+    button {
+        background-color: $white;
+        margin: 0px auto;
+        border-radius: 50px;
+    }
+}
+.document-section {
+    box-shadow: $box-shadow-2;
+    padding-bottom: 0px;
+    &:hover {
+        box-shadow: $box-shadow-1;
+    }
+    .doc_status {
+        a {
+            padding: 10px;
+            border: 1px solid $border-light;
+            width: 150px;
+            display: inline-block;
+            box-shadow: $box-shadow-2;
+            text-align: center;
+            cursor: pointer;
+            &:hover {
+                box-shadow: $box-shadow-1;
+            }
+        }
+        .active {
+            background-color: $primarycolor;
+            color: $white;
+        }
+    }
+    .doc_type {
+        a {
+            background-color: $btn-light-color;
+            width: 150px;
+            padding: 10px;
+            display: initial;
+            text-align: center;
+            float: right;
+            line-height: 3.2;
+            cursor: pointer;
+        }
+    }
+    .text {
+        color: $text-gray;
+        padding: 0 0 5px 5px;
+    }
+    .billing_list {
+        min-height: auto;
+        table {
+            .doc_name {
+                min-width: 500px;
+            }
+        }
+    }
+}
+.action_buttons {
+    margin: 0px auto;
+    display: block button {
+        background-color: $white;
+    }
+}
+.payment-section {
     box-shadow: $box-shadow-2;
     padding-bottom: 0px;
     &:hover {
@@ -48,5 +110,10 @@
     }
     .billing_list {
         min-height: auto;
+        table {
+            .bal_ {
+                color: $danger;
+            }
+        }
     }
 }
