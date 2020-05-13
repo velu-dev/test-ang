@@ -6,11 +6,34 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
-
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { formatDate } from '@angular/common';
+export class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'MM-dd-yyyy', this.locale);
+    } else {
+      return date.toDateString();
+    }
+  }
+}
+export const PICK_FORMATS = {
+  parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
+  display: {
+    dateInput: 'input',
+    monthYearLabel: { year: 'numeric', month: 'short' },
+    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+    monthYearA11yLabel: { year: 'numeric', month: 'long' }
+  }
+};
 @Component({
   selector: 'app-new-claimant',
   templateUrl: './new-claimant.component.html',
-  styleUrls: ['./new-claimant.component.scss']
+  styleUrls: ['./new-claimant.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: PickDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
+  ]
 })
 export class NewClaimantComponent implements OnInit {
   claimantForm: FormGroup;
@@ -61,7 +84,7 @@ export class NewClaimantComponent implements OnInit {
       salutation: [null],
       city: [null],
       state: [null],
-      zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       created_by: [null],
       modified_by: [null],
       createdAt: [null],
@@ -126,14 +149,14 @@ export class NewClaimantComponent implements OnInit {
 
   language(id) {
     if (id) {
-      let index = this.languageList.findIndex(e=>e.id == id)
+      let index = this.languageList.findIndex(e => e.id == id)
       return this.languageList[index].language ? this.languageList[index].language : '';
     }
   }
 
   state(id) {
     if (id) {
-      let index = this.states.findIndex(e=>e.id == id)
+      let index = this.states.findIndex(e => e.id == id)
       return this.states[index].state ? this.states[index].state : '';
     }
   }

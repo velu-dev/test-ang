@@ -87,3 +87,14 @@ mat-card {
         font-weight: $font-weight-medium;
     }
 }
+
+.fixed-checkbox {
+    mat-checkbox {
+      width: 150px;
+    }
+    mat-form-field {
+      width: calc(100% - 200px);
+      padding-left: 0px !important;
+    }
+  }
+  

@@ -50,41 +50,6 @@ mat-card {
   }
 }
 
-// .docs_list {
-//   padding: 20px;
-//   width: $width-100;
-//   margin-left: 10px;
-//   box-shadow: $box-shadow-4 !important;
-//   height: 90px;
-//   img {
-//     width: 25px !important ;
-//     height: auto;
-//     margin: 0px;
-//     display: inline-block;
-//   }
-//   div {
-//     padding-left: 15px;
-//     max-width: 83%;
-//     display: inline-block;
-//     h4 {
-//       margin-bottom: 0px !important;
-//       margin-top: 0px !important;
-//       padding-bottom: 0px !important;
-//       color: $primarycolor;
-//     }
-//     p {
-//       margin-top: 0px !important;
-//       margin-bottom: 0;
-//       color: $light-gray;
-//       font-size: $font-size-1;
-//     }
-//   }
-//   .delete-icon {
-//     float: right;
-//     padding-top: 12px;
-//   }
-// }
-
 .advanced_search {
   div {
     padding: 22px 12px 7px 12px;
@@ -156,7 +121,13 @@ mat-card {
   .address {
     padding: 5px 5px 5px 5px;
   }
-
 }
-
-
+.fixed-checkbox {
+  mat-checkbox {
+    width: 150px;
+  }
+  mat-form-field {
+    width: calc(100% - 200px);
+    padding-left: 0px !important;
+  }
+}

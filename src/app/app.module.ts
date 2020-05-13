@@ -23,7 +23,7 @@ import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
   declarations: [
     AppComponent,
     FullLayoutComponent,
-    CommonLayoutComponent
+    CommonLayoutComponent,
   ],
   imports: [
     BrowserModule,

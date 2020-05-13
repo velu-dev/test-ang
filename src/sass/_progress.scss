@@ -1,0 +1,206 @@
+
+@import "variables";
+.breadcrumb {
+    list-style: none;
+    overflow: hidden;
+    padding: 0;
+    li {
+        float: left;
+
+        a {
+            color: $white;
+            width: auto;
+            font-size: $font-size-7;
+            min-width: 85px;
+            text-decoration: none;
+            display: inline-flex !important;
+            padding: 10px 10px 10px 45px;
+            display: block;
+            background: #f2f7fe;
+            background: transparent linear-gradient(135deg, #f2f7fe 0%, #f2f7fe 80%) 0% 0% no-repeat padding-box;
+            position: relative;
+            display: block;
+            float: left;
+            &::after {
+                content: " ";
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+                border-bottom: 50px solid transparent;
+                border-left: 30px solid #f2f7fe;
+                position: absolute;
+                top: 50%;
+                margin-top: -50px;
+                left: 100%;
+                z-index: 2;
+            }
+            &::before {
+                content: " ";
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+                border-bottom: 50px solid transparent;
+                border-left: 30px solid white;
+                position: absolute;
+                top: 50%;
+                margin-top: -50px;
+                margin-left: 1px;
+                left: 100%;
+                z-index: 1;
+            }
+            i {
+                padding-top: 17px;
+                padding-right: 10px;
+            }
+            span.p-b-11 {
+                padding-bottom: 11px;
+            }
+        }
+        &:first-child a {
+            padding-left: 10px;
+        }
+    }
+}
+
+.breadcrumb li:nth-child(1) a {
+    background: transparent linear-gradient(136deg, #a0e3af 0%, #275535 80%) 0% 0% no-repeat padding-box;
+    &::after {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+        border-bottom: 50px solid transparent;
+        border-left: 30px solid #ffffff;
+        position: absolute;
+        top: 50%;
+        margin-top: -50px;
+        left: 100%;
+        z-index: 2;
+    }
+    &::before {
+        content: " ";
+        display: block;
+        width: 0;
+        height: 0;
+        border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+        border-bottom: 50px solid transparent;
+        border-left: 30px solid #ffffff;
+        position: absolute;
+        top: 50%;
+        margin-top: -50px;
+        margin-left: 0px;
+        left: 0%;
+        z-index: 1;
+    }
+}
+.breadcrumb li:nth-child(1) a:after {
+    border-left-color: #275535;
+}
+.breadcrumb li:nth-child(2) a {
+    background: transparent linear-gradient(140deg, #f8d0b7 0%, #d06625 80%) 0% 0% no-repeat padding-box;
+}
+.breadcrumb li:nth-child(2) a:after {
+    border-left-color: #d06625;
+}
+.breadcrumb li:nth-child(3) a {
+    background: transparent linear-gradient(140deg, #91baff 0%, #224580 80%) 0% 0% no-repeat padding-box;
+}
+.breadcrumb li:nth-child(3) a:after {
+    border-left-color: #224580;
+}
+.breadcrumb li:nth-child(4) a {
+    background: transparent linear-gradient(126deg, #ffa7bd 0%, #801a33 80%) 0% 0% no-repeat padding-box;
+}
+.breadcrumb li:nth-child(4) a:after {
+    border-left-color: #801a33;
+}
+.breadcrumb li:nth-child(5) a {
+    color: $black;
+}
+.breadcrumb li:nth-child(6) a {
+    color: $black;
+}
+.breadcrumb li:nth-child(7) a {
+    color: $black;
+}
+
+
+
+
+
+
+// Style -1 
+
+.bill-status {
+    list-style: none;
+    overflow: hidden;
+    padding: 0;
+    li {
+        float: left;
+
+        a {
+            color: $black;
+            width: auto;
+            font-size: $font-size-7;
+            min-width: 85px;
+            text-decoration: none;
+            display: inline-flex !important;
+            padding: 10px 10px 10px 45px;
+            display: block;
+            background: #f2f7fe;
+            background: transparent linear-gradient(135deg, #f2f7fe 0%, #f2f7fe 80%) 0% 0% no-repeat padding-box;
+            position: relative;
+            display: block;
+            float: left;
+            &::after {
+                content: " ";
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+                border-bottom: 50px solid transparent;
+                border-left: 30px solid #f2f7fe;
+                position: absolute;
+                top: 50%;
+                margin-top: -50px;
+                left: 100%;
+                z-index: 2;
+            }
+            &::before {
+                content: " ";
+                display: block;
+                width: 0;
+                height: 0;
+                border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+                border-bottom: 50px solid transparent;
+                border-left: 30px solid white;
+                position: absolute;
+                top: 50%;
+                margin-top: -50px;
+                margin-left: 1px;
+                left: 100%;
+                z-index: 1;
+            }
+            i {
+                padding-top: 17px;
+                padding-right: 10px;
+            }
+            span.p-b-11 {
+                padding-bottom: 11px;
+            }
+        }
+        &:first-child a {
+            padding-left: 10px;
+        }
+    }
+}
+.bill-status li:nth-child(1) a:after {
+    border-left-color: #ffffff;
+}
+
+.bill-status li:nth-child(1) a {
+    background: #fff
+}
