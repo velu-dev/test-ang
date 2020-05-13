@@ -59,7 +59,7 @@ export class BillableItemComponent implements OnInit {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "action"]
       } else {
         this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Service", "Exam Type", "Claim Number", "Examiner", "Status", "Action"]
         this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_service', "exam_type_code", "claim_number", "examiner_name", "status", "action"]
@@ -112,5 +112,9 @@ export class BillableItemComponent implements OnInit {
 
   navigate(element) {
     this.router.navigate(['/subscriber/examiner/appointment-details', element.claim_id])
+  }
+
+  navigateBillableEdit(e) {
+    this.router.navigate(['/subscriber/new-billable-item', e.claim_id, e.claimant_id, e.id])
   }
 }

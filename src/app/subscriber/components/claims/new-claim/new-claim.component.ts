@@ -356,7 +356,8 @@ export class NewClaimComponent implements OnInit {
       id: [""],
       last_name: ['', Validators.compose([Validators.required])],
       first_name: ['', Validators.compose([Validators.required])],
-      middle_name: ['',],
+      middle_name: [''],
+      salutation: [null, Validators.compose([Validators.maxLength(3)])],
       suffix: [null],
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
@@ -372,7 +373,6 @@ export class NewClaimComponent implements OnInit {
       phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       street1: [null],
       street2: [null],
-      salutation: [null],
       city: [null],
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('[0-9]+')])],
@@ -463,7 +463,8 @@ export class NewClaimComponent implements OnInit {
       claimant_id: [null],
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
-        modifier_id: [null]
+        modifier_id: [null],
+        is_psychiatric:[false]
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
@@ -522,8 +523,11 @@ export class NewClaimComponent implements OnInit {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
-      this.createClaimant('tab')
-
+      if (this.claimant.touched) {
+        this.createClaimant('tab')
+      } else {
+        this.stepper.next();
+      }
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
       this.submitClaim('tab')
