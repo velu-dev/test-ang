@@ -28,7 +28,6 @@
     <div fxLayout="100">
         <ul class="bill-status p-l-0 m-l-0">
             <li><a href="#">Bill Submissions <br /></a></li>
-            <li><a href="#"> <br /></a></li>
         </ul>
     </div>
 </div>
@@ -190,15 +189,7 @@
                         <div>Code search</div>
                         <div>
                             <form>
-                                <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Search ICD" aria-label="State"
-                                        [matAutocomplete]="ICDAuto" [formControl]="icdCtrl">
-                                    <mat-autocomplete #ICDAuto="matAutocomplete">
-                                        <mat-option *ngFor="let icd of (filteredICD | async)" [value]="icd[1]">
-                                            {{icd[1] | json}}
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                </mat-form-field>
+                                <input type="text" class="w-100">
                             </form>
                         </div>
                     </div>

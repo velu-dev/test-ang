@@ -146,6 +146,7 @@
             width: auto;
             font-size: $font-size-7;
             min-width: 85px;
+            text-align: center;
             text-decoration: none;
             display: inline-flex !important;
             padding: 10px 10px 10px 45px;
@@ -202,5 +203,20 @@
 }
 
 .bill-status li:nth-child(1) a {
+    background: #fff
+}
+.bill-status li:nth-child(2) a:after {
+    border-left-color: $primarycolor;
+}
+
+.bill-status li:nth-child(2) a {
+    background: $primarycolor;
+    color:$white
+}
+.bill-status li:nth-child(3) a:after {
+    border-left-color: #ffffff;
+}
+
+.bill-status li:nth-child(3) a {
     background: #fff
 }
