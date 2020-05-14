@@ -48,9 +48,9 @@
 
                 <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                     <mat-label>Date & Time</mat-label>
-                    <input matInput placeholder="Date & Time" [min]="todayDate.appointment"
+                    <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" [value]="billable_item.value.appointment.appointment_scheduled_date_time | date: 'MM-dd-yyyy, hh:mm a'" [min]="todayDate.appointment"
                         formControlName="appointment_scheduled_date_time" autocomplete="off" [owlDateTime]="appointment"
-                        [owlDateTimeTrigger]="appointment">
+                        >
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
                     <owl-date-time (afterPickerOpen)="pickerOpened('app')" #appointment></owl-date-time>
                 </mat-form-field>
@@ -121,8 +121,8 @@
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Intake Call Date & Time</mat-label>
-                    <input matInput placeholder="Intake Call Date & Time" formControlName="call_date" autocomplete="off"
-                        [max]="todayDate.intake" [owlDateTime]="intake" [owlDateTimeTrigger]="intake">
+                    <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" [value]="billable_item.value.intake_call.call_date | date: 'MM-dd-yyyy, hh:mm a'" formControlName="call_date" autocomplete="off"
+                        [max]="todayDate.intake" [owlDateTime]="intake">
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                     <owl-date-time (afterPickerOpen)="pickerOpened('intake')" #intake></owl-date-time>
                 </mat-form-field>
