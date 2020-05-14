@@ -66,12 +66,12 @@ export class NewBillableItemComponent implements OnInit {
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
         modifier_id: [null],
-        is_psychiatric:[false]
+        is_psychiatric: [false]
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
         appointment_scheduled_date_time: [null],
-        duration: [null],
+        duration: [null, Validators.compose([Validators.min(0), Validators.max(450)])],
         examination_location_id: [null]
       }),
       intake_call: this.formBuilder.group({
