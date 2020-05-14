@@ -29,8 +29,18 @@ import { NgxMaskModule } from 'ngx-mask';
 import { FilterPipe } from './pipes/filter.pipe';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+import {OwlMomentDateTimeModule} from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
 
+export const MY_MOMENT_FORMATS = {
+  parseInput: 'MM-DD-YYYY HH:mm A',
+  fullPickerInput: 'MM-DD-YYYY HH:mm A',
+  datePickerInput: 'MM-DD-YYYY',
+  timePickerInput: 'HH:mm:ss',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
 @NgModule({
   declarations: [
     NotFoundComponent,
@@ -55,7 +65,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     NgxSkeletonLoaderModule,
     LoggerModule.forRoot({ serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG,serverLogLevel: NgxLoggerLevel.OFF}),
     NgxMaskModule.forRoot(),
-    OwlDateTimeModule, OwlNativeDateTimeModule
+    OwlDateTimeModule, OwlNativeDateTimeModule,OwlMomentDateTimeModule
   ],
   exports: [
     MaterialModule,
@@ -83,7 +93,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     ExportService,
     UserService,
     CookieService,
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    {provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS},
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

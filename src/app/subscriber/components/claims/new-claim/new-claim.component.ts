@@ -17,6 +17,7 @@ import {
 import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 
 export const PICK_FORMATS = {
   parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -151,6 +152,8 @@ export class NewClaimComponent implements OnInit {
   filteredDeu: Observable<any[]>;
   deuCtrl = new FormControl();
   iseams_entry: boolean = false;
+  role: string;
+
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -166,6 +169,7 @@ export class NewClaimComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
+    public cookieService: CookieService,
     private _location: Location) {
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;
@@ -464,7 +468,7 @@ export class NewClaimComponent implements OnInit {
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
         modifier_id: [null],
-        is_psychiatric:[false]
+        is_psychiatric: [false]
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
@@ -499,7 +503,7 @@ export class NewClaimComponent implements OnInit {
 
     this.claim.valueChanges.subscribe(
       value => {
-        // console.log(JSON.stringify(value));
+         console.log(JSON.stringify(value)+"4444");
         this.claimChanges = true;
       }
     );
@@ -542,7 +546,7 @@ export class NewClaimComponent implements OnInit {
       if (status == 'next') {
         this.stepper.next();
       } else if (status == 'save') {
-        this._location.back();
+       this.routeDashboard();
       }
       return;
     }
@@ -572,7 +576,7 @@ export class NewClaimComponent implements OnInit {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
-          this._location.back();
+          this.routeDashboard();
         }
         this.claimChanges = false;
       }, error => {
@@ -586,7 +590,7 @@ export class NewClaimComponent implements OnInit {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
-          this._location.back();
+          this.routeDashboard();
         }
       }, error => {
         this.isClaimCreated = false;
@@ -633,7 +637,8 @@ export class NewClaimComponent implements OnInit {
     if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
-        this._location.back();
+        //this._location.back();
+        this.routeDashboard();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -658,9 +663,9 @@ export class NewClaimComponent implements OnInit {
       if (status == 'next') {
         this.stepper.next();
       } else if (status == 'save') {
-        this._location.back();
+        this.routeDashboard();
       } else if (status == 'close') {
-        this._location.back();
+        this.routeDashboard();
       }
       return;
     }
@@ -694,9 +699,9 @@ export class NewClaimComponent implements OnInit {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
-          this._location.back();
+          this.routeDashboard();
         } else if (status == 'close') {
-          this._location.back();
+          this.routeDashboard();
         }
         this.claimantChanges = false;
       }, error => {
@@ -711,7 +716,7 @@ export class NewClaimComponent implements OnInit {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
-          this._location.back();
+          this.routeDashboard();
         }
       }, error => {
         this.isClaimantCreated = false;
@@ -1065,5 +1070,29 @@ export class NewClaimComponent implements OnInit {
         name: this.deuCtrl.value
       }
     })
+  }
+
+  routeDashboard() {
+    this.role = this.cookieService.get('role_id')
+    switch (this.role) {
+      case '1':
+        this.router.navigate(["/admin"]);
+        break;
+      case '2':
+        this.router.navigate(["/subscriber"]);
+        break;
+      case '3':
+        this.router.navigate(["/subscriber/manager"]);
+        break;
+      case '4':
+        this.router.navigate(["/subscriber/staff"]);
+        break;
+      case '11':
+        this.router.navigate(["/subscriber/examiner"]);
+        break;
+      default:
+        this.router.navigate(["/"]);
+        break;
+    }
   }
 }
