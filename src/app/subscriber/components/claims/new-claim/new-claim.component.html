@@ -1066,10 +1066,11 @@
                         </mat-form-field>
                         <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
-                            <mat-select formControlName="duration">
+                            <!-- <mat-select formControlName="duration">
                                 <mat-option *ngFor="let data of duration" [value]="data.id">{{data.value}} Mins
                                 </mat-option>
-                            </mat-select>
+                            </mat-select> -->
+                            <input matInput type="number" placeholder="Minutes" formControlName="duration" autocomplete="off">
                         </mat-form-field>
                         <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Service Location Type</mat-label>
