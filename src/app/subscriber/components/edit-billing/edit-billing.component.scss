@@ -19,6 +19,7 @@
 .examiner_details {
     padding: 5px 10px 0px 10px;
 }
+
 .service_ {
     mat-card {
         box-shadow: $box-shadow-2;
@@ -26,6 +27,13 @@
         min-height: 210px;
         &:hover {
             box-shadow: $box-shadow-1;
+        }
+    }
+}
+.diagnosis-section {
+    mat-card {
+        .billing_list {
+            min-height: auto;
         }
     }
 }

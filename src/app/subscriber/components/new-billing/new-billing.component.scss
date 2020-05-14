@@ -29,6 +29,13 @@
         }
     }
 }
+.diagnosis-section {
+    mat-card {
+        .billing_list {
+            min-height: auto;
+        }
+    }
+}
 .service-line {
     box-shadow: $box-shadow-2;
     padding-bottom: 0px;
