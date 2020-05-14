@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import * as globals from '../../../globals';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { FormControl } from '@angular/forms';
@@ -19,7 +18,6 @@ export interface DocList {
   type: string;
 
 }
-
 export interface PaymantList {
   item: string;
   procedure_code: string;
@@ -30,6 +28,12 @@ export interface PaymantList {
   payment: string;
   balance: string;
 }
+
+export interface DiagnosisList {
+  code: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-edit-billing',
   templateUrl: './edit-billing.component.html',
@@ -41,18 +45,34 @@ export class EditBillingComponent implements OnInit {
   displayedColumns: string[] = ['item', 'procedure_code', 'modifer', 'units', 'charge', 'fee_schedule'];
   displayedColumns1: string[] = ['name', 'type'];
   displayedColumns2: string[] = ['item', 'procedure_code', 'modifer', 'units', 'charge', 'fee_schedule', 'payment', 'balance'];
+  displayedColumns3: string[] = ['code', 'name', 'action'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
+  dataSource3 = new MatTableDataSource(ELEMENT_DATA3);
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   myControl = new FormControl();
   options: string[] = ['123456', 'M Venkat', 'M Rajan'];
+  diaCodes = new FormControl();
+  codes: string[] = [
+    'K50.00 - Crohn disease of small intestine without complications',
+    'K50.011 - Crohns disease of small intestine with rectal bleeding',
+    'K50.00 - Crohn disease of small intestine without complications',
+    'K50.011 - Crohns disease of small intestine with rectal bleeding',
+    'K50.00 - Crohn disease of small intestine without complications',
+    'K50.011 - Crohns disease of small intestine with rectal bleeding',
+    'K50.00 - Crohn disease of small intestine without complications',
+    'K50.011 - Crohns disease of small intestine with rectal bleeding',
+    'K50.00 - Crohn disease of small intestine without complications',
+    'K50.011 - Crohns disease of small intestine with rectal bleeding',
+  ];
   filteredOptions: Observable<string[]>;
   filteredICD: Observable<[]>;
 
   constructor() { }
 
-  ngOnInit() {   this.dataSource.sort = this.sort;
+  ngOnInit() {
+    this.dataSource.sort = this.sort;
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
@@ -81,4 +101,10 @@ const ELEMENT_DATA2: PaymantList[] = [
   { item: 'QME Examination', procedure_code: 'ML 101', modifer: '93', units: '1', charge: '$ 2200.00', fee_schedule: '$ 2200.00', payment: '$ 0', balance: '$ 2200.00' },
   { item: 'Report pages', procedure_code: '', modifer: '', units: '', charge: '$ 2200.00', fee_schedule: '$ 2200.00', payment: '$ 0', balance: '$ 2200.00' }
 ];
+
+const ELEMENT_DATA3: DiagnosisList[] = [
+  { code: 'K50.00 ', name: 'Crohn disease of small intestine without complications' },
+  { code: 'K50.011 ', name: 'Crohns disease of small intestine with rectal bleeding' },
+];
+
 
