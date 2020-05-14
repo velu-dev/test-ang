@@ -166,14 +166,21 @@
         <mat-divider></mat-divider>
         <mat-card-content class="p-b-20">
             <form fxLayout="row wrap" fxFlex="100" class="m-t-15">
-                <mat-form-field fxFlex="50">
-                    <input type="text" placeholder="Search code" aria-label="Number" matInput [formControl]="diaCodes"
-                        [matAutocomplete]="auto">
+                <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                    <button mat-stroked-button class="m-b-3" color="primary" class="version">ICD version : 10</button>
+                </div>
+                <mat-form-field fxFlex="100" fxFlex.xs="100" fxFlex.sm="85" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85"
+                    appearance="fill" class="fixed_search">
+                    <input type="text" placeholder="Search Diagnosis Codes" aria-label="Number" matInput
+                        [formControl]="diaCodes" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let code of codes" [value]="code">
                             {{code}}
                         </mat-option>
                     </mat-autocomplete>
+                    <span matSuffix class="search-icon icons">
+                        <mat-icon>search</mat-icon>
+                    </span>
                 </mat-form-field>
 
                 <div class="billing_list w-100" fxFlex="100">

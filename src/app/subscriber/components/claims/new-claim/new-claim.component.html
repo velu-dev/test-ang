@@ -90,8 +90,8 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Zip Code</mat-label>
-                                                    <input matInput  formControlName="zip_code"
-                                                        placeholder="zip code" autocomplete="off">
+                                                    <input matInput formControlName="zip_code" placeholder="zip code"
+                                                        autocomplete="off">
                                                     <mat-error>Enter valid zip code</mat-error>
                                                 </mat-form-field>
 
@@ -296,8 +296,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
                                 <mat-error>Enter valid zip code</mat-error>
                             </mat-form-field>
 
@@ -637,8 +636,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip Code" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip Code" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -719,8 +717,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -803,8 +800,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
 
@@ -891,8 +887,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
 
@@ -967,8 +962,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  formControlName="zip_code" placeholder="Zip Code"
-                                    autocomplete="off">
+                                <input matInput formControlName="zip_code" placeholder="Zip Code" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1029,7 +1023,8 @@
 
                         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <div fxLayout="row wrap" fxFlex="100" class="fixed-checkbox">
-                                <mat-checkbox class="p-t-40 p-l-20" formControlName="is_psychiatric">Psychiatric</mat-checkbox>
+                                <mat-checkbox class="p-t-40 p-l-20" formControlName="is_psychiatric">Psychiatric
+                                </mat-checkbox>
                                 <mat-form-field appearance="standard">
                                     <mat-label>Modifiers</mat-label>
                                     <mat-select formControlName="modifier_id" multiple>
@@ -1056,7 +1051,7 @@
                             </mat-select>
                         </mat-form-field>
 
-                        <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
+                        <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="Date & Time" [min]="todayDate.appointment"
                                 formControlName="appointment_scheduled_date_time" autocomplete="off"
@@ -1064,13 +1059,12 @@
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('app')" #appointment></owl-date-time>
                         </mat-form-field>
-                        <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
+
+                        <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
-                            <!-- <mat-select formControlName="duration">
-                                <mat-option *ngFor="let data of duration" [value]="data.id">{{data.value}} Mins
-                                </mat-option>
-                            </mat-select> -->
-                            <input matInput type="number" placeholder="Minutes" formControlName="duration" autocomplete="off">
+                            <input matInput type="number" placeholder="Minutes" formControlName="duration"
+                                autocomplete="off">
+                            <span matSuffix>Minutes</span>
                         </mat-form-field>
                         <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Service Location Type</mat-label>

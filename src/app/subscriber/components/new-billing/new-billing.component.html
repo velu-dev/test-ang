@@ -182,20 +182,26 @@
     <mat-card class="m-t-10 m-r-10" fxFlex="100">
         <mat-card-header>
             <div class="content-wrapper-main-title p-t-5">Diagnosis Codes</div>
-            <span class="spacer"></span>
-            <button mat-stroked-button class="m-b-3" color="primary">ICD version : 10</button>
+
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content class="p-b-20">
             <form fxLayout="row wrap" fxFlex="100" class="m-t-15">
-                <mat-form-field fxFlex="50">
-                    <input type="text" placeholder="Search code" aria-label="Number" matInput [formControl]="diaCodes"
-                        [matAutocomplete]="auto">
+                <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="15" fxFlex.md="15" fxFlex.lg="15" fxFlex.xl="15">
+                    <button mat-stroked-button class="m-b-3" color="primary" class="version">ICD version : 10</button>
+                </div>
+                <mat-form-field fxFlex="100" fxFlex.xs="100" fxFlex.sm="85" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85"
+                    appearance="fill" class="fixed_search">
+                    <input type="text" placeholder="Search Diagnosis Codes" aria-label="Number" matInput
+                        [formControl]="diaCodes" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let code of codes" [value]="code">
                             {{code}}
                         </mat-option>
                     </mat-autocomplete>
+                    <span matSuffix class="search-icon icons">
+                        <mat-icon>search</mat-icon>
+                    </span>
                 </mat-form-field>
 
                 <div class="billing_list w-100" fxFlex="100">
@@ -204,7 +210,7 @@
                         <!-- Diagnosis code Column -->
                         <ng-container matColumnDef="code">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
-                            <td mat-cell *matCellDef="let element">  {{element.code}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.code}} </td>
                         </ng-container>
 
                         <!-- Name Column -->
@@ -213,16 +219,16 @@
                             <td mat-cell *matCellDef="let element" class="no-wrap-td"> {{element.name}} </td>
                         </ng-container>
 
-                     <!-- Procedure code Column -->
-                     <ng-container matColumnDef="action">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
-                        <td mat-cell *matCellDef="let element" class="no-wrap-td">
-                           <button mat-icon-button color="warn">
-                               <mat-icon>delete_outline</mat-icon>
-                           </button>    
-                        </td>
-                    </ng-container>
-                    
+                        <!-- Procedure code Column -->
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
+                            <td mat-cell *matCellDef="let element" class="no-wrap-td">
+                                <button mat-icon-button color="warn">
+                                    <mat-icon>delete_outline</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
                         <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
                     </table>
