@@ -16,9 +16,8 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Date of Injury </mat-label>
-            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off" [max]="today"
-                [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury"
-                >
+            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off" [min]="date_of_birth" [max]="today"
+                [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury">
             <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
             <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
             <mat-error>Enter valid date of injury</mat-error>
@@ -45,7 +44,7 @@
             <mat-label>CT Start Date</mat-label>
             <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off"
                 [matDatepicker]="continuous_trauma_start_date" [(ngModel)]="injuryInfo.continuous_trauma_start_date"
-                >
+                [min]="date_of_birth">
             <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
             </mat-datepicker-toggle>
             <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
@@ -55,8 +54,7 @@
             fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>CT End Date</mat-label>
             <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" [(ngModel)]="injuryInfo.continuous_trauma_end_date"
-                autocomplete="off" [matDatepicker]="continuous_trauma_end_date"
-                [min]="injuryInfo.continuous_trauma_start_date" >
+                autocomplete="off" [matDatepicker]="continuous_trauma_end_date" [min]="injuryInfo.date_of_injury">
             <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
             </mat-datepicker-toggle>
             <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>

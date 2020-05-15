@@ -496,14 +496,12 @@ export class NewClaimComponent implements OnInit {
     this.correspondenceSource = new MatTableDataSource([]);
     this.claimant.valueChanges.subscribe(
       value => {
-        // console.log(JSON.stringify(value));
         this.claimantChanges = true;
       }
     );
 
     this.claim.valueChanges.subscribe(
       value => {
-        console.log(JSON.stringify(value) + "4444");
         this.claimChanges = true;
       }
     );
@@ -658,14 +656,15 @@ export class NewClaimComponent implements OnInit {
   claimant_name = "";
   isClaimantCreated = false;
   createClaimant(status) {
-
+    console.log("dfdsfdffs", status)
     if (!this.claimantChanges) {
       if (status == 'next') {
         this.stepper.next();
       } else if (status == 'save') {
         this.routeDashboard();
       } else if (status == 'close') {
-        this.routeDashboard();
+        console.log("dfddgfdgdf")
+        this.router.navigate(["/subscriber/claimant"]);
       }
       return;
     }
@@ -701,7 +700,7 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'save') {
           this.routeDashboard();
         } else if (status == 'close') {
-          this.routeDashboard();
+          this.router.navigate(["/subscriber/claimant"]);
         }
         this.claimantChanges = false;
       }, error => {
