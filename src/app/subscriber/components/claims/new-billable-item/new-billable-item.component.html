@@ -5,7 +5,7 @@
     <mat-divider></mat-divider>
 
     <mat-card-content>
-        <form fxLayout="row wrap" fxFlex="100" [formGroup]="billable_item">
+        <form fxLayout="row wrap" fxFlex="100" [formGroup]="billable_item" (keydown.enter)="$event.preventDefault()">
             <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Procedural Type*</mat-label>

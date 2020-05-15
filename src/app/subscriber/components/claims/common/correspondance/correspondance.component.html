@@ -1,5 +1,5 @@
 <div fxLayout="row wrap" fxFlex="100">
-    <form fxFlex="100" [formGroup]="correspondForm">
+    <form fxFlex="100" [formGroup]="correspondForm" (keydown.enter)="$event.preventDefault()">
 
 
         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="Upload_">

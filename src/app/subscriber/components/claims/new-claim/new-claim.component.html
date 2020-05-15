@@ -5,7 +5,7 @@
     <mat-divider></mat-divider>
     <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
-            <form [formGroup]="claimant">
+            <form [formGroup]="claimant" (keydown.enter)="$event.preventDefault()">
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
@@ -42,7 +42,7 @@
                                             <mat-icon>search</mat-icon>
                                         </span>
                                     </mat-form-field>
-                                    <form [formGroup]="advanceSearch">
+                                    <form [formGroup]="advanceSearch" (keydown.enter)="$event.preventDefault()">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
 
@@ -317,7 +317,7 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="claim">
-            <form [formGroup]="claim">
+            <form [formGroup]="claim" (keydown.enter)="$event.preventDefault()">
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claim</ng-template>
                 <mat-card>
                     <mat-card-header>
@@ -498,7 +498,7 @@
                             <div class="sub-title">Correspondence</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
-                            <form [formGroup]="correspondForm" fxFlex="100">
+                            <form [formGroup]="correspondForm" fxFlex="100" (keydown.enter)="$event.preventDefault()">
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
                                     class="Upload_">
                                     <button type="button" (click)="uploader.click()" mat-stroked-button color="primary">
@@ -1000,7 +1000,7 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="billable_item">
-            <form [formGroup]="billable_item">
+            <form [formGroup]="billable_item" (keydown.enter)="$event.preventDefault()">
 
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Billable Item</ng-template>
                 <mat-card fxLayout="row wrap" fxFlex="100">
