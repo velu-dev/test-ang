@@ -653,7 +653,7 @@ export class NewClaimComponent implements OnInit {
     }
   }
   cancel() {
-    this._location.back()
+    this.routeDashboard();
   }
   claimant_name = "";
   isClaimantCreated = false;
