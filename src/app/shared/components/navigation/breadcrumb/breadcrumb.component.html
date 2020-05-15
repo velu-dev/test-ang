@@ -4,8 +4,8 @@
     </li>
 </ul>
 <ul class="breadcrumb" *ngFor="let menu of (menu$ | async)?.menu; let indx = index">
-    <li *ngIf="menu.title != 'Dashboard'" (click)="breadCrumb(menu, indx)">
-        <span *ngIf="menu.path != '/subscriber/edit-claim'">{{menu.title}}</span>
+    <li *ngIf="menu.title != 'Dashboard'">
+        <span *ngIf="menu.path != '/subscriber/edit-claim'" (click)="breadCrumb(menu, indx)">{{menu.title}}</span>
         <span *ngIf="menu.path == '/subscriber/edit-claim'">{{name}}</span>
     </li>
 </ul>
