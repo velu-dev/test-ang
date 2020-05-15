@@ -525,11 +525,7 @@ export class NewClaimComponent implements OnInit {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
-      if (this.claimant.touched) {
         this.createClaimant('tab')
-      } else {
-        this.stepper.next();
-      }
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
       this.submitClaim('tab')
@@ -677,8 +673,8 @@ export class NewClaimComponent implements OnInit {
     this.claimantChanges = false;
     this.isClaimantSubmited = true;
     Object.keys(this.claimant.controls).forEach((key) => {
-      if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
-        this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
+      if(this.claimant.get(key).value && typeof(this.claimant.get(key).value) == 'string')
+      this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
     });
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
@@ -705,6 +701,7 @@ export class NewClaimComponent implements OnInit {
         })
         this.isClaimantCreated = true;
         this.isClaimantEdit = true;
+        this.claimantChanges = false;
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
@@ -712,7 +709,7 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'close') {
           this.routeDashboard();
         }
-        this.claimantChanges = false;
+        
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
