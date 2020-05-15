@@ -5,7 +5,7 @@
     <mat-divider></mat-divider>
 
     <mat-card-content>
-        <form fxLayout="row wrap" fxFlex="100" [formGroup]="billable_item">
+        <form fxLayout="row wrap" fxFlex="100" [formGroup]="billable_item" (keydown.enter)="$event.preventDefault()">
             <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Procedural Type*</mat-label>
@@ -15,14 +15,14 @@
                             {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="isBillSubmited">Select Procuderal Type</mat-error>
+                    <mat-error *ngIf="isBillSubmited">Select Procedural Type</mat-error>
                 </mat-form-field>
 
 
                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <div fxLayout="row wrap" fxFlex="100" class="fixed-checkbox">
                         <mat-checkbox class="p-t-40 p-l-20" formControlName="is_psychiatric">Psychiatric</mat-checkbox>
-                        <mat-form-field appearance="standard" >
+                        <mat-form-field appearance="standard">
                             <mat-label>Modifiers</mat-label>
                             <mat-select formControlName="modifier_id" multiple>
                                 <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
@@ -32,9 +32,6 @@
                         </mat-form-field>
                     </div>
                 </div>
-
-
-              
             </div>
 
             <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
@@ -49,21 +46,24 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
+                <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                     <mat-label>Date & Time</mat-label>
-                    <input matInput placeholder="Date & Time" [min]="todayDate.appointment"
-                        formControlName="appointment_scheduled_date_time" autocomplete="off" [owlDateTime]="appointment"
-                        [owlDateTimeTrigger]="appointment">
+                    <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" [min]="todayDate.appointment"
+                        formControlName="appointment_scheduled_date_time" autocomplete="off"
+                        [owlDateTime]="appointment">
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
                     <owl-date-time (afterPickerOpen)="pickerOpened('app')" #appointment></owl-date-time>
                 </mat-form-field>
-                <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
+
+                <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                     <mat-label>Duration</mat-label>
-                    <mat-select formControlName="duration">
-                        <mat-option *ngFor="let data of duration" [value]="data.id">{{data.value}} Mins
-                        </mat-option>
-                    </mat-select>
+                    <input matInput type="number" placeholder="Minutes" formControlName="duration" autocomplete="off">
+                    <span matSuffix>Minutes</span>
                 </mat-form-field>
+                <!-- <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
+                    <mat-label>Duration</mat-label>
+                    <input matInput type="number" placeholder="Minutes" formControlName="duration" autocomplete="off">
+                </mat-form-field> -->
                 <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>Examination Location</mat-label>
                     <input matInput placeholder="Address" aria-label="State" [matAutocomplete]="examinarAuto"
@@ -121,8 +121,8 @@
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Intake Call Date & Time</mat-label>
-                    <input matInput placeholder="Intake Call Date & Time" formControlName="call_date" autocomplete="off"
-                        [max]="todayDate.intake" [owlDateTime]="intake" [owlDateTimeTrigger]="intake">
+                    <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" formControlName="call_date" autocomplete="off"
+                        [max]="todayDate.intake" [owlDateTime]="intake">
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                     <owl-date-time (afterPickerOpen)="pickerOpened('intake')" #intake></owl-date-time>
                 </mat-form-field>

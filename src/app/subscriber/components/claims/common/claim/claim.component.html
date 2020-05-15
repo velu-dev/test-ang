@@ -4,7 +4,7 @@
             {{claimDetail?.internal_reference}}</div>
         <span class="spacer"></span>
         <!-- <button  mat-icon-button color="primary">
-            <mat-icon>edit</mat-icon>
+           <span class="fa fa-pencil-alt"></span>
         </button> -->
         <button *ngIf="!isEdit" mat-raised-button color="primary" (click)="editClick()" class="m-b-5">
             Edit
@@ -40,7 +40,7 @@
         </div> -->
 
         <div>
-            <form fxLayout="row wrap" fxFlex="100" class="p-t-10" [formGroup]="claim">
+            <form fxLayout="row wrap" fxFlex="100" class="p-t-10" [formGroup]="claim" (keydown.enter)="$event.preventDefault()">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Claim Number</mat-label>
                     <input matInput placeholder="Claim Number" formControlName="claim_number" autocomplete="off">

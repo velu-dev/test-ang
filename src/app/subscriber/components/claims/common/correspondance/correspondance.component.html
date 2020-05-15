@@ -1,5 +1,5 @@
 <div fxLayout="row wrap" fxFlex="100">
-    <form fxFlex="100" [formGroup]="correspondForm">
+    <form fxFlex="100" [formGroup]="correspondForm" (keydown.enter)="$event.preventDefault()">
 
 
         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40" class="Upload_">
@@ -10,7 +10,7 @@
                     [value]="selectedFile?.name | ellipsis:30" placeholder="No file chosen">
                 <input type="file" formControlName="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
                     accept=".pdf, .doc, .docx, .excel, .csv">
-                <mat-error>Please select following file format only (.pdf, .doc, .docx, .excel, .csv)</mat-error>
+                <mat-hint>Please select following file format only (.pdf, .doc, .docx, .excel, .csv)</mat-hint>
             </mat-form-field>
         </div>
 

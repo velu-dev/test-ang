@@ -55,11 +55,11 @@
                         <div class="no-wrap-td" *ngIf="element.address_type_id != 3">
                             <button mat-icon-button class="edit" (click)="editAddress(element)" matTooltip="Edit"
                                 matTooltipPosition="before">
-                                <mat-icon>edit</mat-icon>
+                                <span class="fa fa-pencil-alt"></span>
                             </button>
                             <button mat-icon-button color="warn" matTooltip="Remove" (click)="deleteAddress(element,i)"
                                 matTooltipPosition="after">
-                                <mat-icon>delete</mat-icon>
+                                <mat-icon>delete_outline</mat-icon>
                             </button>
                         </div>
                         <div class="no-wrap-td" *ngIf="element.address_type_id == 3">

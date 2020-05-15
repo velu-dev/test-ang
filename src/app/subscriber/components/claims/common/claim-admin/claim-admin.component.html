@@ -56,7 +56,7 @@
 </div>
 <div fxLayout="row wrap" *ngIf="isEdit" class="claim_admin"> -->
 <div fxLayout="row wrap" class="claim_admin">
-    <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimAdminForm">
+    <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimAdminForm" (keydown.enter)="$event.preventDefault()">
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Insurance Name</mat-label>
             <input matInput placeholder="Insurance" formControlName="company_name" autocomplete="off">

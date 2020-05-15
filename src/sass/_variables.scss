@@ -482,7 +482,7 @@ input:-webkit-autofill {
 .model-header {
   .content-wrapper-main-title {
     color: $primarycolor;
-    font-weight: $font-weight-bold ;
+    font-weight: $font-weight-bold;
   }
   .close-model {
     background-color: $border-light;
@@ -514,6 +514,11 @@ input:-webkit-autofill {
   }
 }
 
+.fixed_search {
+  .mat-form-field-flex {
+    padding: 0 0 0 10px !important;
+  }
+}
 // Upload Button
 .upload_btn {
   border-radius: 2px;

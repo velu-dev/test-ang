@@ -53,7 +53,7 @@ import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
       useClass: TokenInterceptorService,
       multi: true
     },
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    //{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     // { provide: MAT_DATE_FORMATS, useValue: MAT_ },
     // { provide: DateAdapter, useClass: MomentUtcDateAdapter },
     {

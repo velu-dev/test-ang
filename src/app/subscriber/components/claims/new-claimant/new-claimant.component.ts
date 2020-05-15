@@ -81,7 +81,7 @@ export class NewClaimantComponent implements OnInit {
       phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       street1: [null],
       street2: [null],
-      salutation: [null],
+      salutation: [null, Validators.compose([Validators.maxLength(3)])],
       city: [null],
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
@@ -119,6 +119,11 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
+
+    Object.keys(this.claimantForm.controls).forEach((key) => {
+      if(this.claimantForm.get(key).value && typeof(this.claimantForm.get(key).value) == 'string')
+      this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
+    });
     this.isClaimantSubmited = true;
     this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
     if (this.claimantForm.invalid) {

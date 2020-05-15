@@ -5,7 +5,7 @@
     <mat-divider></mat-divider>
     <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
-            <form [formGroup]="claimant">
+            <form [formGroup]="claimant" (keydown.enter)="$event.preventDefault()">
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
@@ -42,7 +42,7 @@
                                             <mat-icon>search</mat-icon>
                                         </span>
                                     </mat-form-field>
-                                    <form [formGroup]="advanceSearch">
+                                    <form [formGroup]="advanceSearch" (keydown.enter)="$event.preventDefault()">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
 
@@ -65,12 +65,11 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Date of Birth</mat-label>
-                                                    <input matInput placeholder="Date of Birth"
+                                                    <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM"
                                                         formControlName="date_of_birth_advance_search"
                                                         autocomplete="off" formControlName="date_of_birth"
                                                         [max]="dateOfbirthEndValue" utc="true"
-                                                        [matDatepicker]="date_of_birth_advance_search"
-                                                        (click)="date_of_birth_advance_search.open()">
+                                                        [matDatepicker]="date_of_birth_advance_search">
                                                     <mat-datepicker-toggle matSuffix
                                                         [for]="date_of_birth_advance_search">
                                                     </mat-datepicker-toggle>
@@ -90,8 +89,8 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Zip Code</mat-label>
-                                                    <input matInput  formControlName="zip_code"
-                                                        placeholder="zip code" autocomplete="off">
+                                                    <input matInput formControlName="zip_code" placeholder="zip code"
+                                                        autocomplete="off">
                                                     <mat-error>Enter valid zip code</mat-error>
                                                 </mat-form-field>
 
@@ -181,9 +180,8 @@
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth*</mat-label>
-                                <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
-                                    autocomplete="off" [max]="today" [matDatepicker]="date_of_birth"
-                                    (click)="date_of_birth.open()">
+                                <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" formControlName="date_of_birth"
+                                    autocomplete="off" [max]="today" [matDatepicker]="date_of_birth">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="isClaimantSubmited">Enter valid date of birth</mat-error>
@@ -296,8 +294,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
                                 <mat-error>Enter valid zip code</mat-error>
                             </mat-form-field>
 
@@ -319,7 +316,7 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="claim">
-            <form [formGroup]="claim">
+            <form [formGroup]="claim" (keydown.enter)="$event.preventDefault()">
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claim</ng-template>
                 <mat-card>
                     <mat-card-header>
@@ -396,10 +393,9 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Date of Injury </mat-label>
-                                <input matInput placeholder="Date of Injury " autocomplete="off"
+                                <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off"
                                     [min]="claimant.value.date_of_birth" [max]="today" [matDatepicker]="date_of_injury1"
-                                    [(ngModel)]="injuryInfo.date_of_injury" [ngModelOptions]="{standalone: true}"
-                                    (click)="date_of_injury1.open()">
+                                    [(ngModel)]="injuryInfo.date_of_injury" [ngModelOptions]="{standalone: true}">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
                                 <mat-error>Enter valid date of injury</mat-error>
@@ -434,11 +430,11 @@
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
-                                <input matInput placeholder="CT Start date" autocomplete="off"
+                                <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_start_date"
                                     [(ngModel)]="injuryInfo.continuous_trauma_start_date"
                                     [min]="injuryInfo.date_of_injury" [max]="injuryInfo.date_of_injury"
-                                    [ngModelOptions]="{standalone: true}" (click)="continuous_trauma_start_date.open()">
+                                    [ngModelOptions]="{standalone: true}">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
@@ -447,12 +443,11 @@
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
-                                <input matInput placeholder="CT End date "
+                                <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM"
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_end_date"
-                                    [min]="injuryInfo.continuous_trauma_start_date"
-                                    (click)="continuous_trauma_end_date.open()">
+                                    [min]="injuryInfo.continuous_trauma_start_date">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
@@ -485,7 +480,7 @@
                                         </mat-icon> |
                                         <mat-icon (click)="deleteInjury(element, i)" class="delete-user"
                                             mat-raised-button matTooltip="Delete" matTooltipPosition="right"
-                                            color="warn">delete
+                                            color="warn">delete_outline
                                         </mat-icon>
                                     </td>
                                 </ng-container>
@@ -501,7 +496,7 @@
                             <div class="sub-title">Correspondence</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
-                            <form [formGroup]="correspondForm" fxFlex="100">
+                            <form [formGroup]="correspondForm" fxFlex="100" (keydown.enter)="$event.preventDefault()">
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
                                     class="Upload_">
                                     <button type="button" (click)="uploader.click()" mat-stroked-button color="primary">
@@ -512,6 +507,8 @@
                                         <input type="file" formControlName="file" #uploader hidden
                                             (change)="uploadFile($event)" id="uploadFile"
                                             accept=".pdf, .doc, .docx, .excel, .csv">
+                                        <mat-hint>Please select following file format only (.pdf, .doc, .docx, .excel,
+                                            .csv)</mat-hint>
                                     </mat-form-field>
                                 </div>
 
@@ -637,8 +634,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip Code" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip Code" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -719,8 +715,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -803,8 +798,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
 
@@ -891,8 +885,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  placeholder="Zip" formControlName="zip_code"
-                                    autocomplete="off">
+                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
 
@@ -967,8 +960,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput  formControlName="zip_code" placeholder="Zip Code"
-                                    autocomplete="off">
+                                <input matInput formControlName="zip_code" placeholder="Zip Code" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1008,7 +1000,7 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="billable_item">
-            <form [formGroup]="billable_item">
+            <form [formGroup]="billable_item" (keydown.enter)="$event.preventDefault()">
 
                 <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Billable Item</ng-template>
                 <mat-card fxLayout="row wrap" fxFlex="100">
@@ -1024,12 +1016,13 @@
                                     {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="isBillSubmited">Select Procuderal Type</mat-error>
+                            <mat-error *ngIf="isBillSubmited">Select Procedural Type</mat-error>
                         </mat-form-field>
 
                         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <div fxLayout="row wrap" fxFlex="100" class="fixed-checkbox">
-                                <mat-checkbox class="p-t-40 p-l-20" formControlName="is_psychiatric">Psychiatric</mat-checkbox>
+                                <mat-checkbox class="p-t-40 p-l-20" formControlName="is_psychiatric">Psychiatric
+                                </mat-checkbox>
                                 <mat-form-field appearance="standard">
                                     <mat-label>Modifiers</mat-label>
                                     <mat-select formControlName="modifier_id" multiple>
@@ -1056,20 +1049,20 @@
                             </mat-select>
                         </mat-form-field>
 
-                        <mat-form-field appearance="standard" fxFlex="30" fxFlex.md="30" fxFlex.sm="30" fxFlex.xs="100">
+                        <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
-                            <input matInput placeholder="Date & Time" [min]="todayDate.appointment"
+                            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" [min]="todayDate.appointment"
                                 formControlName="appointment_scheduled_date_time" autocomplete="off"
-                                [owlDateTime]="appointment" [owlDateTimeTrigger]="appointment">
+                                [owlDateTime]="appointment">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('app')" #appointment></owl-date-time>
                         </mat-form-field>
-                        <mat-form-field appearance="standard" fxFlex="20" fxFlex.md="20" fxFlex.sm="20" fxFlex.xs="100">
+
+                        <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
-                            <mat-select formControlName="duration">
-                                <mat-option *ngFor="let data of duration" [value]="data.id">{{data.value}} Mins
-                                </mat-option>
-                            </mat-select>
+                            <input matInput type="number" placeholder="Minutes" formControlName="duration"
+                                autocomplete="off">
+                            <span matSuffix>Minutes</span>
                         </mat-form-field>
                         <!-- <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Service Location Type</mat-label>
@@ -1140,9 +1133,8 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
-                            <input matInput placeholder="Intake Call Date & Time" formControlName="call_date"
-                                autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake"
-                                [owlDateTimeTrigger]="intake">
+                            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" formControlName="call_date"
+                                autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('intake')" #intake></owl-date-time>
                         </mat-form-field>

@@ -17,6 +17,7 @@ import {
 import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 
 export const PICK_FORMATS = {
   parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -151,6 +152,8 @@ export class NewClaimComponent implements OnInit {
   filteredDeu: Observable<any[]>;
   deuCtrl = new FormControl();
   iseams_entry: boolean = false;
+  role: string;
+
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -166,6 +169,7 @@ export class NewClaimComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
+    public cookieService: CookieService,
     private _location: Location) {
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;
@@ -464,12 +468,12 @@ export class NewClaimComponent implements OnInit {
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
         modifier_id: [null],
-        is_psychiatric:[false]
+        is_psychiatric: [false]
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
         appointment_scheduled_date_time: [null],
-        duration: [null],
+        duration: [null, Validators.compose([Validators.min(0), Validators.max(450)])],
         examination_location_id: [null]
       }),
       intake_call: this.formBuilder.group({
@@ -499,7 +503,7 @@ export class NewClaimComponent implements OnInit {
 
     this.claim.valueChanges.subscribe(
       value => {
-        // console.log(JSON.stringify(value));
+        console.log(JSON.stringify(value) + "4444");
         this.claimChanges = true;
       }
     );
@@ -542,13 +546,17 @@ export class NewClaimComponent implements OnInit {
       if (status == 'next') {
         this.stepper.next();
       } else if (status == 'save') {
-        this._location.back();
+        this.routeDashboard();
       }
       return;
     }
 
     this.claimChanges = false;
     this.isClaimSubmited = true;
+    Object.keys(this.claim.controls).forEach((key) => {
+      if(this.claim.get(key).value && typeof(this.claim.get(key).value) == 'string')
+      this.claim.get(key).setValue(this.claim.get(key).value.trim())
+    });
     if (this.claim.invalid) {
       console.log("claim", this.claim)
       return;
@@ -572,7 +580,7 @@ export class NewClaimComponent implements OnInit {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
-          this._location.back();
+          this.routeDashboard();
         }
         this.claimChanges = false;
       }, error => {
@@ -586,7 +594,7 @@ export class NewClaimComponent implements OnInit {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
-          this._location.back();
+          this.routeDashboard();
         }
       }, error => {
         this.isClaimCreated = false;
@@ -627,13 +635,18 @@ export class NewClaimComponent implements OnInit {
   // }
   submitBillableItem() {
     this.isBillSubmited = true;
+    Object.keys(this.billable_item.controls).forEach((key) => {
+      if(this.billable_item.get(key).value && typeof(this.billable_item.get(key).value) == 'string')
+      this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
+    });
     if (this.billable_item.invalid) {
       return;
     }
     if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
-        this._location.back();
+        //this._location.back();
+        this.routeDashboard();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -648,7 +661,7 @@ export class NewClaimComponent implements OnInit {
     }
   }
   cancel() {
-    this._location.back()
+    this.routeDashboard();
   }
   claimant_name = "";
   isClaimantCreated = false;
@@ -658,14 +671,19 @@ export class NewClaimComponent implements OnInit {
       if (status == 'next') {
         this.stepper.next();
       } else if (status == 'save') {
-        this._location.back();
+        this.routeDashboard();
       } else if (status == 'close') {
-        this._location.back();
+        this.routeDashboard();
       }
       return;
     }
     this.claimantChanges = false;
     this.isClaimantSubmited = true;
+    Object.keys(this.claimant.controls).forEach((key) => {
+      console.log( this.claimant.get(key).value);
+      if(this.claimant.get(key).value && typeof(this.claimant.get(key).value) == 'string')
+      this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
+    });
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
       return;
@@ -694,9 +712,9 @@ export class NewClaimComponent implements OnInit {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
-          this._location.back();
+          this.routeDashboard();
         } else if (status == 'close') {
-          this._location.back();
+          this.routeDashboard();
         }
         this.claimantChanges = false;
       }, error => {
@@ -711,7 +729,7 @@ export class NewClaimComponent implements OnInit {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
-          this._location.back();
+          this.routeDashboard();
         }
       }, error => {
         this.isClaimantCreated = false;
@@ -839,7 +857,13 @@ export class NewClaimComponent implements OnInit {
             claim_details: res.data.claim,
           });
           this.injuryInfodata = res.data.injuryInfodata;
-          this.employerList = res.data.employer;
+          if (res.data.employer.length > 1) {
+            this.employerList = res.data.employer;
+          } else {
+            this.claim.patchValue({
+              Employer: res.data.employer
+            })
+          }
           this.claimAdminList = res.data.claims_administrator;
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
@@ -1065,5 +1089,29 @@ export class NewClaimComponent implements OnInit {
         name: this.deuCtrl.value
       }
     })
+  }
+
+  routeDashboard() {
+    this.role = this.cookieService.get('role_id')
+    switch (this.role) {
+      case '1':
+        this.router.navigate(["/admin"]);
+        break;
+      case '2':
+        this.router.navigate(["/subscriber"]);
+        break;
+      case '3':
+        this.router.navigate(["/subscriber/manager"]);
+        break;
+      case '4':
+        this.router.navigate(["/subscriber/staff"]);
+        break;
+      case '11':
+        this.router.navigate(["/subscriber/examiner"]);
+        break;
+      default:
+        this.router.navigate(["/"]);
+        break;
+    }
   }
 }

@@ -51,7 +51,7 @@
 </div>
 <div *ngIf="isEdit"> -->
 <div fxLayout="row wrap" fxFlex="100" class="app_attorney_info">
-    <form fxLayout="row wrap" fxFlex="100" [formGroup]="ApplicantAttorney">
+    <form fxLayout="row wrap" fxFlex="100" [formGroup]="ApplicantAttorney" (keydown.enter)="$event.preventDefault()">
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Law Firm Name</mat-label>
             <input matInput placeholder="Law Firm Name" formControlName="company_name" autocomplete="off">

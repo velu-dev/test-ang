@@ -51,6 +51,10 @@ export class DefenseAttorneyComponent implements OnInit {
 
   }
   updateDAttorney() {
+    Object.keys(this.DefanceAttorney.controls).forEach((key) => {
+      if(this.DefanceAttorney.get(key).value && typeof(this.DefanceAttorney.get(key).value) == 'string')
+      this.DefanceAttorney.get(key).setValue(this.DefanceAttorney.get(key).value.trim())
+    });
     if (this.DefanceAttorney.invalid) {
       return;
     }

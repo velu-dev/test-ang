@@ -29,6 +29,21 @@
         }
     }
 }
+.diagnosis-section {
+    mat-card {
+        form {
+            div {
+                .version {
+                    padding: 7px 25px;
+                    background-color: $btn_light_color;
+                }
+            }
+        }
+        .billing_list {
+            min-height: auto;
+        }
+    }
+}
 .service-line {
     box-shadow: $box-shadow-2;
     padding-bottom: 0px;
@@ -116,4 +131,18 @@
             }
         }
     }
+}
+
+.fixed_search {
+    .search-icon {
+        background-color: $primarycolor;
+        color: $white;
+        padding: 12px;
+        display: block;
+        cursor: pointer;
+    }
+}
+
+.search-icon {
+    cursor: pointer;
 }

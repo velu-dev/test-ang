@@ -16,9 +16,9 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Date of Injury </mat-label>
-            <input matInput placeholder="Date of Injury " autocomplete="off" [max]="today"
+            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off" [max]="today"
                 [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury"
-                (click)="date_of_injury1.open()">
+                >
             <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
             <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
             <mat-error>Enter valid date of injury</mat-error>
@@ -43,9 +43,9 @@
         <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3" fxFlex.md="33."
             fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>CT Start Date</mat-label>
-            <input matInput placeholder="CT Start date" autocomplete="off"
+            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off"
                 [matDatepicker]="continuous_trauma_start_date" [(ngModel)]="injuryInfo.continuous_trauma_start_date"
-                (click)="continuous_trauma_start_date.open()">
+                >
             <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
             </mat-datepicker-toggle>
             <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
@@ -54,9 +54,9 @@
         <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3" fxFlex.md="33."
             fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>CT End Date</mat-label>
-            <input matInput placeholder="CT End date " [(ngModel)]="injuryInfo.continuous_trauma_end_date"
+            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                 autocomplete="off" [matDatepicker]="continuous_trauma_end_date"
-                [min]="injuryInfo.continuous_trauma_start_date" (click)="continuous_trauma_end_date.open()">
+                [min]="injuryInfo.continuous_trauma_start_date" >
             <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
             </mat-datepicker-toggle>
             <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>

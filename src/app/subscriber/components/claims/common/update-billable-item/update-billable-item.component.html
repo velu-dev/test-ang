@@ -1,5 +1,5 @@
 <div class="m-t-10 p-b-30">
-    <table mat-table [dataSource]="dataSource" class=" user-table">
+    <table mat-table [dataSource]="dataSource" class="user-table">
 
         <ng-container matColumnDef="billable_item">
             <th mat-header-cell *matHeaderCellDef> Exam Type </th>
@@ -29,7 +29,7 @@
             <td mat-cell *matCellDef="let element"> 
                 <button  [routerLink]="['/subscriber/new-billable-item',this.claimId,this.claimantId,element.id]" mat-icon-button class="edit" matTooltip="Edit"
                     matTooltipPosition="before">
-                    <mat-icon>edit</mat-icon>
+                    <span class="fa fa-pencil-alt"></span>
                 </button></td>
         </ng-container>
 
