@@ -208,6 +208,10 @@ export class NewBillableItemComponent implements OnInit {
 
   submitBillableItem() {
     this.isBillSubmited = true;
+    Object.keys(this.billable_item.controls).forEach((key) => {
+      if(this.billable_item.get(key).value && typeof(this.billable_item.get(key).value) == 'string')
+      this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
+    });
     if (this.billable_item.invalid) {
       return;
     }

@@ -50,6 +50,10 @@ export class DeoComponent implements OnInit {
 
   }
   updateDEU() {
+    Object.keys(this.DEU.controls).forEach((key) => {
+      if(this.DEU.get(key).value && typeof(this.DEU.get(key).value) == 'string')
+      this.DEU.get(key).setValue(this.DEU.get(key).value.trim())
+    });
     if (this.DEU.invalid) {
       return;
     }

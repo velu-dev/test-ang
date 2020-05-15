@@ -53,6 +53,10 @@ export class ClaimAdminComponent implements OnInit {
   }
   claimUpdated = false;
   updateClaimAdmin() {
+    Object.keys(this.claimAdminForm.controls).forEach((key) => {
+      if(this.claimAdminForm.get(key).value && typeof(this.claimAdminForm.get(key).value) == 'string')
+      this.claimAdminForm.get(key).setValue(this.claimAdminForm.get(key).value.trim())
+    });
     if (this.claimAdminForm.invalid) {
       return;
     }
