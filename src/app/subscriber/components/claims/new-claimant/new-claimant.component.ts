@@ -119,6 +119,11 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
+
+    Object.keys(this.claimantForm.controls).forEach((key) => {
+      if(this.claimantForm.get(key).value && typeof(this.claimantForm.get(key).value) == 'string')
+      this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
+    });
     this.isClaimantSubmited = true;
     this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
     if (this.claimantForm.invalid) {

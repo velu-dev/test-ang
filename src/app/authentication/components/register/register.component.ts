@@ -54,6 +54,10 @@ export class RegisterComponent implements OnInit {
   registerSubmit() {
     this.isSubmitted = true;
     this.error = '';
+    Object.keys(this.registerForm.controls).forEach((key) => {
+      if(this.registerForm.get(key).value && typeof(this.registerForm.get(key).value) == 'string')
+      this.registerForm.get(key).setValue(this.registerForm.get(key).value.trim())
+    });
     if (this.registerForm.invalid) {
       return;
     }

@@ -51,6 +51,10 @@ export class ApplicationAttorneyComponent implements OnInit {
 
   }
   updateAAttorney() {
+    Object.keys(this.ApplicantAttorney.controls).forEach((key) => {
+      if(this.ApplicantAttorney.get(key).value && typeof(this.ApplicantAttorney.get(key).value) == 'string')
+      this.ApplicantAttorney.get(key).setValue(this.ApplicantAttorney.get(key).value.trim())
+    });
     if (this.ApplicantAttorney.invalid) {
       return;
     }

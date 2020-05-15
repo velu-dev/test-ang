@@ -551,6 +551,10 @@ export class NewClaimComponent implements OnInit {
 
     this.claimChanges = false;
     this.isClaimSubmited = true;
+    Object.keys(this.claim.controls).forEach((key) => {
+      if(this.claim.get(key).value && typeof(this.claim.get(key).value) == 'string')
+      this.claim.get(key).setValue(this.claim.get(key).value.trim())
+    });
     if (this.claim.invalid) {
       console.log("claim", this.claim)
       return;
@@ -629,6 +633,10 @@ export class NewClaimComponent implements OnInit {
   // }
   submitBillableItem() {
     this.isBillSubmited = true;
+    Object.keys(this.billable_item.controls).forEach((key) => {
+      if(this.billable_item.get(key).value && typeof(this.billable_item.get(key).value) == 'string')
+      this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
+    });
     if (this.billable_item.invalid) {
       return;
     }
@@ -670,6 +678,11 @@ export class NewClaimComponent implements OnInit {
     }
     this.claimantChanges = false;
     this.isClaimantSubmited = true;
+    Object.keys(this.claimant.controls).forEach((key) => {
+      console.log( this.claimant.get(key).value);
+      if(this.claimant.get(key).value && typeof(this.claimant.get(key).value) == 'string')
+      this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
+    });
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
       return;
