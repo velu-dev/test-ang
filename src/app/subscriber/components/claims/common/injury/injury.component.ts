@@ -88,7 +88,7 @@ export class InjuryComponent implements OnInit {
   deleteInjury(data, index) {
     console.log(data)
     this.claimService.deleteInjury(data.id).subscribe(res => {
-      this.alertService.openSnackBar("Injury deleted Successful", "success")
+      this.alertService.openSnackBar("Injury deleted successfully!", "success")
       this.getInjury();
       this.injuryDetails.splice(index, 1);
       this.dataSource = new MatTableDataSource(this.injuryDetails)
@@ -175,7 +175,7 @@ export class InjuryPopup {
       arrData.map(row => {
         console.log(this.claim_id)
         this.claimService.updateInjury(row, this.claim_id).subscribe(res => {
-          this.alertService.openSnackBar("Claim injurt updated successfully", 'success')
+          this.alertService.openSnackBar("Claim Injury updated successfully", 'success')
           this.dialogRef.close();
         }, error => {
           this.alertService.openSnackBar(error.error.message, "error")

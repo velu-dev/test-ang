@@ -10,7 +10,7 @@
                     [value]="selectedFile?.name | ellipsis:30" placeholder="No file chosen">
                 <input type="file" formControlName="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
                     accept=".pdf, .doc, .docx, .excel, .csv">
-                <mat-error>Please select following file format only (.pdf, .doc, .docx, .excel, .csv)</mat-error>
+                <mat-hint>Please select following file format only (.pdf, .doc, .docx, .excel, .csv)</mat-hint>
             </mat-form-field>
         </div>
 

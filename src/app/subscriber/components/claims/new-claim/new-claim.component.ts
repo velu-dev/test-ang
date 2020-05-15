@@ -503,7 +503,7 @@ export class NewClaimComponent implements OnInit {
 
     this.claim.valueChanges.subscribe(
       value => {
-         console.log(JSON.stringify(value)+"4444");
+        console.log(JSON.stringify(value) + "4444");
         this.claimChanges = true;
       }
     );
@@ -546,7 +546,7 @@ export class NewClaimComponent implements OnInit {
       if (status == 'next') {
         this.stepper.next();
       } else if (status == 'save') {
-       this.routeDashboard();
+        this.routeDashboard();
       }
       return;
     }
@@ -857,7 +857,13 @@ export class NewClaimComponent implements OnInit {
             claim_details: res.data.claim,
           });
           this.injuryInfodata = res.data.injuryInfodata;
-          this.employerList = res.data.employer;
+          if (res.data.employer.length > 1) {
+            this.employerList = res.data.employer;
+          } else {
+            this.claim.patchValue({
+              Employer: res.data.employer
+            })
+          }
           this.claimAdminList = res.data.claims_administrator;
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
