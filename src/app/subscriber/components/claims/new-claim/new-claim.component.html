@@ -65,7 +65,7 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Date of Birth</mat-label>
-                                                    <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM"
+                                                    <input matInput placeholder="MM-DD-YYYY"
                                                         formControlName="date_of_birth_advance_search"
                                                         autocomplete="off" formControlName="date_of_birth"
                                                         [max]="dateOfbirthEndValue" utc="true"
@@ -180,7 +180,7 @@
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth*</mat-label>
-                                <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" formControlName="date_of_birth"
+                                <input matInput placeholder="MM-DD-YYYY" formControlName="date_of_birth"
                                     autocomplete="off" [max]="today" [matDatepicker]="date_of_birth">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
@@ -393,7 +393,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Date of Injury </mat-label>
-                                <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off"
+                                <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
                                     [min]="claimant.value.date_of_birth" [max]="today" [matDatepicker]="date_of_injury1"
                                     [(ngModel)]="injuryInfo.date_of_injury" [ngModelOptions]="{standalone: true}">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
@@ -430,7 +430,7 @@
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT Start Date</mat-label>
-                                <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off"
+                                <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_start_date"
                                     [(ngModel)]="injuryInfo.continuous_trauma_start_date"
                                     [min]="injuryInfo.date_of_injury" [max]="injuryInfo.date_of_injury"
@@ -443,7 +443,7 @@
                             <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3"
                                 fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>CT End Date</mat-label>
-                                <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM"
+                                <input matInput placeholder="MM-DD-YYYY"
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_end_date"
