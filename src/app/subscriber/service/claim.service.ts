@@ -29,7 +29,6 @@ export class ClaimService {
     return this.http.put(environment.baseUrl + api_endpoint.updateClaim + id, data)
   }
   createClaimant(data): Observable<any> {
-    console.log("service console", data);
     return this.http.post(environment.baseUrl + api_endpoint.createClaimant, data)
   }
   updateClaimant(data): Observable<any> {
@@ -45,7 +44,6 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.examinar_type)
   }
   seedData(data): Observable<any> {
-    console.log(data)
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
   // getCallerAffliation(): Observable<any> {

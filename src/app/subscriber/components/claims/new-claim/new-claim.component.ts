@@ -509,8 +509,8 @@ export class NewClaimComponent implements OnInit {
   newClaimant() {
     this.isEdit = false;
     this.isClaimantEdit = false;
-    this.searchInput.reset();
-    this.emasSearchInput.reset();
+    // this.searchInput.reset();
+    // this.emasSearchInput.reset();
     this.addNewClaimant = true;
     this.claimant.reset();
     this.claim.reset();
@@ -525,11 +525,7 @@ export class NewClaimComponent implements OnInit {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
-      if (this.claimant.touched) {
         this.createClaimant('tab')
-      } else {
-        this.stepper.next();
-      }
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
       this.submitClaim('tab')
@@ -552,8 +548,8 @@ export class NewClaimComponent implements OnInit {
     this.claimChanges = false;
     this.isClaimSubmited = true;
     Object.keys(this.claim.controls).forEach((key) => {
-      if(this.claim.get(key).value && typeof(this.claim.get(key).value) == 'string')
-      this.claim.get(key).setValue(this.claim.get(key).value.trim())
+      if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string')
+        this.claim.get(key).setValue(this.claim.get(key).value.trim())
     });
     if (this.claim.invalid) {
       console.log("claim", this.claim)
@@ -634,8 +630,8 @@ export class NewClaimComponent implements OnInit {
   submitBillableItem() {
     this.isBillSubmited = true;
     Object.keys(this.billable_item.controls).forEach((key) => {
-      if(this.billable_item.get(key).value && typeof(this.billable_item.get(key).value) == 'string')
-      this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
+      if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
+        this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
     });
     if (this.billable_item.invalid) {
       return;
@@ -677,7 +673,6 @@ export class NewClaimComponent implements OnInit {
     this.claimantChanges = false;
     this.isClaimantSubmited = true;
     Object.keys(this.claimant.controls).forEach((key) => {
-      console.log( this.claimant.get(key).value);
       if(this.claimant.get(key).value && typeof(this.claimant.get(key).value) == 'string')
       this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
     });
@@ -706,6 +701,7 @@ export class NewClaimComponent implements OnInit {
         })
         this.isClaimantCreated = true;
         this.isClaimantEdit = true;
+        this.claimantChanges = false;
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
@@ -713,7 +709,7 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'close') {
           this.routeDashboard();
         }
-        this.claimantChanges = false;
+        
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
@@ -829,8 +825,6 @@ export class NewClaimComponent implements OnInit {
     if (this.emasSearchInput.invalid) {
       return;
     }
-
-    console.log(this.emasSearchInput.value != "", this.emasSearchInput.value);
     if (this.emasSearchInput.value != "") {
       var adjValue = this.emasSearchInput.value.replace(/\s/g, '');
       if (adjValue.substring(0, 3).toLowerCase() == 'adj') {
@@ -854,14 +848,19 @@ export class NewClaimComponent implements OnInit {
             claim_details: res.data.claim,
           });
           this.injuryInfodata = res.data.injuryInfodata;
-          if (res.data.employer.length > 1) {
-            this.employerList = res.data.employer;
+          if (res.data.employer.length == 1) {
+            this.employerList = [];
+            this.appEmployer(res.data.employer[0])
           } else {
-            this.claim.patchValue({
-              Employer: res.data.employer
-            })
+            this.employerList = res.data.employer;
           }
-          this.claimAdminList = res.data.claims_administrator;
+          ;
+          if (res.data.claims_administrator.length == 1) {
+            this.claimAdminList = [];
+            this.appClaimAdmin(res.data.claims_administrator[0])
+          } else {
+            this.claimAdminList = res.data.claims_administrator;
+          }
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
             this.attroneylist = res.data.attroney;
