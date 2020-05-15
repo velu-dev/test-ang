@@ -9,7 +9,6 @@ import * as success from './../../../messages/success';
 import * as error from './../../../messages/errors';
 import { AlertService } from "./../../../services/alert.service"
 import * as globals from './../../../../globals';
-import { UserService } from 'src/app/admin/services/user.service';
 import { User } from 'src/app/admin/models/user.model';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
@@ -18,6 +17,7 @@ import { finalize } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import * as headerActions from "./../../../../shared/store/header.actions";
 import * as breadcrumbActions from "./../../../../shared/store/breadcrumb.actions";
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
     this.isLoading = true;
     this.cognitoService.session().then(token => {
       this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
-      this.userService.getUser(this.currentUserID).subscribe(res => {
+      this.userService.getProfile().subscribe(res => {
         this.user = res.data;
         // this.store.dispatch(new headerActions.HeaderAdd(this.user));
         this.user.role_id =  this.cookieService.get('role_id') ? this.cookieService.get('role_id') : res.data.role_id;

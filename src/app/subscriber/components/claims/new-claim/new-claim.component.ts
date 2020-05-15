@@ -361,7 +361,7 @@ export class NewClaimComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required])],
       first_name: ['', Validators.compose([Validators.required])],
       middle_name: [''],
-      salutation: [null, Validators.compose([Validators.maxLength(3)])],
+      salutation: [null, Validators.compose([Validators.maxLength(4)])],
       suffix: [null],
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
