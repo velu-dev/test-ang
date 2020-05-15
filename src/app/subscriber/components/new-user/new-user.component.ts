@@ -173,6 +173,10 @@ export class NewUserComponent implements OnInit {
 
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
+    Object.keys(this.userForm.controls).forEach((key) => {
+      if(this.userForm.get(key).value && typeof(this.userForm.get(key).value) == 'string')
+      this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
+    });
     if (this.userForm.invalid) {
       window.scrollTo(10, 10)
       return;

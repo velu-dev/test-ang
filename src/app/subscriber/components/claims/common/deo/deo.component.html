@@ -48,7 +48,7 @@
 </div>
 <div *ngIf="isEdit" class="deu_info"> -->
 <div class="deu_info">
-    <form fxLayout="row wrap" fxFlex="100" [formGroup]="DEU">
+    <form fxLayout="row wrap" fxFlex="100" [formGroup]="DEU" (keydown.enter)="$event.preventDefault()">
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>Office Name</mat-label>
             <input matInput placeholder="Office Name" formControlName="name" autocomplete="off">

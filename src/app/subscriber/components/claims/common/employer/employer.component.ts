@@ -47,6 +47,10 @@ export class EmployerComponent implements OnInit {
     this.employer.patchValue(this.employerDetail)
   }
   updateEmployer() {
+    Object.keys(this.employer.controls).forEach((key) => {
+      if(this.employer.get(key).value && typeof(this.employer.get(key).value) == 'string')
+      this.employer.get(key).setValue(this.employer.get(key).value.trim())
+    });
     if (this.employer.invalid) {
       return;
     }
