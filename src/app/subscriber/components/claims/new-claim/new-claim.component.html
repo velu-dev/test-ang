@@ -69,8 +69,7 @@
                                                         formControlName="date_of_birth_advance_search"
                                                         autocomplete="off" formControlName="date_of_birth"
                                                         [max]="dateOfbirthEndValue" utc="true"
-                                                        [matDatepicker]="date_of_birth_advance_search"
-                                                        >
+                                                        [matDatepicker]="date_of_birth_advance_search">
                                                     <mat-datepicker-toggle matSuffix
                                                         [for]="date_of_birth_advance_search">
                                                     </mat-datepicker-toggle>
@@ -448,8 +447,7 @@
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_end_date"
-                                    [min]="injuryInfo.continuous_trauma_start_date"
-                                    >
+                                    [min]="injuryInfo.continuous_trauma_start_date">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
@@ -509,6 +507,8 @@
                                         <input type="file" formControlName="file" #uploader hidden
                                             (change)="uploadFile($event)" id="uploadFile"
                                             accept=".pdf, .doc, .docx, .excel, .csv">
+                                        <mat-hint>Please select following file format only (.pdf, .doc, .docx, .excel,
+                                            .csv)</mat-hint>
                                     </mat-form-field>
                                 </div>
 
@@ -1051,7 +1051,7 @@
 
                         <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
-                            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM"  [min]="todayDate.appointment"
+                            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" [min]="todayDate.appointment"
                                 formControlName="appointment_scheduled_date_time" autocomplete="off"
                                 [owlDateTime]="appointment">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
@@ -1134,8 +1134,7 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" formControlName="call_date"
-                                autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake"
-                                >
+                                autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('intake')" #intake></owl-date-time>
                         </mat-form-field>
