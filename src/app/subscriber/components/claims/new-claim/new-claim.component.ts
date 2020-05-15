@@ -664,15 +664,13 @@ export class NewClaimComponent implements OnInit {
   claimant_name = "";
   isClaimantCreated = false;
   createClaimant(status) {
-    console.log("dfdsfdffs", status)
     if (!this.claimantChanges) {
       if (status == 'next') {
         this.stepper.next();
       } else if (status == 'save') {
         this.routeDashboard();
       } else if (status == 'close') {
-        console.log("dfddgfdgdf")
-        this.router.navigate(["/subscriber/claimant"]);
+        this.routeDashboard();
       }
       return;
     }
@@ -712,7 +710,7 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'save') {
           this.routeDashboard();
         } else if (status == 'close') {
-          this.router.navigate(["/subscriber/claimant"]);
+          this.routeDashboard();
         }
         this.claimantChanges = false;
       }, error => {
