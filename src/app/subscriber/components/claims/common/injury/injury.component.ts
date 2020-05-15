@@ -3,6 +3,8 @@ import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@a
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import * as moment from 'moment';
+
 export interface PeriodicElement {
   body_part: string;
   d_o_i: string;
@@ -20,7 +22,9 @@ export class InjuryComponent implements OnInit {
   claim_id: any = "";
   @Input('claim_id') claimId;
   @Input('state') states;
+  @Input('date_of_birth') date_of_birth;
   injuryDetails = [];
+  today = new Date();
   constructor(public dialog: MatDialog, private claimService: ClaimService, public alertService: AlertService) {
     console.log("clcikmmd", this.claimId)
   }
@@ -66,7 +70,7 @@ export class InjuryComponent implements OnInit {
   openDialog(injury): void {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '800px',
-      data: { isEdit: true, data: injury, claim_id: this.claimId }
+      data: { isEdit: true, data: injury, claim_id: this.claimId, date_of_birth: this.date_of_birth }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -77,7 +81,7 @@ export class InjuryComponent implements OnInit {
   addInjury() {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '800px',
-      data: { isEdit: false, claim_id: this.claimId }
+      data: { isEdit: false, claim_id: this.claimId, date_of_birth: this.date_of_birth }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -111,6 +115,7 @@ export class InjuryPopup {
   bodyPartsList = [];
   isEdit: any;
   id: any;
+  date_of_birth: any;
   constructor(
     private claimService: ClaimService,
     public dialogRef: MatDialogRef<InjuryPopup>,
@@ -118,6 +123,7 @@ export class InjuryPopup {
     public alertService: AlertService) {
     this.claim_id = data['claim_id']
     this.isEdit = data['isEdit']
+    this.date_of_birth = data['date_of_birth'];
     if (this.isEdit) {
       this.injuryInfo = data['data'];
 
@@ -152,6 +158,8 @@ export class InjuryPopup {
       }
     }
     if (this.isEdit) {
+      this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury)
+      this.injuryInfo.date_of_injury = moment(this.injuryInfo.date_of_injury).format("MM-DD-YYYY")
       this.claimService.updateInjury(this.injuryInfo, this.claim_id).subscribe(res => {
         this.alertService.openSnackBar("Claim Injury updated successfully", 'success')
         this.dialogRef.close();
@@ -173,7 +181,7 @@ export class InjuryPopup {
         arrData.push(part)
       }
       arrData.map(row => {
-        console.log(this.claim_id)
+        row.date_of_injury = moment(row.date_of_injury).format("MM-DD-YYYY")
         this.claimService.updateInjury(row, this.claim_id).subscribe(res => {
           this.alertService.openSnackBar("Claim Injury updated successfully", 'success')
           this.dialogRef.close();

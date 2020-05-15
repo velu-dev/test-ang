@@ -361,7 +361,7 @@ export class NewClaimComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required])],
       first_name: ['', Validators.compose([Validators.required])],
       middle_name: [''],
-      salutation: [null, Validators.compose([Validators.maxLength(3)])],
+      salutation: [null, Validators.compose([Validators.maxLength(4)])],
       suffix: [null],
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
@@ -496,14 +496,12 @@ export class NewClaimComponent implements OnInit {
     this.correspondenceSource = new MatTableDataSource([]);
     this.claimant.valueChanges.subscribe(
       value => {
-        // console.log(JSON.stringify(value));
         this.claimantChanges = true;
       }
     );
 
     this.claim.valueChanges.subscribe(
       value => {
-        console.log(JSON.stringify(value) + "4444");
         this.claimChanges = true;
       }
     );
@@ -666,7 +664,6 @@ export class NewClaimComponent implements OnInit {
   claimant_name = "";
   isClaimantCreated = false;
   createClaimant(status) {
-
     if (!this.claimantChanges) {
       if (status == 'next') {
         this.stepper.next();

@@ -39,6 +39,7 @@ export class EditClaimComponent implements OnInit {
   isLoading = true;
   states = [];
   isSectionOpen: boolean = false;
+  dateOfBirth: any;
   constructor(private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -50,6 +51,8 @@ export class EditClaimComponent implements OnInit {
         this.claimId = param.id;
         this.isLoading = true;
         this.claimService.getClaim(param.id).subscribe(res => {
+          console.log(res.data.claimant_details)
+          this.dateOfBirth = res.data.claimant_details.date_of_birth;
           this.claimantDetail = res.data.claimant_details;
           this.claimDetail = res.data.claim_details;
           this.claimAdminDetail = res.data.agent_details.InsuranceAdjuster;
