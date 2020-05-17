@@ -22,4 +22,8 @@ export class UserService {
     changeRole(): Observable<any> {
         return this.http.get(environment.baseUrl + api_endpoint.changeRole)
     }
+
+    getProfile(): Observable<any>{
+        return this.http.get(environment.baseUrl + api_endpoint.subscriberProfile);
+      }
 }
