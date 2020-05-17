@@ -26,7 +26,7 @@
         </div>
     </form>
     <div fxFlex="100">
-        <table mat-table [dataSource]="correspondenceSource" class="user-table">
+        <table mat-table [dataSource]="correspondenceSource" class="user-table title-center">
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name</th>
                 <td mat-cell *matCellDef="let element"> <b class="p-t-5">{{element?.file_name}}</b><br />

@@ -581,4 +581,8 @@ input:-webkit-autofill {
   mat-form-field {
     padding: 5px !important;
   }
+  .mat-select-panel {
+    min-width: 100% !important;
+
+  }
 }
