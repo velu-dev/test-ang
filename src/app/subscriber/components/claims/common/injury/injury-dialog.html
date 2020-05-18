@@ -16,7 +16,7 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Date of Injury </mat-label>
-            <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" autocomplete="off" [min]="date_of_birth" [max]="today"
+            <input matInput placeholder="MM-DD-YYYY" autocomplete="off" [min]="date_of_birth" [max]="today"
                 [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury">
             <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
             <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>

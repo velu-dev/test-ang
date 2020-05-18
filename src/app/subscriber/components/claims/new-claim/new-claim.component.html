@@ -95,13 +95,14 @@
                                                     <mat-error>Enter valid zip code</mat-error>
                                                 </mat-form-field>
 
-                                                <div class="text-right w-100 m-t-10 m-b-50">
-                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 "
-                                                        (click)="searchStatus = false">
-                                                        Cancel </button>
+                                                <div class="text-center w-100 m-t-10 m-b-50">
                                                     <button mat-raised-button type="button" color="primary"
                                                         class="m-r-15 btn_success" matStepperPrevious
                                                         (click)="advanceSearchSubmit()">Search</button>
+                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 "
+                                                        (click)="searchStatus = false">
+                                                        Cancel </button>
+
                                                 </div>
                                             </div>
 
@@ -527,7 +528,7 @@
                                 </div>
                             </form>
                             <div fxFlex="100">
-                                <div class="basic-table document_list w-100">
+                                <div class="basic-table document_list w-100 title-center">
                                     <table mat-table [dataSource]="correspondenceSource">
 
                                         <ng-container matColumnDef="doc_image">
