@@ -34,7 +34,8 @@
                                             <mat-option *ngFor="let option of (filteredClaimant | async)?.data"
                                                 (click)="selectClaimant(option)">
                                                 <span><strong>Full Name:</strong> {{option.first_name}}
-                                                    {{option.middle_name}} {{option.last_name}} <strong>DOB:</strong> {{option.date_of_birth | date:'MM-dd-yyyy' }}</span>
+                                                    {{option.middle_name}} {{option.last_name}} <strong>DOB:</strong>
+                                                    {{option.date_of_birth | date:'MM-dd-yyyy' }}</span>
                                             </mat-option>
                                             <mat-option *ngIf="(filteredClaimant | async)?.data.length == 0">No Data
                                                 Found</mat-option>
@@ -191,12 +192,6 @@
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Email</mat-label>
-                                <input matInput placeholder="Email" formControlName="email" autocomplete="off">
-                                <mat-error>Enter valid email</mat-error>
-                            </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
                                 <mat-label>Gender</mat-label>
                                 <mat-select formControlName="gender">
                                     <mat-option value="M">Male</mat-option>
@@ -241,6 +236,13 @@
                                 <mat-label>SSN</mat-label>
                                 <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn"
                                     autocomplete="off">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+                                <mat-error>Enter valid email</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -455,9 +457,15 @@
                                 <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
                             </mat-form-field>
 
-                            <div fxFlex="100" class="p-t-10">
+                            <!-- <div fxFlex="100" class="p-t-10">
                                 <button mat-raised-button type="button" (click)="addInjury()"
                                     class="rounded-corner text-center" color="primary">Save</button>
+                            </div> -->
+                            <div fxFlex="100" class="p-t-10 text-center">
+                                <button mat-raised-button type="button"
+                                    class="rounded-corner btn_success text-center m-r-5">Save</button>
+                                <button mat-raised-button type="button" class="rounded-corner"
+                                    color="warn">Cancel</button>
                             </div>
 
                             <table mat-table [dataSource]="dataSource" class="m-t-20 w-100" fxFlex="100">

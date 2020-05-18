@@ -2,7 +2,7 @@
     Add
 </button>
 <div class="m-t-10 p-b-30">
-    <table mat-table [dataSource]="dataSource" class="user-table">
+    <table mat-table [dataSource]="dataSource" class="user-table w-100">
 
         <ng-container matColumnDef="body_part">
             <th mat-header-cell *matHeaderCellDef> Body parts </th>
@@ -10,12 +10,12 @@
         </ng-container>
 
         <ng-container matColumnDef="date_of_injury">
-            <th mat-header-cell *matHeaderCellDef> Date of injury </th>
+            <th mat-header-cell *matHeaderCellDef class="no-wrap-td"> Date of injury </th>
             <td mat-cell *matCellDef="let element"> {{element?.date_of_injury | date:'MM-dd-yyyy'}} </td>
         </ng-container>
 
         <ng-container matColumnDef="action" class="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <th mat-header-cell *matHeaderCellDef class="no-wrap-td text-center"> Action </th>
             <td mat-cell *matCellDef="let element; let i = index">
                 <mat-icon (click)="openDialog(element)" class="edit-user" mat-raised-button matTooltip="Edit"
                     matTooltipPosition="right">edit
