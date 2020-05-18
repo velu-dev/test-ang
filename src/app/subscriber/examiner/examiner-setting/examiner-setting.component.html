@@ -40,7 +40,14 @@
 
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
                         </mat-form-field>
-                        <button mat-raised-button color="primary" class="m-t-5">Save Changes </button>
+
+                        <div class="text-center w-100 m-t-10 m-b-10">
+                            <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success">
+                                Save </button>
+                            <button mat-raised-button type="button"  class="rounded-corner"
+                                color="warn">Cancel</button>
+                        </div>
+                        <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes </button> -->
                     </form>
                 </mat-card-content>
             </div>
@@ -102,7 +109,13 @@
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
                         </mat-form-field>
 
-                        <button mat-raised-button color="primary" class="m-t-5">Save Changes</button>
+                        <div class="text-center w-100 m-t-10 m-b-10">
+                            <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success">
+                                Save </button>
+                            <button mat-raised-button type="button"  class="rounded-corner"
+                                color="warn">Cancel</button>
+                        </div>
+                        <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes</button> -->
                     </form>
                 </mat-card-content>
             </div>

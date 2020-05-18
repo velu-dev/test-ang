@@ -323,5 +323,7 @@ export class SubscriberSettingsComponent implements OnInit {
 
   }
 
-
+  cancel() {
+    this._location.back();
+  }
 }
