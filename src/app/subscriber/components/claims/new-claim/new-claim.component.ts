@@ -655,7 +655,7 @@ export class NewClaimComponent implements OnInit {
     }
   }
   cancel() {
-    this.routeDashboard();
+    this.openDialogCancel('cancel',null)
   }
   claimant_name = "";
   isClaimantCreated = false;
@@ -1109,5 +1109,17 @@ export class NewClaimComponent implements OnInit {
         this.router.navigate(["/"]);
         break;
     }
+  }
+
+  openDialogCancel(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.routeDashboard();
+      }
+    })
   }
 }
