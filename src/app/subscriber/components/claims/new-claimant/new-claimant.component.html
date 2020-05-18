@@ -142,7 +142,7 @@
           fxFlex.xs="100">
           <mat-label>Date of Birth*</mat-label>
           <input matInput placeholder="MM-DD-YYYY" formControlName="date_of_birth" autocomplete="off" [max]="today"
-            [matDatepicker]="date_of_birth" >
+            [matDatepicker]="date_of_birth">
           <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
           <mat-datepicker #date_of_birth [disabled]="!editStatus"></mat-datepicker>
           <mat-error *ngIf="isClaimantSubmited">Enter valid date of birth</mat-error>
@@ -241,7 +241,7 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Zip Code</mat-label>
-          <input matInput  placeholder="Zip" formControlName="zip_code" autocomplete="off">
+          <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
           <mat-error>Enter valid zip code</mat-error>
         </mat-form-field>
 
