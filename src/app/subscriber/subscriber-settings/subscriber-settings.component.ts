@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -13,6 +13,8 @@ import { Store } from '@ngrx/store';
 import * as headerActions from "./../../shared/store/header.actions";
 import { ClaimService } from '../service/claim.service';
 import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-subscribersettings',
@@ -32,6 +34,9 @@ export class SubscriberSettingsComponent implements OnInit {
   addressForm: FormGroup;
   billingForm: FormGroup;
   states: any;
+  filteredTexonamy: Observable<any[]>;
+  texoCtrl = new FormControl();
+  texoDetails = [];
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -147,6 +152,11 @@ export class SubscriberSettingsComponent implements OnInit {
     this.billingInit();
     this.claimService.seedData('taxonomy').subscribe(response => {
       this.taxonomyList = response['data'];
+      this.filteredTexonamy = this.texoCtrl.valueChanges
+        .pipe(
+          startWith(''),
+          map(tex => tex ? this._filteTex(tex) : this.taxonomyList.slice())
+        );
     }, error => {
       console.log("error", error)
     })
@@ -159,7 +169,6 @@ export class SubscriberSettingsComponent implements OnInit {
 
     if (user.role_id == 2 || user.role_id == 11) {
       this.userService.getPrimarAddress().subscribe(res => {
-        console.log(res);
         if (res['data'].length > 0) {
           var formData: any = [];
           for (let i in res['data']) {
@@ -213,7 +222,11 @@ export class SubscriberSettingsComponent implements OnInit {
       })
     }
   }
+  private _filteTex(value: string): any[] {
+    const filterValue = value.toLowerCase();
 
+    return this.taxonomyList.filter(deu => deu.taxonomy_name.toLowerCase().indexOf(filterValue) === 0);
+  }
   billingInit() {
     this.billingForm = this.formBuilder.group({
       phone1: [''],
@@ -322,8 +335,12 @@ export class SubscriberSettingsComponent implements OnInit {
     })
 
   }
-
-  cancel() {
+  texChange(tex) {
+    this.userForm.patchValue({
+      company_taxonomy_id: tex.id
+    })
+  }
+  cancel(){
     this._location.back();
   }
 }
