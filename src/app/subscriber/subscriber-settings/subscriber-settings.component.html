@@ -256,12 +256,16 @@
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
                                         <mat-label>Company Taxonomy Code</mat-label>
-                                        <mat-select formControlName="company_taxonomy_id">
-                                            <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
-                                                {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
+                                        <input matInput placeholder="Select Company Taxonomy Code"
+                                            aria-label="Office Name" [matAutocomplete]="texAuto"
+                                            [formControl]="texoCtrl">
+                                        <mat-autocomplete #texAuto="matAutocomplete">
+                                            <mat-option (click)="texChange(taxonomy)"
+                                                *ngFor="let taxonomy of (filteredTexonamy | async)"
+                                                [value]="taxonomy.taxonomy_name">
+                                                <span>{{taxonomy.taxonomy_code}} - {{taxonomy.taxonomy_name}}</span>
                                             </mat-option>
-                                        </mat-select>
-                                        <mat-error>error msg here</mat-error>
+                                        </mat-autocomplete>
                                     </mat-form-field>
 
 
@@ -269,8 +273,8 @@
                                         <button mat-raised-button color="primary"
                                             class="m-r-10 rounded-corner btn_success">
                                             Save </button>
-                                        <button mat-raised-button type="button" class="rounded-corner"
-                                            color="warn">Cancel</button>
+                                        <button (click)="cancel()" mat-raised-button type="button"
+                                            class="rounded-corner" color="warn">Cancel</button>
                                     </div>
 
                                     <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes</button> -->

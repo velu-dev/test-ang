@@ -142,17 +142,12 @@
           fxFlex.xs="100">
           <mat-label>Date of Birth*</mat-label>
           <input matInput placeholder="MM-DD-YYYY" formControlName="date_of_birth" autocomplete="off" [max]="today"
-            [matDatepicker]="date_of_birth" >
+            [matDatepicker]="date_of_birth">
           <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
           <mat-datepicker #date_of_birth [disabled]="!editStatus"></mat-datepicker>
           <mat-error *ngIf="isClaimantSubmited">Enter valid date of birth</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Email" formControlName="email" autocomplete="off">
-          <mat-error>Enter valid email</mat-error>
-        </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Gender</mat-label>
           <mat-select formControlName="gender">
@@ -190,12 +185,16 @@
           <mat-error>Select valid primary language</mat-error>
         </mat-form-field>
 
-
-
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>SSN</mat-label>
           <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
           <mat-error>Enter valid SSN</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+          <mat-error>Enter valid email</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -242,7 +241,7 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Zip Code</mat-label>
-          <input matInput  placeholder="Zip" formControlName="zip_code" autocomplete="off">
+          <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
           <mat-error>Enter valid zip code</mat-error>
         </mat-form-field>
 

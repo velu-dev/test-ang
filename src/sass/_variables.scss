@@ -523,7 +523,8 @@ input:-webkit-autofill {
 .upload_btn {
   border-radius: 2px;
   box-shadow: $box-shadow-2;
-  padding: 3px 10px;
+  margin-top: 20px !important;
+  padding: 0px 10px;
   background-color: $tab-active;
   span {
     padding: 8px 0px 10px 10px;
@@ -583,6 +584,11 @@ input:-webkit-autofill {
   }
   .mat-select-panel {
     min-width: 100% !important;
-
   }
+}
+
+.data-max-width {
+  min-width: $width-60;
+  max-width: $width-60;
+  width: $width-60;
 }
