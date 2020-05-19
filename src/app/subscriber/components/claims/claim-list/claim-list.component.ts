@@ -72,8 +72,8 @@ export class ClaimListComponent implements OnInit {
         this.columnName = ["", "First Name", "Action"]
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Date of Birth", "Date of Injury", "Claim number", "Examiner", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', 'date_of_injury', 'claim_number', "examiner_name", "disabled"]
+        this.columnName = ["Last Name", "First Name", "Date of Injury", "Claim number", "WCAB number", "Examiner", "Action"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_injury', 'claim_number', "wcab_number", "examiner_name", "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -125,7 +125,7 @@ export class ClaimListComponent implements OnInit {
         "First Name": res.first_name,
         "Last Name": res.last_name,
         "Claim Number": res.claim_number,
-        "Date of Birth": res.date_of_birth
+        "WCAB number": res.wcab_number
       })
     })
     this.exportService.exportExcel(data, "Claim-List")

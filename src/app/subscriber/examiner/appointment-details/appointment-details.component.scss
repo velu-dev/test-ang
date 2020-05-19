@@ -9,9 +9,22 @@
         &:hover {
             box-shadow: $box-shadow-1;
         }
-        mat-card {
-            box-shadow: $box-shadow-2;
-            padding-bottom: 0px;
+        mat-card-content {
+            @media only screen and (max-width: 1200px) {
+                overflow: hidden;
+                width: 100%;
+                &:hover {
+                    overflow: scroll;
+                }
+            }
+            .status {
+                min-width: 1024px;
+                max-width: 1024px;
+                width: 100%;
+                .steps {
+                    margin: 0px;
+                }
+            }
         }
     }
     .claim_details {
