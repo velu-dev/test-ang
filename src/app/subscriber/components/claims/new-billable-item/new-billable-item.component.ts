@@ -30,7 +30,8 @@ export class NewBillableItemComponent implements OnInit {
   isBillSubmited: boolean = false;
   isEdit: boolean;
   billableId: number;
-  contactType: any
+  contactType: any;
+  languageList: any = [];
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -66,7 +67,8 @@ export class NewBillableItemComponent implements OnInit {
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
         modifier_id: [null],
-        is_psychiatric: [false]
+        is_psychiatric: [false],
+        primary_language_spoken: [null]
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
@@ -85,6 +87,9 @@ export class NewBillableItemComponent implements OnInit {
 
     })
 
+    this.claimService.seedData("language").subscribe(res => {
+      this.languageList = res.data;
+    })
     this.claimService.seedData("modifier").subscribe(res => {
       this.modifiers = res.data;
     })

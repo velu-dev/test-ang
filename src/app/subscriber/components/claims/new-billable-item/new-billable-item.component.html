@@ -35,11 +35,12 @@
                 </div>
             </div>
 
-            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+            <mat-form-field *ngIf="billable_item.value.exam_type.modifier_id == 1" appearance="standard"
+                fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                 <mat-label>Primary Language</mat-label>
-                <mat-select>
-                    <mat-option>
-                        option here
+                <mat-select formControlName="primary_language_spoken">
+                    <mat-option *ngFor="let language of languageList" [value]="language.id">
+                        {{language.language}}
                     </mat-option>
                 </mat-select>
                 <mat-error>Select valid primary language</mat-error>
