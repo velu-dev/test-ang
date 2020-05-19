@@ -473,7 +473,7 @@ export class NewClaimComponent implements OnInit {
       appointment: this.formBuilder.group({
         examiner_id: [null],
         appointment_scheduled_date_time: [null],
-        duration: [null, Validators.compose([Validators.min(0), Validators.max(450)])],
+        duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
         examination_location_id: [null]
       }),
       intake_call: this.formBuilder.group({
@@ -525,7 +525,7 @@ export class NewClaimComponent implements OnInit {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
-        this.createClaimant('tab')
+      this.createClaimant('tab')
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
       this.submitClaim('tab')
@@ -655,7 +655,7 @@ export class NewClaimComponent implements OnInit {
     }
   }
   cancel() {
-    this.openDialogCancel('cancel',null)
+    this.openDialogCancel('cancel', null)
   }
   claimant_name = "";
   isClaimantCreated = false;
@@ -669,12 +669,15 @@ export class NewClaimComponent implements OnInit {
         this.routeDashboard();
       }
       return;
+    } else {
+      if (status == 'close')
+        this.routeDashboard();
     }
     this.claimantChanges = false;
     this.isClaimantSubmited = true;
     Object.keys(this.claimant.controls).forEach((key) => {
-      if(this.claimant.get(key).value && typeof(this.claimant.get(key).value) == 'string')
-      this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
+      if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
+        this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
     });
     if (this.claimant.invalid) {
       console.log("claimant", this.claimant)
@@ -709,7 +712,7 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'close') {
           this.routeDashboard();
         }
-        
+
       }, error => {
         console.log(error)
         this.isClaimantCreated = false;
@@ -930,16 +933,16 @@ export class NewClaimComponent implements OnInit {
         this.contactMask.mask = "email";
         break;
       case "M1":
-        this.contactMask.mask = "(000) 000-0000";
+        this.contactMask.mask = "000 000-0000";
         break;
       case "M2":
-        this.contactMask.mask = "(000) 000-0000";
+        this.contactMask.mask = "000 000-0000";
         break;
       case "L1":
-        this.contactMask.mask = "(000) 000-0000";
+        this.contactMask.mask = "000 000-0000";
         break;
       case "L2":
-        this.contactMask.mask = "(000) 000-0000";
+        this.contactMask.mask = "000 000-0000";
         break;
       case "F1":
         this.contactMask.mask = "000-000-0000";

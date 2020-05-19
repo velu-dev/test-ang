@@ -71,7 +71,7 @@ export class NewBillableItemComponent implements OnInit {
       appointment: this.formBuilder.group({
         examiner_id: [null],
         appointment_scheduled_date_time: [null],
-        duration: [null, Validators.compose([Validators.min(0), Validators.max(450)])],
+        duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
         examination_location_id: [null]
       }),
       intake_call: this.formBuilder.group({
@@ -209,8 +209,8 @@ export class NewBillableItemComponent implements OnInit {
   submitBillableItem() {
     this.isBillSubmited = true;
     Object.keys(this.billable_item.controls).forEach((key) => {
-      if(this.billable_item.get(key).value && typeof(this.billable_item.get(key).value) == 'string')
-      this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
+      if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
+        this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
     });
     if (this.billable_item.invalid) {
       return;

@@ -52,12 +52,13 @@
                         formControlName="appointment_scheduled_date_time" autocomplete="off"
                         [owlDateTime]="appointment">
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
-                    <owl-date-time (afterPickerOpen)="pickerOpened('app')" #appointment></owl-date-time>
+                    <owl-date-time [hour12Timer]="true" (afterPickerOpen)="pickerOpened('app')" #appointment>
+                    </owl-date-time>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                     <mat-label>Duration</mat-label>
-                    <input matInput type="number" placeholder="Minutes" formControlName="duration" autocomplete="off">
+                    <input matInput placeholder="Minutes" formControlName="duration" autocomplete="off">
                     <span matSuffix>Minutes</span>
                 </mat-form-field>
                 <!-- <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
