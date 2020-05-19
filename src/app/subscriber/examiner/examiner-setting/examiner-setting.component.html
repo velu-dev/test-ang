@@ -44,8 +44,7 @@
                         <div class="text-center w-100 m-t-10 m-b-10">
                             <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success">
                                 Save </button>
-                            <button mat-raised-button type="button"  class="rounded-corner"
-                                color="warn">Cancel</button>
+                            <button mat-raised-button type="button" class="rounded-corner" color="warn">Cancel</button>
                         </div>
                         <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes </button> -->
                     </form>
@@ -96,15 +95,15 @@
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.sm="100"
                             class=" m-t-5 p-r-10">
                             <mat-label>Account Number</mat-label>
-                            <input matInput placeholder="Account Number"value="{{this.user?.account_no | mask: '0000-0000-0000'}}"
-                                autocomplete="off" disabled>
+                            <input matInput placeholder="Account Number"
+                                value="{{this.user?.account_no | mask: '0000-0000-0000'}}" autocomplete="off" disabled>
                             <mat-error>error msg here</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.sm="100"
                             class="m-t-5  p-r-10">
-                            <mat-label>Email ID*</mat-label>
-                            <input matInput placeholder="Email ID" formControlName="sign_in_email_id"
+                            <mat-label>Signin Email ID*</mat-label>
+                            <input matInput placeholder="Signin Email ID" formControlName="sign_in_email_id"
                                 autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
                         </mat-form-field>
@@ -112,8 +111,7 @@
                         <div class="text-center w-100 m-t-10 m-b-10">
                             <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success">
                                 Save </button>
-                            <button mat-raised-button type="button"  class="rounded-corner"
-                                color="warn">Cancel</button>
+                            <button mat-raised-button type="button" class="rounded-corner" color="warn">Cancel</button>
                         </div>
                         <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes</button> -->
                     </form>

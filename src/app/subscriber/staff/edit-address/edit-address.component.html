@@ -58,7 +58,8 @@
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Zip code*</mat-label>
-                        <input matInput formControlName="zip_code" placeholder="Zip code" autocomplete="off">
+                        <input matInput mask="00000" formControlName="zip_code" placeholder="Zip code"
+                            autocomplete="off">
                         <mat-error *ngIf="isSubmitted">Enter valid zip code</mat-error>
                     </mat-form-field>
 
@@ -99,13 +100,15 @@
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Fax 1</mat-label>
-                        <input matInput formControlName="fax1" mask="000-000-0000" placeholder="Fax 1" autocomplete="off">
+                        <input matInput formControlName="fax1" mask="000-000-0000" placeholder="Fax 1"
+                            autocomplete="off">
                         <mat-error *ngIf="isSubmitted">Enter valid fax number</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Fax 2</mat-label>
-                        <input matInput formControlName="fax2" mask="000-000-0000" placeholder="Fax 2" autocomplete="off">
+                        <input matInput formControlName="fax2" mask="000-000-0000" placeholder="Fax 2"
+                            autocomplete="off">
                         <mat-error *ngIf="isSubmitted">Enter valid fax number</mat-error>
                     </mat-form-field>
 
@@ -132,8 +135,7 @@
                     </mat-form-field>
 
                     <div class="text-center w-100 m-t-10 m-b-10">
-                        <button mat-raised-button color="warn" class="m-r-10 rounded-corner"
-                            (click)="cancel()">
+                        <button mat-raised-button color="warn" class="m-r-10 rounded-corner" (click)="cancel()">
                             Cancel </button>
                         <button mat-raised-button (click)="addressformSubmit()"
                             class="m-r-15 btn_success rounded-corner">Update</button>

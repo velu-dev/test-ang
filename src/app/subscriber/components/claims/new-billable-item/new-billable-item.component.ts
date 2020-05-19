@@ -30,7 +30,8 @@ export class NewBillableItemComponent implements OnInit {
   isBillSubmited: boolean = false;
   isEdit: boolean;
   billableId: number;
-  contactType: any
+  contactType: any;
+  languageList: any = [];
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -66,12 +67,13 @@ export class NewBillableItemComponent implements OnInit {
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
         modifier_id: [null],
-        is_psychiatric: [false]
+        is_psychiatric: [false],
+        primary_language_spoken: [null]
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
         appointment_scheduled_date_time: [null],
-        duration: [null, Validators.compose([Validators.min(0), Validators.max(450)])],
+        duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
         examination_location_id: [null]
       }),
       intake_call: this.formBuilder.group({
@@ -85,6 +87,9 @@ export class NewBillableItemComponent implements OnInit {
 
     })
 
+    this.claimService.seedData("language").subscribe(res => {
+      this.languageList = res.data;
+    })
     this.claimService.seedData("modifier").subscribe(res => {
       this.modifiers = res.data;
     })
@@ -209,8 +214,8 @@ export class NewBillableItemComponent implements OnInit {
   submitBillableItem() {
     this.isBillSubmited = true;
     Object.keys(this.billable_item.controls).forEach((key) => {
-      if(this.billable_item.get(key).value && typeof(this.billable_item.get(key).value) == 'string')
-      this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
+      if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
+        this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
     });
     if (this.billable_item.invalid) {
       return;

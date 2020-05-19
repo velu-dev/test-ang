@@ -10,7 +10,7 @@
                     [value]="selectedFile?.name | ellipsis:30" placeholder="No file chosen">
                 <input type="file" formControlName="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
                     accept=".pdf, .doc, .docx, .excel, .csv">
-                <mat-hint>Please select following file format only (.pdf, .doc, .docx, .excel, .csv)</mat-hint>
+                <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
             </mat-form-field>
         </div>
 
@@ -21,7 +21,7 @@
         </mat-form-field>
         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
             <button mat-stroked-button type="button" [disabled]="correspondForm.invalid"
-                (click)="correspondFormSubmit();" color="primary" class="m-t-15 upload_btn p-r-20">Add
+                (click)="correspondFormSubmit();" color="primary" class="m-t-15 btn_success p-r-20">Add
             </button>
         </div>
     </form>

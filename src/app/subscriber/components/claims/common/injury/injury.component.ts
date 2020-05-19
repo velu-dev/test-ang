@@ -26,7 +26,6 @@ export class InjuryComponent implements OnInit {
   injuryDetails = [];
   today = new Date();
   constructor(public dialog: MatDialog, private claimService: ClaimService, public alertService: AlertService) {
-    console.log("clcikmmd", this.claimId)
   }
 
   ngOnInit() {
@@ -70,7 +69,7 @@ export class InjuryComponent implements OnInit {
   openDialog(injury): void {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '800px',
-      data: { isEdit: true, data: injury, claim_id: this.claimId, date_of_birth: this.date_of_birth }
+      data: { isEdit: true, data: injury, claim_id: this.claimId, body_parts: this.bodyPartsList, date_of_birth: this.date_of_birth }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -81,7 +80,7 @@ export class InjuryComponent implements OnInit {
   addInjury() {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '800px',
-      data: { isEdit: false, claim_id: this.claimId, date_of_birth: this.date_of_birth }
+      data: { isEdit: false, claim_id: this.claimId, body_parts: this.bodyPartsList, date_of_birth: this.date_of_birth }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -121,16 +120,14 @@ export class InjuryPopup {
     public dialogRef: MatDialogRef<InjuryPopup>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public alertService: AlertService) {
-    this.claim_id = data['claim_id']
-    this.isEdit = data['isEdit']
+    this.bodyPartsList = data['body_parts'];
+    this.claim_id = data['claim_id'];
+    this.isEdit = data['isEdit'];
     this.date_of_birth = data['date_of_birth'];
     if (this.isEdit) {
       this.injuryInfo = data['data'];
 
     }
-    this.claimService.seedData("body_part").subscribe(res => {
-      this.bodyPartsList = res.data;
-    })
   }
 
   onNoClick(): void {
