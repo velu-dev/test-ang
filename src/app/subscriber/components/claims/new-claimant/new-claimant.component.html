@@ -167,6 +167,12 @@
           <mat-error>Enter valid handedness</mat-error>
         </mat-form-field>
 
+        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>SSN</mat-label>
+          <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
+          <mat-error>Enter valid SSN</mat-error>
+        </mat-form-field>
+
         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
           <div class="p-t-30 p-l-10">
             <mat-checkbox class="p-l-10" labelPosition="before" (change)="languageStatus = !languageStatus"
@@ -183,12 +189,6 @@
             </mat-option>
           </mat-select>
           <mat-error>Select valid primary language</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>SSN</mat-label>
-          <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
-          <mat-error>Enter valid SSN</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

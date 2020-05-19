@@ -21,7 +21,8 @@
 
                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <div fxLayout="row wrap" fxFlex="100" class="fixed-checkbox">
-                        <mat-checkbox class="p-t-40 p-l-20" formControlName="is_psychiatric">Psychiatric</mat-checkbox>
+                        <mat-checkbox class="p-t-40 p-l-20" labelPosition="before" formControlName="is_psychiatric">
+                            Psychiatric</mat-checkbox>
                         <mat-form-field appearance="standard">
                             <mat-label>Modifiers</mat-label>
                             <mat-select formControlName="modifier_id" multiple>
@@ -33,6 +34,16 @@
                     </div>
                 </div>
             </div>
+
+            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                <mat-label>Primary Language</mat-label>
+                <mat-select>
+                    <mat-option>
+                        option here
+                    </mat-option>
+                </mat-select>
+                <mat-error>Select valid primary language</mat-error>
+            </mat-form-field>
 
             <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                 Examination
@@ -48,7 +59,7 @@
 
                 <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                     <mat-label>Date & Time</mat-label>
-                    <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" [min]="todayDate.appointment"
+                    <input matInput placeholder="MM-DD-YYYY  HH:MM AM/PM" [min]="todayDate.appointment"
                         formControlName="appointment_scheduled_date_time" autocomplete="off"
                         [owlDateTime]="appointment">
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
@@ -103,7 +114,7 @@
                 </div>
             </div>
 
-            <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+            <div class="sub-title p-l-10 p-t-20" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                 Intake
                 Call
             </div>
