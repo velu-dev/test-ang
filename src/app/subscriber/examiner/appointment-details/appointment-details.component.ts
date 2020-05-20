@@ -1,16 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import * as globals from '../../../globals';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ExaminerService } from '../../service/examiner.service';
 import { ActivatedRoute } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
-export interface PeriodicElement {
-  doc_image: string;
-  doc_name: string;
-  date: Date;
-  action: string;
-}
 @Component({
   selector: 'app-appointment-details',
   templateUrl: './appointment-details.component.html',
@@ -18,24 +13,25 @@ export interface PeriodicElement {
 })
 export class AppointmentDetailsComponent implements OnInit {
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
-  dataSource = ELEMENT_DATA;
-
+  dataSource = [];
+  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
   docx = globals.docx
   pdf = globals.pdf
-  uploadFile: any;
   isMobile: boolean;
   claim_id: number;
   examinationDetails: any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private alertService: AlertService
+  ) {
     this.route.params.subscribe(params => this.claim_id = params.id);
   }
 
   ngOnInit() {
     this.examinerService.getAllExamination(this.claim_id).subscribe(response => {
-      
+
       this.examinationDetails = response['data']
       console.log(this.examinationDetails);
     }, error => {
@@ -43,11 +39,32 @@ export class AppointmentDetailsComponent implements OnInit {
     })
   }
 
+  selectedFile: File;
+  uploadFile(event) {
+    this.selectedFile = null;
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
+
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+      if (FileSize > 30) {
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.selectedFile = event.target.files[0];
+      console.log(" this.selectedFile", this.selectedFile);
+    } else {
+      this.selectedFile = null;
+      //this.errorMessage = 'This file type is not accepted';
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+
+  }
+
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
       width: '800px',
       data: this.examinationDetails,
-      
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -57,7 +74,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openClaim(): void {
     const dialogRef = this.dialog.open(ClaimPopupComponent, {
       width: '800px',
-      data: { name: "", animal: "" }
+      data: this.examinationDetails,
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -67,7 +84,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openBillableItem() {
     const dialogRef = this.dialog.open(BillableitemPopupComponent, {
       width: '800px',
-      data: { name: "", animal: "" }
+      data: this.examinationDetails,
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -119,17 +136,7 @@ export class BillableitemPopupComponent {
     this.dialogRef.close();
   }
 
-  uploadFile(event) {
-
-  }
+ 
 
 
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  // { doc_image: 'xls', doc_name: 'Phasellus aliquam turpis sit amet sem eleifend pretium.xls', date: new Date(), action: '' },
-  // { doc_image: 'docx', doc_name: 'Rajan Mariappan.docx', date: new Date(), action: '' },
-  // { doc_image: 'pdf', doc_name: 'Ganesan Marappa.pdf', date: new Date(), action: '' },
-  // { doc_image: 'pdf', doc_name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.pdf', date: new Date(), action: '' },
-  // { doc_image: 'xls', doc_name: 'Sarath Selvaraj.xls', date: new Date(), action: '' },
-];

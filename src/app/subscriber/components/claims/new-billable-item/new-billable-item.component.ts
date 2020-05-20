@@ -47,7 +47,7 @@ export class NewBillableItemComponent implements OnInit {
         this.billableId = param.billable;
         this.claimService.getBillableItemSingle(param.billable).subscribe(res => {
           console.log(res);
-          this.billable_item.setValue(res['data'])
+          this.billable_item.patchValue(res['data'])
           //this.examinarChange(res['data'].)
           if (res['data'].appointment) {
             let ex = { value: res['data'].appointment.examiner_id, address_id: res['data'].appointment.examination_location_id }
