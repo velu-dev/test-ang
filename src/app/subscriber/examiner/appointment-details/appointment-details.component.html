@@ -227,17 +227,14 @@
                                     fxFlex.xl="30">
                                     <mat-form-field class="doc_type" appearance="fill" color="primary" fxFlex="100">
                                         <mat-label>Select Document Type </mat-label>
-                                        <select matNativeControl required>
-                                            <option value="Forms">Forms</option>
-                                            <option value="History">History</option>
-                                            <option value="Records">Records</option>
-                                            <option value="Report">Reports</option>
-                                            <option value="Transcription">Transcription</option>
+                                        <select matNativeControl required [(ngModel)]="documentType">
+                                            <option *ngFor="let doc of documentList" [value]="doc.id">{{doc.document_name}}</option>
+                                            
                                         </select>
                                     </mat-form-field>
                                 </div>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
-                                    <input type="file" formControlName="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
+                                    <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
                                     accept=".pdf, .doc, .docx, .excel, .csv">
                                     <button mat-stroked-button color="primary" (click)="uploader.click()" class="m-t-25 upload_btn">Upload <span
                                             class="fa fa-upload"></span></button>
