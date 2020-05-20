@@ -3,7 +3,7 @@
         <mat-card-header>
             <div class="content-wrapper-main-title p-t-5">Examination</div>
             <span class="spacer"></span>
-            <button mat-icon-button>
+            <button mat-icon-button (click)="cancelClick()">
                 <mat-icon>fullscreen_exit</mat-icon>
             </button>
         </mat-card-header>
@@ -16,19 +16,19 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div> Address </div>
-                            <div>-</div>
+                            <div>{{data?.appointments?.address}}</div>
                         </div>
                         <div class="grid-list">
                             <div> Date </div>
-                            <div>-</div>
+                            <div>{{data?.appointments?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}</div>
                         </div>
                         <div class="grid-list">
                             <div> Time </div>
-                            <div>-</div>
+                            <div>{{data?.appointments?.appointment_scheduled_date_time | date:'HH:mm a'}}</div>
                         </div>
                         <div class="grid-list">
-                            <div> Status</div>
-                            <div>-</div>
+                            <div> Status </div>
+                            <div>{{data?.appointments?.status_of_appointment}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -38,15 +38,15 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>Intake Caller </div>
-                            <div>-</div>
+                            <div>{{data?.intake_calls?.caller_name}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Date </div>
-                            <div>-</div>
+                            <div>{{data?.intake_calls?.call_date | date:'MM-dd-yyyy'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Time</div>
-                            <div>-</div>
+                            <div>{{data?.intake_calls?.call_date | date:'HH:mm a'}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -54,9 +54,7 @@
             <div fxLayout="row wrap" fxFlex="100">
                 <div class="p-t-10" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.xs="100">
                     <div class="sub-title br-bottom ">notes </div>
-                    <p class="des_">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                        Ipsum has been
-                        the industry’s standard dummy text</p>
+                    <p class="des_">{{data?.intake_calls?.notes}}</p>
 
                 </div>
                 <div class="" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.xs="100">
