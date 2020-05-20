@@ -1100,7 +1100,7 @@
                             <mat-autocomplete #examinarAuto="matAutocomplete">
                                 <mat-option *ngFor="let address of (examinarAddress | async)"
                                     (click)="changeExaminarAddress(address)" [value]="address.street1">
-                                    {{address.street1}}
+                                    {{address.street1}}  {{address.street2}} {{address.city}} {{address.state}} {{address.zip_code}}
                                     <!-- <small>Population: {{state.population}}</small> -->
                                 </mat-option>
                                 <mat-option *ngIf="(examinarAddress | async)?.length == 0" disabled>Location not found
@@ -1120,7 +1120,7 @@
                                             <!-- <span><i class="fa fa-phone-alt"></i>
                                                 {{selectedExaminarAddress.}}</span> -->
                                         </div>
-                                        <div class="address" mat-line>{{selectedExaminarAddress.street1}}</div>
+                                        <div class="address" mat-line> {{selectedExaminarAddress.street1}}  {{selectedExaminarAddress.street2}} {{selectedExaminarAddress.city}} {{selectedExaminarAddress.state}} {{selectedExaminarAddress.zip_code}}</div>
                                     </mat-list-item>
                                 </mat-list>
                                 <mat-list *ngIf="!isAddressSelected">
