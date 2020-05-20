@@ -23,6 +23,7 @@ export class AppointmentDetailsComponent implements OnInit {
   isMobile: boolean;
   claim_id: number;
   examinationDetails: any;
+  collapsed = false;
   documentType:any;
   documentList:any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
@@ -165,7 +166,7 @@ export class BillableitemPopupComponent {
     this.dialogRef.close();
   }
 
- 
+
 
 
 }

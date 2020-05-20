@@ -64,8 +64,8 @@ export class UserComponent implements OnInit {
         this.columnName = ["", "Last Name", "Disable User"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Email", "Role", "Company", "Enrolled On", "Disable User"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', "organization_name", 'createdAt', "disabled"]
+        this.columnName = ["Last Name", "First Name", "Email", "Role", "Company","Account Number", "Subscribed On", "Disable User"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', "organization_name", "account_no", 'createdAt', "disabled"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -170,6 +170,7 @@ export class UserComponent implements OnInit {
         "Email": res.sign_in_email_id,
         "Role": res.role_name,
         "Company": res.organization_name,
+        "Account Number": res.account_no,
         "Enrolled On": moment(res.createdAt).format("MM-DD-YYYY")
       })
     })
