@@ -215,39 +215,68 @@
     background: #fff;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 .steps {
     margin: 40px 0px;
     padding: 0;
     display: block;
     overflow: hidden;
+    a {
+        color: white;
+        text-decoration: none;
+        display: flex;
+    }
+    em {
+        display: block;
+        font-size: 13px;
+        font-style: normal;
+        padding-top: 7px;
+        @media screen and (max-width: 1024px) and (min-width: 768px) {            
+            font-size: 12px;
+          }
+    }
+    i {
+        padding-top: 17px;
+        padding-right: 10px;
+        @media screen and (max-width: 1024px) and (min-width: 768px) {            
+           padding-left: 0px !important;
+          }
+    }
+    li {
+        float: left;
+        margin-left: 0;
+        width: 105px; /* 100 / number of steps */
+        height: 50px; /* total height */
+        list-style-type: none;
+        padding: 5px 5px 5px 30px; /* padding around text, last should include arrow width */
+        border-right: 3px solid #e0ebfb; /* width: gap between arrows, color: background of document */
+        position: relative;
+        border-top: 3px solid #e0ebfb;
+        border-bottom: 3px solid #e0ebfb;
+        @media screen and (max-width: 1024px) and (min-width: 768px) {
+            width: 55px ;
+            font-size: 12px;
+            &:nth-child(4) {
+                width: 75px;
+            }
+            &:nth-child(5) {
+                width: 85px;
+            }
+          }
+    }
 }
-.steps a {
-    color: white;
-    text-decoration: none;
-    display: flex;
-}
-.steps em {
-    display: block;
-    font-size: 13px;
-    font-style: normal;
-    padding-top: 7px;
-}
-.steps i {
-    padding-top: 17px;
-    padding-right: 10px;
-}
-.steps li {
-    float: left;
-    margin-left: 0;
-    width: 105px; /* 100 / number of steps */
-    height: 50px; /* total height */
-    list-style-type: none;
-    padding: 5px 5px 5px 30px; /* padding around text, last should include arrow width */
-    border-right: 3px solid #e0ebfb; /* width: gap between arrows, color: background of document */
-    position: relative;
-    border-top: 3px solid #e0ebfb;
-    border-bottom: 3px solid #e0ebfb;
-}
+
 /* remove extra padding on the first object since it doesn't have an arrow to the left */
 .steps li:first-child {
     padding-left: 5px;
