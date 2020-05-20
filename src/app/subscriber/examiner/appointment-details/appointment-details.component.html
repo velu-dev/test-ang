@@ -168,7 +168,13 @@
                         </div>
                         <div class="grid-list">
                             <div>Address</div>
-                            <div>{{examinationDetails?.appointments?.address}}</div>
+                            <div>
+                                <!-- {{examinationDetails?.appointments?.appointment_location?.street1}}
+                                {{examinationDetails?.appointments?.appointment_location?.street2}}
+                                {{examinationDetails?.appointments?.appointment_location?.city}} -->
+                                {{examinationDetails?.appointments?.appointment_location?.state}}
+                                {{examinationDetails?.appointments?.appointment_location?.zip_code}}
+                            </div>
                         </div>
                         <div class="grid-list">
                             <div>Date</div>
@@ -178,7 +184,7 @@
                         </div>
                         <div class="grid-list">
                             <div>Time</div>
-                            <div>{{examinationDetails?.appointments?.appointment_scheduled_date_time | date:'HH:mm a'}}
+                            <div>{{examinationDetails?.appointments?.appointment_scheduled_date_time | date:'hh:mm a'}}
                             </div>
                         </div>
                     </div>

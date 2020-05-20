@@ -16,7 +16,11 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div> Address </div>
-                            <div>{{data?.appointments?.address}}</div>
+                            <div>{{data?.appointments?.appointment_location?.street1}}
+                                {{data?.appointments?.appointment_location?.street2}}
+                                {{data?.appointments?.appointment_location?.city}}
+                                {{data?.appointments?.appointment_location?.state}}
+                                {{data?.appointments?.appointment_location?.zip_code}}</div>
                         </div>
                         <div class="grid-list">
                             <div> Date </div>
@@ -24,7 +28,7 @@
                         </div>
                         <div class="grid-list">
                             <div> Time </div>
-                            <div>{{data?.appointments?.appointment_scheduled_date_time | date:'HH:mm a'}}</div>
+                            <div>{{data?.appointments?.appointment_scheduled_date_time | date:'hh:mm a'}}</div>
                         </div>
                         <div class="grid-list">
                             <div> Status </div>
@@ -46,7 +50,7 @@
                         </div>
                         <div class="grid-list">
                             <div>Time</div>
-                            <div>{{data?.intake_calls?.call_date | date:'HH:mm a'}}</div>
+                            <div>{{data?.intake_calls?.call_date | date:'hh:mm a'}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -58,11 +62,11 @@
 
                 </div>
                 <div class="" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.xs="100">
-                    <div class="map">
+                    <!-- <div class="map">
                         <p class="des_ m-t-0"><strong>Appointment Location:</strong> 66 b Avenue Ave. Fresno, CA 99302
                         </p>
 
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
