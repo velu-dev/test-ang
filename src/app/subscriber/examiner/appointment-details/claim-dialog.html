@@ -77,7 +77,7 @@
                         </div>
                         <div class="grid-list">
                             <div> Adjuster Phone</div>
-                            <div>{{data?.agent_details?.InsuranceAdjuster?.phone}}</div>
+                            <div>{{data?.agent_details?.InsuranceAdjuster?.phone | mask:'(000) 000-0000'}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -87,7 +87,7 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>Adjuster Fax</div>
-                            <div>{{data?.agent_details?.InsuranceAdjuster?.fax}}</div>
+                            <div>{{data?.agent_details?.InsuranceAdjuster?.fax | mask:'000-000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Adjuster Email</div>
@@ -109,7 +109,7 @@
                         </div>
                         <div class="grid-list">
                             <div>Employer Phone </div>
-                            <div>{{data?.agent_details?.Employer?.phone}}</div>
+                            <div>{{data?.agent_details?.Employer?.phone | mask:'(000) 000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Employer Address</div>
@@ -148,11 +148,11 @@
                         </div>
                         <div class="grid-list">
                             <div>AA Phone</div>
-                            <div>{{data?.agent_details?.ApplicantAttorney?.phone}}</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.phone | mask:'(000) 000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>AA Fax</div>
-                            <div>{{data?.agent_details?.ApplicantAttorney?.fax}}</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.fax | mask:'000-000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>AA Email</div>
@@ -186,11 +186,11 @@
                         </div>
                         <div class="grid-list">
                             <div>DA Phone</div>
-                            <div>{{data?.agent_details?.DefenseAttorney?.phone}}</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.phone | mask:'(000) 000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>DA Fax</div>
-                            <div>{{data?.agent_details?.DefenseAttorney?.fax}}</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.fax | mask:'000-000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div> DA Email</div>

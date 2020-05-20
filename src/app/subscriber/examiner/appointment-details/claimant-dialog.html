@@ -50,11 +50,11 @@
 
                         <div class="grid-list">
                             <div>Phone Number</div>
-                            <div>{{data?.claimant_details?.phone_no_1}}</div>
+                            <div>{{data?.claimant_details?.phone_no_1 | mask:"(000) 000-0000"}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Alternate Phone Number</div>
-                            <div>{{data?.claimant_details?.phone_no_2}}</div>
+                            <div>{{data?.claimant_details?.phone_no_2 | mask:"(000) 000-0000" }}</div>
                         </div>
                         <div class="grid-list">
                             <div>Email</div>
