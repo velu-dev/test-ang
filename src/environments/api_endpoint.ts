@@ -88,4 +88,6 @@ export const api_endpoint = {
     //examination
     getExamination: 'examinations/details',
     getAllExamination: 'examinations/',
+    documentType:'examinations/document-upload',
+    getDocumentData:'examinations/document-details/'
 }

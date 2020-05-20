@@ -5,6 +5,7 @@ import { DialogData } from 'src/app/shared/components/dialogue/dialogue.componen
 import { ExaminerService } from '../../service/examiner.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-appointment-details',
@@ -13,7 +14,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 })
 export class AppointmentDetailsComponent implements OnInit {
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
-  dataSource = [];
+  dataSource:any = [];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -23,6 +24,8 @@ export class AppointmentDetailsComponent implements OnInit {
   claim_id: number;
   examinationDetails: any;
   collapsed = false;
+  documentType:any;
+  documentList:any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService
@@ -35,14 +38,31 @@ export class AppointmentDetailsComponent implements OnInit {
 
       this.examinationDetails = response['data']
       console.log(this.examinationDetails);
+      this.examinerService.getDocumentData(this.examinationDetails.claim_details.id).subscribe(res=>{
+        this.dataSource = new MatTableDataSource(res['data']) 
+        console.log(res['data']);
+        
+      },error=>{
+
+      })
     }, error => {
       console.log(error);
+    })
+
+    this.examinerService.seedData('document_type').subscribe(type=>{
+        this.documentList = type['data']
+        console.log(this.documentList)
     })
   }
 
   selectedFile: File;
   uploadFile(event) {
     this.selectedFile = null;
+    console.log(this.documentType)
+    if(!this.documentType){
+      this.alertService.openSnackBar("Please select Document type", 'error');
+      return;
+    }
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
@@ -52,7 +72,16 @@ export class AppointmentDetailsComponent implements OnInit {
         return;
       }
       this.selectedFile = event.target.files[0];
+      let formData = new FormData()
+      formData.append('file', this.selectedFile);
+      formData.append('document_type_id', this.documentType);
+      formData.append('claim_id', this.examinationDetails.claim_details.id)
       console.log(" this.selectedFile", this.selectedFile);
+      this.examinerService.postDocument(formData).subscribe(res=>{
+
+      },error => {
+
+      })
     } else {
       this.selectedFile = null;
       //this.errorMessage = 'This file type is not accepted';
@@ -116,7 +145,7 @@ export class ClaimPopupComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ClaimPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   cancelClick(): void {
     this.dialogRef.close();
@@ -131,7 +160,7 @@ export class BillableitemPopupComponent {
 
   constructor(
     public dialogRef: MatDialogRef<BillableitemPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   cancelClick(): void {
     this.dialogRef.close();
