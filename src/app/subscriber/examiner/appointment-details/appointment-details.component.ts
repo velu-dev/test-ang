@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import * as globals from '../../../globals';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ExaminerService } from '../../service/examiner.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MatTableDataSource } from '@angular/material';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-appointment-details',
@@ -24,9 +25,12 @@ export class AppointmentDetailsComponent implements OnInit {
   claim_id: number;
   examinationDetails: any;
   collapsed = false;
+  docCollapsed = false;
   documentType: any;
   documentList: any;
   documentTabData: any;
+  filterValue: String;
+  tabIndex = 0;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService
@@ -38,7 +42,6 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinerService.getAllExamination(this.claim_id).subscribe(response => {
 
       this.examinationDetails = response['data']
-      console.log(this.examinationDetails);
       this.getDocumentData();
     }, error => {
       console.log(error);
@@ -46,21 +49,21 @@ export class AppointmentDetailsComponent implements OnInit {
 
     this.examinerService.seedData('document_type').subscribe(type => {
       this.documentList = type['data']
-      console.log(this.documentList)
     })
   }
 
   getDocumentData() {
     this.examinerService.getDocumentData(this.examinationDetails.claim_details.id).subscribe(res => {
-      console.log(res['data']);
       this.documentTabData = res['data'];
-      this.tabChanges(0)
+      this.tabChanges(this.tabIndex)
     }, error => {
       console.log(error);
     })
   }
 
   tabChanges(event) {
+    this.tabIndex = event
+    this.filterValue = '';
     this.dataSource = new MatTableDataSource([])
     let data = this.documentTabData[this.tabNames(event)]
     this.dataSource = new MatTableDataSource(data)
@@ -87,7 +90,6 @@ export class AppointmentDetailsComponent implements OnInit {
   selectedFile: File;
   uploadFile(event) {
     this.selectedFile = null;
-    console.log(this.documentType)
     if (!this.documentType) {
       this.alertService.openSnackBar("Please select Document type", 'error');
       return;
@@ -109,6 +111,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.examinerService.postDocument(formData).subscribe(res => {
         this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
+        this.documentType = null;
         this.getDocumentData();
         this.alertService.openSnackBar("File added successfully", 'success');
       }, error => {
@@ -122,6 +125,34 @@ export class AppointmentDetailsComponent implements OnInit {
     }
 
   }
+
+  download(data) {
+    saveAs(data.exam_report_file_url, data.file_name);
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  deleteDocument(data){
+    this.openDialog('delete', data);
+  }
+
+  openDialog(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+       
+      }
+    })
+
+
+  }
+
+
 
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {

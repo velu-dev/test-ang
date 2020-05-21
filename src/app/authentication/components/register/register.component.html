@@ -43,7 +43,7 @@
                 <input matInput [type]="passwordFieldType ? 'text' : 'password'" placeholder="Password"
                   formControlName="password">
                 <mat-icon matSuffix
-                  matTooltip="Password must contain at least 8 characters, including UPPER/lowercase, special character and numbers."
+                  matTooltip="Password must contain at least 8 characters, including UPPER, lowercase, special character and numbers."
                   matTooltipPosition="above">error_outline</mat-icon>
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
               </mat-form-field>

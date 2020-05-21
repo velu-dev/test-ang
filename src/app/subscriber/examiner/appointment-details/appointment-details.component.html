@@ -160,7 +160,7 @@
             <mat-card>
                 <mat-card-header>
                     <div fxLayout="row wrap" fxFlex="100">
-                        <div class="p-t-5 examiner" >
+                        <div class="p-t-5 examiner">
                             <span>Examiner </span> {{examinationDetails?.examiner_name}}
                         </div>
                         <span class="spacer"></span>
@@ -171,7 +171,8 @@
                             </ul>
                         </div>
                         <button mat-icon-button class="float-right">
-                            <mat-icon (click)="collapsed=!collapsed">expand_more</mat-icon>
+                            <mat-icon (click)="collapsed=!collapsed">
+                                {{collapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                         </button>
                     </div>
                 </mat-card-header>
@@ -195,11 +196,12 @@
                     <div class="content-wrapper-main-title p-t-5">Documents</div>
                     <span class="spacer"></span>
                     <button mat-icon-button>
-                        <mat-icon (click)="collapsed=!collapsed">expand_more</mat-icon>
+                        <mat-icon (click)="docCollapsed=!docCollapsed">
+                            {{docCollapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     </button>
                 </mat-card-header>
                 <mat-divider></mat-divider>
-                <mat-card-content *ngIf="collapsed">
+                <mat-card-content *ngIf="docCollapsed">
                     <div fxLayout="row wrap">
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="">
                             <mat-card-content class="m-b-0">
@@ -207,11 +209,11 @@
                                     fxFlex.xl="30">
                                     <mat-form-field class="doc_type" appearance="fill" color="primary" fxFlex="100">
                                         <mat-label>Select Document Type </mat-label>
-                                        <mat-select required [(ngModel)]="documentType">
-                                            <mat-option  *ngFor="let doc of documentList" [value]="doc.id">
+                                        <mat-select [(ngModel)]="documentType">
+                                            <mat-option *ngFor="let doc of documentList" [value]="doc.id">
                                                 {{doc.document_name}}
                                             </mat-option>
-                                          </mat-select>
+                                        </mat-select>
                                     </mat-form-field>
                                 </div>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
@@ -229,12 +231,12 @@
                                 [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user m-t-5">
                                 <mat-icon>receipt</mat-icon>View Billing
                             </button>
-                            <mat-tab-group class="doc-list" (selectedTabChange)="tabChanges($event.index);">
+                            <mat-tab-group class="doc-list" *ngIf="documentTabData" (selectedTabChange)="tabChanges($event.index);">
                                 <!-- ######~~~~~ Active Users ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> speaker_notes </mat-icon>
-                                        <span> Forms <span class="record-count">(25)</span></span>
+                                        <span> Forms <span class="record-count">({{documentTabData[tabNames(0)]?.length || '0'}})</span></span>
                                     </ng-template>
 
                                 </mat-tab>
@@ -242,14 +244,14 @@
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> history </mat-icon>
-                                        <span> History <span class="history-count">(13)</span></span>
+                                        <span> History <span class="history-count">({{documentTabData[tabNames(1)]?.length || '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
                                 <!-- ######~~~~~ Records ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> library_books </mat-icon>
-                                        <span>Records <span class="record-count">(52)</span></span>
+                                        <span>Records <span class="record-count">({{documentTabData[tabNames(2)]?.length || '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
 
@@ -257,14 +259,14 @@
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> assignment </mat-icon>
-                                        <span>Reports <span class="record-count">(42)</span></span>
+                                        <span>Reports <span class="record-count">({{documentTabData[tabNames(3)]?.length || '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
                                 <!-- ######~~~~~ Transcription  ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> compare_arrows </mat-icon>
-                                        <span>Transcription <span class="record-count">(42)</span></span>
+                                        <span>Transcription <span class="record-count">({{documentTabData[tabNames(4)]?.length || '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
                             </mat-tab-group>
@@ -272,9 +274,8 @@
 
                             <div class="table-search">
                                 <div class="table-filter">
-                                    <input matInput
-                                        placeholder="Search by name, date">
-                                </div>                                
+                                    <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue" placeholder="Search by name, date">
+                                </div>
                             </div>
 
                             <div class="basic-table document_list">
@@ -301,12 +302,12 @@
                                     <ng-container matColumnDef="action" >
                                         <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                                         <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
-                                            <button mat-icon-button color="primary" matTooltip="Download"
-                                                matTooltipPosition="before">
+                                            <a mat-icon-button color="primary" matTooltip="Download"
+                                                matTooltipPosition="before" (click)="download(element)" target="_self">
                                                 <span class="fa fa-download"></span>
-                                            </button>
+                                            </a>
                                             <button mat-icon-button color="warn" matTooltip="Delete"
-                                                matTooltipPosition="after">
+                                                matTooltipPosition="after" (click)="deleteDocument(element)">
                                                 <mat-icon>delete_outline</mat-icon>
                                             </button> </td>
                                     </ng-container>

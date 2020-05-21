@@ -19,7 +19,7 @@ export interface PeriodicElement {
   styleUrls: ['./billing.component.scss']
 })
 export class BillingComponent implements OnInit {
-  displayedColumns: string[] = ['bill_no', 'claim_no', 'claimant_name', 'examinar', 'bill_total', 'status', 'action'];
+  displayedColumns: string[] = ['bill_no', 'claim_id', 'claimant_first_name', 'examiner_first_name', 'paid_amt', 'bill_paid_status', 'action'];
   dataSource: MatTableDataSource<[]>;
   filterValue: string;
   isMobile = false;
