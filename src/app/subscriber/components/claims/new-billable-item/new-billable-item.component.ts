@@ -68,7 +68,7 @@ export class NewBillableItemComponent implements OnInit {
         procedure_type: [null, Validators.required],
         modifier_id: [null],
         is_psychiatric: [false],
-        primary_language_spoken: [null]
+        primary_language_spoken: [{ value: '', disabled: true }]
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
