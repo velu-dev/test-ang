@@ -160,14 +160,14 @@
             <mat-card>
                 <mat-card-header>
                     <div fxLayout="row wrap" fxFlex="100">
-                        <div class="p-t-5">
+                        <div class="p-t-5 examiner" >
                             <span>Examiner </span> {{examinationDetails?.examiner_name}}
                         </div>
                         <span class="spacer"></span>
                         <div class="p-r-5 p-t-5 hide-mobile">
-                            <span>Specialty </span>
-                            <ul class="m-t-0 p-l-0">
-                                <li class="p-t-0">{{examinationDetails?.specialty[0]?.name}}</li>
+                            <span class="speality">Specialty </span>
+                            <ul class="m-t-0 p-l-0 speality-list">
+                                <li class="p-t-0">{{examinationDetails?.specialty[0]?.name | ellipsis:30 }}</li>
                             </ul>
                         </div>
                         <button mat-icon-button class="float-right">
@@ -177,8 +177,8 @@
                 </mat-card-header>
                 <mat-card-content *ngIf="collapsed">
                     <div fxLayout="row wrap" fxFlex="50">
-                        <span>Specialty </span>
-                        <ul class="m-t-0 p-l-0" *ngFor="let spec of examinationDetails?.specialty">
+                        <span class="speality">Specialty </span>
+                        <ul class="m-t-0 p-l-0 speality-list" *ngFor="let spec of examinationDetails?.specialty">
                             <li>{{spec?.name}} </li>
                         </ul>
                     </div>
@@ -207,11 +207,11 @@
                                     fxFlex.xl="30">
                                     <mat-form-field class="doc_type" appearance="fill" color="primary" fxFlex="100">
                                         <mat-label>Select Document Type </mat-label>
-                                        <select matNativeControl required [(ngModel)]="documentType">
-                                            <option *ngFor="let doc of documentList" [value]="doc.id">
-                                                {{doc.document_name}}</option>
-
-                                        </select>
+                                        <mat-select required [(ngModel)]="documentType">
+                                            <mat-option  *ngFor="let doc of documentList" [value]="doc.id">
+                                                {{doc.document_name}}
+                                            </mat-option>
+                                          </mat-select>
                                     </mat-form-field>
                                 </div>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
@@ -222,48 +222,14 @@
                                 </div>
 
                             </mat-card-content>
-
-
                         </div>
-
-                        <!-- <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
-                            class="p-5 uploaded-doc-list">
-                            <mat-card-header>
-                                <mat-card-title class="content-wrapper-main-title">Uploaded Document</mat-card-title>
-                                <mat-card-subtitle class="m-b-0">Uploaded Template here
-                                </mat-card-subtitle>
-                            </mat-card-header>
-                            <mat-card-content>
-                                <div class="doc-list-item">
-                                    <img [src]="docx" alt="docx">
-                                    <div class="doc-name">Venkatesan Mariyappan.docx</div>
-                                </div>
-                                <div class="doc-list-item">
-                                    <img [src]="xls_1" alt="xls">
-                                    <div class="doc-name">Venkatesan Mariyappan.xlx</div>
-                                </div>
-                                <div class="doc-list-item">
-                                    <img [src]="pdf" alt="pdf">
-                                    <div class="doc-name">Venkatesan Mariyappan.pdf</div>
-                                </div>
-                                <div class="doc-list-item">
-                                    <img [src]="docx" alt="docx">
-                                    <div class="doc-name">Venkatesan Mariyappan.docx</div>
-                                </div>
-                                <div class="doc-list-item">
-                                    <img [src]="pdf" alt="pdf">
-                                    <div class="doc-name">Venkatesan Mariyappan.pdf</div>
-                                </div>
-                            </mat-card-content>
-                        </div> -->
-
 
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-5">
                             <button mat-raised-button color="primary"
                                 [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user m-t-5">
                                 <mat-icon>receipt</mat-icon>View Billing
                             </button>
-                            <mat-tab-group class="m-b-10 doc-list" (selectedTabChange)="tabChanges($event.index);">
+                            <mat-tab-group class="doc-list" (selectedTabChange)="tabChanges($event.index);">
                                 <!-- ######~~~~~ Active Users ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
@@ -302,6 +268,14 @@
                                     </ng-template>
                                 </mat-tab>
                             </mat-tab-group>
+
+
+                            <div class="table-search">
+                                <div class="table-filter">
+                                    <input matInput
+                                        placeholder="Search by name, date">
+                                </div>                                
+                            </div>
 
                             <div class="basic-table document_list">
                                 <table mat-table [dataSource]="dataSource">
