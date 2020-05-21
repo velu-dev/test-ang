@@ -3,6 +3,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { ClaimService } from '../../service/claim.service';
 export interface PeriodicElement {
   bill_no: string;
   claim_no: string;
@@ -20,7 +21,6 @@ export interface PeriodicElement {
 export class BillingComponent implements OnInit {
   displayedColumns: string[] = ['bill_no', 'claim_no', 'claimant_name', 'examinar', 'bill_total', 'status', 'action'];
   dataSource: MatTableDataSource<[]>;
-  dataSource1 = ELEMENT_DATA;
   filterValue: string;
   isMobile = false;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -31,16 +31,19 @@ export class BillingComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private claimService: ClaimService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })
-    this.dataSource = new MatTableDataSource([]);
+    this.claimService.getBilling().subscribe(res => {
+      this.dataSource = new MatTableDataSource(res.data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
   }
 
   applyFilter(filterValue: string) {
@@ -51,12 +54,3 @@ export class BillingComponent implements OnInit {
     }
   }
 }
-
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Paid' },
-  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Partially Paid' },
-  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Rejected' },
-  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Paid' },
-  { bill_no: '50504949', claim_no: '123xyz45	', claimant_name: 'Steve S. Steveson', examinar: 'Rames Jim, MD', bill_total: '$ 45200.00', status: 'Rejected' },
-];
