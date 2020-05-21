@@ -128,91 +128,98 @@
 
 // Style -1
 
-.bill-status {
-    list-style: none;
-    overflow: hidden;
+.billing-status {
+    margin: 40px 0px;
     padding: 0;
+    display: block;
+    overflow: hidden;
+    a {
+        color: black;
+        text-decoration: none;
+        display: flex;
+    }
+    em {
+        display: block;
+        font-size: 13px;
+        font-style: normal;
+        padding-top: 7px;
+    }
+    i {
+        padding-top: 17px;
+        padding-right: 10px;
+    }
     li {
         float: left;
-
-        a {
-            color: $black;
-            width: auto;
-            font-size: $font-size-7;
-            min-width: 85px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-flex !important;
-            padding: 10px 10px 10px 45px;
-            display: block;
-            background: #f2f7fe;
-            background: transparent linear-gradient(135deg, #f2f7fe 0%, #f2f7fe 80%) 0% 0% no-repeat padding-box;
-            position: relative;
-            display: block;
-            float: left;
+        margin-left: 0;
+        min-width: auto;
+        max-width: 180px;
+        text-align: center;
+        width: auto; /* 100 / number of steps */
+        height: 50px; /* total height */
+        list-style-type: none;
+        padding: 5px 5px 5px 30px; /* padding around text, last should include arrow width */
+        border-right: 3px solid #e0ebfb; /* width: gap between arrows, color: background of document */
+        position: relative;
+        border-top: 3px solid #e0ebfb;
+        border-bottom: 3px solid #e0ebfb;
+        background: transparent linear-gradient(136deg, #ffffff -10%, #ffffff 70%) 0% 0% no-repeat padding-box;
+        &:last-child {
+            background: transparent;
+            border-top: 0;
+            border-bottom: 0;
+            border-right: 3px solid transparent;
+            border-top: 3px solid transparent;
+            width: 0px !important;
             &::after {
-                content: " ";
-                display: block;
-                width: 0;
-                height: 0;
-                border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
-                border-bottom: 50px solid transparent;
-                border-left: 30px solid #f2f7fe;
-                position: absolute;
-                top: 50%;
-                margin-top: -50px;
-                left: 100%;
-                z-index: 2;
+                border-left: 0px solid transparent;
             }
-            &::before {
-                content: " ";
-                display: block;
-                width: 0;
-                height: 0;
-                border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
-                border-bottom: 50px solid transparent;
-                border-left: 30px solid white;
-                position: absolute;
-                top: 50%;
-                margin-top: -50px;
-                margin-left: 1px;
-                left: 100%;
-                z-index: 1;
-            }
-            i {
-                padding-top: 17px;
-                padding-right: 10px;
-            }
-            span.p-b-11 {
-                padding-bottom: 11px;
-            }
-        }
-        &:first-child a {
-            padding-left: 10px;
         }
     }
 }
-.bill-status li:nth-child(1) a:after {
-    border-left-color: #ffffff;
+
+/* remove extra padding on the first object since it doesn't have an arrow to the left */
+.billing-status li:first-child {
+    padding-left: 5px;
+}
+/* white arrow to the left to "erase" background (starting from the 2nd object) */
+.billing-status li:nth-child(n + 2)::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-left: 25px solid #e0ebfb; /* width: arrow width, color: background of document */
+    border-top: 30px solid transparent; /* width: half height */
+    border-bottom: 30px solid transparent; /* width: half height */
+    width: 0;
+    height: 0;
+    content: " ";
+}
+/* colored arrow to the right */
+.billing-status li::after {
+    z-index: 1; /* need to bring this above the next item */
+    position: absolute;
+    top: 0;
+    right: -25px; /* arrow width (negated) */
+    display: block;
+    border-left: 25px solid #ffffff; /* width: arrow width */
+    border-top: 30px solid transparent; /* width: half height */
+    border-bottom: 30px solid transparent; /* width: half height */
+    width: 0;
+    height: 0;
+    content: " ";
 }
 
-.bill-status li:nth-child(1) a {
-    background: #fff;
-}
-.bill-status li:nth-child(2) a:after {
-    border-left-color: $primarycolor;
-}
+/* Setup colors (both the background and the arrow) */
 
-.bill-status li:nth-child(2) a {
-    background: $primarycolor;
+/* Completed */
+.billing-status li.complete {
+    background: transparent linear-gradient(136deg, #3c3cff -10%, #3c3cff 70%) 0% 0% no-repeat padding-box;
+ a {
     color: $white;
+ }
 }
-.bill-status li:nth-child(3) a:after {
-    border-left-color: #ffffff;
-}
-
-.bill-status li:nth-child(3) a {
-    background: #fff;
+.billing-status li.complete::after {
+    border-left-color: #3c3cff;
 }
 
 .steps {
@@ -220,34 +227,51 @@
     padding: 0;
     display: block;
     overflow: hidden;
+    a {
+        color: white;
+        text-decoration: none;
+        display: flex;
+    }
+    em {
+        display: block;
+        font-size: 13px;
+        font-style: normal;
+        padding-top: 7px;
+        @media screen and (max-width: 1024px) and (min-width: 768px) {
+            font-size: 12px;
+        }
+    }
+    i {
+        padding-top: 17px;
+        padding-right: 10px;
+        @media screen and (max-width: 1024px) and (min-width: 768px) {
+            padding-left: 0px !important;
+        }
+    }
+    li {
+        float: left;
+        margin-left: 0;
+        width: 105px; /* 100 / number of steps */
+        height: 50px; /* total height */
+        list-style-type: none;
+        padding: 5px 5px 5px 30px; /* padding around text, last should include arrow width */
+        border-right: 3px solid #e0ebfb; /* width: gap between arrows, color: background of document */
+        position: relative;
+        border-top: 3px solid #e0ebfb;
+        border-bottom: 3px solid #e0ebfb;
+        @media screen and (max-width: 1024px) and (min-width: 768px) {
+            width: 55px;
+            font-size: 12px;
+            &:nth-child(4) {
+                width: 75px;
+            }
+            &:nth-child(5) {
+                width: 85px;
+            }
+        }
+    }
 }
-.steps a {
-    color: white;
-    text-decoration: none;
-    display: flex;
-}
-.steps em {
-    display: block;
-    font-size: 13px;
-    font-style: normal;
-    padding-top: 7px;
-}
-.steps i {
-    padding-top: 17px;
-    padding-right: 10px;
-}
-.steps li {
-    float: left;
-    margin-left: 0;
-    width: 105px; /* 100 / number of steps */
-    height: 50px; /* total height */
-    list-style-type: none;
-    padding: 5px 5px 5px 30px; /* padding around text, last should include arrow width */
-    border-right: 3px solid #e0ebfb; /* width: gap between arrows, color: background of document */
-    position: relative;
-    border-top: 3px solid #e0ebfb;
-    border-bottom: 3px solid #e0ebfb;
-}
+
 /* remove extra padding on the first object since it doesn't have an arrow to the left */
 .steps li:first-child {
     padding-left: 5px;

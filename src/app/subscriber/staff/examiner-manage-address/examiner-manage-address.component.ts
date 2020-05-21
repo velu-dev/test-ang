@@ -60,17 +60,11 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.examinerName = this.user.first_name + ' ' + this.user.last_name
       this.examinerSearch = new FormControl({ value: this.examinerName, disabled: true })
     }
-    this.filteredOptions = this.addresssearch.valueChanges
+
+    this.addresssearch.valueChanges
       .pipe(
         debounceTime(300),
-        switchMap(value => this.examinerService.searchAddress({ basic_search: value, isadvanced: false })));
-
-
-    // this.examinerFilteredOptions = this.examinerSearch.valueChanges
-    //   .pipe(
-    //     debounceTime(300),
-    //     switchMap(value => this.examinerService.getExaminerList()));
-
+      ).subscribe(value => this.filteredOptions = this.examinerService.searchAddress({ basic_search: value, isadvanced: false }));
 
   }
 
@@ -127,13 +121,12 @@ export class ExaminerManageAddressComponent implements OnInit {
   }
 
   getSearchAddress(event) {
-    this.filteredOptions = this.examinerService.searchAddress({
+    this.filteredOptions =  this.examinerService.searchAddress({
       basic_search: '', isadvanced: this.advancedSearch, state: this.advanceSearch.value.state, city: this.advanceSearch.value.city, zip_code: this.advanceSearch.value.zip_code
     })
     event.openPanel();
     this.advancedSearch = false;
   }
-
 
   getAddressDetails() {
     this.advanceSearch = this.formBuilder.group({
