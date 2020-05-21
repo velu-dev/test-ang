@@ -263,7 +263,7 @@
                                 [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user m-t-5">
                                 <mat-icon>receipt</mat-icon>View Billing
                             </button>
-                            <mat-tab-group class="m-b-10 doc-list">
+                            <mat-tab-group class="m-b-10 doc-list" (selectedTabChange)="tabChanges($event.index);">
                                 <!-- ######~~~~~ Active Users ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
@@ -313,15 +313,15 @@
 
                                     <ng-container matColumnDef="doc_name">
                                         <th mat-header-cell *matHeaderCellDef> Name</th>
-                                        <td mat-cell *matCellDef="let element"> {{element.doc_name}}</td>
+                                        <td mat-cell *matCellDef="let element"> {{element.file_name}}</td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="date">
                                         <th mat-header-cell *matHeaderCellDef> Uploaded On </th>
                                         <td mat-cell *matCellDef="let element" class="no-wrap-td">
-                                            {{element.date |  date }} <small class="p-l-10"><span
+                                            {{element.updatedAt |  date:'MM-dd-yyyy' }} <small class="p-l-10"><span
                                                     class="fa fa-clock-o"></span>
-                                                {{element.date |  date:'shortTime' }} </small></td>
+                                                {{element.updatedAt |  date:'hh:mm a' }} </small></td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="action">
@@ -340,7 +340,7 @@
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
-                                <app-nodata></app-nodata>
+                                <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
                             </div>
                         </div>
                     </div>

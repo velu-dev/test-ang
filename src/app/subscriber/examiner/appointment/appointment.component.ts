@@ -66,7 +66,8 @@ export class AppointmentComponent implements OnInit {
 
     this.examinerService.getExaminationDetails().subscribe(res => {
       console.log(res)
-      this.dataSource = new MatTableDataSource(res['data'])
+      this.dataSource = new MatTableDataSource(res['data']);
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
       console.log(this.dataSource['_data']['_value'])
     }, error => {

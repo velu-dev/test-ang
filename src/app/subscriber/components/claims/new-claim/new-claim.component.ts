@@ -518,15 +518,27 @@ export class NewClaimComponent implements OnInit {
     this.iseams_entry = false;
   }
 
-  advanceSearchSubmit() {
+  advanceSearchSubmit(auto) {
     console.log("advanceSearch", this.advanceSearch.value)
+    let data = this.advanceSearch.value;
+    data['isadvanced'] = this.searchStatus;
+    this.filteredClaimant = this.claimService.searchClaimant(data);
+    this.advanceSearch.reset();
+    this.isClaimantEdit = true;
+    this.claimant.reset();
+    this.claim.reset();
+    this.addNewClaimant = true;
+    this.isClaimantCreated = true
+    auto.openPanel();
+    this.searchStatus = false;
   }
 
   selectionChange(event) {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
-      this.createClaimant('tab')
+      if (this.claimant.touched)
+        this.createClaimant('tab')
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
       this.submitClaim('tab')

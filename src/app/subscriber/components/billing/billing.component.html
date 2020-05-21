@@ -35,7 +35,7 @@
             </mat-list>
         </mat-menu>
         <div class="basic-table billing_list">
-            <table mat-table [dataSource]="dataSource1" matSort>
+            <table mat-table [dataSource]="dataSource" matSort>
                 <!-- bill_no Column -->
                 <ng-container matColumnDef="bill_no">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Bill # </th>
@@ -86,7 +86,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/subscriber/edit-billing/']">
                 </tr>
             </table>
-            <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+            <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
         </div>
 
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
