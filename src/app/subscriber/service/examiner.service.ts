@@ -60,4 +60,15 @@ export class ExaminerService {
   getAllExamination(id){
     return this.http.get(environment.baseUrl + api_endpoint.getAllExamination + id)
   }
+
+  postDocument(data){
+    return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
+  }
+
+  seedData(data): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
+  }
+  getDocumentData(id){
+    return this.http.get(environment.baseUrl + api_endpoint.getDocumentData + id)
+  }
 }

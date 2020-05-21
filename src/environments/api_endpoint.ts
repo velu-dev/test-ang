@@ -60,6 +60,7 @@ export const api_endpoint = {
     deuList: 'claim/seed-data/deu_office_details',
     listIntakeCall: "claim/seed-data/intake_contact_type",
     billableItemSingle:'claim/billable-item/',
+    getBilling:'billing/details',
 
     //seed data
     seedData: 'claim/seed-data/',
@@ -88,4 +89,6 @@ export const api_endpoint = {
     //examination
     getExamination: 'examinations/details',
     getAllExamination: 'examinations/',
+    documentType:'examinations/document-upload',
+    getDocumentData:'examinations/document-details/'
 }

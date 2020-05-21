@@ -1,16 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import * as globals from '../../../globals';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ExaminerService } from '../../service/examiner.service';
 import { ActivatedRoute } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { MatTableDataSource } from '@angular/material';
+import { saveAs } from 'file-saver';
 
-export interface PeriodicElement {
-  doc_image: string;
-  doc_name: string;
-  date: Date;
-  action: string;
-}
 @Component({
   selector: 'app-appointment-details',
   templateUrl: './appointment-details.component.html',
@@ -18,36 +15,150 @@ export interface PeriodicElement {
 })
 export class AppointmentDetailsComponent implements OnInit {
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
-  dataSource = ELEMENT_DATA;
-
+  dataSource: any = [];
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
   docx = globals.docx
   pdf = globals.pdf
-  uploadFile: any;
   isMobile: boolean;
   claim_id: number;
   examinationDetails: any;
+  collapsed = false;
+  docCollapsed = false;
+  documentType: any;
+  documentList: any;
+  documentTabData: any;
+  filterValue: String;
+  tabIndex = 0;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private alertService: AlertService
+  ) {
     this.route.params.subscribe(params => this.claim_id = params.id);
   }
 
   ngOnInit() {
     this.examinerService.getAllExamination(this.claim_id).subscribe(response => {
-      
+
       this.examinationDetails = response['data']
-      console.log(this.examinationDetails);
+      this.getDocumentData();
+    }, error => {
+      console.log(error);
+    })
+
+    this.examinerService.seedData('document_type').subscribe(type => {
+      this.documentList = type['data']
+    })
+  }
+
+  getDocumentData() {
+    this.examinerService.getDocumentData(this.examinationDetails.claim_details.id).subscribe(res => {
+      this.documentTabData = res['data'];
+      this.tabChanges(this.tabIndex)
     }, error => {
       console.log(error);
     })
   }
 
+  tabChanges(event) {
+    this.tabIndex = event
+    this.filterValue = '';
+    this.dataSource = new MatTableDataSource([])
+    let data = this.documentTabData[this.tabNames(event)]
+    this.dataSource = new MatTableDataSource(data)
+  }
+
+  tabNames(index) {
+    switch (index) {
+      case 0:
+        return 'claim_forms';
+      case 1:
+        return 'claim_history';
+      case 2:
+        return 'record_template';
+      case 3:
+        return 'examiner_report'
+      case 4:
+        return 'examination_transcription';
+      default:
+        return 'claim_forms';
+    }
+
+  }
+
+  selectedFile: File;
+  uploadFile(event) {
+    this.selectedFile = null;
+    if (!this.documentType) {
+      this.alertService.openSnackBar("Please select Document type", 'error');
+      return;
+    }
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
+
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+      if (FileSize > 30) {
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.selectedFile = event.target.files[0];
+      let formData = new FormData()
+      formData.append('file', this.selectedFile);
+      formData.append('document_type_id', this.documentType);
+      formData.append('claim_id', this.examinationDetails.claim_details.id)
+      console.log(" this.selectedFile", this.selectedFile);
+      this.examinerService.postDocument(formData).subscribe(res => {
+        this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        this.documentType = null;
+        this.getDocumentData();
+        this.alertService.openSnackBar("File added successfully", 'success');
+      }, error => {
+        this.fileUpload.nativeElement.value = "";
+        this.selectedFile = null;
+      })
+    } else {
+      this.selectedFile = null;
+      //this.errorMessage = 'This file type is not accepted';
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+
+  }
+
+  download(data) {
+    saveAs(data.exam_report_file_url, data.file_name);
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  deleteDocument(data){
+    this.openDialog('delete', data);
+  }
+
+  openDialog(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+       
+      }
+    })
+
+
+  }
+
+
+
   openClaimant(): void {
     const dialogRef = this.dialog.open(ClaimantPopupComponent, {
       width: '800px',
       data: this.examinationDetails,
-      
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -57,7 +168,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openClaim(): void {
     const dialogRef = this.dialog.open(ClaimPopupComponent, {
       width: '800px',
-      data: { name: "", animal: "" }
+      data: this.examinationDetails,
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -67,7 +178,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openBillableItem() {
     const dialogRef = this.dialog.open(BillableitemPopupComponent, {
       width: '800px',
-      data: { name: "", animal: "" }
+      data: this.examinationDetails,
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -98,7 +209,7 @@ export class ClaimPopupComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ClaimPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   cancelClick(): void {
     this.dialogRef.close();
@@ -113,23 +224,13 @@ export class BillableitemPopupComponent {
 
   constructor(
     public dialogRef: MatDialogRef<BillableitemPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   cancelClick(): void {
     this.dialogRef.close();
   }
 
-  uploadFile(event) {
 
-  }
 
 
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  // { doc_image: 'xls', doc_name: 'Phasellus aliquam turpis sit amet sem eleifend pretium.xls', date: new Date(), action: '' },
-  // { doc_image: 'docx', doc_name: 'Rajan Mariappan.docx', date: new Date(), action: '' },
-  // { doc_image: 'pdf', doc_name: 'Ganesan Marappa.pdf', date: new Date(), action: '' },
-  // { doc_image: 'pdf', doc_name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.pdf', date: new Date(), action: '' },
-  // { doc_image: 'xls', doc_name: 'Sarath Selvaraj.xls', date: new Date(), action: '' },
-];

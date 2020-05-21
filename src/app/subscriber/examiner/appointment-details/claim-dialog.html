@@ -3,7 +3,7 @@
         <mat-card-header>
             <div class="content-wrapper-main-title p-t-5">Claim </div>
             <span class="spacer"></span>
-            <button mat-icon-button>
+            <button mat-icon-button (click)="cancelClick()">
                 <mat-icon>fullscreen_exit</mat-icon>
             </button>
         </mat-card-header>
@@ -17,23 +17,23 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>Claim ID </div>
-                            <div>50504949</div>
+                            <div>{{data?.claim_details?.claim_number}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Date of Injury </div>
-                            <div>8 Jun 2015</div>
+                            <div>{{data?.claim_injuries[0]?.date_of_injury | date:'MM-dd-yyyy'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Insurance </div>
-                            <div>Corvel</div>
+                            <div></div>
                         </div>
                         <div class="grid-list">
                             <div>Injuries </div>
-                            <div>Arm L, Shoulder L</div>
+                            <div>{{data?.claim_injuries[0]?.body_part_id}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Continuous Trauma (CT)</div>
-                            <div>No</div>
+                            <div>{{data?.claim_injuries[0]?.continuous_trauma}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -43,23 +43,23 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>CT Start Date</div>
-                            <div>-</div>
+                            <div>{{data?.claim_injuries[0]?.continuous_trauma_start_date | date:'MM-dd-yyyy'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>CT End Date</div>
-                            <div>-</div>
+                            <div>{{data?.claim_injuries[0]?.continuous_trauma_end_date | date:'MM-dd-yyyy'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Panel Number</div>
-                            <div>QME123456</div>
+                            <div>{{data?.claim_details?.panel_number}}</div>
                         </div>
                         <div class="grid-list">
                             <div>WCAB Number</div>
-                            <div>xyz123-wwr3</div>
+                            <div>{{data?.claim_details?.wcab_number}}</div>
                         </div>
                         <div class="grid-list">
                             <div>DEU Office</div>
-                            <div>Fresno, CA</div>
+                            <div>{{data?.agent_details?.DEU?.name}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -73,11 +73,11 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>Adjuster</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.InsuranceAdjuster?.name}}</div>
                         </div>
                         <div class="grid-list">
                             <div> Adjuster Phone</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.InsuranceAdjuster?.phone | mask:'(000) 000-0000'}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -87,11 +87,11 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>Adjuster Fax</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.InsuranceAdjuster?.fax | mask:'000-000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Adjuster Email</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.InsuranceAdjuster?.email}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -105,15 +105,15 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>Employer</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.Employer?.name}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Employer Phone </div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.Employer?.phone | mask:'(000) 000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Employer Address</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.Employer?.street1}} {{data?.agent_details?.Employer?.street2}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -123,15 +123,15 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>Employer City</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.Employer?.city}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Employer State</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.Employer?.state}}</div>
                         </div>
                         <div class="grid-list">
                             <div>Employer Zip</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.Employer?.zip_code}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -144,35 +144,35 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>Applicant Attorney (AA)</div>
-                            <div>Tuna Tuna & Lettuce</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.name}}</div>
                         </div>
                         <div class="grid-list">
                             <div>AA Phone</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.phone | mask:'(000) 000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>AA Fax</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.fax | mask:'000-000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>AA Email</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.email}}</div>
                         </div>
                         <div class="grid-list">
                             <div>AA Address</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.street1}} {{data?.agent_details?.ApplicantAttorney?.street2}}</div>
                         </div>
                         <div class="grid-list">
                             <div>AA City</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.city}}</div>
                         </div>
                         <div class="grid-list">
                             <div>AA State</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.state}}</div>
                         </div>
                         <div class="grid-list">
                             <div>AA Zip</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.ApplicantAttorney?.zip_code}}</div>
                         </div>
                     </div>
                 </mat-card-content>
@@ -182,35 +182,35 @@
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="grid-list">
                             <div>Defense Attorney (DA)</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.name}}</div>
                         </div>
                         <div class="grid-list">
                             <div>DA Phone</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.phone | mask:'(000) 000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div>DA Fax</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.fax | mask:'000-000-0000'}}</div>
                         </div>
                         <div class="grid-list">
                             <div> DA Email</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.email}}</div>
                         </div>
                         <div class="grid-list">
                             <div>DA Address</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.street1}} {{data?.agent_details?.DefenseAttorney?.street2}}</div>
                         </div>
                         <div class="grid-list">
                             <div>DA City</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.city}}</div>
                         </div>
                         <div class="grid-list">
                             <div>DA State</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.state}}</div>
                         </div>
                         <div class="grid-list">
                             <div>DA Zip</div>
-                            <div>-</div>
+                            <div>{{data?.agent_details?.DefenseAttorney?.zip_code}}</div>
                         </div>
                     </div>
                 </mat-card-content>
