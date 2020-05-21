@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
-import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import * as moment from 'moment';
@@ -88,19 +88,26 @@ export class InjuryComponent implements OnInit {
         this.ngOnInit()
     });
   }
+
   deleteInjury(data, index) {
-    console.log(data)
-    this.claimService.deleteInjury(data.id).subscribe(res => {
-      this.alertService.openSnackBar("Injury deleted successfully!", "success")
-      this.getInjury();
-      this.injuryDetails.splice(index, 1);
-      this.dataSource = new MatTableDataSource(this.injuryDetails)
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, "error")
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: 'delete', address: false }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.claimService.deleteInjury(data.id).subscribe(res => {
+          this.alertService.openSnackBar("Injury deleted successfully!", "success")
+          this.getInjury();
+          this.injuryDetails.splice(index, 1);
+          this.dataSource = new MatTableDataSource(this.injuryDetails)
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, "error")
+        })
+      }
     })
 
   }
-
 }
 
 @Component({
