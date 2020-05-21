@@ -178,7 +178,7 @@
                 </mat-card-header>
                 <mat-card-content *ngIf="collapsed">
                     <div fxLayout="row wrap" fxFlex="50">
-                        <span class="speality">Specialty </span>
+                        <!-- <span class="speality">Specialty </span> -->
                         <ul class="m-t-0 p-l-0 speality-list" *ngFor="let spec of examinationDetails?.specialty">
                             <li>{{spec?.name}} </li>
                         </ul>
@@ -231,7 +231,7 @@
                                 [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user m-t-5">
                                 <mat-icon>receipt</mat-icon>View Billing
                             </button>
-                            <mat-tab-group class="doc-list" *ngIf="documentTabData" (selectedTabChange)="tabChanges($event.index);">
+                            <mat-tab-group class="doc-list" (selectedTabChange)="tabChanges($event.index);">
                                 <!-- ######~~~~~ Active Users ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
