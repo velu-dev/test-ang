@@ -14,7 +14,7 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class AppointmentDetailsComponent implements OnInit {
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
-  dataSource:any = [];
+  dataSource: any = [];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -24,8 +24,9 @@ export class AppointmentDetailsComponent implements OnInit {
   claim_id: number;
   examinationDetails: any;
   collapsed = false;
-  documentType:any;
-  documentList:any;
+  documentType: any;
+  documentList: any;
+  documentTabData: any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService
@@ -38,28 +39,57 @@ export class AppointmentDetailsComponent implements OnInit {
 
       this.examinationDetails = response['data']
       console.log(this.examinationDetails);
-      this.examinerService.getDocumentData(this.examinationDetails.claim_details.id).subscribe(res=>{
-        this.dataSource = new MatTableDataSource(res['data']) 
-        console.log(res['data']);
-        
-      },error=>{
-
-      })
+      this.getDocumentData();
     }, error => {
       console.log(error);
     })
 
-    this.examinerService.seedData('document_type').subscribe(type=>{
-        this.documentList = type['data']
-        console.log(this.documentList)
+    this.examinerService.seedData('document_type').subscribe(type => {
+      this.documentList = type['data']
+      console.log(this.documentList)
     })
+  }
+
+  getDocumentData() {
+    this.examinerService.getDocumentData(this.examinationDetails.claim_details.id).subscribe(res => {
+      console.log(res['data']);
+      this.documentTabData = res['data'];
+      this.tabChanges(0)
+    }, error => {
+      console.log(error);
+    })
+  }
+
+  tabChanges(event) {
+    console.log(event)
+    this.dataSource = new MatTableDataSource([])
+    let data = this.documentTabData[this.tabNames(event)]
+    this.dataSource = new MatTableDataSource(data)
+  }
+
+  tabNames(index) {
+    switch (index) {
+      case 0:
+        return 'claim_forms';
+      case 1:
+        return 'claim_history';
+      case 2:
+        return 'record_template';
+      case 3:
+        return 'examiner_report'
+      case 4:
+        return 'examination_transcription';
+      default:
+        return 'claim_forms';
+    }
+
   }
 
   selectedFile: File;
   uploadFile(event) {
     this.selectedFile = null;
     console.log(this.documentType)
-    if(!this.documentType){
+    if (!this.documentType) {
       this.alertService.openSnackBar("Please select Document type", 'error');
       return;
     }
@@ -77,10 +107,14 @@ export class AppointmentDetailsComponent implements OnInit {
       formData.append('document_type_id', this.documentType);
       formData.append('claim_id', this.examinationDetails.claim_details.id)
       console.log(" this.selectedFile", this.selectedFile);
-      this.examinerService.postDocument(formData).subscribe(res=>{
-
-      },error => {
-
+      this.examinerService.postDocument(formData).subscribe(res => {
+        this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        this.getDocumentData();
+        this.alertService.openSnackBar("File added successfully", 'success');
+      }, error => {
+        this.fileUpload.nativeElement.value = "";
+        this.selectedFile = null;
       })
     } else {
       this.selectedFile = null;
