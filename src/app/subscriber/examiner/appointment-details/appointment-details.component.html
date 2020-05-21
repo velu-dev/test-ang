@@ -291,14 +291,14 @@
                                     </ng-container>
 
                                     <ng-container matColumnDef="date">
-                                        <th mat-header-cell *matHeaderCellDef> Uploaded On </th>
-                                        <td mat-cell *matCellDef="let element" class="no-wrap-td">
+                                        <th mat-header-cell *matHeaderCellDef class="text-center"> Uploaded On </th>
+                                        <td mat-cell *matCellDef="let element" class="no-wrap-td  text-center">
                                             {{element.updatedAt |  date:'MM-dd-yyyy' }} <small class="p-l-10"><span
                                                     class="fa fa-clock-o"></span>
                                                 {{element.updatedAt |  date:'hh:mm a' }} </small></td>
                                     </ng-container>
 
-                                    <ng-container matColumnDef="action">
+                                    <ng-container matColumnDef="action" >
                                         <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                                         <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
                                             <button mat-icon-button color="primary" matTooltip="Download"
