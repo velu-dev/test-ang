@@ -35,7 +35,7 @@ export class BillingComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })
-    this.claimService.getBilling().subscribe(res => {
+    this.claimService.getBillings().subscribe(res => {
       this.dataSource = new MatTableDataSource(res.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

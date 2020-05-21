@@ -195,8 +195,8 @@
                     <input type="text" placeholder="Search Diagnosis Codes" aria-label="Number" matInput
                         [formControl]="diaCodes" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let code of codes" [value]="code">
-                            {{code}}
+                        <mat-option *ngFor="let icd of (filteredICD | async)" [value]="icd[1]">
+                            {{icd[1] | json}}
                         </mat-option>
                     </mat-autocomplete>
                     <span matSuffix class="search-icon icons">
