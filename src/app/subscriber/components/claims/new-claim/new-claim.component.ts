@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Input, Optional, Inject } fro
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
-import { startWith, map, debounceTime, switchMap } from 'rxjs/operators';
+import { startWith, map, debounceTime, switchMap, shareReplay } from 'rxjs/operators';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as globals from '../../../../globals';
@@ -18,6 +18,7 @@ import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 export const PICK_FORMATS = {
   parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -162,6 +163,11 @@ export class NewClaimComponent implements OnInit {
   dateOfbirthEndValue = new Date();
   claimantChanges: boolean = false;
   claimChanges: boolean = false;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches),
+    shareReplay()
+  );
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -170,7 +176,12 @@ export class NewClaimComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     public cookieService: CookieService,
+    private breakpointObserver: BreakpointObserver,
     private _location: Location) {
+
+      this.isHandset$.subscribe(res => {
+        this.isMobile = res;
+      })
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;
       this.filteredDeu = this.deuCtrl.valueChanges
@@ -508,10 +519,11 @@ export class NewClaimComponent implements OnInit {
     );
   }
   newClaimant() {
+    Object.keys(this.claimant.controls).forEach(key => {
+      this.claimant.get(key).setErrors(null);
+    });
     this.isEdit = false;
     this.isClaimantEdit = false;
-    // this.searchInput.reset();
-    // this.emasSearchInput.reset();
     this.addNewClaimant = true;
     this.claimant.reset();
     this.claim.reset();
