@@ -93,7 +93,7 @@ export class InjuryComponent implements OnInit {
   deleteInjury(data, index) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: 'delete', address: false }
+      data: { name: 'delete', address: true }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
