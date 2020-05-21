@@ -15,7 +15,7 @@ import { MatTableDataSource } from '@angular/material';
 export class AppointmentDetailsComponent implements OnInit {
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
-  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
   docx = globals.docx
@@ -61,7 +61,6 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   tabChanges(event) {
-    console.log(event)
     this.dataSource = new MatTableDataSource([])
     let data = this.documentTabData[this.tabNames(event)]
     this.dataSource = new MatTableDataSource(data)
