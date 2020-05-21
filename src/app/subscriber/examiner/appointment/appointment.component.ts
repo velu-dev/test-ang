@@ -31,12 +31,11 @@ export class AppointmentComponent implements OnInit {
   left_voicemail = globals.left_voicemail
   columnName = []
   columnsToDisplay = [];
-  displayedColumns: string[] = ["act", 'name', 'claim_number', 'exam_type', 'location', 'date', "status", "data"];
-  dataSource: MatTableDataSource<any>;
+  dataSource: any;
   filterAll: any;
   roles = [];
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -53,22 +52,23 @@ export class AppointmentComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Name", "Name", "Status"]
+        this.columnName = ["", "Name", "Status"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["", "Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status"]
-        this.columnsToDisplay = ['image', 'claimant_name', 'claim_number', 'exam_type_code', 'location', 'appointment_scheduled_date_time', "status"]
+        this.columnName = ["Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status"]
+        this.columnsToDisplay = ['claimant_name', 'claim_number', 'exam_type_code', 'location', 'appointment_scheduled_date_time', "status"]
       }
     })
   }
 
   ngOnInit() {
-
     this.examinerService.getExaminationDetails().subscribe(res => {
       console.log(res)
-      this.dataSource = new MatTableDataSource(res['data'])
+      this.dataSource = new MatTableDataSource(res['data']);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-      console.log(this.dataSource['_data']['_value'])
+   
     }, error => {
       console.log(error);
       this.dataSource = new MatTableDataSource([])
@@ -113,7 +113,4 @@ export class AppointmentComponent implements OnInit {
 
   }
 
-  filterByRole(value?: string) {
-
-  }
 }

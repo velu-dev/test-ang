@@ -39,45 +39,6 @@
         </div>
     </div>
 
-
-
-
-    <!-- ###~~~~~ Status Tracker  ~~~~~###-->
-    <!-- <div class="status_tracker" fxLayout="row wrap">
-        <div fxFlex="100" class="p-5">
-            <mat-card>
-                <mat-card-header>
-                    <div class="content-wrapper-main-title p-t-5">Billable Item category: Examination - Status </div>
-                </mat-card-header>
-                <mat-card-content class="p-b-15">
-                    <ul class="breadcrumb m-0 m-l-20">
-
-                        <li><a href="#" class="p-l-30"><i class="fa fa-calendar-week p-l-10"></i><span>Forms
-                                    <br />Status</span></a></li>
-
-                        <li><a href="#"><i class="fa fa-clipboard"></i><span>History
-                                    <br />Status</span></a></li>
-                        <li><a href="#"><i class="fa fa-calendar-week"></i><span>Records
-                                    <br /> Status
-                                </span></a></li>
-                        <li><a href="#"><i class="fa fa-sticky-note"></i><span>Examination (30)
-                                    <br /> Status </span></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-exchange-alt"></i><span>Transcription
-                                    <br /> Status </span></a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-notes-medical"></i><span>Report
-                                    <br /> Status </span></a>
-                        <li><a href="#"><i class="fa fa-sticky-note"></i><span>Billing (59)
-                                    <br /> Status </span></a>
-                        </li>
-
-                    </ul>
-                </mat-card-content>
-            </mat-card>
-        </div>
-
-    </div> -->
     <div fxLayout="row wrap" class="claim_details">
         <!-- ###~~~~~ Claimant Information  ~~~~~###-->
         <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
@@ -197,21 +158,32 @@
     <div class="examiner_details" fxLayout="row wrap">
         <div fxFlex="100" class="p-5">
             <mat-card>
-                <div fxLayout="row wrap" fxFlex="100">
-                    <div class="p-t-5" fxFlex="100">
-                        <span>Examiner </span> {{examinationDetails?.examiner_name}}
+                <mat-card-header>
+                    <div fxLayout="row wrap" fxFlex="100">
+                        <div class="p-t-5 examiner">
+                            <span>Examiner </span> {{examinationDetails?.examiner_name}}
+                        </div>
+                        <span class="spacer"></span>
+                        <div class="p-r-5 p-t-5 hide-mobile">
+                            <span class="speality">Specialty </span>
+                            <ul class="m-t-0 p-l-0 speality-list">
+                                <li class="p-t-0">{{examinationDetails?.specialty[0]?.name | ellipsis:30 }}</li>
+                            </ul>
+                        </div>
+                        <button mat-icon-button class="float-right">
+                            <mat-icon (click)="collapsed=!collapsed">
+                                {{collapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+                        </button>
                     </div>
-                    <div class="p-r-5 p-t-5" fxFlex="100">
-                        <span>Specialty </span>
-                        <ul class="m-t-0 p-l-0" *ngFor="let spec of examinationDetails?.specialty">
+                </mat-card-header>
+                <mat-card-content *ngIf="collapsed">
+                    <div fxLayout="row wrap" fxFlex="50">
+                        <span class="speality">Specialty </span>
+                        <ul class="m-t-0 p-l-0 speality-list" *ngFor="let spec of examinationDetails?.specialty">
                             <li>{{spec?.name}} </li>
-                            <!-- <li>Internal Medicine - Cardiovascular Disease,</li>
-                            <li>Internal Medicine - Pulmonary Disease (Pulmonology),</li>
-                            <li>Surgery - General Vascular</li> -->
                         </ul>
                     </div>
-
-                </div>
+                </mat-card-content>
             </mat-card>
         </div>
     </div>
@@ -224,11 +196,12 @@
                     <div class="content-wrapper-main-title p-t-5">Documents</div>
                     <span class="spacer"></span>
                     <button mat-icon-button>
-                        <mat-icon (click)="collapsed=!collapsed">expand_more</mat-icon>
+                        <mat-icon (click)="docCollapsed=!docCollapsed">
+                            {{docCollapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     </button>
                 </mat-card-header>
                 <mat-divider></mat-divider>
-                <mat-card-content *ngIf="collapsed">
+                <mat-card-content *ngIf="docCollapsed">
                     <div fxLayout="row wrap">
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="">
                             <mat-card-content class="m-b-0">
@@ -236,67 +209,34 @@
                                     fxFlex.xl="30">
                                     <mat-form-field class="doc_type" appearance="fill" color="primary" fxFlex="100">
                                         <mat-label>Select Document Type </mat-label>
-                                        <select matNativeControl required [(ngModel)]="documentType">
-                                            <option *ngFor="let doc of documentList" [value]="doc.id">{{doc.document_name}}</option>
-                                            
-                                        </select>
+                                        <mat-select [(ngModel)]="documentType">
+                                            <mat-option *ngFor="let doc of documentList" [value]="doc.id">
+                                                {{doc.document_name}}
+                                            </mat-option>
+                                        </mat-select>
                                     </mat-form-field>
                                 </div>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
                                     <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
-                                    accept=".pdf, .doc, .docx, .excel, .csv">
-                                    <button mat-stroked-button color="primary" (click)="uploader.click()" class="m-t-25 upload_btn">Upload <span
-                                            class="fa fa-upload"></span></button>
+                                        accept=".pdf, .doc, .docx, .excel, .csv">
+                                    <button mat-stroked-button color="primary" (click)="uploader.click()"
+                                        class="m-t-25 upload_btn">Upload <span class="fa fa-upload"></span></button>
                                 </div>
 
                             </mat-card-content>
-
-
                         </div>
-
-                        <!-- <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
-                            class="p-5 uploaded-doc-list">
-                            <mat-card-header>
-                                <mat-card-title class="content-wrapper-main-title">Uploaded Document</mat-card-title>
-                                <mat-card-subtitle class="m-b-0">Uploaded Template here
-                                </mat-card-subtitle>
-                            </mat-card-header>
-                            <mat-card-content>
-                                <div class="doc-list-item">
-                                    <img [src]="docx" alt="docx">
-                                    <div class="doc-name">Venkatesan Mariyappan.docx</div>
-                                </div>
-                                <div class="doc-list-item">
-                                    <img [src]="xls_1" alt="xls">
-                                    <div class="doc-name">Venkatesan Mariyappan.xlx</div>
-                                </div>
-                                <div class="doc-list-item">
-                                    <img [src]="pdf" alt="pdf">
-                                    <div class="doc-name">Venkatesan Mariyappan.pdf</div>
-                                </div>
-                                <div class="doc-list-item">
-                                    <img [src]="docx" alt="docx">
-                                    <div class="doc-name">Venkatesan Mariyappan.docx</div>
-                                </div>
-                                <div class="doc-list-item">
-                                    <img [src]="pdf" alt="pdf">
-                                    <div class="doc-name">Venkatesan Mariyappan.pdf</div>
-                                </div>
-                            </mat-card-content>
-                        </div> -->
-
 
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-5">
                             <button mat-raised-button color="primary"
                                 [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user m-t-5">
                                 <mat-icon>receipt</mat-icon>View Billing
                             </button>
-                            <mat-tab-group class="m-b-10 doc-list">
+                            <mat-tab-group class="doc-list" *ngIf="documentTabData" (selectedTabChange)="tabChanges($event.index);">
                                 <!-- ######~~~~~ Active Users ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> speaker_notes </mat-icon>
-                                        <span> Forms <span class="record-count">(25)</span></span>
+                                        <span> Forms <span class="record-count">({{documentTabData[tabNames(0)]?.length || '0'}})</span></span>
                                     </ng-template>
 
                                 </mat-tab>
@@ -304,14 +244,14 @@
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> history </mat-icon>
-                                        <span> History <span class="history-count">(13)</span></span>
+                                        <span> History <span class="history-count">({{documentTabData[tabNames(1)]?.length || '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
                                 <!-- ######~~~~~ Records ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> library_books </mat-icon>
-                                        <span>Records <span class="record-count">(52)</span></span>
+                                        <span>Records <span class="record-count">({{documentTabData[tabNames(2)]?.length || '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
 
@@ -319,17 +259,24 @@
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> assignment </mat-icon>
-                                        <span>Reports <span class="record-count">(42)</span></span>
+                                        <span>Reports <span class="record-count">({{documentTabData[tabNames(3)]?.length || '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
                                 <!-- ######~~~~~ Transcription  ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> compare_arrows </mat-icon>
-                                        <span>Transcription <span class="record-count">(42)</span></span>
+                                        <span>Transcription <span class="record-count">({{documentTabData[tabNames(4)]?.length || '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
                             </mat-tab-group>
+
+
+                            <div class="table-search">
+                                <div class="table-filter">
+                                    <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue" placeholder="Search by name, date">
+                                </div>
+                            </div>
 
                             <div class="basic-table document_list">
                                 <table mat-table [dataSource]="dataSource">
@@ -341,26 +288,26 @@
 
                                     <ng-container matColumnDef="doc_name">
                                         <th mat-header-cell *matHeaderCellDef> Name</th>
-                                        <td mat-cell *matCellDef="let element"> {{element.doc_name}}</td>
+                                        <td mat-cell *matCellDef="let element"> {{element.file_name}}</td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="date">
                                         <th mat-header-cell *matHeaderCellDef> Uploaded On </th>
                                         <td mat-cell *matCellDef="let element" class="no-wrap-td">
-                                            {{element.date |  date }} <small class="p-l-10"><span
+                                            {{element.updatedAt |  date:'MM-dd-yyyy' }} <small class="p-l-10"><span
                                                     class="fa fa-clock-o"></span>
-                                                {{element.date |  date:'shortTime' }} </small></td>
+                                                {{element.updatedAt |  date:'hh:mm a' }} </small></td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="action">
                                         <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                                         <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
-                                            <button mat-icon-button color="primary" matTooltip="Download"
-                                                matTooltipPosition="before">
+                                            <a mat-icon-button color="primary" matTooltip="Download"
+                                                matTooltipPosition="before" (click)="download(element)" target="_self">
                                                 <span class="fa fa-download"></span>
-                                            </button>
+                                            </a>
                                             <button mat-icon-button color="warn" matTooltip="Delete"
-                                                matTooltipPosition="after">
+                                                matTooltipPosition="after" (click)="deleteDocument(element)">
                                                 <mat-icon>delete_outline</mat-icon>
                                             </button> </td>
                                     </ng-container>
@@ -368,7 +315,7 @@
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
-                                <app-nodata></app-nodata>
+                                <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
                             </div>
                         </div>
                     </div>
