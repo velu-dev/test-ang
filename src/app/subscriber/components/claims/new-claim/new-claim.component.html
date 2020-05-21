@@ -28,8 +28,9 @@
                                                 {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
                                             </mat-icon>
                                         </div>
-                                        <input matInput placeholder="Search by name, date of birth "
-                                            [matAutocomplete]="claimantAutocomplete" [formControl]="searchInput">
+                                        <input matInput id="claimant-input" placeholder="Search by name, date of birth "
+                                            [matAutocomplete]="claimantAutocomplete" #trigger="matAutocompleteTrigger"
+                                            [formControl]="searchInput">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                             <mat-option *ngFor="let option of (filteredClaimant | async)?.data"
                                                 (click)="selectClaimant(option)">
@@ -99,7 +100,7 @@
                                                 <div class="text-center w-100 m-t-10 m-b-50">
                                                     <button mat-raised-button type="button" color="primary"
                                                         class="m-r-15 btn_success" matStepperPrevious
-                                                        (click)="advanceSearchSubmit()">Search</button>
+                                                        (click)="advanceSearchSubmit(trigger);$event.stopPropagation()">Search</button>
                                                     <button mat-raised-button color="warn" type="button" class="m-r-10 "
                                                         (click)="searchStatus = false">
                                                         Cancel </button>
@@ -463,7 +464,7 @@
                             <div fxFlex="100" class="p-t-10 text-center">
                                 <button mat-raised-button type="button"
                                     class="rounded-corner btn_success text-center m-r-5">Save</button>
-                                <button mat-raised-button type="button" class="rounded-corner"
+                                <button mat-raised-button (click)="step = 0" type="button" class="rounded-corner"
                                     color="warn">Cancel</button>
                             </div>
 
@@ -1044,8 +1045,8 @@
                         </div>
 
 
-                        <mat-form-field *ngIf="billable_item.value.exam_type.modifier_id == 1"
-                            appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                        <mat-form-field *ngIf="billable_item.value.exam_type.modifier_id == 1" appearance="standard"
+                            fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                             <mat-label>Primary Language</mat-label>
                             <mat-select formControlName="primary_language_spoken">
                                 <mat-option *ngFor="let language of languageList" [value]="language.id">
