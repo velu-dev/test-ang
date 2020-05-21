@@ -262,8 +262,8 @@
                                         <mat-autocomplete #texAuto="matAutocomplete">
                                             <mat-option (click)="texChange(taxonomy)"
                                                 *ngFor="let taxonomy of (filteredTexonamy | async)"
-                                                [value]="taxonomy.taxonomy_name">
-                                                <span>{{taxonomy.taxonomy_code}} - {{taxonomy.taxonomy_name}}</span>
+                                                [value]="taxonomy.taxonomy_name" title="{{taxonomy?.taxonomy_code}} - {{taxonomy?.taxonomy_name}}">
+                                                <span>{{taxonomy?.taxonomy_code}} - {{taxonomy?.taxonomy_name}}</span>
                                             </mat-option>
                                         </mat-autocomplete>
                                     </mat-form-field>

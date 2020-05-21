@@ -152,11 +152,14 @@ export class SubscriberSettingsComponent implements OnInit {
     this.billingInit();
     this.claimService.seedData('taxonomy').subscribe(response => {
       this.taxonomyList = response['data'];
+      this.taxonomyList.map(data=>{
+        data.code_name = data.taxonomy_code.toLowerCase() + '-' + data.taxonomy_name.toLowerCase()
+      })
       this.filteredTexonamy = this.texoCtrl.valueChanges
-        .pipe(
-          startWith(''),
-          map(tex => tex ? this._filteTex(tex) : this.taxonomyList.slice())
-        );
+      .pipe(
+        startWith(''),
+        map(value => this._filteTex(value))
+      );
     }, error => {
       console.log("error", error)
     })
@@ -224,8 +227,7 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   private _filteTex(value: string): any[] {
     const filterValue = value.toLowerCase();
-
-    return this.taxonomyList.filter(deu => deu.taxonomy_name.toLowerCase().indexOf(filterValue) === 0);
+    return this.taxonomyList.filter(deu => deu.code_name.toLowerCase().includes(filterValue));
   }
   billingInit() {
     this.billingForm = this.formBuilder.group({
