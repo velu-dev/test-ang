@@ -171,7 +171,7 @@
                             </ul>
                         </div>
                         <button mat-icon-button class="float-right">
-                            <mat-icon (click)="collapsed=!collapsed">expand_more</mat-icon>
+                            <mat-icon (click)="collapsed=!collapsed">{{collapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                         </button>
                     </div>
                 </mat-card-header>
@@ -195,11 +195,11 @@
                     <div class="content-wrapper-main-title p-t-5">Documents</div>
                     <span class="spacer"></span>
                     <button mat-icon-button>
-                        <mat-icon (click)="collapsed=!collapsed">expand_more</mat-icon>
+                        <mat-icon (click)="docCollapsed=!docCollapsed">{{docCollapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     </button>
                 </mat-card-header>
                 <mat-divider></mat-divider>
-                <mat-card-content *ngIf="collapsed">
+                <mat-card-content *ngIf="docCollapsed">
                     <div fxLayout="row wrap">
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="">
                             <mat-card-content class="m-b-0">

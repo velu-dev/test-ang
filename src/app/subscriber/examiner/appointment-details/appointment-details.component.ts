@@ -24,6 +24,7 @@ export class AppointmentDetailsComponent implements OnInit {
   claim_id: number;
   examinationDetails: any;
   collapsed = false;
+  docCollapsed = false;
   documentType: any;
   documentList: any;
   documentTabData: any;
