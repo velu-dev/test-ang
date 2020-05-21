@@ -508,10 +508,11 @@ export class NewClaimComponent implements OnInit {
     );
   }
   newClaimant() {
+    Object.keys(this.claimant.controls).forEach(key => {
+      this.claimant.get(key).setErrors(null);
+    });
     this.isEdit = false;
     this.isClaimantEdit = false;
-    // this.searchInput.reset();
-    // this.emasSearchInput.reset();
     this.addNewClaimant = true;
     this.claimant.reset();
     this.claim.reset();
