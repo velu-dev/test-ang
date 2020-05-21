@@ -72,15 +72,55 @@
             &:hover {
                 box-shadow: $box-shadow-1;
             }
-            div {
+            mat-card-header {
                 div {
-                    font-size: $font-size-1;
-                    color: $text-gray;
-                    display: inherit;
-                    span {
+                    .examiner {
+                        span {
+                            font-weight: $font-weight-bold;
+                            min-width: 120px;
+                            display: inline-block;
+                            &::after {
+                                content: ":";
+                                display: inline-block;
+                                float: right;
+                                padding-right: 10px;
+                            }
+                        }
+                    }
+                    div {
+                        font-size: $font-size-1;
+                        color: $text-gray;
+                        display: inherit;
+                        .speality {
+                            font-weight: $font-weight-bold;
+                            font-size: $font-size-1;
+                            min-width: 120px;
+                            display: inline-block;
+                            color: $text-gray;
+                            &::after {
+                                content: ":";
+                                display: inline-block;
+                                float: right;
+                                padding-right: 10px;
+                            }
+                        }
+                        .speality-list {
+                            list-style: none;
+                            display: inline;
+                            li {
+                                padding-top: 5px;
+                                color: $text-gray;
+                            }
+                        }
+                    }
+                }
+            }
+            mat-card-content {
+                div {
+                    .speality {
                         font-weight: $font-weight-bold;
                         font-size: $font-size-1;
-                        min-width: 150px;
+                        min-width: 120px;
                         display: inline-block;
                         color: $text-gray;
                         &::after {
@@ -90,11 +130,12 @@
                             padding-right: 10px;
                         }
                     }
-                    ul {
+                    .speality-list {
                         list-style: none;
                         display: inline;
                         li {
-                            padding-top: 5px;
+                            padding-top: 0px;
+                            color: $text-gray;
                         }
                     }
                 }
@@ -131,38 +172,19 @@
                                 padding: 50px;
                             }
                         }
-
-                        .uploaded-doc-list {
-                            padding: 5px;
-                            mat-card-content {
-                                margin-top: 10px;
-                                max-height: 270px;
-                                overflow: auto;
-                                .doc-list-item {
-                                    padding: 10px;
-                                    display: inline-block;
-                                    width: $width-95;
-                                    border: 1px solid $bg-light-blue;
-                                    box-shadow: $box-shadow-2;
-                                    margin-bottom: 5px;
-                                    &:hover {
-                                        box-shadow: $box-shadow-3;
-                                    }
-                                    img {
-                                        width: 25px;
-                                        float: left;
-                                        padding-right: 10px;
-                                        height: auto;
-                                    }
-                                    .doc-name {
-                                        font-size: $font-size-1;
-                                        vertical-align: middle;
-                                        padding: 5px;
-                                        font-weight: $font-weight-bold;
-                                    }
-                                }
-                            }
+                    }
+                    .table-search {
+                        padding: 0px;
+                        .table-filter {
+                            border: 1px solid transparent;
+                            padding-left: 0px;
                         }
+                    }
+                    .document_list {
+                        width: 100%;
+                        min-height: 300px;
+                        max-height: 300px;
+                        overflow: auto;
                     }
                 }
             }
