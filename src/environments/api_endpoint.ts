@@ -90,5 +90,6 @@ export const api_endpoint = {
     getExamination: 'examinations/details',
     getAllExamination: 'examinations/',
     documentType:'examinations/document-upload',
-    getDocumentData:'examinations/document-details/'
+    getDocumentData:'examinations/document-details/',
+    deleteDocument:'examinations/document-remove/'
 }

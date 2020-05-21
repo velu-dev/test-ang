@@ -71,4 +71,7 @@ export class ExaminerService {
   getDocumentData(id){
     return this.http.get(environment.baseUrl + api_endpoint.getDocumentData + id)
   }
+  deleteDocument(id){
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id)
+  }
 }
