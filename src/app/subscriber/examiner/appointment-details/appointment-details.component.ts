@@ -45,6 +45,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.getDocumentData();
     }, error => {
       console.log(error);
+      this.dataSource = new MatTableDataSource([]);
     })
 
     this.examinerService.seedData('document_type').subscribe(type => {
@@ -58,6 +59,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.tabChanges(this.tabIndex)
     }, error => {
       console.log(error);
+      this.dataSource = new MatTableDataSource([]);
     })
   }
 
@@ -65,7 +67,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.tabIndex = event
     this.filterValue = '';
     this.dataSource = new MatTableDataSource([])
-    let data = this.documentTabData[this.tabNames(event)]
+    let data = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
     this.dataSource = new MatTableDataSource(data)
   }
 
