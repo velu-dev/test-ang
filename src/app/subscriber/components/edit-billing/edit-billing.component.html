@@ -3,17 +3,19 @@
 
         <div class="status">
             <ul class="billing-status m-t-10 m-b-0">
-               <li><a href="#" title=""><i class="fa fa-calendar-week p-l-10"></i><em class="p-t-15">Bill Submissions</em></a>
-               </li>
-               <li class="complete"> <a href="#" title=""><i class="fa fa-clipboard p-l-10"></i><em>Bill Submissions <br />7/12/2020</em></a>
-               </li>
-               <li><a href="#" title=""><i class="fa fa-calendar-week p-l-10"></i><em>Second Bill Review Submission 7/12/2020 </em></a>
-               </li>            
-               <li class="inprogress"
-                  >
-               </li>
-           </ul>
-       </div>
+                <li><a href="#" title=""><i class="fa fa-calendar-week p-l-10"></i><em class="p-t-15">Bill
+                            Submissions</em></a>
+                </li>
+                <li class="complete"> <a href="#" title=""><i class="fa fa-clipboard p-l-10"></i><em>Bill Submissions
+                            <br />7/12/2020</em></a>
+                </li>
+                <li><a href="#" title=""><i class="fa fa-calendar-week p-l-10"></i><em>Second Bill Review Submission
+                            7/12/2020 </em></a>
+                </li>
+                <li class="inprogress">
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -74,22 +76,23 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-20">
-                <div fxLayout="row wrap" fxFlex="100">
+                <div fxLayout="row wrap" fxFlex="100" *ngIf="!isLoading">
                     <div class="grid-list">
                         <div>Date of service</div>
-                        <div>5/14/2020</div>
+                        <div>{{billingDetail?.service[0]?.appointment_scheduled_date_time| date:'MM-dd-yyyy'}}</div>
                     </div>
                     <div class="grid-list">
                         <div>Charge</div>
-                        <div>$ 2200.00</div>
+                        <div>${{billingDetail?.service[0]?.paid_amt}}</div>
                     </div>
                     <div class="grid-list">
                         <div>Procedure codes</div>
-                        <div>ML 101</div>
+                        <div>{{billingDetail?.service[0]?.procedural_code}}</div>
                     </div>
                     <div class="grid-list">
                         <div>Modifiers</div>
-                        <div>-</div>
+                        <div *ngFor="let modifier of billingDetail?.service[0]?.modifiers">
+                            {{modifier.modifier_code + " " + modifier.modifier}}</div>
                     </div>
                     <div class="grid-list">
                         <div>Psychiatric</div>
@@ -111,17 +114,17 @@
                 <div fxLayout="row wrap" fxFlex="100">
                     <div class="grid-list">
                         <div>Name</div>
-                        <div>Steve S. Steveson </div>
+                        <div>{{billingDetail?.claimant?.first_name + " " + billingDetail?.claimant?.last_name}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>Date of birth</div>
-                        <div>3/3/1991 </div>
+                        <div>{{billingDetail?.claimant?.date_of_birth | date:'MM-dd-yyyy'}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>SSN</div>
-                        <div>575-89-1234</div>
+                        <div>{{billingDetail?.claimant?.ssn}}</div>
                     </div>
                 </div>
             </mat-card-content>
@@ -132,29 +135,31 @@
     <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.0" fxFlex.lg="33.3" fxFlex.xl="33.3" class="p-5">
         <mat-card>
             <mat-card-header>
-                <div class="content-wrapper-main-title p-t-5">Claim Information - #567839</div>
+                <div class="content-wrapper-main-title p-t-5">Claim Information -
+                    #{{ billingDetail?.claim?.claim_number }}
+                </div>
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-20">
                 <div fxLayout="row wrap" fxFlex="100">
                     <div class="grid-list">
                         <div>Injury</div>
-                        <div>R Arm fracture</div>
+                        <div *ngFor="let injury of billingDetail?.injuries">{{injury?.body_part_name}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>Date of injury</div>
-                        <div>4/21/2017</div>
+                        <div>{{billingDetail?.claim?.date_of_injury}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>Claims administrator</div>
-                        <div>Corvel</div>
+                        <div>{{billingDetail?.claim?.agent_first_name + billingDetail?.claim?.agent_last_name}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>Claim status</div>
-                        <div>-</div>
+                        <div>{{billingDetail?.claim?.claim_status}}</div>
                     </div>
                 </div>
             </mat-card-content>
@@ -179,11 +184,15 @@
                 <mat-form-field fxFlex="100" fxFlex.xs="100" fxFlex.sm="85" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85"
                     appearance="fill" class="fixed_search">
                     <input type="text" placeholder="Search Diagnosis Codes" aria-label="Number" matInput
-                        [formControl]="diaCodes" [matAutocomplete]="auto">
+                        [formControl]="icdCtrl" [matAutocomplete]="auto" ([ngModel])="icdValue">
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let code of codes" [value]="code">
-                            {{code}}
-                        </mat-option>
+                        <ng-template *ngIf="(filteredICD | async)">
+                            <mat-option *ngFor="let icd of (filteredICD | async)" [value]="icd[1]">
+                                {{icd[0] + " "+ icd[1]}}
+                            </mat-option>
+                        </ng-template>
+                        <!-- <mat-option *ngIf="(filteredICD | async).length == 0">No Data
+                            Found</mat-option> -->
                     </mat-autocomplete>
                     <span matSuffix class="search-icon icons">
                         <mat-icon>search</mat-icon>

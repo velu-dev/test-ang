@@ -113,7 +113,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.fileUpload.nativeElement.value = "";
         this.documentType = null;
         this.getDocumentData();
-        this.alertService.openSnackBar("File added successfully", 'success');
+        this.alertService.openSnackBar("File added successfully!", 'success');
       }, error => {
         this.fileUpload.nativeElement.value = "";
         this.selectedFile = null;
@@ -145,7 +145,13 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-       
+       this.examinerService.deleteDocument(data.id).subscribe(res=>{
+         console.log(res['data']);
+         this.getDocumentData();
+         this.alertService.openSnackBar("File deleted successfully!", 'success');
+       },error=>{
+        this.alertService.openSnackBar(error.error.message, 'error');
+       })
       }
     })
 
