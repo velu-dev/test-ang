@@ -41,8 +41,9 @@ import { ClaimantDetailsComponent } from './components/claims/common/claimant-de
 import { UpdateBillableItemComponent } from './components/claims/common/update-billable-item/update-billable-item.component';
 import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
 import { BillingComponent } from './components/billing/billing.component';
-import { NewBillingComponent } from './components/new-billing/new-billing.component';
+import { NewBillingComponent, BillilgDialog } from './components/new-billing/new-billing.component';
 import { EditBillingComponent } from './components/edit-billing/edit-billing.component';
+import { DialogueComponent } from '../shared/components/dialogue/dialogue.component';
 
 @NgModule({
   declarations: [
@@ -89,19 +90,21 @@ import { EditBillingComponent } from './components/edit-billing/edit-billing.com
     NewBillableItemComponent,
     BillingComponent,
     NewBillingComponent,
-    EditBillingComponent
+    EditBillingComponent,
+    BillilgDialog,
   ],
   entryComponents: [
     ClaimantPopupComponent,
     ClaimPopupComponent,
     BillableitemPopupComponent,
-    InjuryPopup
+    InjuryPopup,
+    BillilgDialog,
   ],
   imports: [
     CommonModule,
     SubscriberRoutingModule,
     SharedModule,
-    FullCalendarModule
+    FullCalendarModule,
   ],
   providers: [SubscriberUserService, ClaimService, ExaminerService]
 })

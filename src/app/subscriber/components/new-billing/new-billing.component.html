@@ -26,9 +26,15 @@
 
 <div fxLayout="row" class="w-100 billing_status">
     <div fxLayout="100">
-        <ul class="bill-status p-l-0 m-l-0">
-            <li><a href="#">Bill Submissions <br /></a></li>
-        </ul>
+        <div class="status">
+            <ul class="billing-status m-t-10 m-b-0">
+                <li><a href="#" title=""><i class="fa fa-calendar-week p-l-10"></i><em class="p-t-15">Bill
+                            Submissions</em></a>
+                </li>
+                <li class="inprogress">
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -244,7 +250,8 @@
     <mat-card-header>
         <div class="m-0 content-wrapper-main-title">Bill Line Items</div>
         <span class="spacer"></span>
-        <button mat-stroked-button color="primary" class="m-b-5"> <span class="fa fa-plus"> </span> Add New
+        <button mat-stroked-button color="primary" class="m-b-5" (click)="openDialog()"> <span class="fa fa-plus">
+            </span> Add New
             Line</button>
     </mat-card-header>
     <mat-divider></mat-divider>
@@ -256,42 +263,63 @@
                 <ng-container matColumnDef="item">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Item </th>
                     <td mat-cell *matCellDef="let element" class="no-wrap-td"> {{element.item}} </td>
+                    <td mat-footer-cell *matFooterCellDef> <strong>Total</strong> </td>
+
                 </ng-container>
 
                 <!-- Procedure code Column -->
                 <ng-container matColumnDef="procedure_code">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Procedure code </th>
                     <td mat-cell *matCellDef="let element" class="no-wrap-td"> {{element.procedure_code}} </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="modifer">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Modifer </th>
                     <td mat-cell *matCellDef="let element"> {{element.modifer}} </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
 
                 <!-- Units Column -->
                 <ng-container matColumnDef="units">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Units </th>
                     <td mat-cell *matCellDef="let element">
-                        <input type="text" name="" id="">
+                        {{element.units}}
                     </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
 
                 <!-- Units Column -->
                 <ng-container matColumnDef="charge">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Charge </th>
                     <td mat-cell *matCellDef="let element"> {{element.charge}} </td>
+                    <td mat-footer-cell *matFooterCellDef> <strong> $ 4000.00 </strong></td>
                 </ng-container>
 
                 <!-- Units Column -->
                 <ng-container matColumnDef="fee_schedule">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Expected fee schedule </th>
                     <td mat-cell *matCellDef="let element"> {{element.fee_schedule}} </td>
+                    <td mat-footer-cell *matFooterCellDef> <strong> $ 4000.00 </strong> </td>
+                </ng-container>
+
+                <!-- Units Column -->
+                <ng-container matColumnDef="action" class="action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button class="edit">
+                            <i class="fa fa-pencil-alt"></i>
+                        </button>
+                        <button mat-icon-button color="warn">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button> </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
             </table>
         </div>
     </mat-card-content>

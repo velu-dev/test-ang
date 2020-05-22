@@ -23,7 +23,7 @@
     mat-card {
         box-shadow: $box-shadow-2;
         padding-bottom: 0px;
-        min-height: 210px;
+        min-height: 220px;
         &:hover {
             box-shadow: $box-shadow-1;
         }
@@ -52,6 +52,16 @@
     }
     .billing_list {
         min-height: auto;
+    }
+    .action {
+        th,
+        td {
+            text-align: center !important;
+            display: block;
+        }
+    }
+    .edit {
+        color: $btn-success;
     }
 }
 
