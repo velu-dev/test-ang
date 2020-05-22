@@ -55,8 +55,8 @@ export class AppointmentComponent implements OnInit {
         this.columnName = ["", "Name", "Status"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["Name", "Claim Numbers", "Exam Type", "Location", "Date", "Status"]
-        this.columnsToDisplay = ['claimant_name', 'claim_number', 'exam_type_code', 'location', 'appointment_scheduled_date_time', "status"]
+        this.columnName = ["Name", "Claim Number","Examiner", "Exam Type", "Location", "Date", "Status"]
+        this.columnsToDisplay = ['claimant_name', 'claim_number', 'examiner', 'exam_type_code', 'location', 'appointment_scheduled_date_time', "status"]
       }
     })
   }
