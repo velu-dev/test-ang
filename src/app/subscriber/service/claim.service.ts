@@ -106,7 +106,10 @@ export class ClaimService {
     data = this.http.get("https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&authenticity_token=&terms=" + term)
     return data;
   }
-  getBilling(): Observable<any> {
-    return this.http.get("https://tst01api.simplexam.com/billing/details")
+  getBillings(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getBillings)
+  }
+  getBilling(claim_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getBilling + claim_id)
   }
 }

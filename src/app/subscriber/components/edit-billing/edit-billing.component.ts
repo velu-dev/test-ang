@@ -3,7 +3,9 @@ import * as globals from '../../../globals';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, debounceTime, switchMap } from 'rxjs/operators';
+import { ClaimService } from '../../service/claim.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 export interface PeriodicElement {
   item: string;
@@ -54,29 +56,30 @@ export class EditBillingComponent implements OnInit {
   myControl = new FormControl();
   options: string[] = ['123456', 'M Venkat', 'M Rajan'];
   diaCodes = new FormControl();
-  codes: string[] = [
-    'K50.00 - Crohn disease of small intestine without complications',
-    'K50.011 - Crohns disease of small intestine with rectal bleeding',
-    'K50.00 - Crohn disease of small intestine without complications',
-    'K50.011 - Crohns disease of small intestine with rectal bleeding',
-    'K50.00 - Crohn disease of small intestine without complications',
-    'K50.011 - Crohns disease of small intestine with rectal bleeding',
-    'K50.00 - Crohn disease of small intestine without complications',
-    'K50.011 - Crohns disease of small intestine with rectal bleeding',
-    'K50.00 - Crohn disease of small intestine without complications',
-    'K50.011 - Crohns disease of small intestine with rectal bleeding',
-  ];
   filteredOptions: Observable<string[]>;
   filteredICD: Observable<[]>;
-
-  constructor() { }
+  icdCtrl = new FormControl();
+  icdValue = '';
+  billingDetail = {};
+  isLoading: any;
+  constructor(private claimService: ClaimService, private route: ActivatedRoute) {
+    this.isLoading = true;
+    this.route.params.subscribe(param => {
+      if (param.id) {
+        this.claimService.getBilling(param.id).subscribe(res => {
+          this.billingDetail = res.data;
+          this.isLoading = false;
+        })
+      }
+    })
+  }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
+    this.filteredICD = this.icdCtrl.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap(value => this.claimService.getICD10(value)));
   }
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
