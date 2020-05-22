@@ -68,7 +68,7 @@ export class AppointmentComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-   
+
     }, error => {
       console.log(error);
       this.dataSource = new MatTableDataSource([])
@@ -102,9 +102,10 @@ export class AppointmentComponent implements OnInit {
       data.push({
         "Name": res.claimant_name,
         "Claim Numbers": res.claim_number,
-        "Exam Type": res.exam_type,
-        "Location": res.location,
-        "Date": moment(res.appointment_scheduled_date_time).format("MM-DD-YYYY"),
+        "Exam Type": res.exam_type_code,
+        "Location": res.location.street1 + ' ' + res.location.street2
+          + ' ' + res.location.city + ' ' + res.location.state + ' ' + res.location.zip_code,
+        "Date": res.appointment_scheduled_date_time ?  moment(res.appointment_scheduled_date_time).format("MM-DD-YYYY") : '',
         "Status": res.state,
       })
 
