@@ -84,13 +84,16 @@ const routes: Routes = [{
 },
 {
   path: "billing",
-  component: BillingComponent
-}, {
-  path: "new-billing",
-  component: NewBillingComponent
-}, {
-  path: "edit-billing",
-  component: EditBillingComponent
+  children: [{
+    path: "",
+    component: BillingComponent,
+  }, {
+    path: "new",
+    component: NewBillingComponent
+  }, {
+    path: ":id",
+    component: EditBillingComponent
+  }]
 },
 {
   path: "claims",

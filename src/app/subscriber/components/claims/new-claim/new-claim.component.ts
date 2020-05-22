@@ -480,7 +480,7 @@ export class NewClaimComponent implements OnInit {
         procedure_type: [null, Validators.required],
         modifier_id: [null],
         is_psychiatric: [false],
-        primary_language_spoken: [null]
+        primary_language_spoken: [{ value: '', disabled: true }]
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
@@ -519,10 +519,11 @@ export class NewClaimComponent implements OnInit {
     );
   }
   newClaimant() {
+    Object.keys(this.claimant.controls).forEach(key => {
+      this.claimant.get(key).setErrors(null);
+    });
     this.isEdit = false;
     this.isClaimantEdit = false;
-    // this.searchInput.reset();
-    // this.emasSearchInput.reset();
     this.addNewClaimant = true;
     this.claimant.reset();
     this.claim.reset();
@@ -1148,5 +1149,13 @@ export class NewClaimComponent implements OnInit {
         this.routeDashboard();
       }
     })
+  }
+
+  modifyChange(){
+    if(this.billable_item.value.exam_type.modifier_id.includes(1)){
+      this.billable_item.patchValue({
+        exam_type: { primary_language_spoken:this.claimant.value.primary_language_spoken }
+      })
+    }
   }
 }

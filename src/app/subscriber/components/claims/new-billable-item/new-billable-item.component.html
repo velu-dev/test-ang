@@ -33,9 +33,8 @@
                         </mat-form-field>
                     </div>
                 </div>
-            </div>
 
-            <mat-form-field *ngIf="billable_item.value.exam_type.modifier_id == 1" appearance="standard"
+                <mat-form-field *ngIf="billable_item.value?.exam_type?.modifier_id?.includes(1)" appearance="standard"
                 fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                 <mat-label>Primary Language</mat-label>
                 <mat-select formControlName="primary_language_spoken">
@@ -45,6 +44,9 @@
                 </mat-select>
                 <mat-error>Select valid primary language</mat-error>
             </mat-form-field>
+            </div>
+
+           
 
             <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                 Examination
@@ -84,7 +86,8 @@
                     <mat-autocomplete #examinarAuto="matAutocomplete">
                         <mat-option *ngFor="let address of (examinarAddress | async)"
                             (click)="changeExaminarAddress(address)" [value]="address.street1">
-                            {{address.street1}}
+                            {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
+                            {{address.zip_code}}
                             <!-- <small>Population: {{state.population}}</small> -->
                         </mat-option>
                         <mat-option *ngIf="(examinarAddress | async)?.length == 0" disabled>Location not found
@@ -103,7 +106,9 @@
                                     <!-- <span><i class="fa fa-phone-alt"></i>
                                     {{selectedExaminarAddress.}}</span> -->
                                 </div>
-                                <div class="address" mat-line>{{selectedExaminarAddress.street1}}</div>
+                                <div class="address" mat-line>{{selectedExaminarAddress.street1}}
+                                    {{selectedExaminarAddress.street2}} {{selectedExaminarAddress.city}}
+                                    {{selectedExaminarAddress.state}} {{selectedExaminarAddress.zip_code}}</div>
                             </mat-list-item>
                         </mat-list>
                         <mat-list *ngIf="!isAddressSelected">

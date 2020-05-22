@@ -1036,7 +1036,7 @@
                                 </mat-checkbox>
                                 <mat-form-field appearance="standard">
                                     <mat-label>Modifiers</mat-label>
-                                    <mat-select formControlName="modifier_id" multiple>
+                                    <mat-select formControlName="modifier_id" multiple (selectionChange)="modifyChange()">
                                         <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
                                             {{modifier.modifier_code}} - {{modifier.modifier}}
                                         </mat-option>
@@ -1046,7 +1046,7 @@
                         </div>
 
 
-                        <mat-form-field *ngIf="billable_item.value.exam_type.modifier_id == 1" appearance="standard"
+                        <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(1)" appearance="standard"
                             fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                             <mat-label>Primary Language</mat-label>
                             <mat-select formControlName="primary_language_spoken">
