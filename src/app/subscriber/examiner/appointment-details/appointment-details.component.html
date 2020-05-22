@@ -211,7 +211,7 @@
                                         <mat-label>Select Document Type </mat-label>
                                         <mat-select [(ngModel)]="documentType">
                                             <mat-option *ngFor="let doc of documentList" [value]="doc.id">
-                                                {{doc.document_name}}
+                                                {{doc.document_category_name}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>

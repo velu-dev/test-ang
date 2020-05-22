@@ -48,7 +48,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.dataSource = new MatTableDataSource([]);
     })
 
-    this.examinerService.seedData('document_type').subscribe(type => {
+    this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
     })
   }
@@ -74,17 +74,17 @@ export class AppointmentDetailsComponent implements OnInit {
   tabNames(index) {
     switch (index) {
       case 0:
-        return 'claim_forms';
+        return 'form';
       case 1:
-        return 'claim_history';
+        return 'history';
       case 2:
-        return 'record_template';
+        return 'records';
       case 3:
-        return 'examiner_report'
+        return 'report'
       case 4:
-        return 'examination_transcription';
+        return 'transcription';
       default:
-        return 'claim_forms';
+        return 'form';
     }
 
   }
