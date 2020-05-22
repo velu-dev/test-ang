@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map, debounceTime, switchMap } from 'rxjs/operators';
 import { ClaimService } from '../../service/claim.service';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import * as globals from '../../../globals';
 
 export interface PeriodicElement {
@@ -35,6 +35,10 @@ export interface DiagnosisList {
   code: string;
   name: string;
 
+
+}
+export interface DialogData {
+  animal: 'panda' | 'unicorn' | 'lion';
 }
 @Component({
   selector: 'app-new-billing',
@@ -43,7 +47,7 @@ export interface DiagnosisList {
 })
 export class NewBillingComponent implements OnInit {
   docx = globals.docx;
-  displayedColumns: string[] = ['item', 'procedure_code', 'modifer', 'units', 'charge', 'fee_schedule'];
+  displayedColumns: string[] = ['item', 'procedure_code', 'modifer', 'units', 'charge', 'fee_schedule', 'action'];
   displayedColumns1: string[] = ['name', 'type'];
   displayedColumns2: string[] = ['item', 'procedure_code', 'modifer', 'units', 'charge', 'fee_schedule', 'payment', 'balance'];
   displayedColumns3: string[] = ['code', 'name', 'action'];
@@ -70,11 +74,17 @@ export class NewBillingComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   filteredICD: Observable<[]>;
   icdCtrl = new FormControl();
-  constructor(private claimService: ClaimService) {
+  constructor(public dialog: MatDialog, private claimService: ClaimService) {
     this.filteredICD = this.icdCtrl.valueChanges
       .pipe(
         debounceTime(300),
         switchMap(value => this.claimService.getICD10(value)));
+  }
+  openDialog() {
+    this.dialog.open(BillilgDialog, {
+      width: '800px',
+
+    });
   }
 
   ngOnInit() {
@@ -93,9 +103,10 @@ export class NewBillingComponent implements OnInit {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { item: 'QME Examination', procedure_code: 'ML 101', modifer: '93', units: '', charge: '$ 2200.00', fee_schedule: '$ 2200.00', },
-  { item: 'Report pages', procedure_code: '', modifer: '', units: '', charge: '$ 2200.00', fee_schedule: '$ 2200.00', }
+  { item: 'QME Examination', procedure_code: 'ML 101', modifer: '93', units: '1', charge: '$ 2200.00', fee_schedule: '$ 2200.00', },
+  { item: 'Report pages', procedure_code: '', modifer: '', units: '758', charge: '$ 2200.00', fee_schedule: '$ 2200.00', }
 ];
+
 
 const ELEMENT_DATA1: DocList[] = [
   { name: 'steveson-123ABC-QME.pdf', type: 'Report' },
@@ -112,4 +123,13 @@ const ELEMENT_DATA3: DiagnosisList[] = [
   { code: 'K50.011 ', name: 'Crohns disease of small intestine with rectal bleeding' },
 ];
 
+
+@Component({
+  selector: 'billing-dialog',
+  templateUrl: 'billing-dialog.html',
+})
+export class BillilgDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+}
 
