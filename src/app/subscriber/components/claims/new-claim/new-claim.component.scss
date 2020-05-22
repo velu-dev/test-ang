@@ -40,12 +40,28 @@ mat-card {
       }
     }
   }
-  .Upload_ {
-    button {
-      width: 120px;
+  .correspondence-file-upload {
+    @media only screen and (max-width: 568px) {
+    margin-bottom: 20px;
     }
-    mat-form-field {
-      width: calc(100% - 150px);
+    .Upload_ {
+      button {
+        width: 120px;
+      }
+      mat-form-field {
+        width: calc(100% - 150px);
+        @media only screen and (max-width: 568px) {
+          width: $width-100 !important;
+        }
+      }
+    }
+    div {
+      .btn_success {
+        margin-top: 25px;
+        @media only screen and (max-width: 568px) {
+          margin-top: 0px;
+          }
+      }
     }
   }
 }
@@ -125,45 +141,45 @@ mat-card {
     background-color: $bg-light-blue;
     box-shadow: $box-shadow-3;
     &:hover {
-        background-color: $bg-light-blue;
-        cursor: pointer;
+      background-color: $bg-light-blue;
+      cursor: pointer;
     }
     .name {
-        font-size: $font-size-1;
-        font-size: $font-weight-bold;
-        padding: 10px 5px 5px 5px;
-        width: $width-100;
-        div {
-            min-width: 150px;
-            float: left;
-            @media only screen and (max-width: 568px) {
-                min-width: auto;
-                margin-bottom: 10px;
-                float: none;
-                display: block;
-            }
-            i {
-                opacity: 0.5;
-                padding-right: 10px;
-            }
+      font-size: $font-size-1;
+      font-size: $font-weight-bold;
+      padding: 10px 5px 5px 5px;
+      width: $width-100;
+      div {
+        min-width: 150px;
+        float: left;
+        @media only screen and (max-width: 568px) {
+          min-width: auto;
+          margin-bottom: 10px;
+          float: none;
+          display: block;
         }
-        span {
-            text-align: left;
-            font-weight: $font-weight-medium;
-            i {
-                padding: 5px;
-                opacity: 0.5;
-            }
+        i {
+          opacity: 0.5;
+          padding-right: 10px;
         }
+      }
+      span {
+        text-align: left;
+        font-weight: $font-weight-medium;
+        i {
+          padding: 5px;
+          opacity: 0.5;
+        }
+      }
     }
     .address {
-        color: $text-gray;
-        padding: 0 0 5px 5px;
+      color: $text-gray;
+      padding: 0 0 5px 5px;
     }
     .edit {
-        color: $btn_success;
+      color: $btn_success;
     }
-}
+  }
 }
 .fixed-checkbox {
   mat-checkbox {
@@ -174,5 +190,3 @@ mat-card {
     padding-left: 0px !important;
   }
 }
-
-

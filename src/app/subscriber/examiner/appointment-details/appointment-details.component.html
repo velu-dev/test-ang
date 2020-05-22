@@ -220,7 +220,9 @@
                                     <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
                                         accept=".pdf, .doc, .docx, .excel, .csv">
                                     <button mat-stroked-button color="primary" (click)="uploader.click()"
-                                        class="m-t-25 upload_btn">Upload <span class="fa fa-upload"></span></button>
+                                        class="m-t-25 upload_btn"
+                                        matTooltip="Supported file formats: .pdf, .doc, .docx, .excel, .csv"
+                                        matTooltipPosition="right">Upload <span class="fa fa-upload"></span></button>
                                 </div>
 
                             </mat-card-content>
@@ -236,7 +238,8 @@
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> speaker_notes </mat-icon>
-                                        <span> Forms <span class="record-count">({{documentTabData ? documentTabData[tabNames(0)]?.length || '0': '0'}})</span></span>
+                                        <span> Forms <span
+                                                class="record-count">({{documentTabData ? documentTabData[tabNames(0)]?.length || '0': '0'}})</span></span>
                                     </ng-template>
 
                                 </mat-tab>
@@ -244,14 +247,16 @@
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> history </mat-icon>
-                                        <span> History <span class="history-count">({{documentTabData ? documentTabData[tabNames(1)]?.length || '0': '0'}})</span></span>
+                                        <span> History <span
+                                                class="history-count">({{documentTabData ? documentTabData[tabNames(1)]?.length || '0': '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
                                 <!-- ######~~~~~ Records ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> library_books </mat-icon>
-                                        <span>Records <span class="record-count">({{documentTabData ? documentTabData[tabNames(2)]?.length || '0' : '0'}})</span></span>
+                                        <span>Records <span
+                                                class="record-count">({{documentTabData ? documentTabData[tabNames(2)]?.length || '0' : '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
 
@@ -259,14 +264,16 @@
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> assignment </mat-icon>
-                                        <span>Reports <span class="record-count">({{documentTabData ? documentTabData[tabNames(3)]?.length || '0' : '0'}})</span></span>
+                                        <span>Reports <span
+                                                class="record-count">({{documentTabData ? documentTabData[tabNames(3)]?.length || '0' : '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
                                 <!-- ######~~~~~ Transcription  ~~~~~##### -->
                                 <mat-tab>
                                     <ng-template mat-tab-label>
                                         <mat-icon class="p-r-5"> compare_arrows </mat-icon>
-                                        <span>Transcription <span class="record-count">({{documentTabData ? documentTabData[tabNames(4)]?.length || '0' : '0'}})</span></span>
+                                        <span>Transcription <span
+                                                class="record-count">({{documentTabData ? documentTabData[tabNames(4)]?.length || '0' : '0'}})</span></span>
                                     </ng-template>
                                 </mat-tab>
                             </mat-tab-group>
@@ -274,7 +281,8 @@
 
                             <div class="table-search">
                                 <div class="table-filter">
-                                    <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue" placeholder="Search by name, date">
+                                    <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+                                        placeholder="Search by name, date">
                                 </div>
                             </div>
 
@@ -299,7 +307,7 @@
                                                 {{element.updatedAt |  date:'hh:mm a' }} </small></td>
                                     </ng-container>
 
-                                    <ng-container matColumnDef="action" >
+                                    <ng-container matColumnDef="action">
                                         <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                                         <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
                                             <a mat-icon-button color="primary" matTooltip="Download"

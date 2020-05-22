@@ -507,8 +507,8 @@
                             <div class="sub-title">Correspondence</div>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
-                            <form [formGroup]="correspondForm" fxFlex="100" (keydown.enter)="$event.preventDefault()">
-                                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40" fxFlex.xl="40"
+                            <form [formGroup]="correspondForm"  fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.preventDefault()" class="correspondence-file-upload">
+                                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                                     class="Upload_">
                                     <button type="button" (click)="uploader.click()" mat-stroked-button color="primary">
                                         Select File<i class="fa fa-upload p-l-5"></i></button>
@@ -522,16 +522,16 @@
                                     </mat-form-field>
                                 </div>
 
-                                <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="40" fxFlex.lg="40"
-                                    fxFlex.xl="40" appearance="standard">
+                                <mat-form-field fxFlex="100" fxFlex.sm="70" fxFlex.md="30" fxFlex.lg="30"
+                                    fxFlex.xl="30" appearance="standard">
                                     <mat-label>Note</mat-label>
                                     <input matInput formControlName="note" placeholder="Note">
                                     <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
                                 </mat-form-field>
-                                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+                                <div fxFlex="100" fxFlex.sm="30" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                                     <button mat-stroked-button type="button" [disabled]="correspondForm.invalid"
                                         (click)="correspondFormSubmit();" color="primary"
-                                        class="m-t-15  p-r-20 btn_success">Add
+                                        class="p-r-20 btn_success">Add
                                     </button>
                                 </div>
                             </form>
