@@ -60,7 +60,7 @@ export class EditBillingComponent implements OnInit {
   filteredICD: Observable<[]>;
   icdCtrl = new FormControl();
   icdValue = '';
-  billingDetail = {};
+  billingDetail:any = {};
   isLoading: any;
   constructor(private claimService: ClaimService, private route: ActivatedRoute) {
     this.isLoading = true;

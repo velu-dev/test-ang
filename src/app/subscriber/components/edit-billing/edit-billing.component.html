@@ -79,19 +79,19 @@
                 <div fxLayout="row wrap" fxFlex="100" *ngIf="!isLoading">
                     <div class="grid-list">
                         <div>Date of service</div>
-                        <div>{{billingDetail.service[0].appointment_scheduled_date_time| date:'MM-dd-yyyy'}}</div>
+                        <div>{{billingDetail?.service[0]?.appointment_scheduled_date_time| date:'MM-dd-yyyy'}}</div>
                     </div>
                     <div class="grid-list">
                         <div>Charge</div>
-                        <div>${{billingDetail.service[0].paid_amt}}</div>
+                        <div>${{billingDetail?.service[0]?.paid_amt}}</div>
                     </div>
                     <div class="grid-list">
                         <div>Procedure codes</div>
-                        <div>{{billingDetail.service[0].procedural_code}}</div>
+                        <div>{{billingDetail?.service[0]?.procedural_code}}</div>
                     </div>
                     <div class="grid-list">
                         <div>Modifiers</div>
-                        <div *ngFor="let modifier of billingDetail.service[0].modifiers">
+                        <div *ngFor="let modifier of billingDetail?.service[0]?.modifiers">
                             {{modifier.modifier_code + " " + modifier.modifier}}</div>
                     </div>
                     <div class="grid-list">
@@ -114,17 +114,17 @@
                 <div fxLayout="row wrap" fxFlex="100">
                     <div class="grid-list">
                         <div>Name</div>
-                        <div>{{billingDetail.claimant.first_name + " " + billingDetail.claimant.last_name}}</div>
+                        <div>{{billingDetail?.claimant?.first_name + " " + billingDetail?.claimant?.last_name}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>Date of birth</div>
-                        <div>{{billingDetail.claimant.date_of_birth | date:'MM-dd-yyyy'}}</div>
+                        <div>{{billingDetail?.claimant?.date_of_birth | date:'MM-dd-yyyy'}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>SSN</div>
-                        <div>{{billingDetail.claimant.ssn}}</div>
+                        <div>{{billingDetail?.claimant?.ssn}}</div>
                     </div>
                 </div>
             </mat-card-content>
@@ -136,7 +136,7 @@
         <mat-card>
             <mat-card-header>
                 <div class="content-wrapper-main-title p-t-5">Claim Information -
-                    #{{ billingDetail.claim.claim_number }}
+                    #{{ billingDetail?.claim?.claim_number }}
                 </div>
             </mat-card-header>
             <mat-divider></mat-divider>
@@ -144,22 +144,22 @@
                 <div fxLayout="row wrap" fxFlex="100">
                     <div class="grid-list">
                         <div>Injury</div>
-                        <div *ngFor="let injury of billingDetail.injuries">{{injury.body_part_name}}</div>
+                        <div *ngFor="let injury of billingDetail?.injuries">{{injury?.body_part_name}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>Date of injury</div>
-                        <div>{{billingDetail.claim.date_of_injury}}</div>
+                        <div>{{billingDetail?.claim?.date_of_injury}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>Claims administrator</div>
-                        <div>{{billingDetail.claim.agent_first_name + billingDetail.claim.agent_last_name}}</div>
+                        <div>{{billingDetail?.claim?.agent_first_name + billingDetail?.claim?.agent_last_name}}</div>
                     </div>
 
                     <div class="grid-list">
                         <div>Claim status</div>
-                        <div>{{billingDetail.claim.claim_status}}</div>
+                        <div>{{billingDetail?.claim?.claim_status}}</div>
                     </div>
                 </div>
             </mat-card-content>
