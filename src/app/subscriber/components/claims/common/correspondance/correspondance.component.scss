@@ -4,12 +4,29 @@ mat-form-field {
     padding: 10px !important;
 }
 
-.Upload_ {
-    button {
-        width: 120px;
+.correspondence-file-upload {
+    @media only screen and (max-width: 568px) {
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
-    mat-form-field {
-        width: calc(100% - 150px);
+    .Upload_ {
+        button {
+            width: 120px;
+        }
+        mat-form-field {
+            width: calc(100% - 150px);
+            @media only screen and (max-width: 568px) {
+                width: $width-100 !important;
+            }
+        }
+    }
+    div {
+        .btn_success {
+            margin-top: 25px;
+            @media only screen and (max-width: 568px) {
+                margin-top: 0px;
+            }
+        }
     }
 }
 .upload-btn {

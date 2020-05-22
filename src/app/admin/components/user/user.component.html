@@ -49,9 +49,11 @@
             </mat-list>
         </mat-menu>
         <div class="user-detail">
-            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
+                matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-                    <th mat-header-cell *matHeaderCellDef > <span mat-sort-header *ngIf="columnName[i] != 'Cancel Invite'">{{columnName[i]}}</span> </th>
+                    <th mat-header-cell *matHeaderCellDef> <span mat-sort-header
+                            *ngIf="columnName[i] != 'Cancel Invite'">{{columnName[i]}}</span> </th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="i == 0 && isMobile">
                             <mat-icon mat-raised-button
@@ -59,14 +61,21 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="column == 'last_name'" [title]="element?.last_name"> {{element?.last_name | ellipsis:22}} </span>
-                        <span *ngIf="column == 'first_name'" [title]="element?.first_name">{{element?.first_name | ellipsis:22}}</span>
-                        <span *ngIf="column == 'sign_in_email_id'" [title]="element?.sign_in_email_id">{{element?.sign_in_email_id}}</span>
+                        <span *ngIf="column == 'last_name'" [title]="element?.last_name">
+                            {{element?.last_name | ellipsis:22}} </span>
+                        <span *ngIf="column == 'first_name'"
+                            [title]="element?.first_name">{{element?.first_name | ellipsis:22}}</span>
+                        <span *ngIf="column == 'sign_in_email_id'"
+                            [title]="element?.sign_in_email_id">{{element?.sign_in_email_id}}</span>
                         <span *ngIf="column == 'role_name'">{{element?.role_name}}</span>
-                        <span *ngIf="column == 'organization_name'" [title]="element?.organization_name">{{element?.organization_type == 'INDV' ? '-' : element?.organization_name | ellipsis:22 }}</span>
+                        <span *ngIf="column == 'organization_name'"
+                            [title]="element?.organization_name">{{element?.organization_type == 'INDV' ? '-' : element?.organization_name | ellipsis:22 }}</span>
+                        <span *ngIf="column == 'account_no'"
+                            [title]="element?.account_no">{{element?.account_no }}</span>
                         <span *ngIf="column == 'createdAt'">{{element[column] | date:'MM-dd-yyyy'}} </span>
-                        <span *ngIf="i == (columnsToDisplay.length-1)">                            
-                            <span class="user-disable-enable" *ngIf="tabIndex != 1" (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
+                        <span *ngIf="i == (columnsToDisplay.length-1)">
+                            <span class="user-disable-enable" *ngIf="tabIndex != 1"
+                                (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
                             <!-- <span class="user-disable-enable" *ngIf="tabIndex == 1"  (click)="onDisable($event, element)"> Cancel </span> -->
                         </span>
                     </td>
@@ -80,7 +89,9 @@
                                 <div class="name"><span>Email ID</span> {{element.sign_in_email_id}} </div>
                                 <div class="weight"><span>Role</span> {{element.role_name}} </div>
                                 <div class="weight"><span>Company</span> {{element.organization_name}} </div>
-                                <div class="role_name"><span>Subscribed On</span> {{element.createdAt | date:'MM-dd-yyyy'}} </div>
+                                <div class="weight"><span>Account Number</span> {{element.account_no}} </div>
+                                <div class="role_name"><span>Subscribed On</span>
+                                    {{element.createdAt | date:'MM-dd-yyyy'}} </div>
                             </div>
                         </div>
                     </td>

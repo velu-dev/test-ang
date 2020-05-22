@@ -46,7 +46,7 @@
                         <span *ngIf="columnName[i] == 'Location'">{{element[column].street1 }} {{element[column].street2}}
                              {{element[column].city}} {{element[column].state}} {{element[column].zip_code}}</span>
                         <span *ngIf="columnName[i] != 'Date' && columnName[i] != 'Location' && columnName[i] != 'Examiner'">{{element[column] }}</span>
-                        <span *ngIf="columnName[i] == 'Date'">{{element[column] | date:'MM-dd-yyyy'}}</span>
+                        <span *ngIf="columnName[i] == 'Date'" class="no-wrap-td">{{element[column] | date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="columnName[i] == 'Examiner'">{{element?.examiner_first_name}} {{element?.examiner_middle_name}} {{element?.examiner_last_name}}</span>
                         <!-- <span *ngIf="i == (columnsToDisplay.length-1)">
                             <span class="user-disable-enable" *ngIf="tabIndex != 1"> <button mat-icon-button
