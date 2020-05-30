@@ -103,7 +103,7 @@ export class NewClaimComponent implements OnInit {
   isSubmit = false;
   emasSearchInput = new FormControl('', Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')]));
   searchInput = new FormControl();
-  filteredClaimant: Observable<any[]>;
+  filteredClaimant: any;
   claimForm: FormGroup;
   errorMessages = errors;
   claim: FormGroup;
@@ -1042,7 +1042,7 @@ export class NewClaimComponent implements OnInit {
     }
 
   }
-  file: File = null;
+  file: any = null;
   note: string = null;
   documents_ids = [];
   correspondFormSubmit() {

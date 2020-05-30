@@ -42,6 +42,7 @@ export class ManageLocationComponent implements OnInit {
   columnName = []
   columnsToDisplay = [];
   isMobile = false;
+  expandedElement:any;
   constructor(private examinerService: ExaminerService,
     private router: Router,
     public dialog: MatDialog,
@@ -96,6 +97,9 @@ export class ManageLocationComponent implements OnInit {
   editAddress(data) {
     console.log(data)
     this.router.navigate(['/subscriber/staff/edit-address', data.examiner_id, data.address_id])
+  }
+  editClaim(e){
+    
   }
 
   openDialog(dialogue, data) {

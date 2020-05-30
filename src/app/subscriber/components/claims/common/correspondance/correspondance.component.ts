@@ -26,7 +26,7 @@ export class CorrespondanceComponent implements OnInit {
   @Input('claimId') claimId;
   documents_ids = [];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
-  file:File = null;
+  file:any = null;
   note:string = null;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,

@@ -24,7 +24,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   addresssearch = new FormControl();
   examinerSearch = new FormControl();
 
-  filteredOptions: Observable<any[]>;;
+  filteredOptions: any;;
   examinerFilteredOptions: Observable<any>;
   examinerOptions: any;
   addressForm: FormGroup;

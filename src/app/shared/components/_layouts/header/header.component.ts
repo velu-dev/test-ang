@@ -94,10 +94,10 @@ export class HeaderComponent implements OnInit {
     //   console.table(res)
     // })
   }
-  @HostListener('document:fullscreenchange', ['$event'])
-  @HostListener('document:webkitfullscreenchange', ['$event'])
-  @HostListener('document:mozfullscreenchange', ['$event'])
-  @HostListener('document:MSFullscreenChange', ['$event'])
+  @HostListener('document:fullscreenchange', [])
+  @HostListener('document:webkitfullscreenchange', [])
+  @HostListener('document:mozfullscreenchange', [])
+  @HostListener('document:MSFullscreenChange', [])
   fullscreenmode() {
 
     if (this.toggleClass == 'fullscreen_exit') {

@@ -121,7 +121,7 @@
                                 <input matInput [dropSpecialCharacters]="false"
                                     [mask]="userForm.value.w9_number_type == 'SSN' ? '000-00-0000' : '00-0000000'"
                                     placeholder="Tax ID" formControlName="w9_number">
-                                <mat-error *ngIf="isSubmitted">Enter valid Tax ID</mat-error>
+                                <mat-error *ngIf="isSubmit">Enter valid Tax ID</mat-error>
                             </mat-form-field>
                         </div>
     
@@ -130,7 +130,7 @@
                             <mat-label>National Provider Identifier (NPI) number</mat-label>
                             <input matInput type="number" formControlName="national_provider_identifier"
                                 placeholder="National Provider Identifier (NPI) number">
-                            <mat-error *ngIf="isSubmitted">Enter valid NPI number</mat-error>
+                            <mat-error *ngIf="isSubmit">Enter valid NPI number</mat-error>
                         </mat-form-field>
     
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
@@ -141,14 +141,14 @@
                                     {{specialty?.specialty_code}}-{{specialty?.specialty}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="isSubmitted">Error Message here</mat-error>
+                            <mat-error *ngIf="isSubmit">Error Message here</mat-error>
                         </mat-form-field>
     
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                             fxFlex.xs="100">
                             <mat-label>License Number</mat-label>
                             <input matInput formControlName="state_license_number" placeholder="License Number">
-                            <mat-error *ngIf="isSubmitted">Enter valid License Number</mat-error>
+                            <mat-error *ngIf="isSubmit">Enter valid License Number</mat-error>
                         </mat-form-field>
     
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
@@ -159,7 +159,7 @@
                                     {{state.state}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="isSubmitted">Select valid License State</mat-error>
+                            <mat-error *ngIf="isSubmit">Select valid License State</mat-error>
                         </mat-form-field>
     
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
@@ -177,7 +177,7 @@
                                 </mat-option>
     
                             </mat-select>
-                            <mat-error *ngIf="isSubmitted">Error Message here</mat-error>
+                            <mat-error *ngIf="isSubmit">Error Message here</mat-error>
                         </mat-form-field>
 
                         <div class="text-center w-100 m-t-10 m-b-10">

@@ -31,6 +31,8 @@ export class ExaminerSettingComponent implements OnInit {
   billing_address: boolean = false;
   billingForm: FormGroup;
   first_name: string;
+  specialtyList:any;
+  taxonomyList:any;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
