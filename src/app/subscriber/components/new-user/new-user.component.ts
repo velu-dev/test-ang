@@ -45,7 +45,7 @@ export class NewUserComponent implements OnInit {
   myControl = new FormControl();
   taxonomyList: any;
   specialtyList: any;
-  isExaminer: boolean = true;
+  isExaminer: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -75,18 +75,62 @@ export class NewUserComponent implements OnInit {
         this.activeTitle = res.breadcrumb.active_title;
       }
     })
-    // this.route.params.subscribe(params_res => {
-    //   if (params_res.id) {
-    //     this.isEdit = true;
+    this.route.params.subscribe(params_res => {
+      if (params_res.id) {
+        this.isEdit = true;
 
-    //     this.userService.getUser(params_res.id).subscribe(res => {
-    //       this.userData = res.data;
-    //       console.log(res.data)
-    //       this.userForm.setValue(this.userData)
-    //     })
-    //   } else {
-    //   }
-    // })
+        this.userService.getEditUser(params_res.id).subscribe(res1 => {
+          let res:any = res1
+          this.userData = res.data;
+          console.log(res.data);
+          if(res.data.role_id == 11){
+            this.isExaminer = true
+          }
+          let user = {
+            id: res.data.id,
+            first_name: res.data.first_name,
+            last_name: res.data.last_name,
+            middle_name: res.data.middle_name,
+            company_name: res.data.company_name,
+            sign_in_email_id: res.data.sign_in_email_id,
+            role_id: res.data.role_id
+          }
+          let examiner = {
+            w9_number: res.data.w9_number,
+            w9_number_type: res.data.w9_number_type,
+            national_provider_identifier: res.data.national_provider_identifier,
+            specialty: res.data.specialty,
+            state_license_number: res.data.state_license_number,
+            state_of_license_id: res.data.state_of_license_id,
+            taxonomy_id: res.data.taxonomy_id
+          }
+
+          let address = {
+            phone1: res.data.address_details.phone1,
+            phone2: res.data.address_details.phone2,
+            fax1: res.data.address_details.fax1,
+            fax2: res.data.address_details.fax2,
+            mobile1: res.data.address_details.mobile1,
+            mobile2: res.data.address_details.mobile2,
+            street1: res.data.address_details.street1,
+            street2: res.data.address_details.street2,
+            city: res.data.address_details.city,
+            state: res.data.address_details.state,
+            zip_code: res.data.address_details.zip_code,
+            notes: res.data.address_details.notes,
+            email1: res.data.address_details.email1,
+            email2: res.data.address_details.email2,
+            contact_person: res.data.address_details.contact_person
+          }
+
+          this.userForm.patchValue(user)
+          this.userExaminerForm.patchValue(examiner)
+          this.addressForm.patchValue(address)
+          this.userForm.value.role_id = res.data.role_id;
+        })
+      } else {
+      }
+    })
   }
 
   ngOnInit() {
@@ -133,9 +177,9 @@ export class NewUserComponent implements OnInit {
     this.userExaminerForm = this.formBuilder.group({
       w9_number: [''],
       w9_number_type: ['EIN'],
-      national_provider_identifier: ['',Validators.compose([Validators.required,Validators.maxLength(15)])],
+      national_provider_identifier: ['', Validators.compose([Validators.required, Validators.maxLength(15)])],
       specialty: [''],
-      state_license_number: ['',Validators.compose([Validators.maxLength(15)])],
+      state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
       state_of_license_id: [''],
       taxonomy_id: ['']
 
@@ -174,44 +218,55 @@ export class NewUserComponent implements OnInit {
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
     Object.keys(this.userForm.controls).forEach((key) => {
-      if(this.userForm.get(key).value && typeof(this.userForm.get(key).value) == 'string')
-      this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
+      if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
+        this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
     });
     if (this.userForm.invalid) {
       window.scrollTo(10, 10)
+      this.userForm.markAllAsTouched();
+      return;
+    }
+    if (this.userExaminerForm.invalid) {
+      window.scrollTo(10, 10)
+      this.userExaminerForm.markAllAsTouched();
       return;
     }
     if (this.addressForm.invalid) {
+      this.addressForm.markAllAsTouched();
       return;
     }
     if (this.isExaminer) {
+     
       this.userForm.value.w9_number = this.userExaminerForm.value.w9_number;
       this.userForm.value.w9_number_type = this.userExaminerForm.value.w9_number_type;
       this.userForm.value.national_provider_identifier = this.userExaminerForm.value.national_provider_identifier;
       this.userForm.value.specialty = this.userExaminerForm.value.specialty;
       this.userForm.value.state_license_number = this.userExaminerForm.value.state_license_number;
       this.userForm.value.taxonomy_id = this.userExaminerForm.value.taxonomy_id;
-      this.userForm.value.taxonomy_code = this.userExaminerForm.value.taxonomy_code;
+      this.userForm.value.state_of_license_id = this.userExaminerForm.value.state_of_license_id;
       this.userForm.value.address_details = this.addressForm.value;
+     
     }
-
+    if (!this.isEdit) {
+     
     this.userService.createUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("User created successfully", 'success');
       this.router.navigate(['/subscriber/users'])
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
-    // if (!this.isEdit) {
 
-    // } 
-    // else {
-    //   this.userService.updateUser(this.userForm.value).subscribe(res => {
-    //     this.alertService.openSnackBar("User update successfully", 'success');
-    //     this.router.navigate(['/subscriber/users'])
-    //   }, error => {
-    //     this.alertService.openSnackBar(error.message, 'error');
-    //   })
-    // }
+    } 
+    else {
+      this.userForm.value.role_id =   this.userData.role_id
+      console.log(this.userForm.value)
+      this.userService.updateEditUser(this.userForm.value.id,this.userForm.value).subscribe(res => {
+        this.alertService.openSnackBar("User update successfully", 'success');
+        this.router.navigate(['/subscriber/users'])
+      }, error => {
+        this.alertService.openSnackBar(error.message, 'error');
+      })
+     }
   }
   cancel() {
     this._location.back();

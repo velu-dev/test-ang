@@ -30,7 +30,8 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
-import {OwlMomentDateTimeModule} from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
+import { TextMaskModule } from 'angular2-text-mask';
 
 export const MY_MOMENT_FORMATS = {
   parseInput: 'MM-DD-YYYY HH:mm A',
@@ -63,9 +64,10 @@ export const MY_MOMENT_FORMATS = {
     StoreModule.forFeature("breadcrumb", breadcrumbreducer),
     StoreModule.forFeature("header", headerreducer),
     NgxSkeletonLoaderModule,
-    LoggerModule.forRoot({ serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG,serverLogLevel: NgxLoggerLevel.OFF}),
+    LoggerModule.forRoot({ serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.OFF }),
     NgxMaskModule.forRoot(),
-    OwlDateTimeModule, OwlNativeDateTimeModule,OwlMomentDateTimeModule
+    OwlDateTimeModule, OwlNativeDateTimeModule, OwlMomentDateTimeModule,
+    TextMaskModule
   ],
   exports: [
     MaterialModule,
@@ -85,7 +87,8 @@ export const MY_MOMENT_FORMATS = {
     NgxMaskModule,
     LoggerModule,
     FilterPipe,
-    OwlDateTimeModule, OwlNativeDateTimeModule
+    OwlDateTimeModule, OwlNativeDateTimeModule,
+    TextMaskModule
   ],
   providers: [
     CognitoService,
@@ -93,7 +96,7 @@ export const MY_MOMENT_FORMATS = {
     ExportService,
     UserService,
     CookieService,
-    {provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS},
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

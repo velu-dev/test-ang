@@ -103,7 +103,7 @@
     </div> -->
 
     <div fxLayout="row wrap" fxFlex="100">
-      <form fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.preventDefault()" [formGroup]="claimantForm">
+      <form fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="claimantForm">
 
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
@@ -199,14 +199,14 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Phone Number</mat-label>
-          <input matInput type="text" mask="(000) 000-0000" formControlName="phone_no_1" placeholder="Phone Number"
+          <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no_1" placeholder="Phone Number"
             autocomplete="off">
           <mat-error>Enter valid phone number</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Alternate Phone Number</mat-label>
-          <input matInput type="text" mask="(000) 000-0000" formControlName="phone_no_2"
+          <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no_2"
             placeholder="Alternate Phone Number" autocomplete="off">
           <mat-error>Enter valid alternative phone number</mat-error>
         </mat-form-field>

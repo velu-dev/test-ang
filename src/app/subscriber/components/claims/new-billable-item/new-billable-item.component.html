@@ -5,7 +5,7 @@
     <mat-divider></mat-divider>
 
     <mat-card-content>
-        <form fxLayout="row wrap" fxFlex="100" [formGroup]="billable_item" (keydown.enter)="$event.preventDefault()">
+        <form fxLayout="row wrap" fxFlex="100" [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
             <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Procedural Type*</mat-label>
@@ -20,33 +20,32 @@
 
 
                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <div fxLayout="row wrap" fxFlex="100" class="fixed-checkbox">
-                        <mat-checkbox class="p-t-40 p-l-20" labelPosition="before" formControlName="is_psychiatric">
-                            Psychiatric</mat-checkbox>
-                        <mat-form-field appearance="standard">
-                            <mat-label>Modifiers</mat-label>
-                            <mat-select formControlName="modifier_id" multiple>
-                                <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
-                                    {{modifier.modifier_code}} - {{modifier.modifier}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
+                    <mat-checkbox class="mat-check" labelPosition="before" formControlName="is_psychiatric">
+                        Psychiatric</mat-checkbox>
                 </div>
 
+                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Modifiers</mat-label>
+                    <mat-select formControlName="modifier_id" multiple>
+                        <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
+                            {{modifier.modifier_code}} - {{modifier.modifier}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
                 <mat-form-field *ngIf="billable_item.value?.exam_type?.modifier_id?.includes(1)" appearance="standard"
-                fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
-                <mat-label>Primary Language</mat-label>
-                <mat-select formControlName="primary_language_spoken">
-                    <mat-option *ngFor="let language of languageList" [value]="language.id">
-                        {{language.language}}
-                    </mat-option>
-                </mat-select>
-                <mat-error>Select valid primary language</mat-error>
-            </mat-form-field>
+                    fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Primary Language</mat-label>
+                    <mat-select formControlName="primary_language_spoken">
+                        <mat-option *ngFor="let language of languageList" [value]="language.id">
+                            {{language.language}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Select valid primary language</mat-error>
+                </mat-form-field>
             </div>
 
-           
+
 
             <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                 Examination

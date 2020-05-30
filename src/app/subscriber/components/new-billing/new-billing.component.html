@@ -199,10 +199,10 @@
                 <mat-form-field fxFlex="100" fxFlex.xs="100" fxFlex.sm="85" fxFlex.md="85" fxFlex.lg="85" fxFlex.xl="85"
                     appearance="fill" class="fixed_search">
                     <input type="text" placeholder="Search Diagnosis Codes" aria-label="Number" matInput
-                        [formControl]="diaCodes" [matAutocomplete]="auto">
+                        [formControl]="icdCtrl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let icd of (filteredICD | async)" [value]="icd[1]">
-                            {{icd[1] | json}}
+                        <mat-option *ngFor="let icd of filteredICD" [value]="icd[1]">
+                            {{icd[0] + " "+ icd[1]}}
                         </mat-option>
                     </mat-autocomplete>
                     <span matSuffix class="search-icon icons">

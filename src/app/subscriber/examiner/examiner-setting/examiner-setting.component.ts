@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import * as headerActions from "./../../../shared/store/header.actions";
 import { ExaminerService } from '../../service/examiner.service';
 import { Location } from '@angular/common';
+import { IntercomService } from 'src/app/services/intercom.service';
 
 @Component({
   selector: 'app-examiner-setting',
@@ -29,6 +30,7 @@ export class ExaminerSettingComponent implements OnInit {
   states: any;
   billing_address: boolean = false;
   billingForm: FormGroup;
+  first_name: string;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -39,7 +41,8 @@ export class ExaminerSettingComponent implements OnInit {
     private claimService: ClaimService,
     private examinerService: ExaminerService,
     private store: Store<{ header: any }>,
-    public _location: Location
+    public _location: Location,
+    private intercom: IntercomService
   ) {
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)
@@ -47,16 +50,40 @@ export class ExaminerSettingComponent implements OnInit {
       if (res.data.organization_type == 'INDV') {
         res.data.company_name = '';
       }
-      let userDetails = {
-        id: res.data.id,
-        role_id: res.data.role_id,
-        first_name: res.data.first_name,
-        last_name: res.data.last_name,
-        middle_name: res.data.middle_name,
-        company_name: res.data.company_name,
-        sign_in_email_id: res.data.sign_in_email_id,
-      }
-      this.userForm.setValue(userDetails)
+      this.first_name = res.data.first_name;
+      // let userDetails = {
+      //   id: res.data.id,
+      //   role_id: res.data.role_id,
+      //   first_name: res.data.first_name,
+      //   last_name: res.data.last_name,
+      //   middle_name: res.data.middle_name,
+      //   company_name: res.data.company_name,
+      //   sign_in_email_id: res.data.sign_in_email_id,
+      // }
+      // this.userForm.patchValue(userDetails)
+      
+      this.userService.getEditUser(res.data.id).subscribe(res1 => {
+        let res:any = res1
+        console.log(res.data);
+        let user = {
+          id: res.data.id,
+          first_name: res.data.first_name,
+          last_name: res.data.last_name,
+          middle_name: res.data.middle_name,
+          company_name: res.data.company_name,
+          sign_in_email_id: res.data.sign_in_email_id,
+          role_id: res.data.role_id,
+          w9_number: res.data.w9_number,
+          w9_number_type: res.data.w9_number_type,
+          national_provider_identifier: res.data.national_provider_identifier,
+          specialty: res.data.specialty,
+          state_license_number: res.data.state_license_number,
+          state_of_license_id: res.data.state_of_license_id,
+          taxonomy_id: res.data.taxonomy_id
+        }
+        this.userForm.patchValue(user)
+      })
+     
     })
   }
   ngOnInit() {
@@ -70,9 +97,16 @@ export class ExaminerSettingComponent implements OnInit {
       role_id: [''],
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
-      middle_name: ['', Validators.compose([ Validators.maxLength(50)])],
+      middle_name: ['', Validators.compose([Validators.maxLength(50)])],
       company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
-      sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
+      sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      w9_number_type: [''],
+      w9_number: [''],
+      national_provider_identifier: ['',Validators.compose([Validators.maxLength(15)])],
+      specialty: [''],
+      state_license_number: ['',Validators.compose([Validators.maxLength(15)])],
+      taxonomy_id: [''],
+      state_of_license_id: ['']
     });
 
     this.addressForm = this.formBuilder.group({
@@ -177,16 +211,20 @@ export class ExaminerSettingComponent implements OnInit {
   userformSubmit() {
     this.isSubmit = true;
     Object.keys(this.userForm.controls).forEach((key) => {
-      if(this.userForm.get(key).value && typeof(this.userForm.get(key).value) == 'string')
-      this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
+      if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
+        this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
     });
     if (this.userForm.invalid) {
       return;
     }
-    this.userService.updateUser(this.userForm.value).subscribe(res => {
+    this.userService.updateEditUser(this.userForm.value.id,this.userForm.value).subscribe(res => {
+      if (this.first_name != this.userForm.value.first_name) {
+        this.first_name = this.userForm.value.first_name;
+        this.intercom.setUser(true);
+      }
       this.alertService.openSnackBar("Profile updated successfully", 'success');
-      this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
-      window.location.reload();
+      //this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
+      //window.location.reload();
       this.isSubmit = false;
     }, error => {
       this.isSubmit = false;

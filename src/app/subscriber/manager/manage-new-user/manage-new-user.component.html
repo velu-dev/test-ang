@@ -5,7 +5,7 @@
   <mat-divider></mat-divider>
   <mat-card-content>
     <!--Form start-->
-    <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userSubmit()" class="mat-grid-form">
+    <form fxLayout="row wrap" [formGroup]="userForm" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" (ngSubmit)="userSubmit()" class="mat-grid-form">
 
       <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>First name*</mat-label>

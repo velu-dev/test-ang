@@ -5,8 +5,8 @@
     <mat-divider></mat-divider>
     <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
-            <form [formGroup]="claimant" (keydown.enter)="$event.preventDefault()">
-                <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claimant</ng-template>
+            <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
+                <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant</ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
 
@@ -20,6 +20,12 @@
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
 
                                 <mat-tab label="Search Claimants ">
+                                    <button mat-stroked-button class="show-mobile m-t-10" color="primary"
+                                        (click)="searchStatus = !searchStatus ">Advanced Search
+                                        <mat-icon class="p-l-10">
+                                            {{!searchStatus ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}
+                                        </mat-icon>
+                                    </button>
                                     <mat-form-field appearance="fill" fxFlex="100"
                                         hideRequiredMarker="hideRequiredControl.auto"
                                         floatLabel="floatLabelControl.auto" class="advanced_search w-100">
@@ -31,22 +37,23 @@
                                         </div>
                                         <input matInput id="claimant-input" placeholder="Search by name, date of birth "
                                             [matAutocomplete]="claimantAutocomplete" #trigger="matAutocompleteTrigger"
-                                            [formControl]="searchInput">
+                                            [formControl]="searchInput" class="p-l-10">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
-                                            <mat-option *ngFor="let option of (filteredClaimant | async)?.data"
+                                            <mat-option *ngFor="let option of filteredClaimant?.data"
                                                 (click)="selectClaimant(option)">
                                                 <span><strong>Full Name:</strong> {{option.first_name}}
                                                     {{option.middle_name}} {{option.last_name}} <strong>DOB:</strong>
                                                     {{option.date_of_birth | date:'MM-dd-yyyy' }}</span>
                                             </mat-option>
-                                            <mat-option *ngIf="(filteredClaimant | async)?.data.length == 0">No Data
+                                            <mat-option *ngIf="filteredClaimant?.data.length == 0">No Data
                                                 Found</mat-option>
                                         </mat-autocomplete>
                                         <span matSuffix class="search-icon icons">
                                             <mat-icon>search</mat-icon>
                                         </span>
                                     </mat-form-field>
-                                    <form [formGroup]="advanceSearch" (keydown.enter)="$event.preventDefault()">
+                                    <form [formGroup]="advanceSearch"
+                                        (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                                         <div class="advance_search" *ngIf="searchStatus">
                                             <div fxLayout="row wrap" fxFlex="100">
 
@@ -185,8 +192,8 @@
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth*</mat-label>
-                                <input matInput placeholder="MM-DD-YYYY" formControlName="date_of_birth"
-                                    autocomplete="off" [max]="today" [matDatepicker]="date_of_birth">
+                                <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
+                                    [matDatepicker]="date_of_birth" [max]="today" formControlName="date_of_birth">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="isClaimantSubmited">Enter valid date of birth</mat-error>
@@ -249,16 +256,17 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone Number</mat-label>
-                                <input matInput type="text" mask="000 000-0000" formControlName="phone_no_1"
-                                    placeholder="Phone Number" autocomplete="off">
+                                <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                    formControlName="phone_no_1" placeholder="Phone Number" autocomplete="off">
                                 <mat-error>Enter valid phone number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Alternate Phone Number</mat-label>
-                                <input matInput type="text" mask="000 000-0000" formControlName="phone_no_2"
-                                    placeholder="Alternate Phone Number" autocomplete="off">
+                                <input matInput (keypress)="numberOnly($event)" type="text" mask="(000) 000-0000"
+                                    formControlName="phone_no_2" placeholder="Alternate Phone Number"
+                                    autocomplete="off">
                                 <mat-error>Enter valid alternative phone number</mat-error>
                             </mat-form-field>
 
@@ -303,7 +311,7 @@
                                 <mat-error>Enter valid zip code</mat-error>
                             </mat-form-field>
 
-                            <div class="text-center w-100 m-t-10 m-b-50">
+                            <div class="text-center w-100 m-t-10 m-b-50 action-button">
 
                                 <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner"
                                     (click)="createClaimant('close')">
@@ -321,11 +329,17 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="claim">
-            <form [formGroup]="claim" (keydown.enter)="$event.preventDefault()">
-                <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Claim</ng-template>
+            <form [formGroup]="claim" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" id="claimant">
+                <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claim</ng-template>
                 <mat-card>
                     <mat-card-header>
-                        <div class="sub-title">Claim</div>
+                        <mat-panel-title>
+                            <div class="sub-title">Claimant</div>
+                        </mat-panel-title>
+                        <mat-panel-description class="mat-error">
+                            <div class="alert">{{errors?.claim_details != 0 ? 'Please fill mandatory fields!' : ""}}
+                            </div>
+                        </mat-panel-description>
                     </mat-card-header>
                     <mat-card-content>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_details">
@@ -377,12 +391,14 @@
                     </mat-card-content>
                 </mat-card>
 
-                <mat-accordion class="p-t-15">
-
+                <mat-accordion class="p-t-15 claim-accordion">
                     <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Injury</div>
+                            <mat-panel-title>
+                                <div class="sub-title">Injury</div>
+                            </mat-panel-title>
                         </mat-expansion-panel-header>
+
 
                         <div fxLayout="row wrap" fxFlex="100">
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -504,16 +520,20 @@
 
                     <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Correspondence</div>
+                            <mat-panel-title>
+                                <div class="sub-title">Correspondence</div>
+                            </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
-                            <form [formGroup]="correspondForm"  fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.preventDefault()" class="correspondence-file-upload">
+                            <!-- <form [formGroup]="correspondForm" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                                fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                                class="correspondence-file-upload">
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                                     class="Upload_">
                                     <button type="button" (click)="uploader.click()" mat-stroked-button color="primary">
                                         Select File<i class="fa fa-upload p-l-5"></i></button>
                                     <mat-form-field appearance="standard">
-                                        <input matInput formControlName="file" [title]="selectedFile?.name" readonly
+                                        <input matInput [title]="selectedFile?.name" readonly
                                             [value]="selectedFile?.name | ellipsis:30" placeholder="No file chosen">
                                         <input type="file" formControlName="file" #uploader hidden
                                             (change)="uploadFile($event)" id="uploadFile"
@@ -522,19 +542,44 @@
                                     </mat-form-field>
                                 </div>
 
-                                <mat-form-field fxFlex="100" fxFlex.sm="70" fxFlex.md="30" fxFlex.lg="30"
-                                    fxFlex.xl="30" appearance="standard">
+                                <mat-form-field fxFlex="100" fxFlex.sm="70" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
+                                    appearance="standard">
                                     <mat-label>Note</mat-label>
                                     <input matInput formControlName="note" placeholder="Note">
-                                    <!-- <mat-hint align="end">{{message.value.length}} / 256</mat-hint> -->
                                 </mat-form-field>
                                 <div fxFlex="100" fxFlex.sm="30" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                                     <button mat-stroked-button type="button" [disabled]="correspondForm.invalid"
-                                        (click)="correspondFormSubmit();" color="primary"
-                                        class="p-r-20 btn_success">Add
+                                        (click)="correspondFormSubmit();" color="primary" class="p-r-20 btn_success">Add
                                     </button>
                                 </div>
-                            </form>
+                            </form> -->
+                            <div fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                                class="correspondence-file-upload">
+                                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                                    class="Upload_">
+                                    <button type="button" (click)="uploader.click()" mat-stroked-button color="primary">
+                                        Select File<i class="fa fa-upload p-l-5"></i></button>
+                                    <mat-form-field appearance="standard">
+                                        <input matInput [title]="file" readonly [value]="file | ellipsis:30"
+                                            placeholder="No file chosen">
+                                        <input type="file" #uploader hidden (change)="uploadFile($event)"
+                                            id="uploadFile" accept=".pdf, .doc, .docx, .excel, .csv" required>
+                                        <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
+                                    </mat-form-field>
+                                </div>
+
+                                <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30"
+                                    fxFlex.xl="30" appearance="standard">
+                                    <mat-label>Note*</mat-label>
+                                    <input matInput [(ngModel)]="note" [ngModelOptions]="{standalone: true}"
+                                        placeholder="Note">
+                                </mat-form-field>
+                                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+                                    <button mat-stroked-button type="button" [disabled]="(file == null || note == null)"
+                                        (click)="correspondFormSubmit();" color="primary" class="btn_success p-r-20">Add
+                                    </button>
+                                </div>
+                            </div>
                             <div fxFlex="100">
                                 <div class="basic-table document_list w-100 title-center">
                                     <table mat-table [dataSource]="correspondenceSource">
@@ -585,7 +630,13 @@
 
                     <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Claims Administrator</div>
+                            <mat-panel-title>
+                                <div class="sub-title">Claims Administrator</div>
+                            </mat-panel-title>
+                            <mat-panel-description class="mat-error">
+                                <div class="alert">
+                                    {{errors?.InsuranceAdjuster != 0 ? 'Please fill mandatory fields!' : ""}}</div>
+                            </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="InsuranceAdjuster">
                             <mat-form-field *ngIf="claimAdminList?.length == 0" appearance="standard" fxFlex="50"
@@ -650,8 +701,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Adjuster Phone</mat-label>
-                                <input matInput type="text" mask="000 000-0000" placeholder="Phone"
-                                    formControlName="phone" autocomplete="off">
+                                <input matInput type="text" (keypress)="numberOnly($event)" mask="000 000-0000"
+                                    placeholder="Phone" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -672,7 +723,13 @@
 
                     <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Employer</div>
+                            <mat-panel-title>
+                                <div class="sub-title">Employer</div>
+                            </mat-panel-title>
+                            <mat-panel-description class="mat-error">
+                                <div class="alert">{{errors?.Employer != 0 ? 'Please fill mandatory fields!' : ""}}
+                                </div>
+                            </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="Employer">
 
@@ -731,8 +788,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" type="text" mask="000 000-0000"
-                                    formControlName="phone" autocomplete="off">
+                                <input matInput placeholder="Phone" type="text" (keypress)="numberOnly($event)"
+                                    mask="000 000-0000" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -753,8 +810,14 @@
 
                     <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Applicant
-                                Attorney</div>
+                            <mat-panel-title>
+                                <div class="sub-title">Applicant
+                                    Attorney</div>
+                            </mat-panel-title>
+                            <mat-panel-description class="mat-error">
+                                <div class="alert">
+                                    {{errors?.ApplicantAttorney != 0 ? 'Please fill mandatory fields!' : ""}}</div>
+                            </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="ApplicantAttorney">
                             <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
@@ -815,8 +878,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput type="text" mask="000 000-0000" placeholder="Phone"
-                                    formControlName="phone" autocomplete="off">
+                                <input matInput type="text" (keypress)="numberOnly($event)" mask="000 000-0000"
+                                    placeholder="Phone" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
 
@@ -838,8 +901,15 @@
 
                     <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">Defense Attorney
-                            </div>
+
+                            <mat-panel-title>
+                                <div class="sub-title">Defense Attorney
+                                </div>
+                            </mat-panel-title>
+                            <mat-panel-description class="mat-error">
+                                <div class="alert">
+                                    {{errors?.DefenseAttorney != 0 ? 'Please fill mandatory fields!' : ""}}</div>
+                            </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="DefenseAttorney">
                             <mat-form-field *ngIf="!attroneySelect" appearance="standard" fxFlex="50" fxFlex.md="50"
@@ -902,8 +972,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
-                                <input matInput type="text" mask="000 000-0000" placeholder="Phone"
-                                    formControlName="phone" autocomplete="off">
+                                <input matInput type="text" (keypress)="numberOnly($event)" mask="000 000-0000"
+                                    placeholder="Phone" formControlName="phone" autocomplete="off">
                             </mat-form-field>
 
 
@@ -925,7 +995,12 @@
 
                     <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)">
                         <mat-expansion-panel-header>
-                            <div class="sub-title">DEU Office</div>
+                            <mat-panel-title>
+                                <div class="sub-title">DEU Office</div>
+                            </mat-panel-title>
+                            <mat-panel-description class="mat-error">
+                                <div class="alert">{{errors?.DEU != 0 ? 'Please fill mandatory fields!' : ""}}</div>
+                            </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="DEU">
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
@@ -976,8 +1051,8 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Phone Number</mat-label>
-                                <input matInput type="text" mask="000 000-0000" placeholder="Phone Number"
-                                    formControlName="phone" autocomplete="off">
+                                <input matInput type="text" (keypress)="numberOnly($event)" mask="000 000-0000"
+                                    placeholder="Phone Number" formControlName="phone" autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -994,7 +1069,7 @@
                             </mat-form-field>
                         </div>
                     </mat-expansion-panel>
-                    <div class="text-center w-100 m-t-10 m-b-50">
+                    <div class="text-center w-100 m-t-10 m-b-50 action-button">
                         <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
                             matStepperPrevious>Previous</button>
                         <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner "
@@ -1010,9 +1085,9 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="billable_item">
-            <form [formGroup]="billable_item" (keydown.enter)="$event.preventDefault()">
+            <form [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
 
-                <ng-template matStepLabel>{{isEdit ? 'Update' : 'Create'}} Billable Item</ng-template>
+                <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Billable Item</ng-template>
                 <mat-card fxLayout="row wrap" fxFlex="100">
                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">Billable
                         Item
@@ -1030,24 +1105,22 @@
                         </mat-form-field>
 
                         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <div fxLayout="row wrap" fxFlex="100" class="fixed-checkbox">
-                                <mat-checkbox class="p-t-40 p-l-20" labelPosition="before"
-                                    formControlName="is_psychiatric">Psychiatric
-                                </mat-checkbox>
-                                <mat-form-field appearance="standard">
-                                    <mat-label>Modifiers</mat-label>
-                                    <mat-select formControlName="modifier_id" multiple (selectionChange)="modifyChange()">
-                                        <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
-                                            {{modifier.modifier_code}} - {{modifier.modifier}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
+                            <mat-checkbox class="mat-check" labelPosition="before" formControlName="is_psychiatric">
+                                Psychiatric
+                            </mat-checkbox>
                         </div>
+                        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Modifiers</mat-label>
+                            <mat-select formControlName="modifier_id" multiple (selectionChange)="modifyChange()">
+                                <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
+                                    {{modifier.modifier_code}} - {{modifier.modifier}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
 
-                        <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(1)" appearance="standard"
-                            fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                        <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(1)"
+                            appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Primary Language</mat-label>
                             <mat-select formControlName="primary_language_spoken">
                                 <mat-option *ngFor="let language of languageList" [value]="language.id">
@@ -1071,14 +1144,14 @@
                                     {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}</mat-option>
                             </mat-select>
                         </mat-form-field>
-
                         <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
-                            <input matInput placeholder="MM-DD-YYYY  HH:MM AM/PM" [min]="todayDate.appointment"
-                                formControlName="appointment_scheduled_date_time" autocomplete="off"
-                                [owlDateTime]="appointment">
+                            <input type="datetime" matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
+                                [min]="todayDate.appointment" formControlName="appointment_scheduled_date_time"
+                                autocomplete="off" [owlDateTimeTrigger]="appointment" [owlDateTime]="appointment">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
-                            <owl-date-time (afterPickerOpen)="pickerOpened('app')" #appointment></owl-date-time>
+                            <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment>
+                            </owl-date-time>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
@@ -1161,7 +1234,8 @@
                             <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" formControlName="call_date"
                                 autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
-                            <owl-date-time (afterPickerOpen)="pickerOpened('intake')" #intake></owl-date-time>
+                            <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>
+                            </owl-date-time>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -1187,7 +1261,7 @@
                             <mat-error>Enter Valid contact information</mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="text-center w-100 m-t-10 m-b-50">
+                    <div class="text-center w-100 m-t-10 m-b-50 action-button">
                         <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
                             matStepperPrevious>Previous</button>
 

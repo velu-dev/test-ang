@@ -31,16 +31,16 @@
     <mat-card-content class="p-t-3 m-b-0">
         <div class="table-filter">
             <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by name, email, role">
+                placeholder="Search by name, email, role, etc.">
         </div>
         <span class="spacer"></span>
         <!-- <button mat-icon-button class="filter-icon p-t-0" [matMenuTriggerFor]="filter">
             <mat-icon mat-icon-button aria-hidden="false" material-icons aria-label="home icon">filter_list</mat-icon>
         </button> -->
-        <button mat-icon-button class="filter-icon" (click)="exportData()" matTooltip="Export"
+        <!-- <button mat-icon-button class="filter-icon" (click)="exportData()" matTooltip="Export"
             matTooltipPosition="before">
             <img class="icon-16" [src]="xls" alt="export" />
-        </button>
+        </button> -->
 
         <!-- <mat-menu #filter="matMenu">
             <mat-list role="list">
@@ -57,7 +57,7 @@
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
                 matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-                    <th mat-header-cell *matHeaderCellDef > <span mat-sort-header
+                    <th mat-header-cell *matHeaderCellDef> <span mat-sort-header
                             *ngIf="columnName[i] != 'Cancel Invite'">{{columnName[i]}}</span> </th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="i == 0 && isMobile">

@@ -60,7 +60,7 @@ export class EditBillingComponent implements OnInit {
   filteredICD: Observable<[]>;
   icdCtrl = new FormControl();
   icdValue = '';
-  billingDetail:any = {};
+  billingDetail: any = {};
   isLoading: any;
   constructor(private claimService: ClaimService, private route: ActivatedRoute) {
     this.isLoading = true;
@@ -73,19 +73,23 @@ export class EditBillingComponent implements OnInit {
       }
     })
   }
-
+  icdSearched = false;
   ngOnInit() {
     this.dataSource.sort = this.sort;
-    this.filteredICD = this.icdCtrl.valueChanges
-      .pipe(
-        debounceTime(300),
-        switchMap(value => this.claimService.getICD10(value)));
+    // this.filteredICD = this.icdCtrl.valueChanges
+    //   .pipe(
+    //     debounceTime(300),
+    //     switchMap(value => {this.claimService.getICD10(value)}));
+    this.icdCtrl.valueChanges.subscribe(res => {
+      console.log(res);
+      this.icdSearched = true;
+      this.claimService.getICD10(res).subscribe(icd => {
+        console.log(icd)
+        this.filteredICD = icd[3];
+      });
+    })
   }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-  }
 
 }
 

@@ -51,7 +51,7 @@
 </div>
 <div *ngIf="isEdit" class="def_attorney_info"> -->
 <div class="def_attorney_info">
-    <form fxLayout="row wrap" fxFlex="100" [formGroup]="DefanceAttorney" (keydown.enter)="$event.preventDefault()">
+    <form fxLayout="row wrap" fxFlex="100" [formGroup]="DefanceAttorney" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Law Firm Name</mat-label>
             <input matInput placeholder="Law Firm Name" formControlName="company_name" autocomplete="off">
@@ -92,7 +92,7 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Phone</mat-label>
-            <input matInput type="text" mask="(000) 000-0000" placeholder="Phone" formControlName="phone"
+            <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Phone" formControlName="phone"
                 autocomplete="off">
         </mat-form-field>
 

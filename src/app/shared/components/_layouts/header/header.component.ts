@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Inject, HostListener } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DOCUMENT } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,6 +18,7 @@ import { Store, select } from '@ngrx/store';
 import * as headerActions from "./../../../../shared/store/header.actions";
 import * as breadcrumbActions from "./../../../../shared/store/breadcrumb.actions";
 import { UserService } from 'src/app/shared/services/user.service';
+import { IntercomService } from 'src/app/services/intercom.service';
 
 @Component({
   selector: 'app-header',
@@ -45,6 +46,7 @@ export class HeaderComponent implements OnInit {
   isOpen: any
   isLoading: boolean = false;
   user$: Observable<any>;
+  toggleClass = 'fullscreen';
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
@@ -53,8 +55,18 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private alertService: AlertService,
     private userService: UserService,
-    private store: Store<{ header: any }>
+    private store: Store<{ header: any }>,
+    private intercom: IntercomService
   ) {
+
+    this.intercom.getUser().subscribe(info => {
+      if (info == true) {
+        this.userService.getProfile().subscribe(res => {
+          this.user = res.data;
+        })
+      }
+    })
+
     this.spinnerService.show();
     this.isLoading = true;
     this.cognitoService.session().then(token => {
@@ -62,14 +74,13 @@ export class HeaderComponent implements OnInit {
       this.userService.getProfile().subscribe(res => {
         this.user = res.data;
         // this.store.dispatch(new headerActions.HeaderAdd(this.user));
-        this.user.role_id =  this.cookieService.get('role_id') ? this.cookieService.get('role_id') : res.data.role_id;
+        this.user.role_id = this.cookieService.get('role_id') ? this.cookieService.get('role_id') : res.data.role_id;
         this.cookieService.set('user', JSON.stringify(this.user));
         this.isLoading = false;
         this.spinnerService.hide();
       })
     })
   }
-
   ngOnInit() {
     // this.user$ = this.store.pipe(select('header'));
     this.elem = document.documentElement;
@@ -82,6 +93,20 @@ export class HeaderComponent implements OnInit {
     // this.inputSideNav.toggle().then(res => {
     //   console.table(res)
     // })
+  }
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+  fullscreenmode() {
+
+    if (this.toggleClass == 'fullscreen_exit') {
+      this.toggleClass = 'fullscreen';
+    }
+    else {
+      this.toggleClass = 'fullscreen_exit';
+    }
+    console.log(this.toggleClass)
   }
   logout() {
     this.spinnerService.show();

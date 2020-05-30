@@ -308,6 +308,10 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   color: $text-dark;
   font-size: $font-size-4;
   font-weight: $font-weight-bold;
+  @media only screen and (max-width: 568px) {
+    font-size: $font-size-10;
+    white-space: normal;
+  }
 }
 .mat-card-header-text {
   margin: 0px !important;
@@ -594,11 +598,11 @@ input:-webkit-autofill {
   width: $width-60;
 }
 
-  // .mat-select-panel {
-  //   width: 100%;
-  //   min-width: 100% !important;
-  // }
-  // #cdk-overlay-1 {
-  //   transform: initial !important;
+// .mat-select-panel {
+//   width: 100%;
+//   min-width: 100% !important;
+// }
+// #cdk-overlay-1 {
+//   transform: initial !important;
 
-  // }
+// }

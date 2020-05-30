@@ -18,6 +18,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { IntercomService } from './services/intercom.service'
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [
+    IntercomService,
     Title,
     {
       provide: HTTP_INTERCEPTORS,

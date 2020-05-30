@@ -31,7 +31,7 @@
                         <div class="edit-profile  m-t-10">
                             <mat-card-content>
                                 <!--Form start-->
-                                <form fxLayout="row wrap" [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
+                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
                                     <mat-form-field class="m-t-5" appearance="standard" fxFlex="100">
                                         <mat-label>Current Password*</mat-label>
                                         <input type="password" matInput placeholder="Current Password"
@@ -85,7 +85,7 @@
                         <div class="edit-profile m-t-10" *ngIf="user?.role_id != 2">
                             <mat-card-content>
                                 <!--Form start-->
-                                <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
+                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
@@ -149,7 +149,7 @@
                         <div class="edit-profile m-t-10" *ngIf="user?.role_id == 2">
                             <mat-card-content>
                                 <!--Form start-->
-                                <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
+                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
                                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                         fxFlex.xs="100">User Details
                                     </div>
@@ -288,7 +288,7 @@
                             Primary Address
                         </ng-template>
                         <div class="primary-address">
-                            <form [formGroup]="addressForm">
+                            <form [formGroup]="addressForm" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                                 <div fxLayout="row wrap" fxFlex="100">
 
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -423,7 +423,7 @@
                                 </div>
 
                             </div>
-                            <form [formGroup]="billingForm">
+                            <form [formGroup]="billingForm" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                                 <div fxLayout="row wrap" fxFlex="100">
 
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"

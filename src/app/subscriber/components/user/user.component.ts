@@ -67,11 +67,11 @@ export class UserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Last Name", "Disable User"]
-        this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
+        this.columnName = ["", "Last Name", "Disable User", "Action"]
+        this.columnsToDisplay = ['is_expand', 'last_name', "disabled", "action"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
+        this.columnName = ["Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User", "Action"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled", "action"]
       }
     });
     this.screenWidth = window.innerWidth;
@@ -128,13 +128,13 @@ export class UserComponent implements OnInit {
     this.tabName = ''
     this.tabIndex = event;
     if (event == 0) {
-      this.columnName[this.columnName.length - 1] = "Disable User"
+      this.columnName[this.columnName.length - 2] = "Disable User"
       this.tabName = 'activeUsers'
     } else if (event == 1) {
-      this.columnName[this.columnName.length - 1] = "Cancel Invite"
+      this.columnName[this.columnName.length - 2] = "Cancel Invite"
       this.tabName = 'invitedUsers'
     } else if (event == 2) {
-      this.columnName[this.columnName.length - 1] = "Enable User"
+      this.columnName[this.columnName.length - 2] = "Enable User"
       this.tabName = 'disabledUsers'
     }
     this.users = this.allUser[this.tabName];
@@ -222,6 +222,10 @@ export class UserComponent implements OnInit {
         })
       }
     });
+  }
+
+  editUser(user){
+    this.router.navigate(['subscriber/users/edit',user.id])
   }
 
 }

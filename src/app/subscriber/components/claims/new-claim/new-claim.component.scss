@@ -2,26 +2,6 @@
 
 mat-card {
   mat-horizontal-stepper {
-    .wc_search {
-      width: $width-100;
-      display: block !important;
-      mat-form-field {
-        width: $width-100;
-        padding-left: 0px !important;
-      }
-    }
-    .add_new {
-      border: 1px dashed $primarylightcolor;
-      border-radius: 3px;
-      background-color: $bg-light-blue;
-      color: $primarycolor;
-      font-size: $font-size-1;
-      font-weight: $font-weight-medium;
-      padding: 10px 5px;
-      cursor: pointer;
-      margin: 5px;
-      width: 200px;
-    }
     .sub-title {
       color: $primarycolor;
       font-size: $font-size-1;
@@ -39,10 +19,18 @@ mat-card {
         padding-left: 0px !important;
       }
     }
+    .action-button {
+      button {
+        @media only screen and (max-width: 568px) {
+          width: 120px;
+          padding: 0px 10px !important;
+        }
+      }
+    }
   }
   .correspondence-file-upload {
     @media only screen and (max-width: 568px) {
-    margin-bottom: 20px;
+      margin-bottom: 20px;
     }
     .Upload_ {
       button {
@@ -60,7 +48,7 @@ mat-card {
         margin-top: 25px;
         @media only screen and (max-width: 568px) {
           margin-top: 0px;
-          }
+        }
       }
     }
   }
@@ -76,6 +64,8 @@ mat-card {
     margin-right: 10px;
     mat-icon {
       margin-top: -4px !important;
+    }
+    @media only screen and (max-width: 568px) {
     }
   }
   .search-icon {
@@ -181,12 +171,24 @@ mat-card {
     }
   }
 }
-.fixed-checkbox {
-  mat-checkbox {
-    width: 150px;
+.mat-check {
+  padding-top: 30px;
+  padding-left: 20px;
+  display: block;
+  @media only screen and (max-width: 568px) {
+    padding-top: 0;
+    padding-left: 7px;
   }
-  mat-form-field {
-    width: calc(100% - 200px);
-    padding-left: 0px !important;
+}
+.claim-accordion,
+mat-card-header {
+  .mat-expansion-panel-header-description {
+    flex-grow: 0;
+    font-size: $font-size-7;
+    font-weight: $font-weight-medium;
   }
+}
+
+button {
+  margin: 5px;
 }

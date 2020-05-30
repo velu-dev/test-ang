@@ -24,12 +24,12 @@
         <mat-card-content class="p-t-3  m-b-0">
             <div class="table-filter">
                 <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                    placeholder="Search by name, email, role">
+                    placeholder="Search by name, claim number, examiner, etc.">
             </div>
-            <span class="spacer"></span>
+            <!-- <span class="spacer"></span>
             <button mat-icon-button class="filter-icon" (click)="exportData()">
                 <img class="icon-16" [src]="xls" alt="export" />
-            </button>
+            </button> -->
         </mat-card-content>
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
@@ -100,9 +100,9 @@
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
     </div>
 
-    <div flLayout="row wrap" class="fc_calender">
+    <div flLayout="row wrap" class="fc_calender"  *ngIf="isCalenderVIew">
         <div fxFlex="100">
-            <div *ngIf="isCalenderVIew">
+            <div>
                 <div class="exa_status">
                     <p class="float-right">
                         <span> <i class="fa fa-circle p-r-5 lv"></i> Left Voicemail</span>

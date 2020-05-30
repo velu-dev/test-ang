@@ -10,6 +10,7 @@ import { CognitoService } from 'src/app/shared/services/cognito.service';
 import * as  errors from '../../../shared/messages/errors'
 import { Store } from '@ngrx/store';
 import * as headerActions from "./../../../shared/store/header.actions";
+import { IntercomService } from 'src/app/services/intercom.service';
 
 @Component({
   selector: 'app-settings',
@@ -24,6 +25,7 @@ export class SettingsComponent implements OnInit {
   userPasswrdForm: FormGroup;
   errorMessages = errors;
   isSubmitted = false;
+  first_name: string;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: UserService,
@@ -31,13 +33,15 @@ export class SettingsComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private cognitoService: CognitoService,
-    private store: Store<{ header: any }>
+    private store: Store<{ header: any }>,
+    private intercom: IntercomService
   ) {
     // this.spinnerService.show();
     this.cognitoService.currentSession().subscribe(token => {
       this.currentUser = token['idToken']['payload'];
       this.userService.getUser(this.currentUser['custom:Postgres_UserID']).subscribe(res => {
         // this.spinnerService.hide();
+        this.first_name = res.data.first_name;
         this.user = res.data;
         let userDetails = {
           id: res.data.id,
@@ -63,15 +67,15 @@ export class SettingsComponent implements OnInit {
       role_id: [''],
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
-      middle_name: ['', Validators.compose([ Validators.maxLength(50)])],
+      middle_name: ['', Validators.compose([Validators.maxLength(50)])],
       company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
     });
   }
   userformSubmit() {
     Object.keys(this.userForm.controls).forEach((key) => {
-      if(this.userForm.get(key).value && typeof(this.userForm.get(key).value) == 'string')
-      this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
+      if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
+        this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
     });
     if (this.userForm.invalid) {
       console.log(this.userForm)
@@ -79,8 +83,12 @@ export class SettingsComponent implements OnInit {
     }
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
-      this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
-      this.router.navigate(['/admin/settings'])
+      if (this.first_name != this.userForm.value.first_name) {
+        this.first_name = this.userForm.value.first_name;
+        this.intercom.setUser(true);
+      }
+      //this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
+      //this.router.navigate(['/admin/settings'])
     }, error => {
       this.alertService.openSnackBar(error.message, 'error');
     })

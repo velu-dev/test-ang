@@ -19,6 +19,7 @@ import { Location } from '@angular/common';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 
 export const PICK_FORMATS = {
   parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -50,6 +51,16 @@ export interface PeriodicElement {
   date: Date;
   action: string;
 }
+export const MY_CUSTOM_FORMATS = {
+  parseInput: 'L LT',
+  fullPickerInput: 'L LT',
+  datePickerInput: 'L',
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
+
 
 export interface claimant1 {
   body_part_id: string,
@@ -66,7 +77,8 @@ const ELEMENT_DATA: claimant1[] = []
   styleUrls: ['./new-claim.component.scss'],
   providers: [
     { provide: DateAdapter, useClass: PickDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }
   ]
 })
 export class NewClaimComponent implements OnInit {
@@ -80,7 +92,6 @@ export class NewClaimComponent implements OnInit {
   xls_1 = globals.xls_1
   docx = globals.docx
   pdf = globals.pdf
-
 
   claimAdminList = [];
   today = new Date();
@@ -154,7 +165,7 @@ export class NewClaimComponent implements OnInit {
   deuCtrl = new FormControl();
   iseams_entry: boolean = false;
   role: string;
-
+  date: any;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -164,10 +175,10 @@ export class NewClaimComponent implements OnInit {
   claimantChanges: boolean = false;
   claimChanges: boolean = false;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches),
-    shareReplay()
-  );
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -179,9 +190,9 @@ export class NewClaimComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private _location: Location) {
 
-      this.isHandset$.subscribe(res => {
-        this.isMobile = res;
-      })
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+    })
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;
       this.filteredDeu = this.deuCtrl.valueChanges
@@ -310,10 +321,15 @@ export class NewClaimComponent implements OnInit {
         this.changeCommunicationType(type, 'auto');
       }
     })
-    this.filteredClaimant = this.searchInput.valueChanges
-      .pipe(
-        debounceTime(300),
-        switchMap(value => this.claimService.searchClaimant({ basic_search: value, isadvanced: this.searchStatus })));
+    this.searchInput.valueChanges.subscribe(res => {
+      this.claimService.searchClaimant({ basic_search: res, isadvanced: this.searchStatus }).subscribe(response => {
+        this.filteredClaimant = response;
+      })
+    })
+    // this.filteredClaimant = this.searchInput.valueChanges
+    //   .pipe(
+    //     debounceTime(300),
+    //     switchMap(value => this.claimService.searchClaimant({ basic_search: value, isadvanced: this.searchStatus })));
   }
   private _filteDeu(value: string): any[] {
     const filterValue = value.toLowerCase();
@@ -328,12 +344,14 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimantEdit = false;
   selectClaimant(option) {
+    console.log(option)
     this.isClaimantEdit = true;
     this.claimant.reset();
     this.claim.reset();
     this.addNewClaimant = true;
     this.languageStatus = option.certified_interpreter_required;
     this.isClaimantCreated = true;
+    this.claimantDateOfBirth = option.date_of_birth;
     this.claimant_name = option.first_name + " " + option.last_name;
     this.claim.patchValue({
       claim_details: {
@@ -484,7 +502,7 @@ export class NewClaimComponent implements OnInit {
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
-        appointment_scheduled_date_time: [null],
+        appointment_scheduled_date_time: [Date],
         duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
         examination_location_id: [null]
       }),
@@ -577,7 +595,7 @@ export class NewClaimComponent implements OnInit {
         this.claim.get(key).setValue(this.claim.get(key).value.trim())
     });
     if (this.claim.invalid) {
-      console.log("claim", this.claim)
+      this.getFormValidationErrors();
       return;
     }
     let claim = this.claim.value;
@@ -1016,6 +1034,7 @@ export class NewClaimComponent implements OnInit {
       }
       this.selectedFile = event.target.files[0];
       console.log(" this.selectedFile", this.selectedFile);
+      this.file = event.target.files[0].name;
     } else {
       this.selectedFile = null;
       //this.errorMessage = 'This file type is not accepted';
@@ -1023,19 +1042,23 @@ export class NewClaimComponent implements OnInit {
     }
 
   }
-
+  file: File = null;
+  note: string = null;
   documents_ids = [];
   correspondFormSubmit() {
-    console.log(this.correspondForm.value)
-    console.log(this.claim.value.claim_details.id)
-    if (this.correspondForm.invalid) {
-      this.correspondForm.get('note').markAsTouched();
-      this.correspondForm.get('file').markAsTouched();
+    // console.log(this.correspondForm.value)
+    // console.log(this.claim.value.claim_details.id)
+    // if (this.correspondForm.invalid) {
+    //   this.correspondForm.get('note').markAsTouched();
+    //   this.correspondForm.get('file').markAsTouched();
+    //   return;
+    // }
+    if (this.file == null || this.note == null || this.note.trim() == '') {
       return;
     }
     let formData = new FormData()
     formData.append('file', this.selectedFile);
-    formData.append('notes', this.correspondForm.value.note);
+    formData.append('notes', this.note);
     if (this.claim.value.claim_details.id) {
       formData.append('claim_id', this.claim.value.claim_details.id)
     }
@@ -1043,7 +1066,7 @@ export class NewClaimComponent implements OnInit {
       let details = {
         id: data['data'].id,
         file_name: data['data'].file_name,
-        notes: this.correspondForm.value.note,
+        notes: this.note,
         updatedAt: data['data'].createdAt,
         exam_report_file_url: data['data'].exam_report_file_url
       }
@@ -1056,7 +1079,9 @@ export class NewClaimComponent implements OnInit {
       console.log(this.documents_ids);
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
-      this.correspondForm.reset();
+      //this.correspondForm.reset();
+      this.file = null;
+      this.note = null;
       this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       console.log(error);
@@ -1151,11 +1176,42 @@ export class NewClaimComponent implements OnInit {
     })
   }
 
-  modifyChange(){
-    if(this.billable_item.value.exam_type.modifier_id.includes(1)){
+  modifyChange() {
+    if (this.billable_item.value.exam_type.modifier_id.includes(1)) {
       this.billable_item.patchValue({
-        exam_type: { primary_language_spoken:this.claimant.value.primary_language_spoken }
+        exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken }
       })
     }
+  }
+  errors = { claim_details: 0, claim: 0, Employer: 0, InsuranceAdjuster: 0, ApplicantAttorney: 0, DefenseAttorney: 0, DEU: 0, }
+  getFormValidationErrors() {
+    document.getElementById("claimant").scrollIntoView();
+
+    Object.keys(this.claim.controls).forEach(key => {
+      this.errors[key] = 0;
+      if (this.claim.get(key).status == 'INVALID') {
+        Object.keys(this.claim.get(key)['controls']).map(res => {
+          if (this.claim.get(key)['controls'][res].status == 'INVALID' && this.claim.get(key)['controls'][res].touched) {
+            console.log(this.claim.get(key)['controls'])
+            this.errors[key] = this.errors[key] + 1;
+          }
+        })
+      }
+    });
+  }
+  changeDate(event) {
+    console.log(event)
+  }
+  updateCalcs(event) {
+    console.log(event)
+  }
+  claimantDateOfBirth: any;
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
   }
 }

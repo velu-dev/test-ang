@@ -9,7 +9,7 @@
             <span>Edit Location </span>
         </ng-template>
         <div class="manage-address-form">
-            <form [formGroup]="addressForm">
+            <form [formGroup]="addressForm" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <div fxLayout="row wrap" fxFlex="100">
 
                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

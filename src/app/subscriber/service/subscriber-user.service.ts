@@ -38,4 +38,12 @@ export class SubscriberUserService {
   updatePrimaryAddress(data,id){
     return this.http.post(environment.baseUrl + api_endpoint.updatePrimaryAddress + id, data)
   }
+
+  getEditUser(id){
+    return this.http.get(environment.baseUrl + api_endpoint.getEditUser + id);
+  }
+
+  updateEditUser(id,data){
+    return this.http.put(environment.baseUrl + api_endpoint.updateEditUser + id, data)
+  }
 }
