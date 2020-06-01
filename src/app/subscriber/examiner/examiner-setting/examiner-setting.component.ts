@@ -64,8 +64,7 @@ export class ExaminerSettingComponent implements OnInit {
       // }
       // this.userForm.patchValue(userDetails)
 
-      this.userService.getEditUser(res.data.id).subscribe(res1 => {
-        let res: any = res1
+      this.userService.getEditUser(res.data.id).subscribe(res => {
         console.log(res.data);
         let user = {
           id: res.data.id,
@@ -74,7 +73,7 @@ export class ExaminerSettingComponent implements OnInit {
           middle_name: res.data.middle_name,
           company_name: res.data.company_name,
           sign_in_email_id: res.data.sign_in_email_id,
-          role_id: res.data.role_id,
+          role_id:  this.user.role_id,
           w9_number: res.data.w9_number,
           w9_number_type: res.data.w9_number_type,
           national_provider_identifier: res.data.national_provider_identifier,
@@ -321,10 +320,13 @@ export class ExaminerSettingComponent implements OnInit {
 
     if (this.addressForm.invalid) {
       console.log(this.addressForm)
+      window.scrollTo(10, 10);
+      this.addressForm.markAllAsTouched();
       return;
     }
 
     if (this.billingForm.invalid) {
+      this.billingForm.markAllAsTouched();
       return;
     }
     let updateData = [this.addressForm.value, this.billingForm.value]
