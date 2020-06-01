@@ -31,8 +31,8 @@ export class ExaminerSettingComponent implements OnInit {
   billing_address: boolean = false;
   billingForm: FormGroup;
   first_name: string;
-  specialtyList:any;
-  taxonomyList:any;
+  specialtyList: any;
+  taxonomyList: any;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -63,9 +63,9 @@ export class ExaminerSettingComponent implements OnInit {
       //   sign_in_email_id: res.data.sign_in_email_id,
       // }
       // this.userForm.patchValue(userDetails)
-      
+
       this.userService.getEditUser(res.data.id).subscribe(res1 => {
-        let res:any = res1
+        let res: any = res1
         console.log(res.data);
         let user = {
           id: res.data.id,
@@ -85,7 +85,7 @@ export class ExaminerSettingComponent implements OnInit {
         }
         this.userForm.patchValue(user)
       })
-     
+
     })
   }
   ngOnInit() {
@@ -104,11 +104,11 @@ export class ExaminerSettingComponent implements OnInit {
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       w9_number_type: [''],
       w9_number: [''],
-      national_provider_identifier: ['',Validators.compose([Validators.maxLength(15)])],
+      national_provider_identifier: ['', Validators.compose([Validators.maxLength(15)])],
       specialty: [''],
-      state_license_number: ['',Validators.compose([Validators.maxLength(15)])],
+      state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
       taxonomy_id: [''],
-      state_of_license_id: ['']
+      state_of_license_id: [null]
     });
 
     this.addressForm = this.formBuilder.group({
@@ -131,6 +131,18 @@ export class ExaminerSettingComponent implements OnInit {
 
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.claimService.seedData('taxonomy').subscribe(response => {
+      this.taxonomyList = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.claimService.seedData('specialty').subscribe(response => {
+      this.specialtyList = response['data'];
     }, error => {
       console.log("error", error)
     })
@@ -219,6 +231,8 @@ export class ExaminerSettingComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
+   
+    this.userForm.value.address_details = {}
     this.userService.updateEditUser(this.userForm.value.id,this.userForm.value).subscribe(res => {
       if (this.first_name != this.userForm.value.first_name) {
         this.first_name = this.userForm.value.first_name;

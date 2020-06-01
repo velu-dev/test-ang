@@ -39,11 +39,11 @@ export class SubscriberUserService {
     return this.http.post(environment.baseUrl + api_endpoint.updatePrimaryAddress + id, data)
   }
 
-  getEditUser(id){
+  getEditUser(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getEditUser + id);
   }
 
-  updateEditUser(id,data){
+  updateEditUser(id,data): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.updateEditUser + id, data)
   }
 }

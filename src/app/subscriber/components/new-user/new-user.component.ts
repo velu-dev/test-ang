@@ -79,8 +79,7 @@ export class NewUserComponent implements OnInit {
       if (params_res.id) {
         this.isEdit = true;
 
-        this.userService.getEditUser(params_res.id).subscribe(res1 => {
-          let res:any = res1
+        this.userService.getEditUser(params_res.id).subscribe(res => {
           this.userData = res.data;
           console.log(res.data);
           if(res.data.role_id == 11){
@@ -95,6 +94,7 @@ export class NewUserComponent implements OnInit {
             sign_in_email_id: res.data.sign_in_email_id,
             role_id: res.data.role_id
           }
+          if(this.isExaminer) { 
           let examiner = {
             w9_number: res.data.w9_number,
             w9_number_type: res.data.w9_number_type,
@@ -106,6 +106,7 @@ export class NewUserComponent implements OnInit {
           }
 
           let address = {
+            id: res.data.address_id,
             phone1: res.data.address_details.phone1,
             phone2: res.data.address_details.phone2,
             fax1: res.data.address_details.fax1,
@@ -122,11 +123,11 @@ export class NewUserComponent implements OnInit {
             email2: res.data.address_details.email2,
             contact_person: res.data.address_details.contact_person
           }
-
-          this.userForm.patchValue(user)
           this.userExaminerForm.patchValue(examiner)
           this.addressForm.patchValue(address)
-          this.userForm.value.role_id = res.data.role_id;
+        }
+
+          this.userForm.patchValue(user)
         })
       } else {
       }
@@ -180,12 +181,13 @@ export class NewUserComponent implements OnInit {
       national_provider_identifier: ['', Validators.compose([Validators.required, Validators.maxLength(15)])],
       specialty: [''],
       state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
-      state_of_license_id: [''],
+      state_of_license_id: [null],
       taxonomy_id: ['']
 
     });
 
     this.addressForm = this.formBuilder.group({
+      id:[''],
       phone1: [''],
       phone2: [''],
       fax1: [''],
@@ -226,7 +228,9 @@ export class NewUserComponent implements OnInit {
       this.userForm.markAllAsTouched();
       return;
     }
-    if (this.userExaminerForm.invalid) {
+   
+    if (this.isExaminer) {
+       if (this.userExaminerForm.invalid) {
       window.scrollTo(10, 10)
       this.userExaminerForm.markAllAsTouched();
       return;
@@ -235,7 +239,6 @@ export class NewUserComponent implements OnInit {
       this.addressForm.markAllAsTouched();
       return;
     }
-    if (this.isExaminer) {
      
       this.userForm.value.w9_number = this.userExaminerForm.value.w9_number;
       this.userForm.value.w9_number_type = this.userExaminerForm.value.w9_number_type;
