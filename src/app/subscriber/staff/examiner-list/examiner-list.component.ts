@@ -58,6 +58,9 @@ export class ExaminerListComponent implements OnInit {
   ngOnInit() {
     this.examinerService.getExaminerList().subscribe(response => {
       this.dataSource = new MatTableDataSource(response['data']);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     }, error => {
 
     })
