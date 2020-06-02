@@ -285,7 +285,7 @@
                                         placeholder="Search by name, date">
                                 </div>
                             </div>
-                            <button mat-raised-button color="warn" class="m-l-10 m-t-10 float-right">Generate QME From 110</button>
+                            <button mat-raised-button color="warn" (click)="generateForm()" class="m-l-10 m-t-10 float-right">Generate QME From 110</button>
 
                             <div class="basic-table document_list">
                                 <table mat-table [dataSource]="dataSource">
