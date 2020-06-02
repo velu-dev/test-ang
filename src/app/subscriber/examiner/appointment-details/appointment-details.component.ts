@@ -148,7 +148,11 @@ export class AppointmentDetailsComponent implements OnInit {
   deleteDocument(data) {
     this.openDialog('delete', data);
   }
-
+  generateForm() {
+    this.examinerService.getForms(this.claim_id).subscribe(res => {
+      console.log(res)
+    })
+  }
   noteSubmit(note) {
     console.log(note);
     let data = {
@@ -268,8 +272,5 @@ export class BillableitemPopupComponent {
   cancelClick(): void {
     this.dialogRef.close();
   }
-
-
-
 
 }
