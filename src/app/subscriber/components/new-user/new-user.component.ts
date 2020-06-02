@@ -82,7 +82,7 @@ export class NewUserComponent implements OnInit {
         this.userService.getEditUser(params_res.id).subscribe(res => {
           this.userData = res.data;
           console.log(res.data);
-          if(res.data.role_id == 11){
+          if (res.data.role_id == 11) {
             this.isExaminer = true
           }
           let user = {
@@ -94,38 +94,40 @@ export class NewUserComponent implements OnInit {
             sign_in_email_id: res.data.sign_in_email_id,
             role_id: res.data.role_id
           }
-          if(this.isExaminer) { 
-          let examiner = {
-            w9_number: res.data.w9_number,
-            w9_number_type: res.data.w9_number_type,
-            national_provider_identifier: res.data.national_provider_identifier,
-            specialty: res.data.specialty,
-            state_license_number: res.data.state_license_number,
-            state_of_license_id: res.data.state_of_license_id,
-            taxonomy_id: res.data.taxonomy_id
-          }
+          if (this.isExaminer) {
+            let examiner = {
+              w9_number: res.data.w9_number,
+              w9_number_type: res.data.w9_number_type,
+              national_provider_identifier: res.data.national_provider_identifier,
+              specialty: res.data.specialty,
+              state_license_number: res.data.state_license_number,
+              state_of_license_id: res.data.state_of_license_id,
+              taxonomy_id: res.data.taxonomy_id
+            }
+            if (res.data.address_details) {
+              let address = {
+                id: res.data.address_id,
+                phone1: res.data.address_details.phone1,
+                phone2: res.data.address_details.phone2,
+                fax1: res.data.address_details.fax1,
+                fax2: res.data.address_details.fax2,
+                mobile1: res.data.address_details.mobile1,
+                mobile2: res.data.address_details.mobile2,
+                street1: res.data.address_details.street1,
+                street2: res.data.address_details.street2,
+                city: res.data.address_details.city,
+                state: res.data.address_details.state,
+                zip_code: res.data.address_details.zip_code,
+                notes: res.data.address_details.notes,
+                email1: res.data.address_details.email1,
+                email2: res.data.address_details.email2,
+                contact_person: res.data.address_details.contact_person
+              }
+              this.addressForm.patchValue(address)
+            }
+            this.userExaminerForm.patchValue(examiner)
 
-          let address = {
-            id: res.data.address_id,
-            phone1: res.data.address_details.phone1,
-            phone2: res.data.address_details.phone2,
-            fax1: res.data.address_details.fax1,
-            fax2: res.data.address_details.fax2,
-            mobile1: res.data.address_details.mobile1,
-            mobile2: res.data.address_details.mobile2,
-            street1: res.data.address_details.street1,
-            street2: res.data.address_details.street2,
-            city: res.data.address_details.city,
-            state: res.data.address_details.state,
-            zip_code: res.data.address_details.zip_code,
-            notes: res.data.address_details.notes,
-            email1: res.data.address_details.email1,
-            email2: res.data.address_details.email2,
-            contact_person: res.data.address_details.contact_person
           }
-          this.userExaminerForm.patchValue(examiner)
-          this.addressForm.patchValue(address)
-        }
 
           this.userForm.patchValue(user)
         })
@@ -187,7 +189,7 @@ export class NewUserComponent implements OnInit {
     });
 
     this.addressForm = this.formBuilder.group({
-      id:[''],
+      id: [''],
       phone1: [''],
       phone2: [''],
       fax1: [''],
@@ -228,19 +230,19 @@ export class NewUserComponent implements OnInit {
       this.userForm.markAllAsTouched();
       return;
     }
-   
+
     if (this.isExaminer) {
-       if (this.userExaminerForm.invalid) {
-      window.scrollTo(0, 400)
-      this.userExaminerForm.markAllAsTouched();
-      return;
-    }
-    if (this.addressForm.invalid) {
-      window.scrollTo(0, 900)
-      this.addressForm.markAllAsTouched();
-      return;
-    }
-     
+      if (this.userExaminerForm.invalid) {
+        window.scrollTo(0, 400)
+        this.userExaminerForm.markAllAsTouched();
+        return;
+      }
+      if (this.addressForm.invalid) {
+        window.scrollTo(0, 900)
+        this.addressForm.markAllAsTouched();
+        return;
+      }
+
       this.userForm.value.w9_number = this.userExaminerForm.value.w9_number;
       this.userForm.value.w9_number_type = this.userExaminerForm.value.w9_number_type;
       this.userForm.value.national_provider_identifier = this.userExaminerForm.value.national_provider_identifier;
@@ -249,28 +251,28 @@ export class NewUserComponent implements OnInit {
       this.userForm.value.taxonomy_id = this.userExaminerForm.value.taxonomy_id;
       this.userForm.value.state_of_license_id = this.userExaminerForm.value.state_of_license_id;
       this.userForm.value.address_details = this.addressForm.value;
-     
+
     }
     if (!this.isEdit) {
-     
-    this.userService.createUser(this.userForm.value).subscribe(res => {
-      this.alertService.openSnackBar("User created successfully", 'success');
-      this.router.navigate(['/subscriber/users'])
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
 
-    } 
+      this.userService.createUser(this.userForm.value).subscribe(res => {
+        this.alertService.openSnackBar("User created successfully!", 'success');
+        this.router.navigate(['/subscriber/users'])
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+
+    }
     else {
-      this.userForm.value.role_id =   this.userData.role_id
+      this.userForm.value.role_id = this.userData.role_id
       console.log(this.userForm.value)
-      this.userService.updateEditUser(this.userForm.value.id,this.userForm.value).subscribe(res => {
-        this.alertService.openSnackBar("User update successfully", 'success');
+      this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
+        this.alertService.openSnackBar("User updated successfully!", 'success');
         this.router.navigate(['/subscriber/users'])
       }, error => {
         this.alertService.openSnackBar(error.message, 'error');
       })
-     }
+    }
   }
   cancel() {
     this._location.back();

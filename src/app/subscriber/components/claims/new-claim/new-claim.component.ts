@@ -976,16 +976,16 @@ export class NewClaimComponent implements OnInit {
         this.contactMask.mask = "email";
         break;
       case "M1":
-        this.contactMask.mask = "000 000-0000";
+        this.contactMask.mask = "(000) 000-0000";
         break;
       case "M2":
-        this.contactMask.mask = "000 000-0000";
+        this.contactMask.mask = "(000) 000-0000";
         break;
       case "L1":
-        this.contactMask.mask = "000 000-0000";
+        this.contactMask.mask = "(000) 000-0000";
         break;
       case "L2":
-        this.contactMask.mask = "000 000-0000";
+        this.contactMask.mask = "(000) 000-0000";
         break;
       case "F1":
         this.contactMask.mask = "000-000-0000";
