@@ -85,7 +85,7 @@
                     <span *ngIf="column == 'first_name'">{{element.first_name}} {{element.middle_name}} {{element.last_name}}</span>
                     <span *ngIf="column == 'address_type_name'">{{element.address_type_id == 3 ? element.address_type_name: element.service_name}}</span>
                     <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}} {{element.city}} {{element.state}} - {{element.zip_code}}</span>
-                    <span *ngIf="column == 'contact'">{{element?.contact ? element?.contact : '-'}}</span>
+                    <span *ngIf="column == 'contact'">{{element?.contact ? (element?.contact |  mask:'(000) 000-0000') : '-' }}</span>
                     <span *ngIf="column == 'disabled'">
                         <div class="no-wrap-td" *ngIf="element.address_type_id != 3">
                             <button mat-icon-button class="edit" (click)="editAddress(element)" matTooltip="Edit"
