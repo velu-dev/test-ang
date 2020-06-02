@@ -150,7 +150,9 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   generateForm() {
     this.examinerService.getForms(this.claim_id).subscribe(res => {
-      console.log(res)
+      let data = this.dataSource.data;
+      data.push(res.data);
+      this.dataSource = new MatTableDataSource(data)
     })
   }
   noteSubmit(note) {

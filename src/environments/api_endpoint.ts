@@ -95,5 +95,6 @@ export const api_endpoint = {
     documentType: 'examinations/document-upload',
     getDocumentData: 'examinations/document-details/',
     deleteDocument: 'examinations/document-remove/',
-    postNotes: 'examinations/add-notes'
+    postNotes: 'examinations/add-notes',
+    formUrl: "form/QME/110/",
 }
