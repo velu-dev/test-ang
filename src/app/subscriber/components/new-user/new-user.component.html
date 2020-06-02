@@ -71,7 +71,7 @@
                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                         fxFlex.xs="100">
                         <mat-label>National Provider Identifier (NPI) number</mat-label>
-                        <input matInput type="number" formControlName="national_provider_identifier"
+                        <input matInput type="text" mask="9{15}" formControlName="national_provider_identifier"
                             placeholder="National Provider Identifier (NPI) number">
                         <mat-error *ngIf="isSubmitted">Enter valid NPI number</mat-error>
                     </mat-form-field>
@@ -90,7 +90,7 @@
                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                         fxFlex.xs="100">
                         <mat-label>License Number</mat-label>
-                        <input matInput formControlName="state_license_number" placeholder="License Number">
+                        <input matInput mask="9A{15}" formControlName="state_license_number" placeholder="License Number">
                         <mat-error *ngIf="isSubmitted">Enter valid License Number</mat-error>
                     </mat-form-field>
 
