@@ -19,7 +19,7 @@
                 matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                     <th mat-header-cell *matHeaderCellDef><span mat-sort-header
-                            *ngIf="columnName[i] != 'Cancel Invite'">{{columnName[i]}}</span> </th>
+                        [disabled]="columnName[i] == 'Action'">{{columnName[i]}}</span> </th>
 
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="i == 0 && isMobile">
