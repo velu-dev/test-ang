@@ -334,9 +334,9 @@
     </div>
 
     <!-- ###~~~~~ Note Details ~~~~~###-->
-    <div class="note_details" fxLayout="row wrap"> 
+    <div class="note_details" fxLayout="row wrap">
         <div fxFlex="100" class="p-5">
-            <mat-card >
+            <mat-card>
                 <mat-card-header (click)="noteCollapsed=!noteCollapsed">
                     <div class="content-wrapper-main-title p-t-5">Notes </div>
                     <span class="spacer"></span>
@@ -359,9 +359,10 @@
                 <mat-card-content class="p-b-20" *ngIf="noteCollapsed">
                     <form action="" class="m-t-20">
                         <div fxLayout="row wrap">
-                            <mat-form-field fxFlex="100" appearance="fill">
+                            <mat-form-field fxFlex="100" appearance="outline">
                                 <textarea matInput [disabled]="!saveButtonStatus" [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="notes" rows="15"></textarea>
+                                    [(ngModel)]="notes" cdkTextareaAutosize cdkAutosizeMinRows="10"
+                                    cdkAutosizeMaxRows="10"></textarea>
                             </mat-form-field>
                             <div *ngIf="saveButtonStatus" class="text-center w-100 m-t-10" (click)="noteSubmit(notes)">
                                 <button mat-raised-button class="m-r-10 rounded-corner btn_success">
