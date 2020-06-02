@@ -79,6 +79,6 @@ export class ExaminerService {
     return this.http.post(environment.baseUrl + api_endpoint.postNotes, data)
   }
   getForms(claim_id): Observable<any> {
-    return this.http.get("https://tst01api.simplexam.com/form/QME/110/" + claim_id)
+    return this.http.get(environment.baseUrl + api_endpoint.formUrl + claim_id)
   }
 }
