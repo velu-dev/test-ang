@@ -128,7 +128,7 @@
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                             fxFlex.xs="100">
                             <mat-label>National Provider Identifier (NPI) number</mat-label>
-                            <input matInput type="number" [maxLength]='15' formControlName="national_provider_identifier"
+                            <input matInput type="text" mask="9{15}" formControlName="national_provider_identifier"
                                 placeholder="National Provider Identifier (NPI) number">
                             <mat-error *ngIf="isSubmit">Enter valid NPI number</mat-error>
                         </mat-form-field>
@@ -147,7 +147,7 @@
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                             fxFlex.xs="100">
                             <mat-label>License Number</mat-label>
-                            <input matInput formControlName="state_license_number" placeholder="License Number">
+                            <input matInput mask="9A{15}" formControlName="state_license_number" placeholder="License Number">
                             <mat-error *ngIf="isSubmit">Enter valid License Number</mat-error>
                         </mat-form-field>
     
@@ -202,13 +202,13 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Address 1 </mat-label>
-                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street1" placeholder="Address"></textarea>
+                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street1" placeholder="Address 1"></textarea>
                             <mat-error>Enter valid address</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Address 2</mat-label>
-                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street2" placeholder="Address"></textarea>
+                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street2" placeholder="Address 2"></textarea>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="33.3"
@@ -289,14 +289,14 @@
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                             fxFlex.xs="100">
                             <mat-label>Email ID 1</mat-label>
-                            <input matInput formControlName="email1" placeholder="Email ID">
+                            <input matInput formControlName="email1" placeholder="Email ID 1">
                             <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                             fxFlex.xs="100">
                             <mat-label>Email ID 2</mat-label>
-                            <input matInput formControlName="email2" placeholder="Email ID">
+                            <input matInput formControlName="email2" placeholder="Email ID 2">
                             <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
                         </mat-form-field>
                         
@@ -329,13 +329,13 @@
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Address 1</mat-label>
-                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street1" placeholder="Address"></textarea>
+                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street1" placeholder="Address 1"></textarea>
                             <mat-error>Enter valid address</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Address 2</mat-label>
-                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street2" placeholder="Address"></textarea>
+                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street2" placeholder="Address 2"></textarea>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.sm="33.3"
@@ -416,14 +416,14 @@
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                             fxFlex.xs="100">
                             <mat-label>Email ID 1</mat-label>
-                            <input matInput formControlName="email1" placeholder="Email ID">
+                            <input matInput formControlName="email1" placeholder="Email ID 1">
                             <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50"
                             fxFlex.xs="100">
                             <mat-label>Email ID 2</mat-label>
-                            <input matInput formControlName="email2" placeholder="Email ID">
+                            <input matInput formControlName="email2" placeholder="Email ID 2">
                             <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
                         </mat-form-field>
 
