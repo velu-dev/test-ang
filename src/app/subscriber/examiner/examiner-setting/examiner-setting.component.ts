@@ -103,7 +103,7 @@ export class ExaminerSettingComponent implements OnInit {
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       w9_number_type: [''],
       w9_number: [''],
-      national_provider_identifier: ['', Validators.compose([Validators.maxLength(15)])],
+      national_provider_identifier: ['', Validators.compose([Validators.required,Validators.maxLength(15)])],
       specialty: [''],
       state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
       taxonomy_id: [''],
@@ -320,12 +320,13 @@ export class ExaminerSettingComponent implements OnInit {
 
     if (this.addressForm.invalid) {
       console.log(this.addressForm)
-      window.scrollTo(10, 10);
+      window.scrollTo(0, 250);
       this.addressForm.markAllAsTouched();
       return;
     }
 
     if (this.billingForm.invalid) {
+      window.scrollTo(0, 1150);
       this.billingForm.markAllAsTouched();
       return;
     }

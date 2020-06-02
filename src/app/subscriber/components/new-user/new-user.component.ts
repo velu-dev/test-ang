@@ -224,18 +224,19 @@ export class NewUserComponent implements OnInit {
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
     });
     if (this.userForm.invalid) {
-      window.scrollTo(10, 10)
+      window.scrollTo(0, 0)
       this.userForm.markAllAsTouched();
       return;
     }
    
     if (this.isExaminer) {
        if (this.userExaminerForm.invalid) {
-      window.scrollTo(10, 10)
+      window.scrollTo(0, 400)
       this.userExaminerForm.markAllAsTouched();
       return;
     }
     if (this.addressForm.invalid) {
+      window.scrollTo(0, 900)
       this.addressForm.markAllAsTouched();
       return;
     }
