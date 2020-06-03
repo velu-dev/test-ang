@@ -250,7 +250,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   addressOnChange(data) {
     let existData = this.searchAddressSubmitDetails.some(deatils => deatils.address_id === data.id)
     if (!existData) {
-      let details = { user_id: this.examinerId, address_id: data.id }
+      let details = { user_id: this.examinerId, address_id: data.id, address_type_id: data.address_type_id }
       this.searchAddressDetails.push(data)
       this.searchAddressSubmitDetails.push(details)
     } else {
@@ -263,6 +263,15 @@ export class ExaminerManageAddressComponent implements OnInit {
     console.log(data)
     this.examinerName = data.first_name + ' ' + data.last_name
     this.examinerId = data.id;
+
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
 
   }
 

@@ -83,11 +83,11 @@
                         </mat-icon>
                     </span>
                     <span *ngIf="column == 'first_name'">{{element.first_name}} {{element.middle_name}} {{element.last_name}}</span>
-                    <span *ngIf="column == 'address_type_name'">{{element.address_type_id == 3 ? element.address_type_name: element.service_name}}</span>
+                    <span *ngIf="column == 'address_type_name'">{{element.address_type_id == 3 || element.service_name == 'Other Examiner Primary' ? 'Primary': element.service_name}}</span>
                     <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}} {{element.city}} {{element.state}} - {{element.zip_code}}</span>
                     <span *ngIf="column == 'contact'">{{element?.contact ? (element?.contact |  mask:'(000) 000-0000') : '-' }}</span>
                     <span *ngIf="column == 'disabled'">
-                        <div class="no-wrap-td" *ngIf="element.address_type_id != 3">
+                        <div class="no-wrap-td" *ngIf="element.address_type_id != 3 && element.service_name != 'Other Examiner Primary'">
                             <button mat-icon-button class="edit" (click)="editAddress(element)" matTooltip="Edit"
                                 matTooltipPosition="before">
                                 <span class="fa fa-pencil-alt"></span>
@@ -97,7 +97,7 @@
                                 <mat-icon>delete_outline</mat-icon>
                             </button>
                         </div>
-                        <div class="no-wrap-td" *ngIf="element.address_type_id == 3">
+                        <div class="no-wrap-td" *ngIf="element.address_type_id == 3 || element.service_name == 'Other Examiner Primary'">
                             <button mat-icon-button  matTooltip="Primary address not editable"
                             matTooltipPosition="before">
                             <mat-icon>info</mat-icon>
