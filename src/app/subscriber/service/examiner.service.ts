@@ -78,7 +78,7 @@ export class ExaminerService {
   postNotes(data) {
     return this.http.post(environment.baseUrl + api_endpoint.postNotes, data)
   }
-  getForms(claim_id): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.formUrl + claim_id)
+  getForms(claim_id, form_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.formUrl + form_id + "/" + claim_id)
   }
 }
