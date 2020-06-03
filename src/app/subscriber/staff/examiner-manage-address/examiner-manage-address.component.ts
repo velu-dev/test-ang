@@ -24,7 +24,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   addresssearch = new FormControl();
   examinerSearch = new FormControl();
 
-  filteredOptions: any;;
+  filteredOptions: any;
   examinerFilteredOptions: Observable<any>;
   examinerOptions: any;
   addressForm: FormGroup;
@@ -125,11 +125,14 @@ export class ExaminerManageAddressComponent implements OnInit {
   }
 
   getSearchAddress(event) {
-    this.filteredOptions = this.examinerService.searchAddress({
+    this.examinerService.searchAddress({
       basic_search: '', isadvanced: this.advancedSearch, state: this.advanceSearch.value.state, city: this.advanceSearch.value.city, zip_code: this.advanceSearch.value.zip_code
+    }).subscribe(res => {
+      this.filteredOptions = res;
+      event.openPanel();
+      this.advancedSearch = false;
     })
-    event.openPanel();
-    this.advancedSearch = false;
+
   }
 
   getAddressDetails() {

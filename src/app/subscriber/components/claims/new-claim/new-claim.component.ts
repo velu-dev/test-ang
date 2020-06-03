@@ -552,15 +552,18 @@ export class NewClaimComponent implements OnInit {
     console.log("advanceSearch", this.advanceSearch.value)
     let data = this.advanceSearch.value;
     data['isadvanced'] = this.searchStatus;
-    this.filteredClaimant = this.claimService.searchClaimant(data);
-    this.advanceSearch.reset();
-    this.isClaimantEdit = true;
-    this.claimant.reset();
-    this.claim.reset();
-    this.addNewClaimant = true;
-    this.isClaimantCreated = true
-    auto.openPanel();
-    this.searchStatus = false;
+    this.claimService.searchClaimant(data).subscribe(res => {
+      this.filteredClaimant = res;
+      this.advanceSearch.reset();
+      this.isClaimantEdit = true;
+      this.claimant.reset();
+      this.claim.reset();
+      this.addNewClaimant = true;
+      this.isClaimantCreated = true
+      auto.openPanel();
+      this.searchStatus = false;
+    });
+
   }
 
   selectionChange(event) {
