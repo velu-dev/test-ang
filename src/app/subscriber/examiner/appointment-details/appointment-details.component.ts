@@ -35,6 +35,8 @@ export class AppointmentDetailsComponent implements OnInit {
   notes: any = null;
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
+  forms = [{ name: "QME 110", value: "110" }, { name: "QME 122", value: "122" }]
+  formId = "";
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService
@@ -149,7 +151,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.openDialog('delete', data);
   }
   generateForm() {
-    this.examinerService.getForms(this.claim_id).subscribe(res => {
+    this.examinerService.getForms(this.claim_id, this.formId).subscribe(res => {
       let data = this.dataSource.data;
       data.push(res.data);
       this.dataSource = new MatTableDataSource(data)

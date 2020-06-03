@@ -29,8 +29,8 @@ export const api_endpoint = {
     subscriberProfileUpdate: 'subscriber/profile-update/',
     subscriberProfile: 'subscriber/profile',
     subscriberDisableUser: "subscriber/disable-user/",
-    updateEditUser:'subscriber/user-update/',
-    getEditUser:'subscriber/user-details/',
+    updateEditUser: 'subscriber/user-update/',
+    getEditUser: 'subscriber/user-details/',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',
@@ -96,5 +96,5 @@ export const api_endpoint = {
     getDocumentData: 'examinations/document-details/',
     deleteDocument: 'examinations/document-remove/',
     postNotes: 'examinations/add-notes',
-    formUrl: "form/QME/110/",
+    formUrl: "form/QME/",
 }

@@ -283,9 +283,17 @@
                                 <div class="table-filter">
                                     <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                                         placeholder="Search by name, date">
+                                    <!-- <input type="text" style="width: 100px;" matInput placeholder="Select form"> -->
+                                    <mat-select [(ngModel)]="formId" style="width: 200px;" placeholder="Select Form">
+                                        <mat-option *ngFor="let form of forms" [value]="form.value">
+                                            {{form.name}}
+                                        </mat-option>
+                                    </mat-select>
                                 </div>
                             </div>
-                            <button mat-raised-button color="warn" (click)="generateForm()" class="m-l-10 m-t-10 float-right">Generate QME From 110</button>
+
+                            <button mat-raised-button color="warn" (click)="generateForm()"
+                                class="m-l-10 m-t-10 float-right">Generate QME From</button>
 
                             <div class="basic-table document_list">
                                 <table mat-table [dataSource]="dataSource">
