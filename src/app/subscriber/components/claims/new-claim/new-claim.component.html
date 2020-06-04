@@ -385,6 +385,7 @@
                                 <mat-label>Panel Number </mat-label>
                                 <input matInput placeholder="Panel Number" formControlName="panel_number"
                                     autocomplete="off">
+                                    <mat-error *ngIf="isClaimSubmited">Please enter valid Panel number</mat-error>
                             </mat-form-field>
 
                         </div>
