@@ -122,7 +122,7 @@ export class ExaminerSettingComponent implements OnInit {
       city: [''],
       state: [''],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      notes: [''],
+      notes: ['',Validators.maxLength(2400)],
       email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       contact_person: ['']
@@ -294,7 +294,7 @@ export class ExaminerSettingComponent implements OnInit {
       city: [''],
       state: [''],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      notes: [''],
+      notes: ['',Validators.maxLength(2400)],
       email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       contact_person: ['']
@@ -341,6 +341,15 @@ export class ExaminerSettingComponent implements OnInit {
       console.log(error);
       this.alertService.openSnackBar(error.message, "error");
     })
+
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
 
   }
 }

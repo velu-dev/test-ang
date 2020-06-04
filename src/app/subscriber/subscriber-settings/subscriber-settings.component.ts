@@ -148,7 +148,7 @@ export class SubscriberSettingsComponent implements OnInit {
       city: [''],
       state: [''],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      notes: [''],
+      notes: ['', Validators.maxLength(2400)],
       email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       contact_person: ['']
@@ -246,7 +246,7 @@ export class SubscriberSettingsComponent implements OnInit {
       city: [''],
       state: [''],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      notes: [''],
+      notes: ['', Validators.maxLength(2400)],
       email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       contact_person: ['']
@@ -330,10 +330,14 @@ export class SubscriberSettingsComponent implements OnInit {
 
     if (this.addressForm.invalid) {
       console.log(this.addressForm)
+      window.scrollTo(0, 250);
+      this.addressForm.markAllAsTouched();
       return;
     }
 
     if (this.billingForm.invalid) {
+      window.scrollTo(0, 250);
+      this.addressForm.markAllAsTouched();
       return;
     }
     let updateData = [this.addressForm.value, this.billingForm.value]
@@ -356,5 +360,14 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   cancel() {
     this._location.back();
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
   }
 }
