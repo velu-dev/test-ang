@@ -13,6 +13,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { Role } from 'src/app/shared/model/role.model';
 import { User } from 'src/app/shared/model/user.model';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
 @Component({
   selector: 'app-billable-item',
   templateUrl: './billable-item.component.html',
@@ -77,6 +78,10 @@ export class BillableItemComponent implements OnInit {
 
     this.claimService.getBillableItemList().subscribe(res => {
       console.log(res)
+      res['data'].map(bill=>{
+        bill.date_of_birth = moment(bill.date_of_birth).format("MM-DD-YYYY");
+        bill.date_of_service = bill.date_of_service ?  moment(bill.date_of_service).format("MM-DD-YYYY") : '';
+       })
       this.dataSource = new MatTableDataSource(res['data'])
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

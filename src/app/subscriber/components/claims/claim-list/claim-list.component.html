@@ -29,9 +29,9 @@
                                 {{ expandId == element.claim_id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="column != 'date_of_injury'">{{element[column]}}</span>
-                        <span
-                            *ngIf="column == 'date_of_injury'">{{element?.claim_injuries != null ? (element?.claim_injuries[0]?.date_of_injury | date: 'MM-dd-yyyy') : "" }}</span>
+                        <span >{{element[column]}}</span>
+                        <!-- <span
+                            *ngIf="column == 'date_of_injury'">{{element?.date_of_injury}}</span> -->
                         <!-- <span
                             *ngIf="column == 'date_of_birth'">{{element?.date_of_birth != null ? (element?.date_of_birth | date: 'MM-dd-yyyy') : "" }}
                         </span> -->
@@ -48,6 +48,10 @@
                             <div class="resposive-table">
                                 <div><span>First Name</span> {{element.first_name}} </div>
                                 <div><span>Last Name</span> {{element.last_name}} </div>
+                                <div><span>Date of Injury</span> {{element.date_of_injury}} </div>
+                                <div><span>Claim Number</span> {{element.claim_number}} </div>
+                                <div><span>WCAB number</span> {{element.wcab_number}} </div>
+                                <div><span>Examiner</span> {{element.examiner_name}} </div>
                                 <!-- <div><span>Date Of Birth</span> {{element.date_of_birth | date: 'MM-dd-yyyy'}} </div> -->
                             </div>
                         </div>

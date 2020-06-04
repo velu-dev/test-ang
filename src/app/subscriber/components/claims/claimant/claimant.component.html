@@ -30,9 +30,7 @@
                         <span *ngIf="column == 'first_name'">{{element?.first_name}} </span>
                         <span *ngIf="column == 'last_name'">{{element?.last_name}} </span>
                         <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth |  date:'MM-dd-yyyy'}} </span>
-                        <span *ngIf="column == 'gender'">{{element[column] == "M" ? 'Male' : ''}}{{element[column] == "F" ? 'Female' : ''}}
-                            {{element[column] == "O" ? 'Other' : ''}}
-                        </span>
+                        <span *ngIf="column == 'gender'">{{element?.gender}}</span>
                         <span (click)="gotoEdit(element)" *ngIf="column == 'disabled'">
                             <button mat-icon-button class="edit" matTooltip="Edit"
                             matTooltipPosition="before">

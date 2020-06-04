@@ -124,10 +124,9 @@
                             </mat-icon>
                         </span>
                         <div (click)="navigate(element)">
-                            <span *ngIf="column != 'date_of_service' && column != 'date_of_birth'">{{element[column]}}
-                            </span>
-                            <span *ngIf="column == 'date_of_birth'">{{element[column] | date:'MM-dd-yyyy'}} </span>
-                            <span *ngIf="column == 'date_of_service'">{{element[column] | date:'MM-dd-yyyy'}} </span>
+                            <span>{{element[column]}} </span>
+                            <!-- <span *ngIf="column == 'date_of_birth'">{{element[column] | date:'MM-dd-yyyy'}} </span>
+                            <span *ngIf="column == 'date_of_service'">{{element[column] | date:'MM-dd-yyyy'}} </span> -->
                         </div>
                         <span (click)="navigateBillableEdit(element)" *ngIf="column == 'action'">
                             <button mat-icon-button class="edit" matTooltip="Edit" matTooltipPosition="before">

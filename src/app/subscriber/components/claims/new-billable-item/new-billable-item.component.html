@@ -141,7 +141,7 @@
                     <input matInput placeholder="MM-DD-YYYY,HH:MM AM/PM" formControlName="call_date" autocomplete="off"
                         [max]="todayDate.intake" [owlDateTime]="intake">
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
-                    <owl-date-time (afterPickerOpen)="pickerOpened('intake')" #intake></owl-date-time>
+                    <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake></owl-date-time>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
