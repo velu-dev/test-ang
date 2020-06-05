@@ -279,21 +279,30 @@
                             </mat-tab-group>
 
 
-                            <div class="table-search">
-                                <div class="table-filter">
-                                    <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                                        placeholder="Search by name, date">
+                            <div fxLayout="row wrap">
+                                <div class="table-search" fxFlex.md="50" fxFlex.lg="50" fxFlex.sm="100" fxFlex="100"
+                                    fxFlex.xs="100">
+                                    <div class="table-filter p-t-10 p-b-0 m-b-0">
+                                        <input matInput (keyup)="applyFilter($event.target.value)"
+                                            [(ngModel)]="filterValue" placeholder="Search by name, date">
+
+                                    </div>
+                                </div>
+                                <mat-form-field fxFlex.md="30" fxFlex.lg="30" fxFlex.sm="60" fxFlex="100" fxFlex.xs="60"
+                                    class="m-t-10" appearance="fill">
+                                    <mat-label>Select Form</mat-label>
                                     <!-- <input type="text" style="width: 100px;" matInput placeholder="Select form"> -->
-                                    <mat-select [(ngModel)]="formId" style="width: 200px;" placeholder="Select Form">
+                                    <mat-select [(ngModel)]="formId" placeholder="Select Form">
                                         <mat-option *ngFor="let form of forms" [value]="form.value">
                                             {{form.name}}
                                         </mat-option>
                                     </mat-select>
-                                </div>
-                            </div>
+                                </mat-form-field>
+                                <div fxFlex.md="20" fxFlex.lg="20" fxFlex.sm="40" fxFlex.xs="40" fxFlex="100"> <button
+                                        mat-raised-button color="warn" (click)="generateForm()"
+                                        class="m-l-10 m-t-10 btn_success">Generate QME From</button></div>
 
-                            <button mat-raised-button color="warn" (click)="generateForm()"
-                                class="m-l-10 m-t-10 float-right">Generate QME From</button>
+                            </div>
 
                             <div class="basic-table document_list">
                                 <table mat-table [dataSource]="dataSource">
