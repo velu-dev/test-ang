@@ -180,7 +180,7 @@ export class NewUserComponent implements OnInit {
     this.userExaminerForm = this.formBuilder.group({
       w9_number: [''],
       w9_number_type: ['EIN'],
-      national_provider_identifier: ['', Validators.compose([Validators.required, Validators.maxLength(15)])],
+      national_provider_identifier: ['', Validators.compose([Validators.required,Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
       specialty: [''],
       state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
       state_of_license_id: [null],

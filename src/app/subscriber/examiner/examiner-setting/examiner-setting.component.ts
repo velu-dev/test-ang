@@ -103,7 +103,7 @@ export class ExaminerSettingComponent implements OnInit {
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       w9_number_type: [''],
       w9_number: [''],
-      national_provider_identifier: ['', Validators.compose([Validators.required,Validators.maxLength(15)])],
+      national_provider_identifier: ['', Validators.compose([Validators.required,Validators.pattern('^[0-9]*$'),Validators.maxLength(15)])],
       specialty: [''],
       state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
       taxonomy_id: [''],
