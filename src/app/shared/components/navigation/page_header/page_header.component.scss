@@ -2,4 +2,10 @@
 
 mat-toolbar {
   background-color: $transparent;
+  mat-toolbar-row {
+    @media only screen and (max-width: 568px) {
+      height: auto !important;
+      padding: 10px 0px;
+    }
+  }
 }

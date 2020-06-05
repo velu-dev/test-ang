@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NGXLogger } from 'ngx-logger';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-claim-list',
   templateUrl: './claim-list.component.html',
@@ -99,6 +99,14 @@ export class ClaimListComponent implements OnInit {
   claims = [];
   getclaims() {
     this.claimService.getClaims().subscribe(res => {
+      res.data.map(claim=>{
+        if(claim.claim_injuries != null &&  claim.claim_injuries[0] && claim.claim_injuries[0].date_of_injury) { 
+        claim.date_of_injury = moment(claim.claim_injuries[0].date_of_injury).format("MM-DD-YYYY")
+        claim.claim_injuries[0].date_of_injury = moment(claim.claim_injuries[0].date_of_injury).format("MM-DD-YYYY");
+        }else{
+          claim.date_of_injury = null;
+        } 
+      })
       this.claims = res.data;
       this.dataSource = new MatTableDataSource(this.claims)
       this.dataSource.paginator = this.paginator;

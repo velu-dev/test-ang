@@ -1,17 +1,26 @@
 @import "variables";
 
-.claim_info {
-    mat-form-field {
-        padding: 10px !important;
-    }
-    .fixied_adj {
-        span {
-            width: 60px;
+mat-card {
+    mat-card-header {
+        button {
+            @media only screen and (max-width: 568px) {
+                height: 35px;
+                margin-top: 10px;
+            }
         }
+    }
+    .claim_info {
         mat-form-field {
-            width: calc(100% - 50px);
-            padding-left: 0px !important;
+            padding: 10px !important;
+        }
+        .fixied_adj {
+            span {
+                width: 60px;
+            }
+            mat-form-field {
+                width: calc(100% - 50px);
+                padding-left: 0px !important;
+            }
         }
     }
-
 }

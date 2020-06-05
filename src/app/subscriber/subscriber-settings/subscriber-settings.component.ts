@@ -15,6 +15,7 @@ import { ClaimService } from '../service/claim.service';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { IntercomService } from 'src/app/services/intercom.service';
 
 @Component({
   selector: 'app-subscribersettings',
@@ -37,6 +38,7 @@ export class SubscriberSettingsComponent implements OnInit {
   filteredTexonamy: Observable<any[]>;
   texoCtrl = new FormControl();
   texoDetails = [];
+  first_name: string;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -47,7 +49,8 @@ export class SubscriberSettingsComponent implements OnInit {
     private cookieService: CookieService,
     //private store: Store<{ count: number }>,
     private claimService: ClaimService,
-    public _location: Location
+    public _location: Location,
+    private intercom: IntercomService
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
@@ -60,6 +63,7 @@ export class SubscriberSettingsComponent implements OnInit {
       delete res.data.business_nature;
       delete res.data.logo;
       let userDetails;
+      this.first_name = res.data.first_name;
       if (res.data.role_id == 2) {
         this.disableCompany = false;
         userDetails = {
@@ -144,7 +148,7 @@ export class SubscriberSettingsComponent implements OnInit {
       city: [''],
       state: [''],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      notes: [''],
+      notes: ['', Validators.maxLength(2400)],
       email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       contact_person: ['']
@@ -152,14 +156,14 @@ export class SubscriberSettingsComponent implements OnInit {
     this.billingInit();
     this.claimService.seedData('taxonomy').subscribe(response => {
       this.taxonomyList = response['data'];
-      this.taxonomyList.map(data=>{
+      this.taxonomyList.map(data => {
         data.code_name = data.taxonomy_code.toLowerCase() + '-' + data.taxonomy_name.toLowerCase()
       })
       this.filteredTexonamy = this.texoCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filteTex(value))
-      );
+        .pipe(
+          startWith(''),
+          map(value => this._filteTex(value))
+        );
     }, error => {
       console.log("error", error)
     })
@@ -242,21 +246,29 @@ export class SubscriberSettingsComponent implements OnInit {
       city: [''],
       state: [''],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      notes: [''],
+      notes: ['', Validators.maxLength(2400)],
       email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       contact_person: ['']
     });
   }
   userformSubmit() {
+    Object.keys(this.userForm.controls).forEach((key) => {
+      if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
+        this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
+    });
     this.isSubmit = true;
     if (this.userForm.invalid) {
       return;
     }
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
-      window.location.reload();
+      //window.location.reload();
       this.isSubmit = false;
+      if (this.first_name != this.userForm.value.first_name) {
+        this.first_name = this.userForm.value.first_name;
+        this.intercom.setUser(true);
+      }
       // this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
       //this.router.navigate(['/admin/settings'])
     }, error => {
@@ -318,10 +330,14 @@ export class SubscriberSettingsComponent implements OnInit {
 
     if (this.addressForm.invalid) {
       console.log(this.addressForm)
+      window.scrollTo(0, 250);
+      this.addressForm.markAllAsTouched();
       return;
     }
 
     if (this.billingForm.invalid) {
+      window.scrollTo(0, 250);
+      this.addressForm.markAllAsTouched();
       return;
     }
     let updateData = [this.addressForm.value, this.billingForm.value]
@@ -342,7 +358,16 @@ export class SubscriberSettingsComponent implements OnInit {
       company_taxonomy_id: tex.id
     })
   }
-  cancel(){
+  cancel() {
     this._location.back();
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
   }
 }

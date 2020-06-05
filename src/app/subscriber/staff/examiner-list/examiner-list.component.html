@@ -7,19 +7,19 @@
     <mat-card-content class="p-t-3 m-b-0">
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event)" [(ngModel)]="filterValue"
-                placeholder="Search by name, email, etc">
+                placeholder="Search by name, email ">
         </div>
         <span class="spacer"></span>
-        <button mat-icon-button class="filter-icon">
+        <!-- <button mat-icon-button class="filter-icon">
             <img class="icon-16" [src]="xls" alt="export" />
-        </button>
+        </button> -->
 
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
                 matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                     <th mat-header-cell *matHeaderCellDef><span mat-sort-header
-                            *ngIf="columnName[i] != 'Cancel Invite'">{{columnName[i]}}</span> </th>
+                        [disabled]="columnName[i] == 'Action'">{{columnName[i]}}</span> </th>
 
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="i == 0 && isMobile">

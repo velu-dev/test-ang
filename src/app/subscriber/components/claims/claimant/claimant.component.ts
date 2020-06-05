@@ -14,6 +14,7 @@ import { ExportService } from 'src/app/shared/services/export.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import * as moment from 'moment';
 @Component({
   selector: 'app-claimant',
   templateUrl: './claimant.component.html',
@@ -80,7 +81,12 @@ export class ClaimantComponent implements OnInit {
   users = [];
   getUser() {
     this.claimService.getClaimant().subscribe(res => {
-      this.users = res.data;
+    
+     res.data.map(claim=>{
+      claim.date_of_birth = moment(claim.date_of_birth).format("MM-DD-YYYY");
+      claim.gender =  claim.gender == "M" ? 'Male' : '' ||  claim.gender == "F" ? 'Female' : ''
+     })
+       this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

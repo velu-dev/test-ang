@@ -26,6 +26,8 @@ export class CorrespondanceComponent implements OnInit {
   @Input('claimId') claimId;
   documents_ids = [];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  file:any = null;
+  note:string = null;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -60,6 +62,7 @@ export class CorrespondanceComponent implements OnInit {
       }
       this.selectedFile = event.target.files[0];
       console.log(" this.selectedFile", this.selectedFile);
+      this.file = event.target.files[0].name;
     } else {
       this.selectedFile = null;
       //this.errorMessage = 'This file type is not accepted';
@@ -69,16 +72,19 @@ export class CorrespondanceComponent implements OnInit {
   }
 
   correspondFormSubmit() {
-    console.log(this.correspondForm.value)
-    console.log(this.claimId)
-    if (this.correspondForm.invalid) {
-      this.correspondForm.get('note').markAsTouched();
-      this.correspondForm.get('file').markAsTouched();
+    // console.log(this.correspondForm.value)
+    // console.log(this.claimId)
+    // if (this.correspondForm.invalid) {
+    //   this.correspondForm.get('note').markAsTouched();
+    //   this.correspondForm.get('file').markAsTouched();
+    //   return;
+    // }
+    if(this.file == null || this.note == null ||  this.note.trim() == ''){
       return;
     }
     let formData = new FormData()
     formData.append('file', this.selectedFile);
-    formData.append('notes', this.correspondForm.value.note);
+    formData.append('notes', this.note);
     if (this.claimId) {
       formData.append('claim_id', this.claimId)
     }
@@ -86,7 +92,7 @@ export class CorrespondanceComponent implements OnInit {
       let details = {
         id: data['data'].id,
         file_name: data['data'].file_name,
-        notes: this.correspondForm.value.note,
+        notes: this.note,
         updatedAt: data['data'].createdAt,
         exam_report_file_url: data['data'].exam_report_file_url
       }
@@ -95,7 +101,9 @@ export class CorrespondanceComponent implements OnInit {
       this.correspondenceSource = new MatTableDataSource(tabledata);
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
-      this.correspondForm.reset();
+      this.file = null;
+      this.note = '';
+      //this.correspondForm.reset();
       this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       console.log(error);
@@ -131,6 +139,6 @@ export class CorrespondanceComponent implements OnInit {
   }
 
   download(data) {
-    saveAs(data.exam_report_file_url, "data.file_name");
+    saveAs(data.exam_report_file_url, data.file_name);
   }
 }

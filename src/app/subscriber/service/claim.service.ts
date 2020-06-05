@@ -102,9 +102,9 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.billableItemSingle + id)
   }
   getICD10(term): Observable<any> {
-    let data: any;
-    data = this.http.get("https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&authenticity_token=&terms=" + term)
-    return data;
+    console.log(term)
+    return this.http.get("https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&authenticity_token=&terms=" + term)
+
   }
   getBillings(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getBillings)

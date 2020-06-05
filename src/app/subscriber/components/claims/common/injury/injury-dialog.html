@@ -20,13 +20,13 @@
                 [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury">
             <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
             <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
-            <mat-error>Enter valid date of injury</mat-error>
+            <mat-error>Please enter valid date of injury</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>Injury Note</mat-label>
             <textarea matInput [(ngModel)]="injuryInfo.injury_notes" placeholder="Injury Note "
-                autocomplete="off"></textarea>
+                autocomplete="off" cdkTextareaAutosize cdkAutosizeMinRows="4" cdkAutosizeMaxRows="4"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"

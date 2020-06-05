@@ -158,27 +158,27 @@
     <div class="examiner_details" fxLayout="row wrap">
         <div fxFlex="100" class="p-5">
             <mat-card>
-                <mat-card-header>
+                <mat-card-header (click)="collapsed=!collapsed">
                     <div fxLayout="row wrap" fxFlex="100">
                         <div class="p-t-5 examiner">
                             <span>Examiner </span> {{examinationDetails?.examiner_name}}
                         </div>
                         <span class="spacer"></span>
-                        <div class="p-r-5 p-t-5 hide-mobile">
+                        <div class="p-r-5 p-t-5 hide-mobile" *ngIf="!collapsed">
                             <span class="speality">Specialty </span>
                             <ul class="m-t-0 p-l-0 speality-list">
                                 <li class="p-t-0">{{examinationDetails?.specialty[0]?.name | ellipsis:30 }}</li>
                             </ul>
                         </div>
                         <button mat-icon-button class="float-right">
-                            <mat-icon (click)="collapsed=!collapsed">
+                            <mat-icon>
                                 {{collapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                         </button>
                     </div>
                 </mat-card-header>
                 <mat-card-content *ngIf="collapsed">
                     <div fxLayout="row wrap" fxFlex="50">
-                        <!-- <span class="speality">Specialty </span> -->
+                        <span class="speality">Specialty </span>
                         <ul class="m-t-0 p-l-0 speality-list" *ngFor="let spec of examinationDetails?.specialty">
                             <li>{{spec?.name}} </li>
                         </ul>
@@ -192,11 +192,11 @@
     <div class="documents_section" fxLayout="row wrap">
         <div fxFlex="100" class="p-5">
             <mat-card>
-                <mat-card-header>
+                <mat-card-header (click)="docCollapsed=!docCollapsed">
                     <div class="content-wrapper-main-title p-t-5">Documents</div>
                     <span class="spacer"></span>
                     <button mat-icon-button>
-                        <mat-icon (click)="docCollapsed=!docCollapsed">
+                        <mat-icon>
                             {{docCollapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     </button>
                 </mat-card-header>
@@ -283,8 +283,17 @@
                                 <div class="table-filter">
                                     <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                                         placeholder="Search by name, date">
+                                    <!-- <input type="text" style="width: 100px;" matInput placeholder="Select form"> -->
+                                    <mat-select [(ngModel)]="formId" style="width: 200px;" placeholder="Select Form">
+                                        <mat-option *ngFor="let form of forms" [value]="form.value">
+                                            {{form.name}}
+                                        </mat-option>
+                                    </mat-select>
                                 </div>
                             </div>
+
+                            <button mat-raised-button color="warn" (click)="generateForm()"
+                                class="m-l-10 m-t-10 float-right">Generate QME From</button>
 
                             <div class="basic-table document_list">
                                 <table mat-table [dataSource]="dataSource">
@@ -337,15 +346,43 @@
     <div class="note_details" fxLayout="row wrap">
         <div fxFlex="100" class="p-5">
             <mat-card>
-                <mat-card-header>
+                <mat-card-header (click)="noteCollapsed=!noteCollapsed">
                     <div class="content-wrapper-main-title p-t-5">Notes </div>
                     <span class="spacer"></span>
+                    <button *ngIf="noteCollapsed && !saveButtonStatus"
+                        (click)="$event.stopPropagation();saveButtonStatus = true" mat-raised-button color="primary"
+                        class="m-b-5">
+                        Edit
+                    </button>
+                    <button *ngIf="noteCollapsed && saveButtonStatus"
+                        (click)="$event.stopPropagation();noteSubmit(notes)" mat-raised-button color="primary"
+                        class="m-b-5">
+                        Save
+                    </button>
                     <button mat-icon-button>
-                        <mat-icon>expand_more</mat-icon>
+                        <mat-icon>
+                            {{noteCollapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                     </button>
                 </mat-card-header>
                 <mat-divider></mat-divider>
-                <mat-card-content>
+                <mat-card-content class="p-b-20" *ngIf="noteCollapsed">
+                    <form action="" class="m-t-20">
+                        <div fxLayout="row wrap">
+                            <mat-form-field fxFlex="100" appearance="outline">
+                                <textarea matInput [disabled]="!saveButtonStatus" [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="notes" cdkTextareaAutosize cdkAutosizeMinRows="10"
+                                    cdkAutosizeMaxRows="10"></textarea>
+                            </mat-form-field>
+                            <div *ngIf="saveButtonStatus" class="text-center w-100 m-t-10" (click)="noteSubmit(notes)">
+                                <button mat-raised-button class="m-r-10 rounded-corner btn_success">
+                                    Save </button>
+                                <button mat-raised-button type="button" (click)="saveButtonStatus = false" color="warn"
+                                    class="rounded-corner">Cancel</button>
+                            </div>
+                        </div>
+
+
+                    </form>
                 </mat-card-content>
             </mat-card>
         </div>

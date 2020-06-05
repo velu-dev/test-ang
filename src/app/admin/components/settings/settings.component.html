@@ -33,7 +33,7 @@
                         <div class="edit-profile  m-t-10">
                             <mat-card-content>
                                 <!--Form start-->
-                                <form fxLayout="row wrap" [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
+                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
                                     <mat-form-field class="m-t-5" appearance="standard" fxFlex="100">
                                         <mat-label>Current password*</mat-label>
                                         <input type="password" matInput placeholder="Current password*"
@@ -86,7 +86,7 @@
                         <div class="edit-profile m-t-10">
                             <mat-card-content>
                                 <!--Form start-->
-                                <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
+                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                         fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
                                         <mat-label>First Name*</mat-label>

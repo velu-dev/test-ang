@@ -48,7 +48,7 @@
 </div>
 <div *ngIf="isEdit" class="deu_info"> -->
 <div class="deu_info">
-    <form fxLayout="row wrap" fxFlex="100" [formGroup]="DEU" (keydown.enter)="$event.preventDefault()">
+    <form fxLayout="row wrap" fxFlex="100" [formGroup]="DEU" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-form-field *ngIf="!isEdit" appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
             fxFlex.xs="100">
             <mat-label>Office Name</mat-label>
@@ -68,15 +68,15 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 1</mat-label>
-            <textarea matInput formControlName="street1"></textarea>
+            <textarea matInput placeholder="Address 1" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street1"></textarea>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 2</mat-label>
-            <textarea matInput formControlName="street2"></textarea>
+            <textarea matInput placeholder="Address 2" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street2"></textarea>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>City</mat-label>
-            <input matInput type="text" placeholder="city" formControlName="city" autocomplete="off">
+            <input matInput type="text" placeholder="City" formControlName="city" autocomplete="off">
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -85,17 +85,17 @@
                 <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
                 </mat-option>
             </mat-select>
-            <mat-error>Enter valid state</mat-error>
+            <mat-error>Please enter valid state</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Zip Code</mat-label>
-            <input matInput formControlName="zip_code" placeholder="Zip Code" autocomplete="off">
+            <input matInput  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" placeholder="Zip Code" autocomplete="off">
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Phone Number</mat-label>
-            <input matInput type="text" mask="(000) 000-0000" placeholder="Phone Number" formControlName="phone"
+            <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Phone Number" formControlName="phone"
                 autocomplete="off">
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -106,7 +106,7 @@
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Fax</mat-label>
             <input matInput placeholder="Fax" formControlName="fax" mask="000-000-0000" autocomplete="off">
-            <mat-error>Enter valid fax number</mat-error>
+            <mat-error>Please enter valid fax number</mat-error>
         </mat-form-field>
         <div *ngIf="isEdit" class="text-center w-100 m-t-10 m-b-50">
             <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success" (click)="updateDEU()">

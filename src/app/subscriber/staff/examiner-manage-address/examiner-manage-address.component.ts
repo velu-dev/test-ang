@@ -24,7 +24,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   addresssearch = new FormControl();
   examinerSearch = new FormControl();
 
-  filteredOptions: Observable<any>;
+  filteredOptions: any;
   examinerFilteredOptions: Observable<any>;
   examinerOptions: any;
   addressForm: FormGroup;
@@ -61,10 +61,14 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.examinerSearch = new FormControl({ value: this.examinerName, disabled: true })
     }
 
-    this.addresssearch.valueChanges
-      .pipe(
-        debounceTime(300),
-      ).subscribe(value => this.filteredOptions = this.examinerService.searchAddress({ basic_search: value, isadvanced: false }));
+    this.addresssearch.valueChanges.subscribe(res => {
+      this.examinerService.searchAddress({ basic_search: res, isadvanced: false }).subscribe(value => {
+        this.filteredOptions = value;
+      })
+    })
+    // .pipe(
+    //   debounceTime(300),
+    // ).subscribe(value => this.filteredOptions = ));
 
   }
 
@@ -121,11 +125,14 @@ export class ExaminerManageAddressComponent implements OnInit {
   }
 
   getSearchAddress(event) {
-    this.filteredOptions =  this.examinerService.searchAddress({
+    this.examinerService.searchAddress({
       basic_search: '', isadvanced: this.advancedSearch, state: this.advanceSearch.value.state, city: this.advanceSearch.value.city, zip_code: this.advanceSearch.value.zip_code
+    }).subscribe(res => {
+      this.filteredOptions = res;
+      event.openPanel();
+      this.advancedSearch = false;
     })
-    event.openPanel();
-    this.advancedSearch = false;
+
   }
 
   getAddressDetails() {
@@ -172,28 +179,29 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.addAddressDetails.push(this.addressForm.value);
       this.addressForm.reset();
     }
+    this.newAddressBlukSubmit();
 
   }
 
   newAddressBlukSubmit() {
-    if (this.addAddressDetails.length > 0) {
-      let addressDetails = this.addAddressDetails;
-      addressDetails.map(data => {
-        data.address_type_id = 1
-        delete data.id
-      })
-      console.log(addressDetails)
-      this.examinerService.postExaminerAddressOther(addressDetails, this.examinerId).subscribe(response => {
-        console.log(response)
-        this.alertService.openSnackBar("Location created successfully", 'success');
-        this.router.navigate(['/subscriber/staff/manage-location'])
-      }, error => {
-        console.log(error);
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
-    } else {
-      this.alertService.openSnackBar("No data to submit", 'error');
-    }
+    // if (this.addAddressDetails.length > 0) {
+    let addressDetails = this.addAddressDetails;
+    addressDetails.map(data => {
+      data.address_type_id = 1
+      delete data.id
+    })
+    console.log(addressDetails)
+    this.examinerService.postExaminerAddressOther(addressDetails, this.examinerId).subscribe(response => {
+      console.log(response)
+      this.alertService.openSnackBar("Location created successfully", 'success');
+      this.router.navigate(['/subscriber/staff/manage-location'])
+    }, error => {
+      console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+    // } else {
+    //   this.alertService.openSnackBar("No data to submit", 'error');
+    // }
   }
 
   existAddressBlukSubmit() {
@@ -245,7 +253,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   addressOnChange(data) {
     let existData = this.searchAddressSubmitDetails.some(deatils => deatils.address_id === data.id)
     if (!existData) {
-      let details = { user_id: this.examinerId, address_id: data.id }
+      let details = { user_id: this.examinerId, address_id: data.id, address_type_id: data.address_type_id }
       this.searchAddressDetails.push(data)
       this.searchAddressSubmitDetails.push(details)
     } else {
@@ -258,6 +266,15 @@ export class ExaminerManageAddressComponent implements OnInit {
     console.log(data)
     this.examinerName = data.first_name + ' ' + data.last_name
     this.examinerId = data.id;
+
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
 
   }
 

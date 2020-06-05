@@ -47,7 +47,7 @@
 </div>
 <div fxLayout="row wrap" fxFlex="100" *ngIf="isEdit" class="employer_info"> -->
     <div fxLayout="row wrap" fxFlex="100" class="employer_info">
-    <form fxLayout="row wrap" fxFlex="100" [formGroup]="employer" (keydown.enter)="$event.preventDefault()">
+    <form fxLayout="row wrap" fxFlex="100" [formGroup]="employer" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>Name</mat-label>
             <input matInput placeholder="Name" formControlName="name" autocomplete="off">
@@ -55,12 +55,12 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 1</mat-label>
-            <textarea matInput formControlName="street1"></textarea>
+            <textarea matInput placeholder="Address 1" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street1"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 2</mat-label>
-            <textarea matInput formControlName="street2"></textarea>
+            <textarea matInput placeholder="Address 2" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street2"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -75,17 +75,17 @@
                 <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
                 </mat-option>
             </mat-select>
-            <mat-error>Enter valid state</mat-error>
+            <mat-error>Please enter valid state</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Zip Code</mat-label>
-            <input matInput  placeholder="Zip" formControlName="zip_code" autocomplete="off">
+            <input matInput  placeholder="Zip code"  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Phone</mat-label>
-            <input matInput placeholder="Phone" type="text" mask="(000) 000-0000" formControlName="phone"
+            <input matInput placeholder="Phone" (keypress)="numberOnly($event)" type="text" mask="(000) 000-0000" formControlName="phone"
                 autocomplete="off">
         </mat-form-field>
 

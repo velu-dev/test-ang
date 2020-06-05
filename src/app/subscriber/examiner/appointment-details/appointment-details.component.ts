@@ -26,11 +26,25 @@ export class AppointmentDetailsComponent implements OnInit {
   examinationDetails: any;
   collapsed = false;
   docCollapsed = false;
+  noteCollapsed = false;
   documentType: any;
   documentList: any;
   documentTabData: any;
   filterValue: String;
   tabIndex = 0;
+  notes: any = null;
+  noteDisable: boolean = false;
+  saveButtonStatus: boolean = false;
+  forms = [
+    { name: "QME 110", value: "110" },
+    { name: "QME 122", value: "122" },
+    { name: "QME-121", value: "121" },
+    { name: "QME-111", value: "111" },
+    { name: "DWCCA-10232_1", value: "10232_1" },
+    { name: "DWCCA-10232_2", value: "10232_2" },
+    { name: "FormSBR_1", value: "SBR_1" },
+    { name: "FormIBR_1", value: "IBR_1" }]
+  formId = "";
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService
@@ -43,6 +57,11 @@ export class AppointmentDetailsComponent implements OnInit {
 
       this.examinationDetails = response['data']
       this.getDocumentData();
+      if (response['data'].exam_notes) {
+        this.notes = response['data'].exam_notes;
+      } else {
+        this.saveButtonStatus = true;
+      }
     }, error => {
       console.log(error);
       this.dataSource = new MatTableDataSource([]);
@@ -136,8 +155,36 @@ export class AppointmentDetailsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  deleteDocument(data){
+  deleteDocument(data) {
     this.openDialog('delete', data);
+  }
+  generateForm() {
+    this.examinerService.getForms(this.claim_id, this.formId).subscribe(res => {
+      let data = this.dataSource.data;
+      data.push(res.data);
+      this.dataSource = new MatTableDataSource(data)
+    })
+  }
+  noteSubmit(note) {
+    console.log(note);
+    let data = {
+      "claim_id": this.examinationDetails.claim_details.id,
+      "appointment_id": this.examinationDetails.appointments.id,
+      "exam_notes": note
+    }
+    this.examinerService.postNotes(data).subscribe(res => {
+      this.alertService.openSnackBar("Note added successfully!", 'success');
+      this.saveButtonStatus = false;
+    }, error => {
+      console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+
+  }
+
+  noteCancel() {
+    this.saveButtonStatus = false;
+    this.notes = this.examinationDetails.exam_notes
   }
 
   openDialog(dialogue, data) {
@@ -147,13 +194,13 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-       this.examinerService.deleteDocument(data.id).subscribe(res=>{
-         console.log(res['data']);
-         this.getDocumentData();
-         this.alertService.openSnackBar("File deleted successfully!", 'success');
-       },error=>{
-        this.alertService.openSnackBar(error.error.message, 'error');
-       })
+        this.examinerService.deleteDocument(data.id).subscribe(res => {
+          console.log(res['data']);
+          this.getDocumentData();
+          this.alertService.openSnackBar("File deleted successfully!", 'success');
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
       }
     })
 
@@ -237,8 +284,5 @@ export class BillableitemPopupComponent {
   cancelClick(): void {
     this.dialogRef.close();
   }
-
-
-
 
 }

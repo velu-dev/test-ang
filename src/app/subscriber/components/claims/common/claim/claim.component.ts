@@ -42,16 +42,17 @@ export class ClaimComponent implements OnInit {
       if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string')
         this.claim.get(key).setValue(this.claim.get(key).value.trim())
     });
+    this.isClaimSubmited = true;
     if (this.claim.invalid) {
       return;
     }
     this.claimService.updateClaim(this.claim.value, this.claim.value.id).subscribe(res => {
       this.isEdit = false;
       this.claim.patchValue(res.data)
-      this.claim.disable()
+      this.claim.disable();
       this.alertService.openSnackBar("Claim updated successfully", 'success')
     }, error => {
-      this.alertService.openSnackBar(error.error.message, "error")
+      this.alertService.openSnackBar(error.error.message, "error");
     })
   }
   cancel() {

@@ -74,11 +74,16 @@ export class NewBillingComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   filteredICD: Observable<[]>;
   icdCtrl = new FormControl();
+  icdSearched = false;
   constructor(public dialog: MatDialog, private claimService: ClaimService) {
-    this.filteredICD = this.icdCtrl.valueChanges
-      .pipe(
-        debounceTime(300),
-        switchMap(value => this.claimService.getICD10(value)));
+    this.icdCtrl.valueChanges.subscribe(res => {
+      console.log(res);
+      this.icdSearched = true;
+      this.claimService.getICD10(res).subscribe(icd => {
+        console.log(icd)
+        this.filteredICD = icd[3];
+      });
+    })
   }
   openDialog() {
     this.dialog.open(BillilgDialog, {

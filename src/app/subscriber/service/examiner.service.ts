@@ -22,7 +22,7 @@ export class ExaminerService {
     return this.http.post(environment.baseUrl + api_endpoint.addAddress, data)
   }
 
-  updateExaminerAddress(data,id) {
+  updateExaminerAddress(data, id) {
     return this.http.put(environment.baseUrl + api_endpoint.updateAddress + id, data)
   }
 
@@ -34,10 +34,10 @@ export class ExaminerService {
     return this.http.get(environment.baseUrl + api_endpoint.getExaminerList)
   }
 
-  getsingleExAddress(exam_id,address_id) {
-    return this.http.get(environment.baseUrl + api_endpoint.getSingleExaminer + exam_id +'/'+address_id)
+  getsingleExAddress(exam_id, address_id) {
+    return this.http.get(environment.baseUrl + api_endpoint.getSingleExaminer + exam_id + '/' + address_id)
   }
-  searchAddress(data) {
+  searchAddress(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.searchAddress, data)
   }
 
@@ -53,25 +53,32 @@ export class ExaminerService {
     return this.http.post(environment.baseUrl + api_endpoint.deleteAddress, data)
   }
 
-  getExaminationDetails(){
+  getExaminationDetails() {
     return this.http.get(environment.baseUrl + api_endpoint.getExamination)
   }
 
-  getAllExamination(id){
+  getAllExamination(id) {
     return this.http.get(environment.baseUrl + api_endpoint.getAllExamination + id)
   }
 
-  postDocument(data){
+  postDocument(data) {
     return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
   }
 
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
-  getDocumentData(id){
+  getDocumentData(id) {
     return this.http.get(environment.baseUrl + api_endpoint.getDocumentData + id)
   }
-  deleteDocument(id){
+  deleteDocument(id) {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id)
+  }
+
+  postNotes(data) {
+    return this.http.post(environment.baseUrl + api_endpoint.postNotes, data)
+  }
+  getForms(claim_id, form_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.formUrl + form_id + "/" + claim_id)
   }
 }

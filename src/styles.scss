@@ -481,3 +481,23 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   border: none !important;
   padding: 5px;
 }
+
+mat-horizontal-stepper {
+  .mat-horizontal-stepper-header {
+    .mat-step-icon-state-number, .mat-step-icon-state-edit {
+      @media only screen and (max-width: 568px) {
+        display: none;
+      }
+    }
+    .mat-step-label {
+      @media only screen and (max-width: 568px) {
+        text-align: center;
+      }
+    }
+    span {
+      @media only screen and (max-width: 568px) {
+        display: block;
+      }
+    }
+  }
+}

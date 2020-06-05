@@ -50,7 +50,7 @@ export class EditAddressComponent implements OnInit {
       street2: [''],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      zip_code: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      zip_code: ['', Validators.compose([Validators.required,Validators.maxLength(10), Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       notes: [''],
       email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],

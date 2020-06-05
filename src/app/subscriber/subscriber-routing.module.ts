@@ -42,7 +42,7 @@ const routes: Routes = [{
     path: "new",
     component: NewUserComponent
   }, {
-    path: ":id",
+    path: "edit/:id",
     component: NewUserComponent
   }]
 }, {

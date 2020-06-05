@@ -11,9 +11,9 @@
     <mat-card-content class="p-t-3 m-b-0">
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by name, number">
+                placeholder="Search by bill number, claim number, etc.">
         </div>
-        <span class="spacer"></span>
+        <!-- <span class="spacer"></span>
         <button mat-icon-button class="filter-icon p-t-0 m-t-10" [matMenuTriggerFor]="filter">
             <mat-icon mat-icon-button aria-hidden="false" material-icons aria-label="home icon">filter_list</mat-icon>
         </button>
@@ -34,7 +34,7 @@
                     <mat-checkbox>Rejected</mat-checkbox>
                 </mat-list-item>
             </mat-list>
-        </mat-menu>
+        </mat-menu> -->
         <div class="basic-table billing_list">
             <table mat-table [dataSource]="dataSource" matSort>
                 <!-- bill_no Column -->
@@ -57,7 +57,7 @@
 
                 <!-- examinar Column -->
                 <ng-container matColumnDef="examiner_first_name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Examinar </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Examiner </th>
                     <td mat-cell *matCellDef="let row"> {{row.examiner_first_name}} </td>
                 </ng-container>
 
@@ -76,7 +76,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let row">
                         <mat-icon class="edit-user" matTooltip="Edit {{row.claimant_first_name}} "
                             matTooltipPosition="right">

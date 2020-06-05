@@ -56,7 +56,7 @@
 </div>
 <div fxLayout="row wrap" *ngIf="isEdit" class="claim_admin"> -->
 <div fxLayout="row wrap" class="claim_admin">
-    <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimAdminForm" (keydown.enter)="$event.preventDefault()">
+    <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimAdminForm" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Insurance Name</mat-label>
             <input matInput placeholder="Insurance" formControlName="company_name" autocomplete="off">
@@ -69,17 +69,17 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 1</mat-label>
-            <textarea matInput formControlName="street1"></textarea>
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street1"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 2</mat-label>
-            <textarea matInput formControlName="street2"></textarea>
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street2"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>City</mat-label>
-            <input matInput type="text" placeholder="city" formControlName="city" autocomplete="off">
+            <input matInput type="text" placeholder="City" formControlName="city" autocomplete="off">
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -88,17 +88,17 @@
                 <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
                 </mat-option>
             </mat-select>
-            <mat-error>Enter valid state</mat-error>
+            <mat-error>Please enter valid state</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Zip Code</mat-label>
-            <input matInput placeholder="Zip Code" formControlName="zip_code" autocomplete="off">
+            <input matInput placeholder="Zip Code"  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Adjuster Phone</mat-label>
-            <input matInput type="text" mask="(000) 000-0000" placeholder="Phone" formControlName="phone"
+            <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Phone" formControlName="phone"
                 autocomplete="off">
         </mat-form-field>
 
@@ -110,7 +110,7 @@
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Adjuster Fax</mat-label>
             <input matInput mask="000-000-0000" placeholder="Fax" formControlName="fax" autocomplete="off">
-            <mat-error>Enter valid fax number</mat-error>
+            <mat-error>Please enter valid fax number</mat-error>
         </mat-form-field>
         <div *ngIf="isEdit" class="text-center w-100 m-t-10 m-b-10">
             <button mat-raised-button class="m-r-10 rounded-corner btn_success" (click)="updateClaimAdmin()">
