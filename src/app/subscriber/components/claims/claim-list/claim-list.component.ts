@@ -100,7 +100,7 @@ export class ClaimListComponent implements OnInit {
   getclaims() {
     this.claimService.getClaims().subscribe(res => {
       res.data.map(claim=>{
-        if(claim.claim_injuries != null &&  claim.claim_injuries[0]) { 
+        if(claim.claim_injuries != null &&  claim.claim_injuries[0] && claim.claim_injuries[0].date_of_injury) { 
         claim.date_of_injury = moment(claim.claim_injuries[0].date_of_injury).format("MM-DD-YYYY")
         claim.claim_injuries[0].date_of_injury = moment(claim.claim_injuries[0].date_of_injury).format("MM-DD-YYYY");
         }else{

@@ -15,7 +15,7 @@
                             {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="isBillSubmited">Select Procedural Type</mat-error>
+                    <mat-error *ngIf="isBillSubmited">Please select Procedural Type</mat-error>
                 </mat-form-field>
 
 
@@ -41,7 +41,7 @@
                             {{language.language}}
                         </mat-option>
                     </mat-select>
-                    <mat-error>Select valid primary language</mat-error>
+                    <mat-error>Please select valid primary language</mat-error>
                 </mat-form-field>
             </div>
 
@@ -163,7 +163,7 @@
                     <input matInput [type]="contactMask.type" [mask]="contactMask.mask"
                         formControlName="call_type_detail"
                         placeholder="{{billable_item?.value?.intake_call_info?.communication_type}}" autocomplete="off">
-                    <mat-error>Enter Valid contact information</mat-error>
+                    <mat-error>Please enter valid contact information</mat-error>
                 </mat-form-field>
             </div>
             <div class="text-center w-100 m-t-10 m-b-50">

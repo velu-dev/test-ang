@@ -79,7 +79,7 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>City</mat-label>
-            <input matInput type="text" placeholder="city" formControlName="city" autocomplete="off">
+            <input matInput type="text" placeholder="City" formControlName="city" autocomplete="off">
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -88,7 +88,7 @@
                 <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
                 </mat-option>
             </mat-select>
-            <mat-error>Enter valid state</mat-error>
+            <mat-error>Please enter valid state</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -110,7 +110,7 @@
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Adjuster Fax</mat-label>
             <input matInput mask="000-000-0000" placeholder="Fax" formControlName="fax" autocomplete="off">
-            <mat-error>Enter valid fax number</mat-error>
+            <mat-error>Please enter valid fax number</mat-error>
         </mat-form-field>
         <div *ngIf="isEdit" class="text-center w-100 m-t-10 m-b-10">
             <button mat-raised-button class="m-r-10 rounded-corner btn_success" (click)="updateClaimAdmin()">

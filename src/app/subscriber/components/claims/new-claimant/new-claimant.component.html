@@ -130,7 +130,7 @@
           fxFlex.xs="100">
           <mat-label>Suffix</mat-label>
           <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
-          <mat-error *ngIf="isClaimantSubmited">Enter valid suffix</mat-error>
+          <mat-error *ngIf="isClaimantSubmited">Please enter valid suffix</mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
@@ -145,7 +145,7 @@
             [matDatepicker]="date_of_birth">
           <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
           <mat-datepicker #date_of_birth [disabled]="!editStatus"></mat-datepicker>
-          <mat-error *ngIf="isClaimantSubmited">Enter valid date of birth</mat-error>
+          <mat-error *ngIf="isClaimantSubmited">Please enter valid date of birth</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -155,7 +155,7 @@
             <mat-option value="F">Female</mat-option>
             <!-- <mat-option value="O">Other</mat-option> -->
           </mat-select>
-          <mat-error>Enter valid state</mat-error>
+          <mat-error>Please enter valid state</mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Handedness</mat-label>
@@ -164,13 +164,13 @@
             <mat-option value="L">Left</mat-option>
             <mat-option value="A">Ambidextrous</mat-option>
           </mat-select>
-          <mat-error>Enter valid handedness</mat-error>
+          <mat-error>Please enter valid handedness</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>SSN</mat-label>
           <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
-          <mat-error>Enter valid SSN</mat-error>
+          <mat-error>Please enter valid SSN</mat-error>
         </mat-form-field>
 
         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
@@ -188,46 +188,46 @@
               {{language.language}}
             </mat-option>
           </mat-select>
-          <mat-error>Select valid primary language</mat-error>
+          <mat-error>Please select valid primary language</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Email</mat-label>
           <input matInput placeholder="Email" formControlName="email" autocomplete="off">
-          <mat-error>Enter valid email</mat-error>
+          <mat-error>Please enter valid email</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Phone Number</mat-label>
           <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no_1" placeholder="Phone Number"
             autocomplete="off">
-          <mat-error>Enter valid phone number</mat-error>
+          <mat-error>Please enter valid phone number</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Alternate Phone Number</mat-label>
           <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no_2"
             placeholder="Alternate Phone Number" autocomplete="off">
-          <mat-error>Enter valid alternative phone number</mat-error>
+          <mat-error>Please enter valid alternative phone number</mat-error>
         </mat-form-field>
 
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Address 1</mat-label>
           <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Address 1" formControlName="street1" autocomplete="off"></textarea>
-          <mat-error>Enter valid address</mat-error>
+          <mat-error>Please enter valid address</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Address 2</mat-label>
           <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Address 2" formControlName="street2" autocomplete="off"></textarea>
-          <mat-error>Enter valid address</mat-error>
+          <mat-error>Please enter valid address</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>City</mat-label>
           <input matInput placeholder="City" formControlName="city" autocomplete="off">
-          <mat-error>Enter valid city</mat-error>
+          <mat-error>Please enter valid city</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -236,13 +236,13 @@
             <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
             </mat-option>
           </mat-select>
-          <mat-error>Enter valid state</mat-error>
+          <mat-error>Please enter valid state</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Zip Code</mat-label>
           <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
-          <mat-error>Enter valid zip code</mat-error>
+          <mat-error>Please enter valid zip code</mat-error>
         </mat-form-field>
 
         <div class="text-center w-100 m-t-10 m-b-50" *ngIf="editStatus">
