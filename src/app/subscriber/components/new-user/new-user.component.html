@@ -241,12 +241,20 @@
 
 
 
-                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                            <!-- <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                 fxFlex.xs="100">
                                 <mat-label>Notes</mat-label>
                                 <textarea matInput formControlName="notes" placeholder="Notes"></textarea>
                                 <mat-error *ngIf="isSubmitted">Please enter valid notes</mat-error>
-                            </mat-form-field>
+                            </mat-form-field> -->
+
+                            <mat-form-field appearance="outline" hintLabel="Max 2400 characters" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                            fxFlex.xs="100">
+                            <mat-label>Notes</mat-label>
+                            <textarea matInput #textarea maxlength="2400" formControlName="notes" placeholder="Notes"  cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"></textarea>
+                            <mat-hint align="end">{{textarea.value?.length || 0}}/2400</mat-hint>
+                            <mat-error>Please enter valid notes</mat-error>
+                        </mat-form-field>
 
 
 
