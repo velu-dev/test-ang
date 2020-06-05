@@ -40,7 +40,7 @@ export class AppointmentDetailsComponent implements OnInit {
     { name: "QME 122", value: "122" },
     //{ name: "QME-121", value: "121" },
     //{ name: "QME-111", value: "111" },
-    { name: "DWCCA-10232_1", value: "10232_1" },
+   // { name: "DWCCA-10232_1", value: "10232_1" },
     { name: "DWCCA-10232_2", value: "10232_2" },
    // { name: "FormSBR_1", value: "SBR_1" },
    // { name: "FormIBR_1", value: "IBR_1" }
