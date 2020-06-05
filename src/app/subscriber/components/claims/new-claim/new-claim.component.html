@@ -100,7 +100,7 @@
                                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
                                                     fxFlex.sm="33.3" fxFlex.lg="33.3" fxFlex.xs="100">
                                                     <mat-label>Zip Code</mat-label>
-                                                    <input matInput formControlName="zip_code" placeholder="zip code"
+                                                    <input matInput  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" placeholder="zip code"
                                                         autocomplete="off">
                                                     <mat-error>Please enter valid zip code</mat-error>
                                                 </mat-form-field>
@@ -307,7 +307,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
+                                <input matInput placeholder="Zip code"  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
                                 <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
@@ -698,7 +698,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Zip Code" formControlName="zip_code" autocomplete="off">
+                                <input matInput placeholder="Zip Code"  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -787,7 +787,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
+                                <input matInput placeholder="Zip code"  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -878,7 +878,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
+                                <input matInput placeholder="Zip code"  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
 
@@ -974,7 +974,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Zip" formControlName="zip_code" autocomplete="off">
+                                <input matInput placeholder="Zip code"  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
                             </mat-form-field>
 
 
@@ -1056,7 +1056,7 @@
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput formControlName="zip_code" placeholder="Zip Code" autocomplete="off">
+                                <input matInput  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" placeholder="Zip Code" autocomplete="off">
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1138,7 +1138,7 @@
                                     {{language.language}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error>Select valid primary language</mat-error>
+                            <mat-error>Please select valid primary language</mat-error>
                         </mat-form-field>
                     </div>
 
