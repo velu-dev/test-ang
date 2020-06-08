@@ -47,6 +47,7 @@ export class HeaderComponent implements OnInit {
   isLoading: boolean = false;
   user$: Observable<any>;
   toggleClass = 'fullscreen';
+  role:string;
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
@@ -63,6 +64,7 @@ export class HeaderComponent implements OnInit {
       if (info == true) {
         this.userService.getProfile().subscribe(res => {
           this.user = res.data;
+          
         })
       }
     })
@@ -73,6 +75,7 @@ export class HeaderComponent implements OnInit {
       this.currentUserID = token['idToken']['payload']['custom:Postgres_UserID'];
       this.userService.getProfile().subscribe(res => {
         this.user = res.data;
+        this.role = this.getRole(this.user.role_id)
         // this.store.dispatch(new headerActions.HeaderAdd(this.user));
         this.user.role_id = this.cookieService.get('role_id') ? this.cookieService.get('role_id') : res.data.role_id;
         this.cookieService.set('user', JSON.stringify(this.user));
@@ -180,16 +183,17 @@ export class HeaderComponent implements OnInit {
   }
 
   getRole(role){
+    console.log("role",role);
     switch (role) {
-      case '1':
+      case 1:
        return 'Admin';
-      case '2':
+      case 2:
         return 'Subscriber';
-      case '3':
+      case 3:
         return 'Staff Manager';
-      case '4':
+      case 4:
         return 'Staff';
-      case '11':
+      case 11:
         return 'Examiner';
       default:
         return 'User';
