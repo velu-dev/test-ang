@@ -502,7 +502,7 @@ export class NewClaimComponent implements OnInit {
       }),
       appointment: this.formBuilder.group({
         examiner_id: [null],
-        appointment_scheduled_date_time: [Date],
+        appointment_scheduled_date_time: [null],
         duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
         examination_location_id: [null]
       }),
