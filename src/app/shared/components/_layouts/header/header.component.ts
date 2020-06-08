@@ -178,4 +178,21 @@ export class HeaderComponent implements OnInit {
         break;
     }
   }
+
+  getRole(role){
+    switch (role) {
+      case '1':
+       return 'Admin';
+      case '2':
+        return 'Subscriber';
+      case '3':
+        return 'Staff Manager';
+      case '4':
+        return 'Staff';
+      case '11':
+        return 'Examiner';
+      default:
+        return 'User';
+    }
+  }
 }

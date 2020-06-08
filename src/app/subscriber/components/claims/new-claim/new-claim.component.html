@@ -443,7 +443,7 @@
                                 <mat-label>Continuous Trauma (CT)</mat-label>
                                 <mat-select [(ngModel)]="injuryInfo.continuous_trauma"
                                     [ngModelOptions]="{standalone: true}">
-                                    <mat-option (click)="ctChange()" [value]="true">
+                                    <mat-option [disabled]="injuryInfo.date_of_injury == null" (click)="ctChange()" [value]="true">
                                         Yes</mat-option>
                                     <mat-option (click)="ctChange()" [value]="false">No</mat-option>
                                 </mat-select>
@@ -455,7 +455,7 @@
                                 <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_start_date"
                                     [(ngModel)]="injuryInfo.continuous_trauma_start_date"
-                                    [min]="injuryInfo.date_of_injury" [max]="injuryInfo.date_of_injury"
+                                    [min]="claimant.value?.date_of_birth"
                                     [ngModelOptions]="{standalone: true}">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                                 </mat-datepicker-toggle>
