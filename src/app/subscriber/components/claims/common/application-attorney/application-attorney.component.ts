@@ -32,6 +32,10 @@ export class ApplicationAttorneyComponent implements OnInit {
     });
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateAAttorney()
+    }
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
@@ -39,10 +43,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     } else {
       this.ApplicantAttorney.disable();
     }
-    if (changes.isSave) {
-      if (changes.isSave.currentValue)
-        this.updateAAttorney()
-    }
+   
   }
   ngOnInit() {
     this.ApplicantAttorney.patchValue(this.aattorneyDetail)

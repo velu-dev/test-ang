@@ -856,11 +856,11 @@ export class NewClaimComponent implements OnInit {
     })
     return data
   }
-  deleteInjury(data, index) {
-    this.injuryInfodata.splice(index, 1);
-    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
-    this.dataSource = new MatTableDataSource(this.injuryInfodata)
-  }
+  // deleteInjury(data, index) {
+  //   this.injuryInfodata.splice(index, 1);
+  //   this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+  //   this.dataSource = new MatTableDataSource(this.injuryInfodata)
+  // }
   editInjury(element, index) {
     this.isInjuryEdit = true;
     console.log(element)
@@ -971,26 +971,26 @@ export class NewClaimComponent implements OnInit {
           }
         })
     switch (contact.contact_type) {
-        case "E1":
-          this.contactMask.mask = "";
-          this.contactMask.type = "email";
-          break;
-        case "L1":
-          this.contactMask.mask = "(000) 000-0000";
-          this.contactMask.type = "text";
-          break;
-        case "F1":
-          this.contactMask.mask = "000-000-0000";
-          this.contactMask.type = "text";
-          break;
-        case "LE":
-          this.contactMask.mask = "";
-          this.contactMask.type = "text";
-          break;
-        default:
-          this.contactMask.mask = "";
-          this.contactMask.type = "text";
-          break;
+      case "E1":
+        this.contactMask.mask = "";
+        this.contactMask.type = "email";
+        break;
+      case "L1":
+        this.contactMask.mask = "(000) 000-0000";
+        this.contactMask.type = "text";
+        break;
+      case "F1":
+        this.contactMask.mask = "000-000-0000";
+        this.contactMask.type = "text";
+        break;
+      case "LE":
+        this.contactMask.mask = "";
+        this.contactMask.type = "text";
+        break;
+      default:
+        this.contactMask.mask = "";
+        this.contactMask.type = "text";
+        break;
     }
 
   }
@@ -1210,6 +1210,21 @@ export class NewClaimComponent implements OnInit {
       return false;
     }
     return true;
+
+  }
+
+  deleteInjury(data, index) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: 'delete', address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.injuryInfodata.splice(index, 1);
+        this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+        this.dataSource = new MatTableDataSource(this.injuryInfodata)
+      }
+    })
 
   }
 }
