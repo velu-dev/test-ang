@@ -70,6 +70,7 @@ export class InjuryComponent implements OnInit {
   openDialog(injury): void {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '800px',
+      disableClose: true ,
       data: { isEdit: true, data: injury, claim_id: this.claimId, body_parts: this.bodyPartsList, date_of_birth: this.date_of_birth }
     });
 
@@ -159,6 +160,7 @@ export class InjuryPopup {
       this.injuryInfo = data['data'];
 
     }
+    dialogRef.disableClose = true;
   }
 
   onNoClick(): void {

@@ -32,6 +32,10 @@ export class DefenseAttorneyComponent implements OnInit {
     });
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateDAttorney()
+    }
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
@@ -39,10 +43,7 @@ export class DefenseAttorneyComponent implements OnInit {
     } else {
       this.DefanceAttorney.disable();
     }
-    if (changes.isSave) {
-      if (changes.isSave.currentValue)
-        this.updateDAttorney()
-    }
+    
   }
   ngOnInit() {
     this.DefanceAttorney.patchValue(this.dattorneyDetail)

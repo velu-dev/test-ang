@@ -52,9 +52,25 @@ mat-toolbar-row {
   padding: 10px;
   height: 80px;
 }
+.user_profile {
+  display: block;
+  padding: 5px 20px;
+  margin: 5px 10px;
+  cursor: pointer;
 
+  .ua_ {
+    font-size: $font-size-7;
+    font-weight: $font-weight-base;
+    text-align: center;
+  }
+  .un_ {
+    font-size: $font-size-7;
+    font-weight: $font-weight-bold;
+    text-align: center;
+  }
+}
 .company_profile {
-  margin: 10px;
+  margin: 10px 10px 0px 10px;
   display: block;
   border-top: 2px solid $primarycolor;
   background-color: $btn-light-color;

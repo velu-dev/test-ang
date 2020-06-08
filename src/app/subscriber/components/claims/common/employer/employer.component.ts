@@ -31,6 +31,10 @@ export class EmployerComponent implements OnInit {
     });
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateEmployer()
+    }
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
@@ -38,10 +42,7 @@ export class EmployerComponent implements OnInit {
     } else {
       this.employer.disable();
     }
-    if (changes.isSave) {
-      if (changes.isSave.currentValue)
-        this.updateEmployer()
-    }
+    
   }
   ngOnInit() {
     this.employer.patchValue(this.employerDetail)

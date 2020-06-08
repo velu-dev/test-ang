@@ -51,6 +51,10 @@ export class DeoComponent implements OnInit {
     return this.deuDetails.filter(deu => deu.deu_office.toLowerCase().indexOf(filterValue) === 0);
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateDEU()
+    }
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
@@ -58,10 +62,7 @@ export class DeoComponent implements OnInit {
     } else {
       this.DEU.disable();
     }
-    if (changes.isSave) {
-      if (changes.isSave.currentValue)
-        this.updateDEU()
-    }
+  
   }
   ngOnInit() {
     this.deuId = this.deuDetail.id;

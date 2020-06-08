@@ -83,6 +83,10 @@
                 <div class="ca_">Account Number</div>
                 <div class="cn_">{{user?.account_no | mask: '0000-0000-0000'}}</div>
             </div>
+            <div class="user_profile">
+                <div class="ua_">{{role}}</div>
+                <div class="un_">{{user?.sign_in_email_id}}</div>
+            </div>
             <mat-divider></mat-divider>
             <button (click)="gotoSettings()" mat-menu-item>
                 <mat-icon>settings</mat-icon>
