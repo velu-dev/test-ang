@@ -36,6 +36,10 @@ export class ClaimAdminComponent implements OnInit {
     this.claimAdminForm.patchValue(this.claimAdmin)
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    if (changes.isSave) {
+      if (changes.isSave.currentValue)
+        this.updateClaimAdmin()
+    }
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
@@ -43,10 +47,7 @@ export class ClaimAdminComponent implements OnInit {
     } else {
       this.claimAdminForm.disable();
     }
-    if (changes.isSave) {
-      if (changes.isSave.currentValue)
-        this.updateClaimAdmin()
-    }
+   
   }
   appClaimAdmin(aa) {
 
