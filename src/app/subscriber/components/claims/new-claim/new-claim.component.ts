@@ -1227,4 +1227,8 @@ export class NewClaimComponent implements OnInit {
     })
 
   }
+
+  injuryCancel(){
+    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null } 
+  }
 }
