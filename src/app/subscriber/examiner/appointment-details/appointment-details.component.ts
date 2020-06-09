@@ -36,12 +36,15 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   forms = [
+   
     { name: "QME 110", value: "110" },
     { name: "QME 122", value: "122" },
     //{ name: "QME-121", value: "121" },
-    //{ name: "QME-111", value: "111" },
    { name: "DWCCA-10232_1", value: "10232_1" },
     { name: "DWCCA-10232_2", value: "10232_2" },
+    { name: "QME-100", value: "100" },
+    { name: "QME-101", value: "101" },
+    { name: "QME-111", value: "111" },
    // { name: "FormSBR_1", value: "SBR_1" },
    // { name: "FormIBR_1", value: "IBR_1" }
   ]
@@ -160,11 +163,15 @@ export class AppointmentDetailsComponent implements OnInit {
     this.openDialog('delete', data);
   }
   generateForm() {
+    if(this.formId){
     this.examinerService.getForms(this.claim_id, this.formId).subscribe(res => {
       let data = this.dataSource.data;
       data.push(res.data);
       this.dataSource = new MatTableDataSource(data)
     })
+  }else{
+    this.alertService.openSnackBar('Please select a form', 'error');
+  }
   }
   noteSubmit(note) {
     console.log(note);
