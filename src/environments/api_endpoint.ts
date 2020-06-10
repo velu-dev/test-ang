@@ -96,5 +96,5 @@ export const api_endpoint = {
     getDocumentData: 'examinations/document-details/',
     deleteDocument: 'examinations/document-remove/',
     postNotes: 'examinations/add-notes',
-    formUrl: "form/QME/",
+    formUrl: "form/",
 }

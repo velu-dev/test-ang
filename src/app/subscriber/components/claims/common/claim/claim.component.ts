@@ -18,7 +18,7 @@ export class ClaimComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claim = this.formBuilder.group({
       id: [null],
-      wcab_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(15)])],
+      wcab_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
       claim_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.pattern('[0-9]+')])],
       panel_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.pattern('[0-9]+')])],
       exam_type_id: [{ value: null, disabled: !this.isEdit }, Validators.required],

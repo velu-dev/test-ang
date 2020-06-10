@@ -36,14 +36,22 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   forms = [
-    { name: "QME 110", value: "110" },
-    { name: "QME 122", value: "122" },
-    //{ name: "QME-121", value: "121" },
-    //{ name: "QME-111", value: "111" },
-   { name: "DWCCA-10232_1", value: "10232_1" },
-    { name: "DWCCA-10232_2", value: "10232_2" },
-   // { name: "FormSBR_1", value: "SBR_1" },
-   // { name: "FormIBR_1", value: "IBR_1" }
+    { name: "QME-110", group: "QME", value: "110" },
+    { name: "QME-122", group: "QME", value: "122" },
+    { name: "DWCCA-10232_1", group: "DWCCA", value: "10232_1" },
+    { name: "DWCCA-10232_2", group: "DWCCA", value: "10232_2" },
+    { name: "DEU-100", group: "DEU", value: "100" },
+    { name: "DEU-101", group: "DEU", value: "101" },
+    { name: "QME-121", group: "QME", value: "121" },
+    // { name: "DEU-100 Spanish", group: "DEU", value: "S100" },
+    // { name: "DEU-111", group: "DEU", value: "111" },
+    // { name: "QME-111", group: "QME", value: "111" },
+    // { name: "DWC-AD-10133.36", group: "DWC", value: "10133" },
+    // { name: "DWC-SBR-1", group: "DWC", value: "SBR-1" },
+    // { name: "DWC-IBR-1", group: "DWC", value: "IBR-1" },
+    // { name: "QME-112", group: "QME", value: "112" },
+    // { name: "QME-123", group: "QME", value: "123" },
+    // { name: "QME-123-Instructions", group: "QME", value: "123-I" },
   ]
   formId = "";
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
@@ -159,12 +167,25 @@ export class AppointmentDetailsComponent implements OnInit {
   deleteDocument(data) {
     this.openDialog('delete', data);
   }
+  formChanges(event) {
+
+  }
   generateForm() {
-    this.examinerService.getForms(this.claim_id, this.formId).subscribe(res => {
-      let data = this.dataSource.data;
-      data.push(res.data);
-      this.dataSource = new MatTableDataSource(data)
-    })
+    if (this.formId) {
+      let formPre = "";
+      this.forms.map(res => {
+        if (res.value == this.formId) {
+          formPre = res.group;
+        }
+      })
+      this.examinerService.getForms(this.claim_id, this.formId, formPre).subscribe(res => {
+        let data = this.dataSource.data;
+        data.push(res.data);
+        this.dataSource = new MatTableDataSource(data)
+      })
+    } else {
+      this.alertService.openSnackBar('Please select a form', 'error');
+    }
   }
   noteSubmit(note) {
     console.log(note);
