@@ -70,7 +70,7 @@ export class InjuryComponent implements OnInit {
   openDialog(injury): void {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '800px',
-      disableClose: true ,
+      disableClose: true,
       data: { isEdit: true, data: injury, claim_id: this.claimId, body_parts: this.bodyPartsList, date_of_birth: this.date_of_birth }
     });
 
@@ -188,9 +188,19 @@ export class InjuryPopup {
       }
     }
     if (this.isEdit) {
-      this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury)
-      this.injuryInfo.date_of_injury = moment(this.injuryInfo.date_of_injury).format("MM-DD-YYYY")
-      this.claimService.updateInjury(this.injuryInfo, this.claim_id).subscribe(res => {
+      //this.injuryInfo.date_of_injury
+      let date = new Date(this.injuryInfo.date_of_injury)
+      let injury = moment(date).format("MM-DD-YYYY")
+      let editData = {
+        body_part_id:  this.injuryInfo.body_part_id,
+        date_of_injury:  injury,
+        continuous_trauma:  this.injuryInfo.continuous_trauma,
+        continuous_trauma_start_date:  this.injuryInfo.continuous_trauma_start_date,
+        continuous_trauma_end_date:  this.injuryInfo.continuous_trauma_end_date,
+        injury_notes:  this.injuryInfo.injury_notes,
+        diagram_url:  this.injuryInfo.diagram_url
+      }
+      this.claimService.updateInjury(editData, this.claim_id).subscribe(res => {
         this.alertService.openSnackBar("Claim Injury updated successfully", 'success')
         this.dialogRef.close();
       }, error => {
