@@ -175,7 +175,7 @@
 
         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
           <div class="p-t-30 p-l-10">
-            <mat-checkbox labelPosition="before" (change)="languageStatus = !languageStatus"
+            <mat-checkbox labelPosition="before" (change)="languageStatus = !languageStatus;langChange()"
               formControlName="certified_interpreter_required">Certified Interpreter Required</mat-checkbox>
           </div>
         </div>
