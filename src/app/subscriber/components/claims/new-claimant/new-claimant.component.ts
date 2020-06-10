@@ -113,7 +113,7 @@ export class NewClaimantComponent implements OnInit {
       console.log(res);
       this.languageStatus = res['data'][0].certified_interpreter_required;
       this.claimNumber = res['data'][0].claim_numbers.map(data => data.claim_number)
-      this.claimantForm.setValue(res['data'][0])
+      this.claimantForm.patchValue(res['data'][0])
     }, error => {
 
     })
@@ -185,5 +185,9 @@ export class NewClaimantComponent implements OnInit {
     }
     return true;
 
+  }
+
+  langChange(){
+    this.claimantForm.patchValue({primary_language_spoken:null})
   }
 }
