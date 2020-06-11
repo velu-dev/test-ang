@@ -240,7 +240,7 @@
                             <mat-form-field *ngIf="languageStatus" appearance="standard" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Primary Language</mat-label>
-                                <mat-select formControlName="primary_language_spoken">
+                                <mat-select formControlName="primary_language_spoken" (selectionChange)="primryLangChange()">
                                     <mat-option *ngFor="let language of languageList" [value]="language.id">
                                         {{language.language}}
                                     </mat-option>
