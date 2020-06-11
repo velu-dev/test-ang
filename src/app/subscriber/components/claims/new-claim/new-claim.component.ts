@@ -716,8 +716,13 @@ export class NewClaimComponent implements OnInit {
       }
       return;
     } else {
-      if (status == 'close')
+      if (status == 'close'){ 
+      if (this.claimant.invalid) {
+        console.log("claimant", this.claimant)
+        return;
+      }
         this.routeDashboard();
+    }
     }
     this.claimantChanges = false;
     this.isClaimantSubmited = true;
