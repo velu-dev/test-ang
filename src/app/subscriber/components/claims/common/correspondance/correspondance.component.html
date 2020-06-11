@@ -32,7 +32,7 @@
                 <input matInput  [title]="file" readonly
                     [value]="file | ellipsis:30" placeholder="No file chosen">
                 <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
-                    accept=".pdf, .doc, .docx, .excel, .csv" required>
+                    accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
                 <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
             </mat-form-field>
         </div>
