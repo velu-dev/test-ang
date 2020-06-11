@@ -44,6 +44,7 @@ export class AppointmentDetailsComponent implements OnInit {
     { name: "DEU-101", group: "DEU", value: "101" },
     { name: "QME-121", group: "QME", value: "121" },
     { name: "QME/ AME Appointment Notification", group: "QME/AME", value: "notification" },
+    { name: "SBR 1", group: "DWC", value: "SBR_1" },
     // { name: "DEU-100 Spanish", group: "DEU", value: "S100" },
     // { name: "DEU-111", group: "DEU", value: "111" },
     // { name: "QME-111", group: "QME", value: "111" },
