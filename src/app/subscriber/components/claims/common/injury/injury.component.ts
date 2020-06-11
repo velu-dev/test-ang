@@ -188,10 +188,12 @@ export class InjuryPopup {
       }
     }
     if (this.isEdit) {
-      //this.injuryInfo.date_of_injury
       let date = new Date(this.injuryInfo.date_of_injury)
       let injury = moment(date).format("MM-DD-YYYY")
+      //this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury)
+      //this.injuryInfo.date_of_injury = moment( this.injuryInfo.date_of_injury).format("MM-DD-YYYY")
       let editData = {
+        id: this.injuryInfo['id'],
         body_part_id:  this.injuryInfo.body_part_id,
         date_of_injury:  injury,
         continuous_trauma:  this.injuryInfo.continuous_trauma,
