@@ -187,13 +187,9 @@ export class AppointmentDetailsComponent implements OnInit {
         claim_id = this.claim_id;
       }
       this.examinerService.getForms(claim_id, this.formId, formPre).subscribe(res => {
-        if (this.formId == "notification") {
-          let data = this.dataSource.data;
-          data.push(res.data);
-          this.dataSource = new MatTableDataSource(data)
-        } else {
-          console.log("sdfdfdf", res);
-        }
+        let data = this.dataSource.data;
+        data.push(res.data);
+        this.dataSource = new MatTableDataSource(data)
       })
     } else {
       this.alertService.openSnackBar('Please select a form', 'error');
