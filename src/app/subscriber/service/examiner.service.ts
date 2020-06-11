@@ -57,7 +57,7 @@ export class ExaminerService {
     return this.http.get(environment.baseUrl + api_endpoint.getExamination)
   }
 
-  getAllExamination(id) {
+  getAllExamination(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getAllExamination + id)
   }
 
