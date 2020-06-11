@@ -22,7 +22,7 @@ export class AppointmentDetailsComponent implements OnInit {
   docx = globals.docx
   pdf = globals.pdf
   isMobile: boolean;
-  claim_id: number;
+  claim_id: any;
   examinationDetails: any;
   collapsed = false;
   docCollapsed = false;
@@ -43,6 +43,7 @@ export class AppointmentDetailsComponent implements OnInit {
     { name: "DEU-100", group: "DEU", value: "100" },
     { name: "DEU-101", group: "DEU", value: "101" },
     { name: "QME-121", group: "QME", value: "121" },
+    { name: "QME/ AME Appointment Notification", group: "QME/AME", value: "notification" },
     // { name: "DEU-100 Spanish", group: "DEU", value: "S100" },
     // { name: "DEU-111", group: "DEU", value: "111" },
     // { name: "QME-111", group: "QME", value: "111" },
@@ -54,6 +55,7 @@ export class AppointmentDetailsComponent implements OnInit {
     // { name: "QME-123-Instructions", group: "QME", value: "123-I" },
   ]
   formId = "";
+  examiner_id = "";
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService
@@ -63,7 +65,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.examinerService.getAllExamination(this.claim_id).subscribe(response => {
-
+      this.examiner_id = response.data.appointments.examiner_id;
       this.examinationDetails = response['data']
       this.getDocumentData();
       if (response['data'].exam_notes) {
@@ -178,10 +180,20 @@ export class AppointmentDetailsComponent implements OnInit {
           formPre = res.group;
         }
       })
-      this.examinerService.getForms(this.claim_id, this.formId, formPre).subscribe(res => {
-        let data = this.dataSource.data;
-        data.push(res.data);
-        this.dataSource = new MatTableDataSource(data)
+      let claim_id: any;
+      if (this.formId == "notification") {
+        claim_id = this.claim_id + "/" + this.examiner_id;
+      } else {
+        claim_id = this.claim_id;
+      }
+      this.examinerService.getForms(claim_id, this.formId, formPre).subscribe(res => {
+        if (this.formId == "notification") {
+          let data = this.dataSource.data;
+          data.push(res.data);
+          this.dataSource = new MatTableDataSource(data)
+        } else {
+          console.log("sdfdfdf", res);
+        }
       })
     } else {
       this.alertService.openSnackBar('Please select a form', 'error');
