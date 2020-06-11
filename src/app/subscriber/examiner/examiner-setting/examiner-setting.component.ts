@@ -315,8 +315,8 @@ export class ExaminerSettingComponent implements OnInit {
   }
 
   addressFormSubmit() {
-    console.log(this.addressForm.value);
-    console.log(this.billingForm.value);
+    //console.log(this.addressForm.value);
+    //console.log(this.billingForm.value);
     Object.keys(this.addressForm.controls).forEach((key) => {
       if (this.addressForm.get(key).value && typeof (this.addressForm.get(key).value) == 'string')
         this.addressForm.get(key).setValue(this.addressForm.get(key).value.trim())
