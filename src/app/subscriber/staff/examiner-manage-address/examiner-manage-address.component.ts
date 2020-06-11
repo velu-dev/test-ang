@@ -151,6 +151,10 @@ export class ExaminerManageAddressComponent implements OnInit {
 
   sevice_name = [];
   addressformSubmit() {
+    Object.keys(this.addressForm.controls).forEach((key) => {
+      if (this.addressForm.get(key).value && typeof (this.addressForm.get(key).value) == 'string')
+        this.addressForm.get(key).setValue(this.addressForm.get(key).value.trim())
+    });
     this.addressIsSubmitted = true;
     console.log(this.addressForm.value)
     if (this.addressForm.invalid) {
