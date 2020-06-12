@@ -404,6 +404,9 @@ export class SubscriberSettingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed',result);
+      if(result == null){
+        this.selectedFile = null
+      }
       this.signData = result;
       this.fileUpload.nativeElement.value = "";
     });
