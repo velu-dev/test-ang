@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild  } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef  } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
@@ -25,6 +25,8 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
   styleUrls: ['./subscriber-settings.component.scss']
 })
 export class SubscriberSettingsComponent implements OnInit {
+
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   profile_bg = globals.profile_bg;
   user: User;
   currentUser: any;
@@ -42,6 +44,7 @@ export class SubscriberSettingsComponent implements OnInit {
   texoDetails = [];
   first_name: string;
   signData:any;
+  selectedFile:any = null;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -386,6 +389,8 @@ export class SubscriberSettingsComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
+    console.log("event",event.target.files[0].name);
+    this.selectedFile = event.target.files[0].name;
     this.openSign(event);
   }
 
@@ -399,7 +404,8 @@ export class SubscriberSettingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed',result);
-      this.signData = result
+      this.signData = result;
+      this.fileUpload.nativeElement.value = "";
     });
   }
 
