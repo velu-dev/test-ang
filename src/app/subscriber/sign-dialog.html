@@ -1,0 +1,44 @@
+<div fxLayout="row wrap" class="claimant_details_model">
+    <div fxFlex="100">
+        <mat-card-header>
+            <div class="content-wrapper-main-title p-t-5">Sign </div>
+            <span class="spacer"></span>
+            <button mat-icon-button>
+                <mat-icon>fullscreen_exit</mat-icon>
+            </button>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <div fxLayout="row wrap" class="scroll_">
+            <div fxFlex="100" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" class="p-5">
+                <mat-card-content class="p-b-20 claim_popup">
+                   <div>
+                                    <image-cropper
+                                        [imageChangedEvent]="imageChangedEvent"
+                                        [maintainAspectRatio]="true"
+                                        [containWithinAspectRatio]="containWithinAspectRatio"
+                                        [aspectRatio]="4 / 3"
+                                        [resizeToWidth]="256"
+                                        [cropperMinWidth]="128"
+                                        [onlyScaleDown]="true"
+                                        [roundCropper]="false"
+                                        [canvasRotation]="canvasRotation"
+                                        [transform]="transform"
+                                        [alignImage]="'left'"
+                                        [style.display]="showCropper ? null : 'none'"
+                                        format="png"
+                                        (imageCropped)="imageCropped($event)"
+                                        (imageLoaded)="imageLoaded()"
+                                        (cropperReady)="cropperReady($event)"
+                                        (loadImageFailed)="loadImageFailed()"
+                                    ></image-cropper>
+                                </div>
+                                <button (click)="save()">Apply</button>
+                                <button (click)="cancel()">Cancel</button>
+                </mat-card-content>
+            </div>
+        </div>
+        <mat-card-footer>
+            <!-- <a (click)="cancelClick()" class="close_btn">Close</a> -->
+        </mat-card-footer>
+    </div>
+</div>
