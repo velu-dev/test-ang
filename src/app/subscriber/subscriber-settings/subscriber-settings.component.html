@@ -267,6 +267,25 @@
                                             </mat-option>
                                         </mat-autocomplete>
                                     </mat-form-field>
+<!-- 
+                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                                    class="sign-upload">
+                                    <div fxLayout="row wrap">
+                                        <mat-form-field fxFlex="100" class="w-100">
+                                            <input type="text" matInput placeholder="" value="Upload signature" disabled>
+                                            <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
+                                            accept=".pdf, .doc, .docx, .xls, .xlsx, .csv">
+                                            <button matSuffix type="button" mat-stroked-button color="primary" class="upload_btn">Upload <span
+                                                    class="fa fa-upload"></span></button>
+                                        </mat-form-field>
+        
+                                        <div fxFlex="100">
+                                            <div class="empty-image m-l-10">
+                                                no image uploaded
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
 
 
                                     <div class="text-center w-100 m-t-10 m-b-10">
@@ -281,53 +300,14 @@
                                 </form>
 
 
-                              <!-- <div fxLayout="row wrap">
-                                <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
-                                class="sign-upload">
-                                <div fxLayout="row wrap">
-                                    <mat-form-field fxFlex="100" class="w-100">
-                                        <input type="file" accept="image/*" (change)="fileChangeEvent($event)" matInput placeholder="" value="Upload signature" disabled>
-                                        <button matSuffix mat-stroked-button color="primary" class="upload_btn">Upload <span
-                                                class="fa fa-upload"></span></button>
-                                    </mat-form-field>
-    
-                                    <div fxFlex="100">
-                                        <div class="empty-image m-l-10">
-                                            no image uploaded
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                              </div> -->
+                             
 
 
 
 
-                                <input type="file" accept="image/*" (change)="fileChangeEvent($event)" />
-                                <br />
-                                <!-- <div>
-                                    <image-cropper
-                                        [imageChangedEvent]="imageChangedEvent"
-                                        [maintainAspectRatio]="true"
-                                        [containWithinAspectRatio]="containWithinAspectRatio"
-                                        [aspectRatio]="4 / 3"
-                                        [resizeToWidth]="256"
-                                        [cropperMinWidth]="128"
-                                        [onlyScaleDown]="true"
-                                        [roundCropper]="false"
-                                        [canvasRotation]="canvasRotation"
-                                        [transform]="transform"
-                                        [alignImage]="'left'"
-                                        [style.display]="showCropper ? null : 'none'"
-                                        format="png"
-                                        (imageCropped)="imageCropped($event)"
-                                        (imageLoaded)="imageLoaded()"
-                                        (cropperReady)="cropperReady($event)"
-                                        (loadImageFailed)="loadImageFailed()"
-                                    ></image-cropper>
-                                </div>
-                                <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" /> -->
-                                
+                                <!-- <input type="file" accept="image/*" (change)="fileChangeEvent($event)" />
+                                <br /> -->
+                               
                             </mat-card-content>
                         </div>
                     </mat-tab>
