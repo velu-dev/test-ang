@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild  } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
@@ -16,6 +16,8 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx-image-cropper';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-subscribersettings',
@@ -39,6 +41,7 @@ export class SubscriberSettingsComponent implements OnInit {
   texoCtrl = new FormControl();
   texoDetails = [];
   first_name: string;
+  signData:any;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -50,7 +53,8 @@ export class SubscriberSettingsComponent implements OnInit {
     //private store: Store<{ count: number }>,
     private claimService: ClaimService,
     public _location: Location,
-    private intercom: IntercomService
+    private intercom: IntercomService,
+    public dialog: MatDialog
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
@@ -253,6 +257,7 @@ export class SubscriberSettingsComponent implements OnInit {
     });
   }
   userformSubmit() {
+    console.log(this.signData)
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
@@ -325,8 +330,17 @@ export class SubscriberSettingsComponent implements OnInit {
   }
 
   addressFormSubmit() {
-    console.log(this.addressForm.value);
-    console.log(this.billingForm.value);
+    // console.log(this.addressForm.value);
+    // console.log(this.billingForm.value);
+    Object.keys(this.addressForm.controls).forEach((key) => {
+      if (this.addressForm.get(key).value && typeof (this.addressForm.get(key).value) == 'string')
+        this.addressForm.get(key).setValue(this.addressForm.get(key).value.trim())
+    });
+
+    Object.keys(this.billingForm.controls).forEach((key) => {
+      if (this.billingForm.get(key).value && typeof (this.billingForm.get(key).value) == 'string')
+        this.billingForm.get(key).setValue(this.billingForm.get(key).value.trim())
+    });
 
     if (this.addressForm.invalid) {
       console.log(this.addressForm)
@@ -370,4 +384,73 @@ export class SubscriberSettingsComponent implements OnInit {
     return true;
 
   }
+
+  fileChangeEvent(event: any): void {
+    this.openSign(event);
+  }
+
+    openSign(e): void {
+    const dialogRef = this.dialog.open(SignPopupComponent, {
+     // height: '800px',
+      width: '800px',
+      data: e,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed',result);
+      this.signData = result
+    });
+  }
+
+}
+
+@Component({
+  selector: 'sign-dialog',
+  templateUrl: '../sign-dialog.html',
+})
+export class SignPopupComponent {
+  imageChangedEvent: any = '';
+  showCropper = false;
+  croppedImage: any = '';
+  finalImage:any;
+  constructor(
+    public dialogRef: MatDialogRef<SignPopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+      this.imageChangedEvent = data;
+    }
+
+    imageCropped(event: ImageCroppedEvent) {
+      this.croppedImage = event.base64;
+    //  console.log(event, base64ToFile(event.base64));
+    }
+
+    save(){
+      this.finalImage = this.croppedImage;
+      //console.log(this.finalImage);
+      this.dialogRef.close( this.finalImage);
+    }
+  
+    imageLoaded() {
+      this.showCropper = true;
+      console.log('Image loaded');
+    }
+
+    cancel(){
+      this.finalImage = null;
+      this.dialogRef.close( this.finalImage);
+    }
+  
+    cropperReady(sourceImageDimensions: Dimensions) {
+      console.log('Cropper ready', sourceImageDimensions);
+    }
+  
+    loadImageFailed() {
+      console.log('Load failed');
+    }
+
+  cancelClick(): void {
+    this.dialogRef.close();
+  }
+
 }

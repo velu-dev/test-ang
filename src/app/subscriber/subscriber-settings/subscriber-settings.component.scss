@@ -68,3 +68,28 @@ mat-form-field {
   }
   
 }
+
+
+
+.sign-upload {
+  mat-form-field {
+    .upload_btn {
+      color: $primarydarkcolor;
+      background-color: $btn-light-color;
+      padding: 0px 10px;
+      height: 35px;
+      font-size: $font-size-7;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+  .empty-image {
+    background-color: #ececec;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    color: $light-gray;
+    border: 1px solid $light-gray;
+    cursor: not-allowed;
+  }
+}

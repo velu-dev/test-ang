@@ -240,7 +240,7 @@
                             <mat-form-field *ngIf="languageStatus" appearance="standard" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Primary Language</mat-label>
-                                <mat-select formControlName="primary_language_spoken">
+                                <mat-select formControlName="primary_language_spoken" (selectionChange)="primryLangChange()">
                                     <mat-option *ngFor="let language of languageList" [value]="language.id">
                                         {{language.language}}
                                     </mat-option>
@@ -570,7 +570,7 @@
                                         <input matInput [title]="file" readonly [value]="file | ellipsis:30"
                                             placeholder="No file chosen">
                                         <input type="file" #uploader hidden (change)="uploadFile($event)"
-                                            id="uploadFile" accept=".pdf, .doc, .docx, .excel, .csv" required>
+                                            id="uploadFile" accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
                                         <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
                                     </mat-form-field>
                                 </div>

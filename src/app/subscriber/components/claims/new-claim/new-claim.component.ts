@@ -686,6 +686,9 @@ export class NewClaimComponent implements OnInit {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
         //this._location.back();
+        if (this.claimant.touched){ 
+        this.createClaimant('close')
+        }
         this.routeDashboard();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -716,8 +719,13 @@ export class NewClaimComponent implements OnInit {
       }
       return;
     } else {
-      if (status == 'close')
+      if (status == 'close'){ 
+      if (this.claimant.invalid) {
+        console.log("claimant", this.claimant)
+        return;
+      }
         this.routeDashboard();
+    }
     }
     this.claimantChanges = false;
     this.isClaimantSubmited = true;
@@ -1234,5 +1242,10 @@ export class NewClaimComponent implements OnInit {
 
   langChange(){
     this.claimant.patchValue({primary_language_spoken:null})
+    this.billable_item.patchValue({exam_type:{primary_language_spoken: this.claimant.value.primary_language_spoken}})
+    
+  }
+  primryLangChange(){
+    this.billable_item.patchValue({exam_type:{primary_language_spoken: this.claimant.value.primary_language_spoken}})
   }
 }

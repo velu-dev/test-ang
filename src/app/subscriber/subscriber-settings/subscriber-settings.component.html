@@ -267,6 +267,25 @@
                                             </mat-option>
                                         </mat-autocomplete>
                                     </mat-form-field>
+<!-- 
+                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                                    class="sign-upload">
+                                    <div fxLayout="row wrap">
+                                        <mat-form-field fxFlex="100" class="w-100">
+                                            <input type="text" matInput placeholder="" value="Upload signature" disabled>
+                                            <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
+                                            accept=".pdf, .doc, .docx, .xls, .xlsx, .csv">
+                                            <button matSuffix type="button" mat-stroked-button color="primary" class="upload_btn">Upload <span
+                                                    class="fa fa-upload"></span></button>
+                                        </mat-form-field>
+        
+                                        <div fxFlex="100">
+                                            <div class="empty-image m-l-10">
+                                                no image uploaded
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
 
 
                                     <div class="text-center w-100 m-t-10 m-b-10">
@@ -279,6 +298,16 @@
 
                                     <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes</button> -->
                                 </form>
+
+
+                             
+
+
+
+
+                                <!-- <input type="file" accept="image/*" (change)="fileChangeEvent($event)" />
+                                <br /> -->
+                               
                             </mat-card-content>
                         </div>
                     </mat-tab>

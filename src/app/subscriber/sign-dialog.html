@@ -1,0 +1,39 @@
+<div fxLayout="row wrap">
+    <div fxFlex="100">
+        <mat-card-header class="model-header">
+            <div class="content-wrapper-main-title p-t-5">Select Signature  </div>
+            <span class="spacer"></span>
+            <button class="close-model" (click)="cancel()" color="warn"> <i class="fa fa-close"></i> close </button>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <div fxLayout="row wrap" class="scroll_">
+            <div class="w-100">
+                <mat-card-content class="p-b-20 claim_popup">
+                   <div class="w-100">
+                                    <image-cropper
+                                        [imageChangedEvent]="imageChangedEvent"
+                                        [maintainAspectRatio]="true"
+                                        [aspectRatio]="4 / 1"
+                                        [resizeToWidth]="256"
+                                        [cropperMinWidth]="128"
+                                        [onlyScaleDown]="true"
+                                        [roundCropper]="false"
+                                        [alignImage]="'left'"
+                                        [style.display]="showCropper ? null : 'none'"
+                                        format="png"
+                                        (imageCropped)="imageCropped($event)"
+                                        (imageLoaded)="imageLoaded()"
+                                        (cropperReady)="cropperReady($event)"
+                                        (loadImageFailed)="loadImageFailed()"
+                                    ></image-cropper>
+                                </div>
+                           
+                </mat-card-content>
+            </div>
+        </div>
+        <div mat-dialog-actions class="text-center display-block">
+            <button (click)="save()" mat-raised-button color="primary" class="btn_success rounded-corner">Apply</button>
+            <button (click)="cancel()" mat-raised-button color="warn" class="rounded-corner m-l-10">Cancel</button>
+        </div>
+    </div>
+</div>
