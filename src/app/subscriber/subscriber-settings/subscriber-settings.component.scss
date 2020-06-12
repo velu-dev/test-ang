@@ -66,10 +66,7 @@ mat-form-field {
     float: left;
     padding: 5px 10px;
   }
-  
 }
-
-
 
 .sign-upload {
   mat-form-field {
@@ -91,5 +88,17 @@ mat-form-field {
     color: $light-gray;
     border: 1px solid $light-gray;
     cursor: not-allowed;
+  }
+  .sign-img {
+    padding: 3px;
+    width: 200px;
+    text-align: center;
+    border: 1px solid $light-gray;
+    cursor: not-allowed;
+    img {
+      min-width: 100%;
+      max-width: 100%;
+      width: 100%;
+    }
   }
 }
