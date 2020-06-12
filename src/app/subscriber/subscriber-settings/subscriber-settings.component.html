@@ -279,6 +279,31 @@
 
                                     <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes</button> -->
                                 </form>
+                                <input type="file" accept="image/*" (change)="fileChangeEvent($event)" />
+                                <br />
+                                <!-- <div>
+                                    <image-cropper
+                                        [imageChangedEvent]="imageChangedEvent"
+                                        [maintainAspectRatio]="true"
+                                        [containWithinAspectRatio]="containWithinAspectRatio"
+                                        [aspectRatio]="4 / 3"
+                                        [resizeToWidth]="256"
+                                        [cropperMinWidth]="128"
+                                        [onlyScaleDown]="true"
+                                        [roundCropper]="false"
+                                        [canvasRotation]="canvasRotation"
+                                        [transform]="transform"
+                                        [alignImage]="'left'"
+                                        [style.display]="showCropper ? null : 'none'"
+                                        format="png"
+                                        (imageCropped)="imageCropped($event)"
+                                        (imageLoaded)="imageLoaded()"
+                                        (cropperReady)="cropperReady($event)"
+                                        (loadImageFailed)="loadImageFailed()"
+                                    ></image-cropper>
+                                </div>
+                                <img [src]="croppedImage" [style.border]="croppedImage ? '1px solid black' : 'none'" /> -->
+                                
                             </mat-card-content>
                         </div>
                     </mat-tab>
