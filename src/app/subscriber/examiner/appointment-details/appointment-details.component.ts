@@ -185,7 +185,7 @@ export class AppointmentDetailsComponent implements OnInit {
         }
       })
       let claim_id: any;
-      if (this.formId == "notification") {
+      if (this.formId == "notification" || this.formId == "111") {
         claim_id = this.claim_id + "/" + this.examiner_id;
       } else {
         claim_id = this.claim_id;
