@@ -48,6 +48,8 @@ export class AppointmentDetailsComponent implements OnInit {
     { name: "IBR-1", group: "DWC", value: "IBR_1" },
     { name: "QME-111", group: "QME", value: "111" },
     { name: "QME-112", group: "QME", value: "112" },
+    { name: "DWCAD-1013336", group: "DWCAD", value: "1013336" },
+    { name: "QME-123", group: "QME", value: "123" },
     // { name: "DEU-100 Spanish", group: "DEU", value: "S100" },
     // { name: "DEU-111", group: "DEU", value: "111" },
     // { name: "QME-111", group: "QME", value: "111" },
