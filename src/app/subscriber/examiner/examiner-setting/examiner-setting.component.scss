@@ -249,9 +249,15 @@ mat-form-field {
 
   .sign-img {
     button {
-      margin-left: 162px;
+      margin-left: 155px;
       font-size: $font-size-22;
       cursor: pointer;
+      padding: 0;
+      line-height: 2;
+      i {
+        // color: $danger;
+        font-size: $font-size-7;
+      }
     }
     .sign {
       padding: 3px;
