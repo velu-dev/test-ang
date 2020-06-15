@@ -242,7 +242,7 @@
                                                 </div>
                                             </div>
                                             <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
-                                                <button class="m-b-5" color="warn"> Remove </button><br />
+                                                <button type="button" class="m-b-5" (click)="removeSign()" color="warn"> Remove </button><br />
                                                 <div class="sign m-l-10">
                                                     <img [src]="signData">
                                                 </div>

@@ -88,7 +88,7 @@ export class SubscriberSettingsComponent implements OnInit {
           company_w9_number: res.data.company_w9_number,
           company_npi_number: res.data.company_npi_number,
         }
-        this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
+       
       } else {
         userDetails = {
           id: res.data.id,
@@ -100,6 +100,7 @@ export class SubscriberSettingsComponent implements OnInit {
           sign_in_email_id: res.data.sign_in_email_id,
         }
       }
+      this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
 
 
       this.userForm.patchValue(userDetails)
@@ -139,7 +140,8 @@ export class SubscriberSettingsComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
         company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
-        sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
+        sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+        signature: ['']     
       });
     }
 
@@ -260,11 +262,7 @@ export class SubscriberSettingsComponent implements OnInit {
     });
   }
   userformSubmit() {
-    // if(!this.userForm.touched){
-    //   return;
-    // }
-    //console.log(this.signData)
-
+    
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
@@ -274,9 +272,7 @@ export class SubscriberSettingsComponent implements OnInit {
       return;
     }
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
-
     this.userForm.value.signature = sign;
-    console.log(this.userForm.value);
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       //window.location.reload();

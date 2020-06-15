@@ -68,7 +68,7 @@ export class ExaminerSettingComponent implements OnInit {
       //   sign_in_email_id: res.data.sign_in_email_id,
       // }
       // this.userForm.patchValue(userDetails)
-
+      this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
       this.userService.getEditUser(res.data.id).subscribe(res => {
         console.log(res.data);
         let user = {
@@ -87,6 +87,7 @@ export class ExaminerSettingComponent implements OnInit {
           state_of_license_id: res.data.state_of_license_id,
           taxonomy_id: res.data.taxonomy_id
         }
+       
         this.userForm.patchValue(user)
       })
 
@@ -112,7 +113,8 @@ export class ExaminerSettingComponent implements OnInit {
       specialty: [''],
       state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
       taxonomy_id: [''],
-      state_of_license_id: [null]
+      state_of_license_id: [null],
+      signature: ['']
     });
 
     this.addressForm = this.formBuilder.group({
@@ -235,7 +237,8 @@ export class ExaminerSettingComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-   
+    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
+    this.userForm.value.signature = sign;
     this.userForm.value.address_details = {}
     this.userService.updateEditUser(this.userForm.value.id,this.userForm.value).subscribe(res => {
       if (this.first_name != this.userForm.value.first_name) {
@@ -384,8 +387,8 @@ export class ExaminerSettingComponent implements OnInit {
       this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
   }
-  selectedFile:any;
-  signData:any
+  selectedFile:any = null;
+  signData:any = null;
 
   openSign(e): void {
     const dialogRef = this.dialog.open(SignPopupComponent, {
@@ -403,5 +406,10 @@ export class ExaminerSettingComponent implements OnInit {
       this.signData = result;
       this.fileUpload.nativeElement.value = "";
     });
+  }
+
+  removeSign(){
+    this.signData = null;
+    this.selectedFile = null;
   }
 }
