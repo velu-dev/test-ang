@@ -86,10 +86,9 @@ export class SubscriberSettingsComponent implements OnInit {
           individual_npi_number: res.data.individual_npi_number,
           company_taxonomy_id: res.data.company_taxonomy_id,
           company_w9_number: res.data.company_w9_number,
-          company_npi_number: res.data.company_npi_number
-
+          company_npi_number: res.data.company_npi_number,
         }
-
+        this.signData = 'data:image/png;base64,' + res.data.signature
       } else {
         userDetails = {
           id: res.data.id,
@@ -103,7 +102,7 @@ export class SubscriberSettingsComponent implements OnInit {
       }
 
 
-      this.userForm.setValue(userDetails)
+      this.userForm.patchValue(userDetails)
     })
   }
   ngOnInit() {
@@ -130,6 +129,7 @@ export class SubscriberSettingsComponent implements OnInit {
         company_taxonomy_id: [''],
         company_w9_number: [''],
         company_npi_number: ['', Validators.maxLength(15)],
+        signature: ['']
       });
     } else {
       this.userForm = this.formBuilder.group({
@@ -260,7 +260,11 @@ export class SubscriberSettingsComponent implements OnInit {
     });
   }
   userformSubmit() {
-    console.log(this.signData)
+    // if(!this.userForm.touched){
+    //   return;
+    // }
+    //console.log(this.signData)
+
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
@@ -269,6 +273,10 @@ export class SubscriberSettingsComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
+    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : null;
+
+    this.userForm.value.signature = sign;
+    console.log(this.userForm.value);
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       //window.location.reload();
@@ -390,13 +398,13 @@ export class SubscriberSettingsComponent implements OnInit {
 
   fileChangeEvent(event: any): void {
     console.log("event", event.target.files[0].size);
-   
-  
+
+
 
     let fileTypes = ['png', 'jpg', 'jpeg']
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize =  Math.round(event.target.files[0].size / 1000); // in KB
+      var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
         this.alertService.openSnackBar("This file too long", 'error');
