@@ -33,7 +33,8 @@
                         <div class="edit-profile  m-t-10">
                             <mat-card-content>
                                 <!--Form start-->
-                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
+                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                                    [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
                                     <mat-form-field class="m-t-5" appearance="standard" fxFlex="100">
                                         <mat-label>Current password*</mat-label>
                                         <input type="password" matInput placeholder="Current password*"
@@ -86,23 +87,24 @@
                         <div class="edit-profile m-t-10">
                             <mat-card-content>
                                 <!--Form start-->
-                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
+                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                                    [formGroup]="userForm" (ngSubmit)="userformSubmit()">
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
+                                        fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
                                         <mat-label>First Name*</mat-label>
                                         <input matInput placeholder="First Name" formControlName="first_name"
                                             autocomplete="off">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
+                                        fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
                                         <mat-label>Middle Name</mat-label>
                                         <input matInput placeholder="Middle Name" formControlName="middle_name"
                                             autocomplete="off">
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="100" class="m-t-5">
+                                        fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
                                         <mat-label>Last Name*</mat-label>
                                         <input matInput placeholder="Last Name" formControlName="last_name"
                                             autocomplete="off">
@@ -118,7 +120,7 @@
                                     </mat-form-field> -->
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
-                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
+                                        fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
                                         <mat-label>Signin Email ID*</mat-label>
                                         <input matInput placeholder="Signin Email ID" formControlName="sign_in_email_id"
                                             autocomplete="off">
