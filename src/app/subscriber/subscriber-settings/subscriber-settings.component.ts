@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
@@ -43,8 +43,8 @@ export class SubscriberSettingsComponent implements OnInit {
   texoCtrl = new FormControl();
   texoDetails = [];
   first_name: string;
-  signData:any;
-  selectedFile:any = null;
+  signData: any;
+  selectedFile: any = null;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -86,10 +86,9 @@ export class SubscriberSettingsComponent implements OnInit {
           individual_npi_number: res.data.individual_npi_number,
           company_taxonomy_id: res.data.company_taxonomy_id,
           company_w9_number: res.data.company_w9_number,
-          company_npi_number: res.data.company_npi_number
-
+          company_npi_number: res.data.company_npi_number,
         }
-
+        this.signData = 'data:image/png;base64,' + res.data.signature
       } else {
         userDetails = {
           id: res.data.id,
@@ -103,7 +102,7 @@ export class SubscriberSettingsComponent implements OnInit {
       }
 
 
-      this.userForm.setValue(userDetails)
+      this.userForm.patchValue(userDetails)
     })
   }
   ngOnInit() {
@@ -130,6 +129,7 @@ export class SubscriberSettingsComponent implements OnInit {
         company_taxonomy_id: [''],
         company_w9_number: [''],
         company_npi_number: ['', Validators.maxLength(15)],
+        signature: ['']
       });
     } else {
       this.userForm = this.formBuilder.group({
@@ -260,7 +260,11 @@ export class SubscriberSettingsComponent implements OnInit {
     });
   }
   userformSubmit() {
-    console.log(this.signData)
+    // if(!this.userForm.touched){
+    //   return;
+    // }
+    //console.log(this.signData)
+
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
@@ -269,6 +273,10 @@ export class SubscriberSettingsComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
+    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : null;
+
+    this.userForm.value.signature = sign;
+    console.log(this.userForm.value);
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       //window.location.reload();
@@ -389,14 +397,31 @@ export class SubscriberSettingsComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-    console.log("event",event.target.files[0].name);
-    this.selectedFile = event.target.files[0].name;
-    this.openSign(event);
+    console.log("event", event.target.files[0].size);
+
+
+
+    let fileTypes = ['png', 'jpg', 'jpeg']
+
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
+      if (FileSize > 500) {
+        this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.selectedFile = event.target.files[0].name;
+      this.openSign(event);
+    } else {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
   }
 
-    openSign(e): void {
+  openSign(e): void {
     const dialogRef = this.dialog.open(SignPopupComponent, {
-     // height: '800px',
+      // height: '800px',
       width: '800px',
       data: e,
 
@@ -404,7 +429,7 @@ export class SubscriberSettingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed',result);
-      if(result == null){
+      if (result == null) {
         this.selectedFile = null
       }
       this.signData = result;
@@ -422,41 +447,42 @@ export class SignPopupComponent {
   imageChangedEvent: any = '';
   showCropper = false;
   croppedImage: any = '';
-  finalImage:any;
+  finalImage: any;
   constructor(
     public dialogRef: MatDialogRef<SignPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.imageChangedEvent = data;
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService,) {
+    this.imageChangedEvent = data;
+  }
 
-    imageCropped(event: ImageCroppedEvent) {
-      this.croppedImage = event.base64;
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
     //  console.log(event, base64ToFile(event.base64));
-    }
+  }
 
-    save(){
-      this.finalImage = this.croppedImage;
-      //console.log(this.finalImage);
-      this.dialogRef.close( this.finalImage);
-    }
-  
-    imageLoaded() {
-      this.showCropper = true;
-      console.log('Image loaded');
-    }
+  save() {
+    this.finalImage = this.croppedImage;
+    //console.log(this.finalImage);
+    this.dialogRef.close(this.finalImage);
+  }
 
-    cancel(){
-      this.finalImage = null;
-      this.dialogRef.close( this.finalImage);
-    }
-  
-    cropperReady(sourceImageDimensions: Dimensions) {
-      console.log('Cropper ready', sourceImageDimensions);
-    }
-  
-    loadImageFailed() {
-      console.log('Load failed');
-    }
+  imageLoaded() {
+    this.showCropper = true;
+    console.log('Image loaded');
+  }
+
+  cancel() {
+    this.finalImage = null;
+    this.dialogRef.close(this.finalImage);
+  }
+
+  cropperReady(sourceImageDimensions: Dimensions) {
+    console.log('Cropper ready', sourceImageDimensions);
+  }
+
+  loadImageFailed() {
+    console.log('Load failed');
+    this.alertService.openSnackBar("This file load failed, Please try again", 'error');
+  }
 
   cancelClick(): void {
     this.dialogRef.close();

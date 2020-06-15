@@ -283,7 +283,7 @@
                                                 <input matInput [title]="selectedFile" readonly
                                                     [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
                                                     value="12345">
-                                                <input type="file" #uploader accept="image/*" hidden
+                                                <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
                                                     (change)="fileChangeEvent($event)" id="uploadFile">
                                                 <button matSuffix type="button" (click)="uploader.click()"
                                                     mat-stroked-button color="primary" class="upload_btn">Upload <span
@@ -538,7 +538,7 @@
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                         fxFlex.xs="100">
                                         <mat-label>Land Line 1</mat-label>
-                                        <input matInput formControlName="phone1" mask="(000) 000-0000"
+                                        <input matInput (keypress)="numberOnly($event)" formControlName="phone1" mask="(000) 000-0000"
                                             placeholder="Land Line 1" autocomplete="off">
                                         <mat-error>Please enter valid land line number</mat-error>
                                     </mat-form-field>
@@ -546,7 +546,7 @@
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                         fxFlex.xs="100">
                                         <mat-label>Land Line 2</mat-label>
-                                        <input matInput formControlName="phone2" mask="(000) 000-0000"
+                                        <input matInput (keypress)="numberOnly($event)" formControlName="phone2" mask="(000) 000-0000"
                                             placeholder="Land Line 2" autocomplete="off">
                                         <mat-error>Please enter valid land line number</mat-error>
                                     </mat-form-field>
@@ -554,7 +554,7 @@
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                         fxFlex.xs="100">
                                         <mat-label>Mobile 1</mat-label>
-                                        <input matInput formControlName="mobile1" mask="(000) 000-0000"
+                                        <input matInput (keypress)="numberOnly($event)" formControlName="mobile1" mask="(000) 000-0000"
                                             placeholder="Mobile 1" autocomplete="off">
                                         <mat-error>Please enter valid mobile number</mat-error>
                                     </mat-form-field>
@@ -562,7 +562,7 @@
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                         fxFlex.xs="100">
                                         <mat-label>Mobile 2</mat-label>
-                                        <input matInput formControlName="mobile2" mask="(000) 000-0000"
+                                        <input matInput (keypress)="numberOnly($event)" formControlName="mobile2" mask="(000) 000-0000"
                                             placeholder="Mobile 2" autocomplete="off">
                                         <mat-error>Please enter valid mobile number</mat-error>
                                     </mat-form-field>
