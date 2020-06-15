@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
@@ -43,8 +43,8 @@ export class SubscriberSettingsComponent implements OnInit {
   texoCtrl = new FormControl();
   texoDetails = [];
   first_name: string;
-  signData:any;
-  selectedFile:any = null;
+  signData: any;
+  selectedFile: any = null;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -389,14 +389,31 @@ export class SubscriberSettingsComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-    console.log("event",event.target.files[0].name);
-    this.selectedFile = event.target.files[0].name;
-    this.openSign(event);
+    console.log("event", event.target.files[0].size);
+   
+  
+
+    let fileTypes = ['png', 'jpg', 'jpeg']
+
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize =  Math.round(event.target.files[0].size / 1000); // in KB
+      if (FileSize > 500) {
+        this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.selectedFile = event.target.files[0].name;
+      this.openSign(event);
+    } else {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
   }
 
-    openSign(e): void {
+  openSign(e): void {
     const dialogRef = this.dialog.open(SignPopupComponent, {
-     // height: '800px',
+      // height: '800px',
       width: '800px',
       data: e,
 
@@ -404,7 +421,7 @@ export class SubscriberSettingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       //console.log('The dialog was closed',result);
-      if(result == null){
+      if (result == null) {
         this.selectedFile = null
       }
       this.signData = result;
@@ -422,41 +439,42 @@ export class SignPopupComponent {
   imageChangedEvent: any = '';
   showCropper = false;
   croppedImage: any = '';
-  finalImage:any;
+  finalImage: any;
   constructor(
     public dialogRef: MatDialogRef<SignPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-      this.imageChangedEvent = data;
-    }
+    @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService,) {
+    this.imageChangedEvent = data;
+  }
 
-    imageCropped(event: ImageCroppedEvent) {
-      this.croppedImage = event.base64;
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
     //  console.log(event, base64ToFile(event.base64));
-    }
+  }
 
-    save(){
-      this.finalImage = this.croppedImage;
-      //console.log(this.finalImage);
-      this.dialogRef.close( this.finalImage);
-    }
-  
-    imageLoaded() {
-      this.showCropper = true;
-      console.log('Image loaded');
-    }
+  save() {
+    this.finalImage = this.croppedImage;
+    //console.log(this.finalImage);
+    this.dialogRef.close(this.finalImage);
+  }
 
-    cancel(){
-      this.finalImage = null;
-      this.dialogRef.close( this.finalImage);
-    }
-  
-    cropperReady(sourceImageDimensions: Dimensions) {
-      console.log('Cropper ready', sourceImageDimensions);
-    }
-  
-    loadImageFailed() {
-      console.log('Load failed');
-    }
+  imageLoaded() {
+    this.showCropper = true;
+    console.log('Image loaded');
+  }
+
+  cancel() {
+    this.finalImage = null;
+    this.dialogRef.close(this.finalImage);
+  }
+
+  cropperReady(sourceImageDimensions: Dimensions) {
+    console.log('Cropper ready', sourceImageDimensions);
+  }
+
+  loadImageFailed() {
+    console.log('Load failed');
+    this.alertService.openSnackBar("This file load failed, Please try again", 'error');
+  }
 
   cancelClick(): void {
     this.dialogRef.close();

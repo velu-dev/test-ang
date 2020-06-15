@@ -281,7 +281,7 @@
                                                 <input matInput [title]="selectedFile" readonly
                                                     [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
                                                     value="12345">
-                                                <input type="file" #uploader accept="image/*" hidden
+                                                <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
                                                     (change)="fileChangeEvent($event)" id="uploadFile">
                                                 <button matSuffix type="button" (click)="uploader.click()"
                                                     mat-stroked-button color="primary" class="upload_btn">Upload <span
