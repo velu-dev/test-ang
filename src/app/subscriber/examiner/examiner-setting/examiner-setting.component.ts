@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
@@ -13,6 +13,8 @@ import * as headerActions from "./../../../shared/store/header.actions";
 import { ExaminerService } from '../../service/examiner.service';
 import { Location } from '@angular/common';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-examiner-setting',
@@ -33,6 +35,8 @@ export class ExaminerSettingComponent implements OnInit {
   first_name: string;
   specialtyList: any;
   taxonomyList: any;
+
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -44,7 +48,8 @@ export class ExaminerSettingComponent implements OnInit {
     private examinerService: ExaminerService,
     private store: Store<{ header: any }>,
     public _location: Location,
-    private intercom: IntercomService
+    private intercom: IntercomService,
+    public dialog: MatDialog
   ) {
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)
@@ -359,5 +364,44 @@ export class ExaminerSettingComponent implements OnInit {
     }
     return true;
 
+  }
+
+  fileChangeEvent(event: any): void {
+    console.log("event", event.target.files[0].size);
+    let fileTypes = ['png', 'jpg', 'jpeg']
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
+      if (FileSize > 500) {
+        this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.selectedFile = event.target.files[0].name;
+      this.openSign(event);
+    } else {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+  }
+  selectedFile:any;
+  signData:any
+
+  openSign(e): void {
+    const dialogRef = this.dialog.open(SignPopupComponent, {
+      // height: '800px',
+      width: '800px',
+      data: e,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed',result);
+      if (result == null) {
+        this.selectedFile = null
+      }
+      this.signData = result;
+      this.fileUpload.nativeElement.value = "";
+    });
   }
 }

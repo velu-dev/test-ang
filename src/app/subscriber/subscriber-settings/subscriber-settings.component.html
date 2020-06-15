@@ -301,7 +301,7 @@
                                                 </div>
                                             </div>
                                             <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
-                                                <button class="m-b-5" color="warn"> Remove </button><br />
+                                                <button type="button" class="m-b-5" (click)="removeSign()" color="warn"> Remove </button><br />
                                                 <div class="sign m-l-10">
                                                     <img [src]="signData">
                                                 </div>
@@ -728,7 +728,7 @@
                         </div>
                         <div class="text-center w-100 m-t-30 m-b-10">
                             <button mat-raised-button color="primary" class="m-r-10 btn_success rounded-corner"
-                                (click)="addressFormSubmit()">Save</button>
+                                >Save</button>
                             <button mat-raised-button color="warn" (click)="_location.back()"
                                 class="rounded-corner m-l-10">
                                 Cancel </button>

@@ -88,7 +88,7 @@ export class SubscriberSettingsComponent implements OnInit {
           company_w9_number: res.data.company_w9_number,
           company_npi_number: res.data.company_npi_number,
         }
-        this.signData = 'data:image/png;base64,' + res.data.signature
+        this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
       } else {
         userDetails = {
           id: res.data.id,
@@ -273,7 +273,7 @@ export class SubscriberSettingsComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : null;
+    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
 
     this.userForm.value.signature = sign;
     console.log(this.userForm.value);
@@ -398,11 +398,7 @@ export class SubscriberSettingsComponent implements OnInit {
 
   fileChangeEvent(event: any): void {
     console.log("event", event.target.files[0].size);
-
-
-
     let fileTypes = ['png', 'jpg', 'jpeg']
-
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 500) {
@@ -435,6 +431,11 @@ export class SubscriberSettingsComponent implements OnInit {
       this.signData = result;
       this.fileUpload.nativeElement.value = "";
     });
+  }
+
+  removeSign(){
+    this.signData = null;
+    this.selectedFile = null;
   }
 
 }
