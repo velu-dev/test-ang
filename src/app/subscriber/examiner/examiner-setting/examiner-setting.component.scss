@@ -235,13 +235,36 @@ mat-form-field {
       cursor: pointer;
     }
   }
+
   .empty-image {
     background-color: #ececec;
     padding: 20px;
     width: 200px;
+    float: left;
     text-align: center;
     color: $light-gray;
     border: 1px solid $light-gray;
     cursor: not-allowed;
+  }
+
+  .sign-img {
+    button {
+      margin-left: 162px;
+      font-size: $font-size-22;
+      cursor: pointer;
+    }
+    .sign {
+      padding: 3px;
+      width: 200px;
+      text-align: center;
+      border: 1px solid $light-gray;
+      cursor: not-allowed;
+      float: left;
+      img {
+        min-width: 100%;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
   }
 }

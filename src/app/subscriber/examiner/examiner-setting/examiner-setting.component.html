@@ -212,22 +212,44 @@
                             <mat-error *ngIf="isSubmit">Error Message here</mat-error>
                         </mat-form-field>
 
-                        <!-- <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
-                            class="sign-upload">
-                            <div fxLayout="row wrap">
-                                <mat-form-field fxFlex="100" class="w-100">
-                                    <input type="text" matInput placeholder="" value="Upload signature" disabled>
-                                    <button matSuffix mat-stroked-button color="primary" class="upload_btn">Upload <span
-                                            class="fa fa-upload"></span></button>
-                                </mat-form-field>
-
-                                <div fxFlex="100">
-                                    <div class="empty-image m-l-10">
-                                        no image uploaded
+                        <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                                        fxFlex.xs="100">Signature
                                     </div>
-                                </div>
-                            </div>
-                        </div> -->
+                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                                        class="sign-upload">
+                                        <div fxLayout="row wrap">
+                                            <mat-form-field appearance="standard"
+                                                hideRequiredMarker="hideRequiredControl.auto"
+                                                floatLabel="floatLabelControl.auto" fxFlex="100" class="w-100">
+                                                <input matInput [title]="selectedFile" readonly
+                                                    [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
+                                                    value="12345">
+                                                <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
+                                                    (change)="fileChangeEvent($event)" id="uploadFile">
+                                                <button matSuffix type="button" (click)="uploader.click()"
+                                                    mat-stroked-button color="primary" class="upload_btn">Upload <span
+                                                        class="fa fa-upload"></span></button>
+                                                <mat-hint>
+                                                    *Aspect ratio 3:1<br />
+                                                    *Max size 500 KB<br />
+                                                    *Allowed formats : JPEG/JPG, PNG
+                                                </mat-hint>
+                                            </mat-form-field>
+
+                                            <div fxFlex="100" *ngIf="!signData" class="m-t-30">
+                                                <div class="empty-image m-l-10">
+                                                    No image uploaded
+                                                </div>
+                                            </div>
+                                            <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
+                                                <button type="button" class="m-b-5" (click)="removeSign()" color="warn"> Remove </button><br />
+                                                <div class="sign m-l-10">
+                                                    <img [src]="signData">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
 
 
                         <div class="text-center w-100 m-t-10 m-b-10">
@@ -236,7 +258,6 @@
                             <button mat-raised-button type="button" (click)="_location.back()" class="rounded-corner"
                                 color="warn">Cancel</button>
                         </div>
-                        <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes</button> -->
                     </form>
                 </mat-card-content>
             </div>
