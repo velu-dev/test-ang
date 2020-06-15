@@ -301,7 +301,8 @@
                                                 </div>
                                             </div>
                                             <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
-                                                <button class="m-b-5" color="warn"> Remove </button><br />
+                                                <button class="m-b-5" mat-raised-button color="warn"><i
+                                                        class="fa fa-times-circle"></i> Remove </button><br />
                                                 <div class="sign m-l-10">
                                                     <img [src]="signData">
                                                 </div>
@@ -538,32 +539,32 @@
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                         fxFlex.xs="100">
                                         <mat-label>Land Line 1</mat-label>
-                                        <input matInput (keypress)="numberOnly($event)" formControlName="phone1" mask="(000) 000-0000"
-                                            placeholder="Land Line 1" autocomplete="off">
+                                        <input matInput (keypress)="numberOnly($event)" formControlName="phone1"
+                                            mask="(000) 000-0000" placeholder="Land Line 1" autocomplete="off">
                                         <mat-error>Please enter valid land line number</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                         fxFlex.xs="100">
                                         <mat-label>Land Line 2</mat-label>
-                                        <input matInput (keypress)="numberOnly($event)" formControlName="phone2" mask="(000) 000-0000"
-                                            placeholder="Land Line 2" autocomplete="off">
+                                        <input matInput (keypress)="numberOnly($event)" formControlName="phone2"
+                                            mask="(000) 000-0000" placeholder="Land Line 2" autocomplete="off">
                                         <mat-error>Please enter valid land line number</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                         fxFlex.xs="100">
                                         <mat-label>Mobile 1</mat-label>
-                                        <input matInput (keypress)="numberOnly($event)" formControlName="mobile1" mask="(000) 000-0000"
-                                            placeholder="Mobile 1" autocomplete="off">
+                                        <input matInput (keypress)="numberOnly($event)" formControlName="mobile1"
+                                            mask="(000) 000-0000" placeholder="Mobile 1" autocomplete="off">
                                         <mat-error>Please enter valid mobile number</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                         fxFlex.xs="100">
                                         <mat-label>Mobile 2</mat-label>
-                                        <input matInput (keypress)="numberOnly($event)" formControlName="mobile2" mask="(000) 000-0000"
-                                            placeholder="Mobile 2" autocomplete="off">
+                                        <input matInput (keypress)="numberOnly($event)" formControlName="mobile2"
+                                            mask="(000) 000-0000" placeholder="Mobile 2" autocomplete="off">
                                         <mat-error>Please enter valid mobile number</mat-error>
                                     </mat-form-field>
 
