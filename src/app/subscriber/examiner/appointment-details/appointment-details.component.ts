@@ -91,6 +91,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   getDocumentData() {
     this.examinerService.getDocumentData(this.examinationDetails.claim_details.id).subscribe(res => {
+      console.log(res);
       this.documentTabData = res['data'];
       this.tabChanges(this.tabIndex)
     }, error => {
