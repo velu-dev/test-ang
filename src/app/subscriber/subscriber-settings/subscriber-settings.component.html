@@ -90,7 +90,7 @@
                                     [formGroup]="userForm" (ngSubmit)="userformSubmit()">
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
+                                        fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
                                         <mat-label>First Name*</mat-label>
                                         <input matInput placeholder="First Name" formControlName="first_name"
                                             autocomplete="off">
@@ -98,7 +98,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="50" class=" m-t-5">
+                                        fxFlex.xl="33.3" fxFlex.sm="50" class=" m-t-5">
                                         <mat-label>Middle Name</mat-label>
                                         <input matInput placeholder="Middle Name" formControlName="middle_name"
                                             autocomplete="off">
@@ -106,7 +106,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="50" class=" m-t-5">
+                                        fxFlex.xl="33.3" fxFlex.sm="50" class=" m-t-5">
                                         <mat-label>Last Name*</mat-label>
                                         <input matInput placeholder="Last Name" formControlName="last_name"
                                             autocomplete="off">
@@ -121,7 +121,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
-                                        fxFlex.sm="100" class=" m-t-5 p-r-10">
+                                        fxFlex.xl="50" fxFlex.sm="100" class=" m-t-5 p-r-10">
                                         <mat-label>Account Number</mat-label>
                                         <input matInput placeholder="Account Number"
                                             value="{{this.user?.account_no | mask: '0000-0000-0000'}}"
@@ -130,7 +130,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
-                                        fxFlex.sm="100" class="m-t-5  p-r-10">
+                                        fxFlex.xl="50" fxFlex.sm="100" class="m-t-5  p-r-10">
                                         <mat-label>Signin Email ID*</mat-label>
                                         <input matInput placeholder="Signin Email ID" formControlName="sign_in_email_id"
                                             autocomplete="off">
@@ -140,8 +140,8 @@
                                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                         fxFlex.xs="100">Signature
                                     </div>
-                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
-                                        class="sign-upload">
+                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
+                                        fxFlex.xs="100" class="sign-upload">
                                         <div fxLayout="row wrap">
                                             <mat-form-field appearance="standard"
                                                 hideRequiredMarker="hideRequiredControl.auto"
@@ -182,8 +182,8 @@
                                         <button mat-raised-button color="primary"
                                             class="m-r-10 rounded-corner btn_success">
                                             Save </button>
-                                        <button mat-raised-button type="button" class="rounded-corner"
-                                            color="warn" (click)="cancel()">Cancel</button>
+                                        <button mat-raised-button type="button" class="rounded-corner" color="warn"
+                                            (click)="cancel()">Cancel</button>
                                     </div>
                                     <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes</button> -->
                                 </form>
@@ -198,7 +198,7 @@
                                         fxFlex.xs="100">User Details
                                     </div>
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
+                                        fxFlex.sm="50" fxFlex.xl="33.3" class="m-t-5">
                                         <mat-label>First Name*</mat-label>
                                         <input matInput placeholder="First Name" formControlName="first_name"
                                             autocomplete="off">
@@ -206,7 +206,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="50" class=" m-t-5">
+                                        fxFlex.sm="50" fxFlex.xl="33.3" class=" m-t-5">
                                         <mat-label>Middle Name</mat-label>
                                         <input matInput placeholder="Middle Name" formControlName="middle_name"
                                             autocomplete="off">
@@ -214,7 +214,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                        fxFlex.sm="50" fxFlex.xl="50" class=" m-t-5">
+                                        fxFlex.sm="50" fxFlex.xl="33.3" class=" m-t-5">
                                         <mat-label>Last Name*</mat-label>
                                         <input matInput placeholder="Last Name" formControlName="last_name"
                                             autocomplete="off">
@@ -228,7 +228,7 @@
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
                                     </mat-form-field>
 
-                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                         <div fxLayout="row wrap">
                                             <mat-radio-group formControlName="individual_w9_number_type"
                                                 aria-label="Select an option" fxFlex="40" fxFlex.md="30" fxFlex.lg="30"
@@ -247,11 +247,9 @@
                                                 <mat-error>Please enter valid Tax ID</mat-error>
                                             </mat-form-field>
                                         </div>
-
                                     </div>
 
-
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                                         fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
                                         <mat-label>Individual NPI Number</mat-label>
                                         <input matInput formControlName="individual_npi_number"
@@ -315,7 +313,7 @@
                                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                         fxFlex.xs="100">Signature
                                     </div>
-                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                                         class="sign-upload">
                                         <div fxLayout="row wrap">
                                             <mat-form-field appearance="standard"
@@ -363,12 +361,6 @@
 
                                     <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes</button> -->
                                 </form>
-
-
-
-
-
-
 
                                 <!-- <input type="file" accept="image/*" (change)="fileChangeEvent($event)" />
                                 <br /> -->
@@ -484,15 +476,15 @@
                                         <mat-error>Please enter valid fax number</mat-error>
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50"
-                                        fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                        fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                         <mat-label>Email ID 1</mat-label>
                                         <input matInput formControlName="email1" placeholder="Email ID 1">
                                         <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50"
-                                        fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                        fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                         <mat-label>Email ID 2</mat-label>
                                         <input matInput formControlName="email2" placeholder="Email ID 2">
                                         <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
@@ -626,15 +618,15 @@
                                         <mat-error>Please enter valid fax number</mat-error>
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50"
-                                        fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                        fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                         <mat-label>Email ID 1</mat-label>
                                         <input matInput formControlName="email1" placeholder="Email ID 1">
                                         <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50"
-                                        fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                        fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                         <mat-label>Email ID 2</mat-label>
                                         <input matInput formControlName="email2" placeholder="Email ID 2">
                                         <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
@@ -692,7 +684,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
-                                        fxFlex.sm="50" fxFlex.xl="50" class=" m-t-5">
+                                        fxFlex.xl="50" fxFlex.sm="50" class=" m-t-5">
                                         <mat-label>Phone Number</mat-label>
                                         <input matInput placeholder="Phone Number" autocomplete="off">
                                         <mat-error>error msg here></mat-error>
@@ -707,14 +699,14 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                        fxFlex.xs="100">
+                                        fxFlex.xs="100" fxFlex.xl="50" fxFlex.lg="50">
                                         <mat-label>City</mat-label>
                                         <input matInput placeholder="City" autocomplete="off">
                                         <mat-error>Please enter valid city</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                        fxFlex.xs="100">
+                                        fxFlex.xs="100" fxFlex.xl="50" fxFlex.lg="50">
                                         <mat-label>State</mat-label>
                                         <mat-select>
                                             <mat-option>
@@ -725,7 +717,7 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                        fxFlex.xs="100">
+                                        fxFlex.xs="100" fxFlex.lg="50" fxFlex.xl="50">
                                         <mat-label>Zip code</mat-label>
                                         <input matInput placeholder="Zip code" autocomplete="off">
                                         <mat-error>Please enter valid zip code</mat-error>
@@ -745,7 +737,7 @@
                                     </mat-radio-group>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="60" fxFlex.lg="60"
-                                        fxFlex.sm="60" class="m-t-5">
+                                        fxFlex.xl="60" fxFlex.sm="60" class="m-t-5">
                                         <mat-icon matPrefix class="p-t-3">credit_card</mat-icon>
                                         <mat-label>Credit Card Number*</mat-label>
                                         <input matInput placeholder="EX : 0000 0000 0000 0000" autocomplete="off">
@@ -753,14 +745,14 @@
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
-                                        fxFlex.sm="30" class=" m-t-5">
+                                        fxFlex.xl="30" fxFlex.sm="30" class=" m-t-5">
                                         <mat-label>Expiration Date</mat-label>
                                         <input matInput placeholder="EX : 01-Jan / 2020" autocomplete="off">
                                         <mat-error>error msg here></mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
-                                        fxFlex.sm="10" class=" m-t-5">
+                                        fxFlex.xl="10" fxFlex.sm="10" class=" m-t-5">
                                         <mat-label>CCV Code <mat-icon>info</mat-icon>
                                         </mat-label>
                                         <input matInput placeholder="CCV Code" autocomplete="off">

@@ -62,15 +62,19 @@ export class AppointmentDetailsComponent implements OnInit {
   ]
   formId = "";
   examiner_id = "";
+  billableId: number;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService
   ) {
-    this.route.params.subscribe(params => this.claim_id = params.id);
+    this.route.params.subscribe(params => {
+      this.claim_id = params.id;
+      this.billableId = params.billId
+    });
   }
 
   ngOnInit() {
-    this.examinerService.getAllExamination(this.claim_id).subscribe(response => {
+    this.examinerService.getAllExamination(this.claim_id,this.billableId).subscribe(response => {
       this.examiner_id = response.data.appointments.examiner_id;
       this.examinationDetails = response['data']
       this.getDocumentData();
@@ -90,7 +94,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   getDocumentData() {
-    this.examinerService.getDocumentData(this.examinationDetails.claim_details.id).subscribe(res => {
+    this.examinerService.getDocumentData(this.examinationDetails.claim_details.id,this.billableId).subscribe(res => {
       this.documentTabData = res['data'];
       this.tabChanges(this.tabIndex)
     }, error => {
@@ -144,7 +148,8 @@ export class AppointmentDetailsComponent implements OnInit {
       let formData = new FormData()
       formData.append('file', this.selectedFile);
       formData.append('document_type_id', this.documentType);
-      formData.append('claim_id', this.examinationDetails.claim_details.id)
+      formData.append('claim_id', this.examinationDetails.claim_details.id);
+      formData.append('bill_item_id', this.billableId.toString());
       console.log(" this.selectedFile", this.selectedFile);
       this.examinerService.postDocument(formData).subscribe(res => {
         this.selectedFile = null;
@@ -192,7 +197,7 @@ export class AppointmentDetailsComponent implements OnInit {
       } else {
         claim_id = this.claim_id;
       }
-      this.examinerService.getForms(claim_id, this.formId, formPre).subscribe(res => {
+      this.examinerService.getForms(claim_id, this.formId, formPre, this.billableId).subscribe(res => {
         let data = this.dataSource.data;
         data.push(res.data);
         this.dataSource = new MatTableDataSource(data)
@@ -204,9 +209,10 @@ export class AppointmentDetailsComponent implements OnInit {
   noteSubmit(note) {
     console.log(note);
     let data = {
-      "claim_id": this.examinationDetails.claim_details.id,
-      "appointment_id": this.examinationDetails.appointments.id,
-      "exam_notes": note
+      // "claim_id": this.examinationDetails.claim_details.id,
+      // "appointment_id": this.examinationDetails.appointments.id,
+      "exam_notes": note,
+      "bill_item_id": this.billableId
     }
     this.examinerService.postNotes(data).subscribe(res => {
       this.alertService.openSnackBar("Note added successfully!", 'success');

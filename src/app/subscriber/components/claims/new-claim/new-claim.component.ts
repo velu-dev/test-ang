@@ -12,7 +12,8 @@ import {
   NativeDateAdapter, DateAdapter,
   MAT_DATE_FORMATS,
   MatDialog,
-  MatStepper
+  MatStepper,
+  MAT_DATE_LOCALE
 } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
@@ -20,15 +21,25 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 export const PICK_FORMATS = {
-  parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
+  // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
   display: {
-    dateInput: 'input',
-    monthYearLabel: { year: 'numeric', month: 'short' },
-    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
-    monthYearA11yLabel: { year: 'numeric', month: 'long' }
-  }
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+  // display: {
+  //   dateInput: 'input',
+  //   monthYearLabel: { year: 'numeric', month: 'short' },
+  //   dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+  //   monthYearA11yLabel: { year: 'numeric', month: 'long' }
+  // }
 };
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
@@ -78,7 +89,9 @@ const ELEMENT_DATA: claimant1[] = []
   providers: [
     { provide: DateAdapter, useClass: PickDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
-    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+
   ]
 })
 export class NewClaimComponent implements OnInit {
@@ -686,8 +699,8 @@ export class NewClaimComponent implements OnInit {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
         //this._location.back();
-        if (this.claimant.touched){ 
-        this.createClaimant('close')
+        if (this.claimant.touched) {
+          this.createClaimant('close')
         }
         this.routeDashboard();
       }, error => {
@@ -719,13 +732,13 @@ export class NewClaimComponent implements OnInit {
       }
       return;
     } else {
-      if (status == 'close'){ 
-      if (this.claimant.invalid) {
-        console.log("claimant", this.claimant)
-        return;
-      }
+      if (status == 'close') {
+        if (this.claimant.invalid) {
+          console.log("claimant", this.claimant)
+          return;
+        }
         this.routeDashboard();
-    }
+      }
     }
     this.claimantChanges = false;
     this.isClaimantSubmited = true;
@@ -1236,16 +1249,16 @@ export class NewClaimComponent implements OnInit {
 
   }
 
-  injuryCancel(){
-    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null } 
+  injuryCancel() {
+    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   }
 
-  langChange(){
-    this.claimant.patchValue({primary_language_spoken:null})
-    this.billable_item.patchValue({exam_type:{primary_language_spoken: this.claimant.value.primary_language_spoken}})
-    
+  langChange() {
+    this.claimant.patchValue({ primary_language_spoken: null })
+    this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
+
   }
-  primryLangChange(){
-    this.billable_item.patchValue({exam_type:{primary_language_spoken: this.claimant.value.primary_language_spoken}})
+  primryLangChange() {
+    this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
   }
 }

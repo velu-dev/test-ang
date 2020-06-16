@@ -105,40 +105,40 @@
     <div fxLayout="row wrap" fxFlex="100">
       <form fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="claimantForm">
 
-        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
           <mat-label>First Name*</mat-label>
           <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidfirstname}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
           <mat-label>Middle Name</mat-label>
           <input matInput placeholder="Middle Name" formControlName="middle_name" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidmiddlename}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
           <mat-label>Last Name*</mat-label>
           <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidlastname}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
           <mat-label>Suffix</mat-label>
           <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid suffix</mat-error>
         </mat-form-field>
-        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
           <mat-label>Salutation</mat-label>
           <input matInput placeholder="Salutation" formControlName="salutation" autocomplete="off">
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
           fxFlex.xs="100">
           <mat-label>Date of Birth*</mat-label>
           <input matInput placeholder="MM-DD-YYYY" formControlName="date_of_birth" autocomplete="off" [max]="today"
