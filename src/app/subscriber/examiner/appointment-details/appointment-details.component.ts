@@ -45,9 +45,11 @@ export class AppointmentDetailsComponent implements OnInit {
     { name: "QME-121", group: "QME", value: "121" },
     { name: "QME-AME Appointment Notification", group: "QME/AME", value: "notification" },
     { name: "SBR-1", group: "DWC", value: "SBR_1" },
-    { name: "SBR-2", group: "DWC", value: "SBR_2" },
+    { name: "IBR-1", group: "DWC", value: "IBR_1" },
     { name: "QME-111", group: "QME", value: "111" },
     { name: "QME-112", group: "QME", value: "112" },
+    { name: "DWCAD-1013336", group: "DWCAD", value: "1013336" },
+    { name: "QME-123", group: "QME", value: "123" },
     // { name: "DEU-100 Spanish", group: "DEU", value: "S100" },
     // { name: "DEU-111", group: "DEU", value: "111" },
     // { name: "QME-111", group: "QME", value: "111" },
@@ -185,7 +187,7 @@ export class AppointmentDetailsComponent implements OnInit {
         }
       })
       let claim_id: any;
-      if (this.formId == "notification") {
+      if (this.formId == "notification" || this.formId == "111") {
         claim_id = this.claim_id + "/" + this.examiner_id;
       } else {
         claim_id = this.claim_id;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
@@ -16,6 +16,8 @@ import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx-image-cropper';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-subscribersettings',
@@ -23,6 +25,8 @@ import { IntercomService } from 'src/app/services/intercom.service';
   styleUrls: ['./subscriber-settings.component.scss']
 })
 export class SubscriberSettingsComponent implements OnInit {
+
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   profile_bg = globals.profile_bg;
   user: User;
   currentUser: any;
@@ -39,6 +43,8 @@ export class SubscriberSettingsComponent implements OnInit {
   texoCtrl = new FormControl();
   texoDetails = [];
   first_name: string;
+  signData: any;
+  selectedFile: any = null;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -50,7 +56,8 @@ export class SubscriberSettingsComponent implements OnInit {
     //private store: Store<{ count: number }>,
     private claimService: ClaimService,
     public _location: Location,
-    private intercom: IntercomService
+    private intercom: IntercomService,
+    public dialog: MatDialog
   ) {
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
@@ -79,10 +86,9 @@ export class SubscriberSettingsComponent implements OnInit {
           individual_npi_number: res.data.individual_npi_number,
           company_taxonomy_id: res.data.company_taxonomy_id,
           company_w9_number: res.data.company_w9_number,
-          company_npi_number: res.data.company_npi_number
-
+          company_npi_number: res.data.company_npi_number,
         }
-
+       
       } else {
         userDetails = {
           id: res.data.id,
@@ -94,9 +100,10 @@ export class SubscriberSettingsComponent implements OnInit {
           sign_in_email_id: res.data.sign_in_email_id,
         }
       }
+      this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
 
 
-      this.userForm.setValue(userDetails)
+      this.userForm.patchValue(userDetails)
     })
   }
   ngOnInit() {
@@ -123,6 +130,7 @@ export class SubscriberSettingsComponent implements OnInit {
         company_taxonomy_id: [''],
         company_w9_number: [''],
         company_npi_number: ['', Validators.maxLength(15)],
+        signature: ['']
       });
     } else {
       this.userForm = this.formBuilder.group({
@@ -132,7 +140,8 @@ export class SubscriberSettingsComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
         company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
-        sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
+        sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+        signature: ['']     
       });
     }
 
@@ -253,6 +262,7 @@ export class SubscriberSettingsComponent implements OnInit {
     });
   }
   userformSubmit() {
+    
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
@@ -261,6 +271,8 @@ export class SubscriberSettingsComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
+    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
+    this.userForm.value.signature = sign;
     this.userService.updateUser(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       //window.location.reload();
@@ -325,8 +337,8 @@ export class SubscriberSettingsComponent implements OnInit {
   }
 
   addressFormSubmit() {
-   // console.log(this.addressForm.value);
-   // console.log(this.billingForm.value);
+    // console.log(this.addressForm.value);
+    // console.log(this.billingForm.value);
     Object.keys(this.addressForm.controls).forEach((key) => {
       if (this.addressForm.get(key).value && typeof (this.addressForm.get(key).value) == 'string')
         this.addressForm.get(key).setValue(this.addressForm.get(key).value.trim())
@@ -379,4 +391,98 @@ export class SubscriberSettingsComponent implements OnInit {
     return true;
 
   }
+
+  fileChangeEvent(event: any): void {
+    console.log("event", event.target.files[0].size);
+    let fileTypes = ['png', 'jpg', 'jpeg']
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
+      if (FileSize > 500) {
+        this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.selectedFile = event.target.files[0].name;
+      this.openSign(event);
+    } else {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+  }
+
+  openSign(e): void {
+    const dialogRef = this.dialog.open(SignPopupComponent, {
+      // height: '800px',
+      width: '800px',
+      data: e,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed',result);
+      if (result == null) {
+        this.selectedFile = null
+      }
+      this.signData = result;
+      this.fileUpload.nativeElement.value = "";
+    });
+  }
+
+  removeSign(){
+    this.signData = null;
+    this.selectedFile = null;
+  }
+
+}
+
+@Component({
+  selector: 'sign-dialog',
+  templateUrl: '../sign-dialog.html',
+})
+export class SignPopupComponent {
+  imageChangedEvent: any = '';
+  showCropper = false;
+  croppedImage: any = '';
+  finalImage: any;
+  constructor(
+    public dialogRef: MatDialogRef<SignPopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService,) {
+    this.imageChangedEvent = data;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+    //  console.log(event, base64ToFile(event.base64));
+  }
+
+  save() {
+    this.finalImage = this.croppedImage;
+    //console.log(this.finalImage);
+    this.dialogRef.close(this.finalImage);
+  }
+
+  imageLoaded() {
+    this.showCropper = true;
+    console.log('Image loaded');
+  }
+
+  cancel() {
+    this.finalImage = null;
+    this.dialogRef.close(this.finalImage);
+  }
+
+  cropperReady(sourceImageDimensions: Dimensions) {
+    console.log('Cropper ready', sourceImageDimensions);
+  }
+
+  loadImageFailed() {
+    console.log('Load failed');
+    this.alertService.openSnackBar("This file load failed, Please try again", 'error');
+  }
+
+  cancelClick(): void {
+    this.dialogRef.close();
+  }
+
 }

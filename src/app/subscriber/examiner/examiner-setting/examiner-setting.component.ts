@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
@@ -13,6 +13,8 @@ import * as headerActions from "./../../../shared/store/header.actions";
 import { ExaminerService } from '../../service/examiner.service';
 import { Location } from '@angular/common';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-examiner-setting',
@@ -33,6 +35,8 @@ export class ExaminerSettingComponent implements OnInit {
   first_name: string;
   specialtyList: any;
   taxonomyList: any;
+
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -44,7 +48,8 @@ export class ExaminerSettingComponent implements OnInit {
     private examinerService: ExaminerService,
     private store: Store<{ header: any }>,
     public _location: Location,
-    private intercom: IntercomService
+    private intercom: IntercomService,
+    public dialog: MatDialog
   ) {
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)
@@ -63,7 +68,7 @@ export class ExaminerSettingComponent implements OnInit {
       //   sign_in_email_id: res.data.sign_in_email_id,
       // }
       // this.userForm.patchValue(userDetails)
-
+      this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
       this.userService.getEditUser(res.data.id).subscribe(res => {
         console.log(res.data);
         let user = {
@@ -82,6 +87,7 @@ export class ExaminerSettingComponent implements OnInit {
           state_of_license_id: res.data.state_of_license_id,
           taxonomy_id: res.data.taxonomy_id
         }
+       
         this.userForm.patchValue(user)
       })
 
@@ -107,7 +113,8 @@ export class ExaminerSettingComponent implements OnInit {
       specialty: [''],
       state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
       taxonomy_id: [''],
-      state_of_license_id: [null]
+      state_of_license_id: [null],
+      signature: ['']
     });
 
     this.addressForm = this.formBuilder.group({
@@ -230,7 +237,8 @@ export class ExaminerSettingComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-   
+    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
+    this.userForm.value.signature = sign;
     this.userForm.value.address_details = {}
     this.userService.updateEditUser(this.userForm.value.id,this.userForm.value).subscribe(res => {
       if (this.first_name != this.userForm.value.first_name) {
@@ -359,5 +367,49 @@ export class ExaminerSettingComponent implements OnInit {
     }
     return true;
 
+  }
+
+  fileChangeEvent(event: any): void {
+    console.log("event", event.target.files[0].size);
+    let fileTypes = ['png', 'jpg', 'jpeg']
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
+      if (FileSize > 500) {
+        this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.selectedFile = event.target.files[0].name;
+      this.openSign(event);
+    } else {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+  }
+  selectedFile:any = null;
+  signData:any = null;
+
+  openSign(e): void {
+    const dialogRef = this.dialog.open(SignPopupComponent, {
+      // height: '800px',
+      width: '800px',
+      data: e,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed',result);
+      if (result == null) {
+        this.selectedFile = null
+      }
+      this.signData = result;
+      this.fileUpload.nativeElement.value = "";
+    });
+  }
+
+  removeSign(){
+    this.signData = null;
+    this.selectedFile = null;
   }
 }

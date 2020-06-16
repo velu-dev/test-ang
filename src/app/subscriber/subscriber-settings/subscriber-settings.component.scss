@@ -66,5 +66,56 @@ mat-form-field {
     float: left;
     padding: 5px 10px;
   }
-  
+}
+
+.sign-upload {
+  mat-form-field {
+    .upload_btn {
+      color: $primarydarkcolor;
+      background-color: $btn-light-color;
+      padding: 0px 10px;
+      height: 35px;
+      font-size: $font-size-7;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+
+  .empty-image {
+    background-color: #ececec;
+    padding: 20px;
+    width: 200px;
+    float: left;
+    text-align: center;
+    color: $light-gray;
+    border: 1px solid $light-gray;
+    cursor: not-allowed;
+  }
+
+  .sign-img {
+    button {
+      margin-left: 155px;
+      font-size: $font-size-22;
+      cursor: pointer;
+      padding: 0;
+      line-height: 2;
+      i {
+        // color: $danger;
+        font-size: $font-size-7;
+      }
+    }
+    .sign {
+      padding: 3px;
+      width: 200px;
+      text-align: center;
+      border: 1px solid $light-gray;
+      cursor: not-allowed;
+      float: left;
+      img {
+        min-width: 100%;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  }
 }

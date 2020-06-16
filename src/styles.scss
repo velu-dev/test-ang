@@ -484,7 +484,8 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 
 mat-horizontal-stepper {
   .mat-horizontal-stepper-header {
-    .mat-step-icon-state-number, .mat-step-icon-state-edit {
+    .mat-step-icon-state-number,
+    .mat-step-icon-state-edit {
       @media only screen and (max-width: 568px) {
         display: none;
       }
@@ -507,3 +508,10 @@ mat-datepicker-toggle {
     outline: none;
   }
 }
+// image cropper
+image-cropper {
+  min-width: 100%;
+  width: 100%;
+  height: 50vh;
+}
+

@@ -10,7 +10,7 @@ import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard
 import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
 import { NewClaimantComponent } from './components/claims/new-claimant/new-claimant.component';
 import { SubscriberUserService } from './service/subscriber-user.service';
-import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-settings.component';
+import { SubscriberSettingsComponent, SignPopupComponent } from './subscriber-settings/subscriber-settings.component';
 import { ManageUserComponent } from './manager/manage-user/manage-user.component';
 import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
 import { AppointmentComponent } from './examiner/appointment/appointment.component';
@@ -44,7 +44,7 @@ import { BillingComponent } from './components/billing/billing.component';
 import { NewBillingComponent, BillilgDialog } from './components/new-billing/new-billing.component';
 import { EditBillingComponent } from './components/edit-billing/edit-billing.component';
 import { DialogueComponent } from '../shared/components/dialogue/dialogue.component';
-
+import { ImageCropperModule } from 'ngx-image-cropper';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -92,6 +92,7 @@ import { DialogueComponent } from '../shared/components/dialogue/dialogue.compon
     NewBillingComponent,
     EditBillingComponent,
     BillilgDialog,
+    SignPopupComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -99,12 +100,14 @@ import { DialogueComponent } from '../shared/components/dialogue/dialogue.compon
     BillableitemPopupComponent,
     InjuryPopup,
     BillilgDialog,
+    SignPopupComponent
   ],
   imports: [
     CommonModule,
     SubscriberRoutingModule,
     SharedModule,
     FullCalendarModule,
+    ImageCropperModule
   ],
   providers: [SubscriberUserService, ClaimService, ExaminerService]
 })
