@@ -260,7 +260,7 @@ const routes: Routes = [{
     path: "appointment",
     component: AppointmentComponent
   }, {
-    path: "appointment-details/:id",
+    path: "appointment-details/:id/:billId",
     component: AppointmentDetailsComponent
   }, {
     path: "billing",
