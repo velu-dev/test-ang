@@ -57,8 +57,8 @@ export class ExaminerService {
     return this.http.get(environment.baseUrl + api_endpoint.getExamination)
   }
 
-  getAllExamination(id): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.getAllExamination + id)
+  getAllExamination(id,billId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getAllExamination + id ) //+ '/' + billId
   }
 
   postDocument(data) {
@@ -68,8 +68,8 @@ export class ExaminerService {
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
-  getDocumentData(id) {
-    return this.http.get(environment.baseUrl + api_endpoint.getDocumentData + id)
+  getDocumentData(id,billId) {
+    return this.http.get(environment.baseUrl + api_endpoint.getDocumentData + id ) //+ '/' + billId
   }
   deleteDocument(id) {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id)
@@ -78,7 +78,7 @@ export class ExaminerService {
   postNotes(data) {
     return this.http.post(environment.baseUrl + api_endpoint.postNotes, data)
   }
-  getForms(claim_id, form_id, group): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.formUrl + group + "/" + form_id + "/" + claim_id)
+  getForms(claim_id, form_id, group, billId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.formUrl + group + "/" + form_id + "/" + claim_id ) //+ "/" + billId
   }
 }

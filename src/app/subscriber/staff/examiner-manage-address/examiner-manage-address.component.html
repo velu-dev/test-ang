@@ -97,16 +97,16 @@
                                         <div fxLayout="row wrap" fxFlex="100">
                                             <div class="sub-title p-t-15  p-l-10" fxFlex="100">Advanced Search</div>
 
-                                            <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.md="33.3"
-                                                fxFlex.sm="50" fxFlex.xs="100">
+                                            <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.lg="33.3"
+                                                fxFlex.xl="33.3" fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>City</mat-label>
                                                 <input matInput placeholder="City" formControlName="city"
                                                     autocomplete="off">
                                                 <mat-error>error msg here</mat-error>
                                             </mat-form-field>
 
-                                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
-                                                fxFlex.sm="50" fxFlex.lg="33.3" fxFlex.xs="100">
+                                            <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.lg="33.3"
+                                                fxFlex.xl="33.3" fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>State</mat-label>
                                                 <input matInput placeholder="State" formControlName="state"
                                                     autocomplete="off">
@@ -117,10 +117,11 @@
                                                 </mat-select> -->
                                             </mat-form-field>
 
-                                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="33.3"
-                                                fxFlex.sm="50" fxFlex.lg="33.3" fxFlex.xs="100">
+                                            <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.lg="33.3"
+                                                fxFlex.xl="33.3" fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                                 <mat-label>ZIP Code</mat-label>
-                                                <input matInput placeholder="ZIP Code"  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code"
+                                                <input matInput placeholder="ZIP Code" mask="9{10}"
+                                                    [dropSpecialCharacters]="false" formControlName="zip_code"
                                                     autocomplete="off">
                                                 <mat-error>Please enter valid city</mat-error>
                                             </mat-form-field>
@@ -167,10 +168,11 @@
                                 </mat-list>
                             </mat-card-content>
                             <div class="text-center w-100 m-t-10 m-b-10" *ngIf="searchAddressDetails?.length > 0">
-                                <button mat-raised-button color="warn" class="m-r-10 " (click)="_location.back()">
-                                    Cancel </button>
-                                <button mat-raised-button color="primary" class="m-r-15 btn_success"
+                                <button mat-raised-button color="primary" class="m-r-15 btn_success rounded-corner"
                                     (click)="existAddressBlukSubmit()">Save</button>
+                                <button mat-raised-button color="warn" class="m-r-10  rounded-corner"
+                                    (click)="_location.back()">
+                                    Cancel </button>
                             </div>
 
                         </mat-tab>
@@ -189,7 +191,8 @@
                                             <mat-label>Examiner Name</mat-label>
                                             <input matInput placeholder="Examiner Name" [value]="examinerName"
                                                 autocomplete="off" disabled>
-                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid phone number</mat-error>
+                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid phone number
+                                            </mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -199,7 +202,8 @@
                                                 <mat-option *ngFor="let address of addressType" [value]="address.id">
                                                     {{address?.service_code}} - {{address?.service_name}}</mat-option>
                                             </mat-select>
-                                            <mat-error *ngIf="addressIsSubmitted">Please select valid service location type
+                                            <mat-error *ngIf="addressIsSubmitted">Please select valid service location
+                                                type
                                             </mat-error>
                                         </mat-form-field>
 
@@ -207,7 +211,8 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Address 1*</mat-label>
-                                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street1"
+                                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                                cdkAutosizeMaxRows="2" formControlName="street1"
                                                 placeholder="Address 1"></textarea>
                                             <mat-error *ngIf="addressIsSubmitted">Please enter valid address</mat-error>
                                         </mat-form-field>
@@ -215,7 +220,8 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Address 2</mat-label>
-                                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street2"
+                                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                                                cdkAutosizeMaxRows="2" formControlName="street2"
                                                 placeholder="Address 2"></textarea>
                                         </mat-form-field>
 
@@ -241,9 +247,10 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Zip code*</mat-label>
-                                            <input matInput  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" placeholder="Zip code"
-                                                autocomplete="off">
-                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid zip code</mat-error>
+                                            <input matInput mask="9{10}" [dropSpecialCharacters]="false"
+                                                formControlName="zip_code" placeholder="Zip code" autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid zip code
+                                            </mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100"
@@ -257,8 +264,8 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Land Line 1</mat-label>
-                                            <input matInput (keypress)="numberOnly($event)" formControlName="phone1" mask="(000) 000-0000"
-                                                placeholder="Land Line 1" autocomplete="off">
+                                            <input matInput (keypress)="numberOnly($event)" formControlName="phone1"
+                                                mask="(000) 000-0000" placeholder="Land Line 1" autocomplete="off">
                                             <mat-error *ngIf="addressIsSubmitted">Please enter valid land line number
                                             </mat-error>
                                         </mat-form-field>
@@ -266,8 +273,8 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Land Line 2</mat-label>
-                                            <input matInput (keypress)="numberOnly($event)" formControlName="phone2" mask="(000) 000-0000"
-                                                placeholder="Land Line 2" autocomplete="off">
+                                            <input matInput (keypress)="numberOnly($event)" formControlName="phone2"
+                                                mask="(000) 000-0000" placeholder="Land Line 2" autocomplete="off">
                                             <mat-error *ngIf="addressIsSubmitted">Please enter valid land line number
                                             </mat-error>
                                         </mat-form-field>
@@ -275,17 +282,19 @@
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Mobile 1</mat-label>
-                                            <input matInput (keypress)="numberOnly($event)" formControlName="mobile1" mask="(000) 000-0000"
-                                                placeholder="Mobile 1" autocomplete="off">
-                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid mobile number</mat-error>
+                                            <input matInput (keypress)="numberOnly($event)" formControlName="mobile1"
+                                                mask="(000) 000-0000" placeholder="Mobile 1" autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid mobile number
+                                            </mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Mobile 2</mat-label>
-                                            <input matInput (keypress)="numberOnly($event)" formControlName="mobile2" mask="(000) 000-0000"
-                                                placeholder="Mobile 2" autocomplete="off">
-                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid mobile number</mat-error>
+                                            <input matInput (keypress)="numberOnly($event)" formControlName="mobile2"
+                                                mask="(000) 000-0000" placeholder="Mobile 2" autocomplete="off">
+                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid mobile number
+                                            </mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -293,7 +302,8 @@
                                             <mat-label>Fax 1</mat-label>
                                             <input matInput formControlName="fax1" mask="000-000-0000"
                                                 placeholder="Fax 1" autocomplete="off">
-                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid fax number</mat-error>
+                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid fax number
+                                            </mat-error>
                                         </mat-form-field>
 
                                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -301,18 +311,19 @@
                                             <mat-label>Fax 2</mat-label>
                                             <input matInput formControlName="fax2" mask="000-000-0000"
                                                 placeholder="Fax 2" autocomplete="off">
-                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid fax number</mat-error>
+                                            <mat-error *ngIf="addressIsSubmitted">Please enter valid fax number
+                                            </mat-error>
                                         </mat-form-field>
 
-                                        <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50"
-                                            fxFlex.sm="50" fxFlex.xs="100">
+                                        <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                            fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                             <mat-label>Email ID 1</mat-label>
                                             <input matInput placeholder="Email ID 1" formControlName="email1">
                                             <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
                                         </mat-form-field>
 
-                                        <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.md="50"
-                                            fxFlex.sm="50" fxFlex.xs="100">
+                                        <mat-form-field appearance="standard" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                            fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                             <mat-label>Email ID 2</mat-label>
                                             <input matInput placeholder="Email ID 2" formControlName="email2">
                                             <mat-error>{{errorMessages?.entervalidemail}}</mat-error>
@@ -320,17 +331,18 @@
 
 
 
-                                        <mat-form-field appearance="outline" hintLabel="Max 2400 characters" fxFlex="100" fxFlex.md="100"
-                                            fxFlex.sm="100" fxFlex.xs="100">
+                                        <mat-form-field appearance="outline" hintLabel="Max 2400 characters"
+                                            fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                                             <mat-label>Notes</mat-label>
-                                            <textarea matInput #textarea formControlName="notes" maxlength="2400" placeholder="Notes" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"></textarea>
+                                            <textarea matInput #textarea formControlName="notes" maxlength="2400"
+                                                placeholder="Notes" cdkTextareaAutosize cdkAutosizeMinRows="5"
+                                                cdkAutosizeMaxRows="5"></textarea>
                                             <mat-hint align="end">{{textarea.value?.length || 0}}/2400</mat-hint>
                                             <mat-error *ngIf="addressIsSubmitted">Please enter valid notes</mat-error>
                                         </mat-form-field>
                                         <div class="text-center w-100 m-t-10 m-b-10">
                                             <button mat-raised-button type="button" (click)="addressformSubmit()"
-                                                color="primary"
-                                                class="m-r-15 btn_success rounded-corner">Save</button>
+                                                color="primary" class="m-r-15 btn_success rounded-corner">Save</button>
                                             <button type="button" mat-raised-button color="warn"
                                                 class="m-r-10 rounded-corner" (click)="_location.back()">
                                                 Cancel </button>

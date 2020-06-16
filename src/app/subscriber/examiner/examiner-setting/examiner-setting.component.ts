@@ -402,8 +402,10 @@ export class ExaminerSettingComponent implements OnInit {
       //console.log('The dialog was closed',result);
       if (result == null) {
         this.selectedFile = null
+        this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
+      }else{
+        this.signData = result;
       }
-      this.signData = result;
       this.fileUpload.nativeElement.value = "";
     });
   }
