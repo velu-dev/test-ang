@@ -6,11 +6,22 @@ import { startWith, map } from 'rxjs/operators';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+export const MY_CUSTOM_FORMATS = {
+  parseInput: 'L LT',
+  fullPickerInput: 'L LT',
+  datePickerInput: 'L',
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
 
 @Component({
   selector: 'app-new-billable-item',
   templateUrl: './new-billable-item.component.html',
-  styleUrls: ['./new-billable-item.component.scss']
+  styleUrls: ['./new-billable-item.component.scss'],
+  providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }]
 })
 export class NewBillableItemComponent implements OnInit {
   billable_item: FormGroup;
