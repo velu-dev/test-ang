@@ -81,6 +81,7 @@ export class BillableItemComponent implements OnInit {
       res['data'].map(bill=>{
         bill.date_of_birth = moment(bill.date_of_birth).format("MM-DD-YYYY");
         bill.date_of_service = bill.date_of_service ?  moment(bill.date_of_service).format("MM-DD-YYYY") : '';
+        delete bill.exam_type_name
        })
       this.dataSource = new MatTableDataSource(res['data'])
       this.dataSource.paginator = this.paginator;

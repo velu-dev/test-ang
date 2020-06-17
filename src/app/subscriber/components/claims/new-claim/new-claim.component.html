@@ -200,8 +200,8 @@
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid date of birth</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.lg="50" fxFlex.xl="50" fxFlex.xs="100">
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                            fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Gender</mat-label>
                                 <mat-select formControlName="gender">
                                     <mat-option value="M">Male</mat-option>
@@ -210,8 +210,8 @@
                                 </mat-select>
                                 <mat-error>Please enter valid state</mat-error>
                             </mat-form-field>
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.lg="50" fxFlex.xl="50" fxFlex.xs="100">
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                            fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Handedness</mat-label>
                                 <mat-select formControlName="handedness">
                                     <mat-option value="R">Right</mat-option>
@@ -221,8 +221,8 @@
                                 <mat-error>Please enter valid handedness</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.lg="50" fxFlex.xl="50" fxFlex.xs="100">
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                            fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>SSN</mat-label>
                                 <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn"
                                     autocomplete="off">
@@ -232,10 +232,10 @@
 
                             <div fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100"
                                 class="checkbox">
-                                <div class="p-t-30 p-l-10">Certified Interpreter Required
+                                <div class="p-t-30 p-l-10">
                                     <mat-checkbox class="p-l-10"
                                         (change)="languageStatus = !languageStatus;langChange()"
-                                        formControlName="certified_interpreter_required"></mat-checkbox>
+                                        formControlName="certified_interpreter_required" labelposition="after">Certified Interpreter Required</mat-checkbox>
                                 </div>
                             </div>
 
@@ -251,8 +251,8 @@
                                 <mat-error>Please select valid primary language</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
-                                fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
+                                fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
                                 <mat-label>Email</mat-label>
                                 <input matInput placeholder="Email" formControlName="email" autocomplete="off">
                                 <mat-error>Please enter valid email</mat-error>
@@ -802,6 +802,7 @@
                                 <mat-label>Zip Code</mat-label>
                                 <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false"
                                     formControlName="zip_code" autocomplete="off">
+                                <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -897,6 +898,7 @@
                                 <mat-label>Zip Code</mat-label>
                                 <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false"
                                     formControlName="zip_code" autocomplete="off">
+                                <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
 
@@ -996,6 +998,7 @@
                                 <mat-label>Zip Code</mat-label>
                                 <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false"
                                     formControlName="zip_code" autocomplete="off">
+                                <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
 
@@ -1081,6 +1084,7 @@
                                 <mat-label>Zip Code</mat-label>
                                 <input matInput mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code"
                                     placeholder="Zip Code" autocomplete="off">
+                                <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1142,7 +1146,7 @@
                         </mat-form-field>
 
                         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-checkbox class="mat-check" labelPosition="before" formControlName="is_psychiatric">
+                            <mat-checkbox class="mat-check" labelPosition="after" formControlName="is_psychiatric">
                                 Psychiatric
                             </mat-checkbox>
                         </div>
@@ -1189,6 +1193,7 @@
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment>
                             </owl-date-time>
+                            <mat-error>Please enter valid date & time</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
@@ -1274,6 +1279,7 @@
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>
                             </owl-date-time>
+                            <mat-error>Please enter valid date & time</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

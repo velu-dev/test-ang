@@ -106,6 +106,9 @@ export class ClaimListComponent implements OnInit {
         }else{
           claim.date_of_injury = null;
         } 
+        delete claim.exam_type_code;
+        delete claim.exam_type_name ,claim.internal_reference ;
+
       })
       this.claims = res.data;
       this.dataSource = new MatTableDataSource(this.claims)
