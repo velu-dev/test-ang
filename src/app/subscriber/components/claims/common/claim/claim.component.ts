@@ -38,6 +38,9 @@ export class ClaimComponent implements OnInit {
     this.claim.patchValue(this.claimDetail);
   }
   updateClaim() {
+    if (!this.claim.touched) {
+      return
+    }
     Object.keys(this.claim.controls).forEach((key) => {
       if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string')
         this.claim.get(key).setValue(this.claim.get(key).value.trim())
