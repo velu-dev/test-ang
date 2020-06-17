@@ -20,7 +20,7 @@
 
 
                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-checkbox class="mat-check" labelPosition="before" formControlName="is_psychiatric">
+                    <mat-checkbox class="mat-check" labelPosition="after" formControlName="is_psychiatric">
                         Psychiatric</mat-checkbox>
                 </div>
 
@@ -67,6 +67,7 @@
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
                     <owl-date-time [hour12Timer]="true" (afterPickerOpen)="pickerOpened('app')" #appointment>
                     </owl-date-time>
+                    <mat-error>Please enter valid date & time</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
@@ -143,6 +144,7 @@
                         [max]="todayDate.intake" [owlDateTime]="intake">
                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                     <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake></owl-date-time>
+                    <mat-error>Please enter valid date & time</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
