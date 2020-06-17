@@ -1,20 +1,40 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef, MatDialog, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef, MatDialog, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import * as moment from 'moment';
 import { formatDate } from '@angular/common';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 export interface PeriodicElement {
   body_part: string;
   d_o_i: string;
   action: string;
 }
+export const PICK_FORMATS = {
+  // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
+  display: {
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+  // display: {
+  //   dateInput: 'input',
+  //   monthYearLabel: { year: 'numeric', month: 'short' },
+  //   dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+  //   monthYearA11yLabel: { year: 'numeric', month: 'long' }
+  // }
+};
 @Component({
   selector: 'app-injury',
   templateUrl: './injury.component.html',
-  styleUrls: ['./injury.component.scss']
+  styleUrls: ['./injury.component.scss'],
+  // providers: []
 })
 export class InjuryComponent implements OnInit {
   displayedColumns: string[] = ['body_part', 'date_of_injury', 'action'];
@@ -112,15 +132,6 @@ export class InjuryComponent implements OnInit {
   }
 }
 
-export const PICK_FORMATS = {
-  parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
-  display: {
-    dateInput: 'input',
-    monthYearLabel: { year: 'numeric', month: 'short' },
-    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
-    monthYearA11yLabel: { year: 'numeric', month: 'long' }
-  }
-};
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -136,7 +147,8 @@ export class PickDateAdapter extends NativeDateAdapter {
   templateUrl: 'injury-dialog.html',
   providers: [
     { provide: DateAdapter, useClass: PickDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }
   ]
 })
 export class InjuryPopup {
@@ -194,13 +206,13 @@ export class InjuryPopup {
       //this.injuryInfo.date_of_injury = moment( this.injuryInfo.date_of_injury).format("MM-DD-YYYY")
       let editData = {
         id: this.injuryInfo['id'],
-        body_part_id:  this.injuryInfo.body_part_id,
-        date_of_injury:  injury,
-        continuous_trauma:  this.injuryInfo.continuous_trauma,
-        continuous_trauma_start_date:  this.injuryInfo.continuous_trauma_start_date,
-        continuous_trauma_end_date:  this.injuryInfo.continuous_trauma_end_date,
-        injury_notes:  this.injuryInfo.injury_notes,
-        diagram_url:  this.injuryInfo.diagram_url
+        body_part_id: this.injuryInfo.body_part_id,
+        date_of_injury: injury,
+        continuous_trauma: this.injuryInfo.continuous_trauma,
+        continuous_trauma_start_date: this.injuryInfo.continuous_trauma_start_date,
+        continuous_trauma_end_date: this.injuryInfo.continuous_trauma_end_date,
+        injury_notes: this.injuryInfo.injury_notes,
+        diagram_url: this.injuryInfo.diagram_url
       }
       this.claimService.updateInjury(editData, this.claim_id).subscribe(res => {
         this.alertService.openSnackBar("Claim Injury updated successfully", 'success')

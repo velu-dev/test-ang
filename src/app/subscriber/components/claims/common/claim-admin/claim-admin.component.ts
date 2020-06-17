@@ -25,7 +25,7 @@ export class ClaimAdminComponent implements OnInit {
       street2: [{ value: null, disabled: true }],
       city: [{ value: null, disabled: true }],
       state: [{ value: null, disabled: true }],
-      zip_code: [{ value: null, disabled: true },Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
@@ -36,6 +36,9 @@ export class ClaimAdminComponent implements OnInit {
     this.claimAdminForm.patchValue(this.claimAdmin)
   }
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+    if (this.claimAdminForm.invalid) {
+      return
+    }
     if (changes.isSave) {
       if (changes.isSave.currentValue)
         this.updateClaimAdmin()
@@ -47,7 +50,7 @@ export class ClaimAdminComponent implements OnInit {
     } else {
       this.claimAdminForm.disable();
     }
-   
+
   }
   appClaimAdmin(aa) {
 
@@ -55,8 +58,8 @@ export class ClaimAdminComponent implements OnInit {
   claimUpdated = false;
   updateClaimAdmin() {
     Object.keys(this.claimAdminForm.controls).forEach((key) => {
-      if(this.claimAdminForm.get(key).value && typeof(this.claimAdminForm.get(key).value) == 'string')
-      this.claimAdminForm.get(key).setValue(this.claimAdminForm.get(key).value.trim())
+      if (this.claimAdminForm.get(key).value && typeof (this.claimAdminForm.get(key).value) == 'string')
+        this.claimAdminForm.get(key).setValue(this.claimAdminForm.get(key).value.trim())
     });
     if (this.claimAdminForm.invalid) {
       return;
