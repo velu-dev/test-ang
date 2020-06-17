@@ -68,11 +68,13 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 1</mat-label>
-            <textarea matInput placeholder="Address 1" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street1"></textarea>
+            <textarea matInput placeholder="Address 1" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+                formControlName="street1"></textarea>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 2</mat-label>
-            <textarea matInput placeholder="Address 2" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" formControlName="street2"></textarea>
+            <textarea matInput placeholder="Address 2" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+                formControlName="street2"></textarea>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>City</mat-label>
@@ -90,17 +92,21 @@
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Zip Code</mat-label>
-            <input matInput  mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" placeholder="Zip Code" autocomplete="off">
+            <input matInput mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code"
+                placeholder="Zip Code" autocomplete="off">
+            <mat-error>Please enter valid zip code</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Phone Number</mat-label>
-            <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Phone Number" formControlName="phone"
-                autocomplete="off">
+            <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Phone Number"
+                formControlName="phone" autocomplete="off">
+            <mat-error>Please enter valid phone number</mat-error>
         </mat-form-field>
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+            <mat-error>Please enter valid email</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

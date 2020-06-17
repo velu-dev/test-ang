@@ -148,7 +148,8 @@
           <mat-error *ngIf="isClaimantSubmited">Please enter valid date of birth</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+        fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Gender</mat-label>
           <mat-select formControlName="gender">
             <mat-option value="M">Male</mat-option>
@@ -157,7 +158,8 @@
           </mat-select>
           <mat-error>Please enter valid state</mat-error>
         </mat-form-field>
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+        fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Handedness</mat-label>
           <mat-select formControlName="handedness">
             <mat-option value="R">Right</mat-option>
@@ -167,15 +169,16 @@
           <mat-error>Please enter valid handedness</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+        fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>SSN</mat-label>
           <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
           <mat-error>Please enter valid SSN</mat-error>
         </mat-form-field>
 
-        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
+        <div fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
           <div class="p-t-30 p-l-10">
-            <mat-checkbox labelPosition="before" (change)="languageStatus = !languageStatus;langChange()"
+            <mat-checkbox labelPosition="after" (change)="languageStatus = !languageStatus;langChange()"
               formControlName="certified_interpreter_required">Certified Interpreter Required</mat-checkbox>
           </div>
         </div>
@@ -191,7 +194,7 @@
           <mat-error>Please select valid primary language</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
           <mat-label>Email</mat-label>
           <input matInput placeholder="Email" formControlName="email" autocomplete="off">
           <mat-error>Please enter valid email</mat-error>
