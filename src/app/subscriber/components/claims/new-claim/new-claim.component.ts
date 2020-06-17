@@ -551,7 +551,6 @@ export class NewClaimComponent implements OnInit {
   }
   newClaimant() {
     Object.keys(this.claimant.controls).forEach(key => {
-      console.log(this.claimant.get(key), key)
       this.claimant.get(key).errors
     });
     this.isEdit = false;
@@ -1270,6 +1269,12 @@ export class NewClaimComponent implements OnInit {
   langChange() {
     this.claimant.patchValue({ primary_language_spoken: null })
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
+    if(this.languageStatus){
+      this.claimant.get('primary_language_spoken').setValidators([Validators.required]);
+    }else{
+      this.claimant.get('primary_language_spoken').setValidators([]);
+    }
+     this.claimant.get('primary_language_spoken').updateValueAndValidity();
 
   }
   primryLangChange() {

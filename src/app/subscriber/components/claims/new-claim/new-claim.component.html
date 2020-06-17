@@ -3,7 +3,7 @@
         <div class="m-0 content-wrapper-main-title">{{isEdit ? 'Update' : 'Create'}}{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-horizontal-stepper  (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant</ng-template>
@@ -208,7 +208,7 @@
                                     <mat-option value="F">Female</mat-option>
                                     <!-- <mat-option value="O">Other</mat-option> -->
                                 </mat-select>
-                                <mat-error>Please enter valid state</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid state</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                             fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
@@ -218,7 +218,7 @@
                                     <mat-option value="L">Left</mat-option>
                                     <mat-option value="A">Ambidextrous</mat-option>
                                 </mat-select>
-                                <mat-error>Please enter valid handedness</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid handedness</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
@@ -226,7 +226,7 @@
                                 <mat-label>SSN</mat-label>
                                 <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn"
                                     autocomplete="off">
-                                <mat-error>Please enter valid SSN</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid SSN</mat-error>
                             </mat-form-field>
 
 
@@ -239,23 +239,23 @@
                                 </div>
                             </div>
 
-                            <mat-form-field *ngIf="languageStatus" appearance="standard" fxFlex="50" fxFlex.md="50"
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
                                 fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Primary Language</mat-label>
                                 <mat-select formControlName="primary_language_spoken"
-                                    (selectionChange)="primryLangChange()">
+                                    (selectionChange)="primryLangChange()" [disabled]="!languageStatus">
                                     <mat-option *ngFor="let language of languageList" [value]="language.id">
                                         {{language.language}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error>Please select valid primary language</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please select valid primary language</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
                                 fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
                                 <mat-label>Email</mat-label>
                                 <input matInput placeholder="Email" formControlName="email" autocomplete="off">
-                                <mat-error>Please enter valid email</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid email</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
@@ -263,7 +263,7 @@
                                 <mat-label>Phone Number</mat-label>
                                 <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
                                     formControlName="phone_no_1" placeholder="Phone Number" autocomplete="off">
-                                <mat-error>Please enter valid phone number</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid phone number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
@@ -272,7 +272,7 @@
                                 <input matInput (keypress)="numberOnly($event)" type="text" mask="(000) 000-0000"
                                     formControlName="phone_no_2" placeholder="Alternate Phone Number"
                                     autocomplete="off">
-                                <mat-error>Please enter valid alternative phone number</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid alternative phone number</mat-error>
                             </mat-form-field>
 
 
@@ -289,14 +289,14 @@
                                 <mat-label>Address 2</mat-label>
                                 <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
                                     placeholder="Address 2" formControlName="street2" autocomplete="off"></textarea>
-                                <mat-error>Please enter valid address</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
                                 fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>City</mat-label>
                                 <input matInput placeholder="City" formControlName="city" autocomplete="off">
-                                <mat-error>Please enter valid city</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid city</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
@@ -306,7 +306,7 @@
                                     <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error>Please enter valid state</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid state</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
@@ -314,7 +314,7 @@
                                 <mat-label>Zip Code</mat-label>
                                 <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false"
                                     formControlName="zip_code" autocomplete="off">
-                                <mat-error>Please enter valid zip code</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid zip code</mat-error>
                             </mat-form-field>
 
                             <div class="text-center w-100 m-t-10 m-b-50 action-button">
