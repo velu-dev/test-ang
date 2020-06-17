@@ -72,7 +72,7 @@ export class NewClaimantComponent implements OnInit {
       gender: [null],
       email: ["", Validators.compose([Validators.email])],
       handedness: [null],
-      primary_language_not_english: [null],
+      //primary_language_not_english: [null],
       primary_language_spoken: [null],
       certified_interpreter_required: [null],
       ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
@@ -189,5 +189,11 @@ export class NewClaimantComponent implements OnInit {
 
   langChange(){
     this.claimantForm.patchValue({primary_language_spoken:null})
+    if(this.languageStatus){
+      this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
+    }else{
+      this.claimantForm.get('primary_language_spoken').setValidators([]);
+    }
+     this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
   }
 }
