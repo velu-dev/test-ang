@@ -85,6 +85,7 @@ export class ClaimantComponent implements OnInit {
      res.data.map(claim=>{
       claim.date_of_birth = moment(claim.date_of_birth).format("MM-DD-YYYY");
       claim.gender =  claim.gender == "M" ? 'Male' : '' ||  claim.gender == "F" ? 'Female' : ''
+      delete claim.claim_numbers, claim.examiners_name
      })
        this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)

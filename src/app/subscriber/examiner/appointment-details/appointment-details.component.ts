@@ -94,7 +94,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   getDocumentData() {
-    this.examinerService.getDocumentData(this.examinationDetails.claim_details.id,this.billableId).subscribe(res => {
+    this.examinerService.getDocumentData(this.claim_id,this.billableId).subscribe(res => {
       this.documentTabData = res['data'];
       this.tabChanges(this.tabIndex)
     }, error => {
@@ -148,7 +148,7 @@ export class AppointmentDetailsComponent implements OnInit {
       let formData = new FormData()
       formData.append('file', this.selectedFile);
       formData.append('document_type_id', this.documentType);
-      formData.append('claim_id', this.examinationDetails.claim_details.id);
+      formData.append('claim_id', this.claim_id);
       formData.append('bill_item_id', this.billableId.toString());
       console.log(" this.selectedFile", this.selectedFile);
       this.examinerService.postDocument(formData).subscribe(res => {

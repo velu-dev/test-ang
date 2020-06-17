@@ -433,7 +433,7 @@ export class NewClaimComponent implements OnInit {
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
         wcab_number: [null, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
-        claim_number: [null, Validators.compose([Validators.maxLength(25)])],
+        claim_number: [null, Validators.compose([Validators.maxLength(25), Validators.pattern('[0-9]+')])],
         panel_number: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
@@ -551,7 +551,7 @@ export class NewClaimComponent implements OnInit {
   }
   newClaimant() {
     Object.keys(this.claimant.controls).forEach(key => {
-      this.claimant.get(key).setErrors(null);
+      this.claimant.get(key).errors
     });
     this.isEdit = false;
     this.isClaimantEdit = false;
@@ -994,13 +994,26 @@ export class NewClaimComponent implements OnInit {
     switch (contact.contact_type) {
       case "E1":
         this.contactMask.mask = "";
+        this.billable_item.controls.intake_call['controls']['call_type_detail'].setValidators(Validators.email)
+        this.contactMask.type = "email";
+        break;
+      case "E2":
+        this.contactMask.mask = "";
         this.contactMask.type = "email";
         break;
       case "L1":
         this.contactMask.mask = "(000) 000-0000";
         this.contactMask.type = "text";
         break;
+      case "L2":
+        this.contactMask.mask = "(000) 000-0000";
+        this.contactMask.type = "text";
+        break;
       case "F1":
+        this.contactMask.mask = "000-000-0000";
+        this.contactMask.type = "text";
+        break;
+      case "F2":
         this.contactMask.mask = "000-000-0000";
         this.contactMask.type = "text";
         break;
@@ -1256,6 +1269,12 @@ export class NewClaimComponent implements OnInit {
   langChange() {
     this.claimant.patchValue({ primary_language_spoken: null })
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
+    if(this.languageStatus){
+      this.claimant.get('primary_language_spoken').setValidators([Validators.required]);
+    }else{
+      this.claimant.get('primary_language_spoken').setValidators([]);
+    }
+     this.claimant.get('primary_language_spoken').updateValueAndValidity();
 
   }
   primryLangChange() {
