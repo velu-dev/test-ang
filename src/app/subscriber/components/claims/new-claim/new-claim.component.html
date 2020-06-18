@@ -3,7 +3,7 @@
         <div class="m-0 content-wrapper-main-title">{{isEdit ? 'Update' : 'Create'}}{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper  (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant</ng-template>
@@ -201,7 +201,7 @@
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                            fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                                fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Gender</mat-label>
                                 <mat-select formControlName="gender">
                                     <mat-option value="M">Male</mat-option>
@@ -211,7 +211,7 @@
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid state</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                            fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                                fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Handedness</mat-label>
                                 <mat-select formControlName="handedness">
                                     <mat-option value="R">Right</mat-option>
@@ -222,7 +222,7 @@
                             </mat-form-field>
 
                             <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                            fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                                fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>SSN</mat-label>
                                 <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn"
                                     autocomplete="off">
@@ -235,12 +235,13 @@
                                 <div class="p-t-30 p-l-10">
                                     <mat-checkbox class="p-l-10"
                                         (change)="languageStatus = !languageStatus;langChange()"
-                                        formControlName="certified_interpreter_required" labelposition="after">Certified Interpreter Required</mat-checkbox>
+                                        formControlName="certified_interpreter_required" labelposition="after">Certified
+                                        Interpreter Required</mat-checkbox>
                                 </div>
                             </div>
 
-                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50"
-                                fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
+                                fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Primary Language</mat-label>
                                 <mat-select formControlName="primary_language_spoken"
                                     (selectionChange)="primryLangChange()" [disabled]="!languageStatus">
@@ -272,7 +273,8 @@
                                 <input matInput (keypress)="numberOnly($event)" type="text" mask="(000) 000-0000"
                                     formControlName="phone_no_2" placeholder="Alternate Phone Number"
                                     autocomplete="off">
-                                <mat-error *ngIf="isClaimantSubmited">Please enter valid alternative phone number</mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Please enter valid alternative phone number
+                                </mat-error>
                             </mat-form-field>
 
 
@@ -1275,7 +1277,8 @@
                         <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
-                                autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake">
+                                autocomplete="off" [max]="todayDate.intake"
+                                [owlDateTime]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>
                             </owl-date-time>

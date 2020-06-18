@@ -39,8 +39,9 @@ export const PICK_FORMATS = {
 export class InjuryComponent implements OnInit {
   displayedColumns: string[] = ['body_part', 'date_of_injury', 'action'];
   dataSource: any;
-  bodyPartsList = [];
+  // bodyPartsList = [];
   claim_id: any = "";
+  @Input('body_part') bodyPartsList;
   @Input('claim_id') claimId;
   @Input('state') states;
   @Input('date_of_birth') date_of_birth;
@@ -59,33 +60,33 @@ export class InjuryComponent implements OnInit {
     })
   }
   injuryParser() {
-    this.claimService.seedData("body_part").subscribe(res => {
-      this.bodyPartsList = res.data;
-      let data = [];
-      if (this.injuryDetails)
-        this.injuryDetails.map(res => {
-          this.claim_id = res.claim_id;
-          let bpart = [];
-          res.body_part_id.map(bp => {
-            let iii = this.bodyPartsList.find(val => val.id == bp)
-            if (iii)
-              bpart.push(iii.body_part_code + " - " + iii.body_part_name);
-            let i = {
-              claim_id: res.claim_id,
-              continuous_trauma: res.continuous_trauma,
-              continuous_trauma_end_date: res.continuous_trauma_end_date,
-              continuous_trauma_start_date: res.continuous_trauma_start_date,
-              date_of_injury: res.date_of_injury,
-              id: res.id,
-              injury_notes: res.injury_notes,
-              body_part_id: [bp],
-              body_part: bpart.join(",")
-            }
-            data.push(i)
-          })
+    // this.claimService.seedData("body_part").subscribe(res => {
+    // this.bodyPartsList = res.data;
+    let data = [];
+    if (this.injuryDetails)
+      this.injuryDetails.map(res => {
+        this.claim_id = res.claim_id;
+        let bpart = [];
+        res.body_part_id.map(bp => {
+          let iii = this.bodyPartsList.find(val => val.id == bp)
+          if (iii)
+            bpart.push(iii.body_part_code + " - " + iii.body_part_name);
+          let i = {
+            claim_id: res.claim_id,
+            continuous_trauma: res.continuous_trauma,
+            continuous_trauma_end_date: res.continuous_trauma_end_date,
+            continuous_trauma_start_date: res.continuous_trauma_start_date,
+            date_of_injury: res.date_of_injury,
+            id: res.id,
+            injury_notes: res.injury_notes,
+            body_part_id: [bp],
+            body_part: bpart.join(",")
+          }
+          data.push(i)
         })
-      this.dataSource = new MatTableDataSource(data)
-    })
+      })
+    this.dataSource = new MatTableDataSource(data)
+    // })
   }
   openDialog(injury): void {
     const dialogRef = this.dialog.open(InjuryPopup, {

@@ -202,7 +202,7 @@
               <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
               <span *ngIf="column == 'examiner'">{{element?.examiner}}</span>
               <span *ngIf="column == 'dos'">{{element?.dos}}</span>
-              <span *ngIf="column == 'status'">{{element?.status}}</span>
+              <span *ngIf="column == 'status'">{{element?.status}}{{expandId == element.id}}</span>
             </div>
           </td>
         </ng-container>
@@ -221,8 +221,8 @@
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
-          [class.row]="expandedElement === element" (click)="openElement(element)">
+        <tr (click)="editClaim(element)" mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
+          [class.row]="expandedElement === element">
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
       </table>

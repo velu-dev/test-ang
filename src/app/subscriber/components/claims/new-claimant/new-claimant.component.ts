@@ -6,7 +6,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatPaginator, MatSort } from '@angular/material';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { User } from 'src/app/shared/model/user.model';
@@ -62,7 +62,7 @@ const ELEMENT_DATA = [
   ]
 })
 export class NewClaimantComponent implements OnInit {
-  dataSource = ELEMENT_DATA;
+  dataSource: any;
   columnName = [];
   columnsToDisplay = [];
   expandedElement: User | null;
@@ -95,8 +95,8 @@ export class NewClaimantComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private route: ActivatedRoute,
-
   ) {
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA)
     this.route.params.subscribe(param => this.claimantId = param.id)
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -200,6 +200,12 @@ export class NewClaimantComponent implements OnInit {
       return 'Female'
     } else {
       return ''
+    }
+  }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 

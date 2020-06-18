@@ -995,11 +995,11 @@ export class NewClaimComponent implements OnInit {
       case "E1":
         this.contactMask.mask = "";
         this.billable_item.controls.intake_call['controls']['call_type_detail'].setValidators(Validators.email)
-        this.contactMask.type = "email";
+        this.contactMask.type = "text";
         break;
       case "E2":
         this.contactMask.mask = "";
-        this.contactMask.type = "email";
+        this.contactMask.type = "text";
         break;
       case "L1":
         this.contactMask.mask = "(000) 000-0000";
