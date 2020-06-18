@@ -41,7 +41,9 @@ export interface PeriodicElement {
 
 };
 const ELEMENT_DATA = [
-  { id: 1, procedure_type: '', exam_type: '', claim_number: '', examiner: '', dos: '', status: '' },
+  { id: '1', procedure_type: 'Supplemental', exam_type: 'QME', claim_number: '12334-W', examiner: 'Patrick Curry', dos: '-', status: 'Awaiting Date' },
+  { id: '2', procedure_type: 'Examination', exam_type: 'QME', claim_number: '878786', examiner: 'Monica Ramon', dos: 'January 11, 2017', status: 'Paid' },
+  { id: '3', procedure_type: 'Examination', exam_type: 'QME', claim_number: '987-WX-3', examiner: 'Patrick Curry', dos: 'June 14, 2010', status: 'Paid' },
 ];
 @Component({
   selector: 'app-new-claimant',
@@ -99,11 +101,11 @@ export class NewClaimantComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
+        this.columnName = ["", "Procedure Type", "Status"]
+        this.columnsToDisplay = ['is_expand', 'procedure_type', "status"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Date of Birth", "Gender", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', "gender", "disabled"]
+        this.columnName = ['Procedure Type', 'Exam Type', 'Claim Number', 'Examiner', 'Date of service', 'Status']
+        this.columnsToDisplay = ['procedure_type', 'exam_type', 'claim_number', 'examiner', 'dos', 'status']
       }
     })
   }

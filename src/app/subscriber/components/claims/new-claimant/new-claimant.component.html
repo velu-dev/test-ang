@@ -226,9 +226,9 @@
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
       </table>
-      <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+      <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </div>
 
-    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </mat-card-content>
 </mat-card>
