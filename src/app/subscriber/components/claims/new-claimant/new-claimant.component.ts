@@ -6,7 +6,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatPaginator, MatSort } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { User } from 'src/app/shared/model/user.model';
@@ -62,10 +62,10 @@ const ELEMENT_DATA = [
   ]
 })
 export class NewClaimantComponent implements OnInit {
-  dataSource: any;
+  dataSource = ELEMENT_DATA;
   columnName = [];
   columnsToDisplay = [];
-  expandedElement: any | null;
+  expandedElement: User | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -87,7 +87,6 @@ export class NewClaimantComponent implements OnInit {
   today: any;
   claimNumber: any = '';
   editStatus: boolean = false;
-  filterValue: any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
@@ -96,8 +95,8 @@ export class NewClaimantComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private route: ActivatedRoute,
+
   ) {
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA)
     this.route.params.subscribe(param => this.claimantId = param.id)
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -203,12 +202,7 @@ export class NewClaimantComponent implements OnInit {
       return ''
     }
   }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
+  
 
   language(id) {
     if (id) {
@@ -254,6 +248,12 @@ export class NewClaimantComponent implements OnInit {
     }
     this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
   }
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  //   if (this.dataSource.paginator) {
+  //     this.dataSource.paginator.firstPage();
+  //   }
+  // }
   expandId: any;
   openElement(element) {
     if (this.isMobile) {

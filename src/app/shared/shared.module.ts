@@ -67,7 +67,7 @@ export const MY_MOMENT_FORMATS = {
     LoggerModule.forRoot({ serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.OFF }),
     NgxMaskModule.forRoot(),
     OwlDateTimeModule, OwlNativeDateTimeModule, OwlMomentDateTimeModule,
-    TextMaskModule
+    TextMaskModule,
   ],
   exports: [
     MaterialModule,
@@ -88,7 +88,7 @@ export const MY_MOMENT_FORMATS = {
     LoggerModule,
     FilterPipe,
     OwlDateTimeModule, OwlNativeDateTimeModule,
-    TextMaskModule
+    TextMaskModule,
   ],
   providers: [
     CognitoService,
