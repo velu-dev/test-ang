@@ -65,7 +65,7 @@ export class NewClaimantComponent implements OnInit {
   dataSource: any;
   columnName = [];
   columnsToDisplay = [];
-  expandedElement: User | null;
+  expandedElement: any | null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -87,6 +87,7 @@ export class NewClaimantComponent implements OnInit {
   today: any;
   claimNumber: any = '';
   editStatus: boolean = false;
+  filterValue: any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
@@ -253,12 +254,6 @@ export class NewClaimantComponent implements OnInit {
     }
     this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
   }
-  // applyFilter(filterValue: string) {
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  //   if (this.dataSource.paginator) {
-  //     this.dataSource.paginator.firstPage();
-  //   }
-  // }
   expandId: any;
   openElement(element) {
     if (this.isMobile) {

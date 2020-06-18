@@ -166,7 +166,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.claimService.seedData('taxonomy').subscribe(response => {
       this.taxonomyList = response['data'];
       this.taxonomyList.map(data => {
-        data.code_name = data.taxonomy_code + '-' + data.taxonomy_name
+        data.code_name = data.taxonomy_code + ' - ' + data.taxonomy_name
         if (this.user.role_id == 2) {
           if(this.user.company_taxonomy_id == data.id)
           this.texoCtrl.patchValue( data.taxonomy_code + '-' + data.taxonomy_name)
