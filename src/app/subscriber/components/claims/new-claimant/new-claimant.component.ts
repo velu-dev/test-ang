@@ -41,7 +41,7 @@ export interface PeriodicElement {
 
 };
 const ELEMENT_DATA = [
-  { procedure_type: '', exam_type: '', claim_number: '', examiner: '', dos: '', status: '' },
+  { id: 1, procedure_type: '', exam_type: '', claim_number: '', examiner: '', dos: '', status: '' },
 ];
 @Component({
   selector: 'app-new-claimant',
@@ -60,7 +60,7 @@ const ELEMENT_DATA = [
   ]
 })
 export class NewClaimantComponent implements OnInit {
-  dataSource=  ELEMENT_DATA;
+  dataSource = ELEMENT_DATA;
   columnName = [];
   columnsToDisplay = [];
   expandedElement: User | null;
@@ -93,10 +93,8 @@ export class NewClaimantComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private route: ActivatedRoute,
-    
-  )
-   
-  {
+
+  ) {
     this.route.params.subscribe(param => this.claimantId = param.id)
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -253,10 +251,10 @@ export class NewClaimantComponent implements OnInit {
   //     this.dataSource.paginator.firstPage();
   //   }
   // }
-  expandId1: any;
+  expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      this.expandId1 = element.id;
+      this.expandId = element.id;
     }
   }
 }
