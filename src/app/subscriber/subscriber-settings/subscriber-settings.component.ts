@@ -169,7 +169,7 @@ export class SubscriberSettingsComponent implements OnInit {
         data.code_name = data.taxonomy_code + ' - ' + data.taxonomy_name
         if (this.user.role_id == 2) {
           if(this.user.company_taxonomy_id == data.id)
-          this.texoCtrl.patchValue( data.taxonomy_code + '-' + data.taxonomy_name)
+          this.texoCtrl.patchValue( data.taxonomy_code + ' - ' + data.taxonomy_name)
         }
       })
       this.filteredTexonamy = this.texoCtrl.valueChanges
