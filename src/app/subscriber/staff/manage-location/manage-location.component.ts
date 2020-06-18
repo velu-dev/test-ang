@@ -80,6 +80,9 @@ export class ManageLocationComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+        return data.last_name.toLowerCase().includes(filter) ||  data.middle_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.address_type_name && data.address_type_name.toLowerCase().includes(filter)) || (data.service_name && data.service_name.toLowerCase().includes(filter))|| (data.contact && data.contact.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state && data.state.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.toLowerCase().includes(filter));
+      };
     }, error => {
       console.log(error)
     })
