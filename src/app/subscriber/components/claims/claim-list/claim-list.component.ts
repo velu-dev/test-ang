@@ -106,14 +106,14 @@ export class ClaimListComponent implements OnInit {
         }else{
           claim.date_of_injury = null;
         } 
-        delete claim.exam_type_code;
-        delete claim.exam_type_name ,claim.internal_reference ;
-
       })
       this.claims = res.data;
       this.dataSource = new MatTableDataSource(this.claims)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+        return data.last_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.wcab_number && data.wcab_number.includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.date_of_injury && data.date_of_injury.toLowerCase().includes(filter));
+      };
     })
   }
   gotoEdit(data) {

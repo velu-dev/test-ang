@@ -77,16 +77,17 @@ export class BillableItemComponent implements OnInit {
   ngOnInit() {
 
     this.claimService.getBillableItemList().subscribe(res => {
-      console.log(res)
       res['data'].map(bill=>{
         bill.date_of_birth = moment(bill.date_of_birth).format("MM-DD-YYYY");
         bill.date_of_service = bill.date_of_service ?  moment(bill.date_of_service).format("MM-DD-YYYY") : '';
-        delete bill.exam_type_name
        })
       this.dataSource = new MatTableDataSource(res['data'])
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
 
+      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+        return data.last_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_service && data.date_of_service.includes(filter)) ||  (data.claim_number && data.claim_number.includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter));
+      };
     }, error => {
       this.dataSource = new MatTableDataSource([])
     })
