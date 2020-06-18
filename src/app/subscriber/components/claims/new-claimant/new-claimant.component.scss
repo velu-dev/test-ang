@@ -8,3 +8,12 @@ mat-card {
     }
   }
 }
+
+.billable_item {
+  min-height: auto;
+  mat-card-content {
+      .user-detail {
+          min-height: 200px;
+      }
+  }
+}

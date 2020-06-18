@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
@@ -6,8 +6,13 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatPaginator, MatSort } from '@angular/material';
 import { formatDate } from '@angular/common';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { User } from 'src/app/shared/model/user.model';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -26,16 +31,50 @@ export const PICK_FORMATS = {
     monthYearA11yLabel: { year: 'numeric', month: 'long' }
   }
 };
+export interface PeriodicElement {
+  procedure_type: string;
+  exam_type: string;
+  claim_number: string;
+  examiner: string;
+  dos: string;
+  status: string;
+
+};
+const ELEMENT_DATA = [
+  { id: '1', procedure_type: 'Supplemental', exam_type: 'QME', claim_number: '12334-W', examiner: 'Patrick Curry', dos: '-', status: 'Awaiting Date' },
+  { id: '2', procedure_type: 'Examination', exam_type: 'QME', claim_number: '878786', examiner: 'Monica Ramon', dos: 'January 11, 2017', status: 'Paid' },
+  { id: '3', procedure_type: 'Examination', exam_type: 'QME', claim_number: '987-WX-3', examiner: 'Patrick Curry', dos: 'June 14, 2010', status: 'Paid' },
+];
 @Component({
   selector: 'app-new-claimant',
   templateUrl: './new-claimant.component.html',
   styleUrls: ['./new-claimant.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
   providers: [
     { provide: DateAdapter, useClass: PickDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
   ]
 })
 export class NewClaimantComponent implements OnInit {
+  dataSource = ELEMENT_DATA;
+  columnName = [];
+  columnsToDisplay = [];
+  expandedElement: User | null;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+
+  isMobile = false;
   claimantForm: FormGroup;
   errorMessages = errors;
   languageStatus: boolean = false;
@@ -49,16 +88,28 @@ export class NewClaimantComponent implements OnInit {
   claimNumber: any = '';
   editStatus: boolean = false;
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private router: Router,
     private _location: Location,
     private route: ActivatedRoute,
-  ) {
 
+  ) {
     this.route.params.subscribe(param => this.claimantId = param.id)
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Procedure Type", "Status"]
+        this.columnsToDisplay = ['is_expand', 'procedure_type', "status"]
+      } else {
+        this.columnName = ['Procedure Type', 'Exam Type', 'Claim Number', 'Examiner', 'Date of service', 'Status']
+        this.columnsToDisplay = ['procedure_type', 'exam_type', 'claim_number', 'examiner', 'dos', 'status']
+      }
+    })
   }
+
 
   ngOnInit() {
     this.claimantForm = this.formBuilder.group({
@@ -121,8 +172,8 @@ export class NewClaimantComponent implements OnInit {
   createClaimant() {
 
     Object.keys(this.claimantForm.controls).forEach((key) => {
-      if(this.claimantForm.get(key).value && typeof(this.claimantForm.get(key).value) == 'string')
-      this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
+      if (this.claimantForm.get(key).value && typeof (this.claimantForm.get(key).value) == 'string')
+        this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
     });
     this.isClaimantSubmited = true;
     this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
@@ -187,13 +238,25 @@ export class NewClaimantComponent implements OnInit {
 
   }
 
-  langChange(){
-    this.claimantForm.patchValue({primary_language_spoken:null})
-    if(this.languageStatus){
+  langChange() {
+    this.claimantForm.patchValue({ primary_language_spoken: null })
+    if (this.languageStatus) {
       this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
-    }else{
+    } else {
       this.claimantForm.get('primary_language_spoken').setValidators([]);
     }
-     this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
+    this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
+  }
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  //   if (this.dataSource.paginator) {
+  //     this.dataSource.paginator.firstPage();
+  //   }
+  // }
+  expandId: any;
+  openElement(element) {
+    if (this.isMobile) {
+      this.expandId = element.id;
+    }
   }
 }
