@@ -85,12 +85,15 @@ export class ClaimantComponent implements OnInit {
      res.data.map(claim=>{
       claim.date_of_birth = moment(claim.date_of_birth).format("MM-DD-YYYY");
       claim.gender =  claim.gender == "M" ? 'Male' : '' ||  claim.gender == "F" ? 'Female' : ''
-      delete claim.claim_numbers, claim.examiners_name
      })
        this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
+      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+        return data.last_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.gender && data.gender.toLowerCase().includes(filter));
+      };
     })
   }
   gotoEdit(e) {

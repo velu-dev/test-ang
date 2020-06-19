@@ -71,6 +71,9 @@ export class ExaminerSettingComponent implements OnInit {
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
       this.userService.getEditUser(res.data.id).subscribe(res => {
         console.log(res.data);
+        if ( this.user.organization_type == 'INDV') {
+          res.data.company_name = '';
+        }
         let user = {
           id: res.data.id,
           first_name: res.data.first_name,

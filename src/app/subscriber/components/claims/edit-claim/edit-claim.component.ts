@@ -40,12 +40,16 @@ export class EditClaimComponent implements OnInit {
   states = [];
   isSectionOpen: boolean = false;
   dateOfBirth: any;
+  bodyParts = [];
   constructor(private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
     private _location: Location) {
+    this.claimService.seedData("body_part").subscribe(res => {
+      this.bodyParts = res.data;
+    })
     this.route.params.subscribe(param => {
       if (param.id) {
         this.claimId = param.id;
