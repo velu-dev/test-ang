@@ -51,7 +51,7 @@
         <table mat-table [dataSource]="correspondenceSource" class="user-table title-center">
             <ng-container matColumnDef="doc_image">
                 <th mat-header-cell *matHeaderCellDef> </th>
-                <td mat-cell *matCellDef="let element"> <img [src]="element?.file_name | fileType" alt="docx"></td>
+                <td mat-cell *matCellDef="let element" class="file_type_icon"> <img [src]="element?.file_name | fileType" alt="docx"></td>
             </ng-container>
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name</th>
