@@ -40,11 +40,7 @@ export interface PeriodicElement {
   status: string;
 
 };
-const ELEMENT_DATA = [
-  { id: '1', procedure_type: 'Supplemental', exam_type: 'QME', claim_number: '12334-W', examiner: 'Patrick Curry', dos: '-', status: 'Awaiting Date' },
-  { id: '2', procedure_type: 'Examination', exam_type: 'QME', claim_number: '878786', examiner: 'Monica Ramon', dos: 'January 11, 2017', status: 'Paid' },
-  { id: '3', procedure_type: 'Examination', exam_type: 'QME', claim_number: '987-WX-3', examiner: 'Patrick Curry', dos: 'June 14, 2010', status: 'Paid' },
-];
+
 @Component({
   selector: 'app-new-claimant',
   templateUrl: './new-claimant.component.html',
@@ -62,7 +58,7 @@ const ELEMENT_DATA = [
   ]
 })
 export class NewClaimantComponent implements OnInit {
-  dataSource: any;
+  dataSource: any = [];
   columnName = [];
   columnsToDisplay = [];
   expandedElement: User | null;
@@ -103,13 +99,12 @@ export class NewClaimantComponent implements OnInit {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "Procedure Type", "Status"]
-        this.columnsToDisplay = ['is_expand', 'procedure_type', "status"]
+        this.columnsToDisplay = ['is_expand', 'procedure_type_name', "status"]
       } else {
         this.columnName = ['Procedure Type', 'Exam Type', 'Claim Number', 'Examiner', 'Date of service', 'Status']
-        this.columnsToDisplay = ['procedure_type', 'exam_type', 'claim_number', 'examiner', 'dos', 'status']
+        this.columnsToDisplay = ['procedure_type_name', 'exam_type_code', 'claim_number', 'examiner_name', 'date_of_service', 'status']
       }
     });
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA)
   }
 
 
@@ -120,7 +115,6 @@ export class NewClaimantComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required,])],
       middle_name: [''],
       suffix: [null],
-      // zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       gender: [null],
       email: ["", Validators.compose([Validators.email])],
@@ -144,6 +138,23 @@ export class NewClaimantComponent implements OnInit {
       updatedAt: [null],
       claim_numbers: [],
       examiners_name: []
+    })
+
+    this.claimService.getclaimantBillable(this.claimantId).subscribe(billableRes => {
+      this.dataSource = new MatTableDataSource(billableRes.data);
+      billableRes.data.map(bill => {
+        bill.date_of_service = bill.date_of_service ? moment(bill.date_of_service).format("MM-DD-YYYY") : '';
+
+      })
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return data.procedure_type_name && data.procedure_type_name.toLowerCase().includes(filter) || data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.wcab_number && data.wcab_number.toLowerCase().includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.date_of_service && data.date_of_service.toLowerCase().includes(filter));
+      };
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    }, error => {
+      console.log("error", error)
+      this.dataSource = new MatTableDataSource([]);
     })
 
     this.claimService.seedData('state').subscribe(response => {
@@ -261,5 +272,9 @@ export class NewClaimantComponent implements OnInit {
     if (this.isMobile) {
       this.expandId = element.id;
     }
+  }
+
+  claimNavigate() {
+    this.router.navigate(['/subscriber/claims']);
   }
 }
