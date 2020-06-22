@@ -159,3 +159,21 @@ tr.detail-row {
     text-align: center !important;
   }
 }
+
+
+.user-table tbody tr:nth-child(even) {
+  background-color: $table-solid;
+}
+.striped_ {
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: $table-solid;
+      }
+      &:nth-child(odd) {
+        background-color: $white !important;
+      }
+    }
+  }
+  
+}

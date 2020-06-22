@@ -28,7 +28,7 @@
         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_">
             <button type="button" (click)="uploader.click()" mat-stroked-button color="primary">
                 Select File<i class="fa fa-upload p-l-5"></i></button>
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="standard">
                 <input matInput  [title]="file" readonly
                     [value]="file | ellipsis:30" placeholder="No file chosen">
                 <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
@@ -37,7 +37,7 @@
             </mat-form-field>
         </div>
 
-        <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" appearance="outline">
+        <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30" appearance="standard">
             <mat-label>Note*</mat-label>
             <input matInput [(ngModel)]="note" placeholder="Note" >
         </mat-form-field>
@@ -47,7 +47,7 @@
             </button>
         </div>
     </div>
-    <div fxFlex="100">
+    <div fxFlex="100" class="striped_">
         <table mat-table [dataSource]="correspondenceSource" class="user-table title-center">
             <ng-container matColumnDef="doc_image">
                 <th mat-header-cell *matHeaderCellDef> </th>
