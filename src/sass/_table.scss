@@ -2,7 +2,11 @@
 
 .user-table {
   width: $width-100;
+  border: 1px solid $table-solid;
   tr {
+    &:nth-child(4n+3) {
+      background-color: $table-solid;
+    }
     th {
       padding: 0px 10px !important;
       color: $white !important;
@@ -74,6 +78,9 @@ tr.detail-row {
   table {
     width: $width-100;
     tr {
+      &:nth-child(4n+3) {
+        background-color: $table-solid;
+      }
       th {
         padding: 0px 10px !important;
         color: $white !important;

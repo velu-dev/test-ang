@@ -6,7 +6,7 @@
 <mat-divider></mat-divider>
 <mat-card-content>
     <div fxLayout="row wrap" fxFlex="100" class="add_injury">
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Body Parts</mat-label>
             <mat-select [(ngModel)]="injuryInfo.body_part_id" multiple>
                 <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts.id">
@@ -14,7 +14,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Date of Injury </mat-label>
             <input matInput placeholder="MM-DD-YYYY" autocomplete="off" [min]="date_of_birth" [max]="today"
                 [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury">
@@ -29,7 +29,7 @@
                 autocomplete="off" cdkTextareaAutosize cdkAutosizeMinRows="4" cdkAutosizeMaxRows="4"></textarea>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="33.3" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
+        <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
             fxFlex.xs="100">
             <mat-label>Continuous Trauma (CT)</mat-label>
             <mat-select [(ngModel)]="injuryInfo.continuous_trauma">
@@ -39,7 +39,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3" fxFlex.md="33."
+        <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="outline" fxFlex="33.3" fxFlex.md="33."
             fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>CT Start Date</mat-label>
             <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
@@ -50,7 +50,7 @@
             <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="standard" fxFlex="33.3" fxFlex.md="33."
+        <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="outline" fxFlex="33.3" fxFlex.md="33."
             fxFlex.lg="33.3" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>CT End Date</mat-label>
             <input matInput placeholder="MM-DD-YYYY" [(ngModel)]="injuryInfo.continuous_trauma_end_date"
