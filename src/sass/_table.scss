@@ -2,7 +2,11 @@
 
 .user-table {
   width: $width-100;
+  border: 1px solid $table-solid;
   tr {
+    &:nth-child(4n+3) {
+      background-color: $table-solid;
+    }
     th {
       padding: 0px 10px !important;
       color: $white !important;
@@ -74,6 +78,9 @@ tr.detail-row {
   table {
     width: $width-100;
     tr {
+      &:nth-child(4n+3) {
+        background-color: $table-solid;
+      }
       th {
         padding: 0px 10px !important;
         color: $white !important;
@@ -151,4 +158,22 @@ tr.detail-row {
   th  {
     text-align: center !important;
   }
+}
+
+
+.user-table tbody tr:nth-child(even) {
+  background-color: $table-solid;
+}
+.striped_ {
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: $table-solid;
+      }
+      &:nth-child(odd) {
+        background-color: $white !important;
+      }
+    }
+  }
+  
 }

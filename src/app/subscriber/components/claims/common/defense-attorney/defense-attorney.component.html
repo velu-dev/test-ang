@@ -53,33 +53,33 @@
 <div class="def_attorney_info">
     <form fxLayout="row wrap" fxFlex="100" [formGroup]="DefanceAttorney"
         (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Law Firm Name</mat-label>
             <input matInput placeholder="Law Firm Name" formControlName="company_name" autocomplete="off">
         </mat-form-field>
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Attorney Name</mat-label>
             <input matInput formControlName="name" placeholder="Attorney Name" autocomplete="off">
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 1</mat-label>
             <textarea matInput placeholder="Address 1" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
                 formControlName="street1"></textarea>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 2</mat-label>
             <textarea matInput placeholder="Address 2" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
                 formControlName="street2"></textarea>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>City</mat-label>
             <input matInput placeholder="City" formControlName="city" autocomplete="off">
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>State</mat-label>
             <mat-select formControlName="state">
                 <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
@@ -87,7 +87,7 @@
             </mat-select>
             <mat-error>Please enter valid state</mat-error>
         </mat-form-field>
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Zip Code</mat-label>
             <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false"
                 formControlName="zip_code" autocomplete="off">
@@ -95,7 +95,7 @@
         </mat-form-field>
 
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Phone</mat-label>
             <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Phone"
                 formControlName="phone" autocomplete="off">
@@ -103,13 +103,13 @@
         </mat-form-field>
 
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Email" formControlName="email" autocomplete="off">
             <mat-error>Please enter valid email</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Fax</mat-label>
             <input matInput placeholder="Fax" mask="000-000-0000" formControlName="fax" autocomplete="off">
             <mat-error>Please enter valid fax number</mat-error>

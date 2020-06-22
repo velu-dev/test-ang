@@ -40,12 +40,12 @@
         <div>
             <form fxLayout="row wrap" fxFlex="100" class="p-t-10" [formGroup]="claim"
                 (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Claim Number</mat-label>
                     <input matInput placeholder="Claim Number" formControlName="claim_number" autocomplete="off">
                     <mat-error *ngIf="isClaimSubmited">Please enter valid claim number</mat-error>
                 </mat-form-field>
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
 
                     <mat-label>WCAB Number</mat-label>
                     <input type="text" matInput placeholder="Enter WCAB Number" formControlName="wcab_number"
@@ -53,7 +53,7 @@
                     <mat-error *ngIf="isClaimSubmited">Please enter valid WCAB number</mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Exam Type*</mat-label>
                     <mat-select formControlName="exam_type_id">
                         <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
@@ -63,7 +63,7 @@
                     <mat-error *ngIf="isClaimSubmited">Select exam type</mat-error>
                 </mat-form-field>
 
-                <mat-form-field appearance="standard" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Panel Number </mat-label>
                     <input matInput placeholder="Panel Number" formControlName="panel_number" autocomplete="off">
                     <mat-error *ngIf="isClaimSubmited">Please enter valid Panel number</mat-error>

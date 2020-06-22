@@ -32,13 +32,13 @@
                             <mat-card-content>
                                 <!--Form start-->
                                 <form fxLayout="row wrap" [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
-                                    <mat-form-field class="m-t-5" appearance="standard" fxFlex="100">
+                                    <mat-form-field class="m-t-5" appearance="outline" fxFlex="100">
                                         <mat-label>Current Password</mat-label>
                                         <input type="password" matInput placeholder="Current Password"
                                             autocomplete="off" formControlName="current_password">
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
                                     </mat-form-field>
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50" class="m-t-5 p-r-10">
                                         <mat-label>New Password</mat-label>
                                         <input type="{{isTypePassword ? 'password': 'text'}}" matInput
@@ -46,7 +46,7 @@
                                             formControlName="new_password">
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
                                     </mat-form-field>
-                                    <mat-form-field appearance="standard" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
+                                    <mat-form-field appearance="outline" fxFlex="90" fxFlex.md="45" fxFlex.lg="45"
                                         fxFlex.sm="45" fxFlex.xl="45" class="m-t-5">
                                         <mat-label>Confirm New Password</mat-label>
                                         <input type="{{isTypePassword ? 'password': 'text'}}" matInput
@@ -76,26 +76,26 @@
                             <mat-card-content>
                                 <!--Form start-->
                                 <form fxLayout="row wrap" [formGroup]="userForm" (ngSubmit)="userformSubmit()">
-                                    <mat-form-field appearance="standard" fxFlex="50" class="m-t-5 p-r-10">
+                                    <mat-form-field appearance="outline" fxFlex="50" class="m-t-5 p-r-10">
                                         <mat-label>First Name</mat-label>
                                         <input matInput placeholder="First Name" formControlName="first_name"
                                             autocomplete="off">
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="50" class="m-t-5">
+                                    <mat-form-field appearance="outline" fxFlex="50" class="m-t-5">
                                         <mat-label>Last Name</mat-label>
                                         <input matInput placeholder="Last Name" formControlName="last_name"
                                             autocomplete="off">
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
                                     </mat-form-field>
-                                    <mat-form-field appearance="standard" fxFlex="50" class="m-t-5  p-r-10">
+                                    <mat-form-field appearance="outline" fxFlex="50" class="m-t-5  p-r-10">
                                         <mat-label>Email ID</mat-label>
                                         <input matInput placeholder="Email ID" formControlName="sign_in_email_id"
                                             autocomplete="off">
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
                                     </mat-form-field>
-                                    <mat-form-field appearance="standard" fxFlex="50" class=" m-t-5">
+                                    <mat-form-field appearance="outline" fxFlex="50" class=" m-t-5">
                                         <mat-label>Middle Name</mat-label>
                                         <input matInput placeholder="Middle Name" formControlName="middle_name"
                                             autocomplete="off">

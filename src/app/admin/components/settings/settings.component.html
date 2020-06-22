@@ -35,14 +35,14 @@
                                 <!--Form start-->
                                 <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                                     [formGroup]="userPasswrdForm" (ngSubmit)="changePassword()">
-                                    <mat-form-field class="m-t-5" appearance="standard" fxFlex="100">
+                                    <mat-form-field class="m-t-5" appearance="outline" fxFlex="100">
                                         <mat-label>Current password*</mat-label>
                                         <input type="password" matInput placeholder="Current password*"
                                             autocomplete="off" formControlName="current_password">
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50">
                                         <mat-label>New password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text' " matInput
@@ -54,7 +54,7 @@
                                         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50">
                                         <mat-label>Confirm new password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text'" matInput
@@ -89,28 +89,28 @@
                                 <!--Form start-->
                                 <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                                     [formGroup]="userForm" (ngSubmit)="userformSubmit()">
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                         fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
                                         <mat-label>First Name*</mat-label>
                                         <input matInput placeholder="First Name" formControlName="first_name"
                                             autocomplete="off">
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                         fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
                                         <mat-label>Middle Name</mat-label>
                                         <input matInput placeholder="Middle Name" formControlName="middle_name"
                                             autocomplete="off">
                                     </mat-form-field>
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                         fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
                                         <mat-label>Last Name*</mat-label>
                                         <input matInput placeholder="Last Name" formControlName="last_name"
                                             autocomplete="off">
                                     </mat-form-field>
 
-                                    <!-- <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                    <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
                                         <mat-label>Account Number</mat-label>
                                         <input matInput placeholder="Account Number"
@@ -119,7 +119,7 @@
                                         <mat-error>error msg here</mat-error>
                                     </mat-form-field> -->
 
-                                    <mat-form-field appearance="standard" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
                                         <mat-label>Signin Email ID*</mat-label>
                                         <input matInput placeholder="Signin Email ID" formControlName="sign_in_email_id"
