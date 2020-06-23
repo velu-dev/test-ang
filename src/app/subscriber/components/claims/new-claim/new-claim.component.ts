@@ -608,6 +608,7 @@ export class NewClaimComponent implements OnInit {
       this.getFormValidationErrors();
       return;
     }
+    this.errors = { claim_details: 0, claim: 0, Employer: 0, InsuranceAdjuster: 0, ApplicantAttorney: 0, DefenseAttorney: 0, DEU: 0, }
     let claim = this.claim.value;
     claim['claim_injuries'] = this.injuryInfodata;
     if (this.documents_ids.length > 0) {
@@ -689,6 +690,9 @@ export class NewClaimComponent implements OnInit {
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
     });
     if (this.billable_item.invalid) {
+      return;
+    }
+    if (!this.billable_item.touched) {
       return;
     }
     //if (!this.isEdit) {
