@@ -578,7 +578,7 @@ export class NewClaimComponent implements OnInit {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
       if (this.claimant.touched)
-        this.createClaimant('tab')
+        this.createClaimant('tab');
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
       this.submitClaim('tab')
@@ -646,6 +646,7 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'save') {
           this.routeDashboard();
         }
+        this.claimChanges = false;
       }, error => {
         this.isClaimCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -797,6 +798,7 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'save') {
           this.routeDashboard();
         }
+        this.claimantChanges = false;
       }, error => {
         this.isClaimantCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
