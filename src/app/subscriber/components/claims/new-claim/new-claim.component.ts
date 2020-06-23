@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { startWith, map, debounceTime, switchMap, shareReplay } from 'rxjs/operators';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatTableDataSource } from '@angular/material/table';
-import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -100,11 +99,6 @@ export class NewClaimComponent implements OnInit {
 
   displayedColumns_1 = ['doc_image', 'doc_name', 'date', 'action'];
   correspondenceSource: any = [];
-
-  xls = globals.xls
-  xls_1 = globals.xls_1
-  docx = globals.docx
-  pdf = globals.pdf
 
   claimAdminList = [];
   today = new Date();

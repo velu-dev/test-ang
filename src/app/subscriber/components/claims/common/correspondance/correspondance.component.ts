@@ -18,7 +18,7 @@ export interface PeriodicElement {
   styleUrls: ['./correspondance.component.scss']
 })
 export class CorrespondanceComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'uploaded_on', 'action'];
+  displayedColumns: string[] = ['doc_image','name', 'uploaded_on', 'action'];
   correspondance: FormGroup;
   @Input('state') states;
   correspondForm: FormGroup;

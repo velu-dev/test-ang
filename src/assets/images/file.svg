@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="18" viewBox="0 0 14 18">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_639" data-name="Rectangle 639" width="14" height="18"/>
+    </clipPath>
+  </defs>
+  <g id="file" clip-path="url(#clip-path)">
+    <rect width="14" height="18" fill="rgba(255,255,255,0)"/>
+    <g id="custom_1" data-name="custom – 1" clip-path="url(#clip-path)">
+      <rect id="Rectangle_638" data-name="Rectangle 638" width="14" height="18" fill="rgba(255,255,255,0)"/>
+      <g id="Group_24" data-name="Group 24">
+        <rect id="Rectangle_1" data-name="Rectangle 1" width="14" height="18" fill="rgba(255,255,255,0)"/>
+        <path id="xls-file" d="M54,0H47.422a1.783,1.783,0,0,0-1.743,1.816l.13,6.717c.012.021-.008.337,0,.732V13.7c-.008.4.012.739,0,.739v.814a1.673,1.673,0,0,0,1.613,1.809H56.4a1.783,1.783,0,0,0,1.742-1.816V4.3Zm2.4,15.953H47.422a.691.691,0,0,1-.675-.7v-.814h0a6.581,6.581,0,0,0,0-.725V8.54h0V1.816a.691.691,0,0,1,.675-.7L53.6,1.107v2.38a1.235,1.235,0,0,0,1.209,1.26l2.237-.007.025,10.51a.69.69,0,0,1-.671.7Z" transform="translate(-44.806 0.5)" fill="#4d4f5c"/>
+      </g>
+    </g>
+    <g id="Rectangle_640" data-name="Rectangle 640" transform="translate(3 5)" fill="#4d4f5c" stroke="#4d4f5c" stroke-width="1">
+      <rect width="5" height="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="4" fill="none"/>
+    </g>
+    <g id="Rectangle_641" data-name="Rectangle 641" transform="translate(3 8)" fill="#4d4f5c" stroke="#4d4f5c" stroke-width="1">
+      <rect width="7.5" height="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="6.5" fill="none"/>
+    </g>
+    <g id="Rectangle_642" data-name="Rectangle 642" transform="translate(3 11)" fill="#4d4f5c" stroke="#4d4f5c" stroke-width="1">
+      <rect width="7.5" height="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="6.5" fill="none"/>
+    </g>
+    <g id="Rectangle_643" data-name="Rectangle 643" transform="translate(3 14)" fill="#4d4f5c" stroke="#4d4f5c" stroke-width="1">
+      <rect width="5" height="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="4" fill="none"/>
+    </g>
+    <g id="Path_496" data-name="Path 496" transform="translate(8.5 14)" fill="#4d4f5c">
+      <path d="M0,0H2V1H0Z" stroke="none"/>
+      <path d="M 0 0 L 2 0 L 2 1 L 0 1 L 0 0 Z" stroke="none" fill="#4d4f5c"/>
+    </g>
+  </g>
+</svg>

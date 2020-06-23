@@ -62,6 +62,7 @@ export const api_endpoint = {
     deuList: 'claim/seed-data/deu_office_details',
     listIntakeCall: "claim/seed-data/intake_contact_type",
     billableItemSingle: 'claim/billable-item/',
+    claimantBillable:'claim/claimant-billable-item-list/',
 
 
     //seed data

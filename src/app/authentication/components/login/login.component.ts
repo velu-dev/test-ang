@@ -128,6 +128,9 @@ export class LoginComponent implements OnInit {
         if (verifyDetails.message == 'Email ID is not verified!') {
           this.error = { message: verifyDetails.message, action: "danger" }
           this.spinnerService.hide();
+          if(verifyDetails.role_id == 2){
+            this.router.navigate(['/verification']);
+          }
           return;
         }
 
