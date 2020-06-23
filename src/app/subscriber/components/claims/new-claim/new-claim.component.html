@@ -464,7 +464,8 @@
                                 <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_start_date"
                                     [(ngModel)]="injuryInfo.continuous_trauma_start_date"
-                                    [min]="claimant.value?.date_of_birth" [ngModelOptions]="{standalone: true}">
+                                    [min]="claimant.value?.date_of_birth" [max]="today"
+                                    [ngModelOptions]="{standalone: true}">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
@@ -477,7 +478,7 @@
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_end_date"
-                                    [min]="injuryInfo.continuous_trauma_start_date">
+                                    [min]="injuryInfo.continuous_trauma_start_date" [max]="today">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
@@ -598,7 +599,8 @@
 
                                         <ng-container matColumnDef="doc_image">
                                             <th mat-header-cell *matHeaderCellDef> </th>
-                                            <td mat-cell *matCellDef="let element"> <img [src]="element?.file_name | fileType" alt="docx"></td>
+                                            <td mat-cell *matCellDef="let element"> <img
+                                                    [src]="element?.file_name | fileType" alt="docx"></td>
                                         </ng-container>
 
                                         <ng-container matColumnDef="doc_name">
@@ -1277,8 +1279,7 @@
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
-                                autocomplete="off" [max]="todayDate.intake"
-                                [owlDateTime]="intake">
+                                autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>
                             </owl-date-time>
