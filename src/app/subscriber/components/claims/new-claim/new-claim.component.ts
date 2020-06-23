@@ -817,6 +817,7 @@ export class NewClaimComponent implements OnInit {
       let index = 0;
       this.injuryInfodata.map(res => {
         if (res.body_part_id == this.injuryInfo.body_part_id) {
+          this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury).toDateString();
           this.injuryInfodata[index] = this.injuryInfo;
         }
         index = index + 1;
@@ -845,7 +846,7 @@ export class NewClaimComponent implements OnInit {
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
-          date_of_injury: this.injuryInfo['date_of_injury'],
+          date_of_injury: new Date(this.injuryInfo['date_of_injury']).toDateString(),
           continuous_trauma: this.injuryInfo['continuous_trauma'],
           continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
           continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
