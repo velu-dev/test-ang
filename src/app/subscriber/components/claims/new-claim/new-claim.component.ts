@@ -369,7 +369,7 @@ export class NewClaimComponent implements OnInit {
     this.billable_item.patchValue({
       claimant_id: option.id
     })
-    this.claimant.setValue(option);
+    this.claimant.patchValue(option);
     this.filteredClaimant = new Observable<[]>();
 
   }
@@ -620,6 +620,7 @@ export class NewClaimComponent implements OnInit {
     if (!this.isEdit) {
       this.claimService.createClaim(claim).subscribe(res => {
         this.isClaimCreated = true;
+        this.claimId = res.data.claim_id;
         this.billable_item.patchValue({
           claim_id: res.data.claim_id
         })
@@ -630,6 +631,7 @@ export class NewClaimComponent implements OnInit {
           this.routeDashboard();
         }
         this.claimChanges = false;
+        this.isEdit = true;
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
@@ -689,18 +691,21 @@ export class NewClaimComponent implements OnInit {
     if (this.billable_item.invalid) {
       return;
     }
-    if (!this.isEdit) {
+    //if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
         //this._location.back();
         if (this.claimant.touched) {
           this.createClaimant('close')
         }
+        if (this.claim.touched) {
+          this.submitClaim('close')
+        }
         this.routeDashboard();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
-    } else {
+   // } else {
       // this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
       //   this.alertService.openSnackBar(res.message, "success");
       //   this.router.navigate(['/subscriber/claims'])
@@ -708,7 +713,7 @@ export class NewClaimComponent implements OnInit {
       // }, error => {
       //   this.alertService.openSnackBar(error.error.message, 'error');
       // })
-    }
+   // }
   }
   cancel() {
     this.openDialogCancel('cancel', null)
