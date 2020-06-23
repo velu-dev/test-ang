@@ -994,19 +994,22 @@ export class NewClaimComponent implements OnInit {
     switch (contact.contact_type) {
       case "E1":
         this.contactMask.mask = "";
-        this.billable_item.controls.intake_call['controls']['call_type_detail'].setValidators(Validators.email)
+        this.billable_item.controls.intake_call.get('call_type_detail').setValidators(Validators.email);
         this.contactMask.type = "text";
         break;
       case "E2":
         this.contactMask.mask = "";
+        this.billable_item.controls.intake_call.get('call_type_detail').setValidators(Validators.email)
         this.contactMask.type = "text";
         break;
       case "L1":
         this.contactMask.mask = "(000) 000-0000";
+        this.billable_item.controls.intake_call.get('call_type_detail').setValidators([])
         this.contactMask.type = "text";
         break;
       case "L2":
         this.contactMask.mask = "(000) 000-0000";
+        this.billable_item.controls.intake_call.get('call_type_detail').setValidators([])
         this.contactMask.type = "text";
         break;
       case "F1":
@@ -1026,7 +1029,7 @@ export class NewClaimComponent implements OnInit {
         this.contactMask.type = "text";
         break;
     }
-
+    this.billable_item.get('call_type_detail').updateValueAndValidity();
   }
   todayDate = { appointment: new Date(), intake: new Date() }
   pickerOpened(type) {
