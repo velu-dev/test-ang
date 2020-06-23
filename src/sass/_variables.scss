@@ -608,11 +608,13 @@ input:-webkit-autofill {
   width: $width-60;
 }
 
-// .mat-select-panel {
-//   width: 100%;
-//   min-width: 100% !important;
-// }
-// #cdk-overlay-1 {
-//   transform: initial !important;
-
-// }
+// Form fields disabled label color
+.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+.mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+  color: rgba(0, 0, 0, 0.7);
+}
+.mat-select-disabled .mat-select-value, .mat-checkbox-disabled .mat-checkbox-label {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
