@@ -1173,6 +1173,7 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error>Please select valid primary language</mat-error>
+                            <mat-hint *ngIf="!primary_language_spoken">Note: No primary langauge selected. Please select it from Claimant's section!</mat-hint>
                         </mat-form-field>
                     </div>
 

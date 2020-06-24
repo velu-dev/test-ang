@@ -173,6 +173,7 @@ export class NewClaimComponent implements OnInit {
   iseams_entry: boolean = false;
   role: string;
   date: any;
+  primary_language_spoken:boolean = false;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -369,8 +370,9 @@ export class NewClaimComponent implements OnInit {
     this.billable_item.patchValue({
       claimant_id: option.id
     })
+    this.primary_language_spoken = option.primary_language_spoken ? true : false
     this.claimant.patchValue(option);
-    this.filteredClaimant = new Observable<[]>();
+    //this.filteredClaimant = new Observable<[]>();
 
   }
   setStep(index: number) {
@@ -1274,7 +1276,7 @@ export class NewClaimComponent implements OnInit {
   injuryCancel() {
     this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   }
-
+  
   langChange() {
     this.claimant.patchValue({ primary_language_spoken: null })
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
@@ -1284,9 +1286,11 @@ export class NewClaimComponent implements OnInit {
       this.claimant.get('primary_language_spoken').setValidators([]);
     }
     this.claimant.get('primary_language_spoken').updateValueAndValidity();
-
+    this.primary_language_spoken = this.claimant.value.primary_language_spoken ? true : false
   }
   primryLangChange() {
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
+    this.primary_language_spoken = this.claimant.value.primary_language_spoken ? true : false
   }
+  
 }
