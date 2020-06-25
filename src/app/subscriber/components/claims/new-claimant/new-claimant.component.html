@@ -1,11 +1,11 @@
 <mat-card class="m-card">
   <mat-card-header>
-    <div class="m-0 content-wrapper-main-title">Claimant </div>
+    <div class="m-0 content-wrapper-main-title p-t-5">Claimant </div>
     <span class="spacer"></span>
-    <button mat-raised-button color="primary" *ngIf="!editStatus" class="m-b-5" (click)="edit()">
+    <button mat-stroked-button *ngIf="!editStatus" class="m-b-5 outline-success" (click)="edit()">
       Edit
     </button>
-    <button mat-raised-button color="primary" *ngIf="editStatus" class="m-b-5" (click)="createClaimant()">
+    <button mat-stroked-button class="outline-success" *ngIf="editStatus" (click)="createClaimant()">
       Save
     </button>
   </mat-card-header>
@@ -58,8 +58,7 @@
           <mat-error *ngIf="isClaimantSubmited">Please enter valid date of birth</mat-error>
         </mat-form-field>
 
-        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
-        fxFlex.sm="50" fxFlex.xs="100"></div>
+        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div>
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
@@ -89,14 +88,16 @@
           <mat-error *ngIf="isClaimantSubmited">Please enter valid SSN</mat-error>
         </mat-form-field>
 
-        <div fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
+        <div fxFlex="50" fxFlex.md="50" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
+          fxFlex.xs="100" class="checkbox">
           <div class="p-t-30 p-l-10">
             <mat-checkbox labelPosition="after" (change)="languageStatus = !languageStatus;langChange()"
               formControlName="certified_interpreter_required">Certified Interpreter Required</mat-checkbox>
           </div>
         </div>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Primary Language</mat-label>
           <mat-select formControlName="primary_language_spoken" [disabled]="!languageStatus || !editStatus">
             <mat-option *ngFor="let language of languageList" [value]="language.id">
@@ -105,21 +106,24 @@
           </mat-select>
           <mat-error *ngIf="isClaimantSubmited">Please select valid primary language</mat-error>
         </mat-form-field>
-
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div>
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Email</mat-label>
           <input matInput placeholder="Email" formControlName="email" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid email</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Phone Number</mat-label>
           <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no_1"
             placeholder="Phone Number" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid phone number</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Alternate Phone Number</mat-label>
           <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no_2"
             placeholder="Alternate Phone Number" autocomplete="off">
@@ -129,25 +133,27 @@
 
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Street Address 1</mat-label>
-          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Street Address 1"
-            formControlName="street1" autocomplete="off"></textarea>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+            placeholder="Street Address 1" formControlName="street1" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Street Address 2</mat-label>
-          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Street Address 2"
-            formControlName="street2" autocomplete="off"></textarea>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+            placeholder="Street Address 2" formControlName="street2" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>City</mat-label>
           <input matInput placeholder="City" formControlName="city" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid city</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>State</mat-label>
           <mat-select formControlName="state">
             <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
@@ -156,7 +162,8 @@
           <mat-error *ngIf="isClaimantSubmited">Please enter valid state</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Zip Code</mat-label>
           <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code"
             autocomplete="off">
@@ -164,10 +171,10 @@
         </mat-form-field>
 
         <div class="text-center w-100 m-t-10 m-b-50" *ngIf="editStatus">
-          <button mat-raised-button color="primary" type="submit" (click)="createClaimant()"
-            class="m-r-10 rounded-corner btn_success">
+          <button mat-stroked-button (click)="cancel()" class="outline-danger" color="warn">Cancel</button>
+          <button mat-stroked-button type="submit" (click)="createClaimant()" class="outline-success m-l-10">
             Save </button>
-          <button mat-raised-button (click)="cancel()" class="rounded-corner" color="warn">Cancel</button>
+
 
         </div>
       </form>
@@ -200,7 +207,8 @@
               </mat-icon>
             </span>
             <div>
-              <span *ngIf="column == 'procedure_type_name'" (click)="billableNavigate()">{{element?.procedure_type_name}}</span>
+              <span *ngIf="column == 'procedure_type_name'"
+                (click)="billableNavigate()">{{element?.procedure_type_name}}</span>
               <span *ngIf="column == 'exam_type_code'">{{element?.exam_type_code}} </span>
               <span *ngIf="column == 'claim_number'" (click)="claimNavigate()">{{element?.claim_number}} </span>
               <span *ngIf="column == 'examiner_name'">{{element?.examiner_name}}</span>

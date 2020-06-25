@@ -1,2 +1,20 @@
 @import "variables";
 @import "table";
+mat-card {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+    .table-filter {
+        border: none !important;
+        input {
+            border-radius: 50px;
+            width: 250px;
+        }
+    }
+    .add-new-user {
+        float: right;
+        margin-top: 5px;
+    }
+}
