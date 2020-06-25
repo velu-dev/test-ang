@@ -1,15 +1,16 @@
 <mat-toolbar class="nav-bar navbar-fixed-header">
     <mat-toolbar-row>
         <button [ngClass]="{'opened': isOpen, 'closed': !isOpen}" type="button" aria-label="Toggle sidenav"
-            mat-icon-button (click)="openSidenav()">
+            mat-icon-button (click)="openSidenav()" class="toggle_">
             <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
         </button>
 
         <mat-card-title class="p-t-15 show-mobile"> Simplexam</mat-card-title>
+        <img [src]="nav_logo" alt="logo" class="p-l-5">
         <span flex class="spacer"></span>
         <mat-card-actions>
             <div fxLayout="row">
-                <button (click)="fullScreen()" mat-icon-button class="hide-mobile">
+                <!-- <button (click)="fullScreen()" mat-icon-button class="hide-mobile">
                     <mat-icon> {{toggleClass }}</mat-icon>
                 </button>
                 <button mat-icon-button class="hide-mobile">
@@ -19,53 +20,9 @@
                     <mat-icon matBadgeColor="warn">notifications_none
                     </mat-icon>
                 </button>
-                <!-- <button mat-icon-button [matMenuTriggerFor]="notification" class="hide-mobile">
-                    <mat-icon matBadge="" matBadgeColor="warn">notifications_none</mat-icon>
-                </button>
-                <button mat-icon-button class="show-mobile">
-                    <mat-icon matBadge="" matBadgeColor="warn">notifications_none
-                    </mat-icon>
-                </button> -->
-                <!-- <mat-menu #notification="matMenu" class="">
-                    <div class="p-t-0 notification">
-                        <mat-card-header class="text-center">
-                            <mat-card-title class="m-b-2">NOTIFICATIONS</mat-card-title>
-                        </mat-card-header>
-                        <mat-divider></mat-divider>
-                        <mat-card-content>
-                            <mat-list *ngFor="let notification of notifications">
-                                <mat-list-item>
-                                    <img mat-list-icon [src]="notification_user" alt="Welcome" class="text-left" />
-                                    <h4 mat-line>{{notification.name}}<br /> <small class="text-right"><i
-                                                class="fa fa-clock-o"></i> {{ notification.date | date}}</small></h4>
-                                    <p mat-line> {{notification.message}}</p>
-                                </mat-list-item>
-                                <mat-divider></mat-divider>
-                            </mat-list>
-                        </mat-card-content>
-                        <mat-divider></mat-divider>
-                        <mat-card-footer class="text-center">
-                            <div>View All Notifications</div>
-                        </mat-card-footer>
-
-                    </div>
-                </mat-menu> -->
-                <!-- <div *ngIf="isLoading">
-                    <div class="gravatar">
-                        <ngx-skeleton-loader appearance="circle" [theme]="{ width: '80px', height: '80px' }">
-                        </ngx-skeleton-loader>
-                    </div>
-                    <div class="gravatar-title">
-                        <div>
-                            <ngx-skeleton-loader [theme]="{
-                          width: '200px',
-                          'border-radius': '0',
-                          height: '15px',
-                          'margin-bottom': '10px'
-                        }"></ngx-skeleton-loader>
-                        </div>
-                    </div>
-                </div> -->
+                -->
+                <button mat-button>Help</button>
+                <button mat-button>Log-Out</button>
                 <div *ngIf="user">
                     <button mat-icon-button [title]="user?.first_name" [matMenuTriggerFor]="settings">
                         <div class="welcome_t">

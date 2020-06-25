@@ -81,23 +81,34 @@ export class ClaimantComponent implements OnInit {
   users = [];
   getUser() {
     this.claimService.getClaimant().subscribe(res => {
-    
-     res.data.map(claim=>{
-      claim.date_of_birth = moment(claim.date_of_birth).format("MM-DD-YYYY");
-     // claim.gender =  claim.gender == "M" ? 'Male' : '' ||  claim.gender == "F" ? 'Female' : '';
-     })
-       this.users = res.data;
+
+      res.data.map(claim => {
+        claim.date_of_birth = claim.date_of_birth ? moment(claim.date_of_birth).format("MM-DD-YYYY") : '';
+        claim.date_of_injury = claim.date_of_injury ? moment(claim.date_of_injury).format("MM-DD-YYYY") : '';
+        // claim.gender =  claim.gender == "M" ? 'Male' : '' ||  claim.gender == "F" ? 'Female' : '';
+        let examiner = []
+        claim.examiners_name.map(name => {
+          if (name.first_name && name.first_name.trim() != '' && name.last_name && name.last_name.trim() != '') {
+            examiner.push(name.first_name + ' ' + name.last_name)
+          }
+        })
+        claim.examiner = examiner;
+        claim.claimant_name = claim.last_name + ' ' + claim.first_name;
+      })
+      //console.log(res.data)
+      this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
 
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
-        return data.last_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.gender && data.gender.toLowerCase().includes(filter));
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return data.last_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter) ||  data.examiner && data.examiner.includes(filter));
       };
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
   }
   gotoEdit(e) {
-    this.router.navigate(["/subscriber/claimant/edit-claimant/",e.id])
+    this.router.navigate(["/subscriber/claimant/edit-claimant/", e.id])
   }
 
   applyFilter(filterValue: string) {

@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
     { name: "Name here", message: "Message content here", date: new Date() },
     { name: "Name here", message: "Message content here", date: new Date() }
   ]
+  nav_logo = globals.nav_logo
   profile = globals.profile
   notification_user = globals.notification_user
   // @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
@@ -47,7 +48,7 @@ export class HeaderComponent implements OnInit {
   isLoading: boolean = false;
   user$: Observable<any>;
   toggleClass = 'fullscreen';
-  role:string;
+  role: string;
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
@@ -64,7 +65,7 @@ export class HeaderComponent implements OnInit {
       if (info == true) {
         this.userService.getProfile().subscribe(res => {
           this.user = res.data;
-          
+
         })
       }
     })
@@ -183,11 +184,11 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  getRole(role){
-    console.log("role",role);
+  getRole(role) {
+    console.log("role", role);
     switch (role) {
       case 1:
-       return 'Admin';
+        return 'Admin';
       case 2:
         return 'Subscriber';
       case 3:
