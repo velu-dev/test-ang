@@ -32,10 +32,10 @@
                         </span>
                         <div (click)="!isMobile ? gotoEdit(element):''">
                             <span *ngIf="column == 'claimant_name'">{{element?.last_name}} {{element?.first_name}} </span>
-                            <span *ngIf="column == 'examiner'" > <span *ngFor="let name of element?.examiners_name">{{name.examiner_name}} </span></span>
+                            <span *ngIf="column == 'examiner'" > {{element?.examiner}}</span>
                             <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth}} </span>
                             <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury}}</span>
-                            <span *ngIf="column == 'claim_number'">{{element?.claim_numbers[0].claim_number}}</span>
+                            <span *ngIf="column == 'claim_number'">{{element?.claim_number}}</span>
                             <!-- <span (click)="gotoEdit(element)" *ngIf="column == 'disabled'">
                                 <button mat-icon-button class="edit" matTooltip="Edit" matTooltipPosition="before">
                                     <span class="fa fa-pencil-alt"></span>
@@ -49,10 +49,10 @@
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="resposive-table" (click)="gotoEdit(element)">
                                 <div><span>Claimant Name</span> {{element?.last_name}} {{element?.first_name}} </div>
-                                <div><span>Examiner</span> {{element?.examiners_name[0].examiner_name}}</div>
+                                <div><span>Examiner</span> {{element?.examiner}}</div>
                                 <div><span>Date of Birth</span> {{element?.date_of_birth}} </div>
                                 <div><span>Date of Injury</span> {{element?.date_of_injury}} </div>
-                                <div><span>Claim Number</span> {{element?.claim_numbers[0].claim_number}} </div>
+                                <div><span>Claim Number</span> {{element?.claim_number}} </div>
                             </div>
                         </div>
                     </td>
