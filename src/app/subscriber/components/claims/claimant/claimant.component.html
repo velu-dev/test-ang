@@ -2,6 +2,9 @@
     <mat-card-header>
         <div class="m-0 content-wrapper-main-title">Claimant Management</div>
         <span class="spacer"></span>
+        <button routerLink="new-claimant" mat-mini-fab class="add-user">
+            <mat-icon>add</mat-icon>
+        </button>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="p-t-3 m-b-0">
@@ -27,27 +30,29 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <div (click)="gotoEdit(element)">
-                            <span *ngIf="column == 'first_name'">{{element?.first_name}} </span>
-                            <span *ngIf="column == 'last_name'">{{element?.last_name}} </span>
+                        <div (click)="!isMobile ? gotoEdit(element):''">
+                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}} {{element?.first_name}} </span>
+                            <span *ngIf="column == 'examiner'" > <span *ngFor="let name of element?.examiners_name">{{name.examiner_name}} </span></span>
                             <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth}} </span>
-                            <span *ngIf="column == 'gender'">{{element?.gender}}</span>
-                            <span (click)="gotoEdit(element)" *ngIf="column == 'disabled'">
+                            <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury}}</span>
+                            <span *ngIf="column == 'claim_number'">{{element?.claim_numbers[0].claim_number}}</span>
+                            <!-- <span (click)="gotoEdit(element)" *ngIf="column == 'disabled'">
                                 <button mat-icon-button class="edit" matTooltip="Edit" matTooltipPosition="before">
                                     <span class="fa fa-pencil-alt"></span>
                                 </button>
-                            </span>
+                            </span> -->
                         </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                            <div class="resposive-table">
-                                <div><span>First Name</span> {{element.first_name}} </div>
-                                <div><span>Last Name</span> {{element.last_name}} </div>
-                                <div><span>Date of Birth</span> {{element.date_of_birth}} </div>
-                                <div><span>Gender</span> {{element.gender}} </div>
+                            <div class="resposive-table" (click)="gotoEdit(element)">
+                                <div><span>Claimant Name</span> {{element?.last_name}} {{element?.first_name}} </div>
+                                <div><span>Examiner</span> {{element?.examiners_name[0].examiner_name}}</div>
+                                <div><span>Date of Birth</span> {{element?.date_of_birth}} </div>
+                                <div><span>Date of Injury</span> {{element?.date_of_injury}} </div>
+                                <div><span>Claim Number</span> {{element?.claim_numbers[0].claim_number}} </div>
                             </div>
                         </div>
                     </td>

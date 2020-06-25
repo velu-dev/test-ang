@@ -100,11 +100,16 @@ export const ROUTES = [
     },
     {
         path: '/subscriber/claimant',
-        title: 'Manage Claimants',
+        title: 'Claimants',
         icon: 'dashboard',
         submenu: [{
-            path: '/subscriber/claimant/new',
-            title: 'New Claimant',
+            path: '/subscriber/claimant/new-claimant',
+            title: 'New',
+            icon: 'dashboard',
+            submenu: []
+        },{
+            path: '/subscriber/claimant/edit-claimant',
+            title: 'Edit',
             icon: 'dashboard',
             submenu: []
         }],
@@ -184,11 +189,16 @@ export const ROUTES = [
             submenu: []
         }, {
             path: '/subscriber/manager/claimant',
-            title: 'Manage Claimants',
+            title: 'Claimants',
             icon: 'dashboard',
             submenu: [{
-                path: '/subscriber/manager/claimant/new',
-                title: 'New Claimant',
+                path: '/subscriber/manager/new-claimant',
+                title: 'New',
+                icon: 'dashboard',
+                submenu: []
+            },{
+                path: '/subscriber/manager/edit-claimant',
+                title: 'Edit',
                 icon: 'dashboard',
                 submenu: []
             }],
@@ -257,11 +267,16 @@ export const ROUTES = [
             submenu: [],
         }, {
             path: '/subscriber/staff/claimant',
-            title: 'Manage Claimants',
+            title: 'Claimants',
             icon: 'dashboard',
             submenu: [{
-                path: '/subscriber/staff/claimant/new',
-                title: 'New Claimant',
+                path: '/subscriber/staff/new-claimant',
+                title: 'New',
+                icon: 'dashboard',
+                submenu: []
+            },{
+                path: '/subscriber/staff/edit-claimant',
+                title: 'Edit',
                 icon: 'dashboard',
                 submenu: []
             }],
@@ -335,11 +350,16 @@ export const ROUTES = [
                 submenu: []
             }, {
                 path: '/subscriber/examiner/claimant',
-                title: 'Manage Claimants',
+                title: 'Claimants',
                 icon: 'dashboard',
                 submenu: [{
-                    path: '/subscriber/examiner/claimant/new',
-                    title: 'New Claimant',
+                    path: '/subscriber/examiner/new-claimant',
+                    title: 'New',
+                    icon: 'dashboard',
+                    submenu: []
+                },{
+                    path: '/subscriber/examiner/edit-claimant',
+                    title: 'Edit',
                     icon: 'dashboard',
                     submenu: []
                 }],

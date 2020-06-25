@@ -58,7 +58,10 @@ const routes: Routes = [{
     path: "",
     component: ClaimantComponent
   }, {
-    path: "new-claimant/:id",
+    path: "new-claimant",
+    component: NewClaimantComponent
+  },{
+    path: "edit-claimant/:id",
     component: NewClaimantComponent
   }]
 }, {
@@ -132,7 +135,10 @@ const routes: Routes = [{
         path: "",
         component: ClaimantComponent
       }, {
-        path: "new-claimant/:id",
+        path: "new-claimant",
+        component: NewClaimantComponent
+      },{
+        path: "edit-claimant/:id",
         component: NewClaimantComponent
       }]
     }, {
@@ -180,7 +186,10 @@ const routes: Routes = [{
       path: "",
       component: ClaimantComponent
     }, {
-      path: "new-claimant/:id",
+      path: "new-claimant",
+      component: NewClaimantComponent
+    },{
+      path: "edit-claimant/:id",
       component: NewClaimantComponent
     }]
   }, {
@@ -223,7 +232,10 @@ const routes: Routes = [{
       path: "",
       component: ClaimantComponent
     }, {
-      path: "new-claimant/:id",
+      path: "new-claimant",
+      component: NewClaimantComponent
+    },{
+      path: "edit-claimant/:id",
       component: NewClaimantComponent
     }]
   }, {
@@ -271,7 +283,10 @@ const routes: Routes = [{
       path: "",
       component: ClaimantComponent
     }, {
-      path: "new-claimant/:id",
+      path: "new-claimant",
+      component: NewClaimantComponent
+    },{
+      path: "edit-claimant/:id",
       component: NewClaimantComponent
     }]
   }, {

@@ -42,11 +42,11 @@
           <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid suffix</mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+        <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Salutation</mat-label>
           <input matInput placeholder="Salutation" formControlName="salutation" autocomplete="off">
-        </mat-form-field>
+        </mat-form-field> -->
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
@@ -57,6 +57,9 @@
           <mat-datepicker #date_of_birth [disabled]="!editStatus"></mat-datepicker>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid date of birth</mat-error>
         </mat-form-field>
+
+        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+        fxFlex.sm="50" fxFlex.xs="100"></div>
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
@@ -125,15 +128,15 @@
 
 
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Address 1</mat-label>
-          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Address 1"
+          <mat-label>Street Address 1</mat-label>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Street Address 1"
             formControlName="street1" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Address 2</mat-label>
-          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Address 2"
+          <mat-label>Street Address 2</mat-label>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Street Address 2"
             formControlName="street2" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
@@ -172,7 +175,7 @@
   </mat-card-content>
 </mat-card>
 
-<mat-card class="m-card m-t-25 billable_item">
+<mat-card class="m-card m-t-25 billable_item" *ngIf="claimantId">
   <mat-card-header>
     <div class="m-0 content-wrapper-main-title">Billable Items</div>
     <span class="spacer"></span>

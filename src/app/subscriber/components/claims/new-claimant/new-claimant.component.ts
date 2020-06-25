@@ -94,7 +94,29 @@ export class NewClaimantComponent implements OnInit {
     private route: ActivatedRoute,
 
   ) {
-    this.route.params.subscribe(param => this.claimantId = param.id)
+    this.route.params.subscribe(param => {
+      this.claimantId = param.id;
+      if (param.id) {
+        this.getSingleClaimant();
+
+        this.claimService.getclaimantBillable(this.claimantId).subscribe(billableRes => {
+          this.dataSource = new MatTableDataSource(billableRes.data);
+          billableRes.data.map(bill => {
+            bill.date_of_service = bill.date_of_service ? moment(bill.date_of_service).format("MM-DD-YYYY") : '';
+
+          })
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.dataSource.filterPredicate = function (data, filter: string): boolean {
+            return data.procedure_type_name && data.procedure_type_name.toLowerCase().includes(filter) || data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.wcab_number && data.wcab_number.toLowerCase().includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.date_of_service && data.date_of_service.toLowerCase().includes(filter));
+          };
+          this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+        }, error => {
+          console.log("error", error)
+          this.dataSource = new MatTableDataSource([]);
+        })
+      }
+    })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -140,22 +162,7 @@ export class NewClaimantComponent implements OnInit {
       examiners_name: []
     })
 
-    this.claimService.getclaimantBillable(this.claimantId).subscribe(billableRes => {
-      this.dataSource = new MatTableDataSource(billableRes.data);
-      billableRes.data.map(bill => {
-        bill.date_of_service = bill.date_of_service ? moment(bill.date_of_service).format("MM-DD-YYYY") : '';
 
-      })
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return data.procedure_type_name && data.procedure_type_name.toLowerCase().includes(filter) || data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.wcab_number && data.wcab_number.toLowerCase().includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.date_of_service && data.date_of_service.toLowerCase().includes(filter));
-      };
-      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-    }, error => {
-      console.log("error", error)
-      this.dataSource = new MatTableDataSource([]);
-    })
 
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
@@ -169,7 +176,7 @@ export class NewClaimantComponent implements OnInit {
       console.log("error", error)
     })
     this.today = new Date();
-    this.getSingleClaimant()
+
     this.claimantForm.disable();
   }
   getSingleClaimant() {
@@ -191,19 +198,30 @@ export class NewClaimantComponent implements OnInit {
     this.isClaimantSubmited = true;
     this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
     if (this.claimantForm.invalid) {
-      console.log("claimantForm", this.claimantForm)
       return;
     }
-    //this.claimantForm.value.date_of_birth = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY")
-    this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Claimant updated successfully!", 'success');
-      //this._location.back();
-      this.getSingleClaimant()
-      this.editStatus = false;
-      this.claimantForm.disable();
-    }, error => {
-      this.alertService.openSnackBar(error.error, 'error');
-    })
+
+    if (!this.claimantId) {
+      this.claimService.createClaimant(this.claimantForm.value).subscribe(res => {
+        this.alertService.openSnackBar("Claimant created successfully!", 'success');
+        this.editStatus = false;
+        this.claimantForm.disable();
+        this._location.back();
+      }, error => {
+        console.log(error);
+        this.alertService.openSnackBar(error.error, 'error');
+      })
+    } else {
+      this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
+        this.alertService.openSnackBar("Claimant updated successfully!", 'success');
+        this.getSingleClaimant()
+        this.editStatus = false;
+        this.claimantForm.disable();
+      }, error => {
+        this.alertService.openSnackBar(error.error, 'error');
+      })
+    }
+
   }
 
   gender(code) {
@@ -234,7 +252,9 @@ export class NewClaimantComponent implements OnInit {
 
   cancel() {
     //this._location.back();
-    this.getSingleClaimant()
+    if (this.claimantId) {
+    this.getSingleClaimant();
+    }
     this.editStatus = false;
     this.claimantForm.disable();
   }

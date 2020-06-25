@@ -61,11 +61,11 @@ export class ClaimantComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
+        this.columnName = ["", "Claimant Name", "Action"]
+        this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Date of Birth", "Gender", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', "gender", "disabled"]
+        this.columnName = ["Claimant Name", "Examiner", "Date of Birth", "Date of Injury", "Claim Number"]
+        this.columnsToDisplay = ['claimant_name', 'examiner', 'date_of_birth', "date_of_injury", "claim_number"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -84,7 +84,7 @@ export class ClaimantComponent implements OnInit {
     
      res.data.map(claim=>{
       claim.date_of_birth = moment(claim.date_of_birth).format("MM-DD-YYYY");
-      claim.gender =  claim.gender == "M" ? 'Male' : '' ||  claim.gender == "F" ? 'Female' : ''
+     // claim.gender =  claim.gender == "M" ? 'Male' : '' ||  claim.gender == "F" ? 'Female' : '';
      })
        this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)
@@ -97,7 +97,7 @@ export class ClaimantComponent implements OnInit {
     })
   }
   gotoEdit(e) {
-    this.router.navigate(["/subscriber/claimant/new-claimant/",e.id])
+    this.router.navigate(["/subscriber/claimant/edit-claimant/",e.id])
   }
 
   applyFilter(filterValue: string) {
