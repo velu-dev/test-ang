@@ -1,22 +1,13 @@
 <mat-card class="m-card">
-    <mat-card-header>
-        <div class="m-0 content-wrapper-main-title">Claimant Management</div>
-        <span class="spacer"></span>
-        <button routerLink="new-claimant" mat-mini-fab class="add-user">
-            <mat-icon>add</mat-icon>
-        </button>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content class="p-t-3 m-b-0">
+    <mat-card-content class="m-b-0">
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                 placeholder="Search by name, date of birth, gender">
         </div>
-        <!-- <span class="spacer"></span>
-        <button mat-icon-button class="filter-icon" (click)="exportData()">
-            <img class="icon-16" [src]="xls" alt="export" />
-        </button> -->
 
+        <button routerLink="new-claimant" mat-stroked-button class="add-new-user outline-success">
+            New Claimant
+        </button>
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
                 matSort>
