@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import * as moment from 'moment';
+import { MatMenuTrigger } from '@angular/material';
 @Component({
   selector: 'app-claimant',
   templateUrl: './claimant.component.html',
@@ -50,6 +51,7 @@ export class ClaimantComponent implements OnInit {
   filterValue: string;
   tabIndex: number = 0;
   disabled = false;
+  @ViewChild(MatMenuTrigger,{static:false}) trigger: MatMenuTrigger;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
