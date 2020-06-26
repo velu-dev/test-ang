@@ -3,7 +3,7 @@
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                 placeholder="Search by name, date, claim number">
-                <mat-icon >search</mat-icon>
+            <mat-icon>search</mat-icon>
         </div>
 
         <button routerLink="new-claimant" mat-stroked-button class="add-new-user outline-success">
@@ -23,8 +23,16 @@
                             </mat-icon>
                         </span>
                         <div (click)="!isMobile ? gotoEdit(element):''">
-                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}} {{element?.first_name}} </span>
-                            <span *ngIf="column == 'examiner'" > {{element?.examiner}}</span>
+                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}} {{element?.first_name}}
+                            </span>
+                            <span *ngIf="column == 'examiner'"> {{element?.examiner[0]}}
+                                <i [matMenuTriggerFor]="list" *ngIf="element?.examiner?.length>1"
+                                    (click)="$event.stopPropagation()" class="p-t-10 fa fa-ellipsis-h"></i>
+                                <mat-menu #list="matMenu">
+                                    {{element?.examiner}}
+                                </mat-menu>
+
+                            </span>
                             <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth}} </span>
                             <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury}}</span>
                             <span *ngIf="column == 'claim_number'">{{element?.claim_number}}</span>
