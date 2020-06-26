@@ -31,15 +31,6 @@ export const PICK_FORMATS = {
     monthYearA11yLabel: { year: 'numeric', month: 'long' }
   }
 };
-export interface PeriodicElement {
-  procedure_type: string;
-  exam_type: string;
-  claim_number: string;
-  examiner: string;
-  dos: string;
-  status: string;
-
-};
 
 @Component({
   selector: 'app-new-claimant',
@@ -62,8 +53,8 @@ export class NewClaimantComponent implements OnInit {
   columnName = [];
   columnsToDisplay = [];
   expandedElement: User | null;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -101,15 +92,25 @@ export class NewClaimantComponent implements OnInit {
         this.getSingleClaimant();
 
         this.claimService.getclaimantBillable(this.claimantId).subscribe(billableRes => {
-          this.dataSource = new MatTableDataSource(billableRes.data);
-          billableRes.data.map(bill => {
-            bill.date_of_service = bill.date_of_service ? moment(bill.date_of_service).format("MM-DD-YYYY") : '';
 
+          billableRes.data.map(bill => {
+            bill.date_of_injury = bill.date_of_injury ? moment(bill.date_of_injury).format("MM-DD-YYYY") : '';
+            bill.examiner = bill.ex_last_name + ' ' + bill.ex_first_name
+            let parts = []
+            if(bill.body_parts){
+            bill.body_parts.map(part => {
+              if (part.body_part_name && part.body_part_name.trim() != '') {
+                parts.push(part.body_part_name)
+              }
+            })
+          }
+            bill.parts = parts;
           })
+          this.dataSource = new MatTableDataSource(billableRes.data);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.dataSource.filterPredicate = function (data, filter: string): boolean {
-            return data.procedure_type_name && data.procedure_type_name.toLowerCase().includes(filter) || data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.wcab_number && data.wcab_number.toLowerCase().includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.date_of_service && data.date_of_service.toLowerCase().includes(filter));
+            return data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.parts  && data.parts[0] && data.parts[0].toLowerCase().includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.date_of_injury && data.date_of_injury.toLowerCase().includes(filter));
           };
           this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
         }, error => {
@@ -122,11 +123,11 @@ export class NewClaimantComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Procedure Type", "Status"]
-        this.columnsToDisplay = ['is_expand', 'procedure_type_name', "status"]
+        this.columnName = ["", "Exam Type", "Status"]
+        this.columnsToDisplay = ['is_expand', 'exam_type_code', "status"]
       } else {
-        this.columnName = ['Procedure Type', 'Exam Type', 'Claim Number', 'Examiner', 'Date of service', 'Status']
-        this.columnsToDisplay = ['procedure_type_name', 'exam_type_code', 'claim_number', 'examiner_name', 'date_of_service', 'status']
+        this.columnName = ['Exam Type', 'Claim Number', 'Date of Injury', 'Body Parts', 'Examiner', 'Status']
+        this.columnsToDisplay = ['exam_type_code', 'claim_number', 'date_of_injury', 'parts', 'examiner', 'status']
       }
     });
   }
@@ -180,6 +181,7 @@ export class NewClaimantComponent implements OnInit {
     this.today = new Date();
     if (this.claimantId) {
       this.claimantForm.disable();
+
     }
 
   }
@@ -194,6 +196,9 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
+    if (!this.claimantForm.touched) {
+      return;
+    }
 
     Object.keys(this.claimantForm.controls).forEach((key) => {
       if (this.claimantForm.get(key).value && typeof (this.claimantForm.get(key).value) == 'string')
@@ -259,10 +264,10 @@ export class NewClaimantComponent implements OnInit {
     if (this.claimantId) {
       this.getSingleClaimant();
       this.editStatus = false;
-    }else{
+    } else {
       this._location.back();
     }
-  
+
     this.claimantForm.disable();
   }
 

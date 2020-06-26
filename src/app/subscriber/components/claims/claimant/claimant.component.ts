@@ -36,8 +36,8 @@ export class ClaimantComponent implements OnInit {
   columnName = []
   columnsToDisplay = [];
   expandedElement: User | null;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -102,7 +102,7 @@ export class ClaimantComponent implements OnInit {
       this.dataSource.sort = this.sort;
 
       this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return data.last_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter)) ||  (data.examiner && data.examiner.includes(filter)) || (data.claim_number && data.claim_number.includes(filter)) ;
+        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter)) ||  (data.examiner && data.examiner.includes(filter)) || (data.claim_number && data.claim_number.includes(filter)) ;
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
