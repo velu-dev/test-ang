@@ -278,7 +278,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
 })
 export class EventdetailDialog {
   constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -290,7 +290,7 @@ export class EventdetailDialog {
 })
 export class AddEventDialog {
   constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
   onNoClick(): void {
     this.dialogRef.close();
   }
