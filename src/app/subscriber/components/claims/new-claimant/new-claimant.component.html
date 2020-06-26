@@ -2,10 +2,10 @@
   <mat-card-header>
     <div class="m-0 content-wrapper-main-title p-t-5">Claimant </div>
     <span class="spacer"></span>
-    <button mat-stroked-button *ngIf="!editStatus" class="m-b-5 outline-success" (click)="edit()">
+    <button mat-stroked-button *ngIf="!editStatus && claimantId" class="m-b-5 outline-success" (click)="edit()">
       Edit
     </button>
-    <button mat-stroked-button class="outline-success" *ngIf="editStatus" (click)="createClaimant()">
+    <button mat-stroked-button class="outline-success" *ngIf="editStatus && claimantId" (click)="createClaimant()">
       Save
     </button>
   </mat-card-header>
