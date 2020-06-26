@@ -2,7 +2,8 @@
     <mat-card-content class="m-b-0">
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by name, date of birth, gender">
+                placeholder="Search by name, date, claim number">
+                <mat-icon >search</mat-icon>
         </div>
 
         <button routerLink="new-claimant" mat-stroked-button class="add-new-user outline-success">

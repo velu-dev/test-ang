@@ -21,8 +21,7 @@
                     </mat-icon>
                 </button>
                 -->
-                <button mat-button>Help</button>
-                <button mat-button>Log-Out</button>
+               <div class="support-btn"><a href="javaScript:void(0)">Help</a>|<a (click)="logout()">Log Out</a></div>
                 <div *ngIf="user">
                     <button mat-icon-button [title]="user?.first_name" [matMenuTriggerFor]="settings">
                         <div class="welcome_t">

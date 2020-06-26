@@ -31,6 +31,17 @@ mat-toolbar-row {
     font-weight: $font-weight-bold;
   }
   mat-card-actions {
+    .support-btn {
+      margin-top: 15px;
+      color: $light-gray;
+      a {
+        font-size: $font-size-1;
+        text-decoration: none;
+        padding: 10px;
+        color: $text-gray;
+        cursor: pointer;
+      }
+    }
     button {
       color: $sidebar-dark;
       margin-top: 15px;

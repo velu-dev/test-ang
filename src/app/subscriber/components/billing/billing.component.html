@@ -12,6 +12,7 @@
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                 placeholder="Search by bill number, claim number, etc.">
+                <mat-icon >search</mat-icon>
         </div>
         <!-- <span class="spacer"></span>
         <button mat-icon-button class="filter-icon p-t-0 m-t-10" [matMenuTriggerFor]="filter">

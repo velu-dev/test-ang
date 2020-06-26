@@ -1,17 +1,17 @@
 <mat-card class="m-card">
   <mat-card-header>
-    <div class="m-0 content-wrapper-main-title p-t-5">Claimant </div>
+    <div class="m-0 content-wrapper-main-title p-t-5 p-l-10">Claimant </div>
     <span class="spacer"></span>
-    <button mat-stroked-button *ngIf="!editStatus" class="m-b-5 outline-success" (click)="edit()">
+    <button mat-stroked-button *ngIf="!editStatus" class="m-b-5 outline-success edit-btn" (click)="edit()">
       Edit
     </button>
-    <button mat-stroked-button class="outline-success" *ngIf="editStatus" (click)="createClaimant()">
+    <button mat-stroked-button class="filled-success edit-btn" *ngIf="editStatus" (click)="createClaimant()">
       Save
     </button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <div fxLayout="row wrap" fxFlex="100">
+    <div fxLayout="row wrap" fxFlex="100" class="p-t-10">
       <form fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
         [formGroup]="claimantForm">
 
@@ -170,7 +170,7 @@
           <mat-error *ngIf="isClaimantSubmited">Please enter valid zip code</mat-error>
         </mat-form-field>
 
-        <div class="text-center w-100 m-t-10 m-b-50" *ngIf="editStatus">
+        <div class="text-center w-100 m-t-10 m-b-10" *ngIf="editStatus">
           <button mat-stroked-button (click)="cancel()" class="outline-danger" color="warn">Cancel</button>
           <button mat-stroked-button type="submit" (click)="createClaimant()" class="outline-success m-l-10">
             Save </button>
@@ -184,15 +184,16 @@
 
 <mat-card class="m-card m-t-25 billable_item" *ngIf="claimantId">
   <mat-card-header>
-    <div class="m-0 content-wrapper-main-title">Billable Items</div>
+    <div class="m-0 content-wrapper-main-title p-t-5">Billable Items</div>
     <span class="spacer"></span>
-    <button class="btn_success m-b-5" mat-raised-button>New Item</button>
+    <button class="outline-success m-b-5" mat-stroked-button>New Item</button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content class="p-t-3 m-b-0">
     <div class="table-filter">
       <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
         placeholder="Search by type, claim number, examiner, etc.">
+        <mat-icon >search</mat-icon>
     </div>
     <div class="user-detail">
       <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
