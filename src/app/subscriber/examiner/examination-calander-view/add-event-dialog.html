@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Hi {{data.date}}</h1>
+<div mat-dialog-content>
+  <p>Event Date</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.date">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.date" cdkFocusInitial>Ok</button>
+</div>
