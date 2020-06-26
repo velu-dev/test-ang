@@ -5,9 +5,16 @@ mat-card {
     box-shadow: $shadow-style-one !important;
     &:hover {
         box-shadow: $shadow-style-one-hover;
-    }   
+    }
     .add-new-user {
         float: right;
         margin-top: 5px;
     }
+}
+
+.examiner-multiple-name {
+    padding: 5px 10px;
+    font-size: $font-size-1;
+    color: $text-gray;
+    display: block;
 }
