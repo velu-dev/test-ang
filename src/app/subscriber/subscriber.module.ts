@@ -26,7 +26,7 @@ import { ExaminerService } from './service/examiner.service';
 import { AppointmentDetailsComponent, ClaimantPopupComponent, ClaimPopupComponent, BillableitemPopupComponent } from './examiner/appointment-details/appointment-details.component';
 import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
-import { ExaminationCalanderViewComponent } from './examiner/examination-calander-view/examination-calander-view.component';
+import { ExaminationCalanderViewComponent, EventdetailDialog, AddEventDialog } from './examiner/examination-calander-view/examination-calander-view.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
 import { ClaimComponent } from './components/claims/common/claim/claim.component';
@@ -92,7 +92,9 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     NewBillingComponent,
     EditBillingComponent,
     BillilgDialog,
-    SignPopupComponent
+    SignPopupComponent,
+    EventdetailDialog,
+    AddEventDialog
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -100,7 +102,9 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     BillableitemPopupComponent,
     InjuryPopup,
     BillilgDialog,
-    SignPopupComponent
+    SignPopupComponent,
+    EventdetailDialog,
+    AddEventDialog
   ],
   imports: [
     CommonModule,

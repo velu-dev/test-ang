@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FullCalendarComponent } from "@fullcalendar/angular";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import timeGrigPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { EventInput } from '@fullcalendar/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 @Component({
   selector: 'app-examination-calander-view',
   templateUrl: './examination-calander-view.component.html',
@@ -52,103 +54,103 @@ export class ExaminationCalanderViewComponent implements OnInit {
   events: EventInput[] = [
     {
       title: "Will Smith",
-      start: "2020-05-15T04:00:00.453Z",
-      end: "2020-05-15T04:30:00.453Z",
+      start: "2020-06-15T04:00:00.453Z",
+      end: "2020-06-15T04:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Anthony Hopkins",
-      start: "2020-05-16T05:00:00.453Z",
-      end: "2020-05-16T06:30:00.453Z",
+      start: "2020-06-16T05:00:00.453Z",
+      end: "2020-06-16T06:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Charles Chaplin",
-      start: "2020-05-20T08:00:00.453Z",
-      end: "2020-05-20T08:30:00.453Z",
+      start: "2020-06-20T08:00:00.453Z",
+      end: "2020-06-20T08:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Johnny Depp",
-      start: "2020-05-01T09:00:00.453Z",
-      end: "2020-05-01T09:30:00.453Z",
+      start: "2020-06-01T09:00:00.453Z",
+      end: "2020-06-01T09:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "James Cagney",
-      start: "2020-05-03T10:00:00.453Z",
-      end: "2020-05-03T10:30:00.453Z",
+      start: "2020-06-03T10:00:00.453Z",
+      end: "2020-06-03T10:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Morgan Freeman",
-      start: "2020-05-04T05:00:00.453Z",
-      end: "2020-05-04T05:30:00.453Z",
+      start: "2020-06-04T05:00:00.453Z",
+      end: "2020-06-04T05:30:00.453Z",
       backgroundColor: "#FFC400"
     }, {
       title: "Henry Fonda",
-      start: "2020-05-05T04:23:55.453Z",
+      start: "2020-06-05T04:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Bruce Lee",
-      start: "2020-05-05T05:23:55.453Z",
+      start: "2020-06-05T05:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Steve McQueen",
-      start: "2020-05-05T06:23:55.453Z",
+      start: "2020-06-05T06:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "James Stewart",
-      start: "2020-05-06T07:23:55.453Z",
+      start: "2020-06-06T07:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Laurence Olivier",
-      start: "2020-05-07T08:23:55.453Z",
+      start: "2020-06-07T08:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Cary Grant",
-      start: "2020-05-08T09:23:55.453Z",
+      start: "2020-06-08T09:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
@@ -160,31 +162,31 @@ export class ExaminationCalanderViewComponent implements OnInit {
     },
     {
       title: "Spencer Tracy",
-      start: "2020-05-10T10:23:55.453Z",
+      start: "2020-06-10T10:23:55.453Z",
       backgroundColor: "#72E396"
     }, {
       title: "Shah Rukh Khan",
-      start: "2020-05-11T09:23:55.453Z",
+      start: "2020-06-11T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Leonardo DiCaprio",
-      start: "2020-05-12T09:23:55.453Z",
+      start: "2020-06-12T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Gregory Peck",
-      start: "2020-05-13T09:23:55.453Z",
+      start: "2020-06-13T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Sidney Poitier",
-      start: "2020-05-14T09:23:55.453Z",
+      start: "2020-06-14T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Daniel Day-Lewis",
-      start: "2020-05-15T09:23:55.453Z",
+      start: "2020-06-15T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
@@ -196,12 +198,12 @@ export class ExaminationCalanderViewComponent implements OnInit {
     },
     {
       title: "Humphrey Bogart",
-      start: "2020-05-16T09:23:55.453Z",
+      start: "2020-06-16T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Tom Hanks",
-      start: "2020-05-16T09:23:55.453Z",
+      start: "2020-06-16T09:23:55.453Z",
       backgroundColor: "#FF3366"
     }]
   calendarVisible = true;
@@ -209,7 +211,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   calendarWeekends = true;
   calendarEvents: EventInput[];
   selectedDate = "";
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
     this.loadAllEvents();
@@ -228,10 +230,68 @@ export class ExaminationCalanderViewComponent implements OnInit {
     this.calendarEvents = this.events;
   }
 
+  handleEventClick(e) {
+    console.log(e.event.title);
+    this.openEventDetailDialog(e.event.title);
+  }
   handleDateClick(e) {
-
+    this.openAddEventDialog(e);
   }
   dateChanged() {
+    this.calendar.getApi().gotoDate(this.selectedDate)
+    this.calendar.getApi().changeView("timeGridDay")
+  }
 
+  openEventDetailDialog(e): void {
+    console.log(event)
+    const dialogRef = this.dialog.open(EventdetailDialog, {
+      width: '250px',
+      data: { name: e }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+  openAddEventDialog(arg): void {
+    const dialogRef = this.dialog.open(AddEventDialog, {
+      width: '250px',
+      data: { date: arg.date }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log("dsds", arg.date)
+        let event = {
+          title: "Sample Event",
+          start: arg.date,
+          allDay: true
+        };
+        this.calendarEvents = this.calendarEvents.concat(event);
+      }
+    });
+  }
+}
+@Component({
+  selector: 'event-detail-dialog',
+  templateUrl: 'event-detail-dialog.html',
+})
+export class EventdetailDialog {
+  constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'add-event-dialog',
+  templateUrl: 'add-event-dialog.html',
+})
+export class AddEventDialog {
+  constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

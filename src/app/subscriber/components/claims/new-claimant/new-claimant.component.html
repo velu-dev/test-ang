@@ -2,10 +2,10 @@
   <mat-card-header>
     <div class="m-0 content-wrapper-main-title p-t-5 p-l-10">Claimant </div>
     <span class="spacer"></span>
-    <button mat-stroked-button *ngIf="!editStatus" class="m-b-5 outline-success edit-btn" (click)="edit()">
+    <button mat-stroked-button *ngIf="!editStatus && claimantId" class="m-b-5 outline-success" (click)="edit()">
       Edit
     </button>
-    <button mat-stroked-button class="filled-success edit-btn" *ngIf="editStatus" (click)="createClaimant()">
+    <button mat-stroked-button class="filled-success edit-btn" *ngIf="editStatus && claimantId" (click)="createClaimant()">
       Save
     </button>
   </mat-card-header>
@@ -184,7 +184,7 @@
 
 <mat-card class="m-card m-t-25 billable_item" *ngIf="claimantId">
   <mat-card-header>
-    <div class="m-0 content-wrapper-main-title p-t-5">Billable Items</div>
+    <div class="m-0 content-wrapper-main-title p-t-5">Claims</div>
     <span class="spacer"></span>
     <button class="outline-success m-b-5" mat-stroked-button>New Item</button>
   </mat-card-header>
@@ -192,7 +192,7 @@
   <mat-card-content class="p-t-3 m-b-0">
     <div class="table-filter">
       <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-        placeholder="Search by type, claim number, examiner, etc.">
+        placeholder="Search by name, type, number, etc.">
         <mat-icon >search</mat-icon>
     </div>
     <div class="user-detail">

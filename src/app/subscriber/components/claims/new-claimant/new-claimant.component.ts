@@ -82,7 +82,7 @@ export class NewClaimantComponent implements OnInit {
   claimantId: number;
   today: any;
   claimNumber: any = '';
-  editStatus: boolean = false;
+  editStatus: boolean = true;
   filterValue: string;
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -97,6 +97,7 @@ export class NewClaimantComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.claimantId = param.id;
       if (param.id) {
+        this.editStatus = false;
         this.getSingleClaimant();
 
         this.claimService.getclaimantBillable(this.claimantId).subscribe(billableRes => {
@@ -115,6 +116,7 @@ export class NewClaimantComponent implements OnInit {
           console.log("error", error)
           this.dataSource = new MatTableDataSource([]);
         })
+
       }
     })
     this.isHandset$.subscribe(res => {
@@ -176,8 +178,10 @@ export class NewClaimantComponent implements OnInit {
       console.log("error", error)
     })
     this.today = new Date();
+    if (this.claimantId) {
+      this.claimantForm.disable();
+    }
 
-    this.claimantForm.disable();
   }
   getSingleClaimant() {
     this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
@@ -253,9 +257,12 @@ export class NewClaimantComponent implements OnInit {
   cancel() {
     //this._location.back();
     if (this.claimantId) {
-    this.getSingleClaimant();
+      this.getSingleClaimant();
+      this.editStatus = false;
+    }else{
+      this._location.back();
     }
-    this.editStatus = false;
+  
     this.claimantForm.disable();
   }
 

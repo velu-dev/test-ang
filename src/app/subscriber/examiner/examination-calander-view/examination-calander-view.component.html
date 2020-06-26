@@ -5,6 +5,6 @@
     <full-calendar #calendar *ngIf="options" [eventLimit]="options.eventLimit" [themeSystem]="'standard'"
         [bootstrapFontAwesome]="true" [businessHours]="options.businessHours" [editable]="false" [events]="events"
         [header]="options.header" [customButtons]="options.customButtons" [plugins]="options.plugins"
-        (dateClick)="handleDateClick($event)">
+        (dateClick)="handleDateClick($event)" (eventClick)="handleEventClick($event)">
     </full-calendar>
 </div>
