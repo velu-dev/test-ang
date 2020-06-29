@@ -5,7 +5,8 @@
     <button mat-stroked-button *ngIf="!editStatus && claimantId" class="m-b-5 outline-success" (click)="edit()">
       Edit
     </button>
-    <button mat-stroked-button class="filled-success edit-btn" *ngIf="editStatus && claimantId" (click)="createClaimant()">
+    <button mat-stroked-button class="filled-success edit-btn" *ngIf="editStatus && claimantId"
+      (click)="createClaimant()">
       Save
     </button>
   </mat-card-header>
@@ -131,20 +132,22 @@
         </mat-form-field>
 
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Street Address 1</mat-label>
-          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
             placeholder="Street Address 1" formControlName="street1" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Street Address 2</mat-label>
-          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
             placeholder="Street Address 2" formControlName="street2" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
-
+        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div>
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>City</mat-label>
@@ -193,7 +196,7 @@
     <div class="table-filter">
       <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
         placeholder="Search by name, type, number, etc.">
-        <mat-icon >search</mat-icon>
+      <mat-icon>search</mat-icon>
     </div>
     <div class="user-detail">
       <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
@@ -209,7 +212,7 @@
             </span>
             <div (click)="!isMobile ? claimNavigate(element):''">
               <span *ngIf="column == 'exam_type_code'">{{element?.exam_type_code}} </span>
-              <span *ngIf="column == 'claim_number'" >{{element?.claim_number}} </span>
+              <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
               <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury}} </span>
               <span *ngIf="column == 'examiner'">{{element?.ex_last_name}} {{element?.ex_first_name}}</span>
               <span *ngIf="column == 'parts'">{{element?.parts}}</span>
@@ -222,7 +225,7 @@
             <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
               <div (click)="claimNavigate()" class="resposive-table">
                 <div><span>Exam Type</span> {{element.exam_type_code}} </div>
-                <div ><span>Claim Number</span> {{element.claim_number}} </div>
+                <div><span>Claim Number</span> {{element.claim_number}} </div>
                 <div><span>Date of Injury</span> {{element.date_of_injury}} </div>
                 <div><span>Body Parts</span> {{element.parts}} </div>
                 <div><span>Examiner</span> {{element?.ex_last_name}} {{element?.ex_first_name}} </div>
