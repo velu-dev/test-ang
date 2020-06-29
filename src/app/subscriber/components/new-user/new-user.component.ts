@@ -92,7 +92,8 @@ export class NewUserComponent implements OnInit {
             middle_name: res.data.middle_name,
             company_name: res.data.company_name,
             sign_in_email_id: res.data.sign_in_email_id,
-            role_id: res.data.role_id
+            role_id: res.data.role_id,
+            suffix : res.data.suffix
           }
           if (this.isExaminer) {
             let examiner = {
@@ -145,6 +146,7 @@ export class NewUserComponent implements OnInit {
       company_name: [{ value: this.user.company_name, disabled: true }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required],
+      suffix:['']
     });
 
     this.formInit()
