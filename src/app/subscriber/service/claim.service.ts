@@ -113,7 +113,7 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.getBilling + claim_id)
   }
 
-  getclaimantBillable(id): Observable<any>{
+  getclaimantBillable(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.claimantBillable + id)
   }
 }

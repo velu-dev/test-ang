@@ -91,7 +91,7 @@ export const ROUTES = [
             title: 'New User',
             icon: 'dashboard',
             submenu: []
-        },{
+        }, {
             path: '/subscriber/users/edit',
             title: 'Edit User',
             icon: 'dashboard',
@@ -107,9 +107,14 @@ export const ROUTES = [
             title: 'Claimant',
             icon: 'dashboard',
             submenu: []
-        },{
+        }, {
             path: '/subscriber/claimant/edit-claimant',
             title: 'Claimant',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/subscriber/claimant/edit-claim',
+            title: 'Claim',
             icon: 'dashboard',
             submenu: []
         }],
@@ -132,6 +137,11 @@ export const ROUTES = [
                 title: 'New Claims',
                 icon: 'dashboard',
                 submenu: []
+            }, {
+                path: '/subscriber/claims/edit-claim',
+                title: 'Edit Claim',
+                icon: 'dashboard',
+                submenu: []
             }],
     }, {
         path: '/subscriber/manage-location',
@@ -148,12 +158,6 @@ export const ROUTES = [
     {
         path: '/subscriber/billing',
         title: 'Manage Billing',
-        icon: 'dashboard',
-        submenu: [],
-    },
-    {
-        path: '/subscriber/edit-claim',
-        title: 'Edit Claim',
         icon: 'dashboard',
         submenu: [],
     },
@@ -196,7 +200,7 @@ export const ROUTES = [
                 title: 'Claimant',
                 icon: 'dashboard',
                 submenu: []
-            },{
+            }, {
                 path: '/subscriber/manager/edit-claimant',
                 title: 'Claimant',
                 icon: 'dashboard',
@@ -274,7 +278,7 @@ export const ROUTES = [
                 title: 'Claimant',
                 icon: 'dashboard',
                 submenu: []
-            },{
+            }, {
                 path: '/subscriber/staff/edit-claimant',
                 title: 'Claimant',
                 icon: 'dashboard',
@@ -357,7 +361,7 @@ export const ROUTES = [
                     title: 'Claimant',
                     icon: 'dashboard',
                     submenu: []
-                },{
+                }, {
                     path: '/subscriber/examiner/edit-claimant',
                     title: 'Claimant',
                     icon: 'dashboard',

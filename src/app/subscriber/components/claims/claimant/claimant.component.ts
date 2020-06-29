@@ -51,7 +51,7 @@ export class ClaimantComponent implements OnInit {
   filterValue: string;
   tabIndex: number = 0;
   disabled = false;
-  @ViewChild(MatMenuTrigger,{static:false}) trigger: MatMenuTrigger;
+  @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -83,7 +83,6 @@ export class ClaimantComponent implements OnInit {
   users = [];
   getUser() {
     this.claimService.getClaimant().subscribe(res => {
-
       res.data.map(claim => {
         claim.date_of_birth = claim.date_of_birth ? moment(claim.date_of_birth).format("MM-DD-YYYY") : '';
         claim.date_of_injury = claim.date_of_injury ? moment(claim.date_of_injury).format("MM-DD-YYYY") : '';
@@ -97,16 +96,15 @@ export class ClaimantComponent implements OnInit {
         claim.examiner = examiner;
         claim.claimant_name = claim.last_name + ' ' + claim.first_name;
       })
-      //console.log(res.data)
       this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
 
       this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter)) ||  (data.examiner && data.examiner.includes(filter)) || (data.claim_number && data.claim_number.includes(filter)) ;
+        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter)) || (data.examiner && data.examiner.includes(filter)) || (data.claim_number && data.claim_number.includes(filter));
       };
-      this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
   }
   gotoEdit(e) {
