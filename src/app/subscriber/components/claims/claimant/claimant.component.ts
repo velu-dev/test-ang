@@ -87,17 +87,9 @@ export class ClaimantComponent implements OnInit {
       res.data.map(claim => {
         claim.date_of_birth = claim.date_of_birth ? moment(claim.date_of_birth).format("MM-DD-YYYY") : '';
         claim.date_of_injury = claim.date_of_injury ? moment(claim.date_of_injury).format("MM-DD-YYYY") : '';
-        // claim.gender =  claim.gender == "M" ? 'Male' : '' ||  claim.gender == "F" ? 'Female' : '';
-        let examiner = []
-        claim.examiners_name.map(name => {
-          if (name.first_name && name.first_name.trim() != '' && name.last_name && name.last_name.trim() != '') {
-            examiner.push(name.first_name + ' ' + name.last_name)
-          }
-        })
-        claim.examiner = examiner;
+        claim.examiner = claim.ex_last_name + ' ' + claim.ex_first_name;
         claim.claimant_name = claim.last_name + ' ' + claim.first_name;
       })
-      //console.log(res.data)
       this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;

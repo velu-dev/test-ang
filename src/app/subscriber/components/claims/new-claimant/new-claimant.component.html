@@ -186,7 +186,7 @@
   <mat-card-header>
     <div class="m-0 content-wrapper-main-title p-t-5">Claims</div>
     <span class="spacer"></span>
-    <button class="outline-success m-b-5" mat-stroked-button>New Item</button>
+    <button class="outline-success m-b-5" [routerLink]="['/subscriber/claims/new-claim']" mat-stroked-button>New Item</button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content class="p-t-3 m-b-0">
@@ -207,7 +207,7 @@
                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
               </mat-icon>
             </span>
-            <div (click)="!isMobile ? claimNavigate():''">
+            <div (click)="!isMobile ? claimNavigate(element):''">
               <span *ngIf="column == 'exam_type_code'">{{element?.exam_type_code}} </span>
               <span *ngIf="column == 'claim_number'" >{{element?.claim_number}} </span>
               <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury}} </span>
