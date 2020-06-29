@@ -25,6 +25,7 @@
             <div class="table-filter">
                 <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                     placeholder="Search by name, claim number, examiner, etc.">
+                    <mat-icon >search</mat-icon>
             </div>
             <!-- <span class="spacer"></span>
             <button mat-icon-button class="filter-icon" (click)="exportData()">

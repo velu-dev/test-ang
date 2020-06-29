@@ -6,15 +6,15 @@ mat-card {
     &:hover {
         box-shadow: $shadow-style-one-hover;
     }
-    .table-filter {
-        border: none !important;
-        input {
-            border-radius: 50px;
-            width: 250px;
-        }
-    }
     .add-new-user {
         float: right;
         margin-top: 5px;
     }
+}
+
+.examiner-multiple-name {
+    padding: 5px 10px;
+    font-size: $font-size-1;
+    color: $text-gray;
+    display: block;
 }

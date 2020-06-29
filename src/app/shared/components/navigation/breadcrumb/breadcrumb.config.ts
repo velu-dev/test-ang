@@ -104,12 +104,12 @@ export const ROUTES = [
         icon: 'dashboard',
         submenu: [{
             path: '/subscriber/claimant/new-claimant',
-            title: 'New',
+            title: 'Claimant',
             icon: 'dashboard',
             submenu: []
         },{
             path: '/subscriber/claimant/edit-claimant',
-            title: 'Edit',
+            title: 'Claimant',
             icon: 'dashboard',
             submenu: []
         }],
@@ -193,12 +193,12 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: [{
                 path: '/subscriber/manager/new-claimant',
-                title: 'New',
+                title: 'Claimant',
                 icon: 'dashboard',
                 submenu: []
             },{
                 path: '/subscriber/manager/edit-claimant',
-                title: 'Edit',
+                title: 'Claimant',
                 icon: 'dashboard',
                 submenu: []
             }],
@@ -271,12 +271,12 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: [{
                 path: '/subscriber/staff/new-claimant',
-                title: 'New',
+                title: 'Claimant',
                 icon: 'dashboard',
                 submenu: []
             },{
                 path: '/subscriber/staff/edit-claimant',
-                title: 'Edit',
+                title: 'Claimant',
                 icon: 'dashboard',
                 submenu: []
             }],
@@ -354,12 +354,12 @@ export const ROUTES = [
                 icon: 'dashboard',
                 submenu: [{
                     path: '/subscriber/examiner/new-claimant',
-                    title: 'New',
+                    title: 'Claimant',
                     icon: 'dashboard',
                     submenu: []
                 },{
                     path: '/subscriber/examiner/edit-claimant',
-                    title: 'Edit',
+                    title: 'Claimant',
                     icon: 'dashboard',
                     submenu: []
                 }],
