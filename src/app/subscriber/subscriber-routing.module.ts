@@ -126,7 +126,7 @@ const routes: Routes = [{
     component: NewClaimComponent
   }, {
     path: "edit-claim/:id",
-    component: NewClaimComponent
+    component: EditClaimComponent
   }
   ]
 }, {
@@ -179,7 +179,7 @@ const routes: Routes = [{
         component: NewClaimComponent
       }, {
         path: "edit-claim/:id",
-        component: NewClaimComponent
+        component: EditClaimComponent
       }]
     },
     {
@@ -238,7 +238,7 @@ const routes: Routes = [{
       component: NewClaimComponent
     }, {
       path: "edit-claim/:id",
-      component: NewClaimComponent
+      component: EditClaimComponent
     }]
   }, {
     path: "manage-location",
@@ -290,7 +290,7 @@ const routes: Routes = [{
       component: NewClaimComponent
     }, {
       path: "edit-claim/:id",
-      component: NewClaimComponent
+      component: EditClaimComponent
     }]
   }, {
     path: "settings",
@@ -344,7 +344,7 @@ const routes: Routes = [{
       component: NewClaimComponent
     }, {
       path: "edit-claim/:id",
-      component: NewClaimComponent
+      component: EditClaimComponent
     }
     ]
   }, {

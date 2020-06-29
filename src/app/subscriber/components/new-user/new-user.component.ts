@@ -146,7 +146,7 @@ export class NewUserComponent implements OnInit {
       company_name: [{ value: this.user.company_name, disabled: true }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required],
-      suffix:['']
+      suffix:['',Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])]
     });
 
     this.formInit()

@@ -115,7 +115,7 @@ export const ROUTES = [
         },
         {
             path: '/subscriber/claimant/edit-claimant/:id/new-claim',
-            title: 'New Claim',
+            title: 'Claim',
             icon: 'dashboard',
             submenu: []
         }, {
@@ -135,17 +135,17 @@ export const ROUTES = [
         role: 2
     }, {
         path: '/subscriber/claims',
-        title: 'Manage Claims',
+        title: 'Claims',
         icon: 'dashboard',
         submenu: [
             {
                 path: '/subscriber/claims/new-claim',
-                title: 'New Claims',
+                title: 'Claim',
                 icon: 'dashboard',
                 submenu: []
             }, {
                 path: '/subscriber/claims/edit-claim',
-                title: 'Edit Claim',
+                title: 'Claim',
                 icon: 'dashboard',
                 submenu: []
             }],
@@ -235,12 +235,12 @@ export const ROUTES = [
             role: 2
         }, {
             path: '/subscriber/manager/claims',
-            title: 'Manage Claims',
+            title: 'Claims',
             icon: 'dashboard',
             submenu: [
                 {
                     path: '/subscriber/manager/claims/new-claim',
-                    title: 'New Claims',
+                    title: 'Claim',
                     icon: 'dashboard',
                     submenu: []
                 }],
@@ -313,12 +313,12 @@ export const ROUTES = [
             role: 2
         }, {
             path: '/subscriber/staff/claims',
-            title: 'Manage Claims',
+            title: 'Claims',
             icon: 'dashboard',
             submenu: [
                 {
                     path: '/subscriber/staff/claims/new-claim',
-                    title: 'New Claims',
+                    title: 'Claim',
                     icon: 'dashboard',
                     submenu: []
                 }],
@@ -396,12 +396,12 @@ export const ROUTES = [
                 role: 2
             }, {
                 path: '/subscriber/examiner/claims',
-                title: 'Manage Claims',
+                title: 'Claims',
                 icon: 'dashboard',
                 submenu: [
                     {
                         path: '/subscriber/examiner/claims/new-claim',
-                        title: 'New Claims',
+                        title: 'Claim',
                         icon: 'dashboard',
                         submenu: []
                     }],
