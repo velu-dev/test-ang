@@ -5,8 +5,12 @@ import bootstrapPlugin from '@fullcalendar/bootstrap';
 import timeGrigPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { EventInput } from '@fullcalendar/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { ExaminerService } from '../../service/examiner.service';
+import { formatDate } from '@angular/common';
+import { OWL_DATE_TIME_FORMATS, DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 @Component({
   selector: 'app-examination-calander-view',
   templateUrl: './examination-calander-view.component.html',
@@ -50,7 +54,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
   @ViewChild("calendar", { static: false }) calendar: FullCalendarComponent;
   @ViewChild("picker", { static: false }) picker;
-  calendarComponent: FullCalendarComponent;
+  // calendarComponent: FullCalendarComponent;
   events: EventInput[] = [
     {
       title: "Will Smith",
@@ -211,7 +215,12 @@ export class ExaminationCalanderViewComponent implements OnInit {
   calendarWeekends = true;
   calendarEvents: EventInput[];
   selectedDate = "";
-  constructor(public dialog: MatDialog) { }
+  examinars = [];
+  constructor(public dialog: MatDialog, public examinarService: ExaminerService) {
+    this.examinarService.getExaminerList().subscribe(res => {
+      this.examinars = res.data;
+    })
+  }
 
   ngOnInit() {
     this.loadAllEvents();
@@ -231,8 +240,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
 
   handleEventClick(e) {
-    console.log(e.event.title);
-    this.openEventDetailDialog(e.event.title);
+    this.openEventDetailDialog(e);
   }
   handleDateClick(e) {
     this.openAddEventDialog(e);
@@ -243,32 +251,28 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
 
   openEventDetailDialog(e): void {
-    console.log(event)
     const dialogRef = this.dialog.open(EventdetailDialog, {
-      width: '250px',
-      data: { name: e }
+      width: '550px',
+      data: { title: e.event.title, start: e.event.start, end: e.event.end }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if (result) {
+        e.event.remove();
+        result.start = new Date(result.start)
+        result.end = new Date(result.end)
+        // this.calendarEvents = this.calendarEvents.concat(result);
+        this.calendar.getApi().addEvent(result)
+      }
     });
   }
   openAddEventDialog(arg): void {
     const dialogRef = this.dialog.open(AddEventDialog, {
-      width: '250px',
-      data: { date: arg.date }
+      width: '550px',
+      data: { date: arg.date, name: "" }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log("dsds", arg.date)
-        let event = {
-          title: "Sample Event",
-          start: arg.date,
-          allDay: true
-        };
-        this.calendarEvents = this.calendarEvents.concat(event);
-      }
+
     });
   }
 }
@@ -276,7 +280,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   selector: 'event-detail-dialog',
   templateUrl: 'event-detail-dialog.html',
 })
-export class EventdetailDialog {
+export class AddEventDialog {
   constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
   onNoClick(): void {
@@ -284,14 +288,64 @@ export class EventdetailDialog {
   }
 }
 
+export const PICK_FORMATS = {
+  // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
+  display: {
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+  // display: {
+  //   dateInput: 'input',
+  //   monthYearLabel: { year: 'numeric', month: 'short' },
+  //   dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+  //   monthYearA11yLabel: { year: 'numeric', month: 'long' }
+  // }
+};
+export class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'MM-dd-yyyy', this.locale);;
+    } else {
+      return date.toDateString();
+    }
+  }
+}
+export const MY_CUSTOM_FORMATS = {
+  parseInput: 'L LT',
+  fullPickerInput: 'L LT',
+  datePickerInput: 'L',
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
+
 @Component({
-  selector: 'add-event-dialog',
-  templateUrl: 'add-event-dialog.html',
+  selector: 'event-detail-dialog',
+  templateUrl: 'event-detail-dialog.html',
+  providers: [
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  ]
 })
-export class AddEventDialog {
+export class EventdetailDialog {
+  event: any// = { name: "", start_date: "", end_date: "", location: "" }
+  isEdit = false;
   constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    console.log(data)
+    this.event = data;
+  }
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  pickerOpened(p) { }
+  saveEvent() {
+    this.dialogRef.close(this.event)
   }
 }
