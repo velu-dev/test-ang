@@ -76,7 +76,7 @@ export const ROUTES: SideNavInterface[] = [
                 group: "Subscriber",
                 role: 2
             }, {
-                path: '/subscriber/examiner/appointment',
+                path: '/subscriber/appointment',
                 title: 'Examination',
                 icon: 'dashboard',
                 submenu: [],

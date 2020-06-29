@@ -12,14 +12,14 @@
 
                         <div *ngIf="!isEdit" fxFlex="100">
 
-                            <button *ngIf="tabIndex == 0" mat-mini-fab
+                            <button *ngIf="tabIndex == 0 && !isRemoveSearchRemove" mat-mini-fab
                                 [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user"
                                 type="button" (click)="newClaimant()">
                                 <mat-icon>add</mat-icon>
                             </button>
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
 
-                                <mat-tab label="Search Claimants ">
+                                <mat-tab label="Search Claimants " *ngIf="!isRemoveSearchRemove">
                                     <button mat-stroked-button class="show-mobile m-t-10" color="primary"
                                         (click)="searchStatus = !searchStatus ">Advanced Search
                                         <mat-icon class="p-l-10">
@@ -1173,7 +1173,8 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error>Please select valid primary language</mat-error>
-                            <mat-hint *ngIf="!primary_language_spoken">Note: No primary langauge selected. Please select it from Claimant's section!</mat-hint>
+                            <mat-hint *ngIf="!primary_language_spoken">Note: No primary langauge selected. Please select
+                                it from Claimant's section!</mat-hint>
                         </mat-form-field>
                     </div>
 

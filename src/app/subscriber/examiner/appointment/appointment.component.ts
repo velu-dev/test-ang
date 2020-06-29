@@ -66,7 +66,7 @@ export class AppointmentComponent implements OnInit {
       console.log(res)
       res['data'].map(data => {
         data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
-        data.examiner_name = data.examiner_first_name + ' '+ data.examiner_middle_name + ' '+ data.examiner_last_name
+        data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
       })
       this.dataSource = new MatTableDataSource(res['data']);
       this.dataSource.paginator = this.paginator;
@@ -98,7 +98,7 @@ export class AppointmentComponent implements OnInit {
     }
   }
   navigate(element) {
-    this.router.navigate(['/subscriber/examiner/appointment-details', element.claim_id, element.bill_item_id])
+    this.router.navigate(['/subscriber/appointment/appointment-details', element.claim_id, element.bill_item_id])
   }
 
   exportData() {

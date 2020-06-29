@@ -64,7 +64,7 @@ export class ClaimService {
     return this.http.post(environment.baseUrl + api_endpoint.correspondenceUpload, data)
   }
 
-  getSingleClaimant(id) {
+  getSingleClaimant(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getClaimant + id)
   }
 

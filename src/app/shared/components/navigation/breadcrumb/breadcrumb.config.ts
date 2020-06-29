@@ -112,6 +112,12 @@ export const ROUTES = [
             title: 'Claimant',
             icon: 'dashboard',
             submenu: []
+        },
+        {
+            path: '/subscriber/claimant/edit-claimant/:id/new-claim',
+            title: 'New Claim',
+            icon: 'dashboard',
+            submenu: []
         }, {
             path: '/subscriber/claimant/edit-claim',
             title: 'Claim',
@@ -160,6 +166,18 @@ export const ROUTES = [
         title: 'Manage Billing',
         icon: 'dashboard',
         submenu: [],
+    },
+    {
+        path: '/subscriber/appointment',
+        title: 'Manage Examination',
+        icon: 'dashboard',
+        submenu: []
+    },
+    {
+        path: '/subscriber/appointment/appointment-details/',
+        title: 'Examination',
+        icon: 'dashboard',
+        submenu: []
     },
     //Subscriber staff manager
     {

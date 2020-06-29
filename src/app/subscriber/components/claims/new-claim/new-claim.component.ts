@@ -173,11 +173,13 @@ export class NewClaimComponent implements OnInit {
   iseams_entry: boolean = false;
   role: string;
   date: any;
-  primary_language_spoken:boolean = false;
+  primary_language_spoken: boolean = false;
+  claimant_id: any;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
   }
+  isRemoveSearchRemove = false;
 
   dateOfbirthEndValue = new Date();
   claimantChanges: boolean = false;
@@ -211,6 +213,21 @@ export class NewClaimComponent implements OnInit {
     })
 
     this.route.params.subscribe(param => {
+      if (param.claimant_id) {
+        this.claimant_id = param.claimant_id;
+        this.claimService.getSingleClaimant(this.claimant_id).subscribe(claimant => {
+          if (claimant.status) {
+            this.isRemoveSearchRemove = true;
+            this.isClaimantEdit = true;
+            this.addNewClaimant = true;
+            this.isClaimantCreated = true;
+            this.isClaimCreated = true;
+            console.log(claimant.data)
+            this.languageStatus = claimant['data'][0].certified_interpreter_required;
+            this.claimant.patchValue(claimant.data[0])
+          }
+        })
+      }
       if (param.id) {
         this.claimId = param.id;
         this.isEdit = true;
@@ -699,28 +716,28 @@ export class NewClaimComponent implements OnInit {
       return;
     }
     //if (!this.isEdit) {
-      this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
-        this.alertService.openSnackBar(res.message, "success");
-        //this._location.back();
-        if (this.claimant.touched) {
-          this.createClaimant('close')
-        }
-        if (this.claim.touched) {
-          this.submitClaim('close')
-        }
-        this.routeDashboard();
-      }, error => {
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
-   // } else {
-      // this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
-      //   this.alertService.openSnackBar(res.message, "success");
-      //   this.router.navigate(['/subscriber/claims'])
-      //   this._location.back();
-      // }, error => {
-      //   this.alertService.openSnackBar(error.error.message, 'error');
-      // })
-   // }
+    this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
+      this.alertService.openSnackBar(res.message, "success");
+      //this._location.back();
+      if (this.claimant.touched) {
+        this.createClaimant('close')
+      }
+      if (this.claim.touched) {
+        this.submitClaim('close')
+      }
+      this.routeDashboard();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+    // } else {
+    // this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
+    //   this.alertService.openSnackBar(res.message, "success");
+    //   this.router.navigate(['/subscriber/claims'])
+    //   this._location.back();
+    // }, error => {
+    //   this.alertService.openSnackBar(error.error.message, 'error');
+    // })
+    // }
   }
   cancel() {
     this.openDialogCancel('cancel', null)
@@ -1276,7 +1293,7 @@ export class NewClaimComponent implements OnInit {
   injuryCancel() {
     this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   }
-  
+
   langChange() {
     this.claimant.patchValue({ primary_language_spoken: null })
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
@@ -1292,5 +1309,5 @@ export class NewClaimComponent implements OnInit {
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
     this.primary_language_spoken = this.claimant.value.primary_language_spoken ? true : false
   }
-  
+
 }
