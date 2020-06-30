@@ -1,7 +1,7 @@
 @import "variables";
 
 .mat-tab-group .mat-tab-label-active {
-  background-color: $tab-active !important;
+  background-color: $light-color !important;
   opacity: 1 !important;
 }
 .user-list,.doc-list {
@@ -12,4 +12,7 @@
       background-color: $tab-bg-1 !important;
     }
   
+}
+.mat-ink-bar {
+  background-color: $sidebar-dark !important;
 }
