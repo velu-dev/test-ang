@@ -139,7 +139,7 @@ export class NewClaimantComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required])],
       first_name: ['', Validators.compose([Validators.required,])],
       middle_name: [''],
-      suffix: [null],
+      suffix:[null, Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       date_of_birth: [null, Validators.required],
       gender: [null],
       email: ["", Validators.compose([Validators.email])],
