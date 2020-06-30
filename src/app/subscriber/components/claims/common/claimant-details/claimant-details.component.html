@@ -34,21 +34,27 @@
                 </div>
             </div>
         </div> -->
-        <form fxLayout="row wrap" fxFlex="100" class="p-t-10" >
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3"  fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
-            <mat-label>Name</mat-label>
-            <input matInput placeholder="Name" value="{{claimantDetailsclaiman.middle_name}}"  autocomplete="off" disabled>
-        </mat-form-field>
+        <form fxLayout="row wrap" fxFlex="100" class="p-t-10">
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3" fxFlex.md="33.3"
+                fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" value="{{claimantDetailsclaimant.first_name}}" autocomplete="off"
+                    disabled>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3"  fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
-            <mat-label>Date of Birth</mat-label>
-            <input matInput placeholder="Date of Birth" value="{{claimantDetailsclaiman.date_of_birth | date:'MM-dd-yyyy'}}" autocomplete="off" disabled>
-        </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3" fxFlex.md="33.3"
+                fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput placeholder="Date of Birth"
+                    value="{{claimantDetailsclaimant.date_of_birth | date:'MM-dd-yyyy'}}" autocomplete="off" disabled>
+            </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3"  fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
-            <mat-label>Phone Number</mat-label>
-            <input matInput placeholder="Phone Number" value="{{claimantDetailsclaiman.phone_no_1 | mask:'(000) 000-0000'}}" autocomplete="off" disabled>
-        </mat-form-field>
-    </form>
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3" fxFlex.md="33.3"
+                fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Phone Number</mat-label>
+                <input matInput placeholder="Phone Number"
+                    value="{{claimantDetailsclaimant.phone_no_1 | mask:'(000) 000-0000'}}" autocomplete="off" disabled>
+            </mat-form-field>
+        </form>
     </mat-card-content>
 </mat-card>

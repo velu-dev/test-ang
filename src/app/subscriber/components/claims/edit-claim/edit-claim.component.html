@@ -38,20 +38,8 @@
 <!-- ###~~~~~  injury  ~~~~~###-->
 <div class="injury m-t-25" fxLayout="row wrap">
     <div fxFlex="100">
-        <mat-card>
-            <mat-card-header>
-                <div class="content-wrapper-main-title p-t-10 m-b-10">Injury </div>
-                <span class="spacer"></span>
-                <button mat-stroked-button color="primary" (click)="addInjury()" class="m-b-5 outline-success">
-                    Add
-                </button>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content class="p-b-15">
-                <app-injury *ngIf="!isLoading" [date_of_birth]="dateOfBirth" [body_part]="bodyParts"
-                    [claim_id]="claimId" [state]="states"></app-injury>
-            </mat-card-content>
-        </mat-card>
+        <app-injury *ngIf="!isLoading" [date_of_birth]="dateOfBirth" [body_part]="bodyParts" [claim_id]="claimId"
+            [state]="states"></app-injury>
     </div>
 </div>
 
@@ -80,7 +68,7 @@
                 <div>
                     <button mat-stroked-button *ngIf="!claimAdminEdit"
                         (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit;saveClick.claimAdmin = false"
-                       class="m-b-5 outline-success">
+                        class="m-b-5 outline-success">
                         Edit
                     </button>
                     <button mat-stroked-button *ngIf="claimAdminEdit"
@@ -139,8 +127,8 @@
                 <div class="content-wrapper-main-title p-t-10 m-b-10"> Applicant Attorney </div>
                 <span class="spacer"></span>
                 <div>
-                    <button *ngIf="!aaEdit" mat-stroked-button
-                        (click)="$event.stopPropagation();aaEdit = !aaEdit" class="m-b-5 outline-success">
+                    <button *ngIf="!aaEdit" mat-stroked-button (click)="$event.stopPropagation();aaEdit = !aaEdit"
+                        class="m-b-5 outline-success">
                         Edit
                     </button>
                     <button *ngIf="aaEdit" mat-stroked-button
@@ -168,8 +156,8 @@
                 <div class="content-wrapper-main-title p-t-10 m-b-10"> Defense Attorney </div>
                 <span class="spacer"></span>
                 <div>
-                    <button *ngIf="!daEdit" mat-stroked-button
-                        (click)="$event.stopPropagation();daEdit = !daEdit" class="m-b-5 outline-success">
+                    <button *ngIf="!daEdit" mat-stroked-button (click)="$event.stopPropagation();daEdit = !daEdit"
+                        class="m-b-5 outline-success">
                         Edit
                     </button>
                     <button *ngIf="daEdit" mat-stroked-button
@@ -197,8 +185,8 @@
                 <div class="content-wrapper-main-title p-t-10 m-b-10"> DEU Office </div>
                 <span class="spacer"></span>
                 <div>
-                    <button *ngIf="!deoEdit" mat-stroked-button
-                        (click)="$event.stopPropagation();deoEdit = !deoEdit" class="m-b-5 outline-success">
+                    <button *ngIf="!deoEdit" mat-stroked-button (click)="$event.stopPropagation();deoEdit = !deoEdit"
+                        class="m-b-5 outline-success">
                         Edit
                     </button>
                     <button *ngIf="deoEdit" mat-stroked-button
@@ -211,8 +199,8 @@
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
                 <app-deo *ngIf="!isLoading" [save]="saveClick.deu" (isEditComplete)="isEditChange($event, 'deu')"
-                [state]="states" [deu]="deuDetail" [edit]="deoEdit">
-            </app-deo>
+                    [state]="states" [deu]="deuDetail" [edit]="deoEdit">
+                </app-deo>
             </mat-card-content>
         </mat-card>
     </div>
