@@ -26,7 +26,8 @@ export class BillableItemAwaitingComponent implements OnInit {
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
-  columnName = []
+  columnName = [];
+  filterValue: string;
   constructor(private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -47,6 +48,12 @@ export class BillableItemAwaitingComponent implements OnInit {
     if (this.isMobile) {
       this.expandId = element.id;
     }
+  }
+  applyFilter(filterValue: string) {
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
   }
 
 }
