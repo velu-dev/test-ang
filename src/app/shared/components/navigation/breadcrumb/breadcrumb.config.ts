@@ -84,7 +84,7 @@ export const ROUTES = [
     },
     {
         path: '/subscriber/users',
-        title: 'User Management',
+        title: 'Users',
         icon: 'credit_card',
         submenu: [{
             path: '/subscriber/users/new',
@@ -128,9 +128,19 @@ export const ROUTES = [
         role: 2
     }, {
         path: '/subscriber/billable-item',
-        title: 'Manage Billable Item',
+        title: 'Billable Items',
         icon: 'dashboard',
-        submenu: [],
+        submenu: [ {
+            path: '/subscriber/billable-item/new-billable-item',
+            title: 'Billable Item',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/subscriber/billable-item/edit-billable-item',
+            title: 'Billable Item',
+            icon: 'dashboard',
+            submenu: []
+        }],
         group: "Subscriber",
         role: 2
     }, {
@@ -150,16 +160,21 @@ export const ROUTES = [
                 submenu: []
             }],
     }, {
-        path: '/subscriber/manage-location',
-        title: 'Manage Locations',
+        path: '/subscriber/location',
+        title: 'Locations',
         icon: 'map',
-        submenu: [],
-    },
-    {
-        path: '/subscriber/new-billable-item',
-        title: 'Manage Billable Item',
-        icon: 'dashboard',
-        submenu: [],
+        submenu: [
+            {
+                path: '/subscriber/location/new-location',
+                title: 'Location',
+                icon: 'dashboard',
+                submenu: []
+            }, {
+                path: '/subscriber/location/edit-location',
+                title: 'Location',
+                icon: 'dashboard',
+                submenu: []
+            }],
     },
     {
         path: '/subscriber/billing',
@@ -169,17 +184,17 @@ export const ROUTES = [
     },
     {
         path: '/subscriber/appointment',
-        title: 'Manage Examination',
+        title: 'Examinations',
         icon: 'dashboard',
-        submenu: []
+        submenu: [{
+            path: '/subscriber/appointment/appointment-details',
+            title: 'Examination',
+            icon: 'dashboard',
+            submenu: []
+        },]
     },
-    {
-        path: '/subscriber/appointment/appointment-details/',
-        title: 'Examination',
-        icon: 'dashboard',
-        submenu: []
-    },
-    //Subscriber staff manager
+   
+   // Subscriber staff manager
     {
         path: '/subscriber/manager',
         title: 'Dashboard',
@@ -214,13 +229,24 @@ export const ROUTES = [
             title: 'Claimants',
             icon: 'dashboard',
             submenu: [{
-                path: '/subscriber/manager/new-claimant',
+                path: '/subscriber/manager/claimant/new-claimant',
                 title: 'Claimant',
                 icon: 'dashboard',
                 submenu: []
             }, {
-                path: '/subscriber/manager/edit-claimant',
+                path: '/subscriber/manager/claimant/edit-claimant',
                 title: 'Claimant',
+                icon: 'dashboard',
+                submenu: []
+            },
+            {
+                path: '/subscriber/manager/claimant/edit-claimant/:id/new-claim',
+                title: 'Claim',
+                icon: 'dashboard',
+                submenu: []
+            }, {
+                path: '/subscriber/manager/claimant/edit-claim',
+                title: 'Claim',
                 icon: 'dashboard',
                 submenu: []
             }],
@@ -228,9 +254,19 @@ export const ROUTES = [
             role: 2
         }, {
             path: '/subscriber/manager/billable-item',
-            title: 'Manage Billable Item',
+            title: 'Billable Items',
             icon: 'dashboard',
-            submenu: [],
+            submenu: [ {
+                path: '/subscriber/manager/billable-item/new-billable-item',
+                title: 'Billable Item',
+                icon: 'dashboard',
+                submenu: []
+            }, {
+                path: '/subscriber/manager/billable-item/edit-billable-item',
+                title: 'Billable Item',
+                icon: 'dashboard',
+                submenu: []
+            }],
             group: "Subscriber",
             role: 2
         }, {
@@ -243,12 +279,39 @@ export const ROUTES = [
                     title: 'Claim',
                     icon: 'dashboard',
                     submenu: []
+                }, {
+                    path: '/subscriber/manager/claims/edit-claim',
+                    title: 'Claim',
+                    icon: 'dashboard',
+                    submenu: []
                 }],
         }, {
-            path: '/subscriber/manager/manage-location',
-            title: 'Manage Locations',
+            path: '/subscriber/manager/location',
+            title: 'Locations',
             icon: 'map',
-            submenu: [],
+            submenu: [
+                {
+                    path: '/subscriber/manager/location/new-location',
+                    title: 'Location',
+                    icon: 'dashboard',
+                    submenu: []
+                }, {
+                    path: '/subscriber/manager/location/edit-location',
+                    title: 'Location',
+                    icon: 'dashboard',
+                    submenu: []
+                }],
+        },
+        {
+            path: '/subscriber/manager/appointment',
+            title: 'Examinations',
+            icon: 'dashboard',
+            submenu: [{
+                path: '/subscriber/manager/appointment/appointment-details',
+                title: 'Examination',
+                icon: 'dashboard',
+                submenu: []
+            },]
         }],
     },
     //Subscriber staff
@@ -262,43 +325,38 @@ export const ROUTES = [
             icon: 'dashboard',
             submenu: [],
         }, {
-            path: '/subscriber/staff/manage-address',
-            title: 'Add Location',
-            icon: 'dashboard',
-            submenu: [],
-        }, {
             path: '/subscriber/staff/billing',
             title: 'Manage Billing',
             icon: 'dashboard',
             submenu: [],
         }, {
-            path: '/subscriber/staff/edit-address',
-            title: 'Edit Location',
+            path: '/subscriber/staff/settings',
+            title: 'Settings',
             icon: 'dashboard',
-            submenu: [],
-        }, {
-            path: '/subscriber/staff/examiner-list',
-            title: 'Manage Examiner',
-            icon: 'dashboard',
-            submenu: [],
-        },
-        {
-            path: '/subscriber/staff/manage-location',
-            title: 'Manage Locations',
-            icon: 'map',
-            submenu: [],
+            submenu: []
         }, {
             path: '/subscriber/staff/claimant',
             title: 'Claimants',
             icon: 'dashboard',
             submenu: [{
-                path: '/subscriber/staff/new-claimant',
+                path: '/subscriber/staff/claimant/new-claimant',
                 title: 'Claimant',
                 icon: 'dashboard',
                 submenu: []
             }, {
-                path: '/subscriber/staff/edit-claimant',
+                path: '/subscriber/staff/claimant/edit-claimant',
                 title: 'Claimant',
+                icon: 'dashboard',
+                submenu: []
+            },
+            {
+                path: '/subscriber/staff/claimant/edit-claimant/:id/new-claim',
+                title: 'Claim',
+                icon: 'dashboard',
+                submenu: []
+            }, {
+                path: '/subscriber/staff/claimant/edit-claim',
+                title: 'Claim',
                 icon: 'dashboard',
                 submenu: []
             }],
@@ -306,9 +364,19 @@ export const ROUTES = [
             role: 2
         }, {
             path: '/subscriber/staff/billable-item',
-            title: 'Manage Billable Item',
+            title: 'Billable Items',
             icon: 'dashboard',
-            submenu: [],
+            submenu: [ {
+                path: '/subscriber/staff/billable-item/new-billable-item',
+                title: 'Billable Item',
+                icon: 'dashboard',
+                submenu: []
+            }, {
+                path: '/subscriber/staff/billable-item/edit-billable-item',
+                title: 'Billable Item',
+                icon: 'dashboard',
+                submenu: []
+            }],
             group: "Subscriber",
             role: 2
         }, {
@@ -321,14 +389,46 @@ export const ROUTES = [
                     title: 'Claim',
                     icon: 'dashboard',
                     submenu: []
+                }, {
+                    path: '/subscriber/staff/claims/edit-claim',
+                    title: 'Claim',
+                    icon: 'dashboard',
+                    submenu: []
                 }],
+        }, {
+            path: '/subscriber/staff/location',
+            title: 'Locations',
+            icon: 'map',
+            submenu: [
+                {
+                    path: '/subscriber/staff/location/new-location',
+                    title: 'Location',
+                    icon: 'dashboard',
+                    submenu: []
+                }, {
+                    path: '/subscriber/staff/location/edit-location',
+                    title: 'Location',
+                    icon: 'dashboard',
+                    submenu: []
+                }],
+        },
+        {
+            path: '/subscriber/staff/appointment',
+            title: 'Examinations',
+            icon: 'dashboard',
+            submenu: [{
+                path: '/subscriber/staff/appointment/appointment-details',
+                title: 'Examination',
+                icon: 'dashboard',
+                submenu: []
+            },]
         }
-            // , {
-            //     path: '/subscriber/manager/settings',
-            //     title: 'Settings',
-            //     icon: 'dashboard',
-            //     submenu: []
-            // },
+            , {
+                path: '/subscriber/staff/settings',
+                title: 'Settings',
+                icon: 'dashboard',
+                submenu: []
+            },
         ],
     },
     {
@@ -348,40 +448,34 @@ export const ROUTES = [
                 submenu: []
             },
             {
-                path: '/subscriber/examiner/appointment',
-                title: 'Manage Examination',
-                icon: 'dashboard',
-                submenu: []
-            },
-            {
                 path: '/subscriber/examiner/billing',
                 title: 'Manage Billing',
                 icon: 'dashboard',
                 submenu: [],
             },
             {
-                path: '/subscriber/examiner/appointment-details',
-                title: 'Examination',
-                icon: 'dashboard',
-                submenu: []
-            },
-            {
-                path: '/subscriber/examiner/settings',
-                title: 'Settings',
-                icon: 'dashboard',
-                submenu: []
-            }, {
                 path: '/subscriber/examiner/claimant',
                 title: 'Claimants',
                 icon: 'dashboard',
                 submenu: [{
-                    path: '/subscriber/examiner/new-claimant',
+                    path: '/subscriber/examiner/claimant/new-claimant',
                     title: 'Claimant',
                     icon: 'dashboard',
                     submenu: []
                 }, {
-                    path: '/subscriber/examiner/edit-claimant',
+                    path: '/subscriber/examiner/claimant/edit-claimant',
                     title: 'Claimant',
+                    icon: 'dashboard',
+                    submenu: []
+                },
+                {
+                    path: '/subscriber/examiner/claimant/edit-claimant/:id/new-claim',
+                    title: 'Claim',
+                    icon: 'dashboard',
+                    submenu: []
+                }, {
+                    path: '/subscriber/examiner/claimant/edit-claim',
+                    title: 'Claim',
                     icon: 'dashboard',
                     submenu: []
                 }],
@@ -389,9 +483,19 @@ export const ROUTES = [
                 role: 2
             }, {
                 path: '/subscriber/examiner/billable-item',
-                title: 'Manage Billable Item',
+                title: 'Billable Items',
                 icon: 'dashboard',
-                submenu: [],
+                submenu: [ {
+                    path: '/subscriber/examiner/billable-item/new-billable-item',
+                    title: 'Billable Item',
+                    icon: 'dashboard',
+                    submenu: []
+                }, {
+                    path: '/subscriber/examiner/billable-item/edit-billable-item',
+                    title: 'Billable Item',
+                    icon: 'dashboard',
+                    submenu: []
+                }],
                 group: "Subscriber",
                 role: 2
             }, {
@@ -404,13 +508,46 @@ export const ROUTES = [
                         title: 'Claim',
                         icon: 'dashboard',
                         submenu: []
+                    }, {
+                        path: '/subscriber/examiner/claims/edit-claim',
+                        title: 'Claim',
+                        icon: 'dashboard',
+                        submenu: []
                     }],
             }, {
-                path: '/subscriber/examiner/manage-location',
-                title: 'Manage Locations',
+                path: '/subscriber/examiner/location',
+                title: 'Locations',
                 icon: 'map',
-                submenu: [],
-            }]
+                submenu: [
+                    {
+                        path: '/subscriber/examiner/location/new-location',
+                        title: 'Location',
+                        icon: 'dashboard',
+                        submenu: []
+                    }, {
+                        path: '/subscriber/examiner/location/edit-location',
+                        title: 'Location',
+                        icon: 'dashboard',
+                        submenu: []
+                    }],
+            },
+            {
+                path: '/subscriber/examiner/appointment',
+                title: 'Examinations',
+                icon: 'dashboard',
+                submenu: [{
+                    path: '/subscriber/examiner/appointment/appointment-details',
+                    title: 'Examination',
+                    icon: 'dashboard',
+                    submenu: []
+                },]
+            }
+                , {
+                    path: '/subscriber/examiner/settings',
+                    title: 'Settings',
+                    icon: 'dashboard',
+                    submenu: []
+                },]
     },
 
     // //Vendor historian Menu

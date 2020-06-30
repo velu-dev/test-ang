@@ -32,7 +32,9 @@ export class BreadcrumbComponent implements OnInit {
         this.store.dispatch(new breadcrumbActions.ListBreadcrumb());
     }
     breadCrumb(menu, index) {
+        if(menu.submenu.length != 0){ 
         this.router.navigate([menu.path])
+        }
         this.store.dispatch(new breadcrumbActions.RemoveBreadcrumb({ index: index }));
     }
     breadCrumbMain() {

@@ -40,7 +40,7 @@ export class UpdateBillableItemComponent implements OnInit {
 
 
   navigateBillableEdit(e) {
-    this.router.navigate(['/subscriber/new-billable-item', this.claimId, this.claimantId, e.id])
+    this.router.navigate(['/subscriber/billable-item/new-billable-item', this.claimId, this.claimantId, e.id])
   }
 
 
