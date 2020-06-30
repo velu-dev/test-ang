@@ -118,10 +118,10 @@ export class BillableItemComponent implements OnInit {
   }
 
   navigate(element) {
-    this.router.navigate(['/subscriber/examiner/appointment-details', element.claim_id, element.id])
+    this.router.navigate(['/subscriber/appointment/appointment-details', element.claim_id, element.id])
   }
 
   navigateBillableEdit(e) {
-    this.router.navigate(['/subscriber/new-billable-item', e.claim_id, e.claimant_id, e.id])
+    this.router.navigate(['/subscriber/billable-item/edit-billable-item', e.claim_id, e.claimant_id, e.id])
   }
 }

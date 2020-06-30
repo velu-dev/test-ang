@@ -6,9 +6,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./claimant-details.component.scss']
 })
 export class ClaimantDetailsComponent implements OnInit {
-  @Input('claimant') claimantDetailsclaiman;
+  @Input('claimant') claimantDetailsclaimant;
   @Input('state') states;
-  constructor() { }
+  constructor() {
+    console.log("saasa", this.claimantDetailsclaimant)
+  }
 
   ngOnInit() {
   }

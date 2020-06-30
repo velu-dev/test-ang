@@ -76,7 +76,7 @@ export class ExaminerListComponent implements OnInit {
   }
 
   onDisable(data, user) {
-    this.router.navigate(['/subscriber/staff/manage-address',user.id])
+    this.router.navigate(['/subscriber/location/new-location',user.id])
   }
 
 }

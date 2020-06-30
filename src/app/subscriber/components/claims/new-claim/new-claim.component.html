@@ -327,10 +327,10 @@
                                     (click)="cancel()">Cancel</button>
                                 <button mat-stroked-button type="submit" class="m-r-10 outline-accent"
                                     (click)="createClaimant('close')">
-                                    Save & Close</button>
+                                   {{isClaimantEdit ? "Update" : "Save"}} & Close</button>
                                 <button mat-stroked-button type="submit" class="m-r-10 outline-success"
                                     (click)="createClaimant('next')">
-                                    Save & Next</button>
+                                    {{isClaimantEdit ? "Update" : "Save"}} & Next</button>
 
                             </div>
                         </div>

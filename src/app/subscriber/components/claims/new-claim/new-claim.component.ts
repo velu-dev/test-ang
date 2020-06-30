@@ -222,7 +222,8 @@ export class NewClaimComponent implements OnInit {
             this.addNewClaimant = true;
             this.isClaimantCreated = true;
             this.isClaimCreated = true;
-            console.log(claimant.data)
+            this.tabIndex = 1;
+            this.searchStatus = false;
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
           }
@@ -417,7 +418,7 @@ export class NewClaimComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required])],
       middle_name: [''],
       salutation: [null, Validators.compose([Validators.maxLength(4)])],
-      suffix: [null],
+      suffix:[null, Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       gender: [null],
