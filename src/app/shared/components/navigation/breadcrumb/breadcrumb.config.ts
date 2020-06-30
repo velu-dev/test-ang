@@ -130,7 +130,7 @@ export const ROUTES = [
         path: '/subscriber/billable-item',
         title: 'Billable Items',
         icon: 'dashboard',
-        submenu: [ {
+        submenu: [{
             path: '/subscriber/billable-item/new-billable-item',
             title: 'Billable Item',
             icon: 'dashboard',
@@ -193,361 +193,360 @@ export const ROUTES = [
             submenu: []
         },]
     },
-   
-   // Subscriber staff manager
+
+    // Subscriber staff manager
     {
         path: '/subscriber/manager',
         title: 'Dashboard',
         icon: 'dashboard',
+        submenu: [],
+    }, {
+        path: '/subscriber/manager/dashboard',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    }, {
+        path: '/subscriber/manager/staff',
+        title: 'Staff Management',
+        icon: 'dashboard',
         submenu: [{
-            path: '/subscriber/manager/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-        }, {
-            path: '/subscriber/manager/staff',
-            title: 'Staff Management',
-            icon: 'dashboard',
-            submenu: [],
-        }, {
             path: '/subscriber/manager/staff/new',
             title: 'New User',
             icon: 'dashboard',
             submenu: []
-        }, {
-            path: '/subscriber/manager/billing',
-            title: 'Manage Billing',
-            icon: 'dashboard',
-            submenu: [],
-        }, {
-            path: '/subscriber/manager/settings',
-            title: 'Settings',
+        },],
+    }, {
+        path: '/subscriber/manager/billing',
+        title: 'Manage Billing',
+        icon: 'dashboard',
+        submenu: [],
+    }, {
+        path: '/subscriber/manager/settings',
+        title: 'Settings',
+        icon: 'dashboard',
+        submenu: []
+    }, {
+        path: '/subscriber/manager/claimant',
+        title: 'Claimants',
+        icon: 'dashboard',
+        submenu: [{
+            path: '/subscriber/manager/claimant/new-claimant',
+            title: 'Claimant',
             icon: 'dashboard',
             submenu: []
         }, {
-            path: '/subscriber/manager/claimant',
-            title: 'Claimants',
+            path: '/subscriber/manager/claimant/edit-claimant',
+            title: 'Claimant',
             icon: 'dashboard',
-            submenu: [{
-                path: '/subscriber/manager/claimant/new-claimant',
-                title: 'Claimant',
-                icon: 'dashboard',
-                submenu: []
-            }, {
-                path: '/subscriber/manager/claimant/edit-claimant',
-                title: 'Claimant',
-                icon: 'dashboard',
-                submenu: []
-            },
-            {
-                path: '/subscriber/manager/claimant/edit-claimant/:id/new-claim',
-                title: 'Claim',
-                icon: 'dashboard',
-                submenu: []
-            }, {
-                path: '/subscriber/manager/claimant/edit-claim',
-                title: 'Claim',
-                icon: 'dashboard',
-                submenu: []
-            }],
-            group: "Subscriber",
-            role: 2
-        }, {
-            path: '/subscriber/manager/billable-item',
-            title: 'Billable Items',
-            icon: 'dashboard',
-            submenu: [ {
-                path: '/subscriber/manager/billable-item/new-billable-item',
-                title: 'Billable Item',
-                icon: 'dashboard',
-                submenu: []
-            }, {
-                path: '/subscriber/manager/billable-item/edit-billable-item',
-                title: 'Billable Item',
-                icon: 'dashboard',
-                submenu: []
-            }],
-            group: "Subscriber",
-            role: 2
-        }, {
-            path: '/subscriber/manager/claims',
-            title: 'Claims',
-            icon: 'dashboard',
-            submenu: [
-                {
-                    path: '/subscriber/manager/claims/new-claim',
-                    title: 'Claim',
-                    icon: 'dashboard',
-                    submenu: []
-                }, {
-                    path: '/subscriber/manager/claims/edit-claim',
-                    title: 'Claim',
-                    icon: 'dashboard',
-                    submenu: []
-                }],
-        }, {
-            path: '/subscriber/manager/location',
-            title: 'Locations',
-            icon: 'map',
-            submenu: [
-                {
-                    path: '/subscriber/manager/location/new-location',
-                    title: 'Location',
-                    icon: 'dashboard',
-                    submenu: []
-                }, {
-                    path: '/subscriber/manager/location/edit-location',
-                    title: 'Location',
-                    icon: 'dashboard',
-                    submenu: []
-                }],
+            submenu: []
         },
         {
-            path: '/subscriber/manager/appointment',
-            title: 'Examinations',
+            path: '/subscriber/manager/claimant/edit-claimant/:id/new-claim',
+            title: 'Claim',
             icon: 'dashboard',
-            submenu: [{
-                path: '/subscriber/manager/appointment/appointment-details',
-                title: 'Examination',
+            submenu: []
+        }, {
+            path: '/subscriber/manager/claimant/edit-claim',
+            title: 'Claim',
+            icon: 'dashboard',
+            submenu: []
+        }],
+        group: "Subscriber",
+        role: 2
+    }, {
+        path: '/subscriber/manager/billable-item',
+        title: 'Billable Items',
+        icon: 'dashboard',
+        submenu: [{
+            path: '/subscriber/manager/billable-item/new-billable-item',
+            title: 'Billable Item',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/subscriber/manager/billable-item/edit-billable-item',
+            title: 'Billable Item',
+            icon: 'dashboard',
+            submenu: []
+        }],
+        group: "Subscriber",
+        role: 2
+    }, {
+        path: '/subscriber/manager/claims',
+        title: 'Claims',
+        icon: 'dashboard',
+        submenu: [
+            {
+                path: '/subscriber/manager/claims/new-claim',
+                title: 'Claim',
                 icon: 'dashboard',
                 submenu: []
-            },]
-        }],
+            }, {
+                path: '/subscriber/manager/claims/edit-claim',
+                title: 'Claim',
+                icon: 'dashboard',
+                submenu: []
+            }],
+    }, {
+        path: '/subscriber/manager/location',
+        title: 'Locations',
+        icon: 'map',
+        submenu: [
+            {
+                path: '/subscriber/manager/location/new-location',
+                title: 'Location',
+                icon: 'dashboard',
+                submenu: []
+            }, {
+                path: '/subscriber/manager/location/edit-location',
+                title: 'Location',
+                icon: 'dashboard',
+                submenu: []
+            }],
+    },
+    {
+        path: '/subscriber/manager/appointment',
+        title: 'Examinations',
+        icon: 'dashboard',
+        submenu: [{
+            path: '/subscriber/manager/appointment/appointment-details',
+            title: 'Examination',
+            icon: 'dashboard',
+            submenu: []
+        },]
     },
     //Subscriber staff
     {
         path: '/subscriber/staff',
         title: 'Dashboard',
         icon: 'dashboard',
+        submenu: [],
+    }, {
+        path: '/subscriber/staff/dashboard',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: [],
+    }, {
+        path: '/subscriber/staff/billing',
+        title: 'Manage Billing',
+        icon: 'dashboard',
+        submenu: [],
+    }, {
+        path: '/subscriber/staff/settings',
+        title: 'Settings',
+        icon: 'dashboard',
+        submenu: []
+    }, {
+        path: '/subscriber/staff/claimant',
+        title: 'Claimants',
+        icon: 'dashboard',
         submenu: [{
-            path: '/subscriber/staff/dashboard',
-            title: 'Dashboard',
-            icon: 'dashboard',
-            submenu: [],
-        }, {
-            path: '/subscriber/staff/billing',
-            title: 'Manage Billing',
-            icon: 'dashboard',
-            submenu: [],
-        }, {
-            path: '/subscriber/staff/settings',
-            title: 'Settings',
+            path: '/subscriber/staff/claimant/new-claimant',
+            title: 'Claimant',
             icon: 'dashboard',
             submenu: []
         }, {
-            path: '/subscriber/staff/claimant',
-            title: 'Claimants',
+            path: '/subscriber/staff/claimant/edit-claimant',
+            title: 'Claimant',
             icon: 'dashboard',
-            submenu: [{
-                path: '/subscriber/staff/claimant/new-claimant',
-                title: 'Claimant',
-                icon: 'dashboard',
-                submenu: []
-            }, {
-                path: '/subscriber/staff/claimant/edit-claimant',
-                title: 'Claimant',
-                icon: 'dashboard',
-                submenu: []
-            },
-            {
-                path: '/subscriber/staff/claimant/edit-claimant/:id/new-claim',
-                title: 'Claim',
-                icon: 'dashboard',
-                submenu: []
-            }, {
-                path: '/subscriber/staff/claimant/edit-claim',
-                title: 'Claim',
-                icon: 'dashboard',
-                submenu: []
-            }],
-            group: "Subscriber",
-            role: 2
-        }, {
-            path: '/subscriber/staff/billable-item',
-            title: 'Billable Items',
-            icon: 'dashboard',
-            submenu: [ {
-                path: '/subscriber/staff/billable-item/new-billable-item',
-                title: 'Billable Item',
-                icon: 'dashboard',
-                submenu: []
-            }, {
-                path: '/subscriber/staff/billable-item/edit-billable-item',
-                title: 'Billable Item',
-                icon: 'dashboard',
-                submenu: []
-            }],
-            group: "Subscriber",
-            role: 2
-        }, {
-            path: '/subscriber/staff/claims',
-            title: 'Claims',
-            icon: 'dashboard',
-            submenu: [
-                {
-                    path: '/subscriber/staff/claims/new-claim',
-                    title: 'Claim',
-                    icon: 'dashboard',
-                    submenu: []
-                }, {
-                    path: '/subscriber/staff/claims/edit-claim',
-                    title: 'Claim',
-                    icon: 'dashboard',
-                    submenu: []
-                }],
-        }, {
-            path: '/subscriber/staff/location',
-            title: 'Locations',
-            icon: 'map',
-            submenu: [
-                {
-                    path: '/subscriber/staff/location/new-location',
-                    title: 'Location',
-                    icon: 'dashboard',
-                    submenu: []
-                }, {
-                    path: '/subscriber/staff/location/edit-location',
-                    title: 'Location',
-                    icon: 'dashboard',
-                    submenu: []
-                }],
+            submenu: []
         },
         {
-            path: '/subscriber/staff/appointment',
-            title: 'Examinations',
+            path: '/subscriber/staff/claimant/edit-claimant/:id/new-claim',
+            title: 'Claim',
             icon: 'dashboard',
-            submenu: [{
-                path: '/subscriber/staff/appointment/appointment-details',
-                title: 'Examination',
+            submenu: []
+        }, {
+            path: '/subscriber/staff/claimant/edit-claim',
+            title: 'Claim',
+            icon: 'dashboard',
+            submenu: []
+        }],
+        group: "Subscriber",
+        role: 2
+    }, {
+        path: '/subscriber/staff/billable-item',
+        title: 'Billable Items',
+        icon: 'dashboard',
+        submenu: [{
+            path: '/subscriber/staff/billable-item/new-billable-item',
+            title: 'Billable Item',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/subscriber/staff/billable-item/edit-billable-item',
+            title: 'Billable Item',
+            icon: 'dashboard',
+            submenu: []
+        }],
+        group: "Subscriber",
+        role: 2
+    }, {
+        path: '/subscriber/staff/claims',
+        title: 'Claims',
+        icon: 'dashboard',
+        submenu: [
+            {
+                path: '/subscriber/staff/claims/new-claim',
+                title: 'Claim',
                 icon: 'dashboard',
                 submenu: []
-            },]
-        }
-            , {
-                path: '/subscriber/staff/settings',
-                title: 'Settings',
+            }, {
+                path: '/subscriber/staff/claims/edit-claim',
+                title: 'Claim',
                 icon: 'dashboard',
                 submenu: []
-            },
-        ],
+            }],
+    }, {
+        path: '/subscriber/staff/location',
+        title: 'Locations',
+        icon: 'map',
+        submenu: [
+            {
+                path: '/subscriber/staff/location/new-location',
+                title: 'Location',
+                icon: 'dashboard',
+                submenu: []
+            }, {
+                path: '/subscriber/staff/location/edit-location',
+                title: 'Location',
+                icon: 'dashboard',
+                submenu: []
+            }],
     },
+    {
+        path: '/subscriber/staff/appointment',
+        title: 'Examinations',
+        icon: 'dashboard',
+        submenu: [{
+            path: '/subscriber/staff/appointment/appointment-details',
+            title: 'Examination',
+            icon: 'dashboard',
+            submenu: []
+        },]
+    }
+    , {
+        path: '/subscriber/staff/settings',
+        title: 'Settings',
+        icon: 'dashboard',
+        submenu: []
+    },
+    //examiner
     {
         path: 'subscriber/examiner',
         title: 'Dashboard',
         icon: 'dashboard',
+        submenu: []
+    }, {
+        path: '/subscriber/examiner',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: []
+    }, {
+        path: '/subscriber/examiner/dashboard',
+        title: 'Dashboard',
+        icon: 'dashboard',
+        submenu: []
+    },
+    {
+        path: '/subscriber/examiner/billing',
+        title: 'Manage Billing',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/subscriber/examiner/claimant',
+        title: 'Claimants',
+        icon: 'dashboard',
+        submenu: [{
+            path: '/subscriber/examiner/claimant/new-claimant',
+            title: 'Claimant',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/subscriber/examiner/claimant/edit-claimant',
+            title: 'Claimant',
+            icon: 'dashboard',
+            submenu: []
+        },
+        {
+            path: '/subscriber/examiner/claimant/edit-claimant/:id/new-claim',
+            title: 'Claim',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/subscriber/examiner/claimant/edit-claim',
+            title: 'Claim',
+            icon: 'dashboard',
+            submenu: []
+        }],
+        group: "Subscriber",
+        role: 2
+    }, {
+        path: '/subscriber/examiner/billable-item',
+        title: 'Billable Items',
+        icon: 'dashboard',
+        submenu: [{
+            path: '/subscriber/examiner/billable-item/new-billable-item',
+            title: 'Billable Item',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/subscriber/examiner/billable-item/edit-billable-item',
+            title: 'Billable Item',
+            icon: 'dashboard',
+            submenu: []
+        }],
+        group: "Subscriber",
+        role: 2
+    }, {
+        path: '/subscriber/examiner/claims',
+        title: 'Claims',
+        icon: 'dashboard',
         submenu: [
             {
-                path: '/subscriber/examiner',
-                title: 'Dashboard',
+                path: '/subscriber/examiner/claims/new-claim',
+                title: 'Claim',
                 icon: 'dashboard',
                 submenu: []
             }, {
-                path: '/subscriber/examiner/dashboard',
-                title: 'Dashboard',
+                path: '/subscriber/examiner/claims/edit-claim',
+                title: 'Claim',
                 icon: 'dashboard',
                 submenu: []
-            },
+            }],
+    }, {
+        path: '/subscriber/examiner/location',
+        title: 'Locations',
+        icon: 'map',
+        submenu: [
             {
-                path: '/subscriber/examiner/billing',
-                title: 'Manage Billing',
+                path: '/subscriber/examiner/location/new-location',
+                title: 'Location',
                 icon: 'dashboard',
-                submenu: [],
-            },
-            {
-                path: '/subscriber/examiner/claimant',
-                title: 'Claimants',
-                icon: 'dashboard',
-                submenu: [{
-                    path: '/subscriber/examiner/claimant/new-claimant',
-                    title: 'Claimant',
-                    icon: 'dashboard',
-                    submenu: []
-                }, {
-                    path: '/subscriber/examiner/claimant/edit-claimant',
-                    title: 'Claimant',
-                    icon: 'dashboard',
-                    submenu: []
-                },
-                {
-                    path: '/subscriber/examiner/claimant/edit-claimant/:id/new-claim',
-                    title: 'Claim',
-                    icon: 'dashboard',
-                    submenu: []
-                }, {
-                    path: '/subscriber/examiner/claimant/edit-claim',
-                    title: 'Claim',
-                    icon: 'dashboard',
-                    submenu: []
-                }],
-                group: "Subscriber",
-                role: 2
+                submenu: []
             }, {
-                path: '/subscriber/examiner/billable-item',
-                title: 'Billable Items',
+                path: '/subscriber/examiner/location/edit-location',
+                title: 'Location',
                 icon: 'dashboard',
-                submenu: [ {
-                    path: '/subscriber/examiner/billable-item/new-billable-item',
-                    title: 'Billable Item',
-                    icon: 'dashboard',
-                    submenu: []
-                }, {
-                    path: '/subscriber/examiner/billable-item/edit-billable-item',
-                    title: 'Billable Item',
-                    icon: 'dashboard',
-                    submenu: []
-                }],
-                group: "Subscriber",
-                role: 2
-            }, {
-                path: '/subscriber/examiner/claims',
-                title: 'Claims',
-                icon: 'dashboard',
-                submenu: [
-                    {
-                        path: '/subscriber/examiner/claims/new-claim',
-                        title: 'Claim',
-                        icon: 'dashboard',
-                        submenu: []
-                    }, {
-                        path: '/subscriber/examiner/claims/edit-claim',
-                        title: 'Claim',
-                        icon: 'dashboard',
-                        submenu: []
-                    }],
-            }, {
-                path: '/subscriber/examiner/location',
-                title: 'Locations',
-                icon: 'map',
-                submenu: [
-                    {
-                        path: '/subscriber/examiner/location/new-location',
-                        title: 'Location',
-                        icon: 'dashboard',
-                        submenu: []
-                    }, {
-                        path: '/subscriber/examiner/location/edit-location',
-                        title: 'Location',
-                        icon: 'dashboard',
-                        submenu: []
-                    }],
-            },
-            {
-                path: '/subscriber/examiner/appointment',
-                title: 'Examinations',
-                icon: 'dashboard',
-                submenu: [{
-                    path: '/subscriber/examiner/appointment/appointment-details',
-                    title: 'Examination',
-                    icon: 'dashboard',
-                    submenu: []
-                },]
-            }
-                , {
-                    path: '/subscriber/examiner/settings',
-                    title: 'Settings',
-                    icon: 'dashboard',
-                    submenu: []
-                },]
+                submenu: []
+            }],
+    },
+    {
+        path: '/subscriber/examiner/appointment',
+        title: 'Examinations',
+        icon: 'dashboard',
+        submenu: [{
+            path: '/subscriber/examiner/appointment/appointment-details',
+            title: 'Examination',
+            icon: 'dashboard',
+            submenu: []
+        },]
+    }
+    , {
+        path: '/subscriber/examiner/settings',
+        title: 'Settings',
+        icon: 'dashboard',
+        submenu: []
     },
 
     // //Vendor historian Menu
