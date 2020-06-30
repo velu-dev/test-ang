@@ -136,7 +136,7 @@ export const ROUTES: SideNavInterface[] = [
             {
                 path: '/subscriber/manager/staff',
                 title: 'Manage Staff',
-                icon: 'dashboard',
+                icon: 'supervised_user_circle',
                 submenu: [],
                 group: "Subscriber",
                 role: 3
