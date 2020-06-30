@@ -10,6 +10,7 @@ $sidebar-dark: #1b1c1d;
 $sidebar-light: #383838;
 $menu-light: #b3b3b3;
 $navbar-light: #f4f4f4;
+$light-color: #f4f4f4;
 
 $active: #767676;
 
@@ -51,6 +52,7 @@ $bg-warning: rgba(255, 178, 54, 0.4);
 $bg-error-style-one: #ff8f8f;
 $btn_success: #00cc00 !default;
 $btn_close: #ebebf2;
+$accent: #ff4081;
 
 // Tab background color
 $tab-bg-1: #3c3cff1f;
@@ -620,6 +622,14 @@ input:-webkit-autofill {
   .mat-select-panel {
     min-width: 100% !important;
   }
+  .outline-success {
+    color: $btn_success;
+    border-color: $btn_success;
+  }
+  .outline-danger {
+    color: $danger;
+    border-color: $danger;
+  }
 }
 
 .data-max-width {
@@ -655,12 +665,13 @@ input:-webkit-autofill {
     background-color: $btn_success;
   }
 }
-.filled-success {  
+.filled-success {
   @extend .btn_;
   color: $white;
   background-color: $btn_success;
   border-color: $btn_success;
 }
+
 .outline-danger {
   @extend .btn_;
   color: $danger;
@@ -668,6 +679,24 @@ input:-webkit-autofill {
   &:hover {
     color: $white;
     background-color: $danger;
+  }
+}
+.outline-accent {
+  @extend .btn_;
+  color: $accent;
+  border-color: $accent;
+  &:hover {
+    color: $white;
+    background-color: $accent;
+  }
+}
+.outline-primary {
+  @extend .btn_;
+  color: $primarycolor;
+  border-color: $primarycolor;
+  &:hover {
+    color: $white;
+    background-color: $primarycolor;
   }
 }
 

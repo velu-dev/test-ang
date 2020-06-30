@@ -1,10 +1,19 @@
 @import "variables";
-
+mat-card {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+    &:hover {
+        box-shadow: $box-shadow-1;
+    }
+}
 button {
-   float: right;
-   display: block;
-   margin-bottom: 5px;
- }
+    float: right;
+    display: block;
+    margin-bottom: 5px;
+}
 div {
     table {
         .action {
