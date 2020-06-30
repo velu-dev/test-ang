@@ -34,8 +34,8 @@ export class BillableItemAwaitingComponent implements OnInit {
         this.columnName = ["", "Claimant Name", "Action"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["Claimant Name", "Examiner", "Date of Birth", "Date of Injury", "Claim Number"]
-        this.columnsToDisplay = ['claimant_name', 'examiner', 'date_of_birth', "date_of_injury", "claim_number"]
+        this.columnName = ["Claimant Name", "Date of Birth", "Social Security Number", "Date Created"]
+        this.columnsToDisplay = ['claimant_name', 'date_of_birth', "ssn", "created_date"]
       }
     })
   }
@@ -50,4 +50,11 @@ export class BillableItemAwaitingComponent implements OnInit {
   }
 
 }
-const ELEMENT_DATA = [{ "id": 109, "last_name": "atta", "first_name": "Velusamy", "date_of_birth": "2020-04-08", "gender": null, "ex_first_name": "sarathexaminer", "ex_middle_name": "ss", "ex_last_name": "examiners", "claim_number": "131313", "date_of_injury": "2020-05-22" }, { "id": 10, "last_name": "new", "first_name": "sarath", "date_of_birth": "2020-03-31", "gender": "M", "ex_first_name": "sarath", "ex_middle_name": "ss", "ex_last_name": "selva", "claim_number": "123456788", "date_of_injury": "2020-05-20" }, { "id": 10, "last_name": "new", "first_name": "sarath", "date_of_birth": "2020-03-31", "gender": "M", "ex_first_name": "sarathexaminer", "ex_middle_name": "ss", "ex_last_name": "examiners", "claim_number": "123456788", "date_of_injury": "2020-05-20" }, { "id": 190, "last_name": "ff4", "first_name": "ff4", "date_of_birth": "2020-05-11", "gender": null, "ex_first_name": "sarath", "ex_middle_name": "ss", "ex_last_name": "selva", "claim_number": null, "date_of_injury": null }, { "id": 132, "last_name": "ss1", "first_name": "ss1", "date_of_birth": "2020-05-06", "gender": null, "ex_first_name": null, "ex_middle_name": null, "ex_last_name": null, "claim_number": null, "date_of_injury": null }];
+const ELEMENT_DATA = [
+  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
+  { "id": 132, "last_name": "Mariappan", "first_name": "Rajan", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
+  { "id": 132, "last_name": "ss1", "Selvaraj": "Sarath", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
+  { "id": 132, "last_name": "Venkat", "first_name": "Velu", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
+  { "id": 132, "last_name": "ss1", "first_name": "ss1", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', }
+
+];
