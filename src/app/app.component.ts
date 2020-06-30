@@ -81,7 +81,7 @@ export class AppComponent {
         })
         let breadcrumb = this.breadcrumbList
         if (breadcrumb.length != 0) {
-          console.log(breadcrumb)
+         // console.log(breadcrumb)
           this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
         }
       }

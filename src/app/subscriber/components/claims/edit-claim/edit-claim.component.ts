@@ -128,7 +128,7 @@ export class EditClaimComponent implements OnInit {
     }
   }
   navigateBillable() {
-    this.router.navigate(['/subscriber/new-billable-item', this.claimId, this.claimantDetail.id])
+    this.router.navigate(['/subscriber/billable-item/new-billable-item', this.claimId, this.claimantDetail.id])
   }
 
 }

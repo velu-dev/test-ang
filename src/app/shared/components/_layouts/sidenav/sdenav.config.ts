@@ -107,7 +107,7 @@ export const ROUTES: SideNavInterface[] = [
                 group: "Subscriber",
                 role: 2
             }, {
-                path: '/subscriber/manage-location',
+                path: '/subscriber/location',
                 title: 'Location',
                 icon: 'map',
                 submenu: [],
@@ -140,15 +140,17 @@ export const ROUTES: SideNavInterface[] = [
                 submenu: [],
                 group: "Subscriber",
                 role: 3
-            }, {
-                path: '/subscriber/manager/examiner-list',
-                title: 'Manage Examiner',
-                icon: 'people',
-                submenu: [],
-                group: "Subscriber",
-                role: 3
-            }, {
-                path: '/subscriber/examiner/appointment',
+            },
+            //  {
+            //     path: '/subscriber/manager/examiner-list',
+            //     title: 'Manage Examiner',
+            //     icon: 'people',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 3
+            // }, 
+            {
+                path: '/subscriber/manager/appointment',
                 title: 'Examination',
                 icon: 'dashboard',
                 submenu: [],
@@ -179,7 +181,7 @@ export const ROUTES: SideNavInterface[] = [
                 group: "Subscriber",
                 role: 3
             }, {
-                path: '/subscriber/manager/manage-location',
+                path: '/subscriber/manager/location',
                 title: 'Location',
                 icon: 'map',
                 submenu: [],
@@ -205,15 +207,16 @@ export const ROUTES: SideNavInterface[] = [
             //     group: "Subscriber",
             //     role: 4
             // }, 
+            // {
+            //     path: '/subscriber/staff/examiner-list',
+            //     title: 'Manage Examiner',
+            //     icon: 'people',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 4
+            // }, 
             {
-                path: '/subscriber/staff/examiner-list',
-                title: 'Manage Examiner',
-                icon: 'people',
-                submenu: [],
-                group: "Subscriber",
-                role: 4
-            }, {
-                path: '/subscriber/examiner/appointment',
+                path: '/subscriber/staff/appointment',
                 title: 'Examination',
                 icon: 'dashboard',
                 submenu: [],
@@ -244,14 +247,14 @@ export const ROUTES: SideNavInterface[] = [
                 role: 4
             },
             {
-                path: '/subscriber/staff/manage-location',
+                path: '/subscriber/staff/location',
                 title: 'Location',
                 icon: 'map',
                 submenu: [],
                 group: "Subscriber",
                 role: 4
             }, {
-                path: '/subscriber/examiner/billing',
+                path: '/subscriber/staff/billing',
                 title: 'Billing',
                 icon: 'people',
                 submenu: [],
@@ -302,7 +305,7 @@ export const ROUTES: SideNavInterface[] = [
                 group: "Subscriber",
                 role: 11
             }, {
-                path: '/subscriber/examiner/manage-location',
+                path: '/subscriber/examiner/location',
                 title: 'Location',
                 icon: 'map',
                 submenu: [],

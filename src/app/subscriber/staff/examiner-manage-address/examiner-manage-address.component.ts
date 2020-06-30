@@ -198,7 +198,7 @@ export class ExaminerManageAddressComponent implements OnInit {
     this.examinerService.postExaminerAddressOther(addressDetails, this.examinerId).subscribe(response => {
       console.log(response)
       this.alertService.openSnackBar("Location created successfully", 'success');
-      this.router.navigate(['/subscriber/staff/manage-location'])
+      this.router.navigate(['/subscriber/location/new-location'])
     }, error => {
       console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -214,7 +214,7 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.examinerService.postExistAddress(this.searchAddressSubmitDetails).subscribe(response => {
         console.log(response)
         this.alertService.openSnackBar("Location added successfully", 'success');
-        this.router.navigate(['/subscriber/staff/manage-location'])
+        this.router.navigate(['/subscriber/location/new-location'])
       }, error => {
         console.log(error);
         this.alertService.openSnackBar(error.error.message, 'error');
