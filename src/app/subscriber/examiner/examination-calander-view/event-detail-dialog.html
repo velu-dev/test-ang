@@ -1,7 +1,36 @@
-<h1 mat-dialog-title>Hi {{data.name}}</h1>
+<h1 mat-dialog-title>Event Details</h1>
 <div mat-dialog-content>
-  <p>Event Name</p>
-  <p>{{data.name}}</p>
+  <div class="details" *ngIf="!isEdit">
+    <p>Event Name: {{data.title}}</p>
+    <p>Start Date: {{data.start | date}}</p>
+    <p>End Date: {{data.end | date}}</p>
+    <button (click)="isEdit=true">Edit</button>
+  </div>
+  <div class="edit-event" *ngIf="isEdit">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Event Name" name="title" [(ngModel)]="event.title">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Event Location" name="location" [(ngModel)]="event.location">
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" name="start" autocomplete="off" [owlDateTime]="appointment"
+          [(ngModel)]="event.start">
+        <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
+        <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment>
+        </owl-date-time>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" name="end" autocomplete="off" [owlDateTime]="appointment1" [(ngModel)]="event.end">
+        <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment1"></mat-datepicker-toggle>
+        <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment1>
+        </owl-date-time>
+      </mat-form-field>
+      <button type="submit" (click)="saveEvent()"> Save</button>
+    </form>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>

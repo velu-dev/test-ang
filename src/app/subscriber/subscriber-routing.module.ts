@@ -51,6 +51,15 @@ const routes: Routes = [{
 }, {
   path: "billing",
   component: BillingComponent
+}, {
+  path: "appointment",
+  children: [{
+    path: "",
+    component: AppointmentComponent
+  }, {
+    path: "appointment-details/:id/:billId",
+    component: AppointmentDetailsComponent
+  }]
 },
 {
   path: "claimant",
@@ -60,9 +69,18 @@ const routes: Routes = [{
   }, {
     path: "new-claimant",
     component: NewClaimantComponent
-  },{
+  }, {
     path: "edit-claimant/:id",
-    component: NewClaimantComponent
+    component: NewClaimantComponent,
+  }, {
+    path: "edit-claimant/:claimant_id/new-claim",
+    component: NewClaimComponent,
+  }, {
+    path: "edit-claim/:id",
+    component: NewClaimComponent
+  }, {
+    path: ":id/new-claim",
+    component: NewClaimComponent
   }]
 }, {
   path: "billable-item",
@@ -71,9 +89,6 @@ const routes: Routes = [{
 {
   path: "manage-location",
   component: ManageLocationComponent
-}, {
-  path: "edit-claim/:id",
-  component: EditClaimComponent
 },
 {
   path: "new-billable-item",
@@ -109,6 +124,9 @@ const routes: Routes = [{
   }, {
     path: ":id",
     component: NewClaimComponent
+  }, {
+    path: "edit-claim/:id",
+    component: EditClaimComponent
   }
   ]
 }, {
@@ -137,9 +155,12 @@ const routes: Routes = [{
       }, {
         path: "new-claimant",
         component: NewClaimantComponent
-      },{
+      }, {
         path: "edit-claimant/:id",
         component: NewClaimantComponent
+      }, {
+        path: "edit-claim/:id",
+        component: NewClaimComponent
       }]
     }, {
       path: "billable-item",
@@ -156,6 +177,9 @@ const routes: Routes = [{
       }, {
         path: ":id",
         component: NewClaimComponent
+      }, {
+        path: "edit-claim/:id",
+        component: EditClaimComponent
       }]
     },
     {
@@ -188,9 +212,12 @@ const routes: Routes = [{
     }, {
       path: "new-claimant",
       component: NewClaimantComponent
-    },{
+    }, {
       path: "edit-claimant/:id",
       component: NewClaimantComponent
+    }, {
+      path: "edit-claim/:id",
+      component: NewClaimComponent
     }]
   }, {
     path: "billing",
@@ -209,6 +236,9 @@ const routes: Routes = [{
     }, {
       path: ":id",
       component: NewClaimComponent
+    }, {
+      path: "edit-claim/:id",
+      component: EditClaimComponent
     }]
   }, {
     path: "manage-location",
@@ -234,9 +264,12 @@ const routes: Routes = [{
     }, {
       path: "new-claimant",
       component: NewClaimantComponent
-    },{
+    }, {
       path: "edit-claimant/:id",
       component: NewClaimantComponent
+    }, {
+      path: "edit-claim/:id",
+      component: NewClaimComponent
     }]
   }, {
     path: "billable-item",
@@ -255,6 +288,9 @@ const routes: Routes = [{
     }, {
       path: ":id",
       component: NewClaimComponent
+    }, {
+      path: "edit-claim/:id",
+      component: EditClaimComponent
     }]
   }, {
     path: "settings",
@@ -285,9 +321,12 @@ const routes: Routes = [{
     }, {
       path: "new-claimant",
       component: NewClaimantComponent
-    },{
+    }, {
       path: "edit-claimant/:id",
       component: NewClaimantComponent
+    }, {
+      path: "edit-claim/:id",
+      component: NewClaimComponent
     }]
   }, {
     path: "billable-item",
@@ -303,6 +342,9 @@ const routes: Routes = [{
     }, {
       path: ":id",
       component: NewClaimComponent
+    }, {
+      path: "edit-claim/:id",
+      component: EditClaimComponent
     }
     ]
   }, {

@@ -68,7 +68,9 @@ export class AppComponent {
                     this.breadcrumbList.push(sub)
                   }
                 }
-
+                if (sub.path == "new-claim") {
+                  this.breadcrumbList.push(sub)
+                }
                 if (sub.path == menu_join) {
                   this.breadcrumbList.push(sub)
                 }
@@ -78,14 +80,8 @@ export class AppComponent {
           })
         })
         let breadcrumb = this.breadcrumbList
-        // this.menu$.subscribe(present_menu => {
-        //   console.log("menu response", present_menu)
-        //   if (present_menu == undefined) {
-        //     this.store.dispatch(new breadcrumbActions.ResetBreadcrumb());
-        //     this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
-        //   }
-        // })
         if (breadcrumb.length != 0) {
+          console.log(breadcrumb)
           this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
         }
       }
