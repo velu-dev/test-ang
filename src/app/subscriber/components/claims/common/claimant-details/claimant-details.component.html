@@ -3,8 +3,8 @@
         <div class="content-wrapper-main-title p-t-10 m-b-10">Claimant </div>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-card-content class="p-b-15">
-        <div fxLayout="row wrap">
+    <mat-card-content class="p-b-15 m-t-15">
+        <!-- <div fxLayout="row wrap">
             <div fxFlex="100">
                 <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
                     <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
@@ -33,6 +33,22 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
+        <form fxLayout="row wrap" fxFlex="100" class="p-t-10" >
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3"  fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" value="{{claimantDetailsclaiman.middle_name}}"  autocomplete="off" disabled>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3"  fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput placeholder="Date of Birth" value="{{claimantDetailsclaiman.date_of_birth | date:'MM-dd-yyyy'}}" autocomplete="off" disabled>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3"  fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
+            <mat-label>Phone Number</mat-label>
+            <input matInput placeholder="Phone Number" value="{{claimantDetailsclaiman.phone_no_1 | mask:'(000) 000-0000'}}" autocomplete="off" disabled>
+        </mat-form-field>
+    </form>
     </mat-card-content>
 </mat-card>
