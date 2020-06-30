@@ -34,9 +34,9 @@ import { UnfinishedReportComponent } from './components/dashboard/unfinished-rep
 import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
 
 const routes: Routes = [{
-  path: "",
+  path: "dashboard",
   children: [{
-    path: "dashboard",
+    path: "",
     component: DashboardComponent
   }, {
     path: "claimant-awaiting",
