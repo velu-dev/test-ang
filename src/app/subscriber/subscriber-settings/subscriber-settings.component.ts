@@ -45,6 +45,7 @@ export class SubscriberSettingsComponent implements OnInit {
   first_name: string;
   signData: any;
   selectedFile: any = null;
+  isSubmitted = false;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,

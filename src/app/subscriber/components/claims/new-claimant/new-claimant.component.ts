@@ -306,7 +306,7 @@ export class NewClaimantComponent implements OnInit {
     }
   }
 
-  claimNavigate(element) {
+  claimNavigate(element?) {
     //this.router.navigate(['/subscriber/claims']);
     this.router.navigate(['/subscriber/claims/edit-claim', element.claim_id])
   }

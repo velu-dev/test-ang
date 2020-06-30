@@ -323,10 +323,10 @@
 
                                 <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner"
                                     (click)="createClaimant('close')">
-                                    Save & Close</button>
+                                    {{isClaimantEdit ? "Update" : "Save"}} & Close </button>
                                 <button mat-raised-button type="submit" class="m-r-10 rounded-corner btn_success"
                                     (click)="createClaimant('next')">
-                                    Save & Next</button>
+                                    {{isClaimantEdit ? "Update" : "Save"}} & Next</button>
                                 <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
                                     (click)="cancel()">Cancel</button>
 
