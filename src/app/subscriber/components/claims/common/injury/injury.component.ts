@@ -37,7 +37,7 @@ export const PICK_FORMATS = {
   // providers: []
 })
 export class InjuryComponent implements OnInit {
-  displayedColumns: string[] = ['body_part', 'date_of_injury', 'action'];
+  displayedColumns: string[] = ['body_part', 'date_of_injury'];
   dataSource: any;
   // bodyPartsList = [];
   claim_id: any = "";

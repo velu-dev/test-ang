@@ -671,6 +671,13 @@ input:-webkit-autofill {
   }
 }
 
+.text-success {
+  color: $btn_success;
+}
+.text-danger {
+  color: $danger;
+}
+
 // Common font family
 .mat-toolbar,
 .mat-toolbar h1,

@@ -20,7 +20,7 @@ export const MY_CUSTOM_FORMATS = {
   providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }]
 })
 export class UpdateBillableItemComponent implements OnInit {
-  displayedColumns: string[] = ['billable_item', 'examiner', 'd_o_s', 'status', 'action'];
+  displayedColumns: string[] = ['billable_item', 'd_o_s', 'examiner', 'status'];
   dataSource: any;
   @Input('state') states;
   @Input('claim_id') claimId;

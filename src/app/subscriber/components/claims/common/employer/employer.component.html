@@ -46,7 +46,7 @@
     </div>
 </div>
 <div fxLayout="row wrap" fxFlex="100" *ngIf="isEdit" class="employer_info"> -->
-<div fxLayout="row wrap" fxFlex="100" class="employer_info">
+<div fxLayout="row wrap" fxFlex="100" class="employer_info m-t-15">
     <form fxLayout="row wrap" fxFlex="100" [formGroup]="employer" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>Name</mat-label>
@@ -105,12 +105,11 @@
             <input matInput mask="000-000-0000" placeholder="Fax" formControlName="fax" autocomplete="off">
             <mat-error>Please enter valid fax number</mat-error>
         </mat-form-field>
-        <div *ngIf="isEdit" class="text-center w-100 m-t-10 m-b-10">
-            <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
-                (click)="updateEmployer()">
+        <div *ngIf="isEdit" class="text-center w-100 m-t-10">
+
+            <button mat-stroked-button type="button" (click)="cancel();isEdit = false" class="outline-danger">Cancel</button>
+            <button mat-stroked-button class="m-l-10 outline-success" (click)="updateEmployer()">
                 Save </button>
-            <button mat-raised-button type="button" (click)="cancel();isEdit = false" class="rounded-corner"
-                color="warn">Cancel</button>
         </div>
     </form>
 </div>

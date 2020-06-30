@@ -1,56 +1,5 @@
 <mat-divider></mat-divider>
-<!-- <div fxLayout="row wrap" *ngIf="!isEdit">
-    <div fxFlex="100">
-        <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-            <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-                <div class="grid-list">
-                    <div>Law Firm Name</div>
-                    <div>{{aattorneyDetail.company_name}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Attorney Name</div>
-                    <div>{{aattorneyDetail.name}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Address 1</div>
-                    <div>{{aattorneyDetail.street1}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Address 2</div>
-                    <div>{{aattorneyDetail.street2}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>City</div>
-                    <div>{{aattorneyDetail.city}}</div>
-                </div>
-            </div>
-            <div fxFlex="100" fxFlex.md="50" fxFlex.sm="50" fxFlex.lg="50" fxFlex.xl="50">
-                <div class="grid-list">
-                    <div>State</div>
-                    <div>{{aattorneyDetail.state}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Zip Code</div>
-                    <div>{{aattorneyDetail.zip_code}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Phone</div>
-                    <div>{{aattorneyDetail.phone}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Email</div>
-                    <div>{{aattorneyDetail.email}}</div>
-                </div>
-                <div class="grid-list">
-                    <div>Fax</div>
-                    <div>{{aattorneyDetail.fax}}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div *ngIf="isEdit"> -->
-<div fxLayout="row wrap" fxFlex="100" class="app_attorney_info">
+<div fxLayout="row wrap" fxFlex="100" class="app_attorney_info m-t-15">
     <form fxLayout="row wrap" fxFlex="100" [formGroup]="ApplicantAttorney"
         (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -112,12 +61,10 @@
             <input matInput placeholder="Fax" mask="000-000-0000" formControlName="fax" autocomplete="off">
             <mat-error>Please enter valid fax number</mat-error>
         </mat-form-field>
-        <div *ngIf="isEdit" class="text-center w-100 m-t-10 m-b-10">
-            <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success"
-                (click)="updateAAttorney()">
-                Save </button>
-            <button mat-raised-button type="button" (click)="cancel();isEdit = false" class="rounded-corner"
-                color="warn">Cancel</button>
+        <div *ngIf="isEdit" class="text-center w-100 m-t-10">
+
+            <button mat-stroked-button type="button" (click)="cancel();isEdit = false" class="m-r-10 outline-danger">Cancel</button>
+            <button mat-stroked-button class="outline-success" (click)="updateAAttorney()">Save </button>
         </div>
     </form>
 </div>
