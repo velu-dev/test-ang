@@ -26,10 +26,37 @@ import { NewBillableItemComponent } from './components/claims/new-billable-item/
 import { BillingComponent } from './components/billing/billing.component';
 import { NewBillingComponent } from './components/new-billing/new-billing.component';
 import { EditBillingComponent } from './components/edit-billing/edit-billing.component';
+import { ClaimantAwaitingComponent } from './components/dashboard/claimant-awaiting/claimant-awaiting.component';
+import { ClaimAwaitingComponent } from './components/dashboard/claim-awaiting/claim-awaiting.component';
+import { BillableItemAwaitingComponent } from './components/dashboard/billable-item-awaiting/billable-item-awaiting.component';
+import { UpcommingBillableItemComponent } from './components/dashboard/upcomming-billable-item/upcomming-billable-item.component';
+import { UnfinishedReportComponent } from './components/dashboard/unfinished-report/unfinished-report.component';
+import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
 
 const routes: Routes = [{
-  path: "dashboard",
-  component: DashboardComponent
+  path: "",
+  children: [{
+    path: "dashboard",
+    component: DashboardComponent
+  }, {
+    path: "claimant-awaiting",
+    component: ClaimantAwaitingComponent
+  }, {
+    path: "claim-awaiting",
+    component: ClaimAwaitingComponent
+  }, {
+    path: "billable-item-awaiting",
+    component: BillableItemAwaitingComponent
+  }, {
+    path: "upcomming-billable-item",
+    component: UpcommingBillableItemComponent
+  }, {
+    path: "unfinished-reports",
+    component: UnfinishedReportComponent
+  }, {
+    path: "billing-collection",
+    component: BillingCollectionComponent
+  }]
 }, {
   path: "",
   component: DashboardComponent
@@ -190,7 +217,7 @@ const routes: Routes = [{
         path: "edit-billable-item/:claim/:claimant/:billable",
         component: NewBillableItemComponent
       }]
-    
+
     },
     {
       path: "location",
@@ -204,7 +231,7 @@ const routes: Routes = [{
         path: "new-location",
         component: ExaminerManageAddressComponent
       },]
-    
+
     },
     {
       path: "billing",
@@ -252,7 +279,7 @@ const routes: Routes = [{
   }, {
     path: "dashboard",
     component: ManagerDashboardComponent
-  },{
+  }, {
     path: "staff",
     children: [{
       path: "",
@@ -261,7 +288,7 @@ const routes: Routes = [{
       path: "new",
       component: ManageNewUserComponent
     }]
-  },{
+  }, {
     path: "appointment",
     children: [{
       path: "",
@@ -304,7 +331,7 @@ const routes: Routes = [{
       path: "edit-billable-item/:claim/:claimant/:billable",
       component: NewBillableItemComponent
     }]
-  
+
   },
   {
     path: "location",
@@ -318,7 +345,7 @@ const routes: Routes = [{
       path: "new-location",
       component: ExaminerManageAddressComponent
     },]
-  
+
   },
   {
     path: "billing",
@@ -364,7 +391,7 @@ const routes: Routes = [{
   }, {
     path: "appointment",
     component: AppointmentComponent
-  },{
+  }, {
     path: "appointment",
     children: [{
       path: "",
@@ -407,7 +434,7 @@ const routes: Routes = [{
       path: "edit-billable-item/:claim/:claimant/:billable",
       component: NewBillableItemComponent
     }]
-  
+
   },
   {
     path: "location",
@@ -421,7 +448,7 @@ const routes: Routes = [{
       path: "new-location",
       component: ExaminerManageAddressComponent
     },]
-  
+
   },
   {
     path: "billing",
@@ -456,7 +483,7 @@ const routes: Routes = [{
     path: "settings",
     component: ExaminerSettingComponent
   },
- ]
+  ]
 }
 ];
 
