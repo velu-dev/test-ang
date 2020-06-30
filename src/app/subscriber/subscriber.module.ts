@@ -45,6 +45,12 @@ import { NewBillingComponent, BillilgDialog } from './components/new-billing/new
 import { EditBillingComponent } from './components/edit-billing/edit-billing.component';
 import { DialogueComponent } from '../shared/components/dialogue/dialogue.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { ClaimantAwaitingComponent } from './components/dashboard/claimant-awaiting/claimant-awaiting.component';
+import { ClaimAwaitingComponent } from './components/dashboard/claim-awaiting/claim-awaiting.component';
+import { BillableItemAwaitingComponent } from './components/dashboard/billable-item-awaiting/billable-item-awaiting.component';
+import { UpcommingBillableItemComponent } from './components/dashboard/upcomming-billable-item/upcomming-billable-item.component';
+import { UnfinishedReportComponent } from './components/dashboard/unfinished-report/unfinished-report.component';
+import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -94,6 +100,12 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     BillilgDialog,
     SignPopupComponent,
     EventdetailDialog,
+    ClaimantAwaitingComponent,
+    ClaimAwaitingComponent,
+    BillableItemAwaitingComponent,
+    UpcommingBillableItemComponent,
+    UnfinishedReportComponent,
+    BillingCollectionComponent,
 
   ],
   entryComponents: [
