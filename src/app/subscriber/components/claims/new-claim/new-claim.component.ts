@@ -145,6 +145,7 @@ export class NewClaimComponent implements OnInit {
   userAccountStatus = [];
   userRoles = [];
   claimList = [];
+  tabIndex = 0;
   duration = [{ id: 20, value: "20" }, { id: 30, value: "30" }, { id: 45, value: "45" }, { id: 60, value: "60" }]
   ALL_SEED_DATA = ["address_type", "body_part",
     "contact_type", "agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
@@ -189,6 +190,8 @@ export class NewClaimComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+  isNewClaim = true;
+  fromClaimant = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -214,6 +217,8 @@ export class NewClaimComponent implements OnInit {
 
     this.route.params.subscribe(param => {
       if (param.claimant_id) {
+        this.isNewClaim = false;
+        this.fromClaimant = true;
         this.claimant_id = param.claimant_id;
         this.claimService.getSingleClaimant(this.claimant_id).subscribe(claimant => {
           if (claimant.status) {
@@ -221,8 +226,6 @@ export class NewClaimComponent implements OnInit {
             this.isClaimantEdit = true;
             this.addNewClaimant = true;
             this.isClaimantCreated = true;
-            this.isClaimCreated = true;
-            this.tabIndex = 1;
             this.searchStatus = false;
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
@@ -363,8 +366,8 @@ export class NewClaimComponent implements OnInit {
     return this.deuDetails.filter(deu => deu.deu_office.toLowerCase().indexOf(filterValue) === 0);
   }
   isLoading = false;
-  tabIndex = 0;
   advanceTabChanged(event) {
+    console.log(event.index)
     this.tabIndex = event.index;
     this.searchStatus = false;
   }
@@ -418,7 +421,7 @@ export class NewClaimComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required])],
       middle_name: [''],
       salutation: [null, Validators.compose([Validators.maxLength(4)])],
-      suffix:[null, Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
+      suffix: [null, Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       gender: [null],
@@ -932,14 +935,28 @@ export class NewClaimComponent implements OnInit {
       }
     }
     if (this.emasSearchInput.value) {
-      this.claimant.reset();
-      this.claimService.searchbyEams(this.emasSearchInput.value.replace(/\s/g, '')).subscribe(res => {
+      let data = {};
+      if (!this.fromClaimant) {
+        this.claimant.reset();
+        data = {
+          wcabNumber: this.emasSearchInput.value.replace(/\s/g, ''),
+        }
+      } else {
+        data = {
+          wcabNumber: this.emasSearchInput.value.replace(/\s/g, ''),
+          claimant_first_name: this.claimant.value.first_name,
+          claimant_last_name: this.claimant.value.last_name,
+          claimant_date_of_birth: this.claimant.value.date_of_birth,
+        }
+      }
+      this.claimService.searchbyEams(this.emasSearchInput.value.replace(/\s/g, ''), data).subscribe(res => {
         if (res.data) {
           this.isEdit = false;
-          this.isClaimantEdit = false;
-          this.addNewClaimant = true;
-          this.claimant.patchValue(res.data.claimant)
-
+          if (!this.fromClaimant) {
+            this.isClaimantEdit = false;
+            this.addNewClaimant = true;
+            this.claimant.patchValue(res.data.claimant)
+          }
           this.claim.patchValue({
             claim_details: res.data.claim,
           });
