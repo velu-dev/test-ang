@@ -35,7 +35,7 @@ export class ExaminerSettingComponent implements OnInit {
   first_name: string;
   specialtyList: any;
   taxonomyList: any;
-
+  isSubmitted= false;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(
     private spinnerService: NgxSpinnerService,

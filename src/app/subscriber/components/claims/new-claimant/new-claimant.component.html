@@ -223,7 +223,7 @@
         <ng-container matColumnDef="expandedDetail">
           <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
             <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-              <div (click)="claimNavigate()" class="resposive-table">
+              <div (click)="claimNavigate(element)" class="resposive-table">
                 <div><span>Exam Type</span> {{element.exam_type_code}} </div>
                 <div><span>Claim Number</span> {{element.claim_number}} </div>
                 <div><span>Date of Injury</span> {{element.date_of_injury}} </div>

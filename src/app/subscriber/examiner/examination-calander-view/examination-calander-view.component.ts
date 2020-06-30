@@ -243,7 +243,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     this.openEventDetailDialog(e);
   }
   handleDateClick(e) {
-    this.openAddEventDialog(e);
+    // this.openAddEventDialog(e);
   }
   dateChanged() {
     this.calendar.getApi().gotoDate(this.selectedDate)
@@ -265,28 +265,32 @@ export class ExaminationCalanderViewComponent implements OnInit {
       }
     });
   }
-  openAddEventDialog(arg): void {
-    const dialogRef = this.dialog.open(AddEventDialog, {
-      width: '550px',
-      data: { date: arg.date, name: "" }
-    });
+  // openAddEventDialog(arg): void {
+  //   const dialogRef = this.dialog.open(AddEventDialog, {
+  //     width: '550px',
+  //     data: { date: arg.date, name: "" }
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
+  //   dialogRef.afterClosed().subscribe(result => {
 
-    });
-  }
+  //   });
+  // }
 }
-@Component({
-  selector: 'event-detail-dialog',
-  templateUrl: 'event-detail-dialog.html',
-})
-export class AddEventDialog {
-  constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
+// @Component({
+//   selector: 'event-detail-dialog',
+//   templateUrl: 'event-detail-dialog.html',
+// })
+// export class AddEventDialog {
+//   event = { name: "", start: "", end: "", location: "" }
+//   constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
+//     @Inject(MAT_DIALOG_DATA) public data: any) { }
+//   onNoClick(): void {
+//     this.dialogRef.close();
+//   }
+//   pickerOpened(a) {
+
+//   }
+// }
 
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -334,10 +338,10 @@ export const MY_CUSTOM_FORMATS = {
   ]
 })
 export class EventdetailDialog {
-  event: any// = { name: "", start_date: "", end_date: "", location: "" }
+  event = { title: "", start: "", end: "", location: "" }
   isEdit = false;
   constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: any) {
     console.log(data)
     this.event = data;
   }
