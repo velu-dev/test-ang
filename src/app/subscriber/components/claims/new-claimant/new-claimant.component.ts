@@ -6,13 +6,14 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatPaginator, MatSort, MatTableDataSource, MAT_DATE_LOCALE } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { User } from 'src/app/shared/model/user.model';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -23,12 +24,14 @@ export class PickDateAdapter extends NativeDateAdapter {
   }
 }
 export const PICK_FORMATS = {
-  parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
   display: {
-    dateInput: 'input',
-    monthYearLabel: { year: 'numeric', month: 'short' },
-    dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
-    monthYearA11yLabel: { year: 'numeric', month: 'long' }
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
   }
 };
 
@@ -45,7 +48,8 @@ export const PICK_FORMATS = {
   ],
   providers: [
     { provide: DateAdapter, useClass: PickDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }
   ]
 })
 export class NewClaimantComponent implements OnInit {
@@ -97,20 +101,20 @@ export class NewClaimantComponent implements OnInit {
             bill.date_of_injury = bill.date_of_injury ? moment(bill.date_of_injury).format("MM-DD-YYYY") : '';
             bill.examiner = bill.ex_last_name + ' ' + bill.ex_first_name
             let parts = []
-            if(bill.body_parts){
-            bill.body_parts.map(part => {
-              if (part.body_part_name && part.body_part_name.trim() != '') {
-                parts.push(part.body_part_name)
-              }
-            })
-          }
+            if (bill.body_parts) {
+              bill.body_parts.map(part => {
+                if (part.body_part_name && part.body_part_name.trim() != '') {
+                  parts.push(part.body_part_name)
+                }
+              })
+            }
             bill.parts = parts;
           })
           this.dataSource = new MatTableDataSource(billableRes.data);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.dataSource.filterPredicate = function (data, filter: string): boolean {
-            return data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.parts  && data.parts[0] && data.parts[0].toLowerCase().includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.date_of_injury && data.date_of_injury.toLowerCase().includes(filter));
+            return data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.parts && data.parts[0] && data.parts[0].toLowerCase().includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.date_of_injury && data.date_of_injury.toLowerCase().includes(filter));
           };
           this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
         }, error => {
@@ -139,7 +143,7 @@ export class NewClaimantComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required])],
       first_name: ['', Validators.compose([Validators.required,])],
       middle_name: [''],
-      suffix:[null, Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
+      suffix: [null, Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       date_of_birth: [null, Validators.required],
       gender: [null],
       email: ["", Validators.compose([Validators.email])],

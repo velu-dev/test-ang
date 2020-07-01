@@ -217,16 +217,17 @@ export class NewClaimComponent implements OnInit {
 
     this.route.params.subscribe(param => {
       if (param.claimant_id) {
-        this.isNewClaim = false;
-        this.fromClaimant = true;
         this.claimant_id = param.claimant_id;
+        this.fromClaimant = true;
+        this.isNewClaim = false;
+
         this.claimService.getSingleClaimant(this.claimant_id).subscribe(claimant => {
           if (claimant.status) {
             this.isRemoveSearchRemove = true;
-            this.isClaimantEdit = true;
-            this.addNewClaimant = true;
             this.isClaimantCreated = true;
             this.searchStatus = false;
+            this.isClaimantEdit = true;
+            this.addNewClaimant = true;
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
           }
