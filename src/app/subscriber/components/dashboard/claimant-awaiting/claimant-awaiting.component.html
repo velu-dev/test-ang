@@ -1,1 +1,55 @@
-<p>claimant-awaiting works!</p>
+<mat-card class="m-card">
+    <mat-card-content class="m-b-0">
+        <div class="table-filter">
+            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+                placeholder="Search by Name, Date, SSN">
+            <mat-icon>search</mat-icon>
+        </div>
+        <div class="user-detail">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
+                matSort>
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+                        {{columnName[i]}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="i == 0 && isMobile">
+                            <mat-icon mat-raised-button
+                                [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
+                                {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                            </mat-icon>
+                        </span>
+                        <div>
+                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}},
+                                {{element?.first_name}}</span>
+                            <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth}} </span>
+                            <span *ngIf="column == 'ssn'">{{element?.ssn}}</span>
+                            <span *ngIf="column == 'created_date'">{{element?.created_date}}<small class="p-l-10"><span
+                                        class="fa fa-clock-o"></span>&nbsp; 9:13 AM</small></span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                        <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                            <div class="resposive-table">
+                                <div><span>Claimant</span> {{element?.last_name}}, {{element?.first_name}} </div>
+                                <div><span>Date of Birth</span> {{element?.date_of_birth}} </div>
+                                <div><span>Social Security Number</span> {{element?.ssn}} </div>
+                                <div><span>Date Created</span> {{element?.created_date}}<small class="p-l-10"><span
+                                            class="fa fa-clock-o"></span>&nbsp; 9:13 AM</small> </div>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
+                    [class.row]="expandedElement === element" (click)="openElement(element)">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+            </table>
+            <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+        </div>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    </mat-card-content>
+</mat-card>
