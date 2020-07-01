@@ -6,7 +6,7 @@
     <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
-                <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant{{tabIndex}}
+                <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant
                 </ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
@@ -329,11 +329,9 @@
                                 <button mat-stroked-button type="submit" class="m-r-10 outline-accent"
                                     (click)="createClaimant('close')">
                                     Save & Close </button>
-                                <button mat-raised-button type="submit" class="m-r-10 rounded-corner btn_success"
+                                <button mat-stroked-button type="submit" class="m-r-10 outline-success"
                                     (click)="createClaimant('next')">
                                     Save & Next</button>
-                                <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
-                                    (click)="cancel()">Cancel</button>
 
                             </div>
                         </div>
