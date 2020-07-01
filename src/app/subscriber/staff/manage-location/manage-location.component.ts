@@ -101,7 +101,7 @@ export class ManageLocationComponent implements OnInit {
 
   editAddress(data) {
     console.log(data)
-    this.router.navigate(['/subscriber/staff/edit-address', data.examiner_id, data.address_id])
+    this.router.navigate(['/subscriber/location/edit-location', data.examiner_id, data.address_id])
   }
   editClaim(e){
     

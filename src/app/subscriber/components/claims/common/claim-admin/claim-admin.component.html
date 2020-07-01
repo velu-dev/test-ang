@@ -55,7 +55,7 @@
     </div>
 </div>
 <div fxLayout="row wrap" *ngIf="isEdit" class="claim_admin"> -->
-<div fxLayout="row wrap" class="claim_admin">
+<div fxLayout="row wrap" class="claim_admin m-t-15">
     <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimAdminForm"
         (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -70,13 +70,13 @@
 
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 1</mat-label>
-            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
                 formControlName="street1"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 2</mat-label>
-            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
                 formControlName="street2"></textarea>
         </mat-form-field>
 
@@ -119,11 +119,12 @@
             <input matInput mask="000-000-0000" placeholder="Fax" formControlName="fax" autocomplete="off">
             <mat-error>Please enter valid fax number</mat-error>
         </mat-form-field>
-        <div *ngIf="isEdit" class="text-center w-100 m-t-10 m-b-10">
-            <button mat-raised-button class="m-r-10 rounded-corner btn_success" (click)="updateClaimAdmin()">
-                Save </button>
-            <button mat-raised-button type="button" (click)="cancel();isEdit = false" class="rounded-corner"
+        <div *ngIf="isEdit" class="text-center w-100 m-t-10">
+
+            <button mat-stroked-button type="button" (click)="cancel();isEdit = false" class="outline-danger"
                 color="warn">Cancel</button>
+            <button mat-stroked-button class="m-l-10 outline-success" (click)="updateClaimAdmin()">
+                Save </button>
         </div>
     </form>
 </div>

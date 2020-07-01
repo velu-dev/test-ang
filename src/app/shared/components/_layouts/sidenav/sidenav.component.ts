@@ -29,6 +29,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 export class SidenavComponent implements OnInit {
   screenWidth: number;
   simplexam_logo = globals.simplexam_logo;
+  nav_logo = globals.simplexam_logo;
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
   public menuItems: any;
   expanded: boolean = false;
@@ -80,19 +81,19 @@ export class SidenavComponent implements OnInit {
           console.log(res.data.role_id)
           this.cookieService.set("role_id", res.data.role_id);
           this.router.navigate(["/"]);
-          setTimeout(data=>{
+          setTimeout(data => {
             window.location.reload();
-          },500)
-          
+          }, 500)
+
         }
       })
     }
     if (this.roleId == 11) {
       this.cookieService.set("role_id", 2);
       this.router.navigate(["/"]);
-      setTimeout(data=>{
+      setTimeout(data => {
         window.location.reload();
-      },500)
+      }, 500)
     }
   }
 

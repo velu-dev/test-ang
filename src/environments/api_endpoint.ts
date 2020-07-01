@@ -31,6 +31,9 @@ export const api_endpoint = {
     subscriberDisableUser: "subscriber/disable-user/",
     updateEditUser: 'subscriber/user-update/',
     getEditUser: 'subscriber/user-details/',
+    getClaimantAwait: 'subscriber/awaiting/claimants',
+    getClaimAwait: 'subscriber/awaiting/claims',
+    getBillableAwait: 'subscriber/awaiting/billable-items',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',
@@ -62,7 +65,7 @@ export const api_endpoint = {
     deuList: 'claim/seed-data/deu_office_details',
     listIntakeCall: "claim/seed-data/intake_contact_type",
     billableItemSingle: 'claim/billable-item/',
-    claimantBillable:'claim/claimant-billable-item-list/',
+    claimantBillable: 'claim/claimant-billable-item-list/',
 
 
     //seed data

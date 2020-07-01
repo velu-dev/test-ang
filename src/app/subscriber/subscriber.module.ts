@@ -26,7 +26,7 @@ import { ExaminerService } from './service/examiner.service';
 import { AppointmentDetailsComponent, ClaimantPopupComponent, ClaimPopupComponent, BillableitemPopupComponent } from './examiner/appointment-details/appointment-details.component';
 import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
-import { ExaminationCalanderViewComponent } from './examiner/examination-calander-view/examination-calander-view.component';
+import { ExaminationCalanderViewComponent, EventdetailDialog, } from './examiner/examination-calander-view/examination-calander-view.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
 import { ClaimComponent } from './components/claims/common/claim/claim.component';
@@ -45,6 +45,13 @@ import { NewBillingComponent, BillilgDialog } from './components/new-billing/new
 import { EditBillingComponent } from './components/edit-billing/edit-billing.component';
 import { DialogueComponent } from '../shared/components/dialogue/dialogue.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { ClaimantAwaitingComponent } from './components/dashboard/claimant-awaiting/claimant-awaiting.component';
+import { ClaimAwaitingComponent } from './components/dashboard/claim-awaiting/claim-awaiting.component';
+import { BillableItemAwaitingComponent } from './components/dashboard/billable-item-awaiting/billable-item-awaiting.component';
+import { UpcommingBillableItemComponent } from './components/dashboard/upcomming-billable-item/upcomming-billable-item.component';
+import { UnfinishedReportComponent } from './components/dashboard/unfinished-report/unfinished-report.component';
+import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
+import { SubscriberService } from './service/subscriber.service';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -92,7 +99,15 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     NewBillingComponent,
     EditBillingComponent,
     BillilgDialog,
-    SignPopupComponent
+    SignPopupComponent,
+    EventdetailDialog,
+    ClaimantAwaitingComponent,
+    ClaimAwaitingComponent,
+    BillableItemAwaitingComponent,
+    UpcommingBillableItemComponent,
+    UnfinishedReportComponent,
+    BillingCollectionComponent,
+
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -100,7 +115,9 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     BillableitemPopupComponent,
     InjuryPopup,
     BillilgDialog,
-    SignPopupComponent
+    SignPopupComponent,
+    EventdetailDialog,
+
   ],
   imports: [
     CommonModule,
@@ -109,6 +126,6 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     FullCalendarModule,
     ImageCropperModule
   ],
-  providers: [SubscriberUserService, ClaimService, ExaminerService]
+  providers: [SubscriberUserService, ClaimService, ExaminerService, SubscriberService]
 })
 export class SubscriberModule { }

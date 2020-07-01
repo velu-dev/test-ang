@@ -1,6 +1,18 @@
-:root { 
-  --cropper-outline-color: rgba(0, 0, 0, .3);
+:root {
+  --cropper-outline-color: rgba(0, 0, 0, 0.3);
 }
+
+$primary: #e21b8e;
+$secondary: #96358d;
+$ternary: #00b2e2;
+
+$sidebar-dark: #1b1c1d;
+$sidebar-light: #383838;
+$menu-light: #b3b3b3;
+$navbar-light: #f4f4f4;
+$light-color: #f4f4f4;
+
+$active: #767676;
 
 //colors
 $bg-light-blue: #f2f7ff;
@@ -40,6 +52,7 @@ $bg-warning: rgba(255, 178, 54, 0.4);
 $bg-error-style-one: #ff8f8f;
 $btn_success: #00cc00 !default;
 $btn_close: #ebebf2;
+$accent: #ff4081;
 
 // Tab background color
 $tab-bg-1: #3c3cff1f;
@@ -52,7 +65,7 @@ $warning: #ffc400;
 $danger: #ff3366;
 
 //table odd row color
-$table-solid:#F8F8F8;
+$table-solid: #f8f8f8;
 //class
 // Matero Variables
 //
@@ -108,8 +121,8 @@ $font-size-23: 2em;
 
 //Font-family
 
-$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Roboto ", sans-serif;
-$font-family-source-san-serif: "Source Sans Pro", sans-serif;
+$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Lato ";
+$font-family-source-san-serif: "Lato";
 
 //Alignment
 $float-left: left;
@@ -141,6 +154,10 @@ $width-90: 90%;
 $width-95: 95%;
 $width-100: 100%;
 //box Shadow
+$nav-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+$shadow-style-one: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
+$shadow-style-one-hover: 0 0 25px -5px #9e9c9e;
+
 $box-shadow-none: none !important;
 $box-shadow-1: 5px 5px 25px #b3c5de9c;
 $box-shadow-2: 3px 0 10px 0 rgba(183, 192, 206, 0.2); // Using navebar
@@ -166,7 +183,7 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
 }
 
 .display-block {
-  display: block !important
+  display: block !important;
 }
 
 //Width
@@ -212,7 +229,7 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
 
 @mixin content-wrapper {
   padding: 20px;
-  background-color: $bg-light-blue;
+  background-color: $white;
   @media only screen and (max-width: 568px) {
     padding: 10px;
   }
@@ -331,7 +348,6 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   margin-bottom: 15px;
   display: block;
   font-size: $font-size-2;
-  // font-size: $font-size-10;
   color: $black;
 }
 .m-card {
@@ -345,16 +361,15 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
 
 .table-filter {
   margin-top: 5px !important;
-  margin-bottom: 5px;
+  margin-bottom: 5px !important;
   float: left;
-  border: 1px solid $bg-light-blue;
   input {
     padding: 10px 10px;
     border: 1px solid $transparent;
     font-size: $font-size-1;
     outline: none;
-    width: 500px;
-    border-radius: 3px;
+    border-radius: 50px;
+    width: 350px;
     box-shadow: $box-shadow-3;
     @media only screen and (max-width: 568px) {
       width: $width-100;
@@ -365,7 +380,14 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
       outline: none;
     }
   }
+  mat-icon {
+    position: absolute;
+    left: 340px;
+    padding: 10px 0 0 8px;
+    color: $light-gray;
+  }
 }
+
 .filter-icon {
   cursor: pointer;
   float: right;
@@ -600,6 +622,14 @@ input:-webkit-autofill {
   .mat-select-panel {
     min-width: 100% !important;
   }
+  .outline-success {
+    color: $btn_success;
+    border-color: $btn_success;
+  }
+  .outline-danger {
+    color: $danger;
+    border-color: $danger;
+  }
 }
 
 .data-max-width {
@@ -608,11 +638,82 @@ input:-webkit-autofill {
   width: $width-60;
 }
 
-// .mat-select-panel {
-//   width: 100%;
-//   min-width: 100% !important;
-// }
-// #cdk-overlay-1 {
-//   transform: initial !important;
+// Form fields disabled label color
+.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+.mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+  color: rgba(0, 0, 0, 0.7);
+}
+.mat-select-disabled .mat-select-value,
+.mat-checkbox-disabled .mat-checkbox-label {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
 
-// }
+// OUTLINE BUTTON CSS
+.btn_ {
+  height: 40px;
+  min-width: 100px;
+}
+.outline-success {
+  @extend .btn_;
+  color: $btn_success;
+  border-color: $btn_success;
+  &:hover {
+    color: $white;
+    background-color: $btn_success;
+  }
+}
+.filled-success {
+  @extend .btn_;
+  color: $white;
+  background-color: $btn_success;
+  border-color: $btn_success;
+}
+
+.outline-danger {
+  @extend .btn_;
+  color: $danger;
+  border-color: $danger;
+  &:hover {
+    color: $white;
+    background-color: $danger;
+  }
+}
+.outline-accent {
+  @extend .btn_;
+  color: $accent;
+  border-color: $accent;
+  &:hover {
+    color: $white;
+    background-color: $accent;
+  }
+}
+.outline-primary {
+  @extend .btn_;
+  color: $primarycolor;
+  border-color: $primarycolor;
+  &:hover {
+    color: $white;
+    background-color: $primarycolor;
+  }
+}
+
+.text-success {
+  color: $btn_success;
+}
+.text-danger {
+  color: $danger;
+}
+
+// Common font family
+.mat-toolbar,
+.mat-toolbar h1,
+.mat-toolbar h2,
+.mat-toolbar h3,
+.mat-toolbar h4,
+.mat-toolbar h5,
+.mat-toolbar h6 {
+  font-family: Lato !important;
+}

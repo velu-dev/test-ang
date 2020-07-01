@@ -32,16 +32,17 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-
+              
                 <mat-form-field *ngIf="billable_item.value?.exam_type?.modifier_id?.includes(1)" appearance="outline"
                     fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Primary Language</mat-label>
+                    <mat-label>Primary Language </mat-label>
                     <mat-select formControlName="primary_language_spoken">
                         <mat-option *ngFor="let language of languageList" [value]="language.id">
                             {{language.language}}
                         </mat-option>
                     </mat-select>
                     <mat-error>Please select valid primary language</mat-error>
+                    <mat-hint *ngIf="!primary_language_spoken">Note: No primary langauge selected. Please select it from Claimant's section!</mat-hint>
                 </mat-form-field>
             </div>
 

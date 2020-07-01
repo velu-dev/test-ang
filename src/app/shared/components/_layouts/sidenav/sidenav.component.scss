@@ -3,11 +3,11 @@
 mat-sidenav-container {
   mat-sidenav {
     width: $sidenav-width;
-    background-color: $primarycolor;
-    background: $primarycolor;
+    background-color: $sidebar-dark;
+    background: $sidebar-dark;
     color: $white;
     mat-toolbar {
-      background-color: $primarycolor;
+      background-color: $sidebar-dark;
       color: $white;
       box-shadow: $box-shadow-3;
     }
@@ -37,7 +37,7 @@ mat-sidenav-container {
         }
       }
       .mat-list-item {
-        color: $white;
+        color: $menu-light;
         height: 42px;
         font-size: $font-size-11;
         width: 94%;
@@ -49,7 +49,7 @@ mat-sidenav-container {
         &:active {
           cursor: pointer;
           // background-color: $secondarycolor;
-          background-color: #5c77ff;
+          background-color: $sidebar-light;
           width: 94%;
           margin: 0px auto;
           // color: $menu-active;
@@ -72,7 +72,7 @@ mat-sidenav-container {
   }
   //mat-sidenav end
   mat-sidenav-content {
-    background-color: $bg-light-blue;
+    background-color: $white;
     min-height: 100vh;
     mat-toolbar {
       background-color: $white;
@@ -106,8 +106,9 @@ mat-sidenav-container {
 .active-list-item {
   // background-color: $secondarycolor !important;
   // color: $black !important;
-  background-color: #5c77ff !important;
+  background-color: $sidebar-light !important;
   border-left: 3px solid $white !important;
+  color: $white !important;
   mat-icon {
     color: $white !important;
   }

@@ -99,23 +99,23 @@ export class ClaimListComponent implements OnInit {
   claims = [];
   getclaims() {
     this.claimService.getClaims().subscribe(res => {
-      res.data.map(claim=>{
-        if(claim.claim_injuries != null &&  claim.claim_injuries[0] && claim.claim_injuries[0].date_of_injury) { 
-        claim.date_of_injury = moment(claim.claim_injuries[0].date_of_injury).format("MM-DD-YYYY")
-        claim.claim_injuries[0].date_of_injury = moment(claim.claim_injuries[0].date_of_injury).format("MM-DD-YYYY");
-        }else{
+      res.data.map(claim => {
+        if (claim.claim_injuries != null && claim.claim_injuries[0] && claim.claim_injuries[0].date_of_injury) {
+          claim.date_of_injury = moment(claim.claim_injuries[0].date_of_injury).format("MM-DD-YYYY")
+          claim.claim_injuries[0].date_of_injury = moment(claim.claim_injuries[0].date_of_injury).format("MM-DD-YYYY");
+        } else {
           claim.date_of_injury = null;
-        } 
+        }
       })
       this.claims = res.data;
       this.dataSource = new MatTableDataSource(this.claims)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
         return data.last_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.wcab_number && data.wcab_number.toLowerCase().includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.date_of_injury && data.date_of_injury.toLowerCase().includes(filter));
       };
 
-      this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
   }
   gotoEdit(data) {
@@ -156,6 +156,6 @@ export class ClaimListComponent implements OnInit {
     localStorage.setItem("exam_type", element.exam_type_name);
     localStorage.setItem("name", element.first_name + " " + element.last_name)
     localStorage.setItem("claim_number", element.claim_number)
-    this.router.navigate(['/subscriber/edit-claim', element.claim_id])
+    this.router.navigate(['/subscriber/claims/edit-claim', element.claim_id])
   }
 }

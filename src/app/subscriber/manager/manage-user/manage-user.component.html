@@ -32,6 +32,7 @@
         <div class="table-filter">
             <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                 placeholder="Search by name, email, role, etc.">
+                <mat-icon >search</mat-icon>
         </div>
         <span class="spacer"></span>
         <!-- <button mat-icon-button class="filter-icon p-t-0" [matMenuTriggerFor]="filter">

@@ -1,33 +1,45 @@
-<button mat-raised-button color="primary" (click)="addInjury()" class="m-t-5 float-right">
-    Add
-</button>
-<div class="m-t-10 p-b-30 striped_">
-    <table mat-table [dataSource]="dataSource" class="user-table w-100">
+<mat-card>
+    <mat-card-header>
+        <div class="content-wrapper-main-title p-t-10 m-b-10">Injury </div>
+        <span class="spacer"></span>
+        <button mat-stroked-button color="primary" (click)="addInjury()" class="m-b-5 outline-success">
+            Add
+        </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="p-b-15">
+        <div class="m-t-10 p-b-30 striped_">
+            <table mat-table [dataSource]="dataSource" class="user-table w-100">
 
-        <ng-container matColumnDef="body_part">
-            <th mat-header-cell *matHeaderCellDef class="data-max-width"> Body parts </th>
-            <td mat-cell *matCellDef="let element"> {{element?.body_part}} </td>
-        </ng-container>
+                <ng-container matColumnDef="body_part">
+                    <th mat-header-cell *matHeaderCellDef class="data-max-width"> Body parts </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.body_part}} </td>
+                </ng-container>
 
-        <ng-container matColumnDef="date_of_injury">
-            <th mat-header-cell *matHeaderCellDef class="no-wrap-td"> Date of injury </th>
-            <td mat-cell *matCellDef="let element"> {{element?.date_of_injury | date:'MM-dd-yyyy'}} </td>
-        </ng-container>
+                <ng-container matColumnDef="date_of_injury">
+                    <th mat-header-cell *matHeaderCellDef class="no-wrap-td"> Date of injury </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.date_of_injury | date:'MM-dd-yyyy'}} </td>
+                </ng-container>
 
-        <ng-container matColumnDef="action" class="action">
+                <ng-container matColumnDef="action" class="action">
             <th mat-header-cell *matHeaderCellDef class="no-wrap-td text-center"> Action </th>
             <td mat-cell *matCellDef="let element; let i = index" class=" text-center">
-                <mat-icon (click)="openDialog(element)" class="edit-user" mat-raised-button matTooltip="Edit"
+                <!-- <mat-icon (click)="openDialog(element)" class="edit-user" mat-raised-button matTooltip="Edit"
                     matTooltipPosition="right">edit
-                </mat-icon> |
+                </mat-icon> 
                 <mat-icon (click)="deleteInjury(element,i )" class="delete-user" mat-raised-button matTooltip="Delete"
                     matTooltipPosition="right" color="warn">delete_outline
-                </mat-icon>
+                </mat-icon> -->
+                <a (click)="openDialog(element)" class="text-success m-r-20">Edit</a>
+                <a (click)="deleteInjury(element,i )" class="text-danger">Delete</a>
             </td>
         </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</div>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+
+    </mat-card-content>
+</mat-card>

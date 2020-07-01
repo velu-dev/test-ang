@@ -45,6 +45,7 @@ export class SubscriberSettingsComponent implements OnInit {
   first_name: string;
   signData: any;
   selectedFile: any = null;
+  isSubmitted = false;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -79,6 +80,7 @@ export class SubscriberSettingsComponent implements OnInit {
           first_name: res.data.first_name,
           last_name: res.data.last_name,
           middle_name: res.data.middle_name,
+          suffix: res.data.suffix,
           company_name: res.data.company_name,
           sign_in_email_id: res.data.sign_in_email_id,
           individual_w9_number: res.data.individual_w9_number,
@@ -96,6 +98,7 @@ export class SubscriberSettingsComponent implements OnInit {
           first_name: res.data.first_name,
           last_name: res.data.last_name,
           middle_name: res.data.middle_name,
+          suffix: res.data.suffix,
           company_name: res.data.company_name,
           sign_in_email_id: res.data.sign_in_email_id,
         }
@@ -122,6 +125,7 @@ export class SubscriberSettingsComponent implements OnInit {
         first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
+        suffix:['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
         company_name: [{ value: "", disabled: false }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         individual_w9_number: [''],
@@ -139,6 +143,7 @@ export class SubscriberSettingsComponent implements OnInit {
         first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
+        suffix:['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
         company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         signature: ['']     

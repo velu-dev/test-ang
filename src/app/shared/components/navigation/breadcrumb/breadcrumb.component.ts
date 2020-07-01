@@ -21,10 +21,10 @@ export class BreadcrumbComponent implements OnInit {
     name: string = "";
     constructor(private router: Router, private store: Store<{ breadcrumb: any }>, private cookieService: CookieService) {
         this.menu$ = store.pipe(select('breadcrumb'));
-        this.menu$.subscribe(res => {
-            this.isname = localStorage.getItem("isName")
-            this.name = localStorage.getItem("name")
-        })
+        // this.menu$.subscribe(res => {
+        //     this.isname = localStorage.getItem("isName")
+        //     this.name = localStorage.getItem("name")
+        // })
     }
 
     ngOnInit() {
@@ -32,7 +32,9 @@ export class BreadcrumbComponent implements OnInit {
         this.store.dispatch(new breadcrumbActions.ListBreadcrumb());
     }
     breadCrumb(menu, index) {
+        if(menu.submenu.length != 0){ 
         this.router.navigate([menu.path])
+        }
         this.store.dispatch(new breadcrumbActions.RemoveBreadcrumb({ index: index }));
     }
     breadCrumbMain() {

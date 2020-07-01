@@ -55,7 +55,7 @@ export class AppointmentComponent implements OnInit {
         this.columnName = ["", "Name", "Status"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["Name", "Claim Number","Examiner", "Exam Type", "Location", "Date", "Status"]
+        this.columnName = ["Name", "Claim Number", "Examiner", "Exam Type", "Location", "Date", "Status"]
         this.columnsToDisplay = ['claimant_name', 'claim_number', 'examiner', 'exam_type_code', 'location', 'appointment_scheduled_date_time', "status"]
       }
     })
@@ -64,11 +64,17 @@ export class AppointmentComponent implements OnInit {
   ngOnInit() {
     this.examinerService.getExaminationDetails().subscribe(res => {
       console.log(res)
+      res['data'].map(data => {
+        data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
+        data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
+      })
       this.dataSource = new MatTableDataSource(res['data']);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return data.examiner_name && data.examiner_name.toLowerCase().includes(filter) || (data.claimant_name && data.claimant_name.toLowerCase().includes(filter)) || (data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter)) || (data.location.street1 && data.location.street1.toLowerCase().includes(filter)) || (data.location.street2 && data.location.street2.toLowerCase().includes(filter)) || (data.location.city && data.location.city.toLowerCase().includes(filter)) || (data.location.state && data.location.state.toLowerCase().includes(filter)) || (data.location.zip_code && data.location.zip_code.toString().toLowerCase().includes(filter)) || (data.claim_number && data.claim_number.includes(filter) || data.appointment_scheduled_date_time && data.appointment_scheduled_date_time.includes(filter));
+      };
     }, error => {
       console.log(error);
       this.dataSource = new MatTableDataSource([])
@@ -92,7 +98,7 @@ export class AppointmentComponent implements OnInit {
     }
   }
   navigate(element) {
-    this.router.navigate(['/subscriber/examiner/appointment-details', element.claim_id, element.bill_item_id])
+    this.router.navigate(['/subscriber/appointment/appointment-details', element.claim_id, element.bill_item_id])
   }
 
   exportData() {
@@ -105,7 +111,7 @@ export class AppointmentComponent implements OnInit {
         "Exam Type": res.exam_type_code,
         "Location": res.location.street1 + ' ' + res.location.street2
           + ' ' + res.location.city + ' ' + res.location.state + ' ' + res.location.zip_code,
-        "Date": res.appointment_scheduled_date_time ?  moment(res.appointment_scheduled_date_time).format("MM-DD-YYYY") : '',
+        "Date": res.appointment_scheduled_date_time ? moment(res.appointment_scheduled_date_time).format("MM-DD-YYYY") : '',
         "Status": res.state,
       })
 

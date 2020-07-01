@@ -3,12 +3,12 @@
 mat-card {
   mat-horizontal-stepper {
     .sub-title {
-      color: $primarycolor;
+      color: $text-gray;
       font-size: $font-size-1;
-      font-weight: $font-weight-medium;
+      font-weight: $font-weight-bold;
     }
     mat-form-field {
-      padding: 10px !important;
+      padding: 10px 10px 0px 10px !important;
     }
     .fixied_adj {
       span {
@@ -60,7 +60,7 @@ mat-card {
     display: inline-flex;
     cursor: pointer;
     border-right: 1px solid $light-gray;
-    background-color: $bg-light-blue;
+    background-color: $light-gray;
     margin-right: 10px;
     mat-icon {
       margin-top: -4px !important;
@@ -69,7 +69,7 @@ mat-card {
     }
   }
   .search-icon {
-    background-color: $primarycolor;
+    background-color: $sidebar-dark;
     color: $white;
     padding: 12px;
     display: block;
@@ -83,7 +83,7 @@ mat-card {
 
 .adj_filter {
   .search-icon {
-    background-color: $primarycolor;
+    background-color: $sidebar-dark;
     color: $white;
     padding: 12px;
     display: block;
@@ -128,10 +128,9 @@ mat-card {
     padding: 5px 5px 5px 5px;
   }
   mat-list-item {
-    background-color: $bg-light-blue;
-    box-shadow: $box-shadow-3;
+    background-color: $light-color;
     &:hover {
-      background-color: $bg-light-blue;
+      background-color: $light-color;
       cursor: pointer;
     }
     .name {
@@ -191,4 +190,11 @@ mat-card-header {
 
 button {
   margin: 5px;
+}
+
+
+.float-right {
+  float: right;
+  margin-left: -100px;
+  z-index: 5;
 }

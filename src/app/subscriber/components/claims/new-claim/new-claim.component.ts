@@ -145,6 +145,7 @@ export class NewClaimComponent implements OnInit {
   userAccountStatus = [];
   userRoles = [];
   claimList = [];
+  tabIndex = 0;
   duration = [{ id: 20, value: "20" }, { id: 30, value: "30" }, { id: 45, value: "45" }, { id: 60, value: "60" }]
   ALL_SEED_DATA = ["address_type", "body_part",
     "contact_type", "agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
@@ -173,10 +174,13 @@ export class NewClaimComponent implements OnInit {
   iseams_entry: boolean = false;
   role: string;
   date: any;
+  primary_language_spoken: boolean = false;
+  claimant_id: any;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
   }
+  isRemoveSearchRemove = false;
 
   dateOfbirthEndValue = new Date();
   claimantChanges: boolean = false;
@@ -186,6 +190,8 @@ export class NewClaimComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+  isNewClaim = true;
+  fromClaimant = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -210,6 +216,23 @@ export class NewClaimComponent implements OnInit {
     })
 
     this.route.params.subscribe(param => {
+      if (param.claimant_id) {
+        this.claimant_id = param.claimant_id;
+        this.fromClaimant = true;
+        this.isNewClaim = false;
+
+        this.claimService.getSingleClaimant(this.claimant_id).subscribe(claimant => {
+          if (claimant.status) {
+            this.isRemoveSearchRemove = true;
+            this.isClaimantCreated = true;
+            this.searchStatus = false;
+            this.isClaimantEdit = true;
+            this.addNewClaimant = true;
+            this.languageStatus = claimant['data'][0].certified_interpreter_required;
+            this.claimant.patchValue(claimant.data[0])
+          }
+        })
+      }
       if (param.id) {
         this.claimId = param.id;
         this.isEdit = true;
@@ -344,8 +367,8 @@ export class NewClaimComponent implements OnInit {
     return this.deuDetails.filter(deu => deu.deu_office.toLowerCase().indexOf(filterValue) === 0);
   }
   isLoading = false;
-  tabIndex = 0;
   advanceTabChanged(event) {
+    console.log(event.index)
     this.tabIndex = event.index;
     this.searchStatus = false;
   }
@@ -369,8 +392,9 @@ export class NewClaimComponent implements OnInit {
     this.billable_item.patchValue({
       claimant_id: option.id
     })
-    this.claimant.setValue(option);
-    this.filteredClaimant = new Observable<[]>();
+    this.primary_language_spoken = option.primary_language_spoken ? true : false
+    this.claimant.patchValue(option);
+    //this.filteredClaimant = new Observable<[]>();
 
   }
   setStep(index: number) {
@@ -398,7 +422,7 @@ export class NewClaimComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required])],
       middle_name: [''],
       salutation: [null, Validators.compose([Validators.maxLength(4)])],
-      suffix: [null],
+      suffix: [null, Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       gender: [null],
@@ -578,7 +602,7 @@ export class NewClaimComponent implements OnInit {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
       if (this.claimant.touched)
-        this.createClaimant('tab')
+        this.createClaimant('tab');
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
       this.submitClaim('tab')
@@ -608,6 +632,7 @@ export class NewClaimComponent implements OnInit {
       this.getFormValidationErrors();
       return;
     }
+    this.errors = { claim_details: 0, claim: 0, Employer: 0, InsuranceAdjuster: 0, ApplicantAttorney: 0, DefenseAttorney: 0, DEU: 0, }
     let claim = this.claim.value;
     claim['claim_injuries'] = this.injuryInfodata;
     if (this.documents_ids.length > 0) {
@@ -620,6 +645,7 @@ export class NewClaimComponent implements OnInit {
     if (!this.isEdit) {
       this.claimService.createClaim(claim).subscribe(res => {
         this.isClaimCreated = true;
+        this.claimId = res.data.claim_id;
         this.billable_item.patchValue({
           claim_id: res.data.claim_id
         })
@@ -630,6 +656,7 @@ export class NewClaimComponent implements OnInit {
           this.routeDashboard();
         }
         this.claimChanges = false;
+        this.isEdit = true;
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
@@ -643,6 +670,7 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'save') {
           this.routeDashboard();
         }
+        this.claimChanges = false;
       }, error => {
         this.isClaimCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -689,26 +717,32 @@ export class NewClaimComponent implements OnInit {
     if (this.billable_item.invalid) {
       return;
     }
-    if (!this.isEdit) {
-      this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
-        this.alertService.openSnackBar(res.message, "success");
-        //this._location.back();
-        if (this.claimant.touched) {
-          this.createClaimant('close')
-        }
-        this.routeDashboard();
-      }, error => {
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
-    } else {
-      // this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
-      //   this.alertService.openSnackBar(res.message, "success");
-      //   this.router.navigate(['/subscriber/claims'])
-      //   this._location.back();
-      // }, error => {
-      //   this.alertService.openSnackBar(error.error.message, 'error');
-      // })
+    if (!this.billable_item.touched) {
+      return;
     }
+    //if (!this.isEdit) {
+    this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
+      this.alertService.openSnackBar(res.message, "success");
+      //this._location.back();
+      if (this.claimant.touched) {
+        this.createClaimant('close')
+      }
+      if (this.claim.touched) {
+        this.submitClaim('close')
+      }
+      this.routeDashboard();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+    // } else {
+    // this.claimService.updateBillableItem(this.billable_item.value).subscribe(res => {
+    //   this.alertService.openSnackBar(res.message, "success");
+    //   this.router.navigate(['/subscriber/claims'])
+    //   this._location.back();
+    // }, error => {
+    //   this.alertService.openSnackBar(error.error.message, 'error');
+    // })
+    // }
   }
   cancel() {
     this.openDialogCancel('cancel', null)
@@ -788,6 +822,7 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'save') {
           this.routeDashboard();
         }
+        this.claimantChanges = false;
       }, error => {
         this.isClaimantCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -817,6 +852,7 @@ export class NewClaimComponent implements OnInit {
       let index = 0;
       this.injuryInfodata.map(res => {
         if (res.body_part_id == this.injuryInfo.body_part_id) {
+          this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury).toDateString();
           this.injuryInfodata[index] = this.injuryInfo;
         }
         index = index + 1;
@@ -845,7 +881,7 @@ export class NewClaimComponent implements OnInit {
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
-          date_of_injury: this.injuryInfo['date_of_injury'],
+          date_of_injury: new Date(this.injuryInfo['date_of_injury']).toDateString(),
           continuous_trauma: this.injuryInfo['continuous_trauma'],
           continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
           continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
@@ -900,14 +936,28 @@ export class NewClaimComponent implements OnInit {
       }
     }
     if (this.emasSearchInput.value) {
-      this.claimant.reset();
-      this.claimService.searchbyEams(this.emasSearchInput.value.replace(/\s/g, '')).subscribe(res => {
+      let data = {};
+      if (!this.fromClaimant) {
+        this.claimant.reset();
+        data = {
+          wcabNumber: this.emasSearchInput.value.replace(/\s/g, ''),
+        }
+      } else {
+        data = {
+          wcabNumber: this.emasSearchInput.value.replace(/\s/g, ''),
+          claimant_first_name: this.claimant.value.first_name,
+          claimant_last_name: this.claimant.value.last_name,
+          claimant_date_of_birth: this.claimant.value.date_of_birth,
+        }
+      }
+      this.claimService.searchbyEams(this.emasSearchInput.value.replace(/\s/g, ''), data).subscribe(res => {
         if (res.data) {
           this.isEdit = false;
-          this.isClaimantEdit = false;
-          this.addNewClaimant = true;
-          this.claimant.patchValue(res.data.claimant)
-
+          if (!this.fromClaimant) {
+            this.isClaimantEdit = false;
+            this.addNewClaimant = true;
+            this.claimant.patchValue(res.data.claimant)
+          }
           this.claim.patchValue({
             claim_details: res.data.claim,
           });
@@ -988,19 +1038,22 @@ export class NewClaimComponent implements OnInit {
     switch (contact.contact_type) {
       case "E1":
         this.contactMask.mask = "";
-        this.billable_item.controls.intake_call['controls']['call_type_detail'].setValidators(Validators.email)
+        this.billable_item.controls.intake_call.get('call_type_detail').setValidators(Validators.email);
         this.contactMask.type = "text";
         break;
       case "E2":
         this.contactMask.mask = "";
+        this.billable_item.controls.intake_call.get('call_type_detail').setValidators(Validators.email)
         this.contactMask.type = "text";
         break;
       case "L1":
         this.contactMask.mask = "(000) 000-0000";
+        this.billable_item.controls.intake_call.get('call_type_detail').setValidators([])
         this.contactMask.type = "text";
         break;
       case "L2":
         this.contactMask.mask = "(000) 000-0000";
+        this.billable_item.controls.intake_call.get('call_type_detail').setValidators([])
         this.contactMask.type = "text";
         break;
       case "F1":
@@ -1020,7 +1073,7 @@ export class NewClaimComponent implements OnInit {
         this.contactMask.type = "text";
         break;
     }
-
+    this.billable_item.get('call_type_detail').updateValueAndValidity();
   }
   todayDate = { appointment: new Date(), intake: new Date() }
   pickerOpened(type) {
@@ -1269,9 +1322,11 @@ export class NewClaimComponent implements OnInit {
       this.claimant.get('primary_language_spoken').setValidators([]);
     }
     this.claimant.get('primary_language_spoken').updateValueAndValidity();
-
+    this.primary_language_spoken = this.claimant.value.primary_language_spoken ? true : false
   }
   primryLangChange() {
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
+    this.primary_language_spoken = this.claimant.value.primary_language_spoken ? true : false
   }
+
 }

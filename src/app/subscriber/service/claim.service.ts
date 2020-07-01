@@ -52,8 +52,8 @@ export class ClaimService {
   getExaminarAddress(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.get_examinar_address + id)
   }
-  searchbyEams(eams_number): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.searchEams + eams_number)
+  searchbyEams(eams_number, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.searchEams, data)
   }
 
   getBillableItemList() {
@@ -64,7 +64,7 @@ export class ClaimService {
     return this.http.post(environment.baseUrl + api_endpoint.correspondenceUpload, data)
   }
 
-  getSingleClaimant(id) {
+  getSingleClaimant(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getClaimant + id)
   }
 
@@ -113,7 +113,7 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.getBilling + claim_id)
   }
 
-  getclaimantBillable(id): Observable<any>{
+  getclaimantBillable(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.claimantBillable + id)
   }
 }

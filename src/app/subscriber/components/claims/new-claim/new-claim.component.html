@@ -6,20 +6,24 @@
     <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
-                <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant</ng-template>
+                <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant
+                </ng-template>
                 <mat-card>
                     <div fxLayout="row wrap" fxFlex="100">
-
                         <div *ngIf="!isEdit" fxFlex="100">
 
-                            <button *ngIf="tabIndex == 0" mat-mini-fab
+                            <!-- <button *ngIf="tabIndex == 0 && !isRemoveSearchRemove" mat-mini-fab
                                 [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user"
                                 type="button" (click)="newClaimant()">
                                 <mat-icon>add</mat-icon>
+                            </button> -->
+                            <button *ngIf="tabIndex == 0 && !isRemoveSearchRemove" mat-stroked-button class="outline-success float-right"
+                                type="button" (click)="newClaimant()">
+                               New Claimant
                             </button>
                             <mat-tab-group (selectedTabChange)="advanceTabChanged($event)">
 
-                                <mat-tab label="Search Claimants ">
+                                <mat-tab label="Search Claimants " *ngIf="!isRemoveSearchRemove">
                                     <button mat-stroked-button class="show-mobile m-t-10" color="primary"
                                         (click)="searchStatus = !searchStatus ">Advanced Search
                                         <mat-icon class="p-l-10">
@@ -106,14 +110,13 @@
                                                     <mat-error>Please enter valid zip code</mat-error>
                                                 </mat-form-field>
 
-                                                <div class="text-center w-100 m-t-10 m-b-50">
-                                                    <button mat-raised-button type="button" color="primary"
-                                                        class="m-r-15 btn_success" matStepperPrevious
-                                                        (click)="advanceSearchSubmit(trigger);$event.stopPropagation()">Search</button>
-                                                    <button mat-raised-button color="warn" type="button" class="m-r-10 "
-                                                        (click)="searchStatus = false">
+                                                <div class="text-center w-100 m-t-10 m-b-10">
+                                                    <button mat-stroked-button type="button"
+                                                        class="m-r-10 outline-danger" (click)="searchStatus = false">
                                                         Cancel </button>
-
+                                                    <button mat-stroked-button type="button"
+                                                        class="m-r-15 outline-success" matStepperPrevious
+                                                        (click)="advanceSearchSubmit(trigger);$event.stopPropagation()">Search</button>
                                                 </div>
                                             </div>
 
@@ -121,7 +124,7 @@
                                     </form>
                                 </mat-tab>
 
-                                <mat-tab label="Search EAMS">
+                                <mat-tab label="Search EAMS" *ngIf="isRemoveSearchRemove || isNewClaim">
                                     <mat-form-field appearance="fill" fxFlex="100"
                                         hideRequiredMarker="hideRequiredControl.auto"
                                         floatLabel="floatLabelControl.auto" class="adj_filter w-100">
@@ -281,7 +284,7 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
                                 fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Address 1</mat-label>
-                                <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+                                <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
                                     placeholder="Address 1" formControlName="street1" autocomplete="off"></textarea>
                                 <mat-error>Please enter valid address</mat-error>
                             </mat-form-field>
@@ -289,7 +292,7 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
                                 fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Address 2</mat-label>
-                                <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+                                <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
                                     placeholder="Address 2" formControlName="street2" autocomplete="off"></textarea>
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
                             </mat-form-field>
@@ -321,14 +324,16 @@
 
                             <div class="text-center w-100 m-t-10 m-b-50 action-button">
 
-                                <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner"
+                                <button mat-stroked-button type="button" class="m-r-10 outline-danger"
+                                    (click)="cancel()">Cancel</button>
+                                <button mat-stroked-button type="submit" class="m-r-10 outline-accent"
                                     (click)="createClaimant('close')">
-                                    Save & Close</button>
-                                <button mat-raised-button type="submit" class="m-r-10 rounded-corner btn_success"
+                                    Save & Close </button>
+                                <button mat-stroked-button type="submit" class="m-r-10 outline-success"
                                     (click)="createClaimant('next')">
                                     Save & Next</button>
-                                <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
-                                    (click)="cancel()">Cancel</button>
+                                <!-- <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                                    (click)="cancel()">Cancel</button> -->
 
                             </div>
                         </div>
@@ -464,7 +469,8 @@
                                 <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_start_date"
                                     [(ngModel)]="injuryInfo.continuous_trauma_start_date"
-                                    [min]="claimant.value?.date_of_birth" [ngModelOptions]="{standalone: true}">
+                                    [min]="claimant.value?.date_of_birth" [max]="today"
+                                    [ngModelOptions]="{standalone: true}">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
@@ -477,7 +483,7 @@
                                     [(ngModel)]="injuryInfo.continuous_trauma_end_date"
                                     [ngModelOptions]="{standalone: true}" autocomplete="off"
                                     [matDatepicker]="continuous_trauma_end_date"
-                                    [min]="injuryInfo.continuous_trauma_start_date">
+                                    [min]="injuryInfo.continuous_trauma_start_date" [max]="today">
                                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
@@ -488,10 +494,10 @@
                                     class="rounded-corner text-center" color="primary">Save</button>
                             </div> -->
                             <div fxFlex="100" class="p-t-10 text-center">
-                                <button mat-raised-button type="button" (click)="addInjury()"
-                                    class="rounded-corner btn_success text-center m-r-5">Save</button>
-                                <button mat-raised-button (click)="step = 0;injuryCancel()" type="button"
-                                    class="rounded-corner" color="warn">Cancel</button>
+                                <button mat-stroked-button (click)="step = 0;injuryCancel()" type="button"
+                                    class="outline-danger">Cancel</button>
+                                <button mat-stroked-button type="button" (click)="addInjury()"
+                                    class="outline-success text-center m-r-5">Save</button>
                             </div>
 
                             <div class="user-table">
@@ -537,41 +543,14 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <div fxLayout="row wrap" fxFlex="100">
-                            <!-- <form [formGroup]="correspondForm" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
-                                fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
-                                class="correspondence-file-upload">
-                                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                                    class="Upload_">
-                                    <button type="button" (click)="uploader.click()" mat-stroked-button color="primary">
-                                        Select File<i class="fa fa-upload p-l-5"></i></button>
-                                    <mat-form-field appearance="outline">
-                                        <input matInput [title]="selectedFile?.name" readonly
-                                            [value]="selectedFile?.name | ellipsis:30" placeholder="No file chosen">
-                                        <input type="file" formControlName="file" #uploader hidden
-                                            (change)="uploadFile($event)" id="uploadFile"
-                                            accept=".pdf, .doc, .docx, .excel, .csv">
-                                        <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
-                                    </mat-form-field>
-                                </div>
-
-                                <mat-form-field fxFlex="100" fxFlex.sm="70" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
-                                    appearance="outline">
-                                    <mat-label>Note</mat-label>
-                                    <input matInput formControlName="note" placeholder="Note">
-                                </mat-form-field>
-                                <div fxFlex="100" fxFlex.sm="30" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                                    <button mat-stroked-button type="button" [disabled]="correspondForm.invalid"
-                                        (click)="correspondFormSubmit();" color="primary" class="p-r-20 btn_success">Add
-                                    </button>
-                                </div>
-                            </form> -->
                             <div fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                                 class="correspondence-file-upload">
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                                     class="Upload_">
-                                    <button type="button" (click)="uploader.click()" mat-stroked-button color="primary">
+                                    <button type="button" (click)="uploader.click()" mat-stroked-button
+                                        class="outline-success">
                                         Select File<i class="fa fa-upload p-l-5"></i></button>
-                                    <mat-form-field appearance="outline">
+                                    <mat-form-field appearance="standard">
                                         <input matInput [title]="file" readonly [value]="file | ellipsis:30"
                                             placeholder="No file chosen">
                                         <input type="file" #uploader hidden (change)="uploadFile($event)"
@@ -581,14 +560,14 @@
                                 </div>
 
                                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30"
-                                    fxFlex.xl="30" appearance="outline">
+                                    fxFlex.xl="30" appearance="standard">
                                     <mat-label>Note*</mat-label>
                                     <input matInput [(ngModel)]="note" [ngModelOptions]="{standalone: true}"
                                         placeholder="Note">
                                 </mat-form-field>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                                     <button mat-stroked-button type="button" [disabled]="(file == null || note == null)"
-                                        (click)="correspondFormSubmit();" color="primary" class="btn_success p-r-20">Add
+                                        (click)="correspondFormSubmit();" class="outline-success p-r-20 m-t-20">Add
                                     </button>
                                 </div>
                             </div>
@@ -598,7 +577,8 @@
 
                                         <ng-container matColumnDef="doc_image">
                                             <th mat-header-cell *matHeaderCellDef> </th>
-                                            <td mat-cell *matCellDef="let element"> <img [src]="element?.file_name | fileType" alt="docx"></td>
+                                            <td mat-cell *matCellDef="let element"> <img
+                                                    [src]="element?.file_name | fileType" alt="docx"></td>
                                         </ng-container>
 
                                         <ng-container matColumnDef="doc_name">
@@ -1113,16 +1093,16 @@
                         </div>
                     </mat-expansion-panel>
                     <div class="text-center w-100 m-t-10 m-b-50 action-button">
-                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
+                        <button mat-stroked-button type="button" class="m-r-10 outline-primary"
                             matStepperPrevious>Previous</button>
-                        <button mat-raised-button color="accent" type="submit" class="m-r-10 rounded-corner "
+                        <button mat-stroked-button type="button" class="m-r-10 outline-danger"
+                            (click)="cancel()">Cancel</button>
+                        <button mat-stroked-button type="submit" class="m-r-10 outline-accent"
                             (click)="submitClaim('save')">
                             Save & Close</button>
-                        <button mat-raised-button color="primary" type="submit"
-                            class="m-r-10 rounded-corner btn_success" (click)="submitClaim('next')">Save & Next
+                        <button mat-stroked-button type="submit" class="m-r-10 outline-success"
+                            (click)="submitClaim('next')">Save & Next
                         </button>
-                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
-                            (click)="cancel()">Cancel</button>
                     </div>
                 </mat-accordion>
             </form>
@@ -1171,6 +1151,8 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error>Please select valid primary language</mat-error>
+                            <mat-hint *ngIf="!primary_language_spoken">Note: No primary langauge selected. Please select
+                                it from Claimant's section!</mat-hint>
                         </mat-form-field>
                     </div>
 
@@ -1229,7 +1211,7 @@
                             </mat-autocomplete>
                         </mat-form-field>
                         <div fxFlex="100">
-                            <mat-card-content class="address-list">
+                            <mat-card-content class="address-list p-r-10 p-l-10">
                                 <mat-list *ngIf="isAddressSelected">
                                     <mat-list-item>
                                         <div class="name" mat-line>
@@ -1277,8 +1259,7 @@
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
-                                autocomplete="off" [max]="todayDate.intake"
-                                [owlDateTime]="intake">
+                                autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"></mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>
                             </owl-date-time>
@@ -1309,15 +1290,12 @@
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-50 action-button">
-                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="primary"
+                        <button mat-stroked-button type="button" class="m-r-10 outline-primary"
                             matStepperPrevious>Previous</button>
-
-                        <button mat-raised-button color="primary" class="m-r-10 rounded-corner" color="accent"
-                            (click)="submitBillableItem()">
-                            Save & Close </button>
-
-                        <button mat-raised-button type="button" class="m-r-10 rounded-corner" color="warn"
+                        <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                             (click)="cancel()">Cancel</button>
+                        <button mat-stroked-button class="m-r-10 outline-accent" (click)="submitBillableItem()">
+                            Save & Close </button>
                     </div>
                 </mat-card>
             </form>

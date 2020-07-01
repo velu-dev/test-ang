@@ -1,4 +1,4 @@
-<mat-divider></mat-divider>
+
 <!-- <div fxLayout="row wrap" *ngIf="!isEdit">
     <div fxFlex="100">
         <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
@@ -50,7 +50,7 @@
     </div>
 </div>
 <div *ngIf="isEdit" class="def_attorney_info"> -->
-<div class="def_attorney_info">
+<div class="def_attorney_info  m-t-15">
     <form fxLayout="row wrap" fxFlex="100" [formGroup]="DefanceAttorney"
         (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -64,13 +64,13 @@
 
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 1</mat-label>
-            <textarea matInput placeholder="Address 1" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+            <textarea matInput placeholder="Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
                 formControlName="street1"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>Address 2</mat-label>
-            <textarea matInput placeholder="Address 2" cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"
+            <textarea matInput placeholder="Address 2" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
                 formControlName="street2"></textarea>
         </mat-form-field>
 
@@ -114,11 +114,12 @@
             <input matInput placeholder="Fax" mask="000-000-0000" formControlName="fax" autocomplete="off">
             <mat-error>Please enter valid fax number</mat-error>
         </mat-form-field>
-        <div *ngIf="isEdit" class="text-center w-100 m-t-10 m-b-10">
-            <button mat-raised-button class="m-r-10 rounded-corner btn_success" (click)="updateDAttorney()">
+        <div *ngIf="isEdit" class="text-center w-100 m-t-10">
+
+            <button mat-stroked-button type="button" (click)="cancel();isEdit = false" class="outline-danger"
+                >Cancel</button>
+            <button mat-stroked-button class="m-l-10 outline-success" (click)="updateDAttorney()">
                 Save </button>
-            <button mat-raised-button type="button" (click)="cancel();isEdit = false" class="rounded-corner"
-                color="warn">Cancel</button>
         </div>
     </form>
 </div>

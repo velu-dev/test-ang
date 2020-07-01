@@ -1,10 +1,11 @@
 @import "variables";
 @import "table";
 mat-card {
+  box-shadow: $shadow-style-one !important;
   padding-top: 10px;
   mat-card-content {
     mat-form-field {
-      padding: 10px !important;
+      padding: 10px 10px 0px 10px !important;
     }
   }
 }
@@ -12,8 +13,8 @@ mat-card {
 .billable_item {
   min-height: auto;
   mat-card-content {
-      .user-detail {
-          min-height: 200px;
-      }
+    .user-detail {
+      min-height: 200px;
+    }
   }
 }

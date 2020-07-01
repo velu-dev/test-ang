@@ -1,10 +1,19 @@
 <div class="app-calendar">
+    <h4>Select Examinar</h4>
+    <mat-form-field>
+        <mat-label>Examinar list</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let examinar of examinars" [value]="examinar.id">
+                {{examinar.first_name + examinar.last_name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
     <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="dateChanged()"
         style="visibility: hidden;">
     <mat-datepicker #picker></mat-datepicker>
     <full-calendar #calendar *ngIf="options" [eventLimit]="options.eventLimit" [themeSystem]="'standard'"
-        [bootstrapFontAwesome]="true" [businessHours]="options.businessHours" [editable]="false" [events]="events"
+        [bootstrapFontAwesome]="true" [businessHours]="options.businessHours" [editable]="false" [events]="calendarEvents"
         [header]="options.header" [customButtons]="options.customButtons" [plugins]="options.plugins"
-        (dateClick)="handleDateClick($event)">
+        (eventClick)="handleEventClick($event)">
     </full-calendar>
 </div>

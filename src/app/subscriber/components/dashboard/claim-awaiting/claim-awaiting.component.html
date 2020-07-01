@@ -1,0 +1,57 @@
+<mat-card class="m-card">
+    <mat-card-content class="m-b-0">
+        <div class="table-filter">
+            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+                placeholder="Search by Claim Number, Name, Date, Type">
+            <mat-icon>search</mat-icon>
+        </div>
+        <div class="user-detail">
+            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
+                matSort>
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+                        {{columnName[i]}} </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="i == 0 && isMobile">
+                            <mat-icon mat-raised-button
+                                [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
+                                {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                            </mat-icon>
+                        </span>
+                        <div>
+                            <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name}},
+                                {{element?.claimant_first_name}}</span>
+                            <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
+                            <span *ngIf="column == 'examiner'">{{element?.ex_last_name}}{{element?.ex_first_name}}{{element?.ex_suffix ? ','+element?.ex_suffix : ''}}</span>
+                            <span *ngIf="column == 'exam_type'">{{element?.exam_type_name}}</span>
+                            <span *ngIf="column == 'created_date'">{{element?.created_date}}<small class="p-l-10">
+                                <span *ngIf="element?.created_time" class="fa fa-clock-o"></span>&nbsp; {{element?.created_time}}</small></span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                        <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                            <div class="resposive-table">
+                                <div><span>Claimant</span> {{element?.last_name}}, {{element?.first_name}} </div>
+                                <div><span>Claim Number</span> {{element?.claim_number}} </div>
+                                <div><span>Examiner</span>{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}} </div>
+                                <div><span>Exam Type</span> {{element?.exam_type}} </div>
+                                <div><span>Date Created</span> {{element?.created_date}}<small class="p-l-10">
+                                    <span *ngIf="element?.created_time" class="fa fa-clock-o"></span>&nbsp;{{element?.created_time}}</small> </div>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
+                    [class.row]="expandedElement === element" (click)="openElement(element)">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+            </table>
+            <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
+        </div>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    </mat-card-content>
+</mat-card>

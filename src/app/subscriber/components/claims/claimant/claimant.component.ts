@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import * as moment from 'moment';
+import { MatMenuTrigger } from '@angular/material';
 @Component({
   selector: 'app-claimant',
   templateUrl: './claimant.component.html',
@@ -36,8 +37,8 @@ export class ClaimantComponent implements OnInit {
   columnName = []
   columnsToDisplay = [];
   expandedElement: User | null;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -50,6 +51,7 @@ export class ClaimantComponent implements OnInit {
   filterValue: string;
   tabIndex: number = 0;
   disabled = false;
+  @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -61,11 +63,11 @@ export class ClaimantComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "First Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
+        this.columnName = ["", "Claimant Name", "Action"]
+        this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Date of Birth", "Gender", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'date_of_birth', "gender", "disabled"]
+        this.columnName = ["Claimant Name", "Examiner", "Date of Birth", "Date of Injury", "Claim Number"]
+        this.columnsToDisplay = ['claimant_name', 'examiner', 'date_of_birth', "date_of_injury", "claim_number"]
       }
     })
     this.screenWidth = window.innerWidth;
@@ -81,23 +83,25 @@ export class ClaimantComponent implements OnInit {
   users = [];
   getUser() {
     this.claimService.getClaimant().subscribe(res => {
-    
-     res.data.map(claim=>{
-      claim.date_of_birth = moment(claim.date_of_birth).format("MM-DD-YYYY");
-      claim.gender =  claim.gender == "M" ? 'Male' : '' ||  claim.gender == "F" ? 'Female' : ''
-     })
-       this.users = res.data;
+      res.data.map(claim => {
+        claim.date_of_birth = claim.date_of_birth ? moment(claim.date_of_birth).format("MM-DD-YYYY") : '';
+        claim.date_of_injury = claim.date_of_injury ? moment(claim.date_of_injury).format("MM-DD-YYYY") : '';
+        claim.examiner = claim.ex_last_name + ' ' + claim.ex_first_name;
+        claim.claimant_name = claim.last_name + ' ' + claim.first_name;
+      })
+      this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
 
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
-        return data.last_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.gender && data.gender.toLowerCase().includes(filter));
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter)) || (data.examiner && data.examiner.includes(filter)) || (data.claim_number && data.claim_number.includes(filter));
       };
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
   }
   gotoEdit(e) {
-    this.router.navigate(["/subscriber/claimant/new-claimant/",e.id])
+    this.router.navigate(["/subscriber/claimant/edit-claimant/", e.id])
   }
 
   applyFilter(filterValue: string) {

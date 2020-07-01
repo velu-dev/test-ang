@@ -1,6 +1,11 @@
 @import "variables";
 
 mat-card {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
     mat-card-header {
         button {
             @media only screen and (max-width: 568px) {
@@ -11,7 +16,7 @@ mat-card {
     }
     .claim_info {
         mat-form-field {
-            padding: 10px !important;
+            padding: 10px 10px 0px 10px !important;
         }
         .fixied_adj {
             span {

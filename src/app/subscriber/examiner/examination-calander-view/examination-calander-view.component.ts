@@ -1,10 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FullCalendarComponent } from "@fullcalendar/angular";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import timeGrigPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { EventInput } from '@fullcalendar/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { ExaminerService } from '../../service/examiner.service';
+import { formatDate } from '@angular/common';
+import { OWL_DATE_TIME_FORMATS, DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 @Component({
   selector: 'app-examination-calander-view',
   templateUrl: './examination-calander-view.component.html',
@@ -48,107 +54,107 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
   @ViewChild("calendar", { static: false }) calendar: FullCalendarComponent;
   @ViewChild("picker", { static: false }) picker;
-  calendarComponent: FullCalendarComponent;
+  // calendarComponent: FullCalendarComponent;
   events: EventInput[] = [
     {
       title: "Will Smith",
-      start: "2020-05-15T04:00:00.453Z",
-      end: "2020-05-15T04:30:00.453Z",
+      start: "2020-06-15T04:00:00.453Z",
+      end: "2020-06-15T04:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Anthony Hopkins",
-      start: "2020-05-16T05:00:00.453Z",
-      end: "2020-05-16T06:30:00.453Z",
+      start: "2020-06-16T05:00:00.453Z",
+      end: "2020-06-16T06:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-05-18T07:00:00.453Z",
-      end: "2020-05-18T07:30:00.453Z",
+      start: "2020-06-18T07:00:00.453Z",
+      end: "2020-06-18T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Charles Chaplin",
-      start: "2020-05-20T08:00:00.453Z",
-      end: "2020-05-20T08:30:00.453Z",
+      start: "2020-06-20T08:00:00.453Z",
+      end: "2020-06-20T08:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Johnny Depp",
-      start: "2020-05-01T09:00:00.453Z",
-      end: "2020-05-01T09:30:00.453Z",
+      start: "2020-06-01T09:00:00.453Z",
+      end: "2020-06-01T09:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "James Cagney",
-      start: "2020-05-03T10:00:00.453Z",
-      end: "2020-05-03T10:30:00.453Z",
+      start: "2020-06-03T10:00:00.453Z",
+      end: "2020-06-03T10:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Morgan Freeman",
-      start: "2020-05-04T05:00:00.453Z",
-      end: "2020-05-04T05:30:00.453Z",
+      start: "2020-06-04T05:00:00.453Z",
+      end: "2020-06-04T05:30:00.453Z",
       backgroundColor: "#FFC400"
     }, {
       title: "Henry Fonda",
-      start: "2020-05-05T04:23:55.453Z",
+      start: "2020-06-05T04:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Bruce Lee",
-      start: "2020-05-05T05:23:55.453Z",
+      start: "2020-06-05T05:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Steve McQueen",
-      start: "2020-05-05T06:23:55.453Z",
+      start: "2020-06-05T06:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "James Stewart",
-      start: "2020-05-06T07:23:55.453Z",
+      start: "2020-06-06T07:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Laurence Olivier",
-      start: "2020-05-07T08:23:55.453Z",
+      start: "2020-06-07T08:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Cary Grant",
-      start: "2020-05-08T09:23:55.453Z",
+      start: "2020-06-08T09:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
@@ -160,31 +166,31 @@ export class ExaminationCalanderViewComponent implements OnInit {
     },
     {
       title: "Spencer Tracy",
-      start: "2020-05-10T10:23:55.453Z",
+      start: "2020-06-10T10:23:55.453Z",
       backgroundColor: "#72E396"
     }, {
       title: "Shah Rukh Khan",
-      start: "2020-05-11T09:23:55.453Z",
+      start: "2020-06-11T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Leonardo DiCaprio",
-      start: "2020-05-12T09:23:55.453Z",
+      start: "2020-06-12T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Gregory Peck",
-      start: "2020-05-13T09:23:55.453Z",
+      start: "2020-06-13T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Sidney Poitier",
-      start: "2020-05-14T09:23:55.453Z",
+      start: "2020-06-14T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Daniel Day-Lewis",
-      start: "2020-05-15T09:23:55.453Z",
+      start: "2020-06-15T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
@@ -196,12 +202,12 @@ export class ExaminationCalanderViewComponent implements OnInit {
     },
     {
       title: "Humphrey Bogart",
-      start: "2020-05-16T09:23:55.453Z",
+      start: "2020-06-16T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Tom Hanks",
-      start: "2020-05-16T09:23:55.453Z",
+      start: "2020-06-16T09:23:55.453Z",
       backgroundColor: "#FF3366"
     }]
   calendarVisible = true;
@@ -209,7 +215,12 @@ export class ExaminationCalanderViewComponent implements OnInit {
   calendarWeekends = true;
   calendarEvents: EventInput[];
   selectedDate = "";
-  constructor() { }
+  examinars = [];
+  constructor(public dialog: MatDialog, public examinarService: ExaminerService) {
+    this.examinarService.getExaminerList().subscribe(res => {
+      this.examinars = res.data;
+    })
+  }
 
   ngOnInit() {
     this.loadAllEvents();
@@ -228,10 +239,117 @@ export class ExaminationCalanderViewComponent implements OnInit {
     this.calendarEvents = this.events;
   }
 
+  handleEventClick(e) {
+    this.openEventDetailDialog(e);
+  }
   handleDateClick(e) {
-
+    // this.openAddEventDialog(e);
   }
   dateChanged() {
+    this.calendar.getApi().gotoDate(this.selectedDate)
+    this.calendar.getApi().changeView("timeGridDay")
+  }
 
+  openEventDetailDialog(e): void {
+    const dialogRef = this.dialog.open(EventdetailDialog, {
+      width: '550px',
+      data: { title: e.event.title, start: e.event.start, end: e.event.end }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        e.event.remove();
+        result.start = new Date(result.start)
+        result.end = new Date(result.end)
+        // this.calendarEvents = this.calendarEvents.concat(result);
+        this.calendar.getApi().addEvent(result)
+      }
+    });
+  }
+  // openAddEventDialog(arg): void {
+  //   const dialogRef = this.dialog.open(AddEventDialog, {
+  //     width: '550px',
+  //     data: { date: arg.date, name: "" }
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+
+  //   });
+  // }
+}
+// @Component({
+//   selector: 'event-detail-dialog',
+//   templateUrl: 'event-detail-dialog.html',
+// })
+// export class AddEventDialog {
+//   event = { name: "", start: "", end: "", location: "" }
+//   constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
+//     @Inject(MAT_DIALOG_DATA) public data: any) { }
+//   onNoClick(): void {
+//     this.dialogRef.close();
+//   }
+//   pickerOpened(a) {
+
+//   }
+// }
+
+export const PICK_FORMATS = {
+  // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
+  display: {
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+  // display: {
+  //   dateInput: 'input',
+  //   monthYearLabel: { year: 'numeric', month: 'short' },
+  //   dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+  //   monthYearA11yLabel: { year: 'numeric', month: 'long' }
+  // }
+};
+export class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'MM-dd-yyyy', this.locale);;
+    } else {
+      return date.toDateString();
+    }
+  }
+}
+export const MY_CUSTOM_FORMATS = {
+  parseInput: 'L LT',
+  fullPickerInput: 'L LT',
+  datePickerInput: 'L',
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
+
+@Component({
+  selector: 'event-detail-dialog',
+  templateUrl: 'event-detail-dialog.html',
+  providers: [
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  ]
+})
+export class EventdetailDialog {
+  event = { title: "", start: "", end: "", location: "" }
+  isEdit = false;
+  constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    console.log(data)
+    this.event = data;
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  pickerOpened(p) { }
+  saveEvent() {
+    this.dialogRef.close(this.event)
   }
 }

@@ -1,17 +1,18 @@
 <mat-card class="m-card">
   <mat-card-header>
-    <div class="m-0 content-wrapper-main-title">Claimant </div>
+    <div class="m-0 content-wrapper-main-title p-t-5 p-l-10">Claimant </div>
     <span class="spacer"></span>
-    <button mat-raised-button color="primary" *ngIf="!editStatus" class="m-b-5" (click)="edit()">
+    <button mat-stroked-button *ngIf="!editStatus && claimantId" class="m-b-5 outline-success" (click)="edit()">
       Edit
     </button>
-    <button mat-raised-button color="primary" *ngIf="editStatus" class="m-b-5" (click)="createClaimant()">
+    <button mat-stroked-button class="filled-success edit-btn" *ngIf="editStatus && claimantId"
+      (click)="createClaimant()">
       Save
     </button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <div fxLayout="row wrap" fxFlex="100">
+    <div fxLayout="row wrap" fxFlex="100" class="p-t-10">
       <form fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
         [formGroup]="claimantForm">
 
@@ -42,11 +43,11 @@
           <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid suffix</mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+        <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Salutation</mat-label>
           <input matInput placeholder="Salutation" formControlName="salutation" autocomplete="off">
-        </mat-form-field>
+        </mat-form-field> -->
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
@@ -57,6 +58,8 @@
           <mat-datepicker #date_of_birth [disabled]="!editStatus"></mat-datepicker>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid date of birth</mat-error>
         </mat-form-field>
+
+        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div>
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
@@ -81,20 +84,22 @@
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>SSN</mat-label>
-          <input matInput mask="000-000-0000" placeholder="999-999-9999" formControlName="ssn" autocomplete="off">
+          <mat-label>Social Security Number</mat-label>
+          <input matInput mask="000-00-0000" placeholder="999-99-9999" formControlName="ssn" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid SSN</mat-error>
         </mat-form-field>
 
-        <div fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100" class="checkbox">
+        <div fxFlex="50" fxFlex.md="50" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
+          fxFlex.xs="100" class="checkbox">
           <div class="p-t-30 p-l-10">
             <mat-checkbox labelPosition="after" (change)="languageStatus = !languageStatus;langChange()"
               formControlName="certified_interpreter_required">Certified Interpreter Required</mat-checkbox>
           </div>
         </div>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Primary Language</mat-label>
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>Language</mat-label>
           <mat-select formControlName="primary_language_spoken" [disabled]="!languageStatus || !editStatus">
             <mat-option *ngFor="let language of languageList" [value]="language.id">
               {{language.language}}
@@ -102,21 +107,24 @@
           </mat-select>
           <mat-error *ngIf="isClaimantSubmited">Please select valid primary language</mat-error>
         </mat-form-field>
-
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div>
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Email</mat-label>
           <input matInput placeholder="Email" formControlName="email" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid email</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Phone Number</mat-label>
           <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no_1"
             placeholder="Phone Number" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid phone number</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Alternate Phone Number</mat-label>
           <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no_2"
             placeholder="Alternate Phone Number" autocomplete="off">
@@ -124,27 +132,31 @@
         </mat-form-field>
 
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Address 1</mat-label>
-          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Address 1"
-            formControlName="street1" autocomplete="off"></textarea>
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>Street Address 1</mat-label>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
+            placeholder="Street Address 1" formControlName="street1" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Address 2</mat-label>
-          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2" placeholder="Address 2"
-            formControlName="street2" autocomplete="off"></textarea>
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
+          <mat-label>Street Address 2</mat-label>
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
+            placeholder="Street Address 2" formControlName="street2" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
-
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div>
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>City</mat-label>
           <input matInput placeholder="City" formControlName="city" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid city</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>State</mat-label>
           <mat-select formControlName="state">
             <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
@@ -153,18 +165,19 @@
           <mat-error *ngIf="isClaimantSubmited">Please enter valid state</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+          fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Zip Code</mat-label>
           <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code"
             autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid zip code</mat-error>
         </mat-form-field>
 
-        <div class="text-center w-100 m-t-10 m-b-50" *ngIf="editStatus">
-          <button mat-raised-button color="primary" type="submit" (click)="createClaimant()"
-            class="m-r-10 rounded-corner btn_success">
+        <div class="text-center w-100 m-t-10 m-b-10" *ngIf="editStatus">
+          <button mat-stroked-button (click)="cancel()" class="outline-danger" color="warn">Cancel</button>
+          <button mat-stroked-button type="submit" (click)="createClaimant()" class="outline-success m-l-10">
             Save </button>
-          <button mat-raised-button (click)="cancel()" class="rounded-corner" color="warn">Cancel</button>
+
 
         </div>
       </form>
@@ -172,22 +185,23 @@
   </mat-card-content>
 </mat-card>
 
-<mat-card class="m-card m-t-25 billable_item">
+<mat-card class="m-card m-t-25 billable_item" *ngIf="claimantId">
   <mat-card-header>
-    <div class="m-0 content-wrapper-main-title">Billable Items</div>
+    <div class="m-0 content-wrapper-main-title p-t-5">Claims</div>
     <span class="spacer"></span>
-    <button class="btn_success m-b-5" mat-raised-button>New Item</button>
+    <button class="outline-success m-b-5" [routerLink]="['new-claim']" mat-stroked-button>New Claim</button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content class="p-t-3 m-b-0">
     <div class="table-filter">
       <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-        placeholder="Search by type, claim number, examiner, etc.">
+        placeholder="Search by name, type, number, etc.">
+      <mat-icon>search</mat-icon>
     </div>
     <div class="user-detail">
       <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
         <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Status'">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{columnName[i]}} </th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="i == 0 && isMobile">
@@ -196,12 +210,12 @@
                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
               </mat-icon>
             </span>
-            <div>
-              <span *ngIf="column == 'procedure_type_name'" (click)="billableNavigate()">{{element?.procedure_type_name}}</span>
+            <div (click)="!isMobile ? claimNavigate(element):''">
               <span *ngIf="column == 'exam_type_code'">{{element?.exam_type_code}} </span>
-              <span *ngIf="column == 'claim_number'" (click)="claimNavigate()">{{element?.claim_number}} </span>
-              <span *ngIf="column == 'examiner_name'">{{element?.examiner_name}}</span>
-              <span *ngIf="column == 'date_of_service'">{{element?.date_of_service}}</span>
+              <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
+              <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury}} </span>
+              <span *ngIf="column == 'examiner'">{{element?.ex_last_name}} {{element?.ex_first_name}}</span>
+              <span *ngIf="column == 'parts'">{{element?.parts}}</span>
               <span *ngIf="column == 'status'">{{element?.status}}</span>
             </div>
           </td>
@@ -209,12 +223,12 @@
         <ng-container matColumnDef="expandedDetail">
           <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
             <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-              <div class="resposive-table">
-                <div (click)="billableNavigate()"><span>Procedure Type</span> {{element.procedure_type_name }} </div>
-                <div><span>Examination Type</span> {{element.exam_type_code}} </div>
-                <div (click)="claimNavigate()"><span>Claim Number</span> {{element.claim_number}} </div>
-                <div><span>Examiner</span> {{element.examiner_name}} </div>
-                <div><span>Date of Service</span> {{element.date_of_service}} </div>
+              <div (click)="claimNavigate(element)" class="resposive-table">
+                <div><span>Exam Type</span> {{element.exam_type_code}} </div>
+                <div><span>Claim Number</span> {{element.claim_number}} </div>
+                <div><span>Date of Injury</span> {{element.date_of_injury}} </div>
+                <div><span>Body Parts</span> {{element.parts}} </div>
+                <div><span>Examiner</span> {{element?.ex_last_name}} {{element?.ex_first_name}} </div>
                 <div><span>Status</span> {{element.status}} </div>
               </div>
             </div>
@@ -222,7 +236,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
-          [class.row]="expandedElement === element">
+          [class.row]="expandedElement === element" (click)="openElement(element)">
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
       </table>

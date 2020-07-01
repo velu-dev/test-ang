@@ -1,7 +1,7 @@
 @import "variables";
 
 mat-form-field {
-    padding: 10px !important;
+    padding: 10px 10px 0px 10px !important;
 }
 
 .correspondence-file-upload {
@@ -21,7 +21,7 @@ mat-form-field {
         }
     }
     div {
-        .btn_success {
+        .add-btn {
             margin-top: 25px;
             @media only screen and (max-width: 568px) {
                 margin-top: 0px;

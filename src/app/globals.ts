@@ -1,4 +1,9 @@
 // File globals.ts
+export const nav_logo = '/assets/images/nav-logo.svg'
+
+
+
+
 
 export const logo = '/assets/images/auth-logo.svg'
 export const simplexam_logo = '/assets/images/logo.svg'

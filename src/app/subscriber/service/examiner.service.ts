@@ -30,7 +30,7 @@ export class ExaminerService {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteAddress + id)
   }
 
-  getExaminerList() {
+  getExaminerList(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getExaminerList)
   }
 
@@ -57,7 +57,7 @@ export class ExaminerService {
     return this.http.get(environment.baseUrl + api_endpoint.getExamination)
   }
 
-  getAllExamination(id,billId): Observable<any> {
+  getAllExamination(id, billId): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getAllExamination + id + '/' + billId)
   }
 
@@ -68,7 +68,7 @@ export class ExaminerService {
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
-  getDocumentData(id,billId) {
+  getDocumentData(id, billId) {
     return this.http.get(environment.baseUrl + api_endpoint.getDocumentData + id + '/' + billId)
   }
   deleteDocument(id) {

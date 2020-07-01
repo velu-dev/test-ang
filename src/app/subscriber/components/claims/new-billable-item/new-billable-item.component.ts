@@ -43,6 +43,7 @@ export class NewBillableItemComponent implements OnInit {
   billableId: number;
   contactType: any;
   languageList: any = [];
+  primary_language_spoken:boolean = false;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -58,6 +59,9 @@ export class NewBillableItemComponent implements OnInit {
         this.billableId = param.billable;
         this.claimService.getBillableItemSingle(param.billable).subscribe(res => {
           console.log(res);
+          if(res['data'].exam_type.primary_language_spoken){
+            this.primary_language_spoken = true;
+          }
           this.billable_item.patchValue(res['data'])
           //this.examinarChange(res['data'].)
           if (res['data'].appointment) {
