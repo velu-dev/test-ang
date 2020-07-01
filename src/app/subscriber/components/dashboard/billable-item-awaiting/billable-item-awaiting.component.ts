@@ -32,11 +32,11 @@ export class BillableItemAwaitingComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Claimant Name", "Action"]
+        this.columnName = ["", "Claimant", "Action"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["Claimant Name", "Date of Birth", "Social Security Number", "Date Created"]
-        this.columnsToDisplay = ['claimant_name', 'date_of_birth', "ssn", "created_date"]
+        this.columnName = ["Claimant","Claim Number", "Examiner", "Procedure Type", "Date Created"]
+        this.columnsToDisplay = ['claimant_name','claim_number', "examiner","procedure_type", "created_date"]
       }
     })
   }
@@ -58,10 +58,10 @@ export class BillableItemAwaitingComponent implements OnInit {
 
 }
 const ELEMENT_DATA = [
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
-  { "id": 132, "last_name": "Mariappan", "first_name": "Rajan", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
-  { "id": 132, "last_name": "ss1", "Selvaraj": "Sarath", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
-  { "id": 132, "last_name": "Venkat", "first_name": "Velu", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
-  { "id": 132, "last_name": "ss1", "first_name": "ss1", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', }
+  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "claim_number": "123-xyz 352", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.",  "procedure_type": "Examination", "created_date": '12-10-2020', },
+  { "id": 132, "last_name": "Mariappan", "first_name": "Rajan", "claim_number": "123-xyz 352", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.",  "procedure_type": "Deposition", "created_date": '12-10-2020', },
+  { "id": 132, "last_name": "ss1", "Selvaraj": "Sarath", "claim_number": "123-xyz 352", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.",  "procedure_type": "Deposition", "created_date": '12-10-2020', },
+  { "id": 132, "last_name": "Venkat", "first_name": "Velu", "claim_number": "123-xyz 352", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.",  "procedure_type": "Examination", "created_date": '12-10-2020', },
+  { "id": 132, "last_name": "ss1", "first_name": "ss1", "claim_number": "123-xyz 352", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.",  "procedure_type": "Deposition", "created_date": '12-10-2020', }
 
 ];
