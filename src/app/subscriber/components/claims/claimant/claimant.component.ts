@@ -86,8 +86,8 @@ export class ClaimantComponent implements OnInit {
       res.data.map(claim => {
         claim.date_of_birth = claim.date_of_birth ? moment(claim.date_of_birth).format("MM-DD-YYYY") : '';
         claim.date_of_injury = claim.date_of_injury ? moment(claim.date_of_injury).format("MM-DD-YYYY") : '';
-        claim.examiner = claim.ex_last_name + ' ' + claim.ex_first_name;
-        claim.claimant_name = claim.last_name + ' ' + claim.first_name;
+        claim.examiner = claim.ex_last_name + '' + claim.ex_first_name;
+        claim.claimant_name = claim.last_name + '' + claim.first_name;
       })
       this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)
@@ -95,7 +95,7 @@ export class ClaimantComponent implements OnInit {
       this.dataSource.sort = this.sort;
 
       this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter)) || (data.examiner && data.examiner.includes(filter)) || (data.claim_number && data.claim_number.includes(filter));
+        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.claim_number && data.claim_number.includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
