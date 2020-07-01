@@ -2,7 +2,7 @@
     <mat-card-content class="m-b-0">
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by Claim Number, Name, Date, Type">
+                placeholder="Search by name, type, etc.">
             <mat-icon>search</mat-icon>
         </div>
         <div class="user-detail">
@@ -21,11 +21,15 @@
                         <div>
                             <span *ngIf="column == 'claimant_name'">{{element?.last_name}},
                                 {{element?.first_name}}</span>
-                            <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
-                            <span *ngIf="column == 'examiner'">{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}}</span>
-                            <span *ngIf="column == 'procedure_type'">{{element?.procedure_type}}</span>
-                            <span *ngIf="column == 'created_date'">{{element?.created_date}}<small class="p-l-10"><span
+                            <span *ngIf="column == 'procedure_type'">{{element?.procedure_type}} </span>
+                            <span
+                                *ngIf="column == 'examiner'">{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}}</span>
+                            <span *ngIf="column == 'dos'">{{element?.dos}}<small class="p-l-10"><span
                                         class="fa fa-clock-o"></span>&nbsp; 9:13 AM</small></span>
+                            <span *ngIf="column == 'service_location'">{{element?.service_location}}</span>
+                            <span *ngIf="column == 'history_on_demand'">{{element?.history_on_demand}}</span>
+                            <span *ngIf="column == 'records_on_demand'">{{element?.records_on_demand}}</span>
+                            <span *ngIf="column == 'exam_Status'">{{element?.exam_Status}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -34,11 +38,17 @@
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="resposive-table">
                                 <div><span>Claimant</span> {{element?.last_name}}, {{element?.first_name}} </div>
-                                <div><span>Claim Number</span> {{element?.claim_number}} </div>
-                                <div><span>Examiner</span>{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}} </div>
                                 <div><span>Procedure Type</span> {{element?.procedure_type}} </div>
-                                <div><span>Date Created</span> {{element?.created_date}}<small class="p-l-10"><span
+                                <div>
+                                    <span>Examiner</span>{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}}
+                                </div>
+                                <div><span>Date of service /<br />
+                                        Date Item Received</span> {{element?.dos}}<small class="p-l-10"><span
                                             class="fa fa-clock-o"></span>&nbsp; 9:13 AM</small> </div>
+                                <div><span>Service Location</span> {{element?.service_location}} </div>
+                                <div><span>History <br />On Demand</span> {{element?.history_on_demand}} </div>
+                                <div><span>Records <br />On Demand</span> {{element?.records_on_demand}} </div>
+                                <div><span>Examination Status</span> {{element?.exam_Status}} </div>
                             </div>
                         </div>
                     </td>
