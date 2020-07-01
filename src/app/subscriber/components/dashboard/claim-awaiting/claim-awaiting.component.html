@@ -19,13 +19,13 @@
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}},
-                                {{element?.first_name}}</span>
+                            <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name}},
+                                {{element?.claimant_first_name}}</span>
                             <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
-                            <span *ngIf="column == 'examiner'">{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}}</span>
-                            <span *ngIf="column == 'exam_type'">{{element?.exam_type}}</span>
-                            <span *ngIf="column == 'created_date'">{{element?.created_date}}<small class="p-l-10"><span
-                                        class="fa fa-clock-o"></span>&nbsp; 9:13 AM</small></span>
+                            <span *ngIf="column == 'examiner'">{{element?.ex_last_name}}{{element?.ex_first_name}}{{element?.ex_suffix ? ','+element?.ex_suffix : ''}}</span>
+                            <span *ngIf="column == 'exam_type'">{{element?.exam_type_name}}</span>
+                            <span *ngIf="column == 'created_date'">{{element?.created_date}}<small class="p-l-10">
+                                <span *ngIf="element?.created_time" class="fa fa-clock-o"></span>&nbsp; {{element?.created_time}}</small></span>
                         </div>
                     </td>
                 </ng-container>
@@ -37,8 +37,8 @@
                                 <div><span>Claim Number</span> {{element?.claim_number}} </div>
                                 <div><span>Examiner</span>{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}} </div>
                                 <div><span>Exam Type</span> {{element?.exam_type}} </div>
-                                <div><span>Date Created</span> {{element?.created_date}}<small class="p-l-10"><span
-                                            class="fa fa-clock-o"></span>&nbsp; 9:13 AM</small> </div>
+                                <div><span>Date Created</span> {{element?.created_date}}<small class="p-l-10">
+                                    <span *ngIf="element?.created_time" class="fa fa-clock-o"></span>&nbsp;{{element?.created_time}}</small> </div>
                             </div>
                         </div>
                     </td>
@@ -49,7 +49,7 @@
                 </tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
-            <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+            <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
         </div>
 
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>

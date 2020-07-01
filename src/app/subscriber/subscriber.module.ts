@@ -51,6 +51,7 @@ import { BillableItemAwaitingComponent } from './components/dashboard/billable-i
 import { UpcommingBillableItemComponent } from './components/dashboard/upcomming-billable-item/upcomming-billable-item.component';
 import { UnfinishedReportComponent } from './components/dashboard/unfinished-report/unfinished-report.component';
 import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
+import { SubscriberService } from './service/subscriber.service';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -125,6 +126,6 @@ import { BillingCollectionComponent } from './components/dashboard/billing-colle
     FullCalendarModule,
     ImageCropperModule
   ],
-  providers: [SubscriberUserService, ClaimService, ExaminerService]
+  providers: [SubscriberUserService, ClaimService, ExaminerService, SubscriberService]
 })
 export class SubscriberModule { }

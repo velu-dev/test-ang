@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { SubscriberService } from 'src/app/subscriber/service/subscriber.service';
+import { Router } from '@angular/router';
+import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-claimant-awaiting',
@@ -22,13 +26,19 @@ export class ClaimantAwaitingComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource = ELEMENT_DATA;
+  dataSource:any;
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
-  constructor(private breakpointObserver: BreakpointObserver) {
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  constructor(private breakpointObserver: BreakpointObserver,
+    private subscriberService: SubscriberService,
+    private router: Router,
+    public dialog: MatDialog,
+  ) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -42,6 +52,22 @@ export class ClaimantAwaitingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.subscriberService.getClaimantAwait().subscribe(claimant => {
+      claimant.data.map(claim => {
+        claim.date_of_birth = claim.date_of_birth ? moment(claim.date_of_birth).format("MM-DD-YYYY") : '';
+        claim.claimant_name = claim.last_name + ',' + claim.first_name;
+        claim.created_date = claim.createdAt ? moment(claim.createdAt).format("MM-DD-YYYY") : '';
+        claim.created_time = claim.createdAt ? moment(claim.createdAt).format("hh:mm a") : '';
+        claim.ssn = claim.ssn ? 'xxx-xx-'+claim.ssn.substr(-4) : ''
+      })
+      console.log(claimant);
+      this.dataSource = new MatTableDataSource(claimant.data)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    }, error => {
+      this.dataSource = new MatTableDataSource([])
+    })
   }
   expandId: any;
   openElement(element) {
@@ -50,15 +76,15 @@ export class ClaimantAwaitingComponent implements OnInit {
     }
   }
   applyFilter(filterValue: string) {
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }
 const ELEMENT_DATA = [
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
+  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "date_of_birth": "2020-05-06", "ssn": "111-222-9999", "created_date": '12-10-2020', },
   { "id": 132, "last_name": "Mariappan", "first_name": "Rajan", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
   { "id": 132, "last_name": "ss1", "Selvaraj": "Sarath", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
   { "id": 132, "last_name": "Venkat", "first_name": "Velu", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },

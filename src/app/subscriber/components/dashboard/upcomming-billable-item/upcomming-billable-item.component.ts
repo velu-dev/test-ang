@@ -15,7 +15,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     ]),
   ],
 })
-export class UpcommingBillableItemComponent implements OnInit { isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+export class UpcommingBillableItemComponent implements OnInit {
+   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
     map(result => result.matches),
     shareReplay()
@@ -33,8 +34,8 @@ constructor(private breakpointObserver: BreakpointObserver) {
       this.columnName = ["", "Claimant", "Action"]
       this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
     } else {
-      this.columnName = ["Claimant","Procedure Type", "Examiner", "Date of service", "Service Location"]
-      this.columnsToDisplay = ['claimant_name','claim_number', "examiner","procedure_type", "created_date"]
+      this.columnName = ["Claimant","Procedure Type", "Examiner", "Date of service / Date Item Received", "Service Location", "History On Demand", "Records On Demand", "Examination  Status"]
+      this.columnsToDisplay = ['claimant_name','procedure_type', "examiner", "dos", 'service_location', 'history_on_demand', 'records_on_demand', 'exam_Status']
     }
   })
 }
@@ -56,6 +57,11 @@ applyFilter(filterValue: string) {
 
 }
 const ELEMENT_DATA = [
-{ "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "claim_number": "123-xyz 352", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.",  "procedure_type": "Examination", "created_date": '12-10-2020', },
+{ "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.", "dos": "12-10-2020","service_location":"123 Boulevard avenue - Los Angeles", "history_on_demand":"Complete", "records_on_demand":"In Progress", "exam_Status":"Not Confirmed" },
+{ "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.", "dos": "12-10-2020","service_location":"123 Boulevard avenue - Los Angeles", "history_on_demand":"Accepted", "records_on_demand":"Complete", "exam_Status":"Left Voicemail" },
+{ "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.", "dos": "12-10-2020","service_location":"123 Boulevard avenue - Los Angeles", "history_on_demand":"Sent", "records_on_demand":"Sent", "exam_Status":"Confirmed" },
+{ "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.", "dos": "12-10-2020","service_location":"123 Boulevard avenue - Los Angeles", "history_on_demand":"Complete", "records_on_demand":"In Progress", "exam_Status":"Not Confirmed" },
+{ "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.", "dos": "12-10-2020","service_location":"123 Boulevard avenue - Los Angeles", "history_on_demand":"Accepted", "records_on_demand":"Sent", "exam_Status":"Confirmed" },
+{ "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge","ex_firstname": "Sanchez","ex_suffix": "M.D.", "dos": "12-10-2020","service_location":"123 Boulevard avenue - Los Angeles", "history_on_demand":"Complete", "records_on_demand":"In Progress", "exam_Status":"Not Confirmed" },
 
 ];
