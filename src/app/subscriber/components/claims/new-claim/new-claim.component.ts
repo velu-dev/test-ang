@@ -228,6 +228,7 @@ export class NewClaimComponent implements OnInit {
             this.searchStatus = false;
             this.isClaimantEdit = true;
             this.addNewClaimant = true;
+            this.claimant_name = claimant.data[0].first_name + " " + claimant.data[0].last_name
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
           }
