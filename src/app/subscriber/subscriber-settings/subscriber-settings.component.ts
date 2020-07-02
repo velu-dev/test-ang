@@ -18,13 +18,33 @@ import { startWith, map } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx-image-cropper';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { shareReplay } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-subscribersettings',
   templateUrl: './subscriber-settings.component.html',
-  styleUrls: ['./subscriber-settings.component.scss']
+  styleUrls: ['./subscriber-settings.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class SubscriberSettingsComponent implements OnInit {
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  dataSource = ELEMENT_DATA;
+  columnsToDisplay = [];
+  expandedElement;
+  isMobile = false;
+  columnName = [];
 
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   profile_bg = globals.profile_bg;
@@ -58,8 +78,20 @@ export class SubscriberSettingsComponent implements OnInit {
     private claimService: ClaimService,
     public _location: Location,
     private intercom: IntercomService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private breakpointObserver: BreakpointObserver,
   ) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Invoice Number", "Action"]
+        this.columnsToDisplay = ['is_expand', 'invoice_number', "disabled"]
+      } else {
+        this.columnName = ["Invoice Number", "Amount", "Status", "Date", "Action"]
+        this.columnsToDisplay = ['invoice_number', 'amount', "status", "date", "action",]
+      }
+    })
+
     this.userService.getProfile().subscribe(res => {
       // this.spinnerService.hide();
       console.log("res obj", res)
@@ -90,7 +122,7 @@ export class SubscriberSettingsComponent implements OnInit {
           company_w9_number: res.data.company_w9_number,
           company_npi_number: res.data.company_npi_number,
         }
-       
+
       } else {
         userDetails = {
           id: res.data.id,
@@ -125,7 +157,7 @@ export class SubscriberSettingsComponent implements OnInit {
         first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
-        suffix:['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
+        suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
         company_name: [{ value: "", disabled: false }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         individual_w9_number: [''],
@@ -143,10 +175,10 @@ export class SubscriberSettingsComponent implements OnInit {
         first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
-        suffix:['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
+        suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
         company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-        signature: ['']     
+        signature: ['']
       });
     }
 
@@ -173,8 +205,8 @@ export class SubscriberSettingsComponent implements OnInit {
       this.taxonomyList.map(data => {
         data.code_name = data.taxonomy_code + ' - ' + data.taxonomy_name
         if (user.role_id == 2) {
-          if(this.user.company_taxonomy_id == data.id)
-          this.texoCtrl.patchValue( data.taxonomy_code + ' - ' + data.taxonomy_name)
+          if (this.user.company_taxonomy_id == data.id)
+            this.texoCtrl.patchValue(data.taxonomy_code + ' - ' + data.taxonomy_name)
         }
       })
       this.filteredTexonamy = this.texoCtrl.valueChanges
@@ -247,6 +279,13 @@ export class SubscriberSettingsComponent implements OnInit {
       })
     }
   }
+
+  expandId: any;
+  openElement(element) {
+    if (this.isMobile) {
+      this.expandId = element.id;
+    }
+  }
   private _filteTex(value: string): any[] {
     const filterValue = value.toLowerCase();
     return this.taxonomyList.filter(deu => deu.code_name.toLowerCase().includes(filterValue));
@@ -271,7 +310,7 @@ export class SubscriberSettingsComponent implements OnInit {
     });
   }
   userformSubmit() {
-    
+
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
@@ -433,15 +472,15 @@ export class SubscriberSettingsComponent implements OnInit {
       if (result == null) {
         this.selectedFile = null
         this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
-      }else{
+      } else {
         this.signData = result;
       }
-      
+
       this.fileUpload.nativeElement.value = "";
     });
   }
 
-  removeSign(){
+  removeSign() {
     this.signData = null;
     this.selectedFile = null;
   }
@@ -499,3 +538,8 @@ export class SignPopupComponent {
   }
 
 }
+const ELEMENT_DATA = [
+  { "id": 132, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
+  { "id": 132, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
+  { "id": 132, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
+];
