@@ -318,4 +318,9 @@ export class NewClaimantComponent implements OnInit {
   billableNavigate() {
     this.router.navigate(['/subscriber/billable-item']);
   }
+
+  newClaim(){
+    //[routerLink]="['new-claim']"
+    this.router.navigate(['/subscriber/claims/edit-claim/'+this.claimantId +'/new-claim'])
+  }
 }
