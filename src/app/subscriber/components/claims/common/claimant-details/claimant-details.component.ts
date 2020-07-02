@@ -8,11 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ClaimantDetailsComponent implements OnInit {
   @Input('claimant') claimantDetailsclaimant;
   @Input('state') states;
+  claimant_name = "";
   constructor() {
-    console.log("saasa", this.claimantDetailsclaimant)
+
   }
 
   ngOnInit() {
+    this.claimant_name = (this.claimantDetailsclaimant.first_name == null ? "" : this.claimantDetailsclaimant.first_name) + " " + (this.claimantDetailsclaimant.middle_name == null ? "" : this.claimantDetailsclaimant.middle_name) + " " + (this.claimantDetailsclaimant.last_name == null ? "" : this.claimantDetailsclaimant.last_name)
   }
 
 }

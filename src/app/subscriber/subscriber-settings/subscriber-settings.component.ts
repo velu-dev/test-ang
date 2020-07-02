@@ -201,11 +201,11 @@ export class SubscriberSettingsComponent implements OnInit {
     });
     this.billingInit();
     this.claimService.seedData('taxonomy').subscribe(response => {
-      this.taxonomyList = response['data'];
+      this.taxonomyList = response.data;
       this.taxonomyList.map(data => {
         data.code_name = data.taxonomy_code + ' - ' + data.taxonomy_name
         if (user.role_id == 2) {
-          if (this.user.company_taxonomy_id == data.id)
+          if (user.company_taxonomy_id == data.id)
             this.texoCtrl.patchValue(data.taxonomy_code + ' - ' + data.taxonomy_name)
         }
       })
@@ -279,7 +279,8 @@ export class SubscriberSettingsComponent implements OnInit {
       })
     }
   }
-
+  selectedTabChange(event) {
+  }
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
@@ -540,6 +541,6 @@ export class SignPopupComponent {
 }
 const ELEMENT_DATA = [
   { "id": 132, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
-  { "id": 132, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
-  { "id": 132, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
+  { "id": 133, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
+  { "id": 134, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
 ];

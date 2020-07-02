@@ -2,7 +2,7 @@
     <div fxLayout="row wrap" class="d-cards">
         <div fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100" fxLayout="column">
             <mat-card class="shadow p-t-15">
-                <mat-tab-group>
+                <mat-tab-group (selectedTabChange)="selectedTabChange($event)">
                     <mat-tab>
                         <ng-template mat-tab-label>
                             <!-- <mat-icon class="example-tab-icon p-r-5"> security </mat-icon> -->
@@ -898,7 +898,9 @@
                                                     </mat-icon>
                                                 </span>
                                                 <div>
-                                                    <span *ngIf="column == 'invoice_number'">{{element?.invoice_number}}
+                                                    <span *ngIf="column == 'invoice_number'">
+                                                        {{element?.invoice_number}}
+                                                        {{expandId === element.id ? 'expanded' : 'collapsed'}}
                                                     </span>
                                                     <span *ngIf="column == 'amount'">{{element?.amount}}</span>
                                                     <span *ngIf="column == 'status'">{{element?.status}}</span>
@@ -912,7 +914,7 @@
                                             <td mat-cell *matCellDef="let element"
                                                 [attr.colspan]="columnsToDisplay.length">
                                                 <div class="detail"
-                                                    [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                                                    [@detailExpand]="expandId === element.id ? 'expanded' : 'collapsed'">
                                                     <div class="resposive-table">
                                                         <div><span>Invoice Number</span> {{element?.invoice_number}}
                                                         </div>
