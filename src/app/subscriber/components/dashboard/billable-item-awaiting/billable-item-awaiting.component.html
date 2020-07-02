@@ -21,7 +21,7 @@
                         <div>
                             <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name}},{{element?.claimant_first_name}}</span>
                             <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
-                            <span *ngIf="column == 'examiner'">{{element?.ex_last_name}} {{element?.ex_first_name}}{{element?.ex_suffix ? ','+element?.ex_suffix : ''}}</span>
+                            <span *ngIf="column == 'examiner'">{{element?.ex_last_name}} {{element?.ex_first_name}}{{element?.ex_suffix ? ', '+element?.ex_suffix : ''}}</span>
                             <span *ngIf="column == 'procedure_type'">{{element?.procedure_type_name}}</span>
                             <span *ngIf="column == 'created_date'">{{element?.created_date}}<small class="p-l-10">
                                 <span *ngIf="element?.created_time" class="fa fa-clock-o"></span>&nbsp;  {{element?.created_time}}</small></span>

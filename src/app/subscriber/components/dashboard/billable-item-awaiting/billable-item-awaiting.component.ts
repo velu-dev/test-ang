@@ -56,7 +56,7 @@ export class BillableItemAwaitingComponent implements OnInit {
         bill.claimant_name = bill.claimant_last_name + ',' + bill.claimant_first_name;
         bill.created_date = bill.createdAt ? moment(bill.createdAt).format("MM-DD-YYYY") : '';
         bill.created_time = bill.createdAt ? moment(bill.createdAt).format("hh:mm a") : '';
-        bill.examiner = bill.ex_last_name + ' '+ bill.ex_first_name +''+ (bill.ex_suffix ? ','+bill.ex_suffix : '')
+        bill.examiner = bill.ex_last_name + ' '+ bill.ex_first_name +''+ (bill.ex_suffix ? ', '+bill.ex_suffix : '')
       })
       console.log(billable);
       this.dataSource = new MatTableDataSource(billable.data)

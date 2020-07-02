@@ -57,7 +57,7 @@ export class ClaimAwaitingComponent implements OnInit {
         claim.claimant_name = claim.claimant_last_name + ',' + claim.claimant_first_name;
         claim.created_date = claim.createdAt ? moment(claim.createdAt).format("MM-DD-YYYY") : '';
         claim.created_time = claim.createdAt ? moment(claim.createdAt).format("hh:mm a") : '';
-        claim.examiner = claim.ex_last_name + ' '+ claim.ex_first_name +''+ (claim.ex_suffix ? ','+claim.ex_suffix : '')
+        claim.examiner = claim.ex_last_name + ' '+ claim.ex_first_name +''+ (claim.ex_suffix ? ', '+claim.ex_suffix : '')
       })
       console.log(claims);
       this.dataSource = new MatTableDataSource(claims.data)
