@@ -38,8 +38,7 @@
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3" fxFlex.md="33.3"
                 fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Name</mat-label>
-                <input matInput placeholder="Name" value="{{claimantDetailsclaimant.first_name}}" autocomplete="off"
-                    disabled>
+                <input matInput placeholder="Name" [value]="claimant_name" autocomplete="off" disabled>
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3" fxFlex.md="33.3"

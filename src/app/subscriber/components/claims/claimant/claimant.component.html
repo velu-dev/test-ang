@@ -24,7 +24,7 @@
                         </span>
                         <div>
                             <span *ngIf="column == 'claimant_name'">{{element?.last_name}}, {{element?.first_name}}</span>
-                            <span *ngIf="column == 'examiner'" class="examiner-name"> {{element?.ex_last_name}} {{element?.ex_first_name}}</span>
+                            <span *ngIf="column == 'examiner'" class="examiner-name"> {{element?.ex_last_name}} {{element?.ex_first_name}}{{element?.ex_suffix ? ', '+element?.ex_suffix : ''}}</span>
                             <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth}} </span>
                             <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury}}</span>
                             <span *ngIf="column == 'claim_number'">{{element?.claim_number}}</span>

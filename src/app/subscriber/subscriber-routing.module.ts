@@ -158,7 +158,11 @@ const routes: Routes = [{
   }, {
     path: "edit-claim/:id",
     component: EditClaimComponent
-  }
+  },
+  {
+    path: "edit-claim/:claimant_id/new-claim",
+    component: NewClaimComponent,
+  },
   ]
 }, {
   path: "settings",
