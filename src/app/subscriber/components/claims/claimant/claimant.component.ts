@@ -86,8 +86,8 @@ export class ClaimantComponent implements OnInit {
       res.data.map(claim => {
         claim.date_of_birth = claim.date_of_birth ? moment(claim.date_of_birth).format("MM-DD-YYYY") : '';
         claim.date_of_injury = claim.date_of_injury ? moment(claim.date_of_injury).format("MM-DD-YYYY") : '';
-        claim.examiner = claim.ex_last_name + '' + claim.ex_first_name;
-        claim.claimant_name = claim.last_name + '' + claim.first_name;
+        claim.examiner = claim.ex_last_name + ' ' + claim.ex_first_name;
+        claim.claimant_name = claim.last_name + ', ' + claim.first_name;
       })
       this.users = res.data;
       this.dataSource = new MatTableDataSource(this.users)
