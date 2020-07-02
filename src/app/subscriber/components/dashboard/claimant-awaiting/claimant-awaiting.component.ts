@@ -82,6 +82,10 @@ export class ClaimantAwaitingComponent implements OnInit {
     }
   }
 
+  gotoEdit(e) {
+    this.router.navigate(["/subscriber/claimant/edit-claimant/", e.id])
+  }
+
 }
 const ELEMENT_DATA = [
   { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "date_of_birth": "2020-05-06", "ssn": "111-222-9999", "created_date": '12-10-2020', },

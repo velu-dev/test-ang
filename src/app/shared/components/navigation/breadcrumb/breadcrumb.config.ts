@@ -193,6 +193,24 @@ export const ROUTES = [
             submenu: []
         },]
     },
+    {
+        path: '/subscriber/dashboard/claimant-awaiting',
+        title: 'Claimants Awaing Details',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/subscriber/dashboard/claim-awaiting',
+        title: 'Claims Awaing Details',
+        icon: 'dashboard',
+        submenu: [],
+    },
+    {
+        path: '/subscriber/dashboard/billable-item-awaiting',
+        title: 'Billable Items Awaing Scheduling',
+        icon: 'dashboard',
+        submenu: [],
+    },
 
     // Subscriber staff manager
     {
