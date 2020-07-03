@@ -200,9 +200,10 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
-    if (!this.claimantForm.touched) {
-      return;
-    }
+    // if (!this.claimantForm.touched) {
+    //   console.log('Test')
+    //   return;
+    // }
 
     Object.keys(this.claimantForm.controls).forEach((key) => {
       if (this.claimantForm.get(key).value && typeof (this.claimantForm.get(key).value) == 'string')
