@@ -151,22 +151,32 @@ export class SubscriberSettingsComponent implements OnInit {
     })
 
     if (user.role_id == 2) {
+      // this.userForm = this.formBuilder.group({
+      //   id: [''],
+      //   role_id: [''],
+      //   first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      //   last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      //   middle_name: ['', Validators.compose([Validators.maxLength(50)])],
+      //   suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
+      //   company_name: [{ value: "", disabled: false }, Validators.compose([Validators.maxLength(100)])],
+      //   sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      //   individual_w9_number: [''],
+      //   individual_w9_number_type: ['0'],
+      //   individual_npi_number: ['', Validators.maxLength(15)],
+      //   company_taxonomy_id: [''],
+      //   company_w9_number: [''],
+      //   company_npi_number: ['', Validators.maxLength(15)],
+      //   signature: ['']
+      // });
       this.userForm = this.formBuilder.group({
         id: [''],
-        role_id: [''],
         first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
         suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
         company_name: [{ value: "", disabled: false }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-        individual_w9_number: [''],
-        individual_w9_number_type: ['0'],
-        individual_npi_number: ['', Validators.maxLength(15)],
-        company_taxonomy_id: [''],
-        company_w9_number: [''],
-        company_npi_number: ['', Validators.maxLength(15)],
-        signature: ['']
+        // signature: ['']
       });
     } else {
       this.userForm = this.formBuilder.group({
@@ -320,18 +330,29 @@ export class SubscriberSettingsComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
-    this.userForm.value.signature = sign;
-    this.userService.updateUser(this.userForm.value).subscribe(res => {
+    // let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
+    // this.userForm.value.signature = sign;
+
+    this.userService.updateSubsciberSetting(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
-      //window.location.reload();
       this.isSubmit = false;
       if (this.first_name != this.userForm.value.first_name) {
         this.first_name = this.userForm.value.first_name;
         this.intercom.setUser(true);
       }
-      // this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
-      //this.router.navigate(['/admin/settings'])
+    }, error => {
+      this.isSubmit = false;
+      console.log(error.message)
+      this.alertService.openSnackBar(error.message, 'error');
+    })
+    return
+    this.userService.updateUser(this.userForm.value).subscribe(res => {
+      this.alertService.openSnackBar("Profile updated successfully", 'success');
+      this.isSubmit = false;
+      if (this.first_name != this.userForm.value.first_name) {
+        this.first_name = this.userForm.value.first_name;
+        this.intercom.setUser(true);
+      }
     }, error => {
       this.isSubmit = false;
       console.log(error.message)
