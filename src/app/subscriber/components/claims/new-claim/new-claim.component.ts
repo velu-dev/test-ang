@@ -231,6 +231,14 @@ export class NewClaimComponent implements OnInit {
             this.claimant_name = claimant.data[0].first_name + " " + claimant.data[0].last_name
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
+            this.claim.patchValue({
+              claim_details: {
+                claimant_id: this.claimant_id
+              }
+            })
+            this.billable_item.patchValue({
+              claimant_id: this.claimant_id
+            })
           }
         })
       }
