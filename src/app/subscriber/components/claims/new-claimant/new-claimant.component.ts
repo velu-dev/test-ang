@@ -79,6 +79,7 @@ export class NewClaimantComponent implements OnInit {
   claimNumber: any = '';
   editStatus: boolean = true;
   filterValue: string;
+  claimantChanges: boolean = false;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
@@ -188,6 +189,10 @@ export class NewClaimantComponent implements OnInit {
 
     }
 
+    this.claimantForm.valueChanges.subscribe(val => {
+      this.claimantChanges = true;
+    });
+
   }
   getSingleClaimant() {
     this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
@@ -200,10 +205,17 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
-    if (!this.claimantForm.touched) {
+    if (this.languageStatus) {
+      this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
+    } else {
+      this.claimantForm.get('primary_language_spoken').setValidators([]);
+    }
+    this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
+    if (!this.claimantChanges) {
       return;
     }
 
+    
     Object.keys(this.claimantForm.controls).forEach((key) => {
       if (this.claimantForm.get(key).value && typeof (this.claimantForm.get(key).value) == 'string')
         this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
@@ -220,9 +232,11 @@ export class NewClaimantComponent implements OnInit {
         this.editStatus = false;
         this.claimantForm.disable();
         this._location.back();
+        this.claimantChanges = false;
       }, error => {
         console.log(error);
         this.alertService.openSnackBar(error.error, 'error');
+        this.claimantChanges = true;
       })
     } else {
       this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
@@ -230,8 +244,10 @@ export class NewClaimantComponent implements OnInit {
         this.getSingleClaimant()
         this.editStatus = false;
         this.claimantForm.disable();
+        this.claimantChanges = false;
       }, error => {
         this.alertService.openSnackBar(error.error, 'error');
+        this.claimantChanges = true;
       })
     }
 
@@ -278,6 +294,7 @@ export class NewClaimantComponent implements OnInit {
   edit() {
     this.editStatus = true;
     this.claimantForm.enable();
+    this.claimantChanges = false;
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -290,11 +307,7 @@ export class NewClaimantComponent implements OnInit {
 
   langChange() {
     this.claimantForm.patchValue({ primary_language_spoken: null })
-    if (this.languageStatus) {
-      this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
-    } else {
-      this.claimantForm.get('primary_language_spoken').setValidators([]);
-    }
+    this.claimantForm.get('primary_language_spoken').setValidators([]);
     this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
   }
   applyFilter(filterValue: string) {
@@ -311,7 +324,6 @@ export class NewClaimantComponent implements OnInit {
   }
 
   claimNavigate(element?) {
-    //this.router.navigate(['/subscriber/claims']);
     this.router.navigate(['/subscriber/claims/edit-claim', element.claim_id])
   }
 
@@ -319,8 +331,7 @@ export class NewClaimantComponent implements OnInit {
     this.router.navigate(['/subscriber/billable-item']);
   }
 
-  newClaim(){
-    //[routerLink]="['new-claim']"
-    this.router.navigate(['/subscriber/claims/edit-claim/'+this.claimantId +'/new-claim'])
+  newClaim() {
+    this.router.navigate(['/subscriber/claims/edit-claim/' + this.claimantId + '/new-claim'])
   }
 }
