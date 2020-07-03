@@ -205,6 +205,12 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
+    if (this.languageStatus) {
+      this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
+    } else {
+      this.claimantForm.get('primary_language_spoken').setValidators([]);
+    }
+    this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
     if (!this.claimantChanges) {
       return;
     }
@@ -301,11 +307,7 @@ export class NewClaimantComponent implements OnInit {
 
   langChange() {
     this.claimantForm.patchValue({ primary_language_spoken: null })
-    if (this.languageStatus) {
-      this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
-    } else {
-      this.claimantForm.get('primary_language_spoken').setValidators([]);
-    }
+    this.claimantForm.get('primary_language_spoken').setValidators([]);
     this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
   }
   applyFilter(filterValue: string) {
