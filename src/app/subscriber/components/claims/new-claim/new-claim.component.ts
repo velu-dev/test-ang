@@ -759,56 +759,8 @@ export class NewClaimComponent implements OnInit {
   claimant_name = "";
   isClaimantCreated = false;
   createClaimant(status) {
-    if (!this.claimantChanges) {
-      if (status == 'next') {
-        this.stepper.next();
-      } else if (status == 'save') {
-        this.routeDashboard();
-      } else if (status == 'close') {
-        this.routeDashboard();
-      }
-      return;
-    } else {
-      if (status == 'close') {
-        if (this.claimant.invalid) {
-          console.log("claimant", this.claimant)
-          return;
-        }
-        this.routeDashboard();
-      }
-    }
-    this.claimantChanges = false;
-    this.isClaimantSubmited = true;
-    Object.keys(this.claimant.controls).forEach((key) => {
-      if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
-        this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
-    });
-    if (this.claimant.invalid) {
-      console.log("claimant", this.claimant)
-      return;
-    }
-    let data = this.claimant.value;
-    data['certified_interpreter_required'] = this.languageStatus;
-    data['date_of_birth'] = new Date(this.claimant.value.date_of_birth).toDateString();
-    if (!this.isClaimantEdit) {
-      this.claimService.createClaimant(this.claimant.value).subscribe(res => {
-        this.alertService.openSnackBar(res.message, "success");
-        this.claimant_name = res.data.first_name + " " + res.data.last_name
-        this.claimant.patchValue({
-          id: res.data.id
-        })
-        this.claim.patchValue({
-          claim_details: {
-            claimant_id: res.data.id,
-            claimant_name: this.claimant_name
-          }
-        });
-        this.billable_item.patchValue({
-          claimant_id: res.data.id
-        })
-        this.isClaimantCreated = true;
-        this.isClaimantEdit = true;
-        this.claimantChanges = false;
+    if (this.claimant.touched) {
+      if (!this.claimantChanges) {
         if (status == 'next') {
           this.stepper.next();
         } else if (status == 'save') {
@@ -816,26 +768,76 @@ export class NewClaimComponent implements OnInit {
         } else if (status == 'close') {
           this.routeDashboard();
         }
-
-      }, error => {
-        console.log(error)
-        this.isClaimantCreated = false;
-        this.alertService.openSnackBar(error.error.message, 'error');
-        this.stepper.previous();
-      })
-    } else {
-      this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
-        this.alertService.openSnackBar(res.message, "success");
-        if (status == 'next') {
-          this.stepper.next();
-        } else if (status == 'save') {
+        return;
+      } else {
+        if (status == 'close') {
+          if (this.claimant.invalid) {
+            console.log("claimant", this.claimant)
+            return;
+          }
           this.routeDashboard();
         }
-        this.claimantChanges = false;
-      }, error => {
-        this.isClaimantCreated = false;
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
+      }
+      this.claimantChanges = false;
+      this.isClaimantSubmited = true;
+      Object.keys(this.claimant.controls).forEach((key) => {
+        if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
+          this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
+      });
+      if (this.claimant.invalid) {
+        console.log("claimant", this.claimant)
+        return;
+      }
+      let data = this.claimant.value;
+      data['certified_interpreter_required'] = this.languageStatus;
+      data['date_of_birth'] = new Date(this.claimant.value.date_of_birth).toDateString();
+      if (!this.isClaimantEdit) {
+        this.claimService.createClaimant(this.claimant.value).subscribe(res => {
+          this.alertService.openSnackBar(res.message, "success");
+          this.claimant_name = res.data.first_name + " " + res.data.last_name
+          this.claimant.patchValue({
+            id: res.data.id
+          })
+          this.claim.patchValue({
+            claim_details: {
+              claimant_id: res.data.id,
+              claimant_name: this.claimant_name
+            }
+          });
+          this.billable_item.patchValue({
+            claimant_id: res.data.id
+          })
+          this.isClaimantCreated = true;
+          this.isClaimantEdit = true;
+          this.claimantChanges = false;
+          if (status == 'next') {
+            this.stepper.next();
+          } else if (status == 'save') {
+            this.routeDashboard();
+          } else if (status == 'close') {
+            this.routeDashboard();
+          }
+
+        }, error => {
+          console.log(error)
+          this.isClaimantCreated = false;
+          this.alertService.openSnackBar(error.error.message, 'error');
+          this.stepper.previous();
+        })
+      } else {
+        this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
+          this.alertService.openSnackBar(res.message, "success");
+          if (status == 'next') {
+            this.stepper.next();
+          } else if (status == 'save') {
+            this.routeDashboard();
+          }
+          this.claimantChanges = false;
+        }, error => {
+          this.isClaimantCreated = false;
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
     }
   }
   isInjuryEdit = false;
@@ -861,7 +863,7 @@ export class NewClaimComponent implements OnInit {
       let index = 0;
       this.injuryInfodata.map(res => {
         if (res.body_part_id == this.injuryInfo.body_part_id) {
-          this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury).toDateString();
+          this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury);
           this.injuryInfodata[index] = this.injuryInfo;
         }
         index = index + 1;
@@ -890,7 +892,7 @@ export class NewClaimComponent implements OnInit {
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
-          date_of_injury: new Date(this.injuryInfo['date_of_injury']).toDateString(),
+          date_of_injury: new Date(this.injuryInfo['date_of_injury']),
           continuous_trauma: this.injuryInfo['continuous_trauma'],
           continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
           continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
