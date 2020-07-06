@@ -1,0 +1,8 @@
+@import "table";
+mat-card {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+}

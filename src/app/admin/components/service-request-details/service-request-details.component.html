@@ -1,1 +1,234 @@
-<p>service-request-details works!</p>
+<mat-card class="m-card">
+    <mat-card-header>
+        <div class="content-wrapper-main-title p-l-10">Services Request Details</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <form fxLayout="row wrap" class="p-t-10">
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Subscriber Name</mat-label>
+                <input matInput placeholder="Subscriber Name" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Subscriber Account</mat-label>
+                <input matInput placeholder="Subscriber Account" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Requester Name</mat-label>
+                <input matInput placeholder="Requester Name" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Claim Reference</mat-label>
+                <input matInput placeholder="Claim Reference" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Service Type</mat-label>
+                <input matInput placeholder="Service Type" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Request Reference</mat-label>
+                <input matInput placeholder="Request Reference" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Request Date & time</mat-label>
+                <input matInput placeholder="Request Date & time" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Due Date </mat-label>
+                <input matInput placeholder="Due Date " autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Status</mat-label>
+                <input matInput placeholder="Status" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50">
+                <mat-label>Completion Date</mat-label>
+                <input matInput placeholder="Completion Date " autocomplete="off">
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="m-card m-t-25">
+    <mat-card-header>
+        <div class="content-wrapper-main-title p-l-10">Request Documents</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="m-t-5">
+        <div fxLayout="row wrap">
+            <div class="card" fxFlex="48" fxFlex.xs="100">
+                <span>Zip FileName</span>
+                8880090_1021001685_transcription_01_to_03_20200630_181855_717_NO.zip
+            </div>
+            <div class="card" fxFlex="48" fxFlex.xs="100">
+                <span>Metadata Filename</span>
+                8880090_1021001685_transcription_01_to_03_20200630_181855_717_NO.csv
+            </div>
+        </div>
+        <!-- <div class="table-filter">
+            <input matInput placeholder="Search by Document Name">
+            <mat-icon>search</mat-icon>
+        </div> -->
+        <div class="w-100">
+            <table mat-table [dataSource]="dataSource" class="user-table striped_ w-100">
+                <!-- Document Name Column -->
+                <ng-container matColumnDef="doc_name">
+                    <th mat-header-cell *matHeaderCellDef>Document Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.doc_name}} </td>
+                </ng-container>
+
+                <!-- Sent Document Name Column -->
+                <ng-container matColumnDef="sent_doc_name">
+                    <th mat-header-cell *matHeaderCellDef> Sent Document Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.sent_doc_name}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="m-card m-t-25">
+    <mat-card-header>
+        <div class="content-wrapper-main-title p-l-10">Transmission Status</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="m-t-5">
+        <!-- <div class="table-filter">
+            <input matInput placeholder="Search by date, status, etc.">
+            <mat-icon>search</mat-icon>
+        </div> -->
+        <div class="w-100 ">
+            <table mat-table [dataSource]="dataSource1" class="user-table striped_ w-100">
+                <!-- Transmission Mode Column -->
+                <ng-container matColumnDef="trans_mode">
+                    <th mat-header-cell *matHeaderCellDef>Transmission Mode 
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.trans_mode}} </td>
+                </ng-container>
+
+                <!-- Date & Time Column -->
+                <ng-container matColumnDef="date_time">
+                    <th mat-header-cell *matHeaderCellDef> Date & Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date_time}} </td>
+                </ng-container>
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef> Status </th>
+                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                </ng-container>
+                <!-- Log Column -->
+                <ng-container matColumnDef="log">
+                    <th mat-header-cell *matHeaderCellDef> Log </th>
+                    <td mat-cell *matCellDef="let element"> {{element.log}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="m-card m-t-25">
+    <mat-card-header>
+        <div class="content-wrapper-main-title p-l-10">Follow up Call</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="m-t-5">
+        <div fxLayout="row wrap" fxFlex="100" class="w-100">
+            <div fxFlex="100" class="w-100 m-b-10">
+                <div fxLayout="row wrap">
+                    <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                        <div>Service Provider Name</div>
+                        <div>Venkatesan</div>
+                    </div>
+                    <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                        <div>Service Provider Contact Name</div>
+                        <div>Venkatesan Mariyappan</div>
+                    </div>
+                    <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                        <div>Service Provider Phone</div>
+                        <div>9874563210</div>
+                    </div>
+                    <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                        <div>Service Provider Account Number</div>
+                        <div>45789623210</div>
+                    </div>
+                    <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                        <div>Service Provider Email </div>
+                        <div>test@test.com</div>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="100" class="m-t-5">
+                <!-- <div class="table-filter">
+                    <input matInput placeholder="Search by name, date, etc.">
+                    <mat-icon>search</mat-icon>
+                </div> -->
+                <span class="spacer"></span>
+                <button mat-stroked-button class="add-btn outline-success">
+                    Add Notes
+                </button>
+                <div class="">
+                    <table mat-table [dataSource]="dataSource2" class="user-table striped_ scroll_ w-100">
+                        <!-- Call DateTime Column -->
+                        <ng-container matColumnDef="call_date_time">
+                            <th mat-header-cell *matHeaderCellDef>Call Date & Time </th>
+                            <td mat-cell *matCellDef="let element"> {{element.call_date_time}} </td>
+                        </ng-container>
+
+                        <!-- Caller(PPMC Platform Admin User name) Column -->
+                        <ng-container matColumnDef="caller">
+                            <th mat-header-cell *matHeaderCellDef> Caller</th>
+                            <td mat-cell *matCellDef="let element"> {{element.caller}} </td>
+                        </ng-container>
+
+                        <!-- Callee Column -->
+                        <ng-container matColumnDef="callee">
+                            <th mat-header-cell *matHeaderCellDef>Callee </th>
+                            <td mat-cell *matCellDef="let element"> {{element.callee}} </td>
+                        </ng-container>
+
+                        <!-- Caller(PPMC Platform Admin User name) Column -->
+                        <ng-container matColumnDef="called_name">
+                            <th mat-header-cell *matHeaderCellDef>Called Number </th>
+                            <td mat-cell *matCellDef="let element"> {{element.called_name}} </td>
+                        </ng-container>
+
+                        <!-- Caller(PPMC Platform Admin User name) Column -->
+                        <ng-container matColumnDef="notes">
+                            <th mat-header-cell *matHeaderCellDef>Notes </th>
+                            <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
