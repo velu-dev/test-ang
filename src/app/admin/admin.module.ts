@@ -11,6 +11,8 @@ import { AdminUserComponent } from './components/admin-user/admin-user.component
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { VendorsComponent } from './components/vendors/vendors.component';
+import { ServiceRequestComponent } from './components/service-request/service-request.component';
+import { ServiceRequestDetailsComponent } from './components/service-request-details/service-request-details.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { VendorsComponent } from './components/vendors/vendors.component';
     AdminUserComponent,
     ProfileComponent,
     SettingsComponent,
-    VendorsComponent
+    VendorsComponent,
+    ServiceRequestComponent,
+    ServiceRequestDetailsComponent
   ],
   imports: [
     CommonModule,

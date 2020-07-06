@@ -45,7 +45,14 @@ export const ROUTES: SideNavInterface[] = [
             }],
             group: "Admin",
             role: 1
-        },
+        }, {
+            path: '/admin/service-request',
+            title: 'Service  Request',
+            icon: 'people_alt',
+            submenu: [],
+            group: "Admin",
+            role: 1
+        }
             //  {
             //     path: '/admin/vendors',
             //     title: 'Vendor',
