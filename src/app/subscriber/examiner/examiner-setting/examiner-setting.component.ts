@@ -52,48 +52,47 @@ export class ExaminerSettingComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.userService.getProfile().subscribe(res => {
-      console.log("res obj", res)
       this.user = res.data;
       if (res.data.organization_type == 'INDV') {
         res.data.company_name = '';
       }
       this.first_name = res.data.first_name;
-      // let userDetails = {
-      //   id: res.data.id,
-      //   role_id: res.data.role_id,
-      //   first_name: res.data.first_name,
-      //   last_name: res.data.last_name,
-      //   middle_name: res.data.middle_name,
-      //   company_name: res.data.company_name,
-      //   sign_in_email_id: res.data.sign_in_email_id,
-      // }
-      // this.userForm.patchValue(userDetails)
+      let userDetails = {
+        id: res.data.id,
+        //role_id: res.data.role_id,
+        suffix: res.data.suffix,
+        first_name: res.data.first_name,
+        last_name: res.data.last_name,
+        middle_name: res.data.middle_name,
+        //company_name: res.data.company_name,
+        sign_in_email_id: res.data.sign_in_email_id,
+      }
+      this.userForm.patchValue(userDetails)
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
-      this.userService.getEditUser(res.data.id).subscribe(res => {
-        console.log(res.data);
-        if ( this.user.organization_type == 'INDV') {
-          res.data.company_name = '';
-        }
-        let user = {
-          id: res.data.id,
-          first_name: res.data.first_name,
-          last_name: res.data.last_name,
-          middle_name: res.data.middle_name,
-          suffix: res.data.suffix,
-          company_name: res.data.company_name,
-          sign_in_email_id: res.data.sign_in_email_id,
-          role_id:  this.user.role_id,
-          w9_number: res.data.w9_number,
-          w9_number_type: res.data.w9_number_type,
-          national_provider_identifier: res.data.national_provider_identifier,
-          specialty: res.data.specialty,
-          state_license_number: res.data.state_license_number,
-          state_of_license_id: res.data.state_of_license_id,
-          taxonomy_id: res.data.taxonomy_id
-        }
+      // this.userService.getEditUser(res.data.id).subscribe(res => {
+      //   if ( this.user.organization_type == 'INDV') {
+      //     res.data.company_name = '';
+      //   }
+      //   let user = {
+      //     id: res.data.id,
+      //     first_name: res.data.first_name,
+      //     last_name: res.data.last_name,
+      //     middle_name: res.data.middle_name,
+      //     suffix: res.data.suffix,
+      //     //company_name: res.data.company_name,
+      //     sign_in_email_id: res.data.sign_in_email_id,
+      //     // role_id:  this.user.role_id,
+      //     // w9_number: res.data.w9_number,
+      //     // w9_number_type: res.data.w9_number_type,
+      //     // national_provider_identifier: res.data.national_provider_identifier,
+      //     // specialty: res.data.specialty,
+      //     // state_license_number: res.data.state_license_number,
+      //     // state_of_license_id: res.data.state_of_license_id,
+      //     // taxonomy_id: res.data.taxonomy_id
+      //   }
        
-        this.userForm.patchValue(user)
-      })
+      //  this.userForm.patchValue(user)
+      //})
 
     })
   }
@@ -103,22 +102,32 @@ export class ExaminerSettingComponent implements OnInit {
       new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])]
     })
+    // this.userForm = this.formBuilder.group({
+    //   id: [''],
+    //   role_id: [''],
+    //   first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   middle_name: ['', Validators.compose([Validators.maxLength(50)])],
+    //   suffix:['',Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
+    //   company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
+    //   sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+    //   w9_number_type: [''],
+    //   w9_number: [''],
+    //   national_provider_identifier: ['', Validators.compose([Validators.required,Validators.pattern('^[0-9]*$'),Validators.maxLength(15)])],
+    //   specialty: [''],
+    //   state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
+    //   taxonomy_id: [''],
+    //   state_of_license_id: [null],
+    //   signature: ['']
+    // });
+
     this.userForm = this.formBuilder.group({
       id: [''],
-      role_id: [''],
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
-      suffix:['',Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
-      company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
+      suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      w9_number_type: [''],
-      w9_number: [''],
-      national_provider_identifier: ['', Validators.compose([Validators.required,Validators.pattern('^[0-9]*$'),Validators.maxLength(15)])],
-      specialty: [''],
-      state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
-      taxonomy_id: [''],
-      state_of_license_id: [null],
       signature: ['']
     });
 
@@ -244,7 +253,20 @@ export class ExaminerSettingComponent implements OnInit {
     }
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
     this.userForm.value.signature = sign;
-    this.userForm.value.address_details = {}
+    this.userService.updateSubsciberSetting(this.userForm.value).subscribe(res => {
+      this.alertService.openSnackBar("Profile updated successfully", 'success');
+      this.signData = res.data.signature ?  'data:image/png;base64,' + res.data.signature : null;
+      this.isSubmit = false;
+      if (this.first_name != this.userForm.value.first_name) {
+        this.first_name = this.userForm.value.first_name;
+        this.intercom.setUser(true);
+      }
+    }, error => {
+      this.isSubmit = false;
+      console.log(error.message)
+      this.alertService.openSnackBar(error.message, 'error');
+    })
+    return;
     this.userService.updateEditUser(this.userForm.value.id,this.userForm.value).subscribe(res => {
       if (this.first_name != this.userForm.value.first_name) {
         this.first_name = this.userForm.value.first_name;
@@ -276,7 +298,6 @@ export class ExaminerSettingComponent implements OnInit {
     }
     this.spinnerService.show();
     this.cognitoService.getCurrentUser().subscribe(user => {
-      console.log(user)
       this.cognitoService.changePassword(user, this.userPasswrdForm.value.current_password, this.userPasswrdForm.value.new_password).subscribe(res => {
         this.alertService.openSnackBar("Password successfully changed", "success");
         this.cognitoService.logOut().subscribe(res => {
