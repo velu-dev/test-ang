@@ -1,35 +1,8 @@
-<!-- <mat-card class="file_upload m-b-15">
-    <mat-card-header class="content-wrapper-main-title">
-        Profile Settings
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-        <div fxLayout="row wrap">
-            <div fxFlex="50">
-                <h3>Signature upload </h3>
-                <div class="file-upload">
-                    <p class="p-b-0 m-b-0">
-                        <i class="fa fa-cloud-upload-alt"></i>
-                        <br /><strong>DRAG & DROP</strong>
-                    </p>
-                    <small>Or select files from your system</small>                   
-                </div>
-                <div class="p-t-20 p-b-10">
-                    <mat-hint>*image size lessthen 1 mp</mat-hint><br/>
-                    <mat-hint>*size 200*75 (WxH)</mat-hint>
-                </div>
-            </div>
-        </div>
-    </mat-card-content>
-</mat-card> -->
-
-
-
 <mat-card class="shadow p-t-15">
     <mat-tab-group>
         <mat-tab>
             <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon p-r-5"> security </mat-icon>
+                <!-- <mat-icon class="example-tab-icon p-r-5"> security </mat-icon> -->
                 Security Settings
             </ng-template>
             <!-- cards here -->
@@ -69,13 +42,11 @@
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
                         </mat-form-field>
 
-                        <div class="text-center w-100 m-t-10 m-b-10">
-                            <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success">
-                                Save </button>
-                            <button mat-raised-button type="button" (click)="_location.back()" class="rounded-corner"
-                                color="warn">Cancel</button>
+                        <div class="text-center w-100 m-t-10">
+                            <button mat-stroked-button type="button" (click)="_location.back()"
+                                class="outline-danger">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-success">Save </button>
                         </div>
-                        <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes </button> -->
                     </form>
                 </mat-card-content>
             </div>
@@ -83,7 +54,7 @@
 
         <mat-tab>
             <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon p-r-5"> account_box </mat-icon>
+                <!-- <mat-icon class="example-tab-icon p-r-5"> account_box </mat-icon> -->
                 Account Settings
             </ng-template>
             <!-- Edit profile -->
@@ -121,7 +92,7 @@
                             <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidsuffix}}</mat-error>
                         </mat-form-field>
-
+                        <!-- 
                         <mat-form-field appearance="outline" fxFlex="100" class=" m-t-5 p-r-10">
                             <mat-label>Company Name</mat-label>
                             <input matInput placeholder="Company Name" formControlName="company_name"
@@ -135,17 +106,17 @@
                             <input matInput placeholder="Account Number"
                                 value="{{this.user?.account_no | mask: '0000-0000-0000'}}" autocomplete="off" disabled>
                             <mat-error>error msg here</mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
 
-                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                            fxFlex.sm="100" class="m-t-5  p-r-10">
-                            <mat-label>Signin Email ID*</mat-label>
-                            <input matInput placeholder="Signin Email ID" formControlName="sign_in_email_id"
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
+                            fxFlex.xl="100" fxFlex.sm="100" class="m-t-5  p-r-10">
+                            <mat-label>Signin Email*</mat-label>
+                            <input matInput placeholder="Signin Email" formControlName="sign_in_email_id"
                                 autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
                         </mat-form-field>
 
-                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <!-- <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-radio-group formControlName="w9_number_type" aria-label="Select an option" fxFlex="40"
                                 fxFlex.md="30" fxFlex.lg="30" fxFlex.sm="40" fxFlex.xl="30" fxFlex.xs="100"
                                 class="p-t-35 p-l-10" (change)="userForm.controls['w9_number'].setValue('')">
@@ -205,19 +176,13 @@
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Taxonomy code</mat-label>
                             <mat-select formControlName="taxonomy_id" multiple>
-                                <!-- <mat-select-trigger>
-                                    {{userExaminerForm?.value?.taxonomy_id ? userExaminerForm?.value?.taxonomy_id[0] : ''}}
-                                    <span *ngIf="userExaminerForm?.value?.taxonomy_id?.length > 1" class="example-additional-selection">
-                                      (+{{userExaminerForm?.value?.taxonomy_id?.length - 1}} {{userExaminerForm?.value?.taxonomy_id?.length === 2 ? 'other' : 'others'}})
-                                    </span>
-                                  </mat-select-trigger> -->
                                 <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
                                     {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
                                 </mat-option>
 
                             </mat-select>
                             <mat-error *ngIf="isSubmit">Error Message here</mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
 
                         <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                             Signature
@@ -232,8 +197,9 @@
                                     <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
                                         (change)="fileChangeEvent($event)" id="uploadFile">
                                     <button matSuffix type="button" (click)="uploader.click()" mat-stroked-button
-                                        color="primary" class="upload_btn">Upload <span
-                                            class="fa fa-upload"></span></button>
+                                        class="upload_btn outline-success">Upload
+                                        <!-- <span class="fa fa-upload"></span> -->
+                                    </button>
                                     <mat-hint>
                                         *Aspect ratio 3:1<br />
                                         *Max size 500 KB<br />
@@ -247,9 +213,8 @@
                                     </div>
                                 </div>
                                 <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
-                                    <button type="button" class="m-b-5" (click)="removeSign()" mat-raised-button
-                                        color="warn"><i class="fa fa-times-circle"></i>
-                                        Remove </button><br />
+                                    <button type="button" class="m-b-5" (click)="removeSign()" mat-stroked-button>Remove
+                                    </button><br />
                                     <div class="sign m-l-10">
                                         <img [src]="signData">
                                     </div>
@@ -260,17 +225,17 @@
 
 
                         <div class="text-center w-100 m-t-10 m-b-10">
-                            <button mat-raised-button color="primary" class="m-r-10 rounded-corner btn_success">
-                                Save </button>
-                            <button mat-raised-button type="button" (click)="_location.back()" class="rounded-corner"
-                                color="warn">Cancel</button>
+                            <button mat-stroked-button type="button" (click)="_location.back()"
+                                class="outline-danger">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-success">Save </button>
+
                         </div>
                     </form>
                 </mat-card-content>
             </div>
         </mat-tab>
 
-        <mat-tab *ngIf="user?.role_id == 2 || user?.role_id == 11">
+        <!-- <mat-tab *ngIf="user?.role_id == 2 || user?.role_id == 11">
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon p-r-5"> gps_fixed </mat-icon>
                 Primary Address
@@ -408,10 +373,6 @@
                     <div fxFlex="100">
                         <mat-checkbox [(ngModel)]="isBillingStatus" (change)="primaryAsBill()" class="checkbox">Same as
                             primary address</mat-checkbox>
-                        <!-- <button mat-stroked-button class="new-address m-t-10 m-l-10" color="primary"
-                            (click)="billing_address = !billing_address ">
-                            <mat-icon>add_circle</mat-icon> Add new billing address
-                        </button> -->
                     </div>
 
                 </div>
@@ -546,7 +507,7 @@
                 <button mat-raised-button color="warn" (click)="_location.back()" class="rounded-corner m-l-10">
                     Cancel </button>
             </div>
-        </mat-tab>
+        </mat-tab> -->
 
 
     </mat-tab-group>
