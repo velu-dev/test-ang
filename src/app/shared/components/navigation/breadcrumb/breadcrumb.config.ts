@@ -201,19 +201,19 @@ export const ROUTES = [
     },
     {
         path: '/subscriber/dashboard/claimant-awaiting',
-        title: 'Claimants Awaing Details',
+        title: 'Claimants Awaiting Details',
         icon: 'dashboard',
         submenu: [],
     },
     {
         path: '/subscriber/dashboard/claim-awaiting',
-        title: 'Claims Awaing Details',
+        title: 'Claims Awaiting Details',
         icon: 'dashboard',
         submenu: [],
     },
     {
         path: '/subscriber/dashboard/billable-item-awaiting',
-        title: 'Billable Items Awaing Scheduling',
+        title: 'Billable Items Awaiting Scheduling',
         icon: 'dashboard',
         submenu: [],
     },
