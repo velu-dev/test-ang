@@ -19,35 +19,36 @@
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'subscriber_name'">{{element?.subscriber_name}}</span>
-                            <span *ngIf="column == 'subscriber_account'">{{element?.subscriber_account}}</span>
-                            <span *ngIf="column == 'requesterName'">{{element?.requesterName}}</span>
-                            <span *ngIf="column == 'claim_ref'">{{element?.claim_ref}}</span>
-                            <span *ngIf="column == 'service_type'">{{element?.service_type}}</span>
-                            <span *ngIf="column == 'request_date'">{{element?.request_date}}</span>
+                            <span *ngIf="column == 'subscriber_first_name'">{{element?.subscriber_first_name}}</span>
+                            <span *ngIf="column == 'subscriber_account_no'">{{element?.subscriber_account_no}}</span>
+                            <span *ngIf="column == 'requester_first_name'">{{element?.requester_first_name}}</span>
+                            <span *ngIf="column == 'claim_number'">{{element?.claim_number}}</span>
+                            <span *ngIf="column == 'service_request_type'">{{element?.service_request_type}}</span>
+                            <span *ngIf="column == 'request_reference_id'">{{element?.request_reference_id}}</span>
                             <span *ngIf="column == 'request_ref'">{{element?.request_ref}}</span>
                             <span *ngIf="column == 'service_priority'">{{element?.service_priority}}</span>
-                            <span *ngIf="column == 'service_provider_name'">{{element?.service_provider_name}}</span>
+                            <span *ngIf="column == 'service_provider'">{{element?.service_provider}}</span>
                             <span *ngIf="column == 'ppmc_account'">{{element?.ppmc_account}}</span>
-                            <span *ngIf="column == 'service_status'">{{element?.service_status}}</span>
+                            <span
+                                *ngIf="column == 'service_request_transmit_status'">{{element?.service_request_transmit_status}}</span>
                         </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length" >
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="resposive-table">
-                                <div><span>Subscriber Name</span>{{element?.subscriber_name}} </div>
-                                <div><span>Subscriber Account</span>{{element?.subscriber_account}} </div>
-                                <div><span>RequesterName</span> {{element?.requesterName}}</div>
-                                <div><span>Claim Reference</span>{{element?.claim_ref}} </div>
-                                <div><span>Service type</span> {{element?.service_type}}</div>
+                                <div><span>Subscriber Name</span>{{element?.subscriber_first_name}} </div>
+                                <div><span>Subscriber Account</span>{{element?.subscriber_account_no}} </div>
+                                <div><span>RequesterName</span> {{element?.requester_first_name}}</div>
+                                <div><span>Claim Reference</span>{{element?.claim_number}} </div>
+                                <div><span>Service type</span> {{element?.service_request_type}}</div>
                                 <div><span>Request date Time</span>{{element?.request_date}} </div>
-                                <div><span>Request Reference</span>{{element?.request_ref}} </div>
+                                <div><span>Request Reference</span>{{element?.request_reference_id}} </div>
                                 <div><span>Service Priority</span>{{element?.service_priority}} </div>
-                                <div><span>Service Provider Name</span>{{element?.service_provider_name}} </div>
+                                <div><span>Service Provider Name</span>{{element?.subscriber_first_name}} </div>
                                 <div><span>Service Provider Account</span>{{element?.ppmc_account}} </div>
-                                <div><span>Service Status</span>{{element?.service_status}} </div>
+                                <div><span>Service Status</span>{{element?.service_request_transmit_status}} </div>
 
                             </div>
                         </div>

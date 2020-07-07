@@ -3,6 +3,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { UserService } from './../../services/user.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-service-request',
@@ -22,22 +24,25 @@ export class ServiceRequestComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource = ELEMENT_DATA;
+  dataSource: any;
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private userService: UserService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "Subscriber Name", "Servive Status"]
-        this.columnsToDisplay = ['is_expand', 'subscriber_name', "service_status"]
+        this.columnsToDisplay = ['is_expand', 'subscriber_first_name', "service_request_transmit_status"]
       } else {
-        this.columnName = ["Subscriber Name","Subscriber Account", "Requester Name", "Claim Reference", "Service Type", "Request date Time", "Request Reference", "Service Priority", "Service Provider Name", "Service Provider Account", "Service Status"]
-        this.columnsToDisplay = ['subscriber_name','subscriber_account', 'requesterName', 'claim_ref', 'service_type', 'request_date', 'request_ref', 'service_priority', 'service_provider_name', 'ppmc_account', 'service_status']
+        this.columnName = ["Subscriber Name", "Subscriber Account", "Requester Name", "Claim Reference", "Service Type", "Request date Time", "Request Reference", "Service Priority", "Service Provider Name", "Service Provider Account", "Service Status"]
+        this.columnsToDisplay = ['subscriber_first_name', 'subscriber_account_no', 'requester_first_name', 'claim_number', 'service_request_type', 'request_date', 'request_reference_id', 'service_priority', 'service_provider', 'ppmc_account', 'service_request_transmit_status']
       }
+    });
+    this.userService.getServiceRequest().subscribe(res => {
+      this.dataSource = new MatTableDataSource(res)
     })
   }
 
@@ -50,14 +55,14 @@ export class ServiceRequestComponent implements OnInit {
     }
   }
   applyFilter(filterValue: string) {
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }
 const ELEMENT_DATA = [
-  { "id": 132, "subscriber_name": "Venkat", "subscriber_account":"2566854", "requesterName":"Sarath", "claim_ref":"4455698", "service_type":"type", "request_date":"02-02-2020", "request_ref":"4644", "service_priority":"priority", "service_provider_name":"Rajan", "ppmc_account":"1458956", "service_status":"Status" },
-  
+  { "id": 132, "subscriber_name": "Venkat", "subscriber_account": "2566854", "requesterName": "Sarath", "claim_ref": "4455698", "service_type": "type", "request_date": "02-02-2020", "request_ref": "4644", "service_priority": "priority", "service_provider_name": "Rajan", "ppmc_account": "1458956", "service_status": "Status" },
+
 ];
