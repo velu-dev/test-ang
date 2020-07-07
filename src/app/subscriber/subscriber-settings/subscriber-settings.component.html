@@ -748,49 +748,89 @@
                             <mat-card-content>
                                 <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                                     [formGroup]="userForm" (ngSubmit)="userformSubmit()">
-                                    <div class="sub-title p-l-10" fxFlex="100">Account Number: 4567890123
+                                    <div class="sub-title p-l-10" fxFlex="100">Account Number: {{user?.account_no | mask: '0000-0000-0000'}}
                                     </div>
 
                                     <mat-form-field appearance="outline" fxFlex="100" class="m-t-5">
                                         <mat-label>Company Name*</mat-label>
-                                        <input matInput placeholder="Company Name" autocomplete="off">
-                                        <mat-error>error msg here..</mat-error>
+                                        <input matInput placeholder="Company Name" formControlName="company_name" autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidcompanyname}}</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                         fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                         <mat-label>First Name*</mat-label>
-                                        <input matInput placeholder="First Name" autocomplete="off">
-                                        <mat-error>error msg here..</mat-error>
+                                        <input matInput placeholder="First Name" formControlName="first_name" autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidfirstname}}</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                         fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                         <mat-label>Middle Name</mat-label>
-                                        <input matInput placeholder="Middle Name" autocomplete="off">
-                                        <mat-error>error msg here..</mat-error>
+                                        <input matInput placeholder="Middle Name" formControlName="middle_name" autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidmiddlename}}</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                         fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="70">
                                         <mat-label>Last Name*</mat-label>
-                                        <input matInput placeholder="Last Name" autocomplete="off">
-                                        <mat-error>error msg here..</mat-error>
+                                        <input matInput placeholder="Last Name" formControlName="last_name" autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidlastname}}</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
                                         fxFlex.xl="10" fxFlex.sm="50" fxFlex.xs="30">
                                         <mat-label>Suffix</mat-label>
-                                        <input matInput placeholder="Suffix" autocomplete="off">
-                                        <mat-error>error msg here..</mat-error>
+                                        <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidsuffix}}</mat-error>
                                     </mat-form-field>
                                     <mat-form-field appearance="outline" fxFlex="100">
                                         <mat-label>Signin Email*</mat-label>
-                                        <input matInput placeholder="Signin Email" autocomplete="off">
-                                        <mat-error>error msg here..</mat-error>
+                                        <input matInput placeholder="Signin Email" formControlName="sign_in_email_id"autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
                                     </mat-form-field>
-
                                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                                    fxFlex.xs="100">Signature
+                                </div>
+                                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
+                                    fxFlex.xs="100" class="sign-upload">
+                                    <div fxLayout="row wrap">
+                                        <mat-form-field appearance="standard"
+                                            hideRequiredMarker="hideRequiredControl.auto"
+                                            floatLabel="floatLabelControl.auto" fxFlex="100" class="w-100">
+                                            <input matInput [title]="selectedFile" readonly
+                                                [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
+                                                value="12345">
+                                            <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
+                                                (change)="fileChangeEvent($event)" id="uploadFile">
+                                            <button matSuffix type="button" (click)="uploader.click()"
+                                                mat-stroked-button class="upload_btn outline-success">Upload 
+                                                <!-- <span class="fa fa-upload"></span> -->
+                                            </button>
+                                            <mat-hint>
+                                                *Aspect ratio 3:1<br />
+                                                *Max size 500 KB<br />
+                                                *Allowed formats : JPEG/JPG, PNG
+                                            </mat-hint>
+                                        </mat-form-field>
+
+                                        <div fxFlex="100" *ngIf="!signData" class="m-t-30">
+                                            <div class="empty-image m-l-10">
+                                                No image uploaded
+                                            </div>
+                                        </div>
+                                        <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
+                                            <button type="button" class="m-b-5" (click)="removeSign()"
+                                                mat-stroked-button>Remove </button><br />
+                                            <div class="sign m-l-10">
+                                                <img [src]="signData">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <div class="sub-title p-l-10 m-t-20" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                         fxFlex.xs="100">Payment Information
                                     </div>
 
@@ -873,11 +913,119 @@
                                 </form>
                             </mat-card-content>
                         </div>
+                        <div class="edit-profile m-t-10" *ngIf="user?.role_id != 2">
+                            <mat-card-content>
+                                <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                                    [formGroup]="userForm" (ngSubmit)="userformSubmit()">
+
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                        fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100" class="">
+                                        <mat-label>First Name*</mat-label>
+                                        <input matInput placeholder="First Name" formControlName="first_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidfirstname}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                        fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100" class=" ">
+                                        <mat-label>Middle Name</mat-label>
+                                        <input matInput placeholder="Middle Name" formControlName="middle_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidmiddlename}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                        fxFlex.xl="30" fxFlex.sm="80" fxFlex.xs="80" class=" ">
+                                        <mat-label>Last Name*</mat-label>
+                                        <input matInput placeholder="Last Name" formControlName="last_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidlastname}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
+                                        fxFlex.xl="10" fxFlex.sm="20" fxFlex.xs="20" class="">
+                                        <mat-label>Suffix</mat-label>
+                                        <input matInput placeholder="Suffix" formControlName="suffix"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidsuffix}}</mat-error>
+                                    </mat-form-field>
+
+                                    <!-- <mat-form-field appearance="outline" fxFlex="100" class="p-r-10">
+                                        <mat-label>Company Name</mat-label>
+                                        <input matInput placeholder="Company Name" formControlName="company_name"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidcompanyname}}</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                        fxFlex.xl="50" fxFlex.sm="100" class="p-r-10">
+                                        <mat-label>Account Number</mat-label>
+                                        <input matInput placeholder="Account Number"
+                                            value="{{this.user?.account_no | mask: '0000-0000-0000'}}"
+                                            autocomplete="off" disabled>
+                                        <mat-error>error msg here</mat-error>
+                                    </mat-form-field> -->
+
+                                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
+                                        fxFlex.xl="100" fxFlex.sm="100" class="p-r-10">
+                                        <mat-label>Signin Email*</mat-label>
+                                        <input matInput placeholder="Signin Email" formControlName="sign_in_email_id"
+                                            autocomplete="off">
+                                        <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
+                                    </mat-form-field>
+
+                                    <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                                        fxFlex.xs="100">Signature
+                                    </div>
+                                    <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
+                                        fxFlex.xs="100" class="sign-upload">
+                                        <div fxLayout="row wrap">
+                                            <mat-form-field appearance="standard"
+                                                hideRequiredMarker="hideRequiredControl.auto"
+                                                floatLabel="floatLabelControl.auto" fxFlex="100" class="w-100">
+                                                <input matInput [title]="selectedFile" readonly
+                                                    [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
+                                                    value="12345">
+                                                <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
+                                                    (change)="fileChangeEvent($event)" id="uploadFile">
+                                                <button matSuffix type="button" (click)="uploader.click()"
+                                                    mat-stroked-button class="upload_btn outline-success">Upload 
+                                                    <!-- <span class="fa fa-upload"></span> -->
+                                                </button>
+                                                <mat-hint>
+                                                    *Aspect ratio 3:1<br />
+                                                    *Max size 500 KB<br />
+                                                    *Allowed formats : JPEG/JPG, PNG
+                                                </mat-hint>
+                                            </mat-form-field>
+
+                                            <div fxFlex="100" *ngIf="!signData" class="m-t-30">
+                                                <div class="empty-image m-l-10">
+                                                    No image uploaded
+                                                </div>
+                                            </div>
+                                            <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
+                                                <button type="button" class="m-b-5" (click)="removeSign()"
+                                                    mat-stroked-button>Remove </button><br />
+                                                <div class="sign m-l-10">
+                                                    <img [src]="signData">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center w-100 m-t-10 m-b-10">
+                                        <button mat-stroked-button type="button" class="outline-danger" (click)="cancel()">Cancel</button>
+                                        <button mat-stroked-button class="m-l-10 outline-success">Save </button>
+                                    </div>
+                                </form>
+                            </mat-card-content>
+                        </div>
                     </mat-tab>
 
-                    <mat-tab>
+                    <mat-tab *ngIf="user?.role_id == 2">
                         <ng-template mat-tab-label>
-                            <!-- <mat-icon class="example-tab-icon p-r-5"> security </mat-icon> -->
                             Invoice History
                         </ng-template>
                         <div class="edit-profile m-t-10">
@@ -900,7 +1048,6 @@
                                                 <div>
                                                     <span *ngIf="column == 'invoice_number'">
                                                         {{element?.invoice_number}}
-                                                        {{expandId === element.id ? 'expanded' : 'collapsed'}}
                                                     </span>
                                                     <span *ngIf="column == 'amount'">{{element?.amount}}</span>
                                                     <span *ngIf="column == 'status'">{{element?.status}}</span>

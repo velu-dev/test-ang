@@ -3,6 +3,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-unfinished-report',
@@ -22,7 +23,7 @@ isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Ha
     map(result => result.matches),
     shareReplay()
   );
-dataSource = ELEMENT_DATA;
+dataSource:any = new MatTableDataSource([])
 columnsToDisplay = [];
 expandedElement;
 isMobile = false;

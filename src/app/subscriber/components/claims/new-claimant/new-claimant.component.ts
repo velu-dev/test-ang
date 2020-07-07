@@ -79,6 +79,7 @@ export class NewClaimantComponent implements OnInit {
   claimNumber: any = '';
   editStatus: boolean = true;
   filterValue: string;
+  claimantChanges: boolean = false;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
@@ -148,7 +149,6 @@ export class NewClaimantComponent implements OnInit {
       gender: [null],
       email: ["", Validators.compose([Validators.email])],
       handedness: [null],
-      //primary_language_not_english: [null],
       primary_language_spoken: [null],
       certified_interpreter_required: [null],
       ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
@@ -160,13 +160,7 @@ export class NewClaimantComponent implements OnInit {
       salutation: [null, Validators.compose([Validators.maxLength(4)])],
       city: [null],
       state: [null],
-      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      created_by: [null],
-      modified_by: [null],
-      createdAt: [null],
-      updatedAt: [null],
-      claim_numbers: [],
-      examiners_name: []
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
     })
 
 
@@ -188,6 +182,10 @@ export class NewClaimantComponent implements OnInit {
 
     }
 
+    this.claimantForm.valueChanges.subscribe(val => {
+      this.claimantChanges = true;
+    });
+
   }
   getSingleClaimant() {
     this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
@@ -200,41 +198,53 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
-    if (!this.claimantForm.touched) {
-      return;
-    }
+    if (this.claimantForm.touched) {
+      if (this.languageStatus) {
+        this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
+      } else {
+        this.claimantForm.get('primary_language_spoken').setValidators([]);
+      }
+      this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
+      if (!this.claimantChanges) {
+        return;
+      }
 
-    Object.keys(this.claimantForm.controls).forEach((key) => {
-      if (this.claimantForm.get(key).value && typeof (this.claimantForm.get(key).value) == 'string')
-        this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
-    });
-    this.isClaimantSubmited = true;
-    this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
-    if (this.claimantForm.invalid) {
-      return;
-    }
 
-    if (!this.claimantId) {
-      this.claimService.createClaimant(this.claimantForm.value).subscribe(res => {
-        this.alertService.openSnackBar("Claimant created successfully!", 'success');
-        this.editStatus = false;
-        this.claimantForm.disable();
-        this._location.back();
-      }, error => {
-        console.log(error);
-        this.alertService.openSnackBar(error.error, 'error');
-      })
-    } else {
-      this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
-        this.alertService.openSnackBar("Claimant updated successfully!", 'success');
-        this.getSingleClaimant()
-        this.editStatus = false;
-        this.claimantForm.disable();
-      }, error => {
-        this.alertService.openSnackBar(error.error, 'error');
-      })
-    }
+      Object.keys(this.claimantForm.controls).forEach((key) => {
+        if (this.claimantForm.get(key).value && typeof (this.claimantForm.get(key).value) == 'string')
+          this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
+      });
+      this.isClaimantSubmited = true;
+      this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
+      if (this.claimantForm.invalid) {
+        return;
+      }
 
+      if (!this.claimantId) {
+        this.claimService.createClaimant(this.claimantForm.value).subscribe(res => {
+          this.alertService.openSnackBar("Claimant created successfully!", 'success');
+          this.editStatus = false;
+          this.claimantForm.disable();
+          this._location.back();
+          this.claimantChanges = false;
+        }, error => {
+          console.log(error);
+          this.alertService.openSnackBar(error.error, 'error');
+          this.claimantChanges = true;
+        })
+      } else {
+        this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
+          this.alertService.openSnackBar("Claimant updated successfully!", 'success');
+          this.getSingleClaimant()
+          this.editStatus = false;
+          this.claimantForm.disable();
+          this.claimantChanges = false;
+        }, error => {
+          this.alertService.openSnackBar(error.error, 'error');
+          this.claimantChanges = true;
+        })
+      }
+    }
   }
 
   gender(code) {
@@ -278,6 +288,7 @@ export class NewClaimantComponent implements OnInit {
   edit() {
     this.editStatus = true;
     this.claimantForm.enable();
+    this.claimantChanges = false;
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -290,11 +301,7 @@ export class NewClaimantComponent implements OnInit {
 
   langChange() {
     this.claimantForm.patchValue({ primary_language_spoken: null })
-    if (this.languageStatus) {
-      this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
-    } else {
-      this.claimantForm.get('primary_language_spoken').setValidators([]);
-    }
+    this.claimantForm.get('primary_language_spoken').setValidators([]);
     this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
   }
   applyFilter(filterValue: string) {
@@ -311,7 +318,6 @@ export class NewClaimantComponent implements OnInit {
   }
 
   claimNavigate(element?) {
-    //this.router.navigate(['/subscriber/claims']);
     this.router.navigate(['/subscriber/claims/edit-claim', element.claim_id])
   }
 
@@ -319,8 +325,7 @@ export class NewClaimantComponent implements OnInit {
     this.router.navigate(['/subscriber/billable-item']);
   }
 
-  newClaim(){
-    //[routerLink]="['new-claim']"
-    this.router.navigate(['/subscriber/claims/edit-claim/'+this.claimantId +'/new-claim'])
+  newClaim() {
+    this.router.navigate(['/subscriber/claims/edit-claim/' + this.claimantId + '/new-claim'])
   }
 }

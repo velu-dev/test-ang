@@ -1,0 +1,45 @@
+@import "variables";
+@import "table";
+
+mat-card {
+    min-height: auto !important;
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+    mat-card-content {
+        mat-form-field {
+            padding: 10px 10px 0px 10px !important;
+        }
+        .card {
+           background-color: $light-color;
+           padding: 20px;
+           margin: 10px;
+           color: $text-gray;
+           word-break: break-all;
+           span {
+               font-weight: bold;
+               font-size: $font-size-7;
+               padding-bottom: 5px;
+               display: block;
+           }
+        }
+        .grid-list {
+            div {
+                &:first-child {
+                    min-width: 250px !important;
+                    max-width: 250px !important;
+                }
+            }
+        }
+        .add-btn {
+            float: right;
+        }
+        table.scroll_ {
+            max-height: 300px;
+            overflow: auto;
+            display: block;
+        }
+    }
+}

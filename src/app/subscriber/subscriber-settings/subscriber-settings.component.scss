@@ -79,8 +79,6 @@ mat-form-field {
 .sign-upload {
   mat-form-field {
     .upload_btn {
-      color: $primarydarkcolor;
-      background-color: $btn-light-color;
       padding: 0px 10px;
       height: 35px;
       font-size: $font-size-7;
@@ -105,7 +103,10 @@ mat-form-field {
       margin-left: 155px;
       font-size: $font-size-22;
       cursor: pointer;
-      padding: 0;
+      border-radius: 50px;
+      border-color: $text-gray;
+      background-color: $light-color;
+      padding: 0 10px;
       line-height: 2;
       i {
         // color: $danger;

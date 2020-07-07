@@ -8,6 +8,8 @@ import { AdminUserComponent } from './components/admin-user/admin-user.component
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { VendorsComponent } from './components/vendors/vendors.component';
+import { ServiceRequestComponent } from './components/service-request/service-request.component';
+import { ServiceRequestDetailsComponent } from './components/service-request-details/service-request-details.component';
 
 
 const routes: Routes = [{
@@ -57,6 +59,14 @@ const routes: Routes = [{
 }, {
   path: "settings",
   component: SettingsComponent
+},
+{
+  path: "service-request",
+  component: ServiceRequestComponent
+},
+{
+  path: "service-request-details",
+  component: ServiceRequestDetailsComponent
 },
 {
   path: "",

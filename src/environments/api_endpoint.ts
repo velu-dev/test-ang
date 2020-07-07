@@ -20,6 +20,7 @@ export const api_endpoint = {
     verifySubscriberStatus: 'auth/verify-subscriber-status',
     changeRole: "subscriber/switch-to-examiner/",
     updateSignup: 'auth/update-signup-register',
+    serviceRequest: "admin/service-request/list",
 
     //Subscriber
     getSubscriberUsers: 'subscriber/users',
@@ -34,6 +35,7 @@ export const api_endpoint = {
     getClaimantAwait: 'subscriber/awaiting/claimants',
     getClaimAwait: 'subscriber/awaiting/claims',
     getBillableAwait: 'subscriber/awaiting/billable-items',
+    updateSubsciberSetting: 'subscriber/settings-update/',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',

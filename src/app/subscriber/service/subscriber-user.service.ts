@@ -9,7 +9,7 @@ import { api_endpoint } from 'src/environments/api_endpoint';
 export class SubscriberUserService {
 
   constructor(private http: HttpClient) { }
-  getUsers(roles,status): Observable<any> {
+  getUsers(roles, status): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.getSubscriberUsers, { role_filter: roles, status: status })
   }
   getRoles(): Observable<any> {
@@ -18,24 +18,24 @@ export class SubscriberUserService {
   getUser(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getSubscriberUser + id)
   }
-  
+
   createUser(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createSubscriberUser, data)
   }
   updateUser(data): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.subscriberProfileUpdate + data.id, data)
   }
-  getProfile(): Observable<any>{
+  getProfile(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.subscriberProfile);
   }
   disableUser(id, status): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.subscriberDisableUser + id, { status: status })
   }
 
-  getPrimarAddress(){
+  getPrimarAddress() {
     return this.http.get(environment.baseUrl + api_endpoint.getPrimaryAddress);
   }
-  updatePrimaryAddress(data,id){
+  updatePrimaryAddress(data, id) {
     return this.http.post(environment.baseUrl + api_endpoint.updatePrimaryAddress + id, data)
   }
 
@@ -43,7 +43,11 @@ export class SubscriberUserService {
     return this.http.get(environment.baseUrl + api_endpoint.getEditUser + id);
   }
 
-  updateEditUser(id,data): Observable<any> {
+  updateEditUser(id, data): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.updateEditUser + id, data)
+  }
+
+  updateSubsciberSetting(data): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updateSubsciberSetting + data.id, data);
   }
 }
