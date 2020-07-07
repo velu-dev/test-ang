@@ -192,6 +192,7 @@ export class NewClaimComponent implements OnInit {
     );
   isNewClaim = true;
   fromClaimant = false;
+  steperAutoChange = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -607,18 +608,20 @@ export class NewClaimComponent implements OnInit {
   }
 
   selectionChange(event) {
-    if (event.selectedIndex == 0) {
-      this.titleName = " Claimant";
-    } else if (event.selectedIndex == 1) {
-      if (this.claimant.touched)
-        this.createClaimant('tab');
-      this.titleName = " Claim";
-    } else if (event.selectedIndex == 2) {
-      this.submitClaim('tab')
-      this.titleName = " Billable Item";
+    if (!this.steperAutoChange) {
+      if (event.selectedIndex == 0) {
+        this.titleName = " Claimant";
+      } else if (event.selectedIndex == 1) {
+        if (this.claimant.touched) {
+          console.log(this.steperAutoChange, "fddsfsdfdfS")
+          this.createClaimant('tab');
+        }
+        this.titleName = " Claim";
+      } else if (event.selectedIndex == 2) {
+        this.submitClaim('tab')
+        this.titleName = " Billable Item";
+      }
     }
-
-
   }
   isClaimCreated = false;
   submitClaim(status) {
@@ -760,24 +763,24 @@ export class NewClaimComponent implements OnInit {
   isClaimantCreated = false;
   createClaimant(status) {
     if (this.claimant.touched) {
-      if (!this.claimantChanges) {
-        if (status == 'next') {
-          this.stepper.next();
-        } else if (status == 'save') {
-          this.routeDashboard();
-        } else if (status == 'close') {
-          this.routeDashboard();
+      // if (!this.claimantChanges) {
+      //   if (status == 'next') {
+      //     this.stepper.next();
+      //   } else if (status == 'save') {
+      //     this.routeDashboard();
+      //   } else if (status == 'close') {
+      //     this.routeDashboard();
+      //   }
+      //   return;
+      // } else {
+      if (status == 'close') {
+        if (this.claimant.invalid) {
+          console.log("claimant", this.claimant)
+          return;
         }
-        return;
-      } else {
-        if (status == 'close') {
-          if (this.claimant.invalid) {
-            console.log("claimant", this.claimant)
-            return;
-          }
-          this.routeDashboard();
-        }
+        this.routeDashboard();
       }
+      // }
       this.claimantChanges = false;
       this.isClaimantSubmited = true;
       Object.keys(this.claimant.controls).forEach((key) => {
@@ -794,7 +797,7 @@ export class NewClaimComponent implements OnInit {
       if (!this.isClaimantEdit) {
         this.claimService.createClaimant(this.claimant.value).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
-          this.claimant_name = res.data.first_name + " " + res.data.last_name
+          this.claimant_name = res.data.first_name + " " + res.data.last_name;
           this.claimant.patchValue({
             id: res.data.id
           })
@@ -811,6 +814,8 @@ export class NewClaimComponent implements OnInit {
           this.isClaimantEdit = true;
           this.claimantChanges = false;
           if (status == 'next') {
+            console.log("check")
+            this.steperAutoChange = true;
             this.stepper.next();
           } else if (status == 'save') {
             this.routeDashboard();
@@ -828,6 +833,7 @@ export class NewClaimComponent implements OnInit {
         this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
           if (status == 'next') {
+            this.steperAutoChange = true;
             this.stepper.next();
           } else if (status == 'save') {
             this.routeDashboard();
