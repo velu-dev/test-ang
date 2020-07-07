@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { UserService } from './../../services/user.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-service-request',
@@ -30,6 +30,8 @@ export class ServiceRequestComponent implements OnInit {
   isMobile = false;
   columnName = [];
   filterValue: string;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private breakpointObserver: BreakpointObserver, private userService: UserService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -38,11 +40,13 @@ export class ServiceRequestComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'subscriber_first_name', "service_request_transmit_status"]
       } else {
         this.columnName = ["Subscriber Name", "Subscriber Account", "Requester Name", "Claim Reference", "Service Type", "Request date Time", "Request Reference", "Service Priority", "Service Provider Name", "Service Provider Account", "Service Status"]
-        this.columnsToDisplay = ['subscriber_first_name', 'subscriber_account_no', 'requester_first_name', 'claim_number', 'service_request_type', 'request_date', 'request_reference_id', 'service_priority', 'service_provider', 'ppmc_account', 'service_request_transmit_status']
+        this.columnsToDisplay = ['subscriber_first_name', 'subscriber_account_no', 'requester_first_name', 'claim_number', 'service_request_type', 'date_of_request', 'request_reference_id', 'service_priority', 'service_provider', 'service_provider_account_no', 'service_request_transmit_status']
       }
     });
     this.userService.getServiceRequest().subscribe(res => {
       this.dataSource = new MatTableDataSource(res)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     })
   }
 
