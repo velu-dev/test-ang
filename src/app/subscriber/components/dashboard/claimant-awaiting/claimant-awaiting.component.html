@@ -2,7 +2,7 @@
     <mat-card-content class="m-b-0">
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by Name, DOB">
+                placeholder="Search by Name, DOB, SSN or Date">
             <mat-icon>search</mat-icon>
         </div>
         <div class="user-detail">
@@ -31,7 +31,7 @@
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="resposive-table" (click)=" gotoEdit(element)">
-                                <div><span>Claimant</span> {{element?.last_name}},{{element?.first_name}} </div>
+                                <div><span>Claimant</span> {{element?.last_name}}, {{element?.first_name}} </div>
                                 <div><span>Date of Birth</span> {{element?.date_of_birth}} </div>
                                 <div><span>Social Security Number</span> {{element?.ssn}} </div>
                                 <div><span>Date Created</span> {{element?.created_date}}<small class="p-l-10">

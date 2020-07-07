@@ -1,8 +1,8 @@
 <mat-card class="m-card">
     <mat-card-content class="m-b-0">
         <div class="table-filter">
-            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by Claim Number, Name, Date, Type">
+            <input matInput (keyup)="applyFilter($event.target.value)" title="Search by Name, Claim, Examiner, Exam type or Date created" [(ngModel)]="filterValue"
+                [placeholder]="'Search by Name, Claim, Examiner, Exam type or Date' | ellipsis:50">
             <mat-icon>search</mat-icon>
         </div>
         <div class="user-detail">
@@ -19,7 +19,7 @@
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name}},{{element?.claimant_first_name}}</span>
+                            <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name}}, {{element?.claimant_first_name}}</span>
                             <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
                             <span *ngIf="column == 'examiner'">{{element?.ex_last_name}} {{element?.ex_first_name}}{{element?.ex_suffix ? ', '+element?.ex_suffix : ''}}</span>
                             <span *ngIf="column == 'exam_type'">{{element?.exam_type_code}}</span>
@@ -32,7 +32,7 @@
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="resposive-table" (click)="claimNavigate(element)">
-                                <div><span>Claimant</span> {{element?.last_name}}, {{element?.first_name}} </div>
+                                <div><span>Claimant</span> {{element?.claimant_last_name}}, {{element?.claimant_first_name}} </div>
                                 <div><span>Claim Number</span> {{element?.claim_number}} </div>
                                 <div><span>Examiner</span>{{element?.ex_last_name}}{{element?.ex_first_name}}{{element?.ex_suffix ? ','+element?.ex_suffix : ''}} </div>
                                 <div><span>Exam Type</span> {{element?.exam_type_code}} </div>

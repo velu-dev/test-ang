@@ -64,6 +64,9 @@ export class ClaimantAwaitingComponent implements OnInit {
       this.dataSource = new MatTableDataSource(claimant.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.ssn && data.ssn.toLowerCase().includes(filter)) || (data.created_time && data.created_time.toLowerCase().includes(filter)) || (data.created_date && data.created_date.includes(filter));
+      };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     }, error => {
       this.dataSource = new MatTableDataSource([])
@@ -87,11 +90,3 @@ export class ClaimantAwaitingComponent implements OnInit {
   }
 
 }
-const ELEMENT_DATA = [
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "date_of_birth": "2020-05-06", "ssn": "111-222-9999", "created_date": '12-10-2020', },
-  { "id": 132, "last_name": "Mariappan", "first_name": "Rajan", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
-  { "id": 132, "last_name": "ss1", "Selvaraj": "Sarath", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
-  { "id": 132, "last_name": "Venkat", "first_name": "Velu", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', },
-  { "id": 132, "last_name": "ss1", "first_name": "ss1", "date_of_birth": "2020-05-06", "ssn": "xxx-xx-9999", "created_date": '12-10-2020', }
-
-];
