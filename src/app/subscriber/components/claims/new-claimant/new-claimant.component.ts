@@ -149,7 +149,6 @@ export class NewClaimantComponent implements OnInit {
       gender: [null],
       email: ["", Validators.compose([Validators.email])],
       handedness: [null],
-      //primary_language_not_english: [null],
       primary_language_spoken: [null],
       certified_interpreter_required: [null],
       ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
@@ -161,13 +160,7 @@ export class NewClaimantComponent implements OnInit {
       salutation: [null, Validators.compose([Validators.maxLength(4)])],
       city: [null],
       state: [null],
-      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      created_by: [null],
-      modified_by: [null],
-      createdAt: [null],
-      updatedAt: [null],
-      claim_numbers: [],
-      examiners_name: []
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
     })
 
 

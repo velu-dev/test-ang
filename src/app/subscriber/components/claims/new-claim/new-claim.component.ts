@@ -449,11 +449,7 @@ export class NewClaimComponent implements OnInit {
       street2: [null],
       city: [null],
       state: [null],
-      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      created_by: [null],
-      modified_by: [null],
-      createdAt: [null],
-      updatedAt: [null]
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
     })
 
     this.claim = this.formBuilder.group({
