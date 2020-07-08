@@ -1,8 +1,12 @@
 <mat-card class="m-card">
-    <button routerLink="new" mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}"
+    <!-- <button routerLink="new" mat-mini-fab [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}"
         class="add-user">
         <mat-icon>add</mat-icon>
-    </button>
+    </button> -->
+ <div class="add">
+    <button mat-stroked-button class="outline-success"  routerLink="new">Add Staff</button>
+    <button mat-stroked-button class="outline-success m-l-10">Add Examiner</button>
+ </div>
     <mat-tab-group class="user-list" (selectedTabChange)="tabchange($event.index)">
         <!-- ######~~~~~ Active Users ~~~~~##### -->
         <mat-tab>

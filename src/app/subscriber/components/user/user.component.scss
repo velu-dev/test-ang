@@ -1,2 +1,19 @@
 @import "variables";
 @import "table";
+mat-card {
+    .add {
+        z-index: 4;
+        position: absolute;
+        right: 0;
+        margin-right: 10px;
+        @media only screen and (max-width: 1024px) {
+            position: inherit;
+            float: right;
+            margin-bottom: 10px;
+        }
+    }
+    .user-list {
+        width: $width-100;
+        z-index: 0;
+    }
+}

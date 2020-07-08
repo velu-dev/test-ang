@@ -57,14 +57,13 @@ export class ClaimAwaitingComponent implements OnInit {
         claim.claimant_name = claim.claimant_last_name + ', ' + claim.claimant_first_name;
         claim.created_date = claim.createdAt ? moment(claim.createdAt).format("MM-DD-YYYY") : '';
         claim.created_time = claim.createdAt ? moment(claim.createdAt).format("hh:mm a") : '';
-        claim.examiner = claim.ex_last_name + ' '+ claim.ex_first_name +''+ (claim.ex_suffix ? ', '+claim.ex_suffix : '')
+        claim.examiner = claim.ex_last_name + ' '+ claim.ex_first_name +''+ (claim.ex_suffix ? ', '+claim.ex_suffix : '');
       })
-      console.log(claims);
       this.dataSource = new MatTableDataSource(claims.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return data.claimant_name.toLowerCase().includes(filter) || data.examiner.toLowerCase().includes(filter) || (data.claim_number && data.claim_number.includes(filter)) || (data.created_date && data.created_date.includes(filter)) || (data.created_time && data.created_time.toLowerCase().includes(filter)) || (data.date_of_birth && data.date_of_birth.includes(filter));
+        return data.claimant_name.toLowerCase().includes(filter) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.claim_number && data.claim_number.includes(filter)) || (data.created_date && data.created_date.includes(filter)) || (data.created_time && data.created_time.toLowerCase().includes(filter)) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     }, error => {

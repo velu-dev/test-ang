@@ -60,7 +60,6 @@ export class ClaimantAwaitingComponent implements OnInit {
         claim.created_time = claim.createdAt ? moment(claim.createdAt).format("hh:mm a") : '';
         claim.ssn = claim.ssn ? 'xxx-xx-'+claim.ssn.substr(-4) : ''
       })
-      console.log(claimant);
       this.dataSource = new MatTableDataSource(claimant.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

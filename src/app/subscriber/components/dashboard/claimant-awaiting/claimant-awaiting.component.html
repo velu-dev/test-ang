@@ -1,7 +1,7 @@
 <mat-card class="m-card">
     <mat-card-content class="m-b-0">
         <div class="table-filter">
-            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+            <input matInput autocomplete="off" (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                 placeholder="Search by Name, DOB, SSN or Date">
             <mat-icon>search</mat-icon>
         </div>

@@ -840,6 +840,9 @@ export class NewClaimComponent implements OnInit {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
       }
+    } else {
+      this.steperAutoChange = true;
+      this.stepper.next();
     }
   }
   isInjuryEdit = false;

@@ -3,67 +3,77 @@
         <div class="content-wrapper-main-title p-l-10">Services Request Details</div>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-card-content>
+    <mat-card-content *ngIf="!isLoading">
         <form fxLayout="row wrap" class="p-t-10">
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Subscriber Name</mat-label>
-                <input matInput placeholder="Subscriber Name" autocomplete="off">
+                <input matInput name="subscriber_first_name" placeholder="Subscriber Name"
+                    [(ngModel)]="serviceRequestDetails.subscriber_first_name" autocomplete="off">
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Subscriber Account</mat-label>
-                <input matInput placeholder="Subscriber Account" autocomplete="off">
+                <input matInput placeholder="Subscriber Account" name="subscriber_account_no"
+                    [(ngModel)]="serviceRequestDetails.subscriber_account_no" autocomplete="off">
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Requester Name</mat-label>
-                <input matInput placeholder="Requester Name" autocomplete="off">
+                <input matInput placeholder="Requester Name" name="requester_first_name"
+                    [(ngModel)]="serviceRequestDetails.requester_first_name" autocomplete="off">
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Claim Reference</mat-label>
-                <input matInput placeholder="Claim Reference" autocomplete="off">
+                <input matInput name="claim_number" placeholder="Claim Reference"
+                    [(ngModel)]="serviceRequestDetails.claim_number" autocomplete="off">
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Service Type</mat-label>
-                <input matInput placeholder="Service Type" autocomplete="off">
+                <input matInput placeholder="Service Type" name="service_request_type"
+                    [(ngModel)]="serviceRequestDetails.service_request_type" autocomplete="off">
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Request Reference</mat-label>
-                <input matInput placeholder="Request Reference" autocomplete="off">
+                <input matInput placeholder="Request Reference" name="request_reference_id"
+                    [(ngModel)]="serviceRequestDetails.request_reference_id" autocomplete="off">
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Request Date & time</mat-label>
-                <input matInput placeholder="Request Date & time" autocomplete="off">
+                <input matInput placeholder="Request Date & time" name="date_of_request"
+                    [(ngModel)]="serviceRequestDetails.date_of_request" autocomplete="off">
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Due Date </mat-label>
-                <input matInput placeholder="Due Date " autocomplete="off">
+                <input matInput placeholder="Due Date " name="due_date" [(ngModel)]="serviceRequestDetails.due_date"
+                    autocomplete="off">
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Status</mat-label>
-                <input matInput placeholder="Status" autocomplete="off">
+                <input matInput placeholder="Status" name="service_request_transmit_status"
+                    [(ngModel)]="serviceRequestDetails.service_request_transmit_status" autocomplete="off">
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                 fxFlex.sm="50">
                 <mat-label>Completion Date</mat-label>
-                <input matInput placeholder="Completion Date " autocomplete="off">
+                <input matInput placeholder="Completion Date " name="date_of_service_completion"
+                    [(ngModel)]="serviceRequestDetails.date_of_service_completion" autocomplete="off">
             </mat-form-field>
         </form>
     </mat-card-content>
@@ -92,15 +102,15 @@
         <div class="w-100">
             <table mat-table [dataSource]="dataSource" class="user-table striped_ w-100">
                 <!-- Document Name Column -->
-                <ng-container matColumnDef="doc_name">
+                <ng-container matColumnDef="file_name">
                     <th mat-header-cell *matHeaderCellDef>Document Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.doc_name}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.file_name}} </td>
                 </ng-container>
 
                 <!-- Sent Document Name Column -->
-                <ng-container matColumnDef="sent_doc_name">
+                <ng-container matColumnDef="transmitted_file_name">
                     <th mat-header-cell *matHeaderCellDef> Sent Document Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.sent_doc_name}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.transmitted_file_name}} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -123,26 +133,26 @@
         <div class="w-100 ">
             <table mat-table [dataSource]="dataSource1" class="user-table striped_ w-100">
                 <!-- Transmission Mode Column -->
-                <ng-container matColumnDef="trans_mode">
-                    <th mat-header-cell *matHeaderCellDef>Transmission Mode 
+                <ng-container matColumnDef="document_transmission_type">
+                    <th mat-header-cell *matHeaderCellDef>Transmission Mode
                     </th>
-                    <td mat-cell *matCellDef="let element"> {{element.trans_mode}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.document_transmission_type}} </td>
                 </ng-container>
 
                 <!-- Date & Time Column -->
-                <ng-container matColumnDef="date_time">
+                <ng-container matColumnDef="createdAt">
                     <th mat-header-cell *matHeaderCellDef> Date & Time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.date_time}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'MM-dd-yyyy'}} </td>
                 </ng-container>
                 <!-- Status Column -->
-                <ng-container matColumnDef="status">
+                <ng-container matColumnDef="transmission_status">
                     <th mat-header-cell *matHeaderCellDef> Status </th>
-                    <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.transmission_status}} </td>
                 </ng-container>
                 <!-- Log Column -->
-                <ng-container matColumnDef="log">
+                <ng-container matColumnDef="transmission_message">
                     <th mat-header-cell *matHeaderCellDef> Log </th>
-                    <td mat-cell *matCellDef="let element"> {{element.log}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.transmission_message}} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
