@@ -12,16 +12,42 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { Observable } from 'rxjs';
 import { ClaimService } from '../../service/claim.service';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { shareReplay, map } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 export interface Section {
   type: string;
   name: string;
   address: string;
 
 }
+
+export interface PeriodicElement {
+  license_number: string;
+  license_state: string;
+}
+
+const ELEMENT_DATA1: PeriodicElement[] = [
+  { license_number: '567-wx', license_state: 'California', },
+  { license_number: '567-wx', license_state: 'California', },
+  { license_number: '567-wx', license_state: 'California', },
+  { license_number: '567-wx', license_state: 'California', },
+  { license_number: '567-wx', license_state: 'California', },
+  { license_number: '567-wx', license_state: 'California', },
+];
 @Component({
   selector: 'app-new-user',
   templateUrl: './new-user.component.html',
-  styleUrls: ['./new-user.component.scss']
+  styleUrls: ['./new-user.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
+
 })
 export class NewUserComponent implements OnInit {
   userForm: FormGroup;
@@ -46,6 +72,19 @@ export class NewUserComponent implements OnInit {
   taxonomyList: any;
   specialtyList: any;
   isExaminer: boolean = false;
+  displayedColumns1: string[] = ['license_number', 'license_state', 'action',];
+  dataSource1 = ELEMENT_DATA1;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  dataSource = ELEMENT_DATA;
+  columnsToDisplay = [];
+  expandedElement;
+  isMobile = false;
+  columnName = [];
+  filterValue: string;
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -56,8 +95,19 @@ export class NewUserComponent implements OnInit {
     private store: Store<{ breadcrumb: any }>,
     private _location: Location,
     private cookieService: CookieService,
-    private claimService: ClaimService
+    private claimService: ClaimService,
+    private breakpointObserver: BreakpointObserver
   ) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Address", "Status"]
+        this.columnsToDisplay = ['is_expand', 'claimant_name', "status"]
+      } else {
+        this.columnName = ["Address", "Service Type", "Phone", "NPI Number", "Status"]
+        this.columnsToDisplay = ['address', 'service_type', "phone", "npi_number", 'status']
+      }
+    })
     this.user = JSON.parse(this.cookieService.get('user'));
     if (this.user.organization_type == 'INDV') {
       this.user.company_name = '';
@@ -93,7 +143,7 @@ export class NewUserComponent implements OnInit {
             company_name: res.data.company_name,
             sign_in_email_id: res.data.sign_in_email_id,
             role_id: res.data.role_id,
-            suffix : res.data.suffix
+            suffix: res.data.suffix
           }
           if (this.isExaminer) {
             let examiner = {
@@ -146,7 +196,7 @@ export class NewUserComponent implements OnInit {
       company_name: [{ value: this.user.company_name, disabled: true }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required],
-      suffix:['',Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])]
+      suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])]
     });
 
     this.formInit()
@@ -176,13 +226,19 @@ export class NewUserComponent implements OnInit {
     // })
 
   }
+  expandId: any;
+  openElement(element) {
+    if (this.isMobile) {
+      this.expandId = element.id;
+    }
+  }
 
   formInit() {
 
     this.userExaminerForm = this.formBuilder.group({
       w9_number: [''],
       w9_number_type: ['EIN'],
-      national_provider_identifier: ['', Validators.compose([Validators.required,Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
+      national_provider_identifier: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
       specialty: [''],
       state_license_number: ['', Validators.compose([Validators.maxLength(15)])],
       state_of_license_id: [null],
@@ -291,3 +347,13 @@ export class NewUserComponent implements OnInit {
 
 
 }
+
+const ELEMENT_DATA = [
+  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone":"(123) 456 - 7890", "npi_number":"999999999", "status":"Yes" },
+  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone":"(123) 456 - 7890", "npi_number":"999999999", "status":"Yes" },
+  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone":"(123) 456 - 7890", "npi_number":"999999999", "status":"Yes" },
+  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone":"(123) 456 - 7890", "npi_number":"999999999", "status":"Yes" },
+  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone":"(123) 456 - 7890", "npi_number":"999999999", "status":"Yes" },
+  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone":"(123) 456 - 7890", "npi_number":"999999999", "status":"Yes" },
+
+];
