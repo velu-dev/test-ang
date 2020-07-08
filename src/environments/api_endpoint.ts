@@ -20,6 +20,7 @@ export const api_endpoint = {
     verifySubscriberStatus: 'auth/verify-subscriber-status',
     changeRole: "subscriber/switch-to-examiner/",
     updateSignup: 'auth/update-signup-register',
+    serviceRequest: "admin/service-request/list",
 
     //Subscriber
     getSubscriberUsers: 'subscriber/users',

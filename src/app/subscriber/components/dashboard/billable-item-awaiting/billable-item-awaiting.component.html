@@ -1,8 +1,8 @@
 <mat-card class="m-card">
     <mat-card-content class="m-b-0">
         <div class="table-filter">
-            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                placeholder="Search by Claim Number, Name, Date, Type">
+            <input matInput autocomplete="off" (keyup)="applyFilter($event.target.value)" title="Search by Name, Claim, Examiner, Procedure type or Date" [(ngModel)]="filterValue"
+                [placeholder]="'Search by Name, Claim, Examiner, Procedure type or Date' | ellipsis:50">
             <mat-icon>search</mat-icon>
         </div>
         <div class="user-detail">
@@ -19,7 +19,7 @@
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name}},{{element?.claimant_first_name}}</span>
+                            <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name}}, {{element?.claimant_first_name}}</span>
                             <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
                             <span *ngIf="column == 'examiner'">{{element?.ex_last_name}} {{element?.ex_first_name}}{{element?.ex_suffix ? ', '+element?.ex_suffix : ''}}</span>
                             <span *ngIf="column == 'procedure_type'">{{element?.procedure_type_name}}</span>
@@ -32,10 +32,10 @@
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="resposive-table" (click)="navigateBillableEdit(element)">
-                                <div><span>Claimant</span> {{element?.last_name}}, {{element?.first_name}} </div>
+                                <div><span>Claimant</span> {{element?.claimant_last_name}}, {{element?.claimant_first_name}} </div>
                                 <div><span>Claim Number</span> {{element?.claim_number}} </div>
                                 <div><span>Examiner</span>{{element?.ex_lastname}}{{element?.ex_firstname}}{{element?.ex_suffix ? ','+element?.ex_suffix : ''}} </div>
-                                <div><span>Procedure Type</span> {{element?.procedure_type}} </div>
+                                <div><span>Procedure Type</span> {{element?.procedure_type_name}} </div>
                                 <div><span>Date Created</span> {{element?.created_date}}<small class="p-l-10">
                                     <span *ngIf="element?.created_time" class="fa fa-clock-o"></span>&nbsp;{{element?.created_time}}</small> </div>
                             </div>
@@ -48,7 +48,7 @@
                 </tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
-            <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+            <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
         </div>
 
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>

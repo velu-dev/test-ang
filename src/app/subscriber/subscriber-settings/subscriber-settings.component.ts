@@ -176,7 +176,7 @@ export class SubscriberSettingsComponent implements OnInit {
         suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
         company_name: [{ value: "", disabled: false }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-        // signature: ['']
+        signature: ['']
       });
     } else {
       this.userForm = this.formBuilder.group({
@@ -330,10 +330,10 @@ export class SubscriberSettingsComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    if (this.user.role_id != 2) {
+   // if (this.user.role_id != 2) {
       let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
       this.userForm.value.signature = sign;
-    }
+   // }
 
     this.userService.updateSubsciberSetting(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');

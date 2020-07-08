@@ -25,7 +25,7 @@ export class ApplicationAttorneyComponent implements OnInit {
       street2: [{ value: null, disabled: true }],
       city: [{ value: null, disabled: true }],
       state: [{ value: null, disabled: true }],
-      zip_code: [{ value: null, disabled: true },Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
@@ -43,7 +43,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     } else {
       this.ApplicantAttorney.disable();
     }
-   
+
   }
   ngOnInit() {
     this.ApplicantAttorney.patchValue(this.aattorneyDetail)
@@ -53,8 +53,8 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   updateAAttorney() {
     Object.keys(this.ApplicantAttorney.controls).forEach((key) => {
-      if(this.ApplicantAttorney.get(key).value && typeof(this.ApplicantAttorney.get(key).value) == 'string')
-      this.ApplicantAttorney.get(key).setValue(this.ApplicantAttorney.get(key).value.trim())
+      if (this.ApplicantAttorney.get(key).value && typeof (this.ApplicantAttorney.get(key).value) == 'string')
+        this.ApplicantAttorney.get(key).setValue(this.ApplicantAttorney.get(key).value.trim())
     });
     if (this.ApplicantAttorney.invalid) {
       return;

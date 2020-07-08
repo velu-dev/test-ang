@@ -171,7 +171,6 @@ export class InjuryPopup {
     this.date_of_birth = data['date_of_birth'];
     if (this.isEdit) {
       this.injuryInfo = data['data'];
-
     }
     dialogRef.disableClose = true;
   }
@@ -216,7 +215,7 @@ export class InjuryPopup {
         diagram_url: this.injuryInfo.diagram_url
       }
       this.claimService.updateInjury(editData, this.claim_id).subscribe(res => {
-        this.alertService.openSnackBar("Claim Injury updated successfully", 'success')
+        this.alertService.openSnackBar(this.isEdit ? "Claim Injury updated successfully" : "Claim Injury added successfully", 'success')
         this.dialogRef.close();
       }, error => {
         this.alertService.openSnackBar(error.error.message, "error")
@@ -238,7 +237,7 @@ export class InjuryPopup {
       arrData.map(row => {
         row.date_of_injury = moment(row.date_of_injury).format("MM-DD-YYYY")
         this.claimService.updateInjury(row, this.claim_id).subscribe(res => {
-          this.alertService.openSnackBar("Claim Injury updated successfully", 'success')
+          this.alertService.openSnackBar(this.isEdit ? "Claim Injury updated successfully" : "Claim Injury added successfully", 'success')
           this.dialogRef.close();
         }, error => {
           this.alertService.openSnackBar(error.error.message, "error")
