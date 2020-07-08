@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from './../../services/user.service';
+import { MatTableDataSource } from '@angular/material';
 
 export interface PeriodicElement {
   doc_name: string;
@@ -27,14 +30,14 @@ export interface PeriodicElement12 {
   notes: string;
 }
 const ELEMENT_DATA2: PeriodicElement12[] = [
- { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
- { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
- { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
- { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
- { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
- { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
- { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
- { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
+  { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
+  { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
+  { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
+  { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
+  { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
+  { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
+  { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
+  { call_date_time: '02-02-2020 10.00 AM', caller: 'Venkatesan', callee: 'Rajan', called_name: 'Venkatesan', notes: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', },
 ];
 @Component({
   selector: 'app-service-request-details',
@@ -42,13 +45,33 @@ const ELEMENT_DATA2: PeriodicElement12[] = [
   styleUrls: ['./service-request-details.component.scss']
 })
 export class ServiceRequestDetailsComponent implements OnInit {
-  displayedColumns: string[] = ['doc_name', 'sent_doc_name',];
-  dataSource = ELEMENT_DATA;
-  displayedColumns1: string[] = ['trans_mode', 'date_time', 'status', 'log'];
-  dataSource1 = ELEMENT_DATA1;
+  displayedColumns: string[] = ['transmitted_file_name', 'file_name',];
+  dataSource: any;
+  displayedColumns1: string[] = ['document_transmission_type', 'createdAt', 'transmission_status', 'transmission_message'];
+  dataSource1: any;
   displayedColumns2: string[] = ['call_date_time', 'caller', 'callee', 'called_name', 'notes'];
   dataSource2 = ELEMENT_DATA2;
-  constructor() { }
+  serviceRequestDetails: any;
+  requestDocuments = [];
+  transmissions = [];
+  followupCalls = [];
+  isLoading = false;
+  constructor(private route: ActivatedRoute, private userService: UserService) {
+    this.isLoading = true;
+    this.route.params.subscribe(param => {
+      if (param.id) {
+        this.userService.getServiceRequest(param.id).subscribe(res => {
+          this.serviceRequestDetails = res.service_request[0];
+          this.requestDocuments = res.service_request_doc;
+          this.transmissions = res.service_request_transmission;
+          this.dataSource1 = new MatTableDataSource(this.transmissions)
+          this.dataSource = new MatTableDataSource(this.requestDocuments)
+          this.followupCalls = res.service_request_followup_calls;
+          this.isLoading = false;
+        })
+      }
+    })
+  }
 
   ngOnInit() {
   }

@@ -62,11 +62,16 @@ const routes: Routes = [{
 },
 {
   path: "service-request",
-  component: ServiceRequestComponent
-},
-{
-  path: "service-request-details",
-  component: ServiceRequestDetailsComponent
+  children: [
+    {
+      path: "",
+      component: ServiceRequestComponent
+    },
+    {
+      path: ":id",
+      component: ServiceRequestDetailsComponent
+    },
+  ]
 },
 {
   path: "",
