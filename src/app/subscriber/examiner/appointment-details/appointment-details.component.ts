@@ -136,7 +136,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.alertService.openSnackBar("Please select Document type", 'error');
       return;
     }
-    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB

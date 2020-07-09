@@ -1,0 +1,583 @@
+
+<mat-card class="m-t-25">
+    <mat-card-content>
+        <mat-tab-group class="user-list" (selectedTabChange)="tabchange($event.index)">
+            <!-- ######~~~~~Examiner ~~~~~##### -->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span>Examiner</span>
+                </ng-template>
+                <mat-card-content class="p-b-15">
+                    <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm">
+                        <div fxFlex="100">
+                            <mat-checkbox class="checkbox_" formControlName="SameAsSubscriber" (change)="sameAsSub($event)">Same as Subscriber</mat-checkbox>
+                        </div>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>First name*</mat-label>
+                        <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Middle name / MI</mat-label>
+                        <input matInput placeholder="Middle name" formControlName="middle_name" autocomplete="off">
+                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
+                        fxFlex.sm="80" fxFlex.xs="80">
+                        <mat-label>Last name*</mat-label>
+                        <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
+                    </mat-form-field>
+        
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10"
+                        fxFlex.sm="20" fxFlex.xs="20">
+                        <mat-label>Suffix</mat-label>
+                        <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
+                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidsuffix}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50" fxFlex.sm="50"
+                        fxFlex.xs="100">
+                        <mat-label>Email*</mat-label>
+                        <input matInput placeholder="Email" formControlName="sign_in_email_id">
+                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50" fxFlex.sm="50"
+                        fxFlex.xs="100">
+                        <mat-label>Select a Role*</mat-label>
+                        <mat-select formControlName="role_id">
+                            <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="isSubmitted">{{errorMessages?.selectrole}}</mat-error>
+                    </mat-form-field>
+                        <div class="text-center w-100 m-t-10">
+                            <button mat-stroked-button type="button" class="outline-danger" (click)="cancel()">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-success" (click)="userSubmit()">Save</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+
+            </mat-tab>
+            <!-- ######~~~~~Mailing Address ~~~~~##### -->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span>Mailing Address</span>
+                </ng-template>
+                <mat-card-content>
+                    <form fxLayout="row wrap" class="m-t-10">
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Street 1</mat-label>
+                            <input matInput placeholder="Street 1" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Street 2</mat-label>
+                            <input matInput placeholder="Street 2" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>City</mat-label>
+                            <input matInput placeholder="City" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>State</mat-label>
+                            <input matInput placeholder="State" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Zip Code</mat-label>
+                            <input matInput placeholder="Zip Code" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Phone 1</mat-label>
+                            <input matInput placeholder="Phone 1" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Phone 2</mat-label>
+                            <input matInput placeholder="Phone 2" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Fax</mat-label>
+                            <input matInput placeholder="Fax" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Contact Email</mat-label>
+                            <input matInput placeholder="Contact Email" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Contact Person</mat-label>
+                            <input matInput placeholder="Contact Person" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="50" fxFlex.md="100"
+                            fxFlex.sm="100" fxFlex.xs="100">
+                            <mat-label>Notes</mat-label>
+                            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
+                                placeholder="Notes" autocomplete="off"></textarea>
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <div class="text-center w-100 m-t-10 m-b-20">
+                            <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-success">Save</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+
+            </mat-tab>
+            <!-- ######~~~~~Billing Provider ~~~~~##### -->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span>Billing Provider</span>
+                </ng-template>
+
+                <mat-card-content>
+                    <form fxLayout="row wrap" class="m-t-10">
+                        <div fxFlex="100">
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Default Injury State</mat-label>
+                                <mat-select>
+                                    <mat-option>State list here</mat-option>
+                                </mat-select>
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="100">
+                            <mat-radio-group class="p-l-15">
+                                <mat-radio-button value="1">Individual
+                                </mat-radio-button>
+                                <mat-radio-button value="2" class="p-l-10">
+                                    Organization</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                            CMS 1500 Box 25
+                        </div>
+
+                        <div fxFlex="100">
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Tax ID</mat-label>
+                                <input matInput placeholder="Tax ID" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                            CMS 1500 Box 33
+                        </div>
+
+                        <div fxFlex="100">
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>First name*</mat-label>
+                                <input matInput placeholder="First name" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Middle Name</mat-label>
+                                <input matInput placeholder="Middle Name" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Last Name*</mat-label>
+                                <input matInput placeholder="Last Name" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
+                                fxFlex.xl="10" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Suffix</mat-label>
+                                <input matInput placeholder="Suffix" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="100">
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
+                                fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
+                                <mat-label>Billing Provider Name*</mat-label>
+                                <input matInput placeholder="Billing Provider Name" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Street 1</mat-label>
+                            <input matInput placeholder="Street 1" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Street 2</mat-label>
+                            <input matInput placeholder="Street 2" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>City</mat-label>
+                            <input matInput placeholder="City" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>State</mat-label>
+                            <input matInput placeholder="State" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Zip Code</mat-label>
+                            <input matInput placeholder="Zip Code" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Phone</mat-label>
+                            <input matInput placeholder="Phone" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <div fxLayout="row wrap">
+                                <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                                    CMS 1500 Box 33a
+                                </div>
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="100"
+                                    fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                                    <mat-label>National Provider Identifier (NPI) Number</mat-label>
+                                    <input matInput placeholder="National Provider Identifier (NPI) Number"
+                                        autocomplete="off">
+                                    <mat-error>error msg here</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <div fxLayout="row wrap">
+                                <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                                    CMS 1500 Box 33b
+                                </div>
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="100"
+                                    fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                                    <mat-label>Department of Labor (DOL) Provider Number</mat-label>
+                                    <input matInput placeholder="Department of Labor (DOL) Provider Number"
+                                        autocomplete="off">
+                                    <mat-error>error msg here</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="text-center w-100 m-t-10 m-b-20">
+                            <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-success">Save</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+
+
+            </mat-tab>
+            <!-- ######~~~~~Rendering Provider ~~~~~##### -->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span>Rendering Provider</span>
+                </ng-template>
+                <mat-card-content>
+                    <form fxLayout="row wrap" class="m-t-10">
+                        <div fxFlex="100">
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Default Injury State</mat-label>
+                                <mat-select>
+                                    <mat-option>State list here</mat-option>
+                                </mat-select>
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="100">
+                            <mat-radio-group class="p-l-15">
+                                <mat-radio-button value="1" >Person
+                                </mat-radio-button>
+                                <mat-radio-button value="2" class="p-l-10">
+                                    Non-person</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div fxFlex="100">
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>First name*</mat-label>
+                                <input matInput placeholder="First name" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Middle Name</mat-label>
+                                <input matInput placeholder="Middle Name" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Last Name*</mat-label>
+                                <input matInput placeholder="Last Name" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
+                                fxFlex.xl="10" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Suffix</mat-label>
+                                <input matInput placeholder="Suffix" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="100">
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
+                                fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
+                                <mat-label>Rendering Provider Name*</mat-label>
+                                <input matInput placeholder="Rendering Provider Name" autocomplete="off">
+                                <mat-error>error msg here</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                            CMS 1500 Box 24 J
+                        </div>
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>National Provider Identifier (NPI) Number</mat-label>
+                            <input matInput placeholder="National Provider Identifier (NPI) Number" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Taxonomy Code</mat-label>
+                            <input matInput placeholder="Taxonomy Code" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                            class="add-license">
+                            <div fxLayout="row wrap">
+                                <div fxFlex="100">
+                                    <button mat-stroked-button class="outline-success">Add License </button>
+                                </div>
+                                <div class="w-100 table p-l-10">
+                                    <table mat-table [dataSource]="dataSource1" class="user-table w-100">
+                                        <!-- Position Column -->
+                                        <ng-container matColumnDef="license_number">
+                                            <th mat-header-cell *matHeaderCellDef>License Number </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.license_number}} </td>
+                                        </ng-container>
+
+                                        <!-- Name Column -->
+                                        <ng-container matColumnDef="license_state">
+                                            <th mat-header-cell *matHeaderCellDef> License State </th>
+                                            <td mat-cell *matCellDef="let element"> {{element.license_state}} </td>
+                                        </ng-container>
+
+                                        <!-- Weight Column -->
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
+                                            <td mat-cell *matCellDef="let element" class="text-center">
+                                                <a href="" class="text-success">
+                                                    Edit
+                                                </a>
+                                                <a href="" class="text-danger m-l-10">
+                                                    Remove
+                                                </a>
+                                            </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <div fxLayout="row wrap">
+                                <div class="sub-title p-l-10 m-t-30" fxFlex="100">
+                                    Signature
+                                </div>
+                                <div fxFlex="100" class="sign-upload">
+                                    <div fxLayout="row wrap">
+                                        <mat-form-field appearance="standard"
+                                            hideRequiredMarker="hideRequiredControl.auto"
+                                            floatLabel="floatLabelControl.auto" fxFlex="100" class="w-100">
+                                            <input matInput [title]="selectedFile" readonly
+                                                [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
+                                                value="12345">
+                                            <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
+                                                (change)="fileChangeEvent($event)" id="uploadFile">
+                                            <button matSuffix type="button" (click)="uploader.click()"
+                                                mat-stroked-button class="upload_btn outline-success">Upload
+                                            </button>
+                                            <mat-hint>
+                                                *Aspect ratio 3:1<br />
+                                                *Max size 500 KB<br />
+                                                *Allowed formats : JPEG/JPG, PNG
+                                            </mat-hint>
+                                        </mat-form-field>
+
+                                        <div fxFlex="100" *ngIf="!signData" class="m-t-30">
+                                            <div class="empty-image m-l-10">
+                                                No image uploaded
+                                            </div>
+                                        </div>
+                                        <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
+                                            <button type="button" class="m-b-5" (click)="removeSign()"
+                                                mat-stroked-button>Remove </button><br />
+                                            <div class="sign m-l-10">
+                                                <img [src]="signData">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-title m-t-20" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                            Provider Info
+                        </div>
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Provider Type</mat-label>
+                            <input matInput placeholder="Provider Type" autocomplete="off">
+                            <mat-error>error msg here</mat-error>
+                        </mat-form-field>
+
+                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                            class="p-l-10">
+                            <mat-label class="m-t-10 display-block">Provider status</mat-label>
+                            <mat-radio-group class="">
+                                <mat-radio-button value="1" checked>Active</mat-radio-button>
+                                <mat-radio-button value="2" class="p-l-10">In Active</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <div class="text-center w-100 m-t-10 m-b-20">
+                            <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-success">Save</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+
+
+            </mat-tab>
+            <!-- ######~~~~~Service Locations ~~~~~##### -->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span>Service Locations</span>
+                </ng-template>
+                <mat-card-content>
+                    <div class="table-filter">
+                        <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
+                            placeholder="Search by address, phone, etc.">
+                            <mat-icon >search</mat-icon>
+                    </div>
+                    <span class="spacer"></span>
+                    <button mat-stroked-button class="float-right outline-success m-t-5">
+                        Add Service Location
+                    </button>
+                    <div class="user-detail">
+                        <table mat-table [dataSource]="dataSource" multiTemplateDataRows
+                            class="mat-elevation-z8 user-table" matSort>
+                            <ng-container matColumnDef="{{column}}"
+                                *ngFor="let column of columnsToDisplay; let i=index">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                    [disabled]="columnName[i] == 'Action'">
+                                    {{columnName[i]}} </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span *ngIf="i == 0 && isMobile">
+                                        <mat-icon mat-raised-button
+                                            [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
+                                            {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                                        </mat-icon>
+                                    </span>
+                                    <div>
+                                        <span *ngIf="column == 'address'">{{element?.address}}</span>
+                                        <span *ngIf="column == 'service_type'">{{element?.service_type}} </span>
+                                        <span *ngIf="column == 'phone'">{{element?.phone}}</span>
+                                        <span *ngIf="column == 'npi_number'">{{element?.npi_number}}</span>
+                                        <span *ngIf="column == 'status'">{{element?.status}}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                                    <div class="detail"
+                                        [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                                        <div class="resposive-table">
+                                            <div><span>Address</span> {{element?.address}} </div>
+                                            <div><span>Service Type</span> {{element?.service_type}} </div>
+                                            <div><span>Phone</span> {{element?.phone}} </div>
+                                            <div><span>NPI Number</span> {{element?.npi_number}} </div>
+                                            <div><span>Status</span> {{element?.status}} </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
+                                [class.row]="expandedElement === element" (click)="openElement(element)">
+                            </tr>
+                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+                        </table>
+                        <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+                    </div>
+
+                    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+                </mat-card-content>
+
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>
