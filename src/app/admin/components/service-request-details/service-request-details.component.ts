@@ -61,7 +61,7 @@ export class ServiceRequestDetailsComponent implements OnInit {
     this.route.params.subscribe(param => {
       if (param.id) {
         this.userService.getServiceRequest(param.id).subscribe(res => {
-          this.serviceRequestDetails = res.service_request[0];
+          this.serviceRequestDetails = res.service_request;
           this.requestDocuments = res.service_request_doc;
           this.transmissions = res.service_request_transmission;
           this.dataSource1 = new MatTableDataSource(this.transmissions)

@@ -99,7 +99,7 @@
             <input matInput placeholder="Search by Document Name">
             <mat-icon>search</mat-icon>
         </div> -->
-        <div class="w-100">
+        <div class="w-100" *ngIf="!isLoading">
             <table mat-table [dataSource]="dataSource" class="user-table striped_ w-100">
                 <!-- Document Name Column -->
                 <ng-container matColumnDef="file_name">
@@ -130,7 +130,7 @@
             <input matInput placeholder="Search by date, status, etc.">
             <mat-icon>search</mat-icon>
         </div> -->
-        <div class="w-100 ">
+        <div class="w-100 " *ngIf="!isLoading">
             <table mat-table [dataSource]="dataSource1" class="user-table striped_ w-100">
                 <!-- Transmission Mode Column -->
                 <ng-container matColumnDef="document_transmission_type">
@@ -202,7 +202,7 @@
                 <button mat-stroked-button class="add-btn outline-success">
                     Add Notes
                 </button>
-                <div class="">
+                <div class="" *ngIf="!isLoading">
                     <table mat-table [dataSource]="dataSource2" class="user-table striped_ scroll_ w-100">
                         <!-- Call DateTime Column -->
                         <ng-container matColumnDef="call_date_time">

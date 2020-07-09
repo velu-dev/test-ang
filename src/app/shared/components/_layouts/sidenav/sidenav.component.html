@@ -1,12 +1,14 @@
 <mat-sidenav-container class="sidenav-container ">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    <!-- <span *ngIf="isOpend"> -->
+    <mat-sidenav #drawer [ngClass]="{'opened': isOpend, 'closed': !isOpend}" class="sidenav" mode="side"
+        [disableClose]="true" [opened]="true">
+        <!-- [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false"> -->
 
-        <mat-toolbar style="cursor: pointer;" (click)="mainPage()">
+        <mat-toolbar style="cursor: pointer;" *ngIf="isOpend" (click)="mainPage()">
             <img mat-card-image [src]="simplexam_logo" alt="Lucy logo" class="logo-white">
             <span class="p-l-4"> Simplexam</span>
         </mat-toolbar>
-        <span *ngIf="is_subscriber == 'true'">
+        <span *ngIf="is_subscriber == 'true' && isOpend">
             <a mat-raised-button *ngIf="roleId == 2" (click)="changeRole()" class="text-center switched_account">
                 <mat-icon>loop</mat-icon> Switch to Examiner
             </a>
@@ -16,16 +18,30 @@
         </span>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
-                <a class="menu-card-title">{{menuItem.group}}</a>
+                <a class="menu-card-title" *ngIf="isOpend">{{menuItem.group}}</a>
                 <a *ngFor="let menu of menuItem.menu" (click)="navigate()" [routerLink]="menu.path"
                     routerLinkActive="active-list-item" class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> {{menu.title }}
+                    <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon><span
+                        *ngIf="isOpend">{{menu.title }}</span>
                 </a>
             </span>
         </mat-nav-list>
     </mat-sidenav>
+    <!-- </span>
+    <span *ngIf="!isOpend">
+        <mat-sidenav #drawer1 [opened]="false">
+            <mat-nav-list>
+                <span *ngFor="let menuItem of menuItems">
+                    <a *ngFor="let menu of menuItem.menu" (click)="navigate()" [routerLink]="menu.path"
+                        routerLinkActive="active-list-item" class="list-nav" mat-list-item>
+                        <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon>
+                    </a>
+                </span>
+            </mat-nav-list>
+        </mat-sidenav>
+    </span> -->
     <mat-sidenav-content>
-        <app-header [inputSideNav]="drawer"></app-header>
+        <app-header [inputSideNav]="drawer" (isOpen)="isOpen($event)"></app-header>
         <!-- Add Content Here -->
         <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>
