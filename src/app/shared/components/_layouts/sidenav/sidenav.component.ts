@@ -31,7 +31,6 @@ export class SidenavComponent implements OnInit {
   simplexam_logo = globals.simplexam_logo;
   nav_logo = globals.simplexam_logo;
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
-  @ViewChild('drawer1', { static: false }) sidenav1: MatSidenav;
   public menuItems: any;
   expanded: boolean = false;
   roleId: any;
@@ -43,7 +42,6 @@ export class SidenavComponent implements OnInit {
   isMobile: boolean = false;
   role: any;
   is_subscriber: any;
-  isOpenMenu = true;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -70,17 +68,11 @@ export class SidenavComponent implements OnInit {
 
   }
   ngAfterViewInit() {
-
   }
   navigate() {
     if (this.isMobile) {
       this.sidenav.toggle();
     }
-  }
-  isOpend = true;
-  isOpen(open) {
-    console.log(open)
-    this.isOpend = open;
   }
   changeRole() {
     if (this.roleId == 2) {

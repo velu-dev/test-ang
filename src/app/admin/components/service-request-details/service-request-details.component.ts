@@ -81,7 +81,18 @@ export class ServiceRequestDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-    
+      console.log(result);
+      let data = {
+        "date_of_call": "1234567890",
+        "notes": "test notes",
+        "service_provider_id": "1",
+        "on_demand_service_req_id": "60",
+        "service_provider_contact_number": "8889900000",
+        "service_provider_contact_person": "Kadhir"
+      }
+      this.userService.followupCreate(data).subscribe(res => {
+        console.log(res)
+      })
     });
   }
   ngOnInit() {
@@ -99,7 +110,7 @@ export class ServiceDialog {
 
   constructor(
     public dialogRef: MatDialogRef<ServiceDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();

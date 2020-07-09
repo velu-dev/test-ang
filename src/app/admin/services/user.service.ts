@@ -49,5 +49,8 @@ export class UserService {
   getServiceRequest(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.singleserviceRequest + id)
   }
+  followupCreate(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.followupCall, data)
+  }
 
 }

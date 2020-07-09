@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Inject, HostListener, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Inject, HostListener } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DOCUMENT } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -39,18 +39,16 @@ export class HeaderComponent implements OnInit {
   profile = globals.profile
   notification_user = globals.notification_user
   // @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
-  @Input() inputSideNav: any;
+  @Input() inputSideNav: MatSidenav;
   elem;
   folders = [];
   currentUserID = "";
   user: User;
-  // isOpen: any
+  isOpen: any
   isLoading: boolean = false;
   user$: Observable<any>;
   toggleClass = 'fullscreen';
   role: string;
-  @Output() isOpen = new EventEmitter<boolean>();
-
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
@@ -91,16 +89,12 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     // this.user$ = this.store.pipe(select('header'));
     this.elem = document.documentElement;
-    this.inputSideNav.opened;
+    this.isOpen = this.inputSideNav.opened;
   }
-  isOpend = true;
-  openSidenav() {
-    this.isOpend = !this.isOpend
-    // this.inputSideNav.toggle();
-    // this.inputSideNav = !this.inputSideNav;
-    // this.isOpen = this.inputSideNav;
-    this.isOpen.emit(this.isOpend)
 
+  openSidenav() {
+    this.inputSideNav.toggle();
+    this.isOpen = this.inputSideNav.opened;
     // this.inputSideNav.toggle().then(res => {
     //   console.table(res)
     // })
