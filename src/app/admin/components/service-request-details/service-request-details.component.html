@@ -4,6 +4,48 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content *ngIf="!isLoading">
+         <!-- <div fxLayout="row wrap">
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Subscriber Name</div>
+                    <div>Venkatesan</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Subscriber Account</div>
+                    <div>7895451562</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Requester Name</div>
+                    <div>Rajan</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Claim Reference</div>
+                    <div></div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Service Type </div>
+                    <div></div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Request Reference</div>
+                    <div></div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Request Date & time</div>
+                    <div>10-10-2020 10.00 AM</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Due Date</div>
+                    <div>02-02-2020</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Status</div>
+                    <div></div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Completion Date </div>
+                    <div></div>
+                </div>
+            </div> -->
         <form fxLayout="row wrap" class="p-t-10">
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
@@ -199,7 +241,7 @@
                     <mat-icon>search</mat-icon>
                 </div> -->
                 <span class="spacer"></span>
-                <button mat-stroked-button class="add-btn outline-success">
+                <button mat-stroked-button class="add-btn outline-success" (click)="openDialog()">
                     Add Notes
                 </button>
                 <div class="" *ngIf="!isLoading">

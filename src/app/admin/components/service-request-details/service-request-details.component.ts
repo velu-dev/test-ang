@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from './../../services/user.service';
 import { MatTableDataSource } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 
 export interface PeriodicElement {
   doc_name: string;
@@ -56,7 +58,7 @@ export class ServiceRequestDetailsComponent implements OnInit {
   transmissions = [];
   followupCalls = [];
   isLoading = false;
-  constructor(private route: ActivatedRoute, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private userService: UserService, public dialog: MatDialog) {
     this.isLoading = true;
     this.route.params.subscribe(param => {
       if (param.id) {
@@ -73,7 +75,34 @@ export class ServiceRequestDetailsComponent implements OnInit {
     })
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ServiceDialog, {
+      width: '800px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    
+    });
+  }
   ngOnInit() {
+  }
+
+}
+
+
+@Component({
+  selector: 'service-dialog',
+  templateUrl: 'service-dialog.html',
+})
+
+export class ServiceDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<ServiceDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

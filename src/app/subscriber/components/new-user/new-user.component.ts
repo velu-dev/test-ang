@@ -16,6 +16,8 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
+import { MatDialog } from '@angular/material';
 export interface Section {
   type: string;
   name: string;
@@ -85,6 +87,7 @@ export class NewUserComponent implements OnInit {
   isMobile = false;
   columnName = [];
   filterValue: string;
+  signData:any;
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -96,7 +99,8 @@ export class NewUserComponent implements OnInit {
     private _location: Location,
     private cookieService: CookieService,
     private claimService: ClaimService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    public dialog: MatDialog
   ) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -345,6 +349,61 @@ export class NewUserComponent implements OnInit {
 
   }
 
+  applyFilter(filterValue: string) {
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
+    // if (this.dataSource.paginator) {
+    //   this.dataSource.paginator.firstPage();
+    // }
+  }
+
+  fileChangeEvent(event: any): void {
+    console.log("event", event.target.files[0].size);
+    let fileTypes = ['png', 'jpg', 'jpeg']
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
+      if (FileSize > 500) {
+        //this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.selectedFile = event.target.files[0].name;
+      this.openSign(event);
+    } else {
+      this.selectedFile = null;
+      //this.fileUpload.nativeElement.value = "";
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+  }
+
+  openSign(e): void {
+    const dialogRef = this.dialog.open(SignPopupComponent, {
+      // height: '800px',
+      width: '800px',
+      data: e,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log('The dialog was closed',result);
+      if (result == null) {
+        this.selectedFile = null
+        this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
+      }else{
+        this.signData = result;
+      }
+      //this.fileUpload.nativeElement.value = "";
+    });
+  }
+
+  selectedFile:any = null;
+  removeSign(){
+    this.signData = null;
+    this.selectedFile = null;
+  }
+
+  tabchange(i){
+
+  }
 
 }
 
