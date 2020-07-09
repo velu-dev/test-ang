@@ -22,6 +22,7 @@ export const api_endpoint = {
     updateSignup: 'auth/update-signup-register',
     serviceRequest: "admin/service-request/list",
     singleserviceRequest: "admin/service-request/",
+    followupCall: "admin/service-request/followup-calls",
 
     //Subscriber
     getSubscriberUsers: 'subscriber/users',

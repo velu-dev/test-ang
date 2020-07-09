@@ -193,6 +193,7 @@ export class NewClaimComponent implements OnInit {
   isNewClaim = true;
   fromClaimant = false;
   steperAutoChange = false;
+  isClaimantFilled = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -229,9 +230,10 @@ export class NewClaimComponent implements OnInit {
             this.searchStatus = false;
             this.isClaimantEdit = true;
             this.addNewClaimant = true;
-            this.claimant_name = claimant.data[0].first_name + " " + claimant.data[0].last_name
+            this.claimant_name = claimant.data[0].first_name + " " + claimant.data[0].last_name;
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
+            this.isClaimantFilled = false;
             this.claim.patchValue({
               claim_details: {
                 claimant_id: this.claimant_id
@@ -457,8 +459,8 @@ export class NewClaimComponent implements OnInit {
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
         wcab_number: [null, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
-        claim_number: [null, Validators.compose([Validators.maxLength(25), Validators.pattern('[0-9]+')])],
-        panel_number: [null, Validators.compose([Validators.pattern('[0-9]{9}'), Validators.maxLength(9)])],
+        claim_number: [null, Validators.compose([Validators.maxLength(25), Validators.pattern('[0-9]{0,25}')])],
+        panel_number: [null, Validators.compose([Validators.pattern('[0-9]{0,9}'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
       }),
@@ -974,9 +976,10 @@ export class NewClaimComponent implements OnInit {
             this.addNewClaimant = true;
             this.claimant.patchValue(res.data.claimant)
           }
-          this.claim.patchValue({
-            claim_details: res.data.claim,
-          });
+          if (!this.isClaimantFilled)
+            this.claim.patchValue({
+              claim_details: res.data.claim,
+            });
           this.injuryInfodata = res.data.injuryInfodata;
           if (res.data.employer.length == 1) {
             this.employerList = [];

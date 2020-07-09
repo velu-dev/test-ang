@@ -1,0 +1,52 @@
+<div class="service-dialog"> 
+    <mat-card-header class="model-header">
+        <div class="content-wrapper-main-title">Follow up Call Information</div>
+        <span class="spacer"></span>
+        <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <form fxLayout="row wrap" class="m-t-10">
+    
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
+                fxFlex.xs="100">
+                <mat-label>Caller</mat-label>
+                <input matInput placeholder="Caller" value="Venkatesan" autocomplete="off" disabled>
+                <mat-error>error msg here</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
+                fxFlex.xs="100">
+                <mat-label>Callee</mat-label>
+                <input matInput placeholder="Callee" autocomplete="off">
+                <mat-error>error msg here</mat-error>
+            </mat-form-field>
+    
+            
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
+                fxFlex.xs="100">
+                <mat-label>Called Number</mat-label>
+                <input matInput placeholder="Called Number" autocomplete="off">
+                <mat-error>error msg here</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
+                fxFlex.xs="100">
+                <mat-label>Call Date & Time</mat-label>
+                <input matInput placeholder="Call Date & Time" autocomplete="off">
+                <mat-error>error msg here</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Notes</mat-label>
+                <input matInput placeholder="Notes" autocomplete="off">
+                <mat-error>error msg here</mat-error>
+            </mat-form-field>
+    
+            <div class="text-center w-100">
+                <button mat-stroked-button type="button" class="outline-danger" (click)="onNoClick()">Cancel</button>
+                <button mat-stroked-button class="m-l-10 outline-success">Save</button>
+            </div>
+        </form>
+    </mat-card-content>
+</div>
