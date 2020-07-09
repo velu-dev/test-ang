@@ -282,7 +282,7 @@
                 <mat-card-content class="p-b-15">
                     <form fxLayout="row wrap" class="m-t-10">
                         <div fxFlex="100">
-                            <mat-checkbox [(ngModel)]="isBillingStatus" (change)="primaryAsBill()" class="checkbox_">
+                            <mat-checkbox class="checkbox_">
                                 Same as Subscriber</mat-checkbox>
                         </div>
 
@@ -448,9 +448,9 @@
                         </div>
                         <div fxFlex="100">
                             <mat-radio-group class="p-l-15">
-                                <mat-radio-button value="1" (click)="Individual = !Individual" checked>Individual
+                                <mat-radio-button value="1">Individual
                                 </mat-radio-button>
-                                <mat-radio-button value="2" class="p-l-10" (click)="Organization = !Organization">
+                                <mat-radio-button value="2" class="p-l-10">
                                     Organization</mat-radio-button>
                             </mat-radio-group>
                         </div>
@@ -472,7 +472,7 @@
                             CMS 1500 Box 33
                         </div>
 
-                        <div *ngIf="Individual" fxFlex="100">
+                        <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>First name*</mat-label>
@@ -501,7 +501,7 @@
                                 <mat-error>error msg here</mat-error>
                             </mat-form-field>
                         </div>
-                        <div *ngIf="Organization" fxFlex="100">
+                        <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
                                 fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
                                 <mat-label>Billing Provider Name*</mat-label>
@@ -611,13 +611,13 @@
                         </div>
                         <div fxFlex="100">
                             <mat-radio-group class="p-l-15">
-                                <mat-radio-button value="1" (click)="Person = !Person" checked>Person
+                                <mat-radio-button value="1" >Person
                                 </mat-radio-button>
-                                <mat-radio-button value="2" class="p-l-10" (click)="nonPerson = !nonPerson">
+                                <mat-radio-button value="2" class="p-l-10">
                                     Non-person</mat-radio-button>
                             </mat-radio-group>
                         </div>
-                        <div *ngIf="Person" fxFlex="100">
+                        <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>First name*</mat-label>
@@ -646,7 +646,7 @@
                                 <mat-error>error msg here</mat-error>
                             </mat-form-field>
                         </div>
-                        <div *ngIf="nonPerson" fxFlex="100">
+                        <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
                                 fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
                                 <mat-label>Rendering Provider Name*</mat-label>

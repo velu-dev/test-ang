@@ -21,6 +21,7 @@ export const api_endpoint = {
     changeRole: "subscriber/switch-to-examiner/",
     updateSignup: 'auth/update-signup-register',
     serviceRequest: "admin/service-request/list",
+    singleserviceRequest: "admin/service-request/",
 
     //Subscriber
     getSubscriberUsers: 'subscriber/users',
