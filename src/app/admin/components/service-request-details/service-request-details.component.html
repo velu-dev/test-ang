@@ -3,69 +3,49 @@
         <div class="content-wrapper-main-title p-l-10">Services Request Details</div>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-card-content>
-        <form fxLayout="row wrap" class="p-t-10">
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Subscriber Name</mat-label>
-                <input matInput placeholder="Subscriber Name" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Subscriber Account</mat-label>
-                <input matInput placeholder="Subscriber Account" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Requester Name</mat-label>
-                <input matInput placeholder="Requester Name" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Claim Reference</mat-label>
-                <input matInput placeholder="Claim Reference" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Service Type</mat-label>
-                <input matInput placeholder="Service Type" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Request Reference</mat-label>
-                <input matInput placeholder="Request Reference" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Request Date & time</mat-label>
-                <input matInput placeholder="Request Date & time" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Due Date </mat-label>
-                <input matInput placeholder="Due Date " autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Status</mat-label>
-                <input matInput placeholder="Status" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Completion Date</mat-label>
-                <input matInput placeholder="Completion Date " autocomplete="off">
-            </mat-form-field>
-        </form>
+    <mat-card-content class="p-t-10 p-b-10">
+            <div fxLayout="row wrap">
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Subscriber Name</div>
+                    <div>Venkatesan</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Subscriber Account</div>
+                    <div>7895451562</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Requester Name</div>
+                    <div>Rajan</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Claim Reference</div>
+                    <div></div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Service Type </div>
+                    <div></div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Request Reference</div>
+                    <div></div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Request Date & time</div>
+                    <div>10-10-2020 10.00 AM</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Due Date</div>
+                    <div>02-02-2020</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Status</div>
+                    <div></div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Completion Date </div>
+                    <div></div>
+                </div>
+            </div>
     </mat-card-content>
 </mat-card>
 
@@ -89,7 +69,7 @@
             <input matInput placeholder="Search by Document Name">
             <mat-icon>search</mat-icon>
         </div> -->
-        <div class="w-100">
+        <div class="w-100 table">
             <table mat-table [dataSource]="dataSource" class="user-table striped_ w-100">
                 <!-- Document Name Column -->
                 <ng-container matColumnDef="doc_name">
@@ -120,7 +100,7 @@
             <input matInput placeholder="Search by date, status, etc.">
             <mat-icon>search</mat-icon>
         </div> -->
-        <div class="w-100 ">
+        <div class="w-100 table">
             <table mat-table [dataSource]="dataSource1" class="user-table striped_ w-100">
                 <!-- Transmission Mode Column -->
                 <ng-container matColumnDef="trans_mode">
@@ -189,10 +169,10 @@
                     <mat-icon>search</mat-icon>
                 </div> -->
                 <span class="spacer"></span>
-                <button mat-stroked-button class="add-btn outline-success">
+                <button mat-stroked-button class="add-btn outline-success" (click)="openDialog()">
                     Add Notes
                 </button>
-                <div class="">
+                <div class="table">
                     <table mat-table [dataSource]="dataSource2" class="user-table striped_ scroll_ w-100">
                         <!-- Call DateTime Column -->
                         <ng-container matColumnDef="call_date_time">

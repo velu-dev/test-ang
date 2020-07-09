@@ -716,3 +716,23 @@ input:-webkit-autofill {
 .mat-toolbar h6 {
   font-family: Lato !important;
 }
+
+
+.service-dialog {
+  mat-card-header {
+    .content-wrapper-main-title {
+      color: $text-gray;
+    }
+  }
+  mat-card-content {
+    mat-form-field {
+      padding: 10px 10px 0px 10px !important;
+    }
+    button.outline-success {
+      @extend .outline-success ;
+    }
+    button.outline-danger {
+      @extend .outline-danger ;
+    }
+  }
+}

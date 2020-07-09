@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 
 export interface PeriodicElement {
   doc_name: string;
@@ -48,9 +50,38 @@ export class ServiceRequestDetailsComponent implements OnInit {
   dataSource1 = ELEMENT_DATA1;
   displayedColumns2: string[] = ['call_date_time', 'caller', 'callee', 'called_name', 'notes'];
   dataSource2 = ELEMENT_DATA2;
-  constructor() { }
+  constructor(public dialog: MatDialog) {
+
+   }
+   openDialog(): void {
+    const dialogRef = this.dialog.open(ServiceDialog, {
+      width: '800px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    
+    });
+  }
 
   ngOnInit() {
+  }
+
+}
+
+
+@Component({
+  selector: 'service-dialog',
+  templateUrl: 'service-dialog.html',
+})
+
+export class ServiceDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<ServiceDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

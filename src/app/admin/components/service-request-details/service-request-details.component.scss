@@ -26,6 +26,7 @@ mat-card {
            }
         }
         .grid-list {
+            padding-left: 10px;
             div {
                 &:first-child {
                     min-width: 250px !important;
@@ -36,10 +37,10 @@ mat-card {
         .add-btn {
             float: right;
         }
-        table.scroll_ {
+        .table {
             max-height: 300px;
             overflow: auto;
-            display: block;
+            width: 100%;
         }
     }
 }

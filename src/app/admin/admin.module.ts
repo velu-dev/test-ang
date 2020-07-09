@@ -12,7 +12,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { VendorsComponent } from './components/vendors/vendors.component';
 import { ServiceRequestComponent } from './components/service-request/service-request.component';
-import { ServiceRequestDetailsComponent } from './components/service-request-details/service-request-details.component';
+import { ServiceRequestDetailsComponent, ServiceDialog } from './components/service-request-details/service-request-details.component';
 
 
 @NgModule({
@@ -25,14 +25,17 @@ import { ServiceRequestDetailsComponent } from './components/service-request-det
     SettingsComponent,
     VendorsComponent,
     ServiceRequestComponent,
-    ServiceRequestDetailsComponent
+    ServiceRequestDetailsComponent,
+    ServiceDialog
   ],
   imports: [
     CommonModule,
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    
   ],
   entryComponents: [
+    ServiceDialog
   ],
   providers: [UserService]
 })
