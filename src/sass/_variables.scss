@@ -614,22 +614,6 @@ input:-webkit-autofill {
   }
 }
 
-.add_injury {
-  mat-form-field {
-    padding: 5px !important;
-  }
-  .mat-select-panel {
-    min-width: 100% !important;
-  }
-  .outline-success {
-    color: $btn_success;
-    border-color: $btn_success;
-  }
-  .outline-danger {
-    color: $danger;
-    border-color: $danger;
-  }
-}
 
 .data-max-width {
   min-width: $width-60;
@@ -718,7 +702,7 @@ input:-webkit-autofill {
 }
 
 
-.service-dialog {
+.injury-dialog, .service-dialog {
   mat-card-header {
     .content-wrapper-main-title {
       color: $text-gray;

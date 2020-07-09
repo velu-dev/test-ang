@@ -64,7 +64,7 @@ export class ApplicationAttorneyComponent implements OnInit {
       this.ApplicantAttorney.patchValue(res.data);
       this.ApplicantAttorney.disable();
       this.isEditComplete.emit(true);
-      this.alertService.openSnackBar("Application Attorney updated successfully", 'success')
+      this.alertService.openSnackBar("Applicant Attorney updated successfully!", 'success')
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
