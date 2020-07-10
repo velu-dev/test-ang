@@ -20,7 +20,7 @@
         </span>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
-                <a class="menu-card-title menu-group">{{menuItem.group}}</a>
+                <a class="menu-card-title menu-group expanded_">{{menuItem.group}}</a>
                 <a *ngFor="let menu of menuItem.menu" (click)="navigate()" [routerLink]="menu.path"
                     routerLinkActive="active-list-item" class="list-nav" mat-list-item>
                     <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon><span class="expanded_"> {{menu.title }}</span>
