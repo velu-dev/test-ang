@@ -52,6 +52,7 @@ import { UpcommingBillableItemComponent } from './components/dashboard/upcomming
 import { UnfinishedReportComponent } from './components/dashboard/unfinished-report/unfinished-report.component';
 import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
 import { SubscriberService } from './service/subscriber.service';
+import { NewExaminerUserComponent } from './components/new-examiner-user/new-examiner-user.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -107,6 +108,7 @@ import { SubscriberService } from './service/subscriber.service';
     UpcommingBillableItemComponent,
     UnfinishedReportComponent,
     BillingCollectionComponent,
+    NewExaminerUserComponent,
 
   ],
   entryComponents: [

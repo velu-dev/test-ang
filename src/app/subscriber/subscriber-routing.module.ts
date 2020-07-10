@@ -32,6 +32,7 @@ import { BillableItemAwaitingComponent } from './components/dashboard/billable-i
 import { UpcommingBillableItemComponent } from './components/dashboard/upcomming-billable-item/upcomming-billable-item.component';
 import { UnfinishedReportComponent } from './components/dashboard/unfinished-report/unfinished-report.component';
 import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
+import { NewExaminerUserComponent } from './components/new-examiner-user/new-examiner-user.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -71,6 +72,12 @@ const routes: Routes = [{
   }, {
     path: "edit/:id",
     component: NewUserComponent
+  }, {
+    path: "new-examiner",
+    component: NewExaminerUserComponent
+  }, {
+    path: "examiner/:id",
+    component: NewExaminerUserComponent
   }]
 }, {
   path: "appointment",

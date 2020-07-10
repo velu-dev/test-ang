@@ -1,25 +1,29 @@
 <mat-sidenav-container class="sidenav-container ">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    <mat-sidenav #drawer class="sidenav side-nav-icon" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
 
         <mat-toolbar style="cursor: pointer;" (click)="mainPage()">
-            <img mat-card-image [src]="simplexam_logo" alt="Lucy logo" class="logo-white">
-            <span class="p-l-4"> Simplexam</span>
+            <!-- <button type="button" aria-label="Toggle sidenav"
+            mat-icon-button class="toggle_">
+            <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
+        </button> -->
+            <img mat-card-image [src]="simplexam_logo" alt="Lucy logo" class="logo logo-white">
+            <span class="p-l-4 expanded_"> Simplexam</span>
         </mat-toolbar>
         <span *ngIf="is_subscriber == 'true'">
             <a mat-raised-button *ngIf="roleId == 2" (click)="changeRole()" class="text-center switched_account">
-                <mat-icon>loop</mat-icon> Switch to Examiner
+                <mat-icon>loop</mat-icon><span class="expanded_"> Switch to Examiner</span>
             </a>
             <a mat-raised-button *ngIf="roleId == 11" (click)="changeRole()" class="text-center switched_account">
-                <mat-icon>loop</mat-icon> Switch to Subscriber
+                <mat-icon>loop</mat-icon> <span class="expanded_">Switch to Subscriber</span>
             </a>
         </span>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
-                <a class="menu-card-title">{{menuItem.group}}</a>
+                <a class="menu-card-title menu-group">{{menuItem.group}}</a>
                 <a *ngFor="let menu of menuItem.menu" (click)="navigate()" [routerLink]="menu.path"
                     routerLinkActive="active-list-item" class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> {{menu.title }}
+                    <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon><span class="expanded_"> {{menu.title }}</span>
                 </a>
             </span>
         </mat-nav-list>
