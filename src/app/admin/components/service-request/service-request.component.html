@@ -24,12 +24,14 @@
                             <span *ngIf="column == 'requester_first_name'">{{element?.requester_first_name}}</span>
                             <span *ngIf="column == 'claim_number'">{{element?.claim_number}}</span>
                             <span *ngIf="column == 'service_request_type'">{{element?.service_request_type}}</span>
-                            <span *ngIf="column == 'date_of_request'">{{element?.date_of_request}}</span>
+                            <span
+                                *ngIf="column == 'date_of_request'">{{element?.date_of_request  | date:'MM-dd-yyyy hh:mm a'}}</span>
                             <span *ngIf="column == 'request_reference_id'">{{element?.request_reference_id}}</span>
                             <span *ngIf="column == 'request_ref'">{{element?.request_ref}}</span>
                             <span *ngIf="column == 'service_priority'">{{element?.service_priority}}</span>
                             <span *ngIf="column == 'service_provider'">{{element?.service_provider}}</span>
-                            <span *ngIf="column == 'service_provider_account_no'">{{element?.service_provider_account_no}}</span>
+                            <span
+                                *ngIf="column == 'service_provider_account_no'">{{element?.service_provider_account_no}}</span>
                             <span
                                 *ngIf="column == 'service_request_transmit_status'">{{element?.service_request_transmit_status}}</span>
                         </div>
@@ -48,7 +50,8 @@
                                 <div><span>Request Reference</span>{{element?.request_reference_id}} </div>
                                 <div><span>Service Priority</span>{{element?.service_priority}} </div>
                                 <div><span>Service Provider Name</span>{{element?.subscriber_first_name}} </div>
-                                <div><span>Service Provider Account</span>{{element?.service_provider_account_no}} </div>
+                                <div><span>Service Provider Account</span>{{element?.service_provider_account_no}}
+                                </div>
                                 <div><span>Service Status</span>{{element?.service_request_transmit_status}} </div>
 
                             </div>
