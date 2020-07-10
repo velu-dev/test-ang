@@ -136,11 +136,14 @@ export class ServiceDialog {
       notes: [null],
       service_provider_id: [null],
       on_demand_service_req_id: [null],
-      service_provider_contact_number: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      service_provider_contact_number: [null, Validators.compose([Validators.pattern('[0-9]{0,15}')])],
       service_provider_contact_person: [null]
     });
   }
   followUpSubmit() {
+    if (this.followUp.invalid) {
+      return;
+    }
     this.userService.followupCreate(this.followUp.value).subscribe(res => {
       this.alertService.openSnackBar("Followup call created successfully", 'success');
       this.dialogRef.close(res)
