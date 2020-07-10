@@ -6,19 +6,19 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-        <form fxLayout="row wrap" class="m-t-10">
+        <form fxLayout="row wrap" [formGroup]="followUp" (ngSubmit)="followUpSubmit()" class="m-t-10">
     
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
                 fxFlex.xs="100">
                 <mat-label>Caller</mat-label>
-                <input matInput placeholder="Caller" value="Venkatesan" autocomplete="off" disabled>
+                <input matInput placeholder="Caller" value="Venkatesan" formControlName="service_provider_id" autocomplete="off" disabled>
                 <mat-error>error msg here</mat-error>
             </mat-form-field>
     
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
                 fxFlex.xs="100">
                 <mat-label>Callee</mat-label>
-                <input matInput placeholder="Callee" autocomplete="off">
+                <input matInput placeholder="Callee"  formControlName="service_provider_contact_person" autocomplete="off">
                 <mat-error>error msg here</mat-error>
             </mat-form-field>
     
@@ -26,20 +26,20 @@
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
                 fxFlex.xs="100">
                 <mat-label>Called Number</mat-label>
-                <input matInput placeholder="Called Number" autocomplete="off">
+                <input matInput placeholder="Called Number" formControlName="service_provider_contact_number" autocomplete="off">
                 <mat-error>error msg here</mat-error>
             </mat-form-field>
     
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
                 fxFlex.xs="100">
                 <mat-label>Call Date & Time</mat-label>
-                <input matInput placeholder="Call Date & Time" autocomplete="off">
+                <input matInput placeholder="Call Date & Time"  formControlName="date_of_call" autocomplete="off">
                 <mat-error>error msg here</mat-error>
             </mat-form-field>
     
             <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>Notes</mat-label>
-                <input matInput placeholder="Notes" autocomplete="off">
+                <input matInput placeholder="Notes" autocomplete="off"  formControlName="notes">
                 <mat-error>error msg here</mat-error>
             </mat-form-field>
     

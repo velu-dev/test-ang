@@ -4,6 +4,7 @@ import { UserService } from './../../services/user.service';
 import { MatTableDataSource } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 export interface PeriodicElement {
   doc_name: string;
@@ -73,8 +74,11 @@ export class ServiceRequestDetailsComponent implements OnInit {
         })
       }
     })
-  }
 
+  }
+  ngOnInit() {
+
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(ServiceDialog, {
       width: '800px',
@@ -82,22 +86,9 @@ export class ServiceRequestDetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      let data = {
-        "date_of_call": "1234567890",
-        "notes": "test notes",
-        "service_provider_id": "1",
-        "on_demand_service_req_id": "60",
-        "service_provider_contact_number": "8889900000",
-        "service_provider_contact_person": "Kadhir"
-      }
-      this.userService.followupCreate(data).subscribe(res => {
-        console.log(res)
-      })
+
     });
   }
-  ngOnInit() {
-  }
-
 }
 
 
@@ -107,10 +98,26 @@ export class ServiceRequestDetailsComponent implements OnInit {
 })
 
 export class ServiceDialog {
-
-  constructor(
+  followUp: FormGroup;
+  constructor(private userService: UserService,
     public dialogRef: MatDialogRef<ServiceDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder) {
+    this.followUp = this.formBuilder.group({
+      date_of_call: [null],
+      notes: [null],
+      service_provider_id: [null],
+      on_demand_service_req_id: [null],
+      service_provider_contact_number: [null],
+      service_provider_contact_person: [null]
+    });
+  }
+  followUpSubmit() {
+    this.userService.followupCreate(this.followUp.value).subscribe(res => {
+      this.dialogRef.close(res)
+    }, error => {
+
+    })
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
