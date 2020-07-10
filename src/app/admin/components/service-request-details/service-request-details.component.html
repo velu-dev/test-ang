@@ -4,7 +4,7 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content *ngIf="!isLoading">
-         <!-- <div fxLayout="row wrap">
+        <!-- <div fxLayout="row wrap">
                 <div class="grid-list" fxFlex="50" fxFlex.xs="100">
                     <div>Subscriber Name</div>
                     <div>Venkatesan</div>
@@ -121,7 +121,7 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card class="m-card m-t-25">
+<mat-card class="m-card m-t-25" *ngIf="!isLoading">
     <mat-card-header>
         <div class="content-wrapper-main-title p-l-10">Request Documents</div>
     </mat-card-header>
@@ -130,9 +130,9 @@
         <div fxLayout="row wrap">
             <div class="card" fxFlex="48" fxFlex.xs="100">
                 <span>Zip FileName</span>
-                8880090_1021001685_transcription_01_to_03_20200630_181855_717_NO.zip
+                {{serviceRequestDetails.transmitted_zip_file_name}}
             </div>
-            <div class="card" fxFlex="48" fxFlex.xs="100">
+            <div class="card" fxFlex="48" fxFlex.xs="100" *ngIf="serviceRequestDetails.is_metadata_required">
                 <span>Metadata Filename</span>
                 8880090_1021001685_transcription_01_to_03_20200630_181855_717_NO.csv
             </div>
@@ -212,26 +212,26 @@
     <mat-card-content class="m-t-5">
         <div fxLayout="row wrap" fxFlex="100" class="w-100">
             <div fxFlex="100" class="w-100 m-b-10">
-                <div fxLayout="row wrap">
+                <div fxLayout="row wrap" *ngIf="!isLoading">
                     <div class="grid-list" fxFlex="50" fxFlex.xs="100">
                         <div>Service Provider Name</div>
-                        <div>Venkatesan</div>
+                        <div>{{serviceRequestDetails?.service_provider}}</div>
                     </div>
                     <div class="grid-list" fxFlex="50" fxFlex.xs="100">
                         <div>Service Provider Contact Name</div>
-                        <div>Venkatesan Mariyappan</div>
+                        <div>{{serviceRequestDetails?.service_provider}}</div>
                     </div>
                     <div class="grid-list" fxFlex="50" fxFlex.xs="100">
                         <div>Service Provider Phone</div>
-                        <div>9874563210</div>
+                        <div>{{serviceRequestDetails.phone_no_1}}</div>
                     </div>
                     <div class="grid-list" fxFlex="50" fxFlex.xs="100">
                         <div>Service Provider Account Number</div>
-                        <div>45789623210</div>
+                        <div>{{serviceRequestDetails?.service_provider_account_no}}</div>
                     </div>
                     <div class="grid-list" fxFlex="50" fxFlex.xs="100">
                         <div>Service Provider Email </div>
-                        <div>test@test.com</div>
+                        <div>{{serviceRequestDetails?.email}}</div>
                     </div>
                 </div>
             </div>
@@ -247,27 +247,27 @@
                 <div class="" *ngIf="!isLoading">
                     <table mat-table [dataSource]="dataSource2" class="user-table striped_ scroll_ w-100">
                         <!-- Call DateTime Column -->
-                        <ng-container matColumnDef="call_date_time">
+                        <ng-container matColumnDef="date_of_call">
                             <th mat-header-cell *matHeaderCellDef>Call Date & Time </th>
-                            <td mat-cell *matCellDef="let element"> {{element.call_date_time}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.date_of_call | date:'MM-dd-yyyy hh:mm a'}} </td>
                         </ng-container>
 
                         <!-- Caller(PPMC Platform Admin User name) Column -->
-                        <ng-container matColumnDef="caller">
+                        <ng-container matColumnDef="first_name">
                             <th mat-header-cell *matHeaderCellDef> Caller</th>
-                            <td mat-cell *matCellDef="let element"> {{element.caller}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
                         </ng-container>
 
                         <!-- Callee Column -->
-                        <ng-container matColumnDef="callee">
+                        <ng-container matColumnDef="service_provider_contact_person">
                             <th mat-header-cell *matHeaderCellDef>Callee </th>
-                            <td mat-cell *matCellDef="let element"> {{element.callee}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.service_provider_contact_person}} </td>
                         </ng-container>
 
                         <!-- Caller(PPMC Platform Admin User name) Column -->
-                        <ng-container matColumnDef="called_name">
+                        <ng-container matColumnDef="service_provider_contact_number">
                             <th mat-header-cell *matHeaderCellDef>Called Number </th>
-                            <td mat-cell *matCellDef="let element"> {{element.called_name}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.service_provider_contact_number}} </td>
                         </ng-container>
 
                         <!-- Caller(PPMC Platform Admin User name) Column -->
