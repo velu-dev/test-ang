@@ -44,3 +44,10 @@ mat-card {
         }
     }
 }
+table {
+    tr {
+        &:hover {
+            cursor: auto !important;
+        }
+    }
+}
