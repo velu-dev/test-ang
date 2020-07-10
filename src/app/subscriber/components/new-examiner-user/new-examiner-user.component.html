@@ -9,7 +9,7 @@
                 </ng-template>
                 <mat-card-content class="p-b-15">
                     <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm">
-                        <div fxFlex="100">
+                        <div fxFlex="100" *ngIf="!this.isEdit">
                             <mat-checkbox class="checkbox_" formControlName="SameAsSubscriber" (change)="sameAsSub($event)">Same as Subscriber</mat-checkbox>
                         </div>
 
@@ -64,7 +64,7 @@
 
             </mat-tab>
             <!-- ######~~~~~Mailing Address ~~~~~##### -->
-            <mat-tab>
+            <mat-tab [disabled]='!examinerId'>
                 <ng-template mat-tab-label>
                     <span>Mailing Address</span>
                 </ng-template>
@@ -158,7 +158,7 @@
 
             </mat-tab>
             <!-- ######~~~~~Billing Provider ~~~~~##### -->
-            <mat-tab>
+            <mat-tab [disabled]='!examinerId'>
                 <ng-template mat-tab-label>
                     <span>Billing Provider</span>
                 </ng-template>
@@ -322,7 +322,7 @@
 
             </mat-tab>
             <!-- ######~~~~~Rendering Provider ~~~~~##### -->
-            <mat-tab>
+            <mat-tab [disabled]='!examinerId'>
                 <ng-template mat-tab-label>
                     <span>Rendering Provider</span>
                 </ng-template>
@@ -513,7 +513,7 @@
 
             </mat-tab>
             <!-- ######~~~~~Service Locations ~~~~~##### -->
-            <mat-tab>
+            <mat-tab [disabled]='!examinerId'>
                 <ng-template mat-tab-label>
                     <span>Service Locations</span>
                 </ng-template>
