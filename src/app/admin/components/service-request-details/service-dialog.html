@@ -1,4 +1,4 @@
-<div class="service-dialog"> 
+<div class="service-dialog">
     <mat-card-header class="model-header">
         <div class="content-wrapper-main-title">Follow up Call Information</div>
         <span class="spacer"></span>
@@ -6,43 +6,50 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-        <form fxLayout="row wrap" class="m-t-10">
-    
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
-                fxFlex.xs="100">
+        <form fxLayout="row wrap" [formGroup]="followUp" (ngSubmit)="followUpSubmit()" class="m-t-10">
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Caller</mat-label>
-                <input matInput placeholder="Caller" value="Venkatesan" autocomplete="off" disabled>
+                <input matInput placeholder="Caller" [value]="service_provider_name" autocomplete="off" disabled>
                 <mat-error>error msg here</mat-error>
             </mat-form-field>
-    
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
-                fxFlex.xs="100">
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Callee</mat-label>
-                <input matInput placeholder="Callee" autocomplete="off">
+                <input matInput placeholder="Callee" formControlName="service_provider_contact_person"
+                    autocomplete="off">
                 <mat-error>error msg here</mat-error>
             </mat-form-field>
-    
-            
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
-                fxFlex.xs="100">
+
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Called Number</mat-label>
-                <input matInput placeholder="Called Number" autocomplete="off">
+                <input matInput placeholder="Called Number" formControlName="service_provider_contact_number"
+                    autocomplete="off">
                 <mat-error>error msg here</mat-error>
             </mat-form-field>
-    
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
-                fxFlex.xs="100">
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Call Date & Time</mat-label>
-                <input matInput placeholder="Call Date & Time" autocomplete="off">
-                <mat-error>error msg here</mat-error>
+                <input matInput placeholder="Call Date & Time" [owlDateTime]="appointment"
+                    formControlName="date_of_call" autocomplete="off">
+                <!-- <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment" formControlName="appointment_scheduled_date_time" autocomplete="off"> -->
+                <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"></mat-datepicker-toggle>
+                <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment>
+                </owl-date-time>
+                <mat-error>Please enter valid date & time</mat-error>
             </mat-form-field>
-    
+
             <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>Notes</mat-label>
-                <input matInput placeholder="Notes" autocomplete="off">
+                <input matInput placeholder="Notes" autocomplete="off" formControlName="notes">
                 <mat-error>error msg here</mat-error>
             </mat-form-field>
-    
+
             <div class="text-center w-100">
                 <button mat-stroked-button type="button" class="outline-danger" (click)="onNoClick()">Cancel</button>
                 <button mat-stroked-button class="m-l-10 outline-success">Save</button>

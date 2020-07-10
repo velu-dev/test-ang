@@ -1,9 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from './../../services/user.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, DateAdapter, MAT_DATE_LOCALE } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CookieService } from 'src/app/shared/services/cookie.service';
+import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 export interface PeriodicElement {
   doc_name: string;
@@ -51,69 +56,107 @@ export class ServiceRequestDetailsComponent implements OnInit {
   dataSource: any;
   displayedColumns1: string[] = ['document_transmission_type', 'createdAt', 'transmission_status', 'transmission_message'];
   dataSource1: any;
-  displayedColumns2: string[] = ['call_date_time', 'caller', 'callee', 'called_name', 'notes'];
-  dataSource2 = ELEMENT_DATA2;
+  displayedColumns2: string[] = ['date_of_call', 'first_name', 'service_provider_contact_person', 'service_provider_contact_number', 'notes'];
+  dataSource2: any;
   serviceRequestDetails: any;
   requestDocuments = [];
   transmissions = [];
   followupCalls = [];
   isLoading = false;
-  constructor(private route: ActivatedRoute, private userService: UserService, public dialog: MatDialog) {
+  user: any;
+  service_request_id: any;
+  constructor(private cookieService: CookieService, private route: ActivatedRoute, private userService: UserService, public dialog: MatDialog) {
+    this.user = JSON.parse(this.cookieService.get('user'));
     this.isLoading = true;
     this.route.params.subscribe(param => {
       if (param.id) {
-        this.userService.getServiceRequest(param.id).subscribe(res => {
-          this.serviceRequestDetails = res.service_request;
-          this.requestDocuments = res.service_request_doc;
-          this.transmissions = res.service_request_transmission;
-          this.dataSource1 = new MatTableDataSource(this.transmissions)
-          this.dataSource = new MatTableDataSource(this.requestDocuments)
-          this.followupCalls = res.service_request_followup_calls;
-          this.isLoading = false;
-        })
+        this.service_request_id = param.id;
+        this.getData();
       }
     })
-  }
 
+  }
+  getData() {
+    this.userService.getServiceRequest(this.service_request_id).subscribe(res => {
+      this.serviceRequestDetails = res.service_request;
+      this.requestDocuments = res.service_request_doc;
+      this.transmissions = res.service_request_transmission;
+      this.dataSource1 = new MatTableDataSource(this.transmissions)
+      this.dataSource = new MatTableDataSource(this.requestDocuments)
+      this.followupCalls = res.service_request_followup_calls;
+      this.dataSource2 = new MatTableDataSource(this.followupCalls)
+      this.isLoading = false;
+    })
+  }
+  ngOnInit() {
+
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(ServiceDialog, {
       width: '800px',
+      data: { service_provider_id: this.user.id, on_demand_service_req_id: this.serviceRequestDetails.id, caler_name: this.serviceRequestDetails.service_provider }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      let data = {
-        "date_of_call": "1234567890",
-        "notes": "test notes",
-        "service_provider_id": "1",
-        "on_demand_service_req_id": "60",
-        "service_provider_contact_number": "8889900000",
-        "service_provider_contact_person": "Kadhir"
+      if (result) {
+        this.getData();
       }
-      this.userService.followupCreate(data).subscribe(res => {
-        console.log(res)
-      })
     });
   }
-  ngOnInit() {
-  }
-
 }
 
+export const MY_CUSTOM_FORMATS = {
+  parseInput: 'L LT',
+  fullPickerInput: 'L LT',
+  datePickerInput: 'L',
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
 
 @Component({
   selector: 'service-dialog',
   templateUrl: 'service-dialog.html',
+  providers: [
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+
+  ]
 })
 
 export class ServiceDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<ServiceDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+  followUp: FormGroup;
+  service_provider_name: any;
+  constructor(private userService: UserService,
+    public dialogRef: MatDialogRef<ServiceDialog>, private alertService: AlertService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder) {
+    this.service_provider_name = data['caler_name']
+    this.followUp = this.formBuilder.group({
+      date_of_call: [null],
+      notes: [null],
+      service_provider_id: [null],
+      on_demand_service_req_id: [null],
+      service_provider_contact_number: [null],
+      service_provider_contact_person: [null]
+    });
+  }
+  followUpSubmit() {
+    this.userService.followupCreate(this.followUp.value).subscribe(res => {
+      this.alertService.openSnackBar("Followup call created successfully", 'success');
+      this.dialogRef.close(res)
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-
+  ngOnInit() {
+    this.followUp.patchValue({
+      service_provider_id: this.data['service_provider_id'],
+      on_demand_service_req_id: this.data['on_demand_service_req_id']
+    })
+  }
+  pickerOpened(type) { }
 }
