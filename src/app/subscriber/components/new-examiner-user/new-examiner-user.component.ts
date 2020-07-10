@@ -84,10 +84,12 @@ export class NewExaminerUserComponent implements OnInit {
     delete this.user.logo;
 
     this.userService.getRoles().subscribe(response => {
-      response.data.map((data, i)=>{
-
+      response.data.map((role, i) => {
+        if (role.id == 11) {
+          this.roles.push(role);
+        }
       })
-      this.roles = response.data;
+      //this.roles = response.data;
     })
     this.store.subscribe(res => {
       if (res.breadcrumb && res.breadcrumb.active_title.includes("Admin")) {
@@ -111,41 +113,6 @@ export class NewExaminerUserComponent implements OnInit {
             role_id: res.data.role_id,
             suffix: res.data.suffix
           }
-          // if (this.isExaminer) {
-          //   let examiner = {
-          //     w9_number: res.data.w9_number,
-          //     w9_number_type: res.data.w9_number_type,
-          //     national_provider_identifier: res.data.national_provider_identifier,
-          //     specialty: res.data.specialty,
-          //     state_license_number: res.data.state_license_number,
-          //     state_of_license_id: res.data.state_of_license_id,
-          //     taxonomy_id: res.data.taxonomy_id
-          //   }
-          //   if (res.data.address_details) {
-          //     let address = {
-          //       id: res.data.address_id,
-          //       phone1: res.data.address_details.phone1,
-          //       phone2: res.data.address_details.phone2,
-          //       fax1: res.data.address_details.fax1,
-          //       fax2: res.data.address_details.fax2,
-          //       mobile1: res.data.address_details.mobile1,
-          //       mobile2: res.data.address_details.mobile2,
-          //       street1: res.data.address_details.street1,
-          //       street2: res.data.address_details.street2,
-          //       city: res.data.address_details.city,
-          //       state: res.data.address_details.state,
-          //       zip_code: res.data.address_details.zip_code,
-          //       notes: res.data.address_details.notes,
-          //       email1: res.data.address_details.email1,
-          //       email2: res.data.address_details.email2,
-          //       contact_person: res.data.address_details.contact_person
-          //     }
-          //     this.addressForm.patchValue(address)
-          //   }
-          //   this.userExaminerForm.patchValue(examiner)
-
-          // }
-
           this.userForm.patchValue(user)
         })
       } else {
@@ -165,10 +132,30 @@ export class NewExaminerUserComponent implements OnInit {
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       SameAsSubscriber: [false]
     });
+    this.userForm.patchValue({ role_id: 11 })
   }
 
   sameAsSub(e) {
-    console.log(e)
+    console.log(e.checked)
+    if (e.checked) {
+      this.userForm.disable();
+      this.userService.getProfile().subscribe(res => {
+        let user = {
+          id: res.data.id,
+          first_name: res.data.first_name,
+          last_name: res.data.last_name,
+          middle_name: res.data.middle_name,
+          company_name: res.data.company_name,
+          sign_in_email_id: res.data.sign_in_email_id,
+          role_id: 11,
+          suffix: res.data.suffix
+        }
+        this.userForm.patchValue(user)
+      })
+    }else{
+      this.userForm.reset();
+      this.userForm.enable();
+    }
   }
 
   userSubmit() {
@@ -199,7 +186,7 @@ export class NewExaminerUserComponent implements OnInit {
     }
     if (!this.isEdit) {
 
-      this.userService.createUser(this.userForm.value).subscribe(res => {
+      this.userService.createExaminerUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
         this.router.navigate(['/subscriber/users'])
       }, error => {
