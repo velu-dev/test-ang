@@ -4,120 +4,48 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content *ngIf="!isLoading">
-         <div fxLayout="row wrap">
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Subscriber Name</div>
-                    <div>{{serviceRequestDetails?.subscriber_first_name}}</div>
-                </div>
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Subscriber Account</div>
-                    <div>{{serviceRequestDetails?.subscriber_account_no}}</div>
-                </div>
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Requester Name</div>
-                    <div>{{serviceRequestDetails?.requester_first_name}}</div>
-                </div>
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Claim Reference</div>
-                    <div>{{serviceRequestDetails?.claim_number}}</div>
-                </div>
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Service Type </div>
-                    <div>{{serviceRequestDetails?.service_request_type}}</div>
-                </div>
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Request Reference</div>
-                    <div>{{serviceRequestDetails?.request_reference_id}}</div>
-                </div>
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Request Date & time</div>
-                    <div>{{serviceRequestDetails?.date_of_request}}</div>
-                </div>
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Due Date</div>
-                    <div>{{serviceRequestDetails?.due_date}}</div>
-                </div>
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Status</div>
-                    <div>{{serviceRequestDetails?.service_request_transmit_status}}</div>
-                </div>
-                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                    <div>Completion Date </div>
-                    <div>{{serviceRequestDetails?.date_of_service_completion}}</div>
-                </div>
+        <div fxLayout="row wrap">
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Subscriber Name</div>
+                <div>{{serviceRequestDetails?.subscriber_first_name}}</div>
             </div>
-        <!-- <form fxLayout="row wrap" class="p-t-10">
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Subscriber Name</mat-label>
-                <input matInput name="subscriber_first_name" placeholder="Subscriber Name"
-                    [(ngModel)]="serviceRequestDetails.subscriber_first_name" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Subscriber Account</mat-label>
-                <input matInput placeholder="Subscriber Account" name="subscriber_account_no"
-                    [(ngModel)]="serviceRequestDetails.subscriber_account_no" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Requester Name</mat-label>
-                <input matInput placeholder="Requester Name" name="requester_first_name"
-                    [(ngModel)]="serviceRequestDetails.requester_first_name" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Claim Reference</mat-label>
-                <input matInput name="claim_number" placeholder="Claim Reference"
-                    [(ngModel)]="serviceRequestDetails.claim_number" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Service Type</mat-label>
-                <input matInput placeholder="Service Type" name="service_request_type"
-                    [(ngModel)]="serviceRequestDetails.service_request_type" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Request Reference</mat-label>
-                <input matInput placeholder="Request Reference" name="request_reference_id"
-                    [(ngModel)]="serviceRequestDetails.request_reference_id" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Request Date & time</mat-label>
-                <input matInput placeholder="Request Date & time" name="date_of_request"
-                    [(ngModel)]="serviceRequestDetails.date_of_request" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Due Date </mat-label>
-                <input matInput placeholder="Due Date " name="due_date" [(ngModel)]="serviceRequestDetails.due_date"
-                    autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Status</mat-label>
-                <input matInput placeholder="Status" name="service_request_transmit_status"
-                    [(ngModel)]="serviceRequestDetails.service_request_transmit_status" autocomplete="off">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50">
-                <mat-label>Completion Date</mat-label>
-                <input matInput placeholder="Completion Date " name="date_of_service_completion"
-                    [(ngModel)]="serviceRequestDetails.date_of_service_completion" autocomplete="off">
-            </mat-form-field>
-        </form> -->
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Subscriber Account</div>
+                <div>{{serviceRequestDetails?.subscriber_account_no}}</div>
+            </div>
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Requester Name</div>
+                <div>{{serviceRequestDetails?.requester_first_name}}</div>
+            </div>
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Claim Reference</div>
+                <div>{{serviceRequestDetails?.claim_number}}</div>
+            </div>
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Service Type </div>
+                <div>{{serviceRequestDetails?.service_request_type}}</div>
+            </div>
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Request Reference</div>
+                <div>{{serviceRequestDetails?.request_reference_id}}</div>
+            </div>
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Request Date & time</div>
+                <div>{{serviceRequestDetails?.date_of_request | date:'MM-dd-yyyy hh:mm a' }}</div>
+            </div>
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Due Date</div>
+                <div>{{serviceRequestDetails?.due_date}}</div>
+            </div>
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Status</div>
+                <div>{{serviceRequestDetails?.service_request_transmit_status}}</div>
+            </div>
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Completion Date </div>
+                <div>{{serviceRequestDetails?.date_of_service_completion}}</div>
+            </div>
+        </div>
     </mat-card-content>
 </mat-card>
 
@@ -184,7 +112,8 @@
                 <!-- Date & Time Column -->
                 <ng-container matColumnDef="createdAt">
                     <th mat-header-cell *matHeaderCellDef> Date & Time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'MM-dd-yyyy'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'MM-dd-yyyy hh:mm a'}}
+                    </td>
                 </ng-container>
                 <!-- Status Column -->
                 <ng-container matColumnDef="transmission_status">
@@ -249,13 +178,14 @@
                         <!-- Call DateTime Column -->
                         <ng-container matColumnDef="date_of_call">
                             <th mat-header-cell *matHeaderCellDef>Call Date & Time </th>
-                            <td mat-cell *matCellDef="let element"> {{element.date_of_call | date:'MM-dd-yyyy hh:mm a'}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.date_of_call | date:'MM-dd-yyyy hh:mm a'}}
+                            </td>
                         </ng-container>
 
                         <!-- Caller(PPMC Platform Admin User name) Column -->
                         <ng-container matColumnDef="first_name">
                             <th mat-header-cell *matHeaderCellDef> Caller</th>
-                            <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.first_name}} {{element.last_name}} </td>
                         </ng-container>
 
                         <!-- Callee Column -->

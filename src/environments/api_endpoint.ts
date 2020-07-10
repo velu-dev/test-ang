@@ -39,6 +39,7 @@ export const api_endpoint = {
     getBillableAwait: 'subscriber/awaiting/billable-items',
     updateSubsciberSetting: 'subscriber/settings-update/',
     postExaminerUser: 'subscriber/examiner/create',
+    getExaminerUser:'subscriber/examiner/details/',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',

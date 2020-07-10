@@ -43,6 +43,7 @@ export class NewExaminerUserComponent implements OnInit {
   isExaminer: boolean = false;
   displayedColumns1: string[] = ['license_number', 'license_state', 'action',];
   dataSource1: any = ELEMENT_DATA;
+  examinerId:number = null;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -89,7 +90,6 @@ export class NewExaminerUserComponent implements OnInit {
           this.roles.push(role);
         }
       })
-      //this.roles = response.data;
     })
     this.store.subscribe(res => {
       if (res.breadcrumb && res.breadcrumb.active_title.includes("Admin")) {
@@ -101,20 +101,22 @@ export class NewExaminerUserComponent implements OnInit {
       if (params_res.id) {
         this.isEdit = true;
 
-        this.userService.getEditUser(params_res.id).subscribe(res => {
-          this.userData = res.data;
+        this.userService.getExaminerUser(params_res.id).subscribe(res => {
+          this.userData = res;
           let user = {
-            id: res.data.id,
-            first_name: res.data.first_name,
-            last_name: res.data.last_name,
-            middle_name: res.data.middle_name,
-            company_name: res.data.company_name,
-            sign_in_email_id: res.data.sign_in_email_id,
-            role_id: res.data.role_id,
-            suffix: res.data.suffix
+            id: res.id,
+            first_name: res.first_name,
+            last_name: res.last_name,
+            middle_name: res.middle_name,
+            company_name: res.company_name,
+            sign_in_email_id: res.sign_in_email_id,
+            role_id: res.role_id,
+            suffix: res.suffix
           }
-          this.userForm.patchValue(user)
+          this.userForm.patchValue(user);
+          this.examinerId = res.id
         })
+       
       } else {
       }
     })
@@ -130,13 +132,12 @@ export class NewExaminerUserComponent implements OnInit {
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required],
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
-      SameAsSubscriber: [false]
+      SameAsSubscriber: [{ value: false, disabled: this.isEdit }]
     });
     this.userForm.patchValue({ role_id: 11 })
   }
 
   sameAsSub(e) {
-    console.log(e.checked)
     if (e.checked) {
       this.userForm.disable();
       this.userService.getProfile().subscribe(res => {
@@ -151,6 +152,7 @@ export class NewExaminerUserComponent implements OnInit {
           suffix: res.data.suffix
         }
         this.userForm.patchValue(user)
+        this.userForm.controls.SameAsSubscriber.enable();
       })
     }else{
       this.userForm.reset();
@@ -171,24 +173,12 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.markAllAsTouched();
       return;
     }
-
-    if (this.isExaminer) {
-      if (this.userExaminerForm.invalid) {
-        window.scrollTo(0, 400)
-        this.userExaminerForm.markAllAsTouched();
-        return;
-      }
-      if (this.addressForm.invalid) {
-        window.scrollTo(0, 900)
-        this.addressForm.markAllAsTouched();
-        return;
-      }
-    }
     if (!this.isEdit) {
 
       this.userService.createExaminerUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
-        this.router.navigate(['/subscriber/users'])
+        this.examinerId = res.id
+       // this.router.navigate(['/subscriber/users'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -199,7 +189,8 @@ export class NewExaminerUserComponent implements OnInit {
       console.log(this.userForm.value)
       this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully!", 'success');
-        this.router.navigate(['/subscriber/users'])
+        this.examinerId = res.id
+       // this.router.navigate(['/subscriber/users'])
       }, error => {
         this.alertService.openSnackBar(error.message, 'error');
       })

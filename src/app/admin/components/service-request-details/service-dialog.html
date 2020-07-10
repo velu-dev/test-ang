@@ -12,7 +12,6 @@
                 fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Caller</mat-label>
                 <input matInput placeholder="Caller" [value]="service_provider_name" autocomplete="off" disabled>
-                <mat-error>error msg here</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
@@ -20,16 +19,15 @@
                 <mat-label>Callee</mat-label>
                 <input matInput placeholder="Callee" formControlName="service_provider_contact_person"
                     autocomplete="off">
-                <mat-error>error msg here</mat-error>
+                <mat-error>Enter valid callee Name</mat-error>
             </mat-form-field>
 
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                 fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Called Number</mat-label>
-                <input matInput placeholder="Called Number" formControlName="service_provider_contact_number"
-                    autocomplete="off">
-                <mat-error>error msg here</mat-error>
+                <input matInput placeholder="Called Number" formControlName="service_provider_contact_number" autocomplete="off">
+                <mat-error>Enter valid called number</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
@@ -47,7 +45,7 @@
             <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>Notes</mat-label>
                 <input matInput placeholder="Notes" autocomplete="off" formControlName="notes">
-                <mat-error>error msg here</mat-error>
+                <mat-error>Enter valid notes here</mat-error>
             </mat-form-field>
 
             <div class="text-center w-100">

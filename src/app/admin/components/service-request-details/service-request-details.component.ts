@@ -94,7 +94,7 @@ export class ServiceRequestDetailsComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(ServiceDialog, {
       width: '800px',
-      data: { service_provider_id: this.user.id, on_demand_service_req_id: this.serviceRequestDetails.id, caler_name: this.serviceRequestDetails.service_provider }
+      data: { service_provider_name: (this.user.first_name + " " + this.user.last_name), service_provider_id: this.user.id, on_demand_service_req_id: this.serviceRequestDetails.id, caler_name: this.serviceRequestDetails.service_provider }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -130,17 +130,20 @@ export class ServiceDialog {
   constructor(private userService: UserService,
     public dialogRef: MatDialogRef<ServiceDialog>, private alertService: AlertService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder) {
-    this.service_provider_name = data['caler_name']
+    this.service_provider_name = data['service_provider_name']
     this.followUp = this.formBuilder.group({
       date_of_call: [null],
       notes: [null],
       service_provider_id: [null],
       on_demand_service_req_id: [null],
-      service_provider_contact_number: [null],
+      service_provider_contact_number: [null, Validators.compose([Validators.pattern('[0-9]{0,15}')])],
       service_provider_contact_person: [null]
     });
   }
   followUpSubmit() {
+    if (this.followUp.invalid) {
+      return;
+    }
     this.userService.followupCreate(this.followUp.value).subscribe(res => {
       this.alertService.openSnackBar("Followup call created successfully", 'success');
       this.dialogRef.close(res)
