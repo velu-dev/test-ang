@@ -50,4 +50,11 @@ export class SubscriberUserService {
   updateSubsciberSetting(data): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.updateSubsciberSetting + data.id, data);
   }
+
+  createExaminerUser(data){
+    return this.http.post(environment.baseUrl + api_endpoint.postExaminerUser , data)
+  }
+
+  
+
 }

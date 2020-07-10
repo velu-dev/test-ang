@@ -38,6 +38,7 @@ export const api_endpoint = {
     getClaimAwait: 'subscriber/awaiting/claims',
     getBillableAwait: 'subscriber/awaiting/billable-items',
     updateSubsciberSetting: 'subscriber/settings-update/',
+    postExaminerUser: 'subscriber/examiner/create',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',
