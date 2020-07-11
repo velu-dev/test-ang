@@ -70,8 +70,8 @@ export class UserComponent implements OnInit {
         this.columnName = ["", "Last Name", "Disable User", "Action"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabled", "action"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User", "Action"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled", "action"]
+        this.columnName = ["Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
       }
     });
     this.screenWidth = window.innerWidth;
@@ -128,13 +128,13 @@ export class UserComponent implements OnInit {
     this.tabName = ''
     this.tabIndex = event;
     if (event == 0) {
-      this.columnName[this.columnName.length - 2] = "Disable User"
+      this.columnName[this.columnName.length - 1] = "Disable User"
       this.tabName = 'activeUsers'
     } else if (event == 1) {
-      this.columnName[this.columnName.length - 2] = "Cancel Invite"
+      this.columnName[this.columnName.length - 1] = "Uninvite User"
       this.tabName = 'invitedUsers'
     } else if (event == 2) {
-      this.columnName[this.columnName.length - 2] = "Enable User"
+      this.columnName[this.columnName.length - 1] = "Enable User"
       this.tabName = 'disabledUsers'
     }
     this.users = this.allUser[this.tabName];
@@ -209,6 +209,10 @@ export class UserComponent implements OnInit {
       this.openDialog('disable', id);
     }
   }
+
+  unInvite(e){
+
+  }
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
@@ -225,7 +229,12 @@ export class UserComponent implements OnInit {
   }
 
   editUser(user){
+    console.log(user);
+    if(user.role_id == 11){
+      this.router.navigate(['subscriber/users/examiner',user.id])
+    }else{
     this.router.navigate(['subscriber/users/edit',user.id])
+    }
   }
 
 }

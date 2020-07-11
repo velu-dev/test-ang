@@ -198,7 +198,6 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
-    if (this.claimantForm.touched) {
       if (this.languageStatus) {
         this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
       } else {
@@ -244,7 +243,6 @@ export class NewClaimantComponent implements OnInit {
           this.claimantChanges = true;
         })
       }
-    }
   }
 
   gender(code) {

@@ -1,0 +1,64 @@
+@import "variables";
+
+.mat-drawer-opened {
+  width: 240px !important;
+  .expanded_ {
+    visibility: visible !important;
+    overflow-x: hidden !important;
+  }
+  .switched_account {
+    margin: 15px 0 0px 10px !important;
+  }
+}
+.side-nav-icon {
+  width: 70px;
+  overflow-x: hidden;
+  @media only screen and (max-width: 568px) {
+    width: 0;
+    overflow-x:auto
+  }
+  .logo {
+    width: 25px;
+    @media only screen and (max-width: 568px) {
+      width: auto;
+    }
+  }
+  .switched_account {
+    margin: 15 0 0 0 !important;
+    @media only screen and (max-width: 568px) {
+      margin: auto;
+    }
+  }
+  .expanded_ {
+    visibility: hidden;
+    @media only screen and (max-width: 568px) {
+      visibility: visible;
+    }
+  }
+  .menu-group {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+
+// override css 
+.mat-drawer {
+  transform: inherit !important;
+  @media only screen and (max-width: 568px) {
+  }
+}
+.mat-drawer-side {
+  visibility: visible !important;
+  transform: translate3d(-100%,0,0);
+}
+.mat-sidenav-content {
+  margin-left: 70px;
+  @media only screen and (max-width: 568px) {
+    margin-left: 0px;
+  }
+}
+.mat-drawer-inner-container {
+  overflow: initial !important;
+}

@@ -218,10 +218,10 @@
                                 </div>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30">
                                     <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
-                                        accept=".pdf, .doc, .docx, .xls, .xlsx, .csv">
+                                        accept=".pdf, .doc, .docx, .xls, .xlsx, .csv, .mp3">
                                     <button mat-stroked-button color="primary" (click)="uploader.click()"
                                         class="m-t-25 upload_btn"
-                                        matTooltip="Supported file formats: .pdf, .doc, .docx, .excel, .csv"
+                                        matTooltip="Supported file formats: .pdf, .doc, .docx, .excel, .csv, .mp3"
                                         matTooltipPosition="right">Upload <span class="fa fa-upload"></span></button>
                                 </div>
 

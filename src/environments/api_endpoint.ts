@@ -22,6 +22,7 @@ export const api_endpoint = {
     updateSignup: 'auth/update-signup-register',
     serviceRequest: "admin/service-request/list",
     singleserviceRequest: "admin/service-request/",
+    followupCall: "admin/service-request/followup-calls",
 
     //Subscriber
     getSubscriberUsers: 'subscriber/users',
@@ -37,6 +38,8 @@ export const api_endpoint = {
     getClaimAwait: 'subscriber/awaiting/claims',
     getBillableAwait: 'subscriber/awaiting/billable-items',
     updateSubsciberSetting: 'subscriber/settings-update/',
+    postExaminerUser: 'subscriber/examiner/create',
+    getExaminerUser:'subscriber/examiner/details/',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',
