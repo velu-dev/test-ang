@@ -59,6 +59,8 @@ export class SubscriberUserService {
     return this.http.get(environment.baseUrl + api_endpoint.getExaminerUser + id);
   }
 
-
+  postUninvite(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.postUninvite + data,'')
+  }
 
 }

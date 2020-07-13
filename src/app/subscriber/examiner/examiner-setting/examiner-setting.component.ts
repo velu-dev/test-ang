@@ -128,7 +128,8 @@ export class ExaminerSettingComponent implements OnInit {
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      signature: ['']
+      signature: [''],
+      is_new_signature: [false]
     });
 
     this.addressForm = this.formBuilder.group({
@@ -431,6 +432,7 @@ export class ExaminerSettingComponent implements OnInit {
         this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
       }else{
         this.signData = result;
+        this.userForm.patchValue({ is_new_signature: true })
       }
       this.fileUpload.nativeElement.value = "";
     });
