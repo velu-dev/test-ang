@@ -115,12 +115,12 @@ export class SubscriberSettingsComponent implements OnInit {
           suffix: res.data.suffix,
           company_name: res.data.company_name,
           sign_in_email_id: res.data.sign_in_email_id,
-          individual_w9_number: res.data.individual_w9_number,
-          individual_w9_number_type: res.data.individual_w9_number_type,
-          individual_npi_number: res.data.individual_npi_number,
-          company_taxonomy_id: res.data.company_taxonomy_id,
-          company_w9_number: res.data.company_w9_number,
-          company_npi_number: res.data.company_npi_number,
+          // individual_w9_number: res.data.individual_w9_number,
+          // individual_w9_number_type: res.data.individual_w9_number_type,
+          // individual_npi_number: res.data.individual_npi_number,
+          // company_taxonomy_id: res.data.company_taxonomy_id,
+          // company_w9_number: res.data.company_w9_number,
+          // company_npi_number: res.data.company_npi_number,
         }
 
       } else {
@@ -174,9 +174,10 @@ export class SubscriberSettingsComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
         suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
-        company_name: [{ value: "", disabled: false }, Validators.compose([Validators.maxLength(100)])],
+        company_name: [{ value: "", disabled: false }, Validators.compose([Validators.required, Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-        signature: ['']
+        signature: [''],
+        is_new_signature: [false]
       });
     } else {
       this.userForm = this.formBuilder.group({
@@ -188,7 +189,8 @@ export class SubscriberSettingsComponent implements OnInit {
         suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
         //company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-        signature: ['']
+        signature: [''],
+        is_new_signature: [false]
       });
     }
 
@@ -328,16 +330,17 @@ export class SubscriberSettingsComponent implements OnInit {
     });
     this.isSubmit = true;
     if (this.userForm.invalid) {
+      window.scrollTo(0, 0);
       return;
     }
-   // if (this.user.role_id != 2) {
-      let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
-      this.userForm.value.signature = sign;
-   // }
+    // if (this.user.role_id != 2) {
+    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
+    this.userForm.value.signature = sign;
+    // }
 
     this.userService.updateSubsciberSetting(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
-      this.signData = res.data.signature ?  'data:image/png;base64,' + res.data.signature : null;
+      this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null;
       this.isSubmit = false;
       if (this.first_name != this.userForm.value.first_name) {
         this.first_name = this.userForm.value.first_name;
@@ -498,6 +501,7 @@ export class SubscriberSettingsComponent implements OnInit {
         this.selectedFile = null
         this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
       } else {
+        this.userForm.patchValue({ is_new_signature: true })
         this.signData = result;
       }
 

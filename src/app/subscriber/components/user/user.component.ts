@@ -100,7 +100,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+
   }
   users = [];
   getUser(roles, status) {
@@ -141,23 +141,23 @@ export class UserComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }
 
   selectedRoleId = []
-  filterStatus:boolean;
+  filterStatus: boolean;
   filterByRole(value?: string) {
     this.selectedRoleId = [];
     this.roles.map((res, index) => {
       if (value) {
         this.filterAll ? res['checked'] = true : res['checked'] = false
-        if(!this.filterAll){
-          if(index == 0){
+        if (!this.filterAll) {
+          if (index == 0) {
             res['checked'] = true
             this.selectedRoleId.push(res.id)
-          }      
-        }else{ 
-        this.selectedRoleId.push(res.id)
+          }
+        } else {
+          this.selectedRoleId.push(res.id)
         }
       } else {
         this.filterAll = false;
@@ -166,12 +166,12 @@ export class UserComponent implements OnInit {
         }
       }
     })
-    if(this.selectedRoleId.length == 0) {
+    if (this.selectedRoleId.length == 0) {
       this.users = [];
       this.allUser = [];
       this.dataSource = new MatTableDataSource()
-    }else{ 
-    this.getUser(this.selectedRoleId, this.tabName)
+    } else {
+      this.getUser(this.selectedRoleId, this.tabName)
     }
   }
 
@@ -210,8 +210,9 @@ export class UserComponent implements OnInit {
     }
   }
 
-  unInvite(e){
-
+  unInvite(e) {
+    this.openDialogInvite('uninvite', e.id);
+   
   }
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
@@ -228,12 +229,28 @@ export class UserComponent implements OnInit {
     });
   }
 
-  editUser(user){
+  openDialogInvite(dialogue, user) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.userService.postUninvite(user).subscribe(resUninvite=>{
+          console.log(resUninvite);
+          this.getUser(this.selectedRoleId, this.tabName)
+        })
+      }
+    });
+  }
+
+  editUser(user) {
     console.log(user);
-    if(user.role_id == 11){
-      this.router.navigate(['subscriber/users/examiner',user.id])
-    }else{
-    this.router.navigate(['subscriber/users/edit',user.id])
+    if (user.role_id == 11) {
+      this.router.navigate(['subscriber/users/examiner', user.id])
+    } else {
+      this.router.navigate(['subscriber/users/edit', user.id])
     }
   }
 

@@ -40,6 +40,7 @@ export const api_endpoint = {
     updateSubsciberSetting: 'subscriber/settings-update/',
     postExaminerUser: 'subscriber/examiner/create',
     getExaminerUser:'subscriber/examiner/details/',
+    postUninvite: 'subscriber/uninvite-user/',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',
@@ -71,7 +72,7 @@ export const api_endpoint = {
     deuList: 'claim/seed-data/deu_office_details',
     listIntakeCall: "claim/seed-data/intake_contact_type",
     billableItemSingle: 'claim/billable-item/',
-    claimantBillable: 'claim/claimant-billable-item-list/',
+    claimantBillable: 'claim/claimant-claim-item-list/',
 
 
     //seed data
