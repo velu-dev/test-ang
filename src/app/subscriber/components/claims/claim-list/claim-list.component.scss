@@ -1,2 +1,9 @@
 @import "variables";
 @import "table";
+
+mat-card {
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+      box-shadow: $shadow-style-one-hover;
+    }
+}
