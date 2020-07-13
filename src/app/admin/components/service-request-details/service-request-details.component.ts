@@ -28,7 +28,15 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
   { trans_mode: 'sample data', date_time: 'sample data', status: 'sample data', log: 'sample data', },
   { trans_mode: 'sample data', date_time: 'sample data', status: 'sample data', log: 'sample data', },
 ];
-
+export interface PeriodicElement3 {
+  document_name: string;
+  received_doc_name: string;
+}
+const ELEMENT_DATA3: PeriodicElement3[] = [
+  { document_name: 'sample data', received_doc_name: 'sample data' },
+  { document_name: 'sample data', received_doc_name: 'sample data', },
+  { document_name: 'sample data', received_doc_name: 'sample data', },
+];
 export interface PeriodicElement12 {
   call_date_time: string;
   caller: string;
@@ -58,6 +66,8 @@ export class ServiceRequestDetailsComponent implements OnInit {
   dataSource1: any;
   displayedColumns2: string[] = ['date_of_call', 'first_name', 'service_provider_contact_person', 'service_provider_contact_number', 'notes'];
   dataSource2: any;
+  displayedColumns3: string[] = ['document_name', 'received_doc_name',];
+  dataSource3 = ELEMENT_DATA3;
   serviceRequestDetails: any;
   requestDocuments = [];
   transmissions = [];
