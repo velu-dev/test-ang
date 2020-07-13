@@ -12,11 +12,13 @@ import {
   MAT_DATE_FORMATS,
   MatDialog,
   MatStepper,
-  MAT_DATE_LOCALE
+  MAT_DATE_LOCALE,
+  MatDialogRef,
+  MAT_DIALOG_DATA
 } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
-import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { DialogueComponent, DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
@@ -203,7 +205,7 @@ export class NewClaimComponent implements OnInit {
     public dialog: MatDialog,
     public cookieService: CookieService,
     private breakpointObserver: BreakpointObserver,
-    private _location: Location) {
+    private _location: Location,) {
 
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -1346,6 +1348,32 @@ export class NewClaimComponent implements OnInit {
   primryLangChange() {
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
     this.primary_language_spoken = this.claimant.value.primary_language_spoken ? true : false
+  }
+  openDialog1(): void {
+    const dialogRef = this.dialog.open(InjuryDialog, {
+      width: '800px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
+}
+
+@Component({
+  selector: 'injury-dialog',
+  templateUrl: 'injury-dialog.html',
+})
+export class InjuryDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<InjuryDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

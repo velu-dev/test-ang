@@ -1,0 +1,64 @@
+<div class="injury-dialog">
+    <mat-card-header class="model-header">
+        <div class="content-wrapper-main-title">Add Injury</div>
+        <span class="spacer"></span>
+        <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div fxLayout="row wrap" fxFlex="100" class="">
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Body Parts</mat-label>
+                <mat-select multiple>
+                    <mat-option>Option here</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Date of Injury </mat-label>
+                <input matInput placeholder="MM-DD-YYYY" autocomplete="off">
+                <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
+                <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
+                <mat-error>Please enter valid date of injury</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                <mat-label>Injury Note</mat-label>
+                <textarea matInput placeholder="Injury Note " autocomplete="off" cdkTextareaAutosize
+                    cdkAutosizeMinRows="4" cdkAutosizeMaxRows="4"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.sm="50"
+                fxFlex.xs="100">
+                <mat-label>Continuous Trauma (CT)</mat-label>
+                <mat-select>
+                    <mat-option>Option here</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50"
+                fxFlex.xs="100">
+                <mat-label>CT Start Date</mat-label>
+                <input matInput placeholder="MM-DD-YYYY" autocomplete="off">
+                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
+                </mat-datepicker-toggle>
+                <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="33.3" fxFlex.md="33." fxFlex.lg="33.3" fxFlex.sm="50"
+                fxFlex.xs="100">
+                <mat-label>CT End Date</mat-label>
+                <input matInput placeholder="MM-DD-YYYY">
+                <mat-datepicker-toggle matSuffix [for]="continuous_trauma_end_date">
+                </mat-datepicker-toggle>
+                <mat-datepicker #continuous_trauma_end_date disabled="false"></mat-datepicker>
+            </mat-form-field>
+
+            <div fxFlex="100" class="p-t-10 text-center">
+                <button mat-stroked-button (click)="onNoClick()" type="button"
+                    class="outline-danger m-r-10">Cancel</button>
+                <button mat-stroked-button type="button" class="outline-success text-center m-r-5">Save</button>
+            </div>
+        </div>
+    </mat-card-content>
+</div>

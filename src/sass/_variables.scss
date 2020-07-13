@@ -41,6 +41,8 @@ $menu-active: #383838; //Menu active background
 $tab-active: #3c3cff1f; //Tab active background
 $transparent: transparent;
 $border-light: #efefef;
+$yellow:#F2CF3C;
+$light_green:#B5CC18;
 
 //alert colors
 $text-success: rgb(3, 90, 6);
@@ -682,6 +684,24 @@ input:-webkit-autofill {
     background-color: $primarycolor;
   }
 }
+.outline-warning {
+  @extend .btn_;
+  color: $yellow;
+  border-color: $yellow;
+  &:hover {
+    color: $white;
+    background-color: $yellow;
+  }
+}
+.outline-light_green {
+  @extend .btn_;
+  color: $light_green;
+  border-color: $light_green;
+  &:hover {
+    color: $white;
+    background-color: $light_green;
+  }
+}
 
 .text-success {
   color: $btn_success;
@@ -701,6 +721,11 @@ input:-webkit-autofill {
   font-family: Lato !important;
 }
 
+// step overide css
+.mat-step-header 
+.mat-step-icon-state-edit {
+background-color: $secondary !important;
+}
 
 .injury-dialog, .service-dialog {
   mat-card-header {
