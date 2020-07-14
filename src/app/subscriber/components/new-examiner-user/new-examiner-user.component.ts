@@ -21,6 +21,7 @@ import { Location } from '@angular/common';
 export class NewExaminerUserComponent implements OnInit {
   userForm: FormGroup;
   mailingAddressForm: FormGroup;
+  billingProviderForm: FormGroup;
   addressForm: FormGroup;
   userExaminerForm: FormGroup;
   isSubmitted = false;
@@ -143,12 +144,27 @@ export class NewExaminerUserComponent implements OnInit {
       city: [""],
       state: [""],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      phone_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_no2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       email: ["", Validators.compose([Validators.email])],
       contact_person: [""],
       notes: [""],
+    })
+
+    this.billingProviderForm = this.formBuilder.group({
+      default_injury_state: [null],
+      is_person: [true],
+      national_provider_identifier: [""],
+      dol_provider_number: [""],
+      tax_id: [""],
+      street1: [""],
+      street2: [""],
+      city: [""],
+      state: [""],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      phone_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+
     })
 
     this.userService.seedData('state').subscribe(response => {
@@ -199,7 +215,7 @@ export class NewExaminerUserComponent implements OnInit {
 
       this.userService.createExaminerUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
-        this.examinerId = res.id
+        this.examinerId = res.data.id
         // this.router.navigate(['/subscriber/users'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -211,7 +227,7 @@ export class NewExaminerUserComponent implements OnInit {
       console.log(this.userForm.value)
       this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully!", 'success');
-        this.examinerId = res.id
+        this.examinerId = res.data.id
         // this.router.navigate(['/subscriber/users'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -316,6 +332,34 @@ export class NewExaminerUserComponent implements OnInit {
       })
     } else {
       this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
+        console.log(mail);
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    }
+  }
+
+  billingPrviderSubmit() {
+    this.mailingSubmit = true;
+    Object.keys(this.billingProviderForm.controls).forEach((key) => {
+      if (this.billingProviderForm.get(key).value && typeof (this.billingProviderForm.get(key).value) == 'string')
+        this.billingProviderForm.get(key).setValue(this.billingProviderForm.get(key).value.trim())
+    });
+    if (this.billingProviderForm.invalid) {
+      window.scrollTo(0, 0)
+      this.userForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.billingProviderForm.value.id);
+
+    if (this.billingProviderForm.value.id == '') {
+      this.userService.postBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mailRes => {
+        console.log(mailRes);
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    } else {
+      this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
         console.log(mail);
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
