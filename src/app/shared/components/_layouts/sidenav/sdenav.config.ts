@@ -20,14 +20,14 @@ export const ROUTES: SideNavInterface[] = [
         menu: [{
             path: "/admin/admin-users",
             title: "Admins",
-            icon: "person",
+            icon: "user",
             submenu: [],
             group: "Admin",
             role: 1
         }, {
             path: '/admin/users',
             title: 'Subscribers',
-            icon: 'people_alt',
+            icon: 'users',
             submenu: [{
                 path: '/admin/users/new',
                 title: 'New User',
@@ -48,7 +48,7 @@ export const ROUTES: SideNavInterface[] = [
         }, {
             path: '/admin/service-request',
             title: 'Service  Request',
-            icon: 'people_alt',
+            icon: 'inbox',
             submenu: [],
             group: "Admin",
             role: 1
@@ -67,63 +67,74 @@ export const ROUTES: SideNavInterface[] = [
         group: "Subscriber",
         role_id: 2,
         menu: [
-            //     {
-            //     path: '/subscriber/dashboard',
-            //     title: 'Dashboard',
+            {
+                path: '/subscriber/dashboard',
+                title: 'Dashboard',
+                icon: 'home',
+                submenu: [],
+                group: "Subscriber",
+                role: 2
+            },
+            {
+                path: '/subscriber/appointment',
+                title: 'Calendar',
+                icon: 'calendar-alt',
+                submenu: [],
+                group: "Subscriber",
+                role: 2
+            },
+            {
+                path: '/subscriber/billing',
+                title: 'Billing',
+                icon: 'balance-scale',
+                submenu: [],
+                group: "Subscriber",
+                role: 2
+            },
+            // {
+            //     path: '/subscriber/appointment',
+            //     title: 'Examination',
             //     icon: 'dashboard',
             //     submenu: [],
             //     group: "Subscriber",
             //     role: 2
             // },
             {
-                path: '/subscriber/users',
-                title: 'Manage Users',
-                icon: 'supervised_user_circle',
-                submenu: [],
-                group: "Subscriber",
-                role: 2
-            }, {
-                path: '/subscriber/appointment',
-                title: 'Examination',
-                icon: 'dashboard',
-                submenu: [],
-                group: "Subscriber",
-                role: 2
-            },
-            {
                 path: '/subscriber/claimant',
                 title: 'Claimants',
-                icon: 'people',
+                icon: 'users',
                 submenu: [],
                 group: "Subscriber",
                 role: 2
             },
+            // {
+            //     path: '/subscriber/claims',
+            //     title: 'Claims',
+            //     icon: 'speaker_notes',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 2
+            // },
+            // {
+            //     path: '/subscriber/billable-item',
+            //     title: 'Billable Items',
+            //     icon: 'post_add',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 2
+            // }, 
             {
-                path: '/subscriber/claims',
-                title: 'Claims',
-                icon: 'speaker_notes',
-                submenu: [],
-                group: "Subscriber",
-                role: 2
-            },
-            {
-                path: '/subscriber/billable-item',
-                title: 'Billable Items',
-                icon: 'post_add',
-                submenu: [],
-                group: "Subscriber",
-                role: 2
-            }, {
                 path: '/subscriber/location',
-                title: 'Location',
-                icon: 'map',
+                title: 'Service Locations',
+                icon: 'building',
                 submenu: [],
                 group: "Subscriber",
                 role: 2
-            }, {
-                path: '/subscriber/billing',
-                title: 'Billing',
-                icon: 'people',
+            },
+            {
+                path: '/subscriber/users',
+                title: 'Users',
+                icon: 'user-tie',
                 submenu: [],
                 group: "Subscriber",
                 role: 2
@@ -132,21 +143,20 @@ export const ROUTES: SideNavInterface[] = [
         group: "Subscriber Staff Manager",
         role_id: 3,
         menu: [
-            //     {
-            //     path: '/subscriber/manager/dashboard',
-            //     title: 'Dashboard',
-            //     icon: 'dashboard',
-            //     submenu: [],
-            //     group: "Subscriber",
-            //     role: 3
-            // }, 
             {
-                path: '/subscriber/manager/staff',
-                title: 'Manage Staff',
-                icon: 'supervised_user_circle',
+                path: '/subscriber/manager/dashboard',
+                title: 'Dashboard',
+                icon: 'home',
                 submenu: [],
                 group: "Subscriber",
                 role: 3
+            }, {
+                path: '/subscriber/appointment',
+                title: 'Calendar',
+                icon: 'calendar-alt',
+                submenu: [],
+                group: "Subscriber",
+                role: 2
             },
             //  {
             //     path: '/subscriber/manager/examiner-list',
@@ -156,10 +166,18 @@ export const ROUTES: SideNavInterface[] = [
             //     group: "Subscriber",
             //     role: 3
             // }, 
+            // {
+            //     path: '/subscriber/manager/appointment',
+            //     title: 'Examination',
+            //     icon: 'dashboard',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 3
+            // },
             {
-                path: '/subscriber/manager/appointment',
-                title: 'Examination',
-                icon: 'dashboard',
+                path: '/subscriber/manager/billing',
+                title: 'Billing',
+                icon: 'balance-scale',
                 submenu: [],
                 group: "Subscriber",
                 role: 3
@@ -167,53 +185,55 @@ export const ROUTES: SideNavInterface[] = [
             {
                 path: '/subscriber/manager/claimant',
                 title: 'Claimants',
-                icon: 'people',
+                icon: 'users',
                 submenu: [],
                 group: "Subscriber",
                 role: 3
             },
+            // {
+            //     path: '/subscriber/manager/claims',
+            //     title: 'Claims',
+            //     icon: 'speaker_notes',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 3
+            // },
+            // {
+            //     path: '/subscriber/manager/billable-item',
+            //     title: 'Billable Items',
+            //     icon: 'post_add',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 3
+            // },
             {
-                path: '/subscriber/manager/claims',
-                title: 'Claims',
-                icon: 'speaker_notes',
-                submenu: [],
-                group: "Subscriber",
-                role: 3
-            },
-            {
-                path: '/subscriber/manager/billable-item',
-                title: 'Billable Items',
-                icon: 'post_add',
-                submenu: [],
-                group: "Subscriber",
-                role: 3
-            }, {
                 path: '/subscriber/manager/location',
-                title: 'Location',
-                icon: 'map',
+                title: 'Service Locations',
+                icon: 'building',
                 submenu: [],
                 group: "Subscriber",
                 role: 3
-            }, {
-                path: '/subscriber/manager/billing',
-                title: 'Billing',
-                icon: 'people',
+            },
+            {
+                path: '/subscriber/manager/staff',
+                title: 'Users',
+                icon: 'user-tie',
                 submenu: [],
                 group: "Subscriber",
                 role: 3
-            }]
+            },]
     }, {
         group: "Subscriber Staff",
         role_id: 4,
         menu: [
-            //     {
-            //     path: '/subscriber/staff/dashboard',
-            //     title: 'Dashboard',
-            //     icon: 'dashboard',
-            //     submenu: [],
-            //     group: "Subscriber",
-            //     role: 4
-            // }, 
+            {
+                path: '/subscriber/staff/dashboard',
+                title: 'Dashboard',
+                icon: 'dashboard',
+                submenu: [],
+                group: "Subscriber",
+                role: 4
+            },
             // {
             //     path: '/subscriber/staff/examiner-list',
             //     title: 'Manage Examiner',
@@ -224,108 +244,114 @@ export const ROUTES: SideNavInterface[] = [
             // }, 
             {
                 path: '/subscriber/staff/appointment',
-                title: 'Examination',
-                icon: 'dashboard',
-                submenu: [],
-                group: "Subscriber",
-                role: 4
-            }, {
-                path: '/subscriber/staff/claimant',
-                title: 'Claimants',
-                icon: 'people',
+                title: 'Calendar',
+                icon: 'calendar-alt',
                 submenu: [],
                 group: "Subscriber",
                 role: 4
             },
             {
-                path: '/subscriber/staff/claims',
-                title: 'Claims',
-                icon: 'speaker_notes',
-                submenu: [],
-                group: "Subscriber",
-                role: 4
-            },
-            {
-                path: '/subscriber/staff/billable-item',
-                title: 'Billable Items',
-                icon: 'post_add',
-                submenu: [],
-                group: "Subscriber",
-                role: 4
-            },
-            {
-                path: '/subscriber/staff/location',
-                title: 'Location',
-                icon: 'map',
-                submenu: [],
-                group: "Subscriber",
-                role: 4
-            }, {
                 path: '/subscriber/staff/billing',
                 title: 'Billing',
-                icon: 'people',
+                icon: 'balance-scale',
                 submenu: [],
                 group: "Subscriber",
                 role: 4
-            },]
+            },
+            {
+                path: '/subscriber/staff/claimant',
+                title: 'Claimants',
+                icon: 'users',
+                submenu: [],
+                group: "Subscriber",
+                role: 4
+            }, {
+                path: '/subscriber/staff/location',
+                title: 'Service Locations',
+                icon: 'building',
+                submenu: [],
+                group: "Subscriber",
+                role: 4
+            },
+            // {
+            //     path: '/subscriber/staff/claims',
+            //     title: 'Claims',
+            //     icon: 'speaker_notes',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 4
+            // },
+            // {
+            //     path: '/subscriber/staff/billable-item',
+            //     title: 'Billable Items',
+            //     icon: 'post_add',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 4
+            // },
+        ]
     },
     {
         group: "Examiner",
         role_id: 11,
         menu: [
-            //     {
-            //     path: '/subscriber/examiner/',
-            //     title: 'Dashboard',
-            //     icon: 'dashboard',
+            {
+                path: '/subscriber/examiner/dashboard',
+                title: 'Dashboard',
+                icon: 'home',
+                submenu: [],
+                group: "Subscriber",
+                role: 11
+            },
+            {
+                path: '/subscriber/examiner/appointment',
+                title: 'Calendar',
+                icon: 'calendar-alt',
+                submenu: [],
+                group: "Subscriber",
+                role: 11
+            },
+            {
+                path: '/subscriber/examiner/billing',
+                title: 'Billing',
+                icon: 'balance-scale',
+                submenu: [],
+                group: "Subscriber",
+                role: 11
+            },
+            {
+                path: '/subscriber/examiner/claimant',
+                title: 'Claimants',
+                icon: 'users',
+                submenu: [],
+                group: "Subscriber",
+                role: 11
+            },
+            {
+                path: '/subscriber/examiner/location',
+                title: 'Service Locations',
+                icon: 'building',
+                submenu: [],
+                group: "Subscriber",
+                role: 11
+            },
+            // {
+            //     path: '/subscriber/examiner/claims',
+            //     title: 'Claims',
+            //     icon: 'speaker_notes',
             //     submenu: [],
             //     group: "Subscriber",
             //     role: 11
             // },
-            {
-                path: '/subscriber/examiner/appointment',
-                title: 'Examination',
-                icon: 'dashboard',
-                submenu: [],
-                group: "Subscriber",
-                role: 11
-            }, {
-                path: '/subscriber/examiner/claimant',
-                title: 'Claimants',
-                icon: 'people',
-                submenu: [],
-                group: "Subscriber",
-                role: 11
-            },
-            {
-                path: '/subscriber/examiner/claims',
-                title: 'Claims',
-                icon: 'speaker_notes',
-                submenu: [],
-                group: "Subscriber",
-                role: 11
-            },
-            {
-                path: '/subscriber/examiner/billable-item',
-                title: 'Billable Items',
-                icon: 'post_add',
-                submenu: [],
-                group: "Subscriber",
-                role: 11
-            }, {
-                path: '/subscriber/examiner/location',
-                title: 'Location',
-                icon: 'map',
-                submenu: [],
-                group: "Subscriber",
-                role: 11
-            }, {
-                path: '/subscriber/examiner/billing',
-                title: 'Billing',
-                icon: 'people',
-                submenu: [],
-                group: "Subscriber",
-                role: 11
-            },]
+            // {
+            //     path: '/subscriber/examiner/billable-item',
+            //     title: 'Billable Items',
+            //     icon: 'post_add',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 11
+            // },
+        ]
     },
     // {
     //     group: "Vendor Historian",
