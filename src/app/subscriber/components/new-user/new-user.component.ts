@@ -10,13 +10,10 @@ import { Location } from '@angular/common';
 import * as  errors from '../../../shared/messages/errors'
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { Observable } from 'rxjs';
-import { ClaimService } from '../../service/claim.service';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
 import { MatDialog } from '@angular/material';
 export interface Section {
   type: string;
@@ -69,13 +66,10 @@ export class NewUserComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: SubscriberUserService,
-    private spinnerService: NgxSpinnerService,
     private alertService: AlertService,
     private router: Router,
-    private store: Store<{ breadcrumb: any }>,
     private _location: Location,
     private cookieService: CookieService,
-    private claimService: ClaimService,
     private breakpointObserver: BreakpointObserver,
     public dialog: MatDialog
   ) {
@@ -96,12 +90,6 @@ export class NewUserComponent implements OnInit {
          }
       })
     })
-    // this.store.subscribe(res => {
-    //   if (res.breadcrumb && res.breadcrumb.active_title.includes("Admin")) {
-    //     this.isAdminCreate = true;
-    //     this.activeTitle = res.breadcrumb.active_title;
-    //   }
-    // })
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
         this.isEdit = true;
@@ -131,34 +119,9 @@ export class NewUserComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      role_id: [{ value: '', disabled: this.isEdit }, Validators.required],
+      role_id: ['', Validators.required],
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])]
     });
-
-
-    // this.claimService.seedData('state').subscribe(response => {
-    //   this.states = response['data'];
-    // }, error => {
-    //   console.log("error", error)
-    // })
-
-    // this.claimService.seedData('taxonomy').subscribe(response => {
-    //   this.taxonomyList = response['data'];
-    // }, error => {
-    //   console.log("error", error)
-    // })
-
-    // this.claimService.seedData('specialty').subscribe(response => {
-    //   this.specialtyList = response['data'];
-    // }, error => {
-    //   console.log("error", error)
-    // })
-
-    // this.claimService.seedData('address_type').subscribe(response => {
-    //   this.addressType = response['data'];
-    // }, error => {
-    //   console.log("error", error)
-    // })
 
   }
 
@@ -189,13 +152,12 @@ export class NewUserComponent implements OnInit {
 
     }
     else {
-      this.userForm.value.role_id = this.userData.role_id
       console.log(this.userForm.value)
       this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully!", 'success');
         this.router.navigate(['/subscriber/users'])
       }, error => {
-        this.alertService.openSnackBar(error.message, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
   }

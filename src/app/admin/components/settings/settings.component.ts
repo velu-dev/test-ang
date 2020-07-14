@@ -90,7 +90,7 @@ export class SettingsComponent implements OnInit {
       //this.store.dispatch(new headerActions.HeaderAdd(this.userForm.value));
       //this.router.navigate(['/admin/settings'])
     }, error => {
-      this.alertService.openSnackBar(error.message, 'error');
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
   isTypePassword = true;

@@ -5,19 +5,16 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { SubscriberUserService } from '../service/subscriber-user.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { User } from 'src/app/shared/model/user.model';
 import * as globals from '../../globals'
 import * as  errors from '../../shared/messages/errors'
 import { CookieService } from 'src/app/shared/services/cookie.service';
-import { Store } from '@ngrx/store';
-import * as headerActions from "./../../shared/store/header.actions";
 import { ClaimService } from '../service/claim.service';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx-image-cropper';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -40,7 +37,7 @@ export class SubscriberSettingsComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource = ELEMENT_DATA;
+  dataSource:any = new MatTableDataSource([]);
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
@@ -93,7 +90,6 @@ export class SubscriberSettingsComponent implements OnInit {
     })
 
     this.userService.getProfile().subscribe(res => {
-      // this.spinnerService.hide();
       console.log("res obj", res)
       this.user = res.data;
       if (res.data.organization_type == 'INDV') {
@@ -115,14 +111,7 @@ export class SubscriberSettingsComponent implements OnInit {
           suffix: res.data.suffix,
           company_name: res.data.company_name,
           sign_in_email_id: res.data.sign_in_email_id,
-          // individual_w9_number: res.data.individual_w9_number,
-          // individual_w9_number_type: res.data.individual_w9_number_type,
-          // individual_npi_number: res.data.individual_npi_number,
-          // company_taxonomy_id: res.data.company_taxonomy_id,
-          // company_w9_number: res.data.company_w9_number,
-          // company_npi_number: res.data.company_npi_number,
         }
-
       } else {
         userDetails = {
           id: res.data.id,
@@ -136,8 +125,6 @@ export class SubscriberSettingsComponent implements OnInit {
         }
       }
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
-
-
       this.userForm.patchValue(userDetails)
     })
   }
@@ -151,23 +138,6 @@ export class SubscriberSettingsComponent implements OnInit {
     })
 
     if (user.role_id == 2) {
-      // this.userForm = this.formBuilder.group({
-      //   id: [''],
-      //   role_id: [''],
-      //   first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
-      //   last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
-      //   middle_name: ['', Validators.compose([Validators.maxLength(50)])],
-      //   suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
-      //   company_name: [{ value: "", disabled: false }, Validators.compose([Validators.maxLength(100)])],
-      //   sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      //   individual_w9_number: [''],
-      //   individual_w9_number_type: ['0'],
-      //   individual_npi_number: ['', Validators.maxLength(15)],
-      //   company_taxonomy_id: [''],
-      //   company_w9_number: [''],
-      //   company_npi_number: ['', Validators.maxLength(15)],
-      //   signature: ['']
-      // });
       this.userForm = this.formBuilder.group({
         id: [''],
         first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -182,53 +152,16 @@ export class SubscriberSettingsComponent implements OnInit {
     } else {
       this.userForm = this.formBuilder.group({
         id: [''],
-        //role_id: [''],
         first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
         suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
-        //company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         signature: [''],
         is_new_signature: [false]
       });
     }
 
-    this.addressForm = this.formBuilder.group({
-      phone1: [''],
-      phone2: [''],
-      fax1: [''],
-      fax2: [''],
-      mobile1: [''],
-      mobile2: [''],
-      street1: [''],
-      street2: [''],
-      city: [''],
-      state: [''],
-      zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      notes: ['', Validators.maxLength(2400)],
-      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      contact_person: ['']
-    });
-    this.billingInit();
-    this.claimService.seedData('taxonomy').subscribe(response => {
-      this.taxonomyList = response.data;
-      this.taxonomyList.map(data => {
-        data.code_name = data.taxonomy_code + ' - ' + data.taxonomy_name
-        if (user.role_id == 2) {
-          if (user.company_taxonomy_id == data.id)
-            this.texoCtrl.patchValue(data.taxonomy_code + ' - ' + data.taxonomy_name)
-        }
-      })
-      this.filteredTexonamy = this.texoCtrl.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this._filteTex(value))
-        );
-    }, error => {
-      console.log("error", error)
-    })
 
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
@@ -236,92 +169,19 @@ export class SubscriberSettingsComponent implements OnInit {
       console.log("error", error)
     })
 
-    if (user.role_id == 2 || user.role_id == 11) {
-      this.userService.getPrimarAddress().subscribe(res => {
-        if (res['data'].length > 0) {
-          var formData: any = [];
-          for (let i in res['data']) {
-            formData[res['data'][i].address_type] = {}
-            formData[res['data'][i].address_type].street1 = res['data'][i].street1;
-            formData[res['data'][i].address_type].street2 = res['data'][i].street2;
-            formData[res['data'][i].address_type].city = res['data'][i].city;
-            formData[res['data'][i].address_type].state = res['data'][i].state;
-            formData[res['data'][i].address_type].zip_code = res['data'][i].zip_code;
-            formData[res['data'][i].address_type].notes = res['data'][i].notes;
-            formData[res['data'][i].address_type].contact_person = res['data'][i].contact_person;
-            res['data'][i].contacts.map(contact => {
-              if (contact.contact_type == 'L1') {
-                formData[res['data'][i].address_type].phone1 = contact.contact_info
-              }
-              if (contact.contact_type == 'L2') {
-                formData[res['data'][i].address_type].phone2 = contact.contact_info
-              }
-              if (contact.contact_type == 'M1') {
-                formData[res['data'][i].address_type].mobile1 = contact.contact_info
-              }
-              if (contact.contact_type == 'M1') {
-                formData[res['data'][i].address_type].mobile2 = contact.contact_info
-              }
-              if (contact.contact_type == 'F1') {
-                formData[res['data'][i].address_type].fax1 = contact.contact_info
-              }
-              if (contact.contact_type == 'F2') {
-                formData[res['data'][i].address_type].fax2 = contact.contact_info
-              }
-              if (contact.contact_type == 'E1') {
-                formData[res['data'][i].address_type].email1 = contact.contact_info
-              }
-              if (contact.contact_type == 'E2') {
-                formData[res['data'][i].address_type].email2 = contact.contact_info
-              }
-
-
-            })
-          }
-          console.log(formData['P'])
-          // console.log(Object.keys(formData.B).length === 0)
-          //  console.log(Object.keys(formData.P).length === 0)
-          if (formData.P && !(Object.keys(formData.P).length === 0)) {
-            this.addressForm.setValue(formData.P);
-          }
-          if (formData.B && !(Object.keys(formData.B).length === 0)) {
-            this.billingForm.setValue(formData.B);
-          }
-        }
-      })
-    }
   }
+
   selectedTabChange(event) {
   }
+
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
       this.expandId = element.id;
     }
   }
-  private _filteTex(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.taxonomyList.filter(deu => deu.code_name.toLowerCase().includes(filterValue));
-  }
-  billingInit() {
-    this.billingForm = this.formBuilder.group({
-      phone1: [''],
-      phone2: [''],
-      fax1: [''],
-      fax2: [''],
-      mobile1: [''],
-      mobile2: [''],
-      street1: [''],
-      street2: [''],
-      city: [''],
-      state: [''],
-      zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      notes: ['', Validators.maxLength(2400)],
-      email1: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      email2: ['', Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
-      contact_person: ['']
-    });
-  }
+
+
   userformSubmit() {
 
     Object.keys(this.userForm.controls).forEach((key) => {
@@ -333,11 +193,8 @@ export class SubscriberSettingsComponent implements OnInit {
       window.scrollTo(0, 0);
       return;
     }
-    // if (this.user.role_id != 2) {
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
     this.userForm.value.signature = sign;
-    // }
-
     this.userService.updateSubsciberSetting(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null;
@@ -348,21 +205,8 @@ export class SubscriberSettingsComponent implements OnInit {
       }
     }, error => {
       this.isSubmit = false;
-      console.log(error.message)
-      this.alertService.openSnackBar(error.message, 'error');
-    })
-    return
-    this.userService.updateUser(this.userForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Profile updated successfully", 'success');
-      this.isSubmit = false;
-      if (this.first_name != this.userForm.value.first_name) {
-        this.first_name = this.userForm.value.first_name;
-        this.intercom.setUser(true);
-      }
-    }, error => {
-      this.isSubmit = false;
-      console.log(error.message)
-      this.alertService.openSnackBar(error.message, 'error');
+      console.log(error.error.message)
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
   isTypePassword = true;
@@ -399,62 +243,6 @@ export class SubscriberSettingsComponent implements OnInit {
     })
   }
 
-  isBillingStatus: boolean = false;
-
-  primaryAsBill() {
-    console.log(this.isBillingStatus)
-    if (this.isBillingStatus) {
-      this.billingForm.setValue(this.addressForm.value);
-      this.billing_address = true
-    } else {
-      this.billingInit();
-      this.billing_address = false;
-    }
-  }
-
-  addressFormSubmit() {
-    // console.log(this.addressForm.value);
-    // console.log(this.billingForm.value);
-    Object.keys(this.addressForm.controls).forEach((key) => {
-      if (this.addressForm.get(key).value && typeof (this.addressForm.get(key).value) == 'string')
-        this.addressForm.get(key).setValue(this.addressForm.get(key).value.trim())
-    });
-
-    Object.keys(this.billingForm.controls).forEach((key) => {
-      if (this.billingForm.get(key).value && typeof (this.billingForm.get(key).value) == 'string')
-        this.billingForm.get(key).setValue(this.billingForm.get(key).value.trim())
-    });
-
-    if (this.addressForm.invalid) {
-      console.log(this.addressForm)
-      window.scrollTo(0, 250);
-      this.addressForm.markAllAsTouched();
-      return;
-    }
-
-    if (this.billingForm.invalid) {
-      window.scrollTo(0, 250);
-      this.addressForm.markAllAsTouched();
-      return;
-    }
-    let updateData = [this.addressForm.value, this.billingForm.value]
-    updateData[0].address_type_id = 3;
-    updateData[1].address_type_id = 2;
-
-    this.userService.updatePrimaryAddress(updateData, this.user.id).subscribe(res => {
-      console.log(res);
-      this.alertService.openSnackBar("Location updated successfully", "success");
-    }, error => {
-      console.log(error);
-      this.alertService.openSnackBar(error.message, "error");
-    })
-
-  }
-  texChange(tex) {
-    this.userForm.patchValue({
-      company_taxonomy_id: tex.id
-    })
-  }
   cancel() {
     this._location.back();
   }
@@ -489,14 +277,12 @@ export class SubscriberSettingsComponent implements OnInit {
 
   openSign(e): void {
     const dialogRef = this.dialog.open(SignPopupComponent, {
-      // height: '800px',
       width: '800px',
       data: e,
 
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      //console.log('The dialog was closed',result);
       if (result == null) {
         this.selectedFile = null
         this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
@@ -534,12 +320,10 @@ export class SignPopupComponent {
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
-    //  console.log(event, base64ToFile(event.base64));
   }
 
   save() {
     this.finalImage = this.croppedImage;
-    //console.log(this.finalImage);
     this.dialogRef.close(this.finalImage);
   }
 
@@ -567,8 +351,3 @@ export class SignPopupComponent {
   }
 
 }
-const ELEMENT_DATA = [
-  { "id": 132, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
-  { "id": 133, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
-  { "id": 134, "invoice_number": "100003455", "amount": "$635.00", "status": "Unpaid", "date": "04-01-2020", "action": "Download" },
-];

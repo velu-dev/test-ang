@@ -81,28 +81,33 @@
     @media only screen and (max-width: 568px) {
     }
   }
+  // .search-icon {
+  //   background-color: $sidebar-dark;
+  //   color: $white;
+  //   padding: 12px;
+  //   display: block;
+  //   cursor: pointer;
+  // }
+}
   .search-icon {
-    background-color: $sidebar-dark;
-    color: $white;
+    color: $text-gray;
     padding: 12px;
     display: block;
     cursor: pointer;
   }
-}
-
 .search-icon {
   cursor: pointer;
 }
 
-.adj_filter {
-  .search-icon {
-    background-color: $sidebar-dark;
-    color: $white;
-    padding: 12px;
-    display: block;
-    cursor: pointer;
-  }
-}
+// .adj_filter {
+//   .search-icon {
+//     background-color: $sidebar-dark;
+//     color: $white;
+//     padding: 12px;
+//     display: block;
+//     cursor: pointer;
+//   }
+// }
 
 // .address-list {
 //   .name {
