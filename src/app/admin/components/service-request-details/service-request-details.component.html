@@ -4,48 +4,48 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content *ngIf="!isLoading">
-        <div fxLayout="row wrap">
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Subscriber Name</div>
-                <div>{{serviceRequestDetails?.subscriber_first_name}}</div>
+         <div fxLayout="row wrap">
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Subscriber Name</div>
+                    <div>{{serviceRequestDetails?.subscriber_first_name}}</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Subscriber Account</div>
+                    <div>{{serviceRequestDetails?.subscriber_account_no}}</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Requester Name</div>
+                    <div>{{serviceRequestDetails?.requester_first_name}}</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Claim Reference</div>
+                    <div>{{serviceRequestDetails?.claim_number}}</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Service Type </div>
+                    <div>{{serviceRequestDetails?.service_request_type}}</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Request Reference</div>
+                    <div>{{serviceRequestDetails?.request_reference_id}}</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Request Date & Time</div>
+                   <div>{{serviceRequestDetails?.date_of_request}}</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Due Date</div>
+                    <div>{{serviceRequestDetails?.due_date}}</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Status</div>
+                    <div>{{serviceRequestDetails?.service_request_transmit_status}}</div>
+                </div>
+                <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                    <div>Completion Date </div>
+                    <div>{{serviceRequestDetails?.date_of_service_completion}}</div>
+                </div>
             </div>
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Subscriber Account</div>
-                <div>{{serviceRequestDetails?.subscriber_account_no}}</div>
-            </div>
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Requester Name</div>
-                <div>{{serviceRequestDetails?.requester_first_name}}</div>
-            </div>
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Claim Reference</div>
-                <div>{{serviceRequestDetails?.claim_number}}</div>
-            </div>
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Service Type </div>
-                <div>{{serviceRequestDetails?.service_request_type}}</div>
-            </div>
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Request Reference</div>
-                <div>{{serviceRequestDetails?.request_reference_id}}</div>
-            </div>
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Request Date & time</div>
-                <div>{{serviceRequestDetails?.date_of_request | date:'MM-dd-yyyy hh:mm a'}}</div>
-            </div>
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Due Date</div>
-                <div>{{serviceRequestDetails?.due_date}}</div>
-            </div>
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Status</div>
-                <div>{{serviceRequestDetails?.service_request_transmit_status}}</div>
-            </div>
-            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Completion Date </div>
-                <div>{{serviceRequestDetails?.date_of_service_completion}}</div>
-            </div>
-        </div>
         <!-- <form fxLayout="row wrap" class="p-t-10">
 
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
@@ -184,7 +184,7 @@
                 <!-- Date & Time Column -->
                 <ng-container matColumnDef="createdAt">
                     <th mat-header-cell *matHeaderCellDef> Date & Time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'MM-dd-yyyy hh:mm a'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.createdAt | date:'MM-dd-yyyy'}} </td>
                 </ng-container>
                 <!-- Status Column -->
                 <ng-container matColumnDef="transmission_status">
@@ -276,8 +276,7 @@
                         <!-- Call DateTime Column -->
                         <ng-container matColumnDef="date_of_call">
                             <th mat-header-cell *matHeaderCellDef>Call Date & Time </th>
-                            <td mat-cell *matCellDef="let element"> {{element.date_of_call | date:'MM-dd-yyyy hh:mm a'}}
-                            </td>
+                            <td mat-cell *matCellDef="let element"> {{element.date_of_call | date:'MM-dd-yyyy hh:mm a'}} </td>
                         </ng-container>
 
                         <!-- Caller(PPMC Platform Admin User name) Column -->
