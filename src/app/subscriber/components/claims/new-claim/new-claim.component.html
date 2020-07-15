@@ -3,7 +3,7 @@
         <div class="m-0 content-wrapper-main-title">{{isEdit ? 'Update' : 'Create'}}{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider> -->
-    <mat-horizontal-stepper  (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant
@@ -357,8 +357,10 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth</mat-label>
-                                <input matInput placeholder="Date of Birth" formControlName="date_of_birth"
-                                    autocomplete="off" [value]="claimantDetails.date_of_birth" disabled>
+                                <input matInput placeholder="Date of Birth" autocomplete="off"
+                                    [ngModel]="claimantDetails.date_of_birth | date:'MM-dd-yyyy'"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (ngModelChange)="claimantDetails.date_of_birth = $event" disabled>
                                 <mat-error *ngIf="isClaimSubmited">Please enter valid claim number</mat-error>
                             </mat-form-field>
 
@@ -433,7 +435,8 @@
                             <div class="sub-title p-l-10 p-t-10">Injury Information</div>
                         </mat-panel-title>
                         <span class="spacer"></span>
-                        <button mat-stroked-button class="outline-success float-right m-b-5" (click)="openInjuryDialog()">Add
+                        <button mat-stroked-button class="outline-success float-right m-b-5"
+                            (click)="openInjuryDialog()">Add
                             Injury</button>
                     </mat-card-header>
                     <mat-divider></mat-divider>
@@ -980,14 +983,14 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Street Address 1</mat-label>
-                                <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                                    cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
+                                <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize
+                                    cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Street Address 2</mat-label>
-                                <textarea matInput placeholder="Street Address 2" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                                    cdkAutosizeMaxRows="1" formControlName="street2"></textarea>
+                                <textarea matInput placeholder="Street Address 2" cdkTextareaAutosize
+                                    cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" formControlName="street2"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -1764,8 +1767,10 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth</mat-label>
-                                <input matInput placeholder="Date of Birth" [value]="claimantDetails.date_of_birth"
-                                    disabled>
+                                <input matInput name="date_of_birth" placeholder="Date of Birth"
+                                    [ngModel]="claimantDetails.date_of_birth | date:'MM-dd-yyyy'"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (ngModelChange)="claimantDetails.date_of_birth = $event" disabled>
                                 <mat-error>Please enter valid claim number</mat-error>
                             </mat-form-field>
 

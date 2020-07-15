@@ -23,6 +23,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -1359,22 +1360,31 @@ export class NewClaimComponent implements OnInit {
 @Component({
   selector: 'injury-dialog',
   templateUrl: 'injury-dialog.html',
+  providers: [
+    { provide: DateAdapter, useClass: PickDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }]
 })
 export class InjuryDialog {
   injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
   bodyPartsList = [];
   today = new Date();
   claimant: any;
+  isLoding: boolean = false;
+  minDate: any;
   constructor(
     public dialogRef: MatDialogRef<InjuryDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private claimService: ClaimService,
     private alertService: AlertService) {
+    console.log("sdsadsdasd", data['claimant']);
+    this.isLoding = true;
     this.claimant = data['claimant']
     this.bodyPartsList = data['bodyparts'];
     if (data['isEdit']) {
       this.injuryInfo = data['injuryData']
     }
+    this.isLoding = false;
   }
 
   onNoClick(): void {
@@ -1401,6 +1411,10 @@ export class InjuryDialog {
     }
     this.dialogRef.close(this.injuryInfo)
 
+  }
+  changeEvent() {
+    this.minDate = this.claimant['date_of_birth'];
+    console.log(this.minDate)
   }
   ctChange() {
 

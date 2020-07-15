@@ -1,11 +1,11 @@
 <div class="injury-dialog">
     <mat-card-header class="model-header">
-        <div class="content-wrapper-main-title">Add Injury </div>
+        <div class="content-wrapper-main-title">Add Injury</div>
         <span class="spacer"></span>
         <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-card-content>
+    <mat-card-content *ngIf="!isLoding">
         <div fxLayout="row wrap" fxFlex="100" class="">
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Body Parts</mat-label>
@@ -17,9 +17,9 @@
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Date of Injury </mat-label>
-                <input matInput placeholder="MM-DD-YYYY" autocomplete="off" [min]="claimant.date_of_birth" [max]="today"
-                    [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury">
-                <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
+                <input matInput placeholder="MM-DD-YYYY" autocomplete="off" [min]="minDate" [max]="today"
+                    [matDatepicker]="date_of_injury1"  (click)="changeEvent()" [(ngModel)]="injuryInfo.date_of_injury">
+                <mat-datepicker-toggle matSuffix [for]="date_of_injury1"  (click)="changeEvent()"></mat-datepicker-toggle>
                 <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
                 <mat-error>Please enter valid date of injury</mat-error>
             </mat-form-field>
@@ -45,7 +45,7 @@
                 <mat-label>CT Start Date</mat-label>
                 <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
                     [matDatepicker]="continuous_trauma_start_date" [(ngModel)]="injuryInfo.continuous_trauma_start_date"
-                    [min]="claimant?.date_of_birth" [max]="today">
+                    [min]="minDate" [max]="today"  (click)="changeEvent()">
                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                 </mat-datepicker-toggle>
                 <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
@@ -65,7 +65,8 @@
             <div fxFlex="100" class="p-t-10 text-center">
                 <button mat-stroked-button (click)="onNoClick()" type="button"
                     class="outline-danger m-r-10">Cancel</button>
-                <button mat-stroked-button type="button" class="outline-success text-center m-r-5" (click)="addInjury()">Save</button>
+                <button mat-stroked-button type="button" class="outline-success text-center m-r-5"
+                    (click)="addInjury()">Save</button>
             </div>
         </div>
     </mat-card-content>
