@@ -99,6 +99,14 @@
   cursor: pointer;
 }
 
+.selected_lang {
+  background-color: $light-color;
+  border-radius: 3px ;
+  padding: 5px 20px;
+  width: max-content;
+  margin-left: 10px;
+}
+
 // .adj_filter {
 //   .search-icon {
 //     background-color: $sidebar-dark;
