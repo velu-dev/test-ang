@@ -747,13 +747,6 @@ export class NewClaimComponent implements OnInit {
     //if (!this.isEdit) {
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
-      //this._location.back();
-      if (this.claimant.touched) {
-        this.createClaimant('close')
-      }
-      if (this.claim.touched) {
-        this.submitClaim('close')
-      }
       this.routeDashboard();
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');

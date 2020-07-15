@@ -1776,15 +1776,10 @@
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <<<<<<< HEAD <mat-label>Phone Number</mat-label>
-                                    <input type="text" matInput placeholder="Enter Phone Number"
-                                        formControlName="phone_no_1" mask="(000) 000-0000" disabled>
-                                    =======
-                                    <mat-label>Phone</mat-label>
-                                    <input type="text" matInput placeholder="Enter Phone"
-                                        [value]="claimantDetails.phone_no_1" disabled>
-                                    >>>>>>> c51092ae79c34ca92336b3f8e7cd271595c77fc1
-                                    <mat-error>Please enter valid WCAB number</mat-error>
+                                <mat-label>Phone</mat-label>
+                                <input type="text" matInput placeholder="Enter Phone" formControlName="phone_no_1"
+                                    mask="(000) 000-0000" disabled>
+                                <mat-error>Please enter valid WCAB number</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
