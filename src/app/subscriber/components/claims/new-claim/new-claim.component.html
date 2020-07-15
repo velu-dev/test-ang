@@ -253,17 +253,17 @@
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Phone Number</mat-label>
+                                <mat-label>Phone</mat-label>
                                 <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                    formControlName="phone_no_1" placeholder="Phone Number" autocomplete="off">
+                                    formControlName="phone_no_1" placeholder="Phone" autocomplete="off">
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid phone number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Alternate Phone Number</mat-label>
+                                <mat-label>Alternate Phone</mat-label>
                                 <input matInput (keypress)="numberOnly($event)" type="text" mask="(000) 000-0000"
-                                    formControlName="phone_no_2" placeholder="Alternate Phone Number"
+                                    formControlName="phone_no_2" placeholder="Alternate Phone"
                                     autocomplete="off">
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid alternative phone number
                                 </mat-error>
@@ -340,10 +340,6 @@
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100">Claimant</div>
                         </mat-panel-title>
-                        <mat-panel-description class="mat-error">
-                            <div class="alert">{{errors?.claim_details != 0 ? 'Please correct the error!' : ""}}
-                            </div>
-                        </mat-panel-description>
                     </mat-card-header>
                     <mat-divider></mat-divider>
                     <mat-card-content class="m-t-15">
@@ -366,8 +362,8 @@
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Phone Number</mat-label>
-                                <input type="text" matInput placeholder="Enter Phone Number"
+                                <mat-label>Phone</mat-label>
+                                <input type="text" matInput placeholder="Enter Phone"
                                     formControlName="wcab_number" autocomplete="off" formControlName="phone_no_1"
                                     [value]="claimantDetails.phone_no_1" disabled>
                                 <mat-error *ngIf="isClaimSubmited">Please enter valid WCAB number</mat-error>
@@ -381,6 +377,7 @@
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100">Claim Information</div>
                         </mat-panel-title>
+                        <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
                             <div class="alert">{{errors?.claim_details != 0 ? 'Please correct the error!' : ""}}
                             </div>
@@ -569,6 +566,7 @@
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Claims Administrator Information </div>
                         </mat-panel-title>
+                        <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
                             <div class="alert">
                                 {{errors?.InsuranceAdjuster != 0 ? 'Please correct the error!' : ""}}</div>
@@ -670,6 +668,7 @@
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Employer Information</div>
                         </mat-panel-title>
+                        <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
                             <div class="alert">{{errors?.Employer != 0 ? 'Please correct the error!' : ""}}
                             </div>
@@ -765,6 +764,7 @@
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Applicant Attorney Information </div>
                         </mat-panel-title>
+                        <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
                             <div class="alert">
                                 {{errors?.ApplicantAttorney != 0 ? 'Please correct the error!' : ""}}</div>
@@ -863,6 +863,7 @@
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Defense Attorney Information </div>
                         </mat-panel-title>
+                        <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
                             <div class="alert">
                                 {{errors?.DefenseAttorney != 0 ? 'Please correct the error!' : ""}}</div>
@@ -961,6 +962,7 @@
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">DEU Office </div>
                         </mat-panel-title>
+                        <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
                             <div class="alert">{{errors?.DEU != 0 ? 'Please correct the error!' : ""}}</div>
                         </mat-panel-description>
@@ -1019,9 +1021,9 @@
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
-                                <mat-label>Phone Number</mat-label>
+                                <mat-label>Phone</mat-label>
                                 <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                    placeholder="Phone Number" formControlName="phone" autocomplete="off">
+                                    placeholder="Phone" formControlName="phone" autocomplete="off">
                                 <mat-error>Please enter valid phone number</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1776,8 +1778,8 @@
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Phone Number</mat-label>
-                                <input type="text" matInput placeholder="Enter Phone Number"
+                                <mat-label>Phone</mat-label>
+                                <input type="text" matInput placeholder="Enter Phone"
                                     [value]="claimantDetails.phone_no_1" disabled>
                                 <mat-error>Please enter valid WCAB number</mat-error>
                             </mat-form-field>
