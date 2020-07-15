@@ -402,7 +402,9 @@ export class NewClaimComponent implements OnInit {
     this.claim.patchValue({
       claim_details: {
         claimant_id: option.id,
-        claimant_name: this.claimantDetails.claimant_name
+        claimant_name: this.claimantDetails.claimant_name,
+        date_of_birth: option.date_of_birth,
+        phone_no_1: option.phone_no_1
       }
     });
     this.billable_item.patchValue({
@@ -1283,11 +1285,12 @@ export class NewClaimComponent implements OnInit {
       }
     })
   }
-selectedLanguage: any;
+  selectedLanguage: any;
   modifyChange() {
-    if (this.billable_item.value.exam_type.modifier_id.includes(1)) {
+    console.log(this.billable_item.value.exam_type.modifier_id)
+    if (this.billable_item.value.exam_type.modifier_id.includes(2)) {
       this.languageList.map(res => {
-        if(res.id == this.claimant.value.primary_language_spoken){
+        if (res.id == this.claimant.value.primary_language_spoken) {
           this.selectedLanguage = res;
         }
       })

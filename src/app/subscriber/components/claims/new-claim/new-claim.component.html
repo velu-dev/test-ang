@@ -1835,10 +1835,33 @@
                                     <mat-error *ngIf="isBillSubmited">Please select Procedural Type</mat-error>
                                 </mat-form-field>
 
-
-
                                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                    <!-- <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)"
+                                    <div fxLayout="row wrap">
+                                        <mat-form-field appearance="outline" fxFlex="100">
+                                            <mat-label>Modifiers</mat-label>
+                                            <mat-select formControlName="modifier_id" multiple
+                                                (selectionChange)="modifyChange()">
+                                                <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
+                                                    {{modifier.modifier_code}} - {{modifier.modifier}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-hint *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)">
+                                                <span *ngIf="!primary_language_spoken">Note: No langauge selected.
+                                                    Please
+                                                    select
+                                                    it from Claimant's section!</span>
+
+                                            </mat-hint>
+                                        </mat-form-field>
+                                        <div fxFlex="100">
+                                            <div class="selected_lang" *ngIf="primary_language_spoken">
+                                                {{selectedLanguage?.language}}</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"> -->
+                                <!-- <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)"
                                         appearance="outline" fxFlex="100">
                                         <mat-label>Language</mat-label>
                                         <mat-select formControlName="primary_language_spoken">
@@ -1851,31 +1874,7 @@
                                             select
                                             it from Claimant's section!</mat-hint>
                                     </mat-form-field> -->
-                                    <div fxLayout="row wrap">
-                                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100"
-                                            fxFlex.sm="100" fxFlex.xs="100">
-                                            <mat-label>Modifiers</mat-label>
-                                            <mat-select formControlName="modifier_id" multiple
-                                                (selectionChange)="modifyChange()">
-                                                <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
-                                                    {{modifier.modifier_code}} - {{modifier.modifier}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-
-                                        <div *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)"
-                                            fxFlex="100">
-                                            <mat-hint *ngIf="!primary_language_spoken" class="p-l-10">Note: No langauge selected.
-                                                Please
-                                                select
-                                                it from Claimant's section!</mat-hint>
-                                            <div class="selected_lang" *ngIf="primary_language_spoken">
-                                                {{selectedLanguage?.language}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
+                                <!-- </div> -->
                             </div>
                             <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
 
