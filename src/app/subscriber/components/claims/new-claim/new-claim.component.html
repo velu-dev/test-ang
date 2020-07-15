@@ -1853,7 +1853,7 @@
 
                                             </mat-hint>
                                         </mat-form-field>
-                                        <div fxFlex="100">
+                                        <div fxFlex="100" *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)">
                                             <div class="selected_lang" *ngIf="primary_language_spoken">
                                                 {{selectedLanguage?.language}}</div>
                                         </div>

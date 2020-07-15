@@ -64,7 +64,7 @@ export class SubscriberUserService {
   }
 
   postmailingAddress(id, data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.updateMailingAddress + id, data)
+    return this.http.post(environment.baseUrl + api_endpoint.createMailingAddress + id, data)
   }
 
   updatemailingAddress(id, data): Observable<any> {
@@ -72,7 +72,7 @@ export class SubscriberUserService {
   }
 
   postBillingProvider(id, data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.updateBillingProvider + id, data)
+    return this.http.post(environment.baseUrl + api_endpoint.createBillingProvider + id, data)
   }
 
   updateBillingProvider(id, data): Observable<any> {

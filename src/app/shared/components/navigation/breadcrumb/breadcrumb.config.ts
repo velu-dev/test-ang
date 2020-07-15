@@ -96,6 +96,16 @@ export const ROUTES = [
             title: 'Edit User',
             icon: 'dashboard',
             submenu: []
+        },{
+            path: '/subscriber/users/new-examiner',
+            title: 'New User',
+            icon: 'dashboard',
+            submenu: []
+        }, {
+            path: '/subscriber/users/examiner',
+            title: 'Edit User',
+            icon: 'dashboard',
+            submenu: []
         }],
     },
     {
