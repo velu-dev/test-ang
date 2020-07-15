@@ -3,7 +3,7 @@
         <div class="m-0 content-wrapper-main-title">{{isEdit ? 'Update' : 'Create'}}{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider> -->
-    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant
@@ -979,14 +979,14 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Street Address 1</mat-label>
-                                <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                                    cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
+                                <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize
+                                    cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Street Address 2</mat-label>
-                                <textarea matInput placeholder="Street Address 2" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                                    cdkAutosizeMaxRows="1" formControlName="street2"></textarea>
+                                <textarea matInput placeholder="Street Address 2" cdkTextareaAutosize
+                                    cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" formControlName="street2"></textarea>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -1841,18 +1841,24 @@
                                     </mat-checkbox>
                                 </div>
 
-                                <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)"
-                                    appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-label>Language</mat-label>
-                                    <mat-select formControlName="primary_language_spoken">
-                                        <mat-option *ngFor="let language of languageList" [value]="language.id">
-                                            {{language.language}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error>Please select a valid language</mat-error>
-                                    <mat-hint *ngIf="!primary_language_spoken">Note: No langauge selected. Please select
-                                        it from Claimant's section!</mat-hint>
-                                </mat-form-field>
+                                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)"
+                                        appearance="outline" fxFlex="100">
+                                        <mat-label>Language</mat-label>
+                                        <mat-select formControlName="primary_language_spoken">
+                                            <mat-option *ngFor="let language of languageList" [value]="language.id">
+                                                {{language.language}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error>Please select a valid language</mat-error>
+                                        <mat-hint *ngIf="!primary_language_spoken">Note: No langauge selected. Please
+                                            select
+                                            it from Claimant's section!</mat-hint>
+                                    </mat-form-field>
+                                    <div class="selected_lang">selected language here</div>
+
+                                </div>
+
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Examiner</mat-label>
