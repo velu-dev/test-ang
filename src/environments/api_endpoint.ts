@@ -43,8 +43,10 @@ export const api_endpoint = {
     postUninvite: 'subscriber/uninvite-user/',
 
     //examiner
-    updateMailingAddress:'subscriber/examiner/mailing-address-create/',
-    updateBillingProvider:'subscriber/examiner/billing-provider-create/',
+    createMailingAddress:'subscriber/examiner/mailing-address-create/',
+    createBillingProvider:'subscriber/examiner/billing-provider-create/',
+    updateMailingAddress:'subscriber/examiner/mailing-address-update/',
+    updateBillingProvider:'subscriber/examiner/billing-provider-update/',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',
