@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, Optional, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, Optional, Inject, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
@@ -24,6 +24,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { EventEmitter } from 'protractor';
 
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -1366,6 +1367,7 @@ export class NewClaimComponent implements OnInit {
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }]
 })
 export class InjuryDialog {
+  @Output('opened') openedStream: EventEmitter;
   injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
   bodyPartsList = [];
   today = new Date();
@@ -1414,7 +1416,6 @@ export class InjuryDialog {
   }
   changeEvent() {
     this.minDate = this.claimant['date_of_birth'];
-    console.log(this.minDate)
   }
   ctChange() {
 
