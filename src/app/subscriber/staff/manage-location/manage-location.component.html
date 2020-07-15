@@ -2,10 +2,15 @@
     <mat-card-header>
         <div class="content-wrapper-main-title p-t-10">Examiners Location</div>
         <span class="spacer"></span>
-        <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="primary"
+        <!-- <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="primary"
             [routerLink]="['/subscriber/location/new-location']" routerLinkActive="router-link-active">
             <mat-icon>add</mat-icon>
+        </button> -->
+        <div class="add-new">
+        <button mat-stroked-button class="outline-success" [routerLink]="['/subscriber/location/new-location']" routerLinkActive="router-link-active">
+            Add New Location
         </button>
+        </div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="p-t-10">
