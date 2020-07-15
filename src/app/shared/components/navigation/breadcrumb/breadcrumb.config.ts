@@ -119,7 +119,7 @@ export const ROUTES = [
         //     icon: 'dashboard',
         //     submenu: []
         // },
-         {
+        {
             path: '/subscriber/claimant/edit-claim',
             title: 'Claim',
             icon: 'dashboard',
@@ -145,16 +145,22 @@ export const ROUTES = [
         group: "Subscriber",
         role: 2
     }, {
+        path: '/subscriber/new-claim',
+        title: 'Claimant Intake',
+        icon: 'dashboard',
+        submenu: []
+    }, {
         path: '/subscriber/claims',
         title: 'Claims',
         icon: 'dashboard',
         submenu: [
-            {
-                path: '/subscriber/claims/new-claim',
-                title: 'Claim',
-                icon: 'dashboard',
-                submenu: []
-            }, {
+            // {
+            //     path: '/subscriber/claims/new-claim',
+            //     title: 'Claim',
+            //     icon: 'dashboard',
+            //     submenu: []
+            // },
+             {
                 path: '/subscriber/claims/edit-claim',
                 title: 'Claim',
                 icon: 'dashboard',
