@@ -3,7 +3,7 @@
         <div class="m-0 content-wrapper-main-title">{{isEdit ? 'Update' : 'Create'}}{{titleName}}</div>
     </mat-card-header>
     <mat-divider></mat-divider> -->
-    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant
@@ -352,12 +352,15 @@
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Name </mat-label>
                                 <input matInput type="text" placeholder="Name" formControlName="claimant_name" disabled
-                                    [value]="claimant_name">
+                                    [value]="claimantDetails.claimant_name">
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth</mat-label>
-                                <input matInput placeholder="Date of Birth" autocomplete="off" [value]="" disabled>
+                                <input matInput placeholder="Date of Birth" autocomplete="off"
+                                    [ngModel]="claimantDetails.date_of_birth | date:'MM-dd-yyyy'"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (ngModelChange)="claimantDetails.date_of_birth = $event" disabled>
                                 <mat-error *ngIf="isClaimSubmited">Please enter valid claim number</mat-error>
                             </mat-form-field>
 
@@ -365,8 +368,8 @@
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Phone Number</mat-label>
                                 <input type="text" matInput placeholder="Enter Phone Number"
-                                    formControlName="wcab_number" autocomplete="off" [value]="claimant_phone_no_1"
-                                    disabled>
+                                    formControlName="wcab_number" autocomplete="off" formControlName="phone_no_1"
+                                    [value]="claimantDetails.phone_no_1" disabled>
                                 <mat-error *ngIf="isClaimSubmited">Please enter valid WCAB number</mat-error>
                             </mat-form-field>
 
@@ -432,7 +435,8 @@
                             <div class="sub-title p-l-10 p-t-10">Injury Information</div>
                         </mat-panel-title>
                         <span class="spacer"></span>
-                        <button mat-stroked-button class="outline-success float-right m-b-5" (click)="openDialog1()">Add
+                        <button mat-stroked-button class="outline-success float-right m-b-5"
+                            (click)="openInjuryDialog()">Add
                             Injury</button>
                     </mat-card-header>
                     <mat-divider></mat-divider>
@@ -1757,41 +1761,49 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Name </mat-label>
-                                <input matInput type="text" placeholder="Name" disabled>
+                                <input matInput type="text" placeholder="Name" [value]="claimantDetails.claimant_name"
+                                    disabled>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth</mat-label>
-                                <input matInput placeholder="Date of Birth">
+                                <input matInput name="date_of_birth" placeholder="Date of Birth"
+                                    [ngModel]="claimantDetails.date_of_birth | date:'MM-dd-yyyy'"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (ngModelChange)="claimantDetails.date_of_birth = $event" disabled>
                                 <mat-error>Please enter valid claim number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Phone Number</mat-label>
-                                <input type="text" matInput placeholder="Enter Phone Number" disabled>
+                                <input type="text" matInput placeholder="Enter Phone Number"
+                                    [value]="claimantDetails.phone_no_1" disabled>
                                 <mat-error>Please enter valid WCAB number</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Claim Number</mat-label>
-                                <input matInput placeholder="Claim Number" autocomplete="off">
+                                <input matInput placeholder="Claim Number" [value]="claimDetails.claim_number"
+                                    autocomplete="off" disabled>
                                 <mat-error>Please enter valid claim number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>WCAB Number</mat-label>
-                                <input type="text" matInput placeholder="Enter WCAB Number" autocomplete="off">
+                                <input type="text" matInput placeholder="Enter WCAB Number" autocomplete="off"
+                                    [value]="claimDetails.wcab_number" disabled>
                                 <mat-error>Please enter valid WCAB number</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Exam Type*</mat-label>
-                                <mat-select>
-                                    <mat-option>
-                                        option here
+                                <mat-select disabled [(ngModel)]="claimDetails.exam_type_id"
+                                    [ngModelOptions]="{standalone: true}">
+                                    <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
+                                        {{examType.exam_type_code}} - {{examType.exam_name}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Please select exam type</mat-error>
@@ -1843,28 +1855,28 @@
 
                                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                     <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)"
-                                        appearance="outline" fxFlex="100">
-                                        <mat-label>Language</mat-label>
-                                        <mat-select formControlName="primary_language_spoken">
-                                            <mat-option *ngFor="let language of languageList" [value]="language.id">
-                                                {{language.language}}
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error>Please select a valid language</mat-error>
-                                        <mat-hint *ngIf="!primary_language_spoken">Note: No langauge selected. Please
-                                            select
-                                            it from Claimant's section!</mat-hint>
-                                    </mat-form-field>
-                                    <div class="selected_lang">selected language here</div>
+                                    appearance="outline" fxFlex="100">
+                                    <mat-label>Language</mat-label>
+                                    <mat-select formControlName="primary_language_spoken">
+                                        <mat-option *ngFor="let language of languageList" [value]="language.id">
+                                            {{language.language}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>Please select a valid language</mat-error>
+                                    <mat-hint *ngIf="!primary_language_spoken">Note: No langauge selected. Please select
+                                        it from Claimant's section!</mat-hint>
+                                </mat-form-field>
+                                <div class="selected_lang">selected language here</div>
 
                                 </div>
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Examiner</mat-label>
-                                    <mat-select>
-                                        <mat-option>
-                                            Examiner name list here
+                                    <mat-select formControlName="examiner_id">
+                                        <mat-option *ngFor="let examinar of examinarList"
+                                            (click)="examinarChange(examinar)" [value]="examinar.id">
+                                            {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -1872,7 +1884,9 @@
                                 <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25"
                                     fxFlex.xs="100">
                                     <mat-label>Date & Time</mat-label>
-                                    <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" autocomplete="off">
+                                    <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
+                                        formControlName="appointment_scheduled_date_time" autocomplete="off"
+                                        [owlDateTime]="appointment">
                                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment">
                                     </mat-datepicker-toggle>
                                     <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true"
@@ -1884,7 +1898,7 @@
                                 <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25"
                                     fxFlex.xs="100">
                                     <mat-label>Duration</mat-label>
-                                    <input matInput placeholder="Minutes" autocomplete="off">
+                                    <input matInput placeholder="Minutes" formControlName="duration" autocomplete="off">
                                     <span matSuffix>Minutes</span>
                                     <mat-error>Please enter valid duration</mat-error>
                                 </mat-form-field>
@@ -1892,38 +1906,42 @@
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Location</mat-label>
-                                    <input matInput placeholder="Location" aria-label="State"
-                                        [matAutocomplete]="examinarAuto">
+                                    <input matInput placeholder="Address" aria-label="State"
+                                        [matAutocomplete]="examinarAuto" [formControl]="addressCtrl">
                                     <mat-autocomplete #examinarAuto="matAutocomplete">
-                                        <mat-option>
-                                            Option here...
+                                        <mat-option *ngFor="let address of (examinarAddress | async)"
+                                            (click)="changeExaminarAddress(address)" [value]="address.street1">
+                                            {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
+                                            {{address.zip_code}}
                                         </mat-option>
-                                        <!-- <mat-option *ngIf="(examinarAddress | async)?.length == 0" disabled>Location not
+                                        <mat-option *ngIf="(examinarAddress | async)?.length == 0" disabled>Location not
                                             found
-                                        </mat-option> -->
+                                        </mat-option>
                                     </mat-autocomplete>
                                 </mat-form-field>
-
+                            </div>
+                            <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Intake Caller</mat-label>
-                                    <input matInput placeholder="Intake caller" autocomplete="off">
+                                    <input matInput placeholder="Intake caller" formControlName="caller_name"
+                                        autocomplete="off">
                                 </mat-form-field>
-
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Caller Affiliation</mat-label>
-                                    <mat-select>
-                                        <mat-option>Option here</mat-option>
+                                    <mat-select formControlName="caller_affiliation">
+                                        <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
+                                            {{caller.agent_type_name}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Intake Call Date & Time</mat-label>
-                                    <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" autocomplete="off"
-                                        [max]="todayDate.intake">
-                                    <mat-datepicker-toggle matSuffix>
+                                    <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
+                                        autocomplete="off" [max]="todayDate.intake" [owlDateTime]="intake">
+                                    <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake">
                                     </mat-datepicker-toggle>
                                     <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true"
                                         #intake>
@@ -1934,15 +1952,17 @@
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Communication Type</mat-label>
-                                    <mat-select>
-                                        <mat-option>Option here</mat-option>
+                                    <mat-select formControlName="call_type">
+                                        <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.id">
+                                            {{contactType.display_name}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Intake Call Notes</mat-label>
-                                    <input matInput placeholder="Intake Call Notes" autocomplete="off">
+                                    <input matInput placeholder="Intake Call Notes" formControlName="notes"
+                                        autocomplete="off">
                                 </mat-form-field>
                             </div>
 
