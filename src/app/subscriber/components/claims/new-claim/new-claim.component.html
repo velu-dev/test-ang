@@ -1854,7 +1854,7 @@
                                 </div>
 
                                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)"
+                                    <!-- <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)"
                                         appearance="outline" fxFlex="100">
                                         <mat-label>Language</mat-label>
                                         <mat-select formControlName="primary_language_spoken">
@@ -1866,8 +1866,14 @@
                                         <mat-hint *ngIf="!primary_language_spoken">Note: No langauge selected. Please
                                             select
                                             it from Claimant's section!</mat-hint>
-                                    </mat-form-field>
-                                    <div class="selected_lang">selected language here</div>
+                                    </mat-form-field> -->
+                                    <div *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)">
+                                        <mat-hint *ngIf="!primary_language_spoken">Note: No langauge selected. Please
+                                            select
+                                            it from Claimant's section!</mat-hint>
+                                        <div class="selected_lang" *ngIf="primary_language_spoken">
+                                            {{selectedLanguage?.language}}</div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -1908,7 +1914,13 @@
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Location</mat-label>
-                                    <input matInput placeholder="Address" aria-label="State"
+                                    <mat-select>
+                                        <mat-option *ngFor="let address of (examinarAddress | async)" (click)="changeExaminarAddress(address)" [value]="address.street1">
+                                            {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
+                                            {{address.zip_code}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <!-- <input matInput placeholder="Address" aria-label="State"
                                         [matAutocomplete]="examinarAuto" [formControl]="addressCtrl">
                                     <mat-autocomplete #examinarAuto="matAutocomplete">
                                         <mat-option *ngFor="let address of (examinarAddress | async)"
@@ -1919,7 +1931,7 @@
                                         <mat-option *ngIf="(examinarAddress | async)?.length == 0" disabled>Location not
                                             found
                                         </mat-option>
-                                    </mat-autocomplete>
+                                    </mat-autocomplete> -->
                                 </mat-form-field>
                             </div>
                             <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">

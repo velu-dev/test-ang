@@ -747,6 +747,13 @@ export class NewClaimComponent implements OnInit {
     //if (!this.isEdit) {
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
+      //this._location.back();
+      if (this.claimant.touched) {
+        this.createClaimant('close')
+      }
+      if (this.claim.touched) {
+        this.submitClaim('close')
+      }
       this.routeDashboard();
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -1276,9 +1283,14 @@ export class NewClaimComponent implements OnInit {
       }
     })
   }
-
+selectedLanguage: any;
   modifyChange() {
     if (this.billable_item.value.exam_type.modifier_id.includes(1)) {
+      this.languageList.map(res => {
+        if(res.id == this.claimant.value.primary_language_spoken){
+          this.selectedLanguage = res;
+        }
+      })
       this.billable_item.patchValue({
         exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken }
       })
