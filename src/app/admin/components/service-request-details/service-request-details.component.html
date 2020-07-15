@@ -31,7 +31,7 @@
             </div>
             <div class="grid-list" fxFlex="50" fxFlex.xs="100">
                 <div>Request Date & Time</div>
-                <div>{{serviceRequestDetails?.date_of_request}}</div>
+                <div>{{serviceRequestDetails?.date_of_request  | date:'MM-dd-yyyy hh:mm a' }}</div>
             </div>
             <div class="grid-list" fxFlex="50" fxFlex.xs="100">
                 <div>Due Date</div>
