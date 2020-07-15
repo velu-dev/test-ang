@@ -537,6 +537,14 @@ export class NewClaimComponent implements OnInit {
       })
     })
     this.billable_item = this.formBuilder.group({
+      claim_details: this.formBuilder.group({
+        claimant_name: [{ value: "", disabled: true }],
+        phone_no_1: [{ value: "", disabled: true }],
+        date_of_birth: [{ value: "", disabled: true }],
+        claim_number: [{ value: "", disabled: true }],
+        wcab_number: [{ value: "", disabled: true }],
+        exam_type_id: [{ value: "", disabled: true }]
+      }),
       claim_id: [null],
       claimant_id: [null],
       exam_type: this.formBuilder.group({
@@ -673,7 +681,6 @@ export class NewClaimComponent implements OnInit {
           this.routeDashboard();
         }
         this.claimChanges = false;
-        this.isEdit = true;
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
@@ -812,11 +819,17 @@ export class NewClaimComponent implements OnInit {
               claimant_id: res.data.id,
               claimant_name: this.claimantDetails.claimant_name,
               date_of_birth: res.data.date_of_birth,
-              pphone_no_1: res.data.phone_no_1
+              phone_no_1: res.data.phone_no_1
             }
           });
           this.billable_item.patchValue({
-            claimant_id: res.data.id
+            claimant_id: res.data.id,
+            claim_details: {
+              claimant_id: res.data.id,
+              claimant_name: this.claimantDetails.claimant_name,
+              date_of_birth: res.data.date_of_birth,
+              phone_no_1: res.data.phone_no_1
+            }
           })
           this.isClaimantCreated = true;
           this.isClaimantEdit = true;

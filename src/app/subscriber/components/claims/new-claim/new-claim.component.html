@@ -367,9 +367,8 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Phone Number</mat-label>
-                                <input type="text" matInput placeholder="Enter Phone Number"
-                                    formControlName="wcab_number" autocomplete="off" formControlName="phone_no_1"
-                                    [value]="claimantDetails.phone_no_1" disabled>
+                                <input type="text" matInput placeholder="Enter Phone Number" autocomplete="off"
+                                    formControlName="phone_no_1" mask="(000) 000-0000">
                                 <mat-error *ngIf="isClaimSubmited">Please enter valid WCAB number</mat-error>
                             </mat-form-field>
 
@@ -1757,7 +1756,7 @@
                     </mat-card-header>
                     <mat-divider> </mat-divider>
                     <mat-card-content class="m-t-15">
-                        <div fxLayout="row wrap" fxFlex="100">
+                        <div fxLayout="row wrap" fxFlex="100" formGroupName="claim_details">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Name </mat-label>
@@ -1778,7 +1777,7 @@
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Phone Number</mat-label>
                                 <input type="text" matInput placeholder="Enter Phone Number"
-                                    [value]="claimantDetails.phone_no_1" disabled>
+                                    formControlName="phone_no_1" mask="(000) 000-0000" disabled>
                                 <mat-error>Please enter valid WCAB number</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
@@ -1855,21 +1854,23 @@
 
                                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                     <mat-form-field *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)"
-                                    appearance="outline" fxFlex="100">
-                                    <mat-label>Language</mat-label>
-                                    <mat-select formControlName="primary_language_spoken">
-                                        <mat-option *ngFor="let language of languageList" [value]="language.id">
-                                            {{language.language}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error>Please select a valid language</mat-error>
-                                    <mat-hint *ngIf="!primary_language_spoken">Note: No langauge selected. Please select
-                                        it from Claimant's section!</mat-hint>
-                                </mat-form-field>
-                                <div class="selected_lang">selected language here</div>
+                                        appearance="outline" fxFlex="100">
+                                        <mat-label>Language</mat-label>
+                                        <mat-select formControlName="primary_language_spoken">
+                                            <mat-option *ngFor="let language of languageList" [value]="language.id">
+                                                {{language.language}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error>Please select a valid language</mat-error>
+                                        <mat-hint *ngIf="!primary_language_spoken">Note: No langauge selected. Please
+                                            select
+                                            it from Claimant's section!</mat-hint>
+                                    </mat-form-field>
+                                    <div class="selected_lang">selected language here</div>
 
                                 </div>
-
+                            </div>
+                            <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Examiner</mat-label>
