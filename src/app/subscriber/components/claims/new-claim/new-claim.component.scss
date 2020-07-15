@@ -1,53 +1,66 @@
 @import "variables";
 
-mat-card {
+.create-claim {
   mat-horizontal-stepper {
-    .sub-title {
-      color: $text-gray;
-      font-size: $font-size-1;
-      font-weight: $font-weight-bold;
-    }
-    mat-form-field {
-      padding: 10px 10px 0px 10px !important;
-    }
-    .fixied_adj {
-      span {
-        width: 60px;
+    mat-card {
+      margin: 10px;
+      padding: 10px;
+      box-shadow: $shadow-style-one !important;
+      @media only screen and (max-width: 568px) {
+        margin: 0px;
       }
-      mat-form-field {
-        width: calc(100% - 50px);
-        padding-left: 0px !important;
+      &:hover {
+        box-shadow: $shadow-style-one-hover;
       }
-    }
-    .action-button {
-      button {
-        @media only screen and (max-width: 568px) {
-          width: 120px;
-          padding: 0px 10px !important;
+      mat-card-header {
+        .sub-title {
+          color: $text-gray;
+          font-size: $font-size-1;
+          font-weight: $font-weight-bold;
         }
       }
-    }
-  }
-  .correspondence-file-upload {
-    @media only screen and (max-width: 568px) {
-      margin-bottom: 20px;
-    }
-    .Upload_ {
-      button {
-        width: 120px;
-      }
       mat-form-field {
-        width: calc(100% - 150px);
+        padding: 10px 10px 0px 10px !important;
+      }
+      .mat-check {
+        padding-top: 30px;
+        padding-left: 20px;
+        display: block;
         @media only screen and (max-width: 568px) {
-          width: $width-100 !important;
+          padding-top: 0;
+          padding-left: 7px;
         }
       }
-    }
-    div {
-      .btn_success {
-        margin-top: 25px;
+      .correspondence-file-upload {
         @media only screen and (max-width: 568px) {
-          margin-top: 0px;
+          margin-bottom: 20px;
+        }
+        .Upload_ {
+          button {
+            width: 120px;
+          }
+          mat-form-field {
+            width: calc(100% - 150px);
+            @media only screen and (max-width: 568px) {
+              width: $width-100 !important;
+            }
+          }
+        }
+        div {
+          .btn_success {
+            margin-top: 25px;
+            @media only screen and (max-width: 568px) {
+              margin-top: 0px;
+            }
+          }
+        }
+      }
+      .action-button {
+        button {
+          @media only screen and (max-width: 568px) {
+            width: 120px;
+            padding: 0px 10px !important;
+          }
         }
       }
     }
@@ -68,133 +81,133 @@ mat-card {
     @media only screen and (max-width: 568px) {
     }
   }
+  // .search-icon {
+  //   background-color: $sidebar-dark;
+  //   color: $white;
+  //   padding: 12px;
+  //   display: block;
+  //   cursor: pointer;
+  // }
+}
   .search-icon {
-    background-color: $sidebar-dark;
-    color: $white;
+    color: $text-gray;
     padding: 12px;
     display: block;
     cursor: pointer;
   }
-}
-
 .search-icon {
   cursor: pointer;
 }
 
-.adj_filter {
-  .search-icon {
-    background-color: $sidebar-dark;
-    color: $white;
-    padding: 12px;
-    display: block;
-    cursor: pointer;
-  }
+.selected_lang {
+  background-color: $light-color;
+  border-radius: 3px ;
+  padding: 5px 20px;
+  width: max-content;
+  margin-left: 10px;
 }
 
-.search-icon {
-  cursor: pointer;
-}
+// .adj_filter {
+//   .search-icon {
+//     background-color: $sidebar-dark;
+//     color: $white;
+//     padding: 12px;
+//     display: block;
+//     cursor: pointer;
+//   }
+// }
 
-.address-list {
-  .name {
-    font-size: $font-size-1;
-    font-size: $font-weight-bold;
-    padding: 10px 5px 5px 5px;
-    width: $width-100;
-    div {
-      min-width: 150px;
-      float: left;
-      @media only screen and (max-width: 568px) {
-        min-width: auto;
-        margin-bottom: 10px;
-        float: none;
-        display: block;
-      }
-      i {
-        opacity: 0.5;
-        padding-right: 10px;
-      }
-    }
-    span {
-      text-align: left;
-      font-weight: $font-weight-medium;
-      i {
-        padding: 5px;
-        opacity: 0.5;
-      }
-    }
-  }
-  .address {
-    padding: 5px 5px 5px 5px;
-  }
-  mat-list-item {
-    background-color: $light-color;
-    &:hover {
-      background-color: $light-color;
-      cursor: pointer;
-    }
-    .name {
-      font-size: $font-size-1;
-      font-size: $font-weight-bold;
-      padding: 10px 5px 5px 5px;
-      width: $width-100;
-      div {
-        min-width: 150px;
-        float: left;
-        @media only screen and (max-width: 568px) {
-          min-width: auto;
-          margin-bottom: 10px;
-          float: none;
-          display: block;
-        }
-        i {
-          opacity: 0.5;
-          padding-right: 10px;
-        }
-      }
-      span {
-        text-align: left;
-        font-weight: $font-weight-medium;
-        i {
-          padding: 5px;
-          opacity: 0.5;
-        }
-      }
-    }
-    .address {
-      color: $text-gray;
-      padding: 0 0 5px 5px;
-    }
-    .edit {
-      color: $btn_success;
-    }
-  }
-}
-.mat-check {
-  padding-top: 30px;
-  padding-left: 20px;
-  display: block;
-  @media only screen and (max-width: 568px) {
-    padding-top: 0;
-    padding-left: 7px;
-  }
-}
-.claim-accordion,
-mat-card-header {
-  .mat-expansion-panel-header-description {
-    flex-grow: 0;
-    font-size: $font-size-7;
-    font-weight: $font-weight-medium;
-  }
-}
+// .address-list {
+//   .name {
+//     font-size: $font-size-1;
+//     font-size: $font-weight-bold;
+//     padding: 10px 5px 5px 5px;
+//     width: $width-100;
+//     div {
+//       min-width: 150px;
+//       float: left;
+//       @media only screen and (max-width: 568px) {
+//         min-width: auto;
+//         margin-bottom: 10px;
+//         float: none;
+//         display: block;
+//       }
+//       i {
+//         opacity: 0.5;
+//         padding-right: 10px;
+//       }
+//     }
+//     span {
+//       text-align: left;
+//       font-weight: $font-weight-medium;
+//       i {
+//         padding: 5px;
+//         opacity: 0.5;
+//       }
+//     }
+//   }
+//   .address {
+//     padding: 5px 5px 5px 5px;
+//   }
+//   mat-list-item {
+//     background-color: $light-color;
+//     &:hover {
+//       background-color: $light-color;
+//       cursor: pointer;
+//     }
+//     .name {
+//       font-size: $font-size-1;
+//       font-size: $font-weight-bold;
+//       padding: 10px 5px 5px 5px;
+//       width: $width-100;
+//       div {
+//         min-width: 150px;
+//         float: left;
+//         @media only screen and (max-width: 568px) {
+//           min-width: auto;
+//           margin-bottom: 10px;
+//           float: none;
+//           display: block;
+//         }
+//         i {
+//           opacity: 0.5;
+//           padding-right: 10px;
+//         }
+//       }
+//       span {
+//         text-align: left;
+//         font-weight: $font-weight-medium;
+//         i {
+//           padding: 5px;
+//           opacity: 0.5;
+//         }
+//       }
+//     }
+//     .address {
+//       color: $text-gray;
+//       padding: 0 0 5px 5px;
+//     }
+//     .edit {
+//       color: $btn_success;
+//     }
+//   }
+// }
 
-button {
-  margin: 5px;
-}
+// .claim-accordion,
+// mat-card-header {
+//   .mat-expansion-panel-header-description {
+//     flex-grow: 0;
+//     font-size: $font-size-7;
+//     font-weight: $font-weight-medium;
+//   }
+// }
 
+// button {
+//   margin: 5px;
+// }
 
-.float-right {
-  float: right;
-  margin-left: -100px;
-  z-index: 5;
-}
+// .float-right {
+//   float: right;
+//   margin-left: -100px;
+//   z-index: 5;
+// }

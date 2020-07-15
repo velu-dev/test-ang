@@ -41,6 +41,8 @@ $menu-active: #383838; //Menu active background
 $tab-active: #3c3cff1f; //Tab active background
 $transparent: transparent;
 $border-light: #efefef;
+$yellow: #f2cf3c;
+$light_green: #b5cc18;
 
 //alert colors
 $text-success: rgb(3, 90, 6);
@@ -351,7 +353,11 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   color: $black;
 }
 .m-card {
-  box-shadow: $box-shadow-2;
+  padding: 10px;
+  box-shadow: $shadow-style-one !important;
+  &:hover {
+    box-shadow: $shadow-style-one-hover;
+  }
   min-height: calc(100vh - 240px);
 }
 
@@ -371,9 +377,9 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
     border-radius: 50px;
     width: 350px;
     box-shadow: $box-shadow-3;
-    @media only screen and (max-width: 568px) {
-      width: $width-100;
-    }
+    // @media only screen and (max-width: 568px) {
+    //   width: $width-100;
+    // }
     &:focus,
     &:hover,
     &:active {
@@ -614,7 +620,6 @@ input:-webkit-autofill {
   }
 }
 
-
 .data-max-width {
   min-width: $width-60;
   max-width: $width-60;
@@ -682,6 +687,24 @@ input:-webkit-autofill {
     background-color: $primarycolor;
   }
 }
+.outline-warning {
+  @extend .btn_;
+  color: $yellow;
+  border-color: $yellow;
+  &:hover {
+    color: $white;
+    background-color: $yellow;
+  }
+}
+.outline-light_green {
+  @extend .btn_;
+  color: $light_green;
+  border-color: $light_green;
+  &:hover {
+    color: $white;
+    background-color: $light_green;
+  }
+}
 
 .text-success {
   color: $btn_success;
@@ -701,8 +724,13 @@ input:-webkit-autofill {
   font-family: Lato !important;
 }
 
+// step overide css
+.mat-step-header .mat-step-icon-state-edit {
+  background-color: $secondary !important;
+}
 
-.injury-dialog, .service-dialog {
+.injury-dialog,
+.service-dialog {
   mat-card-header {
     .content-wrapper-main-title {
       color: $text-gray;
@@ -713,10 +741,10 @@ input:-webkit-autofill {
       padding: 10px 10px 0px 10px !important;
     }
     button.outline-success {
-      @extend .outline-success ;
+      @extend .outline-success;
     }
     button.outline-danger {
-      @extend .outline-danger ;
+      @extend .outline-danger;
     }
   }
 }

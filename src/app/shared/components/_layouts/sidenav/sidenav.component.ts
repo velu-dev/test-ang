@@ -30,6 +30,8 @@ export class SidenavComponent implements OnInit {
   screenWidth: number;
   simplexam_logo = globals.simplexam_logo;
   nav_logo = globals.simplexam_logo;
+  icon_logo = globals.icon_logo;
+  switch_user = globals.switch_user;
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
   public menuItems: any;
   expanded: boolean = false;

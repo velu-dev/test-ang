@@ -152,6 +152,10 @@ const routes: Routes = [{
   }]
 },
 {
+  path: "new-claim",
+  component: NewClaimComponent
+},
+{
   path: "claims",
   children: [{
     path: "",

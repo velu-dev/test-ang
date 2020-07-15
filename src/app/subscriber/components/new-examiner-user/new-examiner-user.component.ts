@@ -5,7 +5,7 @@ import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
@@ -20,6 +20,9 @@ import { Location } from '@angular/common';
 })
 export class NewExaminerUserComponent implements OnInit {
   userForm: FormGroup;
+  mailingAddressForm: FormGroup;
+  billingProviderForm: FormGroup;
+  renderingForm: FormGroup;
   addressForm: FormGroup;
   userExaminerForm: FormGroup;
   isSubmitted = false;
@@ -43,7 +46,8 @@ export class NewExaminerUserComponent implements OnInit {
   isExaminer: boolean = false;
   displayedColumns1: string[] = ['license_number', 'license_state', 'action',];
   dataSource1: any = ELEMENT_DATA;
-  examinerId:number = null;
+  examinerId: number = null;
+  mailingSubmit: boolean = false;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -55,7 +59,7 @@ export class NewExaminerUserComponent implements OnInit {
   columnName = [];
   filterValue: string;
   signData: any;
-  dataSource: any;
+  dataSource: any = new MatTableDataSource([]);
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: SubscriberUserService,
@@ -100,30 +104,12 @@ export class NewExaminerUserComponent implements OnInit {
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
         this.isEdit = true;
-
-        this.userService.getExaminerUser(params_res.id).subscribe(res => {
-          this.userData = res;
-          let user = {
-            id: res.id,
-            first_name: res.first_name,
-            last_name: res.last_name,
-            middle_name: res.middle_name,
-            company_name: res.company_name,
-            sign_in_email_id: res.sign_in_email_id,
-            role_id: res.role_id,
-            suffix: res.suffix
-          }
-          this.userForm.patchValue(user);
-          this.examinerId = res.id
-        })
-       
-      } else {
+        this.updateFormData(params_res.id)
       }
     })
   }
 
   ngOnInit() {
-
     this.userForm = this.formBuilder.group({
       id: [""],
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -135,12 +121,118 @@ export class NewExaminerUserComponent implements OnInit {
       SameAsSubscriber: [{ value: false, disabled: this.isEdit }]
     });
     this.userForm.patchValue({ role_id: 11 })
+
+    this.formInit();
+
+    this.renderingForm = this.formBuilder.group({
+      id: [""],
+      default_injury_state: [null],
+      is_person: [''],
+      national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
+      provider_type: [""],
+      taxonomy_id: [""],
+      provider_status: [""]
+    })
+
+    this.userService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+  }
+
+  updateFormData(id) {
+
+    this.userService.getExaminerUser(id).subscribe(res => {
+      this.userData = res;
+      let user = {
+        id: res.examiner_details.id,
+        first_name: res.examiner_details.first_name,
+        last_name: res.examiner_details.last_name,
+        middle_name: res.examiner_details.middle_name,
+        company_name: res.examiner_details.company_name,
+        sign_in_email_id: res.examiner_details.sign_in_email_id,
+        role_id: res.examiner_details.role_id,
+        suffix: res.examiner_details.suffix
+      }
+      this.userForm.patchValue(user);
+
+      this.examinerId = res.examiner_id
+      let mailing = {
+        id: res.mailing_address.id,
+        street1: res.mailing_address.street1,
+        street2: res.mailing_address.street2,
+        city: res.mailing_address.city,
+        state: res.mailing_address.state,
+        zip_code: res.mailing_address.zip_code,
+        phone_no1: res.mailing_address.phone_no1,
+        phone_no2: res.mailing_address.phone_no2,
+        fax_no: res.mailing_address.fax_no,
+        email: res.mailing_address.email,
+        contact_person: res.mailing_address.contact_person,
+        notes: res.mailing_address.notes,
+      }
+      this.mailingAddressForm.patchValue(mailing)
+
+      let billing = {
+        id: res.billing_provider.id,
+        default_injury_state: res.billing_provider.default_injury_state,
+        is_person: res.billing_provider.is_person != null ? res.billing_provider.is_person.toString() : 'true',
+        national_provider_identifier: res.billing_provider.national_provider_identifier,
+        dol_provider_number: res.billing_provider.dol_provider_number,
+        tax_id: res.billing_provider.tax_id,
+        street1: res.billing_provider.street1,
+        street2: res.billing_provider.street2,
+        city: res.billing_provider.city,
+        state: res.billing_provider.state,
+        zip_code: res.billing_provider.zip_code,
+        phone_no: res.billing_provider.phone_no,
+      }
+      this.billingProviderForm.patchValue(billing)
+    })
+  }
+
+  formInit() {
+
+    this.mailingAddressForm = this.formBuilder.group({
+      id: [""],
+      street1: [null],
+      street2: [null],
+      city: [null],
+      state: [null],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_no2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      email: ["", Validators.compose([Validators.email])],
+      contact_person: [""],
+      notes: [""],
+    })
+
+    this.billingProviderForm = this.formBuilder.group({
+      id: [""],
+      default_injury_state: [null],
+      is_person: ['true'],
+      national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
+      dol_provider_number: [""],
+      tax_id: [null],
+      street1: [null],
+      street2: [null],
+      city: [null],
+      state: [null],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      phone_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+
+    })
   }
 
   sameAsSub(e) {
+    this.isSubmitted = false;
     if (e.checked) {
+      this.formInit();
       this.userForm.disable();
       this.userService.getProfile().subscribe(res => {
+        this.userData = res;
         let user = {
           id: res.data.id,
           first_name: res.data.first_name,
@@ -154,7 +246,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.userForm.patchValue(user)
         this.userForm.controls.SameAsSubscriber.enable();
       })
-    }else{
+    } else {
       this.userForm.reset();
       this.userForm.enable();
     }
@@ -174,31 +266,30 @@ export class NewExaminerUserComponent implements OnInit {
       return;
     }
     if (!this.isEdit) {
-
       this.userService.createExaminerUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
-        this.examinerId = res.id
-       // this.router.navigate(['/subscriber/users'])
+        this.examinerId = res.data.id
+        // this.router.navigate(['/subscriber/users'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
 
     }
     else {
-      this.userForm.value.role_id = this.userData.role_id
       console.log(this.userForm.value)
       this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully!", 'success');
-        this.examinerId = res.id
-       // this.router.navigate(['/subscriber/users'])
+        this.examinerId = res.data.id
+        // this.router.navigate(['/subscriber/users'])
       }, error => {
-        this.alertService.openSnackBar(error.message, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
   }
 
   cancel() {
-    this._location.back();
+    //this._location.back();
+    this.router.navigate(['/subscriber/users'])
   }
 
   numberOnly(event): boolean {
@@ -272,6 +363,65 @@ export class NewExaminerUserComponent implements OnInit {
   tabchange(i) {
 
   }
+
+  mailingAddressSubmit() {
+    this.mailingSubmit = true;
+    Object.keys(this.mailingAddressForm.controls).forEach((key) => {
+      if (this.mailingAddressForm.get(key).value && typeof (this.mailingAddressForm.get(key).value) == 'string')
+        this.mailingAddressForm.get(key).setValue(this.mailingAddressForm.get(key).value.trim())
+    });
+    if (this.mailingAddressForm.invalid) {
+      window.scrollTo(0, 0)
+      this.userForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.mailingAddressForm.value.id);
+
+    // if (this.mailingAddressForm.value.id == '') {
+    //   this.userService.postmailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mailRes => {
+    //     console.log(mailRes);
+    //   }, error => {
+    //     this.alertService.openSnackBar(error.error.message, 'error');
+    //   })
+    // } else {
+    this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
+      console.log(mail);
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+    // }
+  }
+
+  billingSubmit: boolean = false;
+  billingPrviderSubmit() {
+    this.billingSubmit = true;
+    Object.keys(this.billingProviderForm.controls).forEach((key) => {
+      if (this.billingProviderForm.get(key).value && typeof (this.billingProviderForm.get(key).value) == 'string')
+        this.billingProviderForm.get(key).setValue(this.billingProviderForm.get(key).value.trim())
+    });
+    if (this.billingProviderForm.invalid) {
+      window.scrollTo(0, 0)
+      this.userForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.billingProviderForm.value.id);
+
+    // if (this.billingProviderForm.value.id == ('' || null)) {
+    //   this.userService.postBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mailRes => {
+    //     console.log(mailRes);
+    //   }, error => {
+    //     this.alertService.openSnackBar(error.error.message, 'error');
+    //   })
+    // } else {
+    this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
+      console.log(mail);
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+    //}
+  }
+
+  renderingSubmit: boolean = false;
 
 }
 

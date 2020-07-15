@@ -15,7 +15,7 @@ import { ManageUserComponent } from './manager/manage-user/manage-user.component
 import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
 import { AppointmentComponent } from './examiner/appointment/appointment.component';
 import { ClaimService } from './service/claim.service';
-import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
+import { NewClaimComponent, InjuryDialog } from './components/claims/new-claim/new-claim.component';
 import { BillableItemComponent } from './components/claims/billable-item/billable-item.component';
 import { ClaimantComponent } from './components/claims/claimant/claimant.component';
 import { ExaminerDashboardComponent } from './examiner/examiner-dashboard/examiner-dashboard.component';
@@ -95,6 +95,7 @@ import { NewExaminerUserComponent } from './components/new-examiner-user/new-exa
     ClaimantDetailsComponent,
     UpdateBillableItemComponent,
     InjuryPopup,
+    InjuryDialog,
     NewBillableItemComponent,
     BillingComponent,
     NewBillingComponent,
@@ -116,6 +117,7 @@ import { NewExaminerUserComponent } from './components/new-examiner-user/new-exa
     ClaimPopupComponent,
     BillableitemPopupComponent,
     InjuryPopup,
+    InjuryDialog,
     BillilgDialog,
     SignPopupComponent,
     EventdetailDialog,

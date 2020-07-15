@@ -1,11 +1,7 @@
 // File globals.ts
 export const nav_logo = '/assets/images/nav-logo.svg'
-
-
-
-
-
 export const logo = '/assets/images/auth-logo.svg'
+export const icon_logo = '/assets/images/icon-logo.svg'
 export const simplexam_logo = '/assets/images/logo.svg'
 export const profile_bg = '/assets/images/profile.jpg'
 export const xls = '/assets/images/xls.svg'
@@ -22,6 +18,8 @@ export const completed = '/assets/images/success.svg'
 export const incompleted = '/assets/images/incompeted.svg'
 export const left_voicemail = '/assets/images/left_voice.svg'
 export const page_not_found = '/assets/images/page_not_found.png'
+export const switch_user = '/assets/images/switch-user.svg'
+
 
 export const roles = [{}, {}]
 

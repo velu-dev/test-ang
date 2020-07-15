@@ -1,29 +1,35 @@
 <mat-sidenav-container class="sidenav-container ">
-    <mat-sidenav #drawer class="sidenav side-nav-icon" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    <mat-sidenav #drawer class="sidenav side-nav-icon" fixedInViewport
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false">
 
-        <mat-toolbar style="cursor: pointer;" (click)="mainPage()">
-            <!-- <button type="button" aria-label="Toggle sidenav"
-            mat-icon-button class="toggle_">
-            <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
-        </button> -->
-            <img mat-card-image [src]="simplexam_logo" alt="Lucy logo" class="logo logo-white">
-            <span class="p-l-4 expanded_"> Simplexam</span>
+        <mat-toolbar>
+            <button type="button" aria-label="Toggle sidenav" mat-icon-button class="toggle_">
+                <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
+            </button>
+            <span class="spacer"></span>
+            <img [src]="icon_logo" alt="Simplexam Logo" class="icon-logo expanded_" (click)="mainPage()">
+            <!-- <img mat-card-image [src]="simplexam_logo" alt="Lucy logo" class="logo logo-white">
+            <span class="p-l-4 expanded_"> Simplexam</span> -->
         </mat-toolbar>
         <span *ngIf="is_subscriber == 'true'">
             <a mat-raised-button *ngIf="roleId == 2" (click)="changeRole()" class="text-center switched_account">
-                <mat-icon>loop</mat-icon><span class="expanded_"> Switch to Examiner</span>
+                <img [src]="switch_user" alt="Switch to Examiner" class="role_change">
+                <span class="expanded_ p-l-10"> Switch to Examiner</span>
             </a>
             <a mat-raised-button *ngIf="roleId == 11" (click)="changeRole()" class="text-center switched_account">
-                <mat-icon>loop</mat-icon> <span class="expanded_">Switch to Subscriber</span>
+                <img [src]="switch_user" alt="Switch to Subscriber" class="role_change">
+                <span class="expanded_ p-l-10">Switch to Subscriber</span>
             </a>
         </span>
         <mat-nav-list>
             <span *ngFor="let menuItem of menuItems">
-                <a class="menu-card-title menu-group expanded_">{{menuItem.group}}</a>
+                <a class="menu-card-title menu-group m-b-50">{{menuItem.group}}</a>
                 <a *ngFor="let menu of menuItem.menu" (click)="navigate()" [routerLink]="menu.path"
                     routerLinkActive="active-list-item" class="list-nav" mat-list-item>
-                    <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon><span class="expanded_"> {{menu.title }}</span>
+                    <!-- <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> -->
+                    <i class="fa fa-{{menu.icon}} p-r-10"></i>
+                    <span class="expanded_"> {{menu.title }}</span>
                 </a>
             </span>
         </mat-nav-list>

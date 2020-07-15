@@ -62,3 +62,8 @@
 .mat-drawer-inner-container {
   overflow: initial !important;
 }
+.mat-sidenav-container {
+  .mat-list-base {
+    margin: 0px 8px !important;
+  }
+}

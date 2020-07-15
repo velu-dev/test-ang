@@ -60,7 +60,27 @@ export class SubscriberUserService {
   }
 
   postUninvite(data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.postUninvite + data,'')
+    return this.http.post(environment.baseUrl + api_endpoint.postUninvite + data, '')
+  }
+
+  postmailingAddress(id, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.createMailingAddress + id, data)
+  }
+
+  updatemailingAddress(id, data): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updateMailingAddress + id, data)
+  }
+
+  postBillingProvider(id, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.createBillingProvider + id, data)
+  }
+
+  updateBillingProvider(id, data): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updateBillingProvider + id, data)
+  }
+
+  seedData(data): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
 
 }

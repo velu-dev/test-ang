@@ -1,4 +1,3 @@
-
 <mat-card class="m-t-25">
     <mat-card-content>
         <mat-tab-group class="user-list" (selectedTabChange)="tabchange($event.index)">
@@ -8,56 +7,60 @@
                     <span>Examiner</span>
                 </ng-template>
                 <mat-card-content class="p-b-15">
-                    <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm">
+                    <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                        [formGroup]="userForm">
                         <div fxFlex="100" *ngIf="!this.isEdit">
-                            <mat-checkbox class="checkbox_" formControlName="SameAsSubscriber" (change)="sameAsSub($event)">Same as Subscriber</mat-checkbox>
+                            <mat-checkbox class="checkbox_" formControlName="SameAsSubscriber"
+                                (change)="sameAsSub($event)">Same as Subscriber</mat-checkbox>
                         </div>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
-                        fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>First name*</mat-label>
-                        <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
-                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
-                    </mat-form-field>
-        
-                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
-                        fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Middle name / MI</mat-label>
-                        <input matInput placeholder="Middle name" formControlName="middle_name" autocomplete="off">
-                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error>
-                    </mat-form-field>
-        
-                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
-                        fxFlex.sm="80" fxFlex.xs="80">
-                        <mat-label>Last name*</mat-label>
-                        <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
-                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
-                    </mat-form-field>
-        
-                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10"
-                        fxFlex.sm="20" fxFlex.xs="20">
-                        <mat-label>Suffix</mat-label>
-                        <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
-                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidsuffix}}</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50" fxFlex.sm="50"
-                        fxFlex.xs="100">
-                        <mat-label>Email*</mat-label>
-                        <input matInput placeholder="Email" formControlName="sign_in_email_id">
-                        <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50" fxFlex.sm="50"
-                        fxFlex.xs="100">
-                        <mat-label>Select a Role*</mat-label>
-                        <mat-select formControlName="role_id">
-                            <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="isSubmitted">{{errorMessages?.selectrole}}</mat-error>
-                    </mat-form-field>
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>First name*</mat-label>
+                            <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+                            <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Middle name / MI</mat-label>
+                            <input matInput placeholder="Middle name" formControlName="middle_name" autocomplete="off">
+                            <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
+                            fxFlex.sm="80" fxFlex.xs="80">
+                            <mat-label>Last name*</mat-label>
+                            <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+                            <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10" fxFlex.xl="10"
+                            fxFlex.sm="20" fxFlex.xs="20">
+                            <mat-label>Suffix</mat-label>
+                            <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
+                            <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidsuffix}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Email*</mat-label>
+                            <input matInput placeholder="Email" formControlName="sign_in_email_id">
+                            <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Select a Role*</mat-label>
+                            <mat-select formControlName="role_id">
+                                <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="isSubmitted">{{errorMessages?.selectrole}}</mat-error>
+                        </mat-form-field>
                         <div class="text-center w-100 m-t-10">
-                            <button mat-stroked-button type="button" class="outline-danger" (click)="cancel()">Cancel</button>
-                            <button mat-stroked-button class="m-l-10 outline-success" (click)="userSubmit()">Save</button>
+                            <button mat-stroked-button type="button" class="outline-danger"
+                                (click)="cancel()">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-success"
+                                (click)="userSubmit()">Save</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -69,89 +72,94 @@
                     <span>Mailing Address</span>
                 </ng-template>
                 <mat-card-content>
-                    <form fxLayout="row wrap" class="m-t-10">
+                    <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                    [formGroup]="mailingAddressForm">
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Street 1</mat-label>
-                            <input matInput placeholder="Street 1" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <mat-label>Street Address 1</mat-label>
+                            <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid address</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Street 2</mat-label>
-                            <input matInput placeholder="Street 2" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <mat-label>Street Address 2</mat-label>
+                            <input matInput placeholder="Street Address 2" formControlName="street2"autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid address</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>City</mat-label>
-                            <input matInput placeholder="City" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="City" formControlName="city" autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid city</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                            fxFlex.sm="50" fxFlex.xs="100">
+                        fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>State</mat-label>
-                            <input matInput placeholder="State" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <mat-select formControlName="state">
+                                <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="mailingSubmit">Please enter valid state</mat-error>
                         </mat-form-field>
+
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Zip Code</mat-label>
-                            <input matInput placeholder="Zip Code" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Zip Code" formControlName="zip_code" autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid zip code</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Phone 1</mat-label>
-                            <input matInput placeholder="Phone 1" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Phone 1" formControlName="phone_no1" (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid phone</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Phone 2</mat-label>
-                            <input matInput placeholder="Phone 2" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Phone 2" formControlName="phone_no2" (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid phone</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Fax</mat-label>
-                            <input matInput placeholder="Fax" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Fax" formControlName="fax_no"  mask="000-000-0000" autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid fax</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Contact Email</mat-label>
-                            <input matInput placeholder="Contact Email" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Contact Email" formControlName="email" autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid email</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Contact Person</mat-label>
-                            <input matInput placeholder="Contact Person" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Contact Person" formControlName="contact_person" autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid contact person</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="50" fxFlex.md="100"
                             fxFlex.sm="100" fxFlex.xs="100">
                             <mat-label>Notes</mat-label>
                             <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
-                                placeholder="Notes" autocomplete="off"></textarea>
-                            <mat-error>error msg here</mat-error>
+                                placeholder="Notes" autocomplete="off" formControlName="notes"></textarea>
+                                <mat-error *ngIf="mailingSubmit">Please enter valid notes</mat-error>
                         </mat-form-field>
 
                         <div class="text-center w-100 m-t-10 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
-                            <button mat-stroked-button class="m-l-10 outline-success">Save</button>
+                            <button mat-stroked-button (click)="mailingAddressSubmit()" class="m-l-10 outline-success">Save</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -164,22 +172,24 @@
                 </ng-template>
 
                 <mat-card-content>
-                    <form fxLayout="row wrap" class="m-t-10">
+                    <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                    [formGroup]="billingProviderForm">
                         <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Default Injury State</mat-label>
-                                <mat-select>
-                                    <mat-option>State list here</mat-option>
+                                <mat-select formControlName="default_injury_state">
+                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                    </mat-option>
                                 </mat-select>
-                                <mat-error>error msg here</mat-error>
+                                <mat-error *ngIf="billingSubmit">Please enter valid state</mat-error>
                             </mat-form-field>
                         </div>
                         <div fxFlex="100">
-                            <mat-radio-group class="p-l-15">
-                                <mat-radio-button value="1">Individual
+                            <mat-radio-group class="p-l-15" formControlName="is_person">
+                                <mat-radio-button value="true">Individual
                                 </mat-radio-button>
-                                <mat-radio-button value="2" class="p-l-10">
+                                <mat-radio-button value="false" class="p-l-10">
                                     Organization</mat-radio-button>
                             </mat-radio-group>
                         </div>
@@ -192,8 +202,8 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Tax ID</mat-label>
-                                <input matInput placeholder="Tax ID" autocomplete="off">
-                                <mat-error>error msg here</mat-error>
+                                <input matInput placeholder="Tax ID" mask='00-0000000' formControlName="tax_id" autocomplete="off">
+                                <mat-error *ngIf="billingSubmit" >Please enter valid tax ID</mat-error>
                             </mat-form-field>
                         </div>
 
@@ -201,84 +211,87 @@
                             CMS 1500 Box 33
                         </div>
 
-                        <div fxFlex="100">
+                        <div fxFlex="100" *ngIf="billingProviderForm.value.is_person == 'true'">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>First name*</mat-label>
-                                <input matInput placeholder="First name" autocomplete="off">
-                                <mat-error>error msg here</mat-error>
+                                <input matInput placeholder="First name" [value]="user.first_name" autocomplete="off" disabled>
+                                <mat-error *ngIf="billingSubmit">Please enter valid first name</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Middle Name</mat-label>
-                                <input matInput placeholder="Middle Name" autocomplete="off">
-                                <mat-error>error msg here</mat-error>
+                                <input matInput placeholder="Middle Name"[value]="user.middle_name" autocomplete="off" disabled>
+                                <mat-error *ngIf="billingSubmit">Please enter valid middle name</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Last Name*</mat-label>
-                                <input matInput placeholder="Last Name" autocomplete="off">
-                                <mat-error>error msg here</mat-error>
+                                <input matInput placeholder="Last Name" [value]="user.last_name" autocomplete="off" disabled>
+                                <mat-error *ngIf="billingSubmit">Please enter valid last name</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
                                 fxFlex.xl="10" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Suffix</mat-label>
-                                <input matInput placeholder="Suffix" autocomplete="off">
-                                <mat-error>error msg here</mat-error>
+                                <input matInput placeholder="Suffix" [value]="user.suffix" autocomplete="off" disabled>
+                                <mat-error>Please enter valid suffix</mat-error>
                             </mat-form-field>
                         </div>
-                        <div fxFlex="100">
+                        <div fxFlex="100" *ngIf="billingProviderForm.value.is_person == 'false'">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
                                 fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
                                 <mat-label>Billing Provider Name*</mat-label>
-                                <input matInput placeholder="Billing Provider Name" autocomplete="off">
-                                <mat-error>error msg here</mat-error>
+                                <input matInput placeholder="Billing Provider Name" [value]="user.company_name" autocomplete="off" disabled>
+                                <mat-error *ngIf="billingSubmit">Please enter valid billing provider name</mat-error>
                             </mat-form-field>
                         </div>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street 1</mat-label>
-                            <input matInput placeholder="Street 1" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Street 1" formControlName="street1" autocomplete="off">
+                            <mat-error *ngIf="billingSubmit">Please enter valid address</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street 2</mat-label>
-                            <input matInput placeholder="Street 2" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Street 2" formControlName="street2" autocomplete="off">
+                            <mat-error *ngIf="billingSubmit">Please enter valid address</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>City</mat-label>
-                            <input matInput placeholder="City" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="City" formControlName="city" autocomplete="off">
+                            <mat-error *ngIf="billingSubmit">Please enter valid city</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>State</mat-label>
-                            <input matInput placeholder="State" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <mat-select formControlName="state">
+                                <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="billingSubmit">Please enter valid state</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Zip Code</mat-label>
-                            <input matInput placeholder="Zip Code" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Zip Code" formControlName="zip_code" autocomplete="off">
+                            <mat-error *ngIf="billingSubmit">Please enter valid zip code</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Phone</mat-label>
-                            <input matInput placeholder="Phone" autocomplete="off">
-                            <mat-error>error msg here</mat-error>
+                            <input matInput placeholder="Phone" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no" autocomplete="off">
+                            <mat-error *ngIf="billingSubmit">Please enter valid phone</mat-error>
                         </mat-form-field>
 
                         <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -290,8 +303,8 @@
                                     fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                                     <mat-label>National Provider Identifier (NPI) Number</mat-label>
                                     <input matInput placeholder="National Provider Identifier (NPI) Number"
-                                        autocomplete="off">
-                                    <mat-error>error msg here</mat-error>
+                                        autocomplete="off"  [dropSpecialCharacters]="false" mask="9{15}" formControlName="national_provider_identifier">
+                                    <mat-error *ngIf="billingSubmit">Please enter valid NPI number</mat-error>
                                 </mat-form-field>
                             </div>
 
@@ -306,41 +319,43 @@
                                     fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                                     <mat-label>Department of Labor (DOL) Provider Number</mat-label>
                                     <input matInput placeholder="Department of Labor (DOL) Provider Number"
-                                        autocomplete="off">
-                                    <mat-error>error msg here</mat-error>
+                                        autocomplete="off" formControlName="dol_provider_number">
+                                    <mat-error *ngIf="billingSubmit">Please enter valid DOL number</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
 
                         <div class="text-center w-100 m-t-10 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
-                            <button mat-stroked-button class="m-l-10 outline-success">Save</button>
+                            <button mat-stroked-button class="m-l-10 outline-success" (click)="billingPrviderSubmit()">Save</button>
                         </div>
                     </form>
                 </mat-card-content>
 
 
             </mat-tab>
-            <!-- ######~~~~~Rendering Provider ~~~~~##### -->
+            <!-- ######~~~~~Rendering Provider ~~~~~#####  -->
             <mat-tab [disabled]='!examinerId'>
                 <ng-template mat-tab-label>
                     <span>Rendering Provider</span>
                 </ng-template>
                 <mat-card-content>
-                    <form fxLayout="row wrap" class="m-t-10">
+                    <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                    [formGroup]="renderingForm">
                         <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Default Injury State</mat-label>
-                                <mat-select>
-                                    <mat-option>State list here</mat-option>
+                                <mat-select formControlName="default_injury_state">
+                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                    </mat-option>
                                 </mat-select>
-                                <mat-error>error msg here</mat-error>
+                                <mat-error *ngIf="billingSubmit">Please enter valid state</mat-error>
                             </mat-form-field>
                         </div>
                         <div fxFlex="100">
-                            <mat-radio-group class="p-l-15">
-                                <mat-radio-button value="1" >Person
+                            <mat-radio-group class="p-l-15" formControlName="is_person">
+                                <mat-radio-button value="1">Person
                                 </mat-radio-button>
                                 <mat-radio-button value="2" class="p-l-10">
                                     Non-person</mat-radio-button>
@@ -521,7 +536,7 @@
                     <div class="table-filter">
                         <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                             placeholder="Search by address, phone, etc.">
-                            <mat-icon >search</mat-icon>
+                        <mat-icon>search</mat-icon>
                     </div>
                     <span class="spacer"></span>
                     <button mat-stroked-button class="float-right outline-success m-t-5">
