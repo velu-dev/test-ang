@@ -431,9 +431,9 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Taxonomy Code</mat-label>
-                            <mat-select formControlName="taxonomy_id">
+                            <mat-select formControlName="taxonomy_id" (selectionChange)="texonomyChange($event.value)">
                                 <mat-select-trigger>
-                                    {{renderingForm.controls['taxonomy_id'].value}}
+                                    {{texonomyValue}}
                                   </mat-select-trigger>
                                 <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
                                     {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
@@ -459,7 +459,7 @@
                                         <!-- Name Column -->
                                         <ng-container matColumnDef="license_state">
                                             <th mat-header-cell *matHeaderCellDef> License State </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.state_of_license_id}} </td>
+                                            <td mat-cell *matCellDef="let element"> {{element.state_name}} </td>
                                         </ng-container>
 
                                         <!-- Weight Column -->
@@ -531,8 +531,12 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Provider Type</mat-label>
-                            <input matInput placeholder="Provider Type" formControlName="provider_type" autocomplete="off">
-                            <mat-error *ngIf="renderingSubmit">Please select valid provider type</mat-error>
+                            <mat-select formControlName="provider_type">
+                                <mat-option *ngFor="let provider of providerTypeList" [value]="provider.name">
+                                    {{provider.name}}
+                                </mat-option>
+                                <mat-error *ngIf="renderingSubmit">Please select valid Provider Type</mat-error>
+                            </mat-select>
                         </mat-form-field>
 
                         <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"

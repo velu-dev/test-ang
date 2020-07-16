@@ -60,6 +60,7 @@ export class NewExaminerUserComponent implements OnInit {
   filterValue: string;
   signData: any;
   dataSource: any = new MatTableDataSource([]);
+  providerTypeList:any;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -135,6 +136,13 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.seedData('taxonomy').subscribe(response => {
       this.taxonomyList = response['data'];
+      this.texonomyChange(this.renderingForm.value.taxonomy_id)
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.userService.seedData('provider_type').subscribe(response => {
+      this.providerTypeList = response['data'];
     }, error => {
       console.log("error", error)
     })
@@ -202,6 +210,7 @@ export class NewExaminerUserComponent implements OnInit {
         license_details: res.rendering_provider.license_details,
         //signature: res.rendering_provider.signature
       }
+     
       this.signData = res.rendering_provider.signature ? 'data:image/png;base64,' + res.rendering_provider.signature : null
       this.renderingForm.patchValue(rendering);
 
@@ -408,19 +417,11 @@ export class NewExaminerUserComponent implements OnInit {
     }
     console.log(this.mailingAddressForm.value.id);
 
-    // if (this.mailingAddressForm.value.id == '') {
-    //   this.userService.postmailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mailRes => {
-    //     console.log(mailRes);
-    //   }, error => {
-    //     this.alertService.openSnackBar(error.error.message, 'error');
-    //   })
-    // } else {
     this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
       console.log(mail);
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
-    // }
   }
 
   billingSubmit: boolean = false;
@@ -437,19 +438,11 @@ export class NewExaminerUserComponent implements OnInit {
     }
     console.log(this.billingProviderForm.value.id);
 
-    // if (this.billingProviderForm.value.id == ('' || null)) {
-    //   this.userService.postBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mailRes => {
-    //     console.log(mailRes);
-    //   }, error => {
-    //     this.alertService.openSnackBar(error.error.message, 'error');
-    //   })
-    // } else {
     this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
       console.log(mail);
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
-    //}
   }
 
   renderingSubmit: boolean = false;
@@ -511,6 +504,15 @@ export class NewExaminerUserComponent implements OnInit {
     })
   }
 
+  texonomyValue:String;
+  texonomyChange(e){
+    this.taxonomyList.map(tex=>{
+      if(e == tex.id){
+        this.texonomyValue = tex.taxonomy_code;
+      }
+    })
+  }
+
 }
 
 @Component({
@@ -525,11 +527,12 @@ export class LicenseDialog {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
   ) {
+    dialogRef.disableClose = true;
     this.states = data.states;
 
     this.licenseForm = this.formBuilder.group({
       id: [""],
-      state_license_number: [null, Validators.compose([Validators.required])],
+      state_license_number: [null, Validators.compose([Validators.required,Validators.maxLength(15)])],
       state_of_license_id: [null, Validators.compose([Validators.required])],
     });
     if (data.details) {
