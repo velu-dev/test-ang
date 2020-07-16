@@ -12,7 +12,7 @@
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>License Number</mat-label>
-                    <input matInput placeholder="License Number" formControlName="state_license_number" autocomplete="off">
+                    <input matInput placeholder="License Number" mask="9A{15}" [dropSpecialCharacters]="false" formControlName="state_license_number" autocomplete="off">
                     <mat-error>Please enter valid License Number</mat-error>
                 </mat-form-field>
 
@@ -23,7 +23,7 @@
                         <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
                         </mat-option>
                     </mat-select>
-                    <mat-error>Please enter valid state</mat-error>
+                    <mat-error>Please select valid License state</mat-error>
                 </mat-form-field>
 
                 <div fxFlex="100" class="p-t-10 text-center">
