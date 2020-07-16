@@ -400,7 +400,7 @@
                                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Fax 1</mat-label>
-                                            <input matInput formControlName="fax1" mask="000-000-0000"
+                                            <input matInput formControlName="fax1" mask="(000) 000-0000"
                                                 placeholder="Fax 1" autocomplete="off">
                                             <mat-error *ngIf="addressIsSubmitted">Please enter valid fax number
                                             </mat-error>
@@ -409,7 +409,7 @@
                                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                             fxFlex.xs="100">
                                             <mat-label>Fax 2</mat-label>
-                                            <input matInput formControlName="fax2" mask="000-000-0000"
+                                            <input matInput formControlName="fax2" mask="(000) 000-0000"
                                                 placeholder="Fax 2" autocomplete="off">
                                             <mat-error *ngIf="addressIsSubmitted">Please enter valid fax number
                                             </mat-error>

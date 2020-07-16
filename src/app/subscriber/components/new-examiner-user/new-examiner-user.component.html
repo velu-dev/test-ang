@@ -133,7 +133,7 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Fax</mat-label>
-                            <input matInput placeholder="Fax" formControlName="fax_no" mask="000-000-0000"
+                            <input matInput placeholder="Fax" formControlName="fax_no" mask="(000) 000-0000"
                                 autocomplete="off">
                             <mat-error *ngIf="mailingSubmit">Please enter valid fax</mat-error>
                         </mat-form-field>
@@ -261,15 +261,15 @@
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Street 1</mat-label>
-                            <input matInput placeholder="Street 1" formControlName="street1" autocomplete="off">
+                            <mat-label>Street Address 1</mat-label>
+                            <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off">
                             <mat-error *ngIf="billingSubmit">Please enter valid address</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Street 2</mat-label>
-                            <input matInput placeholder="Street 2" formControlName="street2" autocomplete="off">
+                            <mat-label>Street Address 2</mat-label>
+                            <input matInput placeholder="Street Address 2" formControlName="street2" autocomplete="off">
                             <mat-error *ngIf="billingSubmit">Please enter valid address</mat-error>
                         </mat-form-field>
 
@@ -331,7 +331,7 @@
                                     fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                                     <mat-label>Department of Labor (DOL) Provider Number</mat-label>
                                     <input matInput placeholder="Department of Labor (DOL) Provider Number"
-                                        autocomplete="off" formControlName="dol_provider_number">
+                                        autocomplete="off"  [dropSpecialCharacters]="false" mask="9{9}" formControlName="dol_provider_number">
                                     <mat-error *ngIf="billingSubmit">Please enter valid DOL number</mat-error>
                                 </mat-form-field>
                             </div>
