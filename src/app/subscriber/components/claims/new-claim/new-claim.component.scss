@@ -23,7 +23,7 @@
         padding: 10px 10px 0px 10px !important;
       }
       .mat-check {
-        padding-top: 30px;
+        padding-top: 25px;
         padding-left: 20px;
         display: block;
         @media only screen and (max-width: 568px) {
@@ -107,6 +107,9 @@
   margin-left: 10px;
 }
 
+.text-success {
+  text-decoration: none;
+}
 // .adj_filter {
 //   .search-icon {
 //     background-color: $sidebar-dark;
