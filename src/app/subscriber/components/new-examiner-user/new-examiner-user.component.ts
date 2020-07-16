@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
@@ -45,7 +45,7 @@ export class NewExaminerUserComponent implements OnInit {
   specialtyList: any;
   isExaminer: boolean = false;
   displayedColumns1: string[] = ['license_number', 'license_state', 'action',];
-  dataSource1: any = ELEMENT_DATA;
+  licenceDataSource: any = new MatTableDataSource([]);
   examinerId: number = null;
   mailingSubmit: boolean = false;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -60,6 +60,7 @@ export class NewExaminerUserComponent implements OnInit {
   filterValue: string;
   signData: any;
   dataSource: any = new MatTableDataSource([]);
+  @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: SubscriberUserService,
@@ -124,21 +125,21 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.formInit();
 
-    this.renderingForm = this.formBuilder.group({
-      id: [""],
-      default_injury_state: [null],
-      is_person: [''],
-      national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
-      provider_type: [""],
-      taxonomy_id: [""],
-      provider_status: [""]
-    })
+
 
     this.userService.seedData('state').subscribe(response => {
       this.states = response['data'];
     }, error => {
       console.log("error", error)
     })
+
+    this.userService.seedData('taxonomy').subscribe(response => {
+      this.taxonomyList = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+
   }
 
   updateFormData(id) {
@@ -189,6 +190,22 @@ export class NewExaminerUserComponent implements OnInit {
         phone_no: res.billing_provider.phone_no,
       }
       this.billingProviderForm.patchValue(billing)
+
+      let rendering = {
+        id: res.rendering_provider.id,
+        default_injury_state: res.rendering_provider.default_injury_state,
+        is_person: res.rendering_provider.is_person != null ? res.rendering_provider.is_person.toString() : 'true',
+        national_provider_identifier: res.rendering_provider.national_provider_identifier,
+        provider_type: res.rendering_provider.provider_type,
+        taxonomy_id: res.rendering_provider.taxonomy_id,
+        provider_status: res.rendering_provider.provider_status != null ? res.rendering_provider.provider_status.toString() : 'true',
+        license_details: res.rendering_provider.license_details,
+        //signature: res.rendering_provider.signature
+      }
+      this.signData = res.rendering_provider.signature ? 'data:image/png;base64,' + res.rendering_provider.signature : null
+      this.renderingForm.patchValue(rendering);
+
+      this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details)
     })
   }
 
@@ -223,6 +240,19 @@ export class NewExaminerUserComponent implements OnInit {
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
 
+    })
+
+    this.renderingForm = this.formBuilder.group({
+      id: [""],
+      default_injury_state: [null],
+      is_person: ['true'],
+      national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
+      provider_type: [null],
+      taxonomy_id: [null],
+      provider_status: ['true'],
+      license_details: [null],
+      signature: [null],
+      is_new_signature: [false]
     })
   }
 
@@ -288,8 +318,8 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   cancel() {
-    //this._location.back();
-    this.router.navigate(['/subscriber/users'])
+    this._location.back();
+    //this.router.navigate(['/subscriber/users'])
   }
 
   numberOnly(event): boolean {
@@ -321,7 +351,7 @@ export class NewExaminerUserComponent implements OnInit {
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 500) {
-        //this.fileUpload.nativeElement.value = "";
+        this.fileUpload.nativeElement.value = "";
         this.alertService.openSnackBar("This file too long", 'error');
         return;
       }
@@ -329,7 +359,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.openSign(event);
     } else {
       this.selectedFile = null;
-      //this.fileUpload.nativeElement.value = "";
+      this.fileUpload.nativeElement.value = "";
       this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
   }
@@ -348,9 +378,10 @@ export class NewExaminerUserComponent implements OnInit {
         this.selectedFile = null
         this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
       } else {
+        this.renderingForm.patchValue({ is_new_signature: true })
         this.signData = result;
       }
-      //this.fileUpload.nativeElement.value = "";
+      this.fileUpload.nativeElement.value = "";
     });
   }
 
@@ -422,16 +453,106 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   renderingSubmit: boolean = false;
+  renderingFormSubmit() {
+    this.renderingSubmit = true;
+    Object.keys(this.renderingForm.controls).forEach((key) => {
+      if (this.renderingForm.get(key).value && typeof (this.renderingForm.get(key).value) == 'string')
+        this.renderingForm.get(key).setValue(this.renderingForm.get(key).value.trim())
+    });
+    if (this.renderingForm.invalid) {
+      window.scrollTo(0, 0)
+      return;
+    }
+    let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
+    this.renderingForm.value.signature = sign;
+    console.log(this.renderingForm.value);
+    this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe(render => {
+
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
+
+  openLicense(data?: any, index?: number) {
+    const dialogRef = this.dialog.open(LicenseDialog, {
+      width: '800px',
+      data: { states: this.states, details: data }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        this.userService.createLicense(this.examinerId, result).subscribe(license => {
+          console.log(license);
+          let data = this.licenceDataSource.data;
+          if(result.id){
+            data.splice(index, 1);
+          }
+          data.push(license.data);
+          this.licenceDataSource = new MatTableDataSource(data)
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    });
+  }
+
+  editLicense(element, i) {
+    this.openLicense(element, i)
+  }
+
+  removeLicense(e, index) {
+    this.userService.deleteLicense(e.id).subscribe(license => {
+      let data = this.licenceDataSource.data;
+      data.splice(index, 1);
+      this.licenceDataSource = new MatTableDataSource(data)
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
+
+}
+
+@Component({
+  selector: 'license-dialog',
+  templateUrl: 'license-dialog.html',
+})
+export class LicenseDialog {
+  states: any;
+  licenseForm: FormGroup;
+  constructor(
+    public dialogRef: MatDialogRef<LicenseDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private formBuilder: FormBuilder,
+  ) {
+    this.states = data.states;
+
+    this.licenseForm = this.formBuilder.group({
+      id: [""],
+      state_license_number: [null, Validators.compose([Validators.required])],
+      state_of_license_id: [null, Validators.compose([Validators.required])],
+    });
+    if (data.details) {
+      this.licenseForm.patchValue(data.details)
+    }
+  }
+
+  addLicense() {
+    console.log()
+    Object.keys(this.licenseForm.controls).forEach((key) => {
+      if (this.licenseForm.get(key).value && typeof (this.licenseForm.get(key).value) == 'string')
+        this.licenseForm.get(key).setValue(this.licenseForm.get(key).value.trim())
+    });
+    if (this.licenseForm.invalid) {
+      return;
+    }
+    this.dialogRef.close(this.licenseForm.value);
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }
 
 
-const ELEMENT_DATA = [
-  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone": "(123) 456 - 7890", "npi_number": "999999999", "status": "Yes" },
-  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone": "(123) 456 - 7890", "npi_number": "999999999", "status": "Yes" },
-  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone": "(123) 456 - 7890", "npi_number": "999999999", "status": "Yes" },
-  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone": "(123) 456 - 7890", "npi_number": "999999999", "status": "Yes" },
-  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone": "(123) 456 - 7890", "npi_number": "999999999", "status": "Yes" },
-  { "id": 132, "address": "123 Street St, Suite 4, Los Angeles, CA 99999-1234", "service_type": "20 - Urgent Care", "phone": "(123) 456 - 7890", "npi_number": "999999999", "status": "Yes" },
-
-];

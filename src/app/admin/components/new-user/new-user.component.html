@@ -1,46 +1,49 @@
 <mat-card class="m-card">
   <mat-card-header>
-    <mat-card-title class="m-0">User Information</mat-card-title>
+    <div class="m-0 content-wrapper-main-title p-l-10">Add Admin</div>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
-    <!--Form start-->
-    <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm" (ngSubmit)="userSubmit()" class="mat-grid-form">
+    <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm"
+      (ngSubmit)="userSubmit()" class="mat-grid-form">
 
-      <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
-        fxFlex.xs="100">
+      <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+        fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>First name*</mat-label>
         <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"  fxFlex.sm="50"
-        fxFlex.xs="100">
+      <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+        fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Middle name / MI</mat-label>
         <input matInput placeholder="Middle name" formControlName="middle_name" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"  fxFlex.sm="50"
-        fxFlex.xs="100">
+      <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+        fxFlex.sm="50" fxFlex.xs="100">
         <mat-label>Last name*</mat-label>
         <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
+      <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100" fxFlex.sm="100"
+        fxFlex.xs="100">
         <mat-label>Company name</mat-label>
         <input matInput placeholder="Company name" formControlName="company_name" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidcompanyname}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
+      <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50"
+        fxFlex.xs="100">
         <mat-label>Email ID*</mat-label>
         <input matInput placeholder="Email ID" formControlName="sign_in_email_id" autocomplete="off">
         <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"  fxFlex.sm="50" fxFlex.xs="100">
+      <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50"
+        fxFlex.xs="100">
         <mat-label>Select a Role*</mat-label>
         <mat-select formControlName="role_id">
           <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}
@@ -50,9 +53,10 @@
       </mat-form-field>
 
       <div class="text-center w-100 m-t-10">
-        <button mat-raised-button color="primary" type="submit" class="m-r-10 rounded-corner btn_success">
+
+        <button mat-stroked-button type="button" (click)="cancel()" class="outline-danger">Cancel</button>
+        <button mat-stroked-button type="submit" class="m-l-10 outline-success">
           Save </button>
-        <button mat-raised-button type="button" color="warn" (click)="cancel()" class="rounded-corner">Cancel</button>
       </div>
 
     </form>
