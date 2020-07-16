@@ -436,8 +436,6 @@ export class NewClaimComponent implements OnInit {
     })
     this.primary_language_spoken = option.primary_language_spoken ? true : false
     this.claimant.patchValue(option);
-    if (option.zip_code_plus_4 != "")
-      this.claimant.patchValue({ zip_code: option.zip_code + "-" + option.zip_code_plus_4 })
     //this.filteredClaimant = new Observable<[]>();
 
   }
