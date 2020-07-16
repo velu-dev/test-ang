@@ -146,3 +146,20 @@ div.advanced_search_expand {
   height: 48px;
   border-bottom: 1px solid $light-gray;
 }
+
+.new-location {
+  mat-card-content {
+    form {
+     .sub-title{
+      color: $text-gray;
+      font-size: $font-size-1;
+      font-weight: $font-weight-bold;
+      border-bottom: 1px solid $border-light;
+      padding: 10px 0;
+     }
+      mat-form-field {
+        padding: 10px 10px 0px 10px !important;
+      }
+    }
+  }
+}
