@@ -9,9 +9,9 @@
                 <mat-card-content class="p-b-15">
                     <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                         [formGroup]="userForm">
-                        <div fxFlex="100" *ngIf="!this.isEdit">
+                        <div fxFlex="100" *ngIf="!sameAsExaminer || (sameAsExaminer && user?.id == userForm?.value?.id)">
                             <mat-checkbox class="checkbox_" formControlName="SameAsSubscriber"
-                                (change)="sameAsSub($event)">Same as Subscriber</mat-checkbox>
+                                (change)="sameAsSub($event)">Add Examiner Role to Subscriber</mat-checkbox>
                         </div>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
