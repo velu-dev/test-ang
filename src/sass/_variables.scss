@@ -640,6 +640,10 @@ input:-webkit-autofill {
 }
 
 // OUTLINE BUTTON CSS
+.mat-button-focus-overlay {
+  transition: none !important;
+  opacity: 0 !important;
+}
 .btn_ {
   height: 40px;
   min-width: 100px;
@@ -753,6 +757,7 @@ input:-webkit-autofill {
 // COMMON CLSSS             =========
 // ==================================
 
+//Manage user add new button 
 .add-new-user {
   z-index: 4;
   position: absolute;
@@ -771,6 +776,8 @@ input:-webkit-autofill {
 .p-5 {
   padding: 5px;
 }
+
+// Landing page card
 .mat-card-details {
   padding: 10px 10px;
   box-shadow: $shadow-style-one !important;
@@ -784,9 +791,10 @@ input:-webkit-autofill {
   &:hover {
     box-shadow: $shadow-style-one-hover !important;
   }
-  mat-card-content { 
+  mat-card-content {
     h4 {
-      font-size: $font-size-10;font-weight: normal;
+      font-size: $font-size-10;
+      font-weight: normal;
       color: $white;
     }
   }
