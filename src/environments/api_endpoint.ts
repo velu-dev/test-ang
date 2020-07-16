@@ -50,6 +50,7 @@ export const api_endpoint = {
     updateRenderingProvider: 'subscriber/examiner/rendering-provider-update/',
     createLicense: 'subscriber/examiner/add-license/',
     deleteLicense: 'subscriber/examiner/remove-license/',
+    verifyRole: 'subscriber/examiner/verify-role',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',
