@@ -29,7 +29,7 @@
         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
             <mat-label>State</mat-label>
             <mat-select formControlName="state">
-                <mat-option *ngFor="let state of states" [value]="state.state_code">{{state.state}}
+                <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
                 </mat-option>
             </mat-select>
             <mat-error>Please enter valid state</mat-error>

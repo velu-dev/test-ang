@@ -663,6 +663,7 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimCreated = false;
   submitClaim(status) {
+    this.isClaimSubmited = true;
     if (!this.claimChanges) {
       if (status == 'next') {
         this.stepper.next();
@@ -673,7 +674,6 @@ export class NewClaimComponent implements OnInit {
     }
 
     this.claimChanges = false;
-    this.isClaimSubmited = true;
     Object.keys(this.claim.controls).forEach((key) => {
       if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string')
         this.claim.get(key).setValue(this.claim.get(key).value.trim())
