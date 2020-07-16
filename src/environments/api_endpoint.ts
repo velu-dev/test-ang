@@ -39,14 +39,17 @@ export const api_endpoint = {
     getBillableAwait: 'subscriber/awaiting/billable-items',
     updateSubsciberSetting: 'subscriber/settings-update/',
     postExaminerUser: 'subscriber/examiner/create',
-    getExaminerUser:'subscriber/examiner/details/',
+    getExaminerUser: 'subscriber/examiner/details/',
     postUninvite: 'subscriber/uninvite-user/',
 
     //examiner
-    createMailingAddress:'subscriber/examiner/mailing-address-create/',
-    createBillingProvider:'subscriber/examiner/billing-provider-create/',
-    updateMailingAddress:'subscriber/examiner/mailing-address-update/',
-    updateBillingProvider:'subscriber/examiner/billing-provider-update/',
+    createMailingAddress: 'subscriber/examiner/mailing-address-create/',
+    createBillingProvider: 'subscriber/examiner/billing-provider-create/',
+    updateMailingAddress: 'subscriber/examiner/mailing-address-update/',
+    updateBillingProvider: 'subscriber/examiner/billing-provider-update/',
+    updateRenderingProvider: 'subscriber/examiner/rendering-provider-update/',
+    createLicense: 'subscriber/examiner/add-license/',
+    deleteLicense: 'subscriber/examiner/remove-license/',
 
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',

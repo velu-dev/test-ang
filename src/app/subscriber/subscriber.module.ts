@@ -52,7 +52,7 @@ import { UpcommingBillableItemComponent } from './components/dashboard/upcomming
 import { UnfinishedReportComponent } from './components/dashboard/unfinished-report/unfinished-report.component';
 import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
 import { SubscriberService } from './service/subscriber.service';
-import { NewExaminerUserComponent } from './components/new-examiner-user/new-examiner-user.component';
+import { NewExaminerUserComponent, LicenseDialog } from './components/new-examiner-user/new-examiner-user.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -110,6 +110,7 @@ import { NewExaminerUserComponent } from './components/new-examiner-user/new-exa
     UnfinishedReportComponent,
     BillingCollectionComponent,
     NewExaminerUserComponent,
+    LicenseDialog
 
   ],
   entryComponents: [
@@ -121,6 +122,7 @@ import { NewExaminerUserComponent } from './components/new-examiner-user/new-exa
     BillilgDialog,
     SignPopupComponent,
     EventdetailDialog,
+    LicenseDialog
 
   ],
   imports: [

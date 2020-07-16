@@ -1,0 +1,39 @@
+<div class="injury-dialog">
+    <mat-card-header class="model-header">
+        <div class="content-wrapper-main-title">Add License</div>
+        <span class="spacer"></span>
+        <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <form [formGroup]="licenseForm">
+            <div fxLayout="row wrap" fxFlex="100" class="">
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>License Number</mat-label>
+                    <input matInput placeholder="License Number" formControlName="state_license_number" autocomplete="off">
+                    <mat-error>Please enter valid License Number</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>License State</mat-label>
+                    <mat-select formControlName="state_of_license_id">
+                        <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Please enter valid state</mat-error>
+                </mat-form-field>
+
+                <div fxFlex="100" class="p-t-10 text-center">
+                    <button mat-stroked-button (click)="onNoClick()" type="button"
+                        class="outline-danger m-r-10">Cancel</button>
+                    <button mat-stroked-button class="outline-success text-center m-r-5"
+                        (click)="addLicense()">Save</button>
+                </div>
+
+            </div>
+        </form>
+    </mat-card-content>
+</div>
