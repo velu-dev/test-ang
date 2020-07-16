@@ -25,6 +25,7 @@ import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EventEmitter } from 'protractor';
+import * as moment from 'moment';
 
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -229,6 +230,7 @@ export class NewClaimComponent implements OnInit {
 
         this.claimService.getSingleClaimant(this.claimant_id).subscribe(claimant => {
           if (claimant.status) {
+            console.log("claimant", claimant)
             this.isRemoveSearchRemove = true;
             this.isClaimantCreated = true;
             this.searchStatus = false;
@@ -237,14 +239,27 @@ export class NewClaimComponent implements OnInit {
             this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
+            if (claimant.data[0].zip_code_plus_4 != "")
+              this.claimant.patchValue({ zip_code: claimant.data[0].zip_code + "-" + claimant.data[0].zip_code_plus_4 })
             this.isClaimantFilled = false;
             this.claim.patchValue({
               claim_details: {
-                claimant_id: this.claimant_id
+                claimant_id: this.claimant_id,
+                claimant_name: this.claimantDetails.claimant_name,
+                date_of_birth: claimant['data'][0].date_of_birth,
+                phone_no_1: claimant['data'][0].phone_no_1
               }
             })
             this.billable_item.patchValue({
-              claimant_id: this.claimant_id
+              claimant_id: this.claimant_id,
+              claim_details: {
+                exam_type: claimant['data'][0].exam_type,
+                intake_call: claimant['data'][0].intake_calls,
+                appointment: claimant['data'][0].appointments,
+                claimant_name: this.claimantDetails.claimant_name,
+                phone_no_1: claimant['data'][0].phone_no_1,
+                date_of_birth: claimant['data'][0].date_of_birth
+              }
             })
           }
         })
@@ -260,6 +275,8 @@ export class NewClaimComponent implements OnInit {
           this.isClaimCreated = true;
           this.languageStatus = res.data.claimant_details.certified_interpreter_required;
           this.claimant.patchValue(res.data.claimant_details)
+          if (res.data.zip_code_plus_4 != "")
+            this.claimant.patchValue({ zip_code: res.data.zip_code + "-" + res.data.zip_code_plus_4 })
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           this.claim.patchValue({
             claim_details: {
@@ -282,9 +299,11 @@ export class NewClaimComponent implements OnInit {
           this.billable_item.patchValue({
             claim_id: res.data.claim_details.id,
             claimant_id: res.data.claimant_details.id,
-            exam_type: res.data.exam_type,
-            intake_call: res.data.intake_calls,
-            appointment: res.data.appointments
+            claim_details: {
+              exam_type: res.data.exam_type,
+              intake_call: res.data.intake_calls,
+              appointment: res.data.appointments
+            }
           })
           if (res.data.appointments) {
             let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
@@ -408,10 +427,17 @@ export class NewClaimComponent implements OnInit {
       }
     });
     this.billable_item.patchValue({
-      claimant_id: option.id
+      claimant_id: option.id,
+      claim_details: {
+        claimant_name: this.claimantDetails.claimant_name,
+        phone_no_1: option.phone_no_1,
+        date_of_birth: option.date_of_birth
+      }
     })
     this.primary_language_spoken = option.primary_language_spoken ? true : false
     this.claimant.patchValue(option);
+    if (option.zip_code_plus_4 != "")
+      this.claimant.patchValue({ zip_code: option.zip_code + "-" + option.zip_code_plus_4 })
     //this.filteredClaimant = new Observable<[]>();
 
   }
@@ -777,6 +803,7 @@ export class NewClaimComponent implements OnInit {
   claimDetails = { claim_number: "", exam_type_id: "", wcab_number: "" }
   isClaimantCreated = false;
   createClaimant(status) {
+    this.isClaimantSubmited = true;
     if (this.claimant.touched) {
       // if (!this.claimantChanges) {
       //   if (status == 'next') {
@@ -795,9 +822,8 @@ export class NewClaimComponent implements OnInit {
         }
         this.routeDashboard();
       }
-      // }
+      // } 
       this.claimantChanges = false;
-      this.isClaimantSubmited = true;
       Object.keys(this.claimant.controls).forEach((key) => {
         if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
           this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
@@ -856,16 +882,31 @@ export class NewClaimComponent implements OnInit {
         console.log(this.claimant.value.date_of_birth)
         this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
-          this.claimantDetails.claimant_name = this.claimant.value.first_name + " " + this.claimant.value.last_name;
-          this.claimantDetails.date_of_birth = new Date(this.claimant.value.date_of_birth).toDateString();
-          this.claimantDetails.phone_no_1 = this.claimant.value.phone_no_1;
+          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           if (status == 'next') {
             this.steperAutoChange = true;
             this.stepper.next();
+
           } else if (status == 'save') {
             this.routeDashboard();
           }
           this.claimantChanges = false;
+          this.claim.patchValue({
+            claim_details: {
+              claimant_name: this.claimantDetails.claimant_name,
+              date_of_birth: res.data.date_of_birth,
+              phone_no_1: res.data.phone_no_1
+            }
+          });
+          this.billable_item.patchValue({
+            claimant_id: res.data.id,
+            claim_details: {
+              claimant_id: res.data.id,
+              claimant_name: this.claimantDetails.claimant_name,
+              date_of_birth: res.data.date_of_birth,
+              phone_no_1: res.data.phone_no_1
+            }
+          })
         }, error => {
           this.isClaimantCreated = false;
           this.alertService.openSnackBar(error.error.message, 'error');
@@ -908,6 +949,8 @@ export class NewClaimComponent implements OnInit {
       this.isInjuryEdit = false;
     } else {
       let arrData = [];
+      // if (this.injuryInfo['body_part_id'] != null)
+      console.log(this.injuryInfo)
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
@@ -952,8 +995,10 @@ export class NewClaimComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.injuryInfo = result;
-      this.addInjury();
+      if (result) {
+        this.injuryInfo = result;
+        this.addInjury();
+      }
     });
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
   }
@@ -1287,17 +1332,17 @@ export class NewClaimComponent implements OnInit {
   }
   selectedLanguage: any;
   modifyChange() {
-    console.log(this.billable_item.value.exam_type.modifier_id)
-    if (this.billable_item.value.exam_type.modifier_id.includes(2)) {
-      this.languageList.map(res => {
-        if (res.id == this.claimant.value.primary_language_spoken) {
-          this.selectedLanguage = res;
-        }
-      })
-      this.billable_item.patchValue({
-        exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken }
-      })
-    }
+    if (this.billable_item.value.exam_type.modifier_id)
+      if (this.billable_item.value.exam_type.modifier_id.includes(2)) {
+        this.languageList.map(res => {
+          if (res.id == this.claimant.value.primary_language_spoken) {
+            this.selectedLanguage = res;
+          }
+        })
+        this.billable_item.patchValue({
+          exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken }
+        })
+      }
   }
   errors = { claim_details: 0, claim: 0, Employer: 0, InsuranceAdjuster: 0, ApplicantAttorney: 0, DefenseAttorney: 0, DEU: 0, }
   getFormValidationErrors() {
@@ -1362,6 +1407,7 @@ export class NewClaimComponent implements OnInit {
     this.primary_language_spoken = this.claimant.value.primary_language_spoken ? true : false
   }
   primryLangChange() {
+    this.modifyChange();
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
     this.primary_language_spoken = this.claimant.value.primary_language_spoken ? true : false
   }
@@ -1385,7 +1431,8 @@ export class NewClaimComponent implements OnInit {
   providers: [
     { provide: DateAdapter, useClass: PickDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }]
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }
+  ]
 })
 export class InjuryDialog {
   @Output('opened') openedStream: EventEmitter;
@@ -1400,7 +1447,7 @@ export class InjuryDialog {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private claimService: ClaimService,
     private alertService: AlertService) {
-    console.log("sdsadsdasd", data['claimant']);
+    dialogRef.disableClose = true;
     this.isLoding = true;
     this.claimant = data['claimant']
     this.bodyPartsList = data['bodyparts'];
@@ -1436,7 +1483,9 @@ export class InjuryDialog {
 
   }
   changeEvent() {
-    this.minDate = this.claimant['date_of_birth'];
+    this.minDate = moment(this.claimant.date_of_birth);
+    // console.log();
+
   }
   ctChange() {
 
