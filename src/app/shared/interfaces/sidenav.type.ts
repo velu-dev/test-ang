@@ -1,6 +1,7 @@
 export interface SideNavInterface {
     group: string,
     role_id: number,
+    short_group: string,
     menu: menuItem[]
 }
 export interface menuItem {
