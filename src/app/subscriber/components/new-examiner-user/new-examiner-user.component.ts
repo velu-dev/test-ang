@@ -60,7 +60,8 @@ export class NewExaminerUserComponent implements OnInit {
   filterValue: string;
   signData: any;
   dataSource: any = new MatTableDataSource([]);
-  providerTypeList:any;
+  providerTypeList: any;
+  sameAsExaminer: boolean;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -112,6 +113,13 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.verifyRole().subscribe(role => {
+      console.log(role);
+      this.sameAsExaminer = role.status;
+    }, error => {
+      console.log(error.error.status)
+      this.sameAsExaminer = error.error.status;
+    })
     this.userForm = this.formBuilder.group({
       id: [""],
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -154,6 +162,10 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.getExaminerUser(id).subscribe(res => {
       this.userData = res;
+      console.log(res, id)
+      if (res.examiner_details.id == id) {
+        this.userForm.disable();
+      }
       let user = {
         id: res.examiner_details.id,
         first_name: res.examiner_details.first_name,
@@ -162,7 +174,8 @@ export class NewExaminerUserComponent implements OnInit {
         company_name: res.examiner_details.company_name,
         sign_in_email_id: res.examiner_details.sign_in_email_id,
         role_id: res.examiner_details.role_id,
-        suffix: res.examiner_details.suffix
+        suffix: res.examiner_details.suffix,
+        SameAsSubscriber: res.examiner_details.SameAsSubscriber
       }
       this.userForm.patchValue(user);
 
@@ -210,11 +223,11 @@ export class NewExaminerUserComponent implements OnInit {
         license_details: res.rendering_provider.license_details,
         //signature: res.rendering_provider.signature
       }
-     
+
       this.signData = res.rendering_provider.signature ? 'data:image/png;base64,' + res.rendering_provider.signature : null
       this.renderingForm.patchValue(rendering);
 
-      this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details)
+      this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
     })
   }
 
@@ -478,7 +491,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.userService.createLicense(this.examinerId, result).subscribe(license => {
           console.log(license);
           let data = this.licenceDataSource.data;
-          if(result.id){
+          if (result.id) {
             data.splice(index, 1);
           }
           data.push(license.data);
@@ -504,10 +517,10 @@ export class NewExaminerUserComponent implements OnInit {
     })
   }
 
-  texonomyValue:String;
-  texonomyChange(e){
-    this.taxonomyList.map(tex=>{
-      if(e == tex.id){
+  texonomyValue: String;
+  texonomyChange(e) {
+    this.taxonomyList.map(tex => {
+      if (e == tex.id) {
         this.texonomyValue = tex.taxonomy_code;
       }
     })
@@ -532,7 +545,7 @@ export class LicenseDialog {
 
     this.licenseForm = this.formBuilder.group({
       id: [""],
-      state_license_number: [null, Validators.compose([Validators.required,Validators.maxLength(15)])],
+      state_license_number: [null, Validators.compose([Validators.required, Validators.maxLength(15)])],
       state_of_license_id: [null, Validators.compose([Validators.required])],
     });
     if (data.details) {
