@@ -1,0 +1,58 @@
+<mat-card class="m-card new-location m-b-20">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Search Existing Service Locations</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div fxLayout="row wrap">
+            <mat-form-field appearance="fill" fxFlex="100" hideRequiredMarker="hideRequiredControl.auto"
+                floatLabel="floatLabelControl.auto" class="w-100 m-t-20">
+                <input matInput placeholder="Search Existing Service Locations" autocomplete="off" class="p-l-10">
+                <span matSuffix class="search-icon icons">
+                    <mat-icon>search</mat-icon>
+                </span>
+                <mat-error>
+                    <span>Please enter valid WCAB number</span></mat-error>
+            </mat-form-field>
+            <div class="address-list" fxFlex="100">
+                <mat-list>
+                    <mat-list-item>
+                        <div class="name" mat-line>
+                            <div>
+                                <strong>
+                                    <i class="fa fa-building-o"></i>Indian Health Service Free-standing Facility
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="address" mat-line>30A,Thirumoorthy Layout, Thadagam Main Rd, R S Puram West, C
+                            30A,Thirumoorthy Layout, Thadagam Main Rd, R S Puram West, C Coimbatore</div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+            <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100">
+                <div fxLayout="row wrap" class="p-l-10">
+                    <div class="content-wrapper-main-title m-t-20 m-b-0" fxFlex="100">National Provider Identifier (NPI)
+                        Number</div>
+                    <p fxFlex="100" class="m-t-5">Once the location is selected it can be given an examiner specific NPI
+                        Number.</p>
+                    <div class="sub-title" fxFlex="100">CMS 1500 Box 32 a</div>
+                    <mat-form-field fxFlex="100" class="m-t-20">
+                        <mat-label>National Provider Identifier (NPI) Number</mat-label>
+                        <input matInput placeholder="National Provider Identifier (NPI) Number">
+                        <mat-error>error msg here</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="text-center w-100 m-t-10 m-b-10">
+                <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
+                <button mat-stroked-button class="m-l-10 outline-success">Save </button>
+            </div>
+
+        </div>
+    </mat-card-content>
+</mat-card>
+
+
+
+

@@ -24,7 +24,7 @@ import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/
 import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 import { ExaminerService } from './service/examiner.service';
 import { AppointmentDetailsComponent, ClaimantPopupComponent, ClaimPopupComponent, BillableitemPopupComponent } from './examiner/appointment-details/appointment-details.component';
-import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
+import { ManageLocationComponent } from './components/manage-location/manage-location.component';
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 import { ExaminationCalanderViewComponent, EventdetailDialog, } from './examiner/examination-calander-view/examination-calander-view.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -53,6 +53,8 @@ import { UnfinishedReportComponent } from './components/dashboard/unfinished-rep
 import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
 import { SubscriberService } from './service/subscriber.service';
 import { NewExaminerUserComponent, LicenseDialog } from './components/new-examiner-user/new-examiner-user.component';
+import { ExistingServiceLocationsComponent } from './components/existing-service-locations/existing-service-locations.component';
+import { AddEditServiceLocationComponent } from './components/add-edit-service-location/add-edit-service-location.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -110,7 +112,9 @@ import { NewExaminerUserComponent, LicenseDialog } from './components/new-examin
     UnfinishedReportComponent,
     BillingCollectionComponent,
     NewExaminerUserComponent,
-    LicenseDialog
+    LicenseDialog,
+    ExistingServiceLocationsComponent,
+    AddEditServiceLocationComponent
 
   ],
   entryComponents: [

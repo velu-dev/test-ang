@@ -1,0 +1,131 @@
+
+
+<mat-card class="m-card new-location">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Add New Service Location</div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div class="" fxLayout="row wrap">
+            <form action="" fxLayout="row wrap" fxFlex="100">
+
+                <div class="sub-title p-l-10 m-t-20 m-b-20" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                    fxFlex.xs="100">
+                    CMS 1500 Box 32
+                    <mat-divider class="m-t-10"></mat-divider>
+                </div>
+
+                <div fxFlex="100">
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Location Name</mat-label>
+                        <input matInput placeholder="Location Name" autocomplete="off">
+                        <mat-error>error msg here..</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Street Address 1 </mat-label>
+                    <input matInput placeholder="Street Address 1" autocomplete="off">
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Street Address 2 </mat-label>
+                    <input matInput placeholder="Street Address 2" autocomplete="off">
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>City</mat-label>
+                    <input matInput placeholder="City" autocomplete="off">
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>State </mat-label>
+                    <mat-select placeholder="State">
+                        <mat-option value="option">Option here</mat-option>
+                    </mat-select>
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Zip Code </mat-label>
+                    <input matInput placeholder="Zip Code" autocomplete="off">
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <div class="sub-title p-l-10 m-t-20 m-b-20" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                    fxFlex.xs="100">
+                    CMS 1500 Box 24 b
+                    <mat-divider class="m-t-10"></mat-divider>
+                </div>
+
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Service Type </mat-label>
+                    <mat-select placeholder="Service Type ">
+                        <mat-option value="option">Option here</mat-option>
+                    </mat-select>
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Phone </mat-label>
+                    <input matInput placeholder="Phone" autocomplete="off">
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Fax </mat-label>
+                    <input matInput placeholder="Fax" autocomplete="off">
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Email </mat-label>
+                    <input matInput placeholder="Email" autocomplete="off">
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+
+                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                    class="p-l-10 m-b-20">
+                    <mat-label class="m-t-10 p-b-10 display-block">Location status</mat-label>
+                    <mat-radio-group class="" formControlName="provider_status">
+                        <mat-radio-button value="true" checked>Active</mat-radio-button>
+                        <mat-radio-button value="false" class="p-l-10">In Active</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Location Contact Person </mat-label>
+                    <input matInput placeholder="Location Contact Person" autocomplete="off">
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Notes </mat-label>
+                    <input matInput placeholder="Notes" autocomplete="off">
+                    <mat-error>error msg here..</mat-error>
+                </mat-form-field>
+
+                <div class="text-center w-100 m-t-10 m-b-10">
+                    <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
+                    <button mat-stroked-button class="m-l-10 outline-success">Save </button>
+                </div>
+
+            </form>
+        </div>
+    </mat-card-content>
+</mat-card>
