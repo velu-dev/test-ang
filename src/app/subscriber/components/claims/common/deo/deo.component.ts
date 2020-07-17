@@ -58,15 +58,18 @@ export class DeoComponent implements OnInit {
     if (changes.isEdit)
       this.isEdit = changes.isEdit.currentValue;
     if (this.isEdit) {
-      this.DEU.enable()
+      this.DEU.enable();
+      this.deuCtrl.setValue(this.deuDetail.name);
     } else {
       this.DEU.disable();
     }
-  
+
   }
   ngOnInit() {
     this.deuId = this.deuDetail.id;
-    this.DEU.patchValue(this.deuDetail)
+    this.DEU.patchValue(this.deuDetail);
+    console.log(this.deuDetail)
+    this.deuCtrl.setValue(this.deuDetail.name);
   }
   appAttorney(sdsd) {
 
