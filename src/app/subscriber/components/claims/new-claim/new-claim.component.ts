@@ -165,6 +165,7 @@ export class NewClaimComponent implements OnInit {
   address = [];
   examinarAddress: Observable<any[]>;
   claimId: any;
+  claimantId: any;
   isClaimSubmited: boolean = false;
   isClaimantSubmited: boolean = false;
   isBillSubmited: boolean = false;
@@ -197,7 +198,6 @@ export class NewClaimComponent implements OnInit {
     );
   isNewClaim = true;
   fromClaimant = false;
-  steperAutoChange = false;
   isClaimantFilled = false;
   constructor(
     private formBuilder: FormBuilder,
@@ -273,8 +273,6 @@ export class NewClaimComponent implements OnInit {
           this.isClaimCreated = true;
           this.languageStatus = res.data.claimant_details.certified_interpreter_required;
           this.claimant.patchValue(res.data.claimant_details)
-          if (res.data.zip_code_plus_4 != "")
-            this.claimant.patchValue({ zip_code: res.data.zip_code + "-" + res.data.zip_code_plus_4 })
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           this.claim.patchValue({
             claim_details: {
@@ -461,7 +459,6 @@ export class NewClaimComponent implements OnInit {
       zip_code: []
     })
     this.claimant = this.formBuilder.group({
-      id: [""],
       last_name: ['', Validators.compose([Validators.required])],
       first_name: ['', Validators.compose([Validators.required])],
       middle_name: [''],
@@ -621,7 +618,7 @@ export class NewClaimComponent implements OnInit {
     Object.keys(this.claimant.controls).forEach(key => {
       this.claimant.controls[key].setErrors(null)
     });
-    this.isEdit = false;
+    // this.isEdit = false;
     this.isClaimantEdit = false;
     this.addNewClaimant = true;
     this.claimant.reset();
@@ -648,34 +645,31 @@ export class NewClaimComponent implements OnInit {
   }
 
   selectionChange(event) {
-    if (!this.steperAutoChange) {
-      if (event.selectedIndex == 0) {
-        this.titleName = " Claimant";
-      } else if (event.selectedIndex == 1) {
-        if (this.claimant.touched) {
-          console.log(this.steperAutoChange, "fddsfsdfdfS")
-          this.createClaimant('tab');
-        }
-        this.titleName = " Claim";
-      } else if (event.selectedIndex == 2) {
-        this.submitClaim('tab')
-        this.titleName = " Billable Item";
+    if (event.selectedIndex == 0) {
+      this.titleName = " Claimant";
+    } else if (event.selectedIndex == 1) {
+      if (this.claimantChanges) {
+        this.createClaimant('tab');
       }
+      this.titleName = " Claim";
+    } else if (event.selectedIndex == 2) {
+      if (this.claimChanges)
+        this.submitClaim('tab')
+      this.titleName = " Billable Item";
     }
   }
   isClaimCreated = false;
   submitClaim(status) {
     this.isClaimSubmited = true;
-    if (!this.claimChanges) {
-      if (status == 'next') {
-        this.stepper.next();
-      } else if (status == 'save') {
-        this.routeDashboard();
-      }
-      return;
-    }
+    // if (!this.claimChanges) {
+    //   if (status == 'next') {
+    //     this.stepper.next();
+    //   } else if (status == 'save') {
+    //     this.routeDashboard();
+    //   }
+    //   return;
+    // }
 
-    this.claimChanges = false;
     Object.keys(this.claim.controls).forEach((key) => {
       if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string')
         this.claim.get(key).setValue(this.claim.get(key).value.trim())
@@ -693,12 +687,12 @@ export class NewClaimComponent implements OnInit {
     if (this.iseams_entry) {
       claim['claim_details'].iseams_entry = this.iseams_entry;
     }
-    console.log("!this.isEdit ||  !this.isClaimantEdit", !this.isEdit || !this.isClaimantEdit)
-    if (!this.isEdit) {
+    console.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
+    if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
         this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: res.data.exam_type_id, wcab_number: res.data.wcab_number }
         this.isClaimCreated = true;
-        this.claimId = res.data.claim_id;
+        this.claimId = res.data.id;
         this.billable_item.patchValue({
           claim_id: res.data.id
         })
@@ -709,6 +703,7 @@ export class NewClaimComponent implements OnInit {
           this.routeDashboard();
         }
         this.claimChanges = false;
+        this.isClaimCreated = true;
       }, error => {
         console.log(error)
         this.isClaimCreated = false;
@@ -776,10 +771,10 @@ export class NewClaimComponent implements OnInit {
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
       //this._location.back();
-      if (this.claimant.touched) {
+      if (this.claimantChanges) {
         this.createClaimant('close')
       }
-      if (this.claim.touched) {
+      if (this.claimChanges) {
         this.submitClaim('close')
       }
       this.routeDashboard();
@@ -804,7 +799,7 @@ export class NewClaimComponent implements OnInit {
   isClaimantCreated = false;
   createClaimant(status) {
     this.isClaimantSubmited = true;
-    if (this.claimant.touched) {
+    if (this.claimantChanges) {
       // if (!this.claimantChanges) {
       //   if (status == 'next') {
       //     this.stepper.next();
@@ -837,11 +832,12 @@ export class NewClaimComponent implements OnInit {
       data['date_of_birth'] = new Date(this.claimant.value.date_of_birth).toDateString();
       if (!this.isClaimantEdit) {
         this.claimService.createClaimant(this.claimant.value).subscribe(res => {
+          this.claimantId = res.data.id;
           this.alertService.openSnackBar(res.message, "success");
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
-          this.claimant.patchValue({
-            id: res.data.id
-          })
+          // this.claimant.patchValue({
+          //   id: res.data.id
+          // })
           this.claim.patchValue({
             claim_details: {
               claimant_id: res.data.id,
@@ -864,7 +860,7 @@ export class NewClaimComponent implements OnInit {
           this.claimantChanges = false;
           if (status == 'next') {
             console.log("check")
-            this.steperAutoChange = true;
+
             this.stepper.next();
           } else if (status == 'save') {
             this.routeDashboard();
@@ -880,11 +876,13 @@ export class NewClaimComponent implements OnInit {
         })
       } else {
         console.log(this.claimant.value.date_of_birth)
-        this.claimService.updateClaimant(this.claimant.value).subscribe(res => {
+        let data = this.claimant.value;
+        data['id'] = this.claimantId;
+        this.claimService.updateClaimant(data).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           if (status == 'next') {
-            this.steperAutoChange = true;
+
             this.stepper.next();
 
           } else if (status == 'save') {
@@ -913,7 +911,6 @@ export class NewClaimComponent implements OnInit {
         })
       }
     } else {
-      this.steperAutoChange = true;
       this.stepper.next();
     }
   }
@@ -1467,7 +1464,11 @@ export class InjuryDialog {
   addInjury() {
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
-
+        if (this.injuryInfo.continuous_trauma_end_date)
+          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
+            this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
+            return
+          }
       } else {
         this.alertService.openSnackBar("Please select start date", "error")
         return;
@@ -1481,10 +1482,6 @@ export class InjuryDialog {
         this.alertService.openSnackBar("Please fill the injury date", "error")
         return
       }
-    }
-    if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
-      this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
-      return
     }
     this.dialogRef.close(this.injuryInfo)
 
