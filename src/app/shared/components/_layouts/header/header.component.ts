@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Inject, HostListener, Output, EventEmitter } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DOCUMENT } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -26,6 +26,8 @@ import { IntercomService } from 'src/app/services/intercom.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @Output() isClosed: EventEmitter<any> = new EventEmitter<any>();
+
   notifications = [
     { name: "Name here", message: "Message content here", date: new Date() },
     { name: "Name here", message: "Message content here", date: new Date() },
@@ -40,6 +42,7 @@ export class HeaderComponent implements OnInit {
   notification_user = globals.notification_user
   // @ViewChild('sidenav', { static: false }) public sidenav: MatSidenav;
   @Input() inputSideNav: MatSidenav;
+  @Input() isOpened: boolean;
   elem;
   folders = [];
   currentUserID = "";
@@ -95,6 +98,7 @@ export class HeaderComponent implements OnInit {
   openSidenav() {
     this.inputSideNav.toggle();
     this.isOpen = this.inputSideNav.opened;
+    this.isClosed.emit(this.isOpen)
     // this.inputSideNav.toggle().then(res => {
     //   console.table(res)
     // })

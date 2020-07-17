@@ -35,7 +35,7 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <app-header [inputSideNav]="drawer"></app-header>
+        <app-header (isClosed)="isclosed($event)" [isOpened]="isOpen" [inputSideNav]="drawer"></app-header>
         <!-- Add Content Here -->
         <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>
