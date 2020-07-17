@@ -385,9 +385,13 @@ export class NewClaimComponent implements OnInit {
       }
     })
     this.searchInput.valueChanges.subscribe(res => {
-      this.claimService.searchClaimant({ basic_search: res, isadvanced: this.searchStatus }).subscribe(response => {
-        this.filteredClaimant = response;
-      })
+      if (res == "") {
+        this.filteredClaimant.data = []
+      } else {
+        this.claimService.searchClaimant({ basic_search: res, isadvanced: this.searchStatus }).subscribe(response => {
+          this.filteredClaimant = response;
+        })
+      }
     })
     // this.filteredClaimant = this.searchInput.valueChanges
     //   .pipe(
@@ -434,7 +438,7 @@ export class NewClaimComponent implements OnInit {
     })
     this.primary_language_spoken = option.primary_language_spoken ? true : false
     this.claimant.patchValue(option);
-    //this.filteredClaimant = new Observable<[]>();
+    this.filteredClaimant.data = [];
 
   }
   setStep(index: number) {
@@ -1477,6 +1481,10 @@ export class InjuryDialog {
         this.alertService.openSnackBar("Please fill the injury date", "error")
         return
       }
+    }
+    if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
+      this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
+      return
     }
     this.dialogRef.close(this.injuryInfo)
 

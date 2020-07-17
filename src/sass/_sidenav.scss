@@ -17,6 +17,9 @@
     width: 0;
     overflow-x:auto
   }
+  @media all and (max-width: 1024px) and (min-width: 568px) {
+    visibility: visible !important;
+  }
   .logo {
     width: 25px;
     @media only screen and (max-width: 568px) {
@@ -52,6 +55,7 @@
 .mat-drawer-side {
   visibility: visible !important;
   transform: translate3d(-100%,0,0);
+ 
 }
 .mat-sidenav-content {
   margin-left: 70px;

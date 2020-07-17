@@ -11,6 +11,7 @@ import * as globals from '../../../../globals';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from './../../../services/user.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -33,6 +34,8 @@ export class SidenavComponent implements OnInit {
   icon_logo = globals.icon_logo;
   switch_user = globals.switch_user;
   @ViewChild('drawer', { static: false }) sidenav: MatSidenav;
+  @ViewChild(HeaderComponent, { static: false }) header: HeaderComponent;
+
   public menuItems: any;
   expanded: boolean = false;
   roleId: any;
@@ -44,7 +47,7 @@ export class SidenavComponent implements OnInit {
   isMobile: boolean = false;
   role: any;
   is_subscriber: any;
-  isOpen: any;
+  isOpen: any = true;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -76,8 +79,12 @@ export class SidenavComponent implements OnInit {
       this.sidenav.toggle();
     }
   }
+  isclosed(status) {
+    this.isOpen = status;
+  }
   openSidenav() {
-    this.sidenav.toggle();
+    // this.sidenav.toggle();
+    this.header.openSidenav();
   }
   changeRole() {
     if (this.roleId == 2) {

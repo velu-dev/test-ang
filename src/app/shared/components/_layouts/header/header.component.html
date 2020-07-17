@@ -1,12 +1,11 @@
 <mat-toolbar class="nav-bar navbar-fixed-header">
     <mat-toolbar-row>
         <button [ngClass]="{'opened': isOpen, 'closed': !isOpen}" type="button" aria-label="Toggle sidenav"
-            mat-icon-button (click)="openSidenav()" class="toggle_">
+            mat-icon-button (click)="openSidenav()" class="toggle_ show-mobile">
             <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
         </button>
-
-        <!-- <mat-card-title class="p-t-15 show-mobile"> Simplexam</mat-card-title> -->
-        <img [src]="nav_logo" alt="logo" class="p-l-5 hide-mobile">
+         <div [ngClass]="{'opened': isOpen, 'closed': !isOpen}" class="hide-mobile"></div>
+        <img [src]="nav_logo" alt="logo" class="p-l-5">
         <span flex class="spacer"></span>
         <mat-card-actions>
             <div fxLayout="row">

@@ -16,6 +16,7 @@ export const ROUTES: SideNavInterface[] = [
     // },
     {
         group: "Platform",
+        short_group: "PL",
         role_id: 1,
         menu: [{
             path: "/admin/admin-users",
@@ -65,6 +66,7 @@ export const ROUTES: SideNavInterface[] = [
 
     }, {
         group: "Subscriber",
+        short_group: "SUB",
         role_id: 2,
         menu: [
             {
@@ -141,6 +143,7 @@ export const ROUTES: SideNavInterface[] = [
             }]
     }, {
         group: "Subscriber Staff Manager",
+        short_group: "SM",
         role_id: 3,
         menu: [
             {
@@ -224,6 +227,7 @@ export const ROUTES: SideNavInterface[] = [
             },]
     }, {
         group: "Subscriber Staff",
+        short_group: "ST",
         role_id: 4,
         menu: [
             {
@@ -293,6 +297,7 @@ export const ROUTES: SideNavInterface[] = [
     },
     {
         group: "Examiner",
+        short_group: "EX",
         role_id: 11,
         menu: [
             {
