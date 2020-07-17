@@ -38,10 +38,10 @@ mat-card {
         }
 
         mat-list-item {
-            background-color: $bg-light-blue;
+            background-color: $light-color;
             box-shadow: $box-shadow-3;
             &:hover {
-                background-color: $bg-light-blue;
+                background-color: $light-color;
                 cursor: pointer;
             }
             .name {
