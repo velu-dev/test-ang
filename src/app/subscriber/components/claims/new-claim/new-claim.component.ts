@@ -239,8 +239,6 @@ export class NewClaimComponent implements OnInit {
             this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
-            if (claimant.data[0].zip_code_plus_4 != "")
-              this.claimant.patchValue({ zip_code: claimant.data[0].zip_code + "-" + claimant.data[0].zip_code_plus_4 })
             this.isClaimantFilled = false;
             this.claim.patchValue({
               claim_details: {
@@ -663,6 +661,7 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimCreated = false;
   submitClaim(status) {
+    this.isClaimSubmited = true;
     if (!this.claimChanges) {
       if (status == 'next') {
         this.stepper.next();
@@ -673,7 +672,6 @@ export class NewClaimComponent implements OnInit {
     }
 
     this.claimChanges = false;
-    this.isClaimSubmited = true;
     Object.keys(this.claim.controls).forEach((key) => {
       if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string')
         this.claim.get(key).setValue(this.claim.get(key).value.trim())
@@ -918,30 +916,32 @@ export class NewClaimComponent implements OnInit {
   isInjuryEdit = false;
   addInjury() {
     if (this.isInjuryEdit) {
-      let index = 0;
-      this.injuryInfodata.map(res => {
-        if (res.body_part_id == this.injuryInfo.body_part_id) {
-          this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury);
-          this.injuryInfodata[index] = this.injuryInfo;
-        }
-        index = index + 1;
-      })
-      // let arrData = [];
-      // for (var i in this.injuryInfo['body_part_id']) {
-      //   var part = {
-      //     body_part_id: [this.injuryInfo['body_part_id'][i]],
-      //     date_of_injury: this.injuryInfo['date_of_injury'],
-      //     continuous_trauma: this.injuryInfo['continuous_trauma'],
-      //     continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
-      //     continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
-      //     injury_notes: this.injuryInfo['injury_notes'],
-      //     diagram_url: this.injuryInfo['diagram_url'],
-      //   };
-      //   arrData.push(part)
-      // }
-      // for(var j in arrData){
-      //   this.injuryInfodata.push(arrData[j])
-      // }
+      // let index = 0;
+      // this.injuryInfodata.map(res => {
+      //   if (res.body_part_id == this.injuryInfo.body_part_id) {
+      //     this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury);
+      //     this.injuryInfodata[index] = this.injuryInfo;
+      //   }
+      //   index = index + 1;
+      // })
+      let arrData = [];
+      // if (this.injuryInfo['body_part_id'] != null)
+      console.log(this.injuryInfo)
+      for (var i in this.injuryInfo['body_part_id']) {
+        var part = {
+          body_part_id: [this.injuryInfo['body_part_id'][i]],
+          date_of_injury: new Date(this.injuryInfo['date_of_injury']),
+          continuous_trauma: this.injuryInfo['continuous_trauma'],
+          continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
+          continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
+          injury_notes: this.injuryInfo['injury_notes'],
+          diagram_url: this.injuryInfo['diagram_url'],
+        };
+        arrData.push(part)
+      }
+      for (var j in arrData) {
+        this.injuryInfodata.push(arrData[j])
+      }
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
       this.isInjuryEdit = false;
@@ -994,6 +994,7 @@ export class NewClaimComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.injuryInfodata.splice(index, 1);
         this.injuryInfo = result;
         this.addInjury();
       }

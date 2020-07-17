@@ -247,14 +247,19 @@ export const ROUTES = [
         submenu: [],
     }, {
         path: '/subscriber/manager/staff',
-        title: 'Staff Management',
+        title: 'Users',
         icon: 'dashboard',
         submenu: [{
             path: '/subscriber/manager/staff/new',
-            title: 'New User',
+            title: 'User',
             icon: 'dashboard',
             submenu: []
-        },],
+        },{
+            path: '/subscriber/manager/staff/edit',
+            title: 'User',
+            icon: 'dashboard',
+            submenu: []
+        }],
     }, {
         path: '/subscriber/manager/billing',
         title: 'Manage Billing',

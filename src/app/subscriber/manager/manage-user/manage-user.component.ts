@@ -64,8 +64,8 @@ export class ManageUserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Last Name", "Disable User"]
-        this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
+        this.columnName = ["", "Last Name", "Disable User", "Action"]
+        this.columnsToDisplay = ['is_expand', 'last_name', "disabled", "action"]
       } else {
         this.columnName = ["Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User"]
         this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
@@ -125,7 +125,7 @@ export class ManageUserComponent implements OnInit {
       this.columnName[this.columnName.length - 1] = "Disable User"
       this.tabName = 'activeUsers'
     } else if (event == 1) {
-      this.columnName[this.columnName.length - 1] = "Cancel Invite"
+      this.columnName[this.columnName.length - 1] = "Uninvite User"
       this.tabName = 'invitedUsers'
     } else if (event == 2) {
       this.columnName[this.columnName.length - 1] = "Enable User"
@@ -199,6 +199,32 @@ export class ManageUserComponent implements OnInit {
       if (result['data']) {
         this.staffManagerService.disableUser(user.id, !user.status).subscribe(res => {
           this.getUser(this.selectedRoleId, this.tabName);
+        })
+      }
+    });
+  }
+
+  editUser(user) {
+    console.log(user);
+      this.router.navigate(['subscriber/manager/staff/edit', user.id])
+  }
+
+  unInvite(e) {
+    this.openDialogInvite('uninvite', e.id);
+   
+  }
+
+  openDialogInvite(dialogue, user) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.staffManagerService.postUninvite(user).subscribe(resUninvite=>{
+          console.log(resUninvite);
+          this.getUser(this.selectedRoleId, this.tabName)
         })
       }
     });
