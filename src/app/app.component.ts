@@ -23,6 +23,7 @@ export class AppComponent {
   }
   ngOnInit() {
     this.listenRouting();
+    ROUTES[0].title = "Velusamy"
     ROUTES.map(menu => {
       let menuData = {};
       menuData = menu
@@ -81,7 +82,7 @@ export class AppComponent {
         })
         let breadcrumb = this.breadcrumbList
         if (breadcrumb.length != 0) {
-         // console.log(breadcrumb)
+          // console.log(breadcrumb)
           this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
         }
       }

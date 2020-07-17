@@ -337,10 +337,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
       max-height: 70vh;
       overflow: auto;
       .sub-title {
-        color: $primarycolor;
-        font-size: $font-size-1;
-        font-weight: $font-weight-medium;
-        border-bottom: 1px solid #efefef;
+        border-bottom: 1px solid $light-color;
       }
       mat-divider {
         display: block;

@@ -1,14 +1,15 @@
 <div fxLayout="row wrap">
-    <div fxFlex="100">
+    <div fxFlex="100" class="dialog">
         <mat-card-header class="model-header">
             <div class="content-wrapper-main-title p-t-5">Select Signature  </div>
             <span class="spacer"></span>
             <button class="close-model" (click)="cancel()" color="warn"> <i class="fa fa-close"></i> close </button>
         </mat-card-header>
         <mat-divider></mat-divider>
+       <mat-card-content class="m-b-0">
         <div fxLayout="row wrap" class="scroll_">
             <div class="w-100">
-                <mat-card-content class="p-b-20 claim_popup">
+                <mat-card-content class="p-b-20 claim_popup m-b-0">
                    <div class="w-100">
                                     <image-cropper
                                         [imageChangedEvent]="imageChangedEvent"
@@ -33,8 +34,9 @@
             </div>
         </div>
         <div mat-dialog-actions class="text-center display-block">
-            <button (click)="save()" mat-raised-button color="primary" class="btn_success rounded-corner">Apply</button>
-            <button (click)="cancel()" mat-raised-button color="warn" class="rounded-corner m-l-10">Cancel</button>
+            <button (click)="cancel()" mat-stroked-button class="outline-danger m-r-10">Cancel</button>
+            <button (click)="save()" mat-stroked-button class="outline-success">Apply</button>
         </div>
+       </mat-card-content>
     </div>
 </div>

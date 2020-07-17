@@ -50,16 +50,6 @@ mat-card {
         float: left;
         margin-right: 10px;
       }
-
-      .sub-title {
-        color: $text-gray;
-        font-size: $font-size-1;
-        font-weight: $font-weight-bold;
-        border-bottom: 1px solid $border-light;
-        padding: 10px 10px 15px 10px;
-        margin: 2px;
-      }
-
       .sign-upload {
         mat-form-field {
           .upload_btn {
@@ -134,7 +124,6 @@ mat-card {
     }
   }
 }
-
 
 .float-right {
   float: right;
