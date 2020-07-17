@@ -44,6 +44,7 @@ export class SidenavComponent implements OnInit {
   isMobile: boolean = false;
   role: any;
   is_subscriber: any;
+  isOpen: any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -55,7 +56,6 @@ export class SidenavComponent implements OnInit {
     this.is_subscriber = this.cookieService.get('is_subscriber');
     this.screenWidth = window.innerWidth;
     this.roleId = this.cookieService.get("role_id");
-    // console.log(this.roleId)
     this.menuItems = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);
     window.onresize = () => {
       this.screenWidth = window.innerWidth;
@@ -75,6 +75,9 @@ export class SidenavComponent implements OnInit {
     if (this.isMobile) {
       this.sidenav.toggle();
     }
+  }
+  openSidenav() {
+    this.sidenav.toggle();
   }
   changeRole() {
     if (this.roleId == 2) {
