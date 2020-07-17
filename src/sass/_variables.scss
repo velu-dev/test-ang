@@ -733,8 +733,7 @@ input:-webkit-autofill {
   background-color: $secondary !important;
 }
 
-.injury-dialog,
-.service-dialog {
+.dialog {
   mat-card-header {
     .content-wrapper-main-title {
       color: $text-gray;
@@ -757,7 +756,7 @@ input:-webkit-autofill {
 // COMMON CLSSS             =========
 // ==================================
 
-//Manage user add new button 
+//Manage user add new button
 .add-new-user {
   z-index: 4;
   position: absolute;
@@ -798,4 +797,14 @@ input:-webkit-autofill {
       color: $white;
     }
   }
+}
+
+// page sub title css
+
+.sub-title {
+  color: $text-gray;
+  font-size: $font-size-1;
+  font-weight: $font-weight-bold;
+  // border-bottom: 1px solid $border-light;
+  padding: 10px 0;
 }

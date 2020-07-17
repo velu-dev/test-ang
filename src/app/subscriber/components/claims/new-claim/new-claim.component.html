@@ -520,7 +520,7 @@
                                         </ng-container>
 
                                         <ng-container matColumnDef="doc_name">
-                                            <th mat-header-cell *matHeaderCellDef  class="data-max-width"> Name</th>
+                                            <th mat-header-cell *matHeaderCellDef class="data-max-width"> Name</th>
                                             <td mat-cell *matCellDef="let element"> <b
                                                     class="p-t-5">{{element?.file_name}}</b><br />
                                                 <small>Note : {{element?.notes}}</small></td>
@@ -1874,13 +1874,14 @@
                                     </mat-form-field> -->
                                 <!-- </div> -->
                                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-checkbox class="mat-check" labelPosition="after"
+                                    <mat-checkbox class="mat-check m-b-20" labelPosition="after"
                                         formControlName="is_psychiatric">
                                         Psychiatric
                                     </mat-checkbox>
                                 </div>
                             </div>
-                                <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
+                            <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
+                                
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Examiner</mat-label>
@@ -1958,7 +1959,8 @@
                                     fxFlex.xs="100">
                                     <mat-label>Intake Call Date & Time</mat-label>
                                     <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
-                                        autocomplete="off" [min]="claimant.value.date_of_birth" [max]="todayDate.intake" [owlDateTime]="intake">
+                                        autocomplete="off" [min]="claimant.value.date_of_birth" [max]="todayDate.intake"
+                                        [owlDateTime]="intake">
                                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake">
                                     </mat-datepicker-toggle>
                                     <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true"
