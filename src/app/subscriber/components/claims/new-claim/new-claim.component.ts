@@ -239,8 +239,6 @@ export class NewClaimComponent implements OnInit {
             this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
-            if (claimant.data[0].zip_code_plus_4 != "")
-              this.claimant.patchValue({ zip_code: claimant.data[0].zip_code + "-" + claimant.data[0].zip_code_plus_4 })
             this.isClaimantFilled = false;
             this.claim.patchValue({
               claim_details: {
