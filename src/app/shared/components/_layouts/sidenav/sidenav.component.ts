@@ -44,7 +44,7 @@ export class SidenavComponent implements OnInit {
   isMobile: boolean = false;
   role: any;
   is_subscriber: any;
-  isOpen: any;
+  isOpen: any = true;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -76,7 +76,11 @@ export class SidenavComponent implements OnInit {
       this.sidenav.toggle();
     }
   }
+  isclosed(status) {
+    this.isOpen = status;
+  }
   openSidenav() {
+    this.isOpen = !this.isOpen
     this.sidenav.toggle();
   }
   changeRole() {
