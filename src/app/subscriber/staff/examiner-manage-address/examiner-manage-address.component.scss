@@ -60,43 +60,8 @@
 }
 
 .address-list {
-  .name {
-    font-size: $font-size-1;
-    font-size: $font-weight-bold;
-    padding: 10px 5px 5px 5px;
-    width: $width-100;
-    div {
-      min-width: 150px;
-      float: left;
-      @media only screen and (max-width: 568px) {
-        min-width: auto;
-        margin-bottom: 10px;
-        float: none;
-        display: block;
-      }
-      i {
-        opacity: 0.5;
-        padding-right: 10px;
-      }
-    }
-    span {
-      text-align: left;
-      font-weight: $font-weight-medium;
-      i {
-        padding: 5px;
-        opacity: 0.5;
-      }
-    }
-  }
-  .address {
-    padding: 5px 5px 5px 5px;
-  }
-
   mat-list-item {
-    &:hover {
-      background-color: $bg-light-blue;
-      cursor: pointer;
-    }
+    background-color: $light-color;
     .name {
       font-size: $font-size-1;
       font-size: $font-weight-bold;
@@ -126,11 +91,7 @@
       }
     }
     .address {
-      color: $text-gray;
-      padding: 0 0 5px 5px;
-    }
-    .edit {
-      color: $btn_success;
+      padding: 5px 5px 5px 5px;
     }
   }
 }
@@ -145,4 +106,14 @@ div.advanced_search_expand {
   margin-right: 10px;
   height: 48px;
   border-bottom: 1px solid $light-gray;
+}
+
+.new-location {
+  mat-card-content {
+    form {
+      mat-form-field {
+        padding: 10px 10px 0px 10px !important;
+      }
+    }
+  }
 }

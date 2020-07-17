@@ -1142,11 +1142,11 @@ export class NewClaimComponent implements OnInit {
   //       this.contactMask.type = "text";
   //       break;
   //     case "F1":
-  //       this.contactMask.mask = "000-000-0000";
+  //       this.contactMask.mask = "(000) 000-0000";
   //       this.contactMask.type = "text";
   //       break;
   //     case "F2":
-  //       this.contactMask.mask = "000-000-0000";
+  //       this.contactMask.mask = "(000) 000-0000";
   //       this.contactMask.type = "text";
   //       break;
   //     case "LE":

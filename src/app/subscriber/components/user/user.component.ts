@@ -53,7 +53,7 @@ export class UserComponent implements OnInit {
   filterValue: string;
   tabIndex: number = 0;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
-  user = {};
+  user:any = {};
   constructor(
     private userService: SubscriberUserService,
     private router: Router,
