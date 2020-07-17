@@ -28,4 +28,8 @@ export class StaffManagerService {
   disableUser(id, status): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.subscriberManageDisableUser + id, { status: status })
   }
+
+  postUninvite(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.postUninvite + data, '')
+  }
 }
