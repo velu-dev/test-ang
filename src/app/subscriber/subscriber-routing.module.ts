@@ -302,6 +302,9 @@ const routes: Routes = [{
     }, {
       path: "new",
       component: ManageNewUserComponent
+    }, {
+      path: "edit/:id",
+      component: ManageNewUserComponent
     }]
   }, {
     path: "appointment",
