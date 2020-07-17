@@ -184,7 +184,11 @@ export class InjuryPopup {
   addInjury() {
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
-
+        if (this.injuryInfo.continuous_trauma_end_date)
+          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
+            this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
+            return
+          }
       } else {
         this.alertService.openSnackBar("Please select start date", "error")
         return;
@@ -199,26 +203,29 @@ export class InjuryPopup {
         return
       }
     }
+
     if (this.isEdit) {
       let date = new Date(this.injuryInfo.date_of_injury)
       let injury = moment(date).format("MM-DD-YYYY")
       //this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury)
       //this.injuryInfo.date_of_injury = moment( this.injuryInfo.date_of_injury).format("MM-DD-YYYY")
-      let editData = {
-        id: this.injuryInfo['id'],
-        body_part_id: this.injuryInfo.body_part_id,
-        date_of_injury: injury,
-        continuous_trauma: this.injuryInfo.continuous_trauma,
-        continuous_trauma_start_date: this.injuryInfo.continuous_trauma_start_date,
-        continuous_trauma_end_date: this.injuryInfo.continuous_trauma_end_date,
-        injury_notes: this.injuryInfo.injury_notes,
-        diagram_url: this.injuryInfo.diagram_url
-      }
-      this.claimService.updateInjury(editData, this.claim_id).subscribe(res => {
-        this.alertService.openSnackBar(this.isEdit ? "Claim Injury updated successfully" : "Claim Injury added successfully", 'success')
-        this.dialogRef.close();
-      }, error => {
-        this.alertService.openSnackBar(error.error.message, "error")
+      this.injuryInfo.body_part_id.map(res => {
+        let editData = {
+          id: this.injuryInfo['id'],
+          body_part_id: [res],
+          date_of_injury: injury,
+          continuous_trauma: this.injuryInfo.continuous_trauma,
+          continuous_trauma_start_date: this.injuryInfo.continuous_trauma_start_date,
+          continuous_trauma_end_date: this.injuryInfo.continuous_trauma_end_date,
+          injury_notes: this.injuryInfo.injury_notes,
+          diagram_url: this.injuryInfo.diagram_url
+        }
+        this.claimService.updateInjury(editData, this.claim_id).subscribe(res => {
+          this.alertService.openSnackBar(this.isEdit ? "Claim Injury updated successfully" : "Claim Injury added successfully", 'success')
+          this.dialogRef.close();
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, "error")
+        })
       })
     } else {
       let arrData = [];
