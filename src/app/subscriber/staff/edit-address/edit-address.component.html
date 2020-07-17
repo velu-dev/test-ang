@@ -33,17 +33,17 @@
 
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Address 1* </mat-label>
+                        <mat-label>Street Address 1* </mat-label>
                         <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
-                            formControlName="street1" placeholder="Address 1"></textarea>
+                            formControlName="street1" placeholder="Street Address 1"></textarea>
                         <mat-error *ngIf="isSubmitted">Please enter valid address</mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Address 2</mat-label>
+                        <mat-label>Street Address 2</mat-label>
                         <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="2"
-                            formControlName="street2" placeholder="Address 2"></textarea>
+                            formControlName="street2" placeholder="Street Address 2"></textarea>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50"
@@ -115,7 +115,7 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Fax 1</mat-label>
-                        <input matInput formControlName="fax1" mask="000-000-0000" placeholder="Fax 1"
+                        <input matInput formControlName="fax1" mask="(000) 000-0000" placeholder="Fax 1"
                             autocomplete="off">
                         <mat-error *ngIf="isSubmitted">Please enter valid fax number</mat-error>
                     </mat-form-field>
@@ -123,7 +123,7 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Fax 2</mat-label>
-                        <input matInput formControlName="fax2" mask="000-000-0000" placeholder="Fax 2"
+                        <input matInput formControlName="fax2" mask="(000) 000-0000" placeholder="Fax 2"
                             autocomplete="off">
                         <mat-error *ngIf="isSubmitted">Please enter valid fax number</mat-error>
                     </mat-form-field>

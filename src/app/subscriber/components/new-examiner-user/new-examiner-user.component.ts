@@ -227,7 +227,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.signData = res.rendering_provider.signature ? 'data:image/png;base64,' + res.rendering_provider.signature : null
       this.renderingForm.patchValue(rendering);
 
-      this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details)
+      this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
     })
   }
 
