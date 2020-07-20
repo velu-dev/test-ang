@@ -432,6 +432,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
       console.log(mail);
+      this.alertService.openSnackBar("Mailing address updated successfully!", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -453,6 +454,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
       console.log(mail);
+      this.alertService.openSnackBar("Billing provider updated successfully!", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -473,7 +475,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.renderingForm.value.signature = sign;
     console.log(this.renderingForm.value);
     this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe(render => {
-
+      this.alertService.openSnackBar("Rendering provider updated successfully!", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
