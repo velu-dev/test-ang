@@ -19,7 +19,7 @@ import { AppointmentComponent } from './examiner/appointment/appointment.compone
 import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/examiner-manage-address.component';
 import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 import { AppointmentDetailsComponent } from './examiner/appointment-details/appointment-details.component';
-import { ManageLocationComponent } from './staff/manage-location/manage-location.component';
+import { ManageLocationComponent } from './components/manage-location/manage-location.component';
 import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
 import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
@@ -33,6 +33,8 @@ import { UpcommingBillableItemComponent } from './components/dashboard/upcomming
 import { UnfinishedReportComponent } from './components/dashboard/unfinished-report/unfinished-report.component';
 import { BillingCollectionComponent } from './components/dashboard/billing-collection/billing-collection.component';
 import { NewExaminerUserComponent } from './components/new-examiner-user/new-examiner-user.component';
+import { ExistingServiceLocationsComponent } from './components/existing-service-locations/existing-service-locations.component';
+import { AddEditServiceLocationComponent } from './components/add-edit-service-location/add-edit-service-location.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -135,7 +137,18 @@ const routes: Routes = [{
   }, {
     path: "new-location",
     component: ExaminerManageAddressComponent
-  },]
+  },{
+    path: "existing-location",
+    component: ExistingServiceLocationsComponent
+  },
+  {
+    path: "add-location",
+    component: AddEditServiceLocationComponent
+  },
+  {
+    path: "edit-location/:id",
+    component: AddEditServiceLocationComponent
+  }]
 
 },
 {
@@ -362,7 +375,19 @@ const routes: Routes = [{
     }, {
       path: "new-location",
       component: ExaminerManageAddressComponent
-    },]
+    },
+    {
+      path: "existing-location",
+      component: ExistingServiceLocationsComponent
+    },
+    {
+      path: "add-location",
+      component: AddEditServiceLocationComponent
+    },
+    {
+      path: "edit-location/:id",
+      component: AddEditServiceLocationComponent
+    }]
 
   },
   {

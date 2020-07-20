@@ -133,7 +133,7 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Fax</mat-label>
-                            <input matInput placeholder="Fax" formControlName="fax_no" mask="(000) 000-0000"
+                            <input matInput placeholder="Fax" (keypress)="numberOnly($event)" formControlName="fax_no" mask="(000) 000-0000"
                                 autocomplete="off">
                             <mat-error *ngIf="mailingSubmit">Please enter valid fax</mat-error>
                         </mat-form-field>

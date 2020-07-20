@@ -52,6 +52,11 @@ export const api_endpoint = {
     deleteLicense: 'subscriber/examiner/remove-license/',
     verifyRole: 'subscriber/examiner/verify-role',
 
+    //loction
+    getLocationDetails: 'subscriber/examiner/service-location-list',
+    updateLocation: 'subscriber/examiner/service-location-update/',
+    updateExistingLocation: 'subscriber/examiner/add-existing-location',
+
     /// subscriber-staff-manager
     createSubscriberManageUser: 'subscriber-staff-manager/create',
     getSubscriberManageUsers: 'subscriber-staff-manager/users',
