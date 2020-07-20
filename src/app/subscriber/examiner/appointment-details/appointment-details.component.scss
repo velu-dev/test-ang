@@ -1,4 +1,5 @@
 @import "variables";
+@import "table";
 
 .appointment-deatils {
     .status_tracker {
@@ -31,11 +32,6 @@
         div.p-5 {
             padding: 5px;
             mat-card {
-                box-shadow: $box-shadow-2;
-                padding-bottom: 0px;
-                &:hover {
-                    box-shadow: $box-shadow-1;
-                }
                 mat-card-content {
                     padding-top: 10px;
                     .claim_label {
@@ -244,5 +240,126 @@
                 box-shadow: $box-shadow-1;
             }
         }
+    }
+}
+.claimant-info {
+    .empty-list {
+        div {
+            &:first-child {
+                &::after {
+                    content: "" !important;
+                    display: inline-flex;
+                }
+            }
+        }
+    }
+}
+
+.action-info {
+    padding: 10px 0 30px 0;
+    .simple-card {
+        margin-top: 30px !important;
+        padding: 10px;
+        width: 75%;
+        margin: 0px auto;
+        text-align: center;
+        border: 1px solid $gray;
+        border-radius: 3px;
+        cursor: pointer;
+        &:hover {
+            background: $light-color;
+            h4,
+            i {
+                color: $ternary;
+            }
+        }
+        h4 {
+            margin: 0px;
+        }
+    }
+    .simple-card-one {
+        @extend .simple-card;
+        background-color: $light-color;
+        text-align: left !important;
+        i {
+            padding: 5px 10px;
+            float: left;
+            font-size: $font-size-17;
+        }
+    }
+}
+.exam-info {
+    padding: 30px 0 30px 0;
+    .calender_btn {
+        vertical-align: middle;
+        padding-top: 40px;
+        button {
+            width: 50%;
+            margin: auto;
+            display: block;
+        }
+    }
+}
+.billable-item-info {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+    mat-card-content {
+        .mat-check {
+            padding-top: 25px;
+            padding-left: 20px;
+            display: block;
+            @media only screen and (max-width: 568px) {
+                padding-top: 0;
+                padding-left: 7px;
+            }
+        }
+
+        mat-form-field {
+            padding: 10px 10px 0px 10px !important;
+        }
+    }
+}
+.document-info {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+    mat-form-field {
+        padding: 10px 10px 0px 10px !important;
+    }
+    .document-file-upload {
+        @media only screen and (max-width: 568px) {
+            margin-bottom: 20px;
+        }
+        .Upload_ {
+            button {
+                width: 120px;
+            }
+            mat-form-field {
+                width: calc(100% - 150px);
+                @media only screen and (max-width: 568px) {
+                    width: $width-100 !important;
+                }
+            }
+        }
+        div {
+            .filled-gray {
+                margin-top: 25px;
+                @media only screen and (max-width: 568px) {
+                    margin-top: 0px;
+                }
+            }
+        }
+    }
+}
+.notes-info {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
     }
 }
