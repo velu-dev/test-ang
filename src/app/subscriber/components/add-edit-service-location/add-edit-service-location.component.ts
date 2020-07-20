@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { SubscriberService } from '../../service/subscriber.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-edit-service-location',
@@ -7,9 +12,81 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddEditServiceLocationComponent implements OnInit {
 
-  constructor() { }
+  locationForm: FormGroup;
+  states:any;
+  addressType:any;
+  locationSubmit:boolean = false;
+  constructor(private subscriberService: SubscriberService,
+    private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    public _location: Location,
+    private route: ActivatedRoute
+  ) { 
+    this.route.params.subscribe(params_res => {
+      if (params_res.id) {
+      }
+    })
+  }
 
   ngOnInit() {
+    this.locationForm = this.formBuilder.group({
+      id: [null],
+      service_location_name: [null],
+      street1: [null],
+      street2: [null],
+      city: [null],
+      state:[null],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      phone_no: [null],
+      fax_no: [null],
+      email: [null, Validators.compose([Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+      contact_person: [null],
+      notes: [null],
+      service_code_id: [null],
+      //national_provider_identifier: [null],
+      is_active: ['true'],
+    })
+    this.subscriberService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+
+    this.subscriberService.seedData('service_code').subscribe(response => {
+      this.addressType = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
+  }
+
+  locationFromSubmit() {
+    Object.keys(this.locationForm.controls).forEach((key) => {
+      if (this.locationForm.get(key).value && typeof (this.locationForm.get(key).value) == 'string')
+        this.locationForm.get(key).setValue(this.locationForm.get(key).value.trim())
+    });
+    this.locationSubmit = true;
+    if (this.locationForm.invalid) {
+      return;
+    }
+
+    this.subscriberService.updateLocation(this.locationForm.value).subscribe(location=>{
+      console.log(location)
+    },error=>{
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
+
+  cancel() {
+    this._location.back();
   }
 
 }

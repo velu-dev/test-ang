@@ -1,5 +1,3 @@
-
-
 <mat-card class="m-card new-location">
     <mat-card-header>
         <div class="m-0 content-wrapper-main-title">Add New Service Location</div>
@@ -7,7 +5,8 @@
     <mat-divider></mat-divider>
     <mat-card-content>
         <div class="" fxLayout="row wrap">
-            <form action="" fxLayout="row wrap" fxFlex="100">
+            <form action="" fxLayout="row wrap" fxFlex="100" [formGroup]="locationForm"
+                (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
 
                 <div class="sub-title p-l-10 m-t-20 m-b-20" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                     fxFlex.xs="100">
@@ -19,46 +18,51 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Location Name</mat-label>
-                        <input matInput placeholder="Location Name" autocomplete="off">
-                        <mat-error>error msg here..</mat-error>
+                        <input matInput placeholder="Location Name" formControlName="service_location_name"
+                            autocomplete="off">
+                        <mat-error>Please enter valid location name</mat-error>
                     </mat-form-field>
                 </div>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Street Address 1 </mat-label>
-                    <input matInput placeholder="Street Address 1" autocomplete="off">
-                    <mat-error>error msg here..</mat-error>
+                    <input matInput placeholder="Street Address 1" formControlName="street1"
+                        autocomplete="off">
+                    <mat-error>Please enter valid street address</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Street Address 2 </mat-label>
-                    <input matInput placeholder="Street Address 2" autocomplete="off">
-                    <mat-error>error msg here..</mat-error>
+                    <input matInput placeholder="Street Address 2" formControlName="street2"
+                        autocomplete="off">
+                    <mat-error>Please enter valid street address</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>City</mat-label>
-                    <input matInput placeholder="City" autocomplete="off">
-                    <mat-error>error msg here..</mat-error>
+                    <input matInput placeholder="City" formControlName="city" autocomplete="off">
+                    <mat-error>Please enter valid city</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>State </mat-label>
-                    <mat-select placeholder="State">
-                        <mat-option value="option">Option here</mat-option>
+                    <mat-select formControlName="state">
+                        <mat-option *ngFor="let state of states" [value]="state.id">
+                            {{state.state}}
+                        </mat-option>
                     </mat-select>
-                    <mat-error>error msg here..</mat-error>
+                    <mat-error>Please select valid state</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Zip Code </mat-label>
-                    <input matInput placeholder="Zip Code" autocomplete="off">
-                    <mat-error>error msg here..</mat-error>
+                    <input matInput placeholder="Zip Code" formControlName="zip_code" autocomplete="off">
+                    <mat-error>Please enter valid zip code</mat-error>
                 </mat-form-field>
 
                 <div class="sub-title p-l-10 m-t-20 m-b-20" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
@@ -71,38 +75,40 @@
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Service Type </mat-label>
-                    <mat-select placeholder="Service Type ">
-                        <mat-option value="option">Option here</mat-option>
+                    <mat-select formControlName="service_code_id">
+                        <mat-option *ngFor="let address of addressType" [value]="address.id">
+                            {{address?.service_code}} - {{address?.service_name}}</mat-option>
                     </mat-select>
-                    <mat-error>error msg here..</mat-error>
+                    <mat-error>Please select valid service type
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Phone </mat-label>
-                    <input matInput placeholder="Phone" autocomplete="off">
-                    <mat-error>error msg here..</mat-error>
+                    <input matInput placeholder="Phone" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no" autocomplete="off">
+                    <mat-error>Please enter valid phone</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Fax </mat-label>
-                    <input matInput placeholder="Fax" autocomplete="off">
-                    <mat-error>error msg here..</mat-error>
+                    <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="fax_no" autocomplete="off">
+                    <mat-error>Please enter valid fax</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Email </mat-label>
-                    <input matInput placeholder="Email" autocomplete="off">
-                    <mat-error>error msg here..</mat-error>
+                    <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+                    <mat-error>Please enter valid email</mat-error>
                 </mat-form-field>
 
 
                 <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                     class="p-l-10 m-b-20">
                     <mat-label class="m-t-10 p-b-10 display-block">Location status</mat-label>
-                    <mat-radio-group class="" formControlName="provider_status">
+                    <mat-radio-group class="" formControlName="is_active">
                         <mat-radio-button value="true" checked>Active</mat-radio-button>
                         <mat-radio-button value="false" class="p-l-10">In Active</mat-radio-button>
                     </mat-radio-group>
@@ -110,19 +116,20 @@
 
                 <mat-form-field appearance="outline" fxFlex="100">
                     <mat-label>Location Contact Person </mat-label>
-                    <input matInput placeholder="Location Contact Person" autocomplete="off">
-                    <mat-error>error msg here..</mat-error>
+                    <input matInput placeholder="Location Contact Person" formControlName="contact_person"
+                        autocomplete="off">
+                    <mat-error>Please enter valid location contact person</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100">
                     <mat-label>Notes </mat-label>
-                    <input matInput placeholder="Notes" autocomplete="off">
-                    <mat-error>error msg here..</mat-error>
+                    <input matInput placeholder="Notes" formControlName="notes" autocomplete="off">
+                    <mat-error>Please enter valid notes</mat-error>
                 </mat-form-field>
 
                 <div class="text-center w-100 m-t-10 m-b-10">
-                    <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
-                    <button mat-stroked-button class="m-l-10 outline-success">Save </button>
+                    <button mat-stroked-button type="button" class="outline-danger" (click)="cancel()">Cancel</button>
+                    <button mat-stroked-button class="m-l-10 outline-success" (click)="locationFromSubmit()">Save </button>
                 </div>
 
             </form>
