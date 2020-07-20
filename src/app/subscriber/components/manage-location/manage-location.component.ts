@@ -13,6 +13,7 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 import { MatDialog } from '@angular/material/dialog';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { trigger, style, state, transition, animate } from '@angular/animations';
+import { SubscriberService } from '../../service/subscriber.service';
 
 @Component({
   selector: 'app-manage-location',
@@ -35,18 +36,19 @@ export class ManageLocationComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches),
-    shareReplay()
-  );
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
   columnName = []
   columnsToDisplay = [];
   isMobile = false;
-  expandedElement:any;
+  expandedElement: any;
   constructor(private examinerService: ExaminerService,
     private router: Router,
     public dialog: MatDialog,
     private alertService: AlertService,
+    private subscriberService: SubscriberService,
     private breakpointObserver: BreakpointObserver) {
 
     this.isHandset$.subscribe(res => {
@@ -56,7 +58,7 @@ export class ManageLocationComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
         this.columnName = ["Examiner Name", "Location Type", "Address", "Phone", "Action"]
-        this.columnsToDisplay = ['first_name', 'address_type_name', 'street1', 'contact',"disabled"]
+        this.columnsToDisplay = ['first_name', 'address_type_name', 'street1', 'contact', "disabled"]
       }
     })
 
@@ -80,11 +82,15 @@ export class ManageLocationComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
-        return data.last_name.toLowerCase().includes(filter) ||  data.middle_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.address_type_name && data.address_type_name.toLowerCase().includes(filter)) || (data.service_name && data.service_name.toLowerCase().includes(filter))|| (data.contact && data.contact.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state && data.state.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.toLowerCase().includes(filter));
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return data.last_name.toLowerCase().includes(filter) || data.middle_name.toLowerCase().includes(filter) || data.first_name.toLowerCase().includes(filter) || (data.address_type_name && data.address_type_name.toLowerCase().includes(filter)) || (data.service_name && data.service_name.toLowerCase().includes(filter)) || (data.contact && data.contact.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state && data.state.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.toLowerCase().includes(filter));
       };
     }, error => {
       console.log(error)
+    })
+
+    this.subscriberService.getLocationDetails().subscribe(location => {
+      console.log(location)
     })
   }
 
@@ -101,10 +107,11 @@ export class ManageLocationComponent implements OnInit {
 
   editAddress(data) {
     console.log(data)
-    this.router.navigate(['/subscriber/location/edit-location', data.examiner_id, data.address_id])
+    //this.router.navigate(['/subscriber/location/edit-location', data.examiner_id, data.address_id])
+    this.router.navigate(['/subscriber/location/edit-location', data.examiner_id])
   }
-  editClaim(e){
-    
+  editClaim(e) {
+
   }
 
   openDialog(dialogue, data) {
