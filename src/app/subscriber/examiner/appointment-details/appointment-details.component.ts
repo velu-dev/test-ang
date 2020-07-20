@@ -7,6 +7,16 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
+export interface PeriodicElement1 {
+  file_name: string;
+  date: string;
+}
+
+const ELEMENT_DATA1: PeriodicElement1[] = [
+  { file_name: "Appointment Notification Letter", date: "01-02-2020" },
+  { file_name: "QME 110 - QME Appointment Notification Form", date: "01-02-2020" },
+  { file_name: "QME 122 - AME or QME Declaration of Service of…", date: "01-02-2020" }
+];
 
 @Component({
   selector: 'app-appointment-details',
@@ -14,6 +24,8 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./appointment-details.component.scss']
 })
 export class AppointmentDetailsComponent implements OnInit {
+  displayedColumns1: string[] = ['file_name', 'date', 'action'];
+  dataSource1 = ELEMENT_DATA1;
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
@@ -74,7 +86,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.examinerService.getAllExamination(this.claim_id,this.billableId).subscribe(response => {
+    this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
       this.examiner_id = response.data.appointments.examiner_id;
       this.examinationDetails = response['data']
       this.getDocumentData();
@@ -94,7 +106,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   getDocumentData() {
-    this.examinerService.getDocumentData(this.claim_id,this.billableId).subscribe(res => {
+    this.examinerService.getDocumentData(this.claim_id, this.billableId).subscribe(res => {
       this.documentTabData = res['data'];
       this.tabChanges(this.tabIndex)
     }, error => {
