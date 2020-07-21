@@ -1,6 +1,66 @@
-<mat-card class="m-card">
+<mat-card class="m-t-20 m-b-20" *ngIf="!isLoading">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title">Billable Item</div>
+        <mat-panel-title>
+            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Claimant & Claim</div>
+        </mat-panel-title>
+    </mat-card-header>
+    <mat-divider> </mat-divider>
+    <mat-card-content class="m-t-15">
+        <div fxLayout="row wrap" fxFlex="100">
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+                fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Name </mat-label>
+                <input matInput type="text" placeholder="Name" [value]="claimantDetails.claimant_name" disabled>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+                fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput name="date_of_birth" placeholder="Date of Birth"
+                    [ngModel]="claimantDetails.date_of_birth | date:'MM-dd-yyyy'"
+                    (ngModelChange)="claimantDetails.date_of_birth = $event" disabled>
+                <mat-error>Please enter valid claim number</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+                fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Phone</mat-label>
+                <input type="text" matInput placeholder="Enter Phone" [value]="claimantDetails.phone_no_1"
+                    mask="(000) 000-0000" disabled>
+                <mat-error>Please enter valid WCAB number</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+                fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Claim Number</mat-label>
+                <input matInput placeholder="Claim Number" [value]="claimDetails.claim_number" autocomplete="off"
+                    disabled>
+                <mat-error>Please enter valid claim number</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+                fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>WCAB Number</mat-label>
+                <input type="text" matInput placeholder="Enter WCAB Number" autocomplete="off"
+                    [value]="claimDetails.wcab_number" disabled>
+                <mat-error>Please enter valid WCAB number</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+                fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Exam Type*</mat-label>
+                <mat-select disabled [(ngModel)]="claimDetails.exam_type_id" [ngModelOptions]="{standalone: true}">
+                    <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
+                        {{examType.exam_type_code}} - {{examType.exam_name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Please select exam type</mat-error>
+            </mat-form-field>
+
+        </div>
+    </mat-card-content>
+</mat-card>
+<mat-card class="m-card" *ngIf="!isLoading">
+    <mat-card-header>
+        <div class="m-0 content-wrapper-main-title">Billable Item and Intake Call Information</div>
     </mat-card-header>
     <mat-divider></mat-divider>
 
@@ -45,7 +105,7 @@
 
                     </div>
                     <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-checkbox class="mat-check m-b-20" labelPosition="after" formControlName="is_psychiatric">
+                        <mat-checkbox class="mat-check m-b-20" (click)="psychiatric()" labelPosition="after" formControlName="is_psychiatric">
                             Psychiatric
                         </mat-checkbox>
                     </div>
@@ -107,7 +167,7 @@
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Intake Call Date & Time</mat-label>
                         <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
-                            autocomplete="off" [min]="today" [max]="todayDate.intake"
+                            autocomplete="off" [min]="claimantDetails.date_of_birth" [max]="todayDate.intake"
                             [owlDateTime]="intake">
                         <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake">
                         </mat-datepicker-toggle>
@@ -130,8 +190,7 @@
                     </mat-form-field>
                 </div>
                 <div class="text-center w-100 m-t-10 m-b-10 action-button">
-                    <button mat-stroked-button type="button" class="m-r-10 outline-warning"
-                        >Previous</button>
+                    <button mat-stroked-button type="button" class="m-r-10 outline-warning">Previous</button>
                     <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                         (click)="cancel()">Cancel</button>
                     <button mat-stroked-button class="m-r-10 outline-light_green" (click)="submitBillableItem()">

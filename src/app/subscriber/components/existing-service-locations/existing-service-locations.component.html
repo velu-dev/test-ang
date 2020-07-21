@@ -25,9 +25,11 @@
                 <mat-error>
                     <span>Please enter valid service location</span></mat-error>
             </mat-form-field>
+            <div fxFlex="100">
             <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0" class="float-right outline-success m-t-5" (click)="locationRoute()">
-                Add Service Location
+               Create Service Location
             </button>
+        </div>
             <div class="address-list" fxFlex="100" *ngIf="locationData">
                 <mat-list>
                     <mat-list-item>
