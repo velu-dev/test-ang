@@ -61,7 +61,8 @@ const ELEMENT_DATA2: PeriodicElement12[] = [
 })
 export class ServiceRequestDetailsComponent implements OnInit {
   displayedColumns: string[] = ['transmitted_file_name', 'file_name',];
-  dataSource: any;
+  requestDocuments: any;
+  receivedDocuments: any;
   displayedColumns1: string[] = ['document_transmission_type', 'createdAt', 'transmission_status', 'transmission_message'];
   dataSource1: any;
   displayedColumns2: string[] = ['date_of_call', 'first_name', 'service_provider_contact_person', 'service_provider_contact_number', 'notes'];
@@ -69,7 +70,6 @@ export class ServiceRequestDetailsComponent implements OnInit {
   displayedColumns3: string[] = ['document_name', 'received_doc_name',];
   dataSource3 = ELEMENT_DATA3;
   serviceRequestDetails: any;
-  requestDocuments = [];
   transmissions = [];
   followupCalls = [];
   isLoading = false;
@@ -89,10 +89,19 @@ export class ServiceRequestDetailsComponent implements OnInit {
   getData() {
     this.userService.getServiceRequest(this.service_request_id).subscribe(res => {
       this.serviceRequestDetails = res.service_request;
-      this.requestDocuments = res.service_request_doc;
+      let requestDocuments = [];
+      let receivedDocument = [];
+      res.service_request_doc.map(doc => {
+        if (doc.transmission_direction == 'OUT') {
+          requestDocuments.push(doc)
+        } else {
+          receivedDocument.push(doc)
+        }
+      })
       this.transmissions = res.service_request_transmission;
       this.dataSource1 = new MatTableDataSource(this.transmissions)
-      this.dataSource = new MatTableDataSource(this.requestDocuments)
+      this.requestDocuments = new MatTableDataSource(requestDocuments)
+      this.receivedDocuments = new MatTableDataSource(receivedDocument)
       this.followupCalls = res.service_request_followup_calls;
       this.dataSource2 = new MatTableDataSource(this.followupCalls)
       this.isLoading = false;

@@ -83,20 +83,24 @@ export class SubscriberUserService {
     return this.http.put(environment.baseUrl + api_endpoint.updateRenderingProvider + id, data)
   }
 
-  createLicense(id, data): Observable<any>{
+  createLicense(id, data): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.createLicense + id, data)
   }
 
-  deleteLicense(id):Observable<any>{
+  deleteLicense(id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteLicense + id)
   }
 
-  verifyRole():Observable<any>{
+  verifyRole(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.verifyRole)
   }
 
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
+  }
+
+  getLocationDetails(id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getLocationDetails + id)
   }
 
 }

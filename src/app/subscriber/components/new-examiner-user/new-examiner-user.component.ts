@@ -5,18 +5,27 @@ import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatDialog, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSort, MatPaginator } from '@angular/material';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
 import * as  errors from '../../../shared/messages/errors'
 import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
+import { SubscriberService } from '../../service/subscriber.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-new-examiner-user',
   templateUrl: './new-examiner-user.component.html',
-  styleUrls: ['./new-examiner-user.component.scss']
+  styleUrls: ['./new-examiner-user.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class NewExaminerUserComponent implements OnInit {
   userForm: FormGroup;
@@ -63,6 +72,8 @@ export class NewExaminerUserComponent implements OnInit {
   providerTypeList: any;
   sameAsExaminer: boolean;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: SubscriberUserService,
@@ -72,15 +83,16 @@ export class NewExaminerUserComponent implements OnInit {
     private cookieService: CookieService,
     private breakpointObserver: BreakpointObserver,
     private store: Store<{ breadcrumb: any }>,
+    private subscriberService: SubscriberService,
     public dialog: MatDialog) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Address", "Status"]
-        this.columnsToDisplay = ['is_expand', 'claimant_name', "status"]
+        this.columnName = ["", "Examiner Name", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["Address", "Service Type", "Phone", "NPI Number", "Status"]
-        this.columnsToDisplay = ['address', 'service_type', "phone", "npi_number", 'status']
+        this.columnName = ["Address", "Service Type", "Phone", "NPI Number", "Action"]
+        this.columnsToDisplay = ['street1', 'service_code_id', 'phone_no', 'npi_number', "action"]
       }
     })
     this.user = JSON.parse(this.cookieService.get('user'));
@@ -156,6 +168,8 @@ export class NewExaminerUserComponent implements OnInit {
     })
 
 
+
+
   }
 
   updateFormData(id) {
@@ -228,7 +242,27 @@ export class NewExaminerUserComponent implements OnInit {
       this.renderingForm.patchValue(rendering);
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
+
+      //this.getLocationDetails();
+      this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
+
     })
+  }
+
+  getLocationDetails() {
+
+    // this.userService.getLocationDetails(this.examinerId).subscribe(response => {
+    //   this.dataSource = new MatTableDataSource(response['data']);
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    //   // this.dataSource.filterPredicate = function (data, filter: string): boolean {
+    //   //   return (data.service_name && data.service_name.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter));
+    //   // };
+    // }, error => {
+    //   console.log(error)
+    //   this.dataSource = new MatTableDataSource([]);
+    // })
   }
 
   formInit() {
@@ -413,8 +447,9 @@ export class NewExaminerUserComponent implements OnInit {
     this.selectedFile = null;
   }
 
+  tab: number;
   tabchange(i) {
-
+    this.tab = i
   }
 
   mailingAddressSubmit() {
@@ -525,6 +560,18 @@ export class NewExaminerUserComponent implements OnInit {
       if (e == tex.id) {
         this.texonomyValue = tex.taxonomy_code;
       }
+    })
+  }
+
+  assignLocation() {
+    this.router.navigate(['/subscriber/location/existing-location', this.examinerId])
+  }
+
+  removeLocation(e, index) {
+    this.subscriberService.removeAssignLocation(this.examinerId, e.id).subscribe(remove => {
+      this.updateFormData(this.examinerId)
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
