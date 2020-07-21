@@ -167,7 +167,7 @@ const routes: Routes = [{
     component: ExistingServiceLocationsComponent
   },
   {
-    path: "add-location/",
+    path: "add-location",
     component: AddEditServiceLocationComponent
   },
   {
