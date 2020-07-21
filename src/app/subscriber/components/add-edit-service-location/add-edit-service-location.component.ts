@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SubscriberService } from '../../service/subscriber.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-edit-service-location',
@@ -13,17 +13,45 @@ import { ActivatedRoute } from '@angular/router';
 export class AddEditServiceLocationComponent implements OnInit {
 
   locationForm: FormGroup;
-  states:any;
-  addressType:any;
-  locationSubmit:boolean = false;
+  states: any;
+  addressType: any;
+  locationSubmit: boolean = false;
+  pageStatus:number;
   constructor(private subscriberService: SubscriberService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     public _location: Location,
-    private route: ActivatedRoute
-  ) { 
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.params.subscribe(params_res => {
+      console.log(params_res)
+      this.pageStatus = params_res.status;
       if (params_res.id) {
+        this.subscriberService.getSingleLocation(params_res.id).subscribe(locations => {
+          console.log(locations.data['0'])
+          let location = locations.data['0']
+          let data = {
+            id: location.id,
+            service_location_name: location.service_location_name,
+            street1: location.street1,
+            street2: location.street2,
+            city: location.city,
+            state: location.state,
+            zip_code: location.zip_code,
+            phone_no: location.phone_no,
+            fax_no: location.fax_no,
+            email: location.email,
+            contact_person: location.contact_person,
+            notes: location.notes,
+            service_code_id: location.service_code_id,
+            national_provider_identifier: location.national_provider_identifier,
+            is_active: location.is_active.toString(),
+          }
+
+          this.locationForm.patchValue(data);
+
+        })
       }
     })
   }
@@ -35,7 +63,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       street1: [null],
       street2: [null],
       city: [null],
-      state:[null],
+      state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no: [null],
       fax_no: [null],
@@ -57,6 +85,10 @@ export class AddEditServiceLocationComponent implements OnInit {
     }, error => {
       console.log("error", error)
     })
+
+    if(this.pageStatus == 2){
+      this.locationForm.addControl('national_provider_identifier', new FormControl(null));
+    }
   }
 
   locationFromSubmit() {
@@ -69,9 +101,10 @@ export class AddEditServiceLocationComponent implements OnInit {
       return;
     }
 
-    this.subscriberService.updateLocation(this.locationForm.value).subscribe(location=>{
-      console.log(location)
-    },error=>{
+    this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
+      //console.log(location)
+      this.router.navigate(['/subscriber/location'])
+    }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }

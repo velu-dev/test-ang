@@ -131,18 +131,20 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: ManageLocationComponent
-  }, {
-    path: "edit-location/:examiner_id/:address_id",
-    component: EditAddressComponent
-  }, {
+  }, 
+  // {
+  //   path: "edit-location/:examiner_id/:address_id",
+  //   component: EditAddressComponent
+  // }, 
+  {
     path: "new-location",
     component: ExaminerManageAddressComponent
   },{
-    path: "existing-location",
+    path: "existing-location/:id",
     component: ExistingServiceLocationsComponent
   },
   {
-    path: "add-location",
+    path: "add-location/:status",
     component: AddEditServiceLocationComponent
   },
   {
