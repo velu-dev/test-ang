@@ -23,7 +23,6 @@ export class AppComponent {
   }
   ngOnInit() {
     this.listenRouting();
-    ROUTES[0].title = "Velusamy"
     ROUTES.map(menu => {
       let menuData = {};
       menuData = menu
