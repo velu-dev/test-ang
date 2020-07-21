@@ -58,6 +58,7 @@ export class NewExaminerUserComponent implements OnInit {
   licenceDataSource: any = new MatTableDataSource([]);
   examinerId: number = null;
   mailingSubmit: boolean = false;
+  tabIndex:number = 0;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -125,6 +126,13 @@ export class NewExaminerUserComponent implements OnInit {
       }
     })
 
+    this.route.params.subscribe(params_res => {
+      if(params_res.status == 1){
+        this.tabIndex = 4
+        this.tab = 4
+      }
+    })
+
 
 
   }
@@ -174,6 +182,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.addresssearch.valueChanges.subscribe(res => {
       if (res != null) {
+        if(res.length > 2)
         this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
           this.filteredOptions = value;
         })
@@ -302,7 +311,7 @@ export class NewExaminerUserComponent implements OnInit {
       default_injury_state: [null],
       is_person: ['true'],
       national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
-      dol_provider_number: [""],
+      dol_provider_number: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(10)])],
       tax_id: [null],
       street1: [null],
       street2: [null],
@@ -614,6 +623,7 @@ export class NewExaminerUserComponent implements OnInit {
   locationAddStatus: boolean = false;
 
   addressOnChange(data) {
+    console.log(data,"data");
     this.locationData = null;
     this.locationData = data;
   }

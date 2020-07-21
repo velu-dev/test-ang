@@ -1,6 +1,6 @@
 <mat-card class="m-t-25">
     <mat-card-content>
-        <mat-tab-group class="user-list" (selectedTabChange)="tabchange($event.index)">
+        <mat-tab-group class="user-list" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabchange($event.index)">
             <!-- ######~~~~~Examiner ~~~~~##### -->
             <mat-tab>
                 <ng-template mat-tab-label>
@@ -661,7 +661,7 @@
                                     {{option?.street1 }} {{option?.street2 }} {{option?.city}}
                                     {{option?.state_name }} {{option?.zip_code }}
                                 </mat-option>
-                                <mat-option *ngIf="filteredOptions?.data?.length == 0">Not found
+                                <mat-option *ngIf="filteredOptions?.data?.length == 0" disabled>Not found
                                 </mat-option>
                             </mat-autocomplete>
                                 <span matSuffix class="search-icon icons">
@@ -687,9 +687,10 @@
                                 </mat-list>
                             </div>
                             <div fxFlex="100" class="p-t-30">
-                                <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="outline-success m-t-5" (click)="locationRoute()">
+                                <!-- <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="outline-success m-t-5" (click)="locationRoute()">
                                    Create Service Location
-                                </button>
+                                </button> -->
+                                <span *ngIf="filteredOptions?.data?.length == 0 && locationData == null">No existing Service Location Found!</span>
                             </div>
                 
                             <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100" *ngIf="locationData">
@@ -710,7 +711,10 @@
                 
                             <div class="text-center w-100 m-t-10 m-b-10">
                                 <button mat-stroked-button type="button" class="outline-danger" (click)="locationCancel()">Cancel</button>
-                                <button mat-stroked-button class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>
+                                <button mat-stroked-button *ngIf="filteredOptions?.data?.length != 0 || (filteredOptions?.data?.length >= 1 || locationData != null)" class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>
+                                <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="m-l-10 outline-success" (click)="locationRoute()">
+                                    Create Service Location
+                                 </button>
                             </div>
                 
                         </div>
