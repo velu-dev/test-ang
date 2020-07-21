@@ -300,15 +300,14 @@
 }
 .exam-info {
     padding: 30px 0 30px 0;
+    .edit_btn {
+        float: right;
+        display: block;
+    }
     .calender_btn {
-        .edit_btn {
-            direction: ltr;
-            vertical-align: text-top;
-        }
-        .calender_btn {
-            direction: ltr;
-            vertical-align: text-top;
-        }
+        display: block;
+        float: right;
+        margin-top: 35px;
     }
 }
 .billable-item-info {
