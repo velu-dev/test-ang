@@ -88,7 +88,7 @@
                             <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidsuffix}}</mat-error>
                         </mat-form-field>
-                      
+
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
                             fxFlex.xl="100" fxFlex.sm="100" class="m-t-5  p-r-10">
                             <mat-label>Signin Email*</mat-label>
@@ -99,32 +99,31 @@
 
                         <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                             Signature
+                            <br /><small>
+                                Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio &
+                                Maximum File Size: 500 KB
+                            </small>
                         </div>
                         <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                             class="sign-upload">
                             <div fxLayout="row wrap">
                                 <mat-form-field appearance="standard" hideRequiredMarker="hideRequiredControl.auto"
-                                    floatLabel="floatLabelControl.auto" fxFlex="100" class="w-100">
+                                    floatLabel="floatLabelControl.auto" fxFlex="80" class="w-100">
                                     <input matInput [title]="selectedFile" readonly [value]="selectedFile | ellipsis:30"
                                         placeholder="No file chosen" value="12345">
                                     <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
                                         (change)="fileChangeEvent($event)" id="uploadFile">
-                                    <button matSuffix type="button" (click)="uploader.click()" mat-stroked-button
-                                        class="upload_btn outline-success">Upload
-                                    </button>
-                                    <mat-hint>
-                                        *Aspect ratio 3:1<br />
-                                        *Max size 500 KB<br />
-                                        *Allowed formats : JPEG/JPG, PNG
-                                    </mat-hint>
                                 </mat-form-field>
+                                <button matSuffix type="button" (click)="uploader.click()" mat-stroked-button
+                                    class="upload_btn outline-success">Upload
+                                </button>
 
-                                <div fxFlex="100" *ngIf="!signData" class="m-t-30">
+                                <div fxFlex="100" *ngIf="!signData" class="m-t-20">
                                     <div class="empty-image m-l-10">
                                         No image uploaded
                                     </div>
                                 </div>
-                                <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
+                                <div fxFlex="100" *ngIf="signData" class="m-t-20 sign-img">
                                     <button type="button" class="m-b-5" (click)="removeSign()" mat-stroked-button>Remove
                                     </button><br />
                                     <div class="sign m-l-10">

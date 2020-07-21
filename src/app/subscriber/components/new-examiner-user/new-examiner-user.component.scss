@@ -135,3 +135,8 @@ mat-card {
   padding-left: 10px;
   margin: 5px;
 }
+.sub-title {
+  small {
+    font-weight: $font-weight-base !important;
+  }
+}

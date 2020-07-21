@@ -35,6 +35,11 @@ import { BillingCollectionComponent } from './components/dashboard/billing-colle
 import { NewExaminerUserComponent } from './components/new-examiner-user/new-examiner-user.component';
 import { ExistingServiceLocationsComponent } from './components/existing-service-locations/existing-service-locations.component';
 import { AddEditServiceLocationComponent } from './components/add-edit-service-location/add-edit-service-location.component';
+import { BillingCorrespondanceComponent } from './examiner/appointment-details/correspondance/correspondance.component';
+import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
+import { HistoryComponent } from './examiner/appointment-details/history/history.component';
+import { RecordsComponent } from './examiner/appointment-details/records/records.component';
+import { ReportComponent } from './examiner/appointment-details/report/report.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -88,7 +93,25 @@ const routes: Routes = [{
     component: AppointmentComponent
   }, {
     path: "appointment-details/:id/:billId",
-    component: AppointmentDetailsComponent
+    children: [{
+      path: "",
+      component: AppointmentDetailsComponent
+    }, {
+      path: "correspondance",
+      component: BillingCorrespondanceComponent
+    }, {
+      path: "examination",
+      component: ExaminationComponent
+    }, {
+      path: "history",
+      component: HistoryComponent
+    }, {
+      path: "records",
+      component: RecordsComponent
+    }, {
+      path: "reports",
+      component: ReportComponent
+    }]
   }]
 },
 {
@@ -131,7 +154,7 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: ManageLocationComponent
-  }, 
+  },
   // {
   //   path: "edit-location/:examiner_id/:address_id",
   //   component: EditAddressComponent
@@ -139,7 +162,7 @@ const routes: Routes = [{
   {
     path: "new-location",
     component: ExaminerManageAddressComponent
-  },{
+  }, {
     path: "existing-location/:id",
     component: ExistingServiceLocationsComponent
   },
@@ -215,7 +238,25 @@ const routes: Routes = [{
         component: AppointmentComponent
       }, {
         path: "appointment-details/:id/:billId",
-        component: AppointmentDetailsComponent
+        children: [{
+          path: "",
+          component: AppointmentDetailsComponent
+        }, {
+          path: "correspondance",
+          component: BillingCorrespondanceComponent
+        }, {
+          path: "examination",
+          component: ExaminationComponent
+        }, {
+          path: "history",
+          component: HistoryComponent
+        }, {
+          path: "records",
+          component: RecordsComponent
+        }, {
+          path: "reports",
+          component: ReportComponent
+        }]
       }]
     },
     {

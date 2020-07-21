@@ -25,7 +25,7 @@ export const MY_CUSTOM_FORMATS = {
 })
 export class NewBillableItemComponent implements OnInit {
   billable_item: FormGroup;
-  modifiers: any;
+  modifiers = [];
   procuderalCodes: any = [];
   examinarList: any;
   duration = [{ id: 20, value: "20" }, { id: 30, value: "30" }, { id: 45, value: "45" }, { id: 60, value: "60" }]
@@ -45,6 +45,11 @@ export class NewBillableItemComponent implements OnInit {
   contactType: any;
   languageList: any = [];
   primary_language_spoken: boolean = false;
+  claimantDetails = {};
+  claimDetails = {};
+  examTypes: any;
+  isLoading = false;
+  modifierList = [];
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -52,17 +57,25 @@ export class NewBillableItemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
   ) {
+    this.isLoading = true;
+    this.claimService.seedData('exam_type').subscribe(res => {
+      this.examTypes = res.data;
+    })
     this.route.params.subscribe(param => {
       this.claimId = param.claim;
       this.claimantId = param.claimant;
+      this.claimService.getClaim(this.claimId).subscribe(claim => {
+        this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number }
+      })
       this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
         this.claimant = claimant.data[0]
+        this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
+
       })
       if (param.billable) {
         this.isEdit = true
         this.billableId = param.billable;
         this.claimService.getBillableItemSingle(param.billable).subscribe(res => {
-          console.log(res);
           if (res['data'].exam_type.primary_language_spoken) {
             this.primary_language_spoken = true;
           }
@@ -76,6 +89,7 @@ export class NewBillableItemComponent implements OnInit {
         })
       }
     })
+    this.isLoading = false;
   }
 
   ngOnInit() {
@@ -110,7 +124,11 @@ export class NewBillableItemComponent implements OnInit {
       this.languageList = res.data;
     })
     this.claimService.seedData("modifier").subscribe(res => {
-      this.modifiers = res.data;
+      this.modifierList = res.data;
+      res.data.map(modifier => {
+        if (modifier.modifier_code != "96")
+          this.modifiers.push(modifier);
+      })
     })
     this.claimService.seedData("procedural_codes").subscribe(res => {
       res.data.map(proc => {
@@ -142,6 +160,17 @@ export class NewBillableItemComponent implements OnInit {
       exam_type: { modifier_id: [] }
     })
   }
+  psychiatric() {
+    this.modifiers = [];
+    if (!(this.billable_item.value.exam_type.is_psychiatric)) {
+      this.modifiers = this.modifierList;
+    } else {
+      this.modifierList.map(res => {
+        if (res.modifier_code != "96")
+          this.modifiers.push(res);
+      })
+    }
+  }
 
   todayDate = { appointment: new Date(), intake: new Date() }
   pickerOpened(type) {
@@ -155,7 +184,6 @@ export class NewBillableItemComponent implements OnInit {
   isAddressSelected = false;
   selectedExaminarAddress: any = {};
   changeExaminarAddress(address) {
-    console.log(address)
     this.billable_item.patchValue({
       appointment: {
         examination_location_id: address.address_id
@@ -167,12 +195,10 @@ export class NewBillableItemComponent implements OnInit {
 
 
   examinarChange(examinar) {
-    console.log(this.billable_item.value)
     this.addressCtrl.setValue('');
     this.selectedExaminarAddress = '';
     this.isAddressSelected = false;
     this.examinarId = examinar.id;
-    console.log(examinar)
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
       this.examinerOptions = []
       this.examinerOptions = res['data'];
@@ -230,7 +256,9 @@ export class NewBillableItemComponent implements OnInit {
     if (this.billable_item.value.exam_type.modifier_id)
       if (this.billable_item.value.exam_type.modifier_id.includes(2)) {
         this.languageList.map(res => {
+
           if (res.id == this.claimant.primary_language_spoken) {
+            this.primary_language_spoken = true;
             this.selectedLanguage = res;
           }
         })
