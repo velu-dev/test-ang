@@ -9,7 +9,8 @@
                 <mat-card-content class="p-b-15">
                     <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                         [formGroup]="userForm">
-                        <div fxFlex="100" *ngIf="!sameAsExaminer || (sameAsExaminer && user?.id == userForm?.value?.id)">
+                        <div fxFlex="100"
+                            *ngIf="!sameAsExaminer || (sameAsExaminer && user?.id == userForm?.value?.id)">
                             <mat-checkbox class="checkbox_" formControlName="SameAsSubscriber"
                                 (change)="sameAsSub($event)">Add Examiner Role to Subscriber</mat-checkbox>
                         </div>
@@ -133,8 +134,8 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Fax</mat-label>
-                            <input matInput placeholder="Fax" (keypress)="numberOnly($event)" formControlName="fax_no" mask="(000) 000-0000"
-                                autocomplete="off">
+                            <input matInput placeholder="Fax" (keypress)="numberOnly($event)" formControlName="fax_no"
+                                mask="(000) 000-0000" autocomplete="off">
                             <mat-error *ngIf="mailingSubmit">Please enter valid fax</mat-error>
                         </mat-form-field>
 
@@ -162,7 +163,8 @@
                         </mat-form-field>
 
                         <div class="text-center w-100 m-t-10 m-b-20">
-                            <button mat-stroked-button type="button" class="outline-danger" (click)="cancel()">Cancel</button>
+                            <button mat-stroked-button type="button" class="outline-danger"
+                                (click)="cancel()">Cancel</button>
                             <button mat-stroked-button (click)="mailingAddressSubmit()"
                                 class="m-l-10 outline-success">Save</button>
                         </div>
@@ -331,14 +333,16 @@
                                     fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                                     <mat-label>Department of Labor (DOL) Provider Number</mat-label>
                                     <input matInput placeholder="Department of Labor (DOL) Provider Number"
-                                        autocomplete="off"  [dropSpecialCharacters]="false" mask="9{9}" formControlName="dol_provider_number">
+                                        autocomplete="off" [dropSpecialCharacters]="false" mask="9{9}"
+                                        formControlName="dol_provider_number">
                                     <mat-error *ngIf="billingSubmit">Please enter valid DOL number</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
 
                         <div class="text-center w-100 m-t-10 m-b-20">
-                            <button mat-stroked-button type="button" class="outline-danger" (click)="cancel()">Cancel</button>
+                            <button mat-stroked-button type="button" class="outline-danger"
+                                (click)="cancel()">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
                                 (click)="billingPrviderSubmit()">Save</button>
                         </div>
@@ -412,7 +416,8 @@
                                 <mat-label>Rendering Provider Name*</mat-label>
                                 <input matInput placeholder="Rendering Provider Name" [value]="user.company_name"
                                     autocomplete="off" disabled>
-                                <mat-error *ngIf="renderingSubmit">Please enter valid rendering provider name</mat-error>
+                                <mat-error *ngIf="renderingSubmit">Please enter valid rendering provider name
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
@@ -434,7 +439,7 @@
                             <mat-select formControlName="taxonomy_id" (selectionChange)="texonomyChange($event.value)">
                                 <mat-select-trigger>
                                     {{texonomyValue}}
-                                  </mat-select-trigger>
+                                </mat-select-trigger>
                                 <mat-option *ngFor="let taxonomy of taxonomyList" [value]="taxonomy.id">
                                     {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
                                 </mat-option>
@@ -446,14 +451,16 @@
                             class="add-license">
                             <div fxLayout="row wrap">
                                 <div fxFlex="100">
-                                    <button mat-stroked-button class="outline-success" (click)="openLicense()">Add License </button>
+                                    <button mat-stroked-button class="outline-success" (click)="openLicense()">Add
+                                        License </button>
                                 </div>
                                 <div class="w-100 table p-l-10">
                                     <table mat-table [dataSource]="licenceDataSource" class="user-table w-100">
                                         <!-- Position Column -->
                                         <ng-container matColumnDef="license_number">
                                             <th mat-header-cell *matHeaderCellDef>License Number </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.state_license_number}} </td>
+                                            <td mat-cell *matCellDef="let element"> {{element.state_license_number}}
+                                            </td>
                                         </ng-container>
 
                                         <!-- Name Column -->
@@ -486,33 +493,33 @@
                             <div fxLayout="row wrap">
                                 <div class="sub-title p-l-10 m-t-30" fxFlex="100">
                                     Signature
+                                    <br /> <small>
+                                        Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio &
+                                        Maximum File Size: 500 KB
+                                    </small>
                                 </div>
                                 <div fxFlex="100" class="sign-upload">
                                     <div fxLayout="row wrap">
                                         <mat-form-field appearance="standard"
                                             hideRequiredMarker="hideRequiredControl.auto"
-                                            floatLabel="floatLabelControl.auto" fxFlex="100" class="w-100">
+                                            floatLabel="floatLabelControl.auto" fxFlex="80" class="w-100">
                                             <input matInput [title]="selectedFile" readonly
                                                 [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
                                                 value="12345">
                                             <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
                                                 (change)="fileChangeEvent($event)" id="uploadFile">
-                                            <button matSuffix type="button" (click)="uploader.click()"
-                                                mat-stroked-button class="upload_btn outline-success">Upload
-                                            </button>
-                                            <mat-hint>
-                                                *Aspect ratio 3:1<br />
-                                                *Max size 500 KB<br />
-                                                *Allowed formats : JPEG/JPG, PNG
-                                            </mat-hint>
-                                        </mat-form-field>
 
-                                        <div fxFlex="100" *ngIf="!signData" class="m-t-30">
+                                        </mat-form-field>
+                                        <button matSuffix type="button" (click)="uploader.click()" mat-stroked-button
+                                            class="upload_btn outline-success">Upload
+                                        </button>
+
+                                        <div fxFlex="100" *ngIf="!signData" class="m-t-20">
                                             <div class="empty-image m-l-10">
                                                 No image uploaded
                                             </div>
                                         </div>
-                                        <div fxFlex="100" *ngIf="signData" class="m-t-30 sign-img">
+                                        <div fxFlex="100" *ngIf="signData" class="m-t-20 sign-img">
                                             <button type="button" class="m-b-5" (click)="removeSign()"
                                                 mat-stroked-button>Remove </button><br />
                                             <div class="sign m-l-10">
@@ -549,8 +556,10 @@
                         </div>
 
                         <div class="text-center w-100 m-t-10 m-b-20">
-                            <button mat-stroked-button type="button" class="outline-danger" (click)="cancel()">Cancel</button>
-                            <button mat-stroked-button class="m-l-10 outline-success" (click)="renderingFormSubmit()">Save</button>
+                            <button mat-stroked-button type="button" class="outline-danger"
+                                (click)="cancel()">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-success"
+                                (click)="renderingFormSubmit()">Save</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -562,7 +571,7 @@
                 <ng-template mat-tab-label>
                     <span>Service Locations</span>
                 </ng-template>
-                <mat-card-content *ngIf = "tab == 4">
+                <mat-card-content *ngIf="tab == 4">
                     <div class="table-filter">
                         <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                             placeholder="Search by address, phone, etc.">
@@ -588,15 +597,19 @@
                                         </mat-icon>
                                     </span>
                                     <div>
-                                        <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}} {{element.city}} {{element.state_name}} - {{element.zip_code}}</span>
-                                        <span *ngIf="column == 'service_code_id'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
-                                        <span *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
-                                        <span *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
-                                        <span *ngIf="column == 'action'"> 
+                                        <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}}
+                                            {{element.city}} {{element.state_name}} - {{element.zip_code}}</span>
+                                        <span
+                                            *ngIf="column == 'service_code_id'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
+                                        <span
+                                            *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
+                                        <span
+                                            *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
+                                        <span *ngIf="column == 'action'">
                                             <a class="text-danger m-l-10" (click)="removeLocation(element,i)">
                                                 Remove
                                             </a>
-                                            </span>
+                                        </span>
                                     </div>
                                 </td>
                             </ng-container>
@@ -605,10 +618,15 @@
                                     <div class="detail"
                                         [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                                         <div class="resposive-table">
-                                            <div><span>Address</span>  {{element.street1}} {{element.street2}} {{element.city}} {{element.state_name}} - {{element.zip_code}} </div>
-                                            <div><span>Service Type</span> {{element?.service_code}} - {{element?.service_name}} </div>
-                                            <div><span>Phone</span> {{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }} </div>
-                                            <div><span>NPI Number</span> {{element?.national_provider_identifier}} </div>
+                                            <div><span>Address</span> {{element.street1}} {{element.street2}}
+                                                {{element.city}} {{element.state_name}} - {{element.zip_code}} </div>
+                                            <div><span>Service Type</span> {{element?.service_code}} -
+                                                {{element?.service_name}} </div>
+                                            <div><span>Phone</span>
+                                                {{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}
+                                            </div>
+                                            <div><span>NPI Number</span> {{element?.national_provider_identifier}}
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
