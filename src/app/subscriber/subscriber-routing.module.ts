@@ -167,7 +167,11 @@ const routes: Routes = [{
     component: ExistingServiceLocationsComponent
   },
   {
-    path: "add-location/:status",
+    path: "add-location/",
+    component: AddEditServiceLocationComponent
+  },
+  {
+    path: "add-location/:status/:examiner",
     component: AddEditServiceLocationComponent
   },
   {

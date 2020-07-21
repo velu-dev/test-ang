@@ -14,6 +14,8 @@ import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import { SubscriberService } from '../../service/subscriber.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ExaminerService } from '../../service/examiner.service';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 
 @Component({
   selector: 'app-new-examiner-user',
@@ -44,7 +46,6 @@ export class NewExaminerUserComponent implements OnInit {
   activeTitle = "";
   user: any = {};
   states = [];
-  filteredOptions: Observable<any[]>;
   advanceSearch: FormGroup;
   searchStatus;
   advancedSearch;
@@ -84,6 +85,7 @@ export class NewExaminerUserComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private store: Store<{ breadcrumb: any }>,
     private subscriberService: SubscriberService,
+    private examinerService: ExaminerService,
     public dialog: MatDialog) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -122,6 +124,9 @@ export class NewExaminerUserComponent implements OnInit {
         this.updateFormData(params_res.id)
       }
     })
+
+
+
   }
 
   ngOnInit() {
@@ -167,7 +172,13 @@ export class NewExaminerUserComponent implements OnInit {
       console.log("error", error)
     })
 
-
+    this.addresssearch.valueChanges.subscribe(res => {
+      if(res != null){ 
+        this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
+          this.filteredOptions = value;
+        })
+      }
+      })
 
 
   }
@@ -245,7 +256,7 @@ export class NewExaminerUserComponent implements OnInit {
 
       //this.getLocationDetails();
       this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
-
+     
     })
   }
 
@@ -545,13 +556,26 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   removeLicense(e, index) {
-    this.userService.deleteLicense(e.id).subscribe(license => {
-      let data = this.licenceDataSource.data;
-      data.splice(index, 1);
-      this.licenceDataSource = new MatTableDataSource(data)
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
+  this.openDialogLicense('remove',e,index)
+  }
+
+  openDialogLicense(dialogue, e,i) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address:true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.userService.deleteLicense(e.id).subscribe(license => {
+          let data = this.licenceDataSource.data;
+          data.splice(i, 1);
+          this.licenceDataSource = new MatTableDataSource(data)
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    });
   }
 
   texonomyValue: String;
@@ -564,16 +588,90 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   assignLocation() {
-    this.router.navigate(['/subscriber/location/existing-location', this.examinerId])
+    //this.router.navigate(['/subscriber/location/existing-location', this.examinerId])
+    this.addresssearch.patchValue(null);
+    this.locationAddStatus = true;
+    this.locationData = null;
+    this.national_provider_identifier = null;
   }
 
   removeLocation(e, index) {
-    this.subscriberService.removeAssignLocation(this.examinerId, e.id).subscribe(remove => {
+    this.openDialog('remove', e);
+  }
+
+  //existing location
+  addresssearch = new FormControl();
+  filteredOptions: any;
+  locationData: any = null;
+  national_provider_identifier: any = null;
+  locationAddStatus: boolean = false;
+
+  addressOnChange(data) {
+    this.locationData = null;
+    this.locationData = data;
+  }
+
+  locationSubmit() {
+    if (this.locationData == null || this.national_provider_identifier == null) {
+      if (this.locationData == null) {
+        this.alertService.openSnackBar('Please select existing location', 'error');
+        return
+      }
+      if (this.national_provider_identifier == null) {
+        this.alertService.openSnackBar('Please enter vaild national provider identifier', 'error');
+      }
+      return;
+    }
+    console.log(this.locationData);
+    console.log(this.national_provider_identifier);
+
+    let existing = {
+      user_id: this.examinerId,
+      service_location_id: this.locationData.id,
+      national_provider_identifier: this.national_provider_identifier
+    }
+
+    this.examinerService.updateExistingLocation(existing).subscribe(location => {
+      console.log(location);
       this.updateFormData(this.examinerId)
+      this.locationAddStatus = false;
+      this.locationData = null;
+      this.national_provider_identifier = null;
+      //this.router.navigate(['/subscriber/users/examiner',this.examinerId])
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
+
   }
+
+  locationCancel() {
+    this.locationAddStatus = false;
+    this.locationData = null;
+    this.national_provider_identifier = null;
+  }
+
+  locationRoute() {
+    this.router.navigate(['/subscriber/location/add-location/2',this.examinerId])
+  }
+
+  openDialog(dialogue, user) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue,address:true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.subscriberService.removeAssignLocation(this.examinerId, user.id).subscribe(remove => {
+          this.updateFormData(this.examinerId)
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    });
+  }
+
+
 
 }
 
