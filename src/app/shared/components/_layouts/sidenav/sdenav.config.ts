@@ -15,7 +15,7 @@ export const ROUTES: SideNavInterface[] = [
     //     }]
     // },
     {
-        group: "Platform",
+        group: "Admin",
         short_group: "PL",
         role_id: 1,
         menu: [{
@@ -142,7 +142,8 @@ export const ROUTES: SideNavInterface[] = [
                 role: 2
             }]
     }, {
-        group: "Subscriber Staff Manager",
+        // group: "Subscriber Staff Manager",
+        group: "Staff Manager",
         short_group: "SM",
         role_id: 3,
         menu: [
@@ -226,7 +227,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 3
             },]
     }, {
-        group: "Subscriber Staff",
+        group: "Staff",
         short_group: "ST",
         role_id: 4,
         menu: [
