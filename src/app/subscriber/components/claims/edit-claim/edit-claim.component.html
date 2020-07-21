@@ -61,147 +61,39 @@
 <!-- ###~~~~~  Claims Administrator  ~~~~~###-->
 <div class="claim_admin m-t-25" fxLayout="row wrap">
     <div fxFlex="100">
-        <mat-card>
-            <mat-card-header>
-                <div class="content-wrapper-main-title p-t-10 m-b-10">Claims Administrator </div>
-                <span class="spacer"></span>
-                <div>
-                    <button mat-stroked-button *ngIf="!claimAdminEdit"
-                        (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit;saveClick.claimAdmin = false"
-                        class="m-b-5 outline-success">
-                        Edit
-                    </button>
-                    <button mat-stroked-button *ngIf="claimAdminEdit"
-                        (click)="$event.stopPropagation();claimAdminEdit=!claimAdminEdit;saveClick.claimAdmin = true"
-                        class="m-b-5 filled-success">
-                        Save
-                    </button>
-                </div>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content class="p-b-15">
-                <app-claim-admin *ngIf="!isLoading" (isEditComplete)="isEditChange($event, 'ca')"
-                    [save]="saveClick.claimAdmin" [state]="states" [claim_admin]="claimAdminDetail"
-                    [edit]="claimAdminEdit">
-                </app-claim-admin>
-            </mat-card-content>
-        </mat-card>
+        <app-claim-admin *ngIf="!isLoading" [state]="states" [claim_admin]="claimAdminDetail">
+        </app-claim-admin>
     </div>
 </div>
 
 <!-- ###~~~~~  Employer  ~~~~~###-->
 <div class="employer m-t-25" fxLayout="row wrap">
     <div fxFlex="100">
-        <mat-card>
-            <mat-card-header>
-                <div class="content-wrapper-main-title p-t-10 m-b-10">Employer </div>
-                <span class="spacer"></span>
-                <div>
-                    <button *ngIf="!employerEdit " mat-stroked-button
-                        (click)="$event.stopPropagation();employerEdit = !employerEdit;saveClick.employer = false"
-                        class="m-b-5 outline-success">
-                        Edit
-                    </button>
-                    <button *ngIf="employerEdit" mat-stroked-button
-                        (click)="$event.stopPropagation();employerEdit = !employerEdit;saveClick.employer = true"
-                        class="m-b-5 filled-success">
-                        Save
-                    </button>
-                </div>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content class="p-b-15">
-                <app-employer *ngIf="!isLoading" (isEditComplete)="isEditChange($event, 'emp')"
-                    [save]="saveClick.employer" [state]="states" [employer]="employeDetail" [edit]="employerEdit">
-                </app-employer>
-            </mat-card-content>
-        </mat-card>
+        <app-employer *ngIf="!isLoading" [state]="states" [employer]="employeDetail" [edit]="employerEdit">
+        </app-employer>
     </div>
 </div>
 
 <!-- ###~~~~~ Applicant Attorney   ~~~~~###-->
 <div class="app_attorney m-t-25" fxLayout="row wrap">
     <div fxFlex="100">
-        <mat-card>
-            <mat-card-header>
-                <div class="content-wrapper-main-title p-t-10 m-b-10"> Applicant Attorney </div>
-                <span class="spacer"></span>
-                <div>
-                    <button *ngIf="!aaEdit" mat-stroked-button (click)="$event.stopPropagation();aaEdit = !aaEdit"
-                        class="m-b-5 outline-success">
-                        Edit
-                    </button>
-                    <button *ngIf="aaEdit" mat-stroked-button
-                        (click)="$event.stopPropagation();aaEdit = !aaEdit;saveClick.aa = true"
-                        class="m-b-5 filled-success">
-                        Save
-                    </button>
-                </div>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content class="p-b-15">
-                <app-application-attorney *ngIf="!isLoading" (isEditComplete)="isEditChange($event, 'aa')"
-                    [save]="saveClick.aa" [state]="states" [aattorney]="aAttorneyDetail" [edit]="aaEdit">
-                </app-application-attorney>
-            </mat-card-content>
-        </mat-card>
+        <app-application-attorney *ngIf="!isLoading" [state]="states" [aattorney]="aAttorneyDetail">
+        </app-application-attorney>
     </div>
 </div>
 
-<!-- ###~~~~~    ~~~~~###-->
+<!-- ###~~~~~  defance attroney   ~~~~~###-->
 <div class="def_attorney m-t-25" fxLayout="row wrap">
     <div fxFlex="100">
-        <mat-card>
-            <mat-card-header>
-                <div class="content-wrapper-main-title p-t-10 m-b-10"> Defense Attorney </div>
-                <span class="spacer"></span>
-                <div>
-                    <button *ngIf="!daEdit" mat-stroked-button (click)="$event.stopPropagation();daEdit = !daEdit"
-                        class="m-b-5 outline-success">
-                        Edit
-                    </button>
-                    <button *ngIf="daEdit" mat-stroked-button
-                        (click)="$event.stopPropagation();daEdit = !daEdit;saveClick.da = true"
-                        class="m-b-5 filled-success">
-                        Save
-                    </button>
-                </div>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content class="p-b-15">
-                <app-defense-attorney *ngIf="!isLoading" (isEditComplete)="isEditChange($event, 'da')"
-                    [save]="saveClick.da" [state]="states" [dattroney]="dAttorneyDetail" [edit]="daEdit">
-                </app-defense-attorney>
-            </mat-card-content>
-        </mat-card>
+        <app-defense-attorney *ngIf="!isLoading" [state]="states" [dattroney]="dAttorneyDetail">
+        </app-defense-attorney>
     </div>
 </div>
 
 <!-- ###~~~~~ DEU Office ~~~~~###-->
 <div class="deu_office m-t-25" fxLayout="row wrap">
     <div fxFlex="100">
-        <mat-card>
-            <mat-card-header>
-                <div class="content-wrapper-main-title p-t-10 m-b-10"> DEU Office </div>
-                <span class="spacer"></span>
-                <div>
-                    <button *ngIf="!deoEdit" mat-stroked-button (click)="$event.stopPropagation();deoEdit = !deoEdit"
-                        class="m-b-5 outline-success">
-                        Edit
-                    </button>
-                    <button *ngIf="deoEdit" mat-stroked-button
-                        (click)="$event.stopPropagation();deoEdit = !deoEdit;saveClick.deu = true"
-                        class="m-b-5 filled-success">
-                        Save
-                    </button>
-                </div>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <mat-card-content class="p-b-15">
-                <app-deo *ngIf="!isLoading" [save]="saveClick.deu" (isEditComplete)="isEditChange($event, 'deu')"
-                    [state]="states" [deu]="deuDetail" [edit]="deoEdit">
-                </app-deo>
-            </mat-card-content>
-        </mat-card>
+        <app-deo *ngIf="!isLoading" [state]="states" [deu]="deuDetail">
+        </app-deo>
     </div>
 </div>

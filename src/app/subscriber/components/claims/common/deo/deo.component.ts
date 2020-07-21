@@ -11,13 +11,11 @@ import { startWith, map } from 'rxjs/operators';
   styleUrls: ['./deo.component.scss']
 })
 export class DeoComponent implements OnInit {
-  @Input('edit') isEdit;
+  deoEdit = false;
   @Input('deu') deuDetail;
   DEU: FormGroup;
   attroneylist = [];
   @Input('state') states;
-  @Input('save') isSave = false;
-  @Output() isEditComplete = new EventEmitter();
   filteredDeu: Observable<any[]>;
   deuCtrl = new FormControl();
   deuDetails = [];
@@ -50,21 +48,7 @@ export class DeoComponent implements OnInit {
 
     return this.deuDetails.filter(deu => deu.deu_office.toLowerCase().indexOf(filterValue) === 0);
   }
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    if (changes.isSave) {
-      if (changes.isSave.currentValue)
-        this.updateDEU()
-    }
-    if (changes.isEdit)
-      this.isEdit = changes.isEdit.currentValue;
-    if (this.isEdit) {
-      this.DEU.enable();
-      this.deuCtrl.setValue(this.deuDetail.name);
-    } else {
-      this.DEU.disable();
-    }
 
-  }
   ngOnInit() {
     this.deuId = this.deuDetail.id;
     this.DEU.patchValue(this.deuDetail);
@@ -73,6 +57,11 @@ export class DeoComponent implements OnInit {
   }
   appAttorney(sdsd) {
 
+  }
+  editDEU(){
+    this.DEU.enable();
+    this.deoEdit = true;
+    
   }
   updateDEU() {
     Object.keys(this.DEU.controls).forEach((key) => {
@@ -83,11 +72,11 @@ export class DeoComponent implements OnInit {
       return;
     }
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
-      this.isEdit = false;
+      this.deoEdit= false;
       this.DEU.patchValue(res.data)
       this.alertService.openSnackBar("DEU updated successfully", 'success');
       this.DEU.disable();
-      this.isEditComplete.emit(true);
+      // this.isEditComplete.emit(true);
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
@@ -101,7 +90,6 @@ export class DeoComponent implements OnInit {
   }
   cancel() {
     this.DEU.disable();
-    this.isEditComplete.emit(true);
     this.DEU.patchValue(this.deuDetail)
   }
   numberOnly(event): boolean {

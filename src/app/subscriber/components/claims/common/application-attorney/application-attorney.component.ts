@@ -9,13 +9,14 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   styleUrls: ['./application-attorney.component.scss']
 })
 export class ApplicationAttorneyComponent implements OnInit {
-  @Input('edit') isEdit;
+  // @Input('edit') isEdit;
+  aaEdit = false;
   @Input('aattorney') aattorneyDetail;
   @Input('state') states;
-  @Input('save') isSave;
+  // @Input('save') isSave;
   ApplicantAttorney: FormGroup;
   attroneylist = [];
-  @Output() isEditComplete = new EventEmitter();
+  // @Output() isEditComplete = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.ApplicantAttorney = this.formBuilder.group({
       id: [],
@@ -31,25 +32,29 @@ export class ApplicationAttorneyComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
   }
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    if (changes.isSave) {
-      if (changes.isSave.currentValue)
-        this.updateAAttorney()
-    }
-    if (changes.isEdit)
-      this.isEdit = changes.isEdit.currentValue;
-    if (this.isEdit) {
-      this.ApplicantAttorney.enable();
-    } else {
-      this.ApplicantAttorney.disable();
-    }
+  // ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+  //   if (changes.isSave) {
+  //     if (changes.isSave.currentValue)
+  //       this.updateAAttorney()
+  //   }
+  //   if (changes.isEdit)
+  //     this.isEdit = changes.isEdit.currentValue;
+  //   if (this.isEdit) {
+  //     this.ApplicantAttorney.enable();
+  //   } else {
+  //     this.ApplicantAttorney.disable();
+  //   }
 
-  }
+  // }
   ngOnInit() {
     this.ApplicantAttorney.patchValue(this.aattorneyDetail)
   }
   appAttorney(sdsd) {
 
+  }
+  editAA() {
+    this.aaEdit = true;
+    this.ApplicantAttorney.enable();
   }
   updateAAttorney() {
     Object.keys(this.ApplicantAttorney.controls).forEach((key) => {
@@ -60,17 +65,18 @@ export class ApplicationAttorneyComponent implements OnInit {
       return;
     }
     this.claimService.updateAgent(this.ApplicantAttorney.value.id, { ApplicantAttorney: this.ApplicantAttorney.value }).subscribe(res => {
-      this.isEdit = false;
+      // this.isEdit = false;
+      this.aaEdit = false;
       this.ApplicantAttorney.patchValue(res.data);
       this.ApplicantAttorney.disable();
-      this.isEditComplete.emit(true);
+      // this.isEditComplete.emit(true);
       this.alertService.openSnackBar("Applicant Attorney updated successfully!", 'success')
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancel() {
-    this.isEditComplete.emit(true);
+    // this.isEditComplete.emit(true);
     this.ApplicantAttorney.disable();
   }
   numberOnly(event): boolean {
