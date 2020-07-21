@@ -1,6 +1,14 @@
 <mat-card class="m-card new-location">
     <mat-card-header>
         <div class="m-0 content-wrapper-main-title">Add New Service Location</div>
+        <span class="spacer"></span>
+    <button mat-stroked-button *ngIf="!editStatus && locationId" class="m-b-5 outline-success" (click)="edit()">
+      Edit
+    </button>
+    <button mat-stroked-button class="filled-success edit-btn" *ngIf="editStatus && locationId"
+      (click)="locationFromSubmit()">
+      Save
+    </button>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
@@ -127,12 +135,29 @@
                     <mat-error>Please enter valid notes</mat-error>
                 </mat-form-field>
 
-                <div class="text-center w-100 m-t-10 m-b-10">
+                <div class="text-center w-100 m-t-10 m-b-10" *ngIf="editStatus">
                     <button mat-stroked-button type="button" class="outline-danger" (click)="cancel()">Cancel</button>
                     <button mat-stroked-button class="m-l-10 outline-success" (click)="locationFromSubmit()">Save </button>
                 </div>
 
             </form>
         </div>
+        <table mat-table [dataSource]="dataSource" class="user-table w-100" *ngIf="locationId">
+            <!-- Position Column -->
+            <ng-container matColumnDef="examiner">
+                <th mat-header-cell *matHeaderCellDef>Examiner </th>
+                <td mat-cell *matCellDef="let element"> {{element?.last_name}} {{element?.first_name}}{{element?.suffix ? ', '+element?.suffix : ''}} </td>
+            </ng-container>
+        
+            <!-- Name Column -->
+            <ng-container matColumnDef="date_added">
+                <th mat-header-cell *matHeaderCellDef> Date Added </th>
+                <td mat-cell *matCellDef="let element"> {{element.date_added | date:'MM-dd-yyyy'}} </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;let element" (click)="nevigateExaminer(element)"></tr>
+        </table>
+        <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </mat-card-content>
 </mat-card>
