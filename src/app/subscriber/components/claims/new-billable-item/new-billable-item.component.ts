@@ -45,8 +45,8 @@ export class NewBillableItemComponent implements OnInit {
   contactType: any;
   languageList: any = [];
   primary_language_spoken: boolean = false;
-  claimantDetails = {};
-  claimDetails = {};
+  claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "" };
+  claimDetails = { claim_number: "", wcab_number: "", exam_type_id: "" };
   examTypes: any;
   isLoading = false;
   modifierList = [];

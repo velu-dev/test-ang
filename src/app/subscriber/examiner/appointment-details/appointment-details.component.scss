@@ -280,23 +280,34 @@
     .simple-card-one {
         @extend .simple-card;
         background-color: $light-color;
-        text-align: left !important;
+        text-align: center !important;
+        &:hover {
+            background: $light-color;
+            h4,
+            i {
+                color: $btn_success;
+            }
+        }
         i {
-            padding: 5px 10px;
-            float: left;
+            padding: 5px 0px;
+            text-align: center;
             font-size: $font-size-17;
+        }
+        div {
+            display: inline-block;
         }
     }
 }
 .exam-info {
     padding: 30px 0 30px 0;
     .calender_btn {
-        vertical-align: middle;
-        padding-top: 40px;
-        button {
-            width: 50%;
-            margin: auto;
-            display: block;
+        .edit_btn {
+            direction: ltr;
+            vertical-align: text-top;
+        }
+        .calender_btn {
+            direction: ltr;
+            vertical-align: text-top;
         }
     }
 }

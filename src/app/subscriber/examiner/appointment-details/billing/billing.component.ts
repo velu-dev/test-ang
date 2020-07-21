@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-billing',
+  selector: 'app-billable-billing',
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.scss']
 })
-export class BillingComponent implements OnInit {
+export class BilllableBillingComponent implements OnInit {
 
   constructor() { }
 
