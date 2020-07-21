@@ -461,6 +461,9 @@ export class NewExaminerUserComponent implements OnInit {
   tab: number;
   tabchange(i) {
     this.tab = i
+    if(i == 4){
+      this.locationAddStatus = false;
+    }
   }
 
   mailingAddressSubmit() {
