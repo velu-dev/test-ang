@@ -1,27 +1,31 @@
 <div fxLayout="column" fxLayoutGap="25px">
     <div fxLayout="row wrap">
         <!-- loop over the cardList and show the cards -->
-        <div fxFlex="33.3" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" class="p-5">
-            <mat-card matRipple class="br-top mat-card-details p-b-50 text-center"  [routerLink]="['/admin/admin-users']" >
+        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" class="p-5">
+            <mat-card matRipple class="mat-card-details text-center"  [routerLink]="['/admin/admin-users']" >
                 <mat-card-content>
-                    <mat-icon>supervised_user_circle</mat-icon>
                     <h4>Admins </h4>
                 </mat-card-content>
             </mat-card>
         </div>
-        <div fxFlex="33.3" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" class="p-5">
-            <mat-card matRipple class="br-top mat-card-details p-b-50 text-center"  [routerLink]="['/admin/users']" >
+        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" class="p-5">
+            <mat-card matRipple class="mat-card-details text-center"  [routerLink]="['/admin/users']" >
                 <mat-card-content>
-                    <mat-icon>people</mat-icon>
                     <h4>Subscribers </h4>
                 </mat-card-content>
             </mat-card>
         </div>
-        <div fxFlex="33.3" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" class="p-5">
-            <mat-card matRipple class="br-top mat-card-details p-b-50 text-center"  [routerLink]="['/admin/settings']" >
+        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" class="p-5">
+            <mat-card matRipple class="mat-card-details m-t-20 text-center"  [routerLink]="['/admin/settings']" >
                 <mat-card-content>
-                    <mat-icon>settings</mat-icon>
                     <h4>Settings </h4>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column" class="p-5">
+            <mat-card matRipple class="mat-card-details m-t-20 text-center"  [routerLink]="['/admin/service-request']" >
+                <mat-card-content>
+                    <h4>Service Request </h4>
                 </mat-card-content>
             </mat-card>
         </div>
