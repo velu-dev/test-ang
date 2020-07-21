@@ -1,0 +1,20 @@
+@import "variables";
+
+.main-title {
+    font-size: $font-size-10 !important;
+    font-weight: $font-weight-medium;
+    color: $black;
+    padding-left: 10px;
+}
+.description {
+    margin-top: 5px;
+    padding-left: 10px;
+}
+.ondemand-status {
+    padding: 10px 0px;
+    mat-progress-bar {
+        height: 20px;
+        color: $light-color;
+        padding-left: 10px;
+    }
+}

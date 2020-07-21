@@ -58,6 +58,7 @@ export class NewExaminerUserComponent implements OnInit {
   licenceDataSource: any = new MatTableDataSource([]);
   examinerId: number = null;
   mailingSubmit: boolean = false;
+  tabIndex:number = 0;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -72,6 +73,7 @@ export class NewExaminerUserComponent implements OnInit {
   dataSource: any = new MatTableDataSource([]);
   providerTypeList: any;
   sameAsExaminer: boolean;
+  selectedUser:any = {}
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -125,6 +127,13 @@ export class NewExaminerUserComponent implements OnInit {
       }
     })
 
+    this.route.params.subscribe(params_res => {
+      if(params_res.status == 1){
+        this.tabIndex = 4
+        this.tab = 4
+      }
+    })
+
 
 
   }
@@ -173,12 +182,15 @@ export class NewExaminerUserComponent implements OnInit {
     })
 
     this.addresssearch.valueChanges.subscribe(res => {
-      if(res != null){ 
+      if (res != null) {
+        if(res.length > 2)
         this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
           this.filteredOptions = value;
         })
+      }else{
+        this.filteredOptions = null;
       }
-      })
+    })
 
 
   }
@@ -188,7 +200,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.getExaminerUser(id).subscribe(res => {
       this.userData = res;
       console.log(res, id)
-      if (res.examiner_details.id == id) {
+      if (res.examiner_id == this.user.id) {
         this.userForm.disable();
       }
       let user = {
@@ -203,6 +215,7 @@ export class NewExaminerUserComponent implements OnInit {
         SameAsSubscriber: res.examiner_details.SameAsSubscriber
       }
       this.userForm.patchValue(user);
+      this.selectedUser = user;
 
       this.examinerId = res.examiner_id
       let mailing = {
@@ -233,7 +246,7 @@ export class NewExaminerUserComponent implements OnInit {
         city: res.billing_provider.city,
         state: res.billing_provider.state,
         zip_code: res.billing_provider.zip_code,
-        phone_no: res.billing_provider.phone_no,
+        phone_no1: res.billing_provider.phone_no1,
       }
       this.billingProviderForm.patchValue(billing)
 
@@ -256,7 +269,9 @@ export class NewExaminerUserComponent implements OnInit {
 
       //this.getLocationDetails();
       this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
-     
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
   }
 
@@ -298,14 +313,14 @@ export class NewExaminerUserComponent implements OnInit {
       default_injury_state: [null],
       is_person: ['true'],
       national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
-      dol_provider_number: [""],
+      dol_provider_number: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(10)])],
       tax_id: [null],
       street1: [null],
       street2: [null],
       city: [null],
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      phone_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
 
     })
 
@@ -341,6 +356,7 @@ export class NewExaminerUserComponent implements OnInit {
           suffix: res.data.suffix
         }
         this.userForm.patchValue(user)
+        this.selectedUser = user;
         this.userForm.controls.SameAsSubscriber.enable();
       })
     } else {
@@ -362,6 +378,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.markAllAsTouched();
       return;
     }
+    this.selectedUser = this.userForm.value;
     if (!this.isEdit) {
       this.userService.createExaminerUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
@@ -406,10 +423,10 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   fileChangeEvent(event: any): void {
@@ -461,7 +478,7 @@ export class NewExaminerUserComponent implements OnInit {
   tab: number;
   tabchange(i) {
     this.tab = i
-    if(i == 4){
+    if (i == 4) {
       this.locationAddStatus = false;
     }
   }
@@ -559,13 +576,13 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   removeLicense(e, index) {
-  this.openDialogLicense('remove',e,index)
+    this.openDialogLicense('remove', e, index)
   }
 
-  openDialogLicense(dialogue, e,i) {
+  openDialogLicense(dialogue, e, i) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address:true }
+      data: { name: dialogue, address: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -610,6 +627,7 @@ export class NewExaminerUserComponent implements OnInit {
   locationAddStatus: boolean = false;
 
   addressOnChange(data) {
+    console.log(data,"data");
     this.locationData = null;
     this.locationData = data;
   }
@@ -625,8 +643,13 @@ export class NewExaminerUserComponent implements OnInit {
       }
       return;
     }
-    console.log(this.locationData);
-    console.log(this.national_provider_identifier);
+
+    let regexp = new RegExp('^[0-9]*$'),
+      test = regexp.test(this.national_provider_identifier);
+    if (!test) {
+      this.alertService.openSnackBar('Please enter vaild national provider identifier', 'error');
+      return;
+    }
 
     let existing = {
       user_id: this.examinerId,
@@ -654,13 +677,13 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   locationRoute() {
-    this.router.navigate(['/subscriber/location/add-location/2',this.examinerId])
+    this.router.navigate(['/subscriber/location/add-location/2', this.examinerId])
   }
 
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue,address:true }
+      data: { name: dialogue, address: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
