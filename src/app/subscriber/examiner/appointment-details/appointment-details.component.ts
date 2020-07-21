@@ -47,6 +47,7 @@ export class AppointmentDetailsComponent implements OnInit {
   notes: any = null;
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
+  file = '';
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
     { name: "QME-122", group: "QME", value: "122" },

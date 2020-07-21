@@ -60,6 +60,7 @@ import { RecordsComponent } from './examiner/appointment-details/records/records
 import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
 import { BillingCorrespondanceComponent } from './examiner/appointment-details/correspondance/correspondance.component';
+import { BilllableBillingComponent } from './examiner/appointment-details/billing/billing.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -124,8 +125,8 @@ import { BillingCorrespondanceComponent } from './examiner/appointment-details/c
     HistoryComponent,
     RecordsComponent,
     ExaminationComponent,
-    ReportComponent
-
+    ReportComponent,
+    BilllableBillingComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,
