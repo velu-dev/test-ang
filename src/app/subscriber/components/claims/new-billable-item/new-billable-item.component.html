@@ -105,7 +105,8 @@
 
                     </div>
                     <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-checkbox class="mat-check m-b-20" (click)="psychiatric()" labelPosition="after" formControlName="is_psychiatric">
+                        <mat-checkbox class="mat-check m-b-20" (click)="psychiatric()" labelPosition="after"
+                            formControlName="is_psychiatric">
                             Psychiatric
                         </mat-checkbox>
                     </div>
@@ -190,11 +191,10 @@
                     </mat-form-field>
                 </div>
                 <div class="text-center w-100 m-t-10 m-b-10 action-button">
-                    <button mat-stroked-button type="button" class="m-r-10 outline-warning">Previous</button>
                     <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                         (click)="cancel()">Cancel</button>
                     <button mat-stroked-button class="m-r-10 outline-light_green" (click)="submitBillableItem()">
-                        Save & Close </button>
+                        Save </button>
                 </div>
             </div>
         </form>
