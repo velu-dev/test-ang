@@ -38,12 +38,13 @@ export class NewBillableItemComponent implements OnInit {
   contactTypes: any;
   claimId: number;
   claimantId: number;
+  claimant: any;
   isBillSubmited: boolean = false;
   isEdit: boolean;
   billableId: number;
   contactType: any;
   languageList: any = [];
-  primary_language_spoken:boolean = false;
+  primary_language_spoken: boolean = false;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -54,12 +55,15 @@ export class NewBillableItemComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.claimId = param.claim;
       this.claimantId = param.claimant;
+      this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
+        this.claimant = claimant.data[0]
+      })
       if (param.billable) {
         this.isEdit = true
         this.billableId = param.billable;
         this.claimService.getBillableItemSingle(param.billable).subscribe(res => {
           console.log(res);
-          if(res['data'].exam_type.primary_language_spoken){
+          if (res['data'].exam_type.primary_language_spoken) {
             this.primary_language_spoken = true;
           }
           this.billable_item.patchValue(res['data'])
@@ -124,7 +128,6 @@ export class NewBillableItemComponent implements OnInit {
       if (this.isEdit) {
         if (this.contactType) {
           let type = this.contactTypes.find(element => element.id == this.contactType)
-          this.changeCommunicationType(type, 'auto');
         }
       }
     })
@@ -162,12 +165,14 @@ export class NewBillableItemComponent implements OnInit {
     this.selectedExaminarAddress = address;
   }
 
+
   examinarChange(examinar) {
     console.log(this.billable_item.value)
     this.addressCtrl.setValue('');
     this.selectedExaminarAddress = '';
     this.isAddressSelected = false;
-    this.examinarId = examinar.value;
+    this.examinarId = examinar.id;
+    console.log(examinar)
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
       this.examinerOptions = []
       this.examinerOptions = res['data'];
@@ -192,54 +197,6 @@ export class NewBillableItemComponent implements OnInit {
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
-  }
-
-  contactMask = { type: "", mask: "" }
-  changeCommunicationType(contact, type) {
-    if (contact)
-      if (type == "man")
-        this.billable_item.patchValue({
-          intake_call: {
-            call_type_detail: ""
-          }
-        })
-    switch (contact.contact_type) {
-      case "E1":
-        this.contactMask.mask = "";
-        this.billable_item.controls.intake_call['controls']['call_type_detail'].setValidators(Validators.email)
-        this.contactMask.type = "text";
-        break;
-      case "E2":
-        this.contactMask.mask = "";
-        this.billable_item.controls.intake_call['controls']['call_type_detail'].setValidators(Validators.email)
-        this.contactMask.type = "text";
-        break;
-      case "L1":
-        this.contactMask.mask = "(000) 000-0000";
-        this.contactMask.type = "text";
-        break;
-      case "L2":
-        this.contactMask.mask = "(000) 000-0000";
-        this.contactMask.type = "text";
-        break;
-      case "F1":
-        this.contactMask.mask = "(000) 000-0000";
-        this.contactMask.type = "text";
-        break;
-      case "F2":
-        this.contactMask.mask = "(000) 000-0000";
-        this.contactMask.type = "text";
-        break;
-      case "LE":
-        this.contactMask.mask = "";
-        this.contactMask.type = "text";
-        break;
-      default:
-        this.contactMask.mask = "";
-        this.contactMask.type = "text";
-        break;
-    }
-
   }
 
   submitBillableItem() {
@@ -267,6 +224,20 @@ export class NewBillableItemComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
+  }
+  selectedLanguage: any;
+  modifyChange() {
+    if (this.billable_item.value.exam_type.modifier_id)
+      if (this.billable_item.value.exam_type.modifier_id.includes(2)) {
+        this.languageList.map(res => {
+          if (res.id == this.claimant.primary_language_spoken) {
+            this.selectedLanguage = res;
+          }
+        })
+        this.billable_item.patchValue({
+          exam_type: { primary_language_spoken: this.claimant.primary_language_spoken }
+        })
+      }
   }
 
   cancel() {
