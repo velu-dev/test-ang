@@ -223,7 +223,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>First name*</mat-label>
-                                <input matInput placeholder="First name" [value]="user.first_name" autocomplete="off"
+                                <input matInput placeholder="First name" [value]="selectedUser.first_name" autocomplete="off"
                                     disabled>
                                 <mat-error *ngIf="billingSubmit">Please enter valid first name</mat-error>
                             </mat-form-field>
@@ -231,7 +231,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Middle Name</mat-label>
-                                <input matInput placeholder="Middle Name" [value]="user.middle_name" autocomplete="off"
+                                <input matInput placeholder="Middle Name" [value]="selectedUser.middle_name" autocomplete="off"
                                     disabled>
                                 <mat-error *ngIf="billingSubmit">Please enter valid middle name</mat-error>
                             </mat-form-field>
@@ -239,7 +239,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Last Name*</mat-label>
-                                <input matInput placeholder="Last Name" [value]="user.last_name" autocomplete="off"
+                                <input matInput placeholder="Last Name" [value]="selectedUser.last_name" autocomplete="off"
                                     disabled>
                                 <mat-error *ngIf="billingSubmit">Please enter valid last name</mat-error>
                             </mat-form-field>
@@ -247,7 +247,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
                                 fxFlex.xl="10" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Suffix</mat-label>
-                                <input matInput placeholder="Suffix" [value]="user.suffix" autocomplete="off" disabled>
+                                <input matInput placeholder="Suffix" [value]="selectedUser.suffix" autocomplete="off" disabled>
                                 <mat-error>Please enter valid suffix</mat-error>
                             </mat-form-field>
                         </div>
@@ -382,7 +382,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>First name*</mat-label>
-                                <input matInput placeholder="First name" [value]="user.first_name" autocomplete="off"
+                                <input matInput placeholder="First name" [value]="selectedUser.first_name" autocomplete="off"
                                     disabled>
                                 <mat-error *ngIf="renderingSubmit">Please enter valid first name</mat-error>
                             </mat-form-field>
@@ -390,7 +390,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Middle Name</mat-label>
-                                <input matInput placeholder="Middle Name" [value]="user.middle_name" autocomplete="off"
+                                <input matInput placeholder="Middle Name" [value]="selectedUser.middle_name" autocomplete="off"
                                     disabled>
                                 <mat-error *ngIf="renderingSubmit">Please enter valid middle name</mat-error>
                             </mat-form-field>
@@ -398,7 +398,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                 fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Last Name*</mat-label>
-                                <input matInput placeholder="Last Name" [value]="user.last_name" autocomplete="off"
+                                <input matInput placeholder="Last Name" [value]="selectedUser.last_name" autocomplete="off"
                                     disabled>
                                 <mat-error *ngIf="renderingSubmit">Please enter valid last name</mat-error>
                             </mat-form-field>
@@ -406,7 +406,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
                                 fxFlex.xl="10" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Suffix</mat-label>
-                                <input matInput placeholder="Suffix" [value]="user.suffix" autocomplete="off" disabled>
+                                <input matInput placeholder="Suffix" [value]="selectedUser.suffix" autocomplete="off" disabled>
                                 <mat-error *ngIf="renderingSubmit">Please enter valid suffix</mat-error>
                             </mat-form-field>
                         </div>

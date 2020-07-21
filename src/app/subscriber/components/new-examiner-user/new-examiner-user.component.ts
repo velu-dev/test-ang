@@ -73,6 +73,7 @@ export class NewExaminerUserComponent implements OnInit {
   dataSource: any = new MatTableDataSource([]);
   providerTypeList: any;
   sameAsExaminer: boolean;
+  selectedUser:any = {}
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -214,6 +215,7 @@ export class NewExaminerUserComponent implements OnInit {
         SameAsSubscriber: res.examiner_details.SameAsSubscriber
       }
       this.userForm.patchValue(user);
+      this.selectedUser = user;
 
       this.examinerId = res.examiner_id
       let mailing = {
@@ -354,6 +356,7 @@ export class NewExaminerUserComponent implements OnInit {
           suffix: res.data.suffix
         }
         this.userForm.patchValue(user)
+        this.selectedUser = user;
         this.userForm.controls.SameAsSubscriber.enable();
       })
     } else {
@@ -375,6 +378,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.markAllAsTouched();
       return;
     }
+    this.selectedUser = this.userForm.value;
     if (!this.isEdit) {
       this.userService.createExaminerUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
