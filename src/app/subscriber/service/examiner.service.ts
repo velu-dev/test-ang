@@ -37,8 +37,8 @@ export class ExaminerService {
   getsingleExAddress(exam_id, address_id) {
     return this.http.get(environment.baseUrl + api_endpoint.getSingleExaminer + exam_id + '/' + address_id)
   }
-  searchAddress(data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.searchAddress, data)
+  searchAddress(data,id): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.searchAddress + id, data)
   }
 
   getAllExaminerAddress() {
@@ -80,5 +80,9 @@ export class ExaminerService {
   }
   getForms(claim_id, form_id, group, billId): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.formUrl + group + "/" + form_id + "/" + claim_id + "/" + billId)
+  }
+
+  updateExistingLocation(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.updateExistingLocation, data)
   }
 }

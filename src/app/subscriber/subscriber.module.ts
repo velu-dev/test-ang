@@ -55,6 +55,12 @@ import { SubscriberService } from './service/subscriber.service';
 import { NewExaminerUserComponent, LicenseDialog } from './components/new-examiner-user/new-examiner-user.component';
 import { ExistingServiceLocationsComponent } from './components/existing-service-locations/existing-service-locations.component';
 import { AddEditServiceLocationComponent } from './components/add-edit-service-location/add-edit-service-location.component';
+import { HistoryComponent } from './examiner/appointment-details/history/history.component';
+import { RecordsComponent } from './examiner/appointment-details/records/records.component';
+import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
+import { ReportComponent } from './examiner/appointment-details/report/report.component';
+import { BillingCorrespondanceComponent } from './examiner/appointment-details/correspondance/correspondance.component';
+import { BilllableBillingComponent } from './examiner/appointment-details/billing/billing.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -114,8 +120,13 @@ import { AddEditServiceLocationComponent } from './components/add-edit-service-l
     NewExaminerUserComponent,
     LicenseDialog,
     ExistingServiceLocationsComponent,
-    AddEditServiceLocationComponent
-
+    AddEditServiceLocationComponent,
+    BillingCorrespondanceComponent,
+    HistoryComponent,
+    RecordsComponent,
+    ExaminationComponent,
+    ReportComponent,
+    BilllableBillingComponent
   ],
   entryComponents: [
     ClaimantPopupComponent,

@@ -37,8 +37,16 @@ export class SubscriberService {
     return this.http.post(environment.baseUrl + api_endpoint.updateExistingLocation, data)
   }
 
+  getSingleLocation(id): Observable<any>{
+    return this.http.get(environment.baseUrl + api_endpoint.getSingleLocation + id)
+  }
+
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
+  }
+
+  removeAssignLocation(userId,locationId): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteAssignLocation + userId + '/' + locationId)
   }
 
 }

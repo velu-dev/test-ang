@@ -5,18 +5,29 @@ import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatDialog, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSort, MatPaginator } from '@angular/material';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
 import * as  errors from '../../../shared/messages/errors'
 import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
+import { SubscriberService } from '../../service/subscriber.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ExaminerService } from '../../service/examiner.service';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 
 @Component({
   selector: 'app-new-examiner-user',
   templateUrl: './new-examiner-user.component.html',
-  styleUrls: ['./new-examiner-user.component.scss']
+  styleUrls: ['./new-examiner-user.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class NewExaminerUserComponent implements OnInit {
   userForm: FormGroup;
@@ -35,7 +46,6 @@ export class NewExaminerUserComponent implements OnInit {
   activeTitle = "";
   user: any = {};
   states = [];
-  filteredOptions: Observable<any[]>;
   advanceSearch: FormGroup;
   searchStatus;
   advancedSearch;
@@ -48,6 +58,7 @@ export class NewExaminerUserComponent implements OnInit {
   licenceDataSource: any = new MatTableDataSource([]);
   examinerId: number = null;
   mailingSubmit: boolean = false;
+  tabIndex:number = 0;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -62,7 +73,10 @@ export class NewExaminerUserComponent implements OnInit {
   dataSource: any = new MatTableDataSource([]);
   providerTypeList: any;
   sameAsExaminer: boolean;
+  selectedUser:any = {}
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: SubscriberUserService,
@@ -72,15 +86,17 @@ export class NewExaminerUserComponent implements OnInit {
     private cookieService: CookieService,
     private breakpointObserver: BreakpointObserver,
     private store: Store<{ breadcrumb: any }>,
+    private subscriberService: SubscriberService,
+    private examinerService: ExaminerService,
     public dialog: MatDialog) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Address", "Status"]
-        this.columnsToDisplay = ['is_expand', 'claimant_name', "status"]
+        this.columnName = ["", "Examiner Name", "Action"]
+        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
       } else {
-        this.columnName = ["Address", "Service Type", "Phone", "NPI Number", "Status"]
-        this.columnsToDisplay = ['address', 'service_type', "phone", "npi_number", 'status']
+        this.columnName = ["Address", "Service Type", "Phone", "NPI Number", "Action"]
+        this.columnsToDisplay = ['street1', 'service_code_id', 'phone_no', 'npi_number', "action"]
       }
     })
     this.user = JSON.parse(this.cookieService.get('user'));
@@ -110,6 +126,16 @@ export class NewExaminerUserComponent implements OnInit {
         this.updateFormData(params_res.id)
       }
     })
+
+    this.route.params.subscribe(params_res => {
+      if(params_res.status == 1){
+        this.tabIndex = 4
+        this.tab = 4
+      }
+    })
+
+
+
   }
 
   ngOnInit() {
@@ -155,6 +181,17 @@ export class NewExaminerUserComponent implements OnInit {
       console.log("error", error)
     })
 
+    this.addresssearch.valueChanges.subscribe(res => {
+      if (res != null) {
+        if(res.length > 2)
+        this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
+          this.filteredOptions = value;
+        })
+      }else{
+        this.filteredOptions = null;
+      }
+    })
+
 
   }
 
@@ -163,7 +200,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.getExaminerUser(id).subscribe(res => {
       this.userData = res;
       console.log(res, id)
-      if (res.examiner_details.id == id) {
+      if (res.examiner_id == this.user.id) {
         this.userForm.disable();
       }
       let user = {
@@ -178,6 +215,7 @@ export class NewExaminerUserComponent implements OnInit {
         SameAsSubscriber: res.examiner_details.SameAsSubscriber
       }
       this.userForm.patchValue(user);
+      this.selectedUser = user;
 
       this.examinerId = res.examiner_id
       let mailing = {
@@ -228,7 +266,29 @@ export class NewExaminerUserComponent implements OnInit {
       this.renderingForm.patchValue(rendering);
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
+
+      //this.getLocationDetails();
+      this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
+  }
+
+  getLocationDetails() {
+
+    // this.userService.getLocationDetails(this.examinerId).subscribe(response => {
+    //   this.dataSource = new MatTableDataSource(response['data']);
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    //   // this.dataSource.filterPredicate = function (data, filter: string): boolean {
+    //   //   return (data.service_name && data.service_name.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter));
+    //   // };
+    // }, error => {
+    //   console.log(error)
+    //   this.dataSource = new MatTableDataSource([]);
+    // })
   }
 
   formInit() {
@@ -253,7 +313,7 @@ export class NewExaminerUserComponent implements OnInit {
       default_injury_state: [null],
       is_person: ['true'],
       national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
-      dol_provider_number: [""],
+      dol_provider_number: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(10)])],
       tax_id: [null],
       street1: [null],
       street2: [null],
@@ -296,6 +356,7 @@ export class NewExaminerUserComponent implements OnInit {
           suffix: res.data.suffix
         }
         this.userForm.patchValue(user)
+        this.selectedUser = user;
         this.userForm.controls.SameAsSubscriber.enable();
       })
     } else {
@@ -317,6 +378,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.markAllAsTouched();
       return;
     }
+    this.selectedUser = this.userForm.value;
     if (!this.isEdit) {
       this.userService.createExaminerUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
@@ -361,10 +423,10 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   fileChangeEvent(event: any): void {
@@ -413,8 +475,12 @@ export class NewExaminerUserComponent implements OnInit {
     this.selectedFile = null;
   }
 
+  tab: number;
   tabchange(i) {
-
+    this.tab = i
+    if (i == 4) {
+      this.locationAddStatus = false;
+    }
   }
 
   mailingAddressSubmit() {
@@ -510,13 +576,26 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   removeLicense(e, index) {
-    this.userService.deleteLicense(e.id).subscribe(license => {
-      let data = this.licenceDataSource.data;
-      data.splice(index, 1);
-      this.licenceDataSource = new MatTableDataSource(data)
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
+    this.openDialogLicense('remove', e, index)
+  }
+
+  openDialogLicense(dialogue, e, i) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.userService.deleteLicense(e.id).subscribe(license => {
+          let data = this.licenceDataSource.data;
+          data.splice(i, 1);
+          this.licenceDataSource = new MatTableDataSource(data)
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    });
   }
 
   texonomyValue: String;
@@ -527,6 +606,98 @@ export class NewExaminerUserComponent implements OnInit {
       }
     })
   }
+
+  assignLocation() {
+    //this.router.navigate(['/subscriber/location/existing-location', this.examinerId])
+    this.addresssearch.patchValue(null);
+    this.locationAddStatus = true;
+    this.locationData = null;
+    this.national_provider_identifier = null;
+  }
+
+  removeLocation(e, index) {
+    this.openDialog('remove', e);
+  }
+
+  //existing location
+  addresssearch = new FormControl();
+  filteredOptions: any;
+  locationData: any = null;
+  national_provider_identifier: any = null;
+  locationAddStatus: boolean = false;
+
+  addressOnChange(data) {
+    console.log(data,"data");
+    this.locationData = null;
+    this.locationData = data;
+  }
+
+  locationSubmit() {
+    if (this.locationData == null || this.national_provider_identifier == null) {
+      if (this.locationData == null) {
+        this.alertService.openSnackBar('Please select existing location', 'error');
+        return
+      }
+      if (this.national_provider_identifier == null) {
+        this.alertService.openSnackBar('Please enter vaild national provider identifier', 'error');
+      }
+      return;
+    }
+
+    let regexp = new RegExp('^[0-9]*$'),
+      test = regexp.test(this.national_provider_identifier);
+    if (!test) {
+      this.alertService.openSnackBar('Please enter vaild national provider identifier', 'error');
+      return;
+    }
+
+    let existing = {
+      user_id: this.examinerId,
+      service_location_id: this.locationData.id,
+      national_provider_identifier: this.national_provider_identifier
+    }
+
+    this.examinerService.updateExistingLocation(existing).subscribe(location => {
+      console.log(location);
+      this.updateFormData(this.examinerId)
+      this.locationAddStatus = false;
+      this.locationData = null;
+      this.national_provider_identifier = null;
+      //this.router.navigate(['/subscriber/users/examiner',this.examinerId])
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+
+  }
+
+  locationCancel() {
+    this.locationAddStatus = false;
+    this.locationData = null;
+    this.national_provider_identifier = null;
+  }
+
+  locationRoute() {
+    this.router.navigate(['/subscriber/location/add-location/2', this.examinerId])
+  }
+
+  openDialog(dialogue, user) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.subscriberService.removeAssignLocation(this.examinerId, user.id).subscribe(remove => {
+          this.updateFormData(this.examinerId)
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    });
+  }
+
+
 
 }
 

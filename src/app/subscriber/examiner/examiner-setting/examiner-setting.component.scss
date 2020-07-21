@@ -268,3 +268,9 @@ mat-form-field {
     }
   }
 }
+
+.sub-title {
+  small {
+    font-weight: $font-weight-base !important;
+  }
+}

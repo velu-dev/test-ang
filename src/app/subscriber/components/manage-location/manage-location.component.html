@@ -24,19 +24,25 @@
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
             matSort>
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'"> {{columnName[i]}} </th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnName[i]}} </th>
+                <td mat-cell *matCellDef="let element" (click)="!isMobile ? editAddress(element) : ''">
                     <span *ngIf="i == 0 && isMobile">
                         <mat-icon (click)="openElement(element)" mat-raised-button
-                            [ngClass]="{'table-expand': expandId == element.address_id, 'expand-close': !(expandId == element.address_id)}">
-                            {{ expandId == element.address_id ? 'remove_circle' : 'add_circle'}}
+                            [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
+                            {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                         </mat-icon>
                     </span>
-                    <span *ngIf="column == 'first_name'">{{element.first_name}} {{element.middle_name}} {{element.last_name}}</span>
-                    <span *ngIf="column == 'address_type_name'">{{element.address_type_id == 3 || element.service_name == 'Other Examiner Primary' ? 'Primary': element.service_name}}</span>
-                    <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}} {{element.city}} {{element.state}} - {{element.zip_code}}</span>
-                    <span *ngIf="column == 'contact'">{{element?.contact ? (element?.contact |  mask:'(000) 000-0000') : '-' }}</span>
-                    <span *ngIf="column == 'disabled'">
+                    <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}} {{element.city}} {{element.state_name}} - {{element.zip_code}}</span>
+                    <span *ngIf="column == 'service_code_id'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
+                    <span *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
+                    <span *ngIf="column == 'examiner'">
+                        <span *ngIf="element?.examiner && element?.examiner?.length == 1">{{element?.examiner[0].last_name}} {{element?.examiner[0].first_name}}{{element?.examiner[0].suffix ? ', '+element?.examiner[0].suffix : ''}}</span>
+                        <span *ngIf="element?.examiner && element?.examiner?.length != 1">{{element?.examiner ? element?.examiner?.length : ''}}</span>
+                    </span>
+                    <span *ngIf="column == 'is_active'">{{element?.is_active == true ? 'Active' : 'InActive'}}</span>
+                   
+                   
+                    <!-- <span *ngIf="column == 'disabled'">
                         <div class="no-wrap-td" *ngIf="element.address_type_id != 3 && element.service_name != 'Other Examiner Primary'">
                             <button mat-icon-button class="edit" (click)="editAddress(element)" matTooltip="Edit"
                                 matTooltipPosition="before">
@@ -53,17 +59,17 @@
                             <mat-icon>info</mat-icon>
                         </button>
                         </div>
-                    </span>
+                    </span> -->
                 </td>
             </ng-container>
             <ng-container matColumnDef="expandedDetail">
                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                    <div class="detail" [@detailExpand]="expandId == element.address_id ? 'expanded' : 'collapsed'">
+                    <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                         <div class="resposive-table">
                             <div><span>Examiner Name</span> {{element.first_name}} {{element.middle_name}} {{element.last_name}}</div>
                             <div><span>Location Type</span> {{element.address_type_id == 3 ? element.address_type_name: element.service_name}} </div>
                             <div><span>Address</span> {{element.street1}} {{element.street2}} {{element.city}} {{element.state}} - {{element.zip_code}} </div>
-                            <div><span>Phone</span> {{element?.contact ? element?.contact : '-'}} </div>
+                            <div><span>Phone</span> {{element?.phone_no ? element?.phone_no : '-'}} </div>
                             <!-- <div><span>Date Of Birth</span> {{element.date_of_birth | date: 'MM-dd-yyyy'}} </div> -->
                         </div>
                     </div>

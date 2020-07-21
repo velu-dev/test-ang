@@ -62,7 +62,7 @@ export class ExaminerManageAddressComponent implements OnInit {
     }
 
     this.addresssearch.valueChanges.subscribe(res => {
-      this.examinerService.searchAddress({ basic_search: res, isadvanced: false }).subscribe(value => {
+      this.examinerService.searchAddress({ basic_search: res, isadvanced: false },1).subscribe(value => {
         this.filteredOptions = value;
       })
     })
@@ -127,7 +127,7 @@ export class ExaminerManageAddressComponent implements OnInit {
   getSearchAddress(event) {
     this.examinerService.searchAddress({
       basic_search: '', isadvanced: this.advancedSearch, state: this.advanceSearch.value.state, city: this.advanceSearch.value.city, zip_code: this.advanceSearch.value.zip_code
-    }).subscribe(res => {
+    },1).subscribe(res => {
       this.filteredOptions = res;
       event.openPanel();
       this.advancedSearch = false;

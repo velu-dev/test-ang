@@ -709,6 +709,16 @@ input:-webkit-autofill {
     background-color: $light_green;
   }
 }
+.filled-gray {
+  @extend .btn_;
+  color: $white;
+  border-color: $active;
+  background-color: $active;
+  &:hover {
+    color: $white;
+    background-color: $active;
+  }
+}
 
 .text-success {
   color: $btn_success;
@@ -807,4 +817,12 @@ input:-webkit-autofill {
   font-weight: $font-weight-bold;
   // border-bottom: 1px solid $border-light;
   padding: 10px 0;
+}
+
+//border-dashed-blue
+
+.border-dashed-blue {
+  border: 1px dashed $ternary;
+  display: block;
+  margin: 10px 0;
 }

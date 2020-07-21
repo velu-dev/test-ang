@@ -25,7 +25,7 @@ export const MY_CUSTOM_FORMATS = {
 })
 export class NewBillableItemComponent implements OnInit {
   billable_item: FormGroup;
-  modifiers: any;
+  modifiers = [];
   procuderalCodes: any = [];
   examinarList: any;
   duration = [{ id: 20, value: "20" }, { id: 30, value: "30" }, { id: 45, value: "45" }, { id: 60, value: "60" }]
@@ -38,12 +38,18 @@ export class NewBillableItemComponent implements OnInit {
   contactTypes: any;
   claimId: number;
   claimantId: number;
+  claimant: any;
   isBillSubmited: boolean = false;
   isEdit: boolean;
   billableId: number;
   contactType: any;
   languageList: any = [];
-  primary_language_spoken:boolean = false;
+  primary_language_spoken: boolean = false;
+  claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "" };
+  claimDetails = { claim_number: "", wcab_number: "", exam_type_id: "" };
+  examTypes: any;
+  isLoading = false;
+  modifierList = [];
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -51,15 +57,26 @@ export class NewBillableItemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
   ) {
+    this.isLoading = true;
+    this.claimService.seedData('exam_type').subscribe(res => {
+      this.examTypes = res.data;
+    })
     this.route.params.subscribe(param => {
       this.claimId = param.claim;
       this.claimantId = param.claimant;
+      this.claimService.getClaim(this.claimId).subscribe(claim => {
+        this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number }
+      })
+      this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
+        this.claimant = claimant.data[0]
+        this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
+
+      })
       if (param.billable) {
         this.isEdit = true
         this.billableId = param.billable;
         this.claimService.getBillableItemSingle(param.billable).subscribe(res => {
-          console.log(res);
-          if(res['data'].exam_type.primary_language_spoken){
+          if (res['data'].exam_type.primary_language_spoken) {
             this.primary_language_spoken = true;
           }
           this.billable_item.patchValue(res['data'])
@@ -72,6 +89,7 @@ export class NewBillableItemComponent implements OnInit {
         })
       }
     })
+    this.isLoading = false;
   }
 
   ngOnInit() {
@@ -106,7 +124,11 @@ export class NewBillableItemComponent implements OnInit {
       this.languageList = res.data;
     })
     this.claimService.seedData("modifier").subscribe(res => {
-      this.modifiers = res.data;
+      this.modifierList = res.data;
+      res.data.map(modifier => {
+        if (modifier.modifier_code != "96")
+          this.modifiers.push(modifier);
+      })
     })
     this.claimService.seedData("procedural_codes").subscribe(res => {
       res.data.map(proc => {
@@ -124,7 +146,6 @@ export class NewBillableItemComponent implements OnInit {
       if (this.isEdit) {
         if (this.contactType) {
           let type = this.contactTypes.find(element => element.id == this.contactType)
-          this.changeCommunicationType(type, 'auto');
         }
       }
     })
@@ -139,6 +160,17 @@ export class NewBillableItemComponent implements OnInit {
       exam_type: { modifier_id: [] }
     })
   }
+  psychiatric() {
+    this.modifiers = [];
+    if (!(this.billable_item.value.exam_type.is_psychiatric)) {
+      this.modifiers = this.modifierList;
+    } else {
+      this.modifierList.map(res => {
+        if (res.modifier_code != "96")
+          this.modifiers.push(res);
+      })
+    }
+  }
 
   todayDate = { appointment: new Date(), intake: new Date() }
   pickerOpened(type) {
@@ -152,7 +184,6 @@ export class NewBillableItemComponent implements OnInit {
   isAddressSelected = false;
   selectedExaminarAddress: any = {};
   changeExaminarAddress(address) {
-    console.log(address)
     this.billable_item.patchValue({
       appointment: {
         examination_location_id: address.address_id
@@ -162,12 +193,12 @@ export class NewBillableItemComponent implements OnInit {
     this.selectedExaminarAddress = address;
   }
 
+
   examinarChange(examinar) {
-    console.log(this.billable_item.value)
     this.addressCtrl.setValue('');
     this.selectedExaminarAddress = '';
     this.isAddressSelected = false;
-    this.examinarId = examinar.value;
+    this.examinarId = examinar.id;
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
       this.examinerOptions = []
       this.examinerOptions = res['data'];
@@ -192,54 +223,6 @@ export class NewBillableItemComponent implements OnInit {
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
-  }
-
-  contactMask = { type: "", mask: "" }
-  changeCommunicationType(contact, type) {
-    if (contact)
-      if (type == "man")
-        this.billable_item.patchValue({
-          intake_call: {
-            call_type_detail: ""
-          }
-        })
-    switch (contact.contact_type) {
-      case "E1":
-        this.contactMask.mask = "";
-        this.billable_item.controls.intake_call['controls']['call_type_detail'].setValidators(Validators.email)
-        this.contactMask.type = "text";
-        break;
-      case "E2":
-        this.contactMask.mask = "";
-        this.billable_item.controls.intake_call['controls']['call_type_detail'].setValidators(Validators.email)
-        this.contactMask.type = "text";
-        break;
-      case "L1":
-        this.contactMask.mask = "(000) 000-0000";
-        this.contactMask.type = "text";
-        break;
-      case "L2":
-        this.contactMask.mask = "(000) 000-0000";
-        this.contactMask.type = "text";
-        break;
-      case "F1":
-        this.contactMask.mask = "(000) 000-0000";
-        this.contactMask.type = "text";
-        break;
-      case "F2":
-        this.contactMask.mask = "(000) 000-0000";
-        this.contactMask.type = "text";
-        break;
-      case "LE":
-        this.contactMask.mask = "";
-        this.contactMask.type = "text";
-        break;
-      default:
-        this.contactMask.mask = "";
-        this.contactMask.type = "text";
-        break;
-    }
-
   }
 
   submitBillableItem() {
@@ -267,6 +250,22 @@ export class NewBillableItemComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
+  }
+  selectedLanguage: any;
+  modifyChange() {
+    if (this.billable_item.value.exam_type.modifier_id)
+      if (this.billable_item.value.exam_type.modifier_id.includes(2)) {
+        this.languageList.map(res => {
+
+          if (res.id == this.claimant.primary_language_spoken) {
+            this.primary_language_spoken = true;
+            this.selectedLanguage = res;
+          }
+        })
+        this.billable_item.patchValue({
+          exam_type: { primary_language_spoken: this.claimant.primary_language_spoken }
+        })
+      }
   }
 
   cancel() {

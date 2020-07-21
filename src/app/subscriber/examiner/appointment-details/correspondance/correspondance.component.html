@@ -1,0 +1,86 @@
+<div fxLayout="row wrap" class="ondemand-status">
+    <div fxFlex="100">
+        <div class="main-title">Correspondence Mail On Demand Status</div>
+        <p class="description">View the Correspondence Mail On Demand’s progress here, from beginning to end.</p>
+        <mat-progress-bar mode="determinate" value="32"></mat-progress-bar>
+        <div class="text-center">Not Sent</div>
+    </div>
+</div>
+
+<div fxLayout="row wrap" class="p-t-25">
+    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+        <div class="main-title">Correspondence Mail On Demand Status</div>
+        <p class="description">View the Correspondence Mail On Demand’s progress here, from beginning to end.</p>
+        <div class="basic-table striped_">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 user-table m-l-10">
+
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                  [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)"
+                                  [aria-label]="checkboxLabel(row)">
+                    </mat-checkbox>
+                  </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>  </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    (click)="selection.toggle(row)">
+                </tr>
+              </table>
+        </div>
+    </div>
+    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+        <div class="main-title">Recipients</div>
+        <p class="description">Select the parties who will receive the documents through the Mail On
+            Demand Service. This selection only applies to the Mail On Demand service.</p>
+        <div class="basic-table striped_">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 user-table m-l-10">
+
+                <!-- Checkbox Column -->
+                <ng-container matColumnDef="select">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                  [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                  </th>
+                  <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                                  (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)"
+                                  [aria-label]="checkboxLabel(row)">
+                    </mat-checkbox>
+                  </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>  </th>
+                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    (click)="selection.toggle(row)">
+                </tr>
+              </table>
+        </div>
+    </div>
+</div>
