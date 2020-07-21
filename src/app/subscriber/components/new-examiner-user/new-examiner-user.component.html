@@ -562,7 +562,7 @@
                 <ng-template mat-tab-label>
                     <span>Service Locations</span>
                 </ng-template>
-                <mat-card-content *ngIf = "tab == 4">
+                <mat-card-content *ngIf="!locationAddStatus">
                     <div class="table-filter">
                         <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                             placeholder="Search by address, phone, etc.">
@@ -572,7 +572,7 @@
                     <button mat-stroked-button class="float-right outline-success m-t-5" (click)="assignLocation()">
                         Add Service Location
                     </button>
-                    <div class="user-detail">
+                    <div class="user-detail"  *ngIf = "tab == 4">
                         <table mat-table [dataSource]="dataSource" multiTemplateDataRows
                             class="mat-elevation-z8 user-table" matSort>
                             <ng-container matColumnDef="{{column}}"
@@ -624,6 +624,82 @@
 
                     <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
                 </mat-card-content>
+
+                <mat-card class="m-card new-location m-b-20" *ngIf="locationAddStatus">
+                    <mat-card-header>
+                        <div class="m-0 content-wrapper-main-title">Search Existing Service Locations</div>
+                    </mat-card-header>
+                    <mat-divider></mat-divider>
+                    <mat-card-content>
+                        <div fxLayout="row wrap">
+                            <mat-form-field appearance="fill" fxFlex="100" hideRequiredMarker="hideRequiredControl.auto"
+                                floatLabel="floatLabelControl.auto" class="w-100 m-t-20">
+                                <!-- <input matInput placeholder="Search Existing Service Locations" autocomplete="off" class="p-l-10"> -->
+                                <input matInput placeholder="Search Existing Service Locations"
+                                [matAutocomplete]="addressAutocomplete" [formControl]="addresssearch" class="p-l-10" autocomplete="off">
+                            <mat-autocomplete #addressAutocomplete="matAutocomplete">
+                                <mat-option *ngFor="let option of filteredOptions?.data"
+                                    (click)="addressOnChange(option)" value="{{option?.street1 }} {{option?.street2 }} {{option?.city}} {{option?.state_name }} {{option?.zip_code }}">
+                                    {{option?.street1 }} {{option?.street2 }} {{option?.city}}
+                                    {{option?.state_name }} {{option?.zip_code }}
+                                </mat-option>
+                                <mat-option *ngIf="filteredOptions?.data?.length == 0">Not found
+                                </mat-option>
+                            </mat-autocomplete>
+                                <span matSuffix class="search-icon icons">
+                                    <mat-icon>search</mat-icon>
+                                </span>
+                                <mat-error>
+                                    <span>Please enter valid service location</span></mat-error>
+                            </mat-form-field>
+                            <div fxFlex="100">
+                            <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="float-right outline-success m-t-5" (click)="locationRoute()">
+                               Create Service Location
+                            </button>
+                        </div>
+                            <div class="address-list" fxFlex="100" *ngIf="locationData">
+                                <mat-list>
+                                    <mat-list-item>
+                                        <div class="name" mat-line>
+                                            <div>
+                                                <strong>
+                                                    <i class="fa fa-building-o"></i>{{locationData?.service_name}}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="address" mat-line>  {{locationData?.street1 }} {{locationData?.street2 }} {{locationData?.city}}
+                                            {{locationData?.state_name }} - {{locationData?.zip_code }}</div>
+                                    </mat-list-item>
+                                </mat-list>
+                            </div>
+                
+                          
+                
+                            <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100" *ngIf="locationData">
+                                <div fxLayout="row wrap" class="p-l-10">
+                                    <div class="content-wrapper-main-title m-t-20 m-b-0" fxFlex="100">National Provider Identifier (NPI)
+                                        Number</div>
+                                    <p fxFlex="100" class="m-t-5">Enter NPI Number for the Service Location.</p>
+                                    <div class="sub-title" fxFlex="100">CMS 1500 Box 32 a</div>
+                                    <mat-form-field fxFlex="100" class="m-t-20">
+                                        <mat-label>National Provider Identifier (NPI) Number</mat-label>
+                                        <input matInput placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
+                                                [dropSpecialCharacters]="false" mask="9{15}"
+                                                [(ngModel)]="national_provider_identifier" required>
+                                        <mat-error>Please enter valid NPI number</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                
+                            <div class="text-center w-100 m-t-10 m-b-10">
+                                <button mat-stroked-button type="button" class="outline-danger" (click)="locationCancel()">Cancel</button>
+                                <button mat-stroked-button class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>
+                            </div>
+                
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                
 
             </mat-tab>
         </mat-tab-group>

@@ -24,7 +24,7 @@ export class ExistingServiceLocationsComponent implements OnInit {
     this.route.params.subscribe(params => this.examinerId = params.id)
 
     this.addresssearch.valueChanges.subscribe(res => {
-      this.examinerService.searchAddress({ basic_search: res, isadvanced: false }).subscribe(value => {
+      this.examinerService.searchAddress({ basic_search: res, isadvanced: false },1).subscribe(value => {
         this.filteredOptions = value;
       })
     })

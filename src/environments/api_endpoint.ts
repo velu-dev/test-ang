@@ -115,7 +115,7 @@ export const api_endpoint = {
 
     getExaminerList: 'subscriber/examiner/examiner-list',
     getSingleExaminer: 'subscriber/examiner/get-address/',
-    searchAddress: 'subscriber/examiner/search-address',
+    searchAddress: 'subscriber/examiner/search-address/',
 
     //examination
     getExamination: 'examinations/details',
