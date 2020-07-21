@@ -123,7 +123,7 @@ export class AddEditServiceLocationComponent implements OnInit {
         }else{
           this.alertService.openSnackBar('Location created successfully', 'success');
         }
-        this.router.navigate(['/subscriber/users/examiner',this.examinerId])
+        this.router.navigate(['/subscriber/users/examiner',this.examinerId,1])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -156,7 +156,7 @@ export class AddEditServiceLocationComponent implements OnInit {
 
   cancel() {
     if (this.pageStatus == 2) {
-      this.router.navigate(['/subscriber/users/examiner',this.examinerId])
+      this.router.navigate(['/subscriber/users/examiner',this.examinerId,1])
       return;
     }
     if (this.locationId) {

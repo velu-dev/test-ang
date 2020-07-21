@@ -173,12 +173,14 @@ export class NewExaminerUserComponent implements OnInit {
     })
 
     this.addresssearch.valueChanges.subscribe(res => {
-      if(res != null){ 
+      if (res != null) {
         this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
           this.filteredOptions = value;
         })
+      }else{
+        this.filteredOptions = null;
       }
-      })
+    })
 
 
   }
@@ -188,7 +190,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.getExaminerUser(id).subscribe(res => {
       this.userData = res;
       console.log(res, id)
-      if (res.examiner_details.id == id) {
+      if (res.examiner_id == this.user.id) {
         this.userForm.disable();
       }
       let user = {
@@ -256,7 +258,9 @@ export class NewExaminerUserComponent implements OnInit {
 
       //this.getLocationDetails();
       this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
-     
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
   }
 
@@ -406,10 +410,10 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   fileChangeEvent(event: any): void {
@@ -461,7 +465,7 @@ export class NewExaminerUserComponent implements OnInit {
   tab: number;
   tabchange(i) {
     this.tab = i
-    if(i == 4){
+    if (i == 4) {
       this.locationAddStatus = false;
     }
   }
@@ -559,13 +563,13 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   removeLicense(e, index) {
-  this.openDialogLicense('remove',e,index)
+    this.openDialogLicense('remove', e, index)
   }
 
-  openDialogLicense(dialogue, e,i) {
+  openDialogLicense(dialogue, e, i) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address:true }
+      data: { name: dialogue, address: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -625,8 +629,13 @@ export class NewExaminerUserComponent implements OnInit {
       }
       return;
     }
-    console.log(this.locationData);
-    console.log(this.national_provider_identifier);
+
+    let regexp = new RegExp('^[0-9]*$'),
+      test = regexp.test(this.national_provider_identifier);
+    if (!test) {
+      this.alertService.openSnackBar('Please enter vaild national provider identifier', 'error');
+      return;
+    }
 
     let existing = {
       user_id: this.examinerId,
@@ -654,13 +663,13 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   locationRoute() {
-    this.router.navigate(['/subscriber/location/add-location/2',this.examinerId])
+    this.router.navigate(['/subscriber/location/add-location/2', this.examinerId])
   }
 
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue,address:true }
+      data: { name: dialogue, address: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {

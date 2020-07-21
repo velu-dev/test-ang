@@ -85,6 +85,9 @@ const routes: Routes = [{
   }, {
     path: "examiner/:id",
     component: NewExaminerUserComponent
+  },{
+    path: "examiner/:id/:status",
+    component: NewExaminerUserComponent
   }]
 }, {
   path: "appointment",

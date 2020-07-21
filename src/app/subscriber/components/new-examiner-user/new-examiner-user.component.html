@@ -333,7 +333,7 @@
                                     fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                                     <mat-label>Department of Labor (DOL) Provider Number</mat-label>
                                     <input matInput placeholder="Department of Labor (DOL) Provider Number"
-                                        autocomplete="off" [dropSpecialCharacters]="false" mask="9{9}"
+                                        autocomplete="off" [dropSpecialCharacters]="false" mask="9{10}"
                                         formControlName="dol_provider_number">
                                     <mat-error *ngIf="billingSubmit">Please enter valid DOL number</mat-error>
                                 </mat-form-field>
@@ -700,7 +700,7 @@
                                     <div class="sub-title" fxFlex="100">CMS 1500 Box 32 a</div>
                                     <mat-form-field fxFlex="100" class="m-t-20">
                                         <mat-label>National Provider Identifier (NPI) Number</mat-label>
-                                        <input matInput placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
+                                        <input matInput pattern="^[0-9]*$" placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
                                                 [dropSpecialCharacters]="false" mask="9{15}"
                                                 [(ngModel)]="national_provider_identifier" required>
                                         <mat-error>Please enter valid NPI number</mat-error>
