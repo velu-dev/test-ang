@@ -246,7 +246,7 @@ export class NewExaminerUserComponent implements OnInit {
         city: res.billing_provider.city,
         state: res.billing_provider.state,
         zip_code: res.billing_provider.zip_code,
-        phone_no: res.billing_provider.phone_no,
+        phone_no1: res.billing_provider.phone_no1,
       }
       this.billingProviderForm.patchValue(billing)
 
@@ -320,7 +320,7 @@ export class NewExaminerUserComponent implements OnInit {
       city: [null],
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      phone_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
 
     })
 
