@@ -180,6 +180,10 @@ const routes: Routes = [{
   {
     path: "edit-location/:id",
     component: AddEditServiceLocationComponent
+  },
+  {
+    path: "edit-location/:id/:status/:examiner",
+    component: AddEditServiceLocationComponent
   }]
 
 },
