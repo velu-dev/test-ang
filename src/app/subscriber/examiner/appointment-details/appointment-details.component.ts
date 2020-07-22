@@ -91,6 +91,7 @@ export class AppointmentDetailsComponent implements OnInit {
   isBillabbleItemLoading = false;
   languageId = "";
   languageList: any = [];
+  callerAffliation:any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -448,6 +449,10 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  procedure_type(){
+
   }
 }
 @Component({
