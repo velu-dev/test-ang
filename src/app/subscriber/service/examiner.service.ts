@@ -37,7 +37,7 @@ export class ExaminerService {
   getsingleExAddress(exam_id, address_id) {
     return this.http.get(environment.baseUrl + api_endpoint.getSingleExaminer + exam_id + '/' + address_id)
   }
-  searchAddress(data,id): Observable<any> {
+  searchAddress(data, id): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.searchAddress + id, data)
   }
 
@@ -56,7 +56,6 @@ export class ExaminerService {
   getExaminationDetails() {
     return this.http.get(environment.baseUrl + api_endpoint.getExamination)
   }
-
   getAllExamination(id, billId): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getAllExamination + id + '/' + billId)
   }
@@ -84,5 +83,11 @@ export class ExaminerService {
 
   updateExistingLocation(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.updateExistingLocation, data)
+  }
+  updateExaminationStatus(data): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updateExamType + data.id, data)
+  }
+  updateBillableItem(data): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.update_billable_item + data.id, data)
   }
 }

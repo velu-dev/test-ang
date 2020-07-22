@@ -125,4 +125,6 @@ export const api_endpoint = {
     deleteDocument: 'examinations/document-remove/',
     postNotes: 'examinations/add-notes',
     formUrl: "form/",
+    //Billable item
+    updateExamType: "billable-item/update-examination-status/",
 }
