@@ -479,6 +479,10 @@ export class AppointmentDetailsComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+  procedure_type(){
+
+  }
 }
 @Component({
   selector: 'claimant-dialog',
