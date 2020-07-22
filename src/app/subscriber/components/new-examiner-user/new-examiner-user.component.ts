@@ -633,20 +633,14 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   locationSubmit() {
-    if (this.locationData == null || this.national_provider_identifier == null) {
-      if (this.locationData == null) {
+    if (this.locationData == null) {
         this.alertService.openSnackBar('Please select existing location', 'error');
         return
-      }
-      if (this.national_provider_identifier == null) {
-        this.alertService.openSnackBar('Please enter vaild national provider identifier', 'error');
-      }
-      return;
     }
 
     let regexp = new RegExp('^[0-9]*$'),
       test = regexp.test(this.national_provider_identifier);
-    if (!test) {
+    if (this.national_provider_identifier != null && !test) {
       this.alertService.openSnackBar('Please enter vaild national provider identifier', 'error');
       return;
     }

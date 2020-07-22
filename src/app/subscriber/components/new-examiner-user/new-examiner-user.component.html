@@ -706,7 +706,7 @@
                                         <mat-label>National Provider Identifier (NPI) Number</mat-label>
                                         <input matInput pattern="^[0-9]*$" placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
                                                 [dropSpecialCharacters]="false" mask="9{15}"
-                                                [(ngModel)]="national_provider_identifier" required>
+                                                [(ngModel)]="national_provider_identifier">
                                         <mat-error>Please enter valid NPI number</mat-error>
                                     </mat-form-field>
                                 </div>
