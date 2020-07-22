@@ -9,13 +9,14 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   styleUrls: ['./claim-admin.component.scss']
 })
 export class ClaimAdminComponent implements OnInit {
-  @Input('edit') isEdit;
+  // @Input('edit') isEdit;
+  claimAdminEdit = false;
   @Input('claim_admin') claimAdmin;
-  @Input('save') isSave = false;
+  // @Input('save') isSave = false;
   claimAdminForm: FormGroup;
   claimAdminList = []
   @Input('state') states;
-  @Output() isEditComplete = new EventEmitter();
+  // @Output() isEditComplete = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimAdminForm = this.formBuilder.group({
       id: [],
@@ -35,23 +36,23 @@ export class ClaimAdminComponent implements OnInit {
   ngOnInit() {
     this.claimAdminForm.patchValue(this.claimAdmin)
   }
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    if (this.claimAdminForm.invalid) {
-      return
-    }
-    if (changes.isSave) {
-      if (changes.isSave.currentValue)
-        this.updateClaimAdmin()
-    }
-    if (changes.isEdit)
-      this.isEdit = changes.isEdit.currentValue;
-    if (this.isEdit) {
-      this.claimAdminForm.enable();
-    } else {
-      this.claimAdminForm.disable();
-    }
+  // ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+  //   if (this.claimAdminForm.invalid) {
+  //     return
+  //   }
+  //   if (changes.isSave) {
+  //     if (changes.isSave.currentValue)
+  //       this.updateClaimAdmin()
+  //   }
+  //   if (changes.isEdit)
+  //     this.isEdit = changes.isEdit.currentValue;
+  //   if (this.isEdit) {
+  //     this.claimAdminForm.enable();
+  //   } else {
+  //     this.claimAdminForm.disable();
+  //   }
 
-  }
+  // }
   appClaimAdmin(aa) {
 
   }
@@ -65,19 +66,23 @@ export class ClaimAdminComponent implements OnInit {
       return;
     }
     this.claimService.updateAgent(this.claimAdminForm.value.id, { InsuranceAdjuster: this.claimAdminForm.value }).subscribe(res => {
-      this.isEdit = false;
+      this.claimAdminEdit = false;
       this.claimAdminForm.patchValue(res.data)
       this.alertService.openSnackBar("Claim Administrator updated successfully", 'success');
       this.claimAdminForm.disable();
       this.claimUpdated = true;
-      this.isEditComplete.emit(true);
+      // this.isEditComplete.emit(true);
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
+   editCA(){
+     this.claimAdminForm.enable();
+     this.claimAdminEdit = true;
+   }
   cancel() {
     this.claimAdminForm.disable();
-    this.isEditComplete.emit(true);
+    // this.isEditComplete.emit(true);
     this.claimAdminForm.patchValue(this.claimAdmin)
   }
   numberOnly(event): boolean {
