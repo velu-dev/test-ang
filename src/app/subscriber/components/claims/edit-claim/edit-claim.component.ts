@@ -4,13 +4,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatDialog } from '@angular/material';
-import { state } from 'src/app/shared/messages/errors';
-export interface PeriodicElement {
-  billable_item: string;
-  examiner: string;
-  d_o_s: string;
-  status: string;
-}
+import { state } from 'src/app/shared/messages/errors'
 @Component({
   selector: 'app-edit-claim',
   templateUrl: './edit-claim.component.html',
@@ -30,17 +24,11 @@ export class EditClaimComponent implements OnInit {
   deuDetail = {};
   employeDetail = {};
   injuryDetails = [];
-  claimAdminEdit = false;
-  employerEdit = false;
-  aaEdit = false;
-  daEdit = false;
-  deoEdit = false;
-  saveClick = { claimAdmin: false, employer: false, aa: false, da: false, deu: false };
   isLoading = true;
   states = [];
-  isSectionOpen: boolean = false;
   dateOfBirth: any;
   bodyParts = [];
+  employerEdit:any;
   constructor(private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -75,57 +63,6 @@ export class EditClaimComponent implements OnInit {
     this.claimService.seedData('state').subscribe(res => {
       this.states = res.data;
     })
-  }
-  isStepOpen = false;
-  setStep(event) {
-    console.log("at open", this.isClosed, this.isStepOpen)
-    this.isStepOpen = true;
-    this.step = event;
-    if (event == 2) {
-      this.isClosed.ca = true;
-    } else if (event == 3) {
-      this.isClosed.emp = true;
-    } else if (event == 4) {
-      this.isClosed.aa = true;
-    } else if (event == 5) {
-      this.isClosed.da = true;
-    } else if (event == 6) {
-      this.isClosed.deu = true;
-    }
-  }
-  isClosed = { aa: false, ca: false, da: false, deu: false, emp: false };
-  closed(event) {
-    this.claimAdminEdit = false;
-    this.employerEdit = false;
-    this.aaEdit = false;
-    this.daEdit = false;
-    this.deoEdit = false;
-    this.isStepOpen = false;
-    if (event == "ca") {
-      this.isClosed.ca = false;
-    } else if (event == "emp") {
-      this.isClosed.emp = false;
-    } else if (event == "aa") {
-      this.isClosed.aa = false;
-    } else if (event == "da") {
-      this.isClosed.da = false;
-    } else {
-      this.isClosed.deu = false;
-    }
-  }
-  isEditChange(event, type) {
-    console.log(event)
-    if (type == "ca") {
-      this.claimAdminEdit = false;
-    } else if (type == "emp") {
-      this.employerEdit = false;
-    } else if (type == "aa") {
-      this.aaEdit = false;
-    } else if (type == "da") {
-      this.daEdit = false;
-    } else {
-      this.deoEdit = false;
-    }
   }
   navigateBillable() {
     this.router.navigate(['/subscriber/billable-item/new-billable-item', this.claimId, this.claimantDetail.id])

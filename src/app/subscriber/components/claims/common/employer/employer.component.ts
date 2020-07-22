@@ -14,8 +14,7 @@ export class EmployerComponent implements OnInit {
   employer: FormGroup;
   employerList = [];
   @Input('state') states;
-  @Input('save') isSave = false;
-  @Output() isEditComplete = new EventEmitter();
+  employerEdit = false;
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.employer = this.formBuilder.group({
       id: [],
@@ -24,33 +23,19 @@ export class EmployerComponent implements OnInit {
       street2: [{ value: null, disabled: true }],
       city: [{ value: null, disabled: true }],
       state: [{ value: null, disabled: true }],
-      zip_code: [{ value: null, disabled: true },Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
-  }
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-    if (changes.isSave) {
-      if (changes.isSave.currentValue)
-        this.updateEmployer()
-    }
-    if (changes.isEdit)
-      this.isEdit = changes.isEdit.currentValue;
-    if (this.isEdit) {
-      this.employer.enable();
-    } else {
-      this.employer.disable();
-    }
-    
   }
   ngOnInit() {
     this.employer.patchValue(this.employerDetail)
   }
   updateEmployer() {
     Object.keys(this.employer.controls).forEach((key) => {
-      if(this.employer.get(key).value && typeof(this.employer.get(key).value) == 'string')
-      this.employer.get(key).setValue(this.employer.get(key).value.trim())
+      if (this.employer.get(key).value && typeof (this.employer.get(key).value) == 'string')
+        this.employer.get(key).setValue(this.employer.get(key).value.trim())
     });
     if (this.employer.invalid) {
       return;
@@ -59,13 +44,16 @@ export class EmployerComponent implements OnInit {
       this.isEdit = false;
       this.alertService.openSnackBar("Employer updated successfully", 'success');
       this.employer.disable();
-      this.isEditComplete.emit(true);
+      this.employerEdit = false;
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
+  editEmployer(){
+    this.employerEdit = true;
+    this.employer.enable();
+  }
   cancel() {
-    this.isEditComplete.emit(true);
     this.employer.disable();
     this.employer.patchValue(this.employerDetail)
   }

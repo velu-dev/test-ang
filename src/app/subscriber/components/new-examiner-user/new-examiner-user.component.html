@@ -111,7 +111,7 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Zip Code</mat-label>
-                            <input matInput placeholder="Zip Code" formControlName="zip_code" autocomplete="off">
+                            <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
                             <mat-error *ngIf="mailingSubmit">Please enter valid zip code</mat-error>
                         </mat-form-field>
 
@@ -295,7 +295,7 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Zip Code</mat-label>
-                            <input matInput placeholder="Zip Code" formControlName="zip_code" autocomplete="off">
+                            <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
                             <mat-error *ngIf="billingSubmit">Please enter valid zip code</mat-error>
                         </mat-form-field>
 
@@ -303,7 +303,7 @@
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Phone</mat-label>
                             <input matInput placeholder="Phone" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                formControlName="phone_no" autocomplete="off">
+                                formControlName="phone_no1" autocomplete="off">
                             <mat-error *ngIf="billingSubmit">Please enter valid phone</mat-error>
                         </mat-form-field>
 
@@ -686,11 +686,11 @@
                                     </mat-list-item>
                                 </mat-list>
                             </div>
-                            <div fxFlex="100" class="p-t-30">
+                            <div fxFlex="100" class="p-t-20 text-center">
                                 <!-- <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="outline-success m-t-5" (click)="locationRoute()">
                                    Create Service Location
                                 </button> -->
-                                <span *ngIf="filteredOptions?.data?.length == 0 && locationData == null">No existing Service Location Found!</span>
+                                <div *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="text-center p-b-40">No existing Service Location Found!</div>
                             </div>
                 
                             <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100" *ngIf="locationData">
@@ -703,7 +703,7 @@
                                         <mat-label>National Provider Identifier (NPI) Number</mat-label>
                                         <input matInput pattern="^[0-9]*$" placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
                                                 [dropSpecialCharacters]="false" mask="9{15}"
-                                                [(ngModel)]="national_provider_identifier" required>
+                                                [(ngModel)]="national_provider_identifier">
                                         <mat-error>Please enter valid NPI number</mat-error>
                                     </mat-form-field>
                                 </div>
