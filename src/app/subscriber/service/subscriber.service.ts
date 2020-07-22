@@ -41,6 +41,10 @@ export class SubscriberService {
     return this.http.get(environment.baseUrl + api_endpoint.getSingleLocation + id)
   }
 
+  getSingleLocationExaminer(id, examiner): Observable<any>{
+    return this.http.get(environment.baseUrl + api_endpoint.getSingleLocation + id + '/'+ examiner)
+  }
+
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
