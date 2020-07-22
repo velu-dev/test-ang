@@ -28,6 +28,7 @@ export class EditClaimComponent implements OnInit {
   states = [];
   dateOfBirth: any;
   bodyParts = [];
+  employerEdit:any;
   constructor(private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,
