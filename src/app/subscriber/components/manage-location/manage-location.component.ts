@@ -79,6 +79,7 @@ export class ManageLocationComponent implements OnInit {
       // };
     }, error => {
       console.log(error)
+      this.dataSource = new MatTableDataSource([]);
     })
 
     // this.examinerService.getAllExaminerAddress().subscribe(location => {

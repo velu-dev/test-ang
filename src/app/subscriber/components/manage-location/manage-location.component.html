@@ -37,8 +37,8 @@
                     <span *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
                     <span *ngIf="column == 'examiner'">
                         <span *ngIf="element?.examiner && element?.examiner?.length == 1">{{element?.examiner[0].last_name}} {{element?.examiner[0].first_name}}{{element?.examiner[0].suffix ? ', '+element?.examiner[0].suffix : ''}}</span>
-                        <span *ngIf="element?.examiner && element?.examiner?.length != 1">{{element?.examiner ? element?.examiner?.length : ''}}</span>,
-                        <small> (+2 more)</small>
+                        <span *ngIf="element?.examiner && element?.examiner?.length != 1">{{element?.examiner ? element?.examiner?.length : ''}}</span>
+                        <!-- <small> (+2 more)</small> -->
                     </span>
                     <span *ngIf="column == 'is_active'">{{element?.is_active == true ? 'Active' : 'InActive'}}</span>
                    
