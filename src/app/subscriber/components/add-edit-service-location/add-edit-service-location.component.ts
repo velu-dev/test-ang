@@ -101,7 +101,7 @@ export class AddEditServiceLocationComponent implements OnInit {
     })
 
     if (this.pageStatus == 2) {
-      this.locationForm.addControl('national_provider_identifier', new FormControl(null));
+      this.locationForm.addControl('national_provider_identifier', new FormControl(null,Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])));
     }
   }
 
@@ -112,6 +112,7 @@ export class AddEditServiceLocationComponent implements OnInit {
     });
     this.locationSubmit = true;
     if (this.locationForm.invalid) {
+      this.locationForm.markAllAsTouched()
       return;
     }
 

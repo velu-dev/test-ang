@@ -7,6 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ClaimService } from '../../service/claim.service';
+import { Observable } from 'rxjs';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -36,6 +39,7 @@ export class AppointmentDetailsComponent implements OnInit {
   isMobile: boolean;
   claim_id: any;
   examinationDetails: any;
+  examinationStatus = [];
   collapsed = false;
   docCollapsed = false;
   noteCollapsed = false;
@@ -76,36 +80,171 @@ export class AppointmentDetailsComponent implements OnInit {
   formId = "";
   examiner_id = "";
   billableId: number;
+  billable_item: FormGroup;
+  examinarList = [];
+  procuderalCodes = [];
+  modifiers = [];
+  modifierList = [];
+  primary_language_spoken: boolean = false;
+  examinarAddress: Observable<any[]>;
+  contactTypes: any;
+  isBillabbleItemLoading = false;
+  languageId = "";
+  languageList: any = [];
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private formBuilder: FormBuilder,
+    private claimService: ClaimService
   ) {
+
+    this.claimService.seedData("intake_contact_type").subscribe(res => {
+      this.contactTypes = res.data;
+    })
+    this.claimService.seedData("modifier").subscribe(res => {
+      this.modifierList = res.data;
+      res.data.map(modifier => {
+        if (modifier.modifier_code != "96")
+          this.modifiers.push(modifier);
+      })
+    })
+    this.claimService.seedData("procedural_codes").subscribe(res => {
+      res.data.map(proc => {
+        if (proc.procedural_code != "ML100") {
+          this.procuderalCodes.push(proc);
+        }
+      })
+    })
+    this.claimService.listExaminar().subscribe(res => {
+      this.examinarList = res.data;
+    })
+    this.claimService.seedData("language").subscribe(res => {
+      this.languageList = res.data;
+    })
+    this.examinerService.seedData('examination_status').subscribe(res => {
+      this.examinationStatus = res.data;
+    })
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
-      this.billableId = params.billId
+      this.billableId = params.billId;
+      this.isBillabbleItemLoading = true;
+      this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
+        console.log(bills)
+        this.isBillabbleItemLoading = false;
+        if (bills['data'].exam_type.primary_language_spoken) {
+          this.primary_language_spoken = true;
+          this.languageId = bills['data'].exam_type.primary_language_spoken;
+        }
+        this.billable_item.patchValue(bills.data);
+      })
+      this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+        this.examinationStatusForm.patchValue(response.data.appointments)
+        this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
+        this.examiner_id = response.data.appointments.examiner_id;
+        this.examinationDetails = response['data']
+        this.getDocumentData();
+        if (response['data'].exam_notes) {
+          this.notes = response['data'].exam_notes;
+        } else {
+          this.saveButtonStatus = true;
+        }
+      }, error => {
+        console.log(error);
+        this.dataSource = new MatTableDataSource([]);
+      })
     });
   }
-
+  claimant_name = "";
+  examinationStatusForm: FormGroup;
   ngOnInit() {
-    this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
-      this.examiner_id = response.data.appointments.examiner_id;
-      this.examinationDetails = response['data']
-      this.getDocumentData();
-      if (response['data'].exam_notes) {
-        this.notes = response['data'].exam_notes;
-      } else {
-        this.saveButtonStatus = true;
-      }
-    }, error => {
-      console.log(error);
-      this.dataSource = new MatTableDataSource([]);
-    })
+    this.billable_item = this.formBuilder.group({
+      id: [{ value: '', disable: true }],
+      claim_id: [this.claim_id],
+      exam_type: this.formBuilder.group({
+        procedure_type: [null, Validators.required],
+        modifier_id: [null],
+        is_psychiatric: [false],
+        primary_language_spoken: [{ value: '', disabled: true }]
+      }),
+      appointment: this.formBuilder.group({
+        examiner_id: [null],
+        appointment_scheduled_date_time: [null],
+        duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
+        examination_location_id: [null]
+      }),
+      intake_call: this.formBuilder.group({
+        caller_affiliation: [null],
+        caller_name: [null],
+        call_date: [null],
+        call_type: [null],
+        call_type_detail: [null],
+        notes: [null],
+      })
 
+    })
+    this.examinationStatusForm = this.formBuilder.group({
+      id: "",
+      examination_status: [{ value: "", disabled: true }, Validators.required],
+      notes: [{ value: "", disabled: true }, Validators.required]
+    })
     this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
     })
   }
+  isExaminationStatusEdit = false;
+  changeEditStatus() {
+    this.examinationStatusForm.enable();
+    this.isExaminationStatusEdit = true;
+  }
+  examinationStatusSubmit() {
+    console.log(this.examinationStatusForm.invalid)
+    if (this.examinationStatusForm.invalid) {
+      return;
+    }
+    this.examinerService.updateExaminationStatus(this.examinationStatusForm.value, "").subscribe(res => {
+      this.examinationStatusForm.disable()
+      this.isExaminationStatusEdit = false;
+    })
+  }
+  cancel() {
+    this.examinationStatusForm.disable();
+    this.isExaminationStatusEdit = false;
+  }
+  psychiatric() {
+    this.modifiers = [];
+    if (!(this.billable_item.value.exam_type.is_psychiatric)) {
+      this.modifiers = this.modifierList;
+    } else {
+      this.modifierList.map(res => {
+        if (res.modifier_code != "96")
+          this.modifiers.push(res);
+      })
+    }
+  }
+  selectedLanguage: any;
+  modifyChange() {
+    if (this.billable_item.value.exam_type.modifier_id)
+      if (this.billable_item.value.exam_type.modifier_id.includes(2)) {
+        this.languageList.map(res => {
 
+          if (res.id == this.languageId) {
+            this.primary_language_spoken = true;
+            this.selectedLanguage = res;
+          }
+        })
+        this.billable_item.patchValue({
+          exam_type: { primary_language_spoken: this.languageId }
+        })
+      }
+  }
+  examinarChange(examinar) {
+    this.claimService.getExaminarAddress("").subscribe(res => {
+
+    })
+  }
+  submitBillableItem() {
+
+  }
   getDocumentData() {
     this.examinerService.getDocumentData(this.claim_id, this.billableId).subscribe(res => {
       this.documentTabData = res['data'];
@@ -122,6 +261,21 @@ export class AppointmentDetailsComponent implements OnInit {
     this.dataSource = new MatTableDataSource([])
     let data = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
     this.dataSource = new MatTableDataSource(data)
+  }
+  todayDate = { appointment: new Date(), intake: new Date() }
+  pickerOpened(type) {
+    if (type = 'intake') {
+      this.todayDate.intake = new Date();
+    } else {
+      this.todayDate.appointment = new Date();
+    }
+  }
+  changeExaminarAddress(address) {
+    this.billable_item.patchValue({
+      appointment: {
+        examination_location_id: address.address_id
+      }
+    })
   }
 
   tabNames(index) {

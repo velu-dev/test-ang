@@ -98,7 +98,7 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.listIntakeCall)
   }
 
-  getBillableItemSingle(id) {
+  getBillableItemSingle(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.billableItemSingle + id)
   }
   getICD10(term): Observable<any> {
