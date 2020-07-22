@@ -1,4 +1,11 @@
 @import "variables";
+::ng-deep .mat-progress-bar-fill::after {
+    background-color: $gray;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: $light-color;
+}
 
 .main-title {
     font-size: $font-size-10 !important;
@@ -17,4 +24,20 @@
         color: $light-color;
         padding-left: 10px;
     }
+}
+.float-right {
+    float: right;
+}
+
+
+@import "table";
+mat-card {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+}
+.user-detail {
+    min-height: auto !important;
 }
