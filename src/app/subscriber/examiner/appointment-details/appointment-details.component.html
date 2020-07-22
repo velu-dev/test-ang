@@ -397,7 +397,7 @@
 
             <div class="grid-list">
                 <div>DOB</div>
-                <div>{{examinationDetails?.date_of_birth | date:'MM-dd-yyyy'}}</div>
+                <div>{{examinationDetails?.dob | date:'MM-dd-yyyy'}}</div>
             </div>
             <div class="grid-list empty-list">
                 <div></div>
@@ -520,7 +520,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="100">
                     <mat-label>Note</mat-label>
-                    <textarea formControlName="notes" matInput placeholder="Note"></textarea>
+                    <textarea formControlName="examination_notes" matInput placeholder="Note"></textarea>
                 </mat-form-field>
             </div>
             <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
@@ -546,7 +546,10 @@
     <mat-card-header>
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item and Intake Call Information</div>
         <span class="spacer"></span>
-        <button class="filled-gray m-b-5" mat-raised-button>Edit</button>
+        <button class="filled-gray m-b-5" *ngIf="!isEditBillableItem" (click)="editBillable()"
+            mat-raised-button>Edit</button>
+        <button class="filled-success m-b-5" *ngIf="isEditBillableItem" (click)="submitBillableItem()"
+            mat-raised-button>Save</button>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content *ngIf="!isBillabbleItemLoading">
@@ -630,9 +633,9 @@
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Location</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let address of (examinarAddress | async)"
-                                    (click)="changeExaminarAddress(address)" [value]="address.street1">
+                            <mat-select [disabled]="!isEditBillableItem" formControlName="examination_location_id">
+                                <mat-option *ngFor="let address of examinarAddress"
+                                    (click)="changeExaminarAddress(address)" [value]="address.address_id">
                                     {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
                                     {{address.zip_code}}
                                 </mat-option>
@@ -656,7 +659,7 @@
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
-                                autocomplete="off" [min]="examinationDetails?.date_of_birth" [max]="todayDate.intake"
+                                autocomplete="off" [min]="examinationDetails?.dob" [max]="todayDate.intake"
                                 [owlDateTime]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake">
                             </mat-datepicker-toggle>
@@ -678,7 +681,7 @@
                             <input matInput placeholder="Intake Call Notes" formControlName="notes" autocomplete="off">
                         </mat-form-field>
                     </div>
-                    <div class="text-center w-100 m-t-10 m-b-10 action-button">
+                    <div class="text-center w-100 m-t-10 m-b-10 action-button" *ngIf="isEditBillableItem">
                         <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                             (click)="cancel()">Cancel</button>
                         <button mat-stroked-button class="m-r-10 outline-light_green" (click)="submitBillableItem()">
@@ -699,12 +702,13 @@
         <div fxLayout="row wrap">
             <div fxLayout="row wrap" fxFlex="100" class="document-file-upload w-100">
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_">
-                    <button type="button" mat-stroked-button class="filled-gray">Select File
+                    <button type="button" mat-stroked-button class="filled-gray" (click)="uploader.click()">Select File
                         <!-- <i class="fa fa-upload p-l-5"></i> -->
                     </button>
                     <mat-form-field appearance="standard">
                         <input matInput [title]="file" readonly placeholder="No file chosen">
-                        <input type="file" #uploader hidden accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+                        <input type="file" #uploader hidden (change)="addFile($event)" hidden
+                            accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
                         <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
                     </mat-form-field>
                 </div>
@@ -712,14 +716,15 @@
                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                     appearance="outline">
                     <mat-label>Document Type</mat-label>
-                    <mat-select>
-                        <mat-option aria-placeholder="Document Type">
-                            Document Type
+                    <mat-select [(ngModel)]="documentType">
+                        <mat-option *ngFor="let doc of documentList" [value]="doc.id">
+                            {{doc.document_category_name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                    <button mat-stroked-button type="button" class="filled-gray p-r-20 m-t-20">Add
+                    <button mat-stroked-button type="button" (click)="uploadFile()"
+                        class="filled-gray p-r-20 m-t-20">Add
                     </button>
                 </div>
             </div>
@@ -742,7 +747,7 @@
                 </div>
             </div>
             <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-                <mat-tab-group fxFlex="100">
+                <mat-tab-group fxFlex="100" (selectedTabChange)="tabChanges($event.index);">
                     <mat-tab label="Correspondence"></mat-tab>
                     <mat-tab label="History"> </mat-tab>
                     <mat-tab label="Records"> </mat-tab>
@@ -756,7 +761,7 @@
                     <mat-icon>search</mat-icon>
                 </div>
                 <div class="striped_ user-details w-100">
-                    <table mat-table [dataSource]="dataSource1" class="mat-elevation-z8 user-table">
+                    <table mat-table [dataSource]="documentsData" class="mat-elevation-z8 user-table">
 
                         <ng-container matColumnDef="file_name">
                             <th mat-header-cell *matHeaderCellDef> File Name </th>
@@ -764,22 +769,22 @@
                         </ng-container>
 
 
-                        <ng-container matColumnDef="date">
+                        <ng-container matColumnDef="updatedAt">
                             <th mat-header-cell *matHeaderCellDef> Date </th>
-                            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.updatedAt}} </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="action">
                             <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                             <td mat-cell *matCellDef="let element" class="text-center">
-                                <a target="_self" class="text-success">Download</a>
-                                <a class="text-danger m-l-10">Remove</a>
+                                <a target="_self" class="text-success" (click)="download(element)">Download</a>
+                                <a class="text-danger m-l-10" (click)="deleteDocument(element)">Remove</a>
                             </td>
                         </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsForDocuments"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsForDocuments;"></tr>
                     </table>
 
                 </div>
@@ -792,14 +797,23 @@
     <mat-card-header>
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Notes</div>
         <span class="spacer"></span>
-        <button class="filled-gray m-b-5" mat-raised-button>Edit</button>
+        <button class="filled-gray m-b-5" *ngIf="!isNotesEdit" (click)="notesEdit()" mat-raised-button>Edit</button>
+        <button class="filled-success m-b-5" *ngIf="isNotesEdit" (click)="noteSubmit()" mat-raised-button>Save</button>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
-        <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-            <mat-form-field appearance="outline" fxFlex="100">
-                <textarea matInput placeholder="Note"></textarea>
-            </mat-form-field>
-        </div>
+        <form [formGroup]="notesForm">
+            <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <textarea matInput formControlName="exam_notes" placeholder="Note"></textarea>
+                </mat-form-field>
+            </div>
+            <div class="text-center w-100 m-t-10 m-b-10 action-button" *ngIf="isNotesEdit">
+                <button mat-stroked-button type="button" class="m-r-10 outline-danger"
+                    (click)="cancel()">Cancel</button>
+                <button mat-stroked-button class="m-r-10 outline-light_green" (click)="noteSubmit()">
+                    Save </button>
+            </div>
+        </form>
     </mat-card-content>
 </mat-card>

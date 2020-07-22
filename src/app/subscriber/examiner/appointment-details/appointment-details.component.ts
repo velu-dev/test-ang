@@ -27,8 +27,8 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
   styleUrls: ['./appointment-details.component.scss']
 })
 export class AppointmentDetailsComponent implements OnInit {
-  displayedColumns1: string[] = ['file_name', 'date', 'action'];
-  dataSource1 = ELEMENT_DATA1;
+  displayedColumnsForDocuments: string[] = ['file_name', 'updatedAt', 'action'];
+  documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
@@ -48,7 +48,6 @@ export class AppointmentDetailsComponent implements OnInit {
   documentTabData: any;
   filterValue: String;
   tabIndex = 0;
-  notes: any = null;
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
@@ -81,23 +80,27 @@ export class AppointmentDetailsComponent implements OnInit {
   examiner_id = "";
   billableId: number;
   billable_item: FormGroup;
+  notesForm: FormGroup;
   examinarList = [];
   procuderalCodes = [];
   modifiers = [];
   modifierList = [];
   primary_language_spoken: boolean = false;
-  examinarAddress: Observable<any[]>;
+  examinarAddress = [];
   contactTypes: any;
   isBillabbleItemLoading = false;
   languageId = "";
   languageList: any = [];
+  callerAffliation = [];
+  isEditBillableItem = false;
+  isNotesEdit = false;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
     private claimService: ClaimService
   ) {
-
+    this.loadForms();
     this.claimService.seedData("intake_contact_type").subscribe(res => {
       this.contactTypes = res.data;
     })
@@ -107,6 +110,9 @@ export class AppointmentDetailsComponent implements OnInit {
         if (modifier.modifier_code != "96")
           this.modifiers.push(modifier);
       })
+    })
+    this.claimService.seedData("agent_type").subscribe(res => {
+      this.callerAffliation = res.data;
     })
     this.claimService.seedData("procedural_codes").subscribe(res => {
       res.data.map(proc => {
@@ -129,8 +135,9 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
-        console.log(bills)
         this.isBillabbleItemLoading = false;
+        let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examination_location_id }
+        this.examinarChange(ex)
         if (bills['data'].exam_type.primary_language_spoken) {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
@@ -138,16 +145,15 @@ export class AppointmentDetailsComponent implements OnInit {
         this.billable_item.patchValue(bills.data);
       })
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+        console.log("response", response);
+        this.notesForm.patchValue({
+          exam_notes: response.data.exam_notes,
+        })
         this.examinationStatusForm.patchValue(response.data.appointments)
         this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
         this.examiner_id = response.data.appointments.examiner_id;
         this.examinationDetails = response['data']
         this.getDocumentData();
-        if (response['data'].exam_notes) {
-          this.notes = response['data'].exam_notes;
-        } else {
-          this.saveButtonStatus = true;
-        }
       }, error => {
         console.log(error);
         this.dataSource = new MatTableDataSource([]);
@@ -156,40 +162,48 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   claimant_name = "";
   examinationStatusForm: FormGroup;
+  loadForms(){
+
+  }
   ngOnInit() {
     this.billable_item = this.formBuilder.group({
       id: [{ value: '', disable: true }],
       claim_id: [this.claim_id],
       exam_type: this.formBuilder.group({
-        procedure_type: [null, Validators.required],
-        modifier_id: [null],
-        is_psychiatric: [false],
+        procedure_type: [{ value: '', disable: true }, Validators.required],
+        modifier_id: [{ value: '', disable: true }],
+        is_psychiatric: [{ value: false, disable: true }],
         primary_language_spoken: [{ value: '', disabled: true }]
       }),
       appointment: this.formBuilder.group({
-        examiner_id: [null],
-        appointment_scheduled_date_time: [null],
-        duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
-        examination_location_id: [null]
+        examiner_id: [{ value: '', disable: true }],
+        appointment_scheduled_date_time: [{ value: '', disable: true }],
+        duration: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
+        examination_location_id: [{ value: '', disable: true }]
       }),
       intake_call: this.formBuilder.group({
-        caller_affiliation: [null],
-        caller_name: [null],
-        call_date: [null],
-        call_type: [null],
-        call_type_detail: [null],
-        notes: [null],
+        caller_affiliation: [{ value: '', disable: true }],
+        caller_name: [{ value: '', disable: true }],
+        call_date: [{ value: '', disable: true }],
+        call_type: [{ value: '', disable: true }],
+        call_type_detail: [{ value: '', disable: true }],
+        notes: [{ value: '', disable: true }],
       })
-
+    })
+    this.notesForm = this.formBuilder.group({
+      exam_notes: [null, Validators.required],
+      bill_item_id: [this.billableId]
     })
     this.examinationStatusForm = this.formBuilder.group({
       id: "",
       examination_status: [{ value: "", disabled: true }, Validators.required],
-      notes: [{ value: "", disabled: true }, Validators.required]
+      examination_notes: [{ value: "", disabled: true }, Validators.required]
     })
     this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
     })
+    this.notesForm.disable();
+    this.billable_item.disable();
   }
   isExaminationStatusEdit = false;
   changeEditStatus() {
@@ -197,13 +211,15 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isExaminationStatusEdit = true;
   }
   examinationStatusSubmit() {
-    console.log(this.examinationStatusForm.invalid)
     if (this.examinationStatusForm.invalid) {
       return;
     }
-    this.examinerService.updateExaminationStatus(this.examinationStatusForm.value, "").subscribe(res => {
+    this.examinerService.updateExaminationStatus(this.examinationStatusForm.value).subscribe(res => {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
+      this.alertService.openSnackBar(res.message, "success");
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
   cancel() {
@@ -238,12 +254,22 @@ export class AppointmentDetailsComponent implements OnInit {
       }
   }
   examinarChange(examinar) {
-    this.claimService.getExaminarAddress("").subscribe(res => {
-
+    this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
+      this.examinarAddress = res['data'];
     })
   }
+  editBillable() {
+    this.isEditBillableItem = true;
+    this.billable_item.enable();
+  }
   submitBillableItem() {
-
+    this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
+      this.isEditBillableItem = false;
+      this.billable_item.disable();
+      this.alertService.openSnackBar(res.message, "success");
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
   getDocumentData() {
     this.examinerService.getDocumentData(this.claim_id, this.billableId).subscribe(res => {
@@ -251,16 +277,17 @@ export class AppointmentDetailsComponent implements OnInit {
       this.tabChanges(this.tabIndex)
     }, error => {
       console.log(error);
-      this.dataSource = new MatTableDataSource([]);
+      this.documentsData = new MatTableDataSource([]);
     })
   }
 
   tabChanges(event) {
+    console.log(event)
     this.tabIndex = event
     this.filterValue = '';
-    this.dataSource = new MatTableDataSource([])
+    this.documentsData = new MatTableDataSource([])
     let data = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
-    this.dataSource = new MatTableDataSource(data)
+    this.documentsData = new MatTableDataSource(data)
   }
   todayDate = { appointment: new Date(), intake: new Date() }
   pickerOpened(type) {
@@ -297,12 +324,9 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   selectedFile: File;
-  uploadFile(event) {
+  formData = new FormData()
+  addFile(event) {
     this.selectedFile = null;
-    if (!this.documentType) {
-      this.alertService.openSnackBar("Please select Document type", 'error');
-      return;
-    }
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
@@ -312,28 +336,33 @@ export class AppointmentDetailsComponent implements OnInit {
         return;
       }
       this.selectedFile = event.target.files[0];
-      let formData = new FormData()
-      formData.append('file', this.selectedFile);
-      formData.append('document_type_id', this.documentType);
-      formData.append('claim_id', this.claim_id);
-      formData.append('bill_item_id', this.billableId.toString());
-      console.log(" this.selectedFile", this.selectedFile);
-      this.examinerService.postDocument(formData).subscribe(res => {
-        this.selectedFile = null;
-        this.fileUpload.nativeElement.value = "";
-        this.documentType = null;
-        this.getDocumentData();
-        this.alertService.openSnackBar("File added successfully!", 'success');
-      }, error => {
-        this.fileUpload.nativeElement.value = "";
-        this.selectedFile = null;
-      })
     } else {
       this.selectedFile = null;
       //this.errorMessage = 'This file type is not accepted';
       this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
 
+  }
+  uploadFile() {
+    if (!this.documentType) {
+      this.alertService.openSnackBar("Please select Document type", 'error');
+      return;
+    }
+    this.formData.append('file', this.selectedFile);
+    this.formData.append('document_type_id', this.documentType);
+    this.formData.append('claim_id', this.claim_id);
+    this.formData.append('bill_item_id', this.billableId.toString());
+    this.examinerService.postDocument(this.formData).subscribe(res => {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.documentType = null;
+      this.formData = new FormData();
+      this.getDocumentData();
+      this.alertService.openSnackBar("File added successfully!", 'success');
+    }, error => {
+      this.fileUpload.nativeElement.value = "";
+      this.selectedFile = null;
+    })
   }
 
   download(data) {
@@ -373,17 +402,18 @@ export class AppointmentDetailsComponent implements OnInit {
       this.alertService.openSnackBar('Please select a form', 'error');
     }
   }
-  noteSubmit(note) {
-    console.log(note);
-    let data = {
-      // "claim_id": this.examinationDetails.claim_details.id,
-      // "appointment_id": this.examinationDetails.appointments.id,
-      "exam_notes": note,
-      "bill_item_id": this.billableId
-    }
-    this.examinerService.postNotes(data).subscribe(res => {
+  notesEdit() {
+    this.notesForm.enable();
+    this.isNotesEdit = true;
+  }
+  noteSubmit() {
+    if (this.notesForm.invalid)
+      return
+    this.examinerService.postNotes(this.notesForm.value).subscribe(res => {
       this.alertService.openSnackBar("Note added successfully!", 'success');
       this.saveButtonStatus = false;
+      this.notesForm.disable();
+      this.isNotesEdit = false;
     }, error => {
       console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -393,7 +423,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   noteCancel() {
     this.saveButtonStatus = false;
-    this.notes = this.examinationDetails.exam_notes
+    this.notesForm = this.examinationDetails.exam_notes
   }
 
   openDialog(dialogue, data) {
