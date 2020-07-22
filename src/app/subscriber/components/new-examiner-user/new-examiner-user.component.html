@@ -605,7 +605,10 @@
                                             *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
                                         <span
                                             *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
-                                        <span *ngIf="column == 'action'">
+                                        <span *ngIf="column == 'action'" class="no-wrap-td">
+                                            <a class="text-success" >
+                                                Edit
+                                            </a>
                                             <a class="text-danger m-l-10" (click)="removeLocation(element,i)">
                                                 Remove
                                             </a>
