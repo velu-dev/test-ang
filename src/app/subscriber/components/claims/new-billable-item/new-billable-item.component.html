@@ -104,14 +104,14 @@
                         </div>
 
                     </div>
-                    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-checkbox class="mat-check m-b-20" (click)="psychiatric()" labelPosition="after"
-                            formControlName="is_psychiatric">
-                            Psychiatric
-                        </mat-checkbox>
-                    </div>
                 </div>
                 <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
+
+                    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-checkbox class="mat-check m-b-20" (change)="psychiatric($event)" labelPosition="after">
+                            Psych
+                        </mat-checkbox>
+                    </div>
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Examiner</mat-label>
                         <mat-select formControlName="examiner_id">

@@ -5,6 +5,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 
 @Component({
   selector: 'app-add-edit-service-location',
@@ -22,14 +23,17 @@ export class AddEditServiceLocationComponent implements OnInit {
   dataSource: any;
   editStatus: boolean = true;
   locationId: number = null;
-  examinerId:number;
+  examinerId: number;
+  user: any;
   constructor(private subscriberService: SubscriberService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     public _location: Location,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService,
   ) {
+    this.user = JSON.parse(this.cookieService.get('user'));
     this.route.params.subscribe(params_res => {
       console.log(params_res)
       this.pageStatus = params_res.status;
@@ -41,50 +45,66 @@ export class AddEditServiceLocationComponent implements OnInit {
       }
     })
   }
-
+  examinerName: string;
   getLocation() {
-    this.subscriberService.getSingleLocation(this.locationId).subscribe(locations => {
-      console.log(locations.data['0'])
-      let location = locations.data['0']
-      let data = {
-        id: location.id,
-        service_location_name: location.service_location_name,
-        street1: location.street1,
-        street2: location.street2,
-        city: location.city,
-        state: location.state,
-        zip_code: location.zip_code,
-        phone_no: location.phone_no,
-        fax_no: location.fax_no,
-        email: location.email,
-        contact_person: location.contact_person,
-        notes: location.notes,
-        service_code_id: location.service_code_id,
-        national_provider_identifier: location.national_provider_identifier,
-        is_active: location.is_active.toString(),
-      }
 
-      this.locationForm.patchValue(data);
-      this.dataSource = new MatTableDataSource(location.examiner_list ? location.examiner_list : []);
-      this.locationForm.disable();
-    })
+    if (this.pageStatus == 2) {
+      this.subscriberService.getSingleLocationExaminer(this.locationId, this.examinerId).subscribe(locations => {
+        this.locationUpdate(locations.data['0'])
+        locations.data['0'].examiner_list.map(data=>{
+          if(data.id == this.examinerId){
+            this.examinerName = data.last_name + ' ' + data.first_name + (data.suffix ? ', ' + data.suffix : '')
+          }
+        })
+      })
+    } else {
+      this.subscriberService.getSingleLocation(this.locationId).subscribe(locations => {
+        this.locationUpdate(locations.data['0'])
+
+      })
+    }
+  }
+
+  locationUpdate(details) {
+    let location = details
+    let data = {
+      id: location.id,
+      service_location_name: location.service_location_name,
+      street1: location.street1,
+      street2: location.street2,
+      city: location.city,
+      state: location.state,
+      zip_code: location.zip_code,
+      phone_no: location.phone_no,
+      fax_no: location.fax_no,
+      email: location.email,
+      contact_person: location.contact_person,
+      notes: location.notes,
+      service_code_id: location.service_code_id,
+      national_provider_identifier: location.national_provider_identifier,
+      is_active: location.is_active.toString(),
+    }
+
+    this.locationForm.patchValue(data);
+    this.dataSource = new MatTableDataSource(location.examiner_list ? location.examiner_list : []);
+    this.locationForm.disable();
   }
 
   ngOnInit() {
     this.locationForm = this.formBuilder.group({
       id: [null],
       service_location_name: [null],
-      street1: [null,Validators.required],
+      street1: [null, Validators.required],
       street2: [null],
-      city: [null,Validators.required],
-      state: [null,Validators.required],
-      zip_code: [null, Validators.compose([Validators.required,Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      city: [null, Validators.required],
+      state: [null, Validators.required],
+      zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no: [null],
       fax_no: [null],
       email: [null, Validators.compose([Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       contact_person: [null],
       notes: [null],
-      service_code_id: [null,Validators.required],
+      service_code_id: [null, Validators.required],
       //national_provider_identifier: [null],
       is_active: ['true'],
     })
@@ -101,7 +121,7 @@ export class AddEditServiceLocationComponent implements OnInit {
     })
 
     if (this.pageStatus == 2) {
-      this.locationForm.addControl('national_provider_identifier', new FormControl(null,Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])));
+      this.locationForm.addControl('national_provider_identifier', new FormControl(null, Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])));
     }
   }
 
@@ -117,33 +137,33 @@ export class AddEditServiceLocationComponent implements OnInit {
     }
 
     if (this.pageStatus == 2) {
-      this.subscriberService.updateExaminerLocation(this.examinerId,this.locationForm.value).subscribe(location => {
+      this.subscriberService.updateExaminerLocation(this.examinerId, this.locationForm.value).subscribe(location => {
         //console.log(location)
-        if(this.locationForm.value.id){
+        if (this.locationForm.value.id) {
           this.alertService.openSnackBar('Location updated successfully', 'success');
-        }else{
+        } else {
           this.alertService.openSnackBar('Location created successfully', 'success');
         }
-        this.router.navigate(['/subscriber/users/examiner',this.examinerId,1])
+        this.router.navigate(['/subscriber/users/examiner', this.examinerId, 1])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
-     
-    }else{ 
 
-    this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
-      //console.log(location)
-      if(this.locationForm.value.id){
-        this.alertService.openSnackBar('Location updated successfully', 'success');
-      }else{
-        this.alertService.openSnackBar('Location created successfully', 'success');
-      }
-      
-      this.router.navigate(['/subscriber/location'])
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
-  }
+    } else {
+
+      this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
+        //console.log(location)
+        if (this.locationForm.value.id) {
+          this.alertService.openSnackBar('Location updated successfully', 'success');
+        } else {
+          this.alertService.openSnackBar('Location created successfully', 'success');
+        }
+
+        this.router.navigate(['/subscriber/location'])
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    }
   }
 
   numberOnly(event): boolean {
@@ -157,7 +177,7 @@ export class AddEditServiceLocationComponent implements OnInit {
 
   cancel() {
     if (this.pageStatus == 2) {
-      this.router.navigate(['/subscriber/users/examiner',this.examinerId,1])
+      this.router.navigate(['/subscriber/users/examiner', this.examinerId, 1])
       return;
     }
     if (this.locationId) {
@@ -174,8 +194,8 @@ export class AddEditServiceLocationComponent implements OnInit {
     this.locationForm.enable();
   }
 
-  nevigateExaminer(e){
-    this.router.navigate(['/subscriber/users/examiner/',e.id])
+  nevigateExaminer(e) {
+    // this.router.navigate(['/subscriber/users/examiner/',e.id])
   }
 
 }
