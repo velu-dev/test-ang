@@ -83,11 +83,11 @@ export class NewUserComponent implements OnInit {
     delete this.user.logo;
 
     this.userService.getRoles().subscribe(response => {
-      response.data.map((role,i)=>{
-        console.log(role,i)
-         if(role.id != 11){
-           this.roles.push(role)
-         }
+      response.data.map((role, i) => {
+        console.log(role, i)
+        if (role.id != 11) {
+          this.roles.push(role)
+        }
       })
     })
     this.route.params.subscribe(params_res => {
@@ -123,10 +123,14 @@ export class NewUserComponent implements OnInit {
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])]
     });
 
+    if (this.user.role_id == 3) {
+      this.userForm.patchValue({ role_id: 4 })
+    }
+
   }
 
   clearChangeValue(event) {
-   
+
   }
 
   userSubmit() {
