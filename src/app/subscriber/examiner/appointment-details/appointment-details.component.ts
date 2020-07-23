@@ -51,7 +51,7 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Correspondence", for: ["E", "S", "D"] }, { name: "History", for: ["E", "S"] }, { name: "Records", for: ["E", "S"] }, { name: "Examination", for: ["E"] }, { name: "Report", for: ["E", "S", "D"] }];
+  procedureTypeStatus = [{ name: "Correspondence", for: ["E", "S", "D"], url: "../../correspondance" }, { name: "History", for: ["E", "S"], url: "../../history" }, { name: "Records", for: ["E", "S"], url: "../../records" }, { name: "Examination", for: ["E"], url: "../../examination" }, { name: "Report", for: ["E", "S", "D"], url: "../../reports" }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
@@ -97,6 +97,7 @@ export class AppointmentDetailsComponent implements OnInit {
   isEditBillableItem = false;
   isNotesEdit = false;
   isChecked = false;
+  isDisplayStatus: any = { status: false, name: "" };
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -160,16 +161,21 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         this.procedureTypeStatus.map(pro => {
           if (response.data.procedural_code == "ML101" || response.data.procedural_code == "ML102" || response.data.procedural_code == "ML103" || response.data.procedural_code == "ML104") {
+            this.isDisplayStatus.status = true;
+            this.isDisplayStatus.name = "Examination";
             if (pro.for.includes('E')) {
               this.procedureTypeList.push(pro);
             }
           }
           if (response.data.procedural_code == "ML106") {
+            this.isDisplayStatus = false;
             if (pro.for.includes('S')) {
               this.procedureTypeList.push(pro);
             }
           }
           if (response.data.procedural_code == "ML105") {
+            this.isDisplayStatus.status = true;
+            this.isDisplayStatus.name = "Deposition";
             if (pro.for.includes('D')) {
               this.procedureTypeList.push(pro);
             }
@@ -264,8 +270,15 @@ export class AppointmentDetailsComponent implements OnInit {
         }
       })
     } else {
+      let modi = [];
+      this.billable_item.value.exam_type.modifier_id.map(res => {
+        if (res != 5) {
+          modi.push(res)
+        }
+      })
       this.billable_item.patchValue({
         exam_type: {
+          modifier_id: modi,
           is_psychiatric: false
         }
       })
@@ -302,6 +315,10 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.enable();
   }
   submitBillableItem() {
+    if (this.billable_item.invalid)
+      return
+    let data = this.billable_item.value;
+    this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
       this.isEditBillableItem = false;
       this.billable_item.disable();
@@ -347,7 +364,7 @@ export class AppointmentDetailsComponent implements OnInit {
   tabNames(index) {
     switch (index) {
       case 0:
-        return 'form';
+        return 'correspondence';
       case 1:
         return 'history';
       case 2:
@@ -383,10 +400,8 @@ export class AppointmentDetailsComponent implements OnInit {
       this.selectedFile = event.target.files[0];
     } else {
       this.selectedFile = null;
-      //this.errorMessage = 'This file type is not accepted';
       this.errors.file.isError = true;
       this.errors.file.error = "This file type is not accepted";
-      // this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
 
   }

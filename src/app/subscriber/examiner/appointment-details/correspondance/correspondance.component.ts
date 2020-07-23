@@ -63,6 +63,22 @@ export class BillingCorrespondanceComponent implements OnInit {
   columnName1 = [];
   filterValue: string;
 
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "File Name", "Download"]
+        this.columnsToDisplay = ['is_expand', 'file_name', "download"]
+      } else {
+        this.columnName = ["File Name", "Action", "Date", "Recipients", "Download"]
+        this.columnsToDisplay = ['file_name', 'action', "date", "recipients", 'download']
+      }
+    })
+  }
+
+  ngOnInit() {
+  }
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -112,6 +128,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
     return `${this.selection1.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
   }
+<<<<<<< HEAD
   constructor(private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -138,6 +155,9 @@ export class BillingCorrespondanceComponent implements OnInit {
   ngOnInit() {
   }
   expandId1: any;
+=======
+  expandId: any;
+>>>>>>> 7435db5cd032a36822f8d98302b3b3aa88f8e161
   openElement(element) {
     if (this.isMobile) {
       this.expandId1 = element.id;

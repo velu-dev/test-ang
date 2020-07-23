@@ -79,6 +79,18 @@ export class NewBillableItemComponent implements OnInit {
           if (res['data'].exam_type.primary_language_spoken) {
             this.primary_language_spoken = true;
           }
+          this.isChecked = res.data.exam_type.is_psychiatric;
+          this.claimService.seedData("modifier").subscribe(res => {
+            this.modifierList = res.data;
+            if (this.isChecked) {
+              this.modifiers = this.modifierList;
+            } else {
+              res.data.map(modifier => {
+                if (modifier.modifier_code != "96")
+                  this.modifiers.push(modifier);
+              })
+            }
+          })
           this.billable_item.patchValue(res['data'])
           //this.examinarChange(res['data'].)
           if (res['data'].appointment) {
@@ -160,7 +172,9 @@ export class NewBillableItemComponent implements OnInit {
       exam_type: { modifier_id: [] }
     })
   }
+  isChecked = false;
   psychiatric(event) {
+    this.isChecked = event.checked;
     this.modifiers = [];
     if (event.checked) {
       this.modifiers = this.modifierList;
@@ -170,8 +184,15 @@ export class NewBillableItemComponent implements OnInit {
         }
       })
     } else {
+      let modi = [];
+      this.billable_item.value.exam_type.modifier_id.map(res => {
+        if (res != 5) {
+          modi.push(res)
+        }
+      })
       this.billable_item.patchValue({
         exam_type: {
+          modifier_id: modi,
           is_psychiatric: false
         }
       })
