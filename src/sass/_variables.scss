@@ -11,6 +11,7 @@ $sidebar-light: #383838;
 $menu-light: #b3b3b3;
 $navbar-light: #f4f4f4;
 $light-color: #f4f4f4;
+$progres-light-gray:#E6E6E6;
 
 $active: #767676;
 
@@ -648,6 +649,10 @@ input:-webkit-autofill {
   height: 40px;
   min-width: 100px;
 }
+.huge-btn {
+  font-size: $font-size-9;
+  height: 50px;
+}
 .outline-success {
   @extend .btn_;
   color: $btn_success;
@@ -812,7 +817,8 @@ input:-webkit-autofill {
 // page sub title css
 
 .sub-title {
-  color: $text-gray;
+  // color: $text-gray;
+  color: $black;
   font-size: $font-size-1;
   font-weight: $font-weight-bold;
   // border-bottom: 1px solid $border-light;
