@@ -264,8 +264,15 @@ export class AppointmentDetailsComponent implements OnInit {
         }
       })
     } else {
+      let modi = [];
+      this.billable_item.value.exam_type.modifier_id.map(res => {
+        if (res != 5) {
+          modi.push(res)
+        }
+      })
       this.billable_item.patchValue({
         exam_type: {
+          modifier_id: modi, 
           is_psychiatric: false
         }
       })
@@ -383,10 +390,8 @@ export class AppointmentDetailsComponent implements OnInit {
       this.selectedFile = event.target.files[0];
     } else {
       this.selectedFile = null;
-      //this.errorMessage = 'This file type is not accepted';
       this.errors.file.isError = true;
       this.errors.file.error = "This file type is not accepted";
-      // this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
 
   }

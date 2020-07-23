@@ -798,7 +798,7 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsForDocuments"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsForDocuments;"></tr>
                     </table>
-                    <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
+                    <app-nodata *ngIf="documentsData?.filteredData?.length == 0"></app-nodata>
 
                 </div>
             </div>
