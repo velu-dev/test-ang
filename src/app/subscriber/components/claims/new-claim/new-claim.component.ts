@@ -662,6 +662,9 @@ export class NewClaimComponent implements OnInit {
       }
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
+      if (this.claimantChanges) {
+        this.createClaimant('tab');
+      }
       if (this.claimChanges)
         this.submitClaim('tab')
       this.titleName = " Billable Item";
@@ -842,7 +845,7 @@ export class NewClaimComponent implements OnInit {
       data['date_of_birth'] = new Date(this.claimant.value.date_of_birth).toDateString();
       if (!this.isClaimantEdit) {
         this.claimService.createClaimant(this.claimant.value).subscribe(res => {
-          this.claimantId = res.data.id;
+          this.claimant_id = res.data.id;
           this.alertService.openSnackBar(res.message, "success");
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           // this.claimant.patchValue({
@@ -1523,8 +1526,6 @@ export class InjuryDialog {
   }
   changeEvent() {
     this.minDate = moment(this.claimant.date_of_birth);
-    // console.log();
-
   }
   ctChange() {
 

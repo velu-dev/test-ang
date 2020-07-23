@@ -49,7 +49,7 @@
                     [min]="minDate" [max]="today"  (click)="changeEvent()">
                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                 </mat-datepicker-toggle>
-                <mat-datepicker #continuous_trauma_start_date disabled="false"></mat-datepicker>
+                <mat-datepicker #continuous_trauma_start_date disabled="false" (opened)="changeEvent()"></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="outline" fxFlex="33.3" fxFlex.md="33."
