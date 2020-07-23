@@ -1129,6 +1129,8 @@
                                             {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
                                             {{address.zip_code}}
                                         </mat-option>
+                                        <mat-option *ngIf="examinarAddress?.length == 0">No Data
+                                            Found</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>

@@ -315,6 +315,10 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.enable();
   }
   submitBillableItem() {
+    if (this.billable_item.invalid)
+      return
+    let data = this.billable_item.value;
+    this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
       this.isEditBillableItem = false;
       this.billable_item.disable();

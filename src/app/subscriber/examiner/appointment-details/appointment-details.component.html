@@ -627,7 +627,7 @@
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
                                 formControlName="appointment_scheduled_date_time" autocomplete="off"
                                 [owlDateTime]="appointment">
-                            <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment">
+                            <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment" [disabled]="!isEditBillableItem" >
                             </mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment>
                             </owl-date-time>
@@ -636,7 +636,7 @@
 
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                             <mat-label>Duration</mat-label>
-                            <input matInput placeholder="Minutes" formControlName="duration" autocomplete="off">
+                            <input matInput placeholder="Minutes" maxlength="3" formControlName="duration" autocomplete="off">
                             <span matSuffix>Minutes</span>
                             <mat-error>Please enter valid duration</mat-error>
                         </mat-form-field>
@@ -671,7 +671,7 @@
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
                                 autocomplete="off" [min]="examinationDetails?.dob" [max]="todayDate.intake"
                                 [owlDateTime]="intake">
-                            <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake">
+                            <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"  [disabled]="!isEditBillableItem" >
                             </mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>
                             </owl-date-time>
