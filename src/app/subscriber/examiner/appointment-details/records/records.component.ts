@@ -137,10 +137,12 @@ export class RecordsComponent implements OnInit {
 
   ngOnInit() {
   }
+  expandId: any;
   expandId1: any;
   openElement(element) {
     if (this.isMobile) {
-      this.expandId1= element.id;
+      this.expandId = element.id;
+      this.expandId1 = element.id;
     }
 
   }
