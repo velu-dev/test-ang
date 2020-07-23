@@ -1,6 +1,6 @@
 <mat-card class="m-card new-location">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title" *ngIf="!examinerId">{{!editStatus ? 'Service Location' : 'Add New Service Location'}}</div>
+        <div class="m-0 content-wrapper-main-title" *ngIf="!examinerId">{{locationId ? 'Service Location' : 'Add New Service Location'}}</div>
         <div class="m-0 content-wrapper-main-title" *ngIf="examinerId">Service Location for {{examinerName}}</div>
         <span class="spacer"></span>
     <button mat-stroked-button *ngIf="!editStatus && locationId" class="m-b-5 outline-success" (click)="edit()">
