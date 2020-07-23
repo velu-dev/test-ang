@@ -215,7 +215,7 @@
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="columnsToDisplay1"></tr>
           <tr mat-row *matRowDef="let element; columns: columnsToDisplay1;" class="row"
-            [class.row]="expandedElement1 === element" (click)="openElement(element)">
+            [class.row]="expandedElement1 === element" (click)="openElement1(element)">
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedElement1']" class="detail-row"></tr>
         </table>
