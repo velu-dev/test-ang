@@ -1079,14 +1079,13 @@
                                     </div>
 
                                 </div>
+                            </div>
+                            <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-checkbox class="mat-check m-b-20" labelPosition="after"
-                                        formControlName="is_psychiatric">
+                                    <mat-checkbox class="mat-check m-b-20" (click)="psychiatric()" labelPosition="after">
                                         Psych
                                     </mat-checkbox>
                                 </div>
-                            </div>
-                            <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Examiner</mat-label>
