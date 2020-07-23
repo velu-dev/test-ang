@@ -182,6 +182,7 @@ export class NewClaimComponent implements OnInit {
   date: any;
   primary_language_spoken: boolean = false;
   claimant_id: any;
+  modifierList = [];
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -342,7 +343,12 @@ export class NewClaimComponent implements OnInit {
             this.languageList = res.data;
             break;
           case "modifier":
-            this.modifiers = res.data;
+            this.modifierList = res.data;
+            res.data.map(modifier => {
+              if (modifier.modifier_code != "96")
+                this.modifiers.push(modifier);
+            })
+            // this.modifiers = res.data;
             break;
           case "object_type":
             this.objectTypes = res.data;
@@ -577,7 +583,7 @@ export class NewClaimComponent implements OnInit {
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
         modifier_id: [null],
-        is_psychiatric: [false],
+        is_psychiatric: [null],
         primary_language_spoken: [null]
       }),
       appointment: this.formBuilder.group({
@@ -1399,6 +1405,28 @@ export class NewClaimComponent implements OnInit {
 
   injuryCancel() {
     this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+  }
+  psychiatric(event) {
+    this.modifiers = [];
+    if (event.checked) {
+      this.modifiers = this.modifierList;
+      this.billable_item.patchValue({
+        exam_type: {
+          is_psychiatric: true
+        }
+      })
+    } else {
+      this.billable_item.patchValue({
+        exam_type: {
+          is_psychiatric: false
+        }
+      })
+      this.modifiers = [];
+      this.modifierList.map(res => {
+        if (res.modifier_code != "96")
+          this.modifiers.push(res);
+      })
+    }
   }
 
   langChange() {
