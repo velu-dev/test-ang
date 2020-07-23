@@ -45,7 +45,7 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Email*</mat-label>
-                            <input matInput placeholder="Email" formControlName="sign_in_email_id">
+                            <input matInput placeholder="Email" formControlName="sign_in_email_id" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
@@ -505,7 +505,7 @@
                                             floatLabel="floatLabelControl.auto" fxFlex="80" class="w-100">
                                             <input matInput [title]="selectedFile" readonly
                                                 [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
-                                                value="12345">
+                                                value="12345" autocomplete="off">
                                             <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
                                                 (change)="fileChangeEvent($event)" id="uploadFile">
 

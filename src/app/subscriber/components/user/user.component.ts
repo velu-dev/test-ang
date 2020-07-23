@@ -108,6 +108,7 @@ export class UserComponent implements OnInit {
     this.allUser = [];
     this.userService.getUsers(roles, status).subscribe(response => {
       this.allUser = response;
+     
       if (status == 'invitedUsers') {
         this.tabchange(1)
       } else if (status == 'disabledUsers') {
@@ -138,9 +139,15 @@ export class UserComponent implements OnInit {
       this.tabName = 'disabledUsers'
     }
     this.users = this.allUser[this.tabName];
+    this.users.map(user=>{
+      user.enroll = moment(user.createdAt).format("MM-DD-YYYY")
+    })
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate = function (data, filter: string): boolean {
+      return data.last_name.toLowerCase().includes(filter) || (data.first_name && data.first_name.toLowerCase().includes(filter)) || (data.sign_in_email_id && data.sign_in_email_id.toLowerCase().includes(filter)) || (data.role_name && data.role_name.toLowerCase().includes(filter)) || (data.enroll && data.enroll.includes(filter));
+    };
     this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }
 
