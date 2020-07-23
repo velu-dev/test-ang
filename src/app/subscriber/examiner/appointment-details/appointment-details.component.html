@@ -433,7 +433,7 @@
             <div fxFlex="100">
                 <div class="grid-list">
                     <div>Procedure Type</div>
-                    <div matTooltip="{{examinationDetails?.procedural_code}} - {{examinationDetails?.procedural_name}}">
+                    <div>
                         {{examinationDetails?.procedural_code}} - {{examinationDetails?.procedural_name}}</div>
                 </div>
                 <div class="grid-list">
@@ -719,7 +719,9 @@
                         <input matInput [(ngModel)]="file" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" hidden
                             accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
-                        <mat-hint *ngIf="errors.file.isError">{{errors.file.error}}</mat-hint>
+                        <mat-hint *ngIf="errors.file.isError">
+                            <mat-error>{{errors.file.error}}</mat-error>
+                        </mat-hint>
                     </mat-form-field>
                 </div>
 
@@ -731,7 +733,11 @@
                             {{doc.document_category_name}}
                         </mat-option>
                     </mat-select>
-                    <mat-hint *ngIf="errors.doc_type.isError">{{errors.doc_type.error}}</mat-hint>
+                    <mat-hint *ngIf="errors.doc_type.isError">
+                        <mat-error>
+                            {{errors.doc_type.error}}
+                        </mat-error>
+                    </mat-hint>
                 </mat-form-field>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                     <button mat-stroked-button type="button" (click)="uploadFile()"
