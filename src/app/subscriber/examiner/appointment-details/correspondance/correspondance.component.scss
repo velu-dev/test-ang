@@ -1,22 +1,20 @@
 @import "variables";
-::ng-deep .mat-progress-bar-fill::after {
+@import "table";
+
+.not-sent ::ng-deep .mat-progress-bar-fill::after {
     background-color: $gray;
+}
+.sent ::ng-deep .mat-progress-bar-fill::after {
+    background-color: $warning;
+}
+.complete ::ng-deep .mat-progress-bar-fill::after {
+    background-color: $btn_success;
 }
 
 ::ng-deep .mat-progress-bar-buffer {
     background: $light-color;
 }
 
-.main-title {
-    font-size: $font-size-10 !important;
-    font-weight: $font-weight-medium;
-    color: $black;
-    padding-left: 10px;
-}
-.description {
-    margin-top: 5px;
-    padding-left: 10px;
-}
 .ondemand-status {
     padding: 10px 0px;
     mat-progress-bar {
@@ -29,14 +27,6 @@
     float: right;
 }
 
-@import "table";
-mat-card {
-    padding: 10px;
-    box-shadow: $shadow-style-one !important;
-    &:hover {
-        box-shadow: $shadow-style-one-hover;
-    }
-}
 .user-detail {
     min-height: auto !important;
 }

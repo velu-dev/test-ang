@@ -512,10 +512,17 @@ image-cropper {
   height: 50vh;
 }
 
-::ng-deep .mat-progress-bar-fill::after {
-  background-color: $gray;
-}
 
-::ng-deep .mat-progress-bar-buffer {
-  background: $light-color;
+// Billable item pages common styles
+.billable-item-status {
+  .main-title {
+      font-size: $font-size-10 !important;
+      font-weight: $font-weight-medium;
+      color: $black;
+      padding-left: 10px;
+  }
+  .description {
+      margin-top: 5px;
+      padding-left: 10px;
+  }
 }

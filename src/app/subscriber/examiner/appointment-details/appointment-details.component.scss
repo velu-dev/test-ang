@@ -365,11 +365,27 @@
             }
         }
     }
+    mat-tab-group {
+        height: 50px;
+    }
+    .user-details {
+        box-shadow: $shadow-style-one;
+        min-height: 300px;
+        max-height: 300px;
+    }
 }
 .notes-info {
     padding: 10px;
     box-shadow: $shadow-style-one !important;
     &:hover {
         box-shadow: $shadow-style-one-hover;
+    }
+}
+
+.grid-list {
+    div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
