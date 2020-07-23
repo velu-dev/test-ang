@@ -1,5 +1,5 @@
 <div class="create-claim">
-    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper leaner (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant
@@ -1082,7 +1082,7 @@
                             </div>
                             <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-checkbox class="mat-check m-b-20" (click)="psychiatric()" labelPosition="after">
+                                    <mat-checkbox class="mat-check m-b-20" (change)="psychiatric($event)" labelPosition="after">
                                         Psych
                                     </mat-checkbox>
                                 </div>
@@ -1151,7 +1151,7 @@
                                     fxFlex.xs="100">
                                     <mat-label>Intake Call Date & Time</mat-label>
                                     <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
-                                        autocomplete="off" [min]="claimant.value.date_of_birth" [max]="todayDate.intake"
+                                        autocomplete="off" [min]="minDate" [max]="todayDate.intake"
                                         [owlDateTime]="intake">
                                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake">
                                     </mat-datepicker-toggle>

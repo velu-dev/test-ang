@@ -182,6 +182,7 @@ export class NewClaimComponent implements OnInit {
   date: any;
   primary_language_spoken: boolean = false;
   claimant_id: any;
+  modifierList = [];
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -199,6 +200,7 @@ export class NewClaimComponent implements OnInit {
   isNewClaim = true;
   fromClaimant = false;
   isClaimantFilled = false;
+  isclaimantfill = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -239,6 +241,7 @@ export class NewClaimComponent implements OnInit {
             this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.claimant.patchValue(claimant.data[0])
+            this.isclaimantfill = true;
             this.isClaimantFilled = false;
             this.claim.patchValue({
               claim_details: {
@@ -340,7 +343,12 @@ export class NewClaimComponent implements OnInit {
             this.languageList = res.data;
             break;
           case "modifier":
-            this.modifiers = res.data;
+            this.modifierList = res.data;
+            res.data.map(modifier => {
+              if (modifier.modifier_code != "96")
+                this.modifiers.push(modifier);
+            })
+            // this.modifiers = res.data;
             break;
           case "object_type":
             this.objectTypes = res.data;
@@ -575,7 +583,7 @@ export class NewClaimComponent implements OnInit {
       exam_type: this.formBuilder.group({
         procedure_type: [null, Validators.required],
         modifier_id: [null],
-        is_psychiatric: [false],
+        is_psychiatric: [null],
         primary_language_spoken: [null]
       }),
       appointment: this.formBuilder.group({
@@ -604,7 +612,8 @@ export class NewClaimComponent implements OnInit {
     this.correspondenceSource = new MatTableDataSource([]);
     this.claimant.valueChanges.subscribe(
       value => {
-        this.claimantChanges = true;
+        if (!this.isclaimantfill)
+          this.claimantChanges = true;
       }
     );
 
@@ -877,38 +886,39 @@ export class NewClaimComponent implements OnInit {
       } else {
         console.log(this.claimant.value.date_of_birth)
         let data = this.claimant.value;
-        data['id'] = this.claimantId;
-        this.claimService.updateClaimant(data).subscribe(res => {
-          this.alertService.openSnackBar(res.message, "success");
-          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
-          if (status == 'next') {
+        data['id'] = this.claimant_id;
+        if (this.claimantChanges)
+          this.claimService.updateClaimant(data).subscribe(res => {
+            this.alertService.openSnackBar(res.message, "success");
+            this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
+            if (status == 'next') {
 
-            this.stepper.next();
+              this.stepper.next();
 
-          } else if (status == 'save') {
-            this.routeDashboard();
-          }
-          this.claimantChanges = false;
-          this.claim.patchValue({
-            claim_details: {
-              claimant_name: this.claimantDetails.claimant_name,
-              date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
+            } else if (status == 'save') {
+              this.routeDashboard();
             }
-          });
-          this.billable_item.patchValue({
-            claimant_id: res.data.id,
-            claim_details: {
+            this.claimantChanges = false;
+            this.claim.patchValue({
+              claim_details: {
+                claimant_name: this.claimantDetails.claimant_name,
+                date_of_birth: res.data.date_of_birth,
+                phone_no_1: res.data.phone_no_1
+              }
+            });
+            this.billable_item.patchValue({
               claimant_id: res.data.id,
-              claimant_name: this.claimantDetails.claimant_name,
-              date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
-            }
+              claim_details: {
+                claimant_id: res.data.id,
+                claimant_name: this.claimantDetails.claimant_name,
+                date_of_birth: res.data.date_of_birth,
+                phone_no_1: res.data.phone_no_1
+              }
+            })
+          }, error => {
+            this.isClaimantCreated = false;
+            this.alertService.openSnackBar(error.error.message, 'error');
           })
-        }, error => {
-          this.isClaimantCreated = false;
-          this.alertService.openSnackBar(error.error.message, 'error');
-        })
       }
     } else {
       this.stepper.next();
@@ -1160,7 +1170,9 @@ export class NewClaimComponent implements OnInit {
   //   this.billable_item.get('call_type_detail').updateValueAndValidity();
   // }
   todayDate = { appointment: new Date(), intake: new Date() }
+  minDate: any;
   pickerOpened(type) {
+    this.minDate = new Date(this.claimant.value.date_of_birth);
     if (type = 'intake') {
       this.todayDate.intake = new Date();
     } else {
@@ -1393,6 +1405,28 @@ export class NewClaimComponent implements OnInit {
 
   injuryCancel() {
     this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+  }
+  psychiatric(event) {
+    this.modifiers = [];
+    if (event.checked) {
+      this.modifiers = this.modifierList;
+      this.billable_item.patchValue({
+        exam_type: {
+          is_psychiatric: true
+        }
+      })
+    } else {
+      this.billable_item.patchValue({
+        exam_type: {
+          is_psychiatric: false
+        }
+      })
+      this.modifiers = [];
+      this.modifierList.map(res => {
+        if (res.modifier_code != "96")
+          this.modifiers.push(res);
+      })
+    }
   }
 
   langChange() {
