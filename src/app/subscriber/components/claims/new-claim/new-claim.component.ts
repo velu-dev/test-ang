@@ -720,6 +720,7 @@ export class NewClaimComponent implements OnInit {
       })
     } else {
       this.claimService.updateClaim(this.claim.value, this.claimId).subscribe(res => {
+        this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: res.data.exam_type_id, wcab_number: res.data.wcab_number }
         this.alertService.openSnackBar(res.message, 'success');
         if (status == 'next') {
           this.stepper.next();
