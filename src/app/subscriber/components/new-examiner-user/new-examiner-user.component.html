@@ -10,7 +10,7 @@
                     <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                         [formGroup]="userForm">
                         <div fxFlex="100"
-                            *ngIf="!sameAsExaminer || (sameAsExaminer && user?.id == userForm?.value?.id)">
+                            *ngIf="(!sameAsExaminer || (sameAsExaminer && user?.id == userForm?.value?.id)) && user?.role_id == 2">
                             <mat-checkbox class="checkbox_" formControlName="SameAsSubscriber"
                                 (change)="sameAsSub($event)">Add Examiner Role to Subscriber</mat-checkbox>
                         </div>
