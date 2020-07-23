@@ -53,7 +53,7 @@ export class UserComponent implements OnInit {
   filterValue: string;
   tabIndex: number = 0;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
-  user:any = {};
+  user: any = {};
   constructor(
     private userService: SubscriberUserService,
     private router: Router,
@@ -106,19 +106,35 @@ export class UserComponent implements OnInit {
   getUser(roles, status) {
     this.users = [];
     this.allUser = [];
-    this.userService.getUsers(roles, status).subscribe(response => {
-      this.allUser = response;
-     
-      if (status == 'invitedUsers') {
-        this.tabchange(1)
-      } else if (status == 'disabledUsers') {
-        this.tabchange(2)
-      } else {
-        this.tabchange(0)
-      }
+    if (this.user.role_id == 3) {
+      this.userService.getManageUsers(roles, status).subscribe(response => {
+        this.allUser = response;
 
-    }, error => {
-    })
+        if (status == 'invitedUsers') {
+          this.tabchange(1)
+        } else if (status == 'disabledUsers') {
+          this.tabchange(2)
+        } else {
+          this.tabchange(0)
+        }
+
+      }, error => {
+      })
+    } else {
+      this.userService.getUsers(roles, status).subscribe(response => {
+        this.allUser = response;
+
+        if (status == 'invitedUsers') {
+          this.tabchange(1)
+        } else if (status == 'disabledUsers') {
+          this.tabchange(2)
+        } else {
+          this.tabchange(0)
+        }
+
+      }, error => {
+      })
+    }
   }
   tabName: string;
   tabchange(event) {
@@ -139,7 +155,7 @@ export class UserComponent implements OnInit {
       this.tabName = 'disabledUsers'
     }
     this.users = this.allUser[this.tabName];
-    this.users.map(user=>{
+    this.users.map(user => {
       user.enroll = moment(user.createdAt).format("MM-DD-YYYY")
     })
     this.dataSource = new MatTableDataSource(this.users)
@@ -219,7 +235,7 @@ export class UserComponent implements OnInit {
 
   unInvite(e) {
     this.openDialogInvite('uninvite', e.id);
-   
+
   }
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
@@ -244,7 +260,7 @@ export class UserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.userService.postUninvite(user).subscribe(resUninvite=>{
+        this.userService.postUninvite(user).subscribe(resUninvite => {
           console.log(resUninvite);
           this.getUser(this.selectedRoleId, this.tabName)
         })
