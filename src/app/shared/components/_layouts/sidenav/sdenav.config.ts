@@ -219,7 +219,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 3
             },
             {
-                path: '/subscriber/manager/staff',
+                path: '/subscriber/users',
                 title: 'Users',
                 icon: 'user-tie',
                 submenu: [],
