@@ -707,7 +707,7 @@ export class NewClaimComponent implements OnInit {
         this.isClaimCreated = true;
         this.claimId = res.data.id;
         this.claim.patchValue({
-          claim_details:{
+          claim_details: {
             id: res.data.id
           }
         })
@@ -787,6 +787,7 @@ export class NewClaimComponent implements OnInit {
       return;
     }
     //if (!this.isEdit) {
+    this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
       //this._location.back();
@@ -1420,12 +1421,19 @@ export class NewClaimComponent implements OnInit {
     this.isChecked = event.checked;
     this.modifiers = [];
     if (event.checked) {
-      this.modifiers = this.modifierList;
+      let modi = [5];
+      if (this.billable_item.value.exam_type.modifier_id != null) {
+        this.billable_item.value.exam_type.modifier_id.map(res => {
+          modi.push(res)
+        })
+      }
       this.billable_item.patchValue({
         exam_type: {
-          is_psychiatric: true
+          is_psychiatric: true,
+          modifier_id: modi,
         }
       })
+      this.modifiers = this.modifierList;
     } else {
       let modi = [];
       this.billable_item.value.exam_type.modifier_id.map(res => {

@@ -177,12 +177,19 @@ export class NewBillableItemComponent implements OnInit {
     this.isChecked = event.checked;
     this.modifiers = [];
     if (event.checked) {
-      this.modifiers = this.modifierList;
+      let modi = [5];
+      if (this.billable_item.value.exam_type.modifier_id != null) {
+        this.billable_item.value.exam_type.modifier_id.map(res => {
+          modi.push(res)
+        })
+      }
       this.billable_item.patchValue({
         exam_type: {
-          is_psychiatric: true
+          is_psychiatric: true,
+          modifier_id: modi,
         }
       })
+      this.modifiers = this.modifierList;
     } else {
       let modi = [];
       this.billable_item.value.exam_type.modifier_id.map(res => {
@@ -259,6 +266,7 @@ export class NewBillableItemComponent implements OnInit {
 
   submitBillableItem() {
     this.isBillSubmited = true;
+
     Object.keys(this.billable_item.controls).forEach((key) => {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
@@ -266,6 +274,7 @@ export class NewBillableItemComponent implements OnInit {
     if (this.billable_item.invalid) {
       return;
     }
+    this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");

@@ -136,6 +136,16 @@ export class AppointmentDetailsComponent implements OnInit {
         this.claimService.seedData("modifier").subscribe(res => {
           this.modifierList = res.data;
           if (this.isChecked) {
+            let modi = [5];
+            this.billable_item.value.exam_type.modifier_id.map(res => {
+              modi.push(res)
+            })
+            this.billable_item.patchValue({
+              exam_type: {
+                is_psychiatric: true,
+                modifier_id: modi,
+              }
+            })
             this.modifiers = this.modifierList;
           } else {
             res.data.map(modifier => {
@@ -263,10 +273,17 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isChecked = event.checked;
     this.modifiers = [];
     if (event.checked) {
+      let modi = [5];
+      this.billable_item.value.exam_type.modifier_id.map(res => {
+        // if (res != 5) {
+        modi.push(res)
+        // }
+      })
       this.modifiers = this.modifierList;
       this.billable_item.patchValue({
         exam_type: {
-          is_psychiatric: true
+          is_psychiatric: true,
+          modifier_id: modi,
         }
       })
     } else {
@@ -317,7 +334,6 @@ export class AppointmentDetailsComponent implements OnInit {
   submitBillableItem() {
     if (this.billable_item.invalid)
       return
-    let data = this.billable_item.value;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
       this.isEditBillableItem = false;

@@ -1115,7 +1115,8 @@
                                 <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25"
                                     fxFlex.xs="100">
                                     <mat-label>Duration</mat-label>
-                                    <input matInput placeholder="Minutes" formControlName="duration" autocomplete="off">
+                                    <input matInput placeholder="Minutes" maxlength="3" formControlName="duration"
+                                        autocomplete="off">
                                     <span matSuffix>Minutes</span>
                                     <mat-error>Please enter valid duration</mat-error>
                                 </mat-form-field>
@@ -1129,8 +1130,6 @@
                                             {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
                                             {{address.zip_code}}
                                         </mat-option>
-                                        <mat-option *ngIf="examinarAddress?.length == 0">No Data
-                                            Found</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
