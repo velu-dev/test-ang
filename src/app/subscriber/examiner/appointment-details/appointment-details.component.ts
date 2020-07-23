@@ -51,6 +51,8 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
+  procedureTypeStatus = [{ name: "Correspondence", for: ["E", "S", "D"] }, { name: "History", for: ["E", "S"] }, { name: "Records", for: ["E", "S"] }, { name: "Examination", for: ["E"] }, { name: "Report", for: ["E", "S", "D"] }];
+  procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
     { name: "QME-122", group: "QME", value: "122" },
@@ -94,6 +96,7 @@ export class AppointmentDetailsComponent implements OnInit {
   callerAffliation = [];
   isEditBillableItem = false;
   isNotesEdit = false;
+  isChecked = false;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -103,13 +106,6 @@ export class AppointmentDetailsComponent implements OnInit {
     this.loadForms();
     this.claimService.seedData("intake_contact_type").subscribe(res => {
       this.contactTypes = res.data;
-    })
-    this.claimService.seedData("modifier").subscribe(res => {
-      this.modifierList = res.data;
-      res.data.map(modifier => {
-        if (modifier.modifier_code != "96")
-          this.modifiers.push(modifier);
-      })
     })
     this.claimService.seedData("agent_type").subscribe(res => {
       this.callerAffliation = res.data;
@@ -135,6 +131,19 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
+        this.isChecked = bills.data.exam_type.is_psychiatric;
+        this.claimService.seedData("modifier").subscribe(res => {
+          this.modifierList = res.data;
+          if (this.isChecked) {
+            this.modifiers = this.modifierList;
+          } else {
+            res.data.map(modifier => {
+              if (modifier.modifier_code != "96")
+                this.modifiers.push(modifier);
+            })
+          }
+        })
+        console.log("billable", bills)
         this.isBillabbleItemLoading = false;
         let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examination_location_id }
         this.examinarChange(ex)
@@ -148,6 +157,23 @@ export class AppointmentDetailsComponent implements OnInit {
         console.log("response", response);
         this.notesForm.patchValue({
           exam_notes: response.data.exam_notes,
+        })
+        this.procedureTypeStatus.map(pro => {
+          if (response.data.procedural_code == "ML101" || response.data.procedural_code == "ML102" || response.data.procedural_code == "ML103" || response.data.procedural_code == "ML104") {
+            if (pro.for.includes('E')) {
+              this.procedureTypeList.push(pro);
+            }
+          }
+          if (response.data.procedural_code == "ML106") {
+            if (pro.for.includes('S')) {
+              this.procedureTypeList.push(pro);
+            }
+          }
+          if (response.data.procedural_code == "ML105") {
+            if (pro.for.includes('D')) {
+              this.procedureTypeList.push(pro);
+            }
+          }
         })
         this.examinationStatusForm.patchValue(response.data.appointments)
         this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
@@ -223,10 +249,12 @@ export class AppointmentDetailsComponent implements OnInit {
     })
   }
   cancel() {
+    this.examinationStatusForm.patchValue(this.examinationDetails.appointments);
     this.examinationStatusForm.disable();
     this.isExaminationStatusEdit = false;
   }
   psychiatric(event) {
+    this.isChecked = event.checked;
     this.modifiers = [];
     if (event.checked) {
       this.modifiers = this.modifierList;
@@ -336,6 +364,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   selectedFile: File;
   formData = new FormData()
+  errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   addFile(event) {
     this.selectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
@@ -343,20 +372,29 @@ export class AppointmentDetailsComponent implements OnInit {
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
-        this.alertService.openSnackBar("This file too long", 'error');
+        this.errors.file.isError = true;
+        this.errors.file.error = "This file too long";
+        // this.alertService.openSnackBar("This file too long", 'error');
         return;
       }
+      this.errors.file.isError = false;
+      this.errors.file.error = "";
+      this.file = event.target.files[0].name;
       this.selectedFile = event.target.files[0];
     } else {
       this.selectedFile = null;
       //this.errorMessage = 'This file type is not accepted';
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
+      this.errors.file.isError = true;
+      this.errors.file.error = "This file type is not accepted";
+      // this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
 
   }
   uploadFile() {
     if (!this.documentType) {
-      this.alertService.openSnackBar("Please select Document type", 'error');
+      this.errors.doc_type.isError = true;
+      this.errors.doc_type.error = "Please select Document type";
+      // this.alertService.openSnackBar("Please select Document type", 'error');
       return;
     }
     this.formData.append('file', this.selectedFile);
@@ -368,7 +406,10 @@ export class AppointmentDetailsComponent implements OnInit {
       this.fileUpload.nativeElement.value = "";
       this.documentType = null;
       this.formData = new FormData();
+      this.file = "";
       this.getDocumentData();
+      this.errors.doc_type.isError = false;
+      this.errors.doc_type.error = "";
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
@@ -434,7 +475,9 @@ export class AppointmentDetailsComponent implements OnInit {
 
   noteCancel() {
     this.saveButtonStatus = false;
-    this.notesForm = this.examinationDetails.exam_notes
+    this.isNotesEdit = false;
+    this.notesForm.disable();
+    this.notesForm.patchValue({ exam_notes: this.examinationDetails.exam_notes })
   }
 
   openDialog(dialogue, data) {
