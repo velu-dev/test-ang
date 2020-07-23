@@ -1,6 +1,11 @@
 @import "variables";
 
 mat-card {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
     mat-form-field {
         padding: 10px !important;
     }

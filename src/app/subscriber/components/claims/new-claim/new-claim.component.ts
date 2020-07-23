@@ -201,6 +201,7 @@ export class NewClaimComponent implements OnInit {
   fromClaimant = false;
   isClaimantFilled = false;
   isclaimantfill = false;
+  isChecked = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -662,6 +663,9 @@ export class NewClaimComponent implements OnInit {
       }
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
+      if (this.claimantChanges) {
+        this.createClaimant('tab');
+      }
       if (this.claimChanges)
         this.submitClaim('tab')
       this.titleName = " Billable Item";
@@ -702,6 +706,11 @@ export class NewClaimComponent implements OnInit {
         this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: res.data.exam_type_id, wcab_number: res.data.wcab_number }
         this.isClaimCreated = true;
         this.claimId = res.data.id;
+        this.claim.patchValue({
+          claim_details: {
+            id: res.data.id
+          }
+        })
         this.billable_item.patchValue({
           claim_id: res.data.id
         })
@@ -719,7 +728,8 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
-      this.claimService.updateClaim(this.claim.value, this.claimId).subscribe(res => {
+      this.claimService.updateClaim(this.claim.value.claim_details, this.claimId).subscribe(res => {
+        this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: res.data.exam_type_id, wcab_number: res.data.wcab_number }
         this.alertService.openSnackBar(res.message, 'success');
         if (status == 'next') {
           this.stepper.next();
@@ -777,6 +787,7 @@ export class NewClaimComponent implements OnInit {
       return;
     }
     //if (!this.isEdit) {
+    this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
       //this._location.back();
@@ -841,7 +852,7 @@ export class NewClaimComponent implements OnInit {
       data['date_of_birth'] = new Date(this.claimant.value.date_of_birth).toDateString();
       if (!this.isClaimantEdit) {
         this.claimService.createClaimant(this.claimant.value).subscribe(res => {
-          this.claimantId = res.data.id;
+          this.claimant_id = res.data.id;
           this.alertService.openSnackBar(res.message, "success");
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           // this.claimant.patchValue({
@@ -1407,17 +1418,32 @@ export class NewClaimComponent implements OnInit {
     this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   }
   psychiatric(event) {
+    this.isChecked = event.checked;
     this.modifiers = [];
     if (event.checked) {
-      this.modifiers = this.modifierList;
+      let modi = [5];
+      if (this.billable_item.value.exam_type.modifier_id != null) {
+        this.billable_item.value.exam_type.modifier_id.map(res => {
+          modi.push(res)
+        })
+      }
       this.billable_item.patchValue({
         exam_type: {
-          is_psychiatric: true
+          is_psychiatric: true,
+          modifier_id: modi,
         }
       })
+      this.modifiers = this.modifierList;
     } else {
+      let modi = [];
+      this.billable_item.value.exam_type.modifier_id.map(res => {
+        if (res != 5) {
+          modi.push(res)
+        }
+      })
       this.billable_item.patchValue({
         exam_type: {
+          modifier_id: modi,
           is_psychiatric: false
         }
       })
@@ -1522,8 +1548,6 @@ export class InjuryDialog {
   }
   changeEvent() {
     this.minDate = moment(this.claimant.date_of_birth);
-    // console.log();
-
   }
   ctChange() {
 

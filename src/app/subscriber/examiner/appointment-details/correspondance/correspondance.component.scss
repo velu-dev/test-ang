@@ -2,7 +2,7 @@
 @import "table";
 
 .not-sent ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $gray;
+    background-color: $progres-light-gray;
 }
 .sent ::ng-deep .mat-progress-bar-fill::after {
     background-color: $warning;
@@ -12,26 +12,28 @@
 }
 
 ::ng-deep .mat-progress-bar-buffer {
-    background: $light-color;
+    background: $progres-light-gray;
 }
 
+th {
+    ::ng-deep .mat-checkbox .mat-checkbox-frame {
+        border-color: $white;
+    }
+    #dropdown-list {
+        vertical-align: middle;
+        margin-top: 10px;
+        line-height: 0.5;
+        padding: 0 0 0 5px;
+    }
+}
 .ondemand-status {
     padding: 10px 0px;
-    mat-progress-bar {
-        height: 20px;
-        color: $light-color;
-        padding-left: 10px;
-    }
 }
 .float-right {
     float: right;
 }
 
-.user-detail {
-    min-height: auto !important;
-}
-th {
-    ::ng-deep .mat-checkbox .mat-checkbox-frame {
-        border-color: $white;
-    }
+.width-fixed {
+    width: 25px !important;
+    padding-right: 0px !important;
 }

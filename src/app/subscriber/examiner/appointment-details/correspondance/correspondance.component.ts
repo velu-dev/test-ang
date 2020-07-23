@@ -54,10 +54,30 @@ export class BillingCorrespondanceComponent implements OnInit {
     );
   dataSource2 = ELEMENT_DATA2;
   columnsToDisplay = [];
+  dataSource3 = ELEMENT_DATA3;
+  columnsToDisplay1 = [];
   expandedElement;
+  expandedElement1;
   isMobile = false;
   columnName = [];
+  columnName1 = [];
   filterValue: string;
+
+  // constructor(private breakpointObserver: BreakpointObserver) {
+  //   this.isHandset$.subscribe(res => {
+  //     this.isMobile = res;
+  //     if (res) {
+  //       this.columnName = ["", "File Name", "Download"]
+  //       this.columnsToDisplay = ['is_expand', 'file_name', "download"]
+  //     } else {
+  //       this.columnName = ["File Name", "Action", "Date", "Recipients", "Download"]
+  //       this.columnsToDisplay = ['file_name', 'action', "date", "recipients", 'download']
+  //     }
+  //   })
+  // }
+
+  // ngOnInit() {
+  // }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -113,16 +133,27 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "File Name", "Download"]
-        this.columnsToDisplay = ['is_expand', 'file_name', ""]
+        this.columnsToDisplay = ['is_expand', 'file_name', 'download']
       } else {
         this.columnName = ["File Name", "Action", "Date", "Recipients", "Download"]
         this.columnsToDisplay = ['file_name', 'action', "date", "recipients", 'download']
+      }
+    })
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName1 = ["", "File Name", "Download"]
+        this.columnsToDisplay1 = ['is_expand', 'file_name', 'download']
+      } else {
+        this.columnName1 = ["File Name", "Action", "Date", "Recipients", "Download"]
+        this.columnsToDisplay1 = ['file_name', 'action', "date", "recipients", 'download']
       }
     })
   }
 
   ngOnInit() {
   }
+
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
@@ -130,10 +161,21 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
 
   }
+  expandId1: any;
+  openElement1(element) {
+    if (this.isMobile) {
+      this.expandId1 = element.id;
+    }
+
+  }
 }
 
 const ELEMENT_DATA2 = [
-  { "id": 143, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date": "01-02-2020", "recipients": "Claimant, Claims Adjuster, Applicant Attorney, Defense Attorney, Employer, DEU Office", "Download":"" },
-  { "id": 234, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date": "01-02-2020", "recipients": "-", "Download":"" },
-  { "id": 345, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date": "01-02-2020", "recipients": "-", "Download":"" },
+  { "id": 143, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date": "01-02-2020", "recipients": "Claimant, Claims Adjuster, Applicant Attorney, Defense Attorney, Employer, DEU Office", "Download": "" },
+  { "id": 234, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date": "01-02-2020", "recipients": "-", "Download": "" },
+  { "id": 345, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date": "01-02-2020", "recipients": "-", "Download": "" },
+];
+
+const ELEMENT_DATA3 = [
+  { "id": 143, "file_name": "Work Comp EDI Proof of Service - 20200912", "action": "Mailed On Demand", "date": "01-02-2020", "recipients": "Claimant, Claims Adjuster, Applicant Attorney, Defense Attorney, Employer, DEU Office", "Download": "" },
 ];

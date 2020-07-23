@@ -60,7 +60,7 @@
 </mat-card>
 <mat-card class="m-card" *ngIf="!isLoading">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title">Billable Item and Intake Call Information</div>
+        <div class="m-0 sub-title">Billable Item and Intake Call Information</div>
     </mat-card-header>
     <mat-divider></mat-divider>
 
@@ -108,7 +108,8 @@
                 <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
 
                     <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-checkbox class="mat-check m-b-20" (change)="psychiatric($event)" labelPosition="after">
+                        <mat-checkbox class="mat-check m-b-20" [(ngModel)]="isChecked"
+                            [ngModelOptions]="{standalone: true}" (change)="psychiatric($event)" labelPosition="after">
                             Psych
                         </mat-checkbox>
                     </div>
@@ -136,7 +137,8 @@
 
                     <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                         <mat-label>Duration</mat-label>
-                        <input matInput placeholder="Minutes" formControlName="duration" autocomplete="off">
+                        <input matInput placeholder="Minutes" maxlength="3" formControlName="duration"
+                            autocomplete="off">
                         <span matSuffix>Minutes</span>
                         <mat-error>Please enter valid duration</mat-error>
                     </mat-form-field>
@@ -193,7 +195,7 @@
                 <div class="text-center w-100 m-t-10 m-b-10 action-button">
                     <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                         (click)="cancel()">Cancel</button>
-                    <button mat-stroked-button class="m-r-10 outline-light_green" (click)="submitBillableItem()">
+                    <button mat-stroked-button class="m-r-10 outline-success" (click)="submitBillableItem()">
                         Save </button>
                 </div>
             </div>

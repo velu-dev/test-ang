@@ -103,4 +103,9 @@ export class SubscriberUserService {
     return this.http.get(environment.baseUrl + api_endpoint.getLocationDetails + id)
   }
 
+
+  getManageUsers(roles, status): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getSubscriberManageUsers, { role_filter: roles, status: status })
+  }
+
 }

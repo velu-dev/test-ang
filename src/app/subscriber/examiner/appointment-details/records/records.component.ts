@@ -1,15 +1,159 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Observable } from 'rxjs';
+import { shareReplay, map } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+export interface PeriodicElement {
+  name: string;
+}
 
+const ELEMENT_DATA: PeriodicElement[] = [
+  { name: 'Appointment Notification Letter' },
+  { name: 'QME 110 - QME Appointment Notification Form' },
+  { name: 'QME 122 - AME or QME Declaration of Service of Medical Legal Report' },
+  { name: 'QME 123 - QME or AME Conflict of Interest Disclosure Form' },
+  { name: 'Claimant Questionnaire' },
+];
+
+
+export interface PeriodicElement1 {
+  name: string;
+}
+
+const ELEMENT_DATA1: PeriodicElement1[] = [
+  { name: 'Claimant' },
+  { name: 'Claims Adjuster' },
+  { name: 'Applicant Attorney' },
+  { name: 'Defence Attorney' },
+  { name: 'Employer' },
+  { name: 'DEU Office' },
+];
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
-  styleUrls: ['./records.component.scss']
+  styleUrls: ['./records.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class RecordsComponent implements OnInit {
 
-  constructor() { }
+  displayedColumns: string[] = ['select', 'name'];
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  selection = new SelectionModel<PeriodicElement>(true, []);
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  dataSource2 = ELEMENT_DATA2;
+  columnsToDisplay = [];
+  dataSource3 = ELEMENT_DATA3;
+  columnsToDisplay1 = [];
+  expandedElement;
+  expandedElement1;
+  isMobile = false;
+  columnName = [];
+  columnName1 = [];
+  filterValue: string;
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: PeriodicElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
+  }
+
+
+
+  displayedColumns1: string[] = ['select', 'name'];
+  dataSource1 = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA1);
+  selection1 = new SelectionModel<PeriodicElement1>(true, []);
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected1() {
+    const numSelected = this.selection1.selected.length;
+    const numRows = this.dataSource1.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection1. */
+  masterToggle1() {
+    this.isAllSelected1() ?
+      this.selection1.clear() :
+      this.dataSource1.data.forEach(row => this.selection1.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel1(row?: PeriodicElement1): string {
+    if (!row) {
+      return `${this.isAllSelected1() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection1.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
+  }
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "File Name", "Download"]
+        this.columnsToDisplay = ['is_expand', 'file_name', 'download']
+      } else {
+        this.columnName = ["File Name", "Request Rush", "Request Date", "Download"]
+        this.columnsToDisplay = ['file_name', 'request_rush', "request_date",'download']
+      }
+    })
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName1 = ["", "File Name", "Download"]
+        this.columnsToDisplay1 = ['is_expand', 'file_name', 'download']
+      } else {
+        this.columnName1 = ["File Name", "Rush Request?", "Date Requested", "Date Received", "Download"]
+        this.columnsToDisplay1 = ['file_name', 'rush_request', "request_date", "received_date", 'download']
+      }
+    })
+  }
 
   ngOnInit() {
   }
+  expandId: any;
+  expandId1: any;
+  openElement(element) {
+    if (this.isMobile) {
+      this.expandId = element.id;
+      this.expandId1 = element.id;
+    }
 
+  }
 }
+
+const ELEMENT_DATA2 = [
+  { "id": 143, "file_name": "Record Set 1", "request_rush": "Yes", "request_date": "01-02-2020", "Download":"" },
+  { "id": 143, "file_name": "Record Set 2", "request_rush": "Yes", "request_date": "01-02-2020", "Download":"" },
+  { "id": 143, "file_name": "Record Set 3", "request_rush": "Yes", "request_date": "01-02-2020", "Download":"" },
+];
+
+const ELEMENT_DATA3 = [
+  { "id": 143, "file_name": "Record Summary File Name", "rush_request": "No", "request_date": "01-02-2020", "received_date": "01-02-2020", "Download": "" },
+];

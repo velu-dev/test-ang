@@ -79,6 +79,18 @@ export class NewBillableItemComponent implements OnInit {
           if (res['data'].exam_type.primary_language_spoken) {
             this.primary_language_spoken = true;
           }
+          this.isChecked = res.data.exam_type.is_psychiatric;
+          this.claimService.seedData("modifier").subscribe(res => {
+            this.modifierList = res.data;
+            if (this.isChecked) {
+              this.modifiers = this.modifierList;
+            } else {
+              res.data.map(modifier => {
+                if (modifier.modifier_code != "96")
+                  this.modifiers.push(modifier);
+              })
+            }
+          })
           this.billable_item.patchValue(res['data'])
           //this.examinarChange(res['data'].)
           if (res['data'].appointment) {
@@ -160,18 +172,34 @@ export class NewBillableItemComponent implements OnInit {
       exam_type: { modifier_id: [] }
     })
   }
+  isChecked = false;
   psychiatric(event) {
+    this.isChecked = event.checked;
     this.modifiers = [];
     if (event.checked) {
-      this.modifiers = this.modifierList;
+      let modi = [5];
+      if (this.billable_item.value.exam_type.modifier_id != null) {
+        this.billable_item.value.exam_type.modifier_id.map(res => {
+          modi.push(res)
+        })
+      }
       this.billable_item.patchValue({
         exam_type: {
-          is_psychiatric: true
+          is_psychiatric: true,
+          modifier_id: modi,
         }
       })
+      this.modifiers = this.modifierList;
     } else {
+      let modi = [];
+      this.billable_item.value.exam_type.modifier_id.map(res => {
+        if (res != 5) {
+          modi.push(res)
+        }
+      })
       this.billable_item.patchValue({
         exam_type: {
+          modifier_id: modi,
           is_psychiatric: false
         }
       })
@@ -238,6 +266,7 @@ export class NewBillableItemComponent implements OnInit {
 
   submitBillableItem() {
     this.isBillSubmited = true;
+
     Object.keys(this.billable_item.controls).forEach((key) => {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
@@ -245,6 +274,7 @@ export class NewBillableItemComponent implements OnInit {
     if (this.billable_item.invalid) {
       return;
     }
+    this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
