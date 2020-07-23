@@ -511,3 +511,11 @@ image-cropper {
   width: 100%;
   height: 50vh;
 }
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: $gray;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: $light-color;
+}

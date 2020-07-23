@@ -29,7 +29,6 @@
     float: right;
 }
 
-
 @import "table";
 mat-card {
     padding: 10px;
@@ -40,4 +39,9 @@ mat-card {
 }
 .user-detail {
     min-height: auto !important;
+}
+th {
+    ::ng-deep .mat-checkbox .mat-checkbox-frame {
+        border-color: $white;
+    }
 }
