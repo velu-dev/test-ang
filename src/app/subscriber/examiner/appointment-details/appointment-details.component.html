@@ -399,8 +399,8 @@
                 <div>DOB</div>
                 <div>{{examinationDetails?.dob | date:'MM-dd-yyyy'}}</div>
             </div>
-            <div class="grid-list empty-list">
-                <div></div>
+            <div class="grid-list empty-list hide-mobile">
+                <div>&nbsp;</div>
                 <div></div>
             </div>
         </div>
@@ -421,19 +421,20 @@
                 <div>DOI</div>
                 <div>{{examinationDetails?.doi | date:'MM-dd-yyyy'}}</div>
             </div>
-            <div class="grid-list empty-list">
-                <div></div>
+            <div class="grid-list empty-list hide-mobile">
+                <div>&nbsp;</div>
                 <div></div>
             </div>
         </div>
     </div>
 
-    <div fxFlex="33.3">
+    <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
         <div fxLayout="row wrap">
             <div fxFlex="100">
                 <div class="grid-list">
                     <div>Procedure Type</div>
-                    <div> {{examinationDetails?.procedural_code}} - {{examinationDetails?.procedural_name}}</div>
+                    <div matTooltip="{{examinationDetails?.procedural_code}} - {{examinationDetails?.procedural_name}}">
+                        {{examinationDetails?.procedural_code}} - {{examinationDetails?.procedural_name}}</div>
                 </div>
                 <div class="grid-list">
                     <div>Examiner</div>
@@ -463,13 +464,13 @@
 
 <div class="action-info w-100" fxLayout="row wrap p-t-0">
     <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="simple-card">
+        <div class="simple-card" [routerLink]="['../../correspondance']">
             <h4>Correspondence</h4>
             <span>Status</span>
         </div>
     </div>
     <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="simple-card">
+        <div class="simple-card" [routerLink]="['../../history']">
             <h4>History</h4>
             <span>Status</span>
         </div>
@@ -506,6 +507,12 @@
 <div class="border-dashed-blue m-t-20"></div>
 
 <div class="exam-info w-100" fxLayout="row wrap">
+    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile">
+        <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
+            class="filled-gray edit_btn">Edit</button>
+        <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
+            class="filled-success edit_btn">Save</button>
+    </div>
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
         <form [formGroup]="examinationStatusForm">
             <div fxLayout="row wrap">
@@ -520,7 +527,8 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="100">
                     <mat-label>Note</mat-label>
-                    <textarea formControlName="examination_notes" matInput placeholder="Note"></textarea>
+                    <textarea formControlName="examination_notes" matInput placeholder="Note" cdkTextareaAutosize
+                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                 </mat-form-field>
             </div>
             <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
@@ -533,16 +541,16 @@
 
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
         <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
-            class="filled-gray edit_btn">Edit</button>
+            class="filled-gray edit_btn hide-mobile">Edit</button>
         <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
-            class="filled-success edit_btn">Save</button><br /><br />
+            class="filled-success edit_btn hide-mobile">Save</button><br /><br />
         <button mat-raised-button class="filled-gray calender_btn">View on Calendar</button>
     </div>
 </div>
 
-<div class="border-dashed-blue m-t-20"></div>
+<div class="border-dashed-blue m-b-50"></div>
 
-<mat-card class="billable-item-info m-t-25">
+<mat-card class="billable-item-info m-b-20">
     <mat-card-header>
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item and Intake Call Information</div>
         <span class="spacer"></span>
@@ -594,14 +602,13 @@
                             </div>
 
                         </div>
+                    </div>
+                    <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-checkbox class="mat-check m-b-20" (click)="psychiatric()" labelPosition="after"
-                                formControlName="is_psychiatric">
+                            <mat-checkbox class="mat-check m-b-20" (click)="psychiatric()" labelPosition="after">
                                 Psych
                             </mat-checkbox>
                         </div>
-                    </div>
-                    <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Examiner</mat-label>
                             <mat-select formControlName="examiner_id">
@@ -684,7 +691,7 @@
                     <div class="text-center w-100 m-t-10 m-b-10 action-button" *ngIf="isEditBillableItem">
                         <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                             (click)="cancel()">Cancel</button>
-                        <button mat-stroked-button class="m-r-10 outline-light_green" (click)="submitBillableItem()">
+                        <button mat-stroked-button class="m-r-10 outline-success" (click)="submitBillableItem()">
                             Save </button>
                     </div>
                 </div>
@@ -786,6 +793,7 @@
                         <tr mat-header-row *matHeaderRowDef="displayedColumnsForDocuments"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsForDocuments;"></tr>
                     </table>
+                    <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
 
                 </div>
             </div>
@@ -805,15 +813,17 @@
         <form [formGroup]="notesForm">
             <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
                 <mat-form-field appearance="outline" fxFlex="100">
-                    <textarea matInput formControlName="exam_notes" placeholder="Note"></textarea>
+                    <textarea matInput formControlName="exam_notes" placeholder="Note" cdkTextareaAutosize
+                        cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"></textarea>
                 </mat-form-field>
+                <div class="text-center w-100 m-t-10 m-b-10 action-button" *ngIf="isNotesEdit">
+                    <button mat-stroked-button type="button" class="m-r-10 outline-danger"
+                        (click)="cancel()">Cancel</button>
+                    <button mat-stroked-button class="m-r-10 outline-success" (click)="noteSubmit()">
+                        Save </button>
+                </div>
             </div>
-            <div class="text-center w-100 m-t-10 m-b-10 action-button" *ngIf="isNotesEdit">
-                <button mat-stroked-button type="button" class="m-r-10 outline-danger"
-                    (click)="cancel()">Cancel</button>
-                <button mat-stroked-button class="m-r-10 outline-light_green" (click)="noteSubmit()">
-                    Save </button>
-            </div>
+
         </form>
     </mat-card-content>
 </mat-card>

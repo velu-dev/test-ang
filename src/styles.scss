@@ -511,3 +511,18 @@ image-cropper {
   width: 100%;
   height: 50vh;
 }
+
+
+// Billable item pages common styles
+.billable-item-status {
+  .main-title {
+      font-size: $font-size-10 !important;
+      font-weight: $font-weight-medium;
+      color: $black;
+      padding-left: 10px;
+  }
+  .description {
+      margin-top: 5px;
+      padding-left: 10px;
+  }
+}
