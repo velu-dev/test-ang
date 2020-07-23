@@ -559,8 +559,8 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Adjuster Fax</mat-label>
-                                <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Fax" formControlName="fax"
-                                    autocomplete="off">
+                                <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Fax"
+                                    formControlName="fax" autocomplete="off">
                                 <mat-error>Please enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
@@ -655,8 +655,8 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Fax" formControlName="fax"
-                                    autocomplete="off">
+                                <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Fax"
+                                    formControlName="fax" autocomplete="off">
                                 <mat-error>Please enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
@@ -754,8 +754,8 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="fax"
-                                    autocomplete="off">
+                                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                    formControlName="fax" autocomplete="off">
                                 <mat-error>Please enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
@@ -853,8 +853,8 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="fax"
-                                    autocomplete="off">
+                                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                    formControlName="fax" autocomplete="off">
                                 <mat-error>Please enter valid fax number</mat-error>
                             </mat-form-field>
                         </div>
@@ -939,8 +939,8 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" formControlName="fax" mask="(000) 000-0000"
-                                    autocomplete="off">
+                                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" formControlName="fax"
+                                    mask="(000) 000-0000" autocomplete="off">
                                 <mat-error>Please enter valid fax number</mat-error>
                             </mat-form-field>
 
@@ -1082,7 +1082,8 @@
                             </div>
                             <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                                 <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-checkbox class="mat-check m-b-20" (change)="psychiatric($event)" labelPosition="after">
+                                    <mat-checkbox [(ngModel)]="isChecked" [ngModelOptions]="{standalone: true}"
+                                        class="mat-check m-b-20" (change)="psychiatric($event)" labelPosition="after">
                                         Psych
                                     </mat-checkbox>
                                 </div>
