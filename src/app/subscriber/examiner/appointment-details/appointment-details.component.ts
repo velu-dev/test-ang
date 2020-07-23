@@ -360,7 +360,7 @@ export class AppointmentDetailsComponent implements OnInit {
   tabNames(index) {
     switch (index) {
       case 0:
-        return 'form';
+        return 'correspondence';
       case 1:
         return 'history';
       case 2:
