@@ -1,6 +1,7 @@
 <mat-card class="m-card all_user_form">
     <mat-card-header>
-        <div class="content-wrapper-main-title p-l-10">Add Staff / Staff Manager</div>
+        <div class="content-wrapper-main-title p-l-10" *ngIf="user.role_id != 3">{{isEdit ? 'Edit Staff / Staff Manager'  : 'Add Staff / Staff Manager'}}</div>
+        <div class="content-wrapper-main-title p-l-10" *ngIf="user.role_id == 3">{{isEdit ? 'Edit Staff' : 'Add Staff'}}</div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="m-b-25">
