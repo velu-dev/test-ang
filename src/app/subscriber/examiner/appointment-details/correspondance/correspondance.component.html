@@ -7,7 +7,7 @@
       <div class="text-center">Not Sent</div>
     </div>
   </div>
-  
+
   <div fxLayout="row wrap" class="p-t-25">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
       <div class="main-title">Correspondence Mail On Demand Status</div>
@@ -15,27 +15,37 @@
         <br />&nbsp;</p>
       <div class="basic-table striped_  m-l-10">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 user-table">
-  
+
           <!-- Checkbox Column -->
           <ng-container matColumnDef="select">
             <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
               </mat-checkbox>
+              <mat-icon [matMenuTriggerFor]="mailondemand" id="dropdown-list">arrow_drop_down</mat-icon>
+              <mat-menu #mailondemand="matMenu">
+                <button mat-menu-item>
+                  <span>All</span>
+                </button>
+                <button mat-menu-item>
+                  <span>None</span>
+                </button>
+              </mat-menu>
             </th>
-            <td mat-cell *matCellDef="let row">
+            <td mat-cell *matCellDef="let row" class="width-fixed">
               <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
                 [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
               </mat-checkbox>
             </td>
           </ng-container>
-  
+
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.name}} </td>
           </ng-container>
-  
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
           </tr>
@@ -48,14 +58,23 @@
         Demand Service. This selection only applies to the Mail On Demand service.</p>
       <div class="basic-table striped_  m-l-10">
         <table mat-table [dataSource]="dataSource1" class="mat-elevation-z8 w-100 user-table">
-  
+
           <!-- Checkbox Column -->
           <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>
+            <th mat-header-cell *matHeaderCellDef class="width-fixed">
               <mat-checkbox (change)="$event ? masterToggle1() : null"
                 [checked]="selection1.hasValue() && isAllSelected1()"
                 [indeterminate]="selection1.hasValue() && !isAllSelected1()" [aria-label]="checkboxLabel1()">
               </mat-checkbox>
+              <mat-icon [matMenuTriggerFor]="recipients" id="dropdown-list">arrow_drop_down</mat-icon>
+              <mat-menu #recipients="matMenu">
+                <button mat-menu-item>
+                  <span>All</span>
+                </button>
+                <button mat-menu-item>
+                  <span>None</span>
+                </button>
+              </mat-menu>
             </th>
             <td mat-cell *matCellDef="let row">
               <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection1.toggle(row) : null"
@@ -63,13 +82,13 @@
               </mat-checkbox>
             </td>
           </ng-container>
-  
+
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
-  
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns1;" (click)="selection1.toggle(row)">
           </tr>
@@ -77,7 +96,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="border-dashed-blue m-t-30 m-b-30"></div>
   <div fxLayout="row wrap">
     <div fxFlex="50">
@@ -91,14 +110,15 @@
       </button>
     </div>
   </div>
-  
+
   <div class="border-dashed-blue m-t-30 m-b-30"></div>
-  
-  
+
+
   <div fxLayout="row wrap" class="send-document">
     <div fxFlex="100">
       <div class="main-title">Documents Sent</div>
-      <p class="description">This table lists the documents, actions that were performed on the documents, the date<br/>
+      <p class="description">This table lists the documents, actions that were performed on the documents, the
+        date<br />
         that the actions were performed and the document recipients.</p>
       <div class="user-detail">
         <table mat-table [dataSource]="dataSource2" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
@@ -114,7 +134,7 @@
               </span>
               <div>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                <span *ngIf="column == 'action'"class="no-wrap-td">{{element?.action}}</span>
+                <span *ngIf="column == 'action'" class="no-wrap-td">{{element?.action}}</span>
                 <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date}}</span>
                 <span *ngIf="column == 'recipients'">{{element?.recipients}}</span>
                 <span *ngIf="column == 'download'">
@@ -147,11 +167,12 @@
       </div>
     </div>
   </div>
-  
-  <div fxLayout="row wrap" class="send-document m-t-50">
+
+  <div fxLayout="row wrap" class="proof-of-service m-t-50">
     <div fxFlex="100">
       <div class="main-title">Proof of Service</div>
-      <p class="description">This table lists the proof of service documents that were created and sent back when the documents were printed and mailed.</p>
+      <p class="description">This table lists the proof of service documents that were created and sent back when the
+        documents were printed and mailed.</p>
       <div class="user-detail">
         <table mat-table [dataSource]="dataSource2" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
@@ -166,7 +187,7 @@
               </span>
               <div>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                <span *ngIf="column == 'action'"class="no-wrap-td">{{element?.action}}</span>
+                <span *ngIf="column == 'action'" class="no-wrap-td">{{element?.action}}</span>
                 <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date}}</span>
                 <span *ngIf="column == 'recipients'">{{element?.recipients}}</span>
                 <span *ngIf="column == 'download'">
