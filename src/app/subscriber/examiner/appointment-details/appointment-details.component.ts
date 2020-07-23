@@ -162,7 +162,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   claimant_name = "";
   examinationStatusForm: FormGroup;
-  loadForms(){
+  loadForms() {
 
   }
   ngOnInit() {
@@ -226,11 +226,22 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinationStatusForm.disable();
     this.isExaminationStatusEdit = false;
   }
-  psychiatric() {
+  psychiatric(event) {
     this.modifiers = [];
-    if (!(this.billable_item.value.exam_type.is_psychiatric)) {
+    if (event.checked) {
       this.modifiers = this.modifierList;
+      this.billable_item.patchValue({
+        exam_type: {
+          is_psychiatric: true
+        }
+      })
     } else {
+      this.billable_item.patchValue({
+        exam_type: {
+          is_psychiatric: false
+        }
+      })
+      this.modifiers = [];
       this.modifierList.map(res => {
         if (res.modifier_code != "96")
           this.modifiers.push(res);
@@ -480,7 +491,7 @@ export class AppointmentDetailsComponent implements OnInit {
     });
   }
 
-  procedure_type(){
+  procedure_type() {
 
   }
 }
