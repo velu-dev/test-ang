@@ -111,13 +111,13 @@ export class AppointmentDetailsComponent implements OnInit {
     this.claimService.seedData("agent_type").subscribe(res => {
       this.callerAffliation = res.data;
     })
-    this.claimService.seedData("procedural_codes").subscribe(res => {
-      res.data.map(proc => {
-        if (proc.procedural_code != "ML100") {
-          this.procuderalCodes.push(proc);
-        }
-      })
-    })
+    // this.claimService.seedData("procedural_codes").subscribe(res => {
+    //   res.data.map(proc => {
+    //     if (proc.procedural_code != "ML100") {
+    //       this.procuderalCodes.push(proc);
+    //     }
+    //   })
+    // })
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
     })
@@ -129,35 +129,64 @@ export class AppointmentDetailsComponent implements OnInit {
     })
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
+
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
+        console.log("bills", bills)
         this.isChecked = bills.data.exam_type.is_psychiatric;
-        this.claimService.seedData("modifier").subscribe(res => {
-          this.modifierList = res.data;
-          if (this.isChecked) {
-            let modi = [5];
-            this.billable_item.value.exam_type.modifier_id.map(res => {
-              modi.push(res)
-            })
-            this.billable_item.patchValue({
-              exam_type: {
-                is_psychiatric: true,
-                modifier_id: modi,
-              }
-            })
-            this.modifiers = this.modifierList;
-          } else {
-            res.data.map(modifier => {
-              if (modifier.modifier_code != "96")
-                this.modifiers.push(modifier);
-            })
-          }
+        this.claimService.getClaim(this.claim_id).subscribe(claim => {
+          this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(procedure => {
+            this.procuderalCodes = procedure.data;
+            console.log(this.isChecked)
+            if (this.isChecked) {
+              let modi = [5];
+              this.billable_item.value.exam_type.modifier_id.map(res => {
+                modi.push(res)
+              })
+              this.billable_item.patchValue({
+                exam_type: {
+                  is_psychiatric: true,
+                  modifier_id: modi,
+                }
+              })
+              this.procuderalCodes.map(proc => {
+                if (proc.id == claim.data.exam_type.procedure_type) {
+                  proc.modifier.map(modifier => {
+                    if (modifier.modifier_code != "96")
+                      this.modifiers.push(modifier);
+                  })
+                }
+              })
+              // this.modifiers = this.modifierList;
+            } else {
+              console.log(claim.data)
+              let modi = []
+              this.procuderalCodes.map(proc => {
+                if (proc.id == claim.data.exam_type.procedure_type) {
+                  proc.modifier.map(modifier => {
+                    if (modifier.modifier_code != "96")
+                      this.modifiers.push(modifier);
+                    modi.push(modifier.id)
+                  })
+                }
+              })
+              this.billable_item.patchValue({
+                exam_type: {
+                  is_psychiatric: false,
+                  modifier_id: modi,
+                }
+              })
+
+            }
+          })
         })
         console.log("billable", bills)
         this.isBillabbleItemLoading = false;
-        let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examination_location_id }
-        this.examinarChange(ex)
+        if (bills['data'].appointment.examiner_id != null) {
+          let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examination_location_id }
+          this.examinarChange(ex)
+        }
         if (bills['data'].exam_type.primary_language_spoken) {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
@@ -323,6 +352,7 @@ export class AppointmentDetailsComponent implements OnInit {
       }
   }
   examinarChange(examinar) {
+    console.log(examinar)
     this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
       this.examinarAddress = res['data'];
     })
@@ -334,6 +364,7 @@ export class AppointmentDetailsComponent implements OnInit {
   submitBillableItem() {
     if (this.billable_item.invalid)
       return
+    this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
       this.isEditBillableItem = false;
@@ -569,8 +600,12 @@ export class AppointmentDetailsComponent implements OnInit {
     });
   }
 
-  procedure_type() {
-
+  procedure_type(procuderalCode) {
+    if (procuderalCode.modifier)
+      this.modifiers = procuderalCode.modifier;
+    this.billable_item.patchValue({
+      exam_type: { modifier_id: [] }
+    })
   }
 }
 @Component({

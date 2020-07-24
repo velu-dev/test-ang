@@ -65,6 +65,9 @@ export class NewBillableItemComponent implements OnInit {
       this.claimId = param.claim;
       this.claimantId = param.claimant;
       this.claimService.getClaim(this.claimId).subscribe(claim => {
+        this.claimService.getProcedureType(claim.data.exam_type.procedure_type).subscribe(res => {
+          this.procuderalCodes = res.data;
+        })
         this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number }
       })
       this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
@@ -93,7 +96,7 @@ export class NewBillableItemComponent implements OnInit {
           })
           this.billable_item.patchValue(res['data'])
           //this.examinarChange(res['data'].)
-          if (res['data'].appointment) {
+          if (res['data'].appointment.examiner_id != null) {
             let ex = { value: res['data'].appointment.examiner_id, address_id: res['data'].appointment.examination_location_id }
             this.examinarChange(ex)
           }
@@ -135,20 +138,20 @@ export class NewBillableItemComponent implements OnInit {
     this.claimService.seedData("language").subscribe(res => {
       this.languageList = res.data;
     })
-    this.claimService.seedData("modifier").subscribe(res => {
-      this.modifierList = res.data;
-      res.data.map(modifier => {
-        if (modifier.modifier_code != "96")
-          this.modifiers.push(modifier);
-      })
-    })
-    this.claimService.seedData("procedural_codes").subscribe(res => {
-      res.data.map(proc => {
-        if (proc.procedural_code != "ML100") {
-          this.procuderalCodes.push(proc);
-        }
-      })
-    })
+    // this.claimService.seedData("modifier").subscribe(res => {
+    //   this.modifierList = res.data;
+    //   res.data.map(modifier => {
+    //     if (modifier.modifier_code != "96")
+    //       this.modifiers.push(modifier);
+    //   })
+    // })
+    // this.claimService.seedData("procedural_codes").subscribe(res => {
+    //   res.data.map(proc => {
+    //     if (proc.procedural_code != "ML100") {
+    //       this.procuderalCodes.push(proc);
+    //     }
+    //   })
+    // })
     this.claimService.seedData("agent_type").subscribe(res => {
       this.callerAffliation = res.data;
     })
@@ -167,17 +170,27 @@ export class NewBillableItemComponent implements OnInit {
     })
 
   }
-  procedure_type() {
+  procedure_type(procuderalCode) {
+    if (procuderalCode.modifier)
+      this.modifiers = procuderalCode.modifier;
     this.billable_item.patchValue({
       exam_type: { modifier_id: [] }
     })
   }
+  // procedure_type() {
+  //   this.billable_item.patchValue({
+  //     exam_type: { modifier_id: [] }
+  //   })
+  // }
   isChecked = false;
   psychiatric(event) {
     this.isChecked = event.checked;
-    this.modifiers = [];
+    // this.modifiers = [];
     if (event.checked) {
-      let modi = [5];
+      let modi = [];
+      if (this.modifiers.find(obj => obj.id === 5)) {
+        modi.push(5)
+      }
       if (this.billable_item.value.exam_type.modifier_id != null) {
         this.billable_item.value.exam_type.modifier_id.map(res => {
           modi.push(res)
@@ -189,7 +202,7 @@ export class NewBillableItemComponent implements OnInit {
           modifier_id: modi,
         }
       })
-      this.modifiers = this.modifierList;
+      // this.modifiers = this.modifierList;
     } else {
       let modi = [];
       this.billable_item.value.exam_type.modifier_id.map(res => {
@@ -203,11 +216,11 @@ export class NewBillableItemComponent implements OnInit {
           is_psychiatric: false
         }
       })
-      this.modifiers = [];
-      this.modifierList.map(res => {
-        if (res.modifier_code != "96")
-          this.modifiers.push(res);
-      })
+      // this.modifiers = [];
+      // this.modifierList.map(res => {
+      //   if (res.modifier_code != "96")
+      //     this.modifiers.push(res);
+      // })
     }
   }
 
@@ -274,6 +287,7 @@ export class NewBillableItemComponent implements OnInit {
     if (this.billable_item.invalid) {
       return;
     }
+    this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     if (!this.isEdit) {
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {

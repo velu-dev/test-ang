@@ -116,4 +116,7 @@ export class ClaimService {
   getclaimantBillable(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.claimantBillable + id)
   }
+  getProcedureType(examtype): Observable<any> {
+    return this.http.get(environment.baseUrl + "claim/procedures-modifiers-seed-data/" + examtype)
+  }
 }
