@@ -305,7 +305,7 @@ export class NewClaimComponent implements OnInit {
               appointment: res.data.appointments
             }
           })
-          if (res.data.appointments) {
+          if (res.data.appointments.examiner_id != null) {
             let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
             this.examinarChange(ex)
           }
@@ -343,24 +343,24 @@ export class NewClaimComponent implements OnInit {
           case "language":
             this.languageList = res.data;
             break;
-          case "modifier":
-            this.modifierList = res.data;
-            res.data.map(modifier => {
-              if (modifier.modifier_code != "96")
-                this.modifiers.push(modifier);
-            })
-            // this.modifiers = res.data;
-            break;
+          // case "modifier":
+          //   this.modifierList = res.data;
+          //   res.data.map(modifier => {
+          //     if (modifier.modifier_code != "96")
+          //       this.modifiers.push(modifier);
+          //   })
+          //   // this.modifiers = res.data;
+          //   break;
           case "object_type":
             this.objectTypes = res.data;
             break;
-          case "procedural_codes":
-            res.data.map(proc => {
-              if (proc.procedural_code != "ML100") {
-                this.procuderalCodes.push(proc);
-              }
-            })
-            break;
+          // case "procedural_codes":
+          //   res.data.map(proc => {
+          //     if (proc.procedural_code != "ML100") {
+          //       this.procuderalCodes.push(proc);
+          //     }
+          //   })
+          //   break;
           case "role_level":
             this.roleLevels = res.data;
             break;
@@ -815,6 +815,11 @@ export class NewClaimComponent implements OnInit {
   cancel() {
     this.openDialogCancel('cancel', null)
   }
+  examtypeChange(type) {
+    this.claimService.getProcedureType(type.id).subscribe(res => {
+      this.procuderalCodes = res.data;
+    })
+  }
   claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "" }
   claimDetails = { claim_number: "", exam_type_id: "", wcab_number: "" }
   isClaimantCreated = false;
@@ -1203,7 +1208,9 @@ export class NewClaimComponent implements OnInit {
     }
     return errorCount;
   }
-  procedure_type() {
+  procedure_type(procuderalCode) {
+    if (procuderalCode.modifier)
+      this.modifiers = procuderalCode.modifier;
     this.billable_item.patchValue({
       exam_type: { modifier_id: [] }
     })
@@ -1420,9 +1427,12 @@ export class NewClaimComponent implements OnInit {
   }
   psychiatric(event) {
     this.isChecked = event.checked;
-    this.modifiers = [];
+    // this.modifiers = [];
     if (event.checked) {
-      let modi = [5];
+      let modi = [];
+      if (this.modifiers.find(obj => obj.id === 5)) {
+        modi.push(5)
+      }
       if (this.billable_item.value.exam_type.modifier_id != null) {
         this.billable_item.value.exam_type.modifier_id.map(res => {
           modi.push(res)
@@ -1434,7 +1444,7 @@ export class NewClaimComponent implements OnInit {
           modifier_id: modi,
         }
       })
-      this.modifiers = this.modifierList;
+      // this.modifiers = this.modifierList;
     } else {
       let modi = [];
       this.billable_item.value.exam_type.modifier_id.map(res => {
@@ -1448,11 +1458,11 @@ export class NewClaimComponent implements OnInit {
           is_psychiatric: false
         }
       })
-      this.modifiers = [];
-      this.modifierList.map(res => {
-        if (res.modifier_code != "96")
-          this.modifiers.push(res);
-      })
+      // this.modifiers = [];
+      // this.modifierList.map(res => {
+      //   if (res.modifier_code != "96")
+      //     this.modifiers.push(res);
+      // })
     }
   }
 
@@ -1523,6 +1533,10 @@ export class InjuryDialog {
     this.dialogRef.close();
   }
   addInjury() {
+    if (this.injuryInfo.body_part_id.length == 0) {
+      this.alertService.openSnackBar("Please select body part", "error")
+      return
+    }
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
         if (this.injuryInfo.continuous_trauma_end_date)
