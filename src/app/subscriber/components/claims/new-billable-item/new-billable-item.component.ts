@@ -96,7 +96,7 @@ export class NewBillableItemComponent implements OnInit {
           })
           this.billable_item.patchValue(res['data'])
           //this.examinarChange(res['data'].)
-          if (res['data'].appointment) {
+          if (res['data'].appointment.examiner_id != null) {
             let ex = { value: res['data'].appointment.examiner_id, address_id: res['data'].appointment.examination_location_id }
             this.examinarChange(ex)
           }

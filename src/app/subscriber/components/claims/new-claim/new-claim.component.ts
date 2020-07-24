@@ -305,7 +305,7 @@ export class NewClaimComponent implements OnInit {
               appointment: res.data.appointments
             }
           })
-          if (res.data.appointments) {
+          if (res.data.appointments.examiner_id != null) {
             let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
             this.examinarChange(ex)
           }
@@ -1533,6 +1533,10 @@ export class InjuryDialog {
     this.dialogRef.close();
   }
   addInjury() {
+    if (this.injuryInfo.body_part_id.length == 0) {
+      this.alertService.openSnackBar("Please select body part", "error")
+      return
+    }
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
         if (this.injuryInfo.continuous_trauma_end_date)
