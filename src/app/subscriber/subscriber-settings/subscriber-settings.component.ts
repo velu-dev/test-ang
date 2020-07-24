@@ -258,14 +258,15 @@ export class SubscriberSettingsComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-    console.log("event", event.target.files[0].size);
+    let fileName = event.target.files[0].name;
     let fileTypes = ['png', 'jpg', 'jpeg']
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
         //this.alertService.openSnackBar("This file too long", 'error');
-        this.openDialog('Your selected file size is too large.','Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio & Maximum File Size: 500 KB"')
+        let title= 'Selected Signature File : '+ fileName +' file size is '+ FileSize +'KB is too large.'
+        this.openDialog(title,'File size should be less than 500KB !')
         return;
       }
       this.selectedFile = event.target.files[0].name;
@@ -304,7 +305,7 @@ export class SubscriberSettingsComponent implements OnInit {
 
   openDialog(title, subTitle) {
     const dialogRef = this.dialog.open(AlertDialogComponent, {
-      width: '350px',
+      width: '450px',
       data: { title: title, subTitle: subTitle }
     });
 
