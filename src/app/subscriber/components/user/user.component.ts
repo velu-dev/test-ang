@@ -70,7 +70,7 @@ export class UserComponent implements OnInit {
         this.columnName = ["", "Last Name", "Disable User", "Action"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabled", "action"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User"]
+        this.columnName = ["Last Name", "First Name", "Email", "Role(s)", "Enrolled On", "Disable User"]
         this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
       }
     });
@@ -157,12 +157,13 @@ export class UserComponent implements OnInit {
     this.users = this.allUser[this.tabName];
     this.users.map(user => {
       user.enroll = moment(user.createdAt).format("MM-DD-YYYY")
+      user.subscriber = user.issubscriber ? 'subscriber' : '';
     })
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.filterPredicate = function (data, filter: string): boolean {
-      return data.last_name.toLowerCase().includes(filter) || (data.first_name && data.first_name.toLowerCase().includes(filter)) || (data.sign_in_email_id && data.sign_in_email_id.toLowerCase().includes(filter)) || (data.role_name && data.role_name.toLowerCase().includes(filter)) || (data.enroll && data.enroll.includes(filter));
+      return data.last_name.toLowerCase().includes(filter) || (data.first_name && data.first_name.toLowerCase().includes(filter)) || (data.sign_in_email_id && data.sign_in_email_id.toLowerCase().includes(filter)) || (data.role_name && data.role_name.toLowerCase().includes(filter)) || (data.enroll && data.enroll.includes(filter)) || (data.subscriber && data.subscriber.toLowerCase().includes(filter));
     };
     this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }

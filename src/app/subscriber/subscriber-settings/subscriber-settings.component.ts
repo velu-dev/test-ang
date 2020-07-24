@@ -18,6 +18,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource } from '@a
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-subscribersettings',
@@ -263,7 +264,8 @@ export class SubscriberSettingsComponent implements OnInit {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
-        this.alertService.openSnackBar("This file too long", 'error');
+        //this.alertService.openSnackBar("This file too long", 'error');
+        this.openDialog('Your selected file size is too large.','Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio & Maximum File Size: 500 KB"')
         return;
       }
       this.selectedFile = event.target.files[0].name;
@@ -298,6 +300,18 @@ export class SubscriberSettingsComponent implements OnInit {
   removeSign() {
     this.signData = null;
     this.selectedFile = null;
+  }
+
+  openDialog(title, subTitle) {
+    const dialogRef = this.dialog.open(AlertDialogComponent, {
+      width: '350px',
+      data: { title: title, subTitle: subTitle }
+    });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result['data']) {
+    //   }
+    // });
   }
 
 }

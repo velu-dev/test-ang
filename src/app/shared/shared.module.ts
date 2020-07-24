@@ -33,6 +33,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } fro
 import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FileTypePipe } from './pipes/file-type.pipe';
+import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 
 export const MY_MOMENT_FORMATS = {
   parseInput: 'MM-DD-YYYY HH:mm A',
@@ -52,12 +53,14 @@ export const MY_MOMENT_FORMATS = {
     NodataComponent,
     EllipsisPipe,
     FilterPipe,
-    FileTypePipe
+    FileTypePipe,
+    AlertDialogComponent
   ],
   entryComponents: [
     AlertComponent,
     DialogueComponent,
-    NodataComponent
+    NodataComponent,
+    AlertDialogComponent
   ],
   imports: [
     CommonModule,
@@ -91,7 +94,8 @@ export const MY_MOMENT_FORMATS = {
     FilterPipe,
     OwlDateTimeModule, OwlNativeDateTimeModule,
     TextMaskModule,
-    FileTypePipe
+    FileTypePipe,
+    AlertDialogComponent
   ],
   providers: [
     CognitoService,
