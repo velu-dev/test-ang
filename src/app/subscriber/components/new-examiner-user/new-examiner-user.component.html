@@ -573,14 +573,15 @@
                 <mat-card-content *ngIf="!locationAddStatus">
                     <div class="table-filter">
                         <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                            placeholder="Search by address, service, phone, NPI etc.">
+                            placeholder="Search by Address, Service Type, Phone, NPI#">
                         <mat-icon>search</mat-icon>
                     </div>
                     <span class="spacer"></span>
                     <button mat-stroked-button class="float-right outline-success m-t-5" (click)="assignLocation()">
                         Add Service Location
                     </button>
-                    <div class="user-detail"  *ngIf = "tab == 4">
+                    <ng-container >
+                    <div class="user-detail" *ngIf = "tab == 4">
                         <table mat-table [dataSource]="dataSource" multiTemplateDataRows
                             class="mat-elevation-z8 user-table" matSort>
                             <ng-container matColumnDef="{{column}}"
@@ -596,10 +597,10 @@
                                         </mat-icon>
                                     </span>
                                     <div>
-                                        <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}}
+                                        <span *ngIf="column == 'address'"> {{element.street1}} {{element.street2}}
                                             {{element.city}} {{element.state_name}} - {{element.zip_code}}</span>
                                         <span
-                                            *ngIf="column == 'service_code_id'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
+                                            *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
                                         <span
                                             *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
                                         <span
@@ -641,7 +642,7 @@
                         </table>
                         <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
                     </div>
-
+                </ng-container>
                     <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
                 </mat-card-content>
 

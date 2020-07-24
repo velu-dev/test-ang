@@ -25,6 +25,7 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
+      state('void', style({height: '0px', minHeight: '0'})),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ]
@@ -58,7 +59,7 @@ export class NewExaminerUserComponent implements OnInit {
   licenceDataSource: any = new MatTableDataSource([]);
   examinerId: number = null;
   mailingSubmit: boolean = false;
-  tabIndex:number = 0;
+  tabIndex: number = 0;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -73,10 +74,26 @@ export class NewExaminerUserComponent implements OnInit {
   dataSource: any = new MatTableDataSource([]);
   providerTypeList: any;
   sameAsExaminer: boolean;
-  selectedUser:any = {}
+  selectedUser: any = {}
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  //@ViewChild(MatSort, { static: false }) sort: MatSort;
+  //@ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  private paginator: MatPaginator;
+  private sort: MatSort;
+  @ViewChild(MatSort, { static: false }) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
+
+  @ViewChild(MatPaginator, { static: false }) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: SubscriberUserService,
@@ -92,11 +109,11 @@ export class NewExaminerUserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Examiner Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
+        this.columnName = ["", "Address", "Action"]
+        this.columnsToDisplay = ['is_expand', 'address', "action"]
       } else {
         this.columnName = ["Address", "Service Type", "Phone", "NPI Number", "Action"]
-        this.columnsToDisplay = ['street1', 'service_code_id', 'phone_no', 'npi_number', "action"]
+        this.columnsToDisplay = ['address', 'service', 'phone_no', 'npi_number', "action"]
       }
     })
     this.user = JSON.parse(this.cookieService.get('user'));
@@ -128,13 +145,13 @@ export class NewExaminerUserComponent implements OnInit {
     })
 
     this.route.params.subscribe(params_res => {
-      if(params_res.status == 1){
+      if (params_res.status == 1) {
         this.tabIndex = 0
         setTimeout(() => {
           this.tabIndex = 4
           this.tab = 4
         }, 1000);
-       
+
       }
     })
 
@@ -187,11 +204,11 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.addresssearch.valueChanges.subscribe(res => {
       if (res != null) {
-        if(res.length > 2)
-        this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
-          this.filteredOptions = value;
-        })
-      }else{
+        if (res.length > 2)
+          this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
+            this.filteredOptions = value;
+          })
+      } else {
         this.filteredOptions = null;
       }
     })
@@ -273,8 +290,18 @@ export class NewExaminerUserComponent implements OnInit {
 
       //this.getLocationDetails();
       this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
+      if (res.service_location != null) {
+        res.service_location.map(data => {
+          data.address = data.street1;
+          data.service =  data.service_code + '' + data.service_name ? ' - ' + data.service_name : '';
+          data.npi_number =  data.national_provider_identifier;
+        })
+      }
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+       this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return (data.service_name && data.service_name.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.npi_number && data.npi_number.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter));
+      };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
   }
@@ -631,15 +658,14 @@ export class NewExaminerUserComponent implements OnInit {
   locationAddStatus: boolean = false;
 
   addressOnChange(data) {
-    console.log(data,"data");
     this.locationData = null;
     this.locationData = data;
   }
 
   locationSubmit() {
     if (this.locationData == null) {
-        this.alertService.openSnackBar('Please select existing location', 'error');
-        return
+      this.alertService.openSnackBar('Please select existing location', 'error');
+      return
     }
 
     let regexp = new RegExp('^[0-9]*$'),
@@ -696,7 +722,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   editAddress(data) {
-    this.router.navigate(['/subscriber/location/edit-location', data.id, 2,this.examinerId])
+    this.router.navigate(['/subscriber/location/edit-location', data.id, 2, this.examinerId])
   }
 
 
