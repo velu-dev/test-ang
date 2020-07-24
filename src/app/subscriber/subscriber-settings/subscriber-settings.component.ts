@@ -258,14 +258,15 @@ export class SubscriberSettingsComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-    console.log("event", event.target.files[0].size);
+    let fileName = event.target.files[0].name;
     let fileTypes = ['png', 'jpg', 'jpeg']
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
         //this.alertService.openSnackBar("This file too long", 'error');
-        this.openDialog('Selected file size is too large !','Selected Signature File : "deivasig-removebg-preview_1500.png" file size is 1046KB is too large. File size should be less than 500KB !')
+        let title= 'Selected Signature File : '+ fileName +' file size is '+ FileSize +'KB is too large.'
+        this.openDialog(title,'File size should be less than 500KB !')
         return;
       }
       this.selectedFile = event.target.files[0].name;
