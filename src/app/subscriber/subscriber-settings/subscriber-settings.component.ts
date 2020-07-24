@@ -265,7 +265,7 @@ export class SubscriberSettingsComponent implements OnInit {
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
         //this.alertService.openSnackBar("This file too long", 'error');
-        this.openDialog('Selected file size is too large !','Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels & Maximum File Size: 500 KB')
+        this.openDialog('Selected file size is too large !','Selected Signature File : "deivasig-removebg-preview_1500.png" file size is 1046KB is too large. File size should be less than 500KB !')
         return;
       }
       this.selectedFile = event.target.files[0].name;

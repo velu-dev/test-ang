@@ -1,54 +1,49 @@
 @import "variables";
 
-.user-disable {
+.error-message {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: $error-bg;
+  border: 1px solid $error-border;
   .mat-card-title {
     text-align: center;
     font-size: $font-size-10;
     color: $error;
   }
+
   .note {
     font-size: $font-size-1;
     font-weight: $font-weight-medium;
-    background-color: $info-bg;
-    border: 1px solid $info-border;
-    padding: 10px;
     text-align: center;
-    color: $info;
-    border-radius: 4px;
+    color: $error;
   }
-  .disable-acctions {
-    text-align: center;
-    .btn {
-      padding: 7px 30px;
-      border-radius: 50px;
-      font-size: $font-size-1;
-      box-shadow: $box-shadow-3;
-      font-weight: $font-weight-bold;
-      cursor: pointer;
-      &:hover {
-        box-shadow: $box-shadow-1;
-      }
-      &:focus,
-      &::-moz-focus-inner {
-        outline: none !important;
-        border: none !important;
-      }
-    }
-    .no {
-      background-color: $white;
-      color: $black;
-      border: 0;
-      &:hover {
-        background-color: $white;
-      }
-      @extend .btn;
-    }
+}
 
-    .yes {
-      background-color: $bg-success;
-      color: $white;
-      border: 0;
-      @extend .btn;
+.disable-acctions {
+  text-align: center;
+  .btn {
+    padding: 7px 30px;
+    border-radius: 50px;
+    font-size: $font-size-1;
+    box-shadow: $box-shadow-3;
+    font-weight: $font-weight-bold;
+    cursor: pointer;
+    &:hover {
+      box-shadow: $box-shadow-1;
     }
+    &:focus,
+    &::-moz-focus-inner {
+      outline: none !important;
+      border: none !important;
+    }
+  }
+  .cancel {
+    background-color: $white;
+    color: $black;
+    border: 0;
+    &:hover {
+      background-color: $white;
+    }
+    @extend .btn;
   }
 }

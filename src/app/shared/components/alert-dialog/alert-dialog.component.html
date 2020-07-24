@@ -1,7 +1,16 @@
-<div class="user-disable">
+<!-- <div class="user-disable">
   <div mat-dialog-title class="mat-card-title">{{data?.title}}</div>
   <div class="note" *ngIf="data?.subTitle">{{data.subTitle}}</div>
   <div mat-dialog-actions class="disable-acctions text-center p-t-25">
     <button mat-raised-button (click)="onNoClick()" class="no m-r-5">OK</button>
   </div>
+</div> -->
+
+
+<div class="error-message">
+  <div mat-dialog-title class="mat-card-title">{{data?.title}}</div>
+  <div class="note" *ngIf="data?.subTitle">{{data.subTitle}}</div>
+</div>
+<div mat-dialog-actions class="disable-acctions text-center p-t-25">
+  <button mat-raised-button (click)="onNoClick()" class="cancel m-r-5">OK</button>
 </div>
