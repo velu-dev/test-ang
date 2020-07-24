@@ -55,10 +55,10 @@ export class ManageLocationComponent implements OnInit {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "Examiner Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'first_name', "disabled"]
+        this.columnsToDisplay = ['is_expand', 'examiner_name', "disabled"]
       } else {
         this.columnName = ["Address", "Service Type", "Phone", "Examiner", "Status"]
-        this.columnsToDisplay = ['street1', 'service_code_id', 'phone_no', 'examiner', "is_active"]
+        this.columnsToDisplay = ['street1', 'service', 'phone_no', 'examiner_name', "status"]
       }
     })
   }
@@ -71,12 +71,17 @@ export class ManageLocationComponent implements OnInit {
   getAddressDetails() {
     this.subscriberService.getLocationDetails().subscribe(response => {
       this.dataSource = new MatTableDataSource(response['data']);
+      response['data'].map(data=>{ 
+        data.status = data.is_active == true ? 'Active' : 'In Active';
+        data.examiner_name = data.examiner != null ? data.examiner[0].last_name + ' '+ data.examiner[0].first_name +''+ (data.examiner[0].suffix ? ', '+data.examiner[0].suffix : '') : null;
+         data.service =  data.service_code + '' + data.service_name ? ' - ' + data.service_name : '';
+      })
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-      // this.dataSource.filterPredicate = function (data, filter: string): boolean {
-      //   return (data.service_name && data.service_name.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter));
-      // };
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return (data.service_name && data.service_name.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter)) || (data.status && data.status.toLowerCase().includes(filter));
+      };
     }, error => {
       console.log(error)
       this.dataSource = new MatTableDataSource([]);

@@ -293,7 +293,7 @@ export class NewExaminerUserComponent implements OnInit {
       if (res.service_location != null) {
         res.service_location.map(data => {
           data.address = data.street1;
-          data.service =  data.service_name ? ' - ' + data.service_name : '';
+          data.service =  data.service_code + '' + data.service_name ? ' - ' + data.service_name : '';
           data.npi_number =  data.national_provider_identifier;
         })
       }
