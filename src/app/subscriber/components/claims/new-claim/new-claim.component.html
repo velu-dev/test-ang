@@ -313,7 +313,8 @@
                                 fxFlex.xs="100">
                                 <mat-label>Exam Type*</mat-label>
                                 <mat-select formControlName="exam_type_id">
-                                    <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
+                                    <mat-option *ngFor="let examType of examTypes" (click)="examtypeChange(examType)"
+                                        [value]="examType.id">
                                         {{examType.exam_type_code}} - {{examType.exam_name}}
                                     </mat-option>
                                 </mat-select>
@@ -1044,9 +1045,9 @@
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Procedural Type*</mat-label>
-                                    <mat-select formControlName="procedure_type" (selectionChange)="procedure_type()">
-                                        <mat-option (click)="procedure_type()"
-                                            *ngFor="let procuderalCode of procuderalCodes" [value]="procuderalCode.id">
+                                    <mat-select formControlName="procedure_type">
+                                        <mat-option *ngFor="let procuderalCode of procuderalCodes"
+                                            [value]="procuderalCode.id" (click)="procedure_type(procuderalCode)">
                                             {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
                                         </mat-option>
                                     </mat-select>
