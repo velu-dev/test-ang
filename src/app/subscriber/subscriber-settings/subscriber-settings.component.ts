@@ -265,7 +265,7 @@ export class SubscriberSettingsComponent implements OnInit {
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
         //this.alertService.openSnackBar("This file too long", 'error');
-        this.openDialog('Your selected file size is too large.','Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio & Maximum File Size: 500 KB"')
+        this.openDialog('Selected file size is too large !','Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels & Maximum File Size: 500 KB')
         return;
       }
       this.selectedFile = event.target.files[0].name;
@@ -304,7 +304,7 @@ export class SubscriberSettingsComponent implements OnInit {
 
   openDialog(title, subTitle) {
     const dialogRef = this.dialog.open(AlertDialogComponent, {
-      width: '350px',
+      width: '450px',
       data: { title: title, subTitle: subTitle }
     });
 
