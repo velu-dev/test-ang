@@ -27,9 +27,15 @@
                 <mat-label>Middle name/MI</mat-label>
                 <input matInput placeholder="Middle name/MI" formControlName="middleInitial" autocomplete="off">
               </mat-form-field>
+              <div  fxFlex="100" class="m-b-20"> 
+                <mat-radio-group class="">
+                  <mat-radio-button value="1" checked>Organization</mat-radio-button>
+                  <mat-radio-button value="2" class="p-l-30">Individual</mat-radio-button>
+              </mat-radio-group>
+              </div>
               <mat-form-field appearance="outline" fxFlex="100">
-                <mat-label>Company name</mat-label>
-                <input matInput placeholder="Company name" formControlName="companyName" autocomplete="off">
+                <mat-label>Organization name</mat-label>
+                <input matInput placeholder="Organization name" formControlName="companyName" autocomplete="off">
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidcompanyname}}</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="100">
