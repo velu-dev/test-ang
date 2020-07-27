@@ -102,7 +102,7 @@ mat-sidenav-container {
 
 .content-wrapper {
   @include content-wrapper;
-  min-height: calc(100vh - 139px);
+  min-height: calc(100vh - 150px);
   margin-top: 64px;
   @media (max-width: 599px) {
     margin-top: 56px;
