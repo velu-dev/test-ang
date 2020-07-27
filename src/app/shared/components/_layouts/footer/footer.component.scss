@@ -1,7 +1,6 @@
 @import "variables";
 
 .footer {
-  background-color: $white;
   padding: 5px 20px;
   font-size: $font-size-7;
   @media only screen and (max-width: 568px) {
@@ -21,5 +20,10 @@
     }
   }
 }
-
-
+.light {
+  background-color: $white;
+}
+.dark {
+  background-color: $primary-dark;
+  color: $white;
+}

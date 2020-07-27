@@ -30,7 +30,7 @@ mat-toolbar.navbar-fixed-header {
 mat-toolbar-row {
   // box-shadow: $box-shadow-2;
   button.toggle_ {
-    color: $sidebar-dark;
+    color: $primary-dark;
     font-weight: $font-weight-bold;
   }
   mat-card-actions {
@@ -46,7 +46,7 @@ mat-toolbar-row {
       }
     }
     button {
-      color: $sidebar-dark;
+      color: $primary-dark;
       margin-top: 15px;
       @media only screen and (max-width: 568px) {
         margin-right: 0px;
@@ -92,7 +92,7 @@ mat-toolbar-row {
   margin: 10px 10px 0px 10px;
   display: block;
   color: $text-dark;
-  border-top: 3px solid $sidebar-dark;
+  border-top: 3px solid $primary-dark;
   background-color: $navbar-light;
   padding: 5px 10px;
   cursor: pointer;

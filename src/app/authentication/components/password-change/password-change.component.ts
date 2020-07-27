@@ -15,6 +15,8 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 })
 export class PasswordChangeComponent implements OnInit {
   logo = globals.logo
+  nav_logo = globals.nav_logo
+  icon_logo = globals.icon_logo
   changePaswordForm: FormGroup;
   isSubmitted = false;
   errorMessages = errors;
