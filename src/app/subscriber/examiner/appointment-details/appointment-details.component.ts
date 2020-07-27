@@ -262,13 +262,13 @@ export class AppointmentDetailsComponent implements OnInit {
       })
     })
     this.notesForm = this.formBuilder.group({
-      exam_notes: [null, Validators.required],
+      exam_notes: [null],
       bill_item_id: [this.billableId]
     })
     this.examinationStatusForm = this.formBuilder.group({
       id: "",
       examination_status: [{ value: "", disabled: true }, Validators.required],
-      examination_notes: [{ value: "", disabled: true }, Validators.required]
+      examination_notes: [null]
     })
     this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
@@ -328,11 +328,11 @@ export class AppointmentDetailsComponent implements OnInit {
           is_psychiatric: false
         }
       })
-      this.modifiers = [];
-      this.modifierList.map(res => {
-        if (res.modifier_code != "96")
-          this.modifiers.push(res);
-      })
+      // this.modifiers = [];
+      // this.modifierList.map(res => {
+      //   if (res.modifier_code != "96")
+      //     this.modifiers.push(res);
+      // })
     }
   }
   selectedLanguage: any;
