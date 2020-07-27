@@ -6,27 +6,26 @@ $primary: #e21b8e;
 $secondary: #96358d;
 $ternary: #00b2e2;
 
-$sidebar-dark: #1b1c1d;
-$sidebar-light: #383838;
+$primary-dark: #1b1c1d;
+$primary-light: #383838;
 $menu-light: #b3b3b3;
 $navbar-light: #f4f4f4;
 $light-color: #f4f4f4;
-$progres-light-gray:#E6E6E6;
+$progres-light-gray: #e6e6e6;
 
 $active: #767676;
-
 
 //alert-color
 
 // INFORMATION
-$info:#018AAF;
-$info-bg:#F2FBFE;
-$info-border:#BEDFE6;
+$info: #018aaf;
+$info-bg: #f2fbfe;
+$info-border: #bedfe6;
 
 // ERROR
-$error:#DB2828;
-$error-bg:#FCEBEB;
-$error-border:#DB2828;
+$error: #db2828;
+$error-bg: #fcebeb;
+$error-border: #db2828;
 
 //colors
 $bg-light-blue: #f2f7ff;
@@ -265,18 +264,19 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
 
 @mixin switched-link {
   padding-top: 22px;
-  text-align: center;
-  color: $text-gray;
+  text-align: left;
+  font-size: $font-size-2;
+  color: $active;
   font-weight: $font-weight-base;
   outline: none;
-
   &:focus,
   &:active {
     outline: none;
   }
 
   span {
-    color: $primarycolor;
+    color: $ternary;
+    border-bottom: 1px solid $ternary;
     outline: none;
     cursor: pointer;
   }
@@ -293,7 +293,7 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
 }
 
 .logo {
-  width: auto;
+  width: 75%;
   margin: 0px auto;
   display: block;
   max-width: 100%;
@@ -308,6 +308,12 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
     min-height: 165px;
   }
 }
+.auth-header-login {
+  min-height: 65px;
+  @media only screen and (max-width: 568px) {
+    min-height: 60px;
+  }
+}
 .auth-header-1 {
   min-height: 115px;
   @media only screen and (max-width: 568px) {
@@ -317,17 +323,22 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
 .auth-tilte {
   font-family: $font-family-source-san-serif;
   letter-spacing: 0;
-  color: $primarycolor;
+  color: $active;
   opacity: 1;
-  font-size: $font-size-14;
+  font-size: $font-size-17;
+  font-weight: $font-weight-bold;
   text-align: center;
 }
 .authentication-btn {
-  background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
-  box-shadow: $btn-primary-shadow;
+  // background: transparent linear-gradient(100deg, #3c3cff 0%, #224580 100%) 0% 0% no-repeat padding-box;
+  background: $ternary;
+  // box-shadow: $btn-primary-shadow;
   border-radius: 2px;
+  font-size: $font-size-9;
+  font-weight: $font-weight-base;
   opacity: 1;
   width: 100%;
+  height: 50px;
   padding: 5px;
   margin-top: 30px;
 
@@ -342,7 +353,11 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   padding-top: 15px;
   padding-left: 5px;
 }
-
+.bottom-icon {
+  width: 30%;
+  margin: 0px auto;
+  display: block;
+}
 // ==================================
 // Page heading styles       ========
 // ==================================

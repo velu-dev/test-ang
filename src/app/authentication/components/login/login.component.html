@@ -4,9 +4,8 @@
       <div class="m-auto" fxFlex="30" fxFlex.md="30" fxFlex.sm="50" fxFlex.xs="100" fxFlex.xl="25" fxLayout="column">
         <mat-card class="p-5">
           <!--Form Title-->
-          <img mat-card-image [src]="logo" alt="Simplexam logo" class="logo">
-          <div class="auth-header-1 p-t-10">
-            <mat-card-title class="auth-tilte">Sign In</mat-card-title>
+          <img mat-card-image [src]="nav_logo" alt="Simplexam logo" class="logo">
+          <div class="auth-header-login p-t-10">
             <app-error *ngIf="error" [data]="error"></app-error>
           </div>
           <mat-card-content>
@@ -29,11 +28,11 @@
               </mat-form-field>
 
               <div class="forgot-password"> <span routerLink="/forgotpassword">Forgot Password ?</span></div>
-              <button mat-raised-button color="primary" type="submit" class="authentication-btn"> Login <i
-                  class="fa fa-arrow-right"></i></button>
+              <button mat-raised-button color="primary" type="submit" class="authentication-btn"> Login</button>
             </form>
-            <div class="new-account">New to Simplexam ? <span routerLink="/register"> Sign up here</span></div>
+            <div class="new-account">New to Simplexam<sup>™</sup>  <span routerLink="/register" class="p-l-5">Sign up here</span></div>
           </mat-card-content>
+          <img mat-card-image [src]="icon_logo" alt="Simplexam logo" class="text-center bottom-icon">
         </mat-card>
       </div>
     </div>

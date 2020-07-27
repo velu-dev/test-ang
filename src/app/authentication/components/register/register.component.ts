@@ -13,7 +13,8 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  logo = globals.logo
+  nav_logo = globals.nav_logo
+  icon_logo = globals.icon_logo  
   registerForm: FormGroup;
   isSubmitted = false;
   errorMessages = errors;
@@ -34,7 +35,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       lastName: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
-      middleInitial: ['', Validators.compose([ Validators.maxLength(50)])],
+      middleInitial: ['', Validators.compose([Validators.maxLength(50)])],
       companyName: ['', Validators.compose([Validators.maxLength(100)])],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
@@ -55,8 +56,8 @@ export class RegisterComponent implements OnInit {
     this.isSubmitted = true;
     this.error = '';
     Object.keys(this.registerForm.controls).forEach((key) => {
-      if(this.registerForm.get(key).value && typeof(this.registerForm.get(key).value) == 'string')
-      this.registerForm.get(key).setValue(this.registerForm.get(key).value.trim())
+      if (this.registerForm.get(key).value && typeof (this.registerForm.get(key).value) == 'string')
+        this.registerForm.get(key).setValue(this.registerForm.get(key).value.trim())
     });
     if (this.registerForm.invalid) {
       return;
@@ -83,25 +84,25 @@ export class RegisterComponent implements OnInit {
           'middle_name': this.registerForm.value.middleInitial,
           'custom:Organization_ID': signupRes.data.Organization_ID.toString(),
           'custom:Postgres_UserID': signupRes.data.Postgres_User_ID.toString(),
-          "custom:Account_Number" : signupRes.data.Account_Number.toString(),
+          "custom:Account_Number": signupRes.data.Account_Number.toString(),
           'custom:isPlatformAdmin': "0",
         }
       }
       this.cognitoService.signUp(userDetails).subscribe(signUpRes => {
         console.log(signUpRes);
         let verificationDetails = {
-          Organization_ID:  signupRes.data.Organization_ID.toString(),
+          Organization_ID: signupRes.data.Organization_ID.toString(),
           Postgres_User_ID: signupRes.data.Postgres_User_ID.toString(),
           sign_in_email_id: this.registerForm.value.email.toLowerCase()
         }
-        this.authenticationService.updateSignup(verificationDetails).subscribe(updateRes =>{
+        this.authenticationService.updateSignup(verificationDetails).subscribe(updateRes => {
           this.router.navigate(['/verification']);
           this.spinnerService.hide();
-        },error=>{
+        }, error => {
           console.log(error);
           this.spinnerService.hide();
         })
-       
+
       }, error => {
         console.log("cognitoSignUpError", error);
         this.spinnerService.hide();

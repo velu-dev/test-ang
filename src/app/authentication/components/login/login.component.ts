@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
   isSubmitted = false;
   passwordFieldType: boolean;
   logo = globals.logo;
+  icon_logo = globals.icon_logo;
+  nav_logo = globals.nav_logo;
   errorMessages = errors;
   redirectUrls = [
     { role_id: 1, redirect_url: "/admin/dashboard" },
