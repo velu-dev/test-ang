@@ -1,8 +1,8 @@
 @import "variables";
 
 .login-form {
-  background-color: $bg-light-blue;
-  min-height: calc(100% - 55px);
+  background-color: $primary-dark;
+  min-height: calc(100% - 66px);
   width: 100%;
   .p-t-100 {
     @media only screen and (max-width: 568px) {
@@ -16,12 +16,12 @@
   }
   mat-card {
     padding: 50px 25px 25px 25px;
-    box-shadow: $box-shadow-1;
+    box-shadow: $shadow-style-one;
 
     form {
       mat-form-field {
         mat-icon {
-          color: $text-gray !important;
+          color: $active !important;
         }
         .check-password {
           cursor: pointer;
@@ -30,12 +30,12 @@
       .forgot-password {
         text-align: right;
         letter-spacing: 0;
-        color: $text-gray;
+        color: $active;
         opacity: 1;
         width: 100%;
         font-size: $font-size-1;
         &:hover {
-          color: $primarycolor;
+          color: $ternary;
         }
         span {
           outline: none;

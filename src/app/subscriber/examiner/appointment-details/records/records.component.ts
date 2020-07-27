@@ -10,11 +10,12 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Appointment Notification Letter' },
-  { name: 'QME 110 - QME Appointment Notification Form' },
-  { name: 'QME 122 - AME or QME Declaration of Service of Medical Legal Report' },
-  { name: 'QME 123 - QME or AME Conflict of Interest Disclosure Form' },
-  { name: 'Claimant Questionnaire' },
+  { name: 'Record Set 1' },
+  { name: 'Record Set 2' },
+  { name: 'Record Set 3' },
+  { name: 'Record Set 4' },
+  { name: 'Record Set 5' },
+  { name: 'Record Set 6' },
 ];
 
 
@@ -22,14 +23,6 @@ export interface PeriodicElement1 {
   name: string;
 }
 
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: 'Claimant' },
-  { name: 'Claims Adjuster' },
-  { name: 'Applicant Attorney' },
-  { name: 'Defence Attorney' },
-  { name: 'Employer' },
-  { name: 'DEU Office' },
-];
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
@@ -44,7 +37,7 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
 })
 export class RecordsComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name'];
+  displayedColumns: string[] = ['select', 'name', 'action'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -85,42 +78,15 @@ export class RecordsComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
   }
 
-
-
-  displayedColumns1: string[] = ['select', 'name'];
-  dataSource1 = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA1);
-  selection1 = new SelectionModel<PeriodicElement1>(true, []);
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected1() {
-    const numSelected = this.selection1.selected.length;
-    const numRows = this.dataSource1.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection1. */
-  masterToggle1() {
-    this.isAllSelected1() ?
-      this.selection1.clear() :
-      this.dataSource1.data.forEach(row => this.selection1.select(row));
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel1(row?: PeriodicElement1): string {
-    if (!row) {
-      return `${this.isAllSelected1() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection1.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
-  }
   constructor(private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "File Name", "Download"]
-        this.columnsToDisplay = ['is_expand', 'file_name', 'download']
+        this.columnName = ["", "File Name"]
+        this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
-        this.columnName = ["File Name", "Request Rush", "Request Date", "Download"]
-        this.columnsToDisplay = ['file_name', 'request_rush', "request_date",'download']
+        this.columnName = ["File Name", "Request Rush", "Request Date"]
+        this.columnsToDisplay = ['file_name', 'request_rush', "request_date"]
       }
     })
     this.isHandset$.subscribe(res => {

@@ -1,4 +1,5 @@
-<div fxLayout="column" fxLayoutGap="15px" class="footer">
+<div fxLayout="column" fxLayoutGap="15px" class="footer"
+    [ngClass]="{'dark':  footerFrom == 'full', 'light':   footerFrom == 'common'}">
     <div fxLayout="row wrap">
         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column">
             <p>©2020, Simplexam. All rights reserved.</p>

@@ -5,9 +5,9 @@
         fxLayoutGap="15px">
         <mat-card class="p-5">
           <!--Form Title-->
-          <img mat-card-image [src]="logo" alt="Simplexam logo" class="logo">
+          <img mat-card-image [src]="nav_logo" alt="Simplexam logo" class="logo">
           <div class="auth-header-1 p-t-10">
-            <mat-card-title class="auth-tilte">Sign Up</mat-card-title>
+            <mat-card-title class="auth-tilte">Welcome</mat-card-title>
             <app-error *ngIf="error" [data]="error"></app-error>
           </div>
           <mat-card-content>
@@ -27,9 +27,15 @@
                 <mat-label>Middle name/MI</mat-label>
                 <input matInput placeholder="Middle name/MI" formControlName="middleInitial" autocomplete="off">
               </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="100">
-                <mat-label>Company name</mat-label>
-                <input matInput placeholder="Company name" formControlName="companyName" autocomplete="off">
+              <div fxFlex="100" class="m-b-20" >  
+                <mat-radio-group class="" formControlName="orgStatus">
+                  <mat-radio-button value="true" checked>Organization</mat-radio-button>
+                  <mat-radio-button value="false" class="p-l-30">Individual</mat-radio-button>
+              </mat-radio-group>
+              </div>
+              <mat-form-field appearance="outline" fxFlex="100" *ngIf="registerForm.value.orgStatus == 'true'">
+                <mat-label>Organization name *</mat-label>
+                <input matInput placeholder="Organization name" formControlName="companyName" autocomplete="off">
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidcompanyname}}</mat-error>
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="100">
@@ -57,21 +63,23 @@
               </mat-form-field>
               <div class="re-captcha-error">
                 <re-captcha formControlName="captcha" name="captcha" required></re-captcha>
-                <mat-error class="note" *ngIf="isSubmitted && (formControls.captcha.errors || !formControls.captcha.value)">{{errorMessages?.imnotrobot}}</mat-error>
+                <mat-error class="note"
+                  *ngIf="isSubmitted && (formControls.captcha.errors || !formControls.captcha.value)">
+                  {{errorMessages?.imnotrobot}}</mat-error>
               </div>
               <div class="p-t-5 p-b-5 checkbox">
-                <mat-checkbox name="policy" formControlName="policy"> Agree the terms and conditions
+                <mat-checkbox name="policy" formControlName="policy"> I agree with the terms and conditions
                 </mat-checkbox>
                 <mat-error *ngIf="isSubmitted && (formControls.policy.errors || !formControls.policy.value)"
                   class="note">{{errorMessages?.agreeterms}}
                 </mat-error>
               </div>
 
-              <button mat-raised-button color="primary" type="submit" class="authentication-btn">Sign up<i
-                  class="fa fa-arrow-right"></i></button>
+              <button mat-raised-button color="primary" type="submit" class="authentication-btn">Sign Up</button>
             </form>
             <div class="new-account">Already have an account? <span routerLink="/login">Sign In</span></div>
           </mat-card-content>
+          <img mat-card-image [src]="icon_logo" alt="Simplexam logo" class="text-center bottom-icon">
         </mat-card>
       </div>
     </div>
