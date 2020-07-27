@@ -16,6 +16,8 @@ import { Title } from '@angular/platform-browser';
 })
 export class ForgotPasswordVerifyComponent implements OnInit {
   logo = globals.logo
+  nav_logo = globals.nav_logo
+  icon_logo = globals.icon_logo
   forgotVerifyForm: FormGroup;
   isSubmitted = false;
   errorMessages = errors;

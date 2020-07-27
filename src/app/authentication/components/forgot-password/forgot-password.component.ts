@@ -18,6 +18,8 @@ export class ForgotPasswordComponent implements OnInit {
   isSubmitted = false;
   passwordFieldType: boolean;
   logo = globals.logo;
+  nav_logo = globals.nav_logo;
+  icon_logo = globals.icon_logo;
   errorMessages = errors;
   error: any;
   constructor(

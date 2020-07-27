@@ -16,6 +16,8 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 })
 export class UserVerificationComponent implements OnInit {
   logo = globals.logo
+  nav_logo = globals.nav_logo
+  icon_logo = globals.icon_logo  
   verificationForm: FormGroup;
   isSubmitted = false;
   errorMessages = errors;
