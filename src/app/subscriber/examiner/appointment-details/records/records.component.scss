@@ -14,6 +14,11 @@
 ::ng-deep .mat-progress-bar-buffer {
     background: $progres-light-gray;
 }
+.scroll_ {
+    min-height: 300px;
+    max-height: 300px;
+    overflow: scroll;
+}
 
 th {
     ::ng-deep .mat-checkbox .mat-checkbox-frame {
@@ -36,4 +41,9 @@ th {
 .width-fixed {
     width: 25px !important;
     padding-right: 0px !important;
+}
+.upload-file {
+    .mat-form-field {
+        width: 80%;
+    }
 }
