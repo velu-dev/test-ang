@@ -98,7 +98,7 @@ export class NewBillableItemComponent implements OnInit {
           this.billable_item.patchValue(res['data'])
           //this.examinarChange(res['data'].)
           if (res['data'].appointment.examiner_id != null) {
-            let ex = { value: res['data'].appointment.examiner_id, address_id: res['data'].appointment.examination_location_id }
+            let ex = { value: res['data'].appointment.examiner_id, address_id: res['data'].appointment.examiner_service_location_id }
             this.examinarChange(ex)
           }
           this.contactType = res['data'].intake_call.call_type
@@ -123,7 +123,7 @@ export class NewBillableItemComponent implements OnInit {
         examiner_id: [null],
         appointment_scheduled_date_time: [null],
         duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
-        examination_location_id: [null]
+        examiner_service_location_id: [null]
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [null],
@@ -239,7 +239,7 @@ export class NewBillableItemComponent implements OnInit {
   changeExaminarAddress(address) {
     this.billable_item.patchValue({
       appointment: {
-        examination_location_id: address.address_id
+        examiner_service_location_id: address.address_id
       }
     })
     this.isAddressSelected = true;

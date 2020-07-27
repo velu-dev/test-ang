@@ -184,7 +184,7 @@ export class AppointmentDetailsComponent implements OnInit {
         console.log("billable", bills)
         this.isBillabbleItemLoading = false;
         if (bills['data'].appointment.examiner_id != null) {
-          let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examination_location_id }
+          let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examiner_service_location_id }
           this.examinarChange(ex)
         }
         if (bills['data'].exam_type.primary_language_spoken) {
@@ -250,7 +250,7 @@ export class AppointmentDetailsComponent implements OnInit {
         examiner_id: [{ value: '', disable: true }],
         appointment_scheduled_date_time: [{ value: '', disable: true }],
         duration: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
-        examination_location_id: [{ value: '', disable: true }]
+        examiner_service_location_id: [{ value: '', disable: true }]
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [{ value: '', disable: true }],
@@ -403,7 +403,7 @@ export class AppointmentDetailsComponent implements OnInit {
   changeExaminarAddress(address) {
     this.billable_item.patchValue({
       appointment: {
-        examination_location_id: address.address_id
+        examiner_service_location_id: address.address_id
       }
     })
   }

@@ -201,7 +201,7 @@ const routes: Routes = [{
   }]
 },
 {
-  path: "new-claim",
+  path: "new-intake",
   component: NewClaimComponent
 },
 {

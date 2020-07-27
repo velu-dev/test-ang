@@ -645,7 +645,7 @@
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Location</mat-label>
-                            <mat-select [disabled]="!isEditBillableItem" formControlName="examination_location_id">
+                            <mat-select [disabled]="!isEditBillableItem" formControlName="examiner_service_location_id">
                                 <mat-option *ngFor="let address of examinarAddress"
                                     (click)="changeExaminarAddress(address)" [value]="address.address_id">
                                     {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}

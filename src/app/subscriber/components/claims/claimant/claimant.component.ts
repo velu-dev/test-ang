@@ -86,7 +86,7 @@ export class ClaimantComponent implements OnInit {
       res.data.map(claim => {
         claim.date_of_birth = claim.date_of_birth ? moment(claim.date_of_birth).format("MM-DD-YYYY") : '';
         claim.date_of_injury = claim.date_of_injury ? moment(claim.date_of_injury).format("MM-DD-YYYY") : '';
-        claim.examiner = claim.ex_last_name + ' ' + claim.ex_first_name+''+ (claim.ex_suffix ? ', '+claim.ex_suffix : '');
+        claim.examiner = claim.ex_last_name + ' ' + claim.ex_first_name + '' + (claim.ex_suffix ? ', ' + claim.ex_suffix : '');
         claim.claimant_name = claim.last_name + ', ' + claim.first_name;
       })
       this.users = res.data;
@@ -127,6 +127,9 @@ export class ClaimantComponent implements OnInit {
     if (this.isMobile) {
       this.expandId = element.id;
     }
+  }
+  openClaimant() {
+    this.router.navigate(['subscriber/claims/new-claim'])
   }
 
 }
