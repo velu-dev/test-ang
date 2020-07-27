@@ -74,13 +74,14 @@ export class ManageLocationComponent implements OnInit {
       response['data'].map(data=>{ 
         data.status = data.is_active == true ? 'Active' : 'In Active';
         data.examiner_name = data.examiner != null ? data.examiner[0].last_name + ' '+ data.examiner[0].first_name +''+ (data.examiner[0].suffix ? ', '+data.examiner[0].suffix : '') : null;
-         data.service =  data.service_code + '' + data.service_name ? ' - ' + data.service_name : '';
+         data.service =  data.service_name ? data.service_code +' - ' + data.service_name : '';
+         console.log(data.service)
       })
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
       this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return (data.service_name && data.service_name.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter)) || (data.status && data.status.toLowerCase().includes(filter));
+        return (data.service && data.service.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.examiner_name && data.examiner_name.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter)) || (data.status && data.status.toLowerCase().includes(filter));
       };
     }, error => {
       console.log(error)
