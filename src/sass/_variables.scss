@@ -659,8 +659,8 @@ input:-webkit-autofill {
 .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
   color: rgba(0, 0, 0, 0.7) !important;
 }
-.mat-input-element:disabled, 
-.mat-form-field-type-mat-native-select.mat-form-field-disabled, 
+.mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled,
 .mat-form-field-infix::after {
   color: rgba(0, 0, 0, 0.7) !important;
 }
@@ -863,14 +863,18 @@ input:-webkit-autofill {
 }
 
 // On Demand Pages Information Icon
-.ondemand-info{
-  padding: 5px;
+.ondemand-info {
   border-radius: 50px;
   border: 2px solid $black;
-  font-size: $font-size-12 !important;
-  width: 5px;
+  width: 15px;
+  height: 15px;
   line-height: .5;
-  height: 5px;
-  cursor: pointer;
   vertical-align: middle;
+  text-align: center;
+  display: inline-table;
+  cursor: pointer;
+  i {
+    font-size: $font-size-12 !important;
+    line-height: 0;
+  }
 }
