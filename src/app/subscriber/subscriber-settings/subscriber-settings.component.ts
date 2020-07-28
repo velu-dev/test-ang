@@ -38,7 +38,7 @@ export class SubscriberSettingsComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource:any = new MatTableDataSource([]);
+  dataSource: any = new MatTableDataSource([]);
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
@@ -96,9 +96,6 @@ export class SubscriberSettingsComponent implements OnInit {
       if (res.data.organization_type == 'INDV') {
         res.data.company_name = '';
       }
-      delete res.data.organization_type;
-      delete res.data.business_nature;
-      delete res.data.logo;
       let userDetails;
       this.first_name = res.data.first_name;
       if (res.data.role_id == 2) {
@@ -145,11 +142,12 @@ export class SubscriberSettingsComponent implements OnInit {
         last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
         middle_name: ['', Validators.compose([Validators.maxLength(50)])],
         suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
-        company_name: [{ value: "", disabled: false }, Validators.compose([Validators.required, Validators.maxLength(100)])],
+        company_name: [''],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         signature: [''],
         is_new_signature: [false]
       });
+
     } else {
       this.userForm = this.formBuilder.group({
         id: [''],
@@ -184,7 +182,15 @@ export class SubscriberSettingsComponent implements OnInit {
 
 
   userformSubmit() {
-
+    if (this.user.role_id == 2) {
+      console.log(this.user)
+        if (this.user.organization_type == 'INDV') {
+          this.userForm.get('company_name').setValidators([Validators.maxLength(100)]);
+        } else {
+          this.userForm.get('company_name').setValidators([Validators.compose([Validators.required,Validators.maxLength(100)])]);
+        }
+        this.userForm.get('company_name').updateValueAndValidity();
+    }
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
@@ -265,7 +271,7 @@ export class SubscriberSettingsComponent implements OnInit {
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
         this.alertService.openSnackBar("This file too long", 'error');
-        let title= 'Selected Signature File : '+ fileName +' file size is '+ FileSize +'KB is too large.'
+        let title = 'Selected Signature File : ' + fileName + ' file size is ' + FileSize + 'KB is too large.'
         //this.openDialog(title,'File size should be less than 500KB !')
         return;
       }

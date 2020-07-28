@@ -12,7 +12,7 @@
             <!-- <img mat-card-image [src]="simplexam_logo" alt="Lucy logo" class="logo logo-white">
             <span class="p-l-4 expanded_"> Simplexam</span> -->
         </mat-toolbar>
-        <span *ngIf="is_subscriber == 'true'">
+        <span *ngIf="is_subscriber == 'true' && sameAsExaminer">
             <a mat-raised-button *ngIf="roleId == 2" (click)="changeRole()" class="text-center switched_account">
                 <img [src]="switch_user" alt="Switch to Examiner" class="role_change">
                 <span class="expanded_ p-l-10"> Switch to Examiner</span>

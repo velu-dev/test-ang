@@ -23,7 +23,11 @@ export class UserService {
         return this.http.get(environment.baseUrl + api_endpoint.changeRole)
     }
 
-    getProfile(): Observable<any>{
+    getProfile(): Observable<any> {
         return this.http.get(environment.baseUrl + api_endpoint.subscriberProfile);
-      }
+    }
+
+    verifyUserRole(): Observable<any> {
+        return this.http.get(environment.baseUrl + api_endpoint.verifyUserRole)
+    }
 }

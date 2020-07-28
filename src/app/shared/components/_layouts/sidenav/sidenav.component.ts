@@ -48,6 +48,7 @@ export class SidenavComponent implements OnInit {
   role: any;
   is_subscriber: any;
   isOpen: any = true;
+  sameAsExaminer: boolean = false;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private router: Router,
@@ -70,6 +71,14 @@ export class SidenavComponent implements OnInit {
 
   }
   ngOnInit() {
+    if (this.is_subscriber) {
+      this.userService.verifyUserRole().subscribe(role => {
+        this.sameAsExaminer = role.status;
+      }, error => {
+        console.log(error.error.status)
+        this.sameAsExaminer = false;
+      })
+    }
 
   }
   ngAfterViewInit() {
