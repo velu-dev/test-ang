@@ -82,11 +82,11 @@ export class RecordsComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "File Name"]
-        this.columnsToDisplay = ['is_expand', 'file_name']
+        this.columnName = ["", "File Name", "Download"]
+        this.columnsToDisplay = ['is_expand', 'file_name', "download"]
       } else {
-        this.columnName = ["File Name", "Request Rush", "Request Date"]
-        this.columnsToDisplay = ['file_name', 'request_rush', "request_date"]
+        this.columnName = ["File Name", "Request Rush", "Request Date", "Download"]
+        this.columnsToDisplay = ['file_name', 'request_rush', "request_date", "download"]
       }
     })
     this.isHandset$.subscribe(res => {

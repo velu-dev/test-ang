@@ -81,11 +81,11 @@ export class ReportComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "File Name",]
-        this.columnsToDisplay = ['is_expand', 'file_name']
+        this.columnName = ["", "File Name", "Download"]
+        this.columnsToDisplay = ['is_expand', 'file_name', 'download']
       } else {
-        this.columnName = ["File Name", "Request Rush", "Request Date"]
-        this.columnsToDisplay = ['file_name', 'request_rush', "request_date"]
+        this.columnName = ["File Name", "Request Rush", "Request Date", "Download"]
+        this.columnsToDisplay = ['file_name', 'request_rush', "request_date", 'download']
       }
     })
     this.isHandset$.subscribe(res => {
@@ -114,9 +114,9 @@ export class ReportComponent implements OnInit {
 }
 
 const ELEMENT_DATA2 = [
-  { "id": 143, "file_name": "Report Template", "request_rush": "Yes", "request_date": "01-02-2020", "Download":"" },
-  { "id": 143, "file_name": "Medical History Questionnaire", "request_rush": "Yes", "request_date": "01-02-2020", "Download":"" },
-  { "id": 143, "file_name": "Dictated Report Audio Recording.mp3", "request_rush": "Yes", "request_date": "01-02-2020", "Download":"" },
+  { "id": 143, "file_name": "Report Template", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
+  { "id": 143, "file_name": "Medical History Questionnaire", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
+  { "id": 143, "file_name": "Dictated Report Audio Recording.mp3", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
 ];
 
 const ELEMENT_DATA3 = [

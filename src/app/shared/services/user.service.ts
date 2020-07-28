@@ -26,7 +26,8 @@ export class UserService {
     getProfile(): Observable<any> {
         return this.http.get(environment.baseUrl + api_endpoint.subscriberProfile);
     }
-    verifyRole(): Observable<any> {
-        return this.http.get(environment.baseUrl + api_endpoint.verifyRole)
+
+    verifyUserRole(): Observable<any> {
+        return this.http.get(environment.baseUrl + api_endpoint.verifyUserRole)
     }
 }

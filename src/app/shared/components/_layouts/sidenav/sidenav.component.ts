@@ -72,7 +72,7 @@ export class SidenavComponent implements OnInit {
   }
   ngOnInit() {
     if (this.is_subscriber) {
-      this.userService.verifyRole().subscribe(role => {
+      this.userService.verifyUserRole().subscribe(role => {
         this.sameAsExaminer = role.status;
       }, error => {
         console.log(error.error.status)
