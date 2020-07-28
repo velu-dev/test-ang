@@ -715,7 +715,13 @@ export class NewClaimComponent implements OnInit {
     console.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
     if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
-        this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: res.data.exam_type_id, wcab_number: res.data.wcab_number }
+        let examtype = "";
+        this.examTypes.map(exam => {
+          if (res.data.exam_type_id == exam.id) {
+            examtype = exam.exam_type_code + " - " + exam.exam_name;
+          }
+        })
+        this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: examtype, wcab_number: res.data.wcab_number }
         this.isClaimCreated = true;
         this.claimId = res.data.id;
         this.claim.patchValue({

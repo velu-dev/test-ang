@@ -1019,12 +1019,8 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Exam Type*</mat-label>
-                                <mat-select disabled [(ngModel)]="claimDetails.exam_type_id"
-                                    [ngModelOptions]="{standalone: true}">
-                                    <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
-                                        {{examType.exam_type_code}} - {{examType.exam_name}}
-                                    </mat-option>
-                                </mat-select>
+                                <input type="text" matInput placeholder="Enter WCAB Number" autocomplete="off"
+                                    [value]="claimDetails.exam_type_id" disabled>
                                 <mat-error>Please select exam type</mat-error>
                             </mat-form-field>
 
