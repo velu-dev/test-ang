@@ -41,7 +41,8 @@ export class RegisterComponent implements OnInit {
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
       captcha: ['', Validators.required],
-      policy: ['', Validators.required]
+      policy: ['', Validators.required],
+      orgStatus: ['true',Validators.required]
     });
   }
   get formControls() { return this.registerForm.controls; }
@@ -55,6 +56,13 @@ export class RegisterComponent implements OnInit {
   registerSubmit() {
     this.isSubmitted = true;
     this.error = '';
+    if (this.registerForm.value.orgStatus == 'true') {
+      this.registerForm.get('companyName').setValidators([Validators.required]);
+    } else {
+      this.registerForm.get('companyName').setValidators([]);
+    }
+    this.registerForm.get('companyName').updateValueAndValidity();
+
     Object.keys(this.registerForm.controls).forEach((key) => {
       if (this.registerForm.get(key).value && typeof (this.registerForm.get(key).value) == 'string')
         this.registerForm.get(key).setValue(this.registerForm.get(key).value.trim())

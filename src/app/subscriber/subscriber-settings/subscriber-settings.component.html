@@ -66,7 +66,7 @@
                                     </div>
 
                                     <mat-form-field appearance="outline" fxFlex="100" class="m-t-5">
-                                        <mat-label>Company Name*</mat-label>
+                                        <mat-label>Company Name{{user?.organization_type != 'INDV' ? '*' : ''}}</mat-label>
                                         <input matInput placeholder="Company Name" formControlName="company_name"
                                             autocomplete="off">
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidcompanyname}}</mat-error>
