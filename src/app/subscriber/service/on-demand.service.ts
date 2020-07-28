@@ -12,4 +12,7 @@ export class OnDemandService {
   constructor(private http: HttpClient) {
 
   }
+  getCorrespondingData(claim_id, bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getcorrespondence_data + claim_id + "/" + bill_item_id)
+  }
 }

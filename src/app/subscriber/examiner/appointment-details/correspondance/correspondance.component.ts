@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute } from '@angular/router';
+import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 export interface PeriodicElement {
   name: string;
 }
@@ -131,11 +132,13 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
   claim_id: any;
   billableId: any;
-  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute) {
+  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private onDemandService: OnDemandService) {
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
       this.billableId = params.billId;
-      console.log(this.claim_id, this.billableId)
+      this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
+        console.log(res)
+      })
     })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;

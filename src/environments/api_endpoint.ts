@@ -128,4 +128,7 @@ export const api_endpoint = {
     formUrl: "form/",
     //Billable item
     updateExamType: "billable-item/update-examination-status/",
+
+    //Corresponding
+    getcorrespondence_data: "billing/ondemand/correspondence/"
 }
