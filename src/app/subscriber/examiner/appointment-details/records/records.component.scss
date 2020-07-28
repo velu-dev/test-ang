@@ -34,9 +34,6 @@ th {
 .ondemand-status {
     padding: 10px 0px;
 }
-.float-right {
-    float: right;
-}
 
 .width-fixed {
     width: 25px !important;
@@ -45,5 +42,20 @@ th {
 .upload-file {
     .mat-form-field {
         width: 80%;
+    }
+}
+
+.ondemand_request {
+    mat-checkbox {
+        display: block;
+        margin-bottom: 20px;
+    }
+    .outline-warning {
+        float: right;
+        margin-top: 45px;
+        @media only screen and (max-width: 568px) {
+            float: left;
+            margin-top: 20px;
+        }
     }
 }

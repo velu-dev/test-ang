@@ -94,8 +94,9 @@
                 <div>
                   <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                   <span *ngIf="column == 'date_uploaded'" class="no-wrap-td">{{element?.date_uploaded}}</span>
-                  <span *ngIf="column == 'download'">
+                  <span *ngIf="column == 'action'"  class="text-center">
                     <a class="text-success">Download</a>
+                    <a class="text-danger p-l-20">Remove</a>
                   </span>
                 </div>
               </td>
@@ -106,8 +107,9 @@
                   <div class="resposive-table">
                     <div><span>File Name</span> {{element?.file_name}} </div>
                     <div class="no-wrap-td"><span>Date Uploaded</span> {{element?.date_uploaded}} </div>
-                    <div><span>Download</span>
+                    <div class="text-center"><span>Action</span>
                       <a class="text-success">Download</a>
+                      <a class="text-danger p-l-20">Remove</a>
                     </div>
                   </div>
                 </div>

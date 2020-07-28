@@ -657,11 +657,12 @@ input:-webkit-autofill {
 
 // Form fields disabled label color
 .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
-  color: rgba(0, 0, 0, 0.6) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
 }
-.mat-input-element:disabled,
-.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
-  color: rgba(0, 0, 0, 0.7);
+.mat-input-element:disabled, 
+.mat-form-field-type-mat-native-select.mat-form-field-disabled, 
+.mat-form-field-infix::after {
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 .mat-select-disabled .mat-select-value,
 .mat-checkbox-disabled .mat-checkbox-label {
@@ -859,4 +860,16 @@ input:-webkit-autofill {
   border: 1px dashed $ternary;
   display: block;
   margin: 10px 0;
+}
+
+// On Demand Pages Information Icon
+.ondemand-info{
+  padding: 5px;
+  border-radius: 50px;
+  border: 2px solid $black;
+  font-size: $font-size-12 !important;
+  width: 5px;
+  line-height: .5;
+  height: 5px;
+  cursor: pointer;
 }

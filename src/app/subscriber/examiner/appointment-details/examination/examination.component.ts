@@ -80,11 +80,11 @@ export class ExaminationComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "File Name", "Download"]
-        this.columnsToDisplay = ['is_expand', 'file_name', 'download']
+        this.columnName = ["", "File Name", "Action"]
+        this.columnsToDisplay = ['is_expand', 'file_name', 'action']
       } else {
-        this.columnName = ["File Name", "Date Uploaded", "Download"]
-        this.columnsToDisplay = ['file_name', "date_uploaded",'download']
+        this.columnName = ["File Name", "Date Uploaded", "Action"]
+        this.columnsToDisplay = ['file_name', "date_uploaded",'action']
       }
     })
   }
@@ -102,7 +102,7 @@ export class ExaminationComponent implements OnInit {
 
 const ELEMENT_DATA2 = [
   { "id": 143, "file_name": "Depression/Anxiety Inventories", "date_uploaded": "01-02-2020", "Download":"" },
-  { "id": 143, "file_name": "DWC-AD 100 (DEU 100)", "date_uploaded": "01-02-2020", "Download":"" },
-  { "id": 143, "file_name": "Personality Inventories", "date_uploaded": "01-02-2020", "Download":"" },
+  { "id": 142, "file_name": "DWC-AD 100 (DEU 100)", "date_uploaded": "01-02-2020", "Download":"" },
+  { "id": 141, "file_name": "Personality Inventories", "date_uploaded": "01-02-2020", "Download":"" },
 ];
 

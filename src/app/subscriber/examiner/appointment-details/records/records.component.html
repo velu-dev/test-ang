@@ -79,16 +79,17 @@
 
   <div class="border-dashed-blue m-t-30 m-b-30"></div>
 
-  <div fxLayout="row wrap">
-    <div fxFlex="50" class="text-center">
-      <mat-checkbox>Rush Request?</mat-checkbox>
+  <div fxLayout="row wrap" class="ondemand_request">
+    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+      <div>
+        <mat-checkbox>Rush Request?</mat-checkbox>
+        <button mat-stroked-button class="outline-success huge-btn">
+          Mail On Demand
+        </button>
+      </div>
     </div>
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-      <button mat-stroked-button class="outline-success huge-btn">
-        Mail On Demand
-      </button>
-      <span spacer></span>
-      <button mat-stroked-button class="outline-warning float-right huge-btn">
+      <button mat-stroked-button class="outline-warning huge-btn">
         Download
       </button>
     </div>
@@ -120,6 +121,9 @@
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'request_rush'" class="no-wrap-td">{{element?.request_rush}}</span>
                 <span *ngIf="column == 'request_date'" class="no-wrap-td">{{element?.request_date}}</span>
+                <span *ngIf="column == 'download'">
+                  <a class="text-success">Download</a>
+                </span>
               </div>
             </td>
           </ng-container>
@@ -130,6 +134,9 @@
                   <div><span>File Name</span> {{element?.file_name}} </div>
                   <div class="no-wrap-td"><span>Rush Request?</span> {{element?.request_rush}} </div>
                   <div class="no-wrap-td"><span>Date Requested</span> {{element?.request_date}} </div>
+                  <div><span>Download</span>
+                    <a class="text-success">Download</a>
+                  </div>
                 </div>
               </div>
             </td>
