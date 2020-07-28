@@ -5,6 +5,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { ActivatedRoute } from '@angular/router';
 export interface PeriodicElement {
   name: string;
 }
@@ -128,7 +129,14 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
     return `${this.selection1.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
   }
-  constructor(private breakpointObserver: BreakpointObserver) {
+  claim_id: any;
+  billableId: any;
+  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      this.claim_id = params.id;
+      this.billableId = params.billId;
+      console.log(this.claim_id, this.billableId)
+    })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
