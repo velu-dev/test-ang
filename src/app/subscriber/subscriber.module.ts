@@ -61,6 +61,7 @@ import { ExaminationComponent } from './examiner/appointment-details/examination
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
 import { BillingCorrespondanceComponent } from './examiner/appointment-details/correspondance/correspondance.component';
 import { BilllableBillingComponent } from './examiner/appointment-details/billing/billing.component';
+import { OnDemandService } from './service/on-demand.service';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -147,6 +148,6 @@ import { BilllableBillingComponent } from './examiner/appointment-details/billin
     FullCalendarModule,
     ImageCropperModule
   ],
-  providers: [SubscriberUserService, ClaimService, ExaminerService, SubscriberService]
+  providers: [SubscriberUserService, ClaimService, ExaminerService, SubscriberService, OnDemandService]
 })
 export class SubscriberModule { }
