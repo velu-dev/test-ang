@@ -66,7 +66,8 @@ export class NewBillableItemComponent implements OnInit {
       this.claimantId = param.claimant;
       this.claimService.getClaim(this.claimId).subscribe(claim => {
         //to send claim details exam type
-        this.claimService.getProcedureType(claim.data.exam_type.procedure_type).subscribe(res => {
+        console.log(claim)
+        this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(res => {
           this.procuderalCodes = res.data;
         })
         this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number }
