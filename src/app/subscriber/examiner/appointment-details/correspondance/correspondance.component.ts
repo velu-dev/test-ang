@@ -54,7 +54,9 @@ export class BillingCorrespondanceComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource2 = ELEMENT_DATA2;
+  sentDocuments: any;
+  documents: any;
+  // dataSource2 = ELEMENT_DATA2;
   columnsToDisplay = [];
   dataSource3 = ELEMENT_DATA3;
   columnsToDisplay1 = [];
@@ -137,7 +139,8 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.claim_id = params.id;
       this.billableId = params.billId;
       this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
-        console.log(res)
+        // this.sentDocuments = new MatTableDataSource(res.);
+        this.documents = res.documets
       })
     })
     this.isHandset$.subscribe(res => {
