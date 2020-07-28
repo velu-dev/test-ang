@@ -1,16 +1,23 @@
 <mat-card>
     <mat-card-header>
-        <!-- <div class="content-wrapper-main-title p-t-10 m-b-10">Claim - Internal Reference Number {{claimDetail?.internal_reference}}</div> -->
-        <div class="content-wrapper-main-title p-t-10 m-b-10"> Claim Information</div>           
-        <span class="spacer"></span>
+        <div fxLayout="row wrap" class="w-100">
+            <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
+                <div class="content-wrapper-main-title p-t-10 m-b-10"> Claim Information</div>
+            </div>
+            <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
+                <div class="content-wrapper-main-title p-t-10 m-b-10 text-center">Internal Reference:
+                    {{claimDetail?.internal_reference}}</div>
 
-        <button *ngIf="!isEdit" mat-stroked-button (click)="editClick()" class="m-b-5 outline-success">
-            Edit
-        </button>
-        <button *ngIf="isEdit" (click)="updateClaim()" mat-stroked-button 
-            class="m-b-5 filled-success">
-            Save
-        </button>
+            </div>
+            <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="text-right">
+                <button *ngIf="!isEdit" mat-stroked-button (click)="editClick()" class="m-b-5 outline-success float-right">
+                    Edit
+                </button>
+                <button *ngIf="isEdit" (click)="updateClaim()" mat-stroked-button class="m-b-5 filled-success float-right">
+                    Save
+                </button>
+            </div>
+        </div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="p-b-15 claim_info m-t-15">
@@ -70,10 +77,9 @@
                 </mat-form-field>
                 <div class="text-center w-100 m-t-10" *ngIf="isEdit">
 
-                    <button mat-stroked-button type="button" (click)="cancel();isEdit = false" class="m-r-10 outline-danger"
-                        color="warn">Cancel</button>
-                    <button mat-stroked-button  class="outline-success"
-                        (click)="updateClaim()">
+                    <button mat-stroked-button type="button" (click)="cancel();isEdit = false"
+                        class="m-r-10 outline-danger" color="warn">Cancel</button>
+                    <button mat-stroked-button class="outline-success" (click)="updateClaim()">
                         Save </button>
                 </div>
             </form>

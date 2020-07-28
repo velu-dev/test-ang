@@ -36,6 +36,7 @@ export class AppointmentDetailsComponent implements OnInit {
   xls_1 = globals.xls_1
   docx = globals.docx
   pdf = globals.pdf
+  simplexam_service = globals.simplexam_service
   isMobile: boolean;
   claim_id: any;
   examinationDetails: any;
