@@ -96,7 +96,7 @@ export const ROUTES = [
             title: 'Edit User',
             icon: 'dashboard',
             submenu: []
-        },{
+        }, {
             path: '/subscriber/users/new-examiner',
             title: 'New User',
             icon: 'dashboard',
@@ -155,7 +155,7 @@ export const ROUTES = [
         group: "Subscriber",
         role: 2
     }, {
-        path: '/subscriber/new-claim',
+        path: '/subscriber/new-intake',
         title: 'Claimant Intake',
         icon: 'dashboard',
         submenu: []
@@ -170,7 +170,7 @@ export const ROUTES = [
             //     icon: 'dashboard',
             //     submenu: []
             // },
-             {
+            {
                 path: '/subscriber/claims/edit-claim',
                 title: 'Claim',
                 icon: 'dashboard',
@@ -254,7 +254,7 @@ export const ROUTES = [
             title: 'User',
             icon: 'dashboard',
             submenu: []
-        },{
+        }, {
             path: '/subscriber/manager/staff/edit',
             title: 'User',
             icon: 'dashboard',

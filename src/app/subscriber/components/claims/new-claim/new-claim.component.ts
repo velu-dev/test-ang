@@ -224,6 +224,13 @@ export class NewClaimComponent implements OnInit {
           map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
         );
     })
+    console.log(this.router.url)
+    if (this.router.url === "/subscriber/claims/new-claim") {
+      console.log("dsdsdss")
+      this.isRemoveSearchRemove = true;
+      this.isNewClaim = true;
+      this.addNewClaimant = true;
+    }
 
     this.route.params.subscribe(param => {
       if (param.claimant_id) {
@@ -306,7 +313,7 @@ export class NewClaimComponent implements OnInit {
             }
           })
           if (res.data.appointments.examiner_id != null) {
-            let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examination_location_id }
+            let ex = { id: res.data.appointments.examiner_id, address_id: res.data.appointments.examiner_service_location_id }
             this.examinarChange(ex)
           }
 
@@ -591,7 +598,7 @@ export class NewClaimComponent implements OnInit {
         examiner_id: [null],
         appointment_scheduled_date_time: [null],
         duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
-        examination_location_id: [null]
+        examiner_service_location_id: [null]
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [null],
@@ -613,8 +620,7 @@ export class NewClaimComponent implements OnInit {
     this.correspondenceSource = new MatTableDataSource([]);
     this.claimant.valueChanges.subscribe(
       value => {
-        if (!this.isclaimantfill)
-          this.claimantChanges = true;
+        this.claimantChanges = true;
       }
     );
 
@@ -658,11 +664,17 @@ export class NewClaimComponent implements OnInit {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
+      if (this.claimant.invalid) {
+        return
+      }
       if (this.claimantChanges) {
         this.createClaimant('tab');
       }
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
+      if (this.claim.invalid) {
+        return
+      }
       if (this.claimantChanges) {
         this.createClaimant('tab');
       }
@@ -798,7 +810,8 @@ export class NewClaimComponent implements OnInit {
       if (this.claimChanges) {
         this.submitClaim('close')
       }
-      this.routeDashboard();
+      // this.routeDashboard();
+      this.router.navigate(['/subscriber/appointment/appointment-details', this.claimId, res.data.id])
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -836,13 +849,6 @@ export class NewClaimComponent implements OnInit {
       //   }
       //   return;
       // } else {
-      if (status == 'close') {
-        if (this.claimant.invalid) {
-          console.log("claimant", this.claimant)
-          return;
-        }
-        this.routeDashboard();
-      }
       // } 
       this.claimantChanges = false;
       Object.keys(this.claimant.controls).forEach((key) => {
@@ -908,13 +914,6 @@ export class NewClaimComponent implements OnInit {
           this.claimService.updateClaimant(data).subscribe(res => {
             this.alertService.openSnackBar(res.message, "success");
             this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
-            if (status == 'next') {
-
-              this.stepper.next();
-
-            } else if (status == 'save') {
-              this.routeDashboard();
-            }
             this.claimantChanges = false;
             this.claim.patchValue({
               claim_details: {
@@ -932,12 +931,26 @@ export class NewClaimComponent implements OnInit {
                 phone_no_1: res.data.phone_no_1
               }
             })
+            if (status == 'next') {
+              this.stepper.next();
+            } else if (status == 'save') {
+              this.routeDashboard();
+            } else if (status == 'close') {
+              this.routeDashboard();
+            }
           }, error => {
             this.isClaimantCreated = false;
             this.alertService.openSnackBar(error.error.message, 'error');
           })
       }
     } else {
+      if (status == 'close') {
+        if (this.claimant.invalid) {
+          return;
+        }
+        this.routeDashboard();
+        return
+      }
       this.stepper.next();
     }
   }
@@ -1116,7 +1129,7 @@ export class NewClaimComponent implements OnInit {
     console.log(address)
     this.billable_item.patchValue({
       appointment: {
-        examination_location_id: address.address_id
+        examiner_service_location_id: address.address_id
       }
     })
     this.isAddressSelected = true;
