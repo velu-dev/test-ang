@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-records',
@@ -40,6 +41,9 @@ export class RecordsComponent implements OnInit {
   columnName1 = [];
   filterValue: string;
 
+  paramsId: any;
+  rocardData: any;
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -62,7 +66,16 @@ export class RecordsComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
   }
 
-  constructor(private breakpointObserver: BreakpointObserver,private onDemandService:OnDemandService) {
+  constructor(private breakpointObserver: BreakpointObserver,
+    private route: ActivatedRoute,
+    private onDemandService: OnDemandService) {
+
+
+    this.route.params.subscribe(param => {
+      console.log(param)
+      this.paramsId = param;
+    })
+
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -87,6 +100,32 @@ export class RecordsComponent implements OnInit {
 
   ngOnInit() {
     //this.onDemandService.getRecords().subscribe()
+
+    this.onDemandService.getRecords(this.paramsId.id, this.paramsId.billId).subscribe(record => {
+      console.log(record, "record")
+      this.rocardData = history;
+      this.rocardData.documets_sent_and_received = [
+        {
+          "on_demand_service_request_id": 71,
+          "on_demand_services_request_docs_id": 139,
+          "transmitted_file_name": "1051031964_RaajanExxRaj_TTTT_1021001739_transcription_01_20200710_120226_446_XP.jpg",
+          "document_id": 1813,
+          "file_name": "canon-powershot-g3-x-sample-images-1-600x400-1593149843695.jpg",
+          transmission_direction: "IN"
+        },
+        {
+          "on_demand_service_request_id": 71,
+          "on_demand_services_request_docs_id": 140,
+          "transmitted_file_name": "1051031964_RaajanExxRaj_TTTT_1021001739_transcription_02_20200710_120228_984_XP.pdf",
+          "document_id": 1814,
+          "file_name": "A Sample PDF-1593149875728.pdf",
+          transmission_direction: "OUT"
+        }
+      ]
+      this.dataSource = new MatTableDataSource(record.documets)
+    }, error => {
+      this.dataSource = new MatTableDataSource([])
+    })
   }
   expandId: any;
   expandId1: any;
@@ -100,9 +139,9 @@ export class RecordsComponent implements OnInit {
 }
 
 const ELEMENT_DATA2 = [
-  { "id": 143, "file_name": "Record Set 1", "request_rush": "Yes", "request_date": "01-02-2020", "Download":"" },
-  { "id": 143, "file_name": "Record Set 2", "request_rush": "Yes", "request_date": "01-02-2020", "Download":"" },
-  { "id": 143, "file_name": "Record Set 3", "request_rush": "Yes", "request_date": "01-02-2020", "Download":"" },
+  { "id": 143, "file_name": "Record Set 1", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
+  { "id": 143, "file_name": "Record Set 2", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
+  { "id": 143, "file_name": "Record Set 3", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
 ];
 
 const ELEMENT_DATA3 = [
