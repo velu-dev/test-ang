@@ -221,9 +221,9 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.getExaminerUser(id).subscribe(res => {
       this.userData = res;
       console.log(res, id)
-      if (res.examiner_id == this.user.id) {
-        this.userForm.disable();
-      }
+      // if (res.examiner_id == this.user.id) {
+      //   this.userForm.disable();
+      // }
       let user = {
         id: res.examiner_details.id,
         first_name: res.examiner_details.first_name,
