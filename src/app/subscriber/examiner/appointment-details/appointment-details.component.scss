@@ -301,9 +301,9 @@
             }
         }
         i {
-            padding: 5px 0px;
             text-align: center;
             font-size: $font-size-17;
+            vertical-align: super;
         }
         div {
             display: inline-block;
@@ -384,6 +384,10 @@
         box-shadow: $shadow-style-one;
         min-height: 300px;
         max-height: 300px;
+    }
+    .scroll_ {
+        height: 400px;
+        overflow: auto;
     }
 }
 .notes-info {
