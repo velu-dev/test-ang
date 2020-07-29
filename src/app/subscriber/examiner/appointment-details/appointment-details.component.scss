@@ -264,15 +264,8 @@
             display: inline-flex;
             .title {
                 padding: 10px 5px 5px 5px;
-                span {
-                    &:first-child {
-                        font-size: $font-size-17;
-                        font-weight: $font-weight-bold;
-                    }
-                }
-                .info {
-                    vertical-align: super;
-                }
+                font-size: $font-size-17;
+                font-weight: $font-weight-bold;
             }
         }
     }
