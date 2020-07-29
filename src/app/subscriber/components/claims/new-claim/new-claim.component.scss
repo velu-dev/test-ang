@@ -26,7 +26,7 @@
       }
       .correspondence-file-upload {
         @media only screen and (max-width: 568px) {
-          margin-bottom: 20px;
+          margin:20px 0 20px 0;
         }
         .Upload_ {
           button {
@@ -53,6 +53,7 @@
           @media only screen and (max-width: 568px) {
             width: 120px;
             padding: 0px 10px !important;
+            margin-top: 10px;
           }
         }
       }
