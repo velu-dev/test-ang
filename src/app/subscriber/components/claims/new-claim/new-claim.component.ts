@@ -425,7 +425,7 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimantEdit = false;
   selectClaimant(option) {
-    console.log(option)
+    this.claimant_id = option.id;
     this.isClaimantEdit = true;
     this.claimant.reset();
     this.claim.reset();
