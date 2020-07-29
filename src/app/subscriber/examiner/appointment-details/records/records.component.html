@@ -1,7 +1,7 @@
 <div class="billable-item-status">
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100">
-      <div class="main-title">Record Summary On Demand Status</div>
+      <div class="main-title">Record Summary On Demand Status  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">View the Record Summary On Demand’s progress here, from beginning to end.</p>
       <mat-progress-bar mode="determinate" value="50" class="not-sent"></mat-progress-bar>
       <div class="text-center">Not Sent</div>
@@ -10,7 +10,7 @@
 
   <div fxLayout="row wrap" class="p-t-25">
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-      <div class="main-title">Record Documents</div>
+      <div class="main-title">Record Documents  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Upload record documents and select the documents
         to send to the record summarizers from this list.</p>
 
@@ -100,7 +100,7 @@
 
   <div fxLayout="row wrap" class="send-document">
     <div fxFlex="100">
-      <div class="main-title">Record Documents Sent</div>
+      <div class="main-title">Record Documents Sent  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">This table lists the documents, actions that were performed on the documents, the date
         <br />
         that the actions were performed and the document recipients.</p>
@@ -153,7 +153,7 @@
 
   <div fxLayout="row wrap" class="proof-of-service m-t-50">
     <div fxFlex="100">
-      <div class="main-title">View Completed Record Summary</div>
+      <div class="main-title">View Completed Record Summary  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">The record summary will be available on this table when it is completed. </p>
       <div class="user-detail height-auto">
         <table mat-table [dataSource]="dataSource3" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>

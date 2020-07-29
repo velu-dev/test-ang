@@ -466,9 +466,11 @@
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="m-auto">
         <div class="text-center service">
             <img [src]="simplexam_service" alt="">
-            <div class="title"> <span>Simple Services</span><span class="m-l-5 info"><i class="fa fa-info ondemand-info"
-                        aria-hidden="true"></i></span></div>
-        </div>
+            <div class="title"> Simple Services</div>
+            <!-- <span class="info ondemand-info">
+                <i class="fa fa-info" aria-hidden="true"></i>
+            </span> -->
+       </div>
     </div>
     <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
         <div class="simple-card" [routerLink]="[status.url]">
@@ -729,6 +731,7 @@
                         <input matInput [(ngModel)]="file" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" hidden
                             accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+                            <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
@@ -788,7 +791,7 @@
                         placeholder="Search by file name, date">
                     <mat-icon>search</mat-icon>
                 </div>
-                <div class="striped_ user-details w-100">
+                <div class="striped_ user-details w-100 scroll_">
                     <table mat-table [dataSource]="documentsData" class="mat-elevation-z8 user-table">
 
                         <ng-container matColumnDef="file_name">
@@ -812,7 +815,7 @@
                             </td>
                         </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsForDocuments"></tr>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsForDocuments; sticky: true"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumnsForDocuments;"></tr>
                     </table>
                     <app-nodata *ngIf="documentsData?.filteredData?.length == 0"></app-nodata>
@@ -835,7 +838,7 @@
         <form [formGroup]="notesForm">
             <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
                 <mat-form-field appearance="outline" fxFlex="100">
-                    <textarea matInput formControlName="exam_notes" placeholder="Note" cdkTextareaAutosize
+                    <textarea matInput formControlName="exam_notes" placeholder="Notes" cdkTextareaAutosize
                         cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"></textarea>
                 </mat-form-field>
                 <div class="text-center w-100 m-t-10 m-b-10 action-button" *ngIf="isNotesEdit">
