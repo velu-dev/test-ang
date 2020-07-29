@@ -371,6 +371,9 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isEditBillableItem = false;
       this.billable_item.disable();
       this.alertService.openSnackBar(res.message, "success");
+      this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+        this.examinationDetails = response['data']
+      })
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
