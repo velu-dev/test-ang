@@ -129,6 +129,11 @@ export const api_endpoint = {
     //Billable item
     updateExamType: "billable-item/update-examination-status/",
 
+    //on-demand
+    getRecords: 'billing/ondemand/records/',
+    getHistory: 'billing/ondemand/history/',
+    getTranscription: 'billing/ondemand/records/',
+    requestCreate: 'service-requests/create',
     //Corresponding
     getcorrespondence_data: "billing/ondemand/correspondence/"
 }

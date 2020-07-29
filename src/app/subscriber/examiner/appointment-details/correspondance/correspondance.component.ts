@@ -5,7 +5,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterState } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 export interface PeriodicElement {
   name: string;
@@ -54,7 +54,9 @@ export class BillingCorrespondanceComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource2 = ELEMENT_DATA2;
+  sentDocuments: any;
+  documents: any;
+  // dataSource2 = ELEMENT_DATA2;
   columnsToDisplay = [];
   dataSource3 = ELEMENT_DATA3;
   columnsToDisplay1 = [];
@@ -132,12 +134,15 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
   claim_id: any;
   billableId: any;
-  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private onDemandService: OnDemandService) {
+  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService) {
+    const state: RouterState = router.routerState;
+    console.log(state)
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
       this.billableId = params.billId;
       this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
-        console.log(res)
+        // this.sentDocuments = new MatTableDataSource(res.);
+        this.documents = res.documets
       })
     })
     this.isHandset$.subscribe(res => {

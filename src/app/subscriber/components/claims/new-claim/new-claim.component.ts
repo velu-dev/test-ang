@@ -248,6 +248,7 @@ export class NewClaimComponent implements OnInit {
             this.addNewClaimant = true;
             this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
+            this.primary_language_spoken = claimant.data[0].primary_language_spoken ? true : false;
             this.claimant.patchValue(claimant.data[0])
             this.isclaimantfill = true;
             this.isClaimantFilled = false;
@@ -426,6 +427,7 @@ export class NewClaimComponent implements OnInit {
   isClaimantEdit = false;
   selectClaimant(option) {
     console.log(option)
+    this.claimant_id = option.id;
     this.isClaimantEdit = true;
     this.claimant.reset();
     this.claim.reset();
@@ -715,7 +717,13 @@ export class NewClaimComponent implements OnInit {
     console.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
     if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
-        this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: res.data.exam_type_id, wcab_number: res.data.wcab_number }
+        let examtype = "";
+        this.examTypes.map(exam => {
+          if (res.data.exam_type_id == exam.id) {
+            examtype = exam.exam_type_code + " - " + exam.exam_name;
+          }
+        })
+        this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: examtype, wcab_number: res.data.wcab_number }
         this.isClaimCreated = true;
         this.claimId = res.data.id;
         this.claim.patchValue({
@@ -1026,7 +1034,8 @@ export class NewClaimComponent implements OnInit {
   // }
   editInjury(element, index) {
     this.isInjuryEdit = true;
-    this.injuryInfo = element;
+    let data = element;
+    this.injuryInfo = data;
     // this.injuryInfodata.splice(index, 1);
     const dialogRef = this.dialog.open(InjuryDialog, {
       width: '800px',
@@ -1502,8 +1511,10 @@ export class NewClaimComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.injuryInfo = result;
-      this.addInjury();
+      if (result) {
+        this.injuryInfo = result;
+        this.addInjury();
+      }
     });
   }
 
@@ -1526,6 +1537,7 @@ export class InjuryDialog {
   claimant: any;
   isLoding: boolean = false;
   minDate: any;
+  injuryData: any;
   constructor(
     public dialogRef: MatDialogRef<InjuryDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -1537,17 +1549,23 @@ export class InjuryDialog {
     this.bodyPartsList = data['bodyparts'];
     if (data['isEdit']) {
       this.injuryInfo = data['injuryData']
+      this.injuryData = data['injuryData']
     }
     this.isLoding = false;
   }
 
   onNoClick(): void {
-    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
-    this.dialogRef.close();
+    this.injuryInfo = this.injuryData;
+    // this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+    this.dialogRef.close(this.injuryInfo);
   }
   addInjury() {
     if (this.injuryInfo.body_part_id.length == 0) {
       this.alertService.openSnackBar("Please select body part", "error")
+      return
+    }
+    if (!this.injuryInfo.date_of_injury) {
+      this.alertService.openSnackBar("Please select injury date", "error")
       return
     }
     if (this.injuryInfo.continuous_trauma) {

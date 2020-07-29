@@ -5,23 +5,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-export interface PeriodicElement {
-  name: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Record Set 1' },
-  { name: 'Record Set 2' },
-  { name: 'Record Set 3' },
-  { name: 'Record Set 4' },
-  { name: 'Record Set 5' },
-  { name: 'Record Set 6' },
-];
-
-
-export interface PeriodicElement1 {
-  name: string;
-}
+import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 
 @Component({
   selector: 'app-records',
@@ -38,8 +22,8 @@ export interface PeriodicElement1 {
 export class RecordsComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'name', 'action'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  dataSource = new MatTableDataSource([]);
+  selection = new SelectionModel();
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -71,14 +55,14 @@ export class RecordsComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
   }
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver,private onDemandService:OnDemandService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -102,6 +86,7 @@ export class RecordsComponent implements OnInit {
   }
 
   ngOnInit() {
+    //this.onDemandService.getRecords().subscribe()
   }
   expandId: any;
   expandId1: any;
