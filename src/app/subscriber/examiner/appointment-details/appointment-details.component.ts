@@ -99,6 +99,7 @@ export class AppointmentDetailsComponent implements OnInit {
   isNotesEdit = false;
   isChecked = false;
   isDisplayStatus: any = { status: false, name: "" };
+  billableData: any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -134,7 +135,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
-        console.log("bills", bills)
+        this.billableData = bills.data;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         this.claimService.getClaim(this.claim_id).subscribe(claim => {
           this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(procedure => {
@@ -299,6 +300,12 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinationStatusForm.disable();
     this.isExaminationStatusEdit = false;
   }
+  billableCancel() {
+    this.billable_item.disable();
+    this.billable_item.patchValue(this.billableData);
+    this.isEditBillableItem = false;
+
+  }
   psychiatric(event) {
     this.isChecked = event.checked;
     this.modifiers = [];
@@ -460,6 +467,7 @@ export class AppointmentDetailsComponent implements OnInit {
     if (!this.selectedFile) {
       this.errors.file.isError = true;
       this.errors.file.error = "Please select file";
+      return;
     }
     if (!this.documentType) {
       this.errors.doc_type.isError = true;
@@ -492,7 +500,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.documentsData.filter = filterValue.trim().toLowerCase();
   }
 
   deleteDocument(data) {

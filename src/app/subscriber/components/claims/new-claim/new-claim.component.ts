@@ -1557,7 +1557,7 @@ export class InjuryDialog {
   onNoClick(): void {
     this.injuryInfo = this.injuryData;
     // this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
-    this.dialogRef.close();
+    this.dialogRef.close(this.injuryInfo);
   }
   addInjury() {
     if (this.injuryInfo.body_part_id.length == 0) {
