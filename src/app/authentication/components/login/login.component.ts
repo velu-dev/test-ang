@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
     this.passwordFieldType = !this.passwordFieldType;
   }
 
-  get formControls() { return this.loginForm.controls; }
+  // get formControls() { return this.loginForm.controls; }
   error: any;
   //login submit
   login() {

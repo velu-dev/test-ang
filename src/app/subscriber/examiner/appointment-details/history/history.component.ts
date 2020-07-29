@@ -3,6 +3,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { ActivatedRoute } from '@angular/router';
+import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 
 @Component({
   selector: 'app-history',
@@ -28,7 +30,18 @@ export class HistoryComponent implements OnInit {
   isMobile = false;
   columnName = [];
   filterValue: string;
-  constructor(private breakpointObserver: BreakpointObserver) {
+  paramsId: any;
+  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
+    private onDemandService: OnDemandService) {
+
+    this.route.params.subscribe(param => {
+      console.log(param)
+      this.paramsId = param;
+      this.onDemandService.getHistory(param.id,param.billId).subscribe(history=>{
+        console.log(history,"history")
+      })
+    })
+
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -49,6 +62,22 @@ export class HistoryComponent implements OnInit {
       this.expandId = element.id;
     }
 
+  }
+
+  onDemandSubmit() {
+
+   let data=  {
+      claim_id: this.paramsId.id,
+      service_priority: "rush",
+      service_description: "",
+      document_type_id: 7,
+      billable_item_id: this.paramsId.billId,
+      service_request_type_id : 3,
+      service_provider_id: 3 // default 3
+  }
+    this.onDemandService.requestCreate(data).subscribe(service => {
+
+    })
   }
 
 }

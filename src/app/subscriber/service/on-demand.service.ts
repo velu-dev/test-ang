@@ -12,4 +12,20 @@ export class OnDemandService {
   constructor(private http: HttpClient) {
 
   }
+
+  getRecords(claim_id, bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getRecords + claim_id + '/' + bill_item_id)
+  }
+
+  getHistory(claim_id, bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getHistory + claim_id + '/' + bill_item_id)
+  }
+
+  getTranscription(claim_id, bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getTranscription + claim_id + '/' + bill_item_id)
+  }
+
+  requestCreate(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.requestCreate, data)
+  }
 }
