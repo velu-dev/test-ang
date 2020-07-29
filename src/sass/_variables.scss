@@ -406,8 +406,9 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
     font-size: $font-size-1;
     outline: none;
     border-radius: 50px;
-    width: 350px;
+    width: 320px;
     box-shadow: $box-shadow-3;
+    
     // @media only screen and (max-width: 568px) {
     //   width: $width-100;
     // }
@@ -419,7 +420,7 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
   }
   mat-icon {
     position: absolute;
-    left: 340px;
+    left: 310px;
     padding: 10px 0 0 8px;
     color: $light-gray;
   }
