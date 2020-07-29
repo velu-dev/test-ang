@@ -6,7 +6,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 import { MatTableDataSource } from '@angular/material';
-
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -34,6 +34,7 @@ export class HistoryComponent implements OnInit {
   paramsId: any;
   historyData: any;
   rushRequest: any;
+  inFile:any = [];
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private onDemandService: OnDemandService) {
 
@@ -100,7 +101,13 @@ export class HistoryComponent implements OnInit {
       //   "file_url": "https://d3qlsnvvobb6z6.cloudfront.net/organization_10_111301101232/claims/RT/779c72745c523473cda9925a6d64d89e.pdf?Expires=1596109913&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9kM3Fsc252dm9iYjZ6Ni5jbG91ZGZyb250Lm5ldC9vcmdhbml6YXRpb25fMTBfMTExMzAxMTAxMjMyL2NsYWltcy9SVC83NzljNzI3NDVjNTIzNDczY2RhOTkyNWE2ZDY0ZDg5ZS5wZGYiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE1OTYxMDk5MTN9fX1dfQ__&Signature=JmBj7JWjHxbzMQKKqlvmilI2KYwyKtPVM1xO3c~zCOs~0f7FTsW6DxivPBw6PSJXW2yH6~y~H3Dr1AXzq7xqyfVatEBqbdC62UUcmve0bQRnQK~U80EoBQk6arH52E7yBgGRx9JBOPAJ~EiBwGbAVMZTA7haNllLEq6z2Bimv7hUkbu8YNtB9iYa5vyCbFmURn-V6VJNy1wmmQHqERuRZUaJwcghYY-3Rz3rfWMsy7tmtUJR1TCwA45naMLVSzYG5vzfBlXW7DI72iCHAkHKgMvNdBluq0uWYt6t-DhwHNcBAVPEJjqy2~kvy9G9-oqRMPINRjwuMRjeazQU~~DMDA__&Key-Pair-Id=APKAJQ63EA47SVC6S4KQ"
       // }
       // ]
-      this.dataSource = new MatTableDataSource(history.documets_sent_and_received)
+      this.historyData.documets_sent_and_received.map(inFile=>{
+        if(inFile.transmission_direction == 'IN'){
+          this.inFile.push(inFile)
+        }
+
+      })
+      this.dataSource = new MatTableDataSource(this.inFile)
     }, error => {
       this.dataSource = new MatTableDataSource([])
     })
@@ -122,7 +129,7 @@ export class HistoryComponent implements OnInit {
     console.log(this.rushRequest)
     let data = {
       claim_id: this.paramsId.id,
-      service_priority: this.rushRequest ? "rush" : 'mormal',
+      service_priority: this.rushRequest ? "rush" : 'normal',
       service_description: "",
       document_type_id: this.historyData.documets[0].document_type_id,
       billable_item_id: this.paramsId.billId,
@@ -135,6 +142,10 @@ export class HistoryComponent implements OnInit {
     }, error => {
       console.log(error)
     })
+  }
+
+  download(data) {
+    saveAs(data.file_url, data.file_name);
   }
 
 }

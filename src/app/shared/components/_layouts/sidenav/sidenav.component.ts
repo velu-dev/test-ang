@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UserService } from './../../../services/user.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { HeaderComponent } from '../header/header.component';
+import { IntercomService } from 'src/app/services/intercom.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -55,8 +56,23 @@ export class SidenavComponent implements OnInit {
     private snackBar: MatSnackBar,
     private loaderService: NgxSpinnerService,
     private userService: UserService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private intercom: IntercomService
   ) {
+
+    this.intercom.getUserChanges().subscribe(info => {
+      if (info == true) {
+        this.is_subscriber = this.cookieService.get('is_subscriber');
+        if (this.is_subscriber) {
+          this.userService.verifyUserRole().subscribe(role => {
+            this.sameAsExaminer = role.status;
+          }, error => {
+            console.log(error.error.status)
+            this.sameAsExaminer = false;
+          })
+        }
+      }
+    })
     this.is_subscriber = this.cookieService.get('is_subscriber');
     this.screenWidth = window.innerWidth;
     this.roleId = this.cookieService.get("role_id");

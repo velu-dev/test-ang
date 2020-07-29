@@ -68,7 +68,8 @@ export class HeaderComponent implements OnInit {
       if (info == true) {
         this.userService.getProfile().subscribe(res => {
           this.user = res.data;
-
+          this.user['signature'] = '';
+          this.cookieService.set('user', JSON.stringify(this.user));
         })
       }
     })

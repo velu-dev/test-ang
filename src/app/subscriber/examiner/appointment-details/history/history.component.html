@@ -37,11 +37,11 @@
                   </span>
                   <div>
                     <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                    <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority}}</span>
+                    <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ? 'Yes' : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
                     <span *ngIf="column == 'date_of_request'" class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                     <span *ngIf="column == 'date_of_communication'">{{element?.date_of_communication | date:'MM-dd-yyyy' }}</span>
                     <span *ngIf="column == 'download'">
-                      <a class="text-success">Download</a>
+                      <a class="text-success" (click)="download(element)">Download</a>
                     </span>
                   </div>
                 </td>
@@ -51,11 +51,11 @@
                   <div class="detail" [@detailExpand]="expandId == element.document_id ? 'expanded' : 'collapsed'">
                     <div class="resposive-table">
                       <div><span>File Name</span> {{element?.file_name}} </div>
-                      <div class="no-wrap-td"><span>Rush Request?</span> {{element?.rush_request}} </div>
+                      <div class="no-wrap-td"><span>Rush Request?</span> {{element?.service_priority == 'rush' ? 'Yes' : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}} </div>
                       <div class="no-wrap-td"><span>Date Requested</span> {{element?.request_date}} </div>
                       <div><span>Date Received</span> {{element?.received_date}} </div>
                       <div><span>Download</span>
-                        <a class="text-success">Download</a>
+                        <a class="text-success" (click)="download(element)">Download</a>
                       </div>
                     </div>
                   </div>
@@ -67,6 +67,7 @@
               </tr>
               <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
+            <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
           </div>
         </div>
       </div>
