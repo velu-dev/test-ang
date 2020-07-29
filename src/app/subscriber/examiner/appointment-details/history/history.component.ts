@@ -31,6 +31,7 @@ export class HistoryComponent implements OnInit {
   columnName = [];
   filterValue: string;
   paramsId: any;
+  historyData:any;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private onDemandService: OnDemandService) {
 
@@ -39,6 +40,7 @@ export class HistoryComponent implements OnInit {
       this.paramsId = param;
       this.onDemandService.getHistory(param.id,param.billId).subscribe(history=>{
         console.log(history,"history")
+        this.historyData = history
       })
     })
 
@@ -70,7 +72,7 @@ export class HistoryComponent implements OnInit {
       claim_id: this.paramsId.id,
       service_priority: "rush",
       service_description: "",
-      document_type_id: 7,
+      //document_type_id: 7,
       billable_item_id: this.paramsId.billId,
       service_request_type_id : 3,
       service_provider_id: 3 // default 3
