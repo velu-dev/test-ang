@@ -98,7 +98,7 @@ export class AppointmentDetailsComponent implements OnInit {
   isEditBillableItem = false;
   isNotesEdit = false;
   isChecked = false;
-  isDisplayStatus: any = { status: false, name: "" };
+  isDisplayStatus: any = { status: false, name: "", isExaminar: false, isDeposition: false };
   billableData: any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
@@ -126,9 +126,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.claimService.seedData("language").subscribe(res => {
       this.languageList = res.data;
     })
-    this.examinerService.seedData('examination_status').subscribe(res => {
-      this.examinationStatus = res.data;
-    })
+    // this.examinerService.seedData('examination_status').subscribe(res => {
+    //   this.examinationStatus = res.data;
+    // })
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
 
@@ -200,6 +200,19 @@ export class AppointmentDetailsComponent implements OnInit {
         this.notesForm.patchValue({
           exam_notes: response.data.exam_notes,
         })
+        if (response.data.procedural_code == "ML101" || response.data.procedural_code == "ML102" || response.data.procedural_code == "ML103" || response.data.procedural_code == "ML104") {
+          this.isDisplayStatus.isExaminar = true;
+          this.claimService.seedData('examination_status').subscribe(curres => {
+            this.examinationStatus = curres.data;
+            console.log(curres)
+          })
+        } else if (response.data.procedural_code == "ML105") {
+          this.isDisplayStatus.isDeposition = true;
+          this.claimService.seedData('deposition_status').subscribe(curres => {
+            this.examinationStatus = curres.data;
+            console.log(curres)
+          })
+        }
         this.procedureTypeStatus.map(pro => {
           if (response.data.procedural_code == "ML101" || response.data.procedural_code == "ML102" || response.data.procedural_code == "ML103" || response.data.procedural_code == "ML104") {
             this.isDisplayStatus.status = true;
@@ -209,7 +222,7 @@ export class AppointmentDetailsComponent implements OnInit {
             }
           }
           if (response.data.procedural_code == "ML106") {
-            this.isDisplayStatus = false;
+            this.isDisplayStatus.status = false;
             if (pro.for.includes('S')) {
               this.procedureTypeList.push(pro);
             }

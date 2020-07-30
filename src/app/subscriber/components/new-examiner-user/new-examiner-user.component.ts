@@ -16,6 +16,7 @@ import { SubscriberService } from '../../service/subscriber.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ExaminerService } from '../../service/examiner.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { IntercomService } from 'src/app/services/intercom.service';
 
 @Component({
   selector: 'app-new-examiner-user',
@@ -105,6 +106,7 @@ export class NewExaminerUserComponent implements OnInit {
     private store: Store<{ breadcrumb: any }>,
     private subscriberService: SubscriberService,
     private examinerService: ExaminerService,
+    private intercom: IntercomService,
     public dialog: MatDialog) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -413,8 +415,11 @@ export class NewExaminerUserComponent implements OnInit {
     if (!this.isEdit) {
       this.userService.createExaminerUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
-        this.examinerId = res.data.id
+        this.examinerId = res.data.id;
         // this.router.navigate(['/subscriber/users'])
+        if (this.examinerId == this.user.id) {
+          this.intercom.setUserChanges(true);
+          }
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -430,6 +435,8 @@ export class NewExaminerUserComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
+   
+   
   }
 
   cancel() {

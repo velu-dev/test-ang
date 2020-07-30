@@ -184,12 +184,12 @@ export class SubscriberSettingsComponent implements OnInit {
   userformSubmit() {
     if (this.user.role_id == 2) {
       console.log(this.user)
-        if (this.user.organization_type == 'INDV') {
-          this.userForm.get('company_name').setValidators([Validators.maxLength(100)]);
-        } else {
-          this.userForm.get('company_name').setValidators([Validators.compose([Validators.required,Validators.maxLength(100)])]);
-        }
-        this.userForm.get('company_name').updateValueAndValidity();
+      if (this.user.organization_type == 'INDV') {
+        this.userForm.get('company_name').setValidators([Validators.maxLength(100)]);
+      } else {
+        this.userForm.get('company_name').setValidators([Validators.compose([Validators.required, Validators.maxLength(100)])]);
+      }
+      this.userForm.get('company_name').updateValueAndValidity();
     }
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
@@ -206,10 +206,7 @@ export class SubscriberSettingsComponent implements OnInit {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null;
       this.isSubmit = false;
-      if (this.first_name != this.userForm.value.first_name) {
-        this.first_name = this.userForm.value.first_name;
         this.intercom.setUser(true);
-      }
     }, error => {
       this.isSubmit = false;
       console.log(error.error.message)
