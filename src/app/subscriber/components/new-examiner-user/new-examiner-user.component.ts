@@ -7,7 +7,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSort, MatPaginator } from '@angular/material';
 import { Observable } from 'rxjs';
-import { shareReplay, map } from 'rxjs/operators';
+import { shareReplay, map, startWith } from 'rxjs/operators';
 import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
 import * as  errors from '../../../shared/messages/errors'
 import { Store } from '@ngrx/store';
@@ -26,7 +26,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      state('void', style({height: '0px', minHeight: '0'})),
+      state('void', style({ height: '0px', minHeight: '0' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ]
@@ -76,6 +76,8 @@ export class NewExaminerUserComponent implements OnInit {
   providerTypeList: any;
   sameAsExaminer: boolean;
   selectedUser: any = {}
+  texonomySearch = new FormControl();
+  texonomyFilteredOptions: Observable<any>;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   //@ViewChild(MatSort, { static: false }) sort: MatSort;
   //@ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -108,6 +110,9 @@ export class NewExaminerUserComponent implements OnInit {
     private examinerService: ExaminerService,
     private intercom: IntercomService,
     public dialog: MatDialog) {
+
+
+
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -157,13 +162,18 @@ export class NewExaminerUserComponent implements OnInit {
       }
     })
 
+  }
 
-
+  private _filter(value: string): string[] {
+    if (typeof (value) == 'number') {
+      return;
+    }
+    const filterValue = value.toLowerCase();
+    return this.taxonomyList.filter(option => option.codeName.toLowerCase().includes(filterValue));
   }
 
   ngOnInit() {
     this.userService.verifyRole().subscribe(role => {
-      console.log(role);
       this.sameAsExaminer = role.status;
     }, error => {
       console.log(error.error.status)
@@ -193,7 +203,15 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.seedData('taxonomy').subscribe(response => {
       this.taxonomyList = response['data'];
+      this.taxonomyList.map(tax => {
+        tax.codeName = tax.taxonomy_code + '-' + tax.taxonomy_name;
+      })
       this.texonomyChange(this.renderingForm.value.taxonomy_id)
+      this.texonomyFilteredOptions = this.texonomySearch.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        );
     }, error => {
       console.log("error", error)
     })
@@ -222,7 +240,6 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.getExaminerUser(id).subscribe(res => {
       this.userData = res;
-      console.log(res, id)
       // if (res.examiner_id == this.user.id) {
       //   this.userForm.disable();
       // }
@@ -295,13 +312,13 @@ export class NewExaminerUserComponent implements OnInit {
       if (res.service_location != null) {
         res.service_location.map(data => {
           data.address = data.street1;
-          data.service =   data.service_name ? data.service_code +' - ' + data.service_name : '';
-          data.npi_number =  data.national_provider_identifier;
+          data.service = data.service_name ? data.service_code + ' - ' + data.service_name : '';
+          data.npi_number = data.national_provider_identifier;
         })
       }
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-       this.dataSource.filterPredicate = function (data, filter: string): boolean {
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
         return (data.service && data.service.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.npi_number && data.npi_number.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
@@ -419,14 +436,13 @@ export class NewExaminerUserComponent implements OnInit {
         // this.router.navigate(['/subscriber/users'])
         if (this.examinerId == this.user.id) {
           this.intercom.setUserChanges(true);
-          }
+        }
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
 
     }
     else {
-      console.log(this.userForm.value)
       this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully!", 'success');
         this.examinerId = res.data.id
@@ -435,8 +451,8 @@ export class NewExaminerUserComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
-   
-   
+
+
   }
 
   cancel() {
@@ -468,7 +484,6 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-    console.log("event", event.target.files[0].size);
     let fileTypes = ['png', 'jpg', 'jpeg']
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
@@ -495,7 +510,6 @@ export class NewExaminerUserComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      //console.log('The dialog was closed',result);
       if (result == null) {
         this.selectedFile = null
         this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
@@ -532,10 +546,8 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.markAllAsTouched();
       return;
     }
-    console.log(this.mailingAddressForm.value.id);
 
     this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
-      console.log(mail);
       this.alertService.openSnackBar("Mailing address updated successfully!", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -554,10 +566,8 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.markAllAsTouched();
       return;
     }
-    console.log(this.billingProviderForm.value.id);
 
     this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
-      console.log(mail);
       this.alertService.openSnackBar("Billing provider updated successfully!", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -577,7 +587,6 @@ export class NewExaminerUserComponent implements OnInit {
     }
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
     this.renderingForm.value.signature = sign;
-    console.log(this.renderingForm.value);
     this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe(render => {
       this.alertService.openSnackBar("Rendering provider updated successfully!", 'success');
     }, error => {
@@ -593,9 +602,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.userService.createLicense(this.examinerId, result).subscribe(license => {
-          console.log(license);
           let data = this.licenceDataSource.data;
           if (result.id) {
             data.splice(index, 1);
@@ -643,6 +650,8 @@ export class NewExaminerUserComponent implements OnInit {
         this.texonomyValue = tex.taxonomy_code;
       }
     })
+    this.texonomySearch.patchValue(this.texonomyValue)
+    this.renderingForm.patchValue({ taxonomy_id: e })
   }
 
   assignLocation() {
@@ -689,7 +698,6 @@ export class NewExaminerUserComponent implements OnInit {
     }
 
     this.examinerService.updateExistingLocation(existing).subscribe(location => {
-      console.log(location);
       this.updateFormData(this.examinerId)
       this.locationAddStatus = false;
       this.locationData = null;
@@ -733,6 +741,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
 
+
 }
 
 @Component({
@@ -761,7 +770,6 @@ export class LicenseDialog {
   }
 
   addLicense() {
-    console.log()
     Object.keys(this.licenseForm.controls).forEach((key) => {
       if (this.licenseForm.get(key).value && typeof (this.licenseForm.get(key).value) == 'string')
         this.licenseForm.get(key).setValue(this.licenseForm.get(key).value.trim())
