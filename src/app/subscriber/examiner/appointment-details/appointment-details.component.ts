@@ -120,6 +120,7 @@ export class AppointmentDetailsComponent implements OnInit {
     //     }
     //   })
     // })
+    this.loadDatas();
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
     })
@@ -129,6 +130,11 @@ export class AppointmentDetailsComponent implements OnInit {
     // this.examinerService.seedData('examination_status').subscribe(res => {
     //   this.examinationStatus = res.data;
     // })
+
+  }
+  loadDatas() {
+    this.procedureTypeList = [];
+    this.modifiers = [];
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
 
@@ -202,11 +208,13 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         if (response.data.procedural_code == "ML101" || response.data.procedural_code == "ML102" || response.data.procedural_code == "ML103" || response.data.procedural_code == "ML104") {
           this.isDisplayStatus.isExaminar = true;
+          this.isDisplayStatus.isDeposition = false;
           this.claimService.seedData('examination_status').subscribe(curres => {
             this.examinationStatus = curres.data;
             console.log(curres)
           })
         } else if (response.data.procedural_code == "ML105") {
+          this.isDisplayStatus.isExaminar = false;
           this.isDisplayStatus.isDeposition = true;
           this.claimService.seedData('deposition_status').subscribe(curres => {
             this.examinationStatus = curres.data;
@@ -283,7 +291,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinationStatusForm = this.formBuilder.group({
       id: "",
       examination_status: [{ value: "", disabled: true }, Validators.required],
-      examination_notes: [null]
+      examination_notes: [{ value: "", disabled: true }]
     })
     this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
@@ -304,6 +312,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
       this.alertService.openSnackBar(res.message, "success");
+      this.loadDatas();
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -391,6 +400,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isEditBillableItem = false;
       this.billable_item.disable();
       this.alertService.openSnackBar(res.message, "success");
+      this.loadDatas();
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
         this.examinationDetails = response['data']
       })
@@ -559,6 +569,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.saveButtonStatus = false;
       this.notesForm.disable();
       this.isNotesEdit = false;
+      this.loadDatas();
     }, error => {
       console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
