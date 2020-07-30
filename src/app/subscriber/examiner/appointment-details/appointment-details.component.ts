@@ -312,6 +312,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
       this.alertService.openSnackBar(res.message, "success");
+      this.loadDatas();
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -568,6 +569,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.saveButtonStatus = false;
       this.notesForm.disable();
       this.isNotesEdit = false;
+      this.loadDatas();
     }, error => {
       console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
