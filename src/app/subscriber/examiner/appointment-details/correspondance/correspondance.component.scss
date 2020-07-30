@@ -15,6 +15,17 @@
     background: $progres-light-gray;
 }
 
+.billable-item-status {
+    .basic-table.scroll_ {
+        min-height: 340px;
+        height: 340px;
+        overflow: auto;
+        // table {
+        //     min-height: 340px;
+        // }
+    }
+}
+
 th {
     ::ng-deep .mat-checkbox .mat-checkbox-frame {
         border-color: $white;
