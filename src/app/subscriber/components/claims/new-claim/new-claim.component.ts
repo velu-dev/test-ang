@@ -68,8 +68,8 @@ export interface PeriodicElement {
 }
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'L LT',
-  fullPickerInput: 'L LT',
-  datePickerInput: 'L',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A',
+  datePickerInput: 'MM-DD-YYYY hh:mm A',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
