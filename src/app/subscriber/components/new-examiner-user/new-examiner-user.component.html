@@ -436,7 +436,7 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Taxonomy Code</mat-label>
-                            <mat-select formControlName="taxonomy_id" (selectionChange)="texonomyChange($event.value)">
+                            <!-- <mat-select formControlName="taxonomy_id" (selectionChange)="texonomyChange($event.value)">
                                 <mat-select-trigger>
                                     {{texonomyValue}}
                                 </mat-select-trigger>
@@ -444,7 +444,17 @@
                                     {{taxonomy.taxonomy_code}}-{{taxonomy.taxonomy_name}}
                                 </mat-option>
                                 <mat-error *ngIf="renderingSubmit">Please select valid taxonomy code</mat-error>
-                            </mat-select>
+                            </mat-select> -->
+                            <input type="text" matInput [formControl]="texonomySearch"
+                            [matAutocomplete]="examinerAutocomplete">
+                        <mat-autocomplete #examinerAutocomplete="matAutocomplete" (optionSelected)="texonomyChange($event.option.value)">
+                            <mat-option *ngFor="let option of (texonomyFilteredOptions | async)"
+                                [value]="option.id" >
+                                {{option.taxonomy_code}}-{{option.taxonomy_name}}
+                            </mat-option>
+                            <mat-option *ngIf="(texonomyFilteredOptions | async)?.length == 0" disabled>No Result Found
+                            </mat-option>
+                        </mat-autocomplete>
                         </mat-form-field>
 
                         <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
