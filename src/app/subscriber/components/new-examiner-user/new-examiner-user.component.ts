@@ -407,6 +407,7 @@ export class NewExaminerUserComponent implements OnInit {
         }
         this.userForm.patchValue(user)
         this.selectedUser = user;
+        console.log(this.selectedUser)
         this.userForm.controls.SameAsSubscriber.enable();
       })
     } else {
@@ -436,6 +437,7 @@ export class NewExaminerUserComponent implements OnInit {
         // this.router.navigate(['/subscriber/users'])
         if (this.examinerId == this.user.id) {
           this.intercom.setUserChanges(true);
+          this.selectedUser = this.user;
         }
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
