@@ -855,6 +855,13 @@ export class NewClaimComponent implements OnInit {
   isClaimantCreated = false;
   createClaimant(status) {
     this.isClaimantSubmited = true;
+    Object.keys(this.claimant.controls).forEach((key) => {
+      if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
+        this.claimant.get(key).setValue(this.claimant.get(key).value.trim());
+    });
+    if (this.claimant.invalid) {
+      return;
+    }
     if (this.claimantChanges) {
       // if (!this.claimantChanges) {
       //   if (status == 'next') {
@@ -868,14 +875,6 @@ export class NewClaimComponent implements OnInit {
       // } else {
       // } 
       this.claimantChanges = false;
-      Object.keys(this.claimant.controls).forEach((key) => {
-        if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
-          this.claimant.get(key).setValue(this.claimant.get(key).value.trim())
-      });
-      if (this.claimant.invalid) {
-        console.log("claimant", this.claimant)
-        return;
-      }
       let data = this.claimant.value;
       data['certified_interpreter_required'] = this.languageStatus;
       data['date_of_birth'] = new Date(this.claimant.value.date_of_birth).toDateString();
@@ -961,6 +960,9 @@ export class NewClaimComponent implements OnInit {
           })
       }
     } else {
+      if (this.claimant.invalid) {
+        return;
+      }
       if (status == 'close') {
         if (this.claimant.invalid) {
           return;
@@ -968,7 +970,7 @@ export class NewClaimComponent implements OnInit {
         this.routeDashboard();
         return
       }
-      this.stepper.next();
+      // this.stepper.next();
     }
   }
   isInjuryEdit = false;
@@ -1220,8 +1222,10 @@ export class NewClaimComponent implements OnInit {
   todayDate = { appointment: new Date(), intake: new Date() }
   minDate: any;
   pickerOpened(type) {
-    this.minDate = new Date(this.claimant.value.date_of_birth);
+    // this.minDate = new Date(this.claimant.value.date_of_birth);
     if (type = 'intake') {
+      let date = moment();
+      this.minDate = date.subtract(60, 'days');
       this.todayDate.intake = new Date();
     } else {
       this.todayDate.appointment = new Date();
@@ -1564,7 +1568,13 @@ export class InjuryDialog {
   }
 
   onNoClick(): void {
-    this.injuryInfo = this.injuryData;
+    this.injuryInfo = this.data['injuryData'];
+    if (this.injuryInfo.continuous_trauma) {
+      if (this.injuryInfo.continuous_trauma_start_date) {
+      } else {
+        this.injuryInfo.continuous_trauma = false;
+      }
+    }
     // this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     this.dialogRef.close(this.injuryInfo);
   }
