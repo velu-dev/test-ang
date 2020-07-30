@@ -9,12 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'L LT',
-  fullPickerInput: 'L LT',
-  datePickerInput: 'L',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A',
+  datePickerInput: 'MM-DD-YYYY hh:mm A',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
-  monthYearA11yLabel: 'MMMM YYYY',
+  monthYearA11yLabel: 'MMMM YYYY', 
 };
 
 @Component({

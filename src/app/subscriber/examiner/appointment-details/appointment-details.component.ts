@@ -10,10 +10,20 @@ import { saveAs } from 'file-saver';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from '../../service/claim.service';
 import { Observable } from 'rxjs';
+import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
 }
+export const MY_CUSTOM_FORMATS = {
+  parseInput: 'L LT',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A',
+  datePickerInput: 'MM-DD-YYYY hh:mm A',
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { file_name: "Appointment Notification Letter", date: "01-02-2020" },
@@ -24,7 +34,8 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
 @Component({
   selector: 'app-appointment-details',
   templateUrl: './appointment-details.component.html',
-  styleUrls: ['./appointment-details.component.scss']
+  styleUrls: ['./appointment-details.component.scss'],
+  providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },]
 })
 export class AppointmentDetailsComponent implements OnInit {
   displayedColumnsForDocuments: string[] = ['file_name', 'updatedAt', 'action'];
