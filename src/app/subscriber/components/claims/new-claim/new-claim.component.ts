@@ -749,7 +749,15 @@ export class NewClaimComponent implements OnInit {
       })
     } else {
       this.claimService.updateClaim(this.claim.value.claim_details, this.claimId).subscribe(res => {
-        this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: res.data.exam_type_id, wcab_number: res.data.wcab_number }
+        let examtype = "";
+
+        this.examTypes.map(exam => {
+          if (res.data.exam_type_id == exam.id) {
+            examtype = exam.exam_type_code + " - " + exam.exam_name;
+          }
+        })
+        console.log(res.data)
+        this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: examtype, wcab_number: res.data.wcab_number }
         this.alertService.openSnackBar(res.message, 'success');
         if (status == 'next') {
           this.stepper.next();
@@ -765,6 +773,7 @@ export class NewClaimComponent implements OnInit {
   }
   examinarId: any;
   examinarChange(examinar) {
+    this.examinarAddress = new Observable()
     this.addressCtrl.setValue('');
     this.selectedExaminarAddress = '';
     this.isAddressSelected = false;
