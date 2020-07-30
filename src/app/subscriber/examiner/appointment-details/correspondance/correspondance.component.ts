@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
@@ -7,6 +7,7 @@ import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute, Router, RouterState } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
+import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 export interface PeriodicElement {
   name: string;
 }
@@ -134,7 +135,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
   claim_id: any;
   billableId: any;
-  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService) {
+  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog) {
     const state: RouterState = router.routerState;
     console.log(state)
     this.route.params.subscribe(params => {
@@ -166,7 +167,17 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
     })
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(CustomDialog, {
+      width: '800px',
+      // data: {name: this.name, animal: this.animal}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
   ngOnInit() {
   }
 
@@ -195,3 +206,20 @@ const ELEMENT_DATA2 = [
 const ELEMENT_DATA3 = [
   { "id": 143, "file_name": "Work Comp EDI Proof of Service - 20200912", "action": "Mailed On Demand", "date": "01-02-2020", "recipients": "Claimant, Claims Adjuster, Applicant Attorney, Defense Attorney, Employer, DEU Office", "Download": "" },
 ];
+
+
+@Component({
+  selector: 'custom-dialog',
+  templateUrl: 'custom-dialog.html',
+})
+export class CustomDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<CustomDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
