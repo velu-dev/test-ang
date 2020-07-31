@@ -108,4 +108,8 @@ export class SubscriberUserService {
     return this.http.post(environment.baseUrl + api_endpoint.getSubscriberManageUsers, { role_filter: roles, status: status })
   }
 
+  disableManageUser(id, status): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.subscriberManageDisableUser + id, { status: status })
+  }
+
 }

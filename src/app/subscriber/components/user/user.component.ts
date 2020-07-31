@@ -246,9 +246,16 @@ export class UserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
+        if (this.user.role_id == 3) { 
+          
+          this.userService.disableManageUser(user.id, !user.status).subscribe(res => {
+            this.getUser(this.selectedRoleId, this.tabName);
+          })
+        }else{ 
         this.userService.disableUser(user.id, !user.status).subscribe(res => {
           this.getUser(this.selectedRoleId, this.tabName);
         })
+      }
       }
     });
   }
