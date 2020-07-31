@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { SubscriberService } from '../../service/subscriber.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 
 @Component({
@@ -51,8 +51,8 @@ export class AddEditServiceLocationComponent implements OnInit {
     if (this.pageStatus == 2) {
       this.subscriberService.getSingleLocationExaminer(this.locationId, this.examinerId).subscribe(locations => {
         this.locationUpdate(locations.data['0'])
-        locations.data['0'].examiner_list.map(data=>{
-          if(data.id == this.examinerId){
+        locations.data['0'].examiner_list.map(data => {
+          if (data.id == this.examinerId) {
             this.examinerName = data.last_name + ' ' + data.first_name + (data.suffix ? ', ' + data.suffix : '')
           }
         })
@@ -196,6 +196,26 @@ export class AddEditServiceLocationComponent implements OnInit {
 
   nevigateExaminer(e) {
     // this.router.navigate(['/subscriber/users/examiner/',e.id])
+  }
+
+  locationStatus(e) {
+    console.log(e)
+  }
+
+}
+
+@Component({
+  selector: 'inactive-dialog',
+  templateUrl: 'in-active-dialog.html',
+})
+export class InActivedialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<InActivedialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  cancelClick(): void {
+    this.dialogRef.close();
   }
 
 }

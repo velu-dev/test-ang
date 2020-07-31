@@ -75,7 +75,6 @@ export class ManageLocationComponent implements OnInit {
         data.status = data.is_active == true ? 'Active' : 'In Active';
         data.examiner_name = data.examiner != null ? data.examiner[0].last_name + ' '+ data.examiner[0].first_name +''+ (data.examiner[0].suffix ? ', '+data.examiner[0].suffix : '') : null;
          data.service =  data.service_name ? data.service_code +' - ' + data.service_name : '';
-         console.log(data.service)
       })
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
