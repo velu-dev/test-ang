@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 
 @Component({
@@ -25,6 +25,7 @@ export class AddEditServiceLocationComponent implements OnInit {
   locationId: number = null;
   examinerId: number;
   user: any;
+  examiner_list: any;
   constructor(private subscriberService: SubscriberService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -32,6 +33,7 @@ export class AddEditServiceLocationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cookieService: CookieService,
+    public dialog: MatDialog
   ) {
     this.user = JSON.parse(this.cookieService.get('user'));
     this.route.params.subscribe(params_res => {
@@ -87,6 +89,7 @@ export class AddEditServiceLocationComponent implements OnInit {
 
     this.locationForm.patchValue(data);
     this.dataSource = new MatTableDataSource(location.examiner_list ? location.examiner_list : []);
+    this.examiner_list = location.examiner_list ? location.examiner_list : [];
     this.locationForm.disable();
   }
 
@@ -136,6 +139,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       return;
     }
 
+
     if (this.pageStatus == 2) {
       this.subscriberService.updateExaminerLocation(this.examinerId, this.locationForm.value).subscribe(location => {
         //console.log(location)
@@ -150,6 +154,19 @@ export class AddEditServiceLocationComponent implements OnInit {
       })
 
     } else {
+
+      if (this.locationForm.value.is_active == 'false' && this.user.role_id == 11) {
+        this.examiner_list.map(ex => {
+          if (ex.id != this.user.id) {
+            this.inActiveStatus = true
+          }
+
+        })
+        if (this.inActiveStatus) {
+          this.opendialog()
+        }
+        return;
+      }
 
       this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
         //console.log(location)
@@ -197,9 +214,36 @@ export class AddEditServiceLocationComponent implements OnInit {
   nevigateExaminer(e) {
     // this.router.navigate(['/subscriber/users/examiner/',e.id])
   }
-
+  inActiveStatus: boolean = false;
   locationStatus(e) {
-    console.log(e)
+    console.log(e.value, this.user.role_id)
+
+  }
+
+  opendialog(): void {
+    const dialogRef = this.dialog.open(InActivedialog, {
+      width: '800px',
+      data: {},
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data) {
+        this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
+          //console.log(location)
+          if (this.locationForm.value.id) {
+            this.alertService.openSnackBar('Location updated successfully', 'success');
+          } else {
+            this.alertService.openSnackBar('Location created successfully', 'success');
+          }
+
+          this.router.navigate(['/subscriber/location'])
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+
+      }
+    });
   }
 
 }
@@ -212,10 +256,18 @@ export class InActivedialog {
 
   constructor(
     public dialogRef: MatDialogRef<InActivedialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    dialogRef.disableClose = true;
+  }
 
-  cancelClick(): void {
-    this.dialogRef.close();
+  onNoClick(): void {
+    this.dialogRef.close({ data: false });
+  }
+
+  onYesClick(): void {
+    this.dialogRef.close(
+      { data: true }
+    );
   }
 
 }
