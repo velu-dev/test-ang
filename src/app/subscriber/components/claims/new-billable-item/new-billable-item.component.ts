@@ -14,7 +14,7 @@ export const MY_CUSTOM_FORMATS = {
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
-  monthYearA11yLabel: 'MMMM YYYY', 
+  monthYearA11yLabel: 'MMMM YYYY',
 };
 
 @Component({
@@ -110,7 +110,7 @@ export class NewBillableItemComponent implements OnInit {
 
   ngOnInit() {
     this.billable_item = this.formBuilder.group({
-      id: [{ value: '', disable: true }],
+      id: [null],
       claim_id: [this.claimId],
       claimant_id: [this.claimantId],
       exam_type: this.formBuilder.group({
@@ -252,6 +252,11 @@ export class NewBillableItemComponent implements OnInit {
     this.selectedExaminarAddress = '';
     this.isAddressSelected = false;
     this.examinarId = examinar.id;
+    this.billable_item.patchValue({
+      appointment: {
+        examiner_id: examinar.id
+      }
+    })
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
       this.examinerOptions = []
       this.examinerOptions = res['data'];

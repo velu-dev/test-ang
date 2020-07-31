@@ -10,11 +10,10 @@
 
   <div fxLayout="row wrap" class="p-t-25">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-      <div class="main-title">Documents <span class="info ondemand-info"><i class="fa fa-info"
-            aria-hidden="true"></i></span></div>
-      <p class="description">Use the checkboxes to select the documents to generate. The first 3 documents in the list,
-        which are labelled with the blue check, are required to be sent within 5 days of confirming the examination
-        appointment date.</p>
+      <div class="main-title">Documents <span class="info ondemand-info m-l-10"
+          matTooltip="The first 3 documents in the list, which are labelled with the blue checkmarks, are required to be sent within 5 days of confirming the examination appointment date. Add Custom Mail On Demand Documents using the button at the bottom"
+          matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description">Use the checkboxes to select the documents to be mailed.</p>
       <div class="basic-table striped_ scroll_ m-l-10">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 user-table">
 
@@ -45,28 +44,30 @@
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.name}}
+              <!-- <span class="default-select"><img [src]="default_select" alt="Default select"></span>  -->
+            </td>
           </ng-container>
           <!-- custom column -->
           <ng-container matColumnDef="custom">
             <td mat-footer-cell *matFooterCellDef colspan="2" class="text-center" (click)="openDialog()">
-             <b>Add Custom Document</b>
+              <b class="main-title">Add Custom Document</b>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
           <tr mat-footer-row *matFooterRowDef="['custom']; sticky: true"></tr>
-          
+
 
         </table>
       </div>
     </div>
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-      <div class="main-title">Recipients <span class="info ondemand-info"><i class="fa fa-info"
-            aria-hidden="true"></i></span></div>
-      <p class="description">Select the parties who will receive the documents through the Mail On
-        Demand Service. This selection only applies to the Mail On Demand service.<br />&nbsp;</p>
+      <div class="main-title">Recipients <span class="info ondemand-info m-l-10" matTooltip="The selected parties will receive the documents through the Mail On
+        Demand Service. Enter the name and address of custom recipients using the button at the bottom."
+          matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description">Use the checkboxes to select the recipients of mailed documents.</p>
       <div class="basic-table striped_ scroll_ m-l-10">
         <table mat-table [dataSource]="dataSource1" class="mat-elevation-z8 w-100 user-table">
 
@@ -97,19 +98,24 @@
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.name}}
+              <!-- <span class="custom-list">
+                <a  class="text-success">Edit</a>
+                <a class="text-danger m-l-10">Remove</a>
+              </span> -->
+            </td>
           </ng-container>
-           <!-- custom_recipient column -->
-           <ng-container matColumnDef="custom_recipient">
-            <td mat-footer-cell *matFooterCellDef colspan="2" class="text-center" (click)="openDialog()" >
-             <b>Add Custom Recipient</b>
+          <!-- custom_recipient column -->
+          <ng-container matColumnDef="custom_recipient">
+            <td mat-footer-cell *matFooterCellDef colspan="2" class="text-center" (click)="openDialog()">
+              <b class="main-title">Add Custom Recipient</b>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns1;" (click)="selection1.toggle(row)"></tr>
-            <tr mat-footer-row *matFooterRowDef="['custom_recipient']; sticky: true"></tr>
-          
+          <tr mat-footer-row *matFooterRowDef="['custom_recipient']; sticky: true"></tr>
+
         </table>
       </div>
     </div>
@@ -141,11 +147,10 @@
 
   <div fxLayout="row wrap" class="send-document">
     <div fxFlex="100">
-      <div class="main-title">Documents Sent <span class="info ondemand-info"><i class="fa fa-info"
-            aria-hidden="true"></i></span></div>
-      <p class="description">This table lists the documents, actions that were performed on the documents, the
-        date<br />
-        that the actions were performed and the document recipients.</p>
+      <div class="main-title">Documents Sent <span class="info ondemand-info m-l-10"
+          matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and the document recipients."
+          matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description">Monitor the actions performed on this page.</p>
       <div class="user-detail height-auto">
         <table mat-table [dataSource]="sentDocuments" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
@@ -196,10 +201,10 @@
 
   <div fxLayout="row wrap" class="proof-of-service m-t-50">
     <div fxFlex="100">
-      <div class="main-title">Proof of Service <span class="info ondemand-info"><i class="fa fa-info"
-            aria-hidden="true"></i></span></div>
-      <p class="description">This table lists the proof of service documents that were created and sent back when the
-        documents were printed and mailed.</p>
+      <div class="main-title">Proof of Service <span class="info ondemand-info m-l-10"
+          matTooltip="This table lists the proof of service documents that were created and sent back when the documents were printed and mailed."
+          matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description">Documents created and sent back by Mail On Demand service.</p>
       <div class="user-detail height-auto">
         <table mat-table [dataSource]="dataSource3" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay1; let i=index">

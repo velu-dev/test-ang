@@ -695,6 +695,12 @@ input:-webkit-autofill {
   background-color: #d5aed2 !important;
 }
 
+// Tooltip font-size
+.mat-tooltip {
+  font-size: 14px !important;
+  max-width: 600px !important;
+}
+
 // OUTLINE BUTTON CSS
 .mat-button-focus-overlay {
   transition: none !important;
@@ -707,6 +713,12 @@ input:-webkit-autofill {
 .huge-btn {
   font-size: $font-size-9;
   height: 50px;
+}
+.mini-btn {
+  font-size: $font-size-12;
+  font-weight: $font-weight-bold !important;
+  height: 26px;
+  line-height: initial;
 }
 .outline-success {
   @extend .btn_;

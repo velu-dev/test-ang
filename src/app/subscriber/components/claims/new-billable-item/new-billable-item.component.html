@@ -69,18 +69,19 @@
             (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
             <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
                 <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Procedural Type*</mat-label>
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                        <mat-label>Exam Procedure Type*</mat-label>
                         <mat-select formControlName="procedure_type">
-                            <mat-option  (click)="procedure_type(procuderalCode)" *ngFor="let procuderalCode of procuderalCodes"
-                                [value]="procuderalCode.id">
-                                {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
+                            <mat-option *ngFor="let procuderalCode of procuderalCodes"
+                                [value]="procuderalCode.exam_procedure_type_id"
+                                (click)="procedure_type(procuderalCode)">
+                                {{procuderalCode.exam_procedure_type}} - {{procuderalCode.exam_procedure_name}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="isBillSubmited">Please select Procedural Type</mat-error>
+                        <mat-error *ngIf="isBillSubmited">Please select Exam Procedure Type</mat-error>
                     </mat-form-field>
 
-                    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <div fxLayout="row wrap">
                             <mat-form-field appearance="outline" fxFlex="100">
                                 <mat-label>Modifiers</mat-label>
@@ -103,16 +104,16 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
                 </div>
                 <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
 
-                    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-checkbox class="mat-check m-b-20" [(ngModel)]="isChecked"
                             [ngModelOptions]="{standalone: true}" (change)="psychiatric($event)" labelPosition="after">
                             Psych
                         </mat-checkbox>
-                    </div>
+                    </div> -->
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Examiner</mat-label>
                         <mat-select formControlName="examiner_id">
