@@ -1043,8 +1043,8 @@
                                     <mat-label>Exam Procedure Type*</mat-label>
                                     <mat-select formControlName="procedure_type">
                                         <mat-option *ngFor="let procuderalCode of procuderalCodes"
-                                            [value]="procuderalCode.id" (click)="procedure_type(procuderalCode)">
-                                            {{procuderalCode.procedural_code}} - {{procuderalCode.procedural_name}}
+                                            [value]="procuderalCode.exam_procedure_type_id" (click)="procedure_type(procuderalCode)">
+                                            {{procuderalCode.exam_procedure_type}} - {{procuderalCode.exam_procedure_name}}
                                         </mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="isBillSubmited">Please select Exam Procedure Type</mat-error>
