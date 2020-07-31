@@ -222,7 +222,7 @@ export class AddEditServiceLocationComponent implements OnInit {
 
   opendialog(): void {
     const dialogRef = this.dialog.open(InActivedialog, {
-      width: '800px',
+      width: '500px',
       data: {},
 
     });

@@ -1,9 +1,8 @@
 <div class="billable-item-status">
     <div fxLayout="row wrap" class="history-status p-t-20">
         <div fxFlex="100">
-            <div class="main-title">Medical History Questionnaire On Demand Status <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
-            <p class="description">View the Medical History Questionnaire On Demand’s progress here, from beginning to
-                end.</p>
+            <div class="main-title">Medical History Questionnaire On Demand Status <span class="info ondemand-info m-l-10" matTooltipPosition="above" matTooltip="Historian will call the Claimant and go through the Medical History Questionnaire over the phone. The status will be shown here."><i class="fa fa-info" aria-hidden="true"></i></span></div>
+            <p class="description">View the progress of Medical History Questionnaire service here.</p>
             <mat-progress-bar mode="determinate" value="32" class="not-sent"></mat-progress-bar>
             <div class="text-center">Not Sent</div>
         </div>
@@ -21,8 +20,8 @@
 
     <div fxLayout="row wrap">
         <div fxFlex="100">
-          <div class="main-title">View Completed Medical History Questionnaire  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
-          <p class="description">The medical history questionnaire will be available on this table when it is completed. </p>
+          <div class="main-title">View Completed Medical History Questionnaire  <span class="info ondemand-info m-l-10" matTooltipPosition="above" matTooltip="The completed Medical History Questionnaire will be available for download from this table."><i class="fa fa-info" aria-hidden="true"></i></span></div>
+          <p class="description">Completed document table. </p>
           <div class="user-detail height-auto">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
               <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
