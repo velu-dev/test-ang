@@ -23,6 +23,15 @@
         // table {
         //     min-height: 340px;
         // }
+        .default-select {
+            float: right;
+            color: $ternary;
+            font-weight: $font-weight-bold;
+        }
+        .custom-list {
+            display: flex;
+            float: right;
+        }
     }
 }
 

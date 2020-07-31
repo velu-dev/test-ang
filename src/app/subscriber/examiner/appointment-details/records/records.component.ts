@@ -22,7 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RecordsComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name', 'action'];
+  displayedColumns: string[] = ['select', 'name', 'doc_pages', 'action'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel();
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

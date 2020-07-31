@@ -8,6 +8,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute, Router, RouterState } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import * as globals from '../../../../globals';
 export interface PeriodicElement {
   name: string;
 }
@@ -55,6 +56,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+  default_select = globals.default_select
   sentDocuments: any;
   documents: any;
   // dataSource2 = ELEMENT_DATA2;
@@ -216,7 +218,7 @@ export class CustomDialog {
 
   constructor(
     public dialogRef: MatDialogRef<CustomDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();

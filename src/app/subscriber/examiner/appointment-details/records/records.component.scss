@@ -31,6 +31,24 @@ th {
         padding: 0 0 0 5px;
     }
 }
+.basic-table{
+    .pages-count {
+        display: flex;
+        input {
+            width: 50px;
+            border: 1px solid $progres-light-gray;
+            padding: 5px;
+            margin-right: 5px;
+            border-radius: 5px;
+        }
+        .action-buttons {
+            display: flex;
+            button {
+                min-width: 10px !important;
+            }
+        }
+    }
+}
 .ondemand-status {
     padding: 10px 0px;
 }
