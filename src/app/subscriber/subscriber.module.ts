@@ -54,7 +54,7 @@ import { BillingCollectionComponent } from './components/dashboard/billing-colle
 import { SubscriberService } from './service/subscriber.service';
 import { NewExaminerUserComponent, LicenseDialog } from './components/new-examiner-user/new-examiner-user.component';
 import { ExistingServiceLocationsComponent } from './components/existing-service-locations/existing-service-locations.component';
-import { AddEditServiceLocationComponent } from './components/add-edit-service-location/add-edit-service-location.component';
+import { AddEditServiceLocationComponent, InActivedialog } from './components/add-edit-service-location/add-edit-service-location.component';
 import { HistoryComponent } from './examiner/appointment-details/history/history.component';
 import { RecordsComponent } from './examiner/appointment-details/records/records.component';
 import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
@@ -128,7 +128,8 @@ import { OnDemandService } from './service/on-demand.service';
     ExaminationComponent,
     ReportComponent,
     BilllableBillingComponent,
-    CustomDialog
+    CustomDialog,
+    InActivedialog
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -140,7 +141,8 @@ import { OnDemandService } from './service/on-demand.service';
     SignPopupComponent,
     EventdetailDialog,
     LicenseDialog,
-    CustomDialog
+    CustomDialog,
+    InActivedialog
 
   ],
   imports: [
