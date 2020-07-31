@@ -1,8 +1,10 @@
 <div class="billable-item-status">
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100">
-      <div class="main-title">Record Summary On Demand Status  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">View the Record Summary On Demand’s progress here, from beginning to end.</p>
+      <div class="main-title">Record Summary On Demand Status <span class="info ondemand-info m-l-10"
+          matTooltip="The Record Summarizer will send progress updates that will be reflected in the status here."
+          matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description">View the progress of Record Summary service here.</p>
       <mat-progress-bar mode="determinate" value="50" class="not-sent"></mat-progress-bar>
       <div class="text-center">Not Sent</div>
     </div>
@@ -10,9 +12,11 @@
 
   <div fxLayout="row wrap" class="p-t-25">
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-      <div class="main-title">Record Documents  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">Upload record documents and select the documents
-        to send to the record summarizers from this list.</p>
+      <div class="main-title">Record Documents <span class="info ondemand-info m-l-10"
+          matTooltip="Record the number of pages in the documents. The number of pages will be included in the bill to the insurance company."
+          matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description">Upload record documents and select the documents to send to the record summarizers from
+        this list.</p>
 
       <div fxFLex="row wrap" class="p-l-10">
         <div fxFlex="50" class="upload-file">
@@ -56,8 +60,23 @@
 
           <!-- Name Column -->
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> </th>
+            <th mat-header-cell *matHeaderCellDef class="w-60"> </th>
             <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.file_name}} </td>
+          </ng-container>
+
+
+          <!-- doc_pages Column -->
+          <ng-container matColumnDef="doc_pages">
+            <th mat-header-cell *matHeaderCellDef> Document Pages</th>
+            <td mat-cell *matCellDef="let element" class="p-l-0">
+              <div class="pages-count">
+                <input matInput placeholder="" value="50">
+                <div class="action-buttons">
+                  <!-- <button mat-stroked-button class="outline-danger mini-btn">Cancel</button> -->
+                  <button mat-stroked-button class="outline-success mini-btn  m-l-10"><i class="fa fa-edit"></i></button>
+                </div>
+              </div>
+            </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -100,10 +119,11 @@
 
   <div fxLayout="row wrap" class="send-document">
     <div fxFlex="100">
-      <div class="main-title">Record Documents Sent  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">This table lists the documents, actions that were performed on the documents, the date
-        <br />
-        that the actions were performed and the document recipients.</p>
+      <div class="main-title">Record Documents Sent <span class="info ondemand-info m-l-10"
+          matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and the document recipients."
+          matTooltipPosition="above">
+          <i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description">This table lists the record document that were sent to be summarized.</p>
 
       <div class="user-detail height-auto">
         <table mat-table [dataSource]="dataSource2" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
@@ -153,7 +173,10 @@
 
   <div fxLayout="row wrap" class="proof-of-service m-t-50">
     <div fxFlex="100">
-      <div class="main-title">View Completed Record Summary  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <div class="main-title">View Completed Record Summary <span class="info ondemand-info m-l-10"
+          matTooltipPosition="above"
+          matTooltip="If there are multiple documents, they will be returned in a zipped folder.">
+          <i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">The record summary will be available on this table when it is completed. </p>
       <div class="user-detail height-auto">
         <table mat-table [dataSource]="dataSource3" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
