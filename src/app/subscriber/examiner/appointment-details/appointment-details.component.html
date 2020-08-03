@@ -432,7 +432,7 @@
         <div fxLayout="row wrap">
             <div fxFlex="100">
                 <div class="grid-list">
-                    <div>Procedure Type</div>
+                    <div>Exam Procedure Type</div>
                     <div>
                         {{examinationDetails?.procedural_code}} - {{examinationDetails?.procedural_name}}</div>
                 </div>
@@ -580,7 +580,7 @@
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                             <mat-label>Exam Procedure Type*</mat-label>
-                            <mat-select formControlName="procedure_type">
+                            <mat-select formControlName="exam_procedure_type_id">
                                 <mat-option *ngFor="let procuderalCode of procuderalCodes"
                                     [value]="procuderalCode.exam_procedure_type_id" (click)="procedure_type(procuderalCode)">
                                     {{procuderalCode.exam_procedure_type}} - {{procuderalCode.exam_procedure_name}}
@@ -682,7 +682,7 @@
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
-                                autocomplete="off" [min]="examinationDetails?.dob" [max]="todayDate.intake"
+                                autocomplete="off" [min]="minDate" [max]="todayDate.intake"
                                 [owlDateTime]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"
                                 [disabled]="!isEditBillableItem">

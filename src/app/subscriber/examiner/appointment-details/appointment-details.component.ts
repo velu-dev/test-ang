@@ -11,6 +11,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from '../../service/claim.service';
 import { Observable } from 'rxjs';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+import * as moment from 'moment';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -275,9 +276,9 @@ export class AppointmentDetailsComponent implements OnInit {
       id: [{ value: '', disable: true }],
       claim_id: [this.claim_id],
       exam_type: this.formBuilder.group({
-        procedure_type: [{ value: '', disable: true }, Validators.required],
-        modifier_id: [{ value: '', disable: true }],
-        is_psychiatric: [{ value: false, disable: true }],
+        exam_procedure_type_id: [{ value: '', disable: true }, Validators.required],
+        // modifier_id: [{ value: '', disable: true }],
+        // is_psychiatric: [{ value: false, disable: true }],
         primary_language_spoken: [{ value: '', disabled: true }]
       }),
       appointment: this.formBuilder.group({
@@ -437,9 +438,13 @@ export class AppointmentDetailsComponent implements OnInit {
     let data = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
     this.documentsData = new MatTableDataSource(data)
   }
-  todayDate = { appointment: new Date(), intake: new Date() }
+  todayDate = { appointment: new Date(), intake: new Date() };
+  minDate: any;
   pickerOpened(type) {
     if (type = 'intake') {
+      let date = moment();
+      this.minDate = date.subtract(60, 'days');
+      this.todayDate.intake = new Date();
       this.todayDate.intake = new Date();
     } else {
       this.todayDate.appointment = new Date();
