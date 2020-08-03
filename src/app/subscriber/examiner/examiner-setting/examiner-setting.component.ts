@@ -15,6 +15,7 @@ import { Location } from '@angular/common';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
 import { MatDialog } from '@angular/material';
+import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-examiner-setting',
@@ -181,13 +182,15 @@ export class ExaminerSettingComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-    console.log("event", event.target.files[0].size);
+    let fileName = event.target.files[0].name;
     let fileTypes = ['png', 'jpg', 'jpeg']
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
-        this.alertService.openSnackBar("This file too long", 'error');
+        //this.alertService.openSnackBar("This file too long", 'error');
+        let title = 'Selected Signature File : "' + fileName + '" file size is ' + FileSize + 'KB is too large.'
+        this.openDialog(title,'File size should be less than 500KB !')
         return;
       }
       this.selectedFile = event.target.files[0].name;
@@ -195,9 +198,18 @@ export class ExaminerSettingComponent implements OnInit {
     } else {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
+      //this.alertService.openSnackBar("This file type is not accepted", 'error');
+      this.openDialog('This file type is not accepted','Supported File Formats are JPEG/JPG/PNG !')
     }
   }
+
+  openDialog(title, subTitle) {
+    const dialogRef = this.dialog.open(AlertDialogComponent, {
+      width: '450px',
+      data: { title: title, subTitle: subTitle }
+    });
+  }
+
   selectedFile:any = null;
   signData:any = null;
 
