@@ -1041,7 +1041,7 @@
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                     fxFlex.xs="100">
                                     <mat-label>Exam Procedure Type*</mat-label>
-                                    <mat-select formControlName="procedure_type">
+                                    <mat-select formControlName="exam_procedure_type_id">
                                         <mat-option *ngFor="let procuderalCode of procuderalCodes"
                                             [value]="procuderalCode.exam_procedure_type_id" (click)="procedure_type(procuderalCode)">
                                             {{procuderalCode.exam_procedure_type}} - {{procuderalCode.exam_procedure_name}}

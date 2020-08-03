@@ -7,6 +7,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+import * as moment from 'moment';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'L LT',
   fullPickerInput: 'MM-DD-YYYY hh:mm A',
@@ -114,7 +115,7 @@ export class NewBillableItemComponent implements OnInit {
       claim_id: [this.claimId],
       claimant_id: [this.claimantId],
       exam_type: this.formBuilder.group({
-        procedure_type: [null, Validators.required],
+        exam_procedure_type_id: [null, Validators.required],
         modifier_id: [null],
         is_psychiatric: [false],
         primary_language_spoken: [{ value: '', disabled: true }]
@@ -225,9 +226,13 @@ export class NewBillableItemComponent implements OnInit {
     }
   }
 
-  todayDate = { appointment: new Date(), intake: new Date() }
+  todayDate = { appointment: new Date(), intake: new Date() };
+  minDate: any;
   pickerOpened(type) {
     if (type = 'intake') {
+      let date = moment();
+      this.minDate = date.subtract(60, 'days');
+      this.todayDate.intake = new Date();
       this.todayDate.intake = new Date();
     } else {
       this.todayDate.appointment = new Date();

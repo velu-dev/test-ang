@@ -145,6 +145,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.billableId = params.billId;
       this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
         // this.sentDocuments = new MatTableDataSource(res.);
+        console.log(res)
         this.documents = res.documets
       })
     })

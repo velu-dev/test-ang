@@ -591,9 +591,9 @@ export class NewClaimComponent implements OnInit {
       claim_id: [null],
       claimant_id: [null],
       exam_type: this.formBuilder.group({
-        procedure_type: [null, Validators.required],
-        modifier_id: [null],
-        is_psychiatric: [null],
+        exam_procedure_type_id: [null, Validators.required],
+        // modifier_id: [null],
+        // is_psychiatric: [null],
         primary_language_spoken: [null]
       }),
       appointment: this.formBuilder.group({
@@ -816,7 +816,7 @@ export class NewClaimComponent implements OnInit {
       return;
     }
     //if (!this.isEdit) {
-    this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
+    // this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
@@ -1244,11 +1244,11 @@ export class NewClaimComponent implements OnInit {
     return errorCount;
   }
   procedure_type(procuderalCode) {
-    if (procuderalCode.modifier)
-      this.modifiers = procuderalCode.modifier;
-    this.billable_item.patchValue({
-      exam_type: { modifier_id: [] }
-    })
+    // if (procuderalCode.modifier)
+    //   this.modifiers = procuderalCode.modifier;
+    // this.billable_item.patchValue({
+    //   exam_type: { modifier_id: [] }
+    // })
   }
   selectedFile: File;
   uploadFile(event) {
