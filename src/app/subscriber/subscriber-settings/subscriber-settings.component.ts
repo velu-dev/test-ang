@@ -267,9 +267,9 @@ export class SubscriberSettingsComponent implements OnInit {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
-        this.alertService.openSnackBar("This file too long", 'error');
-        let title = 'Selected Signature File : ' + fileName + ' file size is ' + FileSize + 'KB is too large.'
-        //this.openDialog(title,'File size should be less than 500KB !')
+        //this.alertService.openSnackBar("This file too long", 'error');
+        let title = 'Selected Signature File : "' + fileName + '" file size is ' + FileSize + 'KB is too large.'
+        this.openDialog(title,'File size should be less than 500KB !')
         return;
       }
       this.selectedFile = event.target.files[0].name;
@@ -277,7 +277,8 @@ export class SubscriberSettingsComponent implements OnInit {
     } else {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
+      //this.alertService.openSnackBar("This file type is not accepted", 'error');
+      this.openDialog('This file type is not accepted','Supported File Formats are JPEG/JPG/PNG !')
     }
   }
 

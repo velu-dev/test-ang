@@ -1,9 +1,8 @@
 <div class="billable-item-status">
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100">
-      <div class="main-title">Report Transcription and Compilation On Demand Status  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">View the Report Transcription and Compilation On Demand’s progress here, from beginning to
-        end.</p>
+      <div class="main-title">Report Transcription and Compilation On Demand Status  <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="The Transcriptionist will use the dictation and the documents submitted to them to create a rough draft of the Report. View the Transcriptionist’s progress here"><i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description"> View the progress of the Transcription and compilation services here.</p>
       <mat-progress-bar mode="determinate" value="50" class="not-sent"></mat-progress-bar>
       <div class="text-center">Not Sent</div>
     </div>
@@ -11,10 +10,9 @@
 
   <div fxLayout="row wrap" class="p-t-25">
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-      <div class="main-title">Report Documents  <span class="info ondemand-info"><i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">These are the documents and files that can be sent to the transcriptionist. Documents can
-        be uploaded from a local computer to this list.
-        Use the checkbox to select the documents and files that will be sent to the transcriptionist.</p>
+      <div class="main-title">Report Documents  <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="Upload your dictation to this table."><i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description"> Upload documents to be incorporated into the report here. Click the checkboxes to select the documents to be sent for
+        On Demand Transcription & Report Building.</p>
 
       <div fxFLex="row wrap" class="p-l-10">
         <div fxFlex="50" class="upload-file">
@@ -94,10 +92,9 @@
 
   <div fxLayout="row wrap" class="send-document">
     <div fxFlex="100">
-      <div class="main-title">Report Documents Sent <span class="m-l-5 info ondemand-info"><i class="fa fa-question" aria-hidden="true"></i></span></div>
-      <p class="description">This table lists the documents, actions that were performed on the documents, the date that
-        the actions were performed and
-        the document recipients.</p>
+      <div class="main-title">Report Documents Sent <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and
+        the document recipients."><i class="fa fa-question" aria-hidden="true"></i></span></div>
+      <p class="description">This table lists the documents sent to the transcriptionist.</p>
 
       <div class="user-detail height-auto">
         <table mat-table [dataSource]="dataSource2" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
@@ -147,8 +144,8 @@
 
   <div fxLayout="row wrap" class="proof-of-service m-t-50">
     <div fxFlex="100">
-      <div class="main-title">Transcribed and Compiled Report Documents <span class="m-l-5 info ondemand-info"><i class="fa fa-question" aria-hidden="true"></i></span></div>
-      <p class="description">The transcribed and compiled report documents will be available on this table when they are completed.  </p>
+      <div class="main-title">Transcribed and Compiled Report Documents <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="This table holds the transcribed and compiled version of the report and documents that were sent to the transcriptionist."><i class="fa fa-question" aria-hidden="true"></i></span></div>
+      <p class="description">The report draft will be available here </p>
       <div class="user-detail height-auto">
         <table mat-table [dataSource]="dataSource3" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay1; let i=index">

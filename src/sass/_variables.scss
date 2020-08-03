@@ -661,6 +661,10 @@ input:-webkit-autofill {
 // Forms overide scss        ========
 // ==================================
 
+.mat-form-field {
+  line-height: 1.5; 
+}
+
 // Form fields disabled label color
 .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
   color: rgba(0, 0, 0, 0.7) !important;
@@ -852,6 +856,22 @@ input:-webkit-autofill {
 }
 
 // ==================================
+// message style            =========
+// ==================================
+.alert-title {
+  font-size: $font-size-10;
+  span {
+    font-weight: $font-weight-bold;
+  }
+}
+.info-message {
+  padding: 5px;
+  border: 1px solid $info-border;
+  background-color: $info-bg;
+  color: $info;
+}
+
+// ==================================
 // COMMON CLSSS             =========
 // ==================================
 
@@ -931,5 +951,45 @@ input:-webkit-autofill {
   i {
     font-size: $font-size-12 !important;
     line-height: 0;
+  }
+}
+
+
+// ==================================
+// POPUP CUSTOM CSS         =========
+// ==================================
+
+.disable-acctions {
+  text-align: center;
+  margin: 0px auto;
+  display: block !important;
+  .btn_ {
+    padding: 7px 30px;
+    border-radius: 50px;
+    font-size: $font-size-1;
+    box-shadow: $box-shadow-3;
+    font-weight: $font-weight-bold;
+    line-height: 0;
+    cursor: pointer;
+    &:focus, &::-moz-focus-inner {
+      outline: none !important;
+      border: none !important;
+    }
+  }
+  .no {
+    background-color: $white;
+    color: $black;
+    border: 0;
+    &:hover {
+      background-color: $white;
+    }
+    @extend .btn_;
+  }
+
+  .yes {
+    background-color: $bg-success;
+    color: $white;
+    border: 0;
+    @extend .btn_;
   }
 }

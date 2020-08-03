@@ -154,16 +154,17 @@ export class AddEditServiceLocationComponent implements OnInit {
       })
 
     } else {
-
+      let examiner = []
       if (this.locationForm.value.is_active == 'false' && this.user.role_id == 11) {
         this.examiner_list.map(ex => {
           if (ex.id != this.user.id) {
+            examiner.push(ex)
             this.inActiveStatus = true
           }
 
         })
         if (this.inActiveStatus) {
-          this.opendialog()
+          this.opendialog(examiner)
         }
         return;
       }
@@ -220,10 +221,10 @@ export class AddEditServiceLocationComponent implements OnInit {
 
   }
 
-  opendialog(): void {
+  opendialog(examiner): void {
     const dialogRef = this.dialog.open(InActivedialog, {
-      width: '800px',
-      data: {},
+      width: '500px',
+      data: { examiner: examiner },
 
     });
 
@@ -253,11 +254,13 @@ export class AddEditServiceLocationComponent implements OnInit {
   templateUrl: 'in-active-dialog.html',
 })
 export class InActivedialog {
-
+examiner:any;
   constructor(
     public dialogRef: MatDialogRef<InActivedialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     dialogRef.disableClose = true;
+    this.examiner = data.examiner;
+    console.log(data)
   }
 
   onNoClick(): void {

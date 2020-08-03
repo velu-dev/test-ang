@@ -17,6 +17,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { ExaminerService } from '../../service/examiner.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 
 @Component({
   selector: 'app-new-examiner-user',
@@ -486,12 +487,15 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
+    let fileName = event.target.files[0].name;
     let fileTypes = ['png', 'jpg', 'jpeg']
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 500) {
         this.fileUpload.nativeElement.value = "";
-        this.alertService.openSnackBar("This file too long", 'error');
+        //this.alertService.openSnackBar("This file too long", 'error');
+        let title = 'Selected Signature File : "' + fileName + '" file size is ' + FileSize + 'KB is too large.'
+        this.openAlertDialog(title,'File size should be less than 500KB !')
         return;
       }
       this.selectedFile = event.target.files[0].name;
@@ -499,8 +503,17 @@ export class NewExaminerUserComponent implements OnInit {
     } else {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
+      //this.alertService.openSnackBar("This file type is not accepted", 'error');
+      this.openDialog('This file type is not accepted','Supported File Formats are JPEG/JPG/PNG !')
     }
+  }
+
+
+  openAlertDialog(title, subTitle) {
+    const dialogRef = this.dialog.open(AlertDialogComponent, {
+      width: '450px',
+      data: { title: title, subTitle: subTitle }
+    });
   }
 
   openSign(e): void {
