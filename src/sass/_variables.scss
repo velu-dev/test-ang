@@ -661,6 +661,10 @@ input:-webkit-autofill {
 // Forms overide scss        ========
 // ==================================
 
+.mat-form-field {
+  line-height: 1.5; 
+}
+
 // Form fields disabled label color
 .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
   color: rgba(0, 0, 0, 0.7) !important;
