@@ -153,52 +153,54 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
+        console.log(bills)
         this.billableData = bills.data;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         this.claimService.getClaim(this.claim_id).subscribe(claim => {
           this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(procedure => {
+            console.log("procedure", procedure)
             this.procuderalCodes = procedure.data;
             console.log(this.isChecked)
-            if (this.isChecked) {
-              let modi = [5];
-              this.billable_item.value.exam_type.modifier_id.map(res => {
-                modi.push(res)
-              })
-              this.billable_item.patchValue({
-                exam_type: {
-                  is_psychiatric: true,
-                  modifier_id: modi,
-                }
-              })
-              this.procuderalCodes.map(proc => {
-                if (proc.id == claim.data.exam_type.procedure_type) {
-                  proc.modifier.map(modifier => {
-                    if (modifier.modifier_code != "96")
-                      this.modifiers.push(modifier);
-                  })
-                }
-              })
-              // this.modifiers = this.modifierList;
-            } else {
-              console.log(claim.data)
-              let modi = []
-              this.procuderalCodes.map(proc => {
-                if (proc.id == claim.data.exam_type.procedure_type) {
-                  proc.modifier.map(modifier => {
-                    if (modifier.modifier_code != "96")
-                      this.modifiers.push(modifier);
-                    modi.push(modifier.id)
-                  })
-                }
-              })
-              this.billable_item.patchValue({
-                exam_type: {
-                  is_psychiatric: false,
-                  modifier_id: modi,
-                }
-              })
+            // if (this.isChecked) {
+            //   let modi = [5];
+            //   this.billable_item.value.exam_type.modifier_id.map(res => {
+            //     modi.push(res)
+            //   })
+            //   this.billable_item.patchValue({
+            //     exam_type: {
+            //       is_psychiatric: true,
+            //       modifier_id: modi,
+            //     }
+            //   })
+            //   this.procuderalCodes.map(proc => {
+            //     if (proc.id == claim.data.exam_type.procedure_type) {
+            //       proc.modifier.map(modifier => {
+            //         if (modifier.modifier_code != "96")
+            //           this.modifiers.push(modifier);
+            //       })
+            //     }
+            //   })
+            //   // this.modifiers = this.modifierList;
+            // } else {
+            //   console.log(claim.data)
+            //   let modi = []
+            //   this.procuderalCodes.map(proc => {
+            //     if (proc.id == claim.data.exam_type.procedure_type) {
+            //       proc.modifier.map(modifier => {
+            //         if (modifier.modifier_code != "96")
+            //           this.modifiers.push(modifier);
+            //         modi.push(modifier.id)
+            //       })
+            //     }
+            //   })
+            //   this.billable_item.patchValue({
+            //     exam_type: {
+            //       is_psychiatric: false,
+            //       modifier_id: modi,
+            //     }
+            //   })
 
-            }
+            // }
           })
         })
         console.log("billable", bills)
@@ -211,6 +213,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
+        console.log("bills data", bills.data);
         this.billable_item.patchValue(bills.data);
       })
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
@@ -218,14 +221,14 @@ export class AppointmentDetailsComponent implements OnInit {
         this.notesForm.patchValue({
           exam_notes: response.data.exam_notes,
         })
-        if (response.data.procedural_code == "ML101" || response.data.procedural_code == "ML102" || response.data.procedural_code == "ML103" || response.data.procedural_code == "ML104") {
+        if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
           this.isDisplayStatus.isExaminar = true;
           this.isDisplayStatus.isDeposition = false;
           this.claimService.seedData('examination_status').subscribe(curres => {
             this.examinationStatus = curres.data;
             console.log(curres)
           })
-        } else if (response.data.procedural_code == "ML105") {
+        } else if (response.data.procedure_type == "Deposition") {
           this.isDisplayStatus.isExaminar = false;
           this.isDisplayStatus.isDeposition = true;
           this.claimService.seedData('deposition_status').subscribe(curres => {
@@ -234,20 +237,21 @@ export class AppointmentDetailsComponent implements OnInit {
           })
         }
         this.procedureTypeStatus.map(pro => {
-          if (response.data.procedural_code == "ML101" || response.data.procedural_code == "ML102" || response.data.procedural_code == "ML103" || response.data.procedural_code == "ML104") {
+          console.log("procedure type", pro);
+          if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
             this.isDisplayStatus.status = true;
             this.isDisplayStatus.name = "Examination";
             if (pro.for.includes('E')) {
               this.procedureTypeList.push(pro);
             }
           }
-          if (response.data.procedural_code == "ML106") {
+          if (response.data.procedure_type == "Supplemental") {
             this.isDisplayStatus.status = false;
             if (pro.for.includes('S')) {
               this.procedureTypeList.push(pro);
             }
           }
-          if (response.data.procedural_code == "ML105") {
+          if (response.data.procedure_type == "Deposition") {
             this.isDisplayStatus.status = true;
             this.isDisplayStatus.name = "Deposition";
             if (pro.for.includes('D')) {
@@ -255,10 +259,12 @@ export class AppointmentDetailsComponent implements OnInit {
             }
           }
         })
+        console.log("response.data", response.data)
         this.examinationStatusForm.patchValue(response.data.appointments)
         this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
         this.examiner_id = response.data.appointments.examiner_id;
-        this.examinationDetails = response['data']
+        this.examinationDetails = response['data'];
+        console.log("examinationDetails", this.examinationDetails)
         this.getDocumentData();
       }, error => {
         console.log(error);
