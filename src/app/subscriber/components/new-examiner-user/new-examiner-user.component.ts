@@ -416,7 +416,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.enable();
     }
   }
-
+  createStatus: boolean = false;
   userSubmit() {
 
     this.userForm.value.company_name = this.user.company_name
@@ -440,6 +440,12 @@ export class NewExaminerUserComponent implements OnInit {
           this.intercom.setUserChanges(true);
           this.selectedUser = this.user;
         }
+        this.isEdit = true;
+        this.createStatus = true;
+        this.userForm.patchValue({id:res.data.id})
+        this.userForm.controls.sign_in_email_id.disable();
+        this.userForm.controls.role_id.disable();
+        this.userForm.get('sign_in_email_id').updateValueAndValidity();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -495,7 +501,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.fileUpload.nativeElement.value = "";
         //this.alertService.openSnackBar("This file too long", 'error');
         let title = 'Selected Signature File : "' + fileName + '" file size is ' + FileSize + 'KB is too large.'
-        this.openAlertDialog(title,'File size should be less than 500KB !')
+        this.openAlertDialog(title, 'File size should be less than 500KB !')
         return;
       }
       this.selectedFile = event.target.files[0].name;
@@ -504,7 +510,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
       //this.alertService.openSnackBar("This file type is not accepted", 'error');
-      this.openDialog('This file type is not accepted','Supported File Formats are JPEG/JPG/PNG !')
+      this.openAlertDialog('This file type is not accepted', 'Supported File Formats are JPEG/JPG/PNG !')
     }
   }
 
