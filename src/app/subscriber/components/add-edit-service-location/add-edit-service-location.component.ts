@@ -165,8 +165,9 @@ export class AddEditServiceLocationComponent implements OnInit {
         })
         if (this.inActiveStatus) {
           this.opendialog(examiner)
+          return;
         }
-        return;
+       
       }
 
       this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
