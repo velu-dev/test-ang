@@ -40,7 +40,7 @@
                         <span *ngIf="element?.examiner && element?.examiner?.length != 1">{{element?.examiner[0].last_name}} {{element?.examiner[0].first_name}}{{element?.examiner[0].suffix ? ', '+element?.examiner[0].suffix : ''}}<small> ,(+{{element?.examiner?.length - 1}} more)</small></span>
                         <!-- <small> (+2 more)</small> -->
                     </span>
-                    <span *ngIf="column == 'status'">{{element?.is_active == true ? 'Active' : 'In Active'}}</span>
+                    <span *ngIf="column == 'status'">{{element?.is_active == true ? 'Active' : 'Inactive'}}</span>
                    
                    
                     <!-- <span *ngIf="column == 'disabled'">

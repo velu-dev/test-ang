@@ -72,7 +72,7 @@ export class ManageLocationComponent implements OnInit {
     this.subscriberService.getLocationDetails().subscribe(response => {
       this.dataSource = new MatTableDataSource(response['data']);
       response['data'].map(data=>{ 
-        data.status = data.is_active == true ? 'Active' : 'In Active';
+        data.status = data.is_active == true ? 'Active' : 'Inactive';
         data.examiner_name = data.examiner != null ? data.examiner[0].last_name + ' '+ data.examiner[0].first_name +''+ (data.examiner[0].suffix ? ', '+data.examiner[0].suffix : '') : null;
          data.service =  data.service_name ? data.service_code +' - ' + data.service_name : '';
       })
