@@ -53,6 +53,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   selection1 = new SelectionModel<any>(true, []);
   claim_id: any;
   billableId: any;
+  isLoading: boolean = false;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
@@ -81,13 +82,15 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
   }
   getData() {
+    this.isLoading = true;
     this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
+      this.isLoading = false;
       this.documents = new MatTableDataSource(res.documets);
       this.recipients = new MatTableDataSource(res.recipient);
     })
   }
   isAllSelected() {
-    if (this.documents.data) {
+    if (!this.isLoading) {
       const numSelected = this.selection.selected.length;
       const numRows = this.documents.data.length;
       return numSelected === numRows;
@@ -131,6 +134,21 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
     return `${this.selection1.isSelected(row) ? 'deselect' : 'select'} row ${row.recipient_type + 1}`;
   }
+  editRecipient(element) {
+    const dialogRef = this.dialog.open(CustomRecipient, {
+      width: '800px',
+      data: { claim_id: this.claim_id, billable_id: this.billableId, data: element, isEdit: true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getData();
+      }
+    });
+  }
+  deleteRecipient(element) {
+    console.log(element);
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(CustomDocuments, {
       width: '800px',
@@ -147,12 +165,13 @@ export class BillingCorrespondanceComponent implements OnInit {
   openCustomRecipient(): void {
     const dialogRef = this.dialog.open(CustomRecipient, {
       width: '800px',
-      // data: {name: this.name, animal: this.animal}
+      data: { claim_id: this.claim_id, billable_id: this.billableId, isEdit: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // this.animal = result;
+      if (result) {
+        this.getData();
+      }
     });
   }
   ngOnInit() {
@@ -173,6 +192,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
     this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, { documents_ids: documents_ids, custom_documents_ids: custom_documents_ids, "hide_sign": signHide }).subscribe(res => {
       if (res.status) {
+        this.alertService.openSnackBar(res.message, "success");
         let data = res.data;
         data.map(doc => {
           this.download(doc.exam_report_file_url, doc.file_name);
@@ -248,6 +268,7 @@ export class CustomDocuments {
     formData.append('bill_item_id', this.billable_id);
     this.onDemandService.uploadDocument(formData).subscribe(res => {
       if (res.status) {
+        this.alertService.openSnackBar(res.message, "success");
         this.dialogRef.close(res);
       } else {
         this.alertService.openSnackBar(res.message, "error");
@@ -262,10 +283,18 @@ export class CustomDocuments {
 export class CustomRecipient {
   customReceipient: any;
   states: any = [];
+  claim_id: any;
+  billable_id: any;
+  isEdit: any = false;
+  recipientData = {};
   constructor(
     public dialogRef: MatDialogRef<CustomRecipient>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private claimService: ClaimService) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private claimService: ClaimService,
+    private alertService: AlertService, private onDemandService: OnDemandService) {
     dialogRef.disableClose = true;
+    this.claim_id = data['claim_id'];
+    this.billable_id = data['billable_id'];
+    this.isEdit = data['isEdit'];
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -277,12 +306,25 @@ export class CustomRecipient {
       street1: [null],
       street2: [null],
       city: [null],
-      state: [null],
-      zip: [null],
+      state_id: [null],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     })
+    if (this.isEdit) {
+      this.customReceipient.patchValue(this.data["data"]);
+    }
   }
   saveClick() {
-    console.log(this.customReceipient.value);
+    if (this.customReceipient.invalid) {
+      return
+    } 
+    this.onDemandService.createCustomRecipient(this.claim_id, this.billable_id, this.customReceipient.value).subscribe(res => {
+      if (res.status) {
+        this.alertService.openSnackBar(res.message, "success");
+        this.dialogRef.close(res)
+      } else {
+        this.alertService.openSnackBar(res.message, "error");
+      }
+    })
   }
   onNoClick(): void {
     this.dialogRef.close();
