@@ -59,7 +59,7 @@ import { HistoryComponent } from './examiner/appointment-details/history/history
 import { RecordsComponent } from './examiner/appointment-details/records/records.component';
 import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
-import { BillingCorrespondanceComponent, CustomDialog } from './examiner/appointment-details/correspondance/correspondance.component';
+import { BillingCorrespondanceComponent, CustomDocuments, CustomRecipient } from './examiner/appointment-details/correspondance/correspondance.component';
 import { BilllableBillingComponent } from './examiner/appointment-details/billing/billing.component';
 import { OnDemandService } from './service/on-demand.service';
 @NgModule({
@@ -128,7 +128,8 @@ import { OnDemandService } from './service/on-demand.service';
     ExaminationComponent,
     ReportComponent,
     BilllableBillingComponent,
-    CustomDialog,
+    CustomDocuments,
+    CustomRecipient,
     InActivedialog
   ],
   entryComponents: [
@@ -141,7 +142,8 @@ import { OnDemandService } from './service/on-demand.service';
     SignPopupComponent,
     EventdetailDialog,
     LicenseDialog,
-    CustomDialog,
+    CustomDocuments,
+    CustomRecipient,
     InActivedialog
 
   ],

@@ -35,4 +35,7 @@ export class OnDemandService {
   downloadCorrespondanceForm(claim_id, bill_item_id, documents_ids): Observable<any> {
     return this.http.post(environment.baseUrl + "billing/ondemand/correspondence-download/" + claim_id + "/" + bill_item_id, documents_ids);
   }
+  uploadDocument(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.document_upload, data);
+  }
 }

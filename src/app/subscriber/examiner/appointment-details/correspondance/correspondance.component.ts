@@ -11,6 +11,9 @@ import { DialogData } from 'src/app/shared/components/dialogue/dialogue.componen
 import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
+import { formatDate } from '@fullcalendar/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ClaimService } from 'src/app/subscriber/service/claim.service';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -36,6 +39,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   sentDocuments: any;
   documents: any;
   recipients: any;
+  dataSource3: any;
   // dataSource2 = ELEMENT_DATA2;
   columnsToDisplay = [];
   columnsToDisplay1 = [];
@@ -53,10 +57,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
       this.billableId = params.billId;
-      this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
-        this.documents = new MatTableDataSource(res.documets);
-        this.recipients = new MatTableDataSource(res.recipient);
-      })
+      this.getData();
     })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -77,6 +78,12 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.columnName1 = ["File Name", "Action", "Date", "Recipients", "Download"]
         this.columnsToDisplay1 = ['file_name', 'action', "date", "recipients", 'download']
       }
+    })
+  }
+  getData() {
+    this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
+      this.documents = new MatTableDataSource(res.documets);
+      this.recipients = new MatTableDataSource(res.recipient);
     })
   }
   isAllSelected() {
@@ -125,7 +132,20 @@ export class BillingCorrespondanceComponent implements OnInit {
     return `${this.selection1.isSelected(row) ? 'deselect' : 'select'} row ${row.recipient_type + 1}`;
   }
   openDialog(): void {
-    const dialogRef = this.dialog.open(CustomDialog, {
+    const dialogRef = this.dialog.open(CustomDocuments, {
+      width: '800px',
+      data: { claim_id: this.claim_id, billable_id: this.billableId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getData();
+      }
+      // this.animal = result;
+    });
+  }
+  openCustomRecipient(): void {
+    const dialogRef = this.dialog.open(CustomRecipient, {
       width: '800px',
       // data: {name: this.name, animal: this.animal}
     });
@@ -137,10 +157,21 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
   ngOnInit() {
   }
-  downloadForms() {
-    let ids: any;
-    ids = this.selection.selected.map(({ id }) => id);
-    this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, { documents_ids: ids }).subscribe(res => {
+  downloadForms(sign) {
+    let signHide = false;
+    if (sign) {
+      signHide = sign;
+    }
+    let documents_ids: any = [];
+    let custom_documents_ids: any = [];
+    this.selection.selected.map(res => {
+      if (res.doc_type == "custom") {
+        custom_documents_ids.push(res.id)
+      } else {
+        documents_ids.push(res.id)
+      }
+    })
+    this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, { documents_ids: documents_ids, custom_documents_ids: custom_documents_ids, "hide_sign": signHide }).subscribe(res => {
       if (res.status) {
         let data = res.data;
         data.map(doc => {
@@ -171,17 +202,88 @@ export class BillingCorrespondanceComponent implements OnInit {
 }
 
 @Component({
-  selector: 'custom-dialog',
-  templateUrl: 'custom-dialog.html',
+  selector: 'custom-documents',
+  templateUrl: 'custom-documents.html',
 })
-export class CustomDialog {
-
+export class CustomDocuments {
+  claim_id: any;
+  billable_id: any;
   constructor(
-    public dialogRef: MatDialogRef<CustomDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    public dialogRef: MatDialogRef<CustomDocuments>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private alertService: AlertService, private onDemandService: OnDemandService) {
     dialogRef.disableClose = true;
+    this.claim_id = data['claim_id'];
+    this.billable_id = data['billable_id'];
   }
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  selectedFile: File;
+  file = "";
+  selectFile(event) {
+    this.selectedFile = null;
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
+
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+      if (FileSize > 30) {
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.selectedFile = event.target.files[0];
+      this.file = event.target.files[0].name;
+    } else {
+      this.selectedFile = null;
+      //this.errorMessage = 'This file type is not accepted';
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+
+  }
+  uploadFile() {
+    let formData = new FormData()
+    formData.append('file', this.selectedFile);
+    formData.append("document_type_id", "10");
+    formData.append('claim_id', this.claim_id);
+    formData.append('bill_item_id', this.billable_id);
+    this.onDemandService.uploadDocument(formData).subscribe(res => {
+      if (res.status) {
+        this.dialogRef.close(res);
+      } else {
+        this.alertService.openSnackBar(res.message, "error");
+      }
+    })
+  }
+}
+@Component({
+  selector: 'custom-recipient',
+  templateUrl: 'custom-recipient.html',
+})
+export class CustomRecipient {
+  customReceipient: any;
+  states: any = [];
+  constructor(
+    public dialogRef: MatDialogRef<CustomRecipient>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private claimService: ClaimService) {
+    dialogRef.disableClose = true;
+    this.claimService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
+  }
+  ngOnInit() {
+    this.customReceipient = this.formBuilder.group({
+      id: [null],
+      name: [null, Validators.required],
+      street1: [null],
+      street2: [null],
+      city: [null],
+      state: [null],
+      zip: [null],
+    })
+  }
+  saveClick() {
+    console.log(this.customReceipient.value);
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
