@@ -1,0 +1,24 @@
+<div class="dialog custom-dialog">
+    <mat-card-header class="model-header">
+        <div class="content-wrapper-main-title">Custom Document</div>
+        <span class="spacer"></span>
+        <button class="close-model" color="warn" (click)="onNoClick()"> <i class="fa fa-close"></i> close </button>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div fxFLex="row wrap" class="w-100" fxFlex="100">
+            <div fxFlex="80" class="upload-file">
+                <button mat-raised-button (click)="uploader.click()" class="filled-gray">Select File</button>
+                <mat-form-field appearance="standard" class="p-l-10 w-100">
+                    <input matInput [title]="file" readonly [value]="file | ellipsis:30" placeholder="No file chosen">
+                    <input type="file" #uploader hidden (change)="selectFile($event)" id="uploadFile"
+                        accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+                    <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
+                </mat-form-field>
+            </div>
+            <div fxFlex="20">
+                <button mat-raised-button class="filled-gray m-t-25" (click)="uploadFile()">Add</button>
+            </div>
+        </div>
+    </mat-card-content>
+</div>
