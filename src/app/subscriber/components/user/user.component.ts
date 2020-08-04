@@ -67,8 +67,8 @@ export class UserComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Last Name", "Disable User", "Action"]
-        this.columnsToDisplay = ['is_expand', 'last_name', "disabled", "action"]
+        this.columnName = ["", "Last Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
         this.columnName = ["Last Name", "First Name", "Email", "Role(s)", "Enrolled On", "Disable User"]
         this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
