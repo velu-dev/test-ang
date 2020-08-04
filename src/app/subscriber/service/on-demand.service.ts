@@ -38,4 +38,7 @@ export class OnDemandService {
   uploadDocument(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.document_upload, data);
   }
+  createCustomRecipient(claim_id, bill_item_id, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.create_custom_recipient + claim_id + "/" + bill_item_id, data)
+  }
 }
