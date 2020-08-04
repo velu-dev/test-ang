@@ -8,6 +8,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-records',
@@ -175,6 +176,10 @@ export class RecordsComponent implements OnInit {
         this.alertService.openSnackBar("This file type is not accepted", 'error');
       }
     }
+  }
+
+  download(data) {
+    saveAs(data.file_url, data.file_name);
   }
 
 
