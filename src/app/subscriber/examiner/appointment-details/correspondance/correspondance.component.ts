@@ -162,9 +162,16 @@ export class BillingCorrespondanceComponent implements OnInit {
     if (sign) {
       signHide = sign;
     }
-    let ids: any;
-    ids = this.selection.selected.map(({ id }) => id);
-    this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, { documents_ids: ids, "hide_sign": signHide }).subscribe(res => {
+    let documents_ids: any = [];
+    let custom_documents_ids: any = [];
+    this.selection.selected.map(res => {
+      if (res.doc_type == "custom") {
+        custom_documents_ids.push(res.id)
+      } else {
+        documents_ids.push(res.id)
+      }
+    })
+    this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, { documents_ids: documents_ids, custom_documents_ids: custom_documents_ids, "hide_sign": signHide }).subscribe(res => {
       if (res.status) {
         let data = res.data;
         data.map(doc => {
