@@ -12,7 +12,7 @@ import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
 import { formatDate } from '@fullcalendar/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 @Component({
   selector: 'app-billing-correspondance',
@@ -266,7 +266,7 @@ export class CustomRecipient {
   ngOnInit() {
     this.customReceipient = this.formBuilder.group({
       id: [null],
-      name: [null],
+      name: [null, Validators.required],
       street1: [null],
       street2: [null],
       city: [null],
