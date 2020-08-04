@@ -155,7 +155,7 @@ export class AddEditServiceLocationComponent implements OnInit {
 
     } else {
       let examiner = []
-      if (this.locationForm.value.is_active == 'false' && this.user.role_id == 11) {
+      if (this.locationForm.value.is_active == 'false') {
         this.examiner_list.map(ex => {
           if (ex.id != this.user.id) {
             examiner.push(ex)

@@ -47,7 +47,7 @@
                             <mat-label>Email ID*</mat-label>
                             <input matInput placeholder="Email" formControlName="sign_in_email_id" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
-                            <mat-hint>Note : Once registered with an email id then it cannot be changed/modified.</mat-hint>
+                            <mat-hint *ngIf="!isEdit">Note : Once registered with an email id then it cannot be changed/modified.</mat-hint>
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
