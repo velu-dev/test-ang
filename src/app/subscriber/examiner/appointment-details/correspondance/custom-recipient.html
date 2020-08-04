@@ -1,26 +1,3 @@
-<div class="dialog custom-dialog">
-    <mat-card-header class="model-header">
-        <div class="content-wrapper-main-title">Custom Document</div>
-        <span class="spacer"></span>
-        <button class="close-model" color="warn" (click)="onNoClick()"> <i class="fa fa-close"></i> close </button>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-        <div fxFLex="row wrap" class="w-100" fxFlex="100">
-            <div fxFlex="80" class="upload-file">
-                <button mat-raised-button class="filled-gray">Select File</button>
-                <mat-form-field appearance="standard" class="p-l-10 w-100">
-                    <input matInput readonly placeholder="No file chosen">
-                    <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
-                </mat-form-field>
-            </div>
-            <div fxFlex="20">
-                <button mat-raised-button class="filled-gray m-t-25">Add</button>
-            </div>
-        </div>
-    </mat-card-content>
-</div>
-
 <div class="dialog custom-dialog m-t-25">
     <mat-card-header class="model-header">
         <div class="content-wrapper-main-title">Custom Recipient</div>
@@ -30,56 +7,59 @@
     <mat-divider></mat-divider>
     <mat-card-content fxFLex="row wrap" class="w-100">
         <div fxFLex="row wrap" class="w-100" fxFlex="100">
-            <form fxLayout="row wrap" class="mat-grid-form m-t-10">
+            <form fxLayout="row wrap" class="mat-grid-form m-t-10" [formGroup]="customReceipient">
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
                     fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>Name</mat-label>
-                    <input matInput placeholder="Name" autocomplete="off">
+                    <input matInput placeholder="Name" formControlName="name" autocomplete="off">
                     <mat-error>error msg here...</mat-error>
                 </mat-form-field>
-                
+
                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>Street Address 1</mat-label>
-                    <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="1"></textarea>
+                    <textarea matInput placeholder="Street Address 1" formControlName="street1" cdkTextareaAutosize
+                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     <mat-error>error msg here...</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>Street Address 2</mat-label>
-                    <textarea matInput placeholder="Street Address 2" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="1"></textarea>
+                    <textarea matInput placeholder="Street Address 2" formControlName="street2" cdkTextareaAutosize
+                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     <mat-error>error msg here...</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>City</mat-label>
-                    <input matInput placeholder="City" autocomplete="off">
+                    <input matInput placeholder="City" formControlName="city" autocomplete="off">
                     <mat-error>error msg here...</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>State</mat-label>
-                    <input matInput placeholder="State" autocomplete="off">
+                    <mat-select formControlName="state">
+                        <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                        </mat-option>
+                    </mat-select>
                     <mat-error>error msg here...</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>Zip</mat-label>
-                    <input matInput placeholder="Zip" autocomplete="off">
+                    <input matInput placeholder="Zip" formControlName="zip" autocomplete="off">
                     <mat-error>error msg here...</mat-error>
-                </mat-form-field>             
-                
+                </mat-form-field>
+
             </form>
             <div class="text-center w-100 m-t-10">
-                <button mat-stroked-button type="button" class="outline-danger"  (click)="onNoClick()">Cancel</button>
-                <button mat-stroked-button class="m-l-10 outline-success">Save </button>
+                <button mat-stroked-button type="button" class="outline-danger" (click)="onNoClick()">Cancel</button>
+                <button mat-stroked-button class="m-l-10 outline-success" (click)="saveClick()">Save </button>
             </div>
         </div>
     </mat-card-content>

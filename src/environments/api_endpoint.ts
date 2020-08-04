@@ -135,5 +135,6 @@ export const api_endpoint = {
     getTranscription: 'billing/ondemand/records/',
     requestCreate: 'service-requests/create',
     //Corresponding
-    getcorrespondence_data: "billing/ondemand/correspondence/"
+    getcorrespondence_data: "billing/ondemand/correspondence/",
+    document_upload: "examinations/document-upload",
 }

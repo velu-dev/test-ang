@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -7,6 +7,7 @@ import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 import { ActivatedRoute } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-records',
@@ -43,31 +44,12 @@ export class RecordsComponent implements OnInit {
 
   paramsId: any;
   rocardData: any;
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
-  }
 
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
+    private alertService: AlertService,
     private onDemandService: OnDemandService) {
 
 
@@ -135,6 +117,62 @@ export class RecordsComponent implements OnInit {
       this.expandId1 = element.id;
     }
 
+  }
+
+  selectedFiles: FileList;
+  selectedFile: File;
+  addFile(event) {
+
+    console.log(event.target.files)
+    this.selectedFiles = event.target.files;
+    console.log(this.selectedFiles)
+    this.selectedFile = null;
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
+
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      let lists = this.selectedFiles[i];
+      console.log(lists);
+      if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
+        var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
+        if (FileSize > 30) {
+          this.fileUpload.nativeElement.value = "";
+           this.alertService.openSnackBar("This file too long", 'error');
+          return;
+        }
+        this.selectedFile = this.selectedFiles[i];
+      } else {
+        //this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
+      }
+    }
+
+console.log(this.selectedFile)
+
+  }
+
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
   }
 }
 

@@ -44,9 +44,10 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Email*</mat-label>
+                            <mat-label>Email ID*</mat-label>
                             <input matInput placeholder="Email" formControlName="sign_in_email_id" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
+                            <mat-hint>Note : Once registered with an email id then it cannot be changed/modified.</mat-hint>
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
@@ -111,7 +112,8 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Zip Code</mat-label>
-                            <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
+                            <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
+                                formControlName="zip_code" autocomplete="off">
                             <mat-error *ngIf="mailingSubmit">Please enter valid zip code</mat-error>
                         </mat-form-field>
 
@@ -201,7 +203,8 @@
                             </mat-radio-group>
                         </div>
 
-                        <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                        <div class="sub-title p-l-10 p-t-25" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                            fxFlex.xs="100">
                             CMS 1500 Box 25
                         </div>
 
@@ -220,36 +223,39 @@
                         </div>
 
                         <div fxFlex="100" *ngIf="billingProviderForm.value.is_person == 'true'">
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
-                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>First name*</mat-label>
-                                <input matInput placeholder="First name" [value]="selectedUser.first_name" autocomplete="off"
-                                    disabled>
-                                <mat-error *ngIf="billingSubmit">Please enter valid first name</mat-error>
-                            </mat-form-field>
+                            <div fxLayout="row wrap">
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                    fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>First name*</mat-label>
+                                    <input matInput placeholder="First name" [value]="selectedUser.first_name"
+                                        autocomplete="off" disabled>
+                                    <mat-error *ngIf="billingSubmit">Please enter valid first name</mat-error>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
-                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Middle Name</mat-label>
-                                <input matInput placeholder="Middle Name" [value]="selectedUser.middle_name" autocomplete="off"
-                                    disabled>
-                                <mat-error *ngIf="billingSubmit">Please enter valid middle name</mat-error>
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                    fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Middle Name</mat-label>
+                                    <input matInput placeholder="Middle Name" [value]="selectedUser.middle_name"
+                                        autocomplete="off" disabled>
+                                    <mat-error *ngIf="billingSubmit">Please enter valid middle name</mat-error>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
-                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Last Name*</mat-label>
-                                <input matInput placeholder="Last Name" [value]="selectedUser.last_name" autocomplete="off"
-                                    disabled>
-                                <mat-error *ngIf="billingSubmit">Please enter valid last name</mat-error>
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                    fxFlex.xl="30" fxFlex.sm="80" fxFlex.xs="80">
+                                    <mat-label>Last Name*</mat-label>
+                                    <input matInput placeholder="Last Name" [value]="selectedUser.last_name"
+                                        autocomplete="off" disabled>
+                                    <mat-error *ngIf="billingSubmit">Please enter valid last name</mat-error>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
-                                fxFlex.xl="10" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Suffix</mat-label>
-                                <input matInput placeholder="Suffix" [value]="selectedUser.suffix" autocomplete="off" disabled>
-                                <mat-error>Please enter valid suffix</mat-error>
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
+                                    fxFlex.xl="10" fxFlex.sm="20" fxFlex.xs="20">
+                                    <mat-label>Suffix</mat-label>
+                                    <input matInput placeholder="Suffix" [value]="selectedUser.suffix"
+                                        autocomplete="off" disabled>
+                                    <mat-error>Please enter valid suffix</mat-error>
+                                </mat-form-field>
+                            </div>
                         </div>
                         <div fxFlex="100" *ngIf="billingProviderForm.value.is_person == 'false'">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
@@ -295,7 +301,8 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Zip Code</mat-label>
-                            <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
+                            <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
+                                formControlName="zip_code" autocomplete="off">
                             <mat-error *ngIf="billingSubmit">Please enter valid zip code</mat-error>
                         </mat-form-field>
 
@@ -378,37 +385,40 @@
                                     Non-person</mat-radio-button>
                             </mat-radio-group>
                         </div>
-                        <div fxFlex="100" *ngIf="renderingForm.value.is_person == 'true'">
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
-                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>First name*</mat-label>
-                                <input matInput placeholder="First name" [value]="selectedUser.first_name" autocomplete="off"
-                                    disabled>
-                                <mat-error *ngIf="renderingSubmit">Please enter valid first name</mat-error>
-                            </mat-form-field>
+                        <div fxFlex="100" *ngIf="renderingForm.value.is_person == 'true'" class="m-t-20">
+                            <div fxLayout="row wrap">
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                    fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>First name*</mat-label>
+                                    <input matInput placeholder="First name" [value]="selectedUser.first_name"
+                                        autocomplete="off" disabled>
+                                    <mat-error *ngIf="renderingSubmit">Please enter valid first name</mat-error>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
-                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Middle Name</mat-label>
-                                <input matInput placeholder="Middle Name" [value]="selectedUser.middle_name" autocomplete="off"
-                                    disabled>
-                                <mat-error *ngIf="renderingSubmit">Please enter valid middle name</mat-error>
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                    fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Middle Name</mat-label>
+                                    <input matInput placeholder="Middle Name" [value]="selectedUser.middle_name"
+                                        autocomplete="off" disabled>
+                                    <mat-error *ngIf="renderingSubmit">Please enter valid middle name</mat-error>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
-                                fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Last Name*</mat-label>
-                                <input matInput placeholder="Last Name" [value]="selectedUser.last_name" autocomplete="off"
-                                    disabled>
-                                <mat-error *ngIf="renderingSubmit">Please enter valid last name</mat-error>
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
+                                    fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Last Name*</mat-label>
+                                    <input matInput placeholder="Last Name" [value]="selectedUser.last_name"
+                                        autocomplete="off" disabled>
+                                    <mat-error *ngIf="renderingSubmit">Please enter valid last name</mat-error>
+                                </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
-                                fxFlex.xl="10" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Suffix</mat-label>
-                                <input matInput placeholder="Suffix" [value]="selectedUser.suffix" autocomplete="off" disabled>
-                                <mat-error *ngIf="renderingSubmit">Please enter valid suffix</mat-error>
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
+                                    fxFlex.xl="10" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Suffix</mat-label>
+                                    <input matInput placeholder="Suffix" [value]="selectedUser.suffix"
+                                        autocomplete="off" disabled>
+                                    <mat-error *ngIf="renderingSubmit">Please enter valid suffix</mat-error>
+                                </mat-form-field>
+                            </div>
                         </div>
                         <div fxFlex="100" *ngIf="renderingForm.value.is_person == 'false'">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
@@ -421,7 +431,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                        <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                             CMS 1500 Box 24 J
                         </div>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
@@ -446,15 +456,17 @@
                                 <mat-error *ngIf="renderingSubmit">Please select valid taxonomy code</mat-error>
                             </mat-select> -->
                             <input type="text" matInput [formControl]="texonomySearch"
-                            [matAutocomplete]="examinerAutocomplete">
-                        <mat-autocomplete #examinerAutocomplete="matAutocomplete" (optionSelected)="texonomyChange($event.option.value)">
-                            <mat-option *ngFor="let option of (texonomyFilteredOptions | async)"
-                                [value]="option.id" >
-                                {{option.taxonomy_code}}-{{option.taxonomy_name}}
-                            </mat-option>
-                            <mat-option *ngIf="(texonomyFilteredOptions | async)?.length == 0" disabled>No Result Found
-                            </mat-option>
-                        </mat-autocomplete>
+                                [matAutocomplete]="examinerAutocomplete">
+                            <mat-autocomplete #examinerAutocomplete="matAutocomplete"
+                                (optionSelected)="texonomyChange($event.option.value)">
+                                <mat-option *ngFor="let option of (texonomyFilteredOptions | async)"
+                                    [value]="option.id">
+                                    {{option.taxonomy_code}}-{{option.taxonomy_name}}
+                                </mat-option>
+                                <mat-option *ngIf="(texonomyFilteredOptions | async)?.length == 0" disabled>No Result
+                                    Found
+                                </mat-option>
+                            </mat-autocomplete>
                         </mat-form-field>
 
                         <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
@@ -504,7 +516,8 @@
                                 <div class="sub-title p-l-10 m-t-30" fxFlex="100">
                                     Signature
                                     <br /> <small>
-                                        Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels & Maximum File Size: 500 KB
+                                        Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels &
+                                        Maximum File Size: 500 KB
                                     </small>
                                 </div>
                                 <div fxFlex="100" class="sign-upload">
@@ -554,16 +567,16 @@
                             </mat-select>
                         </mat-form-field>
 
-                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                        <!-- <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                             class="p-l-10">
                             <mat-label class="m-t-10 display-block">Provider status</mat-label>
                             <mat-radio-group class="" formControlName="provider_status">
                                 <mat-radio-button value="true" checked>Active</mat-radio-button>
-                                <mat-radio-button value="false" class="p-l-10">In Active</mat-radio-button>
+                                <mat-radio-button value="false" class="p-l-10">Inactive</mat-radio-button>
                             </mat-radio-group>
-                        </div>
+                        </div> -->
 
-                        <div class="text-center w-100 m-t-10 m-b-20">
+                        <div class="text-center w-100 m-t-30 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
@@ -589,69 +602,70 @@
                     <button mat-stroked-button class="float-right outline-success m-t-5" (click)="assignLocation()">
                         Add Service Location
                     </button>
-                    <ng-container >
-                    <div class="user-detail" *ngIf = "tab == 4">
-                        <table mat-table [dataSource]="dataSource" multiTemplateDataRows
-                            class="mat-elevation-z8 user-table" matSort>
-                            <ng-container matColumnDef="{{column}}"
-                                *ngFor="let column of columnsToDisplay; let i=index">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                    [disabled]="columnName[i] == 'Action'">
-                                    {{columnName[i]}} </th>
-                                <td mat-cell *matCellDef="let element; let i = index" >
-                                    <span *ngIf="i == 0 && isMobile">
-                                        <mat-icon mat-raised-button
-                                            [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
-                                            {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
-                                        </mat-icon>
-                                    </span>
-                                    <div>
-                                        <span *ngIf="column == 'address'"> {{element.street1}} {{element.street2}}
-                                            {{element.city}} {{element.state_name}} - {{element.zip_code}}</span>
-                                        <span
-                                            *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
-                                        <span
-                                            *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
-                                        <span
-                                            *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
-                                        <span *ngIf="column == 'action'" class="no-wrap-td">
-                                            <a class="text-success" (click)="editAddress(element)">
-                                                Edit
-                                            </a>
-                                            <a class="text-danger m-l-10" (click)="removeLocation(element,i)">
-                                                Remove
-                                            </a>
+                    <ng-container>
+                        <div class="user-detail" *ngIf="tab == 4">
+                            <table mat-table [dataSource]="dataSource" multiTemplateDataRows
+                                class="mat-elevation-z8 user-table" matSort>
+                                <ng-container matColumnDef="{{column}}"
+                                    *ngFor="let column of columnsToDisplay; let i=index">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                        [disabled]="columnName[i] == 'Action'">
+                                        {{columnName[i]}} </th>
+                                    <td mat-cell *matCellDef="let element; let i = index">
+                                        <span *ngIf="i == 0 && isMobile">
+                                            <mat-icon mat-raised-button
+                                                [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
+                                                {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                                            </mat-icon>
                                         </span>
-                                    </div>
-                                </td>
-                            </ng-container>
-                            <ng-container matColumnDef="expandedDetail">
-                                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                                    <div class="detail"
-                                        [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                                        <div class="resposive-table">
-                                            <div><span>Address</span> {{element.street1}} {{element.street2}}
-                                                {{element.city}} {{element.state_name}} - {{element.zip_code}} </div>
-                                            <div><span>Service Type</span> {{element?.service_code}} -
-                                                {{element?.service_name}} </div>
-                                            <div><span>Phone</span>
-                                                {{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}
-                                            </div>
-                                            <div><span>NPI Number</span> {{element?.national_provider_identifier}}
+                                        <div>
+                                            <span *ngIf="column == 'address'"> {{element.street1}} {{element.street2}}
+                                                {{element.city}} {{element.state_name}} - {{element.zip_code}}</span>
+                                            <span
+                                                *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
+                                            <span
+                                                *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
+                                            <span
+                                                *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
+                                            <span *ngIf="column == 'action'" class="no-wrap-td">
+                                                <a class="text-success" (click)="editAddress(element)">
+                                                    Edit
+                                                </a>
+                                                <a class="text-danger m-l-10" (click)="removeLocation(element,i)">
+                                                    Remove
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="expandedDetail">
+                                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                                        <div class="detail"
+                                            [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                                            <div class="resposive-table">
+                                                <div><span>Address</span> {{element.street1}} {{element.street2}}
+                                                    {{element.city}} {{element.state_name}} - {{element.zip_code}}
+                                                </div>
+                                                <div><span>Service Type</span> {{element?.service_code}} -
+                                                    {{element?.service_name}} </div>
+                                                <div><span>Phone</span>
+                                                    {{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}
+                                                </div>
+                                                <div><span>NPI Number</span> {{element?.national_provider_identifier}}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
-                                [class.row]="expandedElement === element" (click)="openElement(element)">
-                            </tr>
-                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
-                        </table>
-                        <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
-                    </div>
-                </ng-container>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
+                                    [class.row]="expandedElement === element" (click)="openElement(element)">
+                                </tr>
+                                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+                            </table>
+                            <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
+                        </div>
+                    </ng-container>
                     <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
                 </mat-card-content>
 
@@ -666,23 +680,25 @@
                                 floatLabel="floatLabelControl.auto" class="w-100">
                                 <!-- <input matInput placeholder="Search Existing Service Locations" autocomplete="off" class="p-l-10"> -->
                                 <input matInput placeholder="Search Existing Service Locations"
-                                [matAutocomplete]="addressAutocomplete" [formControl]="addresssearch" class="p-l-10" autocomplete="off">
-                            <mat-autocomplete #addressAutocomplete="matAutocomplete">
-                                <mat-option *ngFor="let option of filteredOptions?.data"
-                                    (click)="addressOnChange(option)" value="{{option?.street1 }} {{option?.street2 }} {{option?.city}} {{option?.state_name }} {{option?.zip_code }}">
-                                    {{option?.street1 }} {{option?.street2 }} {{option?.city}}
-                                    {{option?.state_name }} {{option?.zip_code }}
-                                </mat-option>
-                                <mat-option *ngIf="filteredOptions?.data?.length == 0" disabled>Not found
-                                </mat-option>
-                            </mat-autocomplete>
+                                    [matAutocomplete]="addressAutocomplete" [formControl]="addresssearch" class="p-l-10"
+                                    autocomplete="off">
+                                <mat-autocomplete #addressAutocomplete="matAutocomplete">
+                                    <mat-option *ngFor="let option of filteredOptions?.data"
+                                        (click)="addressOnChange(option)"
+                                        value="{{option?.street1 }} {{option?.street2 }} {{option?.city}} {{option?.state_name }} {{option?.zip_code }}">
+                                        {{option?.street1 }} {{option?.street2 }} {{option?.city}}
+                                        {{option?.state_name }} {{option?.zip_code }}
+                                    </mat-option>
+                                    <mat-option *ngIf="filteredOptions?.data?.length == 0" disabled>Not found
+                                    </mat-option>
+                                </mat-autocomplete>
                                 <span matSuffix class="search-icon icons">
                                     <mat-icon>search</mat-icon>
                                 </span>
                                 <mat-error>
                                     <span>Please enter valid service location</span></mat-error>
                             </mat-form-field>
-                           
+
                             <div class="address-list" fxFlex="100" *ngIf="locationData">
                                 <mat-list>
                                     <mat-list-item>
@@ -693,7 +709,8 @@
                                                 </strong>
                                             </div>
                                         </div>
-                                        <div class="address" mat-line>  {{locationData?.street1 }} {{locationData?.street2 }} {{locationData?.city}}
+                                        <div class="address" mat-line> {{locationData?.street1 }}
+                                            {{locationData?.street2 }} {{locationData?.city}}
                                             {{locationData?.state_name }} - {{locationData?.zip_code }}</div>
                                     </mat-list-item>
                                 </mat-list>
@@ -702,37 +719,46 @@
                                 <!-- <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="outline-success m-t-5" (click)="locationRoute()">
                                    Create Service Location
                                 </button> -->
-                                <div *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="text-center p-b-40">No existing Service Location Found!</div>
+                                <div *ngIf="filteredOptions?.data?.length == 0 && locationData == null"
+                                    class="text-center p-b-40">No existing Service Location Found!</div>
                             </div>
-                
-                            <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100" *ngIf="locationData">
+
+                            <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100"
+                                fxFlex.xs="100" *ngIf="locationData">
                                 <div fxLayout="row wrap" class="p-l-10">
-                                    <div class="content-wrapper-main-title m-t-20 m-b-0 p-l-5" fxFlex="100">National Provider Identifier (NPI)
+                                    <div class="content-wrapper-main-title m-t-20 m-b-0 p-l-5" fxFlex="100">National
+                                        Provider Identifier (NPI)
                                         Number</div>
                                     <p fxFlex="100" class="m-t-5 p-l-5">Enter NPI Number for the Service Location.</p>
                                     <div class="sub-title" fxFlex="100">CMS 1500 Box 32 a</div>
                                     <mat-form-field fxFlex="100" class="m-t-20">
                                         <mat-label>National Provider Identifier (NPI) Number</mat-label>
-                                        <input matInput pattern="^[0-9]*$" placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
-                                                [dropSpecialCharacters]="false" mask="9{15}"
-                                                [(ngModel)]="national_provider_identifier">
+                                        <input matInput pattern="^[0-9]*$"
+                                            placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
+                                            [dropSpecialCharacters]="false" mask="9{15}"
+                                            [(ngModel)]="national_provider_identifier">
                                         <mat-error>Please enter valid NPI number</mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
-                
+
                             <div class="text-center w-100 m-t-10 m-b-10">
-                                <button mat-stroked-button type="button" class="outline-danger" (click)="locationCancel()">Cancel</button>
-                                <button mat-stroked-button *ngIf="filteredOptions?.data?.length != 0 || (filteredOptions?.data?.length >= 1 || locationData != null)" class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>
-                                <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="m-l-10 outline-success" (click)="locationRoute()">
+                                <button mat-stroked-button type="button" class="outline-danger"
+                                    (click)="locationCancel()">Cancel</button>
+                                <button mat-stroked-button
+                                    *ngIf="filteredOptions?.data?.length != 0 || (filteredOptions?.data?.length >= 1 || locationData != null)"
+                                    class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>
+                                <button mat-stroked-button
+                                    *ngIf="filteredOptions?.data?.length == 0 && locationData == null"
+                                    class="m-l-10 outline-success" (click)="locationRoute()">
                                     Create Service Location
-                                 </button>
+                                </button>
                             </div>
-                
+
                         </div>
                     </mat-card-content>
                 </mat-card>
-                
+
 
             </mat-tab>
         </mat-tab-group>

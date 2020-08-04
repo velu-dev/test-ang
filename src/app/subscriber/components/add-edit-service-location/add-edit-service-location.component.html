@@ -1,15 +1,16 @@
 <mat-card class="m-card new-location">
     <mat-card-header>
-        <div class="m-0 content-wrapper-main-title" *ngIf="!examinerId">{{locationId ? 'Service Location' : 'Add New Service Location'}}</div>
+        <div class="m-0 content-wrapper-main-title" *ngIf="!examinerId">
+            {{locationId ? 'Service Location' : 'Add New Service Location'}}</div>
         <div class="m-0 content-wrapper-main-title" *ngIf="examinerId">Service Location for {{examinerName}}</div>
         <span class="spacer"></span>
-    <button mat-stroked-button *ngIf="!editStatus && locationId" class="m-b-5 outline-success" (click)="edit()">
-      Edit
-    </button>
-    <button mat-stroked-button class="filled-success edit-btn m-b-5" *ngIf="editStatus && locationId"
-      (click)="locationFromSubmit()">
-      Save
-    </button>
+        <button mat-stroked-button *ngIf="!editStatus && locationId" class="m-b-5 outline-success" (click)="edit()">
+            Edit
+        </button>
+        <button mat-stroked-button class="filled-success edit-btn m-b-5" *ngIf="editStatus && locationId"
+            (click)="locationFromSubmit()">
+            Save
+        </button>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
@@ -24,7 +25,8 @@
                 </div>
 
                 <div fxFlex="100">
-                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    <div fxLayout="row wrap">
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Location Name</mat-label>
                         <input matInput placeholder="Location Name" formControlName="service_location_name"
@@ -32,31 +34,29 @@
                         <mat-error *ngIf="locationSubmit">Please enter valid location name</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field  *ngIf="this.pageStatus == 2" appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>National Provider Identifier (NPI) Number</mat-label>
-                <input matInput placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
-                    [dropSpecialCharacters]="false" mask="9{15}"
-                    formControlName="national_provider_identifier">
-                <mat-error *ngIf="locationSubmit">Please enter valid NPI number</mat-error>
-            </mat-form-field>
+                    <mat-form-field *ngIf="this.pageStatus == 2" appearance="outline" fxFlex="100" fxFlex.lg="50"
+                        fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>National Provider Identifier (NPI) Number</mat-label>
+                        <input matInput placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
+                            [dropSpecialCharacters]="false" mask="9{15}" formControlName="national_provider_identifier">
+                        <mat-error *ngIf="locationSubmit">Please enter valid NPI number</mat-error>
+                    </mat-form-field>
+                    </div>
                 </div>
 
-                
+
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Street Address 1 * </mat-label>
-                    <input matInput placeholder="Street Address 1" formControlName="street1"
-                        autocomplete="off">
+                    <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off">
                     <mat-error *ngIf="locationSubmit">Please enter valid street address</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Street Address 2 </mat-label>
-                    <input matInput placeholder="Street Address 2" formControlName="street2"
-                        autocomplete="off">
+                    <input matInput placeholder="Street Address 2" formControlName="street2" autocomplete="off">
                     <mat-error *ngIf="locationSubmit">Please enter valid street address</mat-error>
                 </mat-form-field>
 
@@ -81,30 +81,33 @@
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Zip Code *</mat-label>
-                    <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code" autocomplete="off">
+                    <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
+                        formControlName="zip_code" autocomplete="off">
                     <mat-error *ngIf="locationSubmit">Please enter valid zip code</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Phone </mat-label>
-                <input matInput placeholder="Phone" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="phone_no" autocomplete="off">
-                <mat-error *ngIf="locationSubmit">Please enter valid phone</mat-error>
-            </mat-form-field>
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Phone </mat-label>
+                    <input matInput placeholder="Phone" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                        formControlName="phone_no" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid phone</mat-error>
+                </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Fax </mat-label>
-                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="fax_no" autocomplete="off">
-                <mat-error *ngIf="locationSubmit">Please enter valid fax</mat-error>
-            </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Fax </mat-label>
+                    <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                        formControlName="fax_no" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid fax</mat-error>
+                </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Email </mat-label>
-                <input matInput placeholder="Email" formControlName="email" autocomplete="off">
-                <mat-error *ngIf="locationSubmit">Please enter valid email</mat-error>
-            </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Email </mat-label>
+                    <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid email</mat-error>
+                </mat-form-field>
 
                 <div class="sub-title p-l-10 m-t-20 m-b-20" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                     fxFlex.xs="100">
@@ -113,18 +116,18 @@
                 </div>
 
                 <div fxFlex="100">
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Service Type *</mat-label>
-                    <mat-select formControlName="service_code_id">
-                        <mat-option *ngFor="let address of addressType" [value]="address.id">
-                            {{address?.service_code}} - {{address?.service_name}}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="locationSubmit">Please select valid service type
-                    </mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Service Type *</mat-label>
+                        <mat-select formControlName="service_code_id">
+                            <mat-option *ngFor="let address of addressType" [value]="address.id">
+                                {{address?.service_code}} - {{address?.service_name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="locationSubmit">Please select valid service type
+                        </mat-error>
+                    </mat-form-field>
                 </div>
-              
+
 
 
                 <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
@@ -132,7 +135,7 @@
                     <mat-label class="m-t-10 p-b-10 display-block">Location status</mat-label>
                     <mat-radio-group class="" formControlName="is_active" (change)="locationStatus($event)">
                         <mat-radio-button value="true" checked>Active</mat-radio-button>
-                        <mat-radio-button value="false" class="p-l-10">In Active</mat-radio-button>
+                        <mat-radio-button value="false" class="p-l-10">Inactive</mat-radio-button>
                     </mat-radio-group>
                 </div>
 
@@ -146,12 +149,13 @@
                 <mat-form-field appearance="outline" fxFlex="100">
                     <mat-label>Notes </mat-label>
                     <input matInput placeholder="Notes" formControlName="notes" autocomplete="off">
-                    <mat-error *ngIf="locationSubmit" >Please enter valid notes</mat-error>
+                    <mat-error *ngIf="locationSubmit">Please enter valid notes</mat-error>
                 </mat-form-field>
 
                 <div class="text-center w-100 m-t-10 m-b-10" *ngIf="editStatus">
                     <button mat-stroked-button type="button" class="outline-danger" (click)="cancel()">Cancel</button>
-                    <button mat-stroked-button class="m-l-10 outline-success" (click)="locationFromSubmit()">Save </button>
+                    <button mat-stroked-button class="m-l-10 outline-success" (click)="locationFromSubmit()">Save
+                    </button>
                 </div>
 
             </form>
@@ -160,17 +164,19 @@
             <!-- Position Column -->
             <ng-container matColumnDef="examiner">
                 <th mat-header-cell *matHeaderCellDef>Examiner </th>
-                <td mat-cell *matCellDef="let element"> {{element?.last_name}} {{element?.first_name}}{{element?.suffix ? ', '+element?.suffix : ''}} </td>
+                <td mat-cell *matCellDef="let element"> {{element?.last_name}}
+                    {{element?.first_name}}{{element?.suffix ? ', '+element?.suffix : ''}} </td>
             </ng-container>
-        
+
             <!-- Name Column -->
             <ng-container matColumnDef="date_added">
                 <th mat-header-cell *matHeaderCellDef> Date Added </th>
                 <td mat-cell *matCellDef="let element"> {{element.date_added | date:'MM-dd-yyyy'}} </td>
             </ng-container>
-        
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;let element" (click)="nevigateExaminer(element)"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;let element" (click)="nevigateExaminer(element)">
+            </tr>
         </table>
         <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </mat-card-content>
