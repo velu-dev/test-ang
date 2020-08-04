@@ -46,8 +46,12 @@
           <ng-container matColumnDef="form_name">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.form_name}}
-              <span class="default-select" *ngIf="element.doc_type == 'custom'">
+              <!-- <span class="default-select" *ngIf="element.doc_type == 'custom'">
                 <img [src]="default_select" alt="Default select">
+              </span> -->
+              <span class="custom-list"  *ngIf="element.doc_type == 'custom'">
+                <a  class="text-success">Edit</a>
+                <a class="text-danger m-l-10">Remove</a>
               </span>
             </td>
           </ng-container>
@@ -126,19 +130,19 @@
 
   <div class="border-dashed-blue m-t-30 m-b-30"></div>
 
-  <div fxLayout="row wrap">
-    <div fxFlex="33.3">
+  <div fxLayout="row wrap" class="action-btns">
+    <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
       <button mat-stroked-button class="outline-success huge-btn">
         Mail On Demand
       </button>
     </div>
 
-    <div fxFlex="33.3" class="text-center">
+    <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="text-center">
       <button (click)="downloadForms(false)" mat-stroked-button class="outline-light_green huge-btn">
         E-Sign and Download
       </button>
     </div>
-    <div fxFlex="33.3">
+    <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
       <button (click)="downloadForms(true)" mat-stroked-button class="outline-light_green float-right huge-btn">
         Download
       </button>
