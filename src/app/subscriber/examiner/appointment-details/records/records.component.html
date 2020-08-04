@@ -20,11 +20,12 @@
 
       <div fxFLex="row wrap" class="p-l-10">
         <div fxFlex="50" class="upload-file">
-          <button mat-raised-button class="filled-gray">Select File</button>
+          <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
           <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput readonly placeholder="No file chosen">
-            <!-- <input type="file" #uploader hidden required> -->
-            <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
+            <input type="file" #uploader hidden (change)="addFile($event)" multiple
+              accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+            <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
           </mat-form-field>
         </div>
         <div fxFlex="20">
@@ -72,10 +73,16 @@
               <div class="pages-count">
                 <input matInput placeholder="" value="50">
                 <div class="action-buttons">
-                  <button mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon">
+                  <button mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon"
+                    matTooltipPosition="right" matTooltip="Save">
+                    <mat-icon>done</mat-icon>
+                  </button>
+                  <button mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon"
+                    matTooltipPosition="right" matTooltip="Edit">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button mat-icon-button class="text-danger" aria-label="Example icon-button with a heart icon">
+                  <button mat-icon-button class="text-danger" aria-label="Example icon-button with a heart icon"
+                    matTooltipPosition="right" matTooltip="Cancel">
                     <mat-icon>clear</mat-icon>
                   </button>
                   <!-- <button mat-stroked-button class="outline-danger mini-btn">Cancel</button> -->
