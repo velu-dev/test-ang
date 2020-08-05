@@ -14,7 +14,7 @@ export class StaffDashboardComponent implements OnInit {
   }
   openMenu(menu) {
     if (menu == 'intake') {
-      this.router.navigate(['subscriber/new-claim'])
+      this.router.navigate(['subscriber/new-intake'])
     }
   }
 }

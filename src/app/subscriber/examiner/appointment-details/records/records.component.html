@@ -44,10 +44,10 @@
               </mat-checkbox>
               <mat-icon [matMenuTriggerFor]="mailondemand" id="dropdown-list">arrow_drop_down</mat-icon>
               <mat-menu #mailondemand="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="allOrNone(true)">
                   <span>All</span>
                 </button>
-                <button mat-menu-item>
+                <button mat-menu-item (click)="allOrNone(false)">
                   <span>None</span>
                 </button>
               </mat-menu>
@@ -69,20 +69,20 @@
           <!-- doc_pages Column -->
           <ng-container matColumnDef="doc_pages">
             <th mat-header-cell *matHeaderCellDef> Document Pages</th>
-            <td mat-cell *matCellDef="let element" class="p-l-0">
+            <td mat-cell *matCellDef="let element" class="p-l-0" (click)="$event.stopPropagation()">
               <div class="pages-count">
-                <input matInput placeholder="" value="50">
+                <input matInput placeholder="" type="number" min="0" [disabled]="!element.isEdit" autocomplete="off" [(ngModel)]="element.page_number" (click)="$event.stopPropagation()">
                 <div class="action-buttons">
 
-                  <button mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon"
+                  <button *ngIf="!element.isEdit" (click)="$event.stopPropagation();element.isEdit = true" mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon"
                     matTooltipPosition="right" matTooltip="Edit">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon"
+                  <button *ngIf="element.isEdit" (click)="$event.stopPropagation();pageNumberSave(element);element.isEdit = false" mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon"
                     matTooltipPosition="right" matTooltip="Save">
                     <mat-icon>done</mat-icon>
                   </button>
-                  <button mat-icon-button class="text-danger" aria-label="Example icon-button with a heart icon"
+                  <button *ngIf="element.isEdit" (click)="$event.stopPropagation();element.isEdit = false;element.page_number = element.oldPage" mat-icon-button class="text-danger" aria-label="Example icon-button with a heart icon"
                     matTooltipPosition="right" matTooltip="Cancel">
                     <mat-icon>clear</mat-icon>
                   </button>
@@ -106,6 +106,7 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
           </tr>
         </table>
+        <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
   </div>
@@ -115,14 +116,14 @@
   <div fxLayout="row wrap" class="ondemand_request">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
       <div>
-        <mat-checkbox>Rush Request?</mat-checkbox>
-        <button mat-stroked-button class="outline-success huge-btn">
+        <mat-checkbox [(ngModel)]="rushRequest">Rush Request?</mat-checkbox>
+        <button mat-stroked-button (click)="onDemandSubmit()" class="outline-success huge-btn">
           Mail On Demand
         </button>
       </div>
     </div>
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-      <button mat-stroked-button class="outline-warning huge-btn">
+      <button mat-stroked-button class="outline-warning huge-btn" (click)="multipleDownload()">
         Download
       </button>
     </div>
@@ -156,7 +157,7 @@
                 <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ? 'Yes' : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
                 <span *ngIf="column == 'date_of_request'" class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'download'">
-                  <a class="text-success" (click)="download(element)">Download</a>
+                  <a class="text-success" (click)="inOutdownload(element)">Download</a>
                 </span>
               </div>
             </td>
@@ -169,7 +170,7 @@
                   <div class="no-wrap-td"><span>Rush Request?</span> {{element?.request_rush}} </div>
                   <div class="no-wrap-td"><span>Date Requested</span> {{element?.request_date}} </div>
                   <div><span>Download</span>
-                    <a class="text-success">Download</a>
+                    <a class="text-success" (click)="inOutdownload(element)">Download</a>
                   </div>
                 </div>
               </div>
@@ -181,6 +182,7 @@
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
         </table>
+        <app-nodata *ngIf="dataSoruceOut?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
   </div>
@@ -193,7 +195,7 @@
           <i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">The record summary will be available on this table when it is completed. </p>
       <div class="user-detail height-auto">
-        <table mat-table [dataSource]="dataSoruceOut" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
+        <table mat-table [dataSource]="dataSoruceIn" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay1; let i=index">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName1[i] == 'Action'">
               {{columnName1[i]}} </th>
@@ -210,7 +212,7 @@
                 <span *ngIf="column == 'date_of_request'" class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'date_of_communication'">{{element?.date_of_communication | date:'MM-dd-yyyy' }}</span>
                 <span *ngIf="column == 'download'">
-                  <a class="text-success" (click)="download(element)">Download</a>
+                  <a class="text-success" (click)="inOutdownload(element)">Download</a>
                 </span>
               </div>
             </td>
@@ -224,7 +226,7 @@
                   <div class="no-wrap-td"><span>Date Requested</span> {{element?.request_date}} </div>
                   <div><span>Date Received</span> {{element?.received_date}} </div>
                   <div><span>Download</span>
-                    <a class="text-success">Download</a>
+                    <a class="text-success" (click)="inOutdownload(element)">Download</a>
                   </div>
                 </div>
               </div>
@@ -236,6 +238,7 @@
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedElement1']" class="detail-row"></tr>
         </table>
+        <app-nodata *ngIf="dataSoruceIn?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
   </div>
