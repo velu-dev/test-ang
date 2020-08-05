@@ -79,7 +79,7 @@
             </div>
           </div>
       
-        <div class="user-detail height-auto">
+        <div class="user-detail vertical-fixed">
           <table mat-table [dataSource]="dataSource2" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
               <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
