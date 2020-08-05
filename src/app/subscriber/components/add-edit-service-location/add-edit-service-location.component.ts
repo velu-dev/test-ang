@@ -139,6 +139,21 @@ export class AddEditServiceLocationComponent implements OnInit {
       return;
     }
 
+    let examiner = []
+    if (this.locationForm.value.is_active == 'false') {
+      this.examiner_list.map(ex => {
+        if (ex.id != this.user.id) {
+          examiner.push(ex)
+          this.inActiveStatus = true
+        }
+
+      })
+      if (this.inActiveStatus) {
+        this.opendialog(examiner)
+        return;
+      }
+     
+    }
 
     if (this.pageStatus == 2) {
       this.subscriberService.updateExaminerLocation(this.examinerId, this.locationForm.value).subscribe(location => {
@@ -154,21 +169,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       })
 
     } else {
-      let examiner = []
-      if (this.locationForm.value.is_active == 'false' && this.user.role_id == 11) {
-        this.examiner_list.map(ex => {
-          if (ex.id != this.user.id) {
-            examiner.push(ex)
-            this.inActiveStatus = true
-          }
-
-        })
-        if (this.inActiveStatus) {
-          this.opendialog(examiner)
-          return;
-        }
-       
-      }
+     
 
       this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
         //console.log(location)
