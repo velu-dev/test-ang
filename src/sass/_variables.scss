@@ -679,35 +679,39 @@ input:-webkit-autofill {
 .mat-checkbox-disabled .mat-checkbox-label {
   color: rgba(0, 0, 0, 0.7) !important;
 }
-// outline Form fields custom color
-/* Border */
-//mat-input focused color
 
-::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: #d5aed2 !important;
-}
+::ng-deep {
+  // mat-input carent color
+  .mat-input-element {
+    caret-color: #d5aed2 !important;
+  }
+  // outline Form fields custom color
+  /* Border */
+  //mat-input focused color
+  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: #d5aed2 !important;
+  }
 
-// mat-input carent color
-::ng-deep .mat-input-element {
-  caret-color: #d5aed2 !important;
-}
+  // mat-input label color
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: #96358d !important;
+  }
+  .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: #d5aed2 !important;
+  }
 
-// mat-input label color
-::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-  color: #96358d !important;
-}
-::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
-  background-color: #d5aed2 !important;
-}
+  .mat-datepicker-toggle-active {
+    color: #96358d !important;
+  }
 
-::ng-deep .mat-datepicker-toggle-active {
-  color: #96358d !important;
-}
+  .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    color: #96358d !important;
+  }
 
-::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
-  color: #96358d  !important;
+  .mat-form-field-appearance-outline .mat-form-field-label {
+    margin-top: -0.56em;
+  }
 }
-
 // Tooltip font-size
 .mat-tooltip {
   font-size: 14px !important;
