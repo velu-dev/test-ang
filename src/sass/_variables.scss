@@ -56,7 +56,7 @@ $transparent: transparent;
 $border-light: #efefef;
 $yellow: #f2cf3c;
 $light_green: #b5cc18;
-$icon-gray:#A7A7A7;
+$icon-gray: #a7a7a7;
 
 //alert colors
 $text-success: rgb(3, 90, 6);
@@ -663,7 +663,7 @@ input:-webkit-autofill {
 // ==================================
 
 .mat-form-field {
-  line-height: 1.5; 
+  line-height: 1.5;
 }
 
 // Form fields disabled label color
@@ -698,6 +698,14 @@ input:-webkit-autofill {
 }
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
   background-color: #d5aed2 !important;
+}
+
+::ng-deep .mat-datepicker-toggle-active {
+  color: #96358d !important;
+}
+
+::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: #96358d  !important;
 }
 
 // Tooltip font-size
@@ -955,7 +963,6 @@ input:-webkit-autofill {
   }
 }
 
-
 // ==================================
 // POPUP CUSTOM CSS         =========
 // ==================================
@@ -972,7 +979,8 @@ input:-webkit-autofill {
     font-weight: $font-weight-bold;
     line-height: 0;
     cursor: pointer;
-    &:focus, &::-moz-focus-inner {
+    &:focus,
+    &::-moz-focus-inner {
       outline: none !important;
       border: none !important;
     }
