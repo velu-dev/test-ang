@@ -96,7 +96,7 @@
         the document recipients."><i class="fa fa-question" aria-hidden="true"></i></span></div>
       <p class="description">This table lists the documents sent to the transcriptionist.</p>
 
-      <div class="user-detail height-auto">
+      <div class="user-detail vertical-fixed">
         <table mat-table [dataSource]="dataSource2" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
@@ -146,7 +146,7 @@
     <div fxFlex="100">
       <div class="main-title">Transcribed and Compiled Report Documents <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="This table holds the transcribed and compiled version of the report and documents that were sent to the transcriptionist."><i class="fa fa-question" aria-hidden="true"></i></span></div>
       <p class="description">The report draft will be available here </p>
-      <div class="user-detail height-auto">
+      <div class="user-detail vertical-fixed">
         <table mat-table [dataSource]="dataSource3" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay1; let i=index">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName1[i] == 'Action'">

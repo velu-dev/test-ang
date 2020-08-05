@@ -666,20 +666,21 @@ input:-webkit-autofill {
   line-height: 1.5;
 }
 
-// Form fields disabled label color
-.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
-  color: rgba(0, 0, 0, 0.7) !important;
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  // Form fields disabled label color
+  .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
+    color: rgba(0, 0, 0, 0.7) !important;
+  }
+  .mat-input-element:disabled,
+  .mat-form-field-type-mat-native-select.mat-form-field-disabled,
+  .mat-form-field-infix::after {
+    color: rgba(0, 0, 0, 0.7) !important;
+  }
+  .mat-select-disabled .mat-select-value,
+  .mat-checkbox-disabled .mat-checkbox-label {
+    color: rgba(0, 0, 0, 0.7) !important;
+  }
 }
-.mat-input-element:disabled,
-.mat-form-field-type-mat-native-select.mat-form-field-disabled,
-.mat-form-field-infix::after {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-.mat-select-disabled .mat-select-value,
-.mat-checkbox-disabled .mat-checkbox-label {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-
 ::ng-deep {
   // mat-input carent color
   .mat-input-element {
