@@ -15,7 +15,7 @@
           matTooltip="The first 3 documents in the list, which are labelled with the blue checkmarks, are required to be sent within 5 days of confirming the examination appointment date. Add Custom Mail On Demand Documents using the button at the bottom"
           matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Use the checkboxes to select the documents to be mailed.</p>
-      <div class="basic-table striped_ scroll_ m-l-10" *ngIf="!isLoading">
+      <div class="basic-table striped_ vertical-fixed m-l-10" *ngIf="!isLoading">
         <table mat-table [dataSource]="documents" class="mat-elevation-z8 w-100 user-table">
 
           <!-- Checkbox Column -->
@@ -75,7 +75,7 @@
         Demand Service. Enter the name and address of custom recipients using the button at the bottom."
           matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Use the checkboxes to select the recipients of mailed documents.</p>
-      <div class="basic-table striped_ scroll_ m-l-10">
+      <div class="basic-table striped_ vertical-fixed m-l-10">
         <table mat-table [dataSource]="recipients" class="mat-elevation-z8 w-100 user-table">
 
           <!-- Checkbox Column -->

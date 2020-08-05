@@ -346,7 +346,7 @@
                     <mat-divider></mat-divider>
                     <mat-card-content class="m-t-15 p-b-15">
                         <div fxLayout="row wrap" fxFlex="100">
-                            <div class="user-table">
+                            <div class="user-table vertical-fixed">
                                 <table mat-table [dataSource]="dataSource" class="w-100" fxFlex="100">
                                     <!-- body_parts Column -->
                                     <ng-container matColumnDef="body_part_id">
@@ -374,7 +374,7 @@
                                         </td>
                                     </ng-container>
 
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
                             </div>
@@ -418,8 +418,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <div fxFlex="100">
-                                <div class="basic-table document_list w-100 ">
+                            <div fxFlex="100" class="m-t-10">
+                                <div class="basic-table document_list w-100 vertical-fixed">
                                     <table mat-table [dataSource]="correspondenceSource">
 
                                         <ng-container matColumnDef="doc_image">

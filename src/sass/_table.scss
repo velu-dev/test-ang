@@ -180,3 +180,10 @@ tr.detail-row {
   .height-auto {
     min-height: auto !important;
 }
+
+// Fixed height 
+.vertical-fixed  {
+  min-height: 290px;
+  max-height: 290px;
+  overflow: scroll;
+}

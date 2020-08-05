@@ -8,7 +8,7 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="p-b-15">
-        <div class="m-t-10 p-b-30 striped_">
+        <div class="m-t-10 striped_ vertical-fixed">
             <table mat-table [dataSource]="dataSource" class="user-table w-100">
 
                 <ng-container matColumnDef="body_part">
@@ -37,7 +37,7 @@
                 </ng-container>
 
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </div>
