@@ -263,7 +263,7 @@ export class CustomDocuments {
   uploadFile() {
     let formData = new FormData()
     formData.append('file', this.selectedFile);
-    formData.append("document_type_id", "10");
+    formData.append("document_category_id", "10");
     formData.append('claim_id', this.claim_id);
     formData.append('bill_item_id', this.billable_id);
     this.onDemandService.uploadDocument(formData).subscribe(res => {

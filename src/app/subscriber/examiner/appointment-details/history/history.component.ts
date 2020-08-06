@@ -131,7 +131,7 @@ export class HistoryComponent implements OnInit {
       claim_id: this.paramsId.id,
       service_priority: this.rushRequest ? "rush" : 'normal',
       service_description: "",
-      document_type_id: this.historyData.documets[0].document_type_id,
+      document_category_id: this.historyData.documets[0].document_category_id,
       billable_item_id: this.paramsId.billId,
       service_request_type_id: this.historyData.documets[0].service_request_type_id,
       service_provider_id: this.historyData.documets[0].service_provider_id // default 3
