@@ -49,4 +49,8 @@ export class OnDemandService {
   postDocument(data) {
     return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
   }
+
+  documentUnit(data) {
+    return this.http.post(environment.baseUrl + api_endpoint.documentUnit, data)
+  }
 }

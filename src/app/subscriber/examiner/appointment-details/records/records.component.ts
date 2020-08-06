@@ -95,9 +95,9 @@ export class RecordsComponent implements OnInit {
       console.log(record, "record")
       this.recordData = record;
       record.documets.map(data => {
-        data.page_number = null;
+        data.page_number = data.no_of_units;
         data.isEdit = false;
-        data.oldPage = 0;
+        data.oldPage = data.no_of_units;
       })
       this.dataSource = new MatTableDataSource(record.documets)
       let inFile = [];
@@ -115,7 +115,8 @@ export class RecordsComponent implements OnInit {
     }, error => {
       this.dataSource = new MatTableDataSource([]);
       this.dataSoruceOut = new MatTableDataSource([]);
-      this.dataSoruceIn = new MatTableDataSource([])
+      this.dataSoruceIn = new MatTableDataSource([]);
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
@@ -194,7 +195,7 @@ export class RecordsComponent implements OnInit {
       service_priority: this.rushRequest ? "rush" : 'normal',
       service_description: "",
       document_ids: document_ids,
-      document_type_id: this.recordData.documets[0].document_type_id,
+      document_category_id: this.recordData.documets[0].document_category_id,
       billable_item_id: this.paramsId.billId,
       service_request_type_id: this.recordData.documets[0].service_request_type_id,
       service_provider_id: this.recordData.documets[0].service_provider_id // default 3
@@ -204,12 +205,11 @@ export class RecordsComponent implements OnInit {
       console.log(record)
     }, error => {
       console.log(error)
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
-  pageNumberSave(element) {
-    console.log(element)
-  }
+
 
   deleteDocument(data) {
     this.openDialogDelete('delete', data);
@@ -233,6 +233,32 @@ export class RecordsComponent implements OnInit {
     })
 
 
+  }
+
+  pageNumberSave(element) {
+    let page_data = {
+      document_id: element.document_id,
+      bill_item_id: this.paramsId.billId,
+      claim_id: this.paramsId.id,
+      no_of_units: element.page_number
+    }
+    this.onDemandService.documentUnit(page_data).subscribe(page => {
+      console.log(page)
+     
+      let data = this.dataSource.data;
+      data.map(data => {
+        // data.page_number = data.no_of_units;
+        if (data.document_id == element.document_id) {
+          data.isEdit = false;
+          data.oldPage = element.page_number;
+        }
+      })
+      this.dataSource = new MatTableDataSource(data)
+      //this.dataSource = new MatTableDataSource(record.documets)
+      this.alertService.openSnackBar("Page number updated successfully!", 'success');
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
 
 

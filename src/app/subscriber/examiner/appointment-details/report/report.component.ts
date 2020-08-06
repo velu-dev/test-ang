@@ -155,7 +155,7 @@ export class ReportComponent implements OnInit {
     }
 
     this.formData.append('file', this.selectedFile);
-    this.formData.append('document_type_id', '6');
+    this.formData.append('document_category_id', '6');
     this.formData.append('claim_id', this.paramsId.id.toString());
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
     this.onDemandService.postDocument(this.formData).subscribe(res => {
@@ -202,7 +202,7 @@ export class ReportComponent implements OnInit {
       service_priority: this.rushRequest ? "rush" : 'normal',
       service_description: "",
       document_ids: document_ids,
-      document_type_id: this.reportData.documets[0].document_type_id,
+      document_category_id: this.reportData.documets[0].document_category_id,
       billable_item_id: this.paramsId.billId,
       service_request_type_id: this.reportData.documets[0].service_request_type_id,
       service_provider_id: this.reportData.documets[0].service_provider_id // default 3

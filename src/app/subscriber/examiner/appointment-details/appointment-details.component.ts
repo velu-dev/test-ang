@@ -521,7 +521,7 @@ export class AppointmentDetailsComponent implements OnInit {
       return;
     }
     this.formData.append('file', this.selectedFile);
-    this.formData.append('document_type_id', this.documentType);
+    this.formData.append('document_category_id', this.documentType);
     this.formData.append('claim_id', this.claim_id);
     this.formData.append('bill_item_id', this.billableId.toString());
     this.examinerService.postDocument(this.formData).subscribe(res => {
