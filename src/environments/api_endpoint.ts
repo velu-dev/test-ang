@@ -132,7 +132,7 @@ export const api_endpoint = {
     //on-demand
     getRecords: 'billing/ondemand/records/',
     getHistory: 'billing/ondemand/history/',
-    getTranscription: 'billing/ondemand/records/',
+    getTranscription: 'billing/ondemand/report-transcription/',
     requestCreate: 'service-requests/create',
     //Corresponding
     getcorrespondence_data: "billing/ondemand/correspondence/",
