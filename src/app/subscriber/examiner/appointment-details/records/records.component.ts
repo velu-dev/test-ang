@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 
 @Component({
   selector: 'app-records',
@@ -52,6 +53,7 @@ export class RecordsComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private alertService: AlertService,
+    public dialog: MatDialog,
     private onDemandService: OnDemandService) {
 
 
@@ -84,7 +86,11 @@ export class RecordsComponent implements OnInit {
 
   ngOnInit() {
     //this.onDemandService.getRecords().subscribe()
+    this.getRecord();
 
+  }
+
+  getRecord() {
     this.onDemandService.getRecords(this.paramsId.id, this.paramsId.billId).subscribe(record => {
       console.log(record, "record")
       this.recordData = record;
@@ -112,6 +118,7 @@ export class RecordsComponent implements OnInit {
       this.dataSoruceIn = new MatTableDataSource([])
     })
   }
+
   expandIdOut: any;
   expandIdIn: any;
   openElementOut(element) {
@@ -158,6 +165,10 @@ export class RecordsComponent implements OnInit {
 
   multipleDownload() {
     console.log(this.selection.selected);
+    if (this.selection.selected.length == 0) {
+      this.alertService.openSnackBar("Please select a file", 'error');
+      return
+    }
     this.selection.selected.map(res => {
       saveAs(res.file_url, res.file_name);
     })
@@ -175,6 +186,7 @@ export class RecordsComponent implements OnInit {
     })
     console.log(this.rushRequest)
     if (document_ids.length == 0) {
+      this.alertService.openSnackBar("Please select a file", 'error');
       return
     }
     let data = {
@@ -197,6 +209,30 @@ export class RecordsComponent implements OnInit {
 
   pageNumberSave(element) {
     console.log(element)
+  }
+
+  deleteDocument(data) {
+    this.openDialogDelete('delete', data);
+  }
+
+  openDialogDelete(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.onDemandService.deleteDocument(data.document_id).subscribe(res => {
+          console.log(res['data']);
+          this.getRecord();
+          this.alertService.openSnackBar("File deleted successfully!", 'success');
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    })
+
+
   }
 
 
