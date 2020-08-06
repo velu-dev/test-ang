@@ -747,6 +747,14 @@ input:-webkit-autofill {
     background-color: $btn_success;
   }
 }
+// .outline-success[disabled] {
+//   background-color: transparent;
+//   &:hover {
+//     color: rgba(0, 0, 0, 0.26);
+//     background-color: transparent;
+//   }
+// }
+
 .filled-success {
   @extend .btn_;
   color: $white;
