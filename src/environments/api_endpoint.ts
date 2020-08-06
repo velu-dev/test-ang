@@ -126,13 +126,14 @@ export const api_endpoint = {
     deleteDocument: 'examinations/document-remove/',
     postNotes: 'examinations/add-notes',
     formUrl: "form/",
+    documentUnit: 'examinations/document/units',
     //Billable item
     updateExamType: "billable-item/update-examination-status/",
 
     //on-demand
     getRecords: 'billing/ondemand/records/',
     getHistory: 'billing/ondemand/history/',
-    getTranscription: 'billing/ondemand/records/',
+    getTranscription: 'billing/ondemand/report-transcription/',
     requestCreate: 'service-requests/create',
     //Corresponding
     getcorrespondence_data: "billing/ondemand/correspondence/",

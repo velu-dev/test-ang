@@ -41,4 +41,16 @@ export class OnDemandService {
   createCustomRecipient(claim_id, bill_item_id, data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.create_custom_recipient + claim_id + "/" + bill_item_id, data)
   }
+
+  deleteDocument(id) {
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id)
+  }
+
+  postDocument(data) {
+    return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
+  }
+
+  documentUnit(data) {
+    return this.http.post(environment.baseUrl + api_endpoint.documentUnit, data)
+  }
 }

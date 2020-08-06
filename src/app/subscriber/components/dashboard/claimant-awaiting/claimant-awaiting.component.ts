@@ -42,8 +42,8 @@ export class ClaimantAwaitingComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Claimant", "Action"]
-        this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
+        this.columnName = ["", "Claimant"]
+        this.columnsToDisplay = ['is_expand', 'claimant_name']
       } else {
         this.columnName = ["Claimant", "Date of Birth", "Social Security Number", "Date Created"]
         this.columnsToDisplay = ['claimant_name', 'date_of_birth', "ssn", "created_date"]

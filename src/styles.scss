@@ -62,20 +62,20 @@ button:focus {
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
-  width: 3px;
+  width: 8px;
   height: 3px;
-  border-radius: 10px;
+  // border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background-color: #ebebeb;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  // -webkit-border-radius: 10px;
+  // border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  // -webkit-border-radius: 10px;
+  // border-radius: 10px;
   background: $light-gray;
   opacity: 0.5;
 }
@@ -512,22 +512,30 @@ image-cropper {
   height: 50vh;
 }
 
-
 // Billable item pages common styles
 .billable-item-status {
   .main-title {
-      font-size: $font-size-10 !important;
-      font-weight: $font-weight-medium;
-      color: $black;
-      padding-left: 10px;
+    font-size: $font-size-10 !important;
+    font-weight: $font-weight-medium;
+    color: $black;
+    padding-left: 10px;
   }
   .description {
-      margin-top: 5px;
-      padding-left: 10px;
+    margin-top: 5px;
+    padding-left: 10px;
   }
   mat-progress-bar {
     height: 20px;
     color: $light-color;
     padding-left: 10px;
+  }
 }
-}
+// // billable item exam type left side scroll bar
+// .ng-tns-c25-92.ng-trigger.ng-trigger-transformPanel.mat-select-panel,
+// .ng-tns-c20-12.ng-trigger.ng-trigger-transformPanel.mat-select-panel,
+// .ng-tns-c19-17.ng-trigger.ng-trigger-transformPanel.mat-select-panel {
+//   direction: rtl;
+//   &::-webkit-scrollbar {
+//     width: 8px !important;
+//   }
+// }

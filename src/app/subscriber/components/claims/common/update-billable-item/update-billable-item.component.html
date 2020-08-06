@@ -1,4 +1,4 @@
-<div class="m-t-10 p-b-30 striped_">
+<div class="m-t-10 striped_ vertical-fixed">
     <table mat-table [dataSource]="dataSource" class="user-table">
 
         <ng-container matColumnDef="billable_item">
@@ -33,7 +33,7 @@
                 </button></td>
         </ng-container> -->
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky :true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
