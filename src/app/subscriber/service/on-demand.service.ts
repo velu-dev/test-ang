@@ -42,15 +42,21 @@ export class OnDemandService {
     return this.http.post(environment.baseUrl + api_endpoint.create_custom_recipient + claim_id + "/" + bill_item_id, data)
   }
 
-  deleteDocument(id) {
+  deleteDocument(id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id)
   }
 
-  postDocument(data) {
+  postDocument(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
   }
 
-  documentUnit(data) {
+  documentUnit(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.documentUnit, data)
+  }
+  removeDocument(id): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeCustomDocument + id)
+  }
+  removeRecipient(id): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + id)
   }
 }

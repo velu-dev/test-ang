@@ -153,14 +153,11 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
-        console.log(bills)
         this.billableData = bills.data;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         this.claimService.getClaim(this.claim_id).subscribe(claim => {
           this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(procedure => {
-            console.log("procedure", procedure)
             this.procuderalCodes = procedure.data;
-            console.log(this.isChecked)
             // if (this.isChecked) {
             //   let modi = [5];
             //   this.billable_item.value.exam_type.modifier_id.map(res => {
@@ -182,7 +179,6 @@ export class AppointmentDetailsComponent implements OnInit {
             //   })
             //   // this.modifiers = this.modifierList;
             // } else {
-            //   console.log(claim.data)
             //   let modi = []
             //   this.procuderalCodes.map(proc => {
             //     if (proc.id == claim.data.exam_type.procedure_type) {
@@ -203,7 +199,6 @@ export class AppointmentDetailsComponent implements OnInit {
             // }
           })
         })
-        console.log("billable", bills)
         this.isBillabbleItemLoading = false;
         if (bills['data'].appointment.examiner_id != null) {
           let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examiner_service_location_id }
@@ -213,11 +208,9 @@ export class AppointmentDetailsComponent implements OnInit {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
-        console.log("bills data", bills.data);
         this.billable_item.patchValue(bills.data);
       })
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
-        console.log("response", response);
         this.notesForm.patchValue({
           exam_notes: response.data.exam_notes,
         })
@@ -226,18 +219,15 @@ export class AppointmentDetailsComponent implements OnInit {
           this.isDisplayStatus.isDeposition = false;
           this.claimService.seedData('examination_status').subscribe(curres => {
             this.examinationStatus = curres.data;
-            console.log(curres)
           })
         } else if (response.data.procedure_type == "Deposition") {
           this.isDisplayStatus.isExaminar = false;
           this.isDisplayStatus.isDeposition = true;
           this.claimService.seedData('deposition_status').subscribe(curres => {
             this.examinationStatus = curres.data;
-            console.log(curres)
           })
         }
         this.procedureTypeStatus.map(pro => {
-          console.log("procedure type", pro);
           if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
             this.isDisplayStatus.status = true;
             this.isDisplayStatus.name = "Examination";
@@ -259,15 +249,12 @@ export class AppointmentDetailsComponent implements OnInit {
             }
           }
         })
-        console.log("response.data", response.data)
         this.examinationStatusForm.patchValue(response.data.appointments)
         this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
         this.examiner_id = response.data.appointments.examiner_id;
         this.examinationDetails = response['data'];
-        console.log("examinationDetails", this.examinationDetails)
         this.getDocumentData();
       }, error => {
-        console.log(error);
         this.dataSource = new MatTableDataSource([]);
       })
     });
@@ -400,7 +387,6 @@ export class AppointmentDetailsComponent implements OnInit {
       }
   }
   examinarChange(examinar) {
-    console.log(examinar)
     this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
       this.examinarAddress = res['data'];
     })
@@ -431,13 +417,11 @@ export class AppointmentDetailsComponent implements OnInit {
       this.documentTabData = res['data'];
       this.tabChanges(this.tabIndex)
     }, error => {
-      console.log(error);
       this.documentsData = new MatTableDataSource([]);
     })
   }
 
   tabChanges(event) {
-    console.log(event)
     this.tabIndex = event
     this.filterValue = '';
     this.documentsData = new MatTableDataSource([])
@@ -593,7 +577,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isNotesEdit = false;
       this.loadDatas();
     }, error => {
-      console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
     })
 
@@ -614,7 +597,6 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.examinerService.deleteDocument(data.id).subscribe(res => {
-          console.log(res['data']);
           this.getDocumentData();
           this.alertService.openSnackBar("File deleted successfully!", 'success');
         }, error => {
@@ -636,7 +618,6 @@ export class AppointmentDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
   openClaim(): void {
@@ -646,7 +627,6 @@ export class AppointmentDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
   openBillableItem() {
@@ -656,7 +636,6 @@ export class AppointmentDetailsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 

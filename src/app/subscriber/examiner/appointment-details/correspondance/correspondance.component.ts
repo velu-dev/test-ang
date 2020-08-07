@@ -14,6 +14,7 @@ import { saveAs } from 'file-saver';
 import { formatDate } from '@fullcalendar/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -40,7 +41,6 @@ export class BillingCorrespondanceComponent implements OnInit {
   documents: any;
   recipients: any;
   dataSource3: any;
-  // dataSource2 = ELEMENT_DATA2;
   columnsToDisplay = [];
   columnsToDisplay1 = [];
   expandedElement;
@@ -146,9 +146,6 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
     });
   }
-  deleteRecipient(element) {
-    console.log(element);
-  }
   openDialog(): void {
     const dialogRef = this.dialog.open(CustomDocuments, {
       width: '800px',
@@ -218,6 +215,49 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.expandId1 = element.id;
     }
 
+  }
+  removeCustomDocument(element) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: "delete" }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.onDemandService.removeDocument(element.id).subscribe(res => {
+          if (res.status) {
+            this.alertService.openSnackBar(res.message, "success")
+            this.getData();
+          } else {
+            this.alertService.openSnackBar(res.message, "error")
+          }
+        })
+      } else {
+        return;
+      }
+    });
+
+  }
+  deleteRecipient(element) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: "delete" }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.onDemandService.removeRecipient(element.id).subscribe(res => {
+          if (res.status) {
+            this.getData();
+            this.alertService.openSnackBar(res.message, "success")
+          } else {
+            this.alertService.openSnackBar(res.message, "error")
+          }
+        });
+      } else {
+        return;
+      }
+    });
   }
 }
 
@@ -316,7 +356,7 @@ export class CustomRecipient {
   saveClick() {
     if (this.customReceipient.invalid) {
       return
-    } 
+    }
     this.onDemandService.createCustomRecipient(this.claim_id, this.billable_id, this.customReceipient.value).subscribe(res => {
       if (res.status) {
         this.alertService.openSnackBar(res.message, "success");
