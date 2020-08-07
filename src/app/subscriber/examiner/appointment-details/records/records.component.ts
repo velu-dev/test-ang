@@ -58,7 +58,6 @@ export class RecordsComponent implements OnInit {
 
 
     this.route.params.subscribe(param => {
-      console.log(param)
       this.paramsId = param;
     })
 
@@ -92,7 +91,6 @@ export class RecordsComponent implements OnInit {
 
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.id, this.paramsId.billId).subscribe(record => {
-      console.log(record, "record")
       this.recordData = record;
       record.documets.map(data => {
         data.page_number = data.no_of_units;
@@ -137,17 +135,14 @@ export class RecordsComponent implements OnInit {
 
   selectedFiles: FileList;
   selectedFile: File;
+  formData = new FormData()
+  file: any = [];
   addFile(event) {
-
-    console.log(event.target.files)
     this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles)
     this.selectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      let lists = this.selectedFiles[i];
-      console.log(lists);
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
         if (FileSize > 30) {
@@ -156,6 +151,7 @@ export class RecordsComponent implements OnInit {
           return;
         }
         this.selectedFile = this.selectedFiles[i];
+        this.file.push(this.selectedFiles[i].name);
       } else {
         //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
@@ -164,19 +160,53 @@ export class RecordsComponent implements OnInit {
     }
   }
 
-  multipleDownload() {
-    console.log(this.selection.selected);
+  uploadFile() {
+    if (!this.selectedFile) {
+      this.alertService.openSnackBar("Please select file", 'error');
+      return;
+    }
+
+
+
+    this.formData.append('document_category_id', '4');
+    this.formData.append('claim_id', this.paramsId.id.toString());
+    this.formData.append('bill_item_id', this.paramsId.billId.toString());
+
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.formData.append('file', this.selectedFiles[i]);
+    }
+
+    //return;
+    this.onDemandService.postDocument(this.formData).subscribe(res => {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.formData = new FormData();
+      this.file = "";
+      this.getRecord();
+      this.alertService.openSnackBar("File added successfully!", 'success');
+    }, error => {
+      this.fileUpload.nativeElement.value = "";
+      this.selectedFile = null;
+    })
+  }
+
+  async multipleDownload() {
     if (this.selection.selected.length == 0) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return
     }
-    this.selection.selected.map(res => {
-      saveAs(res.file_url, res.file_name);
-    })
+    // this.selection.selected.map(res => {
+    //   saveAs(res.file_url, res.file_name);
+    // })
+
+    for (let i = 0; i < this.selection.selected.length; i++) {
+      saveAs(this.selection.selected[i].file_url, this.selection.selected[i].file_name, '_self');
+      await new Promise(r => setTimeout(r, 1000));
+    }
+
   }
 
   inOutdownload(data) {
-    console.log(data)
     saveAs(data.file_url, data.file_name);
   }
 
@@ -185,7 +215,6 @@ export class RecordsComponent implements OnInit {
     this.selection.selected.map(res => {
       document_ids.push(res.document_id)
     })
-    console.log(this.rushRequest)
     if (document_ids.length == 0) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return
@@ -200,9 +229,8 @@ export class RecordsComponent implements OnInit {
       service_request_type_id: this.recordData.documets[0].service_request_type_id,
       service_provider_id: this.recordData.documets[0].service_provider_id // default 3
     }
-    console.log(data);
     this.onDemandService.requestCreate(data).subscribe(record => {
-      console.log(record)
+      this.alertService.openSnackBar("Mail On Demand created successfully!", 'success');
     }, error => {
       console.log(error)
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -223,7 +251,6 @@ export class RecordsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.onDemandService.deleteDocument(data.document_id).subscribe(res => {
-          console.log(res['data']);
           this.getRecord();
           this.alertService.openSnackBar("File deleted successfully!", 'success');
         }, error => {
@@ -243,8 +270,6 @@ export class RecordsComponent implements OnInit {
       no_of_units: element.page_number
     }
     this.onDemandService.documentUnit(page_data).subscribe(page => {
-      console.log(page)
-     
       let data = this.dataSource.data;
       data.map(data => {
         // data.page_number = data.no_of_units;
