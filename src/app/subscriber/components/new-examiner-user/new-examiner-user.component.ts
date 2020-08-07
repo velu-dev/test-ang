@@ -207,7 +207,10 @@ export class NewExaminerUserComponent implements OnInit {
       this.taxonomyList.map(tax => {
         tax.codeName = tax.taxonomy_code + '-' + tax.taxonomy_name;
       })
-      this.texonomyChange(this.renderingForm.value.taxonomy_id)
+      setTimeout(() => {
+        this.texonomyChange(this.renderingForm.value.taxonomy_id)
+      }, 1000);
+      
       this.texonomyFilteredOptions = this.texonomySearch.valueChanges
         .pipe(
           startWith(''),
