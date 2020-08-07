@@ -4,7 +4,7 @@
             <div class="main-title">Medical History Questionnaire On Demand Status <span class="info ondemand-info m-l-10" matTooltipPosition="above" matTooltip="Historian will call the Claimant and go through the Medical History Questionnaire over the phone. The status will be shown here."><i class="fa fa-info" aria-hidden="true"></i></span></div>
             <p class="description">View the progress of Medical History Questionnaire service here.</p>
             <mat-progress-bar mode="determinate" value="32" class="not-sent"></mat-progress-bar>
-            <div class="text-center">Not Sent</div>
+            <div class="text-center">{{historyData?.on_demand_status}}</div>
         </div>
         <div fxFlex="100" class="text-center m-t-20">
           <mat-checkbox [(ngModel)]="rushRequest" >Rush Request?</mat-checkbox>

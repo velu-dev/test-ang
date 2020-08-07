@@ -56,7 +56,6 @@ export class ReportComponent implements OnInit {
 
 
     this.route.params.subscribe(param => {
-      console.log(param)
       this.paramsId = param;
     })
 
@@ -88,7 +87,6 @@ export class ReportComponent implements OnInit {
   }
   getReport() {
     this.onDemandService.getTranscription(this.paramsId.id, this.paramsId.billId).subscribe(report => {
-      console.log(report, "record")
       this.reportData = report;
       this.dataSource = new MatTableDataSource(report.documets)
       let inFile = [];
@@ -129,7 +127,6 @@ export class ReportComponent implements OnInit {
   formData = new FormData()
   file: any;
   addFile(event) {
-    console.log(event.target.files)
     this.selectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
@@ -172,7 +169,6 @@ export class ReportComponent implements OnInit {
   }
 
   multipleDownload() {
-    console.log(this.selection.selected);
     if (this.selection.selected.length == 0) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return
@@ -183,7 +179,6 @@ export class ReportComponent implements OnInit {
   }
 
   inOutdownload(data) {
-    console.log(data)
     saveAs(data.file_url, data.file_name);
   }
 
@@ -192,7 +187,6 @@ export class ReportComponent implements OnInit {
     this.selection.selected.map(res => {
       document_ids.push(res.document_id)
     })
-    console.log(this.rushRequest)
     if (document_ids.length == 0) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return
@@ -207,19 +201,16 @@ export class ReportComponent implements OnInit {
       service_request_type_id: this.reportData.documets[0].service_request_type_id,
       service_provider_id: this.reportData.documets[0].service_provider_id // default 3
     }
-    console.log(data);
     this.onDemandService.requestCreate(data).subscribe(record => {
-      console.log(record)
+      this.alertService.openSnackBar("Transcribe and Compile created successfully!", 'success');
       this.getReport();
     }, error => {
-      console.log(error)
+      console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
-  pageNumberSave(element) {
-    console.log(element)
-  }
-
+ 
   deleteDocument(data) {
     this.openDialogDelete('delete', data);
   }
@@ -232,7 +223,6 @@ export class ReportComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.onDemandService.deleteDocument(data.document_id).subscribe(res => {
-          console.log(res);
           this.getReport();
           this.alertService.openSnackBar("File deleted successfully!", 'success');
         }, error => {
@@ -275,13 +265,3 @@ export class ReportComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.file_name + 1}`;
   }
 }
-
-// const ELEMENT_DATA2 = [
-//   { "id": 143, "file_name": "Report Template", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
-//   { "id": 143, "file_name": "Medical History Questionnaire", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
-//   { "id": 143, "file_name": "Dictated Report Audio Recording.mp3", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
-// ];
-
-// const ELEMENT_DATA3 = [
-//   { "id": 143, "file_name": "Transcribed and Compiled Report", "rush_request": "No", "request_date": "01-02-2020", "received_date": "01-02-2020", "Download": "" },
-// ];
