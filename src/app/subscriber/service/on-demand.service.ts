@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ObservedValueOf } from 'rxjs';
+import { Observable, ObservedValueOf, Observer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { api_endpoint } from 'src/environments/api_endpoint';
 import { env } from 'process';
@@ -58,5 +58,17 @@ export class OnDemandService {
   }
   removeRecipient(id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + id)
+  }
+  getBilling(claim_id, bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.bilingList + claim_id + "/" + bill_item_id)
+  }
+  downloadBillingDoc(claim_id, bill_item_id, doc_ids): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.downloadBillingDocument + claim_id + "/" + bill_item_id, doc_ids)
+  }
+  uploadExaminationDocument(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.uploadExaminationFile, data)
+  }
+  listUploadedDocs(claim_id, bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.listExaminationUploadedDocs + claim_id + "/" + bill_item_id)
   }
 }

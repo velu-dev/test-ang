@@ -141,4 +141,8 @@ export const api_endpoint = {
     create_custom_recipient: "billing/ondemand/correspondence/add-custom-recipient/",
     removeCustomDocument: "claim/correspondence-remove/",
     removeCustomRecipient: "billing/ondemand/correspondence/remove-custom-recipient/",
+    bilingList: "billing/ondemand/examination/",
+    downloadBillingDocument: "billing/ondemand/examination-download/",
+    uploadExaminationFile: "billing/ondemand/examination-upload",
+    listExaminationUploadedDocs: "billing/ondemand/examination-document-list/",
 }
