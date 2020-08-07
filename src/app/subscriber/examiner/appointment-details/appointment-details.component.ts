@@ -64,7 +64,7 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Correspondence", for: ["E", "S", "D"], url: "../../correspondance" }, { name: "History", for: ["E", "S"], url: "../../history" }, { name: "Records", for: ["E", "S"], url: "../../records" }, { name: "Examination", for: ["E"], url: "../../examination" }, { name: "Report", for: ["E", "S", "D"], url: "../../reports" }];
+  procedureTypeStatus = [{ name: "Correspondence", icon: "far fa-folder-open", for: ["E", "S", "D"], url: "../../correspondance" }, { name: "History", icon: "fa fa-history", for: ["E", "S"], url: "../../history" }, { name: "Records", icon: "far fa-list-alt", for: ["E", "S"], url: "../../records" }, { name: "Examination", icon: "far fa-edit", for: ["E"], url: "../../examination" }, { name: "Report", icon: "fa fa-tasks", for: ["E", "S", "D"], url: "../../reports" }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
