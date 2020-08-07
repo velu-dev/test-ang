@@ -278,7 +278,17 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     }
   }
 }
+// @media not all and (min-resolution: 0.001dpcm) {
+//   @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+//     .mat-form-field-outline-end {
+//       border-radius: 0px !important;
+//     }
 
+//     .mat-form-field-outline-start {
+//       border-radius: 0px !important;
+//     }
+//   }
+// }
 // .mat-form-field-outline-end {
 //   border-radius: 0px !important;
 // }

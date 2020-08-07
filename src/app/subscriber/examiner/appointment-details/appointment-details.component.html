@@ -469,7 +469,7 @@
     </div>
     <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
         <div class="simple-card" [routerLink]="[status.url]">
-            <i class="fa fa-tasks"></i>
+            <i [class]="status.icon"></i>
             <div class="p-l-10 text-center">
                 <h4>{{status.name}}</h4>
                 <span>Status</span>

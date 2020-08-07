@@ -666,7 +666,6 @@ input:-webkit-autofill {
   line-height: 1.5;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
   // Form fields disabled label color
   .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
     color: rgba(0, 0, 0, 0.7) !important;
@@ -680,7 +679,16 @@ input:-webkit-autofill {
   .mat-checkbox-disabled .mat-checkbox-label {
     color: rgba(0, 0, 0, 0.7) !important;
   }
-}
+ // Safari browser Form fields disabled label color
+
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+      .mat-select-disabled .mat-select-value,
+      .mat-checkbox-disabled .mat-checkbox-label {
+        color: rgba(0, 0, 0, 0.5) !important;
+      }
+    }
+    }
 ::ng-deep {
   // mat-input carent color
   .mat-input-element {
@@ -747,13 +755,6 @@ input:-webkit-autofill {
     background-color: $btn_success;
   }
 }
-// .outline-success[disabled] {
-//   background-color: transparent;
-//   &:hover {
-//     color: rgba(0, 0, 0, 0.26);
-//     background-color: transparent;
-//   }
-// }
 
 .filled-success {
   @extend .btn_;

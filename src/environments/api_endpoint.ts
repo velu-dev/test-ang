@@ -139,4 +139,6 @@ export const api_endpoint = {
     getcorrespondence_data: "billing/ondemand/correspondence/",
     document_upload: "examinations/document-upload",
     create_custom_recipient: "billing/ondemand/correspondence/add-custom-recipient/",
+    removeCustomDocument: "claim/correspondence-remove/",
+    removeCustomRecipient: "billing/ondemand/correspondence/remove-custom-recipient/",
 }
