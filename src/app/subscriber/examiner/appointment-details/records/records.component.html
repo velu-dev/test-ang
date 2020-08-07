@@ -22,14 +22,14 @@
         <div fxFlex="50" class="upload-file">
           <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
           <mat-form-field appearance="standard" class="p-l-10 w-100">
-            <input matInput readonly placeholder="No file chosen">
+            <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
             <input type="file" #uploader hidden (change)="addFile($event)" multiple
               accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
             <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
           </mat-form-field>
         </div>
         <div fxFlex="20">
-          <button mat-raised-button class="filled-gray m-t-15">Add</button>
+          <button mat-raised-button class="filled-gray m-t-15" type="button" (click)="uploadFile()">Add</button>
         </div>
       </div>
       <div class="basic-table striped_  m-l-10 vertical-fixed">
@@ -71,7 +71,7 @@
             <th mat-header-cell *matHeaderCellDef> Document Pages</th>
             <td mat-cell *matCellDef="let element" class="p-l-0" (click)="$event.stopPropagation()">
               <div class="pages-count">
-                <input matInput placeholder="" type="number" min="0" [disabled]="!element.isEdit" autocomplete="off" [(ngModel)]="element.page_number" (click)="$event.stopPropagation()">
+                <input matInput placeholder="" type="number" min="1" [disabled]="!element.isEdit" autocomplete="off" [(ngModel)]="element.page_number" (click)="$event.stopPropagation()">
                 <div class="action-buttons">
 
                   <button *ngIf="!element.isEdit" (click)="$event.stopPropagation();element.isEdit = true" mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon"

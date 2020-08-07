@@ -24,7 +24,7 @@ import { saveAs } from 'file-saver';
 })
 export class ReportComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name'];
+  displayedColumns: string[] = ['select', 'name', 'action'];
   dataSource: any = new MatTableDataSource([]);;
   selection = new SelectionModel<any>(true, []);
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -127,7 +127,7 @@ export class ReportComponent implements OnInit {
 
   selectedFile: File;
   formData = new FormData()
-  file:any;
+  file: any;
   addFile(event) {
     console.log(event.target.files)
     this.selectedFile = null;
@@ -232,7 +232,8 @@ export class ReportComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.onDemandService.deleteDocument(data.document_id).subscribe(res => {
-          console.log(res['data']);
+          console.log(res);
+          this.getReport();
           this.alertService.openSnackBar("File deleted successfully!", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');

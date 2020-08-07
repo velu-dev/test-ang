@@ -390,6 +390,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   sameAsSub(e) {
+    this.isEdit = false;
     this.isSubmitted = false;
     if (e.checked) {
       this.formInit();
@@ -445,6 +446,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.userForm.patchValue({id:res.data.id})
         this.userForm.controls.sign_in_email_id.disable();
         this.userForm.controls.role_id.disable();
+        this.userForm.controls.SameAsSubscriber.disable();
         this.userForm.get('sign_in_email_id').updateValueAndValidity();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
