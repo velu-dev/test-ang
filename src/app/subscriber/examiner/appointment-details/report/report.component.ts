@@ -123,25 +123,30 @@ export class ReportComponent implements OnInit {
     }
   }
 
+  selectedFiles: FileList;
   selectedFile: File;
   formData = new FormData()
-  file: any;
+  file: any = [];
   addFile(event) {
+    this.selectedFiles = event.target.files;
     this.selectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
-      if (FileSize > 30) {
+
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
+        var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
+        if (FileSize > 30) {
+          this.fileUpload.nativeElement.value = "";
+          this.alertService.openSnackBar("This file too long", 'error');
+          return;
+        }
+        this.selectedFile = this.selectedFiles[i];
+        this.file.push(this.selectedFiles[i].name);
+      } else {
+        //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
-        this.alertService.openSnackBar("This file too long", 'error');
-        return;
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
       }
-      this.selectedFile = event.target.files[0];
-      this.file = event.target.files[0].name;
-    } else {
-      //this.selectedFile = null;
-      this.fileUpload.nativeElement.value = "";
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
   }
 
@@ -151,20 +156,25 @@ export class ReportComponent implements OnInit {
       return;
     }
 
-    this.formData.append('file', this.selectedFile);
-    this.formData.append('document_category_id', '6');
+   // this.formData.append('file', this.selectedFile);
+    this.formData.append('document_category_id', '7');
     this.formData.append('claim_id', this.paramsId.id.toString());
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.formData.append('file', this.selectedFiles[i]);
+    }
     this.onDemandService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
+      this.selectedFiles = null;
       this.fileUpload.nativeElement.value = "";
       this.formData = new FormData();
-      this.file = "";
+      this.file = [];
       this.getReport();
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
+      this.selectedFiles = null;
     })
   }
 

@@ -166,8 +166,6 @@ export class RecordsComponent implements OnInit {
       return;
     }
 
-
-
     this.formData.append('document_category_id', '4');
     this.formData.append('claim_id', this.paramsId.id.toString());
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
@@ -179,14 +177,17 @@ export class RecordsComponent implements OnInit {
     //return;
     this.onDemandService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
+      this.selectedFiles = null;
       this.fileUpload.nativeElement.value = "";
       this.formData = new FormData();
-      this.file = "";
+      this.file = [];
       this.getRecord();
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
+      this.selectedFiles = null;
+      this.file = [];
     })
   }
 
