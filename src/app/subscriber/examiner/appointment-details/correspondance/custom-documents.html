@@ -7,16 +7,17 @@
     <mat-divider></mat-divider>
     <mat-card-content>
         <div fxFLex="row wrap" class="w-100" fxFlex="100">
-            <div fxFlex="80" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80" class="upload-file">
+            <div fxFlex="80" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="80" fxFlex.lg="80" fxFlex.xl="80"
+                class="upload-file">
                 <button mat-raised-button (click)="uploader.click()" class="filled-gray">Select File</button>
                 <mat-form-field appearance="standard" class="p-l-10 w-100">
-                    <input matInput [title]="file" readonly [value]="file | ellipsis:30" placeholder="No file chosen">
+                    <input matInput readonly value="{{file | ellipsis:30}}" placeholder="No file chosen">
                     <input type="file" #uploader hidden (change)="selectFile($event)" id="uploadFile"
-                        accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+                        accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" multiple required>
                     <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
                 </mat-form-field>
             </div>
-            <div fxFlex="20"  fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20" >
+            <div fxFlex="20" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                 <button mat-raised-button class="filled-gray m-t-25" (click)="uploadFile()">Add</button>
             </div>
         </div>

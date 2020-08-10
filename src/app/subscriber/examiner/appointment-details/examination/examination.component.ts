@@ -60,7 +60,6 @@ export class ExaminationComponent implements OnInit {
   billableId: any;
   examinationDocuments: any;
   uploadedDocument: any;
-  file: any;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog) {
     this.route.params.subscribe(params => {
       console.log(params)
@@ -112,45 +111,56 @@ export class ExaminationComponent implements OnInit {
     saveAs(url, name);
   }
   selectedFile: File;
-  formData = new FormData()
+  selectedFiles: FileList;
+  file: any = [];
   error = { status: false, message: "" };
   addFile(event) {
+    this.selectedFiles = event.target.files;
     this.selectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
-
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
-      if (FileSize > 30) {
-        this.error.status = true;
-        this.error.message = "This file too long";
-        return;
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
+        var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
+        if (FileSize > 30) {
+          this.fileUpload.nativeElement.value = "";
+          this.alertService.openSnackBar("This file too long", 'error');
+          return;
+        }
+        this.selectedFile = this.selectedFiles[i];
+        this.file.push(this.selectedFiles[i].name);
+      } else {
+        //this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
       }
-      this.error.status = false;
-      this.error.message = "";
-      this.file = event.target.files[0].name;
-      this.selectedFile = event.target.files[0];
-    } else {
-      this.selectedFile = null;
-      this.error.status = true;
-      this.error.message = "This file type is not accepted";
     }
   }
   uploadFile() {
+    let formData = new FormData();
     if (!this.selectedFile) {
       this.error.status = true;
       this.error.message = "Please select file";
       return;
     }
 
-    this.formData.append('file', this.selectedFile);
-    this.formData.append('claim_id', this.claim_id);
-    this.formData.append('bill_item_id', this.billableId.toString());
-    this.ondemandService.uploadExaminationDocument(this.formData).subscribe(res => {
-      this.selectedFile = null;
-      this.fileUpload.nativeElement.value = "";
-      this.formData = new FormData();
-      this.file = "";
-      this.getData();
+    // this.formData.append('file', this.selectedFile);
+    formData.append('claim_id', this.claim_id);
+    formData.append('bill_item_id', this.billableId.toString());
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      formData.append('file', this.selectedFiles[i]);
+    }
+    this.ondemandService.uploadExaminationDocument(formData).subscribe(res => {
+      if (res.status) {
+        this.alertService.openSnackBar(res.message, 'success');
+        this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        formData = new FormData();
+        this.file = "";
+        this.getData();
+      }
+      else {
+        this.alertService.openSnackBar(res.message, "error")
+      }
     })
   }
   downloadDocument(element) {

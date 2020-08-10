@@ -75,9 +75,10 @@
         <div fxFlex="50" class="upload-file">
           <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
           <mat-form-field appearance="standard" class="p-l-10 w-100">
-            <input matInput readonly [(ngModel)]="file" placeholder="No file chosen">
-            <input type="file" #uploader (change)="addFile($event)" hidden accept=".pdf, .doc, .docx, .xls, .xlsx, .csv"
-              required>
+            <input matInput readonly value="{{file | ellipsis:30}}" placeholder="No file chosen">
+            <input type="file" #uploader multiple (change)="addFile($event)" hidden
+              accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+            <mat-error *ngIf="error.status">{{error.message}}</mat-error>
             <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
           </mat-form-field>
         </div>
