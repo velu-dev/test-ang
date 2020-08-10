@@ -2,7 +2,7 @@
 
 .user-table {
   width: $width-100;
-  border: 1px solid $table-solid;
+  // border: 1px solid $table-solid;
   tr {
     &:nth-child(4n+3) {
       background-color: $table-solid;
@@ -185,5 +185,5 @@ tr.detail-row {
 .vertical-fixed  {
   min-height: 290px;
   max-height: 290px;
-  overflow: scroll;
+  overflow: auto;
 }

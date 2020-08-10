@@ -1,128 +1,137 @@
 <div class="billable-item-status">
-    <div fxLayout="row wrap" class="ondemand-status p-t-20">
-      <div fxFlex="100">
-        <div class="main-title">Examination Documents  <span class="info ondemand-info m-l-10" matTooltipPosition="above" matTooltip="Download the documents, print them and fill them out, then scan and upload the finished documents in the section below."><i class="fa fa-info" aria-hidden="true"></i></span></div>
-        <p class="description">Use the checkboxes to select the documents you wish to download and use during the examination.</p>
+  <div fxLayout="row wrap" class="ondemand-status p-t-20">
+    <div fxFlex="100">
+      <div class="main-title">Examination Documents <span class="info ondemand-info m-l-10" matTooltipPosition="above"
+          matTooltip="Download the documents, print them and fill them out, then scan and upload the finished documents in the section below."><i
+            class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description">Use the checkboxes to select the documents you wish to download and use during the
+        examination.</p>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap" *ngIf="!isLoading">
+    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+      <div class="basic-table striped_  m-l-10">
+        <table mat-table [dataSource]="examinationDocuments" class="mat-elevation-z8 w-100 user-table">
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+              </mat-checkbox>
+              <mat-icon [matMenuTriggerFor]="mailondemand" id="dropdown-list">arrow_drop_down</mat-icon>
+              <mat-menu #mailondemand="matMenu">
+                <button mat-menu-item>
+                  <span>All</span>
+                </button>
+                <button mat-menu-item>
+                  <span>None</span>
+                </button>
+              </mat-menu>
+            </th>
+            <td mat-cell *matCellDef="let row" class="width-fixed">
+              <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="form_name">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.form_name}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+          </tr>
+        </table>
       </div>
     </div>
-  
-    <div fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="basic-table striped_  m-l-10">
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 user-table">  
-            <!-- Checkbox Column -->
-            <ng-container matColumnDef="select">
-              <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? masterToggle() : null"
-                  [checked]="selection.hasValue() && isAllSelected()"
-                  [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
-                </mat-checkbox>
-                <mat-icon [matMenuTriggerFor]="mailondemand" id="dropdown-list">arrow_drop_down</mat-icon>
-                <mat-menu #mailondemand="matMenu">
-                  <button mat-menu-item>
-                    <span>All</span>
-                  </button>
-                  <button mat-menu-item>
-                    <span>None</span>
-                  </button>
-                </mat-menu>
-              </th>
-              <td mat-cell *matCellDef="let row" class="width-fixed">
-                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-                  [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
-                </mat-checkbox>
-              </td>
-            </ng-container>
-  
-            <!-- Name Column -->
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> </th>
-              <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.name}} </td>
-            </ng-container>
-    
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-            </tr>
-          </table>
+  </div>
+
+  <div class="border-dashed-blue m-t-30 m-b-30"></div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex="100">
+      <button mat-stroked-button (click)="downloadForms()" class="outline-success huge-btn">
+        Download
+      </button>
+    </div>
+  </div>
+
+  <div class="border-dashed-blue m-t-30 m-b-30"></div>
+
+
+  <div fxLayout="row wrap" class="send-document">
+    <div fxFlex="100">
+      <div class="main-title">Completed Documents <span class="info ondemand-info m-l-10" matTooltipPosition="above"
+          matTooltip="The uploaded documents will be available in to send to transcriptionists and to incorporate into the report that will be billed."><i
+            class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description">Upload the scanned copies of the documents used in the examination. Use the upload function
+        to add the documents to this list.</p>
+      <div fxFLex="row wrap">
+        <div fxFlex="50" class="upload-file">
+          <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
+          <mat-form-field appearance="standard" class="p-l-10 w-100">
+            <input matInput readonly value="{{file | ellipsis:30}}" placeholder="No file chosen">
+            <input type="file" #uploader multiple (change)="addFile($event)" hidden
+              accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+            <mat-error *ngIf="error.status">{{error.message}}</mat-error>
+            <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
+          </mat-form-field>
+        </div>
+        <div fxFlex="20">
+          <button mat-raised-button class="filled-gray m-t-15" (click)="uploadFile()">Add</button>
         </div>
       </div>
-    </div>
-  
-    <div class="border-dashed-blue m-t-30 m-b-30"></div>
-  
-    <div fxLayout="row wrap">
-      <div fxFlex="100">
-        <button mat-stroked-button class="outline-success huge-btn">
-            Download
-          </button>
-      </div>
-    </div>
-  
-    <div class="border-dashed-blue m-t-30 m-b-30"></div>
-  
-  
-    <div fxLayout="row wrap" class="send-document">
-      <div fxFlex="100">
-        <div class="main-title">Completed Documents  <span class="info ondemand-info m-l-10" matTooltipPosition="above" matTooltip="The uploaded documents will be available in to send to transcriptionists and to incorporate into the report that will be billed."><i class="fa fa-info" aria-hidden="true"></i></span></div>
-        <p class="description">Upload the scanned copies of the documents used in the examination. Use the upload function to add the documents to this list.</p>
-        <div fxFLex="row wrap">
-            <div fxFlex="50" class="upload-file">
-              <button mat-raised-button class="filled-gray">Select File</button>
-              <mat-form-field appearance="standard" class="p-l-10 w-100">
-                <input matInput readonly placeholder="No file chosen">
-                <!-- <input type="file" #uploader hidden required> -->
-                <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
-              </mat-form-field>
-            </div>
-            <div fxFlex="20">
-              <button mat-raised-button class="filled-gray m-t-15">Add</button>
-            </div>
-          </div>
-      
-        <div class="user-detail vertical-fixed">
-          <table mat-table [dataSource]="dataSource2" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
-            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
-                {{columnName[i]}} </th>
-              <td mat-cell *matCellDef="let element">
-                <span *ngIf="i == 0 && isMobile">
-                  <mat-icon mat-raised-button
-                    [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
-                    {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
-                  </mat-icon>
+
+      <div class="user-detail vertical-fixed">
+        <table mat-table [dataSource]="uploadedDocument" multiTemplateDataRows class="mat-elevation-z8 user-table"
+          matSort>
+          <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+              {{columnName[i]}} </th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngIf="i == 0 && isMobile">
+                <mat-icon mat-raised-button
+                  [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
+                  {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                </mat-icon>
+              </span>
+              <div>
+                <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
+                <span *ngIf="column == 'updatedAt'" class="no-wrap-td">{{element?.updatedAt | date:'MM-dd-yyyy'}}</span>
+                <span *ngIf="column == 'action'" class="text-center">
+                  <a class="text-success" (click)="downloadDocument(element)">Download</a>
+                  <a class="text-danger p-l-20" (click)="removeDocument(element)">Remove</a>
                 </span>
-                <div>
-                  <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                  <span *ngIf="column == 'date_uploaded'" class="no-wrap-td">{{element?.date_uploaded}}</span>
-                  <span *ngIf="column == 'action'"  class="text-center">
-                    <a class="text-success">Download</a>
-                    <a class="text-danger p-l-20">Remove</a>
-                  </span>
-                </div>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="expandedDetail">
-              <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                  <div class="resposive-table">
-                    <div><span>File Name</span> {{element?.file_name}} </div>
-                    <div class="no-wrap-td"><span>Date Uploaded</span> {{element?.date_uploaded}} </div>
-                    <div class="text-center"><span>Action</span>
-                      <a class="text-success">Download</a>
-                      <a class="text-danger p-l-20">Remove</a>
-                    </div>
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+              <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                <div class="resposive-table">
+                  <div><span>File Name</span> {{element?.file_name}} </div>
+                  <div class="no-wrap-td"><span>Date Uploaded</span> {{element?.updatedAt | date:'MM-dd-yyyy'}} </div>
+                  <div class="text-center"><span>Action</span>
+                    <a class="text-success" (click)="downloadDocument(element)">Download</a>
+                    <a class="text-danger p-l-20" (click)="removeDocument(element)">Remove</a>
                   </div>
                 </div>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
-              [class.row]="expandedElement === element" (click)="openElement(element)">
-            </tr>
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
-          </table>
-        </div>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
+            [class.row]="expandedElement === element" (click)="openElement(element)">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+        </table>
       </div>
     </div>
-
   </div>
+
+</div>

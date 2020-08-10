@@ -418,7 +418,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div fxFlex="100" class="m-t-10">
+                            <div fxFlex="100" class="m-t-20">
                                 <div class="basic-table document_list w-100 vertical-fixed">
                                     <table mat-table [dataSource]="correspondenceSource">
 
@@ -1044,7 +1044,7 @@
                                     <mat-select formControlName="exam_procedure_type_id">
                                         <mat-option *ngFor="let procuderalCode of procuderalCodes"
                                             [value]="procuderalCode.exam_procedure_type_id" (click)="procedure_type(procuderalCode)">
-                                            {{procuderalCode.exam_procedure_type}} - {{procuderalCode.exam_procedure_name}}
+                                            {{procuderalCode.exam_procedure_name}}
                                         </mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="isBillSubmited">Please select Exam Procedure Type</mat-error>

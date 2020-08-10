@@ -56,7 +56,6 @@ export class ReportComponent implements OnInit {
 
 
     this.route.params.subscribe(param => {
-      console.log(param)
       this.paramsId = param;
     })
 
@@ -88,7 +87,6 @@ export class ReportComponent implements OnInit {
   }
   getReport() {
     this.onDemandService.getTranscription(this.paramsId.id, this.paramsId.billId).subscribe(report => {
-      console.log(report, "record")
       this.reportData = report;
       this.dataSource = new MatTableDataSource(report.documets)
       let inFile = [];
@@ -125,26 +123,30 @@ export class ReportComponent implements OnInit {
     }
   }
 
+  selectedFiles: FileList;
   selectedFile: File;
   formData = new FormData()
-  file: any;
+  file: any = [];
   addFile(event) {
-    console.log(event.target.files)
+    this.selectedFiles = event.target.files;
     this.selectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
-      if (FileSize > 30) {
+
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
+        var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
+        if (FileSize > 30) {
+          this.fileUpload.nativeElement.value = "";
+          this.alertService.openSnackBar("This file too long", 'error');
+          return;
+        }
+        this.selectedFile = this.selectedFiles[i];
+        this.file.push(this.selectedFiles[i].name);
+      } else {
+        //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
-        this.alertService.openSnackBar("This file too long", 'error');
-        return;
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
       }
-      this.selectedFile = event.target.files[0];
-      this.file = event.target.files[0].name;
-    } else {
-      //this.selectedFile = null;
-      this.fileUpload.nativeElement.value = "";
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
   }
 
@@ -154,36 +156,45 @@ export class ReportComponent implements OnInit {
       return;
     }
 
-    this.formData.append('file', this.selectedFile);
-    this.formData.append('document_category_id', '6');
+   // this.formData.append('file', this.selectedFile);
+    this.formData.append('document_category_id', '7');
     this.formData.append('claim_id', this.paramsId.id.toString());
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.formData.append('file', this.selectedFiles[i]);
+    }
     this.onDemandService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
+      this.selectedFiles = null;
       this.fileUpload.nativeElement.value = "";
       this.formData = new FormData();
-      this.file = "";
+      this.file = [];
       this.getReport();
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
+      this.selectedFiles = null;
     })
   }
 
-  multipleDownload() {
-    console.log(this.selection.selected);
+  async multipleDownload() {
     if (this.selection.selected.length == 0) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return
     }
-    this.selection.selected.map(res => {
-      saveAs(res.file_url, res.file_name);
-    })
+    // this.selection.selected.map(res => {
+    //   saveAs(res.file_url, res.file_name);
+    // })
+
+    for (let i = 0; i < this.selection.selected.length; i++) {
+      saveAs(this.selection.selected[i].file_url, this.selection.selected[i].file_name, '_self');
+      await new Promise(r => setTimeout(r, 1000));
+    }
+
   }
 
   inOutdownload(data) {
-    console.log(data)
     saveAs(data.file_url, data.file_name);
   }
 
@@ -192,7 +203,6 @@ export class ReportComponent implements OnInit {
     this.selection.selected.map(res => {
       document_ids.push(res.document_id)
     })
-    console.log(this.rushRequest)
     if (document_ids.length == 0) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return
@@ -207,19 +217,16 @@ export class ReportComponent implements OnInit {
       service_request_type_id: this.reportData.documets[0].service_request_type_id,
       service_provider_id: this.reportData.documets[0].service_provider_id // default 3
     }
-    console.log(data);
     this.onDemandService.requestCreate(data).subscribe(record => {
-      console.log(record)
+      this.alertService.openSnackBar("Transcribe and Compile created successfully!", 'success');
       this.getReport();
     }, error => {
-      console.log(error)
+      console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
-  pageNumberSave(element) {
-    console.log(element)
-  }
-
+ 
   deleteDocument(data) {
     this.openDialogDelete('delete', data);
   }
@@ -232,7 +239,6 @@ export class ReportComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.onDemandService.deleteDocument(data.document_id).subscribe(res => {
-          console.log(res);
           this.getReport();
           this.alertService.openSnackBar("File deleted successfully!", 'success');
         }, error => {
@@ -275,13 +281,3 @@ export class ReportComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.file_name + 1}`;
   }
 }
-
-// const ELEMENT_DATA2 = [
-//   { "id": 143, "file_name": "Report Template", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
-//   { "id": 143, "file_name": "Medical History Questionnaire", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
-//   { "id": 143, "file_name": "Dictated Report Audio Recording.mp3", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
-// ];
-
-// const ELEMENT_DATA3 = [
-//   { "id": 143, "file_name": "Transcribed and Compiled Report", "rush_request": "No", "request_date": "01-02-2020", "received_date": "01-02-2020", "Download": "" },
-// ];

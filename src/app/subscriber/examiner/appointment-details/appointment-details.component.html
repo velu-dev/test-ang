@@ -583,7 +583,7 @@
                                 <mat-option *ngFor="let procuderalCode of procuderalCodes"
                                     [value]="procuderalCode.exam_procedure_type_id"
                                     (click)="procedure_type(procuderalCode)">
-                                    {{procuderalCode.exam_procedure_type}} - {{procuderalCode.exam_procedure_name}}
+                                    {{procuderalCode.exam_procedure_name}}
                                 </mat-option>
                             </mat-select>
                             <mat-error>Please select Exam Procedure Type</mat-error>
@@ -724,6 +724,20 @@
     <mat-card-content>
         <div fxLayout="row wrap">
             <div fxLayout="row wrap" fxFlex="100" class="document-file-upload w-100">
+                <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
+                appearance="outline">
+                <mat-label>Document Type</mat-label>
+                <mat-select [(ngModel)]="documentType">
+                    <mat-option *ngFor="let doc of documentList" [value]="doc.id">
+                        {{doc.document_category_name}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint *ngIf="errors.doc_type.isError">
+                    <mat-error>
+                        {{errors.doc_type.error}}
+                    </mat-error>
+                </mat-hint>
+            </mat-form-field>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_">
                     <button type="button" mat-stroked-button class="filled-gray" (click)="uploader.click()">Select File
                         <!-- <i class="fa fa-upload p-l-5"></i> -->
@@ -739,20 +753,7 @@
                     </mat-form-field>
                 </div>
 
-                <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
-                    appearance="outline">
-                    <mat-label>Document Type</mat-label>
-                    <mat-select [(ngModel)]="documentType">
-                        <mat-option *ngFor="let doc of documentList" [value]="doc.id">
-                            {{doc.document_category_name}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-hint *ngIf="errors.doc_type.isError">
-                        <mat-error>
-                            {{errors.doc_type.error}}
-                        </mat-error>
-                    </mat-hint>
-                </mat-form-field>
+
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                     <button mat-stroked-button type="button" (click)="uploadFile()"
                         class="filled-gray p-r-20 m-t-20">Add

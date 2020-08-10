@@ -6,7 +6,7 @@
           matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">View the progress of Record Summary service here.</p>
       <mat-progress-bar mode="determinate" value="50" class="not-sent"></mat-progress-bar>
-      <div class="text-center">Not Sent</div>
+      <div class="text-center">{{recordData?.on_demand_status}}</div>
     </div>
   </div>
 
