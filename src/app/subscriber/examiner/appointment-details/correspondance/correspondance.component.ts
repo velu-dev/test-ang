@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -28,7 +28,6 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
   ],
 })
 export class BillingCorrespondanceComponent implements OnInit {
-
   displayedColumns: string[] = ['select', 'form_name'];
   selection = new SelectionModel<any>(true, []);
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -268,6 +267,7 @@ export class BillingCorrespondanceComponent implements OnInit {
 export class CustomDocuments {
   claim_id: any;
   billable_id: any;
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<CustomDocuments>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private alertService: AlertService, private onDemandService: OnDemandService) {
@@ -280,32 +280,45 @@ export class CustomDocuments {
     this.dialogRef.close();
   }
   selectedFile: File;
-  file = "";
+  selectedFiles: FileList;
+  file: any = [];
   selectFile(event) {
+    this.selectedFiles = event.target.files;
     this.selectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
 
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
-      if (FileSize > 30) {
-        this.alertService.openSnackBar("This file too long", 'error');
-        return;
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
+        var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
+        if (FileSize > 30) {
+          this.fileUpload.nativeElement.value = "";
+          this.alertService.openSnackBar("This file too long", 'error');
+          return;
+        }
+        this.selectedFile = this.selectedFiles[i];
+        this.file.push(this.selectedFiles[i].name);
+        console.log(this.file)
+      } else {
+        //this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
       }
-      this.selectedFile = event.target.files[0];
-      this.file = event.target.files[0].name;
-    } else {
-      this.selectedFile = null;
-      //this.errorMessage = 'This file type is not accepted';
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
 
   }
   uploadFile() {
+    if (!this.selectedFile) {
+      this.alertService.openSnackBar("Please select file", 'error');
+      return;
+    }
+
     let formData = new FormData()
-    formData.append('file', this.selectedFile);
     formData.append("document_category_id", "10");
     formData.append('claim_id', this.claim_id);
     formData.append('bill_item_id', this.billable_id);
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      formData.append('file', this.selectedFiles[i]);
+    }
     this.onDemandService.uploadDocument(formData).subscribe(res => {
       if (res.status) {
         this.alertService.openSnackBar(res.message, "success");
