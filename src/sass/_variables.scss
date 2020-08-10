@@ -663,7 +663,7 @@ input:-webkit-autofill {
 // ==================================
 
 .mat-form-field {
-  line-height: 1.5;
+  line-height: 1.15;
 }
 
   // Form fields disabled label color
@@ -717,9 +717,9 @@ input:-webkit-autofill {
     color: #96358d !important;
   }
 
-  .mat-form-field-appearance-outline .mat-form-field-label {
-    margin-top: -0.46em;
-  }
+  // .mat-form-field-appearance-outline .mat-form-field-label {
+  //   margin-top: -0.46em;
+  // }
 }
 // Tooltip font-size
 .mat-tooltip {
@@ -849,6 +849,9 @@ input:-webkit-autofill {
     display: flex;
   }
   mat-card-content {
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     button.filled-gray {
       @extend .filled-gray;
     }
@@ -866,6 +869,9 @@ input:-webkit-autofill {
     }
   }
   mat-card-content {
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     mat-form-field {
       padding: 10px 10px 0px 10px !important;
     }
@@ -876,6 +882,9 @@ input:-webkit-autofill {
       @extend .outline-danger;
     }
   }
+  // .mat-form-field-appearance-outline .mat-form-field-label {
+  //   margin-top: -0.25em;
+  // }
 }
 
 // ==================================

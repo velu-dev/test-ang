@@ -6,7 +6,7 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content *ngIf="!isLoding">
-        <div fxLayout="row wrap" fxFlex="100" class="">
+        <div fxLayout="row wrap" fxFlex="100" class="m-t-20">
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Body Parts</mat-label>
                 <mat-select multiple [(ngModel)]="injuryInfo.body_part_id">
