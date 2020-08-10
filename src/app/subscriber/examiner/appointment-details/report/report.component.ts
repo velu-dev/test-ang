@@ -178,14 +178,20 @@ export class ReportComponent implements OnInit {
     })
   }
 
-  multipleDownload() {
+  async multipleDownload() {
     if (this.selection.selected.length == 0) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return
     }
-    this.selection.selected.map(res => {
-      saveAs(res.file_url, res.file_name);
-    })
+    // this.selection.selected.map(res => {
+    //   saveAs(res.file_url, res.file_name);
+    // })
+
+    for (let i = 0; i < this.selection.selected.length; i++) {
+      saveAs(this.selection.selected[i].file_url, this.selection.selected[i].file_name, '_self');
+      await new Promise(r => setTimeout(r, 1000));
+    }
+
   }
 
   inOutdownload(data) {
