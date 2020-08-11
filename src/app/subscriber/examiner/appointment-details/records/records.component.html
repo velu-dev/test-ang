@@ -71,7 +71,7 @@
             <th mat-header-cell *matHeaderCellDef> Document Pages</th>
             <td mat-cell *matCellDef="let element" class="p-l-0" (click)="$event.stopPropagation()">
               <div class="pages-count">
-                <input matInput placeholder="" type="number" min="1" [disabled]="!element.isEdit" autocomplete="off" [(ngModel)]="element.page_number" (click)="$event.stopPropagation()">
+                <input matInput placeholder="" type="number" min="1" max="10000" [disabled]="!element.isEdit" autocomplete="off" [(ngModel)]="element.page_number" (click)="$event.stopPropagation()">
                 <div class="action-buttons">
 
                   <button *ngIf="!element.isEdit" (click)="$event.stopPropagation();element.isEdit = true" mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon"

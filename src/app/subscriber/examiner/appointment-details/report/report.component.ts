@@ -45,7 +45,8 @@ export class ReportComponent implements OnInit {
   dataSoruceIn: any;
   rushRequest: any;
   reportData: any;
-
+  documentList: any = [];
+  documentType: any = 6;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
 
   constructor(private breakpointObserver: BreakpointObserver,
@@ -84,6 +85,14 @@ export class ReportComponent implements OnInit {
 
   ngOnInit() {
     this.getReport();
+    this.onDemandService.seedData('document_category').subscribe(type => {
+      type.data.map(data => {
+        if (data.id == 6 || data.id == 7) {
+          this.documentList.push(data);
+        }
+      })
+      this.documentType = 6;
+    })
   }
   getReport() {
     this.onDemandService.getTranscription(this.paramsId.id, this.paramsId.billId).subscribe(report => {
@@ -128,9 +137,17 @@ export class ReportComponent implements OnInit {
   formData = new FormData()
   file: any = [];
   addFile(event) {
-    this.selectedFiles = event.target.files;
+    
     this.selectedFile = null;
-    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
+    this.file = [];
+    this.selectedFiles = null
+    this.selectedFiles = event.target.files;
+    let fileTypes;
+    if (this.documentType == 6) {
+      fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3'];
+    } else {
+      fileTypes = ['mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
+    }
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
@@ -156,8 +173,8 @@ export class ReportComponent implements OnInit {
       return;
     }
 
-   // this.formData.append('file', this.selectedFile);
-    this.formData.append('document_category_id', '7');
+    // this.formData.append('file', this.selectedFile);
+    this.formData.append('document_category_id', this.documentType.toString());
     this.formData.append('claim_id', this.paramsId.id.toString());
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
     for (let i = 0; i < this.selectedFiles.length; i++) {
@@ -175,6 +192,7 @@ export class ReportComponent implements OnInit {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
       this.selectedFiles = null;
+      this.file = [];
     })
   }
 
@@ -226,7 +244,7 @@ export class ReportComponent implements OnInit {
     })
   }
 
- 
+
   deleteDocument(data) {
     this.openDialogDelete('delete', data);
   }
@@ -248,6 +266,14 @@ export class ReportComponent implements OnInit {
     })
 
 
+  }
+
+  docChange(e) {
+    console.log(e)
+    this.fileUpload.nativeElement.value = "";
+    this.selectedFile = null;
+    this.selectedFiles = null;
+    this.file = [];
   }
 
 
