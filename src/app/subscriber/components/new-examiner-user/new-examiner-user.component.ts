@@ -309,11 +309,11 @@ export class NewExaminerUserComponent implements OnInit {
         taxonomy_id: res.rendering_provider.taxonomy_id,
         provider_status: res.rendering_provider.provider_status != null ? res.rendering_provider.provider_status : true,
         license_details: res.rendering_provider.license_details,
-        first_name: res.billing_provider.first_name,
-        last_name: res.billing_provider.last_name,
-        middle_name: res.billing_provider.middle_name,
-        rendering_provider_name: res.billing_provider.rendering_provider_name,
-        suffix: res.billing_provider.suffix,
+        first_name: res.rendering_provider.first_name,
+        last_name: res.rendering_provider.last_name,
+        middle_name: res.rendering_provider.middle_name,
+        rendering_provider_name: res.rendering_provider.rendering_provider_name,
+        suffix: res.rendering_provider.suffix,
         //signature: res.rendering_provider.signature
       }
 
@@ -322,7 +322,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.renderingForm.patchValue(rendering);
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
-
+      this.licenseData = res.rendering_provider.license_details != null ? res.rendering_provider.license_details : []
       //this.getLocationDetails();
       this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
       if (res.service_location != null) {
@@ -629,7 +629,7 @@ export class NewExaminerUserComponent implements OnInit {
       if (this.renderingForm.get(key).value && typeof (this.renderingForm.get(key).value) == 'string')
         this.renderingForm.get(key).setValue(this.renderingForm.get(key).value.trim())
     });
-    this.renderingForm.patchValue({ license_details: [] })
+    this.renderingForm.patchValue({ license_details: this.licenseData })
     if (this.renderingForm.invalid) {
       window.scrollTo(0, 0)
       return;
@@ -642,7 +642,8 @@ export class NewExaminerUserComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
-
+  licenseData: any = [];
+  editStatus: boolean = false;
   openLicense(data?: any, index?: number) {
     const dialogRef = this.dialog.open(LicenseDialog, {
       width: '800px',
@@ -651,21 +652,47 @@ export class NewExaminerUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.userService.createLicense(this.examinerId, result).subscribe(license => {
-          let data = this.licenceDataSource.data;
-          if (result.id) {
-            data.splice(index, 1);
+        // this.userService.createLicense(this.examinerId, result).subscribe(license => {
+        //   let data = this.licenceDataSource.data;
+        //   if (result.id) {
+        //     data.splice(index, 1);
+        //   }
+        //   data.push(license.data);
+        //   this.licenceDataSource = new MatTableDataSource(data)
+        // }, error => {
+        //   this.alertService.openSnackBar(error.error.message, 'error');
+        // })
+
+        // this.licenseData.map(lic=>{
+        //   if(lic.license_number == result.license_number && lic.state_id == result.state_id){
+        //     this.alertService.openSnackBar('Already added', 'error');
+        //     return;
+        //   }
+        // })
+        if (!result.id) {
+          if (this.editStatus) {
+            this.licenseData.splice(index, 1);
+            this.editStatus = false
+          } else {
+            for (var i in this.licenseData) {
+              if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
+                this.alertService.openSnackBar('Already added', 'error');
+                return;
+              }
+            }
           }
-          data.push(license.data);
-          this.licenceDataSource = new MatTableDataSource(data)
-        }, error => {
-          this.alertService.openSnackBar(error.error.message, 'error');
-        })
+        } else {
+          this.licenseData.splice(index, 1);
+        }
+        this.licenseData.push(result);
+        this.licenceDataSource = new MatTableDataSource(this.licenseData)
+        console.log(this.licenseData)
       }
     });
   }
 
   editLicense(element, i) {
+    this.editStatus = true;
     this.openLicense(element, i)
   }
 
@@ -680,7 +707,14 @@ export class NewExaminerUserComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       if (result['data']) {
+        if (!e.id) {
+          let data = this.licenceDataSource.data;
+          data.splice(i, 1);
+          this.licenceDataSource = new MatTableDataSource(data)
+          return
+        }
         this.userService.deleteLicense(e.id).subscribe(license => {
           let data = this.licenceDataSource.data;
           data.splice(i, 1);
@@ -845,8 +879,12 @@ export class NewExaminerUserComponent implements OnInit {
 
   }
 
-
-
+  getState(id) {
+    for(var i in this.states)
+      if (id == this.states[i].id) {
+        return this.states[i].state
+      }
+  }
 }
 
 @Component({
@@ -866,12 +904,13 @@ export class LicenseDialog {
 
     this.licenseForm = this.formBuilder.group({
       id: [""],
-      state_license_number: [null, Validators.compose([Validators.required, Validators.maxLength(15)])],
-      state_of_license_id: [null, Validators.compose([Validators.required])],
+      license_number: [null, Validators.compose([Validators.required, Validators.maxLength(15)])],
+      state_id: [null, Validators.compose([Validators.required])],
     });
     if (data.details) {
       this.licenseForm.patchValue(data.details)
     }
+
   }
 
   addLicense() {
@@ -882,6 +921,8 @@ export class LicenseDialog {
     if (this.licenseForm.invalid) {
       return;
     }
+
+    console.log(this.licenseForm.value)
     this.dialogRef.close(this.licenseForm.value);
   }
 
