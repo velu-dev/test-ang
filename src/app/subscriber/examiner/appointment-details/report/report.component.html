@@ -14,8 +14,16 @@
       <p class="description"> Upload documents to be incorporated into the report here. Click the checkboxes to select the documents to be sent for
         On Demand Transcription & Report Building.</p>
 
-        <div fxFLex="row wrap" class="p-l-10">
-          <div fxFlex="50" class="upload-file">
+        <div fxLayout="row wrap" class="p-l-10 w-100" class="m-b-10">
+          <mat-form-field fxFLex="30" fxFlex.sm="100"  fxFlex.xs="100" appearance="outline" class="m-t-10">
+            <mat-label>Select Type</mat-label>
+            <mat-select>
+              <mat-option>
+               Optiones Here....
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div fxFlex="50"  fxFlex.sm="100"  fxFlex.xs="100" class="upload-file m-l-10">
             <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
             <mat-form-field appearance="standard" class="p-l-10 w-100">
               <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
@@ -24,7 +32,7 @@
               <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
             </mat-form-field>
           </div>
-          <div fxFlex="20">
+          <div fxFlex="20"  fxFlex.sm="100"  fxFlex.xs="100">
             <button mat-raised-button class="filled-gray m-t-15" type="button" (click)="uploadFile()">Add</button>
           </div>
         </div>

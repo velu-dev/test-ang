@@ -169,7 +169,7 @@ export class NewExaminerUserComponent implements OnInit {
     if (typeof (value) == 'number') {
       return;
     }
-    const filterValue = value.toLowerCase();
+    const filterValue = value == undefined ? '' : value && value.toLowerCase();
     return this.taxonomyList.filter(option => option.codeName.toLowerCase().includes(filterValue));
   }
 
@@ -210,7 +210,7 @@ export class NewExaminerUserComponent implements OnInit {
       setTimeout(() => {
         this.texonomyChange(this.renderingForm.value.taxonomy_id)
       }, 1000);
-      
+
       this.texonomyFilteredOptions = this.texonomySearch.valueChanges
         .pipe(
           startWith(''),
@@ -281,7 +281,7 @@ export class NewExaminerUserComponent implements OnInit {
       let billing = {
         id: res.billing_provider.id,
         default_injury_state: res.billing_provider.default_injury_state,
-        is_person: res.billing_provider.is_person != null ? res.billing_provider.is_person.toString() : 'true',
+        is_person: res.billing_provider.is_person != null ? res.billing_provider.is_person : true,
         national_provider_identifier: res.billing_provider.national_provider_identifier,
         dol_provider_number: res.billing_provider.dol_provider_number,
         tax_id: res.billing_provider.tax_id,
@@ -291,22 +291,34 @@ export class NewExaminerUserComponent implements OnInit {
         state: res.billing_provider.state,
         zip_code: res.billing_provider.zip_code,
         phone_no1: res.billing_provider.phone_no1,
+        first_name: res.billing_provider.first_name,
+        last_name: res.billing_provider.last_name,
+        middle_name: res.billing_provider.middle_name,
+        billing_provider_name: res.billing_provider.billing_provider_name,
+        suffix: res.billing_provider.suffix,
       }
+      this.billingOrgChange(billing.is_person)
       this.billingProviderForm.patchValue(billing)
 
       let rendering = {
         id: res.rendering_provider.id,
         default_injury_state: res.rendering_provider.default_injury_state,
-        is_person: res.rendering_provider.is_person != null ? res.rendering_provider.is_person.toString() : 'true',
+        is_person: res.rendering_provider.is_person != null ? res.rendering_provider.is_person : true,
         national_provider_identifier: res.rendering_provider.national_provider_identifier,
         provider_type: res.rendering_provider.provider_type,
         taxonomy_id: res.rendering_provider.taxonomy_id,
-        provider_status: res.rendering_provider.provider_status != null ? res.rendering_provider.provider_status.toString() : 'true',
+        provider_status: res.rendering_provider.provider_status != null ? res.rendering_provider.provider_status : true,
         license_details: res.rendering_provider.license_details,
+        first_name: res.billing_provider.first_name,
+        last_name: res.billing_provider.last_name,
+        middle_name: res.billing_provider.middle_name,
+        rendering_provider_name: res.billing_provider.rendering_provider_name,
+        suffix: res.billing_provider.suffix,
         //signature: res.rendering_provider.signature
       }
 
       this.signData = res.rendering_provider.signature ? 'data:image/png;base64,' + res.rendering_provider.signature : null
+      this.renderingOrgChange(rendering.is_person)
       this.renderingForm.patchValue(rendering);
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
@@ -364,8 +376,12 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.billingProviderForm = this.formBuilder.group({
       id: [""],
+      first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      middle_name: ['', Validators.compose([Validators.maxLength(50)])],
+      suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       default_injury_state: [null],
-      is_person: ['true'],
+      is_person: [true],
       national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
       dol_provider_number: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(10)])],
       tax_id: [null],
@@ -375,20 +391,26 @@ export class NewExaminerUserComponent implements OnInit {
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      billing_provider_name: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
 
     })
 
     this.renderingForm = this.formBuilder.group({
       id: [""],
       default_injury_state: [null],
-      is_person: ['true'],
+      is_person: [true],
       national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
       provider_type: [null],
       taxonomy_id: [null],
-      provider_status: ['true'],
+      provider_status: [true],
       license_details: [null],
       signature: [null],
-      is_new_signature: [false]
+      is_new_signature: [false],
+      first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
+      middle_name: ['', Validators.compose([Validators.maxLength(50)])],
+      suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
+      rendering_provider_name: [null, Validators.compose([Validators.required, Validators.maxLength(100)])],
     })
   }
 
@@ -446,7 +468,7 @@ export class NewExaminerUserComponent implements OnInit {
         }
         this.isEdit = true;
         this.createStatus = true;
-        this.userForm.patchValue({id:res.data.id})
+        this.userForm.patchValue({ id: res.data.id })
         this.userForm.controls.sign_in_email_id.disable();
         this.userForm.controls.role_id.disable();
         this.userForm.controls.SameAsSubscriber.disable();
@@ -607,6 +629,7 @@ export class NewExaminerUserComponent implements OnInit {
       if (this.renderingForm.get(key).value && typeof (this.renderingForm.get(key).value) == 'string')
         this.renderingForm.get(key).setValue(this.renderingForm.get(key).value.trim())
     });
+    this.renderingForm.patchValue({ license_details: [] })
     if (this.renderingForm.invalid) {
       window.scrollTo(0, 0)
       return;
@@ -764,6 +787,62 @@ export class NewExaminerUserComponent implements OnInit {
 
   editAddress(data) {
     this.router.navigate(['/subscriber/location/edit-location', data.id, 2, this.examinerId])
+  }
+
+  billingOrgChange(e) {
+    if (e) {
+      this.billingProviderForm.get('first_name').setValidators([Validators.required]);
+      this.billingProviderForm.get('last_name').setValidators([Validators.required]);
+      this.billingProviderForm.get('billing_provider_name').setValidators([]);
+      this.billingProviderForm.get('billing_provider_name').disable();
+
+      this.billingProviderForm.get('first_name').enable();
+      this.billingProviderForm.get('last_name').enable();
+      this.billingProviderForm.get('middle_name').enable();
+      this.billingProviderForm.get('suffix').enable();
+
+    } else {
+      this.billingProviderForm.get('first_name').setValidators([]);
+      this.billingProviderForm.get('last_name').setValidators([]);
+      this.billingProviderForm.get('billing_provider_name').setValidators([Validators.required, Validators.maxLength(100)]);
+      this.billingProviderForm.get('billing_provider_name').enable();
+
+      this.billingProviderForm.get('first_name').disable();
+      this.billingProviderForm.get('last_name').disable();
+      this.billingProviderForm.get('middle_name').disable();
+      this.billingProviderForm.get('suffix').disable();
+    }
+
+    this.billingProviderForm.get('billing_provider_name').updateValueAndValidity();
+
+  }
+
+  renderingOrgChange(e) {
+    if (e) {
+      this.renderingForm.get('first_name').setValidators([Validators.required]);
+      this.renderingForm.get('last_name').setValidators([Validators.required]);
+      this.renderingForm.get('rendering_provider_name').setValidators([]);
+      this.renderingForm.get('rendering_provider_name').disable();
+
+      this.renderingForm.get('first_name').enable();
+      this.renderingForm.get('last_name').enable();
+      this.renderingForm.get('middle_name').enable();
+      this.renderingForm.get('suffix').enable();
+
+    } else {
+      this.renderingForm.get('first_name').setValidators([]);
+      this.renderingForm.get('last_name').setValidators([]);
+      this.renderingForm.get('rendering_provider_name').setValidators([Validators.required, Validators.maxLength(100)]);
+      this.renderingForm.get('rendering_provider_name').enable();
+
+      this.renderingForm.get('first_name').disable();
+      this.renderingForm.get('last_name').disable();
+      this.renderingForm.get('middle_name').disable();
+      this.renderingForm.get('suffix').disable();
+    }
+
+    this.renderingForm.get('rendering_provider_name').updateValueAndValidity();
+
   }
 
 
