@@ -26,10 +26,10 @@
               </mat-checkbox>
               <mat-icon [matMenuTriggerFor]="mailondemand" id="dropdown-list">arrow_drop_down</mat-icon>
               <mat-menu #mailondemand="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="allOrNone(true)">
                   <span>All</span>
                 </button>
-                <button mat-menu-item>
+                <button mat-menu-item (click)="allOrNone(false)">
                   <span>None</span>
                 </button>
               </mat-menu>
@@ -86,10 +86,10 @@
               </mat-checkbox>
               <mat-icon [matMenuTriggerFor]="recipients" id="dropdown-list">arrow_drop_down</mat-icon>
               <mat-menu #recipients="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="allOrNone1(true)">
                   <span>All</span>
                 </button>
-                <button mat-menu-item>
+                <button mat-menu-item (click)="allOrNone1(false)">
                   <span>None</span>
                 </button>
               </mat-menu>

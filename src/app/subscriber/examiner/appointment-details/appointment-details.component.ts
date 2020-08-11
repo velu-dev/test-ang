@@ -495,15 +495,15 @@ export class AppointmentDetailsComponent implements OnInit {
 
   }
   uploadFile() {
-    if (!this.selectedFile) {
-      this.errors.file.isError = true;
-      this.errors.file.error = "Please select file";
-      return;
-    }
     if (!this.documentType) {
       this.errors.doc_type.isError = true;
       this.errors.doc_type.error = "Please select Document type";
       // this.alertService.openSnackBar("Please select Document type", 'error');
+      return;
+    }
+    if (!this.selectedFile) {
+      this.errors.file.isError = true;
+      this.errors.file.error = "Please select file";
       return;
     }
     this.formData.append('file', this.selectedFile);
