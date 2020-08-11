@@ -208,6 +208,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
+        console.log(bills.data)
         this.billable_item.patchValue(bills.data);
       })
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
@@ -253,6 +254,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
         this.examiner_id = response.data.appointments.examiner_id;
         this.examinationDetails = response['data'];
+        console.log("examinationDetails", this.examinationDetails);
         this.getDocumentData();
       }, error => {
         this.dataSource = new MatTableDataSource([]);
@@ -333,43 +335,43 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isEditBillableItem = false;
 
   }
-  psychiatric(event) {
-    this.isChecked = event.checked;
-    this.modifiers = [];
-    if (event.checked) {
-      let modi = [5];
-      this.billable_item.value.exam_type.modifier_id.map(res => {
-        // if (res != 5) {
-        modi.push(res)
-        // }
-      })
-      this.modifiers = this.modifierList;
-      this.billable_item.patchValue({
-        exam_type: {
-          is_psychiatric: true,
-          modifier_id: modi,
-        }
-      })
-    } else {
-      let modi = [];
-      this.billable_item.value.exam_type.modifier_id.map(res => {
-        if (res != 5) {
-          modi.push(res)
-        }
-      })
-      this.billable_item.patchValue({
-        exam_type: {
-          modifier_id: modi,
-          is_psychiatric: false
-        }
-      })
-      // this.modifiers = [];
-      // this.modifierList.map(res => {
-      //   if (res.modifier_code != "96")
-      //     this.modifiers.push(res);
-      // })
-    }
-  }
+  // psychiatric(event) {
+  //   this.isChecked = event.checked;
+  //   this.modifiers = [];
+  //   if (event.checked) {
+  //     let modi = [5];
+  //     this.billable_item.value.exam_type.modifier_id.map(res => {
+  //       // if (res != 5) {
+  //       modi.push(res)
+  //       // }
+  //     })
+  //     this.modifiers = this.modifierList;
+  //     this.billable_item.patchValue({
+  //       exam_type: {
+  //         is_psychiatric: true,
+  //         modifier_id: modi,
+  //       }
+  //     })
+  //   } else {
+  //     let modi = [];
+  //     this.billable_item.value.exam_type.modifier_id.map(res => {
+  //       if (res != 5) {
+  //         modi.push(res)
+  //       }
+  //     })
+  //     this.billable_item.patchValue({
+  //       exam_type: {
+  //         modifier_id: modi,
+  //         is_psychiatric: false
+  //       }
+  //     })
+  //     // this.modifiers = [];
+  //     // this.modifierList.map(res => {
+  //     //   if (res.modifier_code != "96")
+  //     //     this.modifiers.push(res);
+  //     // })
+  //   }
+  // }
   selectedLanguage: any;
   modifyChange() {
     if (this.billable_item.value.exam_type.modifier_id)

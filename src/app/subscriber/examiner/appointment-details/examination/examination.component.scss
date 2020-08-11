@@ -22,5 +22,8 @@ th {
 .upload-file {
     .mat-form-field {
         width: 70%;
+        mat-error {
+            float: right;
+        }
     }
 }
