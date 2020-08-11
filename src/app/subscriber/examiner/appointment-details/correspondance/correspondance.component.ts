@@ -204,7 +204,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
   }
   download(url, name) {
-    saveAs(url, name);
+    saveAs(url, name, '_self');
   }
   expandId: any;
   openElement(element) {
@@ -212,6 +212,21 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.expandId = element.id;
     }
 
+  }
+
+  allOrNone(status) {
+    if (!status) {
+      this.selection.clear()
+    } else {
+      this.documents.data.forEach(row => this.selection.select(row))
+    }
+  }
+  allOrNone1(status) {
+    if (!status) {
+      this.selection1.clear()
+    } else {
+      this.recipients.data.forEach(row => this.selection1.select(row))
+    }
   }
   expandId1: any;
   openElement1(element) {
