@@ -71,23 +71,24 @@
             class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Upload the scanned copies of the documents used in the examination. Use the upload function
         to add the documents to this list.</p>
-      <div fxFLex="row wrap">
+      <div fxFLex="row wrap" class="w-100">
         <div fxFlex="50" class="upload-file">
           <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
           <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput readonly value="{{file | ellipsis:30}}" placeholder="No file chosen">
             <input type="file" #uploader multiple (change)="addFile($event)" hidden
               accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
-            <mat-error *ngIf="error.status">{{error.message}}</mat-error>
-            <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
+            <mat-hint class="w-100">Supported file formats: .pdf, .doc, .docx, .excel, .csv
+          <span *ngIf="error.status"><mat-error>{{error.message}}</mat-error></span>
+            </mat-hint>
           </mat-form-field>
         </div>
         <div fxFlex="20">
-          <button mat-raised-button class="filled-gray m-t-15" (click)="uploadFile()">Add</button>
+          <button mat-raised-button type="submit" class="filled-gray m-t-15" (click)="uploadFile()">Add</button>
         </div>
       </div>
 
-      <div class="user-detail vertical-fixed">
+      <div class="user-detail vertical-fixed m-t-20">
         <table mat-table [dataSource]="uploadedDocument" multiTemplateDataRows class="mat-elevation-z8 user-table"
           matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">

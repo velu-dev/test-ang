@@ -173,30 +173,35 @@ export class BillingCorrespondanceComponent implements OnInit {
   ngOnInit() {
   }
   downloadForms(sign) {
-    let signHide = false;
-    if (sign) {
-      signHide = sign;
+    if (this.selection.selected.length > 0) {
+      let signHide = false;
+      if (sign) {
+        signHide = sign;
+      }
+      let documents_ids: any = [];
+      let custom_documents_ids: any = [];
+      this.selection.selected.map(res => {
+        if (res.doc_type == "custom") {
+          custom_documents_ids.push(res.id)
+        } else {
+          documents_ids.push(res.id)
+        }
+      })
+      this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, { documents_ids: documents_ids, custom_documents_ids: custom_documents_ids, "hide_sign": signHide }).subscribe(res => {
+        if (res.status) {
+          this.alertService.openSnackBar(res.message, "success");
+          let data = res.data;
+          documents_ids = [];
+          custom_documents_ids = [];
+          this.selection.clear();
+          data.map(doc => {
+            this.download(doc.exam_report_file_url, doc.file_name);
+          })
+        } else {
+          this.alertService.openSnackBar(res.message, "error");
+        }
+      })
     }
-    let documents_ids: any = [];
-    let custom_documents_ids: any = [];
-    this.selection.selected.map(res => {
-      if (res.doc_type == "custom") {
-        custom_documents_ids.push(res.id)
-      } else {
-        documents_ids.push(res.id)
-      }
-    })
-    this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, { documents_ids: documents_ids, custom_documents_ids: custom_documents_ids, "hide_sign": signHide }).subscribe(res => {
-      if (res.status) {
-        this.alertService.openSnackBar(res.message, "success");
-        let data = res.data;
-        data.map(doc => {
-          this.download(doc.exam_report_file_url, doc.file_name);
-        })
-      } else {
-        this.alertService.openSnackBar(res.message, "error");
-      }
-    })
   }
   download(url, name) {
     saveAs(url, name);

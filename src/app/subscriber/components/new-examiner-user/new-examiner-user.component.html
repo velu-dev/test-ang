@@ -484,14 +484,14 @@
                                         <!-- Position Column -->
                                         <ng-container matColumnDef="license_number">
                                             <th mat-header-cell *matHeaderCellDef>License Number </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.state_license_number}}
+                                            <td mat-cell *matCellDef="let element"> {{element.license_number}}
                                             </td>
                                         </ng-container>
 
                                         <!-- Name Column -->
                                         <ng-container matColumnDef="license_state">
                                             <th mat-header-cell *matHeaderCellDef> License State </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.state_name}} </td>
+                                            <td mat-cell *matCellDef="let element"> {{getState(element.state_id)}}</td>
                                         </ng-container>
 
                                         <!-- Weight Column -->
