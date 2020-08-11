@@ -128,6 +128,8 @@ export class ExaminationComponent implements OnInit {
         }
         this.selectedFile = this.selectedFiles[i];
         this.file.push(this.selectedFiles[i].name);
+        this.error.status = false;
+        this.error.message = "";
       } else {
         //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
@@ -157,6 +159,7 @@ export class ExaminationComponent implements OnInit {
         formData = new FormData();
         this.file = "";
         this.getData();
+        this.error = { status: false, message: "" };
       }
       else {
         this.alertService.openSnackBar(res.message, "error")

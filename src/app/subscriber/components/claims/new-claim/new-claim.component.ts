@@ -859,9 +859,11 @@ export class NewClaimComponent implements OnInit {
       if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
         this.claimant.get(key).setValue(this.claimant.get(key).value.trim());
     });
+    console.log("cxczczcxcz", this.claimant.invalid)
     if (this.claimant.invalid) {
       return;
     }
+    console.log("claimantChanges", this.claimantChanges)
     if (this.claimantChanges) {
       // if (!this.claimantChanges) {
       //   if (status == 'next') {
@@ -923,10 +925,10 @@ export class NewClaimComponent implements OnInit {
           this.stepper.previous();
         })
       } else {
-        console.log(this.claimant.value.date_of_birth)
         let data = this.claimant.value;
         data['id'] = this.claimant_id;
         if (this.claimantChanges)
+        console.log("update")
           this.claimService.updateClaimant(data).subscribe(res => {
             this.alertService.openSnackBar(res.message, "success");
             this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
