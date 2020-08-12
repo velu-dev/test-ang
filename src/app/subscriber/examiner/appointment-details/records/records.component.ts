@@ -138,6 +138,8 @@ export class RecordsComponent implements OnInit {
   formData = new FormData()
   file: any = [];
   addFile(event) {
+    this.selectedFiles = null
+    this.file = []
     this.selectedFiles = event.target.files;
     this.selectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
@@ -264,6 +266,18 @@ export class RecordsComponent implements OnInit {
   }
 
   pageNumberSave(element) {
+    if (!(element.page_number > 0 && element.page_number <= 10000)) {
+      this.alertService.openSnackBar("Page number should be  1 to 10000", 'error');
+      let data = this.dataSource.data;
+      data.map(data => {
+        if (data.document_id == element.document_id) {
+          data.isEdit = false;
+          data.page_number = data.oldPage
+        }
+      })
+      this.dataSource = new MatTableDataSource(data)
+      return
+    }
     let page_data = {
       document_id: element.document_id,
       bill_item_id: this.paramsId.billId,

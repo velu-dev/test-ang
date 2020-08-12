@@ -323,7 +323,6 @@ export class NewExaminerUserComponent implements OnInit {
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
       this.licenseData = res.rendering_provider.license_details != null ? res.rendering_provider.license_details : []
-      console.log(this.licenseData)
       //this.getLocationDetails();
       this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
       if (res.service_location != null) {
@@ -629,6 +628,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
       this.alertService.openSnackBar("Billing provider updated successfully!", 'success');
+      this.updateFormData(this.examinerId)
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -660,6 +660,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.renderingForm.value.signature = sign;
     this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe(render => {
       this.alertService.openSnackBar("Rendering provider updated successfully!", 'success');
+      this.updateFormData(this.examinerId)
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -669,7 +670,7 @@ export class NewExaminerUserComponent implements OnInit {
   openLicense(data?: any, index?: number) {
     const dialogRef = this.dialog.open(LicenseDialog, {
       width: '800px',
-      data: { states: this.states, details: data }
+      data: { states: this.states, details: data, editStatus: this.editStatus }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -732,15 +733,13 @@ export class NewExaminerUserComponent implements OnInit {
       console.log(result);
       if (result['data']) {
         if (!e.id) {
-          let data = this.licenceDataSource.data;
-          data.splice(i, 1);
-          this.licenceDataSource = new MatTableDataSource(data)
+          this.licenseData.splice(i, 1);
+          this.licenceDataSource = new MatTableDataSource(this.licenseData)
           return
         }
         this.userService.deleteLicense(e.id).subscribe(license => {
-          let data = this.licenceDataSource.data;
-          data.splice(i, 1);
-          this.licenceDataSource = new MatTableDataSource(data)
+          this.licenseData.splice(i, 1);
+          this.licenceDataSource = new MatTableDataSource(this.licenseData)
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })

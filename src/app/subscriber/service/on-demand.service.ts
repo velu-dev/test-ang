@@ -71,4 +71,8 @@ export class OnDemandService {
   listUploadedDocs(claim_id, bill_item_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.listExaminationUploadedDocs + claim_id + "/" + bill_item_id)
   }
+
+  seedData(data): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
+  }
 }

@@ -1,6 +1,6 @@
 <div class="dialog">
     <mat-card-header class="model-header">
-        <div class="content-wrapper-main-title">{{ licenseForm.value.id ? 'Edit License' : 'Add License'}}</div>
+        <div class="content-wrapper-main-title">{{ licenseForm.value.id || data?.editStatus? 'Edit License' : 'Add License'}}</div>
         <span class="spacer"></span>
         <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
     </mat-card-header>

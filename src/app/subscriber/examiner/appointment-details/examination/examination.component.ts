@@ -110,6 +110,13 @@ export class ExaminationComponent implements OnInit {
   download(url, name) {
     saveAs(url, name);
   }
+  allOrNone(status) {
+    if (!status) {
+      this.selection.clear()
+    } else {
+      this.examinationDocuments.data.forEach(row => this.selection.select(row))
+    }
+  }
   selectedFile: File;
   selectedFiles: FileList;
   file: any = [];
@@ -167,7 +174,7 @@ export class ExaminationComponent implements OnInit {
     })
   }
   downloadDocument(element) {
-    saveAs(element.exam_report_file_url, element.file_name);
+    saveAs(element.exam_report_file_url, element.file_name, '_self');
   }
   removeDocument(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
