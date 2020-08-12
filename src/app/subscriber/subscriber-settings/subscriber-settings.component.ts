@@ -206,7 +206,7 @@ export class SubscriberSettingsComponent implements OnInit {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null;
       this.isSubmit = false;
-        this.intercom.setUser(true);
+      this.intercom.setUser(true);
     }, error => {
       this.isSubmit = false;
       console.log(error.error.message)
@@ -248,7 +248,7 @@ export class SubscriberSettingsComponent implements OnInit {
   }
 
   cancel() {
-    this._location.back();
+    this.router.navigate(["/"])
   }
 
   numberOnly(event): boolean {
@@ -269,7 +269,7 @@ export class SubscriberSettingsComponent implements OnInit {
         this.fileUpload.nativeElement.value = "";
         //this.alertService.openSnackBar("This file too long", 'error');
         let title = 'Selected Signature File : "' + fileName + '" file size is ' + FileSize + 'KB is too large.'
-        this.openDialog(title,'File size should be upto 500KB !')
+        this.openDialog(title, 'File size should be upto 500KB !')
         return;
       }
       this.selectedFile = event.target.files[0].name;
@@ -278,7 +278,7 @@ export class SubscriberSettingsComponent implements OnInit {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
       //this.alertService.openSnackBar("This file type is not accepted", 'error');
-      this.openDialog('This file type is not accepted','Supported File Formats are JPEG/JPG/PNG !')
+      this.openDialog('This file type is not accepted', 'Supported File Formats are JPEG/JPG/PNG !')
     }
   }
 

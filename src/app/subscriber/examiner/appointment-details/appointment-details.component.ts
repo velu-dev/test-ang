@@ -12,6 +12,7 @@ import { ClaimService } from '../../service/claim.service';
 import { Observable } from 'rxjs';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment';
+import { NGXLogger } from 'ngx-logger';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -116,7 +117,8 @@ export class AppointmentDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
-    private claimService: ClaimService
+    private claimService: ClaimService,
+    private logger: NGXLogger
   ) {
     this.loadForms();
     this.claimService.seedData("intake_contact_type").subscribe(res => {
@@ -153,50 +155,14 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
+        this.logger.info("dsdfdsfdsfs", bills);
+        this.logger.error(bills);
+        this.logger.warn(bills)
         this.billableData = bills.data;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         this.claimService.getClaim(this.claim_id).subscribe(claim => {
           this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(procedure => {
             this.procuderalCodes = procedure.data;
-            // if (this.isChecked) {
-            //   let modi = [5];
-            //   this.billable_item.value.exam_type.modifier_id.map(res => {
-            //     modi.push(res)
-            //   })
-            //   this.billable_item.patchValue({
-            //     exam_type: {
-            //       is_psychiatric: true,
-            //       modifier_id: modi,
-            //     }
-            //   })
-            //   this.procuderalCodes.map(proc => {
-            //     if (proc.id == claim.data.exam_type.procedure_type) {
-            //       proc.modifier.map(modifier => {
-            //         if (modifier.modifier_code != "96")
-            //           this.modifiers.push(modifier);
-            //       })
-            //     }
-            //   })
-            //   // this.modifiers = this.modifierList;
-            // } else {
-            //   let modi = []
-            //   this.procuderalCodes.map(proc => {
-            //     if (proc.id == claim.data.exam_type.procedure_type) {
-            //       proc.modifier.map(modifier => {
-            //         if (modifier.modifier_code != "96")
-            //           this.modifiers.push(modifier);
-            //         modi.push(modifier.id)
-            //       })
-            //     }
-            //   })
-            //   this.billable_item.patchValue({
-            //     exam_type: {
-            //       is_psychiatric: false,
-            //       modifier_id: modi,
-            //     }
-            //   })
-
-            // }
           })
         })
         this.isBillabbleItemLoading = false;
@@ -208,7 +174,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
-        console.log(bills.data)
+        this.logger.log(bills.data)
         this.billable_item.patchValue(bills.data);
       })
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
@@ -254,7 +220,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
         this.examiner_id = response.data.appointments.examiner_id;
         this.examinationDetails = response['data'];
-        console.log("examinationDetails", this.examinationDetails);
+        this.logger.log("examinationDetails", this.examinationDetails);
         this.getDocumentData();
       }, error => {
         this.dataSource = new MatTableDataSource([]);

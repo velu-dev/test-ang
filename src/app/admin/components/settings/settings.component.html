@@ -65,7 +65,8 @@
                                     </mat-form-field>
 
                                     <div class="text-center w-100 m-t-10 m-b-10">
-                                        <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
+                                        <button mat-stroked-button type="button" (click)="cancel()"
+                                            class="outline-danger">Cancel</button>
                                         <button mat-stroked-button class="m-l-10 outline-success"> Save </button>
                                     </div>
 
@@ -124,8 +125,9 @@
                                     </mat-form-field>
 
                                     <div class="text-center w-100 m-t-10 m-b-10">
-                                        <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
-                                        <button mat-stroked-button  class="outline-success m-l-10">Save </button>
+                                        <button mat-stroked-button type="button" (click)="cancel()"
+                                            class="outline-danger">Cancel</button>
+                                        <button mat-stroked-button class="outline-success m-l-10">Save </button>
                                     </div>
 
                                     <!-- <button mat-raised-button color="primary" class="m-t-5">Save Changes</button> -->

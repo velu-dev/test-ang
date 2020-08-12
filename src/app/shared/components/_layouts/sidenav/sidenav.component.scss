@@ -9,6 +9,11 @@ mat-sidenav-container {
       background-color: $primary-dark;
       color: $white;
       box-shadow: $box-shadow-3;
+      img {
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
     .switched_account {
       font-size: $font-size-7;
@@ -73,6 +78,7 @@ mat-sidenav-container {
         i {
           font-size: $font-size-9;
           min-width: 25px;
+          text-align: center;
           color: $white;
           opacity: 0.8;
         }

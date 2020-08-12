@@ -26,6 +26,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { EventEmitter } from 'protractor';
 import * as moment from 'moment';
+import { NGXLogger } from 'ngx-logger';
 
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -211,7 +212,8 @@ export class NewClaimComponent implements OnInit {
     public dialog: MatDialog,
     public cookieService: CookieService,
     private breakpointObserver: BreakpointObserver,
-    private _location: Location,) {
+    private _location: Location,
+    private logger: NGXLogger) {
 
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -224,9 +226,9 @@ export class NewClaimComponent implements OnInit {
           map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
         );
     })
-    console.log(this.router.url)
+    this.logger.log(this.router.url)
     if (this.router.url === "/subscriber/claims/new-claim") {
-      console.log("dsdsdss")
+      this.logger.log("dsdsdss")
       this.isRemoveSearchRemove = true;
       this.isNewClaim = true;
       this.addNewClaimant = true;
@@ -240,7 +242,7 @@ export class NewClaimComponent implements OnInit {
 
         this.claimService.getSingleClaimant(this.claimant_id).subscribe(claimant => {
           if (claimant.status) {
-            console.log("claimant", claimant)
+            this.logger.log("claimant", claimant)
             this.isRemoveSearchRemove = true;
             this.isClaimantCreated = true;
             this.searchStatus = false;
@@ -271,6 +273,7 @@ export class NewClaimComponent implements OnInit {
                 date_of_birth: claimant['data'][0].date_of_birth
               }
             })
+            this.stepper.next();
           }
         })
       }
@@ -420,13 +423,13 @@ export class NewClaimComponent implements OnInit {
   }
   isLoading = false;
   advanceTabChanged(event) {
-    console.log(event.index)
+    this.logger.log(event.index)
     this.tabIndex = event.index;
     this.searchStatus = false;
   }
   isClaimantEdit = false;
   selectClaimant(option) {
-    console.log(option)
+    this.logger.log(option)
     this.claimant_id = option.id;
     this.isClaimantEdit = true;
     this.claimant.reset();
@@ -645,7 +648,7 @@ export class NewClaimComponent implements OnInit {
   }
 
   advanceSearchSubmit(auto) {
-    console.log("advanceSearch", this.advanceSearch.value)
+    this.logger.log("advanceSearch", this.advanceSearch.value)
     let data = this.advanceSearch.value;
     data['isadvanced'] = this.searchStatus;
     this.claimService.searchClaimant(data).subscribe(res => {
@@ -714,7 +717,7 @@ export class NewClaimComponent implements OnInit {
     if (this.iseams_entry) {
       claim['claim_details'].iseams_entry = this.iseams_entry;
     }
-    console.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
+    this.logger.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
     if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
         let examtype = "";
@@ -743,7 +746,7 @@ export class NewClaimComponent implements OnInit {
         this.claimChanges = false;
         this.isClaimCreated = true;
       }, error => {
-        console.log(error)
+        this.logger.log(error)
         this.isClaimCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -756,7 +759,7 @@ export class NewClaimComponent implements OnInit {
             examtype = exam.exam_type_code + " - " + exam.exam_name;
           }
         })
-        console.log(res.data)
+        this.logger.log(res.data)
         this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: examtype, wcab_number: res.data.wcab_number }
         this.alertService.openSnackBar(res.message, 'success');
         if (status == 'next') {
@@ -859,11 +862,11 @@ export class NewClaimComponent implements OnInit {
       if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
         this.claimant.get(key).setValue(this.claimant.get(key).value.trim());
     });
-    console.log("cxczczcxcz", this.claimant.invalid)
+    this.logger.log("cxczczcxcz", this.claimant.invalid)
     if (this.claimant.invalid) {
       return;
     }
-    console.log("claimantChanges", this.claimantChanges)
+    this.logger.log("claimantChanges", this.claimantChanges)
     if (this.claimantChanges) {
       // if (!this.claimantChanges) {
       //   if (status == 'next') {
@@ -909,7 +912,7 @@ export class NewClaimComponent implements OnInit {
           this.isClaimantEdit = true;
           this.claimantChanges = false;
           if (status == 'next') {
-            console.log("check")
+            this.logger.log("check")
 
             this.stepper.next();
           } else if (status == 'save') {
@@ -919,7 +922,7 @@ export class NewClaimComponent implements OnInit {
           }
 
         }, error => {
-          console.log(error)
+          this.logger.log(error)
           this.isClaimantCreated = false;
           this.alertService.openSnackBar(error.error.message, 'error');
           this.stepper.previous();
@@ -928,7 +931,7 @@ export class NewClaimComponent implements OnInit {
         let data = this.claimant.value;
         data['id'] = this.claimant_id;
         if (this.claimantChanges)
-        console.log("update")
+        this.logger.log("update")
           this.claimService.updateClaimant(data).subscribe(res => {
             this.alertService.openSnackBar(res.message, "success");
             this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
@@ -988,7 +991,7 @@ export class NewClaimComponent implements OnInit {
       // })
       let arrData = [];
       // if (this.injuryInfo['body_part_id'] != null)
-      console.log(this.injuryInfo)
+      this.logger.log(this.injuryInfo)
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
@@ -1010,7 +1013,7 @@ export class NewClaimComponent implements OnInit {
     } else {
       let arrData = [];
       // if (this.injuryInfo['body_part_id'] != null)
-      console.log(this.injuryInfo)
+      this.logger.log(this.injuryInfo)
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
@@ -1026,7 +1029,7 @@ export class NewClaimComponent implements OnInit {
       for (var j in arrData) {
         this.injuryInfodata.push(arrData[j])
       }
-      console.log("injuryInfodata", this.injuryInfodata)
+      this.logger.log("injuryInfodata", this.injuryInfodata)
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     }
@@ -1073,7 +1076,7 @@ export class NewClaimComponent implements OnInit {
     if (this.emasSearchInput.value != "") {
       var adjValue = this.emasSearchInput.value.replace(/\s/g, '');
       if (adjValue.substring(0, 3).toLowerCase() == 'adj') {
-        console.log(adjValue);
+        this.logger.log(adjValue);
       } else {
         this.alertService.openSnackBar("EAMS Number Not Valid", "error")
         this.eamsStatus = true;
@@ -1148,7 +1151,7 @@ export class NewClaimComponent implements OnInit {
   isAddressSelected = false;
   selectedExaminarAddress: any = {};
   changeExaminarAddress(address) {
-    console.log(address)
+    this.logger.log(address)
     this.billable_item.patchValue({
       appointment: {
         examiner_service_location_id: address.address_id
@@ -1239,7 +1242,7 @@ export class NewClaimComponent implements OnInit {
       if (container.controls.hasOwnProperty(controlKey)) {
         if (container.controls[controlKey].errors) {
           errorCount += Object.keys(container.controls[controlKey].errors).length;
-          console.log(errorCount);
+          this.logger.log(errorCount);
         }
       }
     }
@@ -1264,7 +1267,7 @@ export class NewClaimComponent implements OnInit {
         return;
       }
       this.selectedFile = event.target.files[0];
-      console.log(" this.selectedFile", this.selectedFile);
+      this.logger.log(" this.selectedFile", this.selectedFile);
       this.file = event.target.files[0].name;
     } else {
       this.selectedFile = null;
@@ -1277,8 +1280,8 @@ export class NewClaimComponent implements OnInit {
   note: string = null;
   documents_ids = [];
   correspondFormSubmit() {
-    // console.log(this.correspondForm.value)
-    // console.log(this.claim.value.claim_details.id)
+    // this.logger.log(this.correspondForm.value)
+    // this.logger.log(this.claim.value.claim_details.id)
     // if (this.correspondForm.invalid) {
     //   this.correspondForm.get('note').markAsTouched();
     //   this.correspondForm.get('file').markAsTouched();
@@ -1307,7 +1310,7 @@ export class NewClaimComponent implements OnInit {
       if (!this.claim.value.claim_details.id) {
         this.documents_ids.push(data['data'].documents_id)
       }
-      console.log(this.documents_ids);
+      this.logger.log(this.documents_ids);
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
       //this.correspondForm.reset();
@@ -1315,7 +1318,7 @@ export class NewClaimComponent implements OnInit {
       this.note = null;
       this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
-      console.log(error);
+      this.logger.log(error);
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -1346,7 +1349,7 @@ export class NewClaimComponent implements OnInit {
           this.correspondenceSource = new MatTableDataSource(tabledata);
           this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
-          console.log(error);
+          this.logger.log(error);
         })
       }
     })
@@ -1421,7 +1424,7 @@ export class NewClaimComponent implements OnInit {
       if (this.claim.get(key).status == 'INVALID') {
         Object.keys(this.claim.get(key)['controls']).map(res => {
           if (this.claim.get(key)['controls'][res].status == 'INVALID' && this.claim.get(key)['controls'][res].touched) {
-            console.log(this.claim.get(key)['controls'])
+            this.logger.log(this.claim.get(key)['controls'])
             this.errors[key] = this.errors[key] + 1;
           }
         })
@@ -1429,10 +1432,10 @@ export class NewClaimComponent implements OnInit {
     });
   }
   changeDate(event) {
-    console.log(event)
+    this.logger.log(event)
   }
   updateCalcs(event) {
-    console.log(event)
+    this.logger.log(event)
   }
   claimantDateOfBirth: any;
   numberOnly(event): boolean {

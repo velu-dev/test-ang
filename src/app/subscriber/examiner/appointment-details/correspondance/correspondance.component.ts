@@ -15,6 +15,7 @@ import { formatDate } from '@fullcalendar/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { NGXLogger } from 'ngx-logger';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -53,7 +54,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   claim_id: any;
   billableId: any;
   isLoading: boolean = false;
-  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
+  constructor( private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
       this.billableId = params.billId;
@@ -289,6 +290,7 @@ export class CustomDocuments {
   billable_id: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(
+    private logger: NGXLogger,
     public dialogRef: MatDialogRef<CustomDocuments>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private alertService: AlertService, private onDemandService: OnDemandService) {
     dialogRef.disableClose = true;
@@ -317,7 +319,7 @@ export class CustomDocuments {
         }
         this.selectedFile = this.selectedFiles[i];
         this.file.push(this.selectedFiles[i].name);
-        console.log(this.file)
+        this.logger.info(this.file)
       } else {
         //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
