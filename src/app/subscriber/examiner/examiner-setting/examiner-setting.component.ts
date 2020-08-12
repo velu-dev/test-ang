@@ -36,7 +36,7 @@ export class ExaminerSettingComponent implements OnInit {
   first_name: string;
   specialtyList: any;
   taxonomyList: any;
-  isSubmitted= false;
+  isSubmitted = false;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(
     private spinnerService: NgxSpinnerService,
@@ -77,7 +77,7 @@ export class ExaminerSettingComponent implements OnInit {
       new_password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])]
     })
-    
+
     this.userForm = this.formBuilder.group({
       id: [''],
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -123,7 +123,7 @@ export class ExaminerSettingComponent implements OnInit {
     this.userForm.value.signature = sign;
     this.userService.updateSubsciberSetting(this.userForm.value).subscribe(res => {
       this.alertService.openSnackBar("Profile updated successfully", 'success');
-      this.signData = res.data.signature ?  'data:image/png;base64,' + res.data.signature : null;
+      this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null;
       this.isSubmit = false;
       if (this.first_name != this.userForm.value.first_name) {
         this.first_name = this.userForm.value.first_name;
@@ -168,9 +168,11 @@ export class ExaminerSettingComponent implements OnInit {
     })
   }
 
- 
 
-  
+  cancel() {
+    this.router.navigate(["/"])
+  }
+
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -190,7 +192,7 @@ export class ExaminerSettingComponent implements OnInit {
         this.fileUpload.nativeElement.value = "";
         //this.alertService.openSnackBar("This file too long", 'error');
         let title = 'Selected Signature File : "' + fileName + '" file size is ' + FileSize + 'KB is too large.'
-        this.openDialog(title,'File size should be upto 500KB !')
+        this.openDialog(title, 'File size should be upto 500KB !')
         return;
       }
       this.selectedFile = event.target.files[0].name;
@@ -199,7 +201,7 @@ export class ExaminerSettingComponent implements OnInit {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
       //this.alertService.openSnackBar("This file type is not accepted", 'error');
-      this.openDialog('This file type is not accepted','Supported File Formats are JPEG/JPG/PNG !')
+      this.openDialog('This file type is not accepted', 'Supported File Formats are JPEG/JPG/PNG !')
     }
   }
 
@@ -210,8 +212,8 @@ export class ExaminerSettingComponent implements OnInit {
     });
   }
 
-  selectedFile:any = null;
-  signData:any = null;
+  selectedFile: any = null;
+  signData: any = null;
 
   openSign(e): void {
     const dialogRef = this.dialog.open(SignPopupComponent, {
@@ -226,7 +228,7 @@ export class ExaminerSettingComponent implements OnInit {
       if (result == null) {
         this.selectedFile = null
         this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
-      }else{
+      } else {
         this.signData = result;
         this.userForm.patchValue({ is_new_signature: true })
       }
@@ -234,7 +236,7 @@ export class ExaminerSettingComponent implements OnInit {
     });
   }
 
-  removeSign(){
+  removeSign() {
     this.signData = null;
     this.selectedFile = null;
   }
