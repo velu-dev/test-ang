@@ -124,4 +124,7 @@ export class SettingsComponent implements OnInit {
       })
     })
   }
+  cancel() {
+    this.router.navigate(["/"])
+  }
 }

@@ -116,6 +116,7 @@ export class RecordsComponent implements OnInit {
       this.dataSoruceIn = new MatTableDataSource([]);
       this.alertService.openSnackBar(error.error.message, 'error');
     })
+    this.allOrNone(false);
   }
 
   expandIdOut: any;

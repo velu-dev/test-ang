@@ -668,12 +668,14 @@ export class NewExaminerUserComponent implements OnInit {
   licenseData: any = [];
   editStatus: boolean = false;
   openLicense(data?: any, index?: number) {
+    
     const dialogRef = this.dialog.open(LicenseDialog, {
       width: '800px',
       data: { states: this.states, details: data, editStatus: this.editStatus }
     });
-
+    
     dialogRef.afterClosed().subscribe(result => {
+     
       if (result) {
         // this.userService.createLicense(this.examinerId, result).subscribe(license => {
         //   let data = this.licenceDataSource.data;
@@ -692,25 +694,57 @@ export class NewExaminerUserComponent implements OnInit {
         //     return;
         //   }
         // })
+        console.log(result);
+        console.log(this.editStatus)
+        for (var i in this.licenseData) {
+          if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
+            this.alertService.openSnackBar('Already added', 'error');
+            this.editStatus = false;
+            return;
+          }
+        }
         if (!result.id) {
           if (this.editStatus) {
+            // for (var i in this.licenseData) {
+            //   if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
+            //     this.alertService.openSnackBar('Already added', 'error');
+            //     this.editStatus = false;
+            //     return;
+            //   }
+            // }
             this.licenseData.splice(index, 1);
-            this.editStatus = false
+            //this.editStatus = false
           } else {
-            for (var i in this.licenseData) {
-              if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
-                this.alertService.openSnackBar('Already added', 'error');
-                return;
-              }
-            }
+            // for (var i in this.licenseData) {
+            //   if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
+            //     this.alertService.openSnackBar('Already added', 'error');
+            //     this.editStatus = false;
+            //     return;
+            //   }
+            // }
           }
         } else {
+          // if (this.editStatus) {
+          //   for (var i in this.licenseData) {
+          //     if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
+          //       this.alertService.openSnackBar('Already added', 'error');
+          //       this.editStatus = false;
+          //       return;
+          //     }
+          //   }
+          //   this.licenseData.splice(index, 1);
+          // }else{ 
+          // this.licenseData.splice(index, 1);
+          // }
+
           this.licenseData.splice(index, 1);
         }
+        this.editStatus = false;
         this.licenseData.push(result);
         this.licenceDataSource = new MatTableDataSource(this.licenseData)
         console.log(this.licenseData)
       }
+
     });
   }
 
