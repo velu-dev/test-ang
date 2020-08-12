@@ -64,9 +64,8 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
           <tr mat-footer-row *matFooterRowDef="['custom']; sticky: true"></tr>
-
-
         </table>
+        <app-nodata *ngIf="documents?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
@@ -121,8 +120,8 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns1;" (click)="selection1.toggle(row)"></tr>
           <tr mat-footer-row *matFooterRowDef="['custom_recipient']; sticky: true"></tr>
-
         </table>
+        <app-nodata *ngIf="recipients?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
   </div>

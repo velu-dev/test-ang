@@ -47,6 +47,7 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
           </tr>
         </table>
+        <app-nodata *ngIf="examinationDocuments?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
   </div>
@@ -131,6 +132,7 @@
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
         </table>
+        <app-nodata *ngIf="uploadedDocument?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
   </div>
