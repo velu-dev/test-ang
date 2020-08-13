@@ -18,7 +18,8 @@
                 </mat-form-field>
             </div>
             <div fxFlex="20" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                <button mat-raised-button class="filled-gray m-t-25" (click)="uploadFile()">Add</button>
+                <button mat-raised-button class="filled-gray m-t-25" [disabled]="isUploading"
+                    (click)="uploadFile()">Add</button>
             </div>
         </div>
     </mat-card-content>

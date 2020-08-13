@@ -58,15 +58,15 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>First Name*</mat-label>
-                                <input matInput placeholder="First name" formControlName="first_name"
+                                <input matInput placeholder="First Name" formControlName="first_name"
                                     autocomplete="off">
                                 <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidfirstname}}</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Middle Name</mat-label>
-                                <input matInput placeholder="Middle Name" formControlName="middle_name"
+                                <mat-label>Middle Name/MI</mat-label>
+                                <input matInput placeholder="Middle Name/MI" formControlName="middle_name"
                                     autocomplete="off">
                                 <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidmiddlename}}</mat-error>
                             </mat-form-field>
@@ -74,7 +74,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Last Name*</mat-label>
-                                <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+                                <input matInput placeholder="Last Name" formControlName="last_name" autocomplete="off">
                                 <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidlastname}}</mat-error>
                             </mat-form-field>
 
@@ -215,7 +215,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false"
+                                <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
                                     formControlName="zip_code" autocomplete="off">
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid zip code</mat-error>
                             </mat-form-field>
@@ -632,7 +632,7 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false"
+                                <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
                                     formControlName="zip_code" autocomplete="off">
                                 <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
@@ -732,7 +732,7 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false"
+                                <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
                                     formControlName="zip_code" autocomplete="off">
                                 <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
@@ -831,7 +831,7 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Zip Code</mat-label>
-                                <input matInput placeholder="Zip code" mask="9{10}" [dropSpecialCharacters]="false"
+                                <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
                                     formControlName="zip_code" autocomplete="off">
                                 <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
@@ -877,7 +877,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                 fxFlex.xs="100">
                                 <mat-label>Office Name</mat-label>
-                                <input matInput placeholder="Please select office name" aria-label="Office Name"
+                                <input matInput placeholder="Please Select Office Name" aria-label="Office Name"
                                     [matAutocomplete]="deuAuto" [formControl]="deuCtrl">
                                 <mat-autocomplete #deuAuto="matAutocomplete">
                                     <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)"
@@ -1134,7 +1134,7 @@
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
                                     <mat-label>Intake Caller</mat-label>
-                                    <input matInput placeholder="Intake caller" formControlName="caller_name"
+                                    <input matInput placeholder="Intake Caller" formControlName="caller_name"
                                         autocomplete="off">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"

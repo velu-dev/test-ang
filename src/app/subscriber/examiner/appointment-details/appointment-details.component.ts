@@ -57,7 +57,7 @@ export class AppointmentDetailsComponent implements OnInit {
   collapsed = false;
   docCollapsed = false;
   noteCollapsed = false;
-  documentType: any;
+  documentType: any = null;
   documentList: any;
   documentTabData: any;
   filterValue: String;
@@ -439,7 +439,14 @@ export class AppointmentDetailsComponent implements OnInit {
   errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   addFile(event) {
     this.selectedFile = null;
-    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
+    //let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
+
+    let fileTypes;
+    if (this.documentType != 7) {
+      fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv'];
+    } else {
+      fileTypes = ['mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
+    }
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
@@ -614,7 +621,14 @@ export class AppointmentDetailsComponent implements OnInit {
       exam_type: { modifier_id: [] }
     })
   }
+
+  docChange(e) {
+    this.fileUpload.nativeElement.value = "";
+    this.selectedFile = null;
+    this.file = null;
+  }
 }
+
 @Component({
   selector: 'claimant-dialog',
   templateUrl: 'claimant-dialog.html',
