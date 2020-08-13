@@ -154,11 +154,11 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.route.params.subscribe(params_res => {
       if (params_res.status == 1) {
-        this.tabIndex = 0
-        setTimeout(() => {
+        //this.tabIndex = 0
+       // setTimeout(() => {
           this.tabIndex = 4
           this.tab = 4
-        }, 1000);
+       // }, 1000);
 
       }
     })
