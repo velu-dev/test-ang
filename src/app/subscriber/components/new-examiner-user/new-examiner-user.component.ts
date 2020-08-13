@@ -226,17 +226,21 @@ export class NewExaminerUserComponent implements OnInit {
       console.log("error", error)
     })
 
-    this.addresssearch.valueChanges.subscribe(res => {
-    if (res != null) {
-        //if (res.length > 2)
-          this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
-            this.filteredOptions = value;
-          })
-      } else {
-        //this.filteredOptions = null;
-     }
-    })
-
+    // this.addresssearch.valueChanges.subscribe(res => {
+    // if (res != null) {
+    //     //if (res.length > 2)
+    //       this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
+    //         this.filteredOptions = value;
+    //       })
+    //   } else {
+    //     //this.filteredOptions = null;
+    //  }
+    // })
+    this.filteredOptions = this.addresssearch.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filterLocation(value))
+    );
 
   }
 
@@ -340,10 +344,23 @@ export class NewExaminerUserComponent implements OnInit {
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     
       this.examinerService.searchAddress({ basic_search: '', isadvanced: false }, this.examinerId).subscribe(value => {
-        this.filteredOptions = value;
+        this.locationDataSearch = value.data;
+        console.log(this.locationDataSearch)
+        
       })
     })
   }
+
+  locationDataSearch:any;
+  private _filterLocation(value: string): string[] {
+    // if (typeof (value) == 'number') {
+    //   return;
+    // }
+    const filterValue = value == undefined ? '' : value && value.toLowerCase();
+    return this.locationDataSearch.filter(option => option.street1.toLowerCase().includes(filterValue) || option.street2.toLowerCase().includes(filterValue)
+    || option.city.toLowerCase().includes(filterValue) || option.state_name.toLowerCase().includes(filterValue) || option.zip_code.includes(filterValue));
+  }
+
 
   getLocationDetails() {
 
