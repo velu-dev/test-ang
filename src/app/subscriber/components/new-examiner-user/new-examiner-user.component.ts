@@ -227,14 +227,14 @@ export class NewExaminerUserComponent implements OnInit {
     })
 
     this.addresssearch.valueChanges.subscribe(res => {
-      if (res != null) {
-        if (res.length > 2)
+    if (res != null) {
+        //if (res.length > 2)
           this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
             this.filteredOptions = value;
           })
       } else {
-        this.filteredOptions = null;
-      }
+        //this.filteredOptions = null;
+     }
     })
 
 
@@ -338,6 +338,10 @@ export class NewExaminerUserComponent implements OnInit {
         return (data.service && data.service.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.npi_number && data.npi_number.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    
+      this.examinerService.searchAddress({ basic_search: '', isadvanced: false }, this.examinerId).subscribe(value => {
+        this.filteredOptions = value;
+      })
     })
   }
 
