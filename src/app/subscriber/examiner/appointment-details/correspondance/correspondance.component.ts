@@ -54,7 +54,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   claim_id: any;
   billableId: any;
   isLoading: boolean = false;
-  constructor( private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
+  constructor(private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
       this.billableId = params.billId;
@@ -82,9 +82,9 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
   }
   getData() {
-    this.isLoading = true;
+    this.selection.clear();
+    this.selection1.clear();
     this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
-      this.isLoading = false;
       this.documents = new MatTableDataSource(res.documets);
       this.recipients = new MatTableDataSource(res.recipient);
     })
@@ -134,7 +134,9 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
     return `${this.selection1.isSelected(row) ? 'deselect' : 'select'} row ${row.recipient_type + 1}`;
   }
+  isEditRecipient: boolean = false;
   editRecipient(element) {
+    this.isEditRecipient = true;
     const dialogRef = this.dialog.open(CustomRecipient, {
       width: '800px',
       data: { claim_id: this.claim_id, billable_id: this.billableId, data: element, isEdit: true }
@@ -153,9 +155,17 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.getData();
-      }
+      this.onDemandService.uploadDocument(result).subscribe(res => {
+        if (res.status) {
+          this.alertService.openSnackBar(res.message, "success");
+          this.getData();
+        } else {
+          this.alertService.openSnackBar(res.message, "error");
+        }
+      })
+      // if (result) {
+      //   this.getData();
+      // }
       // this.animal = result;
     });
   }
@@ -239,7 +249,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   removeCustomDocument(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: "delete" }
+      data: { name: "delete", address: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -328,12 +338,13 @@ export class CustomDocuments {
     }
 
   }
+  isUploading = false;
   uploadFile() {
     if (!this.selectedFile) {
       this.alertService.openSnackBar("Please select file", 'error');
       return;
     }
-
+    this.isUploading = true;
     let formData = new FormData()
     formData.append("document_category_id", "10");
     formData.append('claim_id', this.claim_id);
@@ -341,14 +352,7 @@ export class CustomDocuments {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       formData.append('file', this.selectedFiles[i]);
     }
-    this.onDemandService.uploadDocument(formData).subscribe(res => {
-      if (res.status) {
-        this.alertService.openSnackBar(res.message, "success");
-        this.dialogRef.close(res);
-      } else {
-        this.alertService.openSnackBar(res.message, "error");
-      }
-    })
+    this.dialogRef.close(formData);
   }
 }
 @Component({
@@ -389,6 +393,10 @@ export class CustomRecipient {
     }
   }
   saveClick() {
+    Object.keys(this.customReceipient.controls).forEach((key) => {
+      if (this.customReceipient.get(key).value && typeof (this.customReceipient.get(key).value) == 'string')
+        this.customReceipient.get(key).setValue(this.customReceipient.get(key).value.trim())
+    });
     if (this.customReceipient.invalid) {
       return
     }
