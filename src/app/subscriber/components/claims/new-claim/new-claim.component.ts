@@ -155,7 +155,7 @@ export class NewClaimComponent implements OnInit {
   duration = [{ id: 20, value: "20" }, { id: 30, value: "30" }, { id: 45, value: "45" }, { id: 60, value: "60" }]
   ALL_SEED_DATA = ["address_type", "body_part",
     "contact_type", "agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
-    "user_account_status", "user_roles", "procedural_codes"];
+    "user_account_status", "user_roles", "procedural_codes", "eams_representatives", "eams_claims_administrator"];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
   addNewClaimant: boolean;
@@ -203,6 +203,8 @@ export class NewClaimComponent implements OnInit {
   isClaimantFilled = false;
   isclaimantfill = false;
   isChecked = false;
+  eamsRepresentatives = [];
+  eamsClaimsAdministrator = [];
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -339,29 +341,20 @@ export class NewClaimComponent implements OnInit {
           case "body_part":
             this.bodyPartsList = res.data;
             break;
-          // case "contact_type":
-          //   // this.contactTypes = res.data;
-          //   if (this.isEdit) {
-          //     if (this.contactType) {
-          //       let type = this.contactTypes.find(element => element.id == this.contactType)
-          //       this.changeCommunicationType(type, 'auto');
-          //     }
-          //   }
-          //   break;
+          case "eams_representatives":
+            this.logger.info("eams_representatives",res.data);
+            this.eamsRepresentatives = res.data;
+            break;
+          case "eams_claims_administrator":
+            this.logger.info("eams_claims_administrator",res.data);
+            this.eamsClaimsAdministrator = res.data;
+            break;
           case "exam_type":
             this.examTypes = res.data;
             break;
           case "language":
             this.languageList = res.data;
             break;
-          // case "modifier":
-          //   this.modifierList = res.data;
-          //   res.data.map(modifier => {
-          //     if (modifier.modifier_code != "96")
-          //       this.modifiers.push(modifier);
-          //   })
-          //   // this.modifiers = res.data;
-          //   break;
           case "object_type":
             this.objectTypes = res.data;
             break;
@@ -931,38 +924,38 @@ export class NewClaimComponent implements OnInit {
         let data = this.claimant.value;
         data['id'] = this.claimant_id;
         if (this.claimantChanges)
-        this.logger.log("update")
-          this.claimService.updateClaimant(data).subscribe(res => {
-            this.alertService.openSnackBar(res.message, "success");
-            this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
-            this.claimantChanges = false;
-            this.claim.patchValue({
-              claim_details: {
-                claimant_name: this.claimantDetails.claimant_name,
-                date_of_birth: res.data.date_of_birth,
-                phone_no_1: res.data.phone_no_1
-              }
-            });
-            this.billable_item.patchValue({
-              claimant_id: res.data.id,
-              claim_details: {
-                claimant_id: res.data.id,
-                claimant_name: this.claimantDetails.claimant_name,
-                date_of_birth: res.data.date_of_birth,
-                phone_no_1: res.data.phone_no_1
-              }
-            })
-            if (status == 'next') {
-              this.stepper.next();
-            } else if (status == 'save') {
-              this.routeDashboard();
-            } else if (status == 'close') {
-              this.routeDashboard();
+          this.logger.log("update")
+        this.claimService.updateClaimant(data).subscribe(res => {
+          this.alertService.openSnackBar(res.message, "success");
+          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
+          this.claimantChanges = false;
+          this.claim.patchValue({
+            claim_details: {
+              claimant_name: this.claimantDetails.claimant_name,
+              date_of_birth: res.data.date_of_birth,
+              phone_no_1: res.data.phone_no_1
             }
-          }, error => {
-            this.isClaimantCreated = false;
-            this.alertService.openSnackBar(error.error.message, 'error');
+          });
+          this.billable_item.patchValue({
+            claimant_id: res.data.id,
+            claim_details: {
+              claimant_id: res.data.id,
+              claimant_name: this.claimantDetails.claimant_name,
+              date_of_birth: res.data.date_of_birth,
+              phone_no_1: res.data.phone_no_1
+            }
           })
+          if (status == 'next') {
+            this.stepper.next();
+          } else if (status == 'save') {
+            this.routeDashboard();
+          } else if (status == 'close') {
+            this.routeDashboard();
+          }
+        }, error => {
+          this.isClaimantCreated = false;
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
       }
     } else {
       if (this.claimant.invalid) {
