@@ -50,7 +50,8 @@
               </span>
               <span class="custom-list" *ngIf="element.doc_type == 'custom'">
                 <!-- <a  class="text-success" >Edit</a> -->
-                <a class="text-danger m-l-10" (click)="removeCustomDocument(element)">Remove</a>
+                <a class="text-danger m-l-10"
+                  (click)="$event.stopPropagation();removeCustomDocument(element)">Remove</a>
               </span>
             </td>
           </ng-container>
@@ -105,8 +106,8 @@
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
               <span class="custom-list" *ngIf="element.type == 'custom'">
-                <a class="text-success" (click)="editRecipient(element)">Edit</a>
-                <a class="text-danger m-l-10" (click)="deleteRecipient(element)">Remove</a>
+                <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
+                <a class="text-danger m-l-10" (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
               </span>
             </td>
           </ng-container>
