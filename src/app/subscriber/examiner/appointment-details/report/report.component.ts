@@ -145,7 +145,7 @@ export class ReportComponent implements OnInit {
     this.selectedFiles = event.target.files;
     let fileTypes;
     if (this.documentType == 6) {
-      fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3'];
+      fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv'];
     } else {
       fileTypes = ['mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
     }
