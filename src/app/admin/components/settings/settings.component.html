@@ -44,9 +44,9 @@
 
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50">
-                                        <mat-label>New password*</mat-label>
+                                        <mat-label>New Password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text' " matInput
-                                            placeholder="New password*" autocomplete="off"
+                                            placeholder="New Password*" autocomplete="off"
                                             formControlName="new_password">
                                         <mat-icon matSuffix
                                             matTooltip="Password must contain at least 8 characters, including UPPER, lowercase, special character and numbers."
@@ -56,9 +56,9 @@
 
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.sm="50" fxFlex.xl="50">
-                                        <mat-label>Confirm new password*</mat-label>
+                                        <mat-label>Confirm New Password*</mat-label>
                                         <input [type]="isTypePassword ? 'password': 'text'" matInput
-                                            placeholder="Confirm new password*" autocomplete="off"
+                                            placeholder="Confirm New Password*" autocomplete="off"
                                             formControlName="confirmPassword">
                                         <mat-icon matSuffix (click)="changeInputType()">
                                             {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
@@ -96,8 +96,8 @@
 
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                         fxFlex.xl="33.3" fxFlex.sm="50" class="m-t-5">
-                                        <mat-label>Middle Name</mat-label>
-                                        <input matInput placeholder="Middle Name" formControlName="middle_name"
+                                        <mat-label>Middle Name/MI</mat-label>
+                                        <input matInput placeholder="Middle Name/MI" formControlName="middle_name"
                                             autocomplete="off">
                                     </mat-form-field>
 

@@ -26,7 +26,7 @@
                 <mat-form-field *ngIf="deoEdit" appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                     fxFlex.xs="100">
                     <mat-label>Office Name</mat-label>
-                    <input matInput placeholder="Select office name" aria-label="Office Name"
+                    <input matInput placeholder="Select Office Name" aria-label="Office Name"
                         [matAutocomplete]="deuAuto" [formControl]="deuCtrl">
                     <mat-autocomplete #deuAuto="matAutocomplete">
                         <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)"

@@ -17,22 +17,22 @@
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>First name*</mat-label>
-                            <input matInput placeholder="First name" formControlName="first_name" autocomplete="off">
+                            <mat-label>First Name*</mat-label>
+                            <input matInput placeholder="First Name" formControlName="first_name" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidfirstname}}</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Middle name / MI</mat-label>
-                            <input matInput placeholder="Middle name" formControlName="middle_name" autocomplete="off">
+                            <mat-label>Middle Name/MI</mat-label>
+                            <input matInput placeholder="Middle Name/MI" formControlName="middle_name" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                             fxFlex.sm="80" fxFlex.xs="80">
-                            <mat-label>Last name*</mat-label>
-                            <input matInput placeholder="Last name" formControlName="last_name" autocomplete="off">
+                            <mat-label>Last Name*</mat-label>
+                            <input matInput placeholder="Last Name" formControlName="last_name" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidlastname}}</mat-error>
                         </mat-form-field>
 
@@ -226,18 +226,18 @@
                             <div fxLayout="row wrap">
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                     fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-label>First name*</mat-label>
-                                    <input matInput placeholder="First name" formControlName="first_name"
+                                    <mat-label>First Name*</mat-label>
+                                    <input matInput placeholder="First Name" formControlName="first_name"
                                         autocomplete="off" >
                                     <mat-error *ngIf="billingSubmit">Please enter valid first name</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                     fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-label>Middle Name</mat-label>
-                                    <input matInput placeholder="Middle Name" formControlName="middle_name"
+                                    <mat-label>Middle Name/MI</mat-label>
+                                    <input matInput placeholder="Middle Name/MI" formControlName="middle_name"
                                         autocomplete="off" >
-                                    <mat-error *ngIf="billingSubmit">Please enter valid middle name</mat-error>
+                                    <mat-error *ngIf="billingSubmit">Please enter valid middle name/MI</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
@@ -392,18 +392,18 @@
                             <div fxLayout="row wrap">
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                     fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-label>First name*</mat-label>
-                                    <input matInput placeholder="First name" formControlName="first_name"
+                                    <mat-label>First Name*</mat-label>
+                                    <input matInput placeholder="First Name" formControlName="first_name"
                                         autocomplete="off" >
                                     <mat-error *ngIf="renderingSubmit">Please enter valid first name</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                     fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
-                                    <mat-label>Middle Name</mat-label>
-                                    <input matInput placeholder="Middle Name" formControlName="middle_name"
+                                    <mat-label>Middle Name/MI</mat-label>
+                                    <input matInput placeholder="Middle Name/MI" formControlName="middle_name"
                                         autocomplete="off" >
-                                    <mat-error *ngIf="renderingSubmit">Please enter valid middle name</mat-error>
+                                    <mat-error *ngIf="renderingSubmit">Please enter valid middle name/MI</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
@@ -598,7 +598,7 @@
                 <mat-card-content *ngIf="!locationAddStatus">
                     <div class="table-filter">
                         <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                            placeholder="Search by Address, Service Type, Phone, NPI#">
+                            placeholder="Search by address, service type, phone, NPI#">
                         <mat-icon>search</mat-icon>
                     </div>
                     <span class="spacer"></span>
@@ -686,13 +686,13 @@
                                     [matAutocomplete]="addressAutocomplete" [formControl]="addresssearch" class="p-l-10"
                                     autocomplete="off">
                                 <mat-autocomplete #addressAutocomplete="matAutocomplete">
-                                    <mat-option *ngFor="let option of filteredOptions?.data"
+                                    <mat-option *ngFor="let option of (filteredOptions | async)"
                                         (click)="addressOnChange(option)"
                                         value="{{option?.street1 }} {{option?.street2 }} {{option?.city}} {{option?.state_name }} {{option?.zip_code }}">
                                         {{option?.street1 }} {{option?.street2 }} {{option?.city}}
                                         {{option?.state_name }} {{option?.zip_code }}
                                     </mat-option>
-                                    <mat-option *ngIf="filteredOptions?.data?.length == 0" disabled>Not found
+                                    <mat-option *ngIf="(filteredOptions | async)?.length == 0" disabled>Not found
                                     </mat-option>
                                 </mat-autocomplete>
                                 <span matSuffix class="search-icon icons">
@@ -722,7 +722,7 @@
                                 <!-- <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="outline-success m-t-5" (click)="locationRoute()">
                                    Create Service Location
                                 </button> -->
-                                <div *ngIf="filteredOptions?.data?.length == 0 && locationData == null"
+                                <div *ngIf="(filteredOptions | async)?.length == 0 && locationData == null"
                                     class="text-center p-b-40">No existing Service Location Found!</div>
                             </div>
 
@@ -749,10 +749,10 @@
                                 <button mat-stroked-button type="button" class="outline-danger"
                                     (click)="locationCancel()">Cancel</button>
                                 <button mat-stroked-button
-                                    *ngIf="filteredOptions?.data?.length != 0 || (filteredOptions?.data?.length >= 1 || locationData != null)"
+                                    *ngIf="(filteredOptions | async)?.length != 0 || ((filteredOptions | async)?.length >= 1 || locationData != null)"
                                     class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>
                                 <button mat-stroked-button
-                                    *ngIf="filteredOptions?.data?.length == 0 && locationData == null"
+                                    *ngIf="(filteredOptions | async)?.length == 0 && locationData == null"
                                     class="m-l-10 outline-success" (click)="locationRoute()">
                                     Create Service Location
                                 </button>
