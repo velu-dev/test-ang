@@ -227,14 +227,14 @@ export class NewExaminerUserComponent implements OnInit {
     })
 
     this.addresssearch.valueChanges.subscribe(res => {
-      if (res != null) {
-        if (res.length > 2)
+    if (res != null) {
+        //if (res.length > 2)
           this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
             this.filteredOptions = value;
           })
       } else {
-        this.filteredOptions = null;
-      }
+        //this.filteredOptions = null;
+     }
     })
 
 
@@ -338,6 +338,10 @@ export class NewExaminerUserComponent implements OnInit {
         return (data.service && data.service.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.npi_number && data.npi_number.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    
+      this.examinerService.searchAddress({ basic_search: '', isadvanced: false }, this.examinerId).subscribe(value => {
+        this.filteredOptions = value;
+      })
     })
   }
 
@@ -596,7 +600,11 @@ export class NewExaminerUserComponent implements OnInit {
     }
 
     this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
-      this.alertService.openSnackBar("Mailing address updated successfully!", 'success');
+      if (!this.mailingAddressForm.value.id) {
+        this.alertService.openSnackBar("Mailing address Added successfully!", 'success');
+      } else {
+        this.alertService.openSnackBar("Mailing address updated successfully!", 'success');
+      }
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -627,7 +635,12 @@ export class NewExaminerUserComponent implements OnInit {
     }
 
     this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
-      this.alertService.openSnackBar("Billing provider updated successfully!", 'success');
+      
+      if (!this.billingProviderForm.value.id) {
+        this.alertService.openSnackBar("Billing provider Added successfully!", 'success');
+      } else {
+        this.alertService.openSnackBar("Billing provider updated successfully!", 'success');
+      }
       this.updateFormData(this.examinerId)
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -659,7 +672,12 @@ export class NewExaminerUserComponent implements OnInit {
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
     this.renderingForm.value.signature = sign;
     this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe(render => {
-      this.alertService.openSnackBar("Rendering provider updated successfully!", 'success');
+      
+      if (!this.renderingForm.value.id) {
+        this.alertService.openSnackBar("Rendering provider added successfully!", 'success');
+      } else {
+        this.alertService.openSnackBar("Rendering provider updated successfully!", 'success');
+      }
       this.updateFormData(this.examinerId)
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -668,14 +686,14 @@ export class NewExaminerUserComponent implements OnInit {
   licenseData: any = [];
   editStatus: boolean = false;
   openLicense(data?: any, index?: number) {
-    
+
     const dialogRef = this.dialog.open(LicenseDialog, {
       width: '800px',
       data: { states: this.states, details: data, editStatus: this.editStatus }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
-     
+
       if (result) {
         // this.userService.createLicense(this.examinerId, result).subscribe(license => {
         //   let data = this.licenceDataSource.data;
