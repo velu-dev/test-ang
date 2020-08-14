@@ -154,11 +154,11 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.route.params.subscribe(params_res => {
       if (params_res.status == 1) {
-        this.tabIndex = 0
-        setTimeout(() => {
+        //this.tabIndex = 0
+       // setTimeout(() => {
           this.tabIndex = 4
           this.tab = 4
-        }, 1000);
+       // }, 1000);
 
       }
     })
@@ -226,17 +226,21 @@ export class NewExaminerUserComponent implements OnInit {
       console.log("error", error)
     })
 
-    this.addresssearch.valueChanges.subscribe(res => {
-    if (res != null) {
-        //if (res.length > 2)
-          this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
-            this.filteredOptions = value;
-          })
-      } else {
-        //this.filteredOptions = null;
-     }
-    })
-
+    // this.addresssearch.valueChanges.subscribe(res => {
+    // if (res != null) {
+    //     //if (res.length > 2)
+    //       this.examinerService.searchAddress({ basic_search: res, isadvanced: false }, this.examinerId).subscribe(value => {
+    //         this.filteredOptions = value;
+    //       })
+    //   } else {
+    //     //this.filteredOptions = null;
+    //  }
+    // })
+    this.filteredOptions = this.addresssearch.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filterLocation(value))
+    );
 
   }
 
@@ -340,10 +344,23 @@ export class NewExaminerUserComponent implements OnInit {
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     
       this.examinerService.searchAddress({ basic_search: '', isadvanced: false }, this.examinerId).subscribe(value => {
-        this.filteredOptions = value;
+        this.locationDataSearch = value.data;
+        console.log(this.locationDataSearch)
+        
       })
     })
   }
+
+  locationDataSearch:any;
+  private _filterLocation(value: string): string[] {
+    // if (typeof (value) == 'number') {
+    //   return;
+    // }
+    const filterValue = value == undefined ? '' : value && value.toLowerCase();
+    return this.locationDataSearch.filter(option => option.street1.toLowerCase().includes(filterValue) || option.street2.toLowerCase().includes(filterValue)
+    || option.city.toLowerCase().includes(filterValue) || option.state_name.toLowerCase().includes(filterValue) || option.zip_code.includes(filterValue));
+  }
+
 
   getLocationDetails() {
 
@@ -601,7 +618,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
       if (!this.mailingAddressForm.value.id) {
-        this.alertService.openSnackBar("Mailing address Added successfully!", 'success');
+        this.alertService.openSnackBar("Mailing address added successfully!", 'success');
       } else {
         this.alertService.openSnackBar("Mailing address updated successfully!", 'success');
       }
@@ -637,7 +654,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
       
       if (!this.billingProviderForm.value.id) {
-        this.alertService.openSnackBar("Billing provider Added successfully!", 'success');
+        this.alertService.openSnackBar("Billing provider added successfully!", 'success');
       } else {
         this.alertService.openSnackBar("Billing provider updated successfully!", 'success');
       }
@@ -884,6 +901,7 @@ export class NewExaminerUserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.subscriberService.removeAssignLocation(this.examinerId, user.id).subscribe(remove => {
+          this.alertService.openSnackBar('Location removed successfully', 'success');
           this.updateFormData(this.examinerId)
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');

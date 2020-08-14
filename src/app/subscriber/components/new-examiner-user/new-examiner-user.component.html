@@ -686,13 +686,13 @@
                                     [matAutocomplete]="addressAutocomplete" [formControl]="addresssearch" class="p-l-10"
                                     autocomplete="off">
                                 <mat-autocomplete #addressAutocomplete="matAutocomplete">
-                                    <mat-option *ngFor="let option of filteredOptions?.data"
+                                    <mat-option *ngFor="let option of (filteredOptions | async)"
                                         (click)="addressOnChange(option)"
                                         value="{{option?.street1 }} {{option?.street2 }} {{option?.city}} {{option?.state_name }} {{option?.zip_code }}">
                                         {{option?.street1 }} {{option?.street2 }} {{option?.city}}
                                         {{option?.state_name }} {{option?.zip_code }}
                                     </mat-option>
-                                    <mat-option *ngIf="filteredOptions?.data?.length == 0" disabled>Not found
+                                    <mat-option *ngIf="(filteredOptions | async)?.length == 0" disabled>Not found
                                     </mat-option>
                                 </mat-autocomplete>
                                 <span matSuffix class="search-icon icons">
@@ -722,7 +722,7 @@
                                 <!-- <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0 && locationData == null" class="outline-success m-t-5" (click)="locationRoute()">
                                    Create Service Location
                                 </button> -->
-                                <div *ngIf="filteredOptions?.data?.length == 0 && locationData == null"
+                                <div *ngIf="(filteredOptions | async)?.length == 0 && locationData == null"
                                     class="text-center p-b-40">No existing Service Location Found!</div>
                             </div>
 
@@ -749,10 +749,10 @@
                                 <button mat-stroked-button type="button" class="outline-danger"
                                     (click)="locationCancel()">Cancel</button>
                                 <button mat-stroked-button
-                                    *ngIf="filteredOptions?.data?.length != 0 || (filteredOptions?.data?.length >= 1 || locationData != null)"
+                                    *ngIf="(filteredOptions | async)?.length != 0 || ((filteredOptions | async)?.length >= 1 || locationData != null)"
                                     class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>
                                 <button mat-stroked-button
-                                    *ngIf="filteredOptions?.data?.length == 0 && locationData == null"
+                                    *ngIf="(filteredOptions | async)?.length == 0 && locationData == null"
                                     class="m-l-10 outline-success" (click)="locationRoute()">
                                     Create Service Location
                                 </button>

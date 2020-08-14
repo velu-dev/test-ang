@@ -107,7 +107,7 @@
                 <span *ngIf="column == 'updatedAt'" class="no-wrap-td">{{element?.updatedAt | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'action'" class="text-center">
                   <a class="text-success" (click)="downloadDocument(element)">Download</a>
-                  <a class="text-danger p-l-20" (click)="removeDocument(element)">Remove</a>
+                  <a class="text-danger p-l-20" (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
                 </span>
               </div>
             </td>
@@ -120,7 +120,7 @@
                   <div class="no-wrap-td"><span>Date Uploaded</span> {{element?.updatedAt | date:'MM-dd-yyyy'}} </div>
                   <div class="text-center"><span>Action</span>
                     <a class="text-success" (click)="downloadDocument(element)">Download</a>
-                    <a class="text-danger p-l-20" (click)="removeDocument(element)">Remove</a>
+                    <a class="text-danger p-l-20" (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
                   </div>
                 </div>
               </div>
