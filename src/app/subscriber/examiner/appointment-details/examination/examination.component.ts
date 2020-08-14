@@ -179,7 +179,7 @@ export class ExaminationComponent implements OnInit {
   removeDocument(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: "delete" }
+      data: { name: "delete", address: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {

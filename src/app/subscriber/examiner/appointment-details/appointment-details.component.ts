@@ -424,9 +424,11 @@ export class AppointmentDetailsComponent implements OnInit {
         return 'history';
       case 2:
         return 'records';
-      case 5:
-        return 'report'
+      case 3:
+        return 'examination';
       case 4:
+        return 'report'
+      case 5:
         return 'transcription';
       default:
         return 'form';
