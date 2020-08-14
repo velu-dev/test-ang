@@ -2,7 +2,14 @@ import { Component, OnInit, Input, SimpleChange, Output, EventEmitter } from '@a
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+export const _filter = (opt: any[], value: string): string[] => {
+  console.log("opt", opt);
+  const filterValue = value.toLowerCase();
 
+  return opt.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
+};
 @Component({
   selector: 'app-claim-admin',
   templateUrl: './claim-admin.component.html',
@@ -15,9 +22,21 @@ export class ClaimAdminComponent implements OnInit {
   // @Input('save') isSave = false;
   claimAdminForm: FormGroup;
   claimAdminList = []
+  eamsClaimsAdministrator = [];
+  claimAdminGroupOptions: Observable<any[]>;
+  CASelect = true;
   @Input('state') states;
   // @Output() isEditComplete = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+    this.claimService.seedData('eams_claims_administrator').subscribe(res => {
+      this.eamsClaimsAdministrator = res.data;
+      this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }];
+      this.claimAdminGroupOptions = this.claimAdminForm.get('company_name')!.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filterAttroney(value, this.claimAdminList))
+        );
+    })
     this.claimAdminForm = this.formBuilder.group({
       id: [],
       company_name: [{ value: null, disabled: true }],
@@ -36,25 +55,19 @@ export class ClaimAdminComponent implements OnInit {
   ngOnInit() {
     this.claimAdminForm.patchValue(this.claimAdmin)
   }
-  // ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-  //   if (this.claimAdminForm.invalid) {
-  //     return
-  //   }
-  //   if (changes.isSave) {
-  //     if (changes.isSave.currentValue)
-  //       this.updateClaimAdmin()
-  //   }
-  //   if (changes.isEdit)
-  //     this.isEdit = changes.isEdit.currentValue;
-  //   if (this.isEdit) {
-  //     this.claimAdminForm.enable();
-  //   } else {
-  //     this.claimAdminForm.disable();
-  //   }
-
-  // }
   appClaimAdmin(aa) {
+    delete aa.id;
+    console.log(aa)
+    this.claimAdminForm.patchValue(aa)
+  }
+  private _filterAttroney(value: string, data) {
+    if (value) {
+      return data
+        .map(group => ({ name: group.name, data: _filter(group.data, value) }))
+        .filter(group => group.data.length > 0);
+    }
 
+    return data;
   }
   claimUpdated = false;
   updateClaimAdmin() {
@@ -76,10 +89,10 @@ export class ClaimAdminComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
-   editCA(){
-     this.claimAdminForm.enable();
-     this.claimAdminEdit = true;
-   }
+  editCA() {
+    this.claimAdminForm.enable();
+    this.claimAdminEdit = true;
+  }
   cancel() {
     this.claimAdminForm.disable();
     // this.isEditComplete.emit(true);

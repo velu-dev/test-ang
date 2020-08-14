@@ -348,8 +348,8 @@ export class NewClaimComponent implements OnInit {
           case "body_part":
             this.bodyPartsList = res.data;
             break;
-          case "eams_representatives":
-            this.eamsRepresentatives = res.data;
+          case "eams_claims_administrator":
+            this.eamsClaimsAdministrator = res.data;
             this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }];
             this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
               .pipe(
@@ -357,9 +357,9 @@ export class NewClaimComponent implements OnInit {
                 map(value => this._filterAttroney(value, this.claimAdminList))
               );
             break;
-          case "eams_claims_administrator":
-            this.eamsClaimsAdministrator = res.data;
-            this.attroneylist = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }];
+          case "eams_representatives":
+            this.eamsRepresentatives = res.data;
+            this.attroneylist = [{ name: "From DB", data: this.eamsRepresentatives }, { name: "From EAMS", data: [] }];
             this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
               .pipe(
                 startWith(''),

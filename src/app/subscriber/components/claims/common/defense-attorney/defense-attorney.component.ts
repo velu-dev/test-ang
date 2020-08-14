@@ -2,7 +2,14 @@ import { Component, OnInit, Input, SimpleChange, EventEmitter, Output } from '@a
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+export const _filter = (opt: any[], value: string): string[] => {
+  console.log("opt", opt);
+  const filterValue = value.toLowerCase();
 
+  return opt.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
+};
 @Component({
   selector: 'app-defense-attorney',
   templateUrl: './defense-attorney.component.html',
@@ -16,8 +23,19 @@ export class DefenseAttorneyComponent implements OnInit {
   DefanceAttorney: FormGroup;
   attroneylist = [];
   @Input('state') states;
-  // @Output() isEditComplete = new EventEmitter();
+  eamsRepresentatives = [];
+  dattroneyGroupOptions: Observable<any[]>;
+  DattroneySelect = true;
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+    this.claimService.seedData('eams_claims_administrator').subscribe(res => {
+      this.eamsRepresentatives = res.data;
+      this.attroneylist = [{ name: "From DB", data: this.eamsRepresentatives }, { name: "From EAMS", data: [] }];
+      this.dattroneyGroupOptions = this.DefanceAttorney.get('company_name')!.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filterAttroney(value, this.attroneylist))
+        );
+    })
     this.DefanceAttorney = this.formBuilder.group({
       company_name: [{ value: null, disabled: true }],
       id: [],
@@ -32,25 +50,21 @@ export class DefenseAttorneyComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
   }
-  // ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-  //   if (changes.isSave) {
-  //     if (changes.isSave.currentValue)
-  //       this.updateDAttorney()
-  //   }
-  //   if (changes.isEdit)
-  //     this.isEdit = changes.isEdit.currentValue;
-  //   if (this.isEdit) {
-  //     this.DefanceAttorney.enable()
-  //   } else {
-  //     this.DefanceAttorney.disable();
-  //   }
+  private _filterAttroney(value: string, data) {
+    if (value) {
+      return data
+        .map(group => ({ name: group.name, data: _filter(group.data, value) }))
+        .filter(group => group.data.length > 0);
+    }
 
-  // }
+    return data;
+  }
   ngOnInit() {
     this.DefanceAttorney.patchValue(this.dattorneyDetail)
   }
-  appAttorney(sdsd) {
-
+  defAttornety(da) {
+    delete da.id;
+    this.DefanceAttorney.patchValue(da)
   }
   editDA() {
     this.daEdit = true;
