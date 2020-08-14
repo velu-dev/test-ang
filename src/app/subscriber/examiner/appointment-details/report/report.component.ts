@@ -218,6 +218,7 @@ export class ReportComponent implements OnInit {
   }
 
   onDemandSubmit() {
+    return;
     let document_ids = []
     this.selection.selected.map(res => {
       document_ids.push(res.document_id)

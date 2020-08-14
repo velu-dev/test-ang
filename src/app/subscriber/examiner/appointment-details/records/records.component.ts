@@ -215,6 +215,7 @@ export class RecordsComponent implements OnInit {
   }
 
   onDemandSubmit() {
+    return;
     let document_ids = []
     this.selection.selected.map(res => {
       document_ids.push(res.document_id)
@@ -300,6 +301,15 @@ export class RecordsComponent implements OnInit {
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
+  }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
   }
 
 

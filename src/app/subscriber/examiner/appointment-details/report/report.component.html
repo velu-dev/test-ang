@@ -159,7 +159,7 @@
               </div>
             </td>
           </ng-container>
-          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
           <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
             [class.row]="expandedElement === element" (click)="openElementOut(element)">
           </tr>
@@ -212,7 +212,7 @@
               </div>
             </td>
           </ng-container>
-          <tr mat-header-row *matHeaderRowDef="columnsToDisplay1"></tr>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay1; sticky: true"></tr>
           <tr mat-row *matRowDef="let element; columns: columnsToDisplay1;" class="row"
             [class.row]="expandedElement1 === element" (click)="openElementIn(element)">
           </tr>

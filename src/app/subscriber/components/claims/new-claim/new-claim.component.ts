@@ -280,6 +280,7 @@ export class NewClaimComponent implements OnInit {
                 date_of_birth: claimant['data'][0].date_of_birth
               }
             })
+            //this.stepper.next();
           }
         })
       }
