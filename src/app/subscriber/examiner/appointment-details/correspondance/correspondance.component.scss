@@ -52,7 +52,9 @@ th {
 .float-right {
     float: right;
 }
-
+.address-not-found {
+    @extend .float-right
+}
 .width-fixed {
     width: 25px !important;
     padding-right: 0px !important;
@@ -63,5 +65,21 @@ th {
             text-align: center !important;
             margin: 10px;
         }
+    }
+}
+
+
+.info-alert {
+    color: $info;
+    background-color:$info-bg;
+    border: 1px solid $info-border;
+    font-size: $font-size-1;
+    padding: 3px 8px;
+    // font-style: italic;
+    border-radius: 2px;
+    width: auto;
+    float: right;
+    i {
+        padding-right: 10px;
     }
 }
