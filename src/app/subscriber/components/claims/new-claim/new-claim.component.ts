@@ -350,11 +350,26 @@ export class NewClaimComponent implements OnInit {
             break;
           case "eams_representatives":
             this.eamsRepresentatives = res.data;
-            this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }]
+            this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }];
+            this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.claimAdminList))
+              );
             break;
           case "eams_claims_administrator":
             this.eamsClaimsAdministrator = res.data;
-            this.attroneylist = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }]
+            this.attroneylist = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }];
+            this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.attroneylist))
+              );
+            this.dattroneyGroupOptions = this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.attroneylist))
+              );
             break;
           case "exam_type":
             this.examTypes = res.data;
@@ -634,27 +649,11 @@ export class NewClaimComponent implements OnInit {
         this.claimChanges = true;
       }
     );
-    this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterAttroney(value, this.attroneylist))
-      );
-    this.dattroneyGroupOptions = this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterAttroney(value, this.attroneylist))
-      );
-    this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filterAttroney(value, this.claimAdminList))
-      );
   }
   aattroneyGroupOptions: Observable<any[]>;
   dattroneyGroupOptions: Observable<any[]>;
   claimAdminGroupOptions: Observable<any[]>;
   private _filterAttroney(value: string, data) {
-    console.log("here", value)
     if (value) {
       return data
         .map(group => ({ name: group.name, data: _filter(group.data, value) }))
@@ -1163,7 +1162,6 @@ export class NewClaimComponent implements OnInit {
           if (res.data.attroney.length != 0) {
             console.log("attrony")
             // this.attroneylist = res.data.attroney;
-            this.attroneySelect = true;
             let attroney = [];
             res.data.attroney.map(res => {
               res.name = res.company_name;
@@ -1183,7 +1181,9 @@ export class NewClaimComponent implements OnInit {
       this.alertService.openSnackBar("Please enter EAMS Number", "error")
     }
   }
-  attroneySelect = false;
+  AattroneySelect = true;
+  DattroneySelect = true;
+  CASelect = true;
   attroneylist = [];
   bodyPartId(id) {
     let data = "";
