@@ -1,5 +1,6 @@
 <div class="create-claim">
-    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <!-- linear -->
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant
@@ -377,6 +378,7 @@
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 </table>
+                                <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
                             </div>
                         </div>
                     </mat-card-content>
@@ -479,22 +481,34 @@
                     <mat-divider> </mat-divider>
                     <mat-card-content class="m-t-15">
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="InsuranceAdjuster">
-                            <mat-form-field *ngIf="claimAdminList?.length == 0" appearance="outline" fxFlex="50"
+                            <!-- <mat-form-field *ngIf="claimAdminList?.length == 0" appearance="outline" fxFlex="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
                                 <input matInput placeholder="Insurance Name" formControlName="company_name"
                                     autocomplete="off">
-                            </mat-form-field>
-                            <mat-form-field *ngIf="claimAdminList?.length != 0" appearance="outline" fxFlex="50"
-                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            </mat-form-field> -->
+                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
-                                <mat-select formControlName="company_name">
-                                    <mat-option (click)="appClaimAdmin(admin)" *ngFor="let admin of claimAdminList"
-                                        [value]="admin.company_name">
-                                        {{admin.company_name}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error>Please enter valid attroney</mat-error>
+                                <input type="text" matInput placeholder="Insurance Name" formControlName="company_name"
+                                    required [matAutocomplete]="caAuto">
+                                <mat-autocomplete #caAuto="matAutocomplete">
+                                    <mat-optgroup *ngFor="let group of (claimAdminGroupOptions | async)"
+                                        [label]="group.name">
+                                        <mat-option (click)="appClaimAdmin(claim_admin)" *ngFor="let claim_admin of group.data"
+                                            [value]="claim_admin.name">
+                                            {{claim_admin.name}}
+                                        </mat-option>
+                                    </mat-optgroup>
+                                </mat-autocomplete>
+                                <!-- <mat-select formControlName="company_name">
+                                    <mat-optgroup *ngFor="let group of claimAdminList" [label]="group.name">
+                                        <mat-option (click)="appClaimAdmin(admin)" *ngFor="let admin of group.data"
+                                            [value]="admin.name">
+                                            {{admin.name}}
+                                        </mat-option>
+                                    </mat-optgroup>
+                                </mat-select> -->
+                                <mat-error>Please enter valid claim administrator</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -677,21 +691,26 @@
                     <mat-divider> </mat-divider>
                     <mat-card-content class="m-t-15">
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="ApplicantAttorney">
-                            <mat-form-field *ngIf="!attroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
+                            <!-- <mat-form-field *ngIf="!attroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
                                 <input matInput placeholder="Law Firm Name" formControlName="company_name"
                                     autocomplete="off">
-                            </mat-form-field>
-                            <mat-form-field *ngIf="attroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
-                                fxFlex.sm="50" fxFlex.xs="100">
+                            </mat-form-field> -->
+                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
-                                <mat-select formControlName="company_name">
-                                    <mat-option (click)="appAttorney(attroney)" *ngFor="let attroney of attroneylist"
-                                        [value]="attroney.company_name">
-                                        {{attroney.company_name}}
-                                    </mat-option>
-                                </mat-select>
+                                <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
+                                    required [matAutocomplete]="aaAuto">
+                                <mat-autocomplete #aaAuto="matAutocomplete">
+                                    <mat-optgroup *ngFor="let group of (aattroneyGroupOptions | async)"
+                                        [label]="group.name">
+                                        <mat-option (click)="appAttorney(attroney)" *ngFor="let attroney of group.data"
+                                            [value]="attroney.name">
+                                            {{attroney.name}}
+                                        </mat-option>
+                                    </mat-optgroup>
+                                </mat-autocomplete>
                                 <mat-error>Please enter valid attroney</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -776,21 +795,26 @@
                     <mat-divider> </mat-divider>
                     <mat-card-content class="m-t-15">
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="DefenseAttorney">
-                            <mat-form-field *ngIf="!attroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
+                            <!-- <mat-form-field *ngIf="attroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
                                 <input matInput placeholder="Law Firm Name" formControlName="company_name"
                                     autocomplete="off">
-                            </mat-form-field>
-                            <mat-form-field *ngIf="attroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
-                                fxFlex.sm="50" fxFlex.xs="100">
+                            </mat-form-field> -->
+                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
-                                <mat-select formControlName="company_name">
-                                    <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of attroneylist"
-                                        [value]="attroney.company_name">
-                                        {{attroney.company_name}}
-                                    </mat-option>
-                                </mat-select>
+                                <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
+                                    required [matAutocomplete]="daAuto">
+                                <mat-autocomplete #daAuto="matAutocomplete">
+                                    <mat-optgroup *ngFor="let group of (dattroneyGroupOptions | async)"
+                                        [label]="group.name">
+                                        <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of group.data"
+                                            [value]="attroney.name">
+                                            {{attroney.name}}
+                                        </mat-option>
+                                    </mat-optgroup>
+                                </mat-autocomplete>
                                 <mat-error>Please enter valid attroney</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1043,7 +1067,8 @@
                                     <mat-label>Exam Procedure Type*</mat-label>
                                     <mat-select formControlName="exam_procedure_type_id">
                                         <mat-option *ngFor="let procuderalCode of procuderalCodes"
-                                            [value]="procuderalCode.exam_procedure_type_id" (click)="procedure_type(procuderalCode)">
+                                            [value]="procuderalCode.exam_procedure_type_id"
+                                            (click)="procedure_type(procuderalCode)">
                                             {{procuderalCode.exam_procedure_name}}
                                         </mat-option>
                                     </mat-select>
@@ -1084,16 +1109,16 @@
                                         Psych
                                     </mat-checkbox>
                                 </div> -->
-                                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                        fxFlex.xs="100">
-                                        <mat-label>Examiner</mat-label>
-                                        <mat-select formControlName="examiner_id">
-                                            <mat-option *ngFor="let examinar of examinarList"
-                                                (click)="examinarChange(examinar)" [value]="examinar.id">
-                                                {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                    fxFlex.xs="100">
+                                    <mat-label>Examiner</mat-label>
+                                    <mat-select formControlName="examiner_id">
+                                        <mat-option *ngFor="let examinar of examinarList"
+                                            (click)="examinarChange(examinar)" [value]="examinar.id">
+                                            {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25"
                                     fxFlex.xs="100">
