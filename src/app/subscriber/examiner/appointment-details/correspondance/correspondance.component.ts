@@ -85,6 +85,12 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.selection.clear();
     this.selection1.clear();
     this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
+      res.documets.map(doc => {
+        if (doc.is_mandatory) {
+          this.selection.select(doc)
+        }
+      })
+      
       this.documents = new MatTableDataSource(res.documets);
       this.recipients = new MatTableDataSource(res.recipient);
     })

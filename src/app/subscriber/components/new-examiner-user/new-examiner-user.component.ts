@@ -618,7 +618,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
       if (!this.mailingAddressForm.value.id) {
-        this.alertService.openSnackBar("Mailing address Added successfully!", 'success');
+        this.alertService.openSnackBar("Mailing address added successfully!", 'success');
       } else {
         this.alertService.openSnackBar("Mailing address updated successfully!", 'success');
       }
@@ -654,7 +654,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
       
       if (!this.billingProviderForm.value.id) {
-        this.alertService.openSnackBar("Billing provider Added successfully!", 'success');
+        this.alertService.openSnackBar("Billing provider added successfully!", 'success');
       } else {
         this.alertService.openSnackBar("Billing provider updated successfully!", 'success');
       }
