@@ -1,6 +1,6 @@
 <div class="create-claim">
-    <!-- linear -->
-    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <!--  -->
+    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant
@@ -491,7 +491,7 @@
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
                                 <input type="text" matInput placeholder="Insurance Name" formControlName="company_name"
-                                    required [matAutocomplete]="caAuto">
+                                    [matAutocomplete]="caAuto">
                                 <mat-autocomplete #caAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (claimAdminGroupOptions | async)"
                                         [label]="group.name">
@@ -697,7 +697,7 @@
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
-                                    required [matAutocomplete]="aaAuto">
+                                    [matAutocomplete]="aaAuto">
                                 <mat-autocomplete #aaAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (aattroneyGroupOptions | async)"
                                         [label]="group.name">
@@ -804,7 +804,7 @@
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
-                                    required [matAutocomplete]="daAuto">
+                                    [matAutocomplete]="daAuto">
                                 <mat-autocomplete #daAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (dattroneyGroupOptions | async)"
                                         [label]="group.name">
