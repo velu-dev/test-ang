@@ -901,6 +901,7 @@ export class NewExaminerUserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.subscriberService.removeAssignLocation(this.examinerId, user.id).subscribe(remove => {
+          this.alertService.openSnackBar('Location removed successfully', 'success');
           this.updateFormData(this.examinerId)
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
