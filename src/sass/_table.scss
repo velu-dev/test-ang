@@ -4,7 +4,7 @@
   width: $width-100;
   // border: 1px solid $table-solid;
   tr {
-    &:nth-child(4n+3) {
+    &:nth-child(4n + 3) {
       background-color: $table-solid;
     }
     th {
@@ -78,7 +78,7 @@ tr.detail-row {
   table {
     width: $width-100;
     tr {
-      &:nth-child(4n+3) {
+      &:nth-child(4n + 3) {
         background-color: $table-solid;
       }
       th {
@@ -151,15 +151,11 @@ tr.detail-row {
   color: $btn_success;
 }
 
-
-
-
 .title-center {
-  th  {
+  th {
     text-align: center !important;
   }
 }
-
 
 .user-table tbody tr:nth-child(even) {
   background-color: $table-solid;
@@ -175,15 +171,41 @@ tr.detail-row {
       }
     }
   }
-  
 }
-  .height-auto {
-    min-height: auto !important;
+.height-auto {
+  min-height: auto !important;
 }
 
-// Fixed height 
-.vertical-fixed  {
+// Fixed height
+.vertical-fixed {
   min-height: 290px;
   max-height: 290px;
   overflow: auto;
+  box-shadow: $shadow-style-one;
 }
+
+// .footer-fixed {
+//   table {
+//     tbody {
+//       min-height: 290px;
+//       min-width: 100%;
+//       display: inline-table;
+//       overflow-y: auto;
+//       tr {
+//         width: 100%;
+//       }
+//     }
+//     tfoot {
+//       tr {
+//         td {
+//           // box-shadow: $shadow-style-one;
+//           border-top: 1px solid $light-color;
+//           font-size: $font-size-2 !important;
+//           font-weight: $font-weight-medium;
+//           color: $black !important;
+//           background-color: $light-color;
+//         }
+//       }
+//     }
+//   }
+// }
