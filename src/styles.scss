@@ -141,21 +141,29 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 
 .alert-success,
 .success {
-  background-color: $bg-success;
-  color: $text-success;
+  background-color: $success-bg;
+  color: $success;
+  border-color: $success-border;
+  border: 1px solid;
 }
 .error {
-  background-color: $bg-error-style-one;
-  color: $text-error;
+  background-color: $error-bg;
+  color: $error;
+  border-color: $error-border;
+  border: 1px solid;
 }
 .alert-danger {
-  background-color: $bg-error;
-  color: $text-error;
+  background-color: $error-bg;
+  color: $error;
+  border-color: $error-border;
+  border: 1px solid;
 }
 .alert-warning,
 .warning {
-  background-color: $bg-warning;
-  color: $text-warning;
+  background-color: $warning-bg;
+  color: $warning;
+  border-color: $warning-border;
+  border: 1px solid;
 }
 
 // ==================================================
@@ -331,7 +339,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   font-size: $font-size-7;
 }
 .left_voicemail {
-  border: 1px solid $warning;
+  border: 1px solid $warning-light;
   box-shadow: $box-shadow-2;
   white-space: nowrap;
   border-radius: 3px;

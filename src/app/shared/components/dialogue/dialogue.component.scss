@@ -7,11 +7,11 @@
   .disable-acctions {
     text-align: center;
     .btn {
-      padding: 7px 30px;
       border-radius: 50px;
       font-size: $font-size-1;
       box-shadow: $box-shadow-3;
       font-weight: $font-weight-bold;
+      height: 35px;
       cursor: pointer;
       &:hover {
         box-shadow: $box-shadow-1;
@@ -22,12 +22,9 @@
       }
     }
     .no {
-      background-color: $white;
-      color: $black;
+      background-color: $danger;
+      color: $white;
       border: 0;
-      &:hover {
-        background-color: $white;
-      }
       @extend .btn;
     }
 
