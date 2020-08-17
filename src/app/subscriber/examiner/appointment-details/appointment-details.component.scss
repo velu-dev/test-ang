@@ -314,6 +314,15 @@
             margin: 0px;
         }
     }
+    .billing-status-active {
+        background: $light-color;
+        &:hover {
+            h4,
+            i {
+                color: $btn-success;
+            }
+        }
+    }
 }
 .exam-info {
     padding: 30px 0 30px 0;
@@ -326,6 +335,11 @@
         float: right;
         margin-top: 35px;
     }
+}
+.exam-status {
+    padding: 10px;
+    box-shadow: none;
+    border: none;
 }
 .billable-item-info {
     padding: 10px;

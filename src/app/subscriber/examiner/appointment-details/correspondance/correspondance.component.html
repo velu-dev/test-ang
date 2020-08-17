@@ -8,13 +8,13 @@
     </div>
   </div>
 
-  <div fxLayout="row wrap" class="p-t-25">
+  <div fxLayout="row wrap" class="p-t-25" *ngIf="!isLoading">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
       <div class="main-title">Documents <span class="info ondemand-info m-l-10"
-          matTooltip="Documents which are labelled with the blue checkmark are required to be sent within 5 days of confirming the examination appointment date. Add Custom Mail On Demand Documents using the button at the bottom."
-          matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+        matTooltip="Documents which are labelled with the blue checkmark are required to be sent within 5 days of confirming the examination appointment date. Add Custom Mail On Demand Documents using the button at the bottom."
+        matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Use the checkboxes to select the documents to be mailed.</p>
-      <div class="basic-table striped_ vertical-fixed m-l-10">
+      <div class="basic-table striped_ vertical-fixed m-l-10 footer-fixed">
         <table mat-table [dataSource]="documents" class="mat-elevation-z8 w-100 user-table">
 
           <!-- Checkbox Column -->
@@ -50,15 +50,14 @@
               </span>
               <span class="custom-list" *ngIf="element.doc_type == 'custom'">
                 <!-- <a  class="text-success" >Edit</a> -->
-                <a class="text-danger m-l-10"
-                  (click)="$event.stopPropagation();removeCustomDocument(element)">Remove</a>
+                <a class="text-danger m-l-10" (click)="removeCustomDocument(element)">Remove</a>
               </span>
             </td>
           </ng-container>
           <!-- custom column -->
           <ng-container matColumnDef="custom">
             <td mat-footer-cell *matFooterCellDef colspan="2" class="text-center" (click)="openDialog()">
-              <b class="main-title">Add Custom Document</b>
+              <b class="add-custom"><i class="fa fa-file-medical p-r-10"></i> Add Custom Document</b>
             </td>
           </ng-container>
 
@@ -74,7 +73,7 @@
         Demand Service. Enter the name and address of custom recipients using the button at the bottom."
           matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Use the checkboxes to select the recipients of mailed documents.</p>
-      <div class="basic-table striped_ vertical-fixed m-l-10">
+      <div class="basic-table striped_ vertical-fixed m-l-10 footer-fixed">
         <table mat-table [dataSource]="recipients" class="mat-elevation-z8 w-100 user-table">
 
           <!-- Checkbox Column -->
@@ -105,16 +104,17 @@
           <ng-container matColumnDef="recipient_type">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
+              <!-- <div class="info-alert"><i class="fa fa-info"></i>Address incomplete or not entered!</div> -->
               <span class="custom-list" *ngIf="element.type == 'custom'">
-                <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
-                <a class="text-danger m-l-10" (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
+                <a class="text-success" (click)="editRecipient(element)">Edit</a>
+                <a class="text-danger m-l-10" (click)="deleteRecipient(element)">Remove</a>
               </span>
             </td>
           </ng-container>
           <!-- custom_recipient column -->
           <ng-container matColumnDef="custom_recipient">
             <td mat-footer-cell *matFooterCellDef colspan="2" class="text-center" (click)="openCustomRecipient()">
-              <b class="main-title">Add Custom Recipient</b>
+              <b class="add-custom"><i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient</b>
             </td>
           </ng-container>
 
@@ -195,7 +195,7 @@
               </div>
             </td>
           </ng-container>
-          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
           <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
             [class.row]="expandedElement === element" (click)="openElement(element)">
           </tr>
@@ -249,7 +249,7 @@
               </div>
             </td>
           </ng-container>
-          <tr mat-header-row *matHeaderRowDef="columnsToDisplay1"></tr>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay1; sticky: true"></tr>
           <tr mat-row *matRowDef="let element; columns: columnsToDisplay1;" class="row"
             [class.row]="expandedElement1 === element" (click)="openElement1(element)">
           </tr>
