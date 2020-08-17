@@ -138,7 +138,7 @@ export class ReportComponent implements OnInit {
   formData = new FormData()
   file: any = [];
   addFile(event) {
-    
+
     this.selectedFile = null;
     this.file = [];
     this.selectedFiles = null
@@ -218,7 +218,7 @@ export class ReportComponent implements OnInit {
   }
 
   onDemandSubmit() {
-    return;
+    // return;
     let document_ids = []
     this.selection.selected.map(res => {
       document_ids.push(res.document_id)
