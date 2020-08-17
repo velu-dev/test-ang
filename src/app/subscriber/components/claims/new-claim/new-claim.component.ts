@@ -220,7 +220,8 @@ export class NewClaimComponent implements OnInit {
     public cookieService: CookieService,
     private breakpointObserver: BreakpointObserver,
     private _location: Location,
-    private logger: NGXLogger) {
+    private logger: NGXLogger,
+    private loader: NgxSpinnerService) {
 
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -1085,12 +1086,23 @@ export class NewClaimComponent implements OnInit {
       width: '800px',
       data: { claimant: this.claimant.value, bodyparts: this.bodyPartsList, isEdit: true, injuryData: this.injuryInfo }
     });
-
+    localStorage.setItem("editingInjury", JSON.stringify(element));
     dialogRef.afterClosed().subscribe(result => {
+      this.loader.show();
       if (result) {
-        this.injuryInfodata.splice(index, 1);
-        this.injuryInfo = result;
-        this.addInjury();
+        this.logger.log("success");
+        localStorage.removeItem("editingInjury");
+        this.injuryInfodata[index] = result
+        this.dataSource = new MatTableDataSource(this.injuryInfodata)
+        this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+        this.loader.hide();
+      } else {
+        let editingInjury = localStorage.getItem("editingInjury");
+        let data = JSON.parse(editingInjury)
+        data.date_of_injury = new Date(data.date_of_injury)
+        this.injuryInfodata[index] = data;
+        this.dataSource = new MatTableDataSource(this.injuryInfodata)
+        this.loader.hide();
       }
     });
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
@@ -1220,55 +1232,6 @@ export class NewClaimComponent implements OnInit {
       InsuranceAdjuster: claimadmin
     })
   }
-  contactMask = { type: "", mask: "" }
-  // changeCommunicationType(contact, type) {
-  //   if (contact)
-  //     if (type == "man")
-  //       this.billable_item.patchValue({
-  //         intake_call: {
-  //           call_type_detail: ""
-  //         }
-  //       })
-  //   switch (contact.contact_type) {
-  //     case "E1":
-  //       this.contactMask.mask = "";
-  //       this.billable_item.controls.intake_call.get('call_type_detail').setValidators(Validators.email);
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "E2":
-  //       this.contactMask.mask = "";
-  //       this.billable_item.controls.intake_call.get('call_type_detail').setValidators(Validators.email)
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "L1":
-  //       this.contactMask.mask = "(000) 000-0000";
-  //       this.billable_item.controls.intake_call.get('call_type_detail').setValidators([])
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "L2":
-  //       this.contactMask.mask = "(000) 000-0000";
-  //       this.billable_item.controls.intake_call.get('call_type_detail').setValidators([])
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "F1":
-  //       this.contactMask.mask = "(000) 000-0000";
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "F2":
-  //       this.contactMask.mask = "(000) 000-0000";
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "LE":
-  //       this.contactMask.mask = "";
-  //       this.contactMask.type = "text";
-  //       break;
-  //     default:
-  //       this.contactMask.mask = "";
-  //       this.contactMask.type = "text";
-  //       break;
-  //   }
-  //   this.billable_item.get('call_type_detail').updateValueAndValidity();
-  // }
   todayDate = { appointment: new Date(), intake: new Date() }
   minDate: any;
   pickerOpened(type) {
@@ -1294,11 +1257,6 @@ export class NewClaimComponent implements OnInit {
     return errorCount;
   }
   procedure_type(procuderalCode) {
-    // if (procuderalCode.modifier)
-    //   this.modifiers = procuderalCode.modifier;
-    // this.billable_item.patchValue({
-    //   exam_type: { modifier_id: [] }
-    // })
   }
   selectedFile: File;
   uploadFile(event) {
@@ -1325,13 +1283,6 @@ export class NewClaimComponent implements OnInit {
   note: string = null;
   documents_ids = [];
   correspondFormSubmit() {
-    // this.logger.log(this.correspondForm.value)
-    // this.logger.log(this.claim.value.claim_details.id)
-    // if (this.correspondForm.invalid) {
-    //   this.correspondForm.get('note').markAsTouched();
-    //   this.correspondForm.get('file').markAsTouched();
-    //   return;
-    // }
     if (this.file == null || this.note == null || this.note.trim() == '') {
       return;
     }
@@ -1608,7 +1559,6 @@ export class InjuryDialog {
     private claimService: ClaimService,
     private alertService: AlertService,
     private logger: NGXLogger) {
-    logger.info(data)
     dialogRef.disableClose = true;
     this.isLoding = true;
     this.claimant = data['claimant']
@@ -1622,21 +1572,21 @@ export class InjuryDialog {
   }
 
   onNoClick(): void {
-    this.logger.info(this.data)
-    if (this.isEdit) {
-      this.injuryInfo = this.data['injuryData'];
-      if (this.injuryInfo.continuous_trauma) {
-        if (this.injuryInfo.continuous_trauma_start_date) {
-        } else {
-          this.injuryInfo.continuous_trauma = false;
-        }
-      }
-      if (this.injuryInfo.body_part_id != null)
-        // this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
-        this.dialogRef.close(this.injuryInfo);
-    } else {
-      this.dialogRef.close();
-    }
+    this.dialogRef.close(false);
+    // if (this.isEdit) {
+    //   this.injuryInfo = this.data['injuryData'];
+    //   if (this.injuryInfo.continuous_trauma) {
+    //     if (this.injuryInfo.continuous_trauma_start_date) {
+    //     } else {
+    //       this.injuryInfo.continuous_trauma = false;
+    //     }
+    //   }
+    //   if (this.injuryInfo.body_part_id != null)
+    //     // this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+    //     this.dialogRef.close(this.injuryInfo);
+    // } else {
+    //   this.dialogRef.close(false);
+    // }
   }
   addInjury() {
     if (this.injuryInfo.body_part_id.length == 0) {

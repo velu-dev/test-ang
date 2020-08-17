@@ -47,11 +47,8 @@
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
                 fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Exam Type*</mat-label>
-                <mat-select disabled [(ngModel)]="claimDetails.exam_type_id" [ngModelOptions]="{standalone: true}">
-                    <mat-option *ngFor="let examType of examTypes" [value]="examType.id">
-                        {{examType.exam_type_code}} - {{examType.exam_name}}
-                    </mat-option>
-                </mat-select>
+                <input type="text" matInput placeholder="Enter WCAB Number" autocomplete="off"
+                    value="{{claimDetails.exam_type?.exam_type_code}} - {{claimDetails.exam_type?.exam_name}}" disabled>
                 <mat-error>Please select exam type</mat-error>
             </mat-form-field>
 
@@ -171,8 +168,7 @@
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Intake Call Date & Time</mat-label>
                         <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
-                            autocomplete="off" [min]="minDate" [max]="todayDate.intake"
-                            [owlDateTime]="intake">
+                            autocomplete="off" [min]="minDate" [max]="todayDate.intake" [owlDateTime]="intake">
                         <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake">
                         </mat-datepicker-toggle>
                         <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>

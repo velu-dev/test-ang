@@ -725,20 +725,21 @@
         <div fxLayout="row wrap">
             <div fxLayout="row wrap" fxFlex="100" class="document-file-upload w-100">
                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
-                appearance="outline">
-                <mat-label>Document Type</mat-label>
-                <mat-select [(ngModel)]="documentType"  (selectionChange)="docChange($event.value)">
-                    <mat-option *ngFor="let doc of documentList" [value]="doc.id">
-                        {{doc.document_category_name}}
-                    </mat-option>
-                </mat-select>
-                <mat-hint *ngIf="errors.doc_type.isError">
-                    <mat-error>
-                        {{errors.doc_type.error}}
-                    </mat-error>
-                </mat-hint>
-            </mat-form-field>
-                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_" *ngIf="documentType == null || documentType != 7">
+                    appearance="outline">
+                    <mat-label>Document Type</mat-label>
+                    <mat-select [(ngModel)]="documentType" (selectionChange)="docChange($event.value)">
+                        <mat-option *ngFor="let doc of documentList" [value]="doc.id">
+                            {{doc.document_category_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="errors.doc_type.isError">
+                        <mat-error>
+                            {{errors.doc_type.error}}
+                        </mat-error>
+                    </mat-hint>
+                </mat-form-field>
+                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
+                    *ngIf="documentType == null || documentType != 7">
                     <button type="button" mat-stroked-button class="filled-gray" (click)="uploader.click()">Select File
                         <!-- <i class="fa fa-upload p-l-5"></i> -->
                     </button>
@@ -753,15 +754,16 @@
                     </mat-form-field>
                 </div>
 
-                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_" *ngIf="documentType == 7">
+                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
+                    *ngIf="documentType == 7">
                     <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
                     <mat-form-field appearance="standard" class="p-l-10 w-100">
-                      <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
-                      <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                        accept=".mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
-                      <mat-hint>Supported file formats: .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
+                        <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
+                        <input type="file" #uploader hidden (change)="addFile($event)" multiple
+                            accept=".mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
+                        <mat-hint>Supported file formats: .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
                     </mat-form-field>
-                  </div>
+                </div>
 
 
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
@@ -823,7 +825,8 @@
                             <th mat-header-cell *matHeaderCellDef class=""> Action </th>
                             <td mat-cell *matCellDef="let element" class="">
                                 <a target="_self" class="text-success" (click)="download(element)">Download</a>
-                                <a class="text-danger m-l-10" *ngIf="!element?.isServiceRequested" (click)="deleteDocument(element)">Remove</a>
+                                <a class="text-danger m-l-10" *ngIf="!element?.isServiceRequested"
+                                    (click)="deleteDocument(element)">Remove</a>
                             </td>
                         </ng-container>
 

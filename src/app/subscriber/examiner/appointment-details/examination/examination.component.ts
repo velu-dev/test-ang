@@ -79,6 +79,7 @@ export class ExaminationComponent implements OnInit {
     })
   }
   isLoading: any = false;
+  alldocuments = [];
   getData() {
     this.isLoading = true;
     this.ondemandService.getBilling(this.claim_id, this.billableId).subscribe(res => {
@@ -89,7 +90,8 @@ export class ExaminationComponent implements OnInit {
     })
     this.ondemandService.listUploadedDocs(this.claim_id, this.billableId).subscribe(res => {
       if (res.status)
-        this.uploadedDocument = new MatTableDataSource(res.data);
+        this.alldocuments = res.data;
+      this.uploadedDocument = new MatTableDataSource(res.data);
     })
 
   }
@@ -164,7 +166,7 @@ export class ExaminationComponent implements OnInit {
         this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
         formData = new FormData();
-        this.file = "";
+        this.file = [];
         this.getData();
         this.error = { status: false, message: "" };
       }
@@ -186,6 +188,14 @@ export class ExaminationComponent implements OnInit {
       if (result['data']) {
         this.ondemandService.removeDocument(element.id).subscribe(res => {
           if (res.status) {
+            let i = 0;
+            this.alldocuments.map(dd => {
+              if (dd.id == element.id) {
+                this.alldocuments.splice(i, 1)
+              }
+              i = i + 1;
+            })
+            this.uploadedDocument = new MatTableDataSource(this.alldocuments);
             this.alertService.openSnackBar(res.message, "success")
             this.getData();
           } else {

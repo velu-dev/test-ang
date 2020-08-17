@@ -388,13 +388,13 @@ export class AppointmentDetailsComponent implements OnInit {
       this.documentsData = new MatTableDataSource([]);
     })
   }
-
+  tabData = [];
   tabChanges(event) {
     this.tabIndex = event
     this.filterValue = '';
     this.documentsData = new MatTableDataSource([])
-    let data = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
-    this.documentsData = new MatTableDataSource(data)
+    this.tabData = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
+    this.documentsData = new MatTableDataSource(this.tabData)
   }
   todayDate = { appointment: new Date(), intake: new Date() };
   minDate: any;
@@ -574,6 +574,14 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.examinerService.deleteDocument(data.id).subscribe(res => {
+          let i = 0;
+          this.tabData.map(dd => {
+            if (dd.id == data.id) {
+              this.tabData.splice(i, 1)
+            }
+            i = i + 1;
+          })
+          this.documentsData = new MatTableDataSource(this.tabData);
           this.getDocumentData();
           this.alertService.openSnackBar("File deleted successfully!", 'success');
         }, error => {

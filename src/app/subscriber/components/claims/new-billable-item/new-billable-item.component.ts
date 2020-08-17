@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment';
+import { NGXLogger } from 'ngx-logger';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'L LT',
   fullPickerInput: 'MM-DD-YYYY hh:mm A',
@@ -47,7 +48,7 @@ export class NewBillableItemComponent implements OnInit {
   languageList: any = [];
   primary_language_spoken: boolean = false;
   claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "" };
-  claimDetails = { claim_number: "", wcab_number: "", exam_type_id: "" };
+  claimDetails = { claim_number: "", wcab_number: "", exam_type_id: "", exam_type: {} };
   examTypes: any;
   isLoading = false;
   modifierList = [];
@@ -57,6 +58,7 @@ export class NewBillableItemComponent implements OnInit {
     private _location: Location,
     private route: ActivatedRoute,
     private router: Router,
+    private logger: NGXLogger
   ) {
     this.isLoading = true;
     this.claimService.seedData('exam_type').subscribe(res => {
@@ -66,11 +68,18 @@ export class NewBillableItemComponent implements OnInit {
       this.claimId = param.claim;
       this.claimantId = param.claimant;
       this.claimService.getClaim(this.claimId).subscribe(claim => {
+        this.logger.log("claim", claim);
         //to send claim details exam type
         this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(res => {
           this.procuderalCodes = res.data;
         })
-        this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number }
+        let Examtype = {};
+        this.examTypes.map(exam => {
+          if (exam.id == claim.data.claim_details.exam_type_id) {
+            Examtype = exam;
+          }
+        })
+        this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number, exam_type: Examtype }
       })
       this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
         this.claimant = claimant.data[0]
