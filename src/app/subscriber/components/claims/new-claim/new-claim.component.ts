@@ -86,7 +86,12 @@ export interface claimant1 {
   continuous_trauma_end_date: string,
   note: string
 }
-const ELEMENT_DATA: claimant1[] = []
+export const _filter = (opt: any[], value: string): string[] => {
+  console.log("opt", opt);
+  const filterValue = value.toLowerCase();
+
+  return opt.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
+};
 @Component({
   selector: 'app-new-claim',
   templateUrl: './new-claim.component.html',
@@ -215,7 +220,8 @@ export class NewClaimComponent implements OnInit {
     public cookieService: CookieService,
     private breakpointObserver: BreakpointObserver,
     private _location: Location,
-    private logger: NGXLogger) {
+    private logger: NGXLogger,
+    private loader: NgxSpinnerService) {
 
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -275,7 +281,7 @@ export class NewClaimComponent implements OnInit {
                 date_of_birth: claimant['data'][0].date_of_birth
               }
             })
-            this.stepper.next();
+            //this.stepper.next();
           }
         })
       }
@@ -329,6 +335,9 @@ export class NewClaimComponent implements OnInit {
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
     })
+    // this.aattroneyGroupOptions = this.claimService.seedData("eams_claims_administrator");
+    // this.dattroneyGroupOptions = this.claimService.seedData("eams_claims_administrator");
+    // this.claimAdminGroupOptions = this.claimService.seedData("eams_claims_administrator");
     this.ALL_SEED_DATA.map(seed => {
       this.claimService.seedData(seed).subscribe(res => {
         switch (seed) {
@@ -341,13 +350,28 @@ export class NewClaimComponent implements OnInit {
           case "body_part":
             this.bodyPartsList = res.data;
             break;
-          case "eams_representatives":
-            this.logger.info("eams_representatives",res.data);
-            this.eamsRepresentatives = res.data;
-            break;
           case "eams_claims_administrator":
-            this.logger.info("eams_claims_administrator",res.data);
             this.eamsClaimsAdministrator = res.data;
+            this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }];
+            this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.claimAdminList))
+              );
+            break;
+          case "eams_representatives":
+            this.eamsRepresentatives = res.data;
+            this.attroneylist = [{ name: "From DB", data: this.eamsRepresentatives }, { name: "From EAMS", data: [] }];
+            this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.attroneylist))
+              );
+            this.dattroneyGroupOptions = this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.attroneylist))
+              );
             break;
           case "exam_type":
             this.examTypes = res.data;
@@ -627,6 +651,18 @@ export class NewClaimComponent implements OnInit {
         this.claimChanges = true;
       }
     );
+  }
+  aattroneyGroupOptions: Observable<any[]>;
+  dattroneyGroupOptions: Observable<any[]>;
+  claimAdminGroupOptions: Observable<any[]>;
+  private _filterAttroney(value: string, data) {
+    if (value) {
+      return data
+        .map(group => ({ name: group.name, data: _filter(group.data, value) }))
+        .filter(group => group.data.length > 0);
+    }
+
+    return data;
   }
   newClaimant() {
     Object.keys(this.claimant.controls).forEach(key => {
@@ -1050,12 +1086,23 @@ export class NewClaimComponent implements OnInit {
       width: '800px',
       data: { claimant: this.claimant.value, bodyparts: this.bodyPartsList, isEdit: true, injuryData: this.injuryInfo }
     });
-
+    localStorage.setItem("editingInjury", JSON.stringify(element));
     dialogRef.afterClosed().subscribe(result => {
+      this.loader.show();
       if (result) {
-        this.injuryInfodata.splice(index, 1);
-        this.injuryInfo = result;
-        this.addInjury();
+        this.logger.log("success");
+        localStorage.removeItem("editingInjury");
+        this.injuryInfodata[index] = result
+        this.dataSource = new MatTableDataSource(this.injuryInfodata)
+        this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+        this.loader.hide();
+      } else {
+        let editingInjury = localStorage.getItem("editingInjury");
+        let data = JSON.parse(editingInjury)
+        data.date_of_injury = new Date(data.date_of_injury)
+        this.injuryInfodata[index] = data;
+        this.dataSource = new MatTableDataSource(this.injuryInfodata)
+        this.loader.hide();
       }
     });
     this.dataSource = new MatTableDataSource(this.injuryInfodata)
@@ -1110,17 +1157,31 @@ export class NewClaimComponent implements OnInit {
           } else {
             this.employerList = res.data.employer;
           }
-          ;
-          if (res.data.claims_administrator.length == 1) {
-            this.claimAdminList = [];
-            this.appClaimAdmin(res.data.claims_administrator[0])
-          } else {
-            this.claimAdminList = res.data.claims_administrator;
-          }
+          // if (res.data.claims_administrator.length == 1) {
+          //   this.claimAdminList = [];
+          //   // this.appClaimAdmin(res.data.claims_administrator[0])
+          // } else {
+          // this.claimAdminList = res.data.claims_administrator;
+          // let data = [];
+          let claim_admin = [];
+          res.data.claims_administrator.map(res => {
+            res.name = res.company_name;
+            claim_admin.push(res)
+          })
+          this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: claim_admin }]
+          console.table(this.claimAdminList);
+          // }
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
-            this.attroneylist = res.data.attroney;
-            this.attroneySelect = true;
+            console.log("attrony")
+            // this.attroneylist = res.data.attroney;
+            let attroney = [];
+            res.data.attroney.map(res => {
+              res.name = res.company_name;
+              attroney.push(res)
+            })
+            this.attroneylist = [{ name: "From DB", data: this.eamsRepresentatives }, { name: "From EAMS", data: attroney }]
+            console.table(this.attroneylist);
           }
           this.iseams_entry = true;
         } else {
@@ -1133,7 +1194,9 @@ export class NewClaimComponent implements OnInit {
       this.alertService.openSnackBar("Please enter EAMS Number", "error")
     }
   }
-  attroneySelect = false;
+  AattroneySelect = true;
+  DattroneySelect = true;
+  CASelect = true;
   attroneylist = [];
   bodyPartId(id) {
     let data = "";
@@ -1164,59 +1227,11 @@ export class NewClaimComponent implements OnInit {
     })
   }
   appClaimAdmin(claimadmin) {
+    console.log(claimadmin)
     this.claim.patchValue({
       InsuranceAdjuster: claimadmin
     })
   }
-  contactMask = { type: "", mask: "" }
-  // changeCommunicationType(contact, type) {
-  //   if (contact)
-  //     if (type == "man")
-  //       this.billable_item.patchValue({
-  //         intake_call: {
-  //           call_type_detail: ""
-  //         }
-  //       })
-  //   switch (contact.contact_type) {
-  //     case "E1":
-  //       this.contactMask.mask = "";
-  //       this.billable_item.controls.intake_call.get('call_type_detail').setValidators(Validators.email);
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "E2":
-  //       this.contactMask.mask = "";
-  //       this.billable_item.controls.intake_call.get('call_type_detail').setValidators(Validators.email)
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "L1":
-  //       this.contactMask.mask = "(000) 000-0000";
-  //       this.billable_item.controls.intake_call.get('call_type_detail').setValidators([])
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "L2":
-  //       this.contactMask.mask = "(000) 000-0000";
-  //       this.billable_item.controls.intake_call.get('call_type_detail').setValidators([])
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "F1":
-  //       this.contactMask.mask = "(000) 000-0000";
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "F2":
-  //       this.contactMask.mask = "(000) 000-0000";
-  //       this.contactMask.type = "text";
-  //       break;
-  //     case "LE":
-  //       this.contactMask.mask = "";
-  //       this.contactMask.type = "text";
-  //       break;
-  //     default:
-  //       this.contactMask.mask = "";
-  //       this.contactMask.type = "text";
-  //       break;
-  //   }
-  //   this.billable_item.get('call_type_detail').updateValueAndValidity();
-  // }
   todayDate = { appointment: new Date(), intake: new Date() }
   minDate: any;
   pickerOpened(type) {
@@ -1242,11 +1257,6 @@ export class NewClaimComponent implements OnInit {
     return errorCount;
   }
   procedure_type(procuderalCode) {
-    // if (procuderalCode.modifier)
-    //   this.modifiers = procuderalCode.modifier;
-    // this.billable_item.patchValue({
-    //   exam_type: { modifier_id: [] }
-    // })
   }
   selectedFile: File;
   uploadFile(event) {
@@ -1273,13 +1283,6 @@ export class NewClaimComponent implements OnInit {
   note: string = null;
   documents_ids = [];
   correspondFormSubmit() {
-    // this.logger.log(this.correspondForm.value)
-    // this.logger.log(this.claim.value.claim_details.id)
-    // if (this.correspondForm.invalid) {
-    //   this.correspondForm.get('note').markAsTouched();
-    //   this.correspondForm.get('file').markAsTouched();
-    //   return;
-    // }
     if (this.file == null || this.note == null || this.note.trim() == '') {
       return;
     }
@@ -1549,15 +1552,18 @@ export class InjuryDialog {
   isLoding: boolean = false;
   minDate: any;
   injuryData: any;
+  isEdit: any;
   constructor(
     public dialogRef: MatDialogRef<InjuryDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private claimService: ClaimService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private logger: NGXLogger) {
     dialogRef.disableClose = true;
     this.isLoding = true;
     this.claimant = data['claimant']
     this.bodyPartsList = data['bodyparts'];
+    this.isEdit = data['isEdit'];
     if (data['isEdit']) {
       this.injuryInfo = data['injuryData']
       this.injuryData = data['injuryData']
@@ -1566,15 +1572,21 @@ export class InjuryDialog {
   }
 
   onNoClick(): void {
-    this.injuryInfo = this.data['injuryData'];
-    if (this.injuryInfo.continuous_trauma) {
-      if (this.injuryInfo.continuous_trauma_start_date) {
-      } else {
-        this.injuryInfo.continuous_trauma = false;
-      }
-    }
-    // this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
-    this.dialogRef.close(this.injuryInfo);
+    this.dialogRef.close(false);
+    // if (this.isEdit) {
+    //   this.injuryInfo = this.data['injuryData'];
+    //   if (this.injuryInfo.continuous_trauma) {
+    //     if (this.injuryInfo.continuous_trauma_start_date) {
+    //     } else {
+    //       this.injuryInfo.continuous_trauma = false;
+    //     }
+    //   }
+    //   if (this.injuryInfo.body_part_id != null)
+    //     // this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+    //     this.dialogRef.close(this.injuryInfo);
+    // } else {
+    //   this.dialogRef.close(false);
+    // }
   }
   addInjury() {
     if (this.injuryInfo.body_part_id.length == 0) {

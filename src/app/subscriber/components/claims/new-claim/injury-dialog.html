@@ -18,10 +18,9 @@
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Date of Injury </mat-label>
                 <input matInput placeholder="MM-DD-YYYY" autocomplete="off" [min]="minDate" [max]="today"
-                    [matDatepicker]="date_of_injury1"  (click)="changeEvent()" [(ngModel)]="injuryInfo.date_of_injury">
+                    [matDatepicker]="date_of_injury1" (click)="changeEvent()" [(ngModel)]="injuryInfo.date_of_injury">
                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1"></mat-datepicker-toggle>
-                <mat-datepicker #date_of_injury1 disabled="false" (opened)="changeEvent()" 
-                ></mat-datepicker>
+                <mat-datepicker #date_of_injury1 disabled="false" (opened)="changeEvent()"></mat-datepicker>
                 <mat-error>Please enter valid date of injury</mat-error>
             </mat-form-field>
 
@@ -46,10 +45,11 @@
                 <mat-label>CT Start Date</mat-label>
                 <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
                     [matDatepicker]="continuous_trauma_start_date" [(ngModel)]="injuryInfo.continuous_trauma_start_date"
-                    [min]="minDate" [max]="today"  (click)="changeEvent()">
+                    [min]="minDate" [max]="today" (click)="changeEvent()">
                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                 </mat-datepicker-toggle>
-                <mat-datepicker #continuous_trauma_start_date disabled="false" (opened)="changeEvent()"></mat-datepicker>
+                <mat-datepicker #continuous_trauma_start_date disabled="false" (opened)="changeEvent()">
+                </mat-datepicker>
             </mat-form-field>
 
             <mat-form-field *ngIf="injuryInfo.continuous_trauma" appearance="outline" fxFlex="33.3" fxFlex.md="33."
@@ -64,9 +64,8 @@
             </mat-form-field>
 
             <div fxFlex="100" class="p-t-10 text-center">
-                <button mat-stroked-button (click)="onNoClick()" type="button"
-                    class="outline-danger m-r-10">Cancel</button>
-                <button mat-stroked-button type="button" class="outline-success text-center m-r-5"
+                <button mat-stroked-button (click)="onNoClick()" class="outline-danger m-r-10">Cancel</button>
+                <button mat-stroked-button type="submit" class="outline-success text-center m-r-5"
                     (click)="addInjury()">Save</button>
             </div>
         </div>
