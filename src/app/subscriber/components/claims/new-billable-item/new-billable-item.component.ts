@@ -48,7 +48,7 @@ export class NewBillableItemComponent implements OnInit {
   languageList: any = [];
   primary_language_spoken: boolean = false;
   claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "" };
-  claimDetails = { claim_number: "", wcab_number: "", exam_type_id: "", exam_type: {} };
+  claimDetails = { claim_number: "", wcab_number: "", exam_type_id: "", exam_type_code: "", exam_name: "" };
   examTypes: any;
   isLoading = false;
   modifierList = [];
@@ -73,13 +73,13 @@ export class NewBillableItemComponent implements OnInit {
         this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(res => {
           this.procuderalCodes = res.data;
         })
-        let Examtype = {};
+        let Examtype = { exam_type_code: "", exam_name: "" };
         this.examTypes.map(exam => {
           if (exam.id == claim.data.claim_details.exam_type_id) {
             Examtype = exam;
           }
         })
-        this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number, exam_type: Examtype }
+        this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number, exam_type_code: Examtype.exam_type_code, exam_name: Examtype.exam_name }
       })
       this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
         this.claimant = claimant.data[0]

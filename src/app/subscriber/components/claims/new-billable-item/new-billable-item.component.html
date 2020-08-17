@@ -48,7 +48,7 @@
                 fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Exam Type*</mat-label>
                 <input type="text" matInput placeholder="Enter WCAB Number" autocomplete="off"
-                    value="{{claimDetails.exam_type?.exam_type_code}} - {{claimDetails.exam_type?.exam_name}}" disabled>
+                    value="{{claimDetails?.exam_type_code}} - {{claimDetails?.exam_name}}" disabled>
                 <mat-error>Please select exam type</mat-error>
             </mat-form-field>
 
