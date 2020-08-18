@@ -165,7 +165,7 @@ export class ReportComponent implements OnInit {
         this.selectedFile = this.selectedFiles[i];
         this.file.push(this.selectedFiles[i].name);
       } else {
-        //this.selectedFile = null;
+        this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
         this.errors.file.isError = true;
         this.errors.file.error = "This file type is not accepted";
@@ -196,6 +196,7 @@ export class ReportComponent implements OnInit {
       this.formData = new FormData();
       this.file = [];
       this.getReport();
+      this.errors = { file: { isError: false, error: "" }}
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
