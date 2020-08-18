@@ -15,11 +15,11 @@ export class AlertService {
                 message = message + "!"
             }
         this.snackBar.openFromComponent(AlertComponent, {
-            duration: 2 * 1000,
+            duration: 4 * 1000,
             data: { message: message, action: action },
             panelClass: action,
-            verticalPosition: 'top',
-            horizontalPosition: 'end'
+            verticalPosition: 'top', // 'top' | 'bottom'
+            horizontalPosition: 'center' //'start' | 'center' | 'end' | 'left' | 'right'
         });
     }
 }

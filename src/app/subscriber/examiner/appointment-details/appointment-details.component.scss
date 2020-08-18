@@ -395,6 +395,14 @@
                 }
             }
         }
+        .Upload_ {
+            .mat-hint {
+                width: 100%;
+                mat-error {
+                    float: right;
+                }
+            }
+        }
     }
     mat-tab-group {
         height: 50px;
