@@ -111,7 +111,7 @@ export class RecordsComponent implements OnInit {
       })
       this.dataSoruceOut = new MatTableDataSource(outFile);
       this.dataSoruceIn = new MatTableDataSource(inFile)
-
+      this.rushRequest = false;
       this.statusBarChanges(this.recordData.on_demand_status)
     }, error => {
       this.dataSource = new MatTableDataSource([]);

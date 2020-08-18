@@ -68,6 +68,7 @@ export class HistoryComponent implements OnInit {
 
       })
       this.dataSource = new MatTableDataSource(this.inFile);
+     
       this.statusBarChanges(this.historyData.on_demand_status)
     }, error => {
       this.dataSource = new MatTableDataSource([])
@@ -117,6 +118,7 @@ export class HistoryComponent implements OnInit {
       service_provider_id: this.historyData.documets[0].service_provider_id // default 3
     }
     this.onDemandService.requestCreate(data).subscribe(history => {
+      this.rushRequest = false;
       this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully!", 'success');
     }, error => {
       console.log(error);

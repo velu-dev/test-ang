@@ -111,6 +111,7 @@ export class ReportComponent implements OnInit {
       })
       this.dataSoruceOut = new MatTableDataSource(outFile);
       this.dataSoruceIn = new MatTableDataSource(inFile);
+      this.rushRequest = false;
       this.statusBarChanges(this.reportData.on_demand_status)
     }, error => {
       this.dataSource = new MatTableDataSource([]);
