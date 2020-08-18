@@ -5,7 +5,7 @@ import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogu
 import { ExaminerService } from '../../service/examiner.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from '../../service/claim.service';
@@ -44,6 +44,8 @@ export class AppointmentDetailsComponent implements OnInit {
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -355,6 +357,11 @@ export class AppointmentDetailsComponent implements OnInit {
       }
   }
   examinarChange(examinar) {
+    this.billable_item.patchValue({
+      appointment: {
+        examiner_service_location_id: null
+      }
+    })
     this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
       this.examinarAddress = res['data'];
     })
@@ -394,7 +401,8 @@ export class AppointmentDetailsComponent implements OnInit {
     this.filterValue = '';
     this.documentsData = new MatTableDataSource([])
     this.tabData = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
-    this.documentsData = new MatTableDataSource(this.tabData)
+    this.documentsData = new MatTableDataSource(this.tabData);
+    this.documentsData.sort = this.sort;
   }
   todayDate = { appointment: new Date(), intake: new Date() };
   minDate: any;

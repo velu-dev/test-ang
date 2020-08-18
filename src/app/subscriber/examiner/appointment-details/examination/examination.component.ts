@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
@@ -43,6 +43,7 @@ export interface PeriodicElement1 {
   ],
 })
 export class ExaminationComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   displayedColumns: string[] = ['select', 'form_name'];
   selection = new SelectionModel<any>(true, []);
@@ -90,8 +91,11 @@ export class ExaminationComponent implements OnInit {
     })
     this.ondemandService.listUploadedDocs(this.claim_id, this.billableId).subscribe(res => {
       if (res.status)
-        this.alldocuments = res.data;
-      this.uploadedDocument = new MatTableDataSource(res.data);
+        if (res.data) {
+          this.alldocuments = res.data;
+          this.uploadedDocument = new MatTableDataSource(res.data);
+          this.uploadedDocument.sort = this.sort;
+        }
     })
 
   }
@@ -162,11 +166,15 @@ export class ExaminationComponent implements OnInit {
     }
     this.ondemandService.uploadExaminationDocument(formData).subscribe(res => {
       if (res.status) {
+        console.log(res)
         this.alertService.openSnackBar(res.message, 'success');
         this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
         formData = new FormData();
         this.file = [];
+        // this.alldocuments.push(res.data);
+        // this.uploadedDocument = new MatTableDataSource(this.alldocuments);
+        // this.uploadedDocument.sort = this.sort;
         this.getData();
         this.error = { status: false, message: "" };
       }
@@ -196,6 +204,7 @@ export class ExaminationComponent implements OnInit {
               i = i + 1;
             })
             this.uploadedDocument = new MatTableDataSource(this.alldocuments);
+            this.uploadedDocument.sort = this.sort;
             this.alertService.openSnackBar(res.message, "success")
             this.getData();
           } else {

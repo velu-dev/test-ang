@@ -27,7 +27,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { EventEmitter } from 'protractor';
 import * as moment from 'moment';
 import { NGXLogger } from 'ngx-logger';
-
+import { saveAs } from 'file-saver';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
@@ -505,7 +505,7 @@ export class NewClaimComponent implements OnInit {
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       gender: [null],
-      email: ["", Validators.compose([Validators.email])],
+      email: ["", Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       handedness: [null],
       primary_language_not_english: [null],
       primary_language_spoken: [null],
@@ -545,7 +545,7 @@ export class NewClaimComponent implements OnInit {
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [null],
-        email: [null, Validators.compose([Validators.email])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       }),
       Employer: this.formBuilder.group({
         id: [null],
@@ -557,7 +557,7 @@ export class NewClaimComponent implements OnInit {
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [null],
-        email: [null, Validators.compose([Validators.email])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
 
       }),
       ApplicantAttorney: this.formBuilder.group({
@@ -570,14 +570,14 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        email: [null, Validators.compose([Validators.email])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [null],
         company_name: [null],
         name: [null],
-        email: [null, Validators.compose([Validators.email])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         street1: [null],
         street2: [null],
         city: [null],
@@ -595,7 +595,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        email: [null, Validators.compose([Validators.email])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       })
     })
@@ -1010,14 +1010,6 @@ export class NewClaimComponent implements OnInit {
   isInjuryEdit = false;
   addInjury() {
     if (this.isInjuryEdit) {
-      // let index = 0;
-      // this.injuryInfodata.map(res => {
-      //   if (res.body_part_id == this.injuryInfo.body_part_id) {
-      //     this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury);
-      //     this.injuryInfodata[index] = this.injuryInfo;
-      //   }
-      //   index = index + 1;
-      // })
       let arrData = [];
       // if (this.injuryInfo['body_part_id'] != null)
       this.logger.log(this.injuryInfo)
@@ -1238,7 +1230,7 @@ export class NewClaimComponent implements OnInit {
     // this.minDate = new Date(this.claimant.value.date_of_birth);
     if (type = 'intake') {
       let date = moment();
-      this.minDate = date.subtract(60, 'days');
+      this.minDate = date.subtract(59, 'days');
       this.todayDate.intake = new Date();
     } else {
       this.todayDate.appointment = new Date();
@@ -1531,7 +1523,10 @@ export class NewClaimComponent implements OnInit {
       }
     });
   }
-
+  downloadDoc(file, file_name) {
+    this.alertService.openSnackBar("File downloaded successfully", "success");
+    saveAs(file, file_name);
+  }
 }
 
 @Component({
@@ -1596,14 +1591,40 @@ export class InjuryDialog {
     if (!this.injuryInfo.date_of_injury) {
       this.alertService.openSnackBar("Please select injury date", "error")
       return
+    } else {
+      if (!(moment(this.injuryInfo.date_of_injury).isAfter(moment(this.claimant.date_of_birth)))) {
+        this.alertService.openSnackBar("Please select injury date after date of birth", "error")
+        return
+      }
+      if (!(moment(this.injuryInfo.date_of_injury).isBefore(moment(new Date())))) {
+        this.alertService.openSnackBar("Please select injury date before today", "error");
+        return
+      }
     }
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
-        if (this.injuryInfo.continuous_trauma_end_date)
+        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isAfter(moment(this.claimant.date_of_birth)))) {
+          this.alertService.openSnackBar("Continues trauma Start date should after date of birth", "error")
+          return
+        }
+        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(new Date())))) {
+          this.alertService.openSnackBar("Continues trauma Start date should be before today", "error");
+          return
+        }
+        if (this.injuryInfo.continuous_trauma_end_date) {
+          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isAfter(moment(this.claimant.date_of_birth)))) {
+            this.alertService.openSnackBar("Continues trauma End date should after date of birth", "error")
+            return
+          }
+          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isBefore(moment(new Date())))) {
+            this.alertService.openSnackBar("Continues trauma End date should be before today", "error");
+            return
+          }
           if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
             this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
             return
           }
+        }
       } else {
         this.alertService.openSnackBar("Please select start date", "error")
         return;
