@@ -36,6 +36,7 @@ export class HistoryComponent implements OnInit {
   historyData: any;
   rushRequest: any;
   inFile: any = [];
+  statusBarValues = { value: null, status: '', class: '' }
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private onDemandService: OnDemandService, private alertService: AlertService) {
 
@@ -66,10 +67,34 @@ export class HistoryComponent implements OnInit {
         }
 
       })
-      this.dataSource = new MatTableDataSource(this.inFile)
+      this.dataSource = new MatTableDataSource(this.inFile);
+     
+      this.statusBarChanges(this.historyData.on_demand_status)
     }, error => {
       this.dataSource = new MatTableDataSource([])
     })
+  }
+
+  statusBarChanges(status) {
+    switch (status) {
+      case 'Not Sent':
+        this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
+        break;
+      case 'In Progress':
+        console.log(status)
+        this.statusBarValues = { value: 50, status: status, class: 'sent' }
+        break;
+      case 'Completed':
+        this.statusBarValues = { value: 100, status: status, class: 'complete' }
+        break;
+      case 'Error':
+        this.statusBarValues = { value: 50, status: status, class: 'error' }
+        break;
+
+      default:
+        this.statusBarValues = { value: 0, status: 'Error', class: '.error' }
+        break;
+    }
   }
 
  
@@ -93,6 +118,7 @@ export class HistoryComponent implements OnInit {
       service_provider_id: this.historyData.documets[0].service_provider_id // default 3
     }
     this.onDemandService.requestCreate(data).subscribe(history => {
+      this.rushRequest = false;
       this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully!", 'success');
     }, error => {
       console.log(error);

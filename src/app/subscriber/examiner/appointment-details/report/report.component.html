@@ -3,7 +3,7 @@
     <div fxFlex="100">
       <div class="main-title">Report Transcription and Compilation On Demand Status  <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="The Transcriptionist will use the dictation and the documents submitted to them to create a rough draft of the Report. View the Transcriptionist’s progress here"><i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description"> View the progress of the Transcription and compilation services here.</p>
-      <mat-progress-bar mode="determinate" value="50" class="not-sent"></mat-progress-bar>
+      <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class"></mat-progress-bar>
       <div class="text-center">{{reportData?.on_demand_status}}</div>
     </div>
   </div>
@@ -107,7 +107,7 @@
   <div fxLayout="row wrap" class="ondemand_request">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
       <div>
-        <mat-checkbox>Rush Request?</mat-checkbox>
+        <mat-checkbox [(ngModel)]="rushRequest">Rush Request?</mat-checkbox>
         <button mat-stroked-button (click)="onDemandSubmit()" class="outline-success huge-btn">
           Transcribe and Compile
         </button>
