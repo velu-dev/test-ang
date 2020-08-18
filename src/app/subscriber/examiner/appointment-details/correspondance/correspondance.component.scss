@@ -10,7 +10,9 @@
 .complete ::ng-deep .mat-progress-bar-fill::after {
     background-color: $btn_success;
 }
-
+.error ::ng-deep .mat-progress-bar-fill::after {
+    background-color: $progress-error;
+}
 ::ng-deep .mat-progress-bar-buffer {
     background: $progres-light-gray;
 }
@@ -53,7 +55,7 @@ th {
     float: right;
 }
 .address-not-found {
-    @extend .float-right
+    @extend .float-right;
 }
 .width-fixed {
     width: 25px !important;
@@ -68,10 +70,9 @@ th {
     }
 }
 
-
 .info-alert {
     color: $info;
-    background-color:$info-bg;
+    background-color: $info-bg;
     border: 1px solid $info-border;
     font-size: $font-size-1;
     padding: 3px 8px;
@@ -82,4 +83,12 @@ th {
     i {
         padding-right: 10px;
     }
+}
+.m-t-30 {
+    @media only screen and (min-width: 1600px) and (max-width: 2560px) {
+        margin-top: 15px !important;
+    }
+    @media only screen and (min-width: 320px) and (max-width: 560px)  {
+        margin-top: 5px !important;
+        }
 }

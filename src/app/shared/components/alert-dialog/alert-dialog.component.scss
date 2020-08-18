@@ -45,5 +45,9 @@
     border-color: $btn-success !important;
     border: 0;
     @extend .btn;
+    &:hover {
+      background-color: $btn-success;
+      color: $white;
+    }
   }
 }
