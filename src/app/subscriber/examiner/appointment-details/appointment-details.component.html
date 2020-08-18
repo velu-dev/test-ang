@@ -501,7 +501,7 @@
         </div>
     </div> -->
     <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="simple-card bg_light">
+        <div class="simple-card billing-status-active bg_light">
             <i class="fa fa-usd"></i>
             <div class="p-l-10 text-center">
                 <h4>Billing</h4>
@@ -512,7 +512,7 @@
 </div>
 
 <div class="border-dashed-blue m-t-20" *ngIf="isDisplayStatus.status"></div>
-
+<mat-card class="exam-status">
 <div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile">
         <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
@@ -557,6 +557,7 @@
         <button mat-raised-button class="filled-gray calender_btn">View on Calendar</button>
     </div>
 </div>
+</mat-card>
 
 <div class="border-dashed-blue m-b-50"></div>
 
@@ -659,7 +660,7 @@
                             <mat-select [disabled]="!isEditBillableItem" formControlName="examiner_service_location_id">
                                 <mat-option *ngFor="let address of examinarAddress"
                                     (click)="changeExaminarAddress(address)" [value]="address.address_id">
-                                    {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
+                                    {{address.street1}} {{address.street2}} {{address.city}} {{address.state_name}}
                                     {{address.zip_code}}
                                 </mat-option>
                             </mat-select>
@@ -772,7 +773,7 @@
                     </button>
                 </div>
             </div>
-            <div fxLayout="row wrap" fxFlex="100">
+            <div fxLayout="row wrap" fxFlex="100" class="m-t-20">
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                 </div>
 

@@ -481,14 +481,8 @@
                     <mat-divider> </mat-divider>
                     <mat-card-content class="m-t-15">
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="InsuranceAdjuster">
-                            <mat-form-field *ngIf="!CASelect" appearance="outline" fxFlex="50" fxFlex.md="50"
-                                fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Insurance Name</mat-label>
-                                <input matInput placeholder="Insurance Name" formControlName="company_name"
-                                    autocomplete="off">
-                            </mat-form-field>
-                            <mat-form-field *ngIf="CASelect" appearance="outline" fxFlex="50" fxFlex.md="50"
-                                fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
                                 <mat-label>Insurance Name</mat-label>
                                 <input type="text" matInput placeholder="Insurance Name" formControlName="company_name"
                                     [matAutocomplete]="caAuto">
@@ -499,9 +493,6 @@
                                             *ngFor="let claim_admin of group.data" [value]="claim_admin.name">
                                             {{claim_admin.name}}
                                         </mat-option>
-                                    </mat-optgroup>
-                                    <mat-optgroup label="Other">
-                                        <mat-option (click)="CASelect = false">Add new attorney</mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
                                 <mat-error>Please enter valid claim administrator</mat-error>
@@ -687,24 +678,14 @@
                     <mat-divider> </mat-divider>
                     <mat-card-content class="m-t-15">
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="ApplicantAttorney">
-                            <mat-form-field *ngIf="!AattroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
-                                fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Law Firm Name</mat-label>
-                                <input matInput placeholder="Law Firm Name" formControlName="company_name"
-                                    autocomplete="off">
-                            </mat-form-field>
-                            <mat-form-field *ngIf="AattroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
-                                fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                                     [matAutocomplete]="aaAuto">
                                 <mat-autocomplete #aaAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (aattroneyGroupOptions | async)"
                                         [label]="group.name">
-                                        <mat-option (click)="appAttorney(attroney)" *ngFor="let attroney of group.data"
-                                            [value]="attroney.name">
-                                            {{attroney.name}}
-                                        </mat-option>
                                     </mat-optgroup>
                                     <mat-optgroup label="Other">
                                         <mat-option (click)="AattroneySelect = false">Add New Attorney</mat-option>
@@ -794,12 +775,6 @@
                     <mat-divider> </mat-divider>
                     <mat-card-content class="m-t-15">
                         <div fxLayout="row wrap" fxFlex="100" formGroupName="DefenseAttorney">
-                            <mat-form-field *ngIf="!DattroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
-                                fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Law Firm Name</mat-label>
-                                <input matInput placeholder="Law Firm Name" formControlName="company_name"
-                                    autocomplete="off">
-                            </mat-form-field>
                             <mat-form-field *ngIf="DattroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50"
                                 fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Law Firm Name</mat-label>
@@ -808,10 +783,6 @@
                                 <mat-autocomplete #daAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (dattroneyGroupOptions | async)"
                                         [label]="group.name">
-                                        <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of group.data"
-                                            [value]="attroney.name">
-                                            {{attroney.name}}
-                                        </mat-option>
                                     </mat-optgroup>
                                     <mat-optgroup label="Other">
                                         <mat-option (click)="DattroneySelect = false">Add New Attorney</mat-option>

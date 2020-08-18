@@ -215,7 +215,7 @@ export class RecordsComponent implements OnInit {
   }
 
   onDemandSubmit() {
-    return;
+    // return;
     let document_ids = []
     this.selection.selected.map(res => {
       document_ids.push(res.document_id)

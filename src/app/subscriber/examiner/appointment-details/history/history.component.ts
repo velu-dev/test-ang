@@ -82,7 +82,7 @@ export class HistoryComponent implements OnInit {
   }
 
   onDemandSubmit() {
-    return;
+    // return;
     let data = {
       claim_id: this.paramsId.id,
       service_priority: this.rushRequest ? "rush" : 'normal',

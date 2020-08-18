@@ -15,7 +15,9 @@ $progres-light-gray: #e6e6e6;
 
 $active: #767676;
 
-//alert-color
+//===================================
+//===== alert-color =================
+//===================================
 
 // INFORMATION
 $info: #018aaf;
@@ -26,6 +28,16 @@ $info-border: #bedfe6;
 $error: #db2828;
 $error-bg: #fcebeb;
 $error-border: #db2828;
+
+// WARNING
+$warning: #A3501C;
+$warning-bg: #FCDDCA;
+$warning-border: #A3501C;
+
+// SUCCESS
+$success: #1E561F;
+$success-bg: #DBF5D2;
+$success-border: #A8C599;
 
 //colors
 $bg-light-blue: #f2f7ff;
@@ -77,7 +89,7 @@ $tab-bg-1: #3c3cff1f;
 $btn-light-color: #e3e3fa;
 
 //
-$warning: #ffc400;
+$warning-light: #ffc400;
 $danger: #ff3366;
 
 //table odd row color
@@ -666,29 +678,33 @@ input:-webkit-autofill {
   line-height: 1.15;
 }
 
-  // Form fields disabled label color
-  .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
-    color: rgba(0, 0, 0, 0.7) !important;
-  }
-  .mat-input-element:disabled,
-  .mat-form-field-type-mat-native-select.mat-form-field-disabled,
-  .mat-form-field-infix::after {
-    color: rgba(0, 0, 0, 0.7) !important;
-  }
-  .mat-select-disabled .mat-select-value,
-  .mat-checkbox-disabled .mat-checkbox-label {
-    color: rgba(0, 0, 0, 0.7) !important;
-  }
- // Safari browser Form fields disabled label color
+// Form fields disabled label color
+.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-suffix {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+.mat-input-element:disabled,
+.mat-form-field-type-mat-native-select.mat-form-field-disabled,
+.mat-form-field-infix::after {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+.mat-select-disabled .mat-select-value,
+.mat-checkbox-disabled .mat-checkbox-label {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
 
-  @media not all and (min-resolution: 0.001dpcm) {
-    @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-      .mat-select-disabled .mat-select-value,
-      .mat-checkbox-disabled .mat-checkbox-label {
-        color: rgba(0, 0, 0, 0.5) !important;
-      }
+// Safari browser Form fields disabled label color
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+    .mat-select-disabled .mat-select-value,
+    .mat-checkbox-disabled .mat-checkbox-label {
+      color: rgba(0, 0, 0, 0.5) !important;
     }
-    }
+  }
+}
 ::ng-deep {
   // mat-input carent color
   .mat-input-element {
@@ -995,12 +1011,13 @@ input:-webkit-autofill {
   margin: 0px auto;
   display: block !important;
   .btn_ {
-    padding: 7px 30px;
-    border-radius: 50px;
+    border-radius: 3px;
+    border: 1px solid;
     font-size: $font-size-1;
     box-shadow: $box-shadow-3;
     font-weight: $font-weight-bold;
     line-height: 0;
+    height: 35px;
     cursor: pointer;
     &:focus,
     &::-moz-focus-inner {
@@ -1009,19 +1026,16 @@ input:-webkit-autofill {
     }
   }
   .no {
+    border-color:$danger;
     background-color: $white;
-    color: $black;
-    border: 0;
-    &:hover {
-      background-color: $white;
-    }
+    color: $danger;
     @extend .btn_;
   }
 
   .yes {
-    background-color: $bg-success;
-    color: $white;
-    border: 0;
+    background-color: $white;
+    color: $btn-success;
+    border-color: $btn-success;
     @extend .btn_;
   }
 }
