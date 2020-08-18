@@ -54,6 +54,8 @@ export class BillingCorrespondanceComponent implements OnInit {
   claim_id: any;
   billableId: any;
   isLoading: boolean = false;
+  correspondData: any;
+  statusBarValues = { value: null, status: '', class: '' }
   constructor(private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
@@ -85,6 +87,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.selection.clear();
     this.selection1.clear();
     this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
+      this.correspondData = res;
       res.documets.map(doc => {
         if (doc.is_mandatory) {
           this.selection.select(doc)
@@ -93,6 +96,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.logger.log(res.recipient);
       this.documents = new MatTableDataSource(res.documets);
       this.recipients = new MatTableDataSource(res.recipient);
+      this.statusBarChanges(this.correspondData.on_demand_status)
     })
   }
   isAllSelected() {
@@ -295,6 +299,29 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
     });
   }
+
+  statusBarChanges(status) {
+    switch (status) {
+      case 'Not Sent':
+        this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
+        break;
+      case 'In Progress':
+        console.log(status)
+        this.statusBarValues = { value: 50, status: status, class: 'sent' }
+        break;
+      case 'Completed':
+        this.statusBarValues = { value: 100, status: status, class: 'complete' }
+        break;
+      case 'Error':
+        this.statusBarValues = { value: 50, status: status, class: 'error' }
+        break;
+
+      default:
+        this.statusBarValues = { value: 0, status: 'Error', class: '.error' }
+        break;
+    }
+  }
+
 }
 
 @Component({
