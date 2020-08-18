@@ -161,9 +161,11 @@ export class RecordsComponent implements OnInit {
         this.file.push(this.selectedFiles[i].name);
       } else {
         this.selectedFile = null;
+        this.selectedFiles = null
         this.fileUpload.nativeElement.value = "";
         this.errors.file.isError = true;
         this.errors.file.error = "This file type is not accepted";
+        this.file = []
         //this.alertService.openSnackBar("This file type is not accepted", 'error');
       }
     }
