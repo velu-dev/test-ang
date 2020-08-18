@@ -48,6 +48,7 @@ export class ReportComponent implements OnInit {
   documentList: any = [];
   documentType: any = 6;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+  statusBarValues = { value: null, status: '', class: '' }
 
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
@@ -109,13 +110,36 @@ export class ReportComponent implements OnInit {
 
       })
       this.dataSoruceOut = new MatTableDataSource(outFile);
-      this.dataSoruceIn = new MatTableDataSource(inFile)
+      this.dataSoruceIn = new MatTableDataSource(inFile);
+      this.statusBarChanges(this.reportData.on_demand_status)
     }, error => {
       this.dataSource = new MatTableDataSource([]);
       this.dataSoruceOut = new MatTableDataSource([]);
       this.dataSoruceIn = new MatTableDataSource([])
     })
     this.allOrNone(false);
+  }
+
+  statusBarChanges(status) {
+    switch (status) {
+      case 'Not Sent':
+        this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
+        break;
+      case 'In Progress':
+        console.log(status)
+        this.statusBarValues = { value: 50, status: status, class: 'sent' }
+        break;
+      case 'Completed':
+        this.statusBarValues = { value: 100, status: status, class: 'complete' }
+        break;
+      case 'Error':
+        this.statusBarValues = { value: 50, status: status, class: 'error' }
+        break;
+
+      default:
+        this.statusBarValues = { value: 0, status: 'Error', class: '.error' }
+        break;
+    }
   }
 
   expandIdOut: any;
