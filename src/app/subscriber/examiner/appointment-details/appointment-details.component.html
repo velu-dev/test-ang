@@ -660,7 +660,7 @@
                             <mat-select [disabled]="!isEditBillableItem" formControlName="examiner_service_location_id">
                                 <mat-option *ngFor="let address of examinarAddress"
                                     (click)="changeExaminarAddress(address)" [value]="address.address_id">
-                                    {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
+                                    {{address.street1}} {{address.street2}} {{address.city}} {{address.state_name}}
                                     {{address.zip_code}}
                                 </mat-option>
                             </mat-select>

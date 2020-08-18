@@ -285,7 +285,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
       this.alertService.openSnackBar(res.message, "success");
-      this.loadDatas();
+      this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -427,9 +427,9 @@ export class AppointmentDetailsComponent implements OnInit {
       case 3:
         return 'examination';
       case 4:
-        return 'report'
+        return 'transcription'
       case 5:
-        return 'transcription';
+        return 'report';
       default:
         return 'form';
     }
@@ -458,8 +458,8 @@ export class AppointmentDetailsComponent implements OnInit {
         // this.alertService.openSnackBar("This file too long", 'error');
         return;
       }
-      this.errors.file.isError = false;
-      this.errors.file.error = "";
+      this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+      this.errors.doc_type.error = "";
       this.file = event.target.files[0].name;
       this.selectedFile = event.target.files[0];
     } else {
@@ -492,8 +492,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.formData = new FormData();
       this.file = "";
       this.getDocumentData();
-      this.errors.doc_type.isError = false;
-      this.errors.doc_type.error = "";
+      this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
