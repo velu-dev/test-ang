@@ -1,5 +1,5 @@
 <div class="create-claim">
-    <!--  -->
+    <!--   -->
     <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
@@ -286,8 +286,8 @@
                         </mat-panel-title>
                         <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
-                            <div class="alert">{{errors?.claim_details != 0 ? 'Please correct the error!' : ""}}
-                            </div>
+                            <!-- <div class="alert">{{errors?.claim_details != 0 ? 'Please correct the error!' : ""}}
+                            </div> -->
                         </mat-panel-description>
                     </mat-card-header>
                     <mat-divider></mat-divider>
@@ -448,7 +448,7 @@
                                         <ng-container matColumnDef="action">
                                             <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                                             <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
-                                                <a class="text-success" [href]="element?.exam_report_file_url">
+                                                <a class="text-success" (click)="downloadDoc(element?.exam_report_file_url,element?.file_name )">
                                                     Download
                                                 </a>
                                                 <a class="text-danger m-l-10"
@@ -474,8 +474,8 @@
                         </mat-panel-title>
                         <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
-                            <div class="alert">
-                                {{errors?.InsuranceAdjuster != 0 ? 'Please correct the error!' : ""}}</div>
+                            <!-- <div class="alert">
+                                {{errors?.InsuranceAdjuster != 0 ? 'Please correct the error!' : ""}}</div> -->
                         </mat-panel-description>
                     </mat-card-header>
                     <mat-divider> </mat-divider>
@@ -575,8 +575,8 @@
                         </mat-panel-title>
                         <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
-                            <div class="alert">{{errors?.Employer != 0 ? 'Please correct the error!' : ""}}
-                            </div>
+                            <!-- <div class="alert">{{errors?.Employer != 0 ? 'Please correct the error!' : ""}}
+                            </div> -->
                         </mat-panel-description>
                     </mat-card-header>
                     <mat-divider> </mat-divider>
@@ -671,8 +671,8 @@
                         </mat-panel-title>
                         <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
-                            <div class="alert">
-                                {{errors?.ApplicantAttorney != 0 ? 'Please correct the error!' : ""}}</div>
+                            <!-- <div class="alert">
+                                {{errors?.ApplicantAttorney != 0 ? 'Please correct the error!' : ""}}</div> -->
                         </mat-panel-description>
                     </mat-card-header>
                     <mat-divider> </mat-divider>
@@ -768,8 +768,8 @@
                         </mat-panel-title>
                         <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
-                            <div class="alert">
-                                {{errors?.DefenseAttorney != 0 ? 'Please correct the error!' : ""}}</div>
+                            <!-- <div class="alert">
+                                {{errors?.DefenseAttorney != 0 ? 'Please correct the error!' : ""}}</div> -->
                         </mat-panel-description>
                     </mat-card-header>
                     <mat-divider> </mat-divider>
@@ -865,7 +865,7 @@
                         </mat-panel-title>
                         <span class="spacer"></span>
                         <mat-panel-description class="mat-error">
-                            <div class="alert">{{errors?.DEU != 0 ? 'Please correct the error!' : ""}}</div>
+                            <!-- <div class="alert">{{errors?.DEU != 0 ? 'Please correct the error!' : ""}}</div> -->
                         </mat-panel-description>
                     </mat-card-header>
                     <mat-divider> </mat-divider>

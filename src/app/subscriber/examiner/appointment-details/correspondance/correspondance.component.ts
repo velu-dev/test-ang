@@ -90,7 +90,7 @@ export class BillingCorrespondanceComponent implements OnInit {
           this.selection.select(doc)
         }
       })
-      
+      this.logger.log(res.recipient);
       this.documents = new MatTableDataSource(res.documets);
       this.recipients = new MatTableDataSource(res.recipient);
     })
