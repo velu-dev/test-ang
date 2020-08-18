@@ -51,8 +51,15 @@ $secondarycolor: #65ff88;
 $secondarylightcolor: #9effb9;
 $secondaryarkcolor: #19cb59;
 
+
+// progress error
+$progress-error :#F27120;
+
 //ternary color
 $ternary-color: #6464fa;
+
+
+
 //Extra colors
 $green: #65ff88;
 $white: #ffffff;
@@ -1030,6 +1037,10 @@ input:-webkit-autofill {
     background-color: $white;
     color: $danger;
     @extend .btn_;
+    &:hover {
+      background-color: $danger;
+      color: $white;
+    }
   }
 
   .yes {
@@ -1037,5 +1048,9 @@ input:-webkit-autofill {
     color: $btn-success;
     border-color: $btn-success;
     @extend .btn_;
+    &:hover {
+      background-color: $btn-success;
+      color: $white;
+    }
   }
 }

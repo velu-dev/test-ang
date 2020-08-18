@@ -3,17 +3,27 @@
     <div fxFlex="100">
       <div class="main-title">Mail On Demand</div>
       <p class="description">View the progress of Correspondence Mail On Demand service here.</p>
-      <mat-progress-bar mode="determinate" value="50" class="not-sent"></mat-progress-bar>
-      <div class="text-center">Not Sent</div>
+      <mat-progress-bar mode="determinate" value="50" class="sent"></mat-progress-bar>
+      <div class="text-center">Sent</div>
     </div>
   </div>
 
   <div fxLayout="row wrap" class="p-t-25" *ngIf="!isLoading">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-      <div class="main-title">Documents <span class="info ondemand-info m-l-10"
-          matTooltip="Documents which are labelled with the blue checkmark are required to be sent within 5 days of confirming the examination appointment date. Add Custom Mail On Demand Documents using the button at the bottom."
-          matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">Use the checkboxes to select the documents to be mailed.</p>
+      <div fxLayout="row wrap">
+        <div fxFlex="60" fxFlex.sm="100"  fxFlex.xs="100">
+          <div class="main-title">Documents <span class="info ondemand-info m-l-10"
+              matTooltip="Documents which are labelled with the blue checkmark are required to be sent within 5 days of confirming the examination appointment date. Add Custom Mail On Demand Documents using the button at the bottom."
+              matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+          <p class="description m-b-3">Use the checkboxes to select the documents to be mailed.</p>
+        </div>
+        <div fxFlex="40" fxFlex.sm="100"  fxFlex.xs="100">
+          <button mat-stroked-button class="outline-success float-right  m-t-30 m-b-5" (click)="openDialog()">
+            <i class="fa fa-file-medical p-r-10"></i> Add Custom Document
+          </button>
+        </div>
+
+      </div>
       <div class="basic-table striped_ vertical-fixed m-l-10 footer-fixed">
         <table mat-table [dataSource]="documents" class="mat-elevation-z8 w-100 user-table">
 
@@ -56,24 +66,33 @@
             </td>
           </ng-container>
           <!-- custom column -->
-          <ng-container matColumnDef="custom">
+          <!-- <ng-container matColumnDef="custom">
             <td mat-footer-cell *matFooterCellDef colspan="2" class="text-center" (click)="openDialog()">
               <b class="add-custom"><i class="fa fa-file-medical p-r-10"></i> Add Custom Document</b>
             </td>
-          </ng-container>
+          </ng-container> -->
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
-          <tr mat-footer-row *matFooterRowDef="['custom']; sticky: true"></tr>
+          <!-- <tr mat-footer-row *matFooterRowDef="['custom']; sticky: true"></tr> -->
         </table>
         <app-nodata *ngIf="documents?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-      <div class="main-title">Recipients <span class="info ondemand-info m-l-10" matTooltip="The selected parties will receive the documents through the Mail On
-        Demand Service. Enter the name and address of custom recipients using the button at the bottom."
-          matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">Use the checkboxes to select the recipients of mailed documents.</p>
+      <div fxLayout="row wrap">
+        <div fxFlex="60" fxFlex.sm="100"  fxFlex.xs="100">
+          <div class="main-title">Recipients <span class="info ondemand-info m-l-10" matTooltip="The selected parties will receive the documents through the Mail On
+            Demand Service. Enter the name and address of custom recipients using the button at the bottom."
+              matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+          <p class="description m-b-3">Use the checkboxes to select the recipients of mailed documents.</p>
+        </div>
+        <div fxFlex="40" fxFlex.sm="100"  fxFlex.xs="100">
+          <button mat-stroked-button class="outline-success float-right m-t-30 m-b-5" (click)="openCustomRecipient()">
+            <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
+          </button>
+        </div>
+      </div>
       <div class="basic-table striped_ vertical-fixed m-l-10 footer-fixed">
         <table mat-table [dataSource]="recipients" class="mat-elevation-z8 w-100 user-table">
 
@@ -105,8 +124,7 @@
           <ng-container matColumnDef="recipient_type">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
-              <div class="info-alert" *ngIf="element?.message" (click)="$event.stopPropagation()"><i
-                  class="fa fa-info"></i>{{element?.message}}</div>
+              <div class="info-alert" (click)="$event.stopPropagation()" *ngIf="element?.message" ><i class="fa fa-info"></i>{{element?.message}}</div>
               <span class="custom-list" *ngIf="element.type == 'custom'">
                 <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
                 <a class="text-danger m-l-10" (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
@@ -114,15 +132,15 @@
             </td>
           </ng-container>
           <!-- custom_recipient column -->
-          <ng-container matColumnDef="custom_recipient">
+          <!-- <ng-container matColumnDef="custom_recipient">
             <td mat-footer-cell *matFooterCellDef colspan="2" class="text-center" (click)="openCustomRecipient()">
               <b class="add-custom"><i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient</b>
             </td>
-          </ng-container>
+          </ng-container> -->
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns1;" (click)="selection1.toggle(row)"></tr>
-          <tr mat-footer-row *matFooterRowDef="['custom_recipient']; sticky: true"></tr>
+          <!-- <tr mat-footer-row *matFooterRowDef="['custom_recipient']; sticky: true"></tr> -->
         </table>
         <app-nodata *ngIf="recipients?.filteredData?.length == 0"></app-nodata>
       </div>
