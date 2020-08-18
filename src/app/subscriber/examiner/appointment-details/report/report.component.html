@@ -30,6 +30,9 @@
               <input type="file" #uploader hidden (change)="addFile($event)" multiple
                 accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
               <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
+              <mat-hint *ngIf="errors.file.isError">
+                <mat-error>{{errors.file.error}}</mat-error>
+            </mat-hint>
             </mat-form-field>
           </div>
 
@@ -40,6 +43,9 @@
               <input type="file" #uploader hidden (change)="addFile($event)" multiple
                 accept=".mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
               <mat-hint>Supported file formats: .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
+              <mat-hint *ngIf="errors.file.isError">
+                <mat-error>{{errors.file.error}}</mat-error>
+            </mat-hint>
             </mat-form-field>
           </div>
 

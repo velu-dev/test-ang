@@ -137,6 +137,7 @@ export class ReportComponent implements OnInit {
   selectedFile: File;
   formData = new FormData()
   file: any = [];
+  errors = { file: { isError: false, error: "" }}
   addFile(event) {
 
     this.selectedFile = null;
@@ -155,22 +156,29 @@ export class ReportComponent implements OnInit {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
         if (FileSize > 30) {
           this.fileUpload.nativeElement.value = "";
-          this.alertService.openSnackBar("This file too long", 'error');
+          this.errors.file.isError = true;
+          this.errors.file.error = "This file too long";
+          //this.alertService.openSnackBar("This file too long", 'error');
           return;
         }
+        this.errors = { file: { isError: false, error: "" }}
         this.selectedFile = this.selectedFiles[i];
         this.file.push(this.selectedFiles[i].name);
       } else {
         //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
-        this.alertService.openSnackBar("This file type is not accepted", 'error');
+        this.errors.file.isError = true;
+        this.errors.file.error = "This file type is not accepted";
+        //this.alertService.openSnackBar("This file type is not accepted", 'error');
       }
     }
   }
 
   uploadFile() {
     if (!this.selectedFile) {
-      this.alertService.openSnackBar("Please select file", 'error');
+      //this.alertService.openSnackBar("Please select file", 'error');
+      this.errors.file.isError = true;
+      this.errors.file.error = "Please select file";
       return;
     }
 
