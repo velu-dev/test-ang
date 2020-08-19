@@ -48,7 +48,7 @@ export class RecordsComponent implements OnInit {
   recordData: any;
   rushRequest: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
-
+  statusBarValues = { value: 0, status: 'Error', class: '.error' };
 
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
@@ -92,6 +92,7 @@ export class RecordsComponent implements OnInit {
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.id, this.paramsId.billId).subscribe(record => {
       this.recordData = record;
+
       record.documets.map(data => {
         data.page_number = data.no_of_units;
         data.isEdit = false;
@@ -110,6 +111,8 @@ export class RecordsComponent implements OnInit {
       })
       this.dataSoruceOut = new MatTableDataSource(outFile);
       this.dataSoruceIn = new MatTableDataSource(inFile)
+      this.rushRequest = false;
+      this.statusBarChanges(this.recordData.on_demand_status)
     }, error => {
       this.dataSource = new MatTableDataSource([]);
       this.dataSoruceOut = new MatTableDataSource([]);
@@ -117,6 +120,28 @@ export class RecordsComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
     this.allOrNone(false);
+  }
+
+  statusBarChanges(status) {
+    switch (status) {
+      case 'Not Sent':
+        this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
+        break;
+      case 'In Progress':
+        console.log(status)
+        this.statusBarValues = { value: 50, status: status, class: 'sent' }
+        break;
+      case 'Completed':
+        this.statusBarValues = { value: 100, status: status, class: 'complete' }
+        break;
+      case 'Error':
+        this.statusBarValues = { value: 50, status: status, class: 'error' }
+        break;
+
+      default:
+        //this.statusBarValues = { value: 0, status: 'Error', class: '.error' }
+        break;
+    }
   }
 
   expandIdOut: any;
@@ -138,7 +163,7 @@ export class RecordsComponent implements OnInit {
   selectedFile: File;
   formData = new FormData()
   file: any = [];
-  errors = { file: { isError: false, error: "" }}
+  errors = { file: { isError: false, error: "" } }
   addFile(event) {
     this.selectedFiles = null
     this.file = []
@@ -156,7 +181,7 @@ export class RecordsComponent implements OnInit {
           //this.alertService.openSnackBar("This file too long", 'error');
           return;
         }
-        this.errors = { file: { isError: false, error: "" }}
+        this.errors = { file: { isError: false, error: "" } }
         this.selectedFile = this.selectedFiles[i];
         this.file.push(this.selectedFiles[i].name);
       } else {
@@ -195,7 +220,7 @@ export class RecordsComponent implements OnInit {
       this.formData = new FormData();
       this.file = [];
       this.getRecord();
-      this.errors = { file: { isError: false, error: "" }}
+      this.errors = { file: { isError: false, error: "" } }
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";

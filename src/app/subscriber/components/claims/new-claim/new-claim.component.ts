@@ -115,7 +115,7 @@ export class NewClaimComponent implements OnInit {
   today = new Date();
   isMobile = false;
   displayedColumns: string[] = ['body_part_id', 'date_of_injury', "action"];
-  dataSource: any;
+  dataSource = new MatTableDataSource([]);
   step = 0;
   isLinear = false;
   isSubmit = false;
