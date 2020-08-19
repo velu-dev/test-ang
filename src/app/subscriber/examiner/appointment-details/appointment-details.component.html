@@ -661,7 +661,7 @@
                                 <mat-option *ngFor="let address of examinarAddress"
                                     (click)="changeExaminarAddress(address)" [value]="address.address_id">
                                     {{address.street1}} {{address.street2}} {{address.city}} {{address.state_name}}
-                                    {{address.zip_code}}
+                                    {{address.zip_code+(address.zip_code_plus_4 != null ? "-"+address.zip_code_plus_4 : "")}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -806,7 +806,7 @@
                 </mat-tab-group>
                 <div class="table-filter">
                     <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                        placeholder="Search by file name, date">
+                        placeholder="Search by file name, date" autocomplete="off">
                     <mat-icon>search</mat-icon>
                 </div>
                 <div class="striped_ user-details w-100 vertical-fixed">

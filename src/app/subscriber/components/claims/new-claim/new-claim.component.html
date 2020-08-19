@@ -448,7 +448,8 @@
                                         <ng-container matColumnDef="action">
                                             <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                                             <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
-                                                <a class="text-success" (click)="downloadDoc(element?.exam_report_file_url,element?.file_name )">
+                                                <a class="text-success"
+                                                    (click)="downloadDoc(element?.exam_report_file_url,element?.file_name )">
                                                     Download
                                                 </a>
                                                 <a class="text-danger m-l-10"
@@ -486,6 +487,10 @@
                                 <mat-label>Insurance Name</mat-label>
                                 <input type="text" matInput placeholder="Insurance Name" formControlName="company_name"
                                     [matAutocomplete]="caAuto">
+                                    <button mat-button *ngIf="claim.value.InsuranceAdjuster.company_name" matSuffix
+                                    mat-icon-button aria-label="Clear" (click)="clearAutoComplete('ca')">
+                                    <mat-icon>close</mat-icon>
+                                </button>
                                 <mat-autocomplete #caAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (claimAdminGroupOptions | async)"
                                         [label]="group.name">
@@ -683,12 +688,17 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                                     [matAutocomplete]="aaAuto">
+                                <button mat-button *ngIf="claim.value.ApplicantAttorney.company_name" matSuffix
+                                    mat-icon-button aria-label="Clear" (click)="clearAutoComplete('aa')">
+                                    <mat-icon>close</mat-icon>
+                                </button>
                                 <mat-autocomplete #aaAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (aattroneyGroupOptions | async)"
                                         [label]="group.name">
-                                    </mat-optgroup>
-                                    <mat-optgroup label="Other">
-                                        <mat-option (click)="AattroneySelect = false">Add New Attorney</mat-option>
+                                        <mat-option (click)="appAttorney(aa)" *ngFor="let aa of group.data"
+                                            [value]="aa.name">
+                                            {{aa.name}}
+                                        </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
                                 <mat-error>Please enter valid attroney</mat-error>
@@ -780,12 +790,17 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                                     [matAutocomplete]="daAuto">
+                                    <button mat-button *ngIf="claim.value.DefenseAttorney.company_name" matSuffix
+                                    mat-icon-button aria-label="Clear" (click)="clearAutoComplete('da')">
+                                    <mat-icon>close</mat-icon>
+                                </button>
                                 <mat-autocomplete #daAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (dattroneyGroupOptions | async)"
                                         [label]="group.name">
-                                    </mat-optgroup>
-                                    <mat-optgroup label="Other">
-                                        <mat-option (click)="DattroneySelect = false">Add New Attorney</mat-option>
+                                        <mat-option (click)="defAttornety(aa)" *ngFor="let aa of group.data"
+                                            [value]="aa.name">
+                                            {{aa.name}}
+                                        </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
                                 <mat-error>Please enter valid attroney</mat-error>
@@ -1122,8 +1137,9 @@
                                     <mat-select>
                                         <mat-option *ngFor="let address of (examinarAddress | async)"
                                             (click)="changeExaminarAddress(address)" [value]="address.street1">
-                                            {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
-                                            {{address.zip_code}}
+                                            {{address.street1}} {{address.street2}} {{address.city}}
+                                            {{address.state_name}}
+                                            {{address.zip_code+(address.zip_code_plus_4 != null ? "-"+address.zip_code_plus_4 : "")}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>

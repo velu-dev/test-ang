@@ -87,9 +87,7 @@ export interface claimant1 {
   note: string
 }
 export const _filter = (opt: any[], value: string): string[] => {
-  console.log("opt", opt);
   const filterValue = value.toLowerCase();
-
   return opt.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
 };
 @Component({
@@ -352,7 +350,7 @@ export class NewClaimComponent implements OnInit {
             break;
           case "eams_claims_administrator":
             this.eamsClaimsAdministrator = res.data;
-            this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }];
+            this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
             this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
               .pipe(
                 startWith(''),
@@ -361,7 +359,7 @@ export class NewClaimComponent implements OnInit {
             break;
           case "eams_representatives":
             this.eamsRepresentatives = res.data;
-            this.attroneylist = [{ name: "From DB", data: this.eamsRepresentatives }, { name: "From EAMS", data: [] }];
+            this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
             this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
               .pipe(
                 startWith(''),
@@ -382,13 +380,6 @@ export class NewClaimComponent implements OnInit {
           case "object_type":
             this.objectTypes = res.data;
             break;
-          // case "procedural_codes":
-          //   res.data.map(proc => {
-          //     if (proc.procedural_code != "ML100") {
-          //       this.procuderalCodes.push(proc);
-          //     }
-          //   })
-          //   break;
           case "role_level":
             this.roleLevels = res.data;
             break;
@@ -748,7 +739,9 @@ export class NewClaimComponent implements OnInit {
     }
     this.logger.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
     if (!this.claimId) {
+      this.logger.log(claim)
       this.claimService.createClaim(claim).subscribe(res => {
+        this.logger.log(res);
         let examtype = "";
         this.examTypes.map(exam => {
           if (res.data.exam_type_id == exam.id) {
@@ -991,6 +984,7 @@ export class NewClaimComponent implements OnInit {
         }, error => {
           this.isClaimantCreated = false;
           this.alertService.openSnackBar(error.error.message, 'error');
+          this.stepper.previous();
         })
       }
     } else {
@@ -1028,7 +1022,8 @@ export class NewClaimComponent implements OnInit {
       for (var j in arrData) {
         this.injuryInfodata.push(arrData[j])
       }
-      this.dataSource = new MatTableDataSource(this.injuryInfodata)
+      this.dataSource = new MatTableDataSource(this.injuryInfodata);
+      this.alertService.openSnackBar("Injury edited successfully", "success");
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
       this.isInjuryEdit = false;
     } else {
@@ -1050,7 +1045,8 @@ export class NewClaimComponent implements OnInit {
       for (var j in arrData) {
         this.injuryInfodata.push(arrData[j])
       }
-      this.logger.log("injuryInfodata", this.injuryInfodata)
+      this.logger.log("injuryInfodata", this.injuryInfodata);
+      this.alertService.openSnackBar("Injury added successfully", "success");
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     }
@@ -1088,6 +1084,7 @@ export class NewClaimComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.injuryInfodata)
         this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
         this.loader.hide();
+        this.alertService.openSnackBar("Injury updated successfully", "success");
       } else {
         let editingInjury = localStorage.getItem("editingInjury");
         let data = JSON.parse(editingInjury)
@@ -1160,9 +1157,12 @@ export class NewClaimComponent implements OnInit {
             res.name = res.company_name;
             claim_admin.push(res)
           })
-          this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: claim_admin }]
-          console.table(this.claimAdminList);
-          // }
+          this.claimAdminList = [{ name: "EAMS ADJ Addresses", data: claim_admin }, { name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
+          this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
+            .pipe(
+              startWith(''),
+              map(value => this._filterAttroney(value, this.claimAdminList))
+            );
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
             console.log("attrony")
@@ -1172,8 +1172,17 @@ export class NewClaimComponent implements OnInit {
               res.name = res.company_name;
               attroney.push(res)
             })
-            this.attroneylist = [{ name: "From DB", data: this.eamsRepresentatives }, { name: "From EAMS", data: attroney }]
-            console.table(this.attroneylist);
+            this.attroneylist = [{ name: "EAMS ADJ Addresses", data: attroney }, { name: "Simplexam Addresses", data: this.eamsRepresentatives }];
+            this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.attroneylist))
+              );
+            this.dattroneyGroupOptions = this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.attroneylist))
+              );
           }
           this.iseams_entry = true;
         } else {
@@ -1209,20 +1218,35 @@ export class NewClaimComponent implements OnInit {
     this.selectedExaminarAddress = address;
   }
   appAttorney(attroney) {
+    delete attroney['id'];
     this.claim.patchValue({
       ApplicantAttorney: attroney
     })
   }
   defAttornety(attroney) {
+    delete attroney['id'];
     this.claim.patchValue({
       DefenseAttorney: attroney
     })
   }
   appClaimAdmin(claimadmin) {
-    console.log(claimadmin)
+    delete claimadmin['id'];
     this.claim.patchValue({
       InsuranceAdjuster: claimadmin
     })
+  }
+  clearAutoComplete(form) {
+    switch (form) {
+      case 'aa':
+        this.claim.get('ApplicantAttorney').reset();
+        break;
+      case 'da':
+        this.claim.get('DefenseAttorney').reset();
+        break;
+      case 'ca':
+        this.claim.get('InsuranceAdjuster').reset();
+        break;
+    }
   }
   todayDate = { appointment: new Date(), intake: new Date() }
   minDate: any;
@@ -1444,7 +1468,8 @@ export class NewClaimComponent implements OnInit {
       if (result['data']) {
         this.injuryInfodata.splice(index, 1);
         this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
-        this.dataSource = new MatTableDataSource(this.injuryInfodata)
+        this.dataSource = new MatTableDataSource(this.injuryInfodata);
+        this.alertService.openSnackBar("Injury deleted successfully", "success");
       }
     })
 
@@ -1592,35 +1617,35 @@ export class InjuryDialog {
       this.alertService.openSnackBar("Please select injury date", "error")
       return
     } else {
-      if (!(moment(this.injuryInfo.date_of_injury).isAfter(moment(this.claimant.date_of_birth)))) {
+      if (!(moment(this.injuryInfo.date_of_injury).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
         this.alertService.openSnackBar("Please select injury date after date of birth", "error")
         return
       }
-      if (!(moment(this.injuryInfo.date_of_injury).isBefore(moment(new Date())))) {
+      if (!(moment(this.injuryInfo.date_of_injury).isSameOrBefore(moment(new Date())))) {
         this.alertService.openSnackBar("Please select injury date before today", "error");
         return
       }
     }
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
-        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isAfter(moment(this.claimant.date_of_birth)))) {
+        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
           this.alertService.openSnackBar("Continues trauma Start date should after date of birth", "error")
           return
         }
-        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(new Date())))) {
+        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(new Date())))) {
           this.alertService.openSnackBar("Continues trauma Start date should be before today", "error");
           return
         }
         if (this.injuryInfo.continuous_trauma_end_date) {
-          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isAfter(moment(this.claimant.date_of_birth)))) {
+          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
             this.alertService.openSnackBar("Continues trauma End date should after date of birth", "error")
             return
           }
-          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isBefore(moment(new Date())))) {
+          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrBefore(moment(new Date())))) {
             this.alertService.openSnackBar("Continues trauma End date should be before today", "error");
             return
           }
-          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
+          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
             this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
             return
           }
@@ -1646,7 +1671,10 @@ export class InjuryDialog {
     this.minDate = moment(this.claimant.date_of_birth);
   }
   ctChange() {
-
+    if (!this.injuryInfo.continuous_trauma) {
+      this.injuryInfo.continuous_trauma_start_date = null;
+      this.injuryInfo.continuous_trauma_end_date = null;
+    }
     // if (this.injuryInfo.date_of_injury) {
     //   this.injuryInfo.continuous_trauma = false;
     //   return

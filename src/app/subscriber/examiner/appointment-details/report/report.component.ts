@@ -25,7 +25,7 @@ import { saveAs } from 'file-saver';
 export class ReportComponent implements OnInit {
 
   displayedColumns: string[] = ['select', 'name', 'action'];
-  dataSource: any = new MatTableDataSource([]);;
+  dataSource: any = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

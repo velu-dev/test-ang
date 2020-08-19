@@ -44,7 +44,7 @@ export class AppointmentDetailsComponent implements OnInit {
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   xls = globals.xls
@@ -157,9 +157,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
-        this.logger.info("dsdfdsfdsfs", bills);
-        this.logger.error(bills);
-        this.logger.warn(bills)
         this.billableData = bills.data;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -196,6 +193,7 @@ export class AppointmentDetailsComponent implements OnInit {
             this.examinationStatus = curres.data;
           })
         }
+        this.procedureTypeList = [];
         this.procedureTypeStatus.map(pro => {
           if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
             this.isDisplayStatus.status = true;
@@ -286,7 +284,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinerService.updateExaminationStatus(this.examinationStatusForm.value).subscribe(res => {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
-      this.alertService.openSnackBar(res.message, "success");
+      this.alertService.openSnackBar(this.isDisplayStatus.name + ' details updated Successfully', "success");
       this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -403,6 +401,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.tabData = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
     this.documentsData = new MatTableDataSource(this.tabData);
     this.documentsData.sort = this.sort;
+    this.documentsData.filterPredicate = function (data, filter: string): boolean {
+      return data.file_name.toLowerCase().includes(filter) || (data.updatedAt && moment(data.updatedAt).format("MM-DD-YYYY hh:mm a").includes(filter));
+    };
   }
   todayDate = { appointment: new Date(), intake: new Date() };
   minDate: any;
@@ -555,7 +556,7 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.notesForm.invalid)
       return
     this.examinerService.postNotes(this.notesForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Note added successfully!", 'success');
+      this.alertService.openSnackBar("Notes Updated successfully!", 'success');
       this.saveButtonStatus = false;
       this.notesForm.disable();
       this.isNotesEdit = false;
@@ -640,6 +641,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   docChange(e) {
+    this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } };
     this.fileUpload.nativeElement.value = "";
     this.selectedFile = null;
     this.file = null;

@@ -30,7 +30,7 @@ export class ClaimAdminComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsClaimsAdministrator = res.data;
-      this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }];
+      this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
       this.claimAdminGroupOptions = this.claimAdminForm.get('company_name')!.valueChanges
         .pipe(
           startWith(''),
