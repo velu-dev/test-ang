@@ -26,6 +26,7 @@ export class ClaimAdminComponent implements OnInit {
   claimAdminGroupOptions: Observable<any[]>;
   CASelect = true;
   @Input('state') states;
+  id: any;
   // @Output() isEditComplete = new EventEmitter();
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
@@ -54,6 +55,7 @@ export class ClaimAdminComponent implements OnInit {
 
   ngOnInit() {
     this.claimAdminForm.patchValue(this.claimAdmin)
+    this.id = this.claimAdmin.id;
   }
   appClaimAdmin(aa) {
     delete aa.id;
@@ -78,6 +80,7 @@ export class ClaimAdminComponent implements OnInit {
     if (this.claimAdminForm.invalid) {
       return;
     }
+    this.claimAdminForm.value['id'] = this.id;
     this.claimService.updateAgent(this.claimAdminForm.value.id, { InsuranceAdjuster: this.claimAdminForm.value }).subscribe(res => {
       this.claimAdminEdit = false;
       this.claimAdminForm.patchValue(res.data)
@@ -97,6 +100,9 @@ export class ClaimAdminComponent implements OnInit {
     this.claimAdminForm.disable();
     // this.isEditComplete.emit(true);
     this.claimAdminForm.patchValue(this.claimAdmin)
+  }
+  clearAutoComplete() {
+    this.claimAdminForm.reset();
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;

@@ -84,15 +84,6 @@ export class AppointmentDetailsComponent implements OnInit {
     { name: "QME-112", group: "QME", value: "112" },
     { name: "DWCAD-1013336", group: "DWCAD", value: "1013336" },
     { name: "QME-123", group: "QME", value: "123" },
-    // { name: "DEU-100 Spanish", group: "DEU", value: "S100" },
-    // { name: "DEU-111", group: "DEU", value: "111" },
-    // { name: "QME-111", group: "QME", value: "111" },
-    // { name: "DWC-AD-10133.36", group: "DWC", value: "10133" },
-    // { name: "DWC-SBR-1", group: "DWC", value: "SBR-1" },
-    // { name: "DWC-IBR-1", group: "DWC", value: "IBR-1" },
-    // { name: "QME-112", group: "QME", value: "112" },
-    // { name: "QME-123", group: "QME", value: "123" },
-    // { name: "QME-123-Instructions", group: "QME", value: "123-I" },
   ]
   formId = "";
   examiner_id = "";

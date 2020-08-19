@@ -26,6 +26,7 @@ export class DefenseAttorneyComponent implements OnInit {
   eamsRepresentatives = [];
   dattroneyGroupOptions: Observable<any[]>;
   DattroneySelect = true;
+  id: any;
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsRepresentatives = res.data;
@@ -60,7 +61,8 @@ export class DefenseAttorneyComponent implements OnInit {
     return data;
   }
   ngOnInit() {
-    this.DefanceAttorney.patchValue(this.dattorneyDetail)
+    this.DefanceAttorney.patchValue(this.dattorneyDetail);
+    this.id = this.dattorneyDetail.id;
   }
   defAttornety(da) {
     delete da.id;
@@ -78,6 +80,7 @@ export class DefenseAttorneyComponent implements OnInit {
     if (this.DefanceAttorney.invalid) {
       return;
     }
+    this.DefanceAttorney.value['id'] = this.id;
     this.claimService.updateAgent(this.DefanceAttorney.value.id, { DefenseAttorney: this.DefanceAttorney.value }).subscribe(res => {
       this.daEdit = false;
       this.DefanceAttorney.patchValue(res.data);
@@ -92,6 +95,9 @@ export class DefenseAttorneyComponent implements OnInit {
     this.DefanceAttorney.disable();
     // this.isEditComplete.emit(true);
     this.DefanceAttorney.patchValue(this.dattorneyDetail)
+  }
+  clearAutoComplete() {
+    this.DefanceAttorney.reset();
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;

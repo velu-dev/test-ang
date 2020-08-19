@@ -487,7 +487,7 @@
                                 <mat-label>Insurance Name</mat-label>
                                 <input type="text" matInput placeholder="Insurance Name" formControlName="company_name"
                                     [matAutocomplete]="caAuto">
-                                    <button mat-button *ngIf="claim.value.InsuranceAdjuster.company_name" matSuffix
+                                <button mat-button *ngIf="claim.value.InsuranceAdjuster.company_name" matSuffix
                                     mat-icon-button aria-label="Clear" (click)="clearAutoComplete('ca')">
                                     <mat-icon>close</mat-icon>
                                 </button>
@@ -790,7 +790,7 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                                     [matAutocomplete]="daAuto">
-                                    <button mat-button *ngIf="claim.value.DefenseAttorney.company_name" matSuffix
+                                <button mat-button *ngIf="claim.value.DefenseAttorney.company_name" matSuffix
                                     mat-icon-button aria-label="Clear" (click)="clearAutoComplete('da')">
                                     <mat-icon>close</mat-icon>
                                 </button>
