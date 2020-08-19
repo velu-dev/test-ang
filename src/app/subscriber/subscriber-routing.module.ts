@@ -40,6 +40,7 @@ import { ExaminationComponent } from './examiner/appointment-details/examination
 import { HistoryComponent } from './examiner/appointment-details/history/history.component';
 import { RecordsComponent } from './examiner/appointment-details/records/records.component';
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
+import { BilllableBillingComponent } from './examiner/appointment-details/billing/billing.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -114,6 +115,9 @@ const routes: Routes = [{
     }, {
       path: "reports",
       component: ReportComponent
+    },{
+      path: "billing",
+      component: BilllableBillingComponent
     }]
   }]
 },
@@ -263,6 +267,9 @@ const routes: Routes = [{
         }, {
           path: "reports",
           component: ReportComponent
+        },{
+          path: "billing",
+          component: BilllableBillingComponent
         }]
       }]
     },

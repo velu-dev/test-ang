@@ -501,7 +501,7 @@
         </div>
     </div> -->
     <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="simple-card billing-status-active bg_light">
+        <div class="simple-card billing-status-active bg_light" [routerLink]="['../../billing']">
             <i class="fa fa-usd"></i>
             <div class="p-l-10 text-center">
                 <h4>Billing</h4>
@@ -806,7 +806,7 @@
                 </mat-tab-group>
                 <div class="table-filter">
                     <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                        placeholder="Search by file name, date">
+                        placeholder="Search by file name, date" autocomplete="off">
                     <mat-icon>search</mat-icon>
                 </div>
                 <div class="striped_ user-details w-100 vertical-fixed">
