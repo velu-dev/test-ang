@@ -661,7 +661,7 @@
                                 <mat-option *ngFor="let address of examinarAddress"
                                     (click)="changeExaminarAddress(address)" [value]="address.address_id">
                                     {{address.street1}} {{address.street2}} {{address.city}} {{address.state_name}}
-                                    {{address.zip_code}}
+                                    {{address.zip_code+(address.zip_code_plus_4 != null ? "-"+address.zip_code_plus_4 : "")}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
