@@ -29,7 +29,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsRepresentatives = res.data;
-      this.attroneylist = [{ name: "From DB", data: this.eamsRepresentatives }, { name: "From EAMS", data: [] }];
+      this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
       this.dattroneyGroupOptions = this.ApplicantAttorney.get('company_name')!.valueChanges
         .pipe(
           startWith(''),

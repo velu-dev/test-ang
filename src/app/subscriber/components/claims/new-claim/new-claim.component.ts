@@ -739,7 +739,9 @@ export class NewClaimComponent implements OnInit {
     }
     this.logger.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
     if (!this.claimId) {
+      this.logger.log(claim)
       this.claimService.createClaim(claim).subscribe(res => {
+        this.logger.log(res);
         let examtype = "";
         this.examTypes.map(exam => {
           if (res.data.exam_type_id == exam.id) {
@@ -982,6 +984,7 @@ export class NewClaimComponent implements OnInit {
         }, error => {
           this.isClaimantCreated = false;
           this.alertService.openSnackBar(error.error.message, 'error');
+          this.stepper.previous();
         })
       }
     } else {
@@ -1215,31 +1218,35 @@ export class NewClaimComponent implements OnInit {
     this.selectedExaminarAddress = address;
   }
   appAttorney(attroney) {
+    delete attroney['id'];
     this.claim.patchValue({
       ApplicantAttorney: attroney
     })
   }
   defAttornety(attroney) {
+    delete attroney['id'];
     this.claim.patchValue({
       DefenseAttorney: attroney
     })
   }
   appClaimAdmin(claimadmin) {
-    console.log(claimadmin)
+    delete claimadmin['id'];
     this.claim.patchValue({
       InsuranceAdjuster: claimadmin
     })
   }
   clearAutoComplete(form) {
-    // switch (form) {
-    //   case 'aa':
-    //     this.claim
-    //     break;
-    //   case 'da':
-    //     break;
-    //   case 'ca':
-    //     break;
-    // }
+    switch (form) {
+      case 'aa':
+        this.claim.get('ApplicantAttorney').reset();
+        break;
+      case 'da':
+        this.claim.get('DefenseAttorney').reset();
+        break;
+      case 'ca':
+        this.claim.get('InsuranceAdjuster').reset();
+        break;
+    }
   }
   todayDate = { appointment: new Date(), intake: new Date() }
   minDate: any;
