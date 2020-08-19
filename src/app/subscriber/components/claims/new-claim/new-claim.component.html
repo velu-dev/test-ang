@@ -684,10 +684,10 @@
                                 <mat-label>Law Firm Name</mat-label>
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                                     [matAutocomplete]="aaAuto">
-                                <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
+                                <!-- <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
                                     (click)="clearAutoComplete('aa')">
                                     <mat-icon>close</mat-icon>
-                                </button>
+                                </button> -->
                                 <mat-autocomplete #aaAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (aattroneyGroupOptions | async)"
                                         [label]="group.name">
@@ -1129,8 +1129,8 @@
                                     <mat-select>
                                         <mat-option *ngFor="let address of (examinarAddress | async)"
                                             (click)="changeExaminarAddress(address)" [value]="address.street1">
-                                            {{address.street1}} {{address.street2}} {{address.city}} {{address.state}}
-                                            {{address.zip_code}}
+                                            {{address.street1}} {{address.street2}} {{address.city}} {{address.state_name}}
+                                            {{address.zip_code+(address.zip_code_plus_4 != null ? "-"+address.zip_code_plus_4 : "")}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
