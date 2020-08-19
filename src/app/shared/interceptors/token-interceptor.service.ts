@@ -6,6 +6,7 @@ import { switchMap } from "rxjs/operators";
 import  Auth  from "@aws-amplify/auth";
 import { catchError } from "rxjs/operators";
 import { CookieService } from '../services/cookie.service';
+import { Router } from '@angular/router';
 export const InterceptorSkipHeader = "X-Skip-Interceptor";
 
 @Injectable({
@@ -13,7 +14,7 @@ export const InterceptorSkipHeader = "X-Skip-Interceptor";
 })
 export class TokenInterceptorService implements HttpInterceptor {
   roleId: any;
-  constructor(private cookieService: CookieService) {
+  constructor(private cookieService: CookieService, private router: Router) {
 
   }
   intercept(
@@ -48,7 +49,9 @@ export class TokenInterceptorService implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           let err: any = error;
-          // console.log(err.status);
+           if(err && err == 'No current user'){
+             this.router.navigate(['/login']);
+           }
           return throwError(error);
         })
       );
