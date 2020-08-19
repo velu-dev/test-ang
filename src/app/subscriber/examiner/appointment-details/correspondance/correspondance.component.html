@@ -222,6 +222,7 @@
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
         </table>
+        <app-nodata *ngIf="sentDocuments?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
   </div>
@@ -276,6 +277,7 @@
           </tr>
           <tr mat-row *matRowDef="let row; columns: ['expandedElement1']" class="detail-row"></tr>
         </table>
+        <app-nodata *ngIf="dataSource3?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
   </div>
