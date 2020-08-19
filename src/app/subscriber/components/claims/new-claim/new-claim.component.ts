@@ -1019,7 +1019,8 @@ export class NewClaimComponent implements OnInit {
       for (var j in arrData) {
         this.injuryInfodata.push(arrData[j])
       }
-      this.dataSource = new MatTableDataSource(this.injuryInfodata)
+      this.dataSource = new MatTableDataSource(this.injuryInfodata);
+      this.alertService.openSnackBar("Injury edited successfully", "success");
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
       this.isInjuryEdit = false;
     } else {
@@ -1041,7 +1042,8 @@ export class NewClaimComponent implements OnInit {
       for (var j in arrData) {
         this.injuryInfodata.push(arrData[j])
       }
-      this.logger.log("injuryInfodata", this.injuryInfodata)
+      this.logger.log("injuryInfodata", this.injuryInfodata);
+      this.alertService.openSnackBar("Injury added successfully", "success");
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
     }
@@ -1079,6 +1081,7 @@ export class NewClaimComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.injuryInfodata)
         this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
         this.loader.hide();
+        this.alertService.openSnackBar("Injury updated successfully", "success");
       } else {
         let editingInjury = localStorage.getItem("editingInjury");
         let data = JSON.parse(editingInjury)
@@ -1226,6 +1229,17 @@ export class NewClaimComponent implements OnInit {
     this.claim.patchValue({
       InsuranceAdjuster: claimadmin
     })
+  }
+  clearAutoComplete(form) {
+    // switch (form) {
+    //   case 'aa':
+    //     this.claim
+    //     break;
+    //   case 'da':
+    //     break;
+    //   case 'ca':
+    //     break;
+    // }
   }
   todayDate = { appointment: new Date(), intake: new Date() }
   minDate: any;
@@ -1447,7 +1461,8 @@ export class NewClaimComponent implements OnInit {
       if (result['data']) {
         this.injuryInfodata.splice(index, 1);
         this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
-        this.dataSource = new MatTableDataSource(this.injuryInfodata)
+        this.dataSource = new MatTableDataSource(this.injuryInfodata);
+        this.alertService.openSnackBar("Injury deleted successfully", "success");
       }
     })
 
@@ -1595,35 +1610,35 @@ export class InjuryDialog {
       this.alertService.openSnackBar("Please select injury date", "error")
       return
     } else {
-      if (!(moment(this.injuryInfo.date_of_injury).isAfter(moment(this.claimant.date_of_birth)))) {
+      if (!(moment(this.injuryInfo.date_of_injury).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
         this.alertService.openSnackBar("Please select injury date after date of birth", "error")
         return
       }
-      if (!(moment(this.injuryInfo.date_of_injury).isBefore(moment(new Date())))) {
+      if (!(moment(this.injuryInfo.date_of_injury).isSameOrBefore(moment(new Date())))) {
         this.alertService.openSnackBar("Please select injury date before today", "error");
         return
       }
     }
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
-        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isAfter(moment(this.claimant.date_of_birth)))) {
+        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
           this.alertService.openSnackBar("Continues trauma Start date should after date of birth", "error")
           return
         }
-        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(new Date())))) {
+        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(new Date())))) {
           this.alertService.openSnackBar("Continues trauma Start date should be before today", "error");
           return
         }
         if (this.injuryInfo.continuous_trauma_end_date) {
-          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isAfter(moment(this.claimant.date_of_birth)))) {
+          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
             this.alertService.openSnackBar("Continues trauma End date should after date of birth", "error")
             return
           }
-          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isBefore(moment(new Date())))) {
+          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrBefore(moment(new Date())))) {
             this.alertService.openSnackBar("Continues trauma End date should be before today", "error");
             return
           }
-          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
+          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
             this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
             return
           }
@@ -1649,7 +1664,10 @@ export class InjuryDialog {
     this.minDate = moment(this.claimant.date_of_birth);
   }
   ctChange() {
-
+    if (!this.injuryInfo.continuous_trauma) {
+      this.injuryInfo.continuous_trauma_start_date = null;
+      this.injuryInfo.continuous_trauma_end_date = null;
+    }
     // if (this.injuryInfo.date_of_injury) {
     //   this.injuryInfo.continuous_trauma = false;
     //   return

@@ -157,9 +157,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
-        this.logger.info("dsdfdsfdsfs", bills);
-        this.logger.error(bills);
-        this.logger.warn(bills)
         this.billableData = bills.data;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -196,6 +193,7 @@ export class AppointmentDetailsComponent implements OnInit {
             this.examinationStatus = curres.data;
           })
         }
+        this.procedureTypeList = [];
         this.procedureTypeStatus.map(pro => {
           if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
             this.isDisplayStatus.status = true;
