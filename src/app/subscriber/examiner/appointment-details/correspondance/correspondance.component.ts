@@ -37,10 +37,10 @@ export class BillingCorrespondanceComponent implements OnInit {
       shareReplay()
     );
   default_select = globals.default_select
-  sentDocuments: any;
-  documents: any;
-  recipients: any;
-  dataSource3: any;
+  sentDocuments: any = new MatTableDataSource([]);
+  documents: any = new MatTableDataSource([]);
+  recipients: any = new MatTableDataSource([]);
+  dataSource3: any = new MatTableDataSource([]);
   columnsToDisplay = [];
   columnsToDisplay1 = [];
   expandedElement;
@@ -194,7 +194,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   ngOnInit() {
   }
   downloadForms(sign) {
-    if (this.selection.selected.length > 0) {
+    if (this.selection.selected.length > 0 && this.selection1.selected.length > 0) {
       let signHide = false;
       if (sign) {
         signHide = sign;
@@ -208,20 +208,39 @@ export class BillingCorrespondanceComponent implements OnInit {
           documents_ids.push(res.id)
         }
       })
-      this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, { documents_ids: documents_ids, custom_documents_ids: custom_documents_ids, "hide_sign": signHide }).subscribe(res => {
+      let recipientsDocuments_ids: any = [];
+      let recipientsCustom_documents_ids: any = [];
+      this.selection1.selected.map(res => {
+        if (res.type == "custom") {
+          recipientsCustom_documents_ids.push(res.id)
+        } else {
+          recipientsDocuments_ids.push(res.id)
+        }
+      })
+      let docDeatils = {
+        documents_ids: documents_ids,
+        custom_documents_ids: custom_documents_ids,
+        recipients_ids: recipientsDocuments_ids,
+        custom_recipients_ids: recipientsCustom_documents_ids,
+        hide_sign: signHide
+      }
+      this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
         if (res.status) {
-          this.alertService.openSnackBar(res.message, "success");
+          //this.alertService.openSnackBar(res.message, "success");
           let data = res.data;
           documents_ids = [];
           custom_documents_ids = [];
+          recipientsDocuments_ids = [];
+          recipientsCustom_documents_ids = [];
           this.selection.clear();
-          data.map(doc => {
-            this.download(doc.exam_report_file_url, doc.file_name);
-          })
+          this.selection1.clear();
+          this.download(res.data.file_url, res.data.file_name);
         } else {
           this.alertService.openSnackBar(res.message, "error");
         }
       })
+    }else{
+      this.alertService.openSnackBar('Please select Document(s) & Recipient(s) ', "error");
     }
   }
   download(url, name) {
@@ -306,7 +325,6 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
         break;
       case 'In Progress':
-        console.log(status)
         this.statusBarValues = { value: 50, status: status, class: 'sent' }
         break;
       case 'Completed':
