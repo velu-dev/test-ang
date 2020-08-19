@@ -1,0 +1,64 @@
+@import "variables";
+@import "table";
+
+.not-sent ::ng-deep .mat-progress-bar-fill::after {
+    background-color: $progres-light-gray;
+}
+.sent ::ng-deep .mat-progress-bar-fill::after {
+    background-color: $warning-light;
+}
+.complete ::ng-deep .mat-progress-bar-fill::after {
+    background-color: $btn_success;
+}
+.error ::ng-deep .mat-progress-bar-fill::after {
+    background-color: $progress-error;
+}
+::ng-deep .mat-progress-bar-buffer {
+    background: $progres-light-gray;
+}
+
+.billing {
+    .review-status {
+        width: 90px;
+        height: 90px;
+        display: table-cell;
+        margin: 0px auto;
+        text-align: center;
+        padding: 25px;
+        vertical-align: middle;
+        border: 1px solid $light-gray;
+        border-radius: 50%;
+    }
+    .bill-id {
+        text-align: left;
+        span {
+            font-weight: $font-weight-bold;
+        }
+    }
+    .submission-date {
+        text-align: right;
+        span {
+            font-weight: $font-weight-bold;
+        }
+    }
+    .border-dashed-blue {
+        margin: 30px 0px 30px 0;
+    }
+    .examiner-info {
+        margin-top: 20px;
+        mat-card {
+            box-shadow: $shadow-style-one !important;
+            &:hover {
+                box-shadow: $shadow-style-one-hover;
+            }
+        }
+    }
+    .diagnosis-info {
+        @extend .examiner-info
+    }
+    .post-payment {
+        button {
+            float: right;
+        }
+    }
+}

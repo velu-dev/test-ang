@@ -16,25 +16,20 @@
         <div class="def_attorney_info  m-t-15">
             <form fxLayout="row wrap" fxFlex="100" [formGroup]="DefanceAttorney"
                 (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
-                <mat-form-field *ngIf="!DattroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
+                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Law Firm Name</mat-label>
-                    <input matInput placeholder="Law Firm Name" formControlName="company_name" autocomplete="off">
-                </mat-form-field>
-                <mat-form-field *ngIf="DattroneySelect" appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
-                    <mat-label>Law Firm Name</mat-label>
-                    <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name" required
+                    <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                         [matAutocomplete]="daAuto">
+                    <button mat-button *ngIf="DefanceAttorney.value.company_name && daEdit" matSuffix mat-icon-button
+                        aria-label="Clear" (click)="clearAutoComplete()">
+                        <mat-icon>close</mat-icon>
+                    </button>
                     <mat-autocomplete #daAuto="matAutocomplete">
                         <mat-optgroup *ngFor="let group of (dattroneyGroupOptions | async)" [label]="group.name">
                             <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of group.data"
                                 [value]="attroney.name">
                                 {{attroney.name}}
                             </mat-option>
-                        </mat-optgroup>
-                        <mat-optgroup label="Other">
-                            <mat-option (click)="DattroneySelect = false">Add New Attorney</mat-option>
                         </mat-optgroup>
                     </mat-autocomplete>
                     <mat-error>Please enter valid attroney</mat-error>

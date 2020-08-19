@@ -16,25 +16,20 @@
         <div fxLayout="row wrap" class="claim_admin m-t-15">
             <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimAdminForm"
                 (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
-                <mat-form-field *ngIf="!CASelect" appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
+                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Insurance Name</mat-label>
-                    <input matInput placeholder="Insurance Name" formControlName="company_name" autocomplete="off">
-                </mat-form-field>
-                <mat-form-field *ngIf="CASelect" appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                    fxFlex.xs="100">
-                    <mat-label>Insurance Name</mat-label>
-                    <input type="text" matInput placeholder="Insurance Name" formControlName="company_name" required
+                    <input type="text" matInput placeholder="Insurance Name" formControlName="company_name"
                         [matAutocomplete]="caAuto">
+                    <button mat-button *ngIf="claimAdminForm.value.company_name && claimAdminEdit" matSuffix
+                        mat-icon-button aria-label="Clear" (click)="clearAutoComplete()">
+                        <mat-icon>close</mat-icon>
+                    </button>
                     <mat-autocomplete #caAuto="matAutocomplete">
                         <mat-optgroup *ngFor="let group of (claimAdminGroupOptions | async)" [label]="group.name">
                             <mat-option (click)="appClaimAdmin(claim_admin)" *ngFor="let claim_admin of group.data"
                                 [value]="claim_admin.name">
                                 {{claim_admin.name}}
                             </mat-option>
-                        </mat-optgroup>
-                        <mat-optgroup label="Other">
-                            <mat-option (click)="CASelect = false">Add new attorney</mat-option>
                         </mat-optgroup>
                     </mat-autocomplete>
                     <mat-error>Please enter valid claim administrator</mat-error>

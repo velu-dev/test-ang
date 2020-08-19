@@ -778,6 +778,15 @@ input:-webkit-autofill {
     background-color: $btn_success;
   }
 }
+.outline-secondary {
+  @extend .btn_;
+  color: $secondary;
+  border-color: $secondary;
+  &:hover {
+    color: $white;
+    background-color: $secondary;
+  }
+}
 
 .filled-success {
   @extend .btn_;

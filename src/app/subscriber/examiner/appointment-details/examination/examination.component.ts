@@ -184,6 +184,7 @@ export class ExaminationComponent implements OnInit {
     })
   }
   downloadDocument(element) {
+    this.alertService.openSnackBar("File downloaded successfully", "success");
     saveAs(element.exam_report_file_url, element.file_name, '_self');
   }
   removeDocument(element) {

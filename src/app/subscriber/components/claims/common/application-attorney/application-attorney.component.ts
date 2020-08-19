@@ -26,6 +26,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   eamsRepresentatives = [];
   dattroneyGroupOptions: Observable<any[]>;
   DattroneySelect = true;
+  id: any;
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsRepresentatives = res.data;
@@ -52,6 +53,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   ngOnInit() {
     this.ApplicantAttorney.patchValue(this.aattorneyDetail)
+    this.id = this.aattorneyDetail.id;
   }
   private _filterAttroney(value: string, data) {
     if (value) {
@@ -78,6 +80,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     if (this.ApplicantAttorney.invalid) {
       return;
     }
+    this.ApplicantAttorney.value['id'] = this.id;
     this.claimService.updateAgent(this.ApplicantAttorney.value.id, { ApplicantAttorney: this.ApplicantAttorney.value }).subscribe(res => {
       // this.isEdit = false;
       this.aaEdit = false;
@@ -92,6 +95,9 @@ export class ApplicationAttorneyComponent implements OnInit {
   cancel() {
     // this.isEditComplete.emit(true);
     this.ApplicantAttorney.disable();
+  }
+  clearAutoComplete() {
+    this.ApplicantAttorney.reset();
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
