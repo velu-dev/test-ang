@@ -44,7 +44,7 @@ export class AppointmentDetailsComponent implements OnInit {
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   xls = globals.xls
@@ -640,6 +640,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   docChange(e) {
+    this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } };
     this.fileUpload.nativeElement.value = "";
     this.selectedFile = null;
     this.file = null;
