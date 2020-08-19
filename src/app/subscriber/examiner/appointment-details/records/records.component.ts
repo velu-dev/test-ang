@@ -305,7 +305,7 @@ export class RecordsComponent implements OnInit {
 
   pageNumberSave(element) {
     if (!(element.page_number > 0 && element.page_number <= 10000)) {
-      this.alertService.openSnackBar("Page number should be  1 to 10000", 'error');
+      this.alertService.openSnackBar("Page number should be  0 to 10000", 'error');
       let data = this.dataSource.data;
       data.map(data => {
         if (data.document_id == element.document_id) {

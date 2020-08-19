@@ -284,7 +284,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinerService.updateExaminationStatus(this.examinationStatusForm.value).subscribe(res => {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
-      this.alertService.openSnackBar(res.message, "success");
+      this.alertService.openSnackBar(this.isDisplayStatus.name + ' details updated Successfully', "success");
       this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -401,6 +401,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.tabData = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
     this.documentsData = new MatTableDataSource(this.tabData);
     this.documentsData.sort = this.sort;
+    this.documentsData.filterPredicate = function (data, filter: string): boolean {
+      return data.file_name.toLowerCase().includes(filter) || (data.updatedAt && moment(data.updatedAt).format("MM-DD-YYYY hh:mm a").includes(filter));
+    };
   }
   todayDate = { appointment: new Date(), intake: new Date() };
   minDate: any;
@@ -553,7 +556,7 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.notesForm.invalid)
       return
     this.examinerService.postNotes(this.notesForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Note added successfully!", 'success');
+      this.alertService.openSnackBar("Notes Updated successfully!", 'success');
       this.saveButtonStatus = false;
       this.notesForm.disable();
       this.isNotesEdit = false;

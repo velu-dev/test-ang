@@ -806,7 +806,7 @@
                 </mat-tab-group>
                 <div class="table-filter">
                     <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                        placeholder="Search by file name, date">
+                        placeholder="Search by file name, date" autocomplete="off">
                     <mat-icon>search</mat-icon>
                 </div>
                 <div class="striped_ user-details w-100 vertical-fixed">
