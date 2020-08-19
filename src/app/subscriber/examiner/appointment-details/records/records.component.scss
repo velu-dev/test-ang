@@ -29,7 +29,7 @@ th {
         padding: 0 0 0 5px;
     }
 }
-.basic-table{
+.basic-table {
     .pages-count {
         display: flex;
         input {
@@ -58,6 +58,12 @@ th {
 .upload-file {
     .mat-form-field {
         width: 80%;
+    }
+    mat-hint {
+        width: 100%;
+        mat-error {
+            float: right;
+        }
     }
 }
 

@@ -5,7 +5,7 @@
           matTooltip="The Record Summarizer will send progress updates that will be reflected in the status here."
           matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">View the progress of Record Summary service here.</p>
-      <mat-progress-bar mode="determinate" value="50" class="not-sent"></mat-progress-bar>
+      <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class"></mat-progress-bar>
       <div class="text-center">{{recordData?.on_demand_status}}</div>
     </div>
   </div>
@@ -35,7 +35,7 @@
           <button mat-raised-button class="filled-gray m-t-15" type="button" (click)="uploadFile()">Add</button>
         </div>
       </div>
-      <div class="basic-table striped_  m-l-10 vertical-fixed">
+      <div class="basic-table striped_  m-l-10 vertical-fixed m-t-10">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 user-table">
 
           <!-- Checkbox Column -->

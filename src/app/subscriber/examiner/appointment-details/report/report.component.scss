@@ -43,6 +43,12 @@ th {
     .mat-form-field {
         width: 80%;
     }
+    mat-hint {
+        width: 100%;
+        mat-error {
+            float: right;
+        }
+    }
 }
 .ondemand_request {
     mat-checkbox {
