@@ -1,6 +1,6 @@
 <div class="create-claim">
     <!--   -->
-    <mat-horizontal-stepper linear (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
+    <mat-horizontal-stepper (selectionChange)="selectionChange($event)" #stepper class="create-claimant-stepper">
         <mat-step [stepControl]="claimant">
             <form [formGroup]="claimant" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
                 <ng-template matStepLabel><span>{{isEdit ? 'Update' : 'Create'}}</span> Claimant
@@ -448,7 +448,8 @@
                                         <ng-container matColumnDef="action">
                                             <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
                                             <td mat-cell *matCellDef="let element" class="text-center no-wrap-td">
-                                                <a class="text-success" (click)="downloadDoc(element?.exam_report_file_url,element?.file_name )">
+                                                <a class="text-success"
+                                                    (click)="downloadDoc(element?.exam_report_file_url,element?.file_name )">
                                                     Download
                                                 </a>
                                                 <a class="text-danger m-l-10"
@@ -686,9 +687,10 @@
                                 <mat-autocomplete #aaAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (aattroneyGroupOptions | async)"
                                         [label]="group.name">
-                                    </mat-optgroup>
-                                    <mat-optgroup label="Other">
-                                        <mat-option (click)="AattroneySelect = false">Add New Attorney</mat-option>
+                                        <mat-option (click)="appAttorney(aa)" *ngFor="let aa of group.data"
+                                            [value]="aa.name">
+                                            {{aa.name}}
+                                        </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
                                 <mat-error>Please enter valid attroney</mat-error>
@@ -783,9 +785,10 @@
                                 <mat-autocomplete #daAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of (dattroneyGroupOptions | async)"
                                         [label]="group.name">
-                                    </mat-optgroup>
-                                    <mat-optgroup label="Other">
-                                        <mat-option (click)="DattroneySelect = false">Add New Attorney</mat-option>
+                                        <mat-option (click)="defAttornety(aa)" *ngFor="let aa of group.data"
+                                            [value]="aa.name">
+                                            {{aa.name}}
+                                        </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
                                 <mat-error>Please enter valid attroney</mat-error>

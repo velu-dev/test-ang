@@ -87,9 +87,7 @@ export interface claimant1 {
   note: string
 }
 export const _filter = (opt: any[], value: string): string[] => {
-  console.log("opt", opt);
   const filterValue = value.toLowerCase();
-
   return opt.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
 };
 @Component({
@@ -352,7 +350,7 @@ export class NewClaimComponent implements OnInit {
             break;
           case "eams_claims_administrator":
             this.eamsClaimsAdministrator = res.data;
-            this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: [] }];
+            this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
             this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
               .pipe(
                 startWith(''),
@@ -361,7 +359,7 @@ export class NewClaimComponent implements OnInit {
             break;
           case "eams_representatives":
             this.eamsRepresentatives = res.data;
-            this.attroneylist = [{ name: "From DB", data: this.eamsRepresentatives }, { name: "From EAMS", data: [] }];
+            this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
             this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
               .pipe(
                 startWith(''),
@@ -382,13 +380,6 @@ export class NewClaimComponent implements OnInit {
           case "object_type":
             this.objectTypes = res.data;
             break;
-          // case "procedural_codes":
-          //   res.data.map(proc => {
-          //     if (proc.procedural_code != "ML100") {
-          //       this.procuderalCodes.push(proc);
-          //     }
-          //   })
-          //   break;
           case "role_level":
             this.roleLevels = res.data;
             break;
@@ -1160,9 +1151,12 @@ export class NewClaimComponent implements OnInit {
             res.name = res.company_name;
             claim_admin.push(res)
           })
-          this.claimAdminList = [{ name: "From DB", data: this.eamsClaimsAdministrator }, { name: "From EAMS", data: claim_admin }]
-          console.table(this.claimAdminList);
-          // }
+          this.claimAdminList = [{ name: "EAMS ADJ Addresses", data: claim_admin }, { name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
+          this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
+            .pipe(
+              startWith(''),
+              map(value => this._filterAttroney(value, this.claimAdminList))
+            );
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
             console.log("attrony")
@@ -1172,8 +1166,17 @@ export class NewClaimComponent implements OnInit {
               res.name = res.company_name;
               attroney.push(res)
             })
-            this.attroneylist = [{ name: "From DB", data: this.eamsRepresentatives }, { name: "From EAMS", data: attroney }]
-            console.table(this.attroneylist);
+            this.attroneylist = [{ name: "EAMS ADJ Addresses", data: attroney }, { name: "Simplexam Addresses", data: this.eamsRepresentatives }];
+            this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.attroneylist))
+              );
+            this.dattroneyGroupOptions = this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges
+              .pipe(
+                startWith(''),
+                map(value => this._filterAttroney(value, this.attroneylist))
+              );
           }
           this.iseams_entry = true;
         } else {
