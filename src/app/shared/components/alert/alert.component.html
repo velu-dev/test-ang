@@ -1,6 +1,6 @@
 <span class="alert">
   <i *ngIf="data?.action == 'success'" class="far fa-check-circle"></i>
-  <i *ngIf="data?.action == 'error'" class="far fa-exclamation-circle "></i>
-  <i *ngIf="data?.action == 'warning'" class="far fa-exclamation-circle"></i>
-  {{data.message}} <i class="fa fa-times-circle"></i>
+  <i *ngIf="data?.action == 'error'" class="fa fa-exclamation-circle "></i>
+  <i *ngIf="data?.action == 'warning'" class="fa fa-exclamation-circle"></i>
+  {{data.message}} <i class="fa fa-times-circle" (click)="close()"></i>
 </span>
