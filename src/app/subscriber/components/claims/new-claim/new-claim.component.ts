@@ -871,7 +871,9 @@ export class NewClaimComponent implements OnInit {
     this.openDialogCancel('cancel', null)
   }
   examtypeChange(type) {
+    this.logger.log(type);
     this.claimService.getProcedureType(type.id).subscribe(res => {
+      this.logger.log(res.data);
       this.procuderalCodes = res.data;
     })
   }
