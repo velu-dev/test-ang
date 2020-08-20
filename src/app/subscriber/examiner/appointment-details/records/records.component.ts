@@ -67,20 +67,21 @@ export class RecordsComponent implements OnInit {
         this.columnName = ["", "File Name", "Download"]
         this.columnsToDisplay = ['is_expand', 'file_name', "download"]
       } else {
-        this.columnName = ["File Name", "Request Rush", "Request Date", "Download"]
-        this.columnsToDisplay = ['file_name', 'service_priority', "date_of_request", 'download']
+        this.columnName = ["File Name", "Document Pages","Rush Request?", "Date Requested ", "Date Received", "Download Record Document", "Download Record Summary"]
+        this.columnsToDisplay = ['file_name', 'page','service_priority', "date_of_request","date_of_communication", 'download', 'download1']
       }
     })
-    this.isHandset$.subscribe(res => {
-      this.isMobile = res;
-      if (res) {
-        this.columnName1 = ["", "File Name", "Download"]
-        this.columnsToDisplay1 = ['is_expand', 'file_name', 'download']
-      } else {
-        this.columnName1 = ["File Name", "Rush Request?", "Date Requested", "Date Received", "Download"]
-        this.columnsToDisplay1 = ['file_name', 'service_priority', "date_of_request", "date_of_communication", 'download']
-      }
-    })
+    
+    // this.isHandset$.subscribe(res => {
+    //   this.isMobile = res;
+    //   if (res) {
+    //     this.columnName1 = ["", "File Name", "Download"]
+    //     this.columnsToDisplay1 = ['is_expand', 'file_name', 'download']
+    //   } else {
+    //     this.columnName1 = ["File Name", "Rush Request?", "Date Requested", "Date Received", "Download"]
+    //     this.columnsToDisplay1 = ['file_name', 'service_priority', "date_of_request", "date_of_communication", 'download']
+    //   }
+    // })
   }
 
   ngOnInit() {
@@ -101,15 +102,15 @@ export class RecordsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(record.documets)
       let inFile = [];
       let outFile = [];
-      record.documets_sent_and_received.map(file => {
-        if (file.transmission_direction == 'IN') {
-          inFile.push(file)
-        } else {
-          outFile.push(file)
-        }
+      // record.documets_sent_and_received.map(file => {
+      //   if (file.transmission_direction == 'IN') {
+      //     inFile.push(file)
+      //   } else {
+      //     outFile.push(file)
+      //   }
 
-      })
-      this.dataSoruceOut = new MatTableDataSource(outFile);
+      // })
+      this.dataSoruceOut = new MatTableDataSource(record.documets_sent_and_received);
       this.dataSoruceIn = new MatTableDataSource(inFile)
       this.rushRequest = false;
       this.statusBarChanges(this.recordData.on_demand_status)
@@ -378,14 +379,5 @@ export class RecordsComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.file_name + 1}`;
   }
+
 }
-
-const ELEMENT_DATA2 = [
-  { "id": 143, "file_name": "Record Set 1", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
-  { "id": 143, "file_name": "Record Set 2", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
-  { "id": 143, "file_name": "Record Set 3", "request_rush": "Yes", "request_date": "01-02-2020", "Download": "" },
-];
-
-const ELEMENT_DATA3 = [
-  { "id": 143, "file_name": "Record Summary File Name", "rush_request": "No", "request_date": "01-02-2020", "received_date": "01-02-2020", "Download": "" },
-];

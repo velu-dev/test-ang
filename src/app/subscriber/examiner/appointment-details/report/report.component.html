@@ -125,7 +125,7 @@
 
   <div fxLayout="row wrap" class="send-document">
     <div fxFlex="100">
-      <div class="main-title">Report Documents Sent <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and
+      <div class="main-title">Documents Sent <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and
         the document recipients."><i class="fa fa-question" aria-hidden="true"></i></span></div>
       <p class="description">This table lists the documents sent to the transcriptionist.</p>
 
@@ -145,7 +145,11 @@
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ? 'Yes' : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
                 <span *ngIf="column == 'date_of_request'" class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
+                <span *ngIf="column == 'date_of_communication'" class="no-wrap-td">{{element?.date_of_communication | date:'MM-dd-yyyy' }}</span>
                 <span *ngIf="column == 'download'">
+                  <a class="text-success" (click)="inOutdownload(element)">Download</a>
+                </span>
+                <span *ngIf="column == 'download1' && element?.transmission_direction == 'IN'">
                   <a class="text-success" (click)="inOutdownload(element)">Download</a>
                 </span>
               </div>
@@ -176,7 +180,7 @@
     </div>
   </div>
 
-  <div fxLayout="row wrap" class="proof-of-service m-t-50">
+  <!-- <div fxLayout="row wrap" class="proof-of-service m-t-50">
     <div fxFlex="100">
       <div class="main-title">Transcribed and Compiled Report Documents <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="This table holds the transcribed and compiled version of the report and documents that were sent to the transcriptionist."><i class="fa fa-question" aria-hidden="true"></i></span></div>
       <p class="description">The report draft will be available here </p>
@@ -227,5 +231,5 @@
         <app-nodata *ngIf="dataSoruceIn?.filteredData?.length == 0"></app-nodata>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
