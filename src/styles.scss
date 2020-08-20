@@ -137,6 +137,11 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     width: 94%;
     float: left;
   }
+  .fa-times-circle {
+    float: right;
+    padding: 5px 5px 0 0;
+    cursor: pointer;
+  }
 }
 
 .alert-success,
@@ -531,7 +536,8 @@ image-cropper {
 }
 
 // Billable item pages common styles
-.billable-item-status, .billing {
+.billable-item-status,
+.billing {
   .main-title {
     font-size: $font-size-10 !important;
     font-weight: $font-weight-medium;
