@@ -1,5 +1,6 @@
 @import "variables";
 @import "table";
+@import "../appointment-details.component.scss";
 
 .not-sent ::ng-deep .mat-progress-bar-fill::after {
     background-color: $progres-light-gray;
@@ -19,15 +20,18 @@
 
 .billing {
     .review-status {
-        width: 90px;
-        height: 90px;
-        display: table-cell;
-        margin: 0px auto;
-        text-align: center;
-        padding: 25px;
-        vertical-align: middle;
-        border: 1px solid $light-gray;
-        border-radius: 50%;
+        display: table;
+        div {
+            width: 90px;
+            height: 90px;
+            margin: 0px auto;
+            text-align: center;
+            padding: 45px 25px 0 25px;
+            border: 1px solid $light-gray;
+            border-radius: 50%;
+            font-weight: $font-weight-bold;
+            color: $text-gray;
+        }
     }
     .bill-id {
         text-align: left;
@@ -52,13 +56,94 @@
                 box-shadow: $shadow-style-one-hover;
             }
         }
+        .grid-list {
+            div {
+                min-width: 140px !important;
+            }
+        }
     }
     .diagnosis-info {
-        @extend .examiner-info
+        @extend .examiner-info;
     }
     .post-payment {
         button {
             float: right;
         }
+    }
+    .bill-item {
+        @extend .examiner-info;
+        .custom-input {
+            padding: 8px 3px;
+            border: 1px solid $gray;
+            width: 100px;
+            border-radius: 3px;
+            &:disabled {
+                border: 1px solid $white;
+                background-color: transparent;
+                width: auto;
+                border-radius: 3px;
+            }
+        }
+    }
+    .documents {
+        @extend .examiner-info;
+        .document-file-upload {
+            mat-form-field {
+                padding: 0 10px 0 10px;
+            }
+            @media only screen and (max-width: 568px) {
+                margin-bottom: 20px;
+            }
+            .Upload_ {
+                button {
+                    width: 120px;
+                }
+                mat-form-field {
+                    width: calc(100% - 150px);
+                    @media only screen and (max-width: 568px) {
+                        width: $width-100 !important;
+                    }
+                }
+            }
+            div {
+                .filled-gray {
+                    margin-top: 25px;
+                    @media only screen and (max-width: 568px) {
+                        margin-top: 0px;
+                    }
+                }
+            }
+            .Upload_ {
+                .mat-hint {
+                    width: 100%;
+                    mat-error {
+                        float: right;
+                    }
+                }
+            }
+        }
+    }
+    .ondamand-actions {
+        button {
+            font-size: $font-size-10 !important;
+            font-weight: $font-weight-base;
+        }
+        .align-left {
+            text-align: left;
+        }
+        .align-center {
+            text-align: center;
+            .filled-lightgray {
+                &:hover {
+                    color: $ternary;
+                }
+            }
+        }
+        .align-right {
+            text-align: right;
+        }
+    }
+    .completed-documents {
+        @extend .examiner-info;
     }
 }
