@@ -42,6 +42,8 @@ export class BilllableBillingComponent implements OnInit {
   columnName3 = [];
   isMobile3 = false;
   filterValue: string;
+  file: any;
+  documentType: any;
   constructor(private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -106,6 +108,9 @@ export class BilllableBillingComponent implements OnInit {
     //   this.dataSource.paginator.firstPage();
     // }
   }
+  addFile(event) {
+
+  }
 
 }
 const ELEMENT_DATA = [
@@ -130,8 +135,8 @@ const ELEMENT_DATA2 = [
 
 ];
 const ELEMENT_DATA3 = [
-  { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date": "05-25-2019", "recipients":"Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "sent_document":"Download","proof_of_service":"Download" },
-  { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date": "05-25-2019", "recipients":"", "sent_document":"Download","proof_of_service":"Download" },
-  { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date": "05-25-2019", "recipients":"", "sent_document":"Download","proof_of_service":"Download" },
+  { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date": "05-25-2019", "recipients": "Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "sent_document": "Download", "proof_of_service": "Download" },
+  { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date": "05-25-2019", "recipients": "", "sent_document": "Download", "proof_of_service": "Download" },
+  { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date": "05-25-2019", "recipients": "", "sent_document": "Download", "proof_of_service": "Download" },
 
 ];
