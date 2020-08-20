@@ -194,7 +194,19 @@ export class BillingCorrespondanceComponent implements OnInit {
   ngOnInit() {
   }
   downloadForms(sign) {
-    if (this.selection.selected.length > 0 && this.selection1.selected.length > 0) {
+    if (this.selection.selected.length == 0 && this.selection1.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s) & Recipient(s)', "error");
+      return;
+    }
+    if (this.selection.selected.length == 0 ) {
+      this.alertService.openSnackBar('Please select Document(s)', "error");
+      return;
+    }
+    if (this.selection1.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Recipient(s)', "error");
+      return;
+    }
+  
       let signHide = false;
       if (sign) {
         signHide = sign;
@@ -239,9 +251,6 @@ export class BillingCorrespondanceComponent implements OnInit {
           this.alertService.openSnackBar(res.message, "error");
         }
       })
-    }else{
-      this.alertService.openSnackBar('Please select Document(s) & Recipient(s) ', "error");
-    }
   }
   download(url, name) {
     saveAs(url, name, '_self');
@@ -440,6 +449,9 @@ export class CustomRecipient {
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
     })
     if (this.isEdit) {
+      if (this.data["data"].zip_code_plus_4) {
+        this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
+      }
       this.customReceipient.patchValue(this.data["data"]);
     }
   }
