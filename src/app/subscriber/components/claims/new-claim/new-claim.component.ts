@@ -496,7 +496,7 @@ export class NewClaimComponent implements OnInit {
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       gender: [null],
-      email: ["", Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email: ["", Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       handedness: [null],
       primary_language_not_english: [null],
       primary_language_spoken: [null],
@@ -536,7 +536,7 @@ export class NewClaimComponent implements OnInit {
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [null],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       }),
       Employer: this.formBuilder.group({
         id: [null],
@@ -548,7 +548,7 @@ export class NewClaimComponent implements OnInit {
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         fax: [null],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
 
       }),
       ApplicantAttorney: this.formBuilder.group({
@@ -561,14 +561,14 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [null],
         company_name: [null],
         name: [null],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         street1: [null],
         street2: [null],
         city: [null],
@@ -586,7 +586,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       })
     })
