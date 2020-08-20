@@ -794,7 +794,13 @@ input:-webkit-autofill {
   background-color: $btn_success;
   border-color: $btn_success;
 }
+.filled-lightgray {
+  @extend .btn_;
+  color: $text-gray;
+  background-color: $light-color;
+  border-color: $light-color;
 
+}
 .outline-danger {
   @extend .btn_;
   color: $danger;
