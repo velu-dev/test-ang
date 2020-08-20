@@ -170,7 +170,7 @@ export class RecordsComponent implements OnInit {
     this.file = []
     this.selectedFiles = event.target.files;
     this.selectedFile = null;
-    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'mp3']
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
