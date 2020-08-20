@@ -30,7 +30,7 @@ export class DeoComponent implements OnInit {
       state: [{ value: null, disabled: true }],
       zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
-      email: [{ value: null, disabled: true }, Validators.compose([Validators.email])],
+      email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.claimService.getDeuDetails().subscribe(res => {
@@ -58,10 +58,10 @@ export class DeoComponent implements OnInit {
   appAttorney(sdsd) {
 
   }
-  editDEU(){
+  editDEU() {
     this.DEU.enable();
     this.deoEdit = true;
-    
+
   }
   updateDEU() {
     Object.keys(this.DEU.controls).forEach((key) => {
@@ -72,7 +72,7 @@ export class DeoComponent implements OnInit {
       return;
     }
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
-      this.deoEdit= false;
+      this.deoEdit = false;
       this.DEU.patchValue(res.data)
       this.alertService.openSnackBar("DEU updated successfully", 'success');
       this.DEU.disable();

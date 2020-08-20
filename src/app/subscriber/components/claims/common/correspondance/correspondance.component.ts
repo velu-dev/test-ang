@@ -18,7 +18,7 @@ export interface PeriodicElement {
   styleUrls: ['./correspondance.component.scss']
 })
 export class CorrespondanceComponent implements OnInit {
-  displayedColumns: string[] = ['doc_image','name', 'uploaded_on', 'action'];
+  displayedColumns: string[] = ['doc_image', 'name', 'uploaded_on', 'action'];
   correspondance: FormGroup;
   @Input('state') states;
   correspondForm: FormGroup;
@@ -26,8 +26,8 @@ export class CorrespondanceComponent implements OnInit {
   @Input('claimId') claimId;
   documents_ids = [];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
-  file:any = null;
-  note:string = null;
+  file: any = null;
+  note: string = null;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -79,7 +79,7 @@ export class CorrespondanceComponent implements OnInit {
     //   this.correspondForm.get('file').markAsTouched();
     //   return;
     // }
-    if(this.file == null || this.note == null ||  this.note.trim() == ''){
+    if (this.file == null || this.note == null || this.note.trim() == '') {
       return;
     }
     let formData = new FormData()
@@ -139,6 +139,7 @@ export class CorrespondanceComponent implements OnInit {
   }
 
   download(data) {
+    this.alertService.openSnackBar("File downloaded successfully", "success");
     saveAs(data.exam_report_file_url, data.file_name);
   }
 }

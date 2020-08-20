@@ -88,7 +88,7 @@ export class InjuryComponent implements OnInit {
     this.dataSource = new MatTableDataSource(data)
     // })
   }
-  openDialog(injury): void {
+  openDialog(injury, index): void {
     const dialogRef = this.dialog.open(InjuryPopup, {
       width: '800px',
       disableClose: true,
@@ -96,8 +96,11 @@ export class InjuryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != 'no')
+      if (result != 'no') {
         this.ngOnInit();
+      } else {
+        this.getInjury();
+      }
     });
   }
   addInjury() {
@@ -179,16 +182,53 @@ export class InjuryPopup {
     this.dialogRef.close();
   }
   ctChange() {
-
+    if (!this.injuryInfo.continuous_trauma) {
+      this.injuryInfo.continuous_trauma_start_date = null;
+      this.injuryInfo.continuous_trauma_end_date = null;
+    }
   }
   addInjury() {
+    if (this.injuryInfo.body_part_id.length == 0) {
+      this.alertService.openSnackBar("Please select body part", "error")
+      return
+    }
+    if (!this.injuryInfo.date_of_injury) {
+      this.alertService.openSnackBar("Please select injury date", "error")
+      return
+    } else {
+      if (!(moment(this.injuryInfo.date_of_injury).isSameOrAfter(moment(this.date_of_birth)))) {
+        this.alertService.openSnackBar("Please select injury date after date of birth", "error")
+        return
+      }
+      if (!(moment(this.injuryInfo.date_of_injury).isSameOrBefore(moment(new Date())))) {
+        this.alertService.openSnackBar("Please select injury date before today", "error");
+        return
+      }
+    }
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
-        if (this.injuryInfo.continuous_trauma_end_date)
-          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
+        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrAfter(moment(this.date_of_birth)))) {
+          this.alertService.openSnackBar("Continues trauma Start date should after date of birth", "error")
+          return
+        }
+        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(new Date())))) {
+          this.alertService.openSnackBar("Continues trauma Start date should be before today", "error");
+          return
+        }
+        if (this.injuryInfo.continuous_trauma_end_date) {
+          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrAfter(moment(this.date_of_birth)))) {
+            this.alertService.openSnackBar("Continues trauma End date should after date of birth", "error")
+            return
+          }
+          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrBefore(moment(new Date())))) {
+            this.alertService.openSnackBar("Continues trauma End date should be before today", "error");
+            return
+          }
+          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
             this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
             return
           }
+        }
       } else {
         this.alertService.openSnackBar("Please select start date", "error")
         return;
@@ -221,7 +261,7 @@ export class InjuryPopup {
           diagram_url: this.injuryInfo.diagram_url
         }
         this.claimService.updateInjury(editData, this.claim_id).subscribe(res => {
-          this.alertService.openSnackBar(this.isEdit ? "Claim Injury updated successfully" : "Claim Injury added successfully", 'success')
+          this.alertService.openSnackBar(this.isEdit ? "Injury updated successfully" : "Claim Injury added successfully", 'success')
           this.dialogRef.close();
         }, error => {
           this.alertService.openSnackBar(error.error.message, "error")
@@ -244,7 +284,7 @@ export class InjuryPopup {
       arrData.map(row => {
         row.date_of_injury = moment(row.date_of_injury).format("MM-DD-YYYY")
         this.claimService.updateInjury(row, this.claim_id).subscribe(res => {
-          this.alertService.openSnackBar(this.isEdit ? "Claim Injury updated successfully" : "Claim Injury added successfully", 'success')
+          this.alertService.openSnackBar(this.isEdit ? "Injury updated successfully" : "Claim Injury added successfully", 'success')
           this.dialogRef.close();
         }, error => {
           this.alertService.openSnackBar(error.error.message, "error")
