@@ -67,20 +67,20 @@ export class ReportComponent implements OnInit {
         this.columnName = ["", "File Name", "Download"]
         this.columnsToDisplay = ['is_expand', 'file_name', "download"]
       } else {
-        this.columnName = ["File Name", "Request Rush", "Request Date", "Download"]
-        this.columnsToDisplay = ['file_name', 'service_priority', "date_of_request", 'download']
+        this.columnName = ["File Name", "Rush Request?", "Date Requested","Date Received", "Download Submitted Items","Download Compiled Document"]
+        this.columnsToDisplay = ['file_name', 'service_priority', "date_of_request", "date_of_communication", 'download' , 'download1']
       }
     })
-    this.isHandset$.subscribe(res => {
-      this.isMobile = res;
-      if (res) {
-        this.columnName1 = ["", "File Name", "Download"]
-        this.columnsToDisplay1 = ['is_expand', 'file_name', 'download']
-      } else {
-        this.columnName1 = ["File Name", "Rush Request?", "Date Requested", "Date Received", "Download"]
-        this.columnsToDisplay1 = ['file_name', 'service_priority', "date_of_request", "date_of_communication", 'download']
-      }
-    })
+    // this.isHandset$.subscribe(res => {
+    //   this.isMobile = res;
+    //   if (res) {
+    //     this.columnName1 = ["", "File Name", "Download"]
+    //     this.columnsToDisplay1 = ['is_expand', 'file_name', 'download']
+    //   } else {
+    //     this.columnName1 = ["File Name", "Rush Request?", "Date Requested", "Date Received", "Download"]
+    //     this.columnsToDisplay1 = ['file_name', 'service_priority', "date_of_request", "date_of_communication", 'download']
+    //   }
+    // })
   }
 
 
@@ -101,15 +101,15 @@ export class ReportComponent implements OnInit {
       this.dataSource = new MatTableDataSource(report.documets)
       let inFile = [];
       let outFile = [];
-      report.documets_sent_and_received.map(file => {
-        if (file.transmission_direction == 'IN') {
-          inFile.push(file)
-        } else {
-          outFile.push(file)
-        }
+      // report.documets_sent_and_received.map(file => {
+      //   if (file.transmission_direction == 'IN') {
+      //     inFile.push(file)
+      //   } else {
+      //     outFile.push(file)
+      //   }
 
-      })
-      this.dataSoruceOut = new MatTableDataSource(outFile);
+      // })
+      this.dataSoruceOut = new MatTableDataSource(report.documets_sent_and_received);
       this.dataSoruceIn = new MatTableDataSource(inFile);
       this.rushRequest = false;
       this.statusBarChanges(this.reportData.on_demand_status)
