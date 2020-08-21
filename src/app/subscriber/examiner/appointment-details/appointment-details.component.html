@@ -472,7 +472,8 @@
             <i [class]="status.icon"></i>
             <div class="p-l-10 text-center">
                 <h4>{{status.name}}</h4>
-                <span>Status</span>
+                <span *ngIf="progressStatus[status.progress_name]">{{progressStatus[status.progress_name]}}</span>
+                <div *ngIf="!progressStatus[status.progress_name]"></div>
             </div>
         </div>
     </div>
@@ -505,7 +506,8 @@
             <i class="fa fa-usd"></i>
             <div class="p-l-10 text-center">
                 <h4>Billing</h4>
-                <span>Status</span>
+                <span *ngIf="progressStatus?.billing">{{progressStatus?.billing}}</span>
+                <div *ngIf="!progressStatus?.billing"></div>
             </div>
         </div>
     </div>

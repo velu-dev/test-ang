@@ -48,7 +48,7 @@ export class RecordsComponent implements OnInit {
   recordData: any;
   rushRequest: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
-  statusBarValues = { value: 0, status: 'Error', class: '.error' };
+  statusBarValues = { value: null, status: '', class: '' }
 
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
@@ -128,7 +128,6 @@ export class RecordsComponent implements OnInit {
         this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
         break;
       case 'In Progress':
-        console.log(status)
         this.statusBarValues = { value: 50, status: status, class: 'sent' }
         break;
       case 'Completed':
@@ -139,7 +138,7 @@ export class RecordsComponent implements OnInit {
         break;
 
       default:
-        //this.statusBarValues = { value: 0, status: 'Error', class: '.error' }
+        this.statusBarValues = { value: 0, status: 'Error', class: 'error' }
         break;
     }
   }
