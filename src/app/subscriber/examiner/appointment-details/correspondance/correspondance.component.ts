@@ -330,7 +330,7 @@ export class BillingCorrespondanceComponent implements OnInit {
 
   statusBarChanges(status) {
     switch (status) {
-      case 'Not Sent':
+      case 'Unsent':
         this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
         break;
       case 'In Progress':
