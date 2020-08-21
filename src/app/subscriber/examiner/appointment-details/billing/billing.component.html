@@ -59,36 +59,40 @@
             <mat-card-content>
                 <div fxLayout="row wrap" class="m-t-10">
                     <div class="table-filter m-b-10">
-                        <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                            placeholder="Search by code or name">
+                        <input [formControl]="icdCtrl" [matAutocomplete]="auto" placeholder="Search by code or name">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option (click)="selectICD(icd)" *ngFor="let icd of filteredICD" [value]="icd[1]">
+                                {{icd[0] + " "+ icd[1]}}
+                            </mat-option>
+                        </mat-autocomplete>
                         <mat-icon>search</mat-icon>
                     </div>
                     <span class="spacer"></span>
-                    <button mat-raised-button class="filled-gray">
+                    <button mat-raised-button (click)="addIcd()" class="filled-gray">
                         Add
                     </button>
                 </div>
                 <div fxLayout="row wrap">
                     <div class="user-detail vertical-fixed">
-                        <table mat-table [dataSource]="dataSource" multiTemplateDataRows
+                        <table mat-table [dataSource]="IcdDataSource" multiTemplateDataRows
                             class="mat-elevation-z8 user-table" matSort>
                             <ng-container matColumnDef="{{column}}"
                                 *ngFor="let column of columnsToDisplay; let i=index">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header
                                     [disabled]="columnName[i] == 'Action'">
                                     {{columnName[i]}} </th>
-                                <td mat-cell *matCellDef="let element">
+                                <td mat-cell *matCellDef="let element; let ii=index">
                                     <span *ngIf="i == 0 && isMobile">
                                         <mat-icon mat-raised-button
-                                            [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
-                                            {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                                            [ngClass]="{'table-expand': icdExpandID == element.code, 'expand-close': !(icdExpandID == element.code)}">
+                                            {{ icdExpandID == element.code ? 'remove_circle' : 'add_circle'}}
                                         </mat-icon>
                                     </span>
                                     <div>
                                         <span *ngIf="column == 'code'">{{element?.code}}</span>
                                         <span *ngIf="column == 'name'">{{element?.name}}</span>
                                         <span *ngIf="column == 'action'">
-                                            <a class="text-danger">Remove</a>
+                                            <a class="text-danger" (click)="removeICD(element)">Remove</a>
                                         </span>
                                     </div>
                                 </td>
@@ -96,7 +100,7 @@
                             <ng-container matColumnDef="expandedDetail">
                                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                                     <div class="detail"
-                                        [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                                        [@detailExpand]="icdExpandID == element.code ? 'expanded' : 'collapsed'">
                                         <div class="resposive-table">
                                             <div><span>Code</span> {{element?.code}} </div>
                                             <div><span>Name</span> {{element?.name}} </div>
@@ -111,7 +115,7 @@
                             </tr>
                             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
                         </table>
-                        <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+                        <app-nodata *ngIf="IcdDataSource?.filteredData?.length == 0"></app-nodata>
                     </div>
                 </div>
             </mat-card-content>
@@ -156,8 +160,7 @@
                                         <span *ngIf="column == 'item'"><input type="text" value="{{element?.item}}"
                                                 class="custom-input"></span>
                                         <span *ngIf="column == 'procedure_code'"><input type="text"
-                                                value="{{element?.procedure_code}}" class="custom-input"
-                                            ></span>
+                                                value="{{element?.procedure_code}}" class="custom-input"></span>
                                         <span *ngIf="column == 'modifier'"><input type="text"
                                                 value="{{element?.modifier}}" class="custom-input"></span>
                                         <span *ngIf="column == 'units'"><input type="text" value="{{element?.units}}"

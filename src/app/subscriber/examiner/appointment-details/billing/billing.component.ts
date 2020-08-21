@@ -3,6 +3,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { FormControl } from '@angular/forms';
+import { ClaimService } from 'src/app/subscriber/service/claim.service';
+import { NGXLogger } from 'ngx-logger';
+import { MatTableDataSource } from '@angular/material';
+import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-billable-billing',
   templateUrl: './billing.component.html',
@@ -22,7 +27,7 @@ export class BilllableBillingComponent implements OnInit {
       shareReplay()
     );
   columnsToDisplay = [];
-  dataSource = ELEMENT_DATA;
+  IcdDataSource = new MatTableDataSource([]);
   expandedElement;
   isMobile = false;
   columnName = [];
@@ -44,7 +49,7 @@ export class BilllableBillingComponent implements OnInit {
   filterValue: string;
   file: any;
   documentType: any;
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver, private alertService: AlertService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -81,16 +86,49 @@ export class BilllableBillingComponent implements OnInit {
       }
     })
   }
-
+  icdCtrl = new FormControl();
+  icdSearched = false;
+  filteredICD: Observable<[]>;
   ngOnInit() {
+    this.icdCtrl.valueChanges.subscribe(res => {
+      this.icdSearched = true;
+      this.claimService.getICD10(res).subscribe(icd => {
+        console.log(icd)
+        this.filteredICD = icd[3];
+      });
+    })
   }
-  expandId: any;
+  icdData = [];
+  selectedIcd = { code: "", name: "" };
+  selectICD(icd) {
+    this.selectedIcd = { code: icd[0], name: icd[1] }
+  }
+  addIcd() {
+    this.icdData = this.IcdDataSource.data;
+    this.icdData.push(this.selectedIcd)
+    this.IcdDataSource = new MatTableDataSource(this.icdData);
+    this.selectedIcd = { code: "", name: "" };
+    this.alertService.openSnackBar("ICD data added succssfull", "success");
+    this.icdCtrl.reset();
+  }
+  removeICD(icd) {
+    let index = 0;
+    this.icdData.map(res => {
+      if (res.code == icd.code) {
+        this.icdData.splice(index, 1);
+      }
+      index = index + 1;
+    })
+    this.IcdDataSource = new MatTableDataSource(this.icdData);
+    this.alertService.openSnackBar("ICD data removed succssfull", "success");
+  }
+  icdExpandID: any;
   expandId1: any;
   expandId2: any;
   expandId3: any;
   openElement(element) {
     if (this.isMobile) {
-      this.expandId = element.id;
+      this.icdExpandID = element.id;
     }
     if (this.isMobile1) {
       this.expandId1 = element.id;
@@ -108,17 +146,11 @@ export class BilllableBillingComponent implements OnInit {
     //   this.dataSource.paginator.firstPage();
     // }
   }
-  addFile(event) {
+  addFile(file) {
 
   }
 
 }
-const ELEMENT_DATA = [
-  { "id": 132, "code": "K50.00", "name": " Crohn disease of small intestine without complications " },
-  { "id": 131, "code": "N80.1", "name": "Endometriosis of ovary" },
-  { "id": 130, "code": "M76.62", "name": "Achilles tendinitis, left leg" },
-
-];
 const ELEMENT_DATA1 = [
   { "id": 1384, "item": "UQME", "procedure_code": "ML 101", "modifier": "96", "units": "1", "charge": "2200.00", "payment": "0", "balance": "2200.00" },
   { "id": 1384, "item": "UQME", "procedure_code": "ML 101", "modifier": "96", "units": "1", "charge": "2200.00", "payment": "0", "balance": "2200.00" },

@@ -286,11 +286,13 @@ export class AppointmentDetailsComponent implements OnInit {
       })
      
       this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
+      this.examinationDetails.appointments = { examination_notes: res.data.examination_notes, examination_status: res.data.examination_status }
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
   cancel() {
+    console.log(this.examinationDetails.appointments)
     this.examinationStatusForm.patchValue(this.examinationDetails.appointments);
     this.examinationStatusForm.disable();
     this.isExaminationStatusEdit = false;

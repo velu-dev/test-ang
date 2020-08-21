@@ -261,7 +261,7 @@ export class InjuryPopup {
           diagram_url: this.injuryInfo.diagram_url
         }
         this.claimService.updateInjury(editData, this.claim_id).subscribe(res => {
-          this.alertService.openSnackBar(this.isEdit ? "Injury updated successfully" : "Claim Injury added successfully", 'success')
+          this.alertService.openSnackBar(this.isEdit ? "Injury updated successfully" : "Injury added successfully", 'success')
           this.dialogRef.close();
         }, error => {
           this.alertService.openSnackBar(error.error.message, "error")
