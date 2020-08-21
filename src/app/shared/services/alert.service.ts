@@ -15,7 +15,7 @@ export class AlertService {
                 message = message + "!"
             }
         this.snackBar.openFromComponent(AlertComponent, {
-            duration: 20 * 1000,
+            duration: 6 * 1000,
             data: { message: message, action: action },
             panelClass: action,
             verticalPosition: 'top', // 'top' | 'bottom'
