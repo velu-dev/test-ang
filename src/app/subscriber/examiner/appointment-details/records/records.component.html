@@ -157,6 +157,7 @@
               </span>
               <div>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
+                <span *ngIf="column == 'no_of_units'">{{element?.no_of_units}}</span>
                 <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ? 'Yes' : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
                 <span *ngIf="column == 'date_of_request'" class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'date_of_communication'" class="no-wrap-td">{{element?.date_of_communication | date:'MM-dd-yyyy' }}</span>

@@ -48,7 +48,7 @@ export class RecordsComponent implements OnInit {
   recordData: any;
   rushRequest: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
-  statusBarValues = { value: 0, status: 'Error', class: '.error' };
+  statusBarValues = { value: null, status: '', class: '' }
 
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
@@ -68,7 +68,7 @@ export class RecordsComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'file_name', "download"]
       } else {
         this.columnName = ["File Name", "Document Pages","Rush Request?", "Date Requested ", "Date Received", "Download Record Document", "Download Record Summary"]
-        this.columnsToDisplay = ['file_name', 'page','service_priority', "date_of_request","date_of_communication", 'download', 'download1']
+        this.columnsToDisplay = ['file_name', 'no_of_units','service_priority', "date_of_request","date_of_communication", 'download', 'download1']
       }
     })
     
@@ -93,7 +93,6 @@ export class RecordsComponent implements OnInit {
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.id, this.paramsId.billId).subscribe(record => {
       this.recordData = record;
-
       record.documets.map(data => {
         data.page_number = data.no_of_units;
         data.isEdit = false;
@@ -125,11 +124,10 @@ export class RecordsComponent implements OnInit {
 
   statusBarChanges(status) {
     switch (status) {
-      case 'Not Sent':
+      case 'Unsent':
         this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
         break;
       case 'In Progress':
-        console.log(status)
         this.statusBarValues = { value: 50, status: status, class: 'sent' }
         break;
       case 'Completed':
@@ -140,7 +138,7 @@ export class RecordsComponent implements OnInit {
         break;
 
       default:
-        //this.statusBarValues = { value: 0, status: 'Error', class: '.error' }
+        this.statusBarValues = { value: 0, status: 'Error', class: 'error' }
         break;
     }
   }
