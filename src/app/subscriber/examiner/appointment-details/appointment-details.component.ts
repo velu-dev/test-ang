@@ -67,7 +67,7 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Correspondence", icon: "far fa-folder-open", for: ["E", "S", "D"], url: "../../correspondance" }, { name: "History", icon: "fa fa-history", for: ["E", "S"], url: "../../history" }, { name: "Records", icon: "far fa-list-alt", for: ["E", "S"], url: "../../records" }, { name: "Examination", icon: "far fa-edit", for: ["E"], url: "../../examination" }, { name: "Report", icon: "fa fa-tasks", for: ["E", "S", "D"], url: "../../reports" }];
+  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "../../correspondance" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E", "S"], url: "../../history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "../../records" }, { name: "Examination", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "../../examination" }, { name: "Report", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "../../reports" }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
@@ -106,6 +106,7 @@ export class AppointmentDetailsComponent implements OnInit {
   isChecked = false;
   isDisplayStatus: any = { status: false, name: "", isExaminar: false, isDeposition: false };
   billableData: any;
+  progressStatus: any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -168,6 +169,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.billable_item.patchValue(bills.data);
       })
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+        this.progressStatus = response.data.progress_status
         this.notesForm.patchValue({
           exam_notes: response.data.exam_notes,
         })
@@ -207,6 +209,7 @@ export class AppointmentDetailsComponent implements OnInit {
             }
           }
         })
+
         this.examinationStatusForm.patchValue(response.data.appointments)
         this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
         this.examiner_id = response.data.appointments.examiner_id;
@@ -276,6 +279,12 @@ export class AppointmentDetailsComponent implements OnInit {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
       this.alertService.openSnackBar(this.isDisplayStatus.name + ' details updated Successfully', "success");
+      this.examinationStatus.map(data=>{
+        if(data.id == res.data.examination_status){
+          this.progressStatus.examination = data.examination_status
+        }
+      })
+     
       this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
       this.examinationDetails.appointments = { examination_notes: res.data.examination_notes, examination_status: res.data.examination_status }
     }, error => {
