@@ -1,14 +1,14 @@
 <div class="billing">
     <!-- ===== Bill Status ==== -->
     <div fxLayout="row wrap" class="p-t-20">
-        <div fxFlex="80">
+        <div fxFlex="80" fxFlex.sm="100" fxFlex.xs="100">
             <div class="main-title p-l-0">Bill Status</div>
             <p class="description p-l-0">View the Bill’s progress here, from beginning to end.</p>
-            <mat-progress-bar mode="determinate" value="50" class="not-sent p-l-0">
+            <mat-progress-bar mode="determinate" value="50" class="not-sent p-l-0 m-b-20">
             </mat-progress-bar>
             <div class="text-center">Not Sent</div>
         </div>
-        <div fxFlex="20" class="review-status">
+        <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100" class="review-status">
             <div>First Bill Review</div>
         </div>
     </div>
@@ -168,7 +168,7 @@
                                         <span *ngIf="column == 'charge'"><input type="text" value="{{element?.charge}}"
                                                 class="custom-input"></span>
                                         <span *ngIf="column == 'payment'">{{element?.payment}}</span>
-                                        <span *ngIf="column == 'balance'">{{element?.balance}}</span>
+                                        <span *ngIf="column == 'balance'" class="text-danger">{{element?.balance}}</span>
                                         <span *ngIf="column == 'action'">
                                             <a class="text-success m-r-10">Edit</a>
                                             <a class="text-danger">Remove</a>
@@ -183,7 +183,7 @@
                                         <span *ngIf="column == 'units'"></span>
                                         <span *ngIf="column == 'charge'"><b>6600.00</b></span>
                                         <span *ngIf="column == 'payment'">0</span>
-                                        <span *ngIf="column == 'balance'"><b>6600.00</b></span>
+                                        <span *ngIf="column == 'balance'"  class="text-danger"><b>6600.00</b></span>
                                         <span *ngIf="column == 'action'"></span>
                                     </div>
                                 </td>
