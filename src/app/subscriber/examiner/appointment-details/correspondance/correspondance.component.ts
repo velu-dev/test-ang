@@ -40,7 +40,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   sentDocuments: any = new MatTableDataSource([]);
   documents: any = new MatTableDataSource([]);
   recipients: any = new MatTableDataSource([]);
-  dataSource3: any = new MatTableDataSource([]);
+ // dataSource3: any = new MatTableDataSource([]);
   columnsToDisplay = [];
   columnsToDisplay1 = [];
   expandedElement;
@@ -68,20 +68,20 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.columnName = ["", "File Name", "Download"]
         this.columnsToDisplay = ['is_expand', 'file_name', 'download']
       } else {
-        this.columnName = ["File Name", "Action", "Date", "Recipients", "Download"]
-        this.columnsToDisplay = ['file_name', 'action', "date", "recipients", 'download']
+        this.columnName = ["File Name", "Action", "Date", "Recipients", "Download Generated Items", "Download OnDemand Proof of Service"]
+        this.columnsToDisplay =  ['file_name', 'action', "date", "recipients", 'download', 'download1']
       }
     })
-    this.isHandset$.subscribe(res => {
-      this.isMobile = res;
-      if (res) {
-        this.columnName1 = ["", "File Name", "Download"]
-        this.columnsToDisplay1 = ['is_expand', 'file_name', 'download']
-      } else {
-        this.columnName1 = ["File Name", "Action", "Date", "Recipients", "Download"]
-        this.columnsToDisplay1 = ['file_name', 'action', "date", "recipients", 'download']
-      }
-    })
+    // this.isHandset$.subscribe(res => {
+    //   this.isMobile = res;
+    //   if (res) {
+    //     this.columnName1 = ["", "File Name", "Download"]
+    //     this.columnsToDisplay1 = ['is_expand', 'file_name', 'download']
+    //   } else {
+    //     this.columnName1 = ["File Name", "Action", "Date", "Recipients", "Download Generated Items", "Download OnDemand Proof of Service"]
+    //     this.columnsToDisplay1 = ['file_name', 'action', "date", "recipients", 'download', 'download1']
+    //   }
+    // })
   }
   getData() {
     this.selection.clear();
@@ -96,6 +96,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.logger.log(res.recipient);
       this.documents = new MatTableDataSource(res.documets);
       this.recipients = new MatTableDataSource(res.recipient);
+      this.sentDocuments = new MatTableDataSource(res.documets_sent_and_received);
       this.statusBarChanges(this.correspondData.on_demand_status)
     })
   }
@@ -198,7 +199,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.alertService.openSnackBar('Please select Document(s) & Recipient(s)', "error");
       return;
     }
-    if (this.selection.selected.length == 0 ) {
+    if (this.selection.selected.length == 0) {
       this.alertService.openSnackBar('Please select Document(s)', "error");
       return;
     }
@@ -206,51 +207,52 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.alertService.openSnackBar('Please select Recipient(s)', "error");
       return;
     }
-  
-      let signHide = false;
-      if (sign) {
-        signHide = sign;
+
+    let signHide = false;
+    if (sign) {
+      signHide = sign;
+    }
+    let documents_ids: any = [];
+    let custom_documents_ids: any = [];
+    this.selection.selected.map(res => {
+      if (res.doc_type == "custom") {
+        custom_documents_ids.push(res.id)
+      } else {
+        documents_ids.push(res.id)
       }
-      let documents_ids: any = [];
-      let custom_documents_ids: any = [];
-      this.selection.selected.map(res => {
-        if (res.doc_type == "custom") {
-          custom_documents_ids.push(res.id)
-        } else {
-          documents_ids.push(res.id)
-        }
-      })
-      let recipientsDocuments_ids: any = [];
-      let recipientsCustom_documents_ids: any = [];
-      this.selection1.selected.map(res => {
-        if (res.type == "custom") {
-          recipientsCustom_documents_ids.push(res.id)
-        } else {
-          recipientsDocuments_ids.push(res.id)
-        }
-      })
-      let docDeatils = {
-        documents_ids: documents_ids,
-        custom_documents_ids: custom_documents_ids,
-        recipients_ids: recipientsDocuments_ids,
-        custom_recipients_ids: recipientsCustom_documents_ids,
-        hide_sign: signHide
+    })
+    let recipientsDocuments_ids: any = [];
+    let recipientsCustom_documents_ids: any = [];
+    this.selection1.selected.map(res => {
+      if (res.type == "custom") {
+        recipientsCustom_documents_ids.push(res.id)
+      } else {
+        recipientsDocuments_ids.push(res.id)
       }
-      this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
-        if (res.status) {
-          //this.alertService.openSnackBar(res.message, "success");
-          let data = res.data;
-          documents_ids = [];
-          custom_documents_ids = [];
-          recipientsDocuments_ids = [];
-          recipientsCustom_documents_ids = [];
-          this.selection.clear();
-          this.selection1.clear();
-          this.download(res.data.file_url, res.data.file_name);
-        } else {
-          this.alertService.openSnackBar(res.message, "error");
-        }
-      })
+    })
+    let docDeatils = {
+      documents_ids: documents_ids,
+      custom_documents_ids: custom_documents_ids,
+      recipients_ids: recipientsDocuments_ids,
+      custom_recipients_ids: recipientsCustom_documents_ids,
+      hide_sign: signHide
+    }
+    this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
+      if (res.status) {
+        //this.alertService.openSnackBar(res.message, "success");
+        let data = res.data;
+        documents_ids = [];
+        custom_documents_ids = [];
+        recipientsDocuments_ids = [];
+        recipientsCustom_documents_ids = [];
+        this.selection.clear();
+        this.selection1.clear();
+        this.download(res.data.file_url, res.data.file_name);
+        this.alertService.openSnackBar("File downloaded successfully", 'success');
+      } else {
+        this.alertService.openSnackBar(res.message, "error");
+      }
+    })
   }
   download(url, name) {
     saveAs(url, name, '_self');
@@ -258,7 +260,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      this.expandId = element.id;
+      this.expandId = element.document_id;
     }
 
   }
@@ -280,7 +282,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   expandId1: any;
   openElement1(element) {
     if (this.isMobile) {
-      this.expandId1 = element.id;
+      this.expandId1 = element.document_id;
     }
 
   }
@@ -347,6 +349,60 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.statusBarValues = { value: 0, status: 'Error', class: '.error' }
         break;
     }
+  }
+
+  onDemandSubmit() {
+    if (this.selection.selected.length == 0 && this.selection1.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s) & Recipient(s)', "error");
+      return;
+    }
+    if (this.selection.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s)', "error");
+      return;
+    }
+    if (this.selection1.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Recipient(s)', "error");
+      return;
+    }
+    let documents_ids: any = [];
+    let custom_documents_ids: any = [];
+    this.selection.selected.map(res => {
+      if (res.doc_type == "custom") {
+        custom_documents_ids.push(res.id)
+      } else {
+        documents_ids.push(res.id)
+      }
+    })
+    let recipientsDocuments_ids: any = [];
+    let recipientsCustom_documents_ids: any = [];
+    this.selection1.selected.map(res => {
+      if (res.type == "custom") {
+        recipientsCustom_documents_ids.push(res.id)
+      } else {
+        recipientsDocuments_ids.push(res.id)
+      }
+    })
+    let data = {
+      claim_id: this.claim_id,
+      document_category_id: 9,
+      billable_item_id: this.billableId,
+      service_request_type_id: 4,
+      documents_ids: documents_ids,
+      custom_documents_ids: custom_documents_ids,
+      recipients_ids: recipientsDocuments_ids,
+      custom_recipients_ids: recipientsCustom_documents_ids
+    }
+    this.onDemandService.onDemandCorrespondence(data).subscribe(record => {
+      this.alertService.openSnackBar("Mail On Demand created successfully", 'success');
+      this.getData();
+    }, error => {
+      console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
+
+  inOutdownload(data) {
+    saveAs(data.file_url, data.file_name, '_self');
   }
 
 }
