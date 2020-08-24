@@ -67,11 +67,11 @@ export class RecordsComponent implements OnInit {
         this.columnName = ["", "File Name", "Download"]
         this.columnsToDisplay = ['is_expand', 'file_name', "download"]
       } else {
-        this.columnName = ["File Name", "Document Pages","Rush Request?", "Date Requested ", "Date Received", "Download Record Document", "Download Record Summary"]
-        this.columnsToDisplay = ['file_name', 'no_of_units','service_priority', "date_of_request","date_of_communication", 'download', 'download1']
+        this.columnName = ["File Name", "Document Pages", "Rush Request?", "Date Requested ", "Date Received", "Download Record Document", "Download Record Summary"]
+        this.columnsToDisplay = ['file_name', 'no_of_units', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
       }
     })
-    
+
     // this.isHandset$.subscribe(res => {
     //   this.isMobile = res;
     //   if (res) {
@@ -238,10 +238,27 @@ export class RecordsComponent implements OnInit {
     //   saveAs(res.file_url, res.file_name);
     // })
 
-    for (let i = 0; i < this.selection.selected.length; i++) {
-      saveAs(this.selection.selected[i].file_url, this.selection.selected[i].file_name, '_self');
-      await new Promise(r => setTimeout(r, 1000));
+    // for (let i = 0; i < this.selection.selected.length; i++) {
+    //   saveAs(this.selection.selected[i].file_url, this.selection.selected[i].file_name, '_self');
+    //   await new Promise(r => setTimeout(r, 1000));
+    // }
+    let document_ids = []
+    this.selection.selected.map(res => {
+      document_ids.push(res.document_id)
+    })
+    if (document_ids.length == 1) {
+      saveAs(this.selection.selected[0].file_url, this.selection.selected[0].file_name, '_self');
+      this.alertService.openSnackBar("File downloaded successfully", 'success');
+      this.selection.clear();
+      return;
     }
+    this.onDemandService.recordDownload(this.paramsId.id, this.paramsId.billId, { documents_ids: document_ids }).subscribe(record => {
+      saveAs(record.data.file_url, record.data.file_name, '_self');
+      this.selection.clear();
+      this.alertService.openSnackBar("File downloaded successfully", 'success');
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
 
   }
 
@@ -303,7 +320,7 @@ export class RecordsComponent implements OnInit {
   }
 
   pageNumberSave(element) {
-    if (!(element.page_number > 0 && element.page_number <= 10000)) {
+    if (!(element.page_number >= 0 && element.page_number <= 10000)) {
       this.alertService.openSnackBar("Page number should be  0 to 10000", 'error');
       let data = this.dataSource.data;
       data.map(data => {
