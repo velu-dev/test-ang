@@ -33,7 +33,7 @@ th {
     .pages-count {
         display: flex;
         input {
-            width: 50px;
+            width: 55px;
             border: 1px solid $progres-light-gray;
             padding: 5px;
             margin-right: 5px;
@@ -55,14 +55,15 @@ th {
     width: 25px !important;
     padding-right: 0px !important;
 }
+
 .upload-file {
     .mat-form-field {
-        width: 80%;
-    }
-    mat-hint {
-        width: 100%;
-        mat-error {
-            float: right;
+        width: calc(100% - 125px);
+        mat-hint {
+            width: 100%;
+            mat-error {
+                float: right;
+            }
         }
     }
 }

@@ -422,5 +422,10 @@
 .grid-list {
     div {
         align-self: baseline;
+        overflow-wrap: anywhere; 
+        &:first-child {
+            max-width: 105px;
+            min-width: 105px;
+        }
     }
 }
