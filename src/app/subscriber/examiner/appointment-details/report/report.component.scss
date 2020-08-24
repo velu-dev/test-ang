@@ -41,16 +41,16 @@ th {
 }
 .upload-file {
     .mat-form-field {
-        width: 80%;
-    }
-    mat-hint {
-        width: 100%;
-        mat-error {
-            float: right;
+        width: calc(100% - 125px);
+        mat-hint {
+            width: 100%;
+            mat-error {
+                float: right;
+            }
         }
     }
 }
-.ondemand_request {
+demand_request {
     mat-checkbox {
         display: block;
         margin-bottom: 20px;
