@@ -67,8 +67,8 @@ export class ReportComponent implements OnInit {
         this.columnName = ["", "File Name", "Download"]
         this.columnsToDisplay = ['is_expand', 'file_name', "download"]
       } else {
-        this.columnName = ["File Name", "Rush Request?", "Date Requested","Date Received", "Download Submitted Items","Download Compiled Document"]
-        this.columnsToDisplay = ['file_name', 'service_priority', "date_of_request", "date_of_communication", 'download' , 'download1']
+        this.columnName = ["File Name", "Rush Request?", "Date Requested", "Date Received", "Download Submitted Items", "Download Compiled Document"]
+        this.columnsToDisplay = ['file_name', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
       }
     })
     // this.isHandset$.subscribe(res => {
@@ -161,7 +161,7 @@ export class ReportComponent implements OnInit {
   selectedFile: File;
   formData = new FormData()
   file: any = [];
-  errors = { file: { isError: false, error: "" }}
+  errors = { file: { isError: false, error: "" } }
   addFile(event) {
 
     this.selectedFile = null;
@@ -185,7 +185,7 @@ export class ReportComponent implements OnInit {
           //this.alertService.openSnackBar("This file too long", 'error');
           return;
         }
-        this.errors = { file: { isError: false, error: "" }}
+        this.errors = { file: { isError: false, error: "" } }
         this.selectedFile = this.selectedFiles[i];
         this.file.push(this.selectedFiles[i].name);
       } else {
@@ -193,7 +193,7 @@ export class ReportComponent implements OnInit {
         this.selectedFiles = null
         this.fileUpload.nativeElement.value = "";
         this.errors.file.isError = true;
-        this.file= []
+        this.file = []
         this.errors.file.error = "This file type is not accepted";
         //this.alertService.openSnackBar("This file type is not accepted", 'error');
       }
@@ -222,7 +222,7 @@ export class ReportComponent implements OnInit {
       this.formData = new FormData();
       this.file = [];
       this.getReport();
-      this.errors = { file: { isError: false, error: "" }}
+      this.errors = { file: { isError: false, error: "" } }
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
@@ -241,10 +241,29 @@ export class ReportComponent implements OnInit {
     //   saveAs(res.file_url, res.file_name);
     // })
 
-    for (let i = 0; i < this.selection.selected.length; i++) {
-      saveAs(this.selection.selected[i].file_url, this.selection.selected[i].file_name, '_self');
-      await new Promise(r => setTimeout(r, 1000));
+    // for (let i = 0; i < this.selection.selected.length; i++) {
+    //   saveAs(this.selection.selected[i].file_url, this.selection.selected[i].file_name, '_self');
+    //   await new Promise(r => setTimeout(r, 1000));
+    // }
+
+    let document_ids = []
+    this.selection.selected.map(res => {
+      document_ids.push(res.document_id)
+    })
+
+    if (document_ids.length == 1) {
+      saveAs(this.selection.selected[0].file_url, this.selection.selected[0].file_name, '_self');
+      this.alertService.openSnackBar("File downloaded successfully", 'success');
+      this.selection.clear();
+      return;
     }
+    this.onDemandService.reportDownload(this.paramsId.id, this.paramsId.billId, { documents_ids: document_ids }).subscribe(record => {
+      saveAs(record.data.file_url, record.data.file_name, '_self');
+      this.alertService.openSnackBar("File downloaded successfully", 'success');
+      this.selection.clear();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
 
   }
 

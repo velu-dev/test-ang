@@ -75,4 +75,11 @@ export class OnDemandService {
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
+
+  recordDownload(claim_id, bill_item_id, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.recordDownload + claim_id + "/" + bill_item_id, data)
+  }
+  reportDownload(claim_id, bill_item_id, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.reportDownload + claim_id + "/" + bill_item_id, data)
+  }
 }
