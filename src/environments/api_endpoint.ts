@@ -137,6 +137,7 @@ export const api_endpoint = {
     requestCreate: 'service-requests/create',
     recordDownload: 'billing/ondemand/records-download/',
     reportDownload: 'billing/ondemand/report-transcription-download/',
+    onDemandCorrespondence: 'service-requests/correspondence/mail-on-demand/create',
     //Corresponding
     getcorrespondence_data: "billing/ondemand/correspondence/",
     document_upload: "examinations/document-upload",
