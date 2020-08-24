@@ -82,4 +82,8 @@ export class OnDemandService {
   reportDownload(claim_id, bill_item_id, data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.reportDownload + claim_id + "/" + bill_item_id, data)
   }
+
+  onDemandCorrespondence(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.onDemandCorrespondence, data)
+  }
 }
