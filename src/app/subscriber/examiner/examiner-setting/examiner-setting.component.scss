@@ -218,6 +218,7 @@ mat-form-field {
 
 .sign-upload {
   mat-form-field {
+    width: calc( 100% - 145px) !important;
     .upload_btn {
       padding: 0px 10px;
       height: 35px;
