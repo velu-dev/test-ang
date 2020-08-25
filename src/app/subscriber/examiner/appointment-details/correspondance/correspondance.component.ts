@@ -40,7 +40,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   sentDocuments: any = new MatTableDataSource([]);
   documents: any = new MatTableDataSource([]);
   recipients: any = new MatTableDataSource([]);
- // dataSource3: any = new MatTableDataSource([]);
+  // dataSource3: any = new MatTableDataSource([]);
   columnsToDisplay = [];
   columnsToDisplay1 = [];
   expandedElement;
@@ -69,31 +69,26 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'file_name', 'download']
       } else {
         this.columnName = ["File Name", "Action", "Date", "Recipients", "Download Generated Items", "Download OnDemand Proof of Service"]
-        this.columnsToDisplay =  ['file_name', 'action', "date", "recipients", 'download', 'download1']
+        this.columnsToDisplay = ['file_name', 'action', "date", "recipients", 'download', 'download1']
       }
     })
-    // this.isHandset$.subscribe(res => {
-    //   this.isMobile = res;
-    //   if (res) {
-    //     this.columnName1 = ["", "File Name", "Download"]
-    //     this.columnsToDisplay1 = ['is_expand', 'file_name', 'download']
-    //   } else {
-    //     this.columnName1 = ["File Name", "Action", "Date", "Recipients", "Download Generated Items", "Download OnDemand Proof of Service"]
-    //     this.columnsToDisplay1 = ['file_name', 'action', "date", "recipients", 'download', 'download1']
-    //   }
-    // })
   }
-  getData() {
-    this.selection.clear();
-    this.selection1.clear();
+  getData(data?) {
+    console.log(data)
+    let selected = [];
+    if (data) {
+      selected = data;
+    } else {
+      this.selection.clear();
+      this.selection1.clear();
+    }
     this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
       this.correspondData = res;
       res.documets.map(doc => {
         if (doc.is_mandatory) {
-          this.selection.select(doc)
+          this.selection.select(doc);
         }
       })
-      this.logger.log(res.recipient);
       this.documents = new MatTableDataSource(res.documets);
       this.recipients = new MatTableDataSource(res.recipient);
       this.sentDocuments = new MatTableDataSource(res.documets_sent_and_received);
@@ -287,6 +282,9 @@ export class BillingCorrespondanceComponent implements OnInit {
 
   }
   removeCustomDocument(element) {
+    let SelectedIds = [];
+    SelectedIds = this.selection.selected;
+    console.log(SelectedIds)
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
       data: { name: "delete", address: true }
@@ -297,7 +295,9 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.onDemandService.removeDocument(element.id).subscribe(res => {
           if (res.status) {
             this.alertService.openSnackBar(res.message, "success")
-            this.getData();
+            let index = SelectedIds.indexOf(element.id);
+            SelectedIds.splice(index, 1)
+            this.getData(SelectedIds);
           } else {
             this.alertService.openSnackBar(res.message, "error")
           }
@@ -430,6 +430,7 @@ export class CustomDocuments {
   selectedFile: File;
   selectedFiles: FileList;
   file: any = [];
+  errors = { status: false, message: "" }
   selectFile(event) {
     this.selectedFiles = event.target.files;
     this.selectedFile = null;
@@ -440,7 +441,7 @@ export class CustomDocuments {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
         if (FileSize > 30) {
           this.fileUpload.nativeElement.value = "";
-          this.alertService.openSnackBar("This file too long", 'error');
+          this.errors = { status: true, message: "This file too long" };
           return;
         }
         this.selectedFile = this.selectedFiles[i];
@@ -449,7 +450,7 @@ export class CustomDocuments {
       } else {
         //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
-        this.alertService.openSnackBar("This file type is not accepted", 'error');
+        this.errors = { status: true, message: "This file type is not accepted" };
       }
     }
 

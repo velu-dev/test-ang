@@ -15,6 +15,9 @@
                     <input type="file" #uploader hidden (change)="selectFile($event)" id="uploadFile"
                         accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" multiple required>
                     <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
+                    <mat-hint *ngIf="errors.status">
+                        <mat-error>{{errors.message}}</mat-error>
+                    </mat-hint>
                 </mat-form-field>
             </div>
             <div fxFlex="20" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
