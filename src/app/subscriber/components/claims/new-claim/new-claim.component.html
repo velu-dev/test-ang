@@ -347,8 +347,8 @@
                     <mat-divider></mat-divider>
                     <mat-card-content class="m-t-15 p-b-15">
                         <div fxLayout="row wrap" fxFlex="100">
-                            <div class="user-table vertical-fixed">
-                                <table mat-table [dataSource]="dataSource" class="w-100" fxFlex="100">
+                            <div class="user-table vertical-fixed" fxFlex="100">
+                                <table mat-table [dataSource]="dataSource" class="w-100">
                                     <!-- body_parts Column -->
                                     <ng-container matColumnDef="body_part_id">
                                         <th mat-header-cell *matHeaderCellDef class="data-max-width"> Body parts </th>
@@ -454,7 +454,7 @@
                                                 </a>
                                                 <a class="text-danger m-l-10"
                                                     (click)="deletecorrespondence(element?.id)">
-                                                    Delete
+                                                    Remove
                                                 </a>
                                             </td>
                                         </ng-container>
