@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
@@ -6,8 +6,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormControl } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { NGXLogger } from 'ngx-logger';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 @Component({
   selector: 'app-billable-billing',
   templateUrl: './billing.component.html',
@@ -49,7 +50,7 @@ export class BilllableBillingComponent implements OnInit {
   filterValue: string;
   file: any;
   documentType: any;
-  constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver, private alertService: AlertService) {
+  constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver, private alertService: AlertService, public dialog: MatDialog) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -89,6 +90,18 @@ export class BilllableBillingComponent implements OnInit {
   icdCtrl = new FormControl();
   icdSearched = false;
   filteredICD: Observable<[]>;
+
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(BillingPaymentDialog, {
+      width: '800px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   ngOnInit() {
     this.icdCtrl.valueChanges.subscribe(res => {
       this.icdSearched = true;
@@ -172,3 +185,20 @@ const ELEMENT_DATA3 = [
   { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date": "05-25-2019", "recipients": "", "sent_document": "Download", "proof_of_service": "Download" },
 
 ];
+
+
+@Component({
+  selector: 'billing-payment-dialog.html',
+  templateUrl: 'billing-payment-dialog.html',
+})
+export class BillingPaymentDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<BillingPaymentDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
