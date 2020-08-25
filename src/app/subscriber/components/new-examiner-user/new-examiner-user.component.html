@@ -25,7 +25,8 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Middle Name/MI</mat-label>
-                            <input matInput placeholder="Middle Name/MI" formControlName="middle_name" autocomplete="off">
+                            <input matInput placeholder="Middle Name/MI" formControlName="middle_name"
+                                autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidmiddlename}}</mat-error>
                         </mat-form-field>
 
@@ -47,7 +48,8 @@
                             <mat-label>Email ID*</mat-label>
                             <input matInput placeholder="Email" formControlName="sign_in_email_id" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
-                            <mat-hint *ngIf="!isEdit">Note : Once registered with an email id then it cannot be changed/modified.</mat-hint>
+                            <mat-hint *ngIf="!isEdit">Note : Once registered with an email id then it cannot be
+                                changed/modified.</mat-hint>
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
@@ -195,7 +197,8 @@
                             </mat-form-field>
                         </div>
                         <div fxFlex="100">
-                            <mat-radio-group class="p-l-15" formControlName="is_person" (change)="billingOrgChange($event.value)">
+                            <mat-radio-group class="p-l-15" formControlName="is_person"
+                                (change)="billingOrgChange($event.value)">
                                 <mat-radio-button [value]="true">Individual
                                 </mat-radio-button>
                                 <mat-radio-button [value]="false" class="p-l-10">
@@ -228,7 +231,7 @@
                                     fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                     <mat-label>First Name*</mat-label>
                                     <input matInput placeholder="First Name" formControlName="first_name"
-                                        autocomplete="off" >
+                                        autocomplete="off">
                                     <mat-error *ngIf="billingSubmit">Please enter valid first name</mat-error>
                                 </mat-form-field>
 
@@ -236,7 +239,7 @@
                                     fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                     <mat-label>Middle Name/MI</mat-label>
                                     <input matInput placeholder="Middle Name/MI" formControlName="middle_name"
-                                        autocomplete="off" >
+                                        autocomplete="off">
                                     <mat-error *ngIf="billingSubmit">Please enter valid middle name/MI</mat-error>
                                 </mat-form-field>
 
@@ -251,8 +254,7 @@
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
                                     fxFlex.xl="10" fxFlex.sm="20" fxFlex.xs="20">
                                     <mat-label>Suffix</mat-label>
-                                    <input matInput placeholder="Suffix" formControlName="suffix"
-                                        autocomplete="off">
+                                    <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
                                     <mat-error *ngIf="billingSubmit">Please enter valid suffix</mat-error>
                                 </mat-form-field>
                             </div>
@@ -261,8 +263,8 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
                                 fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
                                 <mat-label>Billing Provider Name*</mat-label>
-                                <input matInput placeholder="Billing Provider Name" formControlName="billing_provider_name"
-                                    autocomplete="off">
+                                <input matInput placeholder="Billing Provider Name"
+                                    formControlName="billing_provider_name" autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid billing provider name</mat-error>
                             </mat-form-field>
                         </div>
@@ -378,23 +380,25 @@
                             </mat-form-field>
                         </div>
                         <div fxFlex="100">
-                            <mat-radio-group class="p-l-15" formControlName="is_person" (change)="renderingOrgChange($event.value)">
+                            <mat-radio-group class="p-l-15" formControlName="is_person"
+                                (change)="renderingOrgChange($event.value)">
                                 <mat-radio-button [value]="true">Person
                                 </mat-radio-button>
                                 <mat-radio-button [value]="false" class="p-l-10">
                                     Non-person</mat-radio-button>
                             </mat-radio-group>
                         </div>
-                        <div class="sub-title p-l-10 m-t-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                        <div class="sub-title p-l-10 m-t-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                            fxFlex.xs="100">
                             CMS 1500 Box 31
                         </div>
-                        <div fxFlex="100" *ngIf="renderingForm.value.is_person == true" >
+                        <div fxFlex="100" *ngIf="renderingForm.value.is_person == true">
                             <div fxLayout="row wrap">
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                                     fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                     <mat-label>First Name*</mat-label>
                                     <input matInput placeholder="First Name" formControlName="first_name"
-                                        autocomplete="off" >
+                                        autocomplete="off">
                                     <mat-error *ngIf="renderingSubmit">Please enter valid first name</mat-error>
                                 </mat-form-field>
 
@@ -402,7 +406,7 @@
                                     fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100">
                                     <mat-label>Middle Name/MI</mat-label>
                                     <input matInput placeholder="Middle Name/MI" formControlName="middle_name"
-                                        autocomplete="off" >
+                                        autocomplete="off">
                                     <mat-error *ngIf="renderingSubmit">Please enter valid middle name/MI</mat-error>
                                 </mat-form-field>
 
@@ -417,8 +421,7 @@
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="10" fxFlex.lg="10"
                                     fxFlex.xl="10" fxFlex.sm="20" fxFlex.xs="20">
                                     <mat-label>Suffix</mat-label>
-                                    <input matInput placeholder="Suffix" formControlName="suffix"
-                                        autocomplete="off">
+                                    <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
                                     <mat-error *ngIf="renderingSubmit">Please enter valid suffix</mat-error>
                                 </mat-form-field>
                             </div>
@@ -427,8 +430,8 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
                                 fxFlex.xl="100" fxFlex.sm="100" fxFlex.xs="100">
                                 <mat-label>Rendering Provider Name*</mat-label>
-                                <input matInput placeholder="Rendering Provider Name" formControlName="rendering_provider_name"
-                                    autocomplete="off" >
+                                <input matInput placeholder="Rendering Provider Name"
+                                    formControlName="rendering_provider_name" autocomplete="off">
                                 <mat-error *ngIf="renderingSubmit">Please enter valid rendering provider name
                                 </mat-error>
                             </mat-form-field>
@@ -525,19 +528,21 @@
                                 </div>
                                 <div fxFlex="100" class="sign-upload">
                                     <div fxLayout="row wrap">
-                                        <mat-form-field appearance="standard"
-                                            hideRequiredMarker="hideRequiredControl.auto"
-                                            floatLabel="floatLabelControl.auto" fxFlex="80" class="w-100">
-                                            <input matInput [title]="selectedFile" readonly
-                                                [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
-                                                value="12345" autocomplete="off">
-                                            <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
-                                                (change)="fileChangeEvent($event)" id="uploadFile">
+                                        <div fxFlex="100">
+                                            <mat-form-field appearance="standard"
+                                                hideRequiredMarker="hideRequiredControl.auto"
+                                                floatLabel="floatLabelControl.auto">
+                                                <input matInput [title]="selectedFile" readonly
+                                                    [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
+                                                    value="12345" autocomplete="off">
+                                                <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
+                                                    (change)="fileChangeEvent($event)" id="uploadFile">
 
-                                        </mat-form-field>
-                                        <button matSuffix type="button" (click)="uploader.click()" mat-stroked-button
-                                            class="upload_btn outline-success">Upload
-                                        </button>
+                                            </mat-form-field>
+                                            <button matSuffix type="button" (click)="uploader.click()"
+                                                mat-stroked-button class="upload_btn outline-success">Upload
+                                            </button>
+                                        </div>
 
                                         <div fxFlex="100" *ngIf="!signData" class="m-t-20">
                                             <div class="empty-image m-l-10">
