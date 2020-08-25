@@ -117,10 +117,10 @@
                                     </div>
                                     <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
                                         fxFlex.xs="100" class="sign-upload">
-                                        <div fxLayout="row wrap">
+                                        <div fxLayout="row wrap" fxFlex="100">
                                             <mat-form-field appearance="standard"
                                                 hideRequiredMarker="hideRequiredControl.auto"
-                                                floatLabel="floatLabelControl.auto" fxFlex="80">
+                                                floatLabel="floatLabelControl.auto" >
                                                 <input matInput [title]="selectedFile" readonly
                                                     [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
                                                     value="12345">
@@ -130,7 +130,7 @@
                                             </mat-form-field>
 
                                             <button matSuffix type="button" (click)="uploader.click()"
-                                                mat-stroked-button class="upload_btn outline-success p-t-2 m-l-10">Upload
+                                                mat-stroked-button class="upload_btn outline-success m-t-2 m-l-10">Upload
                                             </button>
 
                                             <div fxFlex="100" *ngIf="!signData" class="m-t-20">

@@ -14,6 +14,7 @@ export class ClaimComponent implements OnInit {
   isEdit = false;
   claim: FormGroup;
   examTypes = [];
+  internalReferanceNumber: any;
   isClaimSubmited: boolean = false;
   constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claim = this.formBuilder.group({
@@ -30,6 +31,8 @@ export class ClaimComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.claimDetail);
+    this.internalReferanceNumber = this.claimDetail.internal_reference;
     this.claim.patchValue(this.claimDetail);
   }
   editClick() {
@@ -54,6 +57,7 @@ export class ClaimComponent implements OnInit {
       this.claim.patchValue(res.data)
       this.claim.disable();
       this.claimDetail = res.data;
+      this.claimDetail.internal_reference = this.internalReferanceNumber;
       this.alertService.openSnackBar("Claim updated successfully", 'success')
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error");
