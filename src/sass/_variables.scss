@@ -924,7 +924,22 @@ input:-webkit-autofill {
   //   margin-top: -0.25em;
   // }
 }
-
+.payment-dialog {
+ mat-card-content {
+  mat-form-field {
+    padding: 10px 10px 0px 0px !important;
+  }
+  .upload-file {
+    .filled-gray {
+      @extend .filled-gray ;
+    }
+    .mat-form-field {
+      width: calc( 100% - 125px) !important;
+      padding: 0 0 0 10px !important;
+    }
+  }
+ }
+}
 // ==================================
 // message style            =========
 // ==================================
