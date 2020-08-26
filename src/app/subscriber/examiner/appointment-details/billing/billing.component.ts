@@ -192,13 +192,17 @@ const ELEMENT_DATA3 = [
   templateUrl: 'billing-payment-dialog.html',
 })
 export class BillingPaymentDialog {
-
+  file:any;
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  addFile(e){
+
   }
 
 }

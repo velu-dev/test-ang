@@ -627,8 +627,8 @@
                                             </mat-icon>
                                         </span>
                                         <div>
-                                            <span *ngIf="column == 'address'"> {{element.street1}} {{element.street2}}
-                                                {{element.city}} {{element.state_name}} - {{element.zip_code}}</span>
+                                            <span *ngIf="column == 'address'"> {{element?.street1}} {{element?.street2}}
+                                                {{element?.city}} {{element?.state}} - {{element?.zip_code}}</span>
                                             <span
                                                 *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
                                             <span
