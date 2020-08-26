@@ -40,6 +40,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+            <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
         </div>
 
     </mat-card-content>

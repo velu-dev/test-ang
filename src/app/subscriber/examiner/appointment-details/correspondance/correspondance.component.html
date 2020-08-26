@@ -11,17 +11,17 @@
   <div fxLayout="row wrap" class="p-t-25" *ngIf="!isLoading">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
       <div fxLayout="row wrap">
-        <div fxFlex="60" fxFlex.sm="100"  fxFlex.xs="100">
+        <div fxFlex="100" fxFlex.sm="100"  fxFlex.xs="100">
           <div class="main-title">Documents <span class="info ondemand-info m-l-10"
               matTooltip="Documents which are labelled with the blue checkmark are required to be sent within 5 days of confirming the examination appointment date. Add Custom Mail On Demand Documents using the button at the bottom."
               matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
           <p class="description m-b-3 m-r-10">Use the checkboxes to select the documents to be mailed.</p>
         </div>
-        <div fxFlex="40" fxFlex.sm="100"  fxFlex.xs="100">
+        <!-- <div fxFlex="50" fxFlex.sm="100"  fxFlex.xs="100">
           <button mat-stroked-button class="outline-success float-right  m-t-30 m-b-5" (click)="openDialog()">
             <i class="fa fa-file-medical p-r-10"></i> Add Custom Document
           </button>
-        </div>
+        </div> -->
 
       </div>
       <div class="basic-table striped_ vertical-fixed m-l-10 footer-fixed">
@@ -53,7 +53,11 @@
 
           <!-- Name Column -->
           <ng-container matColumnDef="form_name">
-            <th mat-header-cell *matHeaderCellDef> </th>
+            <th mat-header-cell *matHeaderCellDef>
+              <button mat-stroked-button class="outline-success white float-right m-t-5 m-b-5" (click)="openDialog()">
+                <i class="fa fa-file-medical p-r-10"></i> Add Custom Document
+              </button>  
+            </th>
             <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.form_name}}
               <span class="default-select" *ngIf="element?.is_mandatory">
                 <img [src]="default_select" alt="Default select">
@@ -81,17 +85,17 @@
     </div>
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
       <div fxLayout="row wrap">
-        <div fxFlex="60" fxFlex.sm="100"  fxFlex.xs="100">
+        <div fxFlex="100" fxFlex.sm="100"  fxFlex.xs="100">
           <div class="main-title">Recipients <span class="info ondemand-info m-l-10" matTooltip="The selected parties will receive the documents through the Mail On
             Demand Service. Enter the name and address of custom recipients using the button at the bottom."
               matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
           <p class="description m-b-3 m-r-10">Use the checkboxes to select the recipients of mailed documents.</p>
         </div>
-        <div fxFlex="40" fxFlex.sm="100"  fxFlex.xs="100">
+        <!-- <div fxFlex="50" fxFlex.sm="100"  fxFlex.xs="100">
           <button mat-stroked-button class="outline-success float-right m-t-30 m-b-5" (click)="openCustomRecipient()">
             <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
           </button>
-        </div>
+        </div> -->
       </div>
       <div class="basic-table striped_ vertical-fixed m-l-10 footer-fixed">
         <table mat-table [dataSource]="recipients" class="mat-elevation-z8 w-100 user-table">
@@ -122,9 +126,12 @@
 
           <!-- Name Column -->
           <ng-container matColumnDef="recipient_type">
-            <th mat-header-cell *matHeaderCellDef> </th>
+            <th mat-header-cell *matHeaderCellDef> 
+              <button mat-stroked-button class="outline-success white float-right m-t-5  m-b-5" (click)="openCustomRecipient()">
+              <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
+            </button></th>
             <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
-              <div class="info-alert" (click)="$event.stopPropagation()" *ngIf="element?.message" ><i class="fa fa-info"></i>Address incomplete</div>
+              <div class="info-alert" (click)="$event.stopPropagation()" *ngIf="element?.message" ><i class="fas fa-info-circle"></i>Address incomplete</div>
               
               <span class="custom-list" *ngIf="element.type == 'custom'">
                 <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
@@ -163,7 +170,7 @@
       </button>
     </div>
     <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-      <button (click)="downloadForms(true)" mat-stroked-button class="outline-light_green float-right huge-btn">
+      <button (click)="downloadForms(true)" mat-stroked-button class="outline-warning float-right huge-btn">
         Download
       </button>
     </div>
