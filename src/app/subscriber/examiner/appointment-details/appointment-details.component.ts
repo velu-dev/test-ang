@@ -279,12 +279,12 @@ export class AppointmentDetailsComponent implements OnInit {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
       this.alertService.openSnackBar(this.isDisplayStatus.name + ' details updated Successfully', "success");
-      this.examinationStatus.map(data=>{
-        if(data.id == res.data.examination_status){
+      this.examinationStatus.map(data => {
+        if (data.id == res.data.examination_status) {
           this.progressStatus.examination = data.examination_status
         }
       })
-     
+
       this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
       this.examinationDetails.appointments = { examination_notes: res.data.examination_notes, examination_status: res.data.examination_status }
     }, error => {
@@ -512,7 +512,8 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   download(data) {
-    saveAs(data.exam_report_file_url, data.file_name);
+    saveAs(data.exam_report_file_url, data.file_name, '_self');
+    this.alertService.openSnackBar("File downloaded successfully", "success");
   }
 
   applyFilter(filterValue: string) {
