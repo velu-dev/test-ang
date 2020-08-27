@@ -14,22 +14,6 @@ export interface PeriodicElement {
   name: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { name: 'Depression/Anxiety Inventories' },
-  { name: 'Diagnostic Requisition' },
-  { name: 'Disability Inventories' },
-  { name: 'DWC-AD 100 (DEU 100)' },
-  { name: 'Pain Drawing' },
-  { name: 'Pain Inventories' },
-  { name: 'Personality Inventories' },
-  { name: 'Physical Exam Templates by Body Region' },
-];
-
-
-export interface PeriodicElement1 {
-  name: string;
-}
-
 @Component({
   selector: 'app-examination',
   templateUrl: './examination.component.html',
@@ -60,7 +44,7 @@ export class ExaminationComponent implements OnInit {
   claim_id: any;
   billableId: any;
   examinationDocuments: any;
-  uploadedDocument: any;
+  uploadedDocument: any = new MatTableDataSource([]);
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog) {
     this.route.params.subscribe(params => {
       console.log(params)
