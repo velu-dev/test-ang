@@ -495,8 +495,8 @@
                                     <mat-optgroup *ngFor="let group of (claimAdminGroupOptions | async)"
                                         [label]="group.name">
                                         <mat-option (click)="appClaimAdmin(claim_admin)"
-                                            *ngFor="let claim_admin of group.data" [value]="claim_admin.name">
-                                            {{claim_admin.name}}
+                                            *ngFor="let claim_admin of group.data" [value]="claim_admin.company_name">
+                                            {{claim_admin.company_name}}
                                         </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
@@ -696,8 +696,8 @@
                                     <mat-optgroup *ngFor="let group of (aattroneyGroupOptions | async)"
                                         [label]="group.name">
                                         <mat-option (click)="appAttorney(aa)" *ngFor="let aa of group.data"
-                                            [value]="aa.name">
-                                            {{aa.name}}
+                                            [value]="aa.company_name">
+                                            {{aa.company_name}}
                                         </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
@@ -798,8 +798,8 @@
                                     <mat-optgroup *ngFor="let group of (dattroneyGroupOptions | async)"
                                         [label]="group.name">
                                         <mat-option (click)="defAttornety(aa)" *ngFor="let aa of group.data"
-                                            [value]="aa.name">
-                                            {{aa.name}}
+                                            [value]="aa.company_name">
+                                            {{aa.company_name}}
                                         </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
