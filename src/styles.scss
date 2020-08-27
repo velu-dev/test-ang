@@ -446,6 +446,14 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 }
 
 // custom calender css
+.fc-header-toolbar {
+  .fc-left {
+    h2 {
+      font-size: $font-size-9;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
 .fc-toolbar {
   button {
     background-color: $white;
