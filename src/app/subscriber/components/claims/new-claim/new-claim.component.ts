@@ -31,7 +31,7 @@ import { saveAs } from 'file-saver';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
-    dateInput: 'MM-DD-YYYY',
+    dateInput: 'LL',
   },
   display: {
     dateInput: 'MM-DD-YYYY',
@@ -88,17 +88,17 @@ export interface claimant1 {
 }
 export const _filter = (opt: any[], value: string): string[] => {
   const filterValue = value.toLowerCase();
-  return opt.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
+  return opt.filter(item => item.company_name.toLowerCase().indexOf(filterValue) === 0);
 };
 @Component({
   selector: 'app-new-claim',
   templateUrl: './new-claim.component.html',
   styleUrls: ['./new-claim.component.scss'],
   providers: [
-    { provide: DateAdapter, useClass: PickDateAdapter },
+    // { provide: DateAdapter, useClass: PickDateAdapter },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
 
   ]
 })
@@ -359,6 +359,7 @@ export class NewClaimComponent implements OnInit {
             break;
           case "eams_representatives":
             this.eamsRepresentatives = res.data;
+            console.log(this.eamsRepresentatives)
             this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
             this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
               .pipe(
@@ -1012,10 +1013,10 @@ export class NewClaimComponent implements OnInit {
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
-          date_of_injury: new Date(this.injuryInfo['date_of_injury']),
+          date_of_injury: new Date(this.injuryInfo['date_of_injury']).toDateString(),
           continuous_trauma: this.injuryInfo['continuous_trauma'],
-          continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
-          continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
+          continuous_trauma_start_date: new Date(this.injuryInfo['continuous_trauma_start_date']).toDateString(),
+          continuous_trauma_end_date: new Date(this.injuryInfo['continuous_trauma_end_date']).toDateString(),
           injury_notes: this.injuryInfo['injury_notes'],
           diagram_url: this.injuryInfo['diagram_url'],
         };
@@ -1035,10 +1036,10 @@ export class NewClaimComponent implements OnInit {
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
-          date_of_injury: new Date(this.injuryInfo['date_of_injury']),
+          date_of_injury: new Date(this.injuryInfo['date_of_injury']).toDateString(),
           continuous_trauma: this.injuryInfo['continuous_trauma'],
-          continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
-          continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
+          continuous_trauma_start_date: new Date(this.injuryInfo['continuous_trauma_start_date']).toDateString(),
+          continuous_trauma_end_date: new Date(this.injuryInfo['continuous_trauma_end_date']).toDateString(),
           injury_notes: this.injuryInfo['injury_notes'],
           diagram_url: this.injuryInfo['diagram_url'],
         };
@@ -1155,11 +1156,11 @@ export class NewClaimComponent implements OnInit {
           // this.claimAdminList = res.data.claims_administrator;
           // let data = [];
           let claim_admin = [];
-          res.data.claims_administrator.map(res => {
-            res.name = res.company_name;
-            claim_admin.push(res)
-          })
-          this.claimAdminList = [{ name: "EAMS ADJ Addresses", data: claim_admin }, { name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
+          // res.data.claims_administrator.map(res => {
+          //   res.name = res.company_name;
+          //   claim_admin.push(res)
+          // })
+          this.claimAdminList = [{ name: "EAMS ADJ Addresses", data: res.data.claims_administrator }, { name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
           this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
             .pipe(
               startWith(''),
@@ -1170,11 +1171,11 @@ export class NewClaimComponent implements OnInit {
             console.log("attrony")
             // this.attroneylist = res.data.attroney;
             let attroney = [];
-            res.data.attroney.map(res => {
-              res.name = res.company_name;
-              attroney.push(res)
-            })
-            this.attroneylist = [{ name: "EAMS ADJ Addresses", data: attroney }, { name: "Simplexam Addresses", data: this.eamsRepresentatives }];
+            // res.data.attroney.map(res => {
+            //   res.name = res.company_name;
+            //   attroney.push(res)
+            // })
+            this.attroneylist = [{ name: "EAMS ADJ Addresses", data: res.data.attroney }, { name: "Simplexam Addresses", data: this.eamsRepresentatives }];
             this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
               .pipe(
                 startWith(''),
@@ -1232,6 +1233,7 @@ export class NewClaimComponent implements OnInit {
     })
   }
   appClaimAdmin(claimadmin) {
+    console.log(claimadmin)
     delete claimadmin['id'];
     this.claim.patchValue({
       InsuranceAdjuster: claimadmin
