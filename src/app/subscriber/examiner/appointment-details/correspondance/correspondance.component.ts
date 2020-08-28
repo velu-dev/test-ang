@@ -330,6 +330,19 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
   }
 
+
+  openDialog1(): void {
+    const dialogRef = this.dialog.open(AddAddress, {
+      width: '800px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
   statusBarChanges(status) {
     switch (status) {
       case 'Unsent':
@@ -529,6 +542,25 @@ export class CustomRecipient {
       }
     })
   }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
+
+
+
+@Component({
+  selector: 'add-address',
+  templateUrl: 'add-address.html',
+})
+export class AddAddress {
+
+  constructor(
+    public dialogRef: MatDialogRef<AddAddress>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
   onNoClick(): void {
     this.dialogRef.close();
   }

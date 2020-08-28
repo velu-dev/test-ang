@@ -65,7 +65,9 @@ th {
     button {
         @media only screen and (max-width: 568px) {
             text-align: center !important;
-            margin: 10px;
+            margin: 10px auto;
+            float: none;
+            display: block
         }
     }
 }

@@ -31,7 +31,7 @@ import { saveAs } from 'file-saver';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
-    dateInput: 'LL',
+    dateInput: 'MM-DD-YYYY',
   },
   display: {
     dateInput: 'MM-DD-YYYY',
@@ -1081,9 +1081,27 @@ export class NewClaimComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.loader.show();
       if (result) {
+        this.dataSource = new MatTableDataSource([]);
         this.logger.log("success");
         localStorage.removeItem("editingInjury");
-        this.injuryInfodata[index] = result
+        let a = 0;
+        for (var i in result['body_part_id']) {
+          var part = {
+            body_part_id: [result['body_part_id'][i]],
+            date_of_injury: new Date(result['date_of_injury']).toDateString(),
+            continuous_trauma: result['continuous_trauma'],
+            continuous_trauma_start_date: new Date(result['continuous_trauma_start_date']).toDateString(),
+            continuous_trauma_end_date: new Date(result['continuous_trauma_end_date']).toDateString(),
+            injury_notes: result['injury_notes'],
+            diagram_url: result['diagram_url'],
+          };
+          if (a == 0) {
+            this.injuryInfodata[index] = part;
+          } else {
+            this.injuryInfodata.push(part);
+          }
+          a = a + 1;
+        }
         this.dataSource = new MatTableDataSource(this.injuryInfodata)
         this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
         this.loader.hide();
@@ -1091,8 +1109,8 @@ export class NewClaimComponent implements OnInit {
       } else {
         let editingInjury = localStorage.getItem("editingInjury");
         let data = JSON.parse(editingInjury)
-        data.date_of_injury = new Date(data.date_of_injury)
-        this.injuryInfodata[index] = data;
+        data.date_of_injury = new Date(data.date_of_injury).toDateString(),
+          this.injuryInfodata[index] = data;
         this.dataSource = new MatTableDataSource(this.injuryInfodata)
         this.loader.hide();
       }
@@ -1589,7 +1607,13 @@ export class InjuryDialog {
     this.bodyPartsList = data['bodyparts'];
     this.isEdit = data['isEdit'];
     if (data['isEdit']) {
-      this.injuryInfo = data['injuryData']
+      this.logger.info(data['injuryData']);
+      this.injuryInfo.body_part_id = data['injuryData'].body_part_id;
+      this.injuryInfo.date_of_injury = new Date(data['injuryData'].date_of_injury);
+      this.injuryInfo.continuous_trauma = data['injuryData'].continuous_trauma;
+      this.injuryInfo.continuous_trauma_start_date = new Date(data['injuryData'].continuous_trauma_start_date);
+      this.injuryInfo.continuous_trauma_end_date = new Date(data['injuryData'].continuous_trauma_end_date);
+      this.injuryInfo.injury_notes = data['injuryData'].injury_notes;
       this.injuryData = data['injuryData']
     }
     this.isLoding = false;
