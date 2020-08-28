@@ -55,8 +55,12 @@ export class BillingCorrespondanceComponent implements OnInit {
   billableId: any;
   isLoading: boolean = false;
   correspondData: any;
+  states = [];
   statusBarValues = { value: null, status: '', class: '' }
-  constructor(private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
+  constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
+    this.claimService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
     this.route.params.subscribe(params => {
       this.claim_id = params.id;
       this.billableId = params.billId;
@@ -330,11 +334,12 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
   }
 
-
-  openDialog1(): void {
+  typeIfRecipient = "";// ["Claimant", "Insurance Company", "DEU Office", "Applicant Attorney", "Defense Attroney"]
+  openAddAddress(element): void {
+    this.typeIfRecipient = element.recipient_type;
     const dialogRef = this.dialog.open(AddAddress, {
       width: '800px',
-      // data: {name: this.name, animal: this.animal}
+      data: { type: this.typeIfRecipient, data: [], state: this.states }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -556,10 +561,21 @@ export class CustomRecipient {
   templateUrl: 'add-address.html',
 })
 export class AddAddress {
-
+  states: any;
+  userData: any;
+  type = "";
+  isLoading = false;
   constructor(
     public dialogRef: MatDialogRef<AddAddress>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    this.isLoading = true;
+    this.states = data["state"];
+    this.userData = data["data"];
+    this.type = data["type"];
+  }
+  ngOnInit() {
+    this.isLoading = false;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

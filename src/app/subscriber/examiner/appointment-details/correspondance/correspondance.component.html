@@ -131,7 +131,7 @@
               <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
             </button></th>
             <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
-              <div class="info-alert" (click)="$event.stopPropagation();openDialog1()" *ngIf="element?.message" ><i class="fas fa-info-circle"></i>Address incomplete</div>
+              <div class="info-alert" (click)="$event.stopPropagation();openAddAddress(element)" *ngIf="element?.message" ><i class="fas fa-info-circle"></i>Address incomplete</div>
               
               <span class="custom-list" *ngIf="element.type == 'custom'">
                 <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
