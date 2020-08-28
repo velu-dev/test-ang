@@ -9,7 +9,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   styleUrls: ['./employer.component.scss']
 })
 export class EmployerComponent implements OnInit {
-  @Input('edit') isEdit;
+  // @Input('edit') isEdit;
   @Input('employer') employerDetail;
   employer: FormGroup;
   employerList = [];
@@ -41,7 +41,7 @@ export class EmployerComponent implements OnInit {
       return;
     }
     this.claimService.updateAgent(this.employer.value.id, { Employer: this.employer.value }).subscribe(res => {
-      this.isEdit = false;
+      // this.isEdit = false;
       this.alertService.openSnackBar("Employer updated successfully", 'success');
       this.employer.disable();
       this.employerEdit = false;

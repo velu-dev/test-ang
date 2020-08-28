@@ -67,7 +67,7 @@ th {
             text-align: center !important;
             margin: 10px auto;
             float: none;
-            display: block
+            display: block;
         }
     }
 }
@@ -89,21 +89,30 @@ th {
         // height: 5px;
         // border-radius: 50%;
         // border: 1px solid $info;
-        margin-right:10px
+        margin-right: 10px;
     }
 }
 .m-t-30 {
     @media only screen and (min-width: 1600px) and (max-width: 2560px) {
         margin-top: 15px !important;
     }
-    @media only screen and (min-width: 320px) and (max-width: 560px)  {
+    @media only screen and (min-width: 320px) and (max-width: 560px) {
         margin-top: 5px !important;
-        }
+    }
 }
 
+// .white-btn {
+//     background-color: $white !important;
+//     color: $btn_success;
+//     border: 1px solid $btn_success;
+//     &:hover {
+//         background-color: $btn_success !important;
+//         color: $white;
+//     }
+// }
 
-.white {
+.white-btn {
     background-color: $ternary !important;
-    color: $white !important;
-    border: none !important;
+    color: $white;
+    border: 1px solid $ternary;
 }
