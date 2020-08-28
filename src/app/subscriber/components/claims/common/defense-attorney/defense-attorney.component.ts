@@ -8,7 +8,7 @@ export const _filter = (opt: any[], value: string): string[] => {
   console.log("opt", opt);
   const filterValue = value.toLowerCase();
 
-  return opt.filter(item => item.name.toLowerCase().indexOf(filterValue) === 0);
+  return opt.filter(item => item.company_name.toLowerCase().indexOf(filterValue) === 0);
 };
 @Component({
   selector: 'app-defense-attorney',
