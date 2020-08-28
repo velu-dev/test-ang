@@ -130,7 +130,8 @@ export class ExaminationComponent implements OnInit {
       } else {
         //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
-        this.alertService.openSnackBar("This file type is not accepted", 'error');
+        this.error = { status: true, message: "This file type is not accepted" };
+        // this.alertService.openSnackBar("This file type is not accepted", 'error');
       }
     }
   }
