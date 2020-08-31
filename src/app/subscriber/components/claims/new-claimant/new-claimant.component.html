@@ -1,14 +1,24 @@
 <mat-card class="m-card">
   <mat-card-header>
-    <div class="m-0 content-wrapper-main-title p-t-5 p-l-10">Claimant </div>
-    <span class="spacer"></span>
-    <button mat-stroked-button *ngIf="!editStatus && claimantId" class="m-b-5 outline-success" (click)="edit()">
-      Edit
-    </button>
-    <button mat-stroked-button class="filled-success edit-btn" *ngIf="editStatus && claimantId"
-      (click)="createClaimant()">
-      Save
-    </button>
+    <div fxLayout="row wrap" class="w-100">
+      <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
+        <div class="content-wrapper-main-title p-t-10 m-b-10 p-l-10"> Claimant</div>
+      </div>
+      <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
+        <div class="content-wrapper-main-title p-t-10 m-b-10 text-center">Internal Reference:
+          1363775734</div>
+
+      </div>
+      <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="text-right">
+        <button mat-stroked-button *ngIf="!editStatus && claimantId" class="m-b-5 outline-success" (click)="edit()">
+          Edit
+        </button>
+        <button mat-stroked-button class="filled-success edit-btn" *ngIf="editStatus && claimantId"
+          (click)="createClaimant()">
+          Save
+        </button>
+      </div>
+    </div>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
@@ -211,7 +221,7 @@
                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
               </mat-icon>
             </span>
-            <div >
+            <div>
               <span *ngIf="column == 'exam_type_code'">{{element?.exam_type_code}} </span>
               <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
               <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury}} </span>
