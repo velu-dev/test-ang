@@ -54,3 +54,13 @@ mat-accordion {
 mat-form-field {
     padding: 10px 10px 0px 10px !important;
   }
+
+
+  .deu_office {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+    
+  }
