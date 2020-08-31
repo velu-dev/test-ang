@@ -466,7 +466,7 @@
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete"
                                 (optionSelected)="texonomyChange($event.option.value)">
                                 <mat-option *ngFor="let option of (texonomyFilteredOptions | async)"
-                                    [value]="option.id">
+                                    [value]="option.id" title="{{option?.taxonomy_code}}-{{option?.taxonomy_name}}">
                                     {{option.taxonomy_code}}-{{option.taxonomy_name}}
                                 </mat-option>
                                 <mat-option *ngIf="(texonomyFilteredOptions | async)?.length == 0" disabled>No Result

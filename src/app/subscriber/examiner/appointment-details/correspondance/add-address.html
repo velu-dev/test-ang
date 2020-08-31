@@ -86,11 +86,11 @@
 <span *ngIf="!isLoading">
     <app-claim-admin *ngIf="type == 'Insurance Company'" [state]="states" [claim_admin]="userData">
     </app-claim-admin>
-    <app-application-attorney *ngIf="type == 'Applicant Attorney'" [aattorney]="userData" [state]="state">
+    <app-application-attorney *ngIf="type == 'Applicant Attorney'" [aattorney]="userData" [state]="states">
     </app-application-attorney>
     <app-defense-attorney *ngIf="type == 'Defense Attroney'" [state]="states" [dattroney]="userData">
     </app-defense-attorney>
     <!-- <app-defense-attorney *ngIf="type == ''" [dattroney]="userData" [state]="state"></app-defense-attorney> -->
-    <app-deo *ngIf="type == 'DEU Office'" [deu]="userData" [state]="state"></app-deo>
-    <app-employer *ngIf="type == 'Employer'" [employer]="userData" [state]="state"></app-employer>
+    <app-deo *ngIf="type == 'DEU Office'" [deu]="userData" [state]="states"></app-deo>
+    <app-employer *ngIf="type == 'Employer'" [employer]="userData" [state]="states"></app-employer>
 </span>
