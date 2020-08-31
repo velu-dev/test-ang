@@ -336,10 +336,23 @@ export class BillingCorrespondanceComponent implements OnInit {
 
   typeIfRecipient = "";// ["Claimant", "Insurance Company", "DEU Office", "Applicant Attorney", "Defense Attroney"]
   openAddAddress(element): void {
+    let address = {
+      city: "Anaheim",
+      company_name: "abc private compant",
+      email: "abc@abc.com",
+      fax: "23443322233",
+      id: 15,
+      name: "Anaheim",
+      phone: "7144141803",
+      state: "California",
+      street1: "1065 N Link",
+      street2: "Ste 170",
+      zip_code: "92806-2131",
+    }
     this.typeIfRecipient = element.recipient_type;
     const dialogRef = this.dialog.open(AddAddress, {
       width: '800px',
-      data: { type: this.typeIfRecipient, data: [], state: this.states }
+      data: { type: this.typeIfRecipient, data: address, state: this.states }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -569,11 +582,11 @@ export class AddAddress {
     public dialogRef: MatDialogRef<AddAddress>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.isLoading = true;
-    this.states = data["state"];
-    this.userData = data["data"];
-    this.type = data["type"];
   }
   ngOnInit() {
+    this.states = this.data["state"];
+    this.userData = this.data["data"];
+    this.type = this.data["type"];
     this.isLoading = false;
   }
 

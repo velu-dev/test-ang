@@ -61,6 +61,7 @@ export class DefenseAttorneyComponent implements OnInit {
     return data;
   }
   ngOnInit() {
+    console.log(this.dattorneyDetail);
     this.DefanceAttorney.patchValue(this.dattorneyDetail);
     this.id = this.dattorneyDetail.id;
   }
