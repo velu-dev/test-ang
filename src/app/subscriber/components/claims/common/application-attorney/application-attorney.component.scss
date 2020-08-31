@@ -1,14 +1,11 @@
 @import "variables";
 
-mat-card {
-    padding: 10px;
-    box-shadow: $shadow-style-one !important;
-    &:hover {
-        box-shadow: $shadow-style-one-hover;
-    }
-    .app_attorney_info {
-        mat-form-field {
-            padding: 10px 10px 0px 10px !important;
-        }
+.float-right {
+    text-align: right;
+}
+.app_attorney_info {
+    mat-form-field {
+        padding: 10px 10px 0px 10px !important;
     }
 }
+
