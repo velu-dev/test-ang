@@ -4,6 +4,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-deo',
@@ -14,13 +15,14 @@ export class DeoComponent implements OnInit {
   deoEdit = false;
   @Input('deu') deuDetail;
   DEU: FormGroup;
+  @Input('fromPop') fromPop = false;
   attroneylist = [];
   @Input('state') states;
   filteredDeu: Observable<any[]>;
   deuCtrl = new FormControl();
   deuDetails = [];
   deuId = "";
-  constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.DEU = this.formBuilder.group({
       id: [null],
       name: [{ value: null, disabled: true }],
@@ -50,6 +52,9 @@ export class DeoComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.fromPop) {
+      this.editDEU();
+    }
     this.deuId = this.deuDetail.id;
     this.DEU.patchValue(this.deuDetail);
     console.log(this.deuDetail)
@@ -76,6 +81,10 @@ export class DeoComponent implements OnInit {
       this.DEU.patchValue(res.data)
       this.alertService.openSnackBar("DEU updated successfully", 'success');
       this.DEU.disable();
+      if (this.fromPop) {
+        this.dialog.closeAll();
+        return
+      }
       // this.isEditComplete.emit(true);
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
@@ -89,6 +98,10 @@ export class DeoComponent implements OnInit {
     })
   }
   cancel() {
+    if (this.fromPop) {
+      this.dialog.closeAll();
+      return
+    }
     this.DEU.disable();
     this.DEU.patchValue(this.deuDetail)
   }

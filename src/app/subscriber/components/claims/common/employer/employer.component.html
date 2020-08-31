@@ -3,11 +3,18 @@
         <div class="content-wrapper-main-title p-t-10 m-b-10">Employer Information </div>
         <span class="spacer"></span>
         <div>
-            <button *ngIf="!employerEdit " mat-stroked-button (click)="editEmployer()" class="m-b-5 outline-success">
-                Edit
-            </button>
-            <button *ngIf="employerEdit" mat-stroked-button (click)="updateEmployer()" class="m-b-5 filled-success">
-                Save
+            <span *ngIf="!fromPop">
+                <button *ngIf="!employerEdit " mat-stroked-button (click)="editEmployer()"
+                    class="m-b-5 outline-success">
+                    Edit
+                </button>
+                <button *ngIf="employerEdit" mat-stroked-button (click)="updateEmployer()" class="m-b-5 filled-success">
+                    Save
+                </button>
+            </span>
+            <button *ngIf="fromPop" (click)="cancel();employerEdit = false" mat-stroked-button
+                class="m-b-5 m-l-5 outline-danger">
+                Close
             </button>
         </div>
     </mat-card-header>

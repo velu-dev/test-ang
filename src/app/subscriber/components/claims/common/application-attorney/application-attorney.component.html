@@ -5,11 +5,16 @@
         </div>
         <div fxFlex="50">
             <div class="float-right">
-                <button *ngIf="!aaEdit" mat-stroked-button (click)="editAA()" class="m-b-5 outline-success">
-                    Edit
-                </button>
-                <button *ngIf="aaEdit" mat-stroked-button (click)="updateAAttorney()" class="m-b-5 filled-success">
-                    Save
+                <span *ngIf="!fromPop">
+                    <button *ngIf="!aaEdit" mat-stroked-button (click)="editAA()" class="m-b-5 outline-success">
+                        Edit
+                    </button>
+                    <button *ngIf="aaEdit" mat-stroked-button (click)="updateAAttorney()" class="m-b-5 filled-success">
+                        Save
+                    </button>
+                </span>
+                <button *ngIf="fromPop" (click)="cancel();aaEdit = false" mat-stroked-button class="m-b-5 m-l-5 outline-danger">
+                    Close
                 </button>
             </div>
         </div>

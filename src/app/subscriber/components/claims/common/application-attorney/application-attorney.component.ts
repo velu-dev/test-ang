@@ -4,6 +4,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
 export const _filter = (opt: any[], value: string): string[] => {
   console.log("opt", opt);
   const filterValue = value.toLowerCase();
@@ -20,6 +21,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   aaEdit = false;
   @Input('aattorney') aattorneyDetail;
   @Input('state') states;
+  @Input('fromPop') fromPop = false;
   // @Input('save') isSave;
   ApplicantAttorney: FormGroup;
   attroneylist = [];
@@ -27,7 +29,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   dattroneyGroupOptions: Observable<any[]>;
   DattroneySelect = true;
   id: any;
-  constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsRepresentatives = res.data;
       this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
@@ -52,6 +54,9 @@ export class ApplicationAttorneyComponent implements OnInit {
     });
   }
   ngOnInit() {
+    if (this.fromPop) {
+      this.editAA();
+    }
     this.ApplicantAttorney.patchValue(this.aattorneyDetail)
     this.id = this.aattorneyDetail.id;
   }
@@ -85,14 +90,21 @@ export class ApplicationAttorneyComponent implements OnInit {
       // this.isEdit = false;
       this.aaEdit = false;
       this.ApplicantAttorney.patchValue(res.data);
-      this.ApplicantAttorney.disable();
-      // this.isEditComplete.emit(true);
       this.alertService.openSnackBar("Applicant Attorney updated successfully!", 'success')
+      this.ApplicantAttorney.disable();
+      if (this.fromPop) {
+        this.dialog.closeAll();
+        return
+      }
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
   cancel() {
+    if (this.fromPop) {
+      this.dialog.closeAll();
+      return
+    }
     // this.isEditComplete.emit(true);
     this.ApplicantAttorney.disable();
   }

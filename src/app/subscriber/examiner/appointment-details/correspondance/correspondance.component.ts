@@ -12,10 +12,11 @@ import * as globals from '../../../../globals';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
 import { formatDate } from '@fullcalendar/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { NGXLogger } from 'ngx-logger';
+import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -78,7 +79,6 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
   }
   getData(data?) {
-    console.log(data)
     let selected = [];
     if (data) {
       selected = data;
@@ -336,28 +336,15 @@ export class BillingCorrespondanceComponent implements OnInit {
 
   typeIfRecipient = "";// ["Claimant", "Insurance Company", "DEU Office", "Applicant Attorney", "Defense Attroney"]
   openAddAddress(element): void {
-    let address = {
-      city: "Anaheim",
-      company_name: "abc private compant",
-      email: "abc@abc.com",
-      fax: "23443322233",
-      id: 15,
-      name: "Anaheim",
-      phone: "7144141803",
-      state: "California",
-      street1: "1065 N Link",
-      street2: "Ste 170",
-      zip_code: "92806-2131",
-    }
+    this.logger.log(element.data)
     this.typeIfRecipient = element.recipient_type;
     const dialogRef = this.dialog.open(AddAddress, {
       width: '800px',
-      data: { type: this.typeIfRecipient, data: address, state: this.states }
+      data: { type: this.typeIfRecipient, data: element.data, state: this.states }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      // this.animal = result;
+      this.getData();
     });
   }
 
@@ -578,8 +565,12 @@ export class AddAddress {
   userData: any;
   type = "";
   isLoading = false;
+  claimantForm: FormGroup;
   constructor(
+    private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddAddress>,
+    private claimService: ClaimService,
+    private alertService: AlertService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.isLoading = true;
   }
@@ -588,8 +579,30 @@ export class AddAddress {
     this.userData = this.data["data"];
     this.type = this.data["type"];
     this.isLoading = false;
+    if (this.type == "Claimant") {
+      this.claimantForm = this.formBuilder.group({
+        id: [""],
+        name: [{ value: "", disable: true }, Validators.compose([Validators.required])],
+        street1: [null],
+        street2: [null],
+        city: [null],
+        state: [null],
+        date_of_birth: [null],
+        organization_id: [null],
+        gender: [null],
+        zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
+      });
+      this.claimantForm.patchValue(this.userData)
+    }
   }
-
+  saveClaimant() {
+    this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
+      this.alertService.openSnackBar("Claimant updated successfully!", 'success');
+      this.dialogRef.close();
+    }, error => {
+      this.alertService.openSnackBar(error.error, 'error');
+    })
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }

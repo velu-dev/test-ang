@@ -1,112 +1,113 @@
 <mat-card-header>
-        <div fxLayout="row wrap" class="w-100">
-            <div fxFlex="50">
-                <div class="content-wrapper-main-title p-t-10 m-b-10">Defense Attorney Information</div>
-            </div>
-            <div fxFlex="50">
-                <div class="float-right">
+    <div fxLayout="row wrap" class="w-100">
+        <div fxFlex="50">
+            <div class="content-wrapper-main-title p-t-10 m-b-10">Defense Attorney Information</div>
+        </div>
+        <div fxFlex="50">
+            <div class="float-right">
+                <span *ngIf="!fromPop">
                     <button *ngIf="!daEdit" mat-stroked-button (click)="editDA()" class="m-b-5 outline-success">
                         Edit
                     </button>
                     <button *ngIf="daEdit" mat-stroked-button (click)="updateDAttorney()" class="m-b-5 filled-success">
                         Save
                     </button>
-
-                    <!-- <button mat-stroked-button class="m-b-5 m-l-5 outline-danger">
-                        Close
-                    </button> -->
+                </span>
+                <button *ngIf="fromPop" (click)="cancel();daEdit = false" mat-stroked-button class="m-b-5 m-l-5 outline-danger">
+                    Close
+                </button>
             </div>
         </div>
     </div>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content class="p-b-15">
-        <div class="def_attorney_info  m-t-15">
-            <form fxLayout="row wrap" fxFlex="100" [formGroup]="DefanceAttorney"
-                (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Law Firm Name</mat-label>
-                    <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
-                        [matAutocomplete]="daAuto">
-                    <button mat-button *ngIf="DefanceAttorney.value.company_name && daEdit" matSuffix mat-icon-button
-                        aria-label="Clear" (click)="clearAutoComplete()">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                    <mat-autocomplete #daAuto="matAutocomplete">
-                        <mat-optgroup *ngFor="let group of (dattroneyGroupOptions | async)" [label]="group.name">
-                            <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of group.data"
-                                [value]="attroney.company_name">
-                                {{attroney.company_name}}
-                            </mat-option>
-                        </mat-optgroup>
-                    </mat-autocomplete>
-                    <mat-error>Please enter valid attroney</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Attorney Name</mat-label>
-                    <input matInput formControlName="name" placeholder="Attorney Name" autocomplete="off">
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Street Address 1</mat-label>
-                    <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Street Address 2</mat-label>
-                    <textarea matInput placeholder="Street Address 2" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="1" formControlName="street2"></textarea>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>City</mat-label>
-                    <input matInput placeholder="City" formControlName="city" autocomplete="off">
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>State</mat-label>
-                    <mat-select formControlName="state">
-                        <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+</mat-card-header>
+<mat-divider></mat-divider>
+<mat-card-content class="p-b-15">
+    <div class="def_attorney_info  m-t-15">
+        <form fxLayout="row wrap" fxFlex="100" [formGroup]="DefanceAttorney"
+            (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Law Firm Name</mat-label>
+                <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
+                    [matAutocomplete]="daAuto">
+                <button mat-button *ngIf="DefanceAttorney.value.company_name && daEdit" matSuffix mat-icon-button
+                    aria-label="Clear" (click)="clearAutoComplete()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete #daAuto="matAutocomplete">
+                    <mat-optgroup *ngFor="let group of (dattroneyGroupOptions | async)" [label]="group.name">
+                        <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of group.data"
+                            [value]="attroney.company_name">
+                            {{attroney.company_name}}
                         </mat-option>
-                    </mat-select>
-                    <mat-error>Please enter valid state</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Zip Code</mat-label>
-                    <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
-                        formControlName="zip_code" autocomplete="off">
-                    <mat-error>Please enter valid zip code</mat-error>
-                </mat-form-field>
+                    </mat-optgroup>
+                </mat-autocomplete>
+                <mat-error>Please enter valid attroney</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Attorney Name</mat-label>
+                <input matInput formControlName="name" placeholder="Attorney Name" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Street Address 1</mat-label>
+                <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Street Address 2</mat-label>
+                <textarea matInput placeholder="Street Address 2" cdkTextareaAutosize cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="1" formControlName="street2"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>City</mat-label>
+                <input matInput placeholder="City" formControlName="city" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>State</mat-label>
+                <mat-select formControlName="state">
+                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Please enter valid state</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Zip Code</mat-label>
+                <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
+                    formControlName="zip_code" autocomplete="off">
+                <mat-error>Please enter valid zip code</mat-error>
+            </mat-form-field>
 
 
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Phone</mat-label>
-                    <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                        placeholder="Phone" formControlName="phone" autocomplete="off">
-                    <mat-error>Please enter valid phone number</mat-error>
-                </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Phone</mat-label>
+                <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Phone"
+                    formControlName="phone" autocomplete="off">
+                <mat-error>Please enter valid phone number</mat-error>
+            </mat-form-field>
 
 
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Email</mat-label>
-                    <input matInput placeholder="Email" formControlName="email" autocomplete="off">
-                    <mat-error>Please enter valid email</mat-error>
-                </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+                <mat-error>Please enter valid email</mat-error>
+            </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Fax</mat-label>
-                    <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                        formControlName="fax" autocomplete="off">
-                    <mat-error>Please enter valid fax number</mat-error>
-                </mat-form-field>
-                <div *ngIf="daEdit" class="text-center w-100 m-t-10">
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Fax</mat-label>
+                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                    formControlName="fax" autocomplete="off">
+                <mat-error>Please enter valid fax number</mat-error>
+            </mat-form-field>
+            <div *ngIf="daEdit" class="text-center w-100 m-t-10">
 
-                    <button mat-stroked-button type="button" (click)="cancel();daEdit = false"
-                        class="outline-danger">Cancel</button>
-                    <button mat-stroked-button class="m-l-10 outline-success" (click)="updateDAttorney()">
-                        Save </button>
-                </div>
-            </form>
-        </div>
+                <button mat-stroked-button type="button" (click)="cancel();daEdit = false"
+                    class="outline-danger">Cancel</button>
+                <button mat-stroked-button class="m-l-10 outline-success" (click)="updateDAttorney()">
+                    Save </button>
+            </div>
+        </form>
+    </div>
 </mat-card-content>

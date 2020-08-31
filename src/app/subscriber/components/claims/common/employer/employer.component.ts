@@ -2,6 +2,7 @@ import { Component, OnInit, Input, SimpleChange, EventEmitter, Output } from '@a
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-employer',
@@ -10,12 +11,13 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 })
 export class EmployerComponent implements OnInit {
   // @Input('edit') isEdit;
+  @Input('fromPop') fromPop = false;
   @Input('employer') employerDetail;
   employer: FormGroup;
   employerList = [];
   @Input('state') states;
   employerEdit = false;
-  constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.employer = this.formBuilder.group({
       id: [],
       name: [{ value: null, disabled: true }],
@@ -30,6 +32,9 @@ export class EmployerComponent implements OnInit {
     });
   }
   ngOnInit() {
+    if (this.fromPop) {
+      this.editEmployer();
+    }
     this.employer.patchValue(this.employerDetail)
   }
   updateEmployer() {
@@ -54,6 +59,10 @@ export class EmployerComponent implements OnInit {
     this.employer.enable();
   }
   cancel() {
+    if (this.fromPop) {
+      this.dialog.closeAll();
+      return
+    }
     this.employer.disable();
     this.employer.patchValue(this.employerDetail)
   }

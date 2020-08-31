@@ -4,6 +4,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
 export const _filter = (opt: any[], value: string): string[] => {
   console.log("opt", opt);
   const filterValue = value.toLowerCase();
@@ -19,6 +20,7 @@ export class ClaimAdminComponent implements OnInit {
   // @Input('edit') isEdit;
   claimAdminEdit = false;
   @Input('claim_admin') claimAdmin;
+  @Input('fromPop') fromPop = false;
   // @Input('save') isSave = false;
   claimAdminForm: FormGroup;
   claimAdminList = []
@@ -28,7 +30,7 @@ export class ClaimAdminComponent implements OnInit {
   @Input('state') states;
   id: any;
   // @Output() isEditComplete = new EventEmitter();
-  constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsClaimsAdministrator = res.data;
       this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
@@ -54,6 +56,9 @@ export class ClaimAdminComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.fromPop) {
+      this.editCA();
+    }
     this.claimAdminForm.patchValue(this.claimAdmin)
     this.id = this.claimAdmin.id;
   }
@@ -87,6 +92,10 @@ export class ClaimAdminComponent implements OnInit {
       this.alertService.openSnackBar("Claim Administrator updated successfully", 'success');
       this.claimAdminForm.disable();
       this.claimUpdated = true;
+      if (this.fromPop) {
+        this.dialog.closeAll();
+        return
+      }
       // this.isEditComplete.emit(true);
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
@@ -97,6 +106,10 @@ export class ClaimAdminComponent implements OnInit {
     this.claimAdminEdit = true;
   }
   cancel() {
+    if (this.fromPop) {
+      this.dialog.closeAll();
+      return
+    }
     this.claimAdminForm.disable();
     // this.isEditComplete.emit(true);
     this.claimAdminForm.patchValue(this.claimAdmin)
