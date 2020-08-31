@@ -1,98 +1,98 @@
-<mat-card>
-    <mat-card-header>
-        <div class="content-wrapper-main-title p-t-10 m-b-10"> DEU Office </div>
-        <span class="spacer"></span>
-        <div>
-            <button *ngIf="!deoEdit" mat-stroked-button (click)="editDEU()"
-                class="m-b-5 outline-success">
-                Edit
-            </button>
-            <button *ngIf="deoEdit" mat-stroked-button
-                (click)="updateDEU()" class="m-b-5 filled-success">
-                Save
-            </button>
+<mat-card-header>
+    <div fxLayout="row wrap" class="w-100">
+        <div fxFlex="50">
+            <div class="content-wrapper-main-title p-t-10 m-b-10"> DEU Office</div>
         </div>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content class="p-b-15">
-        <div class="deu_info m-t-15">
-            <form fxLayout="row wrap" fxFlex="100" [formGroup]="DEU"
-                (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
-                <mat-form-field *ngIf="!deoEdit" appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
-                    fxFlex.xs="100">
-                    <mat-label>Office Name</mat-label>
-                    <input matInput placeholder="Office Name" formControlName="name" autocomplete="off">
-                </mat-form-field>
-                <mat-form-field *ngIf="deoEdit" appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
-                    fxFlex.xs="100">
-                    <mat-label>Office Name</mat-label>
-                    <input matInput placeholder="Select Office Name" aria-label="Office Name"
-                        [matAutocomplete]="deuAuto" [formControl]="deuCtrl">
-                    <mat-autocomplete #deuAuto="matAutocomplete">
-                        <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)"
-                            [value]="deu.deu_office">
-                            <span>{{deu.code}} - {{deu.deu_office}}</span>
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Street Address 1</mat-label>
-                    <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
-                </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Street Address 2</mat-label>
-                    <textarea matInput placeholder="Street Address 2" cdkTextareaAutosize cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="1" formControlName="street2"></textarea>
-                </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>City</mat-label>
-                    <input matInput type="text" placeholder="City" formControlName="city" autocomplete="off">
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>State</mat-label>
-                    <mat-select formControlName="state">
-                        <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error>Please enter valid state</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Zip Code</mat-label>
-                    <input matInput mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code"
-                        placeholder="Zip Code" autocomplete="off">
-                    <mat-error>Please enter valid zip code</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Phone </mat-label>
-                    <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                        placeholder="Phone" formControlName="phone" autocomplete="off">
-                    <mat-error>Please enter valid phone number</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Email</mat-label>
-                    <input matInput placeholder="Email" formControlName="email" autocomplete="off">
-                    <mat-error>Please enter valid email</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Fax</mat-label>
-                    <input matInput placeholder="Fax" (keypress)="numberOnly($event)" formControlName="fax"
-                        mask="(000) 000-0000" autocomplete="off">
-                    <mat-error>Please enter valid fax number</mat-error>
-                </mat-form-field>
-                <div *ngIf="deoEdit" class="text-center w-100 m-t-10">
-
-                    <button mat-stroked-button type="button" (click)="cancel();deoEdit = false" class="outline-danger"
-                        color="warn">Cancel</button>
-                    <button mat-stroked-button class="m-l-10 outline-success" (click)="updateDEU()">
-                        Save </button>
-                </div>
-            </form>
+        <div fxFlex="50">
+            <div class="float-right"> 
+                <button *ngIf="!deoEdit" mat-stroked-button (click)="editDEU()" class="m-b-5 outline-success">
+                    Edit
+                </button>
+                <button *ngIf="deoEdit" mat-stroked-button (click)="updateDEU()" class="m-b-5 filled-success">
+                    Save
+                </button>
+            </div>
         </div>
-    </mat-card-content>
-</mat-card>
+    </div>
+</mat-card-header>
+<mat-divider></mat-divider>
+<mat-card-content class="p-b-15">
+    <div class="deu_info m-t-15">
+        <form fxLayout="row wrap" fxFlex="100" [formGroup]="DEU" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
+            <mat-form-field *ngIf="!deoEdit" appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                fxFlex.xs="100">
+                <mat-label>Office Name</mat-label>
+                <input matInput placeholder="Office Name" formControlName="name" autocomplete="off">
+            </mat-form-field>
+            <mat-form-field *ngIf="deoEdit" appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                fxFlex.xs="100">
+                <mat-label>Office Name</mat-label>
+                <input matInput placeholder="Select Office Name" aria-label="Office Name" [matAutocomplete]="deuAuto"
+                    [formControl]="deuCtrl">
+                <mat-autocomplete #deuAuto="matAutocomplete">
+                    <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)"
+                        [value]="deu.deu_office">
+                        <span>{{deu.code}} - {{deu.deu_office}}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Street Address 1</mat-label>
+                <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Street Address 2</mat-label>
+                <textarea matInput placeholder="Street Address 2" cdkTextareaAutosize cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="1" formControlName="street2"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>City</mat-label>
+                <input matInput type="text" placeholder="City" formControlName="city" autocomplete="off">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>State</mat-label>
+                <mat-select formControlName="state">
+                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Please enter valid state</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Zip Code</mat-label>
+                <input matInput mask="9{10}" [dropSpecialCharacters]="false" formControlName="zip_code"
+                    placeholder="Zip Code" autocomplete="off">
+                <mat-error>Please enter valid zip code</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Phone </mat-label>
+                <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Phone"
+                    formControlName="phone" autocomplete="off">
+                <mat-error>Please enter valid phone number</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+                <mat-error>Please enter valid email</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Fax</mat-label>
+                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" formControlName="fax"
+                    mask="(000) 000-0000" autocomplete="off">
+                <mat-error>Please enter valid fax number</mat-error>
+            </mat-form-field>
+            <div *ngIf="deoEdit" class="text-center w-100 m-t-10">
+
+                <button mat-stroked-button type="button" (click)="cancel();deoEdit = false" class="outline-danger"
+                    color="warn">Cancel</button>
+                <button mat-stroked-button class="m-l-10 outline-success" (click)="updateDEU()">
+                    Save </button>
+            </div>
+        </form>
+    </div>
+</mat-card-content>
