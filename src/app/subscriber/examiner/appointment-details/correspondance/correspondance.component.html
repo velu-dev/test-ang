@@ -186,9 +186,9 @@
           matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Monitor the actions performed on this page.</p>
       <div class="user-detail vertical-fixed">
-        <table mat-table [dataSource]="sentDocuments" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
+        <table mat-table [dataSource]="sentDocuments" multiTemplateDataRows class="mat-elevation-z8 user-table">
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+            <th mat-header-cell *matHeaderCellDef>
               {{columnName[i]}} </th>
             <td mat-cell *matCellDef="let element">
               <span *ngIf="i == 0 && isMobile">
@@ -199,9 +199,11 @@
               </span>
               <div>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                <span *ngIf="column == 'action'" class="no-wrap-td">{{element?.action}}</span>
+                <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element.action"><span *ngSwitchCase="'MD'">Downloaded</span>
+                <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
+                <span *ngSwitchCase="'SFTP'">Mailed On Demand</span></span>
                 <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
-                <span *ngIf="column == 'recipients'">{{element?.recipients}}</span>
+                <span *ngIf="column == 'recipients'"><span *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}} {{!last ? ',' : ''}}</span></span>
                 <span *ngIf="column == 'download'">
                   <a class="text-success" (click)="inOutdownload(element)">Download</a>
                 </span>
