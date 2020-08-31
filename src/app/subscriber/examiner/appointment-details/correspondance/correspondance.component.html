@@ -204,11 +204,11 @@
                 <span *ngSwitchCase="'SFTP'">Mailed On Demand</span></span>
                 <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'recipients'"><span *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}} {{!last ? ',' : ''}}</span></span>
-                <span *ngIf="column == 'download'">
-                  <a class="text-success" (click)="inOutdownload(element)">Download</a>
+                <span *ngIf="column == 'download' && element?.send">
+                  <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
                 </span>
-                <span *ngIf="column == 'download1'">
-                  <!-- <a class="text-success" (click)="inOutdownload(element)">Download</a> -->
+                <span *ngIf="column == 'download1' && element?.received">
+                  <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
                 </span>
               </div>
             </td>
