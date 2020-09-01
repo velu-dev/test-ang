@@ -261,7 +261,6 @@ export class BillingCorrespondanceComponent implements OnInit {
     if (this.isMobile) {
       this.expandId = element.document_id;
     }
-
   }
 
   allOrNone(status) {
@@ -344,8 +343,11 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result)
-        this.getData();
+      // if (!result) {
+      console.log(result)
+      //   return
+      // }
+      this.getData();
     });
   }
 

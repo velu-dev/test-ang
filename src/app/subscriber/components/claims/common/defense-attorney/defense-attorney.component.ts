@@ -30,6 +30,9 @@ export class DefenseAttorneyComponent implements OnInit {
   DattroneySelect = true;
   id: any;
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+    this.claimService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsRepresentatives = res.data;
       this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
