@@ -53,6 +53,7 @@ export class DeoComponent implements OnInit {
 
   ngOnInit() {
     if (this.fromPop) {
+      this.DEU.controls["name"].setValidators([Validators.required]);
       this.DEU.controls["street1"].setValidators([Validators.required]);
       this.DEU.controls["city"].setValidators([Validators.required]);
       this.DEU.controls["state"].setValidators([Validators.required]);

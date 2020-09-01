@@ -67,6 +67,7 @@ export class DefenseAttorneyComponent implements OnInit {
   }
   ngOnInit() {
     if (this.fromPop) {
+      this.DefanceAttorney.controls["company_name"].setValidators([Validators.required]);
       this.DefanceAttorney.controls["street1"].setValidators([Validators.required]);
       this.DefanceAttorney.controls["city"].setValidators([Validators.required]);
       this.DefanceAttorney.controls["state"].setValidators([Validators.required]);

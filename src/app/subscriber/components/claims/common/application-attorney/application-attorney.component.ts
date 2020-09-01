@@ -58,6 +58,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   ngOnInit() {
     if (this.fromPop) {
+      this.ApplicantAttorney.controls["company_name"].setValidators([Validators.required]);
       this.ApplicantAttorney.controls["street1"].setValidators([Validators.required]);
       this.ApplicantAttorney.controls["city"].setValidators([Validators.required]);
       this.ApplicantAttorney.controls["state"].setValidators([Validators.required]);

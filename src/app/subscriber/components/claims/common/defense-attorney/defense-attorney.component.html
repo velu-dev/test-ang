@@ -24,7 +24,7 @@
         <form fxLayout="row wrap" fxFlex="100" [formGroup]="DefanceAttorney"
             (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Law Firm Name</mat-label>
+                <mat-label>Law Firm Name{{fromPop ? "*" : ""}}</mat-label>
                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                     [matAutocomplete]="daAuto">
                 <button mat-button *ngIf="DefanceAttorney.value.company_name && daEdit" matSuffix mat-icon-button

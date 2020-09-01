@@ -521,11 +521,11 @@ export class CustomRecipient {
     this.customReceipient = this.formBuilder.group({
       id: [null],
       name: [null, Validators.required],
-      street1: [null],
+      street1: [null, Validators.required],
       street2: [null],
-      city: [null],
-      state_id: [null],
-      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      city: [null, Validators.required],
+      state_id: [null, Validators.required],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$'), Validators.required])],
     })
     if (this.isEdit) {
       if (this.data["data"].zip_code_plus_4) {
@@ -586,7 +586,7 @@ export class AddAddress {
     if (this.type == "Claimant") {
       this.claimantForm = this.formBuilder.group({
         id: [""],
-        name: [{ value: "", disable: true }, Validators.compose([Validators.required])],
+        name: [{ value: "", disabled: true }, Validators.compose([Validators.required])],
         street1: [null, Validators.compose([Validators.required])],
         street2: [null],
         city: [null, Validators.compose([Validators.required])],

@@ -58,6 +58,7 @@ export class ClaimAdminComponent implements OnInit {
   ngOnInit() {
     console.log(this.states)
     if (this.fromPop) {
+      this.claimAdminForm.controls["company_name"].setValidators([Validators.required]);
       this.claimAdminForm.controls["street1"].setValidators([Validators.required]);
       this.claimAdminForm.controls["city"].setValidators([Validators.required]);
       this.claimAdminForm.controls["state"].setValidators([Validators.required]);
