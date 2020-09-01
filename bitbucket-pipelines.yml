@@ -9,6 +9,7 @@ pipelines:
             - echo "Frontend:::This step runs once you click the 'Run' button!"
 
       - step:
+          size: 2x
           name: Build app
           trigger: automatic               
           script: # The script below will build the application.                    
