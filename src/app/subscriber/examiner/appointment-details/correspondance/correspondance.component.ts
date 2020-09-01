@@ -247,6 +247,7 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.selection.clear();
         this.selection1.clear();
         this.download(res.data.file_url, res.data.file_name);
+        this.getData();
         this.alertService.openSnackBar("File downloaded successfully", 'success');
       } else {
         this.alertService.openSnackBar(res.message, "error");
