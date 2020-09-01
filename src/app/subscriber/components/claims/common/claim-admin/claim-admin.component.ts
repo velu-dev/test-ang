@@ -56,7 +56,12 @@ export class ClaimAdminComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.states)
     if (this.fromPop) {
+      this.claimAdminForm.controls["street1"].setValidators([Validators.required]);
+      this.claimAdminForm.controls["city"].setValidators([Validators.required]);
+      this.claimAdminForm.controls["state"].setValidators([Validators.required]);
+      this.claimAdminForm.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editCA();
     }
     this.claimAdminForm.patchValue(this.claimAdmin)

@@ -345,7 +345,8 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getData();
+      if (result)
+        this.getData();
     });
   }
 
@@ -574,38 +575,41 @@ export class AddAddress {
     private alertService: AlertService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.isLoading = true;
+    this.states = data["state"];
+    this.userData = data["data"];
+    this.type = data["type"];
   }
   ngOnInit() {
-    this.states = this.data["state"];
-    this.userData = this.data["data"];
-    this.type = this.data["type"];
     this.isLoading = false;
     if (this.type == "Claimant") {
       this.claimantForm = this.formBuilder.group({
         id: [""],
         name: [{ value: "", disable: true }, Validators.compose([Validators.required])],
-        street1: [null],
+        street1: [null, Validators.compose([Validators.required])],
         street2: [null],
-        city: [null],
-        state: [null],
+        city: [null, Validators.compose([Validators.required])],
+        state: [null, Validators.compose([Validators.required])],
         date_of_birth: [null],
         organization_id: [null],
         gender: [null],
-        zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
+        zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
       });
       this.claimantForm.patchValue(this.userData)
     }
   }
   saveClaimant() {
+    if (this.claimantForm.invalid) {
+      return
+    }
     this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
       this.alertService.openSnackBar("Claimant updated successfully!", 'success');
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     }, error => {
       this.alertService.openSnackBar(error.error, 'error');
     })
   }
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
 }
