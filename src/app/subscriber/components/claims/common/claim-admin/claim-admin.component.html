@@ -52,6 +52,7 @@
                 <mat-label>Street Address 1{{fromPop ? "*" : ""}}</mat-label>
                 <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
                     formControlName="street1"></textarea>
+                    <mat-error>Please enter valid street address 1</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -63,6 +64,7 @@
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>City{{fromPop ? "*" : ""}}</mat-label>
                 <input matInput type="text" placeholder="City" formControlName="city" autocomplete="off">
+                <mat-error>Please enter valid city</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
