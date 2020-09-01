@@ -53,6 +53,10 @@ export class DeoComponent implements OnInit {
 
   ngOnInit() {
     if (this.fromPop) {
+      this.DEU.controls["street1"].setValidators([Validators.required]);
+      this.DEU.controls["city"].setValidators([Validators.required]);
+      this.DEU.controls["state"].setValidators([Validators.required]);
+      this.DEU.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editDEU();
     }
     this.deuId = this.deuDetail.id;

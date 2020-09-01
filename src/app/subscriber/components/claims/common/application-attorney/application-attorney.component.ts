@@ -55,6 +55,10 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   ngOnInit() {
     if (this.fromPop) {
+      this.ApplicantAttorney.controls["street1"].setValidators([Validators.required]);
+      this.ApplicantAttorney.controls["city"].setValidators([Validators.required]);
+      this.ApplicantAttorney.controls["state"].setValidators([Validators.required]);
+      this.ApplicantAttorney.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editAA();
     }
     this.ApplicantAttorney.patchValue(this.aattorneyDetail)

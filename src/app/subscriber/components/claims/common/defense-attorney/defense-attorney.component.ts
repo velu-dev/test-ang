@@ -64,6 +64,10 @@ export class DefenseAttorneyComponent implements OnInit {
   }
   ngOnInit() {
     if (this.fromPop) {
+      this.DefanceAttorney.controls["street1"].setValidators([Validators.required]);
+      this.DefanceAttorney.controls["city"].setValidators([Validators.required]);
+      this.DefanceAttorney.controls["state"].setValidators([Validators.required]);
+      this.DefanceAttorney.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editDA();
     }
     this.DefanceAttorney.patchValue(this.dattorneyDetail);

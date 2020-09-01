@@ -13,7 +13,8 @@
                         Save
                     </button>
                 </span>
-                <button *ngIf="fromPop" (click)="cancel();aaEdit = false" mat-stroked-button class="m-b-5 m-l-5 outline-danger">
+                <button *ngIf="fromPop" (click)="cancel();aaEdit = false" mat-stroked-button
+                    class="m-b-5 m-l-5 outline-danger">
                     Close
                 </button>
             </div>
@@ -53,6 +54,7 @@
                 <mat-label>Street Address 1</mat-label>
                 <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
                     cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
+                <mat-error>Please enter valid street address 1</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Street Address 2</mat-label>
@@ -62,6 +64,7 @@
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>City</mat-label>
                 <input matInput placeholder="City" formControlName="city" autocomplete="off">
+                <mat-error>Please enter valid City</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
