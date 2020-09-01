@@ -25,7 +25,7 @@
             <div class="table-filter">
                 <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                     placeholder="Search by name, claim number, examiner, etc.">
-                    <mat-icon >search</mat-icon>
+                <mat-icon>search</mat-icon>
             </div>
             <!-- <span class="spacer"></span>
             <button mat-icon-button class="filter-icon" (click)="exportData()">
@@ -37,18 +37,21 @@
                 matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                     <th mat-header-cell *matHeaderCellDef> <span mat-sort-header>{{columnName[i]}}</span> </th>
-                    <td mat-cell *matCellDef="let element" (click)="navigate(element)">
+                    <td mat-cell *matCellDef="let element" (click)="!isMobile ? navigate(element) : ''">
                         <span *ngIf="i == 0 && isMobile">
                             <mat-icon mat-raised-button
                                 [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="columnName[i] == 'Location'">{{element[column].street1 }} {{element[column].street2}}
-                             {{element[column].city}} {{element[column].state}} {{element[column].zip_code}}</span>
-                        <span *ngIf="columnName[i] != 'Location' && columnName[i] != 'Examiner'">{{element[column] }}</span>
-                        
-                        <span *ngIf="columnName[i] == 'Examiner'">{{element?.examiner_first_name}} {{element?.examiner_middle_name}} {{element?.examiner_last_name}}</span>
+                        <span *ngIf="columnName[i] == 'Location'">{{element[column].street1 }}
+                            {{element[column].street2}}
+                            {{element[column].city}} {{element[column].state}} {{element[column].zip_code}}</span>
+                        <span
+                            *ngIf="columnName[i] != 'Location' && columnName[i] != 'Examiner'">{{element[column] }}</span>
+
+                        <span *ngIf="columnName[i] == 'Examiner'">{{element?.examiner_first_name}}
+                            {{element?.examiner_middle_name}} {{element?.examiner_last_name}}</span>
                         <!-- <span *ngIf="i == (columnsToDisplay.length-1)">
                             <span class="user-disable-enable" *ngIf="tabIndex != 1"> <button mat-icon-button
                                     [matMenuTriggerFor]="review_doc">
@@ -77,7 +80,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <td mat-cell *matCellDef="let element" (click)="navigate(element)"
+                        [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="resposive-table">
                                 <div><span>Claim Numbers</span> {{element?.claim_number}} </div>
@@ -101,7 +105,7 @@
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
     </div>
 
-    <div flLayout="row wrap" class="fc_calender"  *ngIf="isCalenderVIew">
+    <div flLayout="row wrap" class="fc_calender" *ngIf="isCalenderVIew">
         <div fxFlex="100">
             <div>
                 <div class="exa_status">
