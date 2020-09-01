@@ -19,6 +19,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { IntercomService } from './services/intercom.service'
+// import { BreadcrumbModule } from 'xng-breadcrumb';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { IntercomService } from './services/intercom.service'
         strictActionImmutability: true
       }
     }),
+    // BreadcrumbModule,
     NgxMaskModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],

@@ -45,6 +45,7 @@
     "ngx-spinner": "^8.1.0",
     "rxjs": "~6.4.0",
     "xlsx": "^0.15.5",
+    "xng-breadcrumb": "^6.1.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

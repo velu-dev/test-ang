@@ -34,6 +34,8 @@ import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/mome
 import { TextMaskModule } from 'angular2-text-mask';
 import { FileTypePipe } from './pipes/file-type.pipe';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
+import { BreadcrumbModule } from 'xng-breadcrumb';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 export const MY_MOMENT_FORMATS = {
   parseInput: 'MM-DD-YYYY HH:mm A',
@@ -73,6 +75,7 @@ export const MY_MOMENT_FORMATS = {
     NgxMaskModule.forRoot(),
     OwlDateTimeModule, OwlNativeDateTimeModule, OwlMomentDateTimeModule,
     TextMaskModule,
+    BreadcrumbModule
   ],
   exports: [
     MaterialModule,
@@ -95,7 +98,8 @@ export const MY_MOMENT_FORMATS = {
     OwlDateTimeModule, OwlNativeDateTimeModule,
     TextMaskModule,
     FileTypePipe,
-    AlertDialogComponent
+    AlertDialogComponent,
+    BreadcrumbModule
   ],
   providers: [
     CognitoService,
@@ -122,7 +126,8 @@ export const MY_MOMENT_FORMATS = {
         siteKey: '6Lfz6doUAAAAANgvOxZA8lZmFEK0vm0v1lWkveLq',
       } as RecaptchaSettings,
     },
-    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+    BreadcrumbService
   ]
 })
 export class SharedModule { }

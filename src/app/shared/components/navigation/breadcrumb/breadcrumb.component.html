@@ -1,4 +1,4 @@
-<ul class="breadcrumb-home">
+<!-- <ul class="breadcrumb-home">
     <li (click)="breadCrumbMain()">
         <mat-icon aria-hidden="false" aria-label="home icon">home</mat-icon>Home
     </li>
@@ -6,7 +6,7 @@
 <ul class="breadcrumb" *ngFor="let menu of (menu$ | async)?.menu; let indx = index">
     <li *ngIf="menu.title != 'Dashboard'">
         <span (click)="breadCrumb(menu, indx)">{{menu.title | ellipsis:40}}</span>
-        <!-- <span *ngIf="menu.path != '/subscriber/edit-claim'" (click)="breadCrumb(menu, indx)">{{menu.title | ellipsis:20}}</span>
-        <span *ngIf="menu.path == '/subscriber/edit-claim'">{{name | ellipsis:20}}</span> -->
+        
     </li>
-</ul>
+</ul> -->
+<xng-breadcrumb></xng-breadcrumb>
