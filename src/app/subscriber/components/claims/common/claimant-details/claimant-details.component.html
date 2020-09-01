@@ -5,8 +5,8 @@
                 <div class="content-wrapper-main-title p-t-10 m-b-10"> Claimant</div>
             </div>
             <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-                <div class="content-wrapper-main-title p-t-10 m-b-10 text-center">Ref #:
-                    1363775734</div>
+                <div class="content-wrapper-main-title p-t-10 m-b-10 text-center" *ngIf="claimantDetailsclaimant?.internal_reference">Ref #:
+                    {{claimantDetailsclaimant?.internal_reference}}</div>
             </div>
             <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"></div>
         </div>
