@@ -80,6 +80,7 @@ export class NewClaimantComponent implements OnInit {
   editStatus: boolean = true;
   filterValue: string;
   claimantChanges: boolean = false;
+  claimantInfo:any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
@@ -189,7 +190,7 @@ export class NewClaimantComponent implements OnInit {
   }
   getSingleClaimant() {
     this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
-      console.log(res);
+      this.claimantInfo = res['data'][0];
       this.languageStatus = res['data'][0].certified_interpreter_required;
       this.claimNumber = res['data'][0].claim_numbers.map(data => data.claim_number)
       this.claimantForm.patchValue(res['data'][0])
