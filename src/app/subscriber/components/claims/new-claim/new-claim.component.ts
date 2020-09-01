@@ -208,6 +208,7 @@ export class NewClaimComponent implements OnInit {
   isChecked = false;
   eamsRepresentatives = [];
   eamsClaimsAdministrator = [];
+  claimantInfo:any;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -249,6 +250,7 @@ export class NewClaimComponent implements OnInit {
         this.claimService.getSingleClaimant(this.claimant_id).subscribe(claimant => {
           if (claimant.status) {
             this.logger.log("claimant", claimant)
+            this.claimantInfo = claimant.data[0]
             this.isRemoveSearchRemove = true;
             this.isClaimantCreated = true;
             this.searchStatus = false;

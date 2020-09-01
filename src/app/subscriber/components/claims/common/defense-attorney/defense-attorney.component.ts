@@ -30,6 +30,9 @@ export class DefenseAttorneyComponent implements OnInit {
   DattroneySelect = true;
   id: any;
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+    this.claimService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsRepresentatives = res.data;
       this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
@@ -64,6 +67,10 @@ export class DefenseAttorneyComponent implements OnInit {
   }
   ngOnInit() {
     if (this.fromPop) {
+      this.DefanceAttorney.controls["street1"].setValidators([Validators.required]);
+      this.DefanceAttorney.controls["city"].setValidators([Validators.required]);
+      this.DefanceAttorney.controls["state"].setValidators([Validators.required]);
+      this.DefanceAttorney.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editDA();
     }
     this.DefanceAttorney.patchValue(this.dattorneyDetail);

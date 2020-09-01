@@ -68,7 +68,7 @@ export class HistoryComponent implements OnInit {
 
       })
       this.dataSource = new MatTableDataSource(this.inFile);
-     
+
       this.statusBarChanges(this.historyData.on_demand_status)
     }, error => {
       this.dataSource = new MatTableDataSource([])
@@ -96,7 +96,7 @@ export class HistoryComponent implements OnInit {
     }
   }
 
- 
+
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
@@ -106,7 +106,11 @@ export class HistoryComponent implements OnInit {
   }
 
   onDemandSubmit() {
-    // return;
+    if (this.historyData.documets.length == 0) {
+      this.alertService.openSnackBar('Document not found', 'error');
+      return;
+    }
+
     let data = {
       claim_id: this.paramsId.id,
       service_priority: this.rushRequest ? "rush" : 'normal',

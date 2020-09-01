@@ -107,6 +107,7 @@ export class AppointmentDetailsComponent implements OnInit {
   isDisplayStatus: any = { status: false, name: "", isExaminar: false, isDeposition: false };
   billableData: any;
   progressStatus: any;
+  appointmentStatus:boolean = false;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -211,6 +212,12 @@ export class AppointmentDetailsComponent implements OnInit {
         })
 
         this.examinationStatusForm.patchValue(response.data.appointments)
+        console.log(response.data.appointments.appointment_scheduled_date_time,"appointment")
+        if(moment(response.data.appointments.appointment_scheduled_date_time) < moment()){
+          this.appointmentStatus = true;
+        }else{
+          this.appointmentStatus = false;
+        }
         this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
         this.examiner_id = response.data.appointments.examiner_id;
         this.examinationDetails = response['data'];
