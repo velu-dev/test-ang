@@ -594,6 +594,9 @@ input:-webkit-autofill {
     }
   }
 }
+.close-model {
+  @extend .close-model;
+}
 
 // ADVANCE SEARCH
 

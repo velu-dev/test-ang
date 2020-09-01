@@ -2,6 +2,11 @@
 
 .float-right {
     text-align: right;
+    .close-model {
+        color: $text-dark;
+        border: 1px solid $light-gray;
+        border-radius: 50px;
+    }
 }
 .app_attorney_info {
     mat-form-field {

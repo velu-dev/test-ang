@@ -1,6 +1,11 @@
 @import "variables";
 .float-right {
     text-align: right;
+    .close-model {
+        color: $text-dark;
+        border: 1px solid $light-gray;
+        border-radius: 50px;
+    }
 }
 .claim_admin {
     mat-form-field {

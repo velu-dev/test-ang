@@ -13,10 +13,8 @@
                         Save
                     </button>
                 </span>
-                <button *ngIf="fromPop" (click)="cancel();aaEdit = false" mat-stroked-button
-                    class="m-b-5 m-l-5 outline-danger">
-                    Close
-                </button>
+                <button class="close-model m-t-10" color="warn" *ngIf="fromPop" (click)="cancel();aaEdit = false"> <i
+                        class="fa fa-close"></i> close </button>
             </div>
         </div>
     </div>
