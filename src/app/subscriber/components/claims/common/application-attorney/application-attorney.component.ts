@@ -4,7 +4,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 export const _filter = (opt: any[], value: string): string[] => {
   console.log("opt", opt);
   const filterValue = value.toLowerCase();
@@ -29,7 +29,12 @@ export class ApplicationAttorneyComponent implements OnInit {
   dattroneyGroupOptions: Observable<any[]>;
   DattroneySelect = true;
   id: any;
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+  constructor(
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    private claimService: ClaimService,
+    public dialogRef: MatDialogRef<ApplicationAttorneyComponent>,
+    private alertService: AlertService) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -58,6 +63,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   ngOnInit() {
     if (this.fromPop) {
+      this.dialogRef.disableClose = true;
       this.ApplicantAttorney.controls["company_name"].setValidators([Validators.required]);
       this.ApplicantAttorney.controls["street1"].setValidators([Validators.required]);
       this.ApplicantAttorney.controls["city"].setValidators([Validators.required]);
@@ -101,7 +107,7 @@ export class ApplicationAttorneyComponent implements OnInit {
       this.alertService.openSnackBar("Applicant Attorney updated successfully!", 'success')
       this.ApplicantAttorney.disable();
       if (this.fromPop) {
-        this.dialog.closeAll();
+        this.dialogRef.close(true);
         return
       }
     }, error => {
@@ -110,7 +116,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   cancel() {
     if (this.fromPop) {
-      this.dialog.closeAll();
+      this.dialogRef.close(false);
       return
     }
     // this.isEditComplete.emit(true);

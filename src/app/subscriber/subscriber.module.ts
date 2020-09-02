@@ -62,6 +62,7 @@ import { ReportComponent } from './examiner/appointment-details/report/report.co
 import { BillingCorrespondanceComponent, CustomDocuments, CustomRecipient, AddAddress } from './examiner/appointment-details/correspondance/correspondance.component';
 import { BilllableBillingComponent, BillingPaymentDialog } from './examiner/appointment-details/billing/billing.component';
 import { OnDemandService } from './service/on-demand.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -148,7 +149,11 @@ import { OnDemandService } from './service/on-demand.service';
     CustomRecipient,
     InActivedialog,
     BillingPaymentDialog,
-    AddAddress
+    AddAddress,
+    // DefenseAttorneyComponent,
+    // ApplicationAttorneyComponent,
+    // DeoComponent,
+    // ClaimAdminComponent
 
   ],
   imports: [
@@ -158,6 +163,14 @@ import { OnDemandService } from './service/on-demand.service';
     FullCalendarModule,
     ImageCropperModule
   ],
-  providers: [SubscriberUserService, ClaimService, ExaminerService, SubscriberService, OnDemandService]
+  providers: [
+    SubscriberUserService,
+    ClaimService,
+    ExaminerService,
+    SubscriberService,
+    OnDemandService,
+    { provide: MatDialogRef, useValue: {} },
+    { provide: MAT_DIALOG_DATA, useValue: [] }
+  ]
 })
 export class SubscriberModule { }

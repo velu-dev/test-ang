@@ -361,7 +361,6 @@ export class NewClaimComponent implements OnInit {
             break;
           case "eams_representatives":
             this.eamsRepresentatives = res.data;
-            console.log(this.eamsRepresentatives)
             this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
             this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
               .pipe(
