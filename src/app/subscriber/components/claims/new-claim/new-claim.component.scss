@@ -25,6 +25,13 @@
           padding-left: 7px;
         }
       }
+      .reference_no {
+        .text-center {
+          @media only screen and (max-width: 568px) {
+            text-align: right;
+          }
+        }
+      }
       .correspondence-file-upload {
         @media only screen and (max-width: 568px) {
           margin:20px 0 20px 0;
