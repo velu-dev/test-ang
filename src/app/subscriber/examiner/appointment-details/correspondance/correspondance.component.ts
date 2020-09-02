@@ -344,11 +344,8 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // if (!result) {
-      console.log(result)
-      //   return
-      // }
-      this.getData();
+      if (result)
+        this.getData();
     });
   }
 

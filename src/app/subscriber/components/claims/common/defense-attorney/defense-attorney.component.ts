@@ -4,9 +4,8 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 export const _filter = (opt: any[], value: string): string[] => {
-  console.log("opt", opt);
   const filterValue = value.toLowerCase();
 
   return opt.filter(item => item.company_name.toLowerCase().indexOf(filterValue) === 0);
@@ -29,7 +28,7 @@ export class DefenseAttorneyComponent implements OnInit {
   dattroneyGroupOptions: Observable<any[]>;
   DattroneySelect = true;
   id: any;
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+  constructor(public dialogRef: MatDialogRef<DefenseAttorneyComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -67,6 +66,7 @@ export class DefenseAttorneyComponent implements OnInit {
   }
   ngOnInit() {
     if (this.fromPop) {
+      this.dialogRef.disableClose = true;
       this.DefanceAttorney.controls["company_name"].setValidators([Validators.required]);
       this.DefanceAttorney.controls["street1"].setValidators([Validators.required]);
       this.DefanceAttorney.controls["city"].setValidators([Validators.required]);
@@ -100,7 +100,7 @@ export class DefenseAttorneyComponent implements OnInit {
       this.alertService.openSnackBar("Defense Attorney updated successfully!", 'success');
       this.DefanceAttorney.disable();
       if (this.fromPop) {
-        this.dialog.closeAll();
+        this.dialogRef.close(true);
         return
       }
     }, error => {
@@ -109,7 +109,7 @@ export class DefenseAttorneyComponent implements OnInit {
   }
   cancel() {
     if (this.fromPop) {
-      this.dialog.closeAll();
+      this.dialogRef.close(false);
       return
     }
     this.DefanceAttorney.disable();

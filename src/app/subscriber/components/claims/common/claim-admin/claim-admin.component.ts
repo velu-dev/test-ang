@@ -4,7 +4,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 export const _filter = (opt: any[], value: string): string[] => {
   console.log("opt", opt);
   const filterValue = value.toLowerCase();
@@ -30,7 +30,7 @@ export class ClaimAdminComponent implements OnInit {
   @Input('state') states;
   id: any;
   // @Output() isEditComplete = new EventEmitter();
-  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+  constructor(public dialogRef: MatDialogRef<ClaimAdminComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsClaimsAdministrator = res.data;
       this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
@@ -58,6 +58,7 @@ export class ClaimAdminComponent implements OnInit {
   ngOnInit() {
     console.log(this.states)
     if (this.fromPop) {
+      this.dialogRef.disableClose = true;
       this.claimAdminForm.controls["company_name"].setValidators([Validators.required]);
       this.claimAdminForm.controls["street1"].setValidators([Validators.required]);
       this.claimAdminForm.controls["city"].setValidators([Validators.required]);
@@ -99,7 +100,7 @@ export class ClaimAdminComponent implements OnInit {
       this.claimAdminForm.disable();
       this.claimUpdated = true;
       if (this.fromPop) {
-        this.dialog.closeAll();
+        this.dialogRef.close(true);
         return
       }
       // this.isEditComplete.emit(true);
@@ -113,7 +114,7 @@ export class ClaimAdminComponent implements OnInit {
   }
   cancel() {
     if (this.fromPop) {
-      this.dialog.closeAll();
+      this.dialogRef.close(false);
       return
     }
     this.claimAdminForm.disable();
