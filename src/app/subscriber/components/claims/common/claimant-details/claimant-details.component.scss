@@ -1,11 +1,19 @@
 @import "variables";
 
-
 mat-card {
     padding: 10px;
     box-shadow: $shadow-style-one !important;
     &:hover {
         box-shadow: $shadow-style-one-hover;
+    }
+    mat-card-header {
+        .reference_no {
+            .text-center {
+                @media only screen and (max-width: 568px) {
+                    text-align: right;
+                }
+            }
+        }
     }
     mat-card-content {
         mat-form-field {

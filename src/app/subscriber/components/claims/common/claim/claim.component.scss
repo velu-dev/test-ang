@@ -13,6 +13,13 @@ mat-card {
                 margin-top: 10px;
             }
         }
+        .reference_no {
+            .text-center {
+                @media only screen and (max-width: 568px) {
+                    text-align: right;
+                }
+            }
+        }
     }
     .claim_info {
         mat-form-field {
