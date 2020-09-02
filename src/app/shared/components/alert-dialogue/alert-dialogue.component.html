@@ -1,0 +1,7 @@
+<div class="user-disable">
+  <div mat-dialog-title class="mat-card-title">{{data?.message}}</div>
+  <div mat-dialog-actions class="disable-acctions text-center p-t-25">
+    <button mat-raised-button (click)="onClick(false)" *ngIf="data.no" class="no m-r-5">No</button>
+    <button mat-raised-button (click)="onClick(true)" *ngIf="data.yes" class="yes">Ok</button>
+  </div>
+</div>

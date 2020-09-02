@@ -17,6 +17,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { NGXLogger } from 'ngx-logger';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -194,19 +195,29 @@ export class BillingCorrespondanceComponent implements OnInit {
   ngOnInit() {
   }
   downloadForms(sign) {
-    if (this.selection.selected.length == 0 && this.selection1.selected.length == 0) {
-      this.alertService.openSnackBar('Please select Document(s) & Recipient(s)', "error");
-      return;
-    }
     if (this.selection.selected.length == 0) {
       this.alertService.openSnackBar('Please select Document(s)', "error");
       return;
     }
-    if (this.selection1.selected.length == 0) {
-      this.alertService.openSnackBar('Please select Recipient(s)', "error");
-      return;
-    }
+    // let addressEmpty = false;
+    // this.selection1.selected.map(res => {
+    //   if (res.message) {
+    //     addressEmpty = true;
+    //   }
+    // })
+    // if (addressEmpty) {
+    //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+    //     width: '350px',
+    //     data: { message: "Recipient address not silled in some recipient'(s). Would you like to countinue?", yes: true, no: true }
+    //   });
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     if (result) {
 
+    //     } else {
+    //       return
+    //     }
+    //   })
+    // }
     let signHide = false;
     if (sign) {
       signHide = sign;
@@ -222,11 +233,15 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
     let recipientsDocuments_ids: any = [];
     let recipientsCustom_documents_ids: any = [];
+    let addressEmpty = false;
     this.selection1.selected.map(res => {
       if (res.type == "custom") {
         recipientsCustom_documents_ids.push(res.id)
       } else {
         recipientsDocuments_ids.push(res.id)
+      }
+      if (res.message) {
+        addressEmpty = true;
       }
     })
     let docDeatils = {
@@ -236,23 +251,54 @@ export class BillingCorrespondanceComponent implements OnInit {
       custom_recipients_ids: recipientsCustom_documents_ids,
       hide_sign: signHide
     }
-    this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
-      if (res.status) {
-        //this.alertService.openSnackBar(res.message, "success");
-        let data = res.data;
-        documents_ids = [];
-        custom_documents_ids = [];
-        recipientsDocuments_ids = [];
-        recipientsCustom_documents_ids = [];
-        this.selection.clear();
-        this.selection1.clear();
-        this.download(res.data.file_url, res.data.file_name);
-        this.getData();
-        this.alertService.openSnackBar("File downloaded successfully", 'success');
-      } else {
-        this.alertService.openSnackBar(res.message, "error");
-      }
-    })
+    if (addressEmpty) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: '350px',
+        data: { message: "Recipient address not silled in some recipient'(s). Would you like to countinue?", yes: true, no: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.data) {
+          this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
+            if (res.status) {
+              //this.alertService.openSnackBar(res.message, "success");
+              let data = res.data;
+              documents_ids = [];
+              custom_documents_ids = [];
+              recipientsDocuments_ids = [];
+              recipientsCustom_documents_ids = [];
+              this.selection.clear();
+              this.selection1.clear();
+              this.download(res.data.file_url, res.data.file_name);
+              this.getData();
+              this.alertService.openSnackBar("File downloaded successfully", 'success');
+            } else {
+              this.alertService.openSnackBar(res.message, "error");
+            }
+          });
+        } else {
+          return;
+        }
+      })
+    } else {
+      this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
+        if (res.status) {
+          //this.alertService.openSnackBar(res.message, "success");
+          let data = res.data;
+          documents_ids = [];
+          custom_documents_ids = [];
+          recipientsDocuments_ids = [];
+          recipientsCustom_documents_ids = [];
+          this.selection.clear();
+          this.selection1.clear();
+          this.download(res.data.file_url, res.data.file_name);
+          this.getData();
+          this.alertService.openSnackBar("File downloaded successfully", 'success');
+        } else {
+          this.alertService.openSnackBar(res.message, "error");
+        }
+      });
+    }
+
   }
   download(url, name) {
     saveAs(url, name, '_self');
@@ -383,6 +429,13 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.alertService.openSnackBar('Please select Recipient(s)', "error");
       return;
     }
+    // let addressEmpty = false;
+    // this.selection1.selected.map(res => {
+    //   if (res.message) {
+    //     addressEmpty = true;
+    //   }
+    // })
+
     let documents_ids: any = [];
     let custom_documents_ids: any = [];
     this.selection.selected.map(res => {
@@ -394,11 +447,15 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
     let recipientsDocuments_ids: any = [];
     let recipientsCustom_documents_ids: any = [];
+    let addressEmpty = false;
     this.selection1.selected.map(res => {
       if (res.type == "custom") {
         recipientsCustom_documents_ids.push(res.id)
       } else {
         recipientsDocuments_ids.push(res.id)
+      }
+      if (res.message) {
+        addressEmpty = true;
       }
     })
     let data = {
@@ -410,6 +467,16 @@ export class BillingCorrespondanceComponent implements OnInit {
       custom_documents_ids: custom_documents_ids,
       recipients_ids: recipientsDocuments_ids,
       custom_recipients_ids: recipientsCustom_documents_ids
+    }
+    if (addressEmpty) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: '350px',
+        data: { message: "Please fill address for recipients", yes: true, no: false }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        return
+      })
+      return;
     }
     this.onDemandService.onDemandCorrespondence(data).subscribe(record => {
       this.alertService.openSnackBar("Mail On Demand created successfully", 'success');
