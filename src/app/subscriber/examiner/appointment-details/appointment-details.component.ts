@@ -108,6 +108,7 @@ export class AppointmentDetailsComponent implements OnInit {
   billableData: any;
   progressStatus: any;
   appointmentStatus:boolean = false;
+  disableExaminationArr:any=[5,6,7,8,10];
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
