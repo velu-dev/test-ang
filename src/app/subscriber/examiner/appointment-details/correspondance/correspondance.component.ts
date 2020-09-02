@@ -254,7 +254,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '350px',
-        data: { message: "Recipient address not silled in some recipient'(s). Would you like to countinue?", yes: true, no: true }
+        data: { message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
@@ -471,7 +471,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '350px',
-        data: { message: "Please fill address for recipients", yes: true, no: false }
+        data: { message: "Recipient address seems to be incomplete. Please fill out the required fields and try again!", yes: true, no: false }
       });
       dialogRef.afterClosed().subscribe(result => {
         return
