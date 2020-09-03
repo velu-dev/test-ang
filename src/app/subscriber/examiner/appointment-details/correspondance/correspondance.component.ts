@@ -253,8 +253,8 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '350px',
-        data: { message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true }
+        width: '500px',
+        data: { title: "Download", message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
@@ -470,8 +470,8 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '350px',
-        data: { message: "Recipient address seems to be incomplete. Please fill out the required fields and try again!", yes: true, no: false }
+        width: '500px',
+        data: { title: "Mail On Demand", message: "Recipient address seems to be incomplete. Please fill out the required fields and try again!", ok: true, no: false, type: "warning", warning: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         return

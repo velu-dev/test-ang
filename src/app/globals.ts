@@ -21,6 +21,8 @@ export const page_not_found = '/assets/images/page_not_found.png'
 export const switch_user = '/assets/images/switch-user.svg'
 export const simplexam_service = '/assets/images/simplexam-service.svg'
 export const default_select = '/assets/images/default-select.svg'
+export const alert = '/assets/images/alert.svg'
+export const info = '/assets/images/info.svg'
 
 
 export const roles = [{}, {}]

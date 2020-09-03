@@ -1,10 +1,24 @@
 @import "variables";
 
-.user-disable {
+.confirm-dialog {
   .mat-card-title {
-    text-align: center;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: $font-size-10;
+    font-weight: $font-weight-bold;
+    display: flex;
+
+    img {
+      max-width: 50px;
+      margin: 0px auto;
+      padding-right: 10px;
+    }
   }
-  .disable-acctions {
+  .mat-card-description {
+    font-size: $font-size-1;
+    font-weight: $font-weight-medium;
+  }
+  .disable-actions {
     text-align: center;
     .btn {
       border-radius: 50px;
@@ -16,23 +30,26 @@
       &:hover {
         box-shadow: $box-shadow-1;
       }
-      &:focus, &::-moz-focus-inner {
+      &:focus,
+      &::-moz-focus-inner {
         outline: none !important;
         border: none !important;
       }
     }
-    .no {
-      background-color: $danger;
-      color: $white;
-      border: 0;
-      @extend .btn;
-    }
+  }
+}
 
-    .yes {
-      background-color: $bg-success;
-      color: $white;
-      border: 0;
-      @extend .btn;
-    }
+.warning-alert {
+  .mat-card-title {
+    color: $warning;
+    background-color: $warning-bg;
+    border: 1px solid $warning-border;
+  }
+}
+.info-alert {
+  .mat-card-title {
+    color: $info;
+    background-color: $info-bg;
+    border: 1px solid $info-border;
   }
 }

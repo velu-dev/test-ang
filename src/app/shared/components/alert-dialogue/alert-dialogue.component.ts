@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import * as globals from '../../../globals';
 @Component({
   selector: 'app-alert-dialogue',
   templateUrl: './alert-dialogue.component.html',
@@ -7,6 +8,8 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 })
 export class AlertDialogueComponent implements OnInit {
 
+  info = globals.info
+  alert = globals.alert
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<AlertDialogueComponent>,
@@ -22,5 +25,6 @@ export class AlertDialogueComponent implements OnInit {
 export interface DialogData {
   message: string,
   yes: string,
-  no: string
+  no: string,
+  type: string
 }
