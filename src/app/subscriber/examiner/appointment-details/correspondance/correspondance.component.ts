@@ -254,7 +254,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '500px',
-        data: { title: "Download", message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        data: { title: signHide ? "Download" : 'E-Sign Download', message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
