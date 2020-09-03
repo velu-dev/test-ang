@@ -35,6 +35,15 @@ mat-card {
   &:hover {
     box-shadow: $shadow-style-one-hover;
   }
+  .info-alert {
+    padding: 10px 15px;
+    color: $info;
+    background-color: $info-bg;
+    border: 1px solid $info-border;
+    width: 95%;
+    margin: 0px auto;
+    border-radius: 5px;
+  }
   mat-form-field {
     padding: 10px 10px 0px 10px !important;
   }
@@ -53,7 +62,7 @@ mat-card {
 
       .sign-upload {
         .mat-form-field {
-          width: calc( 100% - 145px) !important;
+          width: calc(100% - 145px) !important;
           .upload_btn {
             padding: 0px 10px;
             height: 35px;
@@ -126,7 +135,6 @@ mat-card {
     }
   }
 }
-
 
 .float-right {
   float: right;

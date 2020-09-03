@@ -78,7 +78,13 @@
                 <mat-card-content>
                     <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                         [formGroup]="mailingAddressForm">
-
+                        <div fxFlex="100">
+                            <div class="info-alert m-b-10 m-t-10">
+                                <i class="fa fa-info-circle p-r-5"></i> Please ensure to fill the following fields as it
+                                is required to print the mailing
+                                address in the forms.
+                            </div>
+                        </div>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address 1</mat-label>
@@ -465,8 +471,8 @@
                                 [matAutocomplete]="examinerAutocomplete">
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete"
                                 (optionSelected)="texonomyChange($event.option.value)">
-                                <mat-option *ngFor="let option of (texonomyFilteredOptions | async)"
-                                    [value]="option.id" title="{{option?.taxonomy_code}}-{{option?.taxonomy_name}}">
+                                <mat-option *ngFor="let option of (texonomyFilteredOptions | async)" [value]="option.id"
+                                    title="{{option?.taxonomy_code}}-{{option?.taxonomy_name}}">
                                     {{option.taxonomy_code}}-{{option.taxonomy_name}}
                                 </mat-option>
                                 <mat-option *ngIf="(texonomyFilteredOptions | async)?.length == 0" disabled>No Result
