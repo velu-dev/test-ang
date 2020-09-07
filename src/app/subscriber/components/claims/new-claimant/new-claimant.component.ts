@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { BreadcrumbService } from 'xng-breadcrumb';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -80,7 +81,7 @@ export class NewClaimantComponent implements OnInit {
   editStatus: boolean = true;
   filterValue: string;
   claimantChanges: boolean = false;
-  claimantInfo:any;
+  claimantInfo: any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
@@ -89,8 +90,10 @@ export class NewClaimantComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private route: ActivatedRoute,
-
+    private breadcrumbService: BreadcrumbService
   ) {
+    console.log(this.route.queryParams)
+    this.breadcrumbService.set('edit-claimant/:id', 'Enabler');
     this.route.params.subscribe(param => {
       this.claimantId = param.id;
       if (param.id) {
@@ -199,51 +202,51 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
-      if (this.languageStatus) {
-        this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
-      } else {
-        this.claimantForm.get('primary_language_spoken').setValidators([]);
-      }
-      this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
-      if (!this.claimantChanges) {
-        return;
-      }
+    if (this.languageStatus) {
+      this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
+    } else {
+      this.claimantForm.get('primary_language_spoken').setValidators([]);
+    }
+    this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
+    if (!this.claimantChanges) {
+      return;
+    }
 
 
-      Object.keys(this.claimantForm.controls).forEach((key) => {
-        if (this.claimantForm.get(key).value && typeof (this.claimantForm.get(key).value) == 'string')
-          this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
-      });
-      this.isClaimantSubmited = true;
-      this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
-      if (this.claimantForm.invalid) {
-        return;
-      }
+    Object.keys(this.claimantForm.controls).forEach((key) => {
+      if (this.claimantForm.get(key).value && typeof (this.claimantForm.get(key).value) == 'string')
+        this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
+    });
+    this.isClaimantSubmited = true;
+    this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
+    if (this.claimantForm.invalid) {
+      return;
+    }
 
-      if (!this.claimantId) {
-        this.claimService.createClaimant(this.claimantForm.value).subscribe(res => {
-          this.alertService.openSnackBar("Claimant created successfully!", 'success');
-          this.editStatus = false;
-          this.claimantForm.disable();
-          this._location.back();
-          this.claimantChanges = false;
-        }, error => {
-          console.log(error);
-          this.alertService.openSnackBar(error.error, 'error');
-          this.claimantChanges = true;
-        })
-      } else {
-        this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
-          this.alertService.openSnackBar("Claimant updated successfully!", 'success');
-          this.getSingleClaimant()
-          this.editStatus = false;
-          this.claimantForm.disable();
-          this.claimantChanges = false;
-        }, error => {
-          this.alertService.openSnackBar(error.error, 'error');
-          this.claimantChanges = true;
-        })
-      }
+    if (!this.claimantId) {
+      this.claimService.createClaimant(this.claimantForm.value).subscribe(res => {
+        this.alertService.openSnackBar("Claimant created successfully!", 'success');
+        this.editStatus = false;
+        this.claimantForm.disable();
+        this._location.back();
+        this.claimantChanges = false;
+      }, error => {
+        console.log(error);
+        this.alertService.openSnackBar(error.error, 'error');
+        this.claimantChanges = true;
+      })
+    } else {
+      this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
+        this.alertService.openSnackBar("Claimant updated successfully!", 'success');
+        this.getSingleClaimant()
+        this.editStatus = false;
+        this.claimantForm.disable();
+        this.claimantChanges = false;
+      }, error => {
+        this.alertService.openSnackBar(error.error, 'error');
+        this.claimantChanges = true;
+      })
+    }
   }
 
   gender(code) {

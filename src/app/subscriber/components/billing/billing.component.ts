@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { ClaimService } from '../../service/claim.service';
+import { BreadcrumbService } from 'xng-breadcrumb';
+import { Router } from '@angular/router';
 export interface PeriodicElement {
   bill_no: string;
   claim_no: string;
@@ -31,7 +33,13 @@ export class BillingComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private breakpointObserver: BreakpointObserver, private claimService: ClaimService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private claimService: ClaimService,
+    private breadcrumbService: BreadcrumbService,
+    private router: Router) {
+    console.log()
+    this.breadcrumbService.set(this.router.url, "Billing");
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })

@@ -66,10 +66,12 @@ const routes: Routes = [{
     path: "billing-collection",
     component: BillingCollectionComponent
   }]
-}, {
+},
+{
   path: "",
   component: DashboardComponent
-}, {
+},
+{
   path: "users",
   children: [{
     path: "",
@@ -86,11 +88,12 @@ const routes: Routes = [{
   }, {
     path: "examiner/:id",
     component: NewExaminerUserComponent
-  },{
+  }, {
     path: "examiner/:id/:status",
     component: NewExaminerUserComponent
   }]
-}, {
+},
+{
   path: "appointment",
   children: [{
     path: "",
@@ -115,7 +118,7 @@ const routes: Routes = [{
     }, {
       path: "reports",
       component: ReportComponent
-    },{
+    }, {
       path: "billing",
       component: BilllableBillingComponent
     }]
@@ -128,7 +131,8 @@ const routes: Routes = [{
     component: ClaimantComponent
   }, {
     path: "new-claimant",
-    component: NewClaimantComponent
+    component: NewClaimantComponent,
+    data: { breadcrumb: "New Claimant" }
   }, {
     path: "edit-claimant/:id",
     component: NewClaimantComponent,
@@ -193,6 +197,7 @@ const routes: Routes = [{
 },
 {
   path: "billing",
+  component: BillingComponent,
   children: [{
     path: "",
     component: BillingComponent,
@@ -206,7 +211,8 @@ const routes: Routes = [{
 },
 {
   path: "new-intake",
-  component: NewClaimComponent
+  component: NewClaimComponent,
+  data: { breadcrumb: "New Intake" }
 },
 {
   path: "claims",
@@ -247,6 +253,7 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: AppointmentComponent
+
       }, {
         path: "appointment-details/:id/:billId",
         children: [{
@@ -267,7 +274,7 @@ const routes: Routes = [{
         }, {
           path: "reports",
           component: ReportComponent
-        },{
+        }, {
           path: "billing",
           component: BilllableBillingComponent
         }]
@@ -360,7 +367,8 @@ const routes: Routes = [{
     //   component: EditAddressComponent
     // },
   ]
-}, {
+},
+{
   path: "manager",
   children: [{
     path: "",
@@ -484,7 +492,8 @@ const routes: Routes = [{
     path: "settings",
     component: SubscriberSettingsComponent
   }]
-}, {
+},
+{
   path: "examiner",
   children: [{
     path: "",

@@ -9,4 +9,8 @@
         
     </li>
 </ul> -->
-<xng-breadcrumb></xng-breadcrumb>
+<xng-breadcrumb>
+    <ng-container *xngBreadcrumbItem="let breadcrumb">
+      <ng-container>{{ breadcrumb | titlecase }}</ng-container>
+    </ng-container>
+  </xng-breadcrumb>
