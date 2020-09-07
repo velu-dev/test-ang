@@ -110,6 +110,9 @@ const routes: Routes = [{
       path: "history",
       component: HistoryComponent
     }, {
+      path: "history/:examiner",
+      component: HistoryComponent
+    }, {
       path: "records",
       component: RecordsComponent
     }, {

@@ -106,31 +106,45 @@ export class HistoryComponent implements OnInit {
   }
 
   onDemandSubmit() {
-    if (this.historyData.documets.length == 0) {
-      this.alertService.openSnackBar('Document not found', 'error');
+
+    if (!this.paramsId.examiner) {
+      this.alertService.openSnackBar('Please assign examiner', 'error');
       return;
     }
 
     let data = {
       claim_id: this.paramsId.id,
       service_priority: this.rushRequest ? "rush" : 'normal',
-      service_description: "",
-      document_category_id: this.historyData.documets[0].document_category_id,
+      //service_description: "",
+      document_category_id: 2,
       billable_item_id: this.paramsId.billId,
-      service_request_type_id: this.historyData.documets[0].service_request_type_id,
-      service_provider_id: this.historyData.documets[0].service_provider_id // default 3
+      service_request_type_id: 2,
+      examiner_id: this.paramsId.examiner
+      //service_provider_id: this.historyData.documets[0].service_provider_id // default 3
     }
-    this.onDemandService.requestCreate(data).subscribe(history => {
+    // this.onDemandService.requestCreate(data).subscribe(history => {
+    //   this.rushRequest = false;
+    //   this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully!", 'success');
+    // }, error => {
+    //   console.log(error);
+    //   this.alertService.openSnackBar(error.error.message, 'error');
+    // })
+
+    this.onDemandService.OnDemandhistory(data).subscribe(history => {
       this.rushRequest = false;
+      this.download({ file_url: history.data.exam_report_signed_file_url, file_name: 'history.docx' })
       this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully!", 'success');
     }, error => {
       console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
     })
+
+
+
   }
 
   download(data) {
-    saveAs(data.file_url, data.file_name);
+    saveAs(data.file_url, data.file_name, "_self");
   }
 
 }
