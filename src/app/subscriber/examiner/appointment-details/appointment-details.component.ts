@@ -171,6 +171,10 @@ export class AppointmentDetailsComponent implements OnInit {
         this.billable_item.patchValue(bills.data);
       })
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+        if(response.data.appointments.examiner_id){
+          this.procedureTypeStatus[1].url = "../../history/" + response.data.appointments.examiner_id;
+        }
+       
         this.progressStatus = response.data.progress_status
         this.notesForm.patchValue({
           exam_notes: response.data.exam_notes,
