@@ -515,50 +515,55 @@
 
 <div class="border-dashed-blue m-t-20" *ngIf="isDisplayStatus.status"></div>
 <mat-card class="exam-status">
-<div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
-    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile">
-        <button *ngIf="!isExaminationStatusEdit"  [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)" mat-raised-button (click)="changeEditStatus()"
-            class="filled-gray edit_btn">Edit</button>
-        <button *ngIf="isExaminationStatusEdit"  [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)" type="submit" mat-raised-button (click)="examinationStatusSubmit()"
-            class="filled-success edit_btn">Save</button>
-    </div>
-    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-        <form [formGroup]="examinationStatusForm">
-            <div fxLayout="row wrap">
-                <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">{{isDisplayStatus.name}}
-                    Status</div>
-                <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="100" fxFlex.xs="100">
-                    <mat-label>Choose an option</mat-label>
-                    <mat-select formControlName="examination_status">
-                        <mat-option *ngFor="let examination_status of examinationStatus"
-                            [value]="examination_status.id">
-                            {{examination_status[isDisplayStatus.isExaminar ? 'examination_status' : 'deposition_status']}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="100">
-                    <mat-label>Note</mat-label>
-                    <textarea formControlName="examination_notes" matInput placeholder="Note" cdkTextareaAutosize
-                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
-                </mat-form-field>
-            </div>
-            <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
-                <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>
-                <button mat-stroked-button class="m-l-10 outline-success" type="submit"
-                    (click)="examinationStatusSubmit()">Save
-                </button>
-            </div>
-        </form>
-    </div>
+    <div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
+        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile">
+            <button *ngIf="!isExaminationStatusEdit"
+                [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Edit</button>
+            <button *ngIf="isExaminationStatusEdit"
+                [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                type="submit" mat-raised-button (click)="examinationStatusSubmit()"
+                class="filled-success edit_btn">Save</button>
+        </div>
+        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+            <form [formGroup]="examinationStatusForm">
+                <div fxLayout="row wrap">
+                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">{{isDisplayStatus.name}}
+                        Status</div>
+                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="100" fxFlex.xs="100">
+                        <mat-label>Choose an option</mat-label>
+                        <mat-select formControlName="examination_status">
+                            <mat-option *ngFor="let examination_status of examinationStatus"
+                                [value]="examination_status.id">
+                                {{examination_status[isDisplayStatus.isExaminar ? 'examination_status' : 'deposition_status']}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Note</mat-label>
+                        <textarea formControlName="examination_notes" matInput placeholder="Note" cdkTextareaAutosize
+                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
+                    <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>
+                    <button mat-stroked-button class="m-l-10 outline-success" type="submit"
+                        (click)="examinationStatusSubmit()">Save
+                    </button>
+                </div>
+            </form>
+        </div>
 
-    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-        <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
-            class="filled-gray edit_btn hide-mobile" [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)" >Edit</button>
-        <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
-            class="filled-success edit_btn hide-mobile" [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)" >Save</button><br /><br />
-        <button mat-raised-button class="filled-gray calender_btn">View on Calendar</button>
+        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+            <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
+                class="filled-gray edit_btn hide-mobile"
+                [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Edit</button>
+            <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
+                class="filled-success edit_btn hide-mobile"
+                [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Save</button><br /><br />
+            <button mat-raised-button class="filled-gray calender_btn">View on Calendar</button>
+        </div>
     </div>
-</div>
 </mat-card>
 
 <div class="border-dashed-blue m-b-50"></div>
@@ -567,10 +572,12 @@
     <mat-card-header>
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Call Information</div>
         <span class="spacer"></span>
-        <button class="filled-gray m-b-5" [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)" *ngIf="!isEditBillableItem" (click)="editBillable()"
-            mat-raised-button>Edit</button>
-        <button class="filled-success m-b-5" [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)" *ngIf="isEditBillableItem" (click)="submitBillableItem()"
-            mat-raised-button>Save</button>
+        <button class="filled-gray m-b-5"
+            [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+            *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
+        <button class="filled-success m-b-5"
+            [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+            *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content *ngIf="!isBillabbleItemLoading">
@@ -813,15 +820,19 @@
                 </div>
                 <div class="striped_ user-details w-100 vertical-fixed">
                     <table mat-table [dataSource]="documentsData" class="mat-elevation-z8 user-table" matSort>
-
+                        <ng-container matColumnDef="doc_image">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let element" class="file_type_icon"> <img
+                                    [src]="element?.file_name | fileType" alt=""></td>
+                        </ng-container>
                         <ng-container matColumnDef="file_name">
-                            <th mat-header-cell  mat-sort-header *matHeaderCellDef> File Name </th>
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> File Name </th>
                             <td mat-cell *matCellDef="let element"> {{element.file_name}} </td>
                         </ng-container>
 
 
                         <ng-container matColumnDef="updatedAt">
-                            <th mat-header-cell  mat-sort-header *matHeaderCellDef> Date </th>
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef> Date </th>
                             <td mat-cell *matCellDef="let element"> {{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}}
                             </td>
                         </ng-container>

@@ -35,6 +35,7 @@
                     </mat-icon>
                   </span>
                   <div>
+                    <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType" alt=""></span>
                     <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                     <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ? 'Yes' : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
                     <span *ngIf="column == 'date_of_request'" class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>

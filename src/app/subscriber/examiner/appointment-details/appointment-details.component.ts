@@ -40,7 +40,7 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
   providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },]
 })
 export class AppointmentDetailsComponent implements OnInit {
-  displayedColumnsForDocuments: string[] = ['file_name', 'updatedAt', 'action'];
+  displayedColumnsForDocuments: string[] = ['doc_image','file_name', 'updatedAt', 'action'];
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];

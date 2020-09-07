@@ -51,8 +51,8 @@ export class HistoryComponent implements OnInit {
         this.columnName = ["", "File Name", "Download"]
         this.columnsToDisplay = ['is_expand', 'file_name', 'download']
       } else {
-        this.columnName = ["File Name", "Rush Request?", "Date Requested", "Date Received", "Download"]
-        this.columnsToDisplay = ['file_name', 'service_priority', "date_of_request", "date_of_communication", 'download']
+        this.columnName = ["", "File Name", "Rush Request?", "Date Requested", "Date Received", "Download"]
+        this.columnsToDisplay = ['doc_image', 'file_name', 'service_priority', "date_of_request", "date_of_communication", 'download']
       }
     })
   }
