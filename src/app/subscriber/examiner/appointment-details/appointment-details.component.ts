@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment';
 import { NGXLogger } from 'ngx-logger';
+import { BreadcrumbService } from 'xng-breadcrumb';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -107,13 +108,14 @@ export class AppointmentDetailsComponent implements OnInit {
   isDisplayStatus: any = { status: false, name: "", isExaminar: false, isDeposition: false };
   billableData: any;
   progressStatus: any;
-  appointmentStatus:boolean = false;
+  appointmentStatus: boolean = false;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    private breadcrumbService: BreadcrumbService
   ) {
     this.loadForms();
     this.claimService.seedData("intake_contact_type").subscribe(res => {
@@ -153,6 +155,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.billableData = bills.data;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         this.claimService.getClaim(this.claim_id).subscribe(claim => {
+          this.breadcrumbService.set("appointment-details/:id/:billId", claim.data.claimant_details.first_name)
           this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(procedure => {
             this.procuderalCodes = procedure.data;
           })
@@ -212,10 +215,10 @@ export class AppointmentDetailsComponent implements OnInit {
         })
 
         this.examinationStatusForm.patchValue(response.data.appointments)
-        console.log(response.data.appointments.appointment_scheduled_date_time,"appointment")
-        if(moment(response.data.appointments.appointment_scheduled_date_time) < moment()){
+        console.log(response.data.appointments.appointment_scheduled_date_time, "appointment")
+        if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
           this.appointmentStatus = true;
-        }else{
+        } else {
           this.appointmentStatus = false;
         }
         this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;

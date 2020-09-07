@@ -100,28 +100,30 @@ const routes: Routes = [{
     component: AppointmentComponent
   }, {
     path: "appointment-details/:id/:billId",
-    children: [{
-      path: "",
-      component: AppointmentDetailsComponent
-    }, {
-      path: "correspondance",
-      component: BillingCorrespondanceComponent
-    }, {
-      path: "examination",
-      component: ExaminationComponent
-    }, {
-      path: "history",
-      component: HistoryComponent
-    }, {
-      path: "records",
-      component: RecordsComponent
-    }, {
-      path: "reports",
-      component: ReportComponent
-    }, {
-      path: "billing",
-      component: BilllableBillingComponent
-    }]
+    children: [
+      {
+        path: "",
+        component: AppointmentDetailsComponent,
+      },
+      {
+        path: "correspondance",
+        component: BillingCorrespondanceComponent
+      }, {
+        path: "examination",
+        component: ExaminationComponent
+      }, {
+        path: "history",
+        component: HistoryComponent
+      }, {
+        path: "records",
+        component: RecordsComponent
+      }, {
+        path: "reports",
+        component: ReportComponent
+      }, {
+        path: "billing",
+        component: BilllableBillingComponent
+      }]
   }]
 },
 {
