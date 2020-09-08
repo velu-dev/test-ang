@@ -28,7 +28,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
-    <div class="user-detail">
+    <div class="user-detail vertical-fixed">
         <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
             matSort>
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
@@ -63,7 +63,7 @@
                     </div>
                 </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
             <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
                 [class.row]="expandedElement === element" (click)="openElement(element)">
             </tr>

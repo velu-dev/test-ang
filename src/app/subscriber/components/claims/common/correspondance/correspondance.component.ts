@@ -6,6 +6,10 @@ import { Router } from '@angular/router';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { saveAs } from 'file-saver';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 export interface PeriodicElement {
   name: string;
@@ -15,10 +19,17 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-correspondance',
   templateUrl: './correspondance.component.html',
-  styleUrls: ['./correspondance.component.scss']
+  styleUrls: ['./correspondance.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class CorrespondanceComponent implements OnInit {
-  displayedColumns: string[] = ['doc_image', 'name', 'uploaded_on', 'action'];
+  // displayedColumns: string[] = ['doc_image', 'name', 'uploaded_on', 'action'];
   correspondance: FormGroup;
   @Input('state') states;
   correspondForm: FormGroup;
@@ -28,12 +39,34 @@ export class CorrespondanceComponent implements OnInit {
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   file: any = null;
   note: string = null;
+  dataSource: any;
+  columnName = []
+  columnsToDisplay = [];
+  expandedElement: any;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  isMobile = false;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
     private router: Router,
     public dialog: MatDialog,
-  ) { }
+    private breakpointObserver: BreakpointObserver
+  ) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Name", "Action"]
+        this.columnsToDisplay = ['is_expand', 'file_name', "action"]
+      } else {
+        this.columnName = ["", "Name", "Uploaded On ", "Action"]
+        this.columnsToDisplay = ['doc_image', 'file_name', 'uploaded_on', "action"]
+      }
+    })
+  }
 
   ngOnInit() {
     this.correspondForm = this.formBuilder.group({
@@ -141,5 +174,12 @@ export class CorrespondanceComponent implements OnInit {
   download(data) {
     this.alertService.openSnackBar("File downloaded successfully", "success");
     saveAs(data.exam_report_file_url, data.file_name);
+  }
+
+  expandId: any;
+  openElement(element) {
+    if (this.isMobile) {
+      this.expandId = element.id;
+    }
   }
 }

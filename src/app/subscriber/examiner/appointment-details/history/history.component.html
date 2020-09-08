@@ -6,13 +6,14 @@
             <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class"></mat-progress-bar>
             <div class="text-center">{{historyData?.on_demand_status}}</div>
         </div>
-        <div fxFlex="100" class="text-center m-t-20">
-          <mat-checkbox [(ngModel)]="rushRequest" >Rush Request?</mat-checkbox>
+        <div fxFlex="100" class="text-center m-t-20 m-b-20">
+          <!-- <mat-checkbox [(ngModel)]="rushRequest" >Rush Request?</mat-checkbox> -->
+          <div class="info-alert"><strong>Request Date :</strong> 12-12-2020 <span class="p-l-20"><strong>Rush Request? :</strong> Yes</span></div>
       </div>
-        <div fxFlex="100" class="text-center m-t-20 m-b-20 action-btns">
+        <!-- <div fxFlex="100" class="text-center m-t-20 m-b-20 action-btns">
             <button mat-stroked-button class="outline-success huge-btn" (click)="onDemandSubmit()"> Click Here for Medical History Questionnaire On
                 Demand</button>
-        </div>
+        </div> -->
      
     </div>
 
