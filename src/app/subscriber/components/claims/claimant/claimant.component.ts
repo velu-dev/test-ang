@@ -61,8 +61,6 @@ export class ClaimantComponent implements OnInit {
     private claimService: ClaimService,
     private breadcrumbService: BreadcrumbService
   ) {
-    console.log(this.router.url)
-    this.breadcrumbService.set(this.router.url, "Claimant");
     this.getUser();
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -105,7 +103,7 @@ export class ClaimantComponent implements OnInit {
     })
   }
   gotoEdit(e) {
-    this.router.navigate(["/subscriber/claimant/edit-claimant/", e.id])
+    this.router.navigate(["subscriber/claimant/edit-claimant", e.id])
   }
 
   applyFilter(filterValue: string) {

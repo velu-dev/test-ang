@@ -92,8 +92,6 @@ export class NewClaimantComponent implements OnInit {
     private route: ActivatedRoute,
     private breadcrumbService: BreadcrumbService
   ) {
-    console.log(this.route.queryParams)
-    this.breadcrumbService.set('edit-claimant/:id', 'Enabler');
     this.route.params.subscribe(param => {
       this.claimantId = param.id;
       if (param.id) {
@@ -143,6 +141,7 @@ export class NewClaimantComponent implements OnInit {
 
 
   ngOnInit() {
+    this.breadcrumbService.set('claimant/edit-claimant/:id', 'Claimant Name');
     this.claimantForm = this.formBuilder.group({
       id: [""],
       last_name: ['', Validators.compose([Validators.required])],
