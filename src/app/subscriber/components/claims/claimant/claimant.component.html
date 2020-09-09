@@ -5,10 +5,8 @@
                 placeholder="Search by name, examiner, DOB, DOI & claim #">
             <mat-icon>search</mat-icon>
         </div>
+        <button mat-stroked-button class="outline-success float-right"  (click)="openClaimant()"> New Claimant</button>
 
-        <button (click)="openClaimant()" mat-stroked-button class="add-new-user outline-success">
-            New Claimant
-        </button>
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
                 matSort>
@@ -43,7 +41,8 @@
                         <div class="detail" [@detailExpand]="expandId == i ? 'expanded' : 'collapsed'">
                             <div class="resposive-table" (click)="gotoEdit(element)">
                                 <div><span>Claimant Name</span> {{element?.last_name}}, {{element?.first_name}} </div>
-                                <div><span>Examiner</span> {{element?.ex_last_name}} {{element?.ex_first_name}}</div>
+                                <div><span>Examiner</span> {{element?.ex_last_name}}
+                                    {{element?.ex_first_name}}{{element?.ex_suffix ? ', '+element?.ex_suffix : ''}}</div>
                                 <div><span>Date of Birth</span> {{element?.date_of_birth}} </div>
                                 <div><span>Date of Injury</span> {{element?.date_of_injury}} </div>
                                 <div><span>Claim Number</span> {{element?.claim_number}} </div>

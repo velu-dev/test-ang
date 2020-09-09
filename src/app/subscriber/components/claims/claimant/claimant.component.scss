@@ -6,9 +6,9 @@ mat-card {
     &:hover {
         box-shadow: $shadow-style-one-hover;
     }
-    .add-new-user {
+    .float-right {
         float: right;
-        margin-top: 5px;
+        margin:5px 0
     }
 }
 
