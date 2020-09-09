@@ -121,6 +121,9 @@ const routes: Routes = [{
     },{
       path: "billing",
       component: BilllableBillingComponent
+    },{
+      path: "billing/:billingId",
+      component: BilllableBillingComponent
     }]
   }]
 },
