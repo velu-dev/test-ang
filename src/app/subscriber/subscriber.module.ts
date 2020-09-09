@@ -65,7 +65,7 @@ import { OnDemandService } from './service/on-demand.service';
 @NgModule({
   declarations: [
     DashboardComponent,
-    UserComponent,
+    UserComponent, 
     NewUserComponent,
     SubscriberSettingsComponent,
     ManagerDashboardComponent,
