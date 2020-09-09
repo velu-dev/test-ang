@@ -26,4 +26,8 @@ export class BillingService {
   onDemandBilling(data): Observable<any>{
     return this.http.post(environment.baseUrl + api_endpoint.onDemandBilling, data)
   }
+
+  deleteDocument(id) {
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id)
+  }
 }

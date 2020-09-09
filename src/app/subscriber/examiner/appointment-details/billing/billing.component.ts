@@ -8,7 +8,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { NGXLogger } from 'ngx-logger';
 import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
@@ -259,7 +259,7 @@ export class BilllableBillingComponent implements OnInit {
       this.documentType = null;
       this.formData = new FormData();
       this.file = "";
-      // this.getDocumentData();
+      this.getDocumentData();
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
@@ -297,6 +297,29 @@ export class BilllableBillingComponent implements OnInit {
       console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
     })
+  }
+
+  deleteDocument(data) {
+    this.openDialogDocument('delete', data);
+  }
+
+  openDialogDocument(dialogue, data) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.billingService.deleteDocument(data.id).subscribe(res => {
+          this.getDocumentData();
+          this.alertService.openSnackBar("File deleted successfully!", 'success');
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    })
+
+
   }
 }
 const ELEMENT_DATA1 = [
