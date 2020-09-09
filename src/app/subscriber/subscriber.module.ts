@@ -63,6 +63,7 @@ import { BillingCorrespondanceComponent, CustomDocuments, CustomRecipient, AddAd
 import { BilllableBillingComponent, BillingPaymentDialog } from './examiner/appointment-details/billing/billing.component';
 import { OnDemandService } from './service/on-demand.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { BillingService } from './service/billing.service';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -169,6 +170,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
     ExaminerService,
     SubscriberService,
     OnDemandService,
+    BillingService,
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: [] }
   ]

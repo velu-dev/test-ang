@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
@@ -9,6 +9,9 @@ import { NGXLogger } from 'ngx-logger';
 import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { BillingService } from 'src/app/subscriber/service/billing.service';
+import { ActivatedRoute } from '@angular/router';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-billable-billing',
   templateUrl: './billing.component.html',
@@ -27,6 +30,7 @@ export class BilllableBillingComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   columnsToDisplay = [];
   IcdDataSource = new MatTableDataSource([]);
   expandedElement;
@@ -37,7 +41,8 @@ export class BilllableBillingComponent implements OnInit {
   expandedElement1;
   columnName1 = [];
   isMobile1 = false;
-  dataSource2 = ELEMENT_DATA2;
+  // dataSource2 = ELEMENT_DATA2;
+  documentsData: any = new MatTableDataSource([]);
   columnsToDisplay2 = [];
   expandedElement2;
   columnName2 = [];
@@ -50,7 +55,30 @@ export class BilllableBillingComponent implements OnInit {
   filterValue: string;
   file: any;
   documentType: any;
-  constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver, private alertService: AlertService, public dialog: MatDialog) {
+  paramsId: any;
+  billingId: number;
+  documentList: any;
+  constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
+    private alertService: AlertService,
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    public billingService: BillingService) {
+    this.route.params.subscribe(param => {
+      this.paramsId = param;
+      if (!param.billingId) {
+        this.billingService.billCreate(param.id, param.billId).subscribe(bill => {
+          this.logger.log(bill)
+          this.billingId = bill.data.bill_id
+        }, error => {
+          this.logger.error(error)
+        })
+      } else {
+        this.billingId = param.billingId
+      }
+
+      this.logger.log(this.billingId, "billing id")
+
+    })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -73,8 +101,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName2 = ["", "File Name", "Action"]
         this.columnsToDisplay2 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName2 = ["","File Name", "Type", "Date", "Action"]
-        this.columnsToDisplay2 = ['doc_image','file_name', 'type', 'date', "action"]
+        this.columnName2 = ["", "File Name", "Type", "Date", "Action"]
+        this.columnsToDisplay2 = ['doc_image', 'file_name', 'type', 'date', "action"]
       }
 
       this.isMobile3 = res;
@@ -82,14 +110,14 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName3 = ["", "File Name", "Action"]
         this.columnsToDisplay3 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName3 = ["","File Name", "Action", "Date", "Recipients", "Download Sent Documents", "Download Proof of Service"]
-        this.columnsToDisplay3 = ['doc_image','file_name', 'action', 'date', "recipients", "sent_document", "proof_of_service"]
+        this.columnName3 = ["", "File Name", "Action", "Date", "Recipients", "Download Sent Documents", "Download Proof of Service"]
+        this.columnsToDisplay3 = ['doc_image', 'file_name', 'action', 'date', "recipients", "sent_document", "proof_of_service"]
       }
     })
   }
   icdCtrl = new FormControl();
   icdSearched = false;
-  filteredICD: Observable<[]>;
+  filteredICD: any = [];
 
 
   openDialog(): void {
@@ -110,19 +138,29 @@ export class BilllableBillingComponent implements OnInit {
         this.filteredICD = icd[3];
       });
     })
+
+    this.claimService.seedData('bill_ondemand_document_types').subscribe(type => {
+      this.documentList = type['data']
+    })
+
+    this.getDocumentData();
   }
   icdData = [];
   selectedIcd = { code: "", name: "" };
   selectICD(icd) {
     this.selectedIcd = { code: icd[0], name: icd[1] }
+
   }
   addIcd() {
-    this.icdData = this.IcdDataSource.data;
-    this.icdData.push(this.selectedIcd)
-    this.IcdDataSource = new MatTableDataSource(this.icdData);
-    this.selectedIcd = { code: "", name: "" };
-    this.alertService.openSnackBar("ICD data added succssfull", "success");
-    this.icdCtrl.reset();
+    if (this.selectedIcd.code != '') {
+      this.icdData = this.IcdDataSource.data;
+      this.icdData.push(this.selectedIcd)
+      this.IcdDataSource = new MatTableDataSource(this.icdData);
+      this.selectedIcd = { code: "", name: "" };
+      this.alertService.openSnackBar("ICD data added succssfully", "success");
+      this.icdCtrl.reset();
+      this.logger.log("icd 10 data", this.icdData)
+    }
   }
   removeICD(icd) {
     let index = 0;
@@ -133,7 +171,7 @@ export class BilllableBillingComponent implements OnInit {
       index = index + 1;
     })
     this.IcdDataSource = new MatTableDataSource(this.icdData);
-    this.alertService.openSnackBar("ICD data removed succssfull", "success");
+    this.alertService.openSnackBar("ICD data removed succssfully", "success");
   }
   icdExpandID: any;
   expandId1: any;
@@ -159,10 +197,88 @@ export class BilllableBillingComponent implements OnInit {
     //   this.dataSource.paginator.firstPage();
     // }
   }
-  addFile(file) {
-
+  getDocumentData() {
+    this.billingService.getDocumentData(this.paramsId.id, this.paramsId.billId).subscribe(res => {
+      this.documentsData = new MatTableDataSource(res.data);
+    }, error => {
+      this.documentsData = new MatTableDataSource([]);
+    })
   }
 
+  selectedFile: File;
+  formData = new FormData()
+  errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+  addFile(event) {
+    this.selectedFile = null;
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
+
+    // let fileTypes;
+    // if (this.documentType != 7) {
+    //   fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv'];
+    // } else {
+    //   fileTypes = ['mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
+    // }
+
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+      if (FileSize > 30) {
+        this.errors.file.isError = true;
+        this.errors.file.error = "This file too long";
+        // this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+      this.errors.doc_type.error = "";
+      this.file = event.target.files[0].name;
+      this.selectedFile = event.target.files[0];
+    } else {
+      this.selectedFile = null;
+      this.errors.file.isError = true;
+      this.errors.file.error = "This file type is not accepted";
+    }
+
+  }
+  uploadFile() {
+    if (!this.documentType) {
+      this.errors.doc_type.isError = true;
+      this.errors.doc_type.error = "Please select Document type";
+      return;
+    }
+    if (!this.selectedFile) {
+      this.errors.file.isError = true;
+      this.errors.file.error = "Please select file";
+      return;
+    }
+    this.formData.append('file', this.selectedFile);
+    this.formData.append('document_category_id', this.documentType);
+    this.formData.append('claim_id', this.paramsId.id);
+    this.formData.append('bill_item_id', this.paramsId.billId.toString());
+    this.billingService.postDocument(this.formData).subscribe(res => {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.documentType = null;
+      this.formData = new FormData();
+      this.file = "";
+      // this.getDocumentData();
+      this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+      this.alertService.openSnackBar("File added successfully!", 'success');
+    }, error => {
+      this.fileUpload.nativeElement.value = "";
+      this.selectedFile = null;
+    })
+  }
+
+  download(data) {
+    saveAs(data.exam_report_file_url, data.file_name, '_self');
+    this.alertService.openSnackBar("File downloaded successfully", "success");
+  }
+
+  docChange(e) {
+    this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } };
+    this.fileUpload.nativeElement.value = "";
+    this.selectedFile = null;
+    this.file = null;
+  }
 }
 const ELEMENT_DATA1 = [
   { "id": 1384, "item": "UQME", "procedure_code": "ML 101", "modifier": "96", "units": "1", "charge": "2200.00", "payment": "0", "balance": "2200.00" },
@@ -192,16 +308,16 @@ const ELEMENT_DATA3 = [
   templateUrl: 'billing-payment-dialog.html',
 })
 export class BillingPaymentDialog {
-  file:any;
+  file: any;
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  addFile(e){
+  addFile(e) {
 
   }
 

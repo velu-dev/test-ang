@@ -3,7 +3,7 @@ import * as globals from '../../../globals';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ExaminerService } from '../../service/examiner.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { saveAs } from 'file-saver';
@@ -134,7 +134,8 @@ export class AppointmentDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private logger: NGXLogger,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
   ) {
     this.loadForms();
     this.claimService.seedData("intake_contact_type").subscribe(res => {
@@ -205,7 +206,7 @@ export class AppointmentDetailsComponent implements OnInit {
         if(response.data.appointments.examiner_id){
           this.procedureTypeStatus[1].url = "../../history/" + response.data.appointments.examiner_id;
         }
-       
+
         this.progressStatus = response.data.progress_status
         this.notesForm.patchValue({
           exam_notes: response.data.exam_notes,
@@ -698,6 +699,14 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.isMobile) {
       this.expandId = element.id;
     }
+  }
+  billingNev(){
+    if(this.examinationDetails.billid){
+      this.router.navigate(['/billing',this.examinationDetails.billid])
+    }else{
+      this.router.navigate(['/billing'])
+    }
+   
   }
 }
 

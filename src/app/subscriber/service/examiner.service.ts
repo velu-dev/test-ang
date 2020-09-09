@@ -60,7 +60,7 @@ export class ExaminerService {
     return this.http.get(environment.baseUrl + api_endpoint.getAllExamination + id + '/' + billId)
   }
 
-  postDocument(data) {
+  postDocument(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
   }
 
