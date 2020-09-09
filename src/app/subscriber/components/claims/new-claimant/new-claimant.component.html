@@ -5,7 +5,8 @@
         <div class="content-wrapper-main-title p-t-10 m-b-10 p-l-10"> Claimant</div>
       </div>
       <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="50" class="reference_no">
-        <div class="content-wrapper-main-title p-t-10 m-b-10 text-center" *ngIf="claimantInfo?.internal_reference"> Ref #:
+        <div class="content-wrapper-main-title p-t-10 m-b-10 text-center" *ngIf="claimantInfo?.internal_reference"> Ref
+          #:
           {{claimantInfo?.internal_reference}}</div>
 
       </div>
@@ -214,11 +215,10 @@
         <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{columnName[i]}} </th>
-          <td mat-cell *matCellDef="let element" (click)="!isMobile ? claimNavigate(element):''">
+          <td mat-cell *matCellDef="let element;let j" (click)="!isMobile ? claimNavigate(element):''">
             <span *ngIf="i == 0 && isMobile">
-              <mat-icon mat-raised-button
-                [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
-                {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+              <mat-icon mat-raised-button [ngClass]="{'table-expand': expandId == j, 'expand-close': !(expandId == j)}">
+                {{ expandId == j ? 'remove_circle' : 'add_circle'}}
               </mat-icon>
             </span>
             <div>
@@ -232,8 +232,8 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="expandedDetail">
-          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-            <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+          <td mat-cell *matCellDef="let element;let i" [attr.colspan]="columnsToDisplay.length">
+            <div class="detail" [@detailExpand]="expandId == i ? 'expanded' : 'collapsed'">
               <div (click)="claimNavigate(element)" class="resposive-table">
                 <div><span>Exam Type</span> {{element.exam_type_code}} </div>
                 <div><span>Claim Number</span> {{element.claim_number}} </div>
@@ -246,7 +246,7 @@
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
+        <tr mat-row *matRowDef="let element;let i ; columns: columnsToDisplay;" class="row"
           [class.row]="expandedElement === element" (click)="openElement(element)">
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
