@@ -86,4 +86,8 @@ export class OnDemandService {
   onDemandCorrespondence(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.onDemandCorrespondence, data)
   }
+
+  OnDemandhistory(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.onDemandHistory, data)
+  }
 }

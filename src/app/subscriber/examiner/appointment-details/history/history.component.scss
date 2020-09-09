@@ -16,6 +16,15 @@
 ::ng-deep .mat-progress-bar-buffer {
     background: $progres-light-gray;
 }
+.info-alert {
+    color: $info;
+    background-color: $info-bg;
+    border: 1px solid $info-border;
+    padding: 10px 15px;
+    width: fit-content;
+    margin: 0px auto;
+    border-radius: 4px;
+}
 
 .action-btns {
     button {

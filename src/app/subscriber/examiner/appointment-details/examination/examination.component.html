@@ -103,6 +103,7 @@
                 </mat-icon>
               </span>
               <div>
+                <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType" alt=""></span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'updatedAt'" class="no-wrap-td">{{element?.updatedAt | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'action'" class="text-center">

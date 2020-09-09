@@ -1,0 +1,26 @@
+<!-- <div class="user-disable">
+  <div mat-dialog-title class="mat-card-title">{{data?.message}}</div>
+  <div mat-dialog-actions class="disable-actions text-center p-t-25">
+    <button mat-raised-button (click)="onClick(false)" *ngIf="data.no" class="no m-r-5">No</button>
+    <button mat-raised-button (click)="onClick(true)" *ngIf="data.yes" class="yes">Ok</button>
+  </div>
+</div>
+  -->
+
+<div class="confirm-dialog" [ngClass]="{'warning-alert':  data.type =='warning', 'info-alert': data.type=='info'}">
+  <div mat-dialog-title class="mat-card-title">
+    <img [src]="alert" alt="alert" class="text-center" *ngIf="data.warning">
+    <img [src]="info" alt="alert" class="text-center" *ngIf="data.info">
+    <div class="inline">
+      {{data?.title}}
+      <div class="mat-card-description">
+        {{data?.message}}
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="disable-actions text-center p-t-25" fxFlex="80">
+    <button mat-stroked-button (click)="onClick(false)" *ngIf="data.no" class="no m-r-10">No</button>
+    <button mat-stroked-button (click)="onClick(true)" *ngIf="data.ok" class="yes">OK</button>
+    <button mat-stroked-button (click)="onClick(true)" *ngIf="data.yes" class="yes">Yes</button>
+  </div>
+</div>

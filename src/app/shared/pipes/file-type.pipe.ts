@@ -9,6 +9,7 @@ export class FileTypePipe implements PipeTransform {
   pdf = globals.pdf;
   csv = globals.csv;
   empty = globals.file;
+  mp3 = globals.mp3;
   transform(value: any, ...args: any[]): any {
    if(value){
      let fileNanme = value.split('.').pop().toLowerCase();
@@ -16,6 +17,7 @@ export class FileTypePipe implements PipeTransform {
      else if(fileNanme == 'docx' || fileNanme == 'doc') return this.docx;
      else if(fileNanme == 'pdf') return this.pdf;
      else if(fileNanme == 'csv') return this.csv;
+     else if(fileNanme == 'mp3') return this.mp3;
      else return this.empty
    }
     return null;

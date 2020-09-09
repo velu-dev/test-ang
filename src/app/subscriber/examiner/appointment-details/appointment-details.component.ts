@@ -14,6 +14,9 @@ import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment';
 import { NGXLogger } from 'ngx-logger';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -38,10 +41,17 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
   selector: 'app-appointment-details',
   templateUrl: './appointment-details.component.html',
   styleUrls: ['./appointment-details.component.scss'],
-  providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },]
+  providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class AppointmentDetailsComponent implements OnInit {
-  displayedColumnsForDocuments: string[] = ['file_name', 'updatedAt', 'action'];
+  // displayedColumnsForDocuments: string[] = ['doc_image','file_name', 'updatedAt', 'action'];
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
@@ -53,7 +63,7 @@ export class AppointmentDetailsComponent implements OnInit {
   docx = globals.docx
   pdf = globals.pdf
   simplexam_service = globals.simplexam_service
-  isMobile: boolean;
+  isMobile: boolean = false;
   claim_id: any;
   examinationDetails: any;
   examinationStatus = [];
@@ -109,13 +119,24 @@ export class AppointmentDetailsComponent implements OnInit {
   billableData: any;
   progressStatus: any;
   appointmentStatus: boolean = false;
+  disableExaminationArr: any = [5, 6, 7, 8, 10];
+  columnName = [];
+  displayedColumnsForDocuments = [];
+  expandedElement: any;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  // isMobile = false;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private logger: NGXLogger,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.loadForms();
     this.claimService.seedData("intake_contact_type").subscribe(res => {
@@ -141,6 +162,17 @@ export class AppointmentDetailsComponent implements OnInit {
     // this.examinerService.seedData('examination_status').subscribe(res => {
     //   this.examinationStatus = res.data;
     // })
+
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Name", "Action"]
+        this.displayedColumnsForDocuments = ['is_expand', 'file_name', "action"]
+      } else {
+        this.columnName = ["", "Name", "Uploaded On ", "Action"]
+        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'action']
+      }
+    })
 
   }
   loadDatas() {
@@ -173,6 +205,10 @@ export class AppointmentDetailsComponent implements OnInit {
         this.billable_item.patchValue(bills.data);
       })
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+        if (response.data.appointments.examiner_id) {
+          this.procedureTypeStatus[1].url = "../../history/" + response.data.appointments.examiner_id;
+        }
+
         this.progressStatus = response.data.progress_status
         this.notesForm.patchValue({
           exam_notes: response.data.exam_notes,
@@ -658,6 +694,13 @@ export class AppointmentDetailsComponent implements OnInit {
     this.fileUpload.nativeElement.value = "";
     this.selectedFile = null;
     this.file = null;
+  }
+
+  expandId: any;
+  openElement(element) {
+    if (this.isMobile) {
+      this.expandId = element.id;
+    }
   }
 }
 

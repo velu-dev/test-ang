@@ -300,7 +300,7 @@
                                             {{ expandId2 == element.id ? 'remove_circle' : 'add_circle'}}
                                         </mat-icon>
                                     </span>
-                                    <div>
+                                    <div>  <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType" alt=""></span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'type'">{{element?.type}}</span>
                                         <span *ngIf="column == 'date'">{{element?.date}}</span>
@@ -379,7 +379,7 @@
                                             {{ expandId3 == element.id ? 'remove_circle' : 'add_circle'}}
                                         </mat-icon>
                                     </span>
-                                    <div>
+                                    <div>  <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType" alt=""></span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'">{{element?.action}}</span>
                                         <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date}}</span>

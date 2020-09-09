@@ -58,8 +58,8 @@ export class ExaminationComponent implements OnInit {
         this.columnName = ["", "File Name", "Action"]
         this.columnsToDisplay = ['is_expand', 'file_name', 'action']
       } else {
-        this.columnName = ["File Name", "Date Uploaded", "Action"]
-        this.columnsToDisplay = ['file_name', "updatedAt", 'action']
+        this.columnName = ["", "File Name", "Date Uploaded", "Action"]
+        this.columnsToDisplay = ['doc_image', 'file_name', "updatedAt", 'action']
       }
     })
   }

@@ -73,8 +73,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName2 = ["", "File Name", "Action"]
         this.columnsToDisplay2 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName2 = ["File Name", "Type", "Date", "Action"]
-        this.columnsToDisplay2 = ['file_name', 'type', 'date', "action"]
+        this.columnName2 = ["","File Name", "Type", "Date", "Action"]
+        this.columnsToDisplay2 = ['doc_image','file_name', 'type', 'date', "action"]
       }
 
       this.isMobile3 = res;
@@ -82,8 +82,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName3 = ["", "File Name", "Action"]
         this.columnsToDisplay3 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName3 = ["File Name", "Action", "Date", "Recipients", "Download Sent Documents", "Download Proof of Service"]
-        this.columnsToDisplay3 = ['file_name', 'action', 'date', "recipients", "sent_document", "proof_of_service"]
+        this.columnName3 = ["","File Name", "Action", "Date", "Recipients", "Download Sent Documents", "Download Proof of Service"]
+        this.columnsToDisplay3 = ['doc_image','file_name', 'action', 'date', "recipients", "sent_document", "proof_of_service"]
       }
     })
   }

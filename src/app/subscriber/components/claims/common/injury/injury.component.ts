@@ -6,6 +6,10 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import * as moment from 'moment';
 import { formatDate } from '@angular/common';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Observable } from 'rxjs';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
 
 export interface PeriodicElement {
   body_part: string;
@@ -34,12 +38,23 @@ export const PICK_FORMATS = {
   selector: 'app-injury',
   templateUrl: './injury.component.html',
   styleUrls: ['./injury.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
   // providers: []
 })
 export class InjuryComponent implements OnInit {
-  displayedColumns: string[] = ['body_part', 'date_of_injury', 'action'];
-  dataSource: any;
+  // displayedColumns: string[] = ['body_part', 'date_of_injury', 'action'];
+  // dataSource: any;
   // bodyPartsList = [];
+  dataSource: any;
+  columnName = []
+  columnsToDisplay = [];
+  expandedElement: any;
   claim_id: any = "";
   @Input('body_part') bodyPartsList;
   @Input('claim_id') claimId;
@@ -47,7 +62,23 @@ export class InjuryComponent implements OnInit {
   @Input('date_of_birth') date_of_birth;
   injuryDetails = [];
   today = new Date();
-  constructor(public dialog: MatDialog, private claimService: ClaimService, public alertService: AlertService) {
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+isMobile = false;
+  constructor(public dialog: MatDialog, private claimService: ClaimService, public alertService: AlertService, private breakpointObserver: BreakpointObserver) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Body parts", "Action"]
+        this.columnsToDisplay = ['is_expand', 'body_part', "action"]
+      } else {
+        this.columnName = ["Body parts", "Date of injury", "Action"]
+        this.columnsToDisplay = ['body_part', 'date_of_injury', "action"]
+      }
+    })
   }
 
   ngOnInit() {
@@ -133,6 +164,12 @@ export class InjuryComponent implements OnInit {
       }
     })
 
+  }
+  expandId: any;
+  openElement(element) {
+    if (this.isMobile) {
+      this.expandId = element.id;
+    }
   }
 }
 

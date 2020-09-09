@@ -4,7 +4,7 @@
   .mat-card-title {
     text-align: center;
   }
-  .disable-acctions {
+  .disable-actions {
     text-align: center;
     .btn {
       border-radius: 50px;
@@ -20,19 +20,6 @@
         outline: none !important;
         border: none !important;
       }
-    }
-    .no {
-      background-color: $danger;
-      color: $white;
-      border: 0;
-      @extend .btn;
-    }
-
-    .yes {
-      background-color: $bg-success;
-      color: $white;
-      border: 0;
-      @extend .btn;
     }
   }
 }

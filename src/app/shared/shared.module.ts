@@ -36,6 +36,7 @@ import { FileTypePipe } from './pipes/file-type.pipe';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { AlertDialogueComponent } from './components/alert-dialogue/alert-dialogue.component';
 
 export const MY_MOMENT_FORMATS = {
   parseInput: 'MM-DD-YYYY HH:mm A',
@@ -52,6 +53,7 @@ export const MY_MOMENT_FORMATS = {
     AlertComponent,
     ErrorComponent,
     DialogueComponent,
+    AlertDialogueComponent,
     NodataComponent,
     EllipsisPipe,
     FilterPipe,
@@ -61,6 +63,7 @@ export const MY_MOMENT_FORMATS = {
   entryComponents: [
     AlertComponent,
     DialogueComponent,
+    AlertDialogueComponent,
     NodataComponent,
     AlertDialogComponent
   ],
@@ -89,6 +92,7 @@ export const MY_MOMENT_FORMATS = {
     AlertComponent,
     ErrorComponent,
     DialogueComponent,
+    AlertDialogueComponent,
     NodataComponent,
     NgxSkeletonLoaderModule,
     EllipsisPipe,
