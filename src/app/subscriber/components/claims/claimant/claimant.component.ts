@@ -103,7 +103,7 @@ export class ClaimantComponent implements OnInit {
     })
   }
   gotoEdit(e) {
-    this.router.navigate(["subscriber/claimant/edit-claimant", e.id])
+    this.router.navigate(["subscriber/claimants/claimant", e.id])
   }
 
   applyFilter(filterValue: string) {

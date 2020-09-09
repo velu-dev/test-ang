@@ -93,8 +93,8 @@ export class NewClaimantComponent implements OnInit {
     private breadcrumbService: BreadcrumbService
   ) {
     this.route.params.subscribe(param => {
-      this.claimantId = param.id;
-      if (param.id) {
+      this.claimantId = param.claimant_id;
+      if (param.claimant_id) {
         this.editStatus = false;
         this.getSingleClaimant();
 
@@ -319,7 +319,7 @@ export class NewClaimantComponent implements OnInit {
   }
 
   claimNavigate(element?) {
-    this.router.navigate(['/subscriber/claims/edit-claim', element.claim_id])
+    this.router.navigate(['/subscriber/claimants/claimant/' + this.claimantId + '/claim', element.claim_id])
   }
 
   billableNavigate() {
@@ -327,6 +327,6 @@ export class NewClaimantComponent implements OnInit {
   }
 
   newClaim() {
-    this.router.navigate(['/subscriber/claims/edit-claim/' + this.claimantId + '/new-claim'])
+    this.router.navigate(['/subscriber/claimants/claimant/' + this.claimantId + '/new-claim'])
   }
 }

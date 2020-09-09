@@ -78,7 +78,7 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "../../correspondance" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E", "S"], url: "../../history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "../../records" }, { name: "Examination", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "../../examination" }, { name: "Report", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "../../reports" }];
+  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "../../correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E", "S"], url: "../../history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "../../records" }, { name: "Examination", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "../../examination" }, { name: "Report", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "../../reports" }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
@@ -179,7 +179,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.procedureTypeList = [];
     this.modifiers = [];
     this.route.params.subscribe(params => {
-      this.claim_id = params.id;
+      this.claim_id = params.claim_id;
 
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;

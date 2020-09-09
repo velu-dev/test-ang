@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatDialog } from '@angular/material';
 import { state } from 'src/app/shared/messages/errors'
+import { BreadcrumbService } from 'xng-breadcrumb';
 @Component({
   selector: 'app-edit-claim',
   templateUrl: './edit-claim.component.html',
@@ -28,21 +29,23 @@ export class EditClaimComponent implements OnInit {
   states = [];
   dateOfBirth: any;
   bodyParts = [];
-  employerEdit:any;
+  employerEdit: any;
   constructor(private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
-    private _location: Location) {
+    private _location: Location,
+    private breadcrumbService: BreadcrumbService) {
     this.claimService.seedData("body_part").subscribe(res => {
       this.bodyParts = res.data;
     })
     this.route.params.subscribe(param => {
-      if (param.id) {
-        this.claimId = param.id;
+      console.log(param);
+      if (param.claim_id) {
+        this.claimId = param.claim_id;
         this.isLoading = true;
-        this.claimService.getClaim(param.id).subscribe(res => {
+        this.claimService.getClaim(param.claim_id).subscribe(res => {
           console.log(res.data.claimant_details)
           this.dateOfBirth = res.data.claimant_details.date_of_birth;
           this.claimantDetail = res.data.claimant_details;
@@ -65,7 +68,7 @@ export class EditClaimComponent implements OnInit {
     })
   }
   navigateBillable() {
-    this.router.navigate(['/subscriber/billable-item/new-billable-item', this.claimId, this.claimantDetail.id])
+    this.router.navigate(['/subscriber/claimants/claimant/' + this.claimantDetail.id + '/claim/' + this.claimId + '/new-billable-item'])
   }
 
 }

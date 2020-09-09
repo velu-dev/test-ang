@@ -72,7 +72,9 @@ export class UpdateBillableItemComponent implements OnInit {
     })
   }
 
-
+  openrouteElement(e) {
+    this.router.navigate(['/subscriber/claimants/claimant/' + this.claimantId + '/claim/' + this.claimId + '/billable-item', e.id])
+  }
   navigateBillableEdit(e) {
     this.router.navigate(['/subscriber/billable-item/new-billable-item', this.claimId, this.claimantId, e.id])
   }

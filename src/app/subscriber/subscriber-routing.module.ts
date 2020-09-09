@@ -104,7 +104,7 @@ const routes: Routes = [{
       path: "",
       component: AppointmentDetailsComponent
     }, {
-      path: "correspondance",
+      path: "correspondence",
       component: BillingCorrespondanceComponent
     }, {
       path: "examination",
@@ -128,7 +128,7 @@ const routes: Routes = [{
   }]
 },
 {
-  path: "claimant",
+  path: "claimants",
   children: [{
     path: "",
     component: ClaimantComponent
@@ -136,13 +136,62 @@ const routes: Routes = [{
     path: "new-claimant",
     component: NewClaimantComponent,
     data: { breadcrumb: "New Claimant" }
-  }, {
-    path: "edit-claimant/:id",
-    component: NewClaimantComponent,
-  }, {
-    path: "edit-claimant/:claimant_id/new-claim",
-    component: NewClaimComponent,
-  }, {
+  },
+  {
+    path: "claimant/:claimant_id",
+    children: [{
+      path: "",
+      component: NewClaimantComponent
+    }, {
+      path: "claim/:claim_id",
+      children: [{
+        path: "",
+        component: EditClaimComponent
+      }, {
+        path: "new-billable-item",
+        component: NewBillableItemComponent
+      }, {
+        path: "billable-item/:billId",
+        children: [{
+          path: "",
+          component: AppointmentDetailsComponent
+        }, {
+          path: "correspondence",
+          component: BillingCorrespondanceComponent
+        }, {
+          path: "examination",
+          component: ExaminationComponent
+        }, {
+          path: "history",
+          component: HistoryComponent
+        }, {
+          path: "records",
+          component: RecordsComponent
+        }, {
+          path: "reports",
+          component: ReportComponent
+        }, {
+          path: "billing",
+          component: BilllableBillingComponent
+        }]
+      }]
+    }, {
+      path: "new-claim",
+      component: NewClaimComponent
+    }]
+  },
+
+  // {
+  //   path: "claimant/:id",
+  //   component: NewClaimantComponent
+  // }, {
+  //   path: "claimant/:claimant_id/claim/:id",
+  //   component: EditClaimComponent
+  // }, {
+  //   path: "edit-claimant/:claimant_id/new-claim",
+  //   component: NewClaimComponent,
+  // },
+  {
     path: "edit-claim/:id",
     component: NewClaimComponent
   }, {
@@ -263,7 +312,7 @@ const routes: Routes = [{
           path: "",
           component: AppointmentDetailsComponent
         }, {
-          path: "correspondance",
+          path: "correspondence",
           component: BillingCorrespondanceComponent
         }, {
           path: "examination",
