@@ -129,75 +129,82 @@ const routes: Routes = [{
 },
 {
   path: "claimants",
-  children: [{
-    path: "",
-    component: ClaimantComponent
-  }, {
-    path: "new-claimant",
-    component: NewClaimantComponent,
-    data: { breadcrumb: "New Claimant" }
-  },
-  {
-    path: "claimant/:claimant_id",
-    children: [{
+  children: [
+    {
       path: "",
-      component: NewClaimantComponent
-    }, {
-      path: "claim/:claim_id",
+      component: ClaimantComponent,
+      data: { breadcrumb: "Claimants" },
+    },
+    {
+      path: "new-claimant",
+      component: NewClaimantComponent,
+      data: { breadcrumb: "New Claimant" }
+    },
+    {
+      path: "claimant/:claimant_id",
       children: [{
         path: "",
-        component: EditClaimComponent
+        component: NewClaimantComponent,
+        data: { breadcrumb: "Claimant" },
       }, {
-        path: "new-billable-item",
-        component: NewBillableItemComponent
-      }, {
-        path: "billable-item/:billId",
+        path: "claim/:claim_id",
         children: [{
           path: "",
-          component: AppointmentDetailsComponent
+          component: EditClaimComponent,
+          data: { breadcrumb: "Claim" },
         }, {
-          path: "correspondence",
-          component: BillingCorrespondanceComponent
+          path: "new-billable-item",
+          component: NewBillableItemComponent,
+          data: { breadcrumb: "New Billable Item" },
         }, {
-          path: "examination",
-          component: ExaminationComponent
-        }, {
-          path: "history",
-          component: HistoryComponent
-        }, {
-          path: "records",
-          component: RecordsComponent
-        }, {
-          path: "reports",
-          component: ReportComponent
-        }, {
-          path: "billing",
-          component: BilllableBillingComponent
+          path: "billable-item/:billId",
+          children: [{
+            path: "",
+            component: AppointmentDetailsComponent,
+            data: { breadcrumb: "Billable Item" },
+          }, {
+            path: "correspondence",
+            component: BillingCorrespondanceComponent
+          }, {
+            path: "examination",
+            component: ExaminationComponent
+          }, {
+            path: "history",
+            component: HistoryComponent
+          }, {
+            path: "records",
+            component: RecordsComponent
+          }, {
+            path: "reports",
+            component: ReportComponent
+          }, {
+            path: "billing",
+            component: BilllableBillingComponent
+          }]
         }]
+      }, {
+        path: "new-claim",
+        component: NewClaimComponent
       }]
+    },
+
+    // {
+    //   path: "claimant/:id",
+    //   component: NewClaimantComponent
+    // }, {
+    //   path: "claimant/:claimant_id/claim/:id",
+    //   component: EditClaimComponent
+    // }, {
+    //   path: "edit-claimant/:claimant_id/new-claim",
+    //   component: NewClaimComponent,
+    // },
+    {
+      path: "edit-claim/:id",
+      component: NewClaimComponent
     }, {
-      path: "new-claim",
+      path: ":id/new-claim",
       component: NewClaimComponent
     }]
-  },
-
-  // {
-  //   path: "claimant/:id",
-  //   component: NewClaimantComponent
-  // }, {
-  //   path: "claimant/:claimant_id/claim/:id",
-  //   component: EditClaimComponent
-  // }, {
-  //   path: "edit-claimant/:claimant_id/new-claim",
-  //   component: NewClaimComponent,
-  // },
-  {
-    path: "edit-claim/:id",
-    component: NewClaimComponent
-  }, {
-    path: ":id/new-claim",
-    component: NewClaimComponent
-  }]
 }, {
   path: "billable-item",
   children: [{
