@@ -102,7 +102,7 @@ export class BilllableBillingComponent implements OnInit {
         this.columnsToDisplay2 = ['is_expand', 'file_name', "action"]
       } else {
         this.columnName2 = ["", "File Name", "Type", "Date", "Action"]
-        this.columnsToDisplay2 = ['doc_image', 'file_name', 'type', 'date', "action"]
+        this.columnsToDisplay2 = ['doc_image', 'file_name', 'document_type', 'updatedAt', "action"]
       }
 
       this.isMobile3 = res;
@@ -278,6 +278,25 @@ export class BilllableBillingComponent implements OnInit {
     this.fileUpload.nativeElement.value = "";
     this.selectedFile = null;
     this.file = null;
+  }
+
+  billingOnDemand(){
+    let data = {
+      claim_id: this.paramsId.id,
+      document_category_id: 8,
+      billable_item_id: this.paramsId.billId,
+      service_request_type_id: 5,
+      bill_id: this.billingId,
+    }
+
+    this.billingService.onDemandBilling(data).subscribe(bill => {
+      this.logger.log("onDemand",bill)
+      this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: 'Billing_on_demand.csv' })
+      this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+    }, error => {
+      console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
 }
 const ELEMENT_DATA1 = [

@@ -22,4 +22,8 @@ export class BillingService {
   getDocumentData(id, billId):  Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.billDocument + id + '/' + billId)
   }
+
+  onDemandBilling(data): Observable<any>{
+    return this.http.post(environment.baseUrl + api_endpoint.onDemandBilling, data)
+  }
 }

@@ -303,10 +303,10 @@
                                     </span>
                                     <div>  <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType" alt=""></span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                                        <span *ngIf="column == 'type'">{{element?.type}}</span>
-                                        <span *ngIf="column == 'date'">{{element?.date}}</span>
+                                        <span *ngIf="column == 'document_type'">{{element?.document_type | titlecase}}</span>
+                                        <span *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                         <span *ngIf="column == 'action'">
-                                            <a class="text-success m-r-10">Download</a>
+                                            <a class="text-success m-r-10" (click)="download(element)">Download</a>
                                             <a class="text-danger">Remove</a>
                                         </span>
                                     </div>
@@ -343,7 +343,7 @@
     <!-- ===== actions ==== -->
     <div class="ondamand-actions m-t-30 m-b-30" fxLayout="row wrap">
         <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="align-left">
-            <button mat-stroked-button class="outline-success huge-btn m-b-5">Bill On Demand</button>
+            <button mat-stroked-button class="outline-success huge-btn m-b-5" (click)="billingOnDemand()">Bill On Demand</button>
         </div>
         <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"  class="align-center">
             <button mat-stroked-button class="filled-lightgray huge-btn m-b-5">View CMS 1500</button>

@@ -152,5 +152,6 @@ export const api_endpoint = {
 
     //billing
     createbill: 'billing/create/',
-    billDocument: 'billing/document-list/'
+    billDocument: 'billing/document-list/',
+    onDemandBilling: 'service-requests/bill-ondemand/create'
 }
