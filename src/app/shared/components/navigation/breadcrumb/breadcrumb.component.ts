@@ -19,6 +19,7 @@ export class BreadcrumbComponent implements OnInit {
     routeUrl: string;
     isname: string = 'false';
     name: string = "";
+    info:any;
     constructor(private router: Router, private store: Store<{ breadcrumb: any }>, private cookieService: CookieService) {
         this.menu$ = store.pipe(select('breadcrumb'));
         // this.menu$.subscribe(res => {
