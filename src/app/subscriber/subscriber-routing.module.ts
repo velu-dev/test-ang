@@ -377,7 +377,8 @@ const routes: Routes = [{
       path: "location",
       children: [{
         path: "",
-        component: ManageLocationComponent
+        component: ManageLocationComponent,
+        data: { breadcrumb: "Service Location" }
       }, {
         path: "edit-location/:examiner_id/:address_id",
         component: EditAddressComponent
@@ -392,6 +393,7 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: BillingComponent,
+        data: { breadcrumb: "Bills" }
       }, {
         path: "new",
         component: NewBillingComponent

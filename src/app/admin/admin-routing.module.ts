@@ -19,11 +19,13 @@ const routes: Routes = [{
   path: "admin-users",
   children: [{
     path: "",
-    component: AdminUserComponent
+    component: AdminUserComponent,
+    data: { breadcrumb: "Users" }
   },
   {
     path: "new",
-    component: NewUserComponent
+    component: NewUserComponent,
+    data: { breadcrumb: "New" }
   },
   {
     path: ":id",
@@ -33,11 +35,13 @@ const routes: Routes = [{
   path: "users",
   children: [{
     path: "",
-    component: UserComponent
+    component: UserComponent,
+    data: { breadcrumb: "Users" }
   },
   {
     path: "new",
-    component: NewUserComponent
+    component: NewUserComponent,
+    data: { breadcrumb: "New" }
   },
   {
     path: ":id",
@@ -65,7 +69,8 @@ const routes: Routes = [{
   children: [
     {
       path: "",
-      component: ServiceRequestComponent
+      component: ServiceRequestComponent,
+      data: { breadcrumb: "Service Request" }
     },
     {
       path: ":id",
