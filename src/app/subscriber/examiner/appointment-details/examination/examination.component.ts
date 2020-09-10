@@ -48,7 +48,7 @@ export class ExaminationComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog) {
     this.route.params.subscribe(params => {
       console.log(params)
-      this.claim_id = params.id;
+      this.claim_id = params.claim_id;
       this.billableId = params.billId;
       this.getData();
     })

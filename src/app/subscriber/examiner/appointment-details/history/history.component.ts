@@ -59,7 +59,7 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit() {
 
-    this.onDemandService.getHistory(this.paramsId.id, this.paramsId.billId).subscribe(history => {
+    this.onDemandService.getHistory(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
       this.historyData = history;
       this.historyData.documets_sent_and_received.map(inFile => {
         if (inFile.transmission_direction == 'IN') {
@@ -113,7 +113,7 @@ export class HistoryComponent implements OnInit {
     }
 
     let data = {
-      claim_id: this.paramsId.id,
+      claim_id: this.paramsId.claim_id,
       service_priority: this.rushRequest ? "rush" : 'normal',
       //service_description: "",
       document_category_id: 2,
