@@ -315,7 +315,7 @@ export class NewClaimantComponent implements OnInit {
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      this.expandId = element.id;
+      this.expandId = element;
     }
   }
 

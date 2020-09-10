@@ -40,19 +40,19 @@
                 <ng-container matColumnDef="expandedDetail">
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                            <div class="resposive-table">
-                                <div><span>Subscriber Name</span>{{element?.subscriber_first_name}} </div>
-                                <div><span>Subscriber Account</span>{{element?.subscriber_account_no}} </div>
-                                <div><span>RequesterName</span> {{element?.requester_first_name}}</div>
-                                <div><span>Claim Reference</span>{{element?.claim_number}} </div>
-                                <div><span>Service type</span> {{element?.service_request_type}}</div>
-                                <div><span>Request Date Time</span>{{element?.date_of_request}} </div>
-                                <div><span>Request Reference</span>{{element?.request_reference_id}} </div>
-                                <div><span>Service Priority</span>{{element?.service_priority}} </div>
-                                <div><span>Service Provider Name</span>{{element?.subscriber_first_name}} </div>
-                                <div><span>Service Provider Account</span>{{element?.service_provider_account_no}}
-                                </div>
-                                <div><span>Service Status</span>{{element?.service_request_transmit_status}} </div>
+                            <div class="responsive-table">
+                                <div><span>Subscriber Name</span><span>{{element?.subscriber_first_name}} </span></div>
+                                <div><span>Subscriber Account</span><span>{{element?.subscriber_account_no}} </span></div>
+                                <div><span>RequesterName</span><span> {{element?.requester_first_name}}</span></div>
+                                <div><span>Claim Reference</span><span>{{element?.claim_number}} </span></div>
+                                <div><span>Service type</span><span> {{element?.service_request_type}}</span></div>
+                                <div><span>Request Date Time</span><span>{{element?.date_of_request}} </span></div>
+                                <div><span>Request Reference</span><span>{{element?.request_reference_id}} </span></div>
+                                <div><span>Service Priority</span><span>{{element?.service_priority}} </span></div>
+                                <div><span>Service Provider Name</span><span>{{element?.subscriber_first_name}} </span></div>
+                                <div><span>Service Provider Account</span><span>{{element?.service_provider_account_no}}
+                                </span></div>
+                                <div><span>Service Status</span><span>{{element?.service_request_transmit_status}} </span></div>
 
                             </div>
                         </div>

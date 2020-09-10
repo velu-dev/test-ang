@@ -656,17 +656,17 @@
                                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                                         <div class="detail"
                                             [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                                            <div class="resposive-table">
-                                                <div><span>Address</span> {{element.street1}} {{element.street2}}
+                                            <div class="responsive-table">
+                                                <div><span>Address</span><span> {{element.street1}} {{element.street2}}
                                                     {{element.city}} {{element.state_name}} - {{element.zip_code}}
-                                                </div>
-                                                <div><span>Service Type</span> {{element?.service_code}} -
-                                                    {{element?.service_name}} </div>
-                                                <div><span>Phone</span>
+                                                </span></div>
+                                                <div><span>Service Type</span><span> {{element?.service_code}} -
+                                                    {{element?.service_name}} </span></div>
+                                                <div><span>Phone</span><span>
                                                     {{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}
-                                                </div>
-                                                <div><span>NPI Number</span> {{element?.national_provider_identifier}}
-                                                </div>
+                                                </span></div>
+                                                <div><span>NPI Number</span><span> {{element?.national_provider_identifier}}
+                                                </span></div>
                                             </div>
                                         </div>
                                     </td>
