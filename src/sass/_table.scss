@@ -199,6 +199,10 @@ tr.detail-row {
   max-height: 290px;
   overflow: auto;
   box-shadow: $shadow-style-one;
+  @media only screen and (max-width: 568px) {
+    min-height: 150px;
+    max-height: 500px;
+  }
 }
 
 .footer-fixed {
