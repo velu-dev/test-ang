@@ -21,7 +21,7 @@ const routes: Routes = [
     data: {
       breadcrumb: {
         label: 'Home',
-        info: { myData: { icon: 'home', iconType: 'material' } }
+        info: 'dashboard',
       }
     }
   }, {

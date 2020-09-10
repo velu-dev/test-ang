@@ -97,12 +97,14 @@ const routes: Routes = [{
   path: "appointment",
   children: [{
     path: "",
-    component: AppointmentComponent
+    component: AppointmentComponent,
+    data: { breadcrumb: "Calendar" }
   }, {
-    path: "appointment-details/:id/:billId",
+    path: "appointment-details/:claim_id/:billId",
     children: [{
       path: "",
-      component: AppointmentDetailsComponent
+      component: AppointmentDetailsComponent,
+      data: { breadcrumb: "Appointment Details" }
     }, {
       path: "correspondence",
       component: BillingCorrespondanceComponent
@@ -114,7 +116,8 @@ const routes: Routes = [{
       component: HistoryComponent
     }, {
       path: "history/:examiner",
-      component: HistoryComponent
+      component: HistoryComponent,
+      data: { breadcrumb: "History" }
     }, {
       path: "records",
       component: RecordsComponent
@@ -145,7 +148,7 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: NewClaimantComponent,
-        data: { breadcrumb: "Claimant" },
+        data: { breadcrumb: "Claimant" }
       }, {
         path: "claim/:claim_id",
         children: [{
@@ -172,6 +175,10 @@ const routes: Routes = [{
             path: "history",
             component: HistoryComponent
           }, {
+            path: "history/:examiner",
+            component: HistoryComponent,
+            data: { breadcrumb: "History" }
+          }, {
             path: "records",
             component: RecordsComponent
           }, {
@@ -187,17 +194,6 @@ const routes: Routes = [{
         component: NewClaimComponent
       }]
     },
-
-    // {
-    //   path: "claimant/:id",
-    //   component: NewClaimantComponent
-    // }, {
-    //   path: "claimant/:claimant_id/claim/:id",
-    //   component: EditClaimComponent
-    // }, {
-    //   path: "edit-claimant/:claimant_id/new-claim",
-    //   component: NewClaimComponent,
-    // },
     {
       path: "edit-claim/:id",
       component: NewClaimComponent
@@ -256,10 +252,10 @@ const routes: Routes = [{
 },
 {
   path: "billing",
-  component: BillingComponent,
   children: [{
     path: "",
     component: BillingComponent,
+    data: { breadcrumb: "Bills" }
   }, {
     path: "new",
     component: NewBillingComponent

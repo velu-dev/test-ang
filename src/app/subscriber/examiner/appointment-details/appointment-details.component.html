@@ -854,9 +854,12 @@
 
                 </div> -->
                 <div class="user-detail  vertical-fixed">
-                    <table mat-table [dataSource]="documentsData" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
-                        <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumnsForDocuments; let i=index">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+                    <table mat-table [dataSource]="documentsData" multiTemplateDataRows
+                        class="mat-elevation-z8 user-table" matSort>
+                        <ng-container matColumnDef="{{column}}"
+                            *ngFor="let column of displayedColumnsForDocuments; let i=index">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                [disabled]="columnName[i] == 'Action'">
                                 {{columnName[i]}} </th>
                             <td mat-cell *matCellDef="let element" (click)="!isMobile ? gotoEdit(element):''">
                                 <span *ngIf="i == 0 && isMobile">
@@ -866,9 +869,11 @@
                                     </mat-icon>
                                 </span>
                                 <div>
-                                    <span *ngIf="column == 'doc_image'" class="file_type_icon"><img [src]="element?.file_name | fileType" alt=""></span>
+                                    <span *ngIf="column == 'doc_image'" class="file_type_icon"><img
+                                            [src]="element?.file_name | fileType" alt=""></span>
                                     <span *ngIf="column == 'file_name'"> {{element.file_name}} </span>
-                                    <span *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
+                                    <span
+                                        *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                     <span *ngIf="column == 'action'" class="text-center">
                                         <a target="_self" class="text-success" (click)="download(element)">Download</a>
                                         <a class="text-danger m-l-10" *ngIf="!element?.isServiceRequested"

@@ -6,6 +6,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatDialog } from '@angular/material';
 import { state } from 'src/app/shared/messages/errors'
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { breadcrumbreducer } from 'src/app/shared/store/breadcrumb.reducer';
 @Component({
   selector: 'app-edit-claim',
   templateUrl: './edit-claim.component.html',
@@ -37,6 +38,7 @@ export class EditClaimComponent implements OnInit {
     public dialog: MatDialog,
     private _location: Location,
     private breadcrumbService: BreadcrumbService) {
+    breadcrumbService.set("claimant/:claimant_id/claim/:claim_id", "saddasdasdd");
     this.claimService.seedData("body_part").subscribe(res => {
       this.bodyParts = res.data;
     })

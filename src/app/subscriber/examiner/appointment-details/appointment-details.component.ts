@@ -228,6 +228,7 @@ export class AppointmentDetailsComponent implements OnInit {
         }
         this.procedureTypeList = [];
         this.procedureTypeStatus.map(pro => {
+          console.log("Procedure", pro);
           if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
             this.isDisplayStatus.status = true;
             this.isDisplayStatus.name = "Examination";

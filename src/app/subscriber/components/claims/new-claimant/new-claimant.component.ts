@@ -92,6 +92,7 @@ export class NewClaimantComponent implements OnInit {
     private route: ActivatedRoute,
     private breadcrumbService: BreadcrumbService
   ) {
+    this.breadcrumbService.set("@Claimant", "Velu")
     this.route.params.subscribe(param => {
       this.claimantId = param.claimant_id;
       if (param.claimant_id) {
