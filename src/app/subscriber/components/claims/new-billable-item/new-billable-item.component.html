@@ -69,7 +69,7 @@
                         <mat-label>Exam Procedure Type*</mat-label>
                         <mat-select formControlName="exam_procedure_type_id">
                             <mat-option *ngFor="let procuderalCode of procuderalCodes"
-                                [value]="procuderalCode.exam_procedure_type_id"
+                                [value]="procuderalCode.id"
                                 (click)="procedure_type(procuderalCode)">
                                 {{procuderalCode.exam_procedure_name}}
                             </mat-option>

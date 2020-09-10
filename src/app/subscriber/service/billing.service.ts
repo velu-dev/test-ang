@@ -19,15 +19,23 @@ export class BillingService {
     return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
   }
 
-  getDocumentData(id, billId):  Observable<any> {
+  getDocumentData(id, billId): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.billDocument + id + '/' + billId)
   }
 
-  onDemandBilling(data): Observable<any>{
+  onDemandBilling(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.onDemandBilling, data)
   }
 
-  deleteDocument(id) {
+  deleteDocument(id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id)
+  }
+
+  getBilling(id, billId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getbilling + id + '/' + billId)
+  }
+
+  createBillLine(billId,billableId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.createBillLineItem + billId + '/' + billableId)
   }
 }

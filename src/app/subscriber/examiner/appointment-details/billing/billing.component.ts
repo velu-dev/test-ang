@@ -58,6 +58,10 @@ export class BilllableBillingComponent implements OnInit {
   paramsId: any;
   billingId: number;
   documentList: any;
+  eaxmProcuderalCodes:any;
+  procuderalCodes:any;
+  modifiers:any;
+
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -139,11 +143,32 @@ export class BilllableBillingComponent implements OnInit {
       });
     })
 
-    this.claimService.seedData('bill_ondemand_document_types').subscribe(type => {
-      this.documentList = type['data']
+    // this.claimService.seedData('bill_ondemand_document_types').subscribe(type => {
+    //   this.documentList = type['data']
+    // })
+
+    this.claimService.getProcedureType(2).subscribe(procedure => {
+      this.eaxmProcuderalCodes = procedure.data;
+    })
+
+     this.claimService.seedData('procedural_codes').subscribe(type => {
+      this.procuderalCodes = type['data']
+    })
+
+     this.claimService.seedData('modifier').subscribe(type => {
+      this.modifiers = type['data']
     })
 
     this.getDocumentData();
+    this.getBillingDetails();
+  }
+
+  getBillingDetails() {
+    this.billingService.getBilling(this.paramsId.id, this.paramsId.billId).subscribe(billing => {
+      this.logger.log("billing", billing)
+    }, error => {
+      this.logger.log(error)
+    })
   }
   icdData = [];
   selectedIcd = { code: "", name: "" };
@@ -239,18 +264,13 @@ export class BilllableBillingComponent implements OnInit {
 
   }
   uploadFile() {
-    if (!this.documentType) {
-      this.errors.doc_type.isError = true;
-      this.errors.doc_type.error = "Please select Document type";
-      return;
-    }
     if (!this.selectedFile) {
       this.errors.file.isError = true;
       this.errors.file.error = "Please select file";
       return;
     }
     this.formData.append('file', this.selectedFile);
-    this.formData.append('document_category_id', this.documentType);
+    this.formData.append('document_category_id', '8');
     this.formData.append('claim_id', this.paramsId.id);
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
     this.billingService.postDocument(this.formData).subscribe(res => {
@@ -280,7 +300,7 @@ export class BilllableBillingComponent implements OnInit {
     this.file = null;
   }
 
-  billingOnDemand(){
+  billingOnDemand() {
     let data = {
       claim_id: this.paramsId.id,
       document_category_id: 8,
@@ -290,7 +310,7 @@ export class BilllableBillingComponent implements OnInit {
     }
 
     this.billingService.onDemandBilling(data).subscribe(bill => {
-      this.logger.log("onDemand",bill)
+      this.logger.log("onDemand", bill)
       this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: 'Billing_on_demand.csv' })
       this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
     }, error => {
@@ -328,15 +348,15 @@ const ELEMENT_DATA1 = [
   { "id": 1384, "item": "UQME", "procedure_code": "ML 101", "modifier": "96", "units": "1", "charge": "2200.00", "payment": "0", "balance": "2200.00" },
 
 ];
-const ELEMENT_DATA2 = [
-  { "id": 123, "file_name": "Finalized and Signed Report.pdf", "type": "Report", "date": "05-25-2019" },
-  { "id": 1, "file_name": "Submission Cover Letter", "type": "Attachment", "date": "05-25-2019" },
-  { "id": 2, "file_name": "Finalized and Signed Report.pdf", "type": "Report", "date": "05-25-2019" },
-  { "id": 3, "file_name": "Submission Cover Letter", "type": "Attachment", "date": "05-25-2019" },
-  { "id": 4, "file_name": "Finalized and Signed Report.pdf", "type": "Report", "date": "05-25-2019" },
-  { "id": 5, "file_name": "Submission Cover Letter", "type": "Attachment", "date": "05-25-2019" },
+// const ELEMENT_DATA2 = [
+//   { "id": 123, "file_name": "Finalized and Signed Report.pdf", "type": "Report", "date": "05-25-2019" },
+//   { "id": 1, "file_name": "Submission Cover Letter", "type": "Attachment", "date": "05-25-2019" },
+//   { "id": 2, "file_name": "Finalized and Signed Report.pdf", "type": "Report", "date": "05-25-2019" },
+//   { "id": 3, "file_name": "Submission Cover Letter", "type": "Attachment", "date": "05-25-2019" },
+//   { "id": 4, "file_name": "Finalized and Signed Report.pdf", "type": "Report", "date": "05-25-2019" },
+//   { "id": 5, "file_name": "Submission Cover Letter", "type": "Attachment", "date": "05-25-2019" },
 
-];
+// ];
 const ELEMENT_DATA3 = [
   { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date": "05-25-2019", "recipients": "Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "sent_document": "Download", "proof_of_service": "Download" },
   { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date": "05-25-2019", "recipients": "", "sent_document": "Download", "proof_of_service": "Download" },
