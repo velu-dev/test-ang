@@ -58,9 +58,10 @@ export class BilllableBillingComponent implements OnInit {
   paramsId: any;
   billingId: number;
   documentList: any;
-  eaxmProcuderalCodes:any;
-  procuderalCodes:any;
-  modifiers:any;
+  eaxmProcuderalCodes: any;
+  procuderalCodes: any;
+  modifiers: any;
+  billingData: any;
 
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
@@ -151,11 +152,11 @@ export class BilllableBillingComponent implements OnInit {
       this.eaxmProcuderalCodes = procedure.data;
     })
 
-     this.claimService.seedData('procedural_codes').subscribe(type => {
+    this.claimService.seedData('procedural_codes').subscribe(type => {
       this.procuderalCodes = type['data']
     })
 
-     this.claimService.seedData('modifier').subscribe(type => {
+    this.claimService.seedData('modifier').subscribe(type => {
       this.modifiers = type['data']
     })
 
@@ -165,6 +166,7 @@ export class BilllableBillingComponent implements OnInit {
 
   getBillingDetails() {
     this.billingService.getBilling(this.paramsId.id, this.paramsId.billId).subscribe(billing => {
+      this.billingData = billing.data
       this.logger.log("billing", billing)
     }, error => {
       this.logger.log(error)
