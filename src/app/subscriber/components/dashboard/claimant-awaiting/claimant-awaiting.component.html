@@ -30,12 +30,12 @@
                 <ng-container matColumnDef="expandedDetail">
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                            <div class="resposive-table" (click)=" gotoEdit(element)">
-                                <div><span>Claimant</span> {{element?.last_name}}, {{element?.first_name}} </div>
-                                <div><span>Date of Birth</span> {{element?.date_of_birth}} </div>
-                                <div><span>Social Security Number</span> {{element?.ssn}} </div>
-                                <div><span>Date Created</span> {{element?.created_date}}<small class="p-l-10">
-                                    <span *ngIf="element?.created_time" class="fa fa-clock-o"></span>&nbsp; {{element?.created_time}}</small> </div>
+                            <div class="responsive-table" (click)=" gotoEdit(element)">
+                                <div><span>Claimant</span><span> {{element?.last_name}}, {{element?.first_name}} </span></div>
+                                <div><span>Date of Birth</span><span> {{element?.date_of_birth}} </span></div>
+                                <div><span>Social Security Number</span><span> {{element?.ssn}} </span></div>
+                                <div><span>Date Created</span><span> {{element?.created_date}}<small class="p-l-10">
+                                    <p *ngIf="element?.created_time" class="fa fa-clock-o"></p>&nbsp; {{element?.created_time}}</small> </span></div>
                             </div>
                         </div>
                     </td>

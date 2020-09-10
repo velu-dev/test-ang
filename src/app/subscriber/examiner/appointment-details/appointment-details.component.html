@@ -880,9 +880,9 @@
                         <ng-container matColumnDef="expandedDetail">
                             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsForDocuments.length">
                                 <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                                    <div class="resposive-table">
-                                        <div><span>File Name</span>{{element.file_name}}</div>
-                                        <div><span>Date</span> {{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}} </div>
+                                    <div class="responsive-table">
+                                        <div><span>File Name</span><span>{{element.file_name}}</span></div>
+                                        <div><span>Date</span><span> {{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}} </span></div>
                                     </div>
                                 </div>
                             </td>

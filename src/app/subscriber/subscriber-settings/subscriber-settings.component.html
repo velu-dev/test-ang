@@ -366,14 +366,14 @@
                                                 [attr.colspan]="columnsToDisplay.length">
                                                 <div class="detail"
                                                     [@detailExpand]="expandId === element.id ? 'expanded' : 'collapsed'">
-                                                    <div class="resposive-table">
-                                                        <div><span>Invoice Number</span> {{element?.invoice_number}}
-                                                        </div>
-                                                        <div><span>Amount</span> {{element?.amount}} </div>
-                                                        <div><span>Status</span> {{element?.status}} </div>
-                                                        <div><span>Date</span> {{element?.date}} </div>
-                                                        <div><span>Action</span><a class="text-success">
-                                                                {{element?.action}} </a></div>
+                                                    <div class="responsive-table">
+                                                        <div><span>Invoice Number</span><span> {{element?.invoice_number}}
+                                                        </span></div>
+                                                        <div><span>Amount</span><span> {{element?.amount}} </span></div>
+                                                        <div><span>Status</span><span> {{element?.status}} </span></div>
+                                                        <div><span>Date</span><span> {{element?.date}} </span></div>
+                                                        <div><span>Action</span><span><a class="text-success">
+                                                                {{element?.action}} </a></span></div>
                                                     </div>
                                                 </div>
                                             </td>
