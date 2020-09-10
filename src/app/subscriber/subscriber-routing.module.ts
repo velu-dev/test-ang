@@ -129,7 +129,8 @@ const routes: Routes = [{
       component: BilllableBillingComponent
     },{
       path: "billing/:billingId",
-      component: BilllableBillingComponent
+      component: BilllableBillingComponent,
+      data: { breadcrumb: "Billing" }
     }]
   }]
 },
