@@ -3,7 +3,7 @@ import * as globals from '../../../globals';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ExaminerService } from '../../service/examiner.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { saveAs } from 'file-saver';
@@ -136,7 +136,8 @@ export class AppointmentDetailsComponent implements OnInit {
     private claimService: ClaimService,
     private logger: NGXLogger,
     private breadcrumbService: BreadcrumbService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
   ) {
     this.loadForms();
     this.claimService.seedData("intake_contact_type").subscribe(res => {
@@ -702,6 +703,14 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.isMobile) {
       this.expandId = element.id;
     }
+  }
+  billingNev(){
+    if(this.examinationDetails.billid){
+      this.router.navigate(['/billing',this.examinationDetails.billid])
+    }else{
+      this.router.navigate(['/billing'])
+    }
+   
   }
 }
 

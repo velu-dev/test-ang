@@ -149,4 +149,11 @@ export const api_endpoint = {
     downloadBillingDocument: "billing/ondemand/examination-download/",
     uploadExaminationFile: "billing/ondemand/examination-upload",
     listExaminationUploadedDocs: "billing/ondemand/examination-document-list/",
+
+    //billing
+    createbill: 'billing/create/',
+    billDocument: 'billing/document-list/',
+    onDemandBilling: 'service-requests/bill-ondemand/create',
+    getbilling: 'billing/details/',
+    createBillLineItem: 'billing/add-bill-line-item'
 }
