@@ -29,7 +29,8 @@ const routes: Routes = [{
   },
   {
     path: ":id",
-    component: NewUserComponent
+    component: NewUserComponent,
+    data: { breadcrumb: "User" }
   }]
 }, {
   path: "users",
@@ -45,17 +46,20 @@ const routes: Routes = [{
   },
   {
     path: ":id",
-    component: NewUserComponent
+    component: NewUserComponent,
+    data: { breadcrumb: "User" }
   }
   ]
 }, {
   path: "vendors",
   children: [{
     path: "",
-    component: VendorsComponent
+    component: VendorsComponent,
+    data: { breadcrumb: "Vendors" }
   }, {
     path: "new",
-    component: NewUserComponent
+    component: NewUserComponent,
+    data: { breadcrumb: "New" }
   }]
 }, {
   path: "profile",
@@ -70,11 +74,12 @@ const routes: Routes = [{
     {
       path: "",
       component: ServiceRequestComponent,
-      data: { breadcrumb: "Service Request" }
+      data: { breadcrumb: "Service Requests" }
     },
     {
       path: ":id",
-      component: ServiceRequestDetailsComponent
+      component: ServiceRequestDetailsComponent,
+      data: { breadcrumb: "Service Request" }
     },
   ]
 },

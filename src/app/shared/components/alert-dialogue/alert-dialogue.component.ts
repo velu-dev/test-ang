@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import * as globals from '../../../globals';
+import * as globals from './../../../globals';
 @Component({
   selector: 'app-alert-dialogue',
   templateUrl: './alert-dialogue.component.html',
