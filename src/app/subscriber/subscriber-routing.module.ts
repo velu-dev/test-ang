@@ -46,7 +46,8 @@ const routes: Routes = [{
   path: "dashboard",
   children: [{
     path: "",
-    component: DashboardComponent
+    component: DashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "claimant-awaiting",
     component: ClaimantAwaitingComponent,
@@ -317,7 +318,7 @@ const routes: Routes = [{
     component: NewClaimComponent,
     data: { breadcrumb: "Claim" }
   }, {
-    path: "edit-claim/:id",
+    path: "edit-claim/:claim_id",
     component: EditClaimComponent,
     data: { breadcrumb: "Edit Claim" }
   },
@@ -400,7 +401,7 @@ const routes: Routes = [{
         component: NewClaimComponent,
         data: { breadcrumb: "New Claim" }
       }, {
-        path: "edit-claim/:id",
+        path: "edit-claim/:claim_id",
         component: NewClaimComponent,
         data: { breadcrumb: "Edit Claim" }
       }, {
