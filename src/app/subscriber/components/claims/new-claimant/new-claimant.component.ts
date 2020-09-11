@@ -15,6 +15,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { IntercomService } from 'src/app/services/intercom.service';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -90,9 +91,8 @@ export class NewClaimantComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private route: ActivatedRoute,
-    private breadcrumbService: BreadcrumbService
+    private intercom: IntercomService
   ) {
-    this.breadcrumbService.set("@Claimant", "Velu")
     this.route.params.subscribe(param => {
       this.claimantId = param.claimant_id;
       if (param.claimant_id) {
@@ -142,7 +142,6 @@ export class NewClaimantComponent implements OnInit {
 
 
   ngOnInit() {
-    this.breadcrumbService.set('claimant/edit-claimant/:id', 'Claimant Name');
     this.claimantForm = this.formBuilder.group({
       id: [""],
       last_name: ['', Validators.compose([Validators.required])],
@@ -193,6 +192,7 @@ export class NewClaimantComponent implements OnInit {
   }
   getSingleClaimant() {
     this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
+      this.intercom.setClaimant(res['data'][0].last_name+', '+ res['data'][0].first_name);
       this.claimantInfo = res['data'][0];
       this.languageStatus = res['data'][0].certified_interpreter_required;
       this.claimNumber = res['data'][0].claim_numbers.map(data => data.claim_number)

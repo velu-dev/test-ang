@@ -164,7 +164,7 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: NewClaimantComponent,
-        data: { breadcrumb: "Claimant" }
+        data: { breadcrumb:  { alias: '@Claimant' } }
       }, {
         path: "claim/:claim_id",
         children: [{
