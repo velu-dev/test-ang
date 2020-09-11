@@ -1,4 +1,4 @@
-// @import "variables";
+@import "variables";
 // .breadcrumb-home {
 //   list-style: none;
 //   display: inline;
@@ -54,4 +54,9 @@
 //   }
 // }
 
+.arrow-forward {
+  font-weight: $font-weight-bold;
+  font-size: $font-size-2;
+  display: contents;
+  }
 

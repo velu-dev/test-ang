@@ -11,12 +11,12 @@
 </ul> -->
 <xng-breadcrumb [separator]="iconTemplate" id="titleCase">
     <ng-container *xngBreadcrumbItem="let breadcrumb; let info; let first = first">
-        <mat-icon aria-hidden="false" *ngIf="info && first" aria-label="home icon">home</mat-icon>
+        <mat-icon aria-hidden="false" *ngIf="info && first" aria-label="home icon" class="bread-home">home</mat-icon>
         <ng-container class="breadcrumb-list">{{ breadcrumb.replace("-", " ") | titlecase }}</ng-container>
     </ng-container>
 </xng-breadcrumb>
 
 <ng-template #iconTemplate>
-    <mat-icon>east</mat-icon>
+    <mat-icon class="arrow-forward">arrow_forward</mat-icon>
   </ng-template>
   
