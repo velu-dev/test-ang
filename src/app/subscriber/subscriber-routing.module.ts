@@ -337,10 +337,11 @@ const routes: Routes = [{
     {
       path: "",
       component: StaffDashboardComponent,
-      data: { breadcrumb: "Staffs" }
+      data: { breadcrumb: { skip: true } }
     }, {
       path: "dashboard",
-      component: StaffDashboardComponent
+      component: StaffDashboardComponent,
+      data: { breadcrumb: { skip: true } }
     },
     {
       path: "appointment",
@@ -480,10 +481,12 @@ const routes: Routes = [{
   path: "manager",
   children: [{
     path: "",
-    component: ManagerDashboardComponent
+    component: ManagerDashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "dashboard",
-    component: ManagerDashboardComponent
+    component: ManagerDashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "staff",
     children: [{
@@ -607,10 +610,12 @@ const routes: Routes = [{
   path: "examiner",
   children: [{
     path: "",
-    component: ExaminerDashboardComponent
+    component: ExaminerDashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "dashboard",
-    component: ExaminerDashboardComponent
+    component: ExaminerDashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "appointment",
     component: AppointmentComponent,
