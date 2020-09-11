@@ -16,7 +16,6 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import * as moment from 'moment';
 import { MatMenuTrigger } from '@angular/material';
-import { BreadcrumbService } from 'xng-breadcrumb';
 @Component({
   selector: 'app-claimant',
   templateUrl: './claimant.component.html',
@@ -59,7 +58,6 @@ export class ClaimantComponent implements OnInit {
     private exportService: ExportService,
     public dialog: MatDialog,
     private claimService: ClaimService,
-    private breadcrumbService: BreadcrumbService
   ) {
     this.getUser();
     this.isHandset$.subscribe(res => {

@@ -7,6 +7,8 @@ import * as breadcrumbActions from "./shared/store/breadcrumb.actions";
 import * as fromBreadcrumb from "./shared/store/breadcrumb.reducer";
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { BreadcrumbService } from 'xng-breadcrumb';
+import { IntercomService } from './services/intercom.service';
 Auth.configure(environment.Amplify);
 @Component({
   selector: 'app-root',
@@ -18,8 +20,24 @@ export class AppComponent {
   menu: Array<any> = [];
   name: string;
   menu$: Observable<any>;
-  constructor(private _router: Router, private store: Store<{ breadcrumb: any }>) {
-    this.menu$ = store.pipe(select('breadcrumb'));
+  constructor(private _router: Router, private store: Store<{ breadcrumb: any }>,
+    private breadcrumbService: BreadcrumbService,
+    private intercom: IntercomService) {
+    this.intercom.getClaimant().subscribe(name => {
+      this.breadcrumbService.set("@Claimant", name)
+    })
+
+    this.intercom.getClaimNumber().subscribe(number => {
+      if (!number) {
+        this.breadcrumbService.set("subscriber/claimants/claimant/:id/claim/:id", "Claim")
+      } else {
+        this.breadcrumbService.set("subscriber/claimants/claimant/:id/claim/:id", number)
+      }
+    })
+
+    //this.menu$ = store.pipe(select('breadcrumb'));
+    //this.breadcrumbService.set("subscriber/appointment/appointment-details/:claim_id/:bill_id", "sarath22")
+
   }
   ngOnInit() {
     this.listenRouting();

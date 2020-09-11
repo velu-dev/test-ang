@@ -46,7 +46,8 @@ const routes: Routes = [{
   path: "dashboard",
   children: [{
     path: "",
-    component: DashboardComponent
+    component: DashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "claimant-awaiting",
     component: ClaimantAwaitingComponent,
@@ -164,7 +165,7 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: NewClaimantComponent,
-        data: { breadcrumb: "Claimant" }
+        data: { breadcrumb:  { alias: '@Claimant' } }
       }, {
         path: "claim/:claim_id",
         children: [{
@@ -317,7 +318,7 @@ const routes: Routes = [{
     component: NewClaimComponent,
     data: { breadcrumb: "Claim" }
   }, {
-    path: "edit-claim/:id",
+    path: "edit-claim/:claim_id",
     component: EditClaimComponent,
     data: { breadcrumb: "Edit Claim" }
   },
@@ -337,10 +338,11 @@ const routes: Routes = [{
     {
       path: "",
       component: StaffDashboardComponent,
-      data: { breadcrumb: "Staffs" }
+      data: { breadcrumb: { skip: true } }
     }, {
       path: "dashboard",
-      component: StaffDashboardComponent
+      component: StaffDashboardComponent,
+      data: { breadcrumb: { skip: true } }
     },
     {
       path: "appointment",
@@ -399,7 +401,7 @@ const routes: Routes = [{
         component: NewClaimComponent,
         data: { breadcrumb: "New Claim" }
       }, {
-        path: "edit-claim/:id",
+        path: "edit-claim/:claim_id",
         component: NewClaimComponent,
         data: { breadcrumb: "Edit Claim" }
       }, {
@@ -480,10 +482,12 @@ const routes: Routes = [{
   path: "manager",
   children: [{
     path: "",
-    component: ManagerDashboardComponent
+    component: ManagerDashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "dashboard",
-    component: ManagerDashboardComponent
+    component: ManagerDashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "staff",
     children: [{
@@ -607,10 +611,12 @@ const routes: Routes = [{
   path: "examiner",
   children: [{
     path: "",
-    component: ExaminerDashboardComponent
+    component: ExaminerDashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "dashboard",
-    component: ExaminerDashboardComponent
+    component: ExaminerDashboardComponent,
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "appointment",
     component: AppointmentComponent,
