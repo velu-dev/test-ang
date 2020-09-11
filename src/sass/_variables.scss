@@ -655,7 +655,7 @@ input:-webkit-autofill {
 .grid-list {
   width: 100%;
   display: flex;
-  div {
+  div, span {
     padding: 5px;
     align-self: flex-end;
 

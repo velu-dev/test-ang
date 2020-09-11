@@ -96,7 +96,7 @@ export class ReportComponent implements OnInit {
     })
   }
   getReport() {
-    this.onDemandService.getTranscription(this.paramsId.id, this.paramsId.billId).subscribe(report => {
+    this.onDemandService.getTranscription(this.paramsId.claim_id, this.paramsId.billId).subscribe(report => {
       this.reportData = report;
       this.dataSource = new MatTableDataSource(report.documets)
       let inFile = [];
@@ -210,7 +210,7 @@ export class ReportComponent implements OnInit {
 
     // this.formData.append('file', this.selectedFile);
     this.formData.append('document_category_id', this.documentType.toString());
-    this.formData.append('claim_id', this.paramsId.id.toString());
+    this.formData.append('claim_id', this.paramsId.claim_id.toString());
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
     for (let i = 0; i < this.selectedFiles.length; i++) {
       this.formData.append('file', this.selectedFiles[i]);
@@ -257,7 +257,7 @@ export class ReportComponent implements OnInit {
       this.selection.clear();
       return;
     }
-    this.onDemandService.reportDownload(this.paramsId.id, this.paramsId.billId, { documents_ids: document_ids }).subscribe(record => {
+    this.onDemandService.reportDownload(this.paramsId.claim_id, this.paramsId.billId, { documents_ids: document_ids }).subscribe(record => {
       saveAs(record.data.file_url, record.data.file_name, '_self');
       this.alertService.openSnackBar("File downloaded successfully", 'success');
       this.selection.clear();
@@ -282,7 +282,7 @@ export class ReportComponent implements OnInit {
       return
     }
     let data = {
-      claim_id: this.paramsId.id,
+      claim_id: this.paramsId.claim_id,
       service_priority: this.rushRequest ? "rush" : 'normal',
       service_description: "",
       document_ids: document_ids,

@@ -71,7 +71,7 @@ export class BilllableBillingComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.paramsId = param;
       if (!param.billingId) {
-        this.billingService.billCreate(param.id, param.billId).subscribe(bill => {
+        this.billingService.billCreate(param.claim_id, param.billId).subscribe(bill => {
           this.logger.log(bill)
           this.billingId = bill.data.bill_id
         }, error => {
@@ -165,7 +165,7 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   getBillingDetails() {
-    this.billingService.getBilling(this.paramsId.id, this.paramsId.billId).subscribe(billing => {
+    this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data
       this.logger.log("billing", billing)
     }, error => {
@@ -225,7 +225,7 @@ export class BilllableBillingComponent implements OnInit {
     // }
   }
   getDocumentData() {
-    this.billingService.getDocumentData(this.paramsId.id, this.paramsId.billId).subscribe(res => {
+    this.billingService.getDocumentData(this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {
       this.documentsData = new MatTableDataSource(res.data);
     }, error => {
       this.documentsData = new MatTableDataSource([]);
@@ -273,7 +273,7 @@ export class BilllableBillingComponent implements OnInit {
     }
     this.formData.append('file', this.selectedFile);
     this.formData.append('document_category_id', '8');
-    this.formData.append('claim_id', this.paramsId.id);
+    this.formData.append('claim_id', this.paramsId.claim_id);
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
     this.billingService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
@@ -304,7 +304,7 @@ export class BilllableBillingComponent implements OnInit {
 
   billingOnDemand() {
     let data = {
-      claim_id: this.paramsId.id,
+      claim_id: this.paramsId.claim_id,
       document_category_id: 8,
       billable_item_id: this.paramsId.billId,
       service_request_type_id: 5,

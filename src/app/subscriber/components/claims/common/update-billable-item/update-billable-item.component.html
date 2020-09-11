@@ -51,14 +51,14 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="expandedDetail">
-                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                     <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                        <div class="resposive-table">
-                            <div><span>Exam Type</span><a [routerLink]="['/subscriber/appointment/appointment-details',this.claimId, element?.id]"> {{element?.exam_type_code}}-{{element?.exam_type_name}}
-                                {{element?.procedure_type_name}}</a> </div>
-                            <div><span>Date of Service /<br/>Date Item Received</span> {{element?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}} </div>
-                            <div><span>Examiner</span> {{element?.examiner_name}} </div>
-                            <div><span>Status</span> {{element?.status}} </div>
+                        <div class="responsive-table">
+                            <div><span>Exam Type</span><span><a [routerLink]="['/subscriber/appointment/appointment-details',this.claimId, element?.id]"> {{element?.exam_type_code}}-{{element?.exam_type_name}}
+                                {{element?.procedure_type_name}}</a> </span></div>
+                            <div><span>Date of Service /<br/>Date Item Received</span><span> {{element?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}} </span></div>
+                            <div><span>Examiner</span><span> {{element?.examiner_name}} </span></div>
+                            <div><span>Status</span><span> {{element?.status}} </span></div>
                         </div>
                     </div>
                 </td>

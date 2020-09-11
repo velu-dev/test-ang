@@ -91,7 +91,7 @@ export class RecordsComponent implements OnInit {
   }
 
   getRecord() {
-    this.onDemandService.getRecords(this.paramsId.id, this.paramsId.billId).subscribe(record => {
+    this.onDemandService.getRecords(this.paramsId.claim_id, this.paramsId.billId).subscribe(record => {
       this.recordData = record;
       record.documets.map(data => {
         data.page_number = data.no_of_units;
@@ -204,7 +204,7 @@ export class RecordsComponent implements OnInit {
     }
 
     this.formData.append('document_category_id', '4');
-    this.formData.append('claim_id', this.paramsId.id.toString());
+    this.formData.append('claim_id', this.paramsId.claim_id.toString());
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
@@ -252,7 +252,7 @@ export class RecordsComponent implements OnInit {
       this.selection.clear();
       return;
     }
-    this.onDemandService.recordDownload(this.paramsId.id, this.paramsId.billId, { documents_ids: document_ids }).subscribe(record => {
+    this.onDemandService.recordDownload(this.paramsId.claim_id, this.paramsId.billId, { documents_ids: document_ids }).subscribe(record => {
       saveAs(record.data.file_url, record.data.file_name, '_self');
       this.selection.clear();
       this.alertService.openSnackBar("File downloaded successfully", 'success');
@@ -277,7 +277,7 @@ export class RecordsComponent implements OnInit {
       return
     }
     let data = {
-      claim_id: this.paramsId.id,
+      claim_id: this.paramsId.claim_id,
       service_priority: this.rushRequest ? "rush" : 'normal',
       service_description: "",
       document_ids: document_ids,
@@ -335,7 +335,7 @@ export class RecordsComponent implements OnInit {
     let page_data = {
       document_id: element.document_id,
       bill_item_id: this.paramsId.billId,
-      claim_id: this.paramsId.id,
+      claim_id: this.paramsId.claim_id,
       no_of_units: element.page_number
     }
     this.onDemandService.documentUnit(page_data).subscribe(page => {

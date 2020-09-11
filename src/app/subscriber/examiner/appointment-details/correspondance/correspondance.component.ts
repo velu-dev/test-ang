@@ -64,7 +64,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.states = res.data;
     })
     this.route.params.subscribe(params => {
-      this.claim_id = params.id;
+      this.claim_id = params.claim_id;
       this.billableId = params.billId;
       this.getData();
     })

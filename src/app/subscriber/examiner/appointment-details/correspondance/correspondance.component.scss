@@ -74,21 +74,15 @@ th {
 
 .info-alert {
     color: $info;
-    // background-color: $info-bg;
-    // border: 1px solid $info-border;
     font-size: $font-size-1;
     padding: 3px 8px;
     border-radius: 2px;
     width: auto;
     float: right;
+    // @media only screen and (max-width: 568px) {
+    //     float: left;
+    // }
     i {
-        // padding: 5px 5px 5px 5px;
-        // font-size: 10px;
-        // line-height: .5;
-        // width: 5px;
-        // height: 5px;
-        // border-radius: 50%;
-        // border: 1px solid $info;
         margin-right: 10px;
     }
 }
