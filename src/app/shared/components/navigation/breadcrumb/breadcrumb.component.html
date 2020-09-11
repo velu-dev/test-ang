@@ -9,9 +9,9 @@
         
     </li>
 </ul> -->
-<xng-breadcrumb separator=">" id="titleCase">
+<xng-breadcrumb separator="&#8594;" id="titleCase">
     <ng-container *xngBreadcrumbItem="let breadcrumb">
         <mat-icon *ngIf="info">{{ info }}</mat-icon>
-        <ng-container>{{ breadcrumb.replace("-", " ") | titlecase }}</ng-container>
+        <ng-container class="breadcrumb-list">{{ breadcrumb.replace("-", " ") | titlecase }}</ng-container>
     </ng-container>
 </xng-breadcrumb>
