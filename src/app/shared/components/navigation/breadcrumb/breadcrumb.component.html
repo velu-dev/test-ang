@@ -10,8 +10,8 @@
     </li>
 </ul> -->
 <xng-breadcrumb separator=">" id="titleCase">
-    <ng-container *xngBreadcrumbItem="let breadcrumb">
-        <mat-icon *ngIf="info">{{ info }}</mat-icon>
+    <ng-container *xngBreadcrumbItem="let breadcrumb; let info; let first = first">
+        <mat-icon aria-hidden="false" *ngIf="info && first" aria-label="home icon">home</mat-icon>
         <ng-container>{{ breadcrumb.replace("-", " ") | titlecase }}</ng-container>
     </ng-container>
 </xng-breadcrumb>

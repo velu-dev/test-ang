@@ -127,7 +127,7 @@ const routes: Routes = [{
     }, {
       path: "billing",
       component: BilllableBillingComponent
-    },{
+    }, {
       path: "billing/:billingId",
       component: BilllableBillingComponent
     }]
@@ -189,6 +189,9 @@ const routes: Routes = [{
             component: ReportComponent
           }, {
             path: "billing",
+            component: BilllableBillingComponent
+          }, {
+            path: "billing/:billingId",
             component: BilllableBillingComponent
           }]
         }]
@@ -334,6 +337,9 @@ const routes: Routes = [{
           component: ReportComponent
         }, {
           path: "billing",
+          component: BilllableBillingComponent
+        },{
+          path: "billing/:billingId",
           component: BilllableBillingComponent
         }]
       }]
