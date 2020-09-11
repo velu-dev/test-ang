@@ -6,10 +6,10 @@
             </div>
             <div fxFlex="50" class="floating-button">
                 <span class="spacer"></span>
-                <button (click)="isCalenderVIew = true" mat-icon-button [ngClass]="{'active': isCalenderVIew}">
+                <button (click)="CalenderVIew(true)" mat-icon-button [ngClass]="{'active': isCalenderVIew}">
                     <span class="fa fa-calendar-day"></span>
                 </button>
-                <button (click)="isCalenderVIew = false" mat-icon-button [ngClass]="{'active': !isCalenderVIew}">
+                <button (click)="CalenderVIew(false)" mat-icon-button [ngClass]="{'active': !isCalenderVIew}">
                     <span class="fa fa-th-list"></span>
                 </button>
 

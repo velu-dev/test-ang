@@ -60,7 +60,7 @@ export class AppointmentComponent implements OnInit {
       }
     })
   }
-
+  appointmentsData = []
   ngOnInit() {
     this.examinerService.getExaminationDetails().subscribe(res => {
       console.log(res)
@@ -68,6 +68,7 @@ export class AppointmentComponent implements OnInit {
         data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
         data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
       })
+      this.appointmentsData = res['data'];
       this.dataSource = new MatTableDataSource(res['data']);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -118,6 +119,18 @@ export class AppointmentComponent implements OnInit {
     })
     this.exportService.exportExcel(data, "Examination" + moment().format('MM-DD-YYYYhh:mm'))
 
+  }
+  getData() {
+    this.dataSource = new MatTableDataSource(this.appointmentsData);
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+  CalenderVIew(status) {
+    this.dataSource = new MatTableDataSource([])
+    this.getData()
+    this.isCalenderVIew = status;
   }
 
 }
