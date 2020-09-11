@@ -30,14 +30,14 @@ $error-bg: #fcebeb;
 $error-border: #db2828;
 
 // WARNING
-$warning: #A3501C;
-$warning-bg: #FCDDCA;
-$warning-border: #A3501C;
+$warning: #a3501c;
+$warning-bg: #fcddca;
+$warning-border: #a3501c;
 
 // SUCCESS
-$success: #1E561F;
-$success-bg: #DBF5D2;
-$success-border: #A8C599;
+$success: #1e561f;
+$success-bg: #dbf5d2;
+$success-border: #a8c599;
 
 //colors
 $bg-light-blue: #f2f7ff;
@@ -51,14 +51,11 @@ $secondarycolor: #65ff88;
 $secondarylightcolor: #9effb9;
 $secondaryarkcolor: #19cb59;
 
-
 // progress error
-$progress-error :#F27120;
+$progress-error: #f27120;
 
 //ternary color
 $ternary-color: #6464fa;
-
-
 
 //Extra colors
 $green: #65ff88;
@@ -655,7 +652,8 @@ input:-webkit-autofill {
 .grid-list {
   width: 100%;
   display: flex;
-  div, span {
+  div,
+  span {
     padding: 5px;
     align-self: flex-end;
 
@@ -802,7 +800,6 @@ input:-webkit-autofill {
   color: $text-gray;
   background-color: $light-color;
   border-color: $light-color;
-
 }
 .outline-danger {
   @extend .btn_;
@@ -898,7 +895,7 @@ input:-webkit-autofill {
     }
     .upload-file {
       .mat-form-field {
-        width: calc( 100% - 125px);
+        width: calc(100% - 125px);
       }
     }
   }
@@ -928,20 +925,20 @@ input:-webkit-autofill {
   // }
 }
 .fixed-dialog {
- mat-card-content {
-  mat-form-field {
-    padding: 10px 10px 0px 0px !important;
-  }
-  .upload-file {
-    .filled-gray {
-      @extend .filled-gray ;
+  mat-card-content {
+    mat-form-field {
+      padding: 10px 10px 0px 0px !important;
     }
-    .mat-form-field {
-      width: calc( 100% - 125px) !important;
-      padding: 0 0 0 10px !important;
+    .upload-file {
+      .filled-gray {
+        @extend .filled-gray;
+      }
+      .mat-form-field {
+        width: calc(100% - 125px) !important;
+        padding: 0 0 0 10px !important;
+      }
     }
   }
- }
 }
 // ==================================
 // message style            =========
@@ -1066,7 +1063,7 @@ input:-webkit-autofill {
     }
   }
   .no {
-    border-color:$danger;
+    border-color: $danger;
     background-color: $white;
     color: $danger;
     @extend .btn_;
@@ -1084,6 +1081,29 @@ input:-webkit-autofill {
     &:hover {
       background-color: $btn-success;
       color: $white;
+    }
+  }
+}
+// Breadcrumb Common CSS
+#titleCase {
+  nav {
+    ol {
+      li {
+        a,
+        .xng-breadcrumb-trail {
+          padding: 0 3px;
+          font-weight: normal;
+          font-size: $font-size-2;
+          color: $text-gray;
+          &:hover {
+            text-decoration: none;
+            color: $primary;
+          }
+        }
+        .xng-breadcrumb-trail {
+          color:$black
+        }
+      }
     }
   }
 }

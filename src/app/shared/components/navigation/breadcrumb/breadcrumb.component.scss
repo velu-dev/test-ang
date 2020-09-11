@@ -1,55 +1,57 @@
-@import "variables";
-.breadcrumb-home {
-  list-style: none;
-  display: inline;
-  padding: 0px;
-  li {
-    float: left;    
-    font-weight: normal;
-    font-size: $font-size-2;
-    padding-right: .3rem;
-    cursor: pointer;
-    &:focus {
-      outline: none;
-    }
-    &:hover {
-      color: $primary;
-    }
-    mat-icon {
-      padding: 0 3px;
-      vertical-align: middle;
-      font-size: $font-size-4;
-      width: 25px;
-      height: 28px;
-    }
-  }
-}
-.breadcrumb {
-  list-style: none;
-  display: inline;
-  padding: 0px;
-  li {
-    float: left;
-    padding: 0 3px;
-    font-weight: normal;
-    font-size: $font-size-2;    
-    color: $text-gray;
-    cursor: pointer;
-    &:before {
-      display: inline-block;
-      padding-right: 0.3rem;
-      color: $text-gray;
-      font-family: FontAwesome;
-      content: "\f054";
-      font-size: $font-size-1;
-      vertical-align: middle;
-      font-weight: $font-weight-base;
-    }
-    &:focus {
-      outline: none;
-    }
-    &:hover {
-      color:$primary;
-    }
-  }
-}
+// @import "variables";
+// .breadcrumb-home {
+//   list-style: none;
+//   display: inline;
+//   padding: 0px;
+//   li {
+//     float: left;
+//     font-weight: normal;
+//     font-size: $font-size-2;
+//     padding-right: 0.3rem;
+//     cursor: pointer;
+//     &:focus {
+//       outline: none;
+//     }
+//     &:hover {
+//       color: $primary;
+//     }
+//     mat-icon {
+//       padding: 0 3px;
+//       vertical-align: middle;
+//       font-size: $font-size-4;
+//       width: 25px;
+//       height: 28px;
+//     }
+//   }
+// }
+// .breadcrumb {
+//   list-style: none;
+//   display: inline;
+//   padding: 0px;
+//   li {
+//     float: left;
+//     padding: 0 3px;
+//     font-weight: normal;
+//     font-size: $font-size-2;
+//     color: $text-gray;
+//     cursor: pointer;
+//     &:before {
+//       display: inline-block;
+//       padding-right: 0.3rem;
+//       color: $text-gray;
+//       font-family: FontAwesome;
+//       content: "\f054";
+//       font-size: $font-size-1;
+//       vertical-align: middle;
+//       font-weight: $font-weight-base;
+//     }
+//     &:focus {
+//       outline: none;
+//     }
+//     &:hover {
+//       color: $primary;
+//     }
+//   }
+// }
+
+

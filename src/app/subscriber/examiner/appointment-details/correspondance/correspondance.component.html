@@ -202,7 +202,8 @@
                 </mat-icon>
               </span>
               <div>
-                <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType" alt=""></span>
+                <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType"
+                    alt=""></span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element.action"><span
                     *ngSwitchCase="'MD'">Downloaded</span>
@@ -228,17 +229,28 @@
                 <div class="responsive-table">
                   <ng-container matColumnDef="doc_image">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element" class="file_type_icon"><img [src]="element?.file_name | fileType" alt=""></td>
+            <td mat-cell *matCellDef="let element" class="file_type_icon"><img [src]="element?.file_name | fileType"
+                alt=""></td>
           </ng-container>
 
           <!-- <div><span></span> <img [src]="element?.file_name | fileType" alt="docx"> </div> -->
-          <div><span>File Name</span><span> {{element?.file_name}} </span></div>
-          <div class="no-wrap-td"><span>Action</span><span> {{element?.action}} </span></div>
+          <!-- <div><span>File Name</span><span> {{element?.file_name}} </span></div> -->
+          <div class="no-wrap-td"><span>Action</span>
+            <span [ngSwitch]="element.action">
+              <p *ngSwitchCase="'MD'" class="m-b-0">Downloaded</p>
+              <p *ngSwitchCase="'MES'" class="m-b-0">E-Sign Downloaded</p>
+              <p *ngSwitchCase="'SFTP'" class="m-b-0">Mailed On Demand</p>
+            </span>
+          </div>
           <div class="no-wrap-td"><span>Date</span><span> {{element?.date_of_request | date:'MM-dd-yyyy'}} </span></div>
-          <div><span>Recipients</span><span> {{element?.recipients}} </span></div>
-          <div><span>Download</span><span>
-            <a class="text-success" (click)="inOutdownload(element)">Download</a>
-          </span></div>
+          <div><span>Recipients</span><span *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
+              {{!last ? ',' : ''}}</span></div>
+          <div><span> Download Generated Items </span><span *ngIf="element?.send">
+              <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
+            </span></div>
+          <div><span> Download OnDemand Proof of Service </span><span *ngIf="element?.received">
+              <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
+            </span></div>
       </div>
     </div>
     </td>
