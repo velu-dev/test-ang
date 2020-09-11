@@ -383,7 +383,7 @@
             mat-form-field {
                 width: calc(100% - 150px);
                 @media only screen and (max-width: 568px) {
-                    width: $width-100 !important;
+                    width: calc(100% - 10px) !important;
                 }
             }
         }

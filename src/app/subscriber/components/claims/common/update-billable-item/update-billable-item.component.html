@@ -42,7 +42,7 @@
                         </mat-icon>
                     </span>
                     <div>
-                        <span *ngIf="column == 'procedure_type_name'"><a (click)="openrouteElement(element)">{{element?.exam_type_code}}-{{element?.exam_type_name}}
+                        <span *ngIf="column == 'procedure_type_name'"><a (click)="openrouteElement(element)" [routerLink]="['/subscriber/appointment/appointment-details',this.claimId, element?.id]">{{element?.exam_type_code}}-{{element?.exam_type_name}}
                             {{element?.procedure_type_name}}</a></span>
                         <span *ngIf="column == 'appointment_scheduled_date_time'">{{element?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'examiner_name'">{{element?.examiner_name}}</span>
