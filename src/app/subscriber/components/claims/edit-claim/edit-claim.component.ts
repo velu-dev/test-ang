@@ -40,6 +40,7 @@ export class EditClaimComponent implements OnInit {
     private _location: Location,
     private intercom: IntercomService
     ) {
+      this.intercom.setClaimNumber("Claim");
     this.claimService.seedData("body_part").subscribe(res => {
       this.bodyParts = res.data;
     })

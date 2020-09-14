@@ -2,6 +2,8 @@ import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
+import { IntercomService } from 'src/app/services/intercom.service';
 
 @Component({
   selector: 'app-claim',
@@ -16,7 +18,11 @@ export class ClaimComponent implements OnInit {
   examTypes = [];
   internalReferanceNumber: any;
   isClaimSubmited: boolean = false;
-  constructor(private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
+  constructor(private formBuilder: FormBuilder, private claimService: ClaimService,
+    private alertService: AlertService,
+    private intercom: IntercomService,
+    private cookieService: CookieService
+  ) {
     this.claim = this.formBuilder.group({
       id: [null],
       wcab_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
@@ -53,6 +59,13 @@ export class ClaimComponent implements OnInit {
       return;
     }
     this.claimService.updateClaim(this.claim.value, this.claim.value.id).subscribe(res => {
+      if (this.claim.value.claim_number) {
+        this.intercom.setClaimNumber(this.claim.value.claim_number);
+        this.cookieService.set('claimNumber', this.claim.value.claim_number)
+      }else{
+        this.intercom.setClaimNumber('Claim');
+      }
+
       this.isEdit = false;
       this.claim.patchValue(res.data)
       this.claim.disable();

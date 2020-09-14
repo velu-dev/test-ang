@@ -95,6 +95,7 @@ export class NewClaimantComponent implements OnInit {
     private intercom: IntercomService,
     private cookieService: CookieService
   ) {
+    this.intercom.setClaimant("claimant");
     this.route.params.subscribe(param => {
       this.claimantId = param.claimant_id;
       if (param.claimant_id) {

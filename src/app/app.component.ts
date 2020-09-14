@@ -52,12 +52,13 @@ export class AppComponent {
 
    let claimant =  this.cookieService.get('claimDeatis');
   
-   if(claimant){
+   if(claimant && claimant != 'null'){
     this.breadcrumbService.set("@Claimant", claimant)
    }
 
    let claimNumber =  this.cookieService.get('claimNumber');
-   if(claimNumber){
+   console.log(claimNumber)
+   if(claimNumber && claimNumber != 'null'){
     this.breadcrumbService.set("@Claim", claimNumber)
    }else{
     this.breadcrumbService.set("@Claim", 'Claim')
