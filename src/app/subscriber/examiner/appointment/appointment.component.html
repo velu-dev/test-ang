@@ -84,7 +84,9 @@
                         [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
-                                <div><span>Claim Numbers</span><span> {{element?.claim_number}} </span></div>
+                                <div><span>Claim Number</span><span> {{element?.claim_number}} </span></div>
+                                <div><span>Examiner</span><span> {{element?.examiner_first_name}}
+                                        {{element?.examiner_middle_name}} {{element?.examiner_last_name}}</span></div>
                                 <div><span>Exam Type</span><span> {{element?.exam_type_code}} </span></div>
                                 <div><span>Location</span><span>{{element?.location?.street1 }}
                                         {{element?.location?.street2}}

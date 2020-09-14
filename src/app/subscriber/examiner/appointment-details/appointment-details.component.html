@@ -886,8 +886,7 @@
                             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsForDocuments.length">
                                 <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                                     <div class="responsive-table">
-                                        <div><span>File Name</span><span>{{element.file_name}}</span></div>
-                                        <div><span>Date</span><span> {{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}} </span></div>
+                                        <div><span>Uploaded on</span><span> {{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}} </span></div>
                                     </div>
                                 </div>
                             </td>
