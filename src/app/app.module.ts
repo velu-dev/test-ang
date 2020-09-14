@@ -20,7 +20,7 @@ import { environment } from '../environments/environment'
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { IntercomService } from './services/intercom.service'
 import { BreadcrumbModule } from 'xng-breadcrumb';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     BreadcrumbModule
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
     IntercomService,
     Title,
     {
