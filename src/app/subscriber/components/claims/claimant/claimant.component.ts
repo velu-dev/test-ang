@@ -16,6 +16,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import * as moment from 'moment';
 import { MatMenuTrigger } from '@angular/material';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 @Component({
   selector: 'app-claimant',
   templateUrl: './claimant.component.html',
@@ -58,6 +59,7 @@ export class ClaimantComponent implements OnInit {
     private exportService: ExportService,
     public dialog: MatDialog,
     private claimService: ClaimService,
+    private cookieService: CookieService
   ) {
     this.getUser();
     this.isHandset$.subscribe(res => {
@@ -101,6 +103,7 @@ export class ClaimantComponent implements OnInit {
     })
   }
   gotoEdit(e) {
+    this.cookieService.set('claimDeatis',e.last_name+', '+ e.first_name)
     this.router.navigate(["subscriber/claimants/claimant", e.id])
   }
 

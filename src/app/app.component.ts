@@ -9,6 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { IntercomService } from './services/intercom.service';
+import { CookieService } from './shared/services/cookie.service';
 Auth.configure(environment.Amplify);
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent {
   menu$: Observable<any>;
   constructor(private _router: Router, private store: Store<{ breadcrumb: any }>,
     private breadcrumbService: BreadcrumbService,
-    private intercom: IntercomService) {
+    private intercom: IntercomService,
+    private cookieService: CookieService) {
     this.intercom.getClaimant().subscribe(name => {
       this.breadcrumbService.set("@Claimant", name)
     })
@@ -47,6 +49,19 @@ export class AppComponent {
       menuData['children'] = menu.submenu;
       this.menu.push(menuData)
     })
+
+   let claimant =  this.cookieService.get('claimDeatis');
+  
+   if(claimant){
+    this.breadcrumbService.set("@Claimant", claimant)
+   }
+
+   let claimNumber =  this.cookieService.get('claimNumber');
+   if(claimNumber){
+    this.breadcrumbService.set("@Claim", claimNumber)
+   }else{
+    this.breadcrumbService.set("@Claim", 'Claim')
+   }
   }
   onActivate(event) {
     window.scroll(0, 0);

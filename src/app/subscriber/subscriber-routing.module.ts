@@ -171,7 +171,8 @@ const routes: Routes = [{
         children: [{
           path: "",
           component: EditClaimComponent,
-          data: { breadcrumb: "Claim" },
+          //data: { breadcrumb: "Claim" },
+          data: { breadcrumb:  { alias: '@Claim' } }
         }, {
           path: "new-billable-item",
           component: NewBillableItemComponent,
