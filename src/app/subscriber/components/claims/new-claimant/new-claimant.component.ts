@@ -16,6 +16,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -91,7 +92,8 @@ export class NewClaimantComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private route: ActivatedRoute,
-    private intercom: IntercomService
+    private intercom: IntercomService,
+    private cookieService: CookieService
   ) {
     this.route.params.subscribe(param => {
       this.claimantId = param.claimant_id;
@@ -320,6 +322,7 @@ export class NewClaimantComponent implements OnInit {
   }
 
   claimNavigate(element?) {
+    this.cookieService.set('claimNumber',element.claim_number)
     this.router.navigate(['/subscriber/claimants/claimant/' + this.claimantId + '/claim', element.claim_id])
   }
 
