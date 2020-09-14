@@ -38,4 +38,8 @@ export class BillingService {
   createBillLine(billId,billableId): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.createBillLineItem + billId + '/' + billableId)
   }
+
+  updateDiagnosisCode(data){
+    return this.http.post(environment.baseUrl + api_endpoint.updateDiagnosisCode, data)
+  }
 }

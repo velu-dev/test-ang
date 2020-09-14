@@ -166,10 +166,12 @@ export class BilllableBillingComponent implements OnInit {
 
   getBillingDetails() {
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
-      this.billingData = billing.data
+      this.billingData = billing.data;
+      this.icdData = billing.data.billing_diagnosis_code;
+      this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)
     }, error => {
-      this.logger.log(error)
+      this.logger.error(error)
     })
   }
   icdData = [];
@@ -182,11 +184,17 @@ export class BilllableBillingComponent implements OnInit {
     if (this.selectedIcd.code != '') {
       this.icdData = this.IcdDataSource.data;
       this.icdData.push(this.selectedIcd)
-      this.IcdDataSource = new MatTableDataSource(this.icdData);
-      this.selectedIcd = { code: "", name: "" };
-      this.alertService.openSnackBar("ICD data added succssfully", "success");
-      this.icdCtrl.reset();
-      this.logger.log("icd 10 data", this.icdData)
+      let data = { id: this.billingId, diagnosis_code: this.icdData }
+      this.billingService.updateDiagnosisCode(data).subscribe(code => {
+        this.IcdDataSource = new MatTableDataSource(this.icdData);
+        this.selectedIcd = { code: "", name: "" };
+        this.alertService.openSnackBar("ICD data added succssfully", "success");
+        this.icdCtrl.reset();
+        this.logger.log("icd 10 data", this.icdData)
+      }, error => {
+        this.logger.error(error)
+      })
+
     }
   }
   removeICD(icd) {
@@ -194,11 +202,20 @@ export class BilllableBillingComponent implements OnInit {
     this.icdData.map(res => {
       if (res.code == icd.code) {
         this.icdData.splice(index, 1);
+        let data = { id: this.billingId, diagnosis_code: this.icdData }
+        this.billingService.updateDiagnosisCode(data).subscribe(code => {
+          this.IcdDataSource = new MatTableDataSource(this.icdData);
+          this.selectedIcd = { code: "", name: "" };
+          this.alertService.openSnackBar("ICD data removed succssfully", "success");
+          this.icdCtrl.reset();
+          this.logger.log("icd 10 data", this.icdData)
+        }, error => {
+          this.logger.error(error)
+        })
       }
       index = index + 1;
     })
-    this.IcdDataSource = new MatTableDataSource(this.icdData);
-    this.alertService.openSnackBar("ICD data removed succssfully", "success");
+   
   }
   icdExpandID: any;
   expandId1: any;
