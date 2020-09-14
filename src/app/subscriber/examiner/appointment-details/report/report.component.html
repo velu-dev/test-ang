@@ -1,59 +1,65 @@
 <div class="billable-item-status">
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100">
-      <div class="main-title">Report Transcription and Compilation On Demand Status  <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="The Transcriptionist will use the dictation and the documents submitted to them to create a rough draft of the Report. View the Transcriptionist’s progress here"><i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <div class="main-title">Report Transcription and Compilation On Demand Status <span
+          class="m-l-10 info ondemand-info" matTooltipPosition="above"
+          matTooltip="The Transcriptionist will use the dictation and the documents submitted to them to create a rough draft of the Report. View the Transcriptionist’s progress here"><i
+            class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description"> View the progress of the Transcription and compilation services here.</p>
-      <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class"></mat-progress-bar>
+      <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class">
+      </mat-progress-bar>
       <div class="text-center">{{reportData?.on_demand_status}}</div>
     </div>
   </div>
 
   <div fxLayout="row wrap" class="p-t-25">
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-      <div class="main-title">Report Documents  <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="Upload your dictation to this table."><i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description"> Upload documents to be incorporated into the report here. Click the checkboxes to select the documents to be sent for
+      <div class="main-title">Report Documents <span class="m-l-10 info ondemand-info" matTooltipPosition="above"
+          matTooltip="Upload your dictation to this table."><i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <p class="description"> Upload documents to be incorporated into the report here. Click the checkboxes to select
+        the documents to be sent for
         On Demand Transcription & Report Building.</p>
 
-        <div fxLayout="row wrap" class="p-l-10 w-100" class="m-b-10">
-          <mat-form-field fxFLex="30" fxFlex.sm="100"  fxFlex.xs="100" appearance="outline" class="m-t-10">
-            <mat-label>Select Type</mat-label>
-            <mat-select [(ngModel)]="documentType" (selectionChange)="docChange($event.value)">
-              <mat-option *ngFor="let doc of documentList" [value]="doc.id">
-                {{doc.document_category_name}}
+      <div fxLayout="row wrap" class="upload-sec w-100 m-b-10">
+        <mat-form-field fxFLex="30" fxFlex.sm="100" fxFlex.xs="100" appearance="outline" class="m-t-10">
+          <mat-label>Select Type</mat-label>
+          <mat-select [(ngModel)]="documentType" (selectionChange)="docChange($event.value)">
+            <mat-option *ngFor="let doc of documentList" [value]="doc.id">
+              {{doc.document_category_name}}
             </mat-option>
-            </mat-select>
+          </mat-select>
+        </mat-form-field>
+        <div fxFlex="50" *ngIf="documentType == 6" fxFlex.sm="100" fxFlex.xs="100" class="upload-file">
+          <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
+          <mat-form-field appearance="standard" class="p-l-10 w-100">
+            <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
+            <input type="file" #uploader hidden (change)="addFile($event)" multiple
+              accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+            <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
+            <mat-hint *ngIf="errors.file.isError">
+              <mat-error>{{errors.file.error}}</mat-error>
+            </mat-hint>
           </mat-form-field>
-          <div fxFlex="50" *ngIf="documentType == 6" fxFlex.sm="100"  fxFlex.xs="100" class="upload-file m-l-10">
-            <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
-            <mat-form-field appearance="standard" class="p-l-10 w-100">
-              <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
-              <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
-              <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
-              <mat-hint *ngIf="errors.file.isError">
-                <mat-error>{{errors.file.error}}</mat-error>
-            </mat-hint>
-            </mat-form-field>
-          </div>
-
-          <div fxFlex="50" *ngIf="documentType == 7" fxFlex.sm="100"  fxFlex.xs="100" class="upload-file m-l-10">
-            <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
-            <mat-form-field appearance="standard" class="p-l-10 w-100">
-              <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
-              <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                accept=".mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
-              <mat-hint>Supported file formats: .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
-              <mat-hint *ngIf="errors.file.isError">
-                <mat-error>{{errors.file.error}}</mat-error>
-            </mat-hint>
-            </mat-form-field>
-          </div>
-
-          <div fxFlex="20"  fxFlex.sm="100"  fxFlex.xs="100">
-            <button mat-raised-button class="filled-gray m-t-15" type="button" (click)="uploadFile()">Add</button>
-          </div>
         </div>
-      <div class="basic-table striped_  m-l-10 vertical-fixed m-t-10">
+
+        <div fxFlex="50" *ngIf="documentType == 7" fxFlex.sm="100" fxFlex.xs="100" class="upload-file m-l-10">
+          <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
+          <mat-form-field appearance="standard" class="p-l-10 w-100">
+            <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
+            <input type="file" #uploader hidden (change)="addFile($event)" multiple
+              accept=".mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
+            <mat-hint>Supported file formats: .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
+            <mat-hint *ngIf="errors.file.isError">
+              <mat-error>{{errors.file.error}}</mat-error>
+            </mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100">
+          <button mat-raised-button class="filled-gray m-t-15" type="button" (click)="uploadFile()">Add</button>
+        </div>
+      </div>
+      <div class="basic-table striped_ vertical-fixed m-t-10">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100 user-table">
 
           <!-- Checkbox Column -->
@@ -88,7 +94,8 @@
 
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action </th>
-            <td mat-cell *matCellDef="let element" class="p-l-0" (click)="$event.stopPropagation();deleteDocument(element)">
+            <td mat-cell *matCellDef="let element" class="p-l-0"
+              (click)="$event.stopPropagation();deleteDocument(element)">
               <a class="text-danger text-center">Remove</a>
             </td>
           </ng-container>
@@ -125,8 +132,9 @@
 
   <div fxLayout="row wrap" class="send-document">
     <div fxFlex="100">
-      <div class="main-title">Documents Sent <span class="m-l-10 info ondemand-info" matTooltipPosition="above" matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and
-        the document recipients."><i class="fa fa-question" aria-hidden="true"></i></span></div>
+      <div class="main-title">Documents Sent <span class="m-l-10 info ondemand-info" matTooltipPosition="above"
+          matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and
+        the document recipients."><i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">This table lists the documents sent to the transcriptionist.</p>
 
       <div class="user-detail vertical-fixed">
@@ -142,11 +150,16 @@
                 </mat-icon>
               </span>
               <div>
-                <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType" alt=""></span>
+                <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType"
+                    alt=""></span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ? 'Yes' : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
-                <span *ngIf="column == 'date_of_request'" class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
-                <span *ngIf="column == 'date_of_communication' && element?.received" class="no-wrap-td">{{element?.received?.date_of_communication | date:'MM-dd-yyyy' }}</span>
+                <span *ngIf="column == 'service_priority'"
+                  class="no-wrap-td">{{element?.service_priority == 'rush' ? 'Yes' : ''}}
+                  {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
+                <span *ngIf="column == 'date_of_request'"
+                  class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
+                <span *ngIf="column == 'date_of_communication' && element?.received"
+                  class="no-wrap-td">{{element?.received?.date_of_communication | date:'MM-dd-yyyy' }}</span>
                 <span *ngIf="column == 'download' && element?.send">
                   <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
                 </span>
@@ -161,11 +174,21 @@
               <div class="detail" [@detailExpand]="expandIdOut == element.document_id ? 'expanded' : 'collapsed'">
                 <div class="responsive-table">
                   <div><span>File Name</span><span> {{element?.file_name}} </span></div>
-                  <div class="no-wrap-td"><span>Rush Request?</span><span> {{element?.request_rush}} </span></div>
-                  <div class="no-wrap-td"><span>Date Requested</span><span> {{element?.request_date}} </span></div>
-                  <div><span>Download</span><span>
-                    <a class="text-success" (click)="inOutdownload(element)">Download</a>
-                  </span></div>
+                  <div class="no-wrap-td"><span>Rush
+                      Request?</span><span>{{element?.service_priority == 'rush' ? 'Yes' : ''}}
+                      {{element?.service_priority == 'normal' ? 'No' : ''}} </span></div>
+                  <div class="no-wrap-td"><span>Date Requested</span><span>
+                      {{element?.date_of_request | date:'MM-dd-yyyy'}}</span></div>
+                  <div><span>Date
+                      Received</span><span
+                      *ngIf="element?.received">{{element?.received?.date_of_communication | date:'MM-dd-yyyy' }}</span>
+                  </div>
+                  <div><span>Download Submitted Items</span> <span *ngIf="element?.send">
+                      <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
+                    </span></div>
+                  <div><span>Download Compiled Document</span> <span *ngIf="element?.received">
+                      <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
+                    </span></div>
                 </div>
               </div>
             </td>

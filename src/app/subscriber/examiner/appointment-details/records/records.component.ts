@@ -64,8 +64,8 @@ export class RecordsComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "File Name", "Download"]
-        this.columnsToDisplay = ['is_expand', 'file_name', "download"]
+        this.columnName = ["", "File Name"]
+        this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
         this.columnName = ["","File Name", "Document Pages", "Rush Request?", "Date Requested ", "Date Received", "Download Record Document", "Download Record Summary"]
         this.columnsToDisplay = ['doc_image','file_name', 'no_of_units', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
