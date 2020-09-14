@@ -31,9 +31,9 @@ export class AppComponent {
 
     this.intercom.getClaimNumber().subscribe(number => {
       if (!number) {
-        this.breadcrumbService.set("subscriber/claimants/claimant/:id/claim/:id", "Claim")
+        this.breadcrumbService.set("@Claim", "Claim")
       } else {
-        this.breadcrumbService.set("subscriber/claimants/claimant/:id/claim/:id", number)
+        this.breadcrumbService.set("@Claim", number)
       }
     })
 
@@ -42,13 +42,13 @@ export class AppComponent {
 
   }
   ngOnInit() {
-    this.listenRouting();
-    ROUTES.map(menu => {
-      let menuData = {};
-      menuData = menu
-      menuData['children'] = menu.submenu;
-      this.menu.push(menuData)
-    })
+   // this.listenRouting();
+    // ROUTES.map(menu => {
+    //   let menuData = {};
+    //   menuData = menu
+    //   menuData['children'] = menu.submenu;
+    //   this.menu.push(menuData)
+    // })
 
    let claimant =  this.cookieService.get('claimDeatis');
   

@@ -17,7 +17,8 @@ const routes: Routes = [
     path: "subscriber",
     component: CommonLayoutComponent,
     canActivate: [AuthGuard],
-    loadChildren: () => import('./subscriber/subscriber.module').then(m => m.SubscriberModule)
+    loadChildren: () => import('./subscriber/subscriber.module').then(m => m.SubscriberModule),
+    data: { breadcrumb: "Home" }
   }, {
     path: "admin",
     component: CommonLayoutComponent,
