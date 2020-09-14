@@ -62,7 +62,8 @@
 
     </div> -->
     <div class="user-detail  vertical-fixed">
-        <table mat-table [dataSource]="correspondenceSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
+        <table mat-table [dataSource]="correspondenceSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
+            matSort>
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
                     {{columnName[i]}} </th>
@@ -74,7 +75,8 @@
                         </mat-icon>
                     </span>
                     <div>
-                        <span *ngIf="column == 'doc_image'" class="file_type_icon"><img [src]="element?.file_name | fileType" alt=""></span>
+                        <span *ngIf="column == 'doc_image'" class="file_type_icon"><img
+                                [src]="element?.file_name | fileType" alt=""></span>
                         <span *ngIf="column == 'file_name'"><b class="p-t-5">{{element?.file_name}}</b>
                             <br />
                             <small>Note : {{element?.notes}}</small>
@@ -100,8 +102,8 @@
                             <div><span>File Name</span><span>{{element?.file_name}}</span></div>
                             <div><span>Note</span><span> {{element?.notes}}</span></div>
                             <div><span>Uploaded On</span><span> {{element?.updatedAt |  date:'MM-dd-yyyy' }} <small
-                                    class="p-l-10"><span class="fa fa-clock-o"></span>
-                                    {{element?.updatedAt |  date:'hh:mm a' }} </small> </span></div>
+                                        class="p-l-10"><i class="fa fa-clock-o"></i>
+                                        {{element?.updatedAt |  date:'hh:mm a' }} </small> </span></div>
                         </div>
                     </div>
                 </td>
