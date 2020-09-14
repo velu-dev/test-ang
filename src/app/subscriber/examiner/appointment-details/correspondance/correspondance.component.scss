@@ -100,6 +100,15 @@ th {
     border-radius: 2px;
     width: auto;
     float: right;
+
+    @media only screen and (max-width: 568px) {
+        float: left;
+        background-color: $info-bg;
+        border: 2px solid $info-border;
+        margin: 5px 0;
+        width: -webkit-fill-available;
+        border-radius: 4px;
+    }
     i {
         margin-right: 10px;
     }
