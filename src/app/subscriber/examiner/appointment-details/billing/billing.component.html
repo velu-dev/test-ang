@@ -246,24 +246,24 @@
                                 <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls ; let i=index">
                                   <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                                     <td>
-                                      <mat-form-field>
+                                      <mat-form-field appearance="outline">
                                         <input matInput type="text" formControlName="name">
                                       </mat-form-field>
                                     </td>
                                     <td>
-                                      <mat-form-field>
+                                      <mat-form-field appearance="outline">
                                         <input matInput type="tetx" formControlName="email">
                                       </mat-form-field>
                                     </td>
                                     <td>
-                                      <mat-form-field>
+                                      <mat-form-field appearance="outline">
                                         <input matInput matInput [matDatepicker]="picker" formControlName="dob">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                       </mat-form-field>
                                     </td>
                                     <td>
-                                      <mat-form-field>
+                                      <mat-form-field appearance="outline">
                                         <mat-select formControlName="bloodGroup">
                                           <mat-option value="O+">O</mat-option>
                                           <mat-option value="A">A</mat-option>
@@ -273,13 +273,19 @@
                                       </mat-form-field>
                                     </td>
                                     <td>
-                                      <mat-form-field>
+                                      <mat-form-field appearance="outline">
                                         <input matInput type="text" formControlName="mobNumber">
                                       </mat-form-field>
                                     </td>
-                                    <td>
-                                      <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
-                                      <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
+                                    <td class="no-wrap-td">
+                                        <a class="text-success" (click)="deleteRow(i)">
+                                            Save
+                                        </a>
+                                        <a class="text-danger m-l-10" (click)="doneRow(group)">
+                                            Cancel
+                                        </a>
+                                      <!-- <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
+                                      <mat-icon class="done" (click)="doneRow(group)">done</mat-icon> -->
                                     </td>
                                   </tr>
                                   <tr *ngIf="!group.get('isEditable').value" >
@@ -299,7 +305,10 @@
                                       {{group.get('mobNumber').value}}
                                     </td>
                                     <td>
-                                      <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>
+                                      <!-- <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon> -->
+                                      <a class="text-danger"(click)="editRow(group)">
+                                        Edit
+                                    </a>
                                     </td>
                                   </tr>
                                 </ng-container>

@@ -237,3 +237,57 @@ tr.detail-row {
     width: 20px;
   }
 }
+
+.billing-table {
+  width: $width-100;
+  border-collapse: collapse;
+
+  thead {
+  
+    th {
+      padding: 12px 10px !important;
+      color: $white !important;
+      font-size: $font-size-1;
+      background-color: $active;
+      white-space: pre;
+    
+    }
+  }
+  tbody {
+  
+    tr {
+      &:nth-child(even) {
+        background-color: $table-solid;
+      }
+      &:nth-child(odd) {
+        background-color: $white !important;
+      }
+      td {
+        color: $dark-gray;
+        padding: 0px 10px !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      
+        // mat-form-field {
+        //   border: 1px solid $light-color;
+        //   border-radius: 3px;
+        // }
+        // input {
+        //   border: 1px solid $light-color;
+        //   border-radius: 3px;
+        //   padding: 5px 5px;
+        // }
+        .delete {
+          color: $danger;
+        }
+
+        .done {
+          color: $btn_success;
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+}
+.billing-table tr th,.billing-table tr td {
+  border: 1px solid $light-color;
+} 
