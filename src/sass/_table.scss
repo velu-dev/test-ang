@@ -241,20 +241,19 @@ tr.detail-row {
 .billing-table {
   width: $width-100;
   border-collapse: collapse;
+  table-layout: fixed;
 
   thead {
-  
     th {
       padding: 12px 10px !important;
       color: $white !important;
       font-size: $font-size-1;
       background-color: $active;
       white-space: pre;
-    
+      text-align: left;
     }
   }
   tbody {
-  
     tr {
       &:nth-child(even) {
         background-color: $table-solid;
@@ -266,28 +265,34 @@ tr.detail-row {
         color: $dark-gray;
         padding: 0px 10px !important;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      
-        // mat-form-field {
-        //   border: 1px solid $light-color;
-        //   border-radius: 3px;
-        // }
-        // input {
-        //   border: 1px solid $light-color;
-        //   border-radius: 3px;
-        //   padding: 5px 5px;
-        // }
-        .delete {
-          color: $danger;
+        &:first-child {
+          width: 100px;
         }
-
-        .done {
-          color: $btn_success;
-          padding-left: 10px;
+        .mat-form-field.mat-form-field-appearance-outline .mat-form-field-infix {
+          padding: 5px 0 10px 0;
         }
+        mat-form-field {
+          width: 100%;
+          .mat-form-field-wrapper {
+            padding-bottom: 5px !important;
+          }
+        }
+        // .w-100 {
+        //   width: 100px;
+        // }
+        a {
+          cursor: pointer;
+        }
+      }
+    }
+    tr.bill-value {
+      td {
+        padding: 12px 10px !important;
       }
     }
   }
 }
-.billing-table tr th,.billing-table tr td {
+.billing-table tr th,
+.billing-table tr td {
   border: 1px solid $light-color;
-} 
+}
