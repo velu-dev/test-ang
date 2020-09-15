@@ -139,12 +139,12 @@
             <mat-card-header>
                 <div class="content-wrapper-main-title">Billing Line Items</div>
                 <span class="spacer"></span>
-                <button mat-raised-button class="filled-gray" [disabled]="!userTable.valid" (click)="addRow()">
+                <button mat-raised-button class="filled-gray m-b-5" [disabled]="!userTable.valid" (click)="addRow()">
                     Add Bill Item
                 </button>
             </mat-card-header>
             <mat-divider></mat-divider>
-            <mat-card-content>
+            <mat-card-content class="m-b-10">
                 <!-- <div fxLayout="row wrap" class="m-t-10">
                     <div class="table-filter m-b-10">
                         <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
@@ -263,17 +263,17 @@
                                                 </mat-form-field>
                                             </td>
                                             <td>
-                                                <mat-form-field appearance="outline">
+                                                <mat-form-field appearance="outline" class="w-100">
                                                     <input matInput type="text" autocomplete="off" formControlName="modifier">
                                                 </mat-form-field>
                                             </td>
                                             <td>
-                                                <mat-form-field appearance="outline">
+                                                <mat-form-field appearance="outline" class="w-100">
                                                     <input matInput type="number" autocomplete="off" formControlName="units">
                                                 </mat-form-field>
                                             </td>
                                             <td>
-                                                <mat-form-field appearance="outline">
+                                                <mat-form-field appearance="outline" class="w-100">
                                                     <input matInput type="number" autocomplete="off" formControlName="charge">
                                                 </mat-form-field>
                                             </td>
@@ -287,10 +287,10 @@
                                                 <!-- <mat-form-field appearance="outline">
                                                     <input matInput type="text" autocomplete="off" disable formControlName="balance">
                                                 </mat-form-field> -->
-                                                0
+                                               <span class="text-danger"> 0</span>
                                             </td>
 
-                                            <td class="no-wrap-td">
+                                            <td class="no-wrap-td text-center">
                                                 <a class="text-success" (click)="doneRow(group)">
                                                     Save
                                                 </a>
@@ -301,7 +301,7 @@
                                       <mat-icon class="done" (click)="doneRow(group)">done</mat-icon> -->
                                             </td>
                                         </tr>
-                                        <tr *ngIf="!group.get('isEditable').value">
+                                        <tr *ngIf="!group.get('isEditable').value" class="bill-value">
                                             <td>
                                                 {{group.get('item').value}}
                                             </td>
@@ -323,13 +323,13 @@
                                             <td>
                                                 {{group.get('balance').value}}
                                             </td>
-                                            <td>
+                                            <td class="no-wrap-td text-center">
                                                 <!-- <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon> -->
-                                                <a class="text-danger" (click)="editRow(group)">
+                                                <a class="text-success" (click)="editRow(group)">
                                                     Edit
                                                 </a>
 
-                                                <a class="text-danger" (click)="deleteRow(group)">
+                                                <a class="text-danger m-l-0" (click)="deleteRow(group)">
                                                     Remove
                                                 </a>
                                             </td>
