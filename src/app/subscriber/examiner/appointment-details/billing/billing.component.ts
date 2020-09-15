@@ -3,7 +3,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { NGXLogger } from 'ngx-logger';
 import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
@@ -63,11 +63,19 @@ export class BilllableBillingComponent implements OnInit {
   modifiers: any;
   billingData: any;
 
+
+  //table
+  userTable: FormGroup;
+  control: FormArray;
+  mode: boolean;
+  touchedRows: any;
+
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    public billingService: BillingService) {
+    public billingService: BillingService,
+    private fb: FormBuilder) {
     this.route.params.subscribe(param => {
       this.paramsId = param;
       if (!param.billingId) {
@@ -162,6 +170,13 @@ export class BilllableBillingComponent implements OnInit {
 
     this.getDocumentData();
     this.getBillingDetails();
+
+    //table
+    this.touchedRows = [];
+    this.userTable = this.fb.group({
+      tableRows: this.fb.array([])
+    });
+    this.addRow();
   }
 
   getBillingDetails() {
@@ -359,6 +374,54 @@ export class BilllableBillingComponent implements OnInit {
     })
 
 
+  }
+
+  ngAfterOnInit() {
+    this.control = this.userTable.get('tableRows') as FormArray;
+  }
+
+  initiateForm(): FormGroup {
+    return this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.email, Validators.required]],
+      dob: ['', [Validators.required]],
+      bloodGroup: [''],
+      mobNumber: ['', [Validators.required, Validators.maxLength(10)]],
+      isEditable: [true]
+    });
+  }
+
+  addRow() {
+    const control =  this.userTable.get('tableRows') as FormArray;
+    control.push(this.initiateForm());
+  }
+
+  deleteRow(index: number) {
+    const control =  this.userTable.get('tableRows') as FormArray;
+    control.removeAt(index);
+  }
+
+  editRow(group: FormGroup) {
+    group.get('isEditable').setValue(true);
+  }
+
+  doneRow(group: FormGroup) {
+    group.get('isEditable').setValue(false);
+  }
+
+  saveUserDetails() {
+    console.log(this.userTable.value);
+  }
+
+  get getFormControls() {
+    const control = this.userTable.get('tableRows') as FormArray;
+    return control;
+  }
+
+  submitForm() {
+    const control = this.userTable.get('tableRows') as FormArray;
+    this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
+    console.log(this.touchedRows);
   }
 }
 const ELEMENT_DATA1 = [
