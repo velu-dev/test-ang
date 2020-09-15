@@ -329,7 +329,7 @@
                                                     Edit
                                                 </a>
 
-                                                <a class="text-danger" (click)="deleteRow(group)">
+                                                <a *ngIf="i != 0" class="text-danger" (click)="deleteRow(group)">
                                                     Remove
                                                 </a>
                                             </td>
