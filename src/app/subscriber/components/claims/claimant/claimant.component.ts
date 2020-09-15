@@ -103,7 +103,7 @@ export class ClaimantComponent implements OnInit {
     })
   }
   gotoEdit(e) {
-    this.cookieService.set('claimDeatis',e.last_name+', '+ e.first_name)
+    this.cookieService.set('claimDeatis', e.last_name + ', ' + e.first_name)
     this.router.navigate(["subscriber/claimants/claimant", e.id])
   }
 
@@ -132,7 +132,7 @@ export class ClaimantComponent implements OnInit {
     }
   }
   openClaimant() {
-    this.router.navigate(['subscriber/claims/new-claim'])
+    this.router.navigate(['subscriber/claimants/new-claimant'])
   }
 
 }
