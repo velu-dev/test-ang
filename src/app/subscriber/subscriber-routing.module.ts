@@ -51,11 +51,11 @@ const routes: Routes = [{
   }, {
     path: "claimant-awaiting",
     component: ClaimantAwaitingComponent,
-    data: { breadcrumb: "Claimant Awaiting Details" }
+    data: { breadcrumb: "Claimants Awaiting Details" }
   }, {
     path: "claim-awaiting",
     component: ClaimAwaitingComponent,
-    data: { breadcrumb: "Claim Awaiting Details" }
+    data: { breadcrumb: "Claims Awaiting Details" }
   }, {
     path: "billable-item-awaiting",
     component: BillableItemAwaitingComponent,
@@ -71,7 +71,7 @@ const routes: Routes = [{
   }, {
     path: "billing-collection",
     component: BillingCollectionComponent,
-    data: { breadcrumb: "Billing And Collection" }
+    data: { breadcrumb: "Billing And Collections" }
   }]
 },
 {
@@ -157,7 +157,7 @@ const routes: Routes = [{
     },
     {
       path: "new-claimant",
-      component: NewClaimantComponent,
+      component: NewClaimComponent,
       data: { breadcrumb: "New Claimant" }
     },
     {
@@ -165,14 +165,15 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: NewClaimantComponent,
-        data: { breadcrumb:  { alias: '@Claimant' } }
-      }, {
+        data: { breadcrumb: { alias: '@Claimant' } }
+      }, 
+      {
         path: "claim/:claim_id",
         children: [{
           path: "",
           component: EditClaimComponent,
           //data: { breadcrumb: "Claim" },
-          data: { breadcrumb:  { alias: '@Claim' } }
+          data: { breadcrumb: { alias: '@Claim' } }
         }, {
           path: "new-billable-item",
           component: NewBillableItemComponent,
