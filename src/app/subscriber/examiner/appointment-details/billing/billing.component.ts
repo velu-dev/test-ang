@@ -176,7 +176,7 @@ export class BilllableBillingComponent implements OnInit {
     this.userTable = this.fb.group({
       tableRows: this.fb.array([])
     });
-    this.addRow();
+   
   }
 
   getBillingDetails() {
@@ -185,6 +185,21 @@ export class BilllableBillingComponent implements OnInit {
       this.icdData = billing.data.billing_diagnosis_code;
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)
+
+      this.addRow();
+      let firstData= {
+        id:billing.data.billing_line_items[0].id,
+        item: billing.data.billing_line_items[0].item_description,
+        procedure_code: billing.data.billing_line_items[0].procedure_code,
+        modifier: billing.data.billing_line_items[0].modifier,
+        units: billing.data.billing_line_items[0].units,
+        charge: billing.data.billing_line_items[0].charge,
+        payment: 0,
+        balance: 1,
+        isEditable: [true]
+      }
+      this.getFormControls.controls[0].patchValue(firstData)
+      console.log(this.getFormControls.controls[0])
     }, error => {
       this.logger.error(error)
     })
@@ -415,7 +430,6 @@ export class BilllableBillingComponent implements OnInit {
     console.log("Done", group.value)
     if (group.status == "INVALID") {
       group.markAllAsTouched();
-      alert();
       return;
     }
     group.get('isEditable').setValue(false);
@@ -430,14 +444,33 @@ export class BilllableBillingComponent implements OnInit {
     return control;
   }
 
-  submitForm() {
-    const control = this.userTable.get('tableRows') as FormArray;
-    this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-    console.log(this.touchedRows);
+  // submitForm() {
+  //   const control = this.userTable.get('tableRows') as FormArray;
+  //   this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
+  //   console.log(this.touchedRows);
+  // }
+
+  cancelRow(group: FormGroup,i) {
+    console.log("cancel", group,i);
+   
+    let data= {
+      id:this.billingData.billing_line_items[i].id,
+      item: this.billingData.billing_line_items[i].item_description,
+      procedure_code: this.billingData.billing_line_items[i].procedure_code,
+      modifier: this.billingData.billing_line_items[i].modifier,
+      units: this.billingData.billing_line_items[i].units,
+      charge: this.billingData.billing_line_items[i].charge,
+      payment: 0,
+      balance: 1,
+      isEditable: [false]
+    }
+    group.patchValue(data);
+    group.get('isEditable').setValue(false);
+
   }
 
-  cancelRow(group: FormGroup) {
-    console.log("cancel", group)
+  rowSelected(group: FormGroup){
+    //console.log("select", group);
   }
 }
 const ELEMENT_DATA1 = [

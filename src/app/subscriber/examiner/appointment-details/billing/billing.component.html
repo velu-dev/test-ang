@@ -250,12 +250,15 @@
                                 </thead>
                                 <tbody>
                                     <ng-container formArrayName="tableRows"
-                                        *ngFor="let group of getFormControls.controls ; let i=index">
-                                        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+                                        *ngFor="let group of getFormControls.controls ; let i=index" >
+                                        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i" (click)="rowSelected(group)">
                                             <td>
-                                                <mat-form-field appearance="outline">
-                                                    <input matInput type="text" autocomplete="off" formControlName="item">
+                                                <mat-form-field appearance="outline" *ngIf="i != 0">
+                                                    <input matInput type="text" [disabled]="" autocomplete="off" formControlName="item">
                                                 </mat-form-field>
+                                                <span  *ngIf="i == 0">
+                                                    {{group.get('item').value}}
+                                                </span>
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline">
@@ -281,20 +284,20 @@
                                                 <!-- <mat-form-field appearance="outline">
                                                     <input matInput type="text" autocomplete="off" disable formControlName="payment">
                                                 </mat-form-field> -->
-                                                0
+                                                {{group.value.payment}}
                                             </td>
                                             <td>
                                                 <!-- <mat-form-field appearance="outline">
                                                     <input matInput type="text" autocomplete="off" disable formControlName="balance">
                                                 </mat-form-field> -->
-                                               <span class="text-danger"> 0</span>
+                                               <span class="text-danger"> {{group.value.balance}}</span>
                                             </td>
 
                                             <td class="no-wrap-td text-center">
                                                 <a class="text-success" (click)="doneRow(group)">
                                                     Save
                                                 </a>
-                                                <a class="text-danger m-l-10" (click)="cancelRow(group)">
+                                                <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
                                                     Cancel
                                                 </a>
                                                 <!-- <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
@@ -329,7 +332,7 @@
                                                     Edit
                                                 </a>
 
-                                                <a class="text-danger m-l-0" (click)="deleteRow(group)">
+                                                <a *ngIf="i != 0" class="text-danger m-l-0" (click)="deleteRow(group)">
                                                     Remove
                                                 </a>
                                             </td>
