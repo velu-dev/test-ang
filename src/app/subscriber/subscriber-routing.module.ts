@@ -676,12 +676,15 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: BillableItemComponent,
+      data: { breadcrumb: "Bills" }
     }, {
       path: "new-billable-item/:claim/:claimant",
-      component: NewBillableItemComponent
+      component: NewBillableItemComponent,
+      data: { breadcrumb: "New Bill" }
     }, {
       path: "edit-billable-item/:claim/:claimant/:billable",
-      component: NewBillableItemComponent
+      component: NewBillableItemComponent,
+      data: { breadcrumb: "New Bill" }
     }]
 
   },
