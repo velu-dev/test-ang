@@ -230,7 +230,7 @@ export class BilllableBillingComponent implements OnInit {
       }
       index = index + 1;
     })
-   
+
   }
   icdExpandID: any;
   expandId1: any;
@@ -380,38 +380,50 @@ export class BilllableBillingComponent implements OnInit {
     this.control = this.userTable.get('tableRows') as FormArray;
   }
 
+  //'item', 'procedure_code', 'modifier', 'units', 'charge', 'payment', 'balance', 'action'
   initiateForm(): FormGroup {
     return this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.email, Validators.required]],
-      dob: ['', [Validators.required]],
-      bloodGroup: [''],
-      mobNumber: ['', [Validators.required, Validators.maxLength(10)]],
+      id: [''],
+      item: ['', Validators.required],
+      procedure_code: ['', [Validators.required]],
+      modifier: ['', [Validators.required]],
+      units: ['', [Validators.required]],
+      charge: ['', [Validators.required]],
+      payment: [''],
+      balance: [''],
       isEditable: [true]
     });
   }
 
   addRow() {
-    const control =  this.userTable.get('tableRows') as FormArray;
+    const control = this.userTable.get('tableRows') as FormArray;
     control.push(this.initiateForm());
   }
 
   deleteRow(index: number) {
-    const control =  this.userTable.get('tableRows') as FormArray;
+    const control = this.userTable.get('tableRows') as FormArray;
     control.removeAt(index);
   }
 
   editRow(group: FormGroup) {
+    // if(group.status)
+    console.log("edit", group, group.status)
     group.get('isEditable').setValue(true);
   }
 
   doneRow(group: FormGroup) {
+    console.log("Done", group.value)
+    if (group.status == "INVALID") {
+      group.markAllAsTouched();
+      alert();
+      return;
+    }
     group.get('isEditable').setValue(false);
   }
 
-  saveUserDetails() {
-    console.log(this.userTable.value);
-  }
+  // saveUserDetails() {
+  //   console.log(this.userTable.value);
+  // }
 
   get getFormControls() {
     const control = this.userTable.get('tableRows') as FormArray;
@@ -422,6 +434,10 @@ export class BilllableBillingComponent implements OnInit {
     const control = this.userTable.get('tableRows') as FormArray;
     this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
     console.log(this.touchedRows);
+  }
+
+  cancelRow(group: FormGroup) {
+    console.log("cancel", group)
   }
 }
 const ELEMENT_DATA1 = [
