@@ -59,11 +59,11 @@ const routes: Routes = [{
   }, {
     path: "billable-item-awaiting",
     component: BillableItemAwaitingComponent,
-    data: { breadcrumb: "Billable Items Awaiting Details" }
+    data: { breadcrumb: "Billable Items Awaiting Scheduling" }
   }, {
     path: "upcomming-billable-item",
     component: UpcommingBillableItemComponent,
-    data: { breadcrumb: "Billable Items Awaiting Scheduling" }
+    data: { breadcrumb: "Upcoming Appointments" }
   }, {
     path: "unfinished-reports",
     component: UnfinishedReportComponent,
@@ -136,7 +136,8 @@ const routes: Routes = [{
       component: RecordsComponent
     }, {
       path: "reports",
-      component: ReportComponent
+      component: ReportComponent,
+      data:{breadcrumb: "Report"}
     }, {
       path: "billing",
       component: BilllableBillingComponent
@@ -166,7 +167,7 @@ const routes: Routes = [{
         path: "",
         component: NewClaimantComponent,
         data: { breadcrumb: { alias: '@Claimant' } }
-      }, 
+      },
       {
         path: "claim/:claim_id",
         children: [{
@@ -202,7 +203,8 @@ const routes: Routes = [{
             component: RecordsComponent
           }, {
             path: "reports",
-            component: ReportComponent
+            component: ReportComponent,
+            data: { breadcrumb: "Report" }
           }, {
             path: "billing",
             component: BilllableBillingComponent
@@ -270,7 +272,8 @@ const routes: Routes = [{
   },
   {
     path: "add-location/:status/:examiner",
-    component: AddEditServiceLocationComponent
+    component: AddEditServiceLocationComponent,
+    data: { breadcrumb: "Add Location" }
   },
   {
     path: "edit-location/:id",
@@ -351,7 +354,7 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: AppointmentComponent,
-        data: { breadcrumb: "Examinations" }
+        data: { breadcrumb: "Calendar" }
 
       }, {
         path: "appointment-details/:id/:billId",
@@ -373,7 +376,8 @@ const routes: Routes = [{
           component: RecordsComponent
         }, {
           path: "reports",
-          component: ReportComponent
+          component: ReportComponent,
+          data: { breadcrumb: "Report" }
         }, {
           path: "billing",
           component: BilllableBillingComponent
@@ -494,20 +498,23 @@ const routes: Routes = [{
     path: "staff",
     children: [{
       path: "",
-      component: ManageUserComponent
+      component: ManageUserComponent,
+      data: { breadcrumb: "Users" }
     }, {
       path: "new",
-      component: ManageNewUserComponent
+      component: ManageNewUserComponent,
+      data: { breadcrumb: "New" }
     }, {
       path: "edit/:id",
-      component: ManageNewUserComponent
+      component: ManageNewUserComponent,
+      data: { breadcrumb: "Edit" }
     }]
   }, {
     path: "appointment",
     children: [{
       path: "",
       component: AppointmentComponent,
-      data: { breadcrumb: "Examinations" }
+      data: { breadcrumb: "Calendar" }
     }, {
       path: "appointment-details/:id/:billId",
       component: AppointmentDetailsComponent,
@@ -518,7 +525,8 @@ const routes: Routes = [{
     path: "claimant",
     children: [{
       path: "",
-      component: ClaimantComponent
+      component: ClaimantComponent,
+      data: { breadcrumb: "Claimants" }
     }, {
       path: "new-claimant",
       component: NewClaimantComponent
@@ -553,13 +561,16 @@ const routes: Routes = [{
     path: "location",
     children: [{
       path: "",
-      component: ManageLocationComponent
+      component: ManageLocationComponent,
+      data: { breadcrumb: "Service Locations" }
     }, {
       path: "edit-location/:examiner_id/:address_id",
-      component: EditAddressComponent
+      component: EditAddressComponent,
+      data: { breadcrumb: "Edit Service Locations" }
     }, {
       path: "new-location",
-      component: ExaminerManageAddressComponent
+      component: ExaminerManageAddressComponent,
+      data: { breadcrumb: "New" }
     },
     {
       path: "existing-location",
@@ -567,7 +578,8 @@ const routes: Routes = [{
     },
     {
       path: "add-location",
-      component: AddEditServiceLocationComponent
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Add Location" }
     },
     {
       path: "edit-location/:id",
@@ -580,12 +592,15 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: BillingComponent,
+      data: { breadcrumb: "Bills" }
     }, {
       path: "new",
-      component: NewBillingComponent
+      component: NewBillingComponent,
+      data: { breadcrumb: "New" }
     }, {
       path: ":id",
-      component: EditBillingComponent
+      component: EditBillingComponent,
+      data: { breadcrumb: "Edit" }
     }]
   },
   {
@@ -621,14 +636,10 @@ const routes: Routes = [{
     data: { breadcrumb: { skip: true } }
   }, {
     path: "appointment",
-    component: AppointmentComponent,
-    data: { breadcrumb: "Examinations" }
-  }, {
-    path: "appointment",
     children: [{
       path: "",
       component: AppointmentComponent,
-      data: { breadcrumb: "Examinations" }
+      data: { breadcrumb: "Calendar" }
     }, {
       path: "appointment-details/:id/:billId",
       component: AppointmentDetailsComponent,
@@ -639,34 +650,43 @@ const routes: Routes = [{
     path: "claimant",
     children: [{
       path: "",
-      component: ClaimantComponent
+      component: ClaimantComponent,
+      data: { breadcrumb: "Claimants" }
     }, {
       path: "new-claimant",
-      component: NewClaimantComponent
+      component: NewClaimantComponent,
+      data: { breadcrumb: "New Claimant" }
     }, {
       path: "edit-claimant/:id",
       component: NewClaimantComponent,
+      data: { breadcrumb: "Edit Claimant" }
     }, {
       path: "edit-claimant/:claimant_id/new-claim",
       component: NewClaimComponent,
+      data: { breadcrumb: "New Claim" }
     }, {
       path: "edit-claim/:id",
-      component: NewClaimComponent
+      component: NewClaimComponent,
+      data: { breadcrumb: "Edit Claim" }
     }, {
       path: ":id/new-claim",
-      component: NewClaimComponent
+      component: NewClaimComponent,
+      data: { breadcrumb: "New Claim" }
     }]
   }, {
     path: "billable-item",
     children: [{
       path: "",
-      component: BillableItemComponent
+      component: BillableItemComponent,
+      data: { breadcrumb: "Bills" }
     }, {
       path: "new-billable-item/:claim/:claimant",
-      component: NewBillableItemComponent
+      component: NewBillableItemComponent,
+      data: { breadcrumb: "New Bill" }
     }, {
       path: "edit-billable-item/:claim/:claimant/:billable",
-      component: NewBillableItemComponent
+      component: NewBillableItemComponent,
+      data: { breadcrumb: "New Bill" }
     }]
 
   },
@@ -674,13 +694,16 @@ const routes: Routes = [{
     path: "location",
     children: [{
       path: "",
-      component: ManageLocationComponent
+      component: ManageLocationComponent,
+      data: { breadcrumb: "Service Locations" }
     }, {
       path: "edit-location/:examiner_id/:address_id",
-      component: EditAddressComponent
+      component: EditAddressComponent,
+      data: { breadcrumb: "Edit" }
     }, {
       path: "new-location",
-      component: ExaminerManageAddressComponent
+      component: ExaminerManageAddressComponent,
+      data: { breadcrumb: "New" }
     },]
 
   },
@@ -689,12 +712,15 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: BillingComponent,
+      data: { breadcrumb: "Bills" }
     }, {
       path: "new",
-      component: NewBillingComponent
+      component: NewBillingComponent,
+      data: { breadcrumb: "New" }
     }, {
       path: ":id",
-      component: EditBillingComponent
+      component: EditBillingComponent,
+      data: { breadcrumb: "Edit" }
     }]
   },
   {
