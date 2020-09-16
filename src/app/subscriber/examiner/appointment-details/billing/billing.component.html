@@ -27,6 +27,36 @@
     <div class="examiner-info">
         <mat-card>
             <mat-card-header>
+                <div class="content-wrapper-main-title p-t-5">Payor Information</div>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <div fxLayout="row wrap" class="p-t-20">
+                    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+                        <form>
+                            <div fxLayout="row wrap">
+                                <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payer ID</div>
+                                <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
+                                    <mat-label>Select Payer ID</mat-label>
+                                    <mat-select>
+                                        <mat-option value="1">CB768 - 1-2-1 CLAIMS</mat-option>
+                                        <mat-option *ngFor="let payor of payors" [value]="payor.name"
+                                            (click)="openSnackBar()">
+                                            {{payor.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- ===== Examiner information ==== -->
+    <div class="examiner-info">
+        <mat-card>
+            <mat-card-header>
                 <div class="content-wrapper-main-title">Provider Information</div>
             </mat-card-header>
             <mat-divider></mat-divider>
@@ -62,7 +92,9 @@
     <div class="diagnosis-info">
         <mat-card>
             <mat-card-header>
-                <div class="content-wrapper-main-title">Diagnosis Codes</div>
+                <div class="content-wrapper-main-title">Diagnosis Codes<span class="info ondemand-info m-l-10"
+                        matTooltip="You can 'Add' up to 12 diagnosis codes." matTooltipPosition="above"> <i
+                            class="fa fa-info" aria-hidden="true"></i></span></div>
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content>
@@ -254,27 +286,32 @@
                                         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                                             <td>
                                                 <mat-form-field appearance="outline">
-                                                    <input matInput type="text" autocomplete="off" formControlName="item">
+                                                    <input matInput type="text" autocomplete="off"
+                                                        formControlName="item">
                                                 </mat-form-field>
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline">
-                                                    <input matInput type="text" autocomplete="off" formControlName="procedure_code">
+                                                    <input matInput type="text" autocomplete="off"
+                                                        formControlName="procedure_code">
                                                 </mat-form-field>
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput type="text" autocomplete="off" formControlName="modifier">
+                                                    <input matInput type="text" autocomplete="off"
+                                                        formControlName="modifier">
                                                 </mat-form-field>
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput type="number" autocomplete="off" formControlName="units">
+                                                    <input matInput type="number" autocomplete="off"
+                                                        formControlName="units">
                                                 </mat-form-field>
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput type="number" autocomplete="off" formControlName="charge">
+                                                    <input matInput type="number" autocomplete="off"
+                                                        formControlName="charge">
                                                 </mat-form-field>
                                             </td>
                                             <td>
@@ -287,7 +324,7 @@
                                                 <!-- <mat-form-field appearance="outline">
                                                     <input matInput type="text" autocomplete="off" disable formControlName="balance">
                                                 </mat-form-field> -->
-                                               <span class="text-danger"> 0</span>
+                                                <span class="text-danger"> 0</span>
                                             </td>
 
                                             <td class="no-wrap-td text-center">
@@ -487,15 +524,16 @@
 
     <div class="border-dashed-blue m-b-20 m-t-20"></div>
 
-    <!-- ===== Completed Documents ==== -->
+    <!-- ===== Billing Documents ==== -->
     <div class="completed-documents m-t-30">
         <mat-card>
             <mat-card-content>
                 <div fxLayout="row wrap" class="w-100">
                     <div fxFlex="100">
-                        <div class="main-title p-l-0">Completed Documents</div>
+                        <div class="main-title p-l-0">Billing Documents</div>
                         <p class="description p-l-0">This table lists the documents, actions that were performed on the
-                            documents, the date that the actions were performed and the document recipients.</p>
+                            documents, the date
+                            that the actions were performed and the document recipients.</p>
                     </div>
                     <div class="user-detail vertical-fixed" fxFlex="100">
                         <table mat-table [dataSource]="dataSource3" multiTemplateDataRows
@@ -516,15 +554,17 @@
                                                 [src]="element?.file_name | fileType" alt=""></span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'">{{element?.action}}</span>
-                                        <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date}}</span>
+                                        <span *ngIf="column == 'date_submitted'"
+                                            class="no-wrap-td">{{element?.date_submitted}}</span>
+                                        <span *ngIf="column == 'date_received'"
+                                            class="no-wrap-td">{{element?.date_received}}</span>
                                         <span *ngIf="column == 'recipients'">{{element?.recipients}}</span>
-                                        <span *ngIf="column == 'sent_document'">
+                                        <span *ngIf="column == 'download'">
                                             <a class="text-success m-r-10">Download</a>
                                         </span>
-                                        <span *ngIf="column == 'proof_of_service'">
+                                        <!-- <span *ngIf="column == 'proof_of_service'">
                                             <a class="text-success m-r-10">Download</a>
-                                        </span>
-                                        <!-- <span *ngIf="column == 'action'">
+                                        </span> <span *ngIf="column == 'action'">
                                             <a class="text-success m-r-10">Edit</a>
                                             <a class="text-danger">Remove</a>
                                         </span> -->
@@ -538,16 +578,20 @@
                                         <div class="responsive-table">
                                             <div><span>File Name</span><span> {{element?.file_name}} </span></div>
                                             <div><span>Action</span><span> {{element?.action}} </span></div>
-                                            <div><span>Date</span><span> {{element?.date}} </span></div>
+                                            <div><span>Date Submitted</span><span> {{element?.date_submitted}} </span>
+                                            </div>
+                                            <div><span>Date Submitted</span><span> {{element?.date_received}} </span>
+                                            </div>
                                             <div><span>Recipients</span><span>{{element?.recipients}} </span></div>
-                                            <div><span>Download
-                                                    Sent Documents</span><span> <a
+                                            <div><span>Download</span><span> <a class="text-success">Download</a>
+                                                </span></div>
+                                            <!-- <div><span>Download</span><span> <a
                                                         class="text-success m-r-10">Download</a>
                                                 </span></div>
                                             <div><span>Download
                                                     Proof of Service</span><span> <a
                                                         class="text-success m-r-10">Download</a>
-                                                </span></div>
+                                                </span></div> -->
 
                                         </div>
                                     </div>
