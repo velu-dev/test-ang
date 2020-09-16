@@ -70,12 +70,20 @@ export class BilllableBillingComponent implements OnInit {
   mode: boolean;
   touchedRows: any;
 
+  payors = [
+    { name: "WC100 - 1-888-OHIOCOMP"},
+    { name: "37850 - 1ST AUTO & CASUALTY (CORVEL)"},
+    { name: "WC170 - 1ST CHOICE STAFFING INC"},
+    { name: "WC171 - 20/20 BUILDERS"},
+    { name: "CB150 - 21ST CENTURY INSURANCE"},
+  ]
+
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     public billingService: BillingService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,) {
     this.route.params.subscribe(param => {
       this.paramsId = param;
       if (!param.billingId) {
@@ -123,8 +131,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName3 = ["", "File Name", "Action"]
         this.columnsToDisplay3 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName3 = ["", "File Name", "Action", "Date", "Recipients", "Download Sent Documents", "Download Proof of Service"]
-        this.columnsToDisplay3 = ['doc_image', 'file_name', 'action', 'date', "recipients", "sent_document", "proof_of_service"]
+        this.columnName3 = ["", "File Name", "Action", "Date Submitted", "Date Received", "Recipients", "Download"]
+        this.columnsToDisplay3 = ['doc_image', 'file_name', 'action', 'date_submitted', 'date_received', "recipients", "download"]
       }
     })
   }
@@ -209,6 +217,9 @@ export class BilllableBillingComponent implements OnInit {
   selectICD(icd) {
     this.selectedIcd = { code: icd[0], name: icd[1] }
 
+  }
+  openSnackBar() {
+    this.alertService.openSnackBar("Payor changed successfully", "success");
   }
   addIcd() {
     if (this.selectedIcd.code != '') {
@@ -489,9 +500,9 @@ const ELEMENT_DATA1 = [
 
 // ];
 const ELEMENT_DATA3 = [
-  { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date": "05-25-2019", "recipients": "Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "sent_document": "Download", "proof_of_service": "Download" },
-  { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date": "05-25-2019", "recipients": "", "sent_document": "Download", "proof_of_service": "Download" },
-  { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date": "05-25-2019", "recipients": "", "sent_document": "Download", "proof_of_service": "Download" },
+  { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date_submitted": "05-25-2019",  "date_received": "05-25-2019", "recipients": "Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "download": "Download",},
+  { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date_submitted": "05-25-2019",  "date_received": "05-25-2019", "recipients": "", "download": "Download",},
+  { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date_submitted": "05-25-2019",  "date_received": "05-25-2019", "recipients": "", "download": "Download",},
 
 ];
 

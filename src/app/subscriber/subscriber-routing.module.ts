@@ -63,7 +63,7 @@ const routes: Routes = [{
   }, {
     path: "upcomming-billable-item",
     component: UpcommingBillableItemComponent,
-    data: { breadcrumb: "Upcoming Appointment" }
+    data: { breadcrumb: "Upcoming Appointments" }
   }, {
     path: "unfinished-reports",
     component: UnfinishedReportComponent,
@@ -136,7 +136,8 @@ const routes: Routes = [{
       component: RecordsComponent
     }, {
       path: "reports",
-      component: ReportComponent
+      component: ReportComponent,
+      data:{breadcrumb: "Report"}
     }, {
       path: "billing",
       component: BilllableBillingComponent
@@ -202,7 +203,8 @@ const routes: Routes = [{
             component: RecordsComponent
           }, {
             path: "reports",
-            component: ReportComponent
+            component: ReportComponent,
+            data: { breadcrumb: "Report" }
           }, {
             path: "billing",
             component: BilllableBillingComponent
@@ -676,12 +678,15 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: BillableItemComponent,
+      data: { breadcrumb: "Bills" }
     }, {
       path: "new-billable-item/:claim/:claimant",
-      component: NewBillableItemComponent
+      component: NewBillableItemComponent,
+      data: { breadcrumb: "New Bill" }
     }, {
       path: "edit-billable-item/:claim/:claimant/:billable",
-      component: NewBillableItemComponent
+      component: NewBillableItemComponent,
+      data: { breadcrumb: "New Bill" }
     }]
 
   },
