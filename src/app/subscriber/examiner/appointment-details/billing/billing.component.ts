@@ -47,7 +47,7 @@ export class BilllableBillingComponent implements OnInit {
   expandedElement2;
   columnName2 = [];
   isMobile2 = false;
-  dataSource3 = ELEMENT_DATA3;
+  dataSource3 =  new MatTableDataSource([]);
   columnsToDisplay3 = [];
   expandedElement3;
   columnName3 = [];
@@ -70,12 +70,20 @@ export class BilllableBillingComponent implements OnInit {
   mode: boolean;
   touchedRows: any;
 
+  payors = [
+    { name: "WC100 - 1-888-OHIOCOMP"},
+    { name: "37850 - 1ST AUTO & CASUALTY (CORVEL)"},
+    { name: "WC170 - 1ST CHOICE STAFFING INC"},
+    { name: "WC171 - 20/20 BUILDERS"},
+    { name: "CB150 - 21ST CENTURY INSURANCE"},
+  ]
+
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
     public billingService: BillingService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,) {
     this.route.params.subscribe(param => {
       this.paramsId = param;
       if (!param.billingId) {
@@ -123,8 +131,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName3 = ["", "File Name", "Action"]
         this.columnsToDisplay3 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName3 = ["", "File Name", "Action", "Date", "Recipients", "Download Sent Documents", "Download Proof of Service"]
-        this.columnsToDisplay3 = ['doc_image', 'file_name', 'action', 'date', "recipients", "sent_document", "proof_of_service"]
+        this.columnName3 = ["", "File Name", "Action", "Date Submitted", "Date Received", "Recipients", "Download"]
+        this.columnsToDisplay3 = ['doc_image', 'file_name', 'action', 'date_submitted', 'date_received', "recipients", "download"]
       }
     })
   }
@@ -176,15 +184,32 @@ export class BilllableBillingComponent implements OnInit {
     this.userTable = this.fb.group({
       tableRows: this.fb.array([])
     });
-    this.addRow();
+   
   }
 
   getBillingDetails() {
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
-      this.icdData = billing.data.billing_diagnosis_code;
+      this.icdData =  billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)
+
+      this.addRow();
+      if(billing.data && billing.data.billing_line_items){ 
+      let firstData= {
+        id:billing.data.billing_line_items[0].id,
+        item: billing.data.billing_line_items[0].item_description,
+        procedure_code: billing.data.billing_line_items[0].procedure_code,
+        modifier: billing.data.billing_line_items[0].modifier,
+        units: billing.data.billing_line_items[0].units,
+        charge: billing.data.billing_line_items[0].charge,
+        payment: 0,
+        balance: 1,
+        isEditable: [true]
+      }
+      this.getFormControls.controls[0].patchValue(firstData)
+      console.log(this.getFormControls.controls[0])
+    }
     }, error => {
       this.logger.error(error)
     })
@@ -194,6 +219,9 @@ export class BilllableBillingComponent implements OnInit {
   selectICD(icd) {
     this.selectedIcd = { code: icd[0], name: icd[1] }
 
+  }
+  openSnackBar() {
+    this.alertService.openSnackBar("Payor changed successfully", "success");
   }
   addIcd() {
     if (this.selectedIcd.code != '') {
@@ -415,7 +443,6 @@ export class BilllableBillingComponent implements OnInit {
     console.log("Done", group.value)
     if (group.status == "INVALID") {
       group.markAllAsTouched();
-      alert();
       return;
     }
     group.get('isEditable').setValue(false);
@@ -430,14 +457,33 @@ export class BilllableBillingComponent implements OnInit {
     return control;
   }
 
-  submitForm() {
-    const control = this.userTable.get('tableRows') as FormArray;
-    this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-    console.log(this.touchedRows);
+  // submitForm() {
+  //   const control = this.userTable.get('tableRows') as FormArray;
+  //   this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
+  //   console.log(this.touchedRows);
+  // }
+
+  cancelRow(group: FormGroup,i) {
+    console.log("cancel", group,i);
+   
+    let data= {
+      id:this.billingData.billing_line_items[i].id,
+      item: this.billingData.billing_line_items[i].item_description,
+      procedure_code: this.billingData.billing_line_items[i].procedure_code,
+      modifier: this.billingData.billing_line_items[i].modifier,
+      units: this.billingData.billing_line_items[i].units,
+      charge: this.billingData.billing_line_items[i].charge,
+      payment: 0,
+      balance: 1,
+      isEditable: [false]
+    }
+    group.patchValue(data);
+    group.get('isEditable').setValue(false);
+
   }
 
-  cancelRow(group: FormGroup) {
-    console.log("cancel", group)
+  rowSelected(group: FormGroup){
+    //console.log("select", group);
   }
 }
 const ELEMENT_DATA1 = [
@@ -456,9 +502,9 @@ const ELEMENT_DATA1 = [
 
 // ];
 const ELEMENT_DATA3 = [
-  { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date": "05-25-2019", "recipients": "Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "sent_document": "Download", "proof_of_service": "Download" },
-  { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date": "05-25-2019", "recipients": "", "sent_document": "Download", "proof_of_service": "Download" },
-  { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date": "05-25-2019", "recipients": "", "sent_document": "Download", "proof_of_service": "Download" },
+  { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date_submitted": "05-25-2019",  "date_received": "05-25-2019", "recipients": "Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "download": "Download",},
+  { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date_submitted": "05-25-2019",  "date_received": "05-25-2019", "recipients": "", "download": "Download",},
+  { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date_submitted": "05-25-2019",  "date_received": "05-25-2019", "recipients": "", "download": "Download",},
 
 ];
 

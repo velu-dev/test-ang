@@ -157,9 +157,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
     })
-    this.claimService.seedData("language").subscribe(res => {
-      this.languageList = res.data;
-    })
+    // this.claimService.seedData("language").subscribe(res => {
+    //   this.languageList = res.data;
+    // })
     // this.examinerService.seedData('examination_status').subscribe(res => {
     //   this.examinationStatus = res.data;
     // })
@@ -187,12 +187,12 @@ export class AppointmentDetailsComponent implements OnInit {
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
         this.isChecked = bills.data.exam_type.is_psychiatric;
-        this.claimService.getClaim(this.claim_id).subscribe(claim => {
-          this.breadcrumbService.set("appointment-details/:id/:billId", claim.data.claimant_details.first_name)
-          this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(procedure => {
-            this.procuderalCodes = procedure.data;
-          })
-        })
+        // this.claimService.getClaim(this.claim_id).subscribe(claim => {
+        //   this.breadcrumbService.set("appointment-details/:id/:billId", claim.data.claimant_details.first_name)
+        //   this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(procedure => {
+        //     this.procuderalCodes = procedure.data;
+        //   })
+        // })
         this.isBillabbleItemLoading = false;
         if (bills['data'].appointment.examiner_id != null) {
           let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examiner_service_location_id }
@@ -206,6 +206,10 @@ export class AppointmentDetailsComponent implements OnInit {
         this.billable_item.patchValue(bills.data);
       })
       this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+
+        this.claimService.getProcedureType(response.data.claim_details.exam_type_id).subscribe(procedure => {
+          this.procuderalCodes = procedure.data;
+        })
         if (response.data.appointments.examiner_id) {
           this.procedureTypeStatus[1].url = "../../history/" + response.data.appointments.examiner_id;
         }
@@ -706,10 +710,14 @@ export class AppointmentDetailsComponent implements OnInit {
     }
   }
   billingNev() {
-    if (this.examinationDetails.billid) {
-      this.router.navigate(['/billing', this.examinationDetails.billid])
+    if (!this.examinationDetails.bill_id) {
+      this.claimService.billCreate(this.claim_id, this.billableId).subscribe(bill => {
+        this.router.navigateByUrl(this.router.url + '/billing/' + bill.data.bill_id)
+      }, error => {
+        this.logger.error(error)
+      })
     } else {
-      this.router.navigate(['/billing'])
+      this.router.navigateByUrl(this.router.url + '/billing/' + this.examinationDetails.bill_id)
     }
 
   }

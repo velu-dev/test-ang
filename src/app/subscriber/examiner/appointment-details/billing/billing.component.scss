@@ -64,6 +64,11 @@
     }
     .diagnosis-info {
         @extend .examiner-info;
+        mat-card-header {
+            .content-wrapper-main-title {
+               width: 100%;
+            }
+        }
     }
     .post-payment {
         button {

@@ -502,7 +502,7 @@
         </div>
     </div> -->
     <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="simple-card billing-status-active bg_light" [routerLink]="examinationDetails?.bill_id ? ['../../billing',examinationDetails?.bill_id] : ['../../billing']">
+        <div class="simple-card billing-status-active bg_light" (click)="billingNev()">
             <i class="fa fa-usd"></i>
             <div class="p-l-10 text-center">
                 <h4>Billing</h4>
