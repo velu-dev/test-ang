@@ -119,4 +119,8 @@ export class ClaimService {
   getProcedureType(examtype): Observable<any> {
     return this.http.get(environment.baseUrl + "claim/procedures-modifiers-seed-data/" + examtype)
   }
+
+  billCreate(cliam, bill): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.createbill + cliam + '/' + bill, {})
+  }
 }

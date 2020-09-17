@@ -704,13 +704,17 @@ export class AppointmentDetailsComponent implements OnInit {
       this.expandId = element.id;
     }
   }
-  billingNev(){
-    if(this.examinationDetails.billid){
-      this.router.navigate(['/billing',this.examinationDetails.billid])
-    }else{
-      this.router.navigate(['/billing'])
+  billingNev() {
+    if (!this.examinationDetails.bill_id) {
+      this.claimService.billCreate(this.claim_id, this.billableId).subscribe(bill => {
+        this.router.navigateByUrl(this.router.url + '/billing/' + bill.data.bill_id)
+      }, error => {
+        this.logger.error(error)
+      })
+    } else {
+      this.router.navigateByUrl(this.router.url + '/billing/' + this.examinationDetails.bill_id)
     }
-   
+
   }
 }
 

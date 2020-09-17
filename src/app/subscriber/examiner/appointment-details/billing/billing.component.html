@@ -326,7 +326,7 @@
                                                 <!-- <mat-form-field appearance="outline">
                                                     <input matInput type="text" autocomplete="off" disable formControlName="balance">
                                                 </mat-form-field> -->
-                                               <span class="text-danger"> {{group.value.balance}}</span>
+                                               <span class="text-danger"> {{group.value.charge - group.value.payment}}</span>
                                             </td>
 
                                             <td class="no-wrap-td text-center">
@@ -501,6 +501,7 @@
                             </tr>
                             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
                         </table>
+                        <app-nodata *ngIf="documentsData?.filteredData?.length == 0"></app-nodata>
                     </div>
                 </div>
             </mat-card-content>
@@ -605,6 +606,7 @@
                             </tr>
                             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
                         </table>
+                        <app-nodata *ngIf="dataSource3?.filteredData?.length == 0"></app-nodata>
                     </div>
                 </div>
             </mat-card-content>

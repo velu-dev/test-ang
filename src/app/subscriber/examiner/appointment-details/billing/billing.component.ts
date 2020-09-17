@@ -47,7 +47,7 @@ export class BilllableBillingComponent implements OnInit {
   expandedElement2;
   columnName2 = [];
   isMobile2 = false;
-  dataSource3 = ELEMENT_DATA3;
+  dataSource3 =  new MatTableDataSource([]);
   columnsToDisplay3 = [];
   expandedElement3;
   columnName3 = [];
@@ -190,11 +190,12 @@ export class BilllableBillingComponent implements OnInit {
   getBillingDetails() {
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
-      this.icdData = billing.data.billing_diagnosis_code;
+      this.icdData =  billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)
 
       this.addRow();
+      if(billing.data && billing.data.billing_line_items){ 
       let firstData= {
         id:billing.data.billing_line_items[0].id,
         item: billing.data.billing_line_items[0].item_description,
@@ -208,6 +209,7 @@ export class BilllableBillingComponent implements OnInit {
       }
       this.getFormControls.controls[0].patchValue(firstData)
       console.log(this.getFormControls.controls[0])
+    }
     }, error => {
       this.logger.error(error)
     })
