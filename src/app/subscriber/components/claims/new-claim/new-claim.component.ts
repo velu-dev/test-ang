@@ -208,7 +208,7 @@ export class NewClaimComponent implements OnInit {
   isChecked = false;
   eamsRepresentatives = [];
   eamsClaimsAdministrator = [];
-  claimantInfo:any;
+  claimantInfo: any;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -1016,8 +1016,8 @@ export class NewClaimComponent implements OnInit {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
           date_of_injury: new Date(this.injuryInfo['date_of_injury']).toDateString(),
           continuous_trauma: this.injuryInfo['continuous_trauma'],
-          continuous_trauma_start_date: new Date(this.injuryInfo['continuous_trauma_start_date']).toDateString(),
-          continuous_trauma_end_date: new Date(this.injuryInfo['continuous_trauma_end_date']).toDateString(),
+          continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'] ? new Date(this.injuryInfo['continuous_trauma_start_date']).toDateString() : null,
+          continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'] ? new Date(this.injuryInfo['continuous_trauma_end_date']).toDateString() : null,
           injury_notes: this.injuryInfo['injury_notes'],
           diagram_url: this.injuryInfo['diagram_url'],
         };
@@ -1039,8 +1039,8 @@ export class NewClaimComponent implements OnInit {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
           date_of_injury: new Date(this.injuryInfo['date_of_injury']).toDateString(),
           continuous_trauma: this.injuryInfo['continuous_trauma'],
-          continuous_trauma_start_date: new Date(this.injuryInfo['continuous_trauma_start_date']).toDateString(),
-          continuous_trauma_end_date: new Date(this.injuryInfo['continuous_trauma_end_date']).toDateString(),
+          continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'] ? new Date(this.injuryInfo['continuous_trauma_start_date']).toDateString() : null,
+          continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'] ? new Date(this.injuryInfo['continuous_trauma_end_date']).toDateString() : null,
           injury_notes: this.injuryInfo['injury_notes'],
           diagram_url: this.injuryInfo['diagram_url'],
         };
@@ -1091,8 +1091,8 @@ export class NewClaimComponent implements OnInit {
             body_part_id: [result['body_part_id'][i]],
             date_of_injury: new Date(result['date_of_injury']).toDateString(),
             continuous_trauma: result['continuous_trauma'],
-            continuous_trauma_start_date: new Date(result['continuous_trauma_start_date']).toDateString(),
-            continuous_trauma_end_date: new Date(result['continuous_trauma_end_date']).toDateString(),
+            continuous_trauma_start_date: result['continuous_trauma_end_date'] ? new Date(result['continuous_trauma_start_date']).toDateString() : null,
+            continuous_trauma_end_date: result['continuous_trauma_end_date'] ? new Date(result['continuous_trauma_end_date']).toDateString() : null,
             injury_notes: result['injury_notes'],
             diagram_url: result['diagram_url'],
           };
@@ -1608,12 +1608,13 @@ export class InjuryDialog {
     this.bodyPartsList = data['bodyparts'];
     this.isEdit = data['isEdit'];
     if (data['isEdit']) {
+
       this.logger.info(data['injuryData']);
       this.injuryInfo.body_part_id = data['injuryData'].body_part_id;
-      this.injuryInfo.date_of_injury = new Date(data['injuryData'].date_of_injury);
+      this.injuryInfo.date_of_injury = data['injuryData'].date_of_injury ? new Date(data['injuryData'].date_of_injury) : "";
       this.injuryInfo.continuous_trauma = data['injuryData'].continuous_trauma;
-      this.injuryInfo.continuous_trauma_start_date = new Date(data['injuryData'].continuous_trauma_start_date);
-      this.injuryInfo.continuous_trauma_end_date = new Date(data['injuryData'].continuous_trauma_end_date);
+      this.injuryInfo.continuous_trauma_start_date = data['injuryData'].continuous_trauma_start_date ? new Date(data['injuryData'].continuous_trauma_start_date) : "";
+      this.injuryInfo.continuous_trauma_end_date = data['injuryData'].continuous_trauma_end_date ? new Date(data['injuryData'].continuous_trauma_end_date) : "";
       this.injuryInfo.injury_notes = data['injuryData'].injury_notes;
       this.injuryData = data['injuryData']
     }

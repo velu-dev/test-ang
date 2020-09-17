@@ -592,6 +592,7 @@ export class AppointmentDetailsComponent implements OnInit {
         // let data = this.dataSource.data;
         // data.push(res.data);
         // this.dataSource = new MatTableDataSource(data);
+        this.alertService.openSnackBar("Form Generated Successfully", "success")
         this.formId = "";
         this.getDocumentData();
       })
@@ -704,13 +705,13 @@ export class AppointmentDetailsComponent implements OnInit {
       this.expandId = element.id;
     }
   }
-  billingNev(){
-    if(this.examinationDetails.billid){
-      this.router.navigate(['/billing',this.examinationDetails.billid])
-    }else{
+  billingNev() {
+    if (this.examinationDetails.billid) {
+      this.router.navigate(['/billing', this.examinationDetails.billid])
+    } else {
       this.router.navigate(['/billing'])
     }
-   
+
   }
 }
 
