@@ -375,6 +375,9 @@
                                         </tr>
                                        
                                     </ng-container>
+                                   
+                                </tbody>
+                                <tfoot>
                                     <tr class="bill-value" id="static-footer">
                                         <td>Total </td>
                                         <td></td>
@@ -385,7 +388,7 @@
                                         <td><span class="text-danger">{{calculateTotalBal()}}</span></td>
                                         <td></td>
                                     </tr>
-                                </tbody>
+                                </tfoot>
                             </table>
                             <!-- <div class="action-container">
                               <button mat-raised-button type="submit" [disabled]="!userTable.valid" (click)="addRow()">Add row</button>
