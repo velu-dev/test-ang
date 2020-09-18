@@ -145,9 +145,15 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.claimService.getICD10('a').subscribe(icd => {
+      this.filteredICD = icd[3];
+    });
+
     this.icdCtrl.valueChanges.subscribe(res => {
       this.icdSearched = true;
+     
       this.claimService.getICD10(res).subscribe(icd => {
+        this.filteredICD = [];
         this.filteredICD = icd[3];
       });
     })
@@ -536,6 +542,36 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   rowSelected(group: FormGroup) {
+  }
+
+  calculateTotal(){
+    let total = 0;
+    for (var j in this.getFormControls.controls) {
+      if (this.getFormControls.controls[j].value.charge) {
+        total += this.getFormControls.controls[j].value.charge
+      }
+    }
+    return total;
+  }
+
+  calculateTotalBal(){
+    let total = 0;
+    for (var j in this.getFormControls.controls) {
+      if (this.getFormControls.controls[j].value.charge) {
+        total += this.getFormControls.controls[j].value.charge - this.getFormControls.controls[j].value.payment
+      }
+    }
+    return total;
+  }
+
+  calculateTotalPayment(){
+    let total = 0;
+    for (var j in this.getFormControls.controls) {
+      if (this.getFormControls.controls[j].value.payment) {
+        total += this.getFormControls.controls[j].value.payment
+      }
+    }
+    return total;
   }
 }
 const ELEMENT_DATA1 = [

@@ -373,17 +373,18 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr class="bill-value" id="static-footer">
-                                            <td>Total </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>3516.00</td>
-                                            <td>0</td>
-                                            <td><span class="text-danger">9347</span></td>
-                                            <td></td>
-                                        </tr>
+                                       
                                     </ng-container>
+                                    <tr class="bill-value" id="static-footer">
+                                        <td>Total </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{calculateTotal()}}</td>
+                                        <td>{{calculateTotalPayment()}}</td>
+                                        <td><span class="text-danger">{{calculateTotalBal()}}</span></td>
+                                        <td></td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <!-- <div class="action-container">
