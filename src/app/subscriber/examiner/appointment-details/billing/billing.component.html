@@ -171,7 +171,7 @@
             <mat-card-header>
                 <div class="content-wrapper-main-title">Billing Line Items</div>
                 <span class="spacer"></span>
-                <button mat-raised-button class="filled-gray m-b-5" [disabled]="!userTable.valid" (click)="addRow()">
+                <button mat-raised-button class="filled-gray m-b-5" (click)="addRow()">
                     Add Bill Item
                 </button>
             </mat-card-header>
@@ -286,10 +286,10 @@
                                         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i" (click)="rowSelected(group)">
                                             <td>
                                                 <mat-form-field appearance="outline" *ngIf="i != 0">
-                                                    <input matInput type="text" [disabled]="" autocomplete="off" formControlName="item">
+                                                    <input matInput type="text" [disabled]="" autocomplete="off" formControlName="item_description">
                                                 </mat-form-field>
                                                 <span  *ngIf="i == 0">
-                                                    {{group.get('item').value}}
+                                                    {{group.get('item_description').value}}
                                                 </span>
                                             </td>
                                             <td>
@@ -342,7 +342,7 @@
                                         </tr>
                                         <tr *ngIf="!group.get('isEditable').value" class="bill-value">
                                             <td>
-                                                {{group.get('item').value}}
+                                                {{group.get('item_description').value}}
                                             </td>
                                             <td>
                                                 {{group.get('procedure_code').value}}
@@ -360,7 +360,7 @@
                                                 {{group.get('payment').value}}
                                             </td>
                                             <td>
-                                                {{group.get('balance').value}}
+                                                {{group.get('charge').value - group.get('payment').value}}
                                             </td>
                                             <td class="no-wrap-td text-center">
                                                 <!-- <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon> -->
@@ -368,7 +368,7 @@
                                                     Edit
                                                 </a>
 
-                                                <a *ngIf="i != 0" class="text-danger m-l-0" (click)="deleteRow(group)">
+                                                <a *ngIf="i != 0" class="text-danger m-l-0" (click)="deleteRow(i,group)">
                                                     Remove
                                                 </a>
                                             </td>
