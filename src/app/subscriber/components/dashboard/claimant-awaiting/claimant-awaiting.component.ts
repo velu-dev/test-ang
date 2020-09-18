@@ -26,7 +26,7 @@ export class ClaimantAwaitingComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource:any;
+  dataSource: any;
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
@@ -58,7 +58,7 @@ export class ClaimantAwaitingComponent implements OnInit {
         claim.claimant_name = claim.last_name + ',' + claim.first_name;
         claim.created_date = claim.createdAt ? moment(claim.createdAt).format("MM-DD-YYYY") : '';
         claim.created_time = claim.createdAt ? moment(claim.createdAt).format("hh:mm a") : '';
-        claim.ssn = claim.ssn ? 'xxx-xx-'+claim.ssn.substr(-4) : ''
+        claim.ssn = claim.ssn ? 'xxx-xx-' + claim.ssn.substr(-4) : ''
       })
       this.dataSource = new MatTableDataSource(claimant.data)
       this.dataSource.paginator = this.paginator;
@@ -85,7 +85,7 @@ export class ClaimantAwaitingComponent implements OnInit {
   }
 
   gotoEdit(e) {
-    this.router.navigate(["/subscriber/claimants/claimant/", e.id])
+    this.router.navigate([this.router.url + "/claimants/claimant/", e.id])
   }
 
 }

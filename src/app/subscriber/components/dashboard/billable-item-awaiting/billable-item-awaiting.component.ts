@@ -56,15 +56,15 @@ export class BillableItemAwaitingComponent implements OnInit {
         bill.claimant_name = bill.claimant_last_name + ', ' + bill.claimant_first_name;
         bill.created_date = bill.createdAt ? moment(bill.createdAt).format("MM-DD-YYYY") : '';
         bill.created_time = bill.createdAt ? moment(bill.createdAt).format("hh:mm a") : '';
-        bill.examiner = bill.ex_last_name + ' '+ bill.ex_first_name +''+ (bill.ex_suffix ? ', '+bill.ex_suffix : '');
+        bill.examiner = bill.ex_last_name + ' ' + bill.ex_first_name + '' + (bill.ex_suffix ? ', ' + bill.ex_suffix : '');
         bill.procedure_type = bill.procedure_type_name;
       })
       console.log(billable);
       this.dataSource = new MatTableDataSource(billable.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate = function(data, filter: string): boolean {
-        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) ||  (data.claim_number && data.claim_number.includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.created_date && data.created_date.includes(filter)) || (data.created_time && data.created_time.toLowerCase().includes(filter)) || (data.procedure_type && data.procedure_type.toLowerCase().includes(filter));
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.claim_number && data.claim_number.includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.created_date && data.created_date.includes(filter)) || (data.created_time && data.created_time.toLowerCase().includes(filter)) || (data.procedure_type && data.procedure_type.toLowerCase().includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     }, error => {
@@ -85,7 +85,7 @@ export class BillableItemAwaitingComponent implements OnInit {
   }
 
   navigateBillableEdit(e) {
-    this.router.navigate(['/subscriber/billable-item/edit-billable-item', e.claim_id, e.claimant_id, e.id])
+    this.router.navigate([this.router.url + '/billable-item/edit-billable-item', e.claim_id, e.claimant_id, e.id])
   }
 
 }
