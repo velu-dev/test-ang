@@ -47,7 +47,7 @@ export class BilllableBillingComponent implements OnInit {
   expandedElement2;
   columnName2 = [];
   isMobile2 = false;
-  dataSource3 =  new MatTableDataSource([]);
+  dataSource3 = new MatTableDataSource([]);
   columnsToDisplay3 = [];
   expandedElement3;
   columnName3 = [];
@@ -62,7 +62,8 @@ export class BilllableBillingComponent implements OnInit {
   procuderalCodes: any;
   modifiers: any;
   billingData: any;
-
+  payors: any;
+  payorId: number;
 
   //table
   userTable: FormGroup;
@@ -70,13 +71,7 @@ export class BilllableBillingComponent implements OnInit {
   mode: boolean;
   touchedRows: any;
 
-  payors = [
-    { name: "WC100 - 1-888-OHIOCOMP"},
-    { name: "37850 - 1ST AUTO & CASUALTY (CORVEL)"},
-    { name: "WC170 - 1ST CHOICE STAFFING INC"},
-    { name: "WC171 - 20/20 BUILDERS"},
-    { name: "CB150 - 21ST CENTURY INSURANCE"},
-  ]
+
 
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
@@ -115,7 +110,7 @@ export class BilllableBillingComponent implements OnInit {
         this.columnsToDisplay1 = ['is_expand', 'code', "action"]
       } else {
         this.columnName1 = ["Item", "Procedure Code", "Modifier", "Units", "Charge", "Payment", "Balance", "Action"]
-        this.columnsToDisplay1 = ['item', 'procedure_code', 'modifier', 'units', 'charge', 'payment', 'balance', 'action']
+        this.columnsToDisplay1 = ['item_description', 'procedure_code', 'modifier', 'units', 'charge', 'payment', 'balance', 'action']
       }
       this.isMobile2 = res;
       if (res) {
@@ -147,15 +142,19 @@ export class BilllableBillingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 
   ngOnInit() {
+    this.claimService.getICD10('a').subscribe(icd => {
+      this.filteredICD = icd[3];
+    });
+
     this.icdCtrl.valueChanges.subscribe(res => {
       this.icdSearched = true;
+
       this.claimService.getICD10(res).subscribe(icd => {
-        console.log(icd)
+        this.filteredICD = [];
         this.filteredICD = icd[3];
       });
     })
@@ -176,6 +175,12 @@ export class BilllableBillingComponent implements OnInit {
       this.modifiers = type['data']
     })
 
+    this.claimService.seedData('workcompedi_payor_details').subscribe(type => {
+      this.payors = type['data']
+    })
+
+
+
     this.getDocumentData();
     this.getBillingDetails();
 
@@ -184,32 +189,39 @@ export class BilllableBillingComponent implements OnInit {
     this.userTable = this.fb.group({
       tableRows: this.fb.array([])
     });
-   
+
   }
 
   getBillingDetails() {
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
-      this.icdData =  billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
+      this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)
 
-      this.addRow();
-      if(billing.data && billing.data.billing_line_items){ 
-      let firstData= {
-        id:billing.data.billing_line_items[0].id,
-        item: billing.data.billing_line_items[0].item_description,
-        procedure_code: billing.data.billing_line_items[0].procedure_code,
-        modifier: billing.data.billing_line_items[0].modifier,
-        units: billing.data.billing_line_items[0].units,
-        charge: billing.data.billing_line_items[0].charge,
-        payment: 0,
-        balance: 1,
-        isEditable: [true]
+      this.payorId = billing.data.payor_id;
+      if (billing.data && billing.data.billing_line_items) {
+        billing.data.billing_line_items.map((item, index) => {
+          let firstData = {};
+          this.addRow();
+          firstData = {
+            id: item.id,
+            item_description: item.item_description,
+            procedure_code: item.procedure_code,
+            modifier: item.modifier,
+            units: item.units,
+            charge: item.charge,
+            payment: 0,
+            balance: 1,
+            isEditable: [true]
+          }
+          this.getFormControls.controls[index].patchValue(firstData)
+          if (this.getFormControls.controls[index].status == "VALID") {
+            this.getFormControls.controls[index].get('isEditable').setValue(false);
+          }
+        })
+
       }
-      this.getFormControls.controls[0].patchValue(firstData)
-      console.log(this.getFormControls.controls[0])
-    }
     }, error => {
       this.logger.error(error)
     })
@@ -376,7 +388,6 @@ export class BilllableBillingComponent implements OnInit {
       this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: 'Billing_on_demand.csv' })
       this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
     }, error => {
-      console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
@@ -412,9 +423,9 @@ export class BilllableBillingComponent implements OnInit {
   initiateForm(): FormGroup {
     return this.fb.group({
       id: [''],
-      item: ['', Validators.required],
+      item_description: ['', Validators.required],
       procedure_code: ['', [Validators.required]],
-      modifier: ['', [Validators.required]],
+      modifier: [''],
       units: ['', [Validators.required]],
       charge: ['', [Validators.required]],
       payment: [''],
@@ -424,32 +435,80 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   addRow() {
+    let newRowStatus = true
+    for (var j in this.getFormControls.controls) {
+      if (this.getFormControls.controls[j].status == 'INVALID') {
+        newRowStatus = false;
+      }
+    }
+
+    if (!newRowStatus) {
+      this.alertService.openSnackBar("Please fill existing data", 'error');
+      return;
+    }
+
     const control = this.userTable.get('tableRows') as FormArray;
     control.push(this.initiateForm());
   }
 
-  deleteRow(index: number) {
-    const control = this.userTable.get('tableRows') as FormArray;
-    control.removeAt(index);
+  deleteRow(index: number, group) {
+
+    if (group.value.id) {
+      this.billingService.removeBillItem(group.value.id).subscribe(del => {
+        this.alertService.openSnackBar("Bill Line Item deleted successfully", 'success');
+        const control = this.userTable.get('tableRows') as FormArray;
+        control.removeAt(index);
+        this.billingData.billing_line_items.splice(index, 1)
+        return
+      }, err => {
+        this.alertService.openSnackBar(err.error.message, 'error');
+      })
+    } else {
+      const control = this.userTable.get('tableRows') as FormArray;
+      control.removeAt(index);
+      this.billingData.billing_line_items.splice(index, 1)
+    }
   }
 
   editRow(group: FormGroup) {
-    // if(group.status)
-    console.log("edit", group, group.status)
     group.get('isEditable').setValue(true);
   }
 
   doneRow(group: FormGroup) {
-    console.log("Done", group.value)
     if (group.status == "INVALID") {
       group.markAllAsTouched();
       return;
     }
+    if (group.untouched) {
+      return;
+    }
+    let data = {
+      id: group.value.id,
+      item_description: group.value.item_description,
+      procedure_code: group.value.procedure_code,
+      modifier: group.value.modifier,
+      units: group.value.units,
+      charge: group.value.charge,
+      //payment: 0,
+      //balance: 1,
+      //isEditable: [false]
+    }
+
+    this.billingService.createBillLine(this.billingId, this.paramsId.billId, data).subscribe(line => {
+      group.get('id').setValue(line.data.id);
+      if (data.id) {
+        this.alertService.openSnackBar("Bill Line Item updated successfully", 'success');
+      } else {
+        this.alertService.openSnackBar("Bill Line Item created successfully", 'success');
+      }
+      this.billingData.billing_line_items.push(group.value)
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
     group.get('isEditable').setValue(false);
   }
 
   // saveUserDetails() {
-  //   console.log(this.userTable.value);
   // }
 
   get getFormControls() {
@@ -460,15 +519,16 @@ export class BilllableBillingComponent implements OnInit {
   // submitForm() {
   //   const control = this.userTable.get('tableRows') as FormArray;
   //   this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-  //   console.log(this.touchedRows);
   // }
 
-  cancelRow(group: FormGroup,i) {
-    console.log("cancel", group,i);
-   
-    let data= {
-      id:this.billingData.billing_line_items[i].id,
-      item: this.billingData.billing_line_items[i].item_description,
+  cancelRow(group: FormGroup, i) {
+    if (!group.value.id) {
+      this.deleteRow(i, group);
+      return
+    }
+    let data = {
+      id: this.billingData.billing_line_items[i].id,
+      item_description: this.billingData.billing_line_items[i].item_description,
       procedure_code: this.billingData.billing_line_items[i].procedure_code,
       modifier: this.billingData.billing_line_items[i].modifier,
       units: this.billingData.billing_line_items[i].units,
@@ -482,8 +542,46 @@ export class BilllableBillingComponent implements OnInit {
 
   }
 
-  rowSelected(group: FormGroup){
-    //console.log("select", group);
+  rowSelected(group: FormGroup) {
+  }
+
+  calculateTotal() {
+    let total = 0;
+    for (var j in this.getFormControls.controls) {
+      if (this.getFormControls.controls[j].value.charge) {
+        total += this.getFormControls.controls[j].value.charge
+      }
+    }
+    return total;
+  }
+
+  calculateTotalBal() {
+    let total = 0;
+    for (var j in this.getFormControls.controls) {
+      if (this.getFormControls.controls[j].value.charge) {
+        total += this.getFormControls.controls[j].value.charge - this.getFormControls.controls[j].value.payment
+      }
+    }
+    return total;
+  }
+
+  calculateTotalPayment() {
+    let total = 0;
+    for (var j in this.getFormControls.controls) {
+      if (this.getFormControls.controls[j].value.payment) {
+        total += this.getFormControls.controls[j].value.payment
+      }
+    }
+    return total;
+  }
+
+  updatePayor(id) {
+    this.billingService.updatePayor(this.billingId, this.payorId).subscribe(payor => {
+      console.log(payor);
+      this.alertService.openSnackBar("Payor changed successfully", "success");
+    }, err => {
+      this.alertService.openSnackBar(err.error.message, "error");
+    })
   }
 }
 const ELEMENT_DATA1 = [
@@ -502,9 +600,9 @@ const ELEMENT_DATA1 = [
 
 // ];
 const ELEMENT_DATA3 = [
-  { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date_submitted": "05-25-2019",  "date_received": "05-25-2019", "recipients": "Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "download": "Download",},
-  { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date_submitted": "05-25-2019",  "date_received": "05-25-2019", "recipients": "", "download": "Download",},
-  { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date_submitted": "05-25-2019",  "date_received": "05-25-2019", "recipients": "", "download": "Download",},
+  { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date_submitted": "05-25-2019", "date_received": "05-25-2019", "recipients": "Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "download": "Download", },
+  { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date_submitted": "05-25-2019", "date_received": "05-25-2019", "recipients": "", "download": "Download", },
+  { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date_submitted": "05-25-2019", "date_received": "05-25-2019", "recipients": "", "download": "Download", },
 
 ];
 

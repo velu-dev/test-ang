@@ -155,6 +155,8 @@ export const api_endpoint = {
     billDocument: 'billing/document-list/',
     onDemandBilling: 'service-requests/bill-ondemand/create',
     getbilling: 'billing/details/',
-    createBillLineItem: 'billing/add-bill-line-item',
-    updateDiagnosisCode:'billing/diagnosis/update-diagnosis'
+    createBillLineItem: 'billing/add-bill-line-item/',
+    updateDiagnosisCode: 'billing/diagnosis/update-diagnosis',
+    removeBillItem: 'billing/remove-bill-line-item/',
+    updatePayor: 'billing/update-payor/'
 }

@@ -242,7 +242,8 @@ tr.detail-row {
   width: $width-100;
   border-collapse: collapse;
   table-layout: fixed;
-
+  // position: relative;
+  // height: 350px;
   thead {
     th {
       padding: 12px 10px !important;
@@ -254,6 +255,12 @@ tr.detail-row {
     }
   }
   tbody {
+    height: 500px;
+    // position: relative;
+    // width: 100%;
+    // z-index: 1;
+    // margin: auto;
+    // overflow: auto;
     tr {
       &:nth-child(even) {
         background-color: $table-solid;
@@ -277,9 +284,6 @@ tr.detail-row {
             padding-bottom: 5px !important;
           }
         }
-        // .w-100 {
-        //   width: 100px;
-        // }
         a {
           cursor: pointer;
         }
@@ -288,6 +292,23 @@ tr.detail-row {
     tr.bill-value {
       td {
         padding: 12px 10px !important;
+      }
+    }
+    tr#static-footer {
+      font-weight: $font-weight-bold;
+      position: sticky;
+    }
+  }
+  tfoot {
+    border-top: 1px solid $light-gray;
+    tr {
+      td {
+        position: -webkit-sticky;
+        position: sticky;
+        padding: 12px 10px !important;
+        bottom: 0;
+        z-index: 4;
+        background-color: $white;
       }
     }
   }

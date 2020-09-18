@@ -35,11 +35,19 @@ export class BillingService {
     return this.http.get(environment.baseUrl + api_endpoint.getbilling + id + '/' + billId)
   }
 
-  createBillLine(billId,billableId): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.createBillLineItem + billId + '/' + billableId)
+  createBillLine(billId, billableId, data): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.createBillLineItem + billId + '/' + billableId, data)
   }
 
-  updateDiagnosisCode(data){
+  updateDiagnosisCode(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.updateDiagnosisCode, data)
+  }
+
+  removeBillItem(id): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeBillItem + id)
+  }
+
+  updatePayor(billId, payor): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updatePayor + billId + '/' + payor, {})
   }
 }
