@@ -329,7 +329,7 @@
                                                <span class="text-danger"> {{group.value.charge - group.value.payment}}</span>
                                             </td>
 
-                                            <td class="no-wrap-td text-center">
+                                            <td class="no-wrap-td">
                                                 <a class="text-success" (click)="doneRow(group)">
                                                     Save
                                                 </a>
@@ -362,7 +362,7 @@
                                             <td>
                                                 {{group.get('charge').value - group.get('payment').value}}
                                             </td>
-                                            <td class="no-wrap-td text-center">
+                                            <td class="no-wrap-td">
                                                 <!-- <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon> -->
                                                 <a class="text-success" (click)="editRow(group)">
                                                     Edit
@@ -372,6 +372,16 @@
                                                     Remove
                                                 </a>
                                             </td>
+                                        </tr>
+                                        <tr class="bill-value" id="static-footer">
+                                            <td>Total </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>3516.00</td>
+                                            <td>0</td>
+                                            <td><span class="text-danger">9347</span></td>
+                                            <td></td>
                                         </tr>
                                     </ng-container>
                                 </tbody>

@@ -242,6 +242,7 @@ tr.detail-row {
   width: $width-100;
   border-collapse: collapse;
   table-layout: fixed;
+  // position: relative;
 
   thead {
     th {
@@ -289,6 +290,12 @@ tr.detail-row {
       td {
         padding: 12px 10px !important;
       }
+    }
+    tr#static-footer {
+      font-weight: $font-weight-bold;
+    //   position: absolute;
+    //   bottom: 0px;
+    //   table-layout: fixed;
     }
   }
 }
