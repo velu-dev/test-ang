@@ -62,7 +62,8 @@ export class BilllableBillingComponent implements OnInit {
   procuderalCodes: any;
   modifiers: any;
   billingData: any;
-
+  payors: any;
+  payorId: number;
 
   //table
   userTable: FormGroup;
@@ -70,7 +71,7 @@ export class BilllableBillingComponent implements OnInit {
   mode: boolean;
   touchedRows: any;
 
-  payors: any;
+
 
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
@@ -151,7 +152,7 @@ export class BilllableBillingComponent implements OnInit {
 
     this.icdCtrl.valueChanges.subscribe(res => {
       this.icdSearched = true;
-     
+
       this.claimService.getICD10(res).subscribe(icd => {
         this.filteredICD = [];
         this.filteredICD = icd[3];
@@ -198,9 +199,9 @@ export class BilllableBillingComponent implements OnInit {
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)
 
-
+      this.payorId = billing.data.payor_id;
       if (billing.data && billing.data.billing_line_items) {
-        billing.data.billing_line_items.map((item,index) => {
+        billing.data.billing_line_items.map((item, index) => {
           let firstData = {};
           this.addRow();
           firstData = {
@@ -424,7 +425,7 @@ export class BilllableBillingComponent implements OnInit {
       id: [''],
       item_description: ['', Validators.required],
       procedure_code: ['', [Validators.required]],
-      modifier: ['', [Validators.required]],
+      modifier: [''],
       units: ['', [Validators.required]],
       charge: ['', [Validators.required]],
       payment: [''],
@@ -454,10 +455,10 @@ export class BilllableBillingComponent implements OnInit {
 
     if (group.value.id) {
       this.billingService.removeBillItem(group.value.id).subscribe(del => {
-        this.alertService.openSnackBar("Bill line item deleted successfully", 'success');
+        this.alertService.openSnackBar("Bill Line Item deleted successfully", 'success');
         const control = this.userTable.get('tableRows') as FormArray;
         control.removeAt(index);
-        this.billingData.billing_line_items.splice(index,1)
+        this.billingData.billing_line_items.splice(index, 1)
         return
       }, err => {
         this.alertService.openSnackBar(err.error.message, 'error');
@@ -465,7 +466,7 @@ export class BilllableBillingComponent implements OnInit {
     } else {
       const control = this.userTable.get('tableRows') as FormArray;
       control.removeAt(index);
-      this.billingData.billing_line_items.splice(index,1)
+      this.billingData.billing_line_items.splice(index, 1)
     }
   }
 
@@ -495,10 +496,10 @@ export class BilllableBillingComponent implements OnInit {
 
     this.billingService.createBillLine(this.billingId, this.paramsId.billId, data).subscribe(line => {
       group.get('id').setValue(line.data.id);
-      if(data.id){
-        this.alertService.openSnackBar("Bill line item updated successfully", 'success');
-      }else{ 
-      this.alertService.openSnackBar("Bill line item created successfully", 'success');
+      if (data.id) {
+        this.alertService.openSnackBar("Bill Line Item updated successfully", 'success');
+      } else {
+        this.alertService.openSnackBar("Bill Line Item created successfully", 'success');
       }
       this.billingData.billing_line_items.push(group.value)
     }, error => {
@@ -544,7 +545,7 @@ export class BilllableBillingComponent implements OnInit {
   rowSelected(group: FormGroup) {
   }
 
-  calculateTotal(){
+  calculateTotal() {
     let total = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
@@ -554,7 +555,7 @@ export class BilllableBillingComponent implements OnInit {
     return total;
   }
 
-  calculateTotalBal(){
+  calculateTotalBal() {
     let total = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
@@ -564,7 +565,7 @@ export class BilllableBillingComponent implements OnInit {
     return total;
   }
 
-  calculateTotalPayment(){
+  calculateTotalPayment() {
     let total = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.payment) {
@@ -572,6 +573,15 @@ export class BilllableBillingComponent implements OnInit {
       }
     }
     return total;
+  }
+
+  updatePayor(id) {
+    this.billingService.updatePayor(this.billingId, this.payorId).subscribe(payor => {
+      console.log(payor);
+      this.alertService.openSnackBar("Payor changed successfully", "success");
+    }, err => {
+      this.alertService.openSnackBar(err.error.message, "error");
+    })
   }
 }
 const ELEMENT_DATA1 = [

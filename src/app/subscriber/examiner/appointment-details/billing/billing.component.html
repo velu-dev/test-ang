@@ -33,21 +33,20 @@
             <mat-card-content>
                 <div fxLayout="row wrap" class="p-t-20">
                     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-                        <form>
+                     
                             <div fxLayout="row wrap">
                                 <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payor ID</div>
                                 <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
                                     <mat-label>Select Payor ID</mat-label>
-                                    <mat-select>
-                                        <mat-option value="1">CB768 - 1-2-1 CLAIMS</mat-option>
-                                        <mat-option *ngFor="let payor of payors" [value]="payor.name"
-                                            (click)="openSnackBar()">
+                                    <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">
+                                        <mat-option *ngFor="let payor of payors" [value]="payor.id"
+                                            >
                                             {{payor?.payor_id}} - {{payor?.payor_name}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                        </form>
+                       
                     </div>
                 </div>
             </mat-card-content>
