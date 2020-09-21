@@ -126,7 +126,7 @@
   <div class="border-dashed-blue m-t-30 m-b-30"></div>
 
   <div fxLayout="row wrap" class="ondemand_request">
-    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+    <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100">
       <div>
         <mat-checkbox [(ngModel)]="rushRequest">Rush Request?</mat-checkbox>
         <button mat-stroked-button (click)="onDemandSubmit()" class="outline-success huge-btn">
@@ -134,7 +134,7 @@
         </button>
       </div>
     </div>
-    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+    <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100">
       <button mat-stroked-button class="outline-warning huge-btn" (click)="multipleDownload()">
         Download
       </button>
