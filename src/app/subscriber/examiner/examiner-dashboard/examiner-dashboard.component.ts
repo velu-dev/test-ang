@@ -15,7 +15,7 @@ export class ExaminerDashboardComponent implements OnInit {
 
   openMenu(menu) {
     if (menu == 'intake') {
-      this.router.navigate(['subscriber/new-intake'])
+      this.router.navigate(['subscriber/examiner/new-intake'])
     }
   }
 
