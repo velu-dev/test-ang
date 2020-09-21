@@ -135,7 +135,7 @@ export class ManageUserComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }
 
   selectedRoleId = []
@@ -206,12 +206,12 @@ export class ManageUserComponent implements OnInit {
 
   editUser(user) {
     console.log(user);
-      this.router.navigate(['subscriber/manager/staff/edit', user.id])
+    this.router.navigate([this.router.url + '/edit', user.id])
   }
 
   unInvite(e) {
     this.openDialogInvite('uninvite', e.id);
-   
+
   }
 
   openDialogInvite(dialogue, user) {
@@ -222,7 +222,7 @@ export class ManageUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.staffManagerService.postUninvite(user).subscribe(resUninvite=>{
+        this.staffManagerService.postUninvite(user).subscribe(resUninvite => {
           console.log(resUninvite);
           this.getUser(this.selectedRoleId, this.tabName)
         })

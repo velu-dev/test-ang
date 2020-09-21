@@ -37,7 +37,7 @@ export class BillingComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
     private breadcrumbService: BreadcrumbService,
-    private router: Router) {
+    public router: Router) {
     console.log()
     this.breadcrumbService.set(this.router.url, "Billing");
     this.isHandset$.subscribe(res => {
