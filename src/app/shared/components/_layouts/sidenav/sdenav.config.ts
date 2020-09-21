@@ -70,7 +70,7 @@ export const ROUTES: SideNavInterface[] = [
         role_id: 2,
         menu: [
             {
-                path: '/subscriber',
+                path: '/subscriber/dashboard',
                 title: 'Dashboard',
                 icon: 'home',
                 submenu: [],
@@ -148,7 +148,7 @@ export const ROUTES: SideNavInterface[] = [
         role_id: 3,
         menu: [
             {
-                path: '/subscriber/manager',
+                path: '/subscriber/manager/dashboard',
                 title: 'Dashboard',
                 icon: 'home',
                 submenu: [],
@@ -232,7 +232,7 @@ export const ROUTES: SideNavInterface[] = [
         role_id: 4,
         menu: [
             {
-                path: '/subscriber/staff',
+                path: '/subscriber/staff/dashboard',
                 title: 'Dashboard',
                 icon: 'home',
                 submenu: [],
@@ -264,7 +264,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 4
             },
             {
-                path: '/subscriber/staff/claimant',
+                path: '/subscriber/staff/claimants',
                 title: 'Claimants',
                 icon: 'users',
                 submenu: [],
@@ -302,7 +302,7 @@ export const ROUTES: SideNavInterface[] = [
         role_id: 11,
         menu: [
             {
-                path: '/subscriber/examiner',
+                path: '/subscriber/examiner/dashboard',
                 title: 'Dashboard',
                 icon: 'home',
                 submenu: [],

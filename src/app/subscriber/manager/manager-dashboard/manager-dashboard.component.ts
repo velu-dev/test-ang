@@ -14,7 +14,7 @@ export class ManagerDashboardComponent implements OnInit {
   }
   openMenu(menu) {
     if (menu == 'intake') {
-      this.router.navigate([this.router.url + '/new-intake'])
+      this.router.navigate(['subscriber/manager/new-intake'])
     }
   }
 }
