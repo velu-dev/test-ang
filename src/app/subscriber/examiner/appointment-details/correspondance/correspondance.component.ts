@@ -480,6 +480,9 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
     this.onDemandService.onDemandCorrespondence(data).subscribe(record => {
       this.alertService.openSnackBar("Mail On Demand created successfully", 'success');
+      if (record.data.file_url) {
+        this.download(record.data.file_url, record.data.file_name);
+      }
       this.getData();
     }, error => {
       console.log(error);
