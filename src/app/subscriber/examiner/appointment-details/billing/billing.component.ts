@@ -445,6 +445,10 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   addRow() {
+    if (this.getFormControls.controls && this.getFormControls.controls.length >= 12) {
+      this.alertService.openSnackBar("Maximum 12", 'error');
+      return
+    }
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].status == 'INVALID') {
