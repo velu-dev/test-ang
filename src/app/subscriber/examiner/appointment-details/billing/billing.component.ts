@@ -381,11 +381,21 @@ export class BilllableBillingComponent implements OnInit {
       billable_item_id: this.paramsId.billId,
       service_request_type_id: 5,
       bill_id: this.billingId,
+      //documents_ids: [1753, 1755],
+      //recipients_ids: [2, 3, 4, 5]
     }
 
     this.billingService.onDemandBilling(data).subscribe(bill => {
-      this.logger.log("onDemand", bill)
-      this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: 'Billing_on_demand.csv' })
+      this.logger.log("onDemand", bill);
+      if (bill.data.exam_report_signed_file_url) {
+        this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: 'Billing_on_demand_CSV.csv' })
+      }
+      if (bill.data.bill_on_demand_signed_zip_file_url) {
+        setTimeout(() => {
+          this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: 'Billing_on_demand_Zip.zip' })
+        }, 1000);
+
+      }
       this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
