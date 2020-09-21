@@ -1,16 +1,16 @@
 <mat-card class="m-card">
   <mat-card-header>
     <div fxLayout="row wrap" class="w-100">
-      <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="50">
+      <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="50">
         <div class="content-wrapper-main-title p-t-10 m-b-10 p-l-10"> Claimant</div>
       </div>
-      <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="50" class="reference_no">
+      <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="50" class="reference_no">
         <div class="content-wrapper-main-title p-t-10 m-b-10 text-center" *ngIf="claimantInfo?.internal_reference"> Ref
           #:
           {{claimantInfo?.internal_reference}}</div>
 
       </div>
-      <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="text-right">
+      <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="text-right">
         <button mat-stroked-button *ngIf="!editStatus && claimantId" class="m-b-5 outline-success" (click)="edit()">
           Edit
         </button>
