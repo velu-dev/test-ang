@@ -40,6 +40,7 @@ export class SidenavComponent implements OnInit {
   public menuItems: any;
   expanded: boolean = false;
   roleId: any;
+  isTablet: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Tablet).pipe(map(result => result.matches), shareReplay())
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),

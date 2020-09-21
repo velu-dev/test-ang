@@ -1,7 +1,8 @@
 <mat-sidenav-container class="sidenav-container ">
     <mat-sidenav #drawer class="sidenav side-nav-icon" fixedInViewport
-        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
-        [opened]="(isHandset$ | async) === false">
+        [attr.role]="((isHandset$ | async) || (isTablet | async) ) ? 'dialog' : 'navigation'"
+        [mode]="((isHandset$ | async) || (isTablet | async) ) ? 'over' : 'side'"
+        [opened]="((isHandset$ | async) || (isTablet | async) ) === false">
 
         <mat-toolbar>
             <button type="button" (click)="openSidenav()" aria-label="Toggle sidenav" mat-icon-button class="toggle_">
