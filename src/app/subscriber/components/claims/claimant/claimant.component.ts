@@ -104,7 +104,7 @@ export class ClaimantComponent implements OnInit {
   }
   gotoEdit(e) {
     this.cookieService.set('claimDeatis', e.last_name + ', ' + e.first_name)
-    this.router.navigate(["subscriber/claimants/claimant", e.id])
+    this.router.navigate([this.router.url + "/claimant", e.id])
   }
 
   applyFilter(filterValue: string) {
@@ -132,7 +132,7 @@ export class ClaimantComponent implements OnInit {
     }
   }
   openClaimant() {
-    this.router.navigate(['subscriber/claimants/new-claimant'])
+    this.router.navigate([this.router.url + '/new-claimant'])
   }
 
 }

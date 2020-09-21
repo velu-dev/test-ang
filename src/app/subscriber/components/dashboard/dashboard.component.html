@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutGap="25px">
     <div fxLayout="row wrap">
         <!-- <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="['/subscriber/users']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="[router.url + '/users']">
                 <mat-card-content>
                     <h4>Manage Users </h4>
                 </mat-card-content>
@@ -9,7 +9,7 @@
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
-                [routerLink]="['/subscriber/settings']">
+                [routerLink]="[router.url + '/settings']">
                 <mat-card-content>
                     <h4>Settings </h4>
                 </mat-card-content>
@@ -23,63 +23,72 @@
             </mat-card>
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"  [routerLink]="['/subscriber/appointment']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
+                [routerLink]="[router.url + '/appointment']">
                 <mat-card-content>
                     <h4>Calendar </h4>
                 </mat-card-content>
             </mat-card>
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="['/subscriber/dashboard/claimant-awaiting']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
+                [routerLink]="[router.url + '/claimant-awaiting']">
                 <mat-card-content>
                     <h4>Claimants Awaiting Details</h4>
                 </mat-card-content>
             </mat-card>
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="['/subscriber/dashboard/upcomming-billable-item']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
+                [routerLink]="[router.url + '/upcomming-billable-item']">
                 <mat-card-content>
                     <h4>Upcoming Appointments </h4>
                 </mat-card-content>
             </mat-card>
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="['/subscriber/dashboard/claim-awaiting']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
+                [routerLink]="[router.url + '/claim-awaiting']">
                 <mat-card-content>
                     <h4>Claims Awaiting Details </h4>
                 </mat-card-content>
             </mat-card>
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="['/subscriber/dashboard/unfinished-reports']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
+                [routerLink]="[router.url + '/unfinished-reports']">
                 <mat-card-content>
                     <h4>Unfinished Reports </h4>
                 </mat-card-content>
             </mat-card>
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="['/subscriber/dashboard/billable-item-awaiting']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
+                [routerLink]="[router.url + '/billable-item-awaiting']">
                 <mat-card-content>
                     <h4>Billable Items Awaiting Scheduling </h4>
                 </mat-card-content>
             </mat-card>
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="['/subscriber/dashboard//billing-collection']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
+                [routerLink]="[router.url + '/billing-collection']">
                 <mat-card-content>
                     <h4>Billing and Collections </h4>
                 </mat-card-content>
             </mat-card>
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="['/subscriber/users/new']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
+                [routerLink]="[router.url + '/new']">
                 <mat-card-content>
                     <h4>New Staff / Staff Manager</h4>
                 </mat-card-content>
             </mat-card>
         </div>
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center" [routerLink]="['/subscriber/users/new-examiner']">
+            <mat-card matRipple class="br-top m-t-15 mat-card-details text-center"
+                [routerLink]="[router.url + '/new-examiner']">
                 <mat-card-content>
                     <h4>New Examiner </h4>
                 </mat-card-content>

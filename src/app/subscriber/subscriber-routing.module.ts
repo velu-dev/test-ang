@@ -48,31 +48,188 @@ const routes: Routes = [{
     path: "",
     component: DashboardComponent,
     data: { breadcrumb: { skip: true } }
-  }, {
-    path: "claimant-awaiting",
-    component: ClaimantAwaitingComponent,
-    data: { breadcrumb: "Claimants Awaiting Details" }
-  }, {
-    path: "claim-awaiting",
-    component: ClaimAwaitingComponent,
-    data: { breadcrumb: "Claims Awaiting Details" }
-  }, {
-    path: "billable-item-awaiting",
-    component: BillableItemAwaitingComponent,
-    data: { breadcrumb: "Billable Items Awaiting Scheduling" }
-  }, {
-    path: "upcomming-billable-item",
-    component: UpcommingBillableItemComponent,
-    data: { breadcrumb: "Upcoming Appointments" }
-  }, {
-    path: "unfinished-reports",
-    component: UnfinishedReportComponent,
-    data: { breadcrumb: "Unfinished Reports" }
-  }, {
-    path: "billing-collection",
-    component: BillingCollectionComponent,
-    data: { breadcrumb: "Billing And Collections" }
   }]
+}, {
+  path: "new-examiner",
+  component: NewExaminerUserComponent,
+  data: { breadcrumb: "New Examiner" }
+}, {
+  path: "new",
+  component: NewUserComponent,
+  data: { breadcrumb: "New Staff" }
+},
+{
+  path: "claimant-awaiting",
+  children: [
+    {
+      path: "",
+      component: ClaimantAwaitingComponent,
+      data: { breadcrumb: "Claimants Awaiting Details" }
+    },
+    {
+      path: "claimants",
+      children: [
+        {
+          path: "",
+          component: ClaimantComponent,
+          data: { breadcrumb: "Claimants" },
+        },
+        {
+          path: "new-claimant",
+          component: NewClaimComponent,
+          data: { breadcrumb: "New Claimant" }
+        },
+        {
+          path: "claimant/:claimant_id",
+          children: [{
+            path: "",
+            component: NewClaimantComponent,
+            data: { breadcrumb: { alias: '@Claimant' } }
+          },
+          {
+            path: "claim/:claim_id",
+            children: [{
+              path: "",
+              component: EditClaimComponent,
+              //data: { breadcrumb: "Claim" },
+              data: { breadcrumb: { alias: '@Claim' } }
+            }, {
+              path: "new-billable-item",
+              component: NewBillableItemComponent,
+              data: { breadcrumb: "New Billable Item" },
+            }, {
+              path: "billable-item/:billId",
+              children: [{
+                path: "",
+                component: AppointmentDetailsComponent,
+                data: { breadcrumb: "Billable Item" },
+              }, {
+                path: "correspondence",
+                component: BillingCorrespondanceComponent
+              }, {
+                path: "examination",
+                component: ExaminationComponent
+              }, {
+                path: "history",
+                component: HistoryComponent
+              }, {
+                path: "history/:examiner",
+                component: HistoryComponent,
+                data: { breadcrumb: "History" }
+              }, {
+                path: "records",
+                component: RecordsComponent
+              }, {
+                path: "reports",
+                component: ReportComponent,
+                data: { breadcrumb: "Report" }
+              }, {
+                path: "billing",
+                component: BilllableBillingComponent
+              }, {
+                path: "billing/:billingId",
+                component: BilllableBillingComponent,
+                data: { breadcrumb: "Billing" }
+              }]
+            }]
+          }, {
+            path: "new-claim",
+            component: NewClaimComponent,
+            data: { breadcrumb: "New Claim" }
+          }]
+        },
+        {
+          path: "edit-claim/:id",
+          component: NewClaimComponent,
+          data: { breadcrumb: "Edit" }
+        }, {
+          path: ":id/new-claim",
+          component: NewClaimComponent,
+          data: { breadcrumb: "New Claim" }
+        }]
+    }
+  ]
+},
+{
+  path: "claim-awaiting",
+  children: [
+    {
+      path: "",
+      component: ClaimAwaitingComponent,
+      data: { breadcrumb: "Claims Awaiting Details" }
+    }, {
+      path: "edit-claim/:claim_id",
+      children: [{
+        path: "",
+        component: EditClaimComponent,
+        //data: { breadcrumb: "Claim" },
+        data: { breadcrumb: { alias: '@Claim' } }
+      }, {
+        path: "new-billable-item",
+        component: NewBillableItemComponent,
+        data: { breadcrumb: "New Billable Item" },
+      }, {
+        path: "billable-item/:billId",
+        children: [{
+          path: "",
+          component: AppointmentDetailsComponent,
+          data: { breadcrumb: "Billable Item" },
+        }, {
+          path: "correspondence",
+          component: BillingCorrespondanceComponent
+        }, {
+          path: "examination",
+          component: ExaminationComponent
+        }, {
+          path: "history",
+          component: HistoryComponent
+        }, {
+          path: "history/:examiner",
+          component: HistoryComponent,
+          data: { breadcrumb: "History" }
+        }, {
+          path: "records",
+          component: RecordsComponent
+        }, {
+          path: "reports",
+          component: ReportComponent,
+          data: { breadcrumb: "Report" }
+        }, {
+          path: "billing",
+          component: BilllableBillingComponent
+        }, {
+          path: "billing/:billingId",
+          component: BilllableBillingComponent,
+          data: { breadcrumb: "Billing" }
+        }]
+      }]
+    }
+  ]
+}, {
+  path: "billable-item-awaiting",
+  children: [{
+    path: "",
+    component: BillableItemAwaitingComponent,
+    data: { breadcrumb: "Billable Items Awaiting Scheduling" },
+  },
+  {
+    path: "billable-item/edit-billable-item/:claim/:claimant/:billable",
+    component: NewBillableItemComponent,
+    data: { breadcrumb: "Edit Billable Item" },
+  }
+  ]
+}, {
+  path: "upcomming-billable-item",
+  component: UpcommingBillableItemComponent,
+  data: { breadcrumb: "Upcoming Appointments" }
+}, {
+  path: "unfinished-reports",
+  component: UnfinishedReportComponent,
+  data: { breadcrumb: "Unfinished Reports" }
+}, {
+  path: "billing-collection",
+  component: BillingCollectionComponent,
+  data: { breadcrumb: "Billing And Collections" }
 },
 {
   path: "",
@@ -87,7 +244,7 @@ const routes: Routes = [{
   }, {
     path: "new",
     component: NewUserComponent,
-    data: { breadcrumb: "New" }
+    data: { breadcrumb: "New Staff" }
   }, {
     path: "edit/:id",
     component: NewUserComponent,
@@ -137,7 +294,7 @@ const routes: Routes = [{
     }, {
       path: "reports",
       component: ReportComponent,
-      data:{breadcrumb: "Report"}
+      data: { breadcrumb: "Report" }
     }, {
       path: "billing",
       component: BilllableBillingComponent
@@ -229,7 +386,8 @@ const routes: Routes = [{
       component: NewClaimComponent,
       data: { breadcrumb: "New Claim" }
     }]
-}, {
+},
+{
   path: "billable-item",
   children: [{
     path: "",
@@ -357,7 +515,7 @@ const routes: Routes = [{
         data: { breadcrumb: "Calendar" }
 
       }, {
-        path: "appointment-details/:id/:billId",
+        path: "appointment-details/:claim_id/:billId",
         children: [{
           path: "",
           component: AppointmentDetailsComponent,
@@ -478,151 +636,414 @@ const routes: Routes = [{
       path: "settings",
       component: SubscriberSettingsComponent
     },
-    //  {
-    //   path: "edit-address/:examiner_id/:address_id",
-    //   component: EditAddressComponent
-    // },
   ]
 },
 {
   path: "manager",
-  children: [{
-    path: "",
-    component: ManagerDashboardComponent,
-    data: { breadcrumb: { skip: true } }
-  }, {
-    path: "dashboard",
-    component: ManagerDashboardComponent,
-    data: { breadcrumb: { skip: true } }
-  }, {
-    path: "staff",
-    children: [{
-      path: "",
-      component: ManageUserComponent,
-      data: { breadcrumb: "Users" }
-    }, {
-      path: "new",
-      component: ManageNewUserComponent,
-      data: { breadcrumb: "New" }
-    }, {
-      path: "edit/:id",
-      component: ManageNewUserComponent,
-      data: { breadcrumb: "Edit" }
-    }]
-  }, {
-    path: "appointment",
-    children: [{
-      path: "",
-      component: AppointmentComponent,
-      data: { breadcrumb: "Calendar" }
-    }, {
-      path: "appointment-details/:id/:billId",
-      component: AppointmentDetailsComponent,
-      data: { breadcrumb: "Examination Details" }
-    }]
-  },
-  {
-    path: "claimant",
-    children: [{
-      path: "",
-      component: ClaimantComponent,
-      data: { breadcrumb: "Claimants" }
-    }, {
-      path: "new-claimant",
-      component: NewClaimantComponent
-    }, {
-      path: "edit-claimant/:id",
-      component: NewClaimantComponent,
-    }, {
-      path: "edit-claimant/:claimant_id/new-claim",
+  children: [
+    {
+      path: "new-intake",
       component: NewClaimComponent,
-    }, {
-      path: "edit-claim/:id",
-      component: NewClaimComponent
-    }, {
-      path: ":id/new-claim",
-      component: NewClaimComponent
-    }]
-  }, {
-    path: "billable-item",
-    children: [{
+      data: { breadcrumb: "New Claim" }
+    },
+    {
+      path: "new-examiner",
+      component: NewExaminerUserComponent,
+      data: { breadcrumb: "New Examiner" }
+    },
+    {
+      path: "new-staff",
+      component: ManageNewUserComponent,
+      data: { breadcrumb: "New Staff" }
+    },
+    {
       path: "",
-      component: BillableItemComponent
-    }, {
-      path: "new-billable-item/:claim/:claimant",
-      component: NewBillableItemComponent
-    }, {
-      path: "edit-billable-item/:claim/:claimant/:billable",
-      component: NewBillableItemComponent
-    }]
+      component: ManagerDashboardComponent,
+      data: { breadcrumb: { skip: true } }
+    },
+    {
+      path: "claimant-awaiting",
+      children: [
+        {
+          path: "",
+          component: ClaimantAwaitingComponent,
+          data: { breadcrumb: "Claimants Awaiting Details" }
+        },
+        {
+          path: "claimants",
+          children: [
+            {
+              path: "",
+              component: ClaimantComponent,
+              data: { breadcrumb: "Claimants" },
+            },
+            {
+              path: "new-claimant",
+              component: NewClaimComponent,
+              data: { breadcrumb: "New Claimant" }
+            },
+            {
+              path: "claimant/:claimant_id",
+              children: [{
+                path: "",
+                component: NewClaimantComponent,
+                data: { breadcrumb: { alias: '@Claimant' } }
+              },
+              {
+                path: "claim/:claim_id",
+                children: [{
+                  path: "",
+                  component: EditClaimComponent,
+                  //data: { breadcrumb: "Claim" },
+                  data: { breadcrumb: { alias: '@Claim' } }
+                }, {
+                  path: "new-billable-item",
+                  component: NewBillableItemComponent,
+                  data: { breadcrumb: "New Billable Item" },
+                }, {
+                  path: "billable-item/:billId",
+                  children: [{
+                    path: "",
+                    component: AppointmentDetailsComponent,
+                    data: { breadcrumb: "Billable Item" },
+                  }, {
+                    path: "correspondence",
+                    component: BillingCorrespondanceComponent
+                  }, {
+                    path: "examination",
+                    component: ExaminationComponent
+                  }, {
+                    path: "history",
+                    component: HistoryComponent
+                  }, {
+                    path: "history/:examiner",
+                    component: HistoryComponent,
+                    data: { breadcrumb: "History" }
+                  }, {
+                    path: "records",
+                    component: RecordsComponent
+                  }, {
+                    path: "reports",
+                    component: ReportComponent,
+                    data: { breadcrumb: "Report" }
+                  }, {
+                    path: "billing",
+                    component: BilllableBillingComponent
+                  }, {
+                    path: "billing/:billingId",
+                    component: BilllableBillingComponent,
+                    data: { breadcrumb: "Billing" }
+                  }]
+                }]
+              }, {
+                path: "new-claim",
+                component: NewClaimComponent,
+                data: { breadcrumb: "New Claim" }
+              }]
+            },
+            {
+              path: "edit-claim/:id",
+              component: NewClaimComponent,
+              data: { breadcrumb: "Edit" }
+            }, {
+              path: ":id/new-claim",
+              component: NewClaimComponent,
+              data: { breadcrumb: "New Claim" }
+            }]
+        }
+      ]
+    },
+    {
+      path: "claim-awaiting",
+      children: [
+        {
+          path: "",
+          component: ClaimAwaitingComponent,
+          data: { breadcrumb: "Claims Awaiting Details" }
+        }, {
+          path: "edit-claim/:claim_id",
+          children: [{
+            path: "",
+            component: EditClaimComponent,
+            //data: { breadcrumb: "Claim" },
+            data: { breadcrumb: { alias: '@Claim' } }
+          }, {
+            path: "new-billable-item",
+            component: NewBillableItemComponent,
+            data: { breadcrumb: "New Billable Item" },
+          }, {
+            path: "billable-item/:billId",
+            children: [{
+              path: "",
+              component: AppointmentDetailsComponent,
+              data: { breadcrumb: "Billable Item" },
+            }, {
+              path: "correspondence",
+              component: BillingCorrespondanceComponent
+            }, {
+              path: "examination",
+              component: ExaminationComponent
+            }, {
+              path: "history",
+              component: HistoryComponent
+            }, {
+              path: "history/:examiner",
+              component: HistoryComponent,
+              data: { breadcrumb: "History" }
+            }, {
+              path: "records",
+              component: RecordsComponent
+            }, {
+              path: "reports",
+              component: ReportComponent,
+              data: { breadcrumb: "Report" }
+            }, {
+              path: "billing",
+              component: BilllableBillingComponent
+            }, {
+              path: "billing/:billingId",
+              component: BilllableBillingComponent,
+              data: { breadcrumb: "Billing" }
+            }]
+          }]
+        }
+      ]
+    },
+    {
+      path: "billable-item-awaiting",
+      children: [{
+        path: "",
+        component: BillableItemAwaitingComponent,
+        data: { breadcrumb: "Billable Items Awaiting Scheduling" },
+      },
+      {
+        path: "billable-item/edit-billable-item/:claim/:claimant/:billable",
+        component: NewBillableItemComponent,
+        data: { breadcrumb: "Edit Billable Item" },
+      }
+      ]
+    },
+    {
+      path: "upcomming-billable-item",
+      component: UpcommingBillableItemComponent,
+      data: { breadcrumb: "Upcoming Appointments" }
+    },
+    {
+      path: "unfinished-reports",
+      component: UnfinishedReportComponent,
+      data: { breadcrumb: "Unfinished Reports" }
+    },
+    {
+      path: "billing-collection",
+      component: BillingCollectionComponent,
+      data: { breadcrumb: "Billing And Collections" }
+    },
+    {
+      path: "dashboard",
+      component: ManagerDashboardComponent,
+      data: { breadcrumb: { skip: true } }
+    },
+    {
+      path: "users",
+      children: [{
+        path: "",
+        component: ManageUserComponent,
+        data: { breadcrumb: "Users" }
+      }, {
+        path: "new",
+        component: ManageNewUserComponent,
+        data: { breadcrumb: "New Staff" }
+      }, {
+        path: "edit/:id",
+        component: ManageNewUserComponent,
+        data: { breadcrumb: "Edit" }
+      }, {
+        path: "new-examiner",
+        component: NewExaminerUserComponent,
+        data: { breadcrumb: "New Examiner" }
+      }]
+    },
+    {
+      path: "appointment",
+      children: [{
+        path: "",
+        component: AppointmentComponent,
+        data: { breadcrumb: "Calendar" }
+      }, {
+        path: "appointment-details/:claim_id/:billId",
+        children: [{
+          path: "",
+          component: AppointmentDetailsComponent,
+          data: { breadcrumb: "Examination Details" }
+        }, {
+          path: "correspondence",
+          component: BillingCorrespondanceComponent
+        }, {
+          path: "examination",
+          component: ExaminationComponent
+        }, {
+          path: "history",
+          component: HistoryComponent
+        }, {
+          path: "history/:examiner",
+          component: HistoryComponent,
+          data: { breadcrumb: "History" }
+        }, {
+          path: "records",
+          component: RecordsComponent
+        }, {
+          path: "reports",
+          component: ReportComponent,
+          data: { breadcrumb: "Report" }
+        }, {
+          path: "billing",
+          component: BilllableBillingComponent
+        }, {
+          path: "billing/:billingId",
+          component: BilllableBillingComponent,
+          data: { breadcrumb: "Billing" }
+        }]
+      }]
+    },
+    {
+      path: "claimants",
+      children: [
+        {
+          path: "",
+          component: ClaimantComponent,
+          data: { breadcrumb: "Claimants" },
+        },
+        {
+          path: "new-claimant",
+          component: NewClaimComponent,
+          data: { breadcrumb: "New Claimant" }
+        },
+        {
+          path: "claimant/:claimant_id",
+          children: [{
+            path: "",
+            component: NewClaimantComponent,
+            data: { breadcrumb: { alias: '@Claimant' } }
+          },
+          {
+            path: "claim/:claim_id",
+            children: [{
+              path: "",
+              component: EditClaimComponent,
+              //data: { breadcrumb: "Claim" },
+              data: { breadcrumb: { alias: '@Claim' } }
+            }, {
+              path: "new-billable-item",
+              component: NewBillableItemComponent,
+              data: { breadcrumb: "New Billable Item" },
+            }, {
+              path: "billable-item/:billId",
+              children: [{
+                path: "",
+                component: AppointmentDetailsComponent,
+                data: { breadcrumb: "Billable Item" },
+              }, {
+                path: "correspondence",
+                component: BillingCorrespondanceComponent
+              }, {
+                path: "examination",
+                component: ExaminationComponent
+              }, {
+                path: "history",
+                component: HistoryComponent
+              }, {
+                path: "history/:examiner",
+                component: HistoryComponent,
+                data: { breadcrumb: "History" }
+              }, {
+                path: "records",
+                component: RecordsComponent
+              }, {
+                path: "reports",
+                component: ReportComponent,
+                data: { breadcrumb: "Report" }
+              }, {
+                path: "billing",
+                component: BilllableBillingComponent
+              }, {
+                path: "billing/:billingId",
+                component: BilllableBillingComponent,
+                data: { breadcrumb: "Billing" }
+              }]
+            }]
+          }, {
+            path: "new-claim",
+            component: NewClaimComponent,
+            data: { breadcrumb: "New Claim" }
+          }]
+        },
+        {
+          path: "edit-claim/:id",
+          component: NewClaimComponent,
+          data: { breadcrumb: "Edit" }
+        }, {
+          path: ":id/new-claim",
+          component: NewClaimComponent,
+          data: { breadcrumb: "New Claim" }
+        }]
+    },
+    {
+      path: "billable-item",
+      children: [{
+        path: "",
+        component: BillableItemComponent
+      }, {
+        path: "new-billable-item/:claim/:claimant",
+        component: NewBillableItemComponent
+      }, {
+        path: "edit-billable-item/:claim/:claimant/:billable",
+        component: NewBillableItemComponent
+      }]
 
-  },
-  {
-    path: "location",
-    children: [{
-      path: "",
-      component: ManageLocationComponent,
-      data: { breadcrumb: "Service Locations" }
-    }, {
-      path: "edit-location/:examiner_id/:address_id",
-      component: EditAddressComponent,
-      data: { breadcrumb: "Edit Service Locations" }
-    }, {
-      path: "new-location",
-      component: ExaminerManageAddressComponent,
-      data: { breadcrumb: "New" }
     },
     {
-      path: "existing-location",
-      component: ExistingServiceLocationsComponent
-    },
-    {
-      path: "add-location",
-      component: AddEditServiceLocationComponent,
-      data: { breadcrumb: "Add Location" }
-    },
-    {
-      path: "edit-location/:id",
-      component: AddEditServiceLocationComponent
-    }]
+      path: "location",
+      children: [{
+        path: "",
+        component: ManageLocationComponent,
+        data: { breadcrumb: "Service Locations" }
+      }, {
+        path: "new-location",
+        component: ExaminerManageAddressComponent,
+        data: { breadcrumb: "New" }
+      },
+      {
+        path: "add-location",
+        component: AddEditServiceLocationComponent,
+        data: { breadcrumb: "Add Location" }
+      },
+      {
+        path: "edit-location/:id",
+        component: AddEditServiceLocationComponent,
+        data: { breadcrumb: "Edit Location" }
+      }]
 
-  },
-  {
-    path: "billing",
-    children: [{
-      path: "",
-      component: BillingComponent,
-      data: { breadcrumb: "Bills" }
-    }, {
-      path: "new",
-      component: NewBillingComponent,
-      data: { breadcrumb: "New" }
-    }, {
-      path: ":id",
-      component: EditBillingComponent,
-      data: { breadcrumb: "Edit" }
+    },
+    {
+      path: "billing",
+      children: [{
+        path: "",
+        component: BillingComponent,
+        data: { breadcrumb: "Bills" }
+      }, {
+        path: "new",
+        component: NewBillingComponent,
+        data: { breadcrumb: "New" }
+      }, {
+        path: ":id",
+        component: EditBillingComponent,
+        data: { breadcrumb: "Edit" }
+      }]
+    },
+    {
+      path: "settings",
+      component: SubscriberSettingsComponent
     }]
-  },
-  {
-    path: "claims",
-    children: [{
-      path: "",
-      component: ClaimListComponent
-    }, {
-      path: "new-claim",
-      component: NewClaimComponent
-    }, {
-      path: ":id",
-      component: NewClaimComponent
-    }, {
-      path: "edit-claim/:id",
-      component: EditClaimComponent
-    }
-    ]
-  }, {
-    path: "settings",
-    component: SubscriberSettingsComponent
-  }]
 },
 {
   path: "examiner",
@@ -634,45 +1055,277 @@ const routes: Routes = [{
     path: "dashboard",
     component: ExaminerDashboardComponent,
     data: { breadcrumb: { skip: true } }
-  }, {
+  },
+  {
+    path: "claimant-awaiting",
+    children: [
+      {
+        path: "",
+        component: ClaimantAwaitingComponent,
+        data: { breadcrumb: "Claimants Awaiting Details" }
+      },
+      {
+        path: "claimants",
+        children: [
+          {
+            path: "",
+            component: ClaimantComponent,
+            data: { breadcrumb: "Claimants" },
+          },
+          {
+            path: "new-claimant",
+            component: NewClaimComponent,
+            data: { breadcrumb: "New Claimant" }
+          },
+          {
+            path: "claimant/:claimant_id",
+            children: [{
+              path: "",
+              component: NewClaimantComponent,
+              data: { breadcrumb: { alias: '@Claimant' } }
+            },
+            {
+              path: "claim/:claim_id",
+              children: [{
+                path: "",
+                component: EditClaimComponent,
+                //data: { breadcrumb: "Claim" },
+                data: { breadcrumb: { alias: '@Claim' } }
+              }, {
+                path: "new-billable-item",
+                component: NewBillableItemComponent,
+                data: { breadcrumb: "New Billable Item" },
+              }, {
+                path: "billable-item/:billId",
+                children: [{
+                  path: "",
+                  component: AppointmentDetailsComponent,
+                  data: { breadcrumb: "Billable Item" },
+                }, {
+                  path: "correspondence",
+                  component: BillingCorrespondanceComponent
+                }, {
+                  path: "examination",
+                  component: ExaminationComponent
+                }, {
+                  path: "history",
+                  component: HistoryComponent
+                }, {
+                  path: "history/:examiner",
+                  component: HistoryComponent,
+                  data: { breadcrumb: "History" }
+                }, {
+                  path: "records",
+                  component: RecordsComponent
+                }, {
+                  path: "reports",
+                  component: ReportComponent,
+                  data: { breadcrumb: "Report" }
+                }, {
+                  path: "billing",
+                  component: BilllableBillingComponent
+                }, {
+                  path: "billing/:billingId",
+                  component: BilllableBillingComponent,
+                  data: { breadcrumb: "Billing" }
+                }]
+              }]
+            }, {
+              path: "new-claim",
+              component: NewClaimComponent,
+              data: { breadcrumb: "New Claim" }
+            }]
+          },
+          {
+            path: "edit-claim/:id",
+            component: NewClaimComponent,
+            data: { breadcrumb: "Edit" }
+          }, {
+            path: ":id/new-claim",
+            component: NewClaimComponent,
+            data: { breadcrumb: "New Claim" }
+          }]
+      }
+    ]
+  },
+  {
+    path: "upcomming-billable-item",
+    component: UpcommingBillableItemComponent,
+    data: { breadcrumb: "Upcoming Appointments" }
+  },
+  {
+    path: "claim-awaiting",
+    children: [
+      {
+        path: "",
+        component: ClaimAwaitingComponent,
+        data: { breadcrumb: "Claims Awaiting Details" }
+      }, {
+        path: "edit-claim/:claim_id",
+        children: [{
+          path: "",
+          component: EditClaimComponent,
+          //data: { breadcrumb: "Claim" },
+          data: { breadcrumb: { alias: '@Claim' } }
+        }, {
+          path: "new-billable-item",
+          component: NewBillableItemComponent,
+          data: { breadcrumb: "New Billable Item" },
+        }, {
+          path: "billable-item/:billId",
+          children: [{
+            path: "",
+            component: AppointmentDetailsComponent,
+            data: { breadcrumb: "Billable Item" },
+          }, {
+            path: "correspondence",
+            component: BillingCorrespondanceComponent
+          }, {
+            path: "examination",
+            component: ExaminationComponent
+          }, {
+            path: "history",
+            component: HistoryComponent
+          }, {
+            path: "history/:examiner",
+            component: HistoryComponent,
+            data: { breadcrumb: "History" }
+          }, {
+            path: "records",
+            component: RecordsComponent
+          }, {
+            path: "reports",
+            component: ReportComponent,
+            data: { breadcrumb: "Report" }
+          }, {
+            path: "billing",
+            component: BilllableBillingComponent
+          }, {
+            path: "billing/:billingId",
+            component: BilllableBillingComponent,
+            data: { breadcrumb: "Billing" }
+          }]
+        }]
+      }
+    ]
+  },
+  {
+    path: "unfinished-reports",
+    component: UnfinishedReportComponent,
+    data: { breadcrumb: "Unfinished Reports" }
+  },
+  {
+    path: "billing-collection",
+    component: BillingCollectionComponent,
+    data: { breadcrumb: "Billing And Collections" }
+  },
+  {
+    path: "billable-item-awaiting",
+    children: [{
+      path: "",
+      component: BillableItemAwaitingComponent,
+      data: { breadcrumb: "Billable Items Awaiting Scheduling" },
+    },
+    {
+      path: "billable-item/edit-billable-item/:claim/:claimant/:billable",
+      component: NewBillableItemComponent,
+      data: { breadcrumb: "Edit Billable Item" },
+    }
+    ]
+  },
+  {
     path: "appointment",
     children: [{
       path: "",
       component: AppointmentComponent,
       data: { breadcrumb: "Calendar" }
     }, {
-      path: "appointment-details/:id/:billId",
+      path: "appointment-details/:claim_id/:billId",
       component: AppointmentDetailsComponent,
       data: { breadcrumb: "Examination Details" }
     }]
   },
   {
-    path: "claimant",
-    children: [{
-      path: "",
-      component: ClaimantComponent,
-      data: { breadcrumb: "Claimants" }
-    }, {
-      path: "new-claimant",
-      component: NewClaimantComponent,
-      data: { breadcrumb: "New Claimant" }
-    }, {
-      path: "edit-claimant/:id",
-      component: NewClaimantComponent,
-      data: { breadcrumb: "Edit Claimant" }
-    }, {
-      path: "edit-claimant/:claimant_id/new-claim",
-      component: NewClaimComponent,
-      data: { breadcrumb: "New Claim" }
-    }, {
-      path: "edit-claim/:id",
-      component: NewClaimComponent,
-      data: { breadcrumb: "Edit Claim" }
-    }, {
-      path: ":id/new-claim",
-      component: NewClaimComponent,
-      data: { breadcrumb: "New Claim" }
-    }]
+    path: "claimants",
+    children: [
+      {
+        path: "",
+        component: ClaimantComponent,
+        data: { breadcrumb: "Claimants" },
+      },
+      {
+        path: "new-claimant",
+        component: NewClaimComponent,
+        data: { breadcrumb: "New Claimant" }
+      },
+      {
+        path: "claimant/:claimant_id",
+        children: [{
+          path: "",
+          component: NewClaimantComponent,
+          data: { breadcrumb: { alias: '@Claimant' } }
+        },
+        {
+          path: "claim/:claim_id",
+          children: [{
+            path: "",
+            component: EditClaimComponent,
+            //data: { breadcrumb: "Claim" },
+            data: { breadcrumb: { alias: '@Claim' } }
+          }, {
+            path: "new-billable-item",
+            component: NewBillableItemComponent,
+            data: { breadcrumb: "New Billable Item" },
+          }, {
+            path: "billable-item/:billId",
+            children: [{
+              path: "",
+              component: AppointmentDetailsComponent,
+              data: { breadcrumb: "Billable Item" },
+            }, {
+              path: "correspondence",
+              component: BillingCorrespondanceComponent
+            }, {
+              path: "examination",
+              component: ExaminationComponent
+            }, {
+              path: "history",
+              component: HistoryComponent
+            }, {
+              path: "history/:examiner",
+              component: HistoryComponent,
+              data: { breadcrumb: "History" }
+            }, {
+              path: "records",
+              component: RecordsComponent
+            }, {
+              path: "reports",
+              component: ReportComponent,
+              data: { breadcrumb: "Report" }
+            }, {
+              path: "billing",
+              component: BilllableBillingComponent
+            }, {
+              path: "billing/:billingId",
+              component: BilllableBillingComponent,
+              data: { breadcrumb: "Billing" }
+            }]
+          }]
+        }, {
+          path: "new-claim",
+          component: NewClaimComponent,
+          data: { breadcrumb: "New Claim" }
+        }]
+      },
+      {
+        path: "edit-claim/:id",
+        component: NewClaimComponent,
+        data: { breadcrumb: "Edit" }
+      }, {
+        path: ":id/new-claim",
+        component: NewClaimComponent,
+        data: { breadcrumb: "New Claim" }
+      }]
   }, {
     path: "billable-item",
     children: [{
@@ -696,16 +1349,39 @@ const routes: Routes = [{
       path: "",
       component: ManageLocationComponent,
       data: { breadcrumb: "Service Locations" }
-    }, {
-      path: "edit-location/:examiner_id/:address_id",
-      component: EditAddressComponent,
-      data: { breadcrumb: "Edit" }
-    }, {
+    },
+    // {
+    //   path: "edit-location/:examiner_id/:address_id",
+    //   component: EditAddressComponent
+    // }, 
+    {
       path: "new-location",
       component: ExaminerManageAddressComponent,
       data: { breadcrumb: "New" }
-    },]
-
+    }, {
+      path: "existing-location/:id",
+      component: ExistingServiceLocationsComponent
+    },
+    {
+      path: "add-location",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "New" }
+    },
+    {
+      path: "add-location/:status/:examiner",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Add Location" }
+    },
+    {
+      path: "edit-location/:id",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Edit " }
+    },
+    {
+      path: "edit-location/:id/:status/:examiner",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Edit" }
+    }]
   },
   {
     path: "billing",

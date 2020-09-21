@@ -45,7 +45,7 @@ export class ManageLocationComponent implements OnInit {
   isMobile = false;
   expandedElement: any;
   constructor(private examinerService: ExaminerService,
-    private router: Router,
+    public router: Router,
     public dialog: MatDialog,
     private alertService: AlertService,
     private subscriberService: SubscriberService,
@@ -71,10 +71,10 @@ export class ManageLocationComponent implements OnInit {
   getAddressDetails() {
     this.subscriberService.getLocationDetails().subscribe(response => {
       this.dataSource = new MatTableDataSource(response['data']);
-      response['data'].map(data=>{ 
+      response['data'].map(data => {
         data.status = data.is_active == true ? 'Active' : 'Inactive';
-        data.examiner_name = data.examiner != null ? data.examiner[0].last_name + ' '+ data.examiner[0].first_name +''+ (data.examiner[0].suffix ? ', '+data.examiner[0].suffix : '') : null;
-         data.service =  data.service_name ? data.service_code +' - ' + data.service_name : '';
+        data.examiner_name = data.examiner != null ? data.examiner[0].last_name + ' ' + data.examiner[0].first_name + '' + (data.examiner[0].suffix ? ', ' + data.examiner[0].suffix : '') : null;
+        data.service = data.service_name ? data.service_code + ' - ' + data.service_name : '';
       })
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -106,7 +106,7 @@ export class ManageLocationComponent implements OnInit {
   editAddress(data) {
     console.log(data)
     //this.router.navigate(['/subscriber/location/edit-location', data.examiner_id, data.address_id])
-    this.router.navigate(['/subscriber/location/edit-location', data.id])
+    this.router.navigate([this.router.url + '/edit-location', data.id])
   }
   editClaim(e) {
 

@@ -99,7 +99,7 @@ export class AppointmentComponent implements OnInit {
     }
   }
   navigate(element) {
-    this.router.navigate(['/subscriber/appointment/appointment-details', element.claim_id, element.bill_item_id])
+    this.router.navigate([this.router.url + '/appointment-details', element.claim_id, element.bill_item_id])
   }
 
   exportData() {

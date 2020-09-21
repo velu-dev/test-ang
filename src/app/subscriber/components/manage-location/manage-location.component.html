@@ -7,43 +7,54 @@
             <mat-icon>add</mat-icon>
         </button> -->
         <div class="add-new">
-        <button mat-stroked-button class="outline-success" [routerLink]="['/subscriber/location/add-location']" routerLinkActive="router-link-active">
-            Add New Location
-        </button>
+            <button mat-stroked-button class="outline-success" [routerLink]="[router.url +'/add-location']"
+                routerLinkActive="router-link-active">
+                Add New Location
+            </button>
         </div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="p-t-10">
 
         <div class="table-filter">
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search by address, service type, phone etc.">
-            <mat-icon >search</mat-icon>
+            <input matInput (keyup)="applyFilter($event.target.value)"
+                placeholder="Search by address, service type, phone etc.">
+            <mat-icon>search</mat-icon>
         </div>
 
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
-            matSort>
-            <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'"> {{columnName[i]}} </th>
-                <td mat-cell *matCellDef="let element" (click)="!isMobile ? editAddress(element) : ''">
-                    <span *ngIf="i == 0 && isMobile">
-                        <mat-icon (click)="openElement(element)" mat-raised-button
-                            [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
-                            {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
-                        </mat-icon>
-                    </span>
-                    <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}} {{element.city}} {{element.state_name}} - {{element.zip_code}}</span>
-                    <span *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
-                    <span *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
-                    <span *ngIf="column == 'examiner_name'">
-                        <span *ngIf="element?.examiner && element?.examiner?.length == 1">{{element?.examiner[0].last_name}} {{element?.examiner[0].first_name}}{{element?.examiner[0].suffix ? ', '+element?.examiner[0].suffix : ''}}</span>
-                        <span *ngIf="element?.examiner && element?.examiner?.length != 1">{{element?.examiner[0].last_name}} {{element?.examiner[0].first_name}}{{element?.examiner[0].suffix ? ', '+element?.examiner[0].suffix : ''}}<small> ,(+{{element?.examiner?.length - 1}} more)</small></span>
-                        <!-- <small> (+2 more)</small> -->
-                    </span>
-                    <span *ngIf="column == 'status'">{{element?.is_active == true ? 'Active' : 'Inactive'}}</span>
-                   
-                   
-                    <!-- <span *ngIf="column == 'disabled'">
+                matSort>
+                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+                        {{columnName[i]}} </th>
+                    <td mat-cell *matCellDef="let element" (click)="!isMobile ? editAddress(element) : ''">
+                        <span *ngIf="i == 0 && isMobile">
+                            <mat-icon (click)="openElement(element)" mat-raised-button
+                                [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
+                                {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                            </mat-icon>
+                        </span>
+                        <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}} {{element.city}}
+                            {{element.state_name}} - {{element.zip_code}}</span>
+                        <span
+                            *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
+                        <span
+                            *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
+                        <span *ngIf="column == 'examiner_name'">
+                            <span
+                                *ngIf="element?.examiner && element?.examiner?.length == 1">{{element?.examiner[0].last_name}}
+                                {{element?.examiner[0].first_name}}{{element?.examiner[0].suffix ? ', '+element?.examiner[0].suffix : ''}}</span>
+                            <span
+                                *ngIf="element?.examiner && element?.examiner?.length != 1">{{element?.examiner[0].last_name}}
+                                {{element?.examiner[0].first_name}}{{element?.examiner[0].suffix ? ', '+element?.examiner[0].suffix : ''}}<small>
+                                    ,(+{{element?.examiner?.length - 1}} more)</small></span>
+                            <!-- <small> (+2 more)</small> -->
+                        </span>
+                        <span *ngIf="column == 'status'">{{element?.is_active == true ? 'Active' : 'Inactive'}}</span>
+
+
+                        <!-- <span *ngIf="column == 'disabled'">
                         <div class="no-wrap-td" *ngIf="element.address_type_id != 3 && element.service_name != 'Other Examiner Primary'">
                             <button mat-icon-button class="edit" (click)="editAddress(element)" matTooltip="Edit"
                                 matTooltipPosition="before">
@@ -61,26 +72,30 @@
                         </button>
                         </div>
                     </span> -->
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="expandedDetail">
-                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                    <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                        <div class="responsive-table">
-                            <div><span>Address</span><span>{{element.street1}} {{element.street2}} {{element.city}} {{element.state_name}} - {{element.zip_code}}</span></div>
-                            <div><span>Service Type</span><span> {{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}} </span></div>
-                            <div><span>Phone</span><span>{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }} </span></div>
-                            <!-- <div><span>Date Of Birth</span><span> {{element.date_of_birth | date: 'MM-dd-yyyy'}} </span></div> -->
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="expandedDetail">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                        <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                            <div class="responsive-table">
+                                <div><span>Address</span><span>{{element.street1}} {{element.street2}} {{element.city}}
+                                        {{element.state_name}} - {{element.zip_code}}</span></div>
+                                <div><span>Service Type</span><span>
+                                        {{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}
+                                    </span></div>
+                                <div><span>Phone</span><span>{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}
+                                    </span></div>
+                                <!-- <div><span>Date Of Birth</span><span> {{element.date_of_birth | date: 'MM-dd-yyyy'}} </span></div> -->
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-                class="row" [class.row]="expandedElement === element">
-            </tr>
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
-        </table>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
+                    [class.row]="expandedElement === element">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+            </table>
             <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
         </div>
         <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">

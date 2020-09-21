@@ -8,13 +8,13 @@ import { Router } from '@angular/router';
 })
 export class ManagerDashboardComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
   }
   openMenu(menu) {
     if (menu == 'intake') {
-      this.router.navigate(['subscriber/new-intake'])
+      this.router.navigate([this.router.url + '/new-intake'])
     }
   }
 }

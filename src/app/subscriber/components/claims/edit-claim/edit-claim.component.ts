@@ -39,9 +39,9 @@ export class EditClaimComponent implements OnInit {
     public dialog: MatDialog,
     private _location: Location,
     private intercom: IntercomService
-    ) {
-      this.intercom.setClaimant("Claimant");
-      this.intercom.setClaimNumber("Claim");
+  ) {
+    this.intercom.setClaimant("Claimant");
+    this.intercom.setClaimNumber("Claim");
     this.claimService.seedData("body_part").subscribe(res => {
       this.bodyParts = res.data;
     })
@@ -51,7 +51,7 @@ export class EditClaimComponent implements OnInit {
         this.claimId = param.claim_id;
         this.isLoading = true;
         this.claimService.getClaim(param.claim_id).subscribe(res => {
-          this.intercom.setClaimant(res['data'].claimant_details.last_name+', '+ res['data'].claimant_details.first_name);
+          this.intercom.setClaimant(res['data'].claimant_details.last_name + ', ' + res['data'].claimant_details.first_name);
           this.intercom.setClaimNumber(res.data.claim_details.claim_number);
           console.log(res.data.claimant_details)
           this.dateOfBirth = res.data.claimant_details.date_of_birth;
@@ -75,7 +75,7 @@ export class EditClaimComponent implements OnInit {
     })
   }
   navigateBillable() {
-    this.router.navigate(['/subscriber/claimants/claimant/' + this.claimantDetail.id + '/claim/' + this.claimId + '/new-billable-item'])
+    this.router.navigate([this.router.url + '/new-billable-item'])
   }
 
 }

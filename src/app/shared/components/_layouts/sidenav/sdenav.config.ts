@@ -70,7 +70,7 @@ export const ROUTES: SideNavInterface[] = [
         role_id: 2,
         menu: [
             {
-                path: '/subscriber/dashboard',
+                path: '/subscriber',
                 title: 'Dashboard',
                 icon: 'home',
                 submenu: [],
@@ -148,14 +148,14 @@ export const ROUTES: SideNavInterface[] = [
         role_id: 3,
         menu: [
             {
-                path: '/subscriber/manager/dashboard',
+                path: '/subscriber/manager',
                 title: 'Dashboard',
                 icon: 'home',
                 submenu: [],
                 group: "Subscriber",
                 role: 3
             }, {
-                path: '/subscriber/appointment',
+                path: '/subscriber/manager/appointment',
                 title: 'Calendar',
                 icon: 'calendar-alt',
                 submenu: [],
@@ -187,7 +187,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 3
             },
             {
-                path: '/subscriber/manager/claimant',
+                path: '/subscriber/manager/claimants',
                 title: 'Claimants',
                 icon: 'users',
                 submenu: [],
@@ -219,7 +219,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 3
             },
             {
-                path: '/subscriber/users',
+                path: '/subscriber/manager/users',
                 title: 'Users',
                 icon: 'user-tie',
                 submenu: [],
@@ -232,7 +232,7 @@ export const ROUTES: SideNavInterface[] = [
         role_id: 4,
         menu: [
             {
-                path: '/subscriber/staff/dashboard',
+                path: '/subscriber/staff',
                 title: 'Dashboard',
                 icon: 'home',
                 submenu: [],
@@ -302,7 +302,7 @@ export const ROUTES: SideNavInterface[] = [
         role_id: 11,
         menu: [
             {
-                path: '/subscriber/examiner/dashboard',
+                path: '/subscriber/examiner',
                 title: 'Dashboard',
                 icon: 'home',
                 submenu: [],
@@ -326,7 +326,7 @@ export const ROUTES: SideNavInterface[] = [
                 role: 11
             },
             {
-                path: '/subscriber/examiner/claimant',
+                path: '/subscriber/examiner/claimants',
                 title: 'Claimants',
                 icon: 'users',
                 submenu: [],
