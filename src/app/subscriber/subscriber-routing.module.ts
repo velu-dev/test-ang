@@ -1103,7 +1103,7 @@ const routes: Routes = [{
       path: "users",
       children: [{
         path: "",
-        component: ManageUserComponent,
+        component: UserComponent,
         data: { breadcrumb: "Users" }
       }, {
         path: "new",
@@ -1111,7 +1111,7 @@ const routes: Routes = [{
         data: { breadcrumb: "New Staff" }
       }, {
         path: "edit/:id",
-        component: ManageNewUserComponent,
+        component: NewExaminerUserComponent,
         data: { breadcrumb: "Edit" }
       }, {
         path: "new-examiner",

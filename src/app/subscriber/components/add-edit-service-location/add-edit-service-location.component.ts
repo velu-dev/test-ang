@@ -37,12 +37,14 @@ export class AddEditServiceLocationComponent implements OnInit {
   ) {
     this.user = JSON.parse(this.cookieService.get('user'));
     this.route.params.subscribe(params_res => {
-      console.log(params_res)
+      // this.locationForm.enable();
+      // this.editStatus = true;
       this.pageStatus = params_res.status;
       this.examinerId = params_res.examiner;
       if (params_res.id) {
         this.editStatus = false;
         this.locationId = params_res.id;
+        this.edit();
         this.getLocation()
       }
     })
@@ -152,7 +154,7 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.opendialog(examiner)
         return;
       }
-     
+
     }
 
     if (this.pageStatus == 2) {
@@ -169,7 +171,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       })
 
     } else {
-     
+
 
       this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
         //console.log(location)
@@ -256,7 +258,7 @@ export class AddEditServiceLocationComponent implements OnInit {
   templateUrl: 'in-active-dialog.html',
 })
 export class InActivedialog {
-examiner:any;
+  examiner: any;
   constructor(
     public dialogRef: MatDialogRef<InActivedialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {

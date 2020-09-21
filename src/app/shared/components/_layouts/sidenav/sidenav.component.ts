@@ -47,6 +47,7 @@ export class SidenavComponent implements OnInit {
       shareReplay()
     );
   isMobile: boolean = false;
+  isTab: boolean = false;
   role: any;
   is_subscriber: any;
   isOpen: any = true;
@@ -84,6 +85,9 @@ export class SidenavComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })
+    this.isTablet.subscribe(res => {
+      this.isTab = res;
+    })
     this.loaderService.hide();
 
   }
@@ -101,7 +105,7 @@ export class SidenavComponent implements OnInit {
   ngAfterViewInit() {
   }
   navigate() {
-    if (this.isMobile) {
+    if (this.isMobile || this.isTab) {
       this.sidenav.toggle();
     }
   }
