@@ -155,10 +155,10 @@ export class NewExaminerUserComponent implements OnInit {
     this.route.params.subscribe(params_res => {
       if (params_res.status == 1) {
         //this.tabIndex = 0
-       // setTimeout(() => {
-          this.tabIndex = 4
-          this.tab = 4
-       // }, 1000);
+        // setTimeout(() => {
+        this.tabIndex = 4
+        this.tab = 4
+        // }, 1000);
 
       }
     })
@@ -237,10 +237,10 @@ export class NewExaminerUserComponent implements OnInit {
     //  }
     // })
     this.filteredOptions = this.addresssearch.valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filterLocation(value))
-    );
+      .pipe(
+        startWith(''),
+        map(value => this._filterLocation(value))
+      );
 
   }
 
@@ -342,23 +342,23 @@ export class NewExaminerUserComponent implements OnInit {
         return (data.service && data.service.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.npi_number && data.npi_number.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-    
+
       this.examinerService.searchAddress({ basic_search: '', isadvanced: false }, this.examinerId).subscribe(value => {
         this.locationDataSearch = value.data;
         console.log(this.locationDataSearch)
-        
+
       })
     })
   }
 
-  locationDataSearch:any;
+  locationDataSearch: any;
   private _filterLocation(value: string): string[] {
     // if (typeof (value) == 'number') {
     //   return;
     // }
     const filterValue = value == undefined ? '' : value && value.toLowerCase();
     return this.locationDataSearch.filter(option => option.street1.toLowerCase().includes(filterValue) || option.street2.toLowerCase().includes(filterValue)
-    || option.city.toLowerCase().includes(filterValue) || option.state_name.toLowerCase().includes(filterValue) || option.zip_code.includes(filterValue));
+      || option.city.toLowerCase().includes(filterValue) || option.state_name.toLowerCase().includes(filterValue) || option.zip_code.includes(filterValue));
   }
 
 
@@ -652,7 +652,7 @@ export class NewExaminerUserComponent implements OnInit {
     }
 
     this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
-      
+
       if (!this.billingProviderForm.value.id) {
         this.alertService.openSnackBar("Billing provider added successfully!", 'success');
       } else {
@@ -689,7 +689,7 @@ export class NewExaminerUserComponent implements OnInit {
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
     this.renderingForm.value.signature = sign;
     this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe(render => {
-      
+
       if (!this.renderingForm.value.id) {
         this.alertService.openSnackBar("Rendering provider added successfully!", 'success');
       } else {
@@ -889,7 +889,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   locationRoute() {
-    this.router.navigate(['/subscriber/location/add-location/2', this.examinerId])
+    this.router.navigate([this.router.url + '/add-location/2', this.examinerId])
   }
 
   openDialog(dialogue, user) {
@@ -911,7 +911,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   editAddress(data) {
-    this.router.navigate(['/subscriber/location/edit-location', data.id, 2, this.examinerId])
+    this.router.navigate([this.router.url + '/edit-location', data.id, 2, this.examinerId])
   }
 
   billingOrgChange(e) {

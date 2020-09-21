@@ -213,7 +213,7 @@ const routes: Routes = [{
     data: { breadcrumb: "Billable Items Awaiting Scheduling" },
   },
   {
-    path: "billable-item/edit-billable-item/:claim/:claimant/:billable",
+    path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
     component: NewBillableItemComponent,
     data: { breadcrumb: "Edit Billable Item" },
   }
@@ -255,9 +255,22 @@ const routes: Routes = [{
     data: { breadcrumb: "New Examiner" }
   }, {
     path: "examiner/:id",
-    component: NewExaminerUserComponent,
-    data: { breadcrumb: "Examiner" }
-  }, {
+    children: [{
+      path: "",
+      component: NewExaminerUserComponent,
+      data: { breadcrumb: "Examiner" }
+    }, {
+      path: "edit-location/:id/:status/:examiner",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Edit Location" }
+    },
+    {
+      path: "add-location/:status/:examiner",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Add Location" }
+    }]
+  },
+  {
     path: "examiner/:id/:status",
     component: NewExaminerUserComponent,
     data: { breadcrumb: "Examiner" }
@@ -394,11 +407,11 @@ const routes: Routes = [{
     component: BillableItemComponent,
     data: { breadcrumb: "Bills" }
   }, {
-    path: "new-billable-item/:claim/:claimant",
+    path: "new-billable-item/:claim_id/:claimant_id",
     component: NewBillableItemComponent,
     data: { breadcrumb: "New Billable Item" }
   }, {
-    path: "edit-billable-item/:claim/:claimant/:billable",
+    path: "edit-billable-item/:claim_id/:claimant_id/:billable",
     component: NewBillableItemComponent,
     data: { breadcrumb: "Edit" }
   }]
@@ -579,10 +592,10 @@ const routes: Routes = [{
         path: "",
         component: BillableItemComponent
       }, {
-        path: "new-billable-item/:claim/:claimant",
+        path: "new-billable-item/:claim_id/:claimant_id",
         component: NewBillableItemComponent
       }, {
-        path: "edit-billable-item/:claim/:claimant/:billable",
+        path: "edit-billable-item/:claim_id/:claimant_id/:billable",
         component: NewBillableItemComponent
       }]
 
@@ -817,7 +830,7 @@ const routes: Routes = [{
         data: { breadcrumb: "Billable Items Awaiting Scheduling" },
       },
       {
-        path: "billable-item/edit-billable-item/:claim/:claimant/:billable",
+        path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
         component: NewBillableItemComponent,
         data: { breadcrumb: "Edit Billable Item" },
       }
@@ -993,10 +1006,10 @@ const routes: Routes = [{
         path: "",
         component: BillableItemComponent
       }, {
-        path: "new-billable-item/:claim/:claimant",
+        path: "new-billable-item/:claim_id/:claimant_id",
         component: NewBillableItemComponent
       }, {
-        path: "edit-billable-item/:claim/:claimant/:billable",
+        path: "edit-billable-item/:claim_id/:claimant_id/:billable",
         component: NewBillableItemComponent
       }]
 
@@ -1227,7 +1240,7 @@ const routes: Routes = [{
       data: { breadcrumb: "Billable Items Awaiting Scheduling" },
     },
     {
-      path: "billable-item/edit-billable-item/:claim/:claimant/:billable",
+      path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
       component: NewBillableItemComponent,
       data: { breadcrumb: "Edit Billable Item" },
     }
@@ -1333,11 +1346,11 @@ const routes: Routes = [{
       component: BillableItemComponent,
       data: { breadcrumb: "Bills" }
     }, {
-      path: "new-billable-item/:claim/:claimant",
+      path: "new-billable-item/:claim_id/:claimant_id",
       component: NewBillableItemComponent,
       data: { breadcrumb: "New Bill" }
     }, {
-      path: "edit-billable-item/:claim/:claimant/:billable",
+      path: "edit-billable-item/:claim_id/:claimant_id/:billable",
       component: NewBillableItemComponent,
       data: { breadcrumb: "New Bill" }
     }]
