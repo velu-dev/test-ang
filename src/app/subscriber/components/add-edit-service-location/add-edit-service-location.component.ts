@@ -41,10 +41,10 @@ export class AddEditServiceLocationComponent implements OnInit {
       // this.editStatus = true;
       this.pageStatus = params_res.status;
       this.examinerId = params_res.examiner;
+      console.log(params_res)
       if (params_res.id) {
         this.editStatus = false;
         this.locationId = params_res.id;
-        this.edit();
         this.getLocation();
       }
     })
@@ -59,7 +59,8 @@ export class AddEditServiceLocationComponent implements OnInit {
           if (data.id == this.examinerId) {
             this.examinerName = data.last_name + ' ' + data.first_name + (data.suffix ? ', ' + data.suffix : '')
           }
-        })
+        });
+        this.edit();
       })
     } else {
       this.subscriberService.getSingleLocation(this.locationId).subscribe(locations => {
