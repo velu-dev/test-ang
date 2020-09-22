@@ -517,13 +517,15 @@
 <mat-card class="exam-status">
     <div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile">
-            <button *ngIf="!isExaminationStatusEdit"
-                [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
-                mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Edit</button>
-            <button *ngIf="isExaminationStatusEdit"
-                [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
-                type="submit" mat-raised-button (click)="examinationStatusSubmit()"
-                class="filled-success edit_btn">Save</button>
+            <span *ngIf="!isExamTypeChanged">
+                <button *ngIf="!isExaminationStatusEdit"
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                    mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Edit</button>
+                <button *ngIf="isExaminationStatusEdit"
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                    type="submit" mat-raised-button (click)="examinationStatusSubmit()"
+                    class="filled-success edit_btn">Save</button>
+            </span>
         </div>
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
             <form [formGroup]="examinationStatusForm">
@@ -555,12 +557,14 @@
         </div>
 
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
-                class="filled-gray edit_btn hide-mobile"
-                [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Edit</button>
-            <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
-                class="filled-success edit_btn hide-mobile"
-                [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Save</button><br /><br />
+            <span *ngIf="!isExamTypeChanged">
+                <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
+                    class="filled-gray edit_btn hide-mobile"
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Edit</button>
+                <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
+                    class="filled-success edit_btn hide-mobile"
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Save</button><br /><br />
+            </span>
             <button mat-raised-button class="filled-gray calender_btn">View on Calendar</button>
         </div>
     </div>
@@ -572,12 +576,14 @@
     <mat-card-header>
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Call Information</div>
         <span class="spacer"></span>
+        <span *ngIf="!isExamTypeChanged">
         <button class="filled-gray m-b-5"
             [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
             *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
         <button class="filled-success m-b-5"
             [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
             *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
+        </span>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content *ngIf="!isBillabbleItemLoading">
@@ -886,7 +892,8 @@
                             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsForDocuments.length">
                                 <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                                     <div class="responsive-table">
-                                        <div><span>Uploaded on</span><span> {{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}} </span></div>
+                                        <div><span>Uploaded on</span><span>
+                                                {{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}} </span></div>
                                     </div>
                                 </div>
                             </td>
@@ -908,8 +915,11 @@
     <mat-card-header>
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Notes</div>
         <span class="spacer"></span>
-        <button class="filled-gray m-b-5" *ngIf="!isNotesEdit" (click)="notesEdit()" mat-raised-button>Edit</button>
-        <button class="filled-success m-b-5" *ngIf="isNotesEdit" (click)="noteSubmit()" mat-raised-button>Save</button>
+        <span *ngIf="!isExamTypeChanged">
+            <button class="filled-gray m-b-5" *ngIf="!isNotesEdit" (click)="notesEdit()" mat-raised-button>Edit</button>
+            <button class="filled-success m-b-5" *ngIf="isNotesEdit" (click)="noteSubmit()"
+                mat-raised-button>Save</button>
+        </span>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>

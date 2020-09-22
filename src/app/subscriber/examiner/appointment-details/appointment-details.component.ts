@@ -177,6 +177,7 @@ export class AppointmentDetailsComponent implements OnInit {
     })
 
   }
+  isExamTypeChanged = false;
   loadDatas() {
     this.procedureTypeList = [];
     this.modifiers = [];
@@ -187,6 +188,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
+        this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
         //   this.breadcrumbService.set("appointment-details/:id/:billId", claim.data.claimant_details.first_name)

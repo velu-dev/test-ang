@@ -56,7 +56,7 @@ const routes: Routes = [{
 }, {
   path: "new",
   component: NewUserComponent,
-  data: { breadcrumb: "New Staff" }
+  data: { breadcrumb: "New Staff / Staff Manager" }
 },
 {
   path: "claimant-awaiting",
@@ -244,11 +244,11 @@ const routes: Routes = [{
   }, {
     path: "new",
     component: NewUserComponent,
-    data: { breadcrumb: "New Staff" }
+    data: { breadcrumb: "New Staff / Staff Manager" }
   }, {
     path: "edit/:id",
     component: NewUserComponent,
-    data: { breadcrumb: "User" }
+    data: { breadcrumb: "Staff / Staff Manager" }
   }, {
     path: "new-examiner",
     component: NewExaminerUserComponent,
@@ -281,7 +281,7 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: AppointmentComponent,
-    data: { breadcrumb: "Calendar" }
+    data: { breadcrumb: { skip: true } }
   }, {
     path: "appointment-details/:claim_id/:billId",
     children: [{
@@ -910,7 +910,7 @@ const routes: Routes = [{
     {
       path: "new-staff",
       component: ManageNewUserComponent,
-      data: { breadcrumb: "New Staff" }
+      data: { breadcrumb: "New Staff / Staff Manager" }
     },
     {
       path: "",
@@ -1108,7 +1108,7 @@ const routes: Routes = [{
       }, {
         path: "new",
         component: ManageNewUserComponent,
-        data: { breadcrumb: "New Staff" }
+        data: { breadcrumb: "New Staff / Staff Manager" }
       }, {
         path: "edit/:id",
         component: NewExaminerUserComponent,
