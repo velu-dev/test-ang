@@ -22,14 +22,15 @@ export interface PeriodicElement1 {
   date: string;
 }
 export const MY_CUSTOM_FORMATS = {
-  parseInput: 'L LT',
-  fullPickerInput: 'MM-DD-YYYY hh:mm A',
-  datePickerInput: 'MM-DD-YYYY hh:mm A',
+  parseInput: 'MM-DD-YYYY hh:mm A Z',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
+  datePickerInput: 'MM-DD-YYYY hh:mm A Z',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
   monthYearA11yLabel: 'MMMM YYYY',
 };
+
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { file_name: "Appointment Notification Letter", date: "01-02-2020" },

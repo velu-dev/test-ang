@@ -321,14 +321,15 @@ export class PickDateAdapter extends NativeDateAdapter {
   }
 }
 export const MY_CUSTOM_FORMATS = {
-  parseInput: 'L LT',
-  fullPickerInput: 'L LT',
-  datePickerInput: 'L',
+  parseInput: 'MM-DD-YYYY hh:mm A Z',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
+  datePickerInput: 'MM-DD-YYYY hh:mm A Z',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
   monthYearA11yLabel: 'MMMM YYYY',
 };
+
 
 @Component({
   selector: 'event-detail-dialog',

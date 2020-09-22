@@ -45,7 +45,7 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.editStatus = false;
         this.locationId = params_res.id;
         this.edit();
-        this.getLocation()
+        this.getLocation();
       }
     })
   }

@@ -921,13 +921,6 @@ input:-webkit-autofill {
     }
   }
 }
-.payment-dialog {
-  mat-card-content {
-    mat-form-field {
-      padding-left: 0px !important;
-    }
-  }
-}
 .dialog {
   mat-card-header {
     .content-wrapper-main-title {
@@ -939,7 +932,7 @@ input:-webkit-autofill {
     overflow-y: auto;
     overflow-x: hidden;
     mat-form-field {
-      padding: 10px 10px 0px 10px !important;
+      padding: 10px 10px 0px 0px !important;
     }
     button.outline-success {
       @extend .outline-success;
