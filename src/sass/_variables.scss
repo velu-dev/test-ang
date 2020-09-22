@@ -811,6 +811,12 @@ input:-webkit-autofill {
   background-color: $light-color;
   border-color: $light-color;
 }
+.filled-secondary {
+  @extend .btn_;
+  color: $white;
+  background-color: $secondary;
+  border-color: $secondary;
+}
 .outline-danger {
   @extend .btn_;
   color: $danger;
@@ -915,6 +921,13 @@ input:-webkit-autofill {
     }
   }
 }
+.payment-dialog {
+  mat-card-content {
+    mat-form-field {
+      padding-left: 0px !important;
+    }
+  }
+}
 .dialog {
   mat-card-header {
     .content-wrapper-main-title {
@@ -939,6 +952,7 @@ input:-webkit-autofill {
   //   margin-top: -0.25em;
   // }
 }
+
 .fixed-dialog {
   mat-card-content {
     mat-form-field {

@@ -6,6 +6,8 @@ import { map, shareReplay } from 'rxjs/operators';
 import { ClaimService } from '../../service/claim.service';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { Router } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { User } from 'src/app/shared/model/user.model';
 export interface PeriodicElement {
   bill_no: string;
   claim_no: string;
@@ -18,12 +20,24 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-billing',
   templateUrl: './billing.component.html',
-  styleUrls: ['./billing.component.scss']
+  styleUrls: ['./billing.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
 export class BillingComponent implements OnInit {
-  displayedColumns: string[] = ['bill_no', 'claim_id', 'claimant_first_name', 'examiner_first_name', 'paid_amt', 'bill_paid_status', 'action'];
-  dataSource: MatTableDataSource<[]>;
+  // displayedColumns: string[] = ['bill_no', 'claim_id', 'claimant_first_name', 'examiner_first_name', 'paid_amt', 'bill_paid_status', 'action'];
+  // dataSource: MatTableDataSource<[]>;
   filterValue: string;
+
+  dataSource: any;
+  columnName = []
+  displayedColumns = [];
+  expandedElement: User | null;
   isMobile = false;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -48,6 +62,17 @@ export class BillingComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
+
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Bill #", "Action"]
+        this.displayedColumns = ['is_expand', 'bill_no', 'action']
+      } else {
+        this.columnName = ["Bill #", "Claim #", "Claimant Name", "Examiner", "Bill Total", "Status", "Action"]
+        this.displayedColumns = ['bill_no', 'claim_no', 'claimant_first_name', "examiner_first_name", "paid_amt", "status", "action"]
+      }
+    })
   }
 
   ngOnInit() {
@@ -59,6 +84,13 @@ export class BillingComponent implements OnInit {
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  expandId: any;
+  openElement(element) {
+    if (this.isMobile) {
+      this.expandId = element;
     }
   }
 }
