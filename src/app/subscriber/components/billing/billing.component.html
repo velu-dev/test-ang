@@ -110,9 +110,9 @@
                             <span *ngIf="column == 'examiner_first_name'">{{element?.examiner_first_name}}</span>
                             <span *ngIf="column == 'paid_amt'">{{element?.paid_amt}}</span>
                             <span *ngIf="column == 'bill_paid_status'" [ngClass]="{
-                                'paid': row.bill_paid_status === 'Paid',
-                                'par_paid': row.bill_paid_status === 'Partially Paid',
-                                'rejected': row.bill_paid_status === 'Rejected'
+                                'paid': element?.bill_paid_status === 'Paid',
+                                'par_paid': element?.bill_paid_status === 'Partially Paid',
+                                'rejected': element?.bill_paid_status === 'Rejected'
                               }">{{element?.status}}</span>
                             <span *ngIf="column == 'action'">
                                 <mat-icon class="edit-user" matTooltip="Edit {{element?.claimant_first_name}} "
@@ -131,10 +131,10 @@
                                 <div><span>Claimant Name</span><span> {{element?.claimant_first_name}} </span></div>
                                 <div><span>Examiner</span><span> {{element?.examiner_first_name}} </span></div>
                                 <div><span>Bill Total</span><span> {{element?.paid_amt}} </span></div>
-                                <div><span>Status</span><span *ngIf="column == 'bill_paid_status'" [ngClass]="{
-                                    'paid': row.bill_paid_status === 'Paid',
-                                    'par_paid': row.bill_paid_status === 'Partially Paid',
-                                    'rejected': row.bill_paid_status === 'Rejected'
+                                <div><span>Status</span><span *ngIf="element == 'bill_paid_status'" [ngClass]="{
+                                    'paid': element?.bill_paid_status === 'Paid',
+                                    'par_paid': element?.bill_paid_status === 'Partially Paid',
+                                    'rejected': element?.bill_paid_status === 'Rejected'
                                   }"> {{element?.status}} </span></div>
                                 <div><span>Action</span><span>
                                         <mat-icon class="edit-user" matTooltip="Edit {{element?.claimant_first_name}} "
