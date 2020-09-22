@@ -171,7 +171,7 @@
                 <div class="content-wrapper-main-title">Billing Line Items</div>
                 <span class="spacer"></span>
                 <button mat-raised-button class="filled-gray m-b-5" (click)="addRow()">
-                    Add Bill Item
+                    Add Billing Line Item
                 </button>
             </mat-card-header>
             <mat-divider></mat-divider>
@@ -376,7 +376,7 @@
                                     </ng-container>
                                    
                                 </tbody>
-                                <tfoot>
+                                <tfoot *ngIf="getFormControls.controls.length > 0">
                                     <tr class="bill-value" id="static-footer">
                                         <td>Total </td>
                                         <td></td>

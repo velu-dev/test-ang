@@ -151,12 +151,14 @@ export class BilllableBillingComponent implements OnInit {
     });
 
     this.icdCtrl.valueChanges.subscribe(res => {
-      this.icdSearched = true;
+      if (res) {
+        this.icdSearched = true;
 
-      this.claimService.getICD10(res).subscribe(icd => {
-        this.filteredICD = [];
-        this.filteredICD = icd[3];
-      });
+        this.claimService.getICD10(res).subscribe(icd => {
+          this.filteredICD = [];
+          this.filteredICD = icd[3];
+        });
+      }
     })
 
     // this.claimService.seedData('bill_ondemand_document_types').subscribe(type => {
@@ -236,7 +238,27 @@ export class BilllableBillingComponent implements OnInit {
     this.alertService.openSnackBar("Payor changed successfully", "success");
   }
   addIcd() {
+    if (this.icdData && this.icdData.length >= 12) {
+      this.icdCtrl.reset();
+      this.alertService.openSnackBar("Maximum 12", 'error');
+      return
+    }
+  
     if (this.selectedIcd.code != '') {
+      let icdStatus = true;
+      if (this.icdData.length) {
+        for (var j in this.icdData) {
+          if (this.icdData[j].code == this.selectedIcd.code && this.icdData[j].name == this.selectedIcd.name) {
+            icdStatus = false;
+          }
+        }
+      }
+      if (!icdStatus) {
+        this.icdCtrl.reset();
+        this.alertService.openSnackBar("Already added", 'error');
+        return
+      }
+
       this.icdData = this.IcdDataSource.data;
       this.icdData.push(this.selectedIcd)
       let data = { id: this.billingId, diagnosis_code: this.icdData }
@@ -445,10 +467,10 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   addRow() {
-    if (this.getFormControls.controls && this.getFormControls.controls.length >= 12) {
-      this.alertService.openSnackBar("Maximum 12", 'error');
-      return
-    }
+    // if (this.getFormControls.controls && this.getFormControls.controls.length >= 12) {
+    //   this.alertService.openSnackBar("Maximum 12", 'error');
+    //   return
+    // }
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].status == 'INVALID') {
