@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
 import { ClaimService } from '../../service/claim.service';
-import { BreadcrumbService } from 'xng-breadcrumb';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { User } from 'src/app/shared/model/user.model';
@@ -50,10 +49,7 @@ export class BillingComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
-    private breadcrumbService: BreadcrumbService,
     public router: Router) {
-    console.log()
-    this.breadcrumbService.set(this.router.url, "Billing");
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })
@@ -70,7 +66,7 @@ export class BillingComponent implements OnInit {
         this.displayedColumns = ['is_expand', 'bill_no', 'action']
       } else {
         this.columnName = ["Bill #", "Claim #", "Claimant Name", "Examiner", "Bill Total", "Status", "Action"]
-        this.displayedColumns = ['bill_no', 'claim_no', 'claimant_first_name', "examiner_first_name", "paid_amt", "status", "action"]
+        this.displayedColumns = ['bill_no', 'claim_number', 'claimant_first_name', "examiner_first_name", "paid_amt", "status", "action"]
       }
     })
   }
@@ -92,5 +88,9 @@ export class BillingComponent implements OnInit {
     if (this.isMobile) {
       this.expandId = element;
     }
+  }
+
+  gotoBilling(e) {
+    //this.router.navigateByUrl(this.router.url + '/' + e.claim_id + '/' + e.billable_item_id + '/ ' + 'edit-billing' + e.bill_id)
   }
 }
