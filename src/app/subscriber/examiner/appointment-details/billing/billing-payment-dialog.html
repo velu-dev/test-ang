@@ -1,5 +1,5 @@
 <div fxLayout="row wrap">
-    <div fxFlex="100" class="payment-dialog dialog">
+    <div fxFlex="100" class="payment-dialog dialog custom-dialog">
         <mat-card-header class="model-header">
             <div class="content-wrapper-main-title p-t-3">Post Payment </div>
             <span class="spacer"></span>
@@ -126,7 +126,7 @@
                         <div class="sub-tile" fxFlex="100">Upload Paper EOR</div>
                         <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100">
                             <button mat-raised-button class="filled-gray">Select File</button>
-                            <mat-form-field appearance="standard" class="p-l-10">
+                            <mat-form-field appearance="standard" class="m-l-10">
                                 <input matInput value="{{file | ellipsis:30}}" readonly placeholder="EOR Paper thing that was scanned">
                                 <input type="file" #uploader hidden (change)="addFile($event)" multiple
                                     accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
