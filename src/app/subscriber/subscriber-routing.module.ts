@@ -125,11 +125,12 @@ const routes: Routes = [{
                 data: { breadcrumb: "Report" }
               }, {
                 path: "billing",
-                component: BilllableBillingComponent
+                component: BilllableBillingComponent,
+                data: { breadcrumb: "Bill" }
               }, {
                 path: "billing/:billingId",
                 component: BilllableBillingComponent,
-                data: { breadcrumb: "Billing" }
+                data: { breadcrumb: "Bill" }
               }]
             }]
           }, {
@@ -196,11 +197,12 @@ const routes: Routes = [{
           data: { breadcrumb: "Report" }
         }, {
           path: "billing",
-          component: BilllableBillingComponent
+          component: BilllableBillingComponent,
+          data: { breadcrumb: "Bill" }
         }, {
           path: "billing/:billingId",
           component: BilllableBillingComponent,
-          data: { breadcrumb: "Billing" }
+          data: { breadcrumb: "Bill" }
         }]
       }]
     }
@@ -310,11 +312,12 @@ const routes: Routes = [{
       data: { breadcrumb: "Report" }
     }, {
       path: "billing",
-      component: BilllableBillingComponent
+      component: BilllableBillingComponent,
+      data: { breadcrumb: "Bill" }
     }, {
       path: "billing/:billingId",
       component: BilllableBillingComponent,
-      data: { breadcrumb: "Billing" }
+      data: { breadcrumb: "Bill" }
     }]
   }]
 },
@@ -377,11 +380,12 @@ const routes: Routes = [{
             data: { breadcrumb: "Report" }
           }, {
             path: "billing",
-            component: BilllableBillingComponent
+            component: BilllableBillingComponent,
+            data: { breadcrumb: "Bill" }
           }, {
             path: "billing/:billingId",
             component: BilllableBillingComponent,
-            data: { breadcrumb: "Billing" }
+            data: { breadcrumb: "Bill" }
           }]
         }]
       }, {
@@ -590,11 +594,12 @@ const routes: Routes = [{
                     data: { breadcrumb: "Report" }
                   }, {
                     path: "billing",
-                    component: BilllableBillingComponent
+                    component: BilllableBillingComponent,
+                    data: { breadcrumb: "Bill" }
                   }, {
                     path: "billing/:billingId",
                     component: BilllableBillingComponent,
-                    data: { breadcrumb: "Billing" }
+                    data: { breadcrumb: "Bill" }
                   }]
                 }]
               }, {
@@ -661,11 +666,12 @@ const routes: Routes = [{
               data: { breadcrumb: "Report" }
             }, {
               path: "billing",
-              component: BilllableBillingComponent
+              component: BilllableBillingComponent,
+              data: { breadcrumb: "Bill" }
             }, {
               path: "billing/:billingId",
               component: BilllableBillingComponent,
-              data: { breadcrumb: "Billing" }
+              data: { breadcrumb: "Bill" }
             }]
           }]
         }
@@ -730,11 +736,12 @@ const routes: Routes = [{
           data: { breadcrumb: "Report" }
         }, {
           path: "billing",
-          component: BilllableBillingComponent
+          component: BilllableBillingComponent,
+          data: { breadcrumb: "Bill" }
         }, {
           path: "billing/:billingId",
           component: BilllableBillingComponent,
-          data: { breadcrumb: "Billing" }
+          data: { breadcrumb: "Bill" }
         }]
       }]
     },
@@ -797,11 +804,12 @@ const routes: Routes = [{
                 data: { breadcrumb: "Report" }
               }, {
                 path: "billing",
-                component: BilllableBillingComponent
+                component: BilllableBillingComponent,
+                data: { breadcrumb: "Bill" }
               }, {
                 path: "billing/:billingId",
                 component: BilllableBillingComponent,
-                data: { breadcrumb: "Billing" }
+                data: { breadcrumb: "Bill" }
               }]
             }]
           }, {
@@ -984,11 +992,12 @@ const routes: Routes = [{
                     data: { breadcrumb: "Report" }
                   }, {
                     path: "billing",
-                    component: BilllableBillingComponent
+                    component: BilllableBillingComponent,
+                    data: { breadcrumb: "Bill" }
                   }, {
                     path: "billing/:billingId",
                     component: BilllableBillingComponent,
-                    data: { breadcrumb: "Billing" }
+                    data: { breadcrumb: "Bill" }
                   }]
                 }]
               }, {
@@ -1055,11 +1064,12 @@ const routes: Routes = [{
               data: { breadcrumb: "Report" }
             }, {
               path: "billing",
-              component: BilllableBillingComponent
+              component: BilllableBillingComponent,
+              data: { breadcrumb: "Bill" }
             }, {
               path: "billing/:billingId",
               component: BilllableBillingComponent,
-              data: { breadcrumb: "Billing" }
+              data: { breadcrumb: "Bill" }
             }]
           }]
         }
@@ -1153,11 +1163,12 @@ const routes: Routes = [{
           data: { breadcrumb: "Report" }
         }, {
           path: "billing",
-          component: BilllableBillingComponent
+          component: BilllableBillingComponent,
+          data: { breadcrumb: "Bill" }
         }, {
           path: "billing/:billingId",
           component: BilllableBillingComponent,
-          data: { breadcrumb: "Billing" }
+          data: { breadcrumb: "Bill" }
         }]
       }]
     },
@@ -1220,11 +1231,12 @@ const routes: Routes = [{
                 data: { breadcrumb: "Report" }
               }, {
                 path: "billing",
-                component: BilllableBillingComponent
+                component: BilllableBillingComponent,
+                data: { breadcrumb: "Bill" }
               }, {
                 path: "billing/:billingId",
                 component: BilllableBillingComponent,
-                data: { breadcrumb: "Billing" }
+                data: { breadcrumb: "Bill" }
               }]
             }]
           }, {
@@ -1379,11 +1391,12 @@ const routes: Routes = [{
                   data: { breadcrumb: "Report" }
                 }, {
                   path: "billing",
-                  component: BilllableBillingComponent
+                  component: BilllableBillingComponent,
+                  data: { breadcrumb: "Bill" }
                 }, {
                   path: "billing/:billingId",
                   component: BilllableBillingComponent,
-                  data: { breadcrumb: "Billing" }
+                  data: { breadcrumb: "Bill" }
                 }]
               }]
             }, {
@@ -1455,11 +1468,12 @@ const routes: Routes = [{
             data: { breadcrumb: "Report" }
           }, {
             path: "billing",
-            component: BilllableBillingComponent
+            component: BilllableBillingComponent,
+            data: { breadcrumb: "Bill" }
           }, {
             path: "billing/:billingId",
             component: BilllableBillingComponent,
-            data: { breadcrumb: "Billing" }
+            data: { breadcrumb: "Bill" }
           }]
         }]
       }
@@ -1560,11 +1574,12 @@ const routes: Routes = [{
               data: { breadcrumb: "Report" }
             }, {
               path: "billing",
-              component: BilllableBillingComponent
+              component: BilllableBillingComponent,
+              data: { breadcrumb: "Bill" }
             }, {
               path: "billing/:billingId",
               component: BilllableBillingComponent,
-              data: { breadcrumb: "Billing" }
+              data: { breadcrumb: "Bill" }
             }]
           }]
         }, {
