@@ -72,7 +72,7 @@ const routes: Routes = [{
         {
           path: "",
           component: ClaimantComponent,
-          data: { breadcrumb: "Claimants" },
+          data: { breadcrumb: { skip: true } }
         },
         {
           path: "new-claimant",
@@ -215,7 +215,7 @@ const routes: Routes = [{
   {
     path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
     component: NewBillableItemComponent,
-    data: { breadcrumb: "Edit Billable Item" },
+    data: { breadcrumb: "Billable Item" },
   }
   ]
 }, {
@@ -229,7 +229,7 @@ const routes: Routes = [{
 }, {
   path: "billing-collection",
   component: BillingCollectionComponent,
-  data: { breadcrumb: "Billing And Collections" }
+  data: { breadcrumb: "Billing and Collections" }
 },
 {
   path: "",
@@ -537,7 +537,7 @@ const routes: Routes = [{
             {
               path: "",
               component: ClaimantComponent,
-              data: { breadcrumb: "Claimants" },
+              data: { breadcrumb: { skip: true } }
             },
             {
               path: "new-claimant",
@@ -680,7 +680,7 @@ const routes: Routes = [{
       {
         path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
         component: NewBillableItemComponent,
-        data: { breadcrumb: "Edit Billable Item" },
+        data: { breadcrumb: "Billable Item" },
       }
       ]
     }, {
@@ -694,7 +694,7 @@ const routes: Routes = [{
     }, {
       path: "billing-collection",
       component: BillingCollectionComponent,
-      data: { breadcrumb: "Billing And Collections" }
+      data: { breadcrumb: "Billing and Collections" }
     },
     {
       path: "appointment",
@@ -900,7 +900,7 @@ const routes: Routes = [{
     {
       path: "new-intake",
       component: NewClaimComponent,
-      data: { breadcrumb: "New Claim" }
+      data: { breadcrumb: "New Intake" }
     },
     {
       path: "new-examiner",
@@ -931,7 +931,7 @@ const routes: Routes = [{
             {
               path: "",
               component: ClaimantComponent,
-              data: { breadcrumb: "Claimants" },
+              data: { breadcrumb: { skip: true } }
             },
             {
               path: "new-claimant",
@@ -1075,7 +1075,7 @@ const routes: Routes = [{
       {
         path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
         component: NewBillableItemComponent,
-        data: { breadcrumb: "Edit Billable Item" },
+        data: { breadcrumb: "Billable Item" },
       }
       ]
     },
@@ -1092,7 +1092,7 @@ const routes: Routes = [{
     {
       path: "billing-collection",
       component: BillingCollectionComponent,
-      data: { breadcrumb: "Billing And Collections" }
+      data: { breadcrumb: "Billing and Collections" }
     },
     {
       path: "dashboard",
@@ -1473,7 +1473,7 @@ const routes: Routes = [{
   {
     path: "billing-collection",
     component: BillingCollectionComponent,
-    data: { breadcrumb: "Billing And Collections" }
+    data: { breadcrumb: "Billing and Collections" }
   },
   {
     path: "billable-item-awaiting",
@@ -1485,7 +1485,7 @@ const routes: Routes = [{
     {
       path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
       component: NewBillableItemComponent,
-      data: { breadcrumb: "Edit Billable Item" },
+      data: { breadcrumb: "Billable Item" },
     }
     ]
   },

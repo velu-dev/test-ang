@@ -68,9 +68,9 @@ export interface PeriodicElement {
   action: string;
 }
 export const MY_CUSTOM_FORMATS = {
-  parseInput: 'L LT',
-  fullPickerInput: 'MM-DD-YYYY hh:mm A',
-  datePickerInput: 'MM-DD-YYYY hh:mm A',
+  parseInput: 'l LT',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
+  datePickerInput: 'MM-DD-YYYY hh:mm A Z',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
@@ -221,7 +221,7 @@ export class NewClaimComponent implements OnInit {
     private _location: Location,
     private logger: NGXLogger,
     private loader: NgxSpinnerService) {
-
+    // this.logger.log(moment.)
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })

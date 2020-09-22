@@ -10,14 +10,15 @@ import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment';
 import { NGXLogger } from 'ngx-logger';
 export const MY_CUSTOM_FORMATS = {
-  parseInput: 'L LT',
-  fullPickerInput: 'MM-DD-YYYY hh:mm A',
-  datePickerInput: 'MM-DD-YYYY hh:mm A',
+  parseInput: 'MM-DD-YYYY hh:mm A Z',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
+  datePickerInput: 'MM-DD-YYYY hh:mm A Z',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
   monthYearA11yLabel: 'MMMM YYYY',
 };
+
 
 @Component({
   selector: 'app-new-billable-item',
@@ -66,9 +67,11 @@ export class NewBillableItemComponent implements OnInit {
     })
     this.route.params.subscribe(param => {
       this.claimId = param.claim_id;
-      this.claimantId = param.claimant_id;
+      if (param.claimant_id)
+        this.claimantId = param.claimant_id;
       this.claimService.getClaim(this.claimId).subscribe(claim => {
         this.logger.log("claim", claim);
+        this.claimantId = claim.data.claim_details.claimant_id;
         //to send claim details exam type
         this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(res => {
           this.procuderalCodes = res.data;
@@ -80,11 +83,11 @@ export class NewBillableItemComponent implements OnInit {
           }
         })
         this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number, exam_type_code: Examtype.exam_type_code, exam_name: Examtype.exam_name }
-      })
-      this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
-        this.claimant = claimant.data[0]
-        this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
+        this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
+          this.claimant = claimant.data[0]
+          this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
 
+        })
       })
       if (param.billable) {
         this.isEdit = true
