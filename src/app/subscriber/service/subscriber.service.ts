@@ -52,5 +52,8 @@ export class SubscriberService {
   removeAssignLocation(userId,locationId): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteAssignLocation + userId + '/' + locationId)
   }
+  getExaminer(id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getExaminerUser + id);
+  }
 
 }
