@@ -1559,8 +1559,39 @@ const routes: Routes = [{
       data: { breadcrumb: "Calendar" }
     }, {
       path: "appointment-details/:claim_id/:billId",
-      component: AppointmentDetailsComponent,
-      data: { breadcrumb: "Examination Details" }
+      children: [{
+        path: "",
+        component: AppointmentDetailsComponent,
+        data: { breadcrumb: "Examination Details" }
+      }, {
+        path: "correspondence",
+        component: BillingCorrespondanceComponent
+      }, {
+        path: "examination",
+        component: ExaminationComponent
+      }, {
+        path: "history",
+        component: HistoryComponent
+      }, {
+        path: "history/:examiner",
+        component: HistoryComponent,
+        data: { breadcrumb: "History" }
+      }, {
+        path: "records",
+        component: RecordsComponent
+      }, {
+        path: "reports",
+        component: ReportComponent,
+        data: { breadcrumb: "Report" }
+      }, {
+        path: "billing",
+        component: BilllableBillingComponent,
+        data: { breadcrumb: "Bill" }
+      }, {
+        path: "billing/:billingId",
+        component: BilllableBillingComponent,
+        data: { breadcrumb: "Bill" }
+      }]
     }]
   },
   {
