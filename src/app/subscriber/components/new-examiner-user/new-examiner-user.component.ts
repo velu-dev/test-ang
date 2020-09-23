@@ -357,8 +357,8 @@ export class NewExaminerUserComponent implements OnInit {
     //   return;
     // }
     const filterValue = value == undefined ? '' : value && value.toLowerCase();
-    return this.locationDataSearch.filter(option => option.street1.toLowerCase().includes(filterValue) || option.street2.toLowerCase().includes(filterValue)
-      || option.city.toLowerCase().includes(filterValue) || option.state_name.toLowerCase().includes(filterValue) || option.zip_code.includes(filterValue));
+    return this.locationDataSearch.filter(option => option.street1 && option.street1.toLowerCase().includes(filterValue) || option.street2 && option.street2.toLowerCase().includes(filterValue)
+      ||  option.city && option.city.toLowerCase().includes(filterValue) || option.state_name && option.state_name.toLowerCase().includes(filterValue) || option.zip_code && option.zip_code.includes(filterValue));
   }
 
 
