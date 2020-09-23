@@ -299,7 +299,7 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput type="text" autocomplete="off"
+                                                    <input matInput [dropSpecialCharacters]="false" type="text" mask="9{8}"  autocomplete="off"
                                                         formControlName="modifier">
                                                 </mat-form-field>
                                             </td>

@@ -458,7 +458,7 @@ export class BilllableBillingComponent implements OnInit {
       item_description: ['', Validators.required],
       procedure_code: ['', [Validators.required]],
       //modifier: [''],
-      modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:,[0-9]{2})?(?:,[0-9]{2})?$')])],
+      modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
       units: ['', [Validators.required]],
       charge: ['', [Validators.required]],
       payment: [''],
