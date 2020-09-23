@@ -51,8 +51,17 @@ const routes: Routes = [{
   }]
 }, {
   path: "new-examiner",
-  component: NewExaminerUserComponent,
-  data: { breadcrumb: "New Examiner" }
+  children: [
+    {
+      path: "",
+      component: NewExaminerUserComponent,
+      data: { breadcrumb: "New Examiner" }
+    }, {
+      path: "add-location/:status/:examiner",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Add Location" }
+    }
+  ]
 }, {
   path: "new",
   component: NewUserComponent,
@@ -253,8 +262,17 @@ const routes: Routes = [{
     data: { breadcrumb: "Staff / Staff Manager" }
   }, {
     path: "new-examiner",
-    component: NewExaminerUserComponent,
-    data: { breadcrumb: "New Examiner" }
+    children: [
+      {
+        path: "",
+        component: NewExaminerUserComponent,
+        data: { breadcrumb: "New Examiner" }
+      }, {
+        path: "add-location/:status/:examiner",
+        component: AddEditServiceLocationComponent,
+        data: { breadcrumb: "Add Location" }
+      }
+    ]
   }, {
     path: "examiner/:id",
     children: [{
@@ -274,8 +292,20 @@ const routes: Routes = [{
   },
   {
     path: "examiner/:id/:status",
-    component: NewExaminerUserComponent,
-    data: { breadcrumb: "Examiner" }
+    children: [{
+      path: "",
+      component: NewExaminerUserComponent,
+      data: { breadcrumb: "Examiner" }
+    }, {
+      path: "edit-location/:id/:status/:examiner",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Edit Location" }
+    },
+    {
+      path: "add-location/:status/:examiner",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Add Location" }
+    }]
   }]
 },
 {
@@ -283,7 +313,7 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: AppointmentComponent,
-    data: { breadcrumb: { skip: true } }
+    data: { breadcrumb: "Calendar" }
   }, {
     path: "appointment-details/:claim_id/:billId",
     children: [{
@@ -912,13 +942,22 @@ const routes: Routes = [{
     },
     {
       path: "new-examiner",
-      component: NewExaminerUserComponent,
-      data: { breadcrumb: "New Examiner" }
+      children: [
+        {
+          path: "",
+          component: NewExaminerUserComponent,
+          data: { breadcrumb: "New Examiner" }
+        }, {
+          path: "add-location/:status/:examiner",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "Add Location" }
+        }
+      ]
     },
     {
       path: "new-staff",
       component: ManageNewUserComponent,
-      data: { breadcrumb: "New Staff / Staff Manager" }
+      data: { breadcrumb: "New Staff" }
     },
     {
       path: "",
@@ -1118,15 +1157,24 @@ const routes: Routes = [{
       }, {
         path: "new",
         component: ManageNewUserComponent,
-        data: { breadcrumb: "New Staff / Staff Manager" }
+        data: { breadcrumb: "New Staff" }
       }, {
         path: "edit/:id",
         component: NewExaminerUserComponent,
         data: { breadcrumb: "Edit" }
       }, {
         path: "new-examiner",
-        component: NewExaminerUserComponent,
-        data: { breadcrumb: "New Examiner" }
+        children: [
+          {
+            path: "",
+            component: NewExaminerUserComponent,
+            data: { breadcrumb: "New Examiner" }
+          }, {
+            path: "add-location/:status/:examiner",
+            component: AddEditServiceLocationComponent,
+            data: { breadcrumb: "Add Location" }
+          }
+        ]
       }]
     },
     {
@@ -1338,7 +1386,7 @@ const routes: Routes = [{
           {
             path: "",
             component: ClaimantComponent,
-            data: { breadcrumb: "Claimants" },
+            data: { breadcrumb: { skip: true } }
           },
           {
             path: "new-claimant",

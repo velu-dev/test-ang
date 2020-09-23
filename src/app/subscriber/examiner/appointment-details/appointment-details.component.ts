@@ -188,7 +188,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
-        this.isExamTypeChanged = bills.data.is_exam_type_changed;
+        // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
         //   this.breadcrumbService.set("appointment-details/:id/:billId", claim.data.claimant_details.first_name)
@@ -196,6 +196,9 @@ export class AppointmentDetailsComponent implements OnInit {
         //     this.procuderalCodes = procedure.data;
         //   })
         // })
+        this.claimService.getProcedureType(bills.data.exam_type_id).subscribe(procedure => {
+          this.procuderalCodes = procedure.data;
+        })
         this.isBillabbleItemLoading = false;
         if (bills['data'].appointment.examiner_id != null) {
           let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examiner_service_location_id }
@@ -205,74 +208,73 @@ export class AppointmentDetailsComponent implements OnInit {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
-        this.logger.log(bills.data)
         this.billable_item.patchValue(bills.data);
-      })
-      this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+        // })
+        this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+          this.logger.log(response.data)
+          if (response.data.appointments.examiner_id) {
+            this.procedureTypeStatus[1].url = "../../history/" + response.data.appointments.examiner_id;
+          }
 
-        this.claimService.getProcedureType(response.data.claim_details.exam_type_id).subscribe(procedure => {
-          this.procuderalCodes = procedure.data;
-        })
-        if (response.data.appointments.examiner_id) {
-          this.procedureTypeStatus[1].url = "../../history/" + response.data.appointments.examiner_id;
-        }
-
-        this.progressStatus = response.data.progress_status
-        this.notesForm.patchValue({
-          exam_notes: response.data.exam_notes,
-        })
-        if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
-          this.isDisplayStatus.isExaminar = true;
-          this.isDisplayStatus.isDeposition = false;
-          this.claimService.seedData('examination_status').subscribe(curres => {
-            this.examinationStatus = curres.data;
+          this.progressStatus = response.data.progress_status
+          this.notesForm.patchValue({
+            exam_notes: response.data.exam_notes,
           })
-        } else if (response.data.procedure_type == "Deposition") {
-          this.isDisplayStatus.isExaminar = false;
-          this.isDisplayStatus.isDeposition = true;
-          this.claimService.seedData('deposition_status').subscribe(curres => {
-            this.examinationStatus = curres.data;
-          })
-        }
-        this.procedureTypeList = [];
-        this.procedureTypeStatus.map(pro => {
-          console.log("Procedure", pro);
           if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
-            this.isDisplayStatus.status = true;
-            this.isDisplayStatus.name = "Examination";
-            if (pro.for.includes('E')) {
-              this.procedureTypeList.push(pro);
-            }
+            this.isDisplayStatus.isExaminar = true;
+            this.isDisplayStatus.isDeposition = false;
+            this.claimService.seedData('examination_status').subscribe(curres => {
+              this.examinationStatus = curres.data;
+            })
+          } else if (response.data.procedure_type == "Deposition") {
+            this.isDisplayStatus.isExaminar = false;
+            this.isDisplayStatus.isDeposition = true;
+            this.claimService.seedData('deposition_status').subscribe(curres => {
+              this.examinationStatus = curres.data;
+            })
           }
-          if (response.data.procedure_type == "Supplemental") {
-            this.isDisplayStatus.status = false;
-            if (pro.for.includes('S')) {
-              this.procedureTypeList.push(pro);
+          this.procedureTypeList = [];
+          this.procedureTypeStatus.map(pro => {
+            if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
+              this.isDisplayStatus.status = true;
+              this.isDisplayStatus.name = "Examination";
+              if (pro.for.includes('E')) {
+                this.procedureTypeList.push(pro);
+              }
             }
-          }
-          if (response.data.procedure_type == "Deposition") {
-            this.isDisplayStatus.status = true;
-            this.isDisplayStatus.name = "Deposition";
-            if (pro.for.includes('D')) {
-              this.procedureTypeList.push(pro);
+            if (response.data.procedure_type == "Supplemental") {
+              this.isDisplayStatus.status = false;
+              if (pro.for.includes('S')) {
+                this.procedureTypeList.push(pro);
+              }
             }
-          }
-        })
+            if (response.data.procedure_type == "Deposition") {
+              this.isDisplayStatus.status = true;
+              this.isDisplayStatus.name = "Deposition";
+              if (pro.for.includes('D')) {
+                this.procedureTypeList.push(pro);
+              }
+            }
+          })
 
-        this.examinationStatusForm.patchValue(response.data.appointments)
-        console.log(response.data.appointments.appointment_scheduled_date_time, "appointment")
-        if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
-          this.appointmentStatus = true;
-        } else {
-          this.appointmentStatus = false;
-        }
-        this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
-        this.examiner_id = response.data.appointments.examiner_id;
-        this.examinationDetails = response['data'];
-        this.logger.log("examinationDetails", this.examinationDetails);
-        this.getDocumentData();
-      }, error => {
-        this.dataSource = new MatTableDataSource([]);
+          this.examinationStatusForm.patchValue(response.data.appointments)
+          if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
+            this.appointmentStatus = true;
+          } else {
+            this.appointmentStatus = false;
+          }
+          this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
+          this.examiner_id = response.data.appointments.examiner_id;
+          this.examinationDetails = response['data'];
+          this.getDocumentData();
+          if (bills.data.exam_type_name != response.data.exam_type_name) {
+            this.isExamTypeChanged = true;
+          }
+          this.examinationDetails.exam_type_code = bills.data.exam_type_code;
+          this.examinationDetails.exam_type_name = bills.data.exam_type_name;
+        }, error => {
+          this.dataSource = new MatTableDataSource([]);
+        })
       })
     });
   }
@@ -444,6 +446,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   getDocumentData() {
     this.examinerService.getDocumentData(this.claim_id, this.billableId).subscribe(res => {
+      console.log(res)
       this.documentTabData = res['data'];
       this.tabChanges(this.tabIndex)
     }, error => {

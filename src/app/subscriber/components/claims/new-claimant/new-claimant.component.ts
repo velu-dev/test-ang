@@ -195,7 +195,7 @@ export class NewClaimantComponent implements OnInit {
   }
   getSingleClaimant() {
     this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
-      this.intercom.setClaimant(res['data'][0].first_name + ', ' + res['data'][0].last_name);
+      this.intercom.setClaimant(res['data'][0].first_name + ' ' + res['data'][0].last_name);
       this.claimantInfo = res['data'][0];
       this.languageStatus = res['data'][0].certified_interpreter_required;
       this.claimNumber = res['data'][0].claim_numbers.map(data => data.claim_number)

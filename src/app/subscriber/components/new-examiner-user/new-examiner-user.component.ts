@@ -596,12 +596,29 @@ export class NewExaminerUserComponent implements OnInit {
     this.selectedFile = null;
   }
 
-  tab: number;
+  tab: number = this.tabIndex;
   tabchange(i) {
-    this.tab = i
-    if (i == 4) {
-      this.locationAddStatus = false;
+    if (this.tab == 0) {
+      if (this.userForm.touched)
+        this.userSubmit();
+    } else if (this.tab == 1) {
+      if (this.mailingAddressForm.touched)
+        this.mailingAddressSubmit();
+    } else if (this.tab == 2) {
+      if (this.billingProviderForm.touched)
+        this.billingPrviderSubmit();
+    } else if (this.tab == 3) {
+      if (this.renderingForm.touched)
+        this.renderingFormSubmit();
+    } else if (this.tab == 4) {
+      // if (this.loca.touched)
+      // this.locationSubmit();
     }
+    this.tab = i
+    if (i == 0)
+      if (i == 4) {
+        this.locationAddStatus = false;
+      }
   }
 
   mailingAddressSubmit() {

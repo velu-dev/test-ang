@@ -577,12 +577,12 @@
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Call Information</div>
         <span class="spacer"></span>
         <span *ngIf="!isExamTypeChanged">
-        <button class="filled-gray m-b-5"
-            [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
-            *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
-        <button class="filled-success m-b-5"
-            [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
-            *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
+            <button class="filled-gray m-b-5"
+                [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
+            <button class="filled-success m-b-5"
+                [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
         </span>
     </mat-card-header>
     <mat-divider> </mat-divider>
@@ -739,7 +739,8 @@
     <mat-divider> </mat-divider>
     <mat-card-content>
         <div fxLayout="row wrap">
-            <div fxLayout="row wrap" fxFlex="100" class="document-file-upload w-100">
+            <div fxLayout="row wrap" *ngIf="!isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
+                <!-- <span *ngIf="!isExamTypeChanged"> -->
                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                     appearance="outline">
                     <mat-label>Document Type</mat-label>
@@ -756,7 +757,8 @@
                 </mat-form-field>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
                     *ngIf="documentType == null || documentType != 7">
-                    <button type="button" mat-stroked-button class="filled-gray" (click)="uploader.click()">Select File
+                    <button type="button" mat-stroked-button class="filled-gray" (click)="uploader.click()">Select
+                        File
                         <!-- <i class="fa fa-upload p-l-5"></i> -->
                     </button>
                     <mat-form-field appearance="standard">
@@ -790,8 +792,12 @@
                         class="filled-gray p-r-20 m-t-20">Add
                     </button>
                 </div>
+                <!-- </span> -->
             </div>
-            <div fxLayout="row wrap" fxFlex="100" class="m-t-20">
+            <div fxLayout="row wrap" *ngIf="isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
+                <span class="error">Exam type was changed in claim Unable to upload documents in this section</span>
+            </div>
+            <div *ngIf="!isExamTypeChanged" fxLayout="row wrap" fxFlex="100" class="m-t-20">
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                 </div>
 
@@ -882,7 +888,7 @@
                                         *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                     <span *ngIf="column == 'action'" class="text-center">
                                         <a target="_self" class="text-success" (click)="download(element)">Download</a>
-                                        <a class="text-danger m-l-10" *ngIf="!element?.isServiceRequested"
+                                        <a class="text-danger m-l-10" *ngIf="!element?.isServiceRequested && !isExamTypeChanged"
                                             (click)="deleteDocument(element)">Remove</a>
                                     </span>
                                 </div>

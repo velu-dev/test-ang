@@ -47,6 +47,9 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.locationId = params_res.id;
         this.getLocation();
       }
+      this.subscriberService.getExaminer(this.examinerId).subscribe(res => {
+        this.examinerName = res.examiner_details.last_name + ' ' + res.examiner_details.first_name + (res.examiner_details.suffix ? ', ' + res.examiner_details.suffix : '')
+      })
     })
   }
   examinerName: string;
