@@ -65,8 +65,8 @@ export class BillingComponent implements OnInit {
         this.columnName = ["", "Bill #", "Action"]
         this.displayedColumns = ['is_expand', 'bill_no', 'action']
       } else {
-        this.columnName = ["Bill #", "Claim #", "Claimant Name", "Examiner", "Bill Total", "Status", "Action"]
-        this.displayedColumns = ['bill_no', 'claim_number', 'claimant_first_name', "examiner_first_name", "paid_amt", "status", "action"]
+        this.columnName = ["Bill #", "Claim #", "Claimant Name", "Examiner", "Bill Total", "Status"]
+        this.displayedColumns = ['bill_no', 'claim_number', 'claimant_first_name', "examiner_first_name", "paid_amt", "status"]
       }
     })
   }
@@ -91,6 +91,6 @@ export class BillingComponent implements OnInit {
   }
 
   gotoBilling(e) {
-    //this.router.navigateByUrl(this.router.url + '/' + e.claim_id + '/' + e.billable_item_id + '/ ' + 'edit-billing' + e.bill_id)
+    this.router.navigateByUrl(this.router.url + '/' + e.claim_id + '/' + e.billable_item_id + '/' + 'edit-billing' + '/' + e.bill_id)
   }
 }

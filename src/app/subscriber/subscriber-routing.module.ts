@@ -467,14 +467,14 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: BillingComponent,
-    data: { breadcrumb: "Bills" }
+    data: { breadcrumb: "Billing" }
   }, {
     path: "new",
     component: NewBillingComponent,
     data: { breadcrumb: "New Bill" }
   }, {
-    path: ":id",
-    component: EditBillingComponent,
+    path: ":claim_id/:billId/edit-billing/:billingId",
+    component: BilllableBillingComponent,
     data: { breadcrumb: "Edit" }
   }]
 },
@@ -869,14 +869,14 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: BillingComponent,
-        data: { breadcrumb: "Bills" }
+        data: { breadcrumb: "Billing" }
       }, {
         path: "new",
         component: NewBillingComponent,
-        data: { breadcrumb: "New" }
+        data: { breadcrumb: "New Bill" }
       }, {
-        path: ":id",
-        component: EditBillingComponent,
+        path: ":claim_id/:billId/edit-billing/:billingId",
+        component: BilllableBillingComponent,
         data: { breadcrumb: "Edit" }
       }]
     },
@@ -1297,14 +1297,14 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: BillingComponent,
-        data: { breadcrumb: "Bills" }
+        data: { breadcrumb: "Billing" }
       }, {
         path: "new",
         component: NewBillingComponent,
-        data: { breadcrumb: "New" }
+        data: { breadcrumb: "New Bill" }
       }, {
-        path: ":id",
-        component: EditBillingComponent,
+        path: ":claim_id/:billId/edit-billing/:billingId",
+        component: BilllableBillingComponent,
         data: { breadcrumb: "Edit" }
       }]
     },
@@ -1659,14 +1659,14 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: BillingComponent,
-      data: { breadcrumb: "Bills" }
+      data: { breadcrumb: "Billing" }
     }, {
       path: "new",
       component: NewBillingComponent,
-      data: { breadcrumb: "New" }
+      data: { breadcrumb: "New Bill" }
     }, {
-      path: ":id",
-      component: EditBillingComponent,
+      path: ":claim_id/:billId/edit-billing/:billingId",
+      component: BilllableBillingComponent,
       data: { breadcrumb: "Edit" }
     }]
   },

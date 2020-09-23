@@ -106,19 +106,19 @@
                         <div>
                             <span *ngIf="column == 'bill_no'">{{element?.bill_no}} </span>
                             <span *ngIf="column == 'claim_number'">{{element?.claim_number}}</span>
-                            <span *ngIf="column == 'claimant_first_name'">{{element?.claimant_first_name}}</span>
-                            <span *ngIf="column == 'examiner_first_name'">{{element?.examiner_first_name}}</span>
+                            <span *ngIf="column == 'claimant_first_name'">{{element?.claimant_last_name}}, {{element?.claimant_first_name}}</span>
+                            <span *ngIf="column == 'examiner_first_name'">{{element?.examiner_last_name}} {{element?.examiner_first_name}}{{element?.examiner_suffix ? ','+element?.examiner_suffix : ''}}</span>
                             <span *ngIf="column == 'paid_amt'">{{element?.paid_amt}}</span>
                             <span *ngIf="column == 'bill_paid_status'" [ngClass]="{
                                 'paid': element?.bill_paid_status === 'Paid',
                                 'par_paid': element?.bill_paid_status === 'Partially Paid',
                                 'rejected': element?.bill_paid_status === 'Rejected'
                               }">{{element?.status}}</span>
-                            <span *ngIf="column == 'action'">
+                            <!-- <span *ngIf="column == 'action'">
                                 <mat-icon class="edit-user" matTooltip="Edit {{element?.claimant_first_name}} "
                                     matTooltipPosition="right">
                                     edit</mat-icon>
-                            </span>
+                            </span> -->
                         </div>
                     </td>
                 </ng-container>
@@ -128,19 +128,19 @@
                             <div class="responsive-table">
                                 <div><span>Bill #</span><span> {{element?.bill_no}}</span></div>
                                 <div><span>Claim #</span><span> {{element?.claim_number}}</span></div>
-                                <div><span>Claimant Name</span><span> {{element?.claimant_first_name}} </span></div>
-                                <div><span>Examiner</span><span> {{element?.examiner_first_name}} </span></div>
+                                <div><span>Claimant Name</span><span> {{element?.claimant_last_name}}, {{element?.claimant_first_name}} </span></div>
+                                <div><span>Examiner</span><span>{{element?.examiner_last_name}} {{element?.examiner_first_name}}{{element?.examiner_suffix ? ','+element?.examiner_suffix : ''}} </span></div>
                                 <div><span>Bill Total</span><span> {{element?.paid_amt}} </span></div>
                                 <div><span>Status</span><span *ngIf="element == 'bill_paid_status'" [ngClass]="{
                                     'paid': element?.bill_paid_status === 'Paid',
                                     'par_paid': element?.bill_paid_status === 'Partially Paid',
                                     'rejected': element?.bill_paid_status === 'Rejected'
                                   }"> {{element?.status}} </span></div>
-                                <div><span>Action</span><span>
+                                <!-- <div><span>Action</span><span>
                                         <mat-icon class="edit-user" matTooltip="Edit {{element?.claimant_first_name}} "
                                             matTooltipPosition="right">
                                             edit</mat-icon>
-                                    </span></div>
+                                    </span></div> -->
                             </div>
                         </div>
                     </td>
