@@ -351,7 +351,7 @@ export class NewExaminerUserComponent implements OnInit {
     })
   }
 
-  locationDataSearch: any;
+  locationDataSearch: any =[];
   private _filterLocation(value: string): string[] {
     // if (typeof (value) == 'number') {
     //   return;
