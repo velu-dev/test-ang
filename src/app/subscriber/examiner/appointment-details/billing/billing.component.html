@@ -14,7 +14,7 @@
     </div>
     <div fxLayout="row wrap" class="p-t-20">
         <div fxFlex="50">
-            <div class="bill-id"><span>Bill:</span> #{{billingData?.bill_no}}</div>
+            <div class="bill-id"><span>Bill : </span> {{billingData?.agent_short_code}}{{billingData?.bill_no}}</div>
         </div>
         <div fxFlex="50">
             <div class="submission-date"><span>First Bill Review Submission Date:</span> 10-13-2020</div>
@@ -111,9 +111,9 @@
                         <mat-icon>search</mat-icon>
                     </div>
                     <span class="spacer"></span>
-                    <button mat-raised-button (click)="addIcd()" class="filled-gray">
+                    <!-- <button mat-raised-button (click)="addIcd()" class="filled-gray">
                         Add
-                    </button>
+                    </button> -->
                 </div>
                 <div fxLayout="row wrap">
                     <div class="user-detail vertical-fixed">
@@ -299,7 +299,7 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput type="text" autocomplete="off"
+                                                    <input matInput [dropSpecialCharacters]="false" type="text" mask="9{8}"  autocomplete="off"
                                                         formControlName="modifier">
                                                 </mat-form-field>
                                             </td>
@@ -312,20 +312,20 @@
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
                                                     <input matInput type="number" autocomplete="off"
-                                                        formControlName="charge">
+                                                        formControlName="charge" (change)="setTwoNumberDecimal($event)">
                                                 </mat-form-field>
                                             </td>
                                             <td>
                                                 <!-- <mat-form-field appearance="outline">
                                                     <input matInput type="text" autocomplete="off" disable formControlName="payment">
                                                 </mat-form-field> -->
-                                                {{group.value.payment}}
+                                                {{group.value.payment | number : '1.2-2'}}
                                             </td>
                                             <td>
                                                 <!-- <mat-form-field appearance="outline">
                                                     <input matInput type="text" autocomplete="off" disable formControlName="balance">
                                                 </mat-form-field> -->
-                                               <span class="text-danger"> {{group.value.charge - group.value.payment}}</span>
+                                               <span class="text-danger"> {{group.value.charge - group.value.payment | number : '1.2-2'}}</span>
                                             </td>
 
                                             <td class="no-wrap-td">
@@ -353,13 +353,13 @@
                                                 {{group.get('units').value}}
                                             </td>
                                             <td>
-                                                {{group.get('charge').value}}
+                                                {{group.get('charge').value | number : '1.2-2'}}
                                             </td>
                                             <td>
-                                                {{group.get('payment').value}}
+                                                {{group.get('payment').value | number : '1.2-2'}}
                                             </td>
                                             <td>
-                                                {{group.get('charge').value - group.get('payment').value}}
+                                                {{(group.get('charge').value - group.get('payment').value) | number : '1.2-2'}}
                                             </td>
                                             <td class="no-wrap-td">
                                                 <!-- <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon> -->
@@ -382,9 +382,9 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>{{calculateTotal()}}</td>
-                                        <td>{{calculateTotalPayment()}}</td>
-                                        <td><span class="text-danger">{{calculateTotalBal()}}</span></td>
+                                        <td>{{calculateTotal() | number : '1.2-2'}}</td>
+                                        <td>{{calculateTotalPayment() | number : '1.2-2' }}</td>
+                                        <td><span class="text-danger">{{calculateTotalBal() | number : '1.2-2'}}</span></td>
                                         <td></td>
                                     </tr>
                                 </tfoot>

@@ -232,6 +232,7 @@ export class BilllableBillingComponent implements OnInit {
   selectedIcd = { code: "", name: "" };
   selectICD(icd) {
     this.selectedIcd = { code: icd[0], name: icd[1] }
+    this.addIcd()
 
   }
   openSnackBar() {
@@ -243,7 +244,7 @@ export class BilllableBillingComponent implements OnInit {
       this.alertService.openSnackBar("Maximum 12", 'error');
       return
     }
-  
+
     if (this.selectedIcd.code != '') {
       let icdStatus = true;
       if (this.icdData.length) {
@@ -447,6 +448,10 @@ export class BilllableBillingComponent implements OnInit {
 
   }
 
+  setTwoNumberDecimal($event) {
+    $event.target.value = parseFloat($event.target.value).toFixed(2);
+  }
+
   ngAfterOnInit() {
     this.control = this.userTable.get('tableRows') as FormArray;
   }
@@ -458,11 +463,12 @@ export class BilllableBillingComponent implements OnInit {
       item_description: ['', Validators.required],
       procedure_code: ['', [Validators.required]],
       //modifier: [''],
-      modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:,[0-9]{2})?(?:,[0-9]{2})?$')])],
+      modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
       units: ['', [Validators.required]],
       charge: ['', [Validators.required]],
       payment: [''],
       balance: [''],
+      total_charge: [''],
       isEditable: [true]
     });
   }
@@ -526,6 +532,7 @@ export class BilllableBillingComponent implements OnInit {
       modifier: group.value.modifier,
       units: group.value.units,
       charge: group.value.charge,
+      total_charge : this.calculateTotal()
       //payment: 0,
       //balance: 1,
       //isEditable: [false]
