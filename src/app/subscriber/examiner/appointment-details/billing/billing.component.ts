@@ -241,7 +241,7 @@ export class BilllableBillingComponent implements OnInit {
   addIcd() {
     if (this.icdData && this.icdData.length >= 12) {
       this.icdCtrl.reset();
-      this.alertService.openSnackBar("Maximum 12", 'error');
+      this.alertService.openSnackBar("Maximum 12 Diagnosis Codes will be allowed here!", 'error');
       return
     }
 
@@ -411,11 +411,11 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.onDemandBilling(data).subscribe(bill => {
       this.logger.log("onDemand", bill);
       if (bill.data.exam_report_signed_file_url) {
-        this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: 'Billing_on_demand_CSV.csv' })
+        this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name:  bill.data.exam_report_csv_file_name })
       }
       if (bill.data.bill_on_demand_signed_zip_file_url) {
         setTimeout(() => {
-          this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: 'Billing_on_demand_Zip.zip' })
+          this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name:  bill.data.bill_on_demand_zip_file_name })
         }, 1000);
 
       }
