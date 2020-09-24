@@ -135,6 +135,8 @@ export class BilllableBillingComponent implements OnInit {
   icdSearched = false;
   filteredICD: any = [];
 
+  payorCtrl = new FormControl();
+
 
   openDialog(): void {
     const dialogRef = this.dialog.open(BillingPaymentDialog, {
@@ -161,6 +163,23 @@ export class BilllableBillingComponent implements OnInit {
       }
     })
 
+    this.billingService.searchPayor({ search: null }).subscribe(payor => {
+      this.payors = payor.data
+    });
+
+    this.payorCtrl.valueChanges.subscribe(res => {
+      if (res.length > 2) {
+        this.billingService.searchPayor({ search: res }).subscribe(payor => {
+          if(payor.data){
+            this.payors = payor.data
+          }else{
+            this.payors = [];
+          }
+          
+        });
+      }
+    })
+
     // this.claimService.seedData('bill_ondemand_document_types').subscribe(type => {
     //   this.documentList = type['data']
     // })
@@ -177,9 +196,9 @@ export class BilllableBillingComponent implements OnInit {
       this.modifiers = type['data']
     })
 
-    this.claimService.seedData('workcompedi_payor_details').subscribe(type => {
-      this.payors = type['data']
-    })
+    // this.claimService.seedData('workcompedi_payor_details').subscribe(type => {
+    //   this.payors = type['data']
+    // })
 
 
 
@@ -411,11 +430,11 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.onDemandBilling(data).subscribe(bill => {
       this.logger.log("onDemand", bill);
       if (bill.data.exam_report_signed_file_url) {
-        this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name:  bill.data.exam_report_csv_file_name })
+        this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
       }
       if (bill.data.bill_on_demand_signed_zip_file_url) {
         setTimeout(() => {
-          this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name:  bill.data.bill_on_demand_zip_file_name })
+          this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
         }, 1000);
 
       }
@@ -532,7 +551,7 @@ export class BilllableBillingComponent implements OnInit {
       modifier: group.value.modifier,
       units: group.value.units,
       charge: group.value.charge,
-      total_charge : this.calculateTotal()
+      total_charge: this.calculateTotal()
       //payment: 0,
       //balance: 1,
       //isEditable: [false]
@@ -619,8 +638,9 @@ export class BilllableBillingComponent implements OnInit {
     return total;
   }
 
-  updatePayor(id) {
-    this.billingService.updatePayor(this.billingId, this.payorId).subscribe(payor => {
+  updatePayor(e) {
+    this.payorCtrl.patchValue(e.payor_id + ' - '+ e.payor_name)
+    this.billingService.updatePayor(this.billingId, e.id).subscribe(payor => {
       console.log(payor);
       this.alertService.openSnackBar("Payor changed successfully", "success");
     }, err => {

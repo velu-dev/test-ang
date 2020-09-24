@@ -37,16 +37,24 @@
                             <div fxLayout="row wrap">
                                 <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payor ID</div>
                                 <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
-                                    <mat-label>Select Payor ID</mat-label>
-                                    <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">
+                                
+                                    <input matInput [formControl]="payorCtrl" [matAutocomplete]="auto1" placeholder="Search by Payor ID , Name">
+                                    <mat-autocomplete #auto1="matAutocomplete" >
+                                        <mat-option (click)="updatePayor(payor)" *ngFor="let payor of payors" [value]="payor.id">
+                                            {{payor?.payor_id}} - {{payor?.payor_name}}
+                                        </mat-option>
+                                        <mat-option disabled *ngIf="payors?.length == 0">
+                                            Not Found
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                         <!-- <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">
                                         <mat-option *ngFor="let payor of payors" [value]="payor.id"
                                             >
                                             {{payor?.payor_id}} - {{payor?.payor_name}}
                                         </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                       
+                                    </mat-select> -->
                     </div>
                 </div>
             </mat-card-content>
