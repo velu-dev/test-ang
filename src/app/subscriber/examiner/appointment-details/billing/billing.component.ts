@@ -447,6 +447,10 @@ export class BilllableBillingComponent implements OnInit {
 
   }
 
+  setTwoNumberDecimal($event) {
+    $event.target.value = parseFloat($event.target.value).toFixed(2);
+    }
+
   ngAfterOnInit() {
     this.control = this.userTable.get('tableRows') as FormArray;
   }
