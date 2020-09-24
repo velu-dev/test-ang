@@ -63,7 +63,6 @@ export class BilllableBillingComponent implements OnInit {
   modifiers: any;
   billingData: any;
   payors: any;
-  payorId: number;
 
   //table
   userTable: FormGroup;
@@ -168,7 +167,7 @@ export class BilllableBillingComponent implements OnInit {
     });
 
     this.payorCtrl.valueChanges.subscribe(res => {
-      if (res.length > 2) {
+      if (res && res.length > 2) {
         this.billingService.searchPayor({ search: res }).subscribe(payor => {
           if(payor.data){
             this.payors = payor.data
@@ -219,8 +218,10 @@ export class BilllableBillingComponent implements OnInit {
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)
-
-      this.payorId = billing.data.payor_id;
+      if(billing.data.payor_id){
+        this.payorCtrl.patchValue(billing.data.payor_id + ' - '+ billing.data.payor_name)
+      }
+     
       if (billing.data && billing.data.billing_line_items) {
         billing.data.billing_line_items.map((item, index) => {
           let firstData = {};
@@ -246,6 +247,10 @@ export class BilllableBillingComponent implements OnInit {
     }, error => {
       this.logger.error(error)
     })
+  }
+
+  clearPayorCtrl(){
+    this.payorCtrl.reset()
   }
   icdData = [];
   selectedIcd = { code: "", name: "" };

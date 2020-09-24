@@ -39,6 +39,9 @@
                                 <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
                                 
                                     <input matInput [formControl]="payorCtrl" [matAutocomplete]="auto1" placeholder="Search by Payor ID , Name">
+                                    <button mat-button *ngIf="payorCtrl.value" (click)="clearPayorCtrl()" matSuffix mat-icon-button>
+                                        <mat-icon>close</mat-icon>
+                                      </button>
                                     <mat-autocomplete #auto1="matAutocomplete" >
                                         <mat-option (click)="updatePayor(payor)" *ngFor="let payor of payors" [value]="payor.id">
                                             {{payor?.payor_id}} - {{payor?.payor_name}}
