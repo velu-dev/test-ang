@@ -47,7 +47,7 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: DashboardComponent,
-    data: { breadcrumb: { skip: true } }
+    data: { breadcrumb: "Home" }
   }]
 }, {
   path: "new-examiner",
@@ -549,7 +549,7 @@ const routes: Routes = [{
     {
       path: "",
       component: StaffDashboardComponent,
-      data: { breadcrumb: { skip: true } }
+      data: { breadcrumb: "Home" }
     }, {
       path: "new-intake",
       component: NewClaimComponent,
@@ -963,7 +963,7 @@ const routes: Routes = [{
     {
       path: "",
       component: ManagerDashboardComponent,
-      data: { breadcrumb: { skip: true } }
+      data: { breadcrumb: "Home" }
     },
     {
       path: "claimant-awaiting",
@@ -1367,7 +1367,7 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: ExaminerDashboardComponent,
-    data: { breadcrumb: { skip: true } }
+    data: { breadcrumb: "Home" }
   }, {
     path: "dashboard",
     component: ExaminerDashboardComponent,
