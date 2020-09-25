@@ -4,7 +4,7 @@
     <app-application-attorney *ngIf="type == 'Applicant Attorney'" [fromPop]="true" [aattorney]="userData"
         [state]="states">
     </app-application-attorney>
-    <app-defense-attorney *ngIf="type == 'Defense Attroney'" [fromPop]="true" [state]="states" [dattroney]="userData">
+    <app-defense-attorney *ngIf="type == 'Defense Attorney'" [fromPop]="true" [state]="states" [dattroney]="userData">
     </app-defense-attorney>
     <app-deo *ngIf="type == 'DEU Office'" [fromPop]="true" [deu]="userData" [state]="states"></app-deo>
     <app-employer *ngIf="type == 'Employer'" [fromPop]="true" [employer]="userData" [state]="states"></app-employer>

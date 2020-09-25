@@ -106,7 +106,7 @@ export class SidenavComponent implements OnInit {
   }
   navigate() {
     if (this.isMobile || this.isTab) {
-      this.sidenav.toggle();
+      this.sidenav.close();
     }
   }
   isclosed(status) {
