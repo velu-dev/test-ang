@@ -158,5 +158,6 @@ export const api_endpoint = {
     createBillLineItem: 'billing/add-bill-line-item/',
     updateDiagnosisCode: 'billing/diagnosis/update-diagnosis',
     removeBillItem: 'billing/remove-bill-line-item/',
-    updatePayor: 'billing/update-payor/'
+    updatePayor: 'billing/update-payor/',
+    searchPayor: 'billing/payor-search'
 }

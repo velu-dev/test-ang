@@ -468,7 +468,8 @@ const routes: Routes = [{
     data: { breadcrumb: "New" }
   }, {
     path: "existing-location/:id",
-    component: ExistingServiceLocationsComponent
+    component: ExistingServiceLocationsComponent,
+    data: { breadcrumb: "Service Location" }
   },
   {
     path: "add-location",
@@ -497,7 +498,7 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: BillingComponent,
-    data: { breadcrumb: "Billing" }
+    data: { breadcrumb: "Bills" }
   }, {
     path: "new",
     component: NewBillingComponent,
@@ -899,7 +900,7 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: BillingComponent,
-        data: { breadcrumb: "Billing" }
+        data: { breadcrumb: "Bills" }
       }, {
         path: "new",
         component: NewBillingComponent,
@@ -956,7 +957,7 @@ const routes: Routes = [{
     },
     {
       path: "new-staff",
-      component: ManageNewUserComponent,
+      component: NewUserComponent,
       data: { breadcrumb: "New Staff" }
     },
     {
@@ -1345,7 +1346,7 @@ const routes: Routes = [{
       children: [{
         path: "",
         component: BillingComponent,
-        data: { breadcrumb: "Billing" }
+        data: { breadcrumb: "Bills" }
       }, {
         path: "new",
         component: NewBillingComponent,
@@ -1710,7 +1711,8 @@ const routes: Routes = [{
       data: { breadcrumb: "New" }
     }, {
       path: "existing-location/:id",
-      component: ExistingServiceLocationsComponent
+      component: ExistingServiceLocationsComponent,
+      data: { breadcrumb: "Edit" }
     },
     {
       path: "add-location",
@@ -1738,7 +1740,7 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: BillingComponent,
-      data: { breadcrumb: "Billing" }
+      data: { breadcrumb: "Bills" }
     }, {
       path: "new",
       component: NewBillingComponent,

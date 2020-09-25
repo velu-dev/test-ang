@@ -63,7 +63,6 @@ export class BilllableBillingComponent implements OnInit {
   modifiers: any;
   billingData: any;
   payors: any;
-  payorId: number;
 
   //table
   userTable: FormGroup;
@@ -135,6 +134,8 @@ export class BilllableBillingComponent implements OnInit {
   icdSearched = false;
   filteredICD: any = [];
 
+  payorCtrl = new FormControl();
+
 
   openDialog(): void {
     const dialogRef = this.dialog.open(BillingPaymentDialog, {
@@ -161,6 +162,23 @@ export class BilllableBillingComponent implements OnInit {
       }
     })
 
+    this.billingService.searchPayor({ search: null }).subscribe(payor => {
+      this.payors = payor.data
+    });
+
+    this.payorCtrl.valueChanges.subscribe(res => {
+      if (res && res.length > 2) {
+        this.billingService.searchPayor({ search: res }).subscribe(payor => {
+          if(payor.data){
+            this.payors = payor.data
+          }else{
+            this.payors = [];
+          }
+          
+        });
+      }
+    })
+
     // this.claimService.seedData('bill_ondemand_document_types').subscribe(type => {
     //   this.documentList = type['data']
     // })
@@ -177,9 +195,9 @@ export class BilllableBillingComponent implements OnInit {
       this.modifiers = type['data']
     })
 
-    this.claimService.seedData('workcompedi_payor_details').subscribe(type => {
-      this.payors = type['data']
-    })
+    // this.claimService.seedData('workcompedi_payor_details').subscribe(type => {
+    //   this.payors = type['data']
+    // })
 
 
 
@@ -200,8 +218,10 @@ export class BilllableBillingComponent implements OnInit {
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)
-
-      this.payorId = billing.data.payor_id;
+      if(billing.data.payor_id){
+        this.payorCtrl.patchValue(billing.data.payor_id + ' - '+ billing.data.payor_name)
+      }
+     
       if (billing.data && billing.data.billing_line_items) {
         billing.data.billing_line_items.map((item, index) => {
           let firstData = {};
@@ -228,10 +248,15 @@ export class BilllableBillingComponent implements OnInit {
       this.logger.error(error)
     })
   }
+
+  clearPayorCtrl(){
+    this.payorCtrl.reset()
+  }
   icdData = [];
   selectedIcd = { code: "", name: "" };
   selectICD(icd) {
     this.selectedIcd = { code: icd[0], name: icd[1] }
+    this.addIcd()
 
   }
   openSnackBar() {
@@ -240,10 +265,10 @@ export class BilllableBillingComponent implements OnInit {
   addIcd() {
     if (this.icdData && this.icdData.length >= 12) {
       this.icdCtrl.reset();
-      this.alertService.openSnackBar("Maximum 12", 'error');
+      this.alertService.openSnackBar("Maximum 12 Diagnosis Codes will be allowed here!", 'error');
       return
     }
-  
+
     if (this.selectedIcd.code != '') {
       let icdStatus = true;
       if (this.icdData.length) {
@@ -410,11 +435,11 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.onDemandBilling(data).subscribe(bill => {
       this.logger.log("onDemand", bill);
       if (bill.data.exam_report_signed_file_url) {
-        this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: 'Billing_on_demand_CSV.csv' })
+        this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
       }
       if (bill.data.bill_on_demand_signed_zip_file_url) {
         setTimeout(() => {
-          this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: 'Billing_on_demand_Zip.zip' })
+          this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
         }, 1000);
 
       }
@@ -449,7 +474,7 @@ export class BilllableBillingComponent implements OnInit {
 
   setTwoNumberDecimal($event) {
     $event.target.value = parseFloat($event.target.value).toFixed(2);
-    }
+  }
 
   ngAfterOnInit() {
     this.control = this.userTable.get('tableRows') as FormArray;
@@ -467,6 +492,7 @@ export class BilllableBillingComponent implements OnInit {
       charge: ['', [Validators.required]],
       payment: [''],
       balance: [''],
+      total_charge: [''],
       isEditable: [true]
     });
   }
@@ -530,6 +556,7 @@ export class BilllableBillingComponent implements OnInit {
       modifier: group.value.modifier,
       units: group.value.units,
       charge: group.value.charge,
+      total_charge: this.calculateTotal()
       //payment: 0,
       //balance: 1,
       //isEditable: [false]
@@ -616,8 +643,9 @@ export class BilllableBillingComponent implements OnInit {
     return total;
   }
 
-  updatePayor(id) {
-    this.billingService.updatePayor(this.billingId, this.payorId).subscribe(payor => {
+  updatePayor(e) {
+    this.payorCtrl.patchValue(e.payor_id + ' - '+ e.payor_name)
+    this.billingService.updatePayor(this.billingId, e.id).subscribe(payor => {
       console.log(payor);
       this.alertService.openSnackBar("Payor changed successfully", "success");
     }, err => {

@@ -50,4 +50,8 @@ export class BillingService {
   updatePayor(billId, payor): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.updatePayor + billId + '/' + payor, {})
   }
+
+  searchPayor(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.searchPayor, data)
+  }
 }

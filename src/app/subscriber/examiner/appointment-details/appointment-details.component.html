@@ -888,7 +888,8 @@
                                         *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                     <span *ngIf="column == 'action'" class="text-center">
                                         <a target="_self" class="text-success" (click)="download(element)">Download</a>
-                                        <a class="text-danger m-l-10" *ngIf="!element?.isServiceRequested && !isExamTypeChanged"
+                                        <a class="text-danger m-l-10"
+                                            *ngIf="!element?.isServiceRequested && !isExamTypeChanged"
                                             (click)="deleteDocument(element)">Remove</a>
                                     </span>
                                 </div>
@@ -921,11 +922,8 @@
     <mat-card-header>
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Notes</div>
         <span class="spacer"></span>
-        <span *ngIf="!isExamTypeChanged">
-            <button class="filled-gray m-b-5" *ngIf="!isNotesEdit" (click)="notesEdit()" mat-raised-button>Edit</button>
-            <button class="filled-success m-b-5" *ngIf="isNotesEdit" (click)="noteSubmit()"
-                mat-raised-button>Save</button>
-        </span>
+        <button class="filled-gray m-b-5" *ngIf="!isNotesEdit" (click)="notesEdit()" mat-raised-button>Edit</button>
+        <button class="filled-success m-b-5" *ngIf="isNotesEdit" (click)="noteSubmit()" mat-raised-button>Save</button>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
