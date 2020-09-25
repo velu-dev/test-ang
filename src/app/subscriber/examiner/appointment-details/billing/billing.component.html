@@ -37,16 +37,27 @@
                             <div fxLayout="row wrap">
                                 <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payor ID</div>
                                 <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
-                                    <mat-label>Select Payor ID</mat-label>
-                                    <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">
+                                
+                                    <input matInput [formControl]="payorCtrl" [matAutocomplete]="auto1" placeholder="Search by Payor ID , Name">
+                                    <button mat-button *ngIf="payorCtrl.value" (click)="clearPayorCtrl()" matSuffix mat-icon-button>
+                                        <mat-icon>close</mat-icon>
+                                      </button>
+                                    <mat-autocomplete #auto1="matAutocomplete" >
+                                        <mat-option (click)="updatePayor(payor)" *ngFor="let payor of payors" [value]="payor.id">
+                                            {{payor?.payor_id}} - {{payor?.payor_name}}
+                                        </mat-option>
+                                        <mat-option disabled *ngIf="payors?.length == 0">
+                                            Not Found
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
+                         <!-- <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">
                                         <mat-option *ngFor="let payor of payors" [value]="payor.id"
                                             >
                                             {{payor?.payor_id}} - {{payor?.payor_name}}
                                         </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                       
+                                    </mat-select> -->
                     </div>
                 </div>
             </mat-card-content>
@@ -92,7 +103,7 @@
         <mat-card>
             <mat-card-header>
                 <div class="content-wrapper-main-title">Diagnosis Codes<span class="info ondemand-info m-l-10"
-                        matTooltip="You can 'Add' up to 12 diagnosis codes." matTooltipPosition="above"> <i
+                        matTooltip="Maximum 12 Diagnosis Codes will be allowed here!" matTooltipPosition="above"> <i
                             class="fa fa-info" aria-hidden="true"></i></span></div>
             </mat-card-header>
             <mat-divider></mat-divider>
