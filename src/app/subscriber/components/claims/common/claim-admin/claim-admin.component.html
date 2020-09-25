@@ -14,13 +14,14 @@
                         Save
                     </button>
                 </span>
-                <button class="close-model m-t-10" color="warn" *ngIf="fromPop" (click)="cancel();claimAdminEdit = false" > <i class="fa fa-close"></i> close </button>
+                <button class="close-model m-t-10" color="warn" *ngIf="fromPop"
+                    (click)="cancel();claimAdminEdit = false"> <i class="fa fa-close"></i> close </button>
             </div>
         </div>
     </div>
 </mat-card-header>
 <mat-divider></mat-divider>
-<mat-card-content class="p-b-15">
+<mat-card-content>
     <div fxLayout="row wrap" class="claim_admin m-t-15">
         <form fxLayout="row wrap" fxFlex="100" [formGroup]="claimAdminForm"
             (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
@@ -52,7 +53,7 @@
                 <mat-label>Street Address 1{{fromPop ? "*" : ""}}</mat-label>
                 <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
                     formControlName="street1"></textarea>
-                    <mat-error>Please enter valid street address 1</mat-error>
+                <mat-error>Please enter valid street address 1</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

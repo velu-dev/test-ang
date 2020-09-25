@@ -370,7 +370,7 @@
         box-shadow: $shadow-style-one-hover;
     }
     mat-form-field {
-        padding: 10px 10px 0px 10px !important;
+        padding: 10px 10px 0px 10px;
     }
     .document-file-upload {
         @media only screen and (max-width: 568px) {
@@ -404,6 +404,12 @@
             }
         }
     }
+    .generate-doc {
+        padding-left: 0px !important;
+        @media screen and (max-width: 1024px) and (min-width: 768px) {
+            padding-left: 0px !important;
+        }
+    }
     mat-tab-group {
         height: 50px;
     }
@@ -422,7 +428,7 @@
 .grid-list {
     div {
         align-self: baseline;
-        overflow-wrap: anywhere; 
+        overflow-wrap: anywhere;
         &:first-child {
             max-width: 110px;
             min-width: 110px;

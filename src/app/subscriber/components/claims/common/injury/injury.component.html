@@ -36,7 +36,7 @@
             </table>
             <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
         </div> -->
-        <div class="user-detail  vertical-fixed">
+        <div class="user-detail  vertical-fixed m-t-10">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
                 matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
@@ -51,7 +51,8 @@
                         </span>
                         <div>
                             <span *ngIf="column == 'body_part'">{{element?.body_part}}</span>
-                            <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury | date:'MM-dd-yyyy'}}</span>
+                            <span
+                                *ngIf="column == 'date_of_injury'">{{element?.date_of_injury | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'action'" class="text-center">
                                 <a (click)="openDialog(element, i)" class="text-success m-r-20">Edit</a>
                                 <a (click)="deleteInjury(element,i )" class="text-danger">Remove</a>
@@ -64,7 +65,8 @@
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Body parts</span><span>{{element?.body_part}}</span></div>
-                                <div><span>Date of injury</span><span> {{element?.date_of_injury | date:'MM-dd-yyyy'}} </span></div>
+                                <div><span>Date of injury</span><span> {{element?.date_of_injury | date:'MM-dd-yyyy'}}
+                                    </span></div>
                             </div>
                         </div>
                     </td>
