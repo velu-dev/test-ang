@@ -18,7 +18,7 @@ const routes: Routes = [
     component: CommonLayoutComponent,
     canActivate: [AuthGuard],
     loadChildren: () => import('./subscriber/subscriber.module').then(m => m.SubscriberModule),
-    data: { breadcrumb: { skip: true } }
+    data: { breadcrumb: "Home" }
   }, {
     path: "admin",
     component: CommonLayoutComponent,
@@ -38,7 +38,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true ,scrollPositionRestoration: 'enabled' })],
+  imports: [RouterModule.forRoot(routes, { useHash: true, scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
