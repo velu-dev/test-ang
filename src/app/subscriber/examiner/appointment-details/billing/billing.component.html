@@ -33,26 +33,29 @@
             <mat-card-content>
                 <div fxLayout="row wrap" class="p-t-20">
                     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-                     
-                            <div fxLayout="row wrap">
-                                <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payor ID</div>
-                                <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
-                                
-                                    <input matInput [formControl]="payorCtrl" [matAutocomplete]="auto1" placeholder="Search by Payor ID , Name">
-                                    <button mat-button *ngIf="payorCtrl.value" (click)="clearPayorCtrl()" matSuffix mat-icon-button>
-                                        <mat-icon>close</mat-icon>
-                                      </button>
-                                    <mat-autocomplete #auto1="matAutocomplete" >
-                                        <mat-option (click)="updatePayor(payor)" *ngFor="let payor of payors" [value]="payor.id">
-                                            {{payor?.payor_id}} - {{payor?.payor_name}}
-                                        </mat-option>
-                                        <mat-option disabled *ngIf="payors?.length == 0">
-                                            Not Found
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                </mat-form-field>
-                            </div>
-                         <!-- <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">
+
+                        <div fxLayout="row wrap">
+                            <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payor ID</div>
+                            <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
+
+                                <input matInput [formControl]="payorCtrl" [matAutocomplete]="auto1"
+                                    placeholder="Search by Payor ID , Name">
+                                <button mat-button *ngIf="payorCtrl.value" (click)="clearPayorCtrl()" matSuffix
+                                    mat-icon-button>
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                <mat-autocomplete #auto1="matAutocomplete">
+                                    <mat-option (click)="updatePayor(payor)" *ngFor="let payor of payors"
+                                        [value]="payor.id">
+                                        {{payor?.payor_id}} - {{payor?.payor_name}}
+                                    </mat-option>
+                                    <mat-option disabled *ngIf="payors?.length == 0">
+                                        Not Found
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                        <!-- <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">
                                         <mat-option *ngFor="let payor of payors" [value]="payor.id"
                                             >
                                             {{payor?.payor_id}} - {{payor?.payor_name}}
@@ -198,7 +201,7 @@
                         Add Bill Item
                     </button>
                 </div> -->
-                <div fxLayout="row wrap">
+                <div fxLayout="row wrap" class="m-t-10">
                     <div class="user-detail vertical-fixed">
                         <!-- <table mat-table [dataSource]="dataSource1" multiTemplateDataRows
                             class="mat-elevation-z8 user-table" matSort>
@@ -292,13 +295,15 @@
                                 </thead>
                                 <tbody>
                                     <ng-container formArrayName="tableRows"
-                                        *ngFor="let group of getFormControls.controls ; let i=index" >
-                                        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i" (click)="rowSelected(group)">
+                                        *ngFor="let group of getFormControls.controls ; let i=index">
+                                        <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
+                                            (click)="rowSelected(group)">
                                             <td>
                                                 <mat-form-field appearance="outline" *ngIf="i != 0">
-                                                    <input matInput type="text" [disabled]="" autocomplete="off" formControlName="item_description">
+                                                    <input matInput type="text" [disabled]="" autocomplete="off"
+                                                        formControlName="item_description">
                                                 </mat-form-field>
-                                                <span  *ngIf="i == 0">
+                                                <span *ngIf="i == 0">
                                                     {{group.get('item_description').value}}
                                                 </span>
                                             </td>
@@ -310,8 +315,8 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput [dropSpecialCharacters]="false" type="text" mask="9{8}"  autocomplete="off"
-                                                        formControlName="modifier">
+                                                    <input matInput [dropSpecialCharacters]="false" type="text"
+                                                        mask="9{8}" autocomplete="off" formControlName="modifier">
                                                 </mat-form-field>
                                             </td>
                                             <td>
@@ -336,7 +341,8 @@
                                                 <!-- <mat-form-field appearance="outline">
                                                     <input matInput type="text" autocomplete="off" disable formControlName="balance">
                                                 </mat-form-field> -->
-                                               <span class="text-danger"> {{group.value.charge - group.value.payment | number : '1.2-2'}}</span>
+                                                <span class="text-danger">
+                                                    {{group.value.charge - group.value.payment | number : '1.2-2'}}</span>
                                             </td>
 
                                             <td class="no-wrap-td">
@@ -378,14 +384,15 @@
                                                     Edit
                                                 </a>
 
-                                                <a *ngIf="i != 0" class="text-danger m-l-0" (click)="deleteRow(i,group)">
+                                                <a *ngIf="i != 0" class="text-danger m-l-0"
+                                                    (click)="deleteRow(i,group)">
                                                     Remove
                                                 </a>
                                             </td>
                                         </tr>
-                                       
+
                                     </ng-container>
-                                   
+
                                 </tbody>
                                 <tfoot *ngIf="getFormControls.controls.length > 0">
                                     <tr class="bill-value" id="static-footer">
@@ -395,7 +402,8 @@
                                         <td></td>
                                         <td>{{calculateTotal() | number : '1.2-2'}}</td>
                                         <td>{{calculateTotalPayment() | number : '1.2-2' }}</td>
-                                        <td><span class="text-danger">{{calculateTotalBal() | number : '1.2-2'}}</span></td>
+                                        <td><span class="text-danger">{{calculateTotalBal() | number : '1.2-2'}}</span>
+                                        </td>
                                         <td></td>
                                     </tr>
                                 </tfoot>
@@ -469,7 +477,7 @@
 
 
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                            <button mat-stroked-button type="button" class="filled-gray p-r-20 m-t-20"
+                            <button mat-stroked-button type="button" class="filled-gray add-btn p-r-20 m-t-20"
                                 (click)="uploadFile()">Add
                             </button>
                         </div>

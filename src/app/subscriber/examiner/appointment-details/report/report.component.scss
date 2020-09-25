@@ -40,6 +40,9 @@ th {
     padding-right: 0px !important;
 }
 .upload-file {
+    @media screen and (max-width: 1024px) and (min-width: 768px) {
+        margin-left: 0 !important;
+    }
     .mat-form-field {
         width: calc(100% - 125px);
         mat-hint {
