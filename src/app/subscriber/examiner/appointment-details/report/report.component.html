@@ -20,7 +20,7 @@
         the documents to be sent for
         On Demand Transcription & Report Building.</p>
 
-      <div fxLayout="row wrap" class="upload-sec w-100 m-b-10">
+      <div fxLayout="row wrap" class="upload-sec w-100 m-b-10" *ngIf="!reportData.is_exam_type_changed">
         <mat-form-field fxFLex="30" fxFlex.sm="100" fxFlex.xs="100" appearance="outline" class="m-t-10">
           <mat-label>Select Type</mat-label>
           <mat-select [(ngModel)]="documentType" (selectionChange)="docChange($event.value)">
@@ -94,9 +94,9 @@
 
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action </th>
-            <td mat-cell *matCellDef="let element" class="p-l-0"
-              (click)="$event.stopPropagation();deleteDocument(element)">
-              <a class="text-danger text-center">Remove</a>
+            <td mat-cell *matCellDef="let element" class="p-l-0">
+              <a *ngIf="!reportData.is_exam_type_changed" (click)="$event.stopPropagation();deleteDocument(element)"
+                class="text-danger text-center">Remove</a>
             </td>
           </ng-container>
 
@@ -114,8 +114,9 @@
   <div fxLayout="row wrap" class="ondemand_request">
     <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100">
       <div>
-        <mat-checkbox [(ngModel)]="rushRequest">Rush Request?</mat-checkbox>
-        <button mat-stroked-button (click)="onDemandSubmit()" class="outline-success huge-btn">
+        <mat-checkbox [disabled]="reportData.is_exam_type_changed" [(ngModel)]="rushRequest">Rush Request?
+        </mat-checkbox>
+        <button [disabled]="reportData.is_exam_type_changed" mat-stroked-button (click)="onDemandSubmit()" class="outline-success huge-btn">
           Transcribe and Compile
         </button>
       </div>

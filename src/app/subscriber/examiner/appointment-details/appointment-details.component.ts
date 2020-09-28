@@ -79,7 +79,7 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "../../correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E", "S"], url: "../../history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "../../records" }, { name: "Examination", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "../../examination" }, { name: "Report", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "../../reports" }];
+  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E", "S"], url: "/history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" }, { name: "Examination", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" }, { name: "Report", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" }, { name: "Billing", progress_name: 'transcription', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing" }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
@@ -422,6 +422,13 @@ export class AppointmentDetailsComponent implements OnInit {
     this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
       this.examinarAddress = res['data'];
     })
+  }
+  clickNav(url) {
+    if (url != "/billing") {
+      this.router.navigate([this.router.url + url]);
+    } else {
+      this.billingNev();
+    }
   }
   editBillable() {
     this.isEditBillableItem = true;
