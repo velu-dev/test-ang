@@ -288,6 +288,39 @@ tr.detail-row {
           cursor: pointer;
         }
       }
+      td.bill-modifier {
+        // display: contents;
+        // mat-form-field {
+        //   width: 26px !important;
+        //   margin-left: 4px;
+        //   &:first-child {
+        //     margin-left: 4px;
+        //   }
+        //   .mat-form-field-flex {
+        //     padding: 0 6px !important;
+        //   }
+        // }
+        .chip-list {
+          width: 100%;
+          line-height: 2.5;
+          .mat-form-field.mat-form-field-appearance-outline .mat-form-field-infix {
+            padding: inherit;
+          }
+          .mat-form-field-flex {
+            padding: 0 0px !important;
+          }
+          .mat-standard-chip.mat-chip-with-trailing-icon {
+            padding: 0 4px 0 10px;
+            min-height: 25px;
+          }
+          .mat-chip-list-wrapper .mat-standard-chip, .mat-chip-list-wrapper input.mat-input-element {
+            margin: 2px;
+          }
+          .mat-standard-chip .mat-chip-remove.mat-icon {
+            margin-left: 4px;
+          }
+        }
+      }
       td.no-wrap-td {
         @media screen and (max-width: 1024px) and (min-width: 768px) {
           white-space: normal;
