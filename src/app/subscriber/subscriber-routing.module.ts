@@ -114,20 +114,24 @@ const routes: Routes = [{
                 data: { breadcrumb: "Billable Item" },
               }, {
                 path: "correspondence",
-                component: BillingCorrespondanceComponent
+                component: BillingCorrespondanceComponent,
+                data: { breadcrumb: "Correspondence" },
               }, {
                 path: "examination",
-                component: ExaminationComponent
+                component: ExaminationComponent,
+                data: { breadcrumb: "Examination" },
               }, {
                 path: "history",
-                component: HistoryComponent
+                component: HistoryComponent,
+                data: { breadcrumb: "History" },
               }, {
                 path: "history/:examiner",
                 component: HistoryComponent,
                 data: { breadcrumb: "History" }
               }, {
                 path: "records",
-                component: RecordsComponent
+                component: RecordsComponent,
+                data: { breadcrumb: "Records" },
               }, {
                 path: "reports",
                 component: ReportComponent,
@@ -186,20 +190,24 @@ const routes: Routes = [{
           data: { breadcrumb: "Billable Item" },
         }, {
           path: "correspondence",
-          component: BillingCorrespondanceComponent
+          component: BillingCorrespondanceComponent,
+          data: {breadcrumb: "Correspondence"}
         }, {
           path: "examination",
-          component: ExaminationComponent
+          component: ExaminationComponent,
+          data: {breadcrumb: "Examination"}
         }, {
           path: "history",
-          component: HistoryComponent
+          component: HistoryComponent,
+          data: {breadcrumb: "History"}
         }, {
           path: "history/:examiner",
           component: HistoryComponent,
           data: { breadcrumb: "History" }
         }, {
           path: "records",
-          component: RecordsComponent
+          component: RecordsComponent,
+          data: {breadcrumb : "Records"}
         }, {
           path: "reports",
           component: ReportComponent,
@@ -322,20 +330,24 @@ const routes: Routes = [{
       data: { breadcrumb: "Examination Details" }
     }, {
       path: "correspondence",
-      component: BillingCorrespondanceComponent
+      component: BillingCorrespondanceComponent,
+      data: {breadcrumb: "Correspondence"}
     }, {
       path: "examination",
-      component: ExaminationComponent
+      component: ExaminationComponent,
+      data: {breadcrumb: "Examination"}
     }, {
       path: "history",
-      component: HistoryComponent
+      component: HistoryComponent,
+      data: {breadcrumb: "History"}
     }, {
       path: "history/:examiner",
       component: HistoryComponent,
       data: { breadcrumb: "History" }
     }, {
       path: "records",
-      component: RecordsComponent
+      component: RecordsComponent,
+      data: {breadcrumb : "Records"}
     }, {
       path: "reports",
       component: ReportComponent,
@@ -390,20 +402,24 @@ const routes: Routes = [{
             data: { breadcrumb: "Billable Item" },
           }, {
             path: "correspondence",
-            component: BillingCorrespondanceComponent
+            component: BillingCorrespondanceComponent,
+            data: {breadcrumb: "Correspondence"}
           }, {
             path: "examination",
-            component: ExaminationComponent
+            component: ExaminationComponent,
+            data: {breadcrumb: "Examination"}
           }, {
             path: "history",
-            component: HistoryComponent
+            component: HistoryComponent,
+            data: {breadcrumb: "History"}
           }, {
             path: "history/:examiner",
             component: HistoryComponent,
             data: { breadcrumb: "History" }
           }, {
             path: "records",
-            component: RecordsComponent
+            component: RecordsComponent,
+            data: {breadcrumb : "Records"}
           }, {
             path: "reports",
             component: ReportComponent,
@@ -605,20 +621,24 @@ const routes: Routes = [{
                     data: { breadcrumb: "Billable Item" },
                   }, {
                     path: "correspondence",
-                    component: BillingCorrespondanceComponent
+                    component: BillingCorrespondanceComponent,
+                    data: {breadcrumb: "Correspondence"}
                   }, {
                     path: "examination",
-                    component: ExaminationComponent
+                    component: ExaminationComponent,
+                    data: {breadcrumb: "Examination"}
                   }, {
                     path: "history",
-                    component: HistoryComponent
+                    component: HistoryComponent,
+                    data: {breadcrumb: "History"}
                   }, {
                     path: "history/:examiner",
                     component: HistoryComponent,
                     data: { breadcrumb: "History" }
                   }, {
                     path: "records",
-                    component: RecordsComponent
+                    component: RecordsComponent,
+                    data: {breadcrumb : "Records"}
                   }, {
                     path: "reports",
                     component: ReportComponent,
@@ -677,20 +697,24 @@ const routes: Routes = [{
               data: { breadcrumb: "Billable Item" },
             }, {
               path: "correspondence",
-              component: BillingCorrespondanceComponent
+              component: BillingCorrespondanceComponent,
+              data: {breadcrumb: "Correspondence"}
             }, {
               path: "examination",
-              component: ExaminationComponent
+              component: ExaminationComponent,
+              data: {breadcrumb: "Examination"}
             }, {
               path: "history",
-              component: HistoryComponent
+              component: HistoryComponent,
+              data: {breadcrumb: "History"}
             }, {
               path: "history/:examiner",
               component: HistoryComponent,
               data: { breadcrumb: "History" }
             }, {
               path: "records",
-              component: RecordsComponent
+              component: RecordsComponent,
+              data: {breadcrumb : "Records"}
             }, {
               path: "reports",
               component: ReportComponent,
@@ -747,20 +771,24 @@ const routes: Routes = [{
           data: { breadcrumb: "Examination Details" }
         }, {
           path: "correspondence",
-          component: BillingCorrespondanceComponent
+          component: BillingCorrespondanceComponent,
+          data: {breadcrumb: "Correspondence"}
         }, {
           path: "examination",
-          component: ExaminationComponent
+          component: ExaminationComponent,
+          data: {breadcrumb: "Examination"}
         }, {
           path: "history",
-          component: HistoryComponent
+          component: HistoryComponent,
+          data: {breadcrumb: "History"}
         }, {
           path: "history/:examiner",
           component: HistoryComponent,
           data: { breadcrumb: "History" }
         }, {
           path: "records",
-          component: RecordsComponent
+          component: RecordsComponent,
+          data: {breadcrumb : "Records"}
         }, {
           path: "reports",
           component: ReportComponent,
@@ -815,20 +843,24 @@ const routes: Routes = [{
                 data: { breadcrumb: "Billable Item" },
               }, {
                 path: "correspondence",
-                component: BillingCorrespondanceComponent
+                component: BillingCorrespondanceComponent,
+                data: {breadcrumb: "Correspondence"}
               }, {
                 path: "examination",
-                component: ExaminationComponent
+                component: ExaminationComponent,
+                data: {breadcrumb: "Examination"}
               }, {
                 path: "history",
-                component: HistoryComponent
+                component: HistoryComponent,
+                data: {breadcrumb: "History"}
               }, {
                 path: "history/:examiner",
                 component: HistoryComponent,
                 data: { breadcrumb: "History" }
               }, {
                 path: "records",
-                component: RecordsComponent
+                component: RecordsComponent,
+                data: {breadcrumb : "Records"}
               }, {
                 path: "reports",
                 component: ReportComponent,
@@ -886,12 +918,12 @@ const routes: Routes = [{
       {
         path: "add-location",
         component: AddEditServiceLocationComponent,
-        data: { breadcrumb: "Add Location" }
+        data: { breadcrumb: "New" }
       },
       {
         path: "edit-location/:id",
         component: AddEditServiceLocationComponent,
-        data: { breadcrumb: "Edit Location" }
+        data: { breadcrumb: "Edit" }
       }]
 
     },
@@ -1012,20 +1044,24 @@ const routes: Routes = [{
                     data: { breadcrumb: "Billable Item" },
                   }, {
                     path: "correspondence",
-                    component: BillingCorrespondanceComponent
+                    component: BillingCorrespondanceComponent,
+                    data: {breadcrumb: "Correspondence"}
                   }, {
                     path: "examination",
-                    component: ExaminationComponent
+                    component: ExaminationComponent,
+                    data: {breadcrumb: "Examination"}
                   }, {
                     path: "history",
-                    component: HistoryComponent
+                    component: HistoryComponent,
+                    data: {breadcrumb: "History"}
                   }, {
                     path: "history/:examiner",
                     component: HistoryComponent,
                     data: { breadcrumb: "History" }
                   }, {
                     path: "records",
-                    component: RecordsComponent
+                    component: RecordsComponent,
+                    data: {breadcrumb : "Records"}
                   }, {
                     path: "reports",
                     component: ReportComponent,
@@ -1084,20 +1120,24 @@ const routes: Routes = [{
               data: { breadcrumb: "Billable Item" },
             }, {
               path: "correspondence",
-              component: BillingCorrespondanceComponent
+              component: BillingCorrespondanceComponent,
+              data: {breadcrumb: "Correspondence"}
             }, {
               path: "examination",
-              component: ExaminationComponent
+              component: ExaminationComponent,
+              data: {breadcrumb: "Examination"}
             }, {
               path: "history",
-              component: HistoryComponent
+              component: HistoryComponent,
+              data: {breadcrumb: "History"}
             }, {
               path: "history/:examiner",
               component: HistoryComponent,
               data: { breadcrumb: "History" }
             }, {
               path: "records",
-              component: RecordsComponent
+              component: RecordsComponent,
+              data: {breadcrumb : "Records"}
             }, {
               path: "reports",
               component: ReportComponent,
@@ -1192,20 +1232,24 @@ const routes: Routes = [{
           data: { breadcrumb: "Examination Details" }
         }, {
           path: "correspondence",
-          component: BillingCorrespondanceComponent
+          component: BillingCorrespondanceComponent,
+          data: {breadcrumb: "Correspondence"}
         }, {
           path: "examination",
-          component: ExaminationComponent
+          component: ExaminationComponent,
+          data: {breadcrumb: "Examination"}
         }, {
           path: "history",
-          component: HistoryComponent
+          component: HistoryComponent,
+          data: {breadcrumb: "History"}
         }, {
           path: "history/:examiner",
           component: HistoryComponent,
           data: { breadcrumb: "History" }
         }, {
           path: "records",
-          component: RecordsComponent
+          component: RecordsComponent,
+          data: {breadcrumb : "Records"}
         }, {
           path: "reports",
           component: ReportComponent,
@@ -1260,20 +1304,24 @@ const routes: Routes = [{
                 data: { breadcrumb: "Billable Item" },
               }, {
                 path: "correspondence",
-                component: BillingCorrespondanceComponent
+                component: BillingCorrespondanceComponent,
+                data: {breadcrumb: "Correspondence"}
               }, {
                 path: "examination",
-                component: ExaminationComponent
+                component: ExaminationComponent,
+                data: {breadcrumb: "Examination"}
               }, {
                 path: "history",
-                component: HistoryComponent
+                component: HistoryComponent,
+                data: {breadcrumb: "History"}
               }, {
                 path: "history/:examiner",
                 component: HistoryComponent,
                 data: { breadcrumb: "History" }
               }, {
                 path: "records",
-                component: RecordsComponent
+                component: RecordsComponent,
+                data: {breadcrumb : "Records"}
               }, {
                 path: "reports",
                 component: ReportComponent,
@@ -1332,12 +1380,12 @@ const routes: Routes = [{
       {
         path: "add-location",
         component: AddEditServiceLocationComponent,
-        data: { breadcrumb: "Add Location" }
+        data: { breadcrumb: "New" }
       },
       {
         path: "edit-location/:id",
         component: AddEditServiceLocationComponent,
-        data: { breadcrumb: "Edit Location" }
+        data: { breadcrumb: "Edit" }
       }]
 
     },
@@ -1420,20 +1468,24 @@ const routes: Routes = [{
                   data: { breadcrumb: "Billable Item" },
                 }, {
                   path: "correspondence",
-                  component: BillingCorrespondanceComponent
+                  component: BillingCorrespondanceComponent,
+                  data: {breadcrumb: "Correspondence"}
                 }, {
                   path: "examination",
-                  component: ExaminationComponent
+                  component: ExaminationComponent,
+                  data: {breadcrumb: "Examination"}
                 }, {
                   path: "history",
-                  component: HistoryComponent
+                  component: HistoryComponent,
+                  data: {breadcrumb: "History"}
                 }, {
                   path: "history/:examiner",
                   component: HistoryComponent,
                   data: { breadcrumb: "History" }
                 }, {
                   path: "records",
-                  component: RecordsComponent
+                  component: RecordsComponent,
+                  data: {breadcrumb : "Records"}
                 }, {
                   path: "reports",
                   component: ReportComponent,
@@ -1497,20 +1549,24 @@ const routes: Routes = [{
             data: { breadcrumb: "Billable Item" },
           }, {
             path: "correspondence",
-            component: BillingCorrespondanceComponent
+            component: BillingCorrespondanceComponent,
+            data: {breadcrumb: "Correspondence"}
           }, {
             path: "examination",
-            component: ExaminationComponent
+            component: ExaminationComponent,
+            data: {breadcrumb: "Examination"}
           }, {
             path: "history",
-            component: HistoryComponent
+            component: HistoryComponent,
+            data: {breadcrumb: "History"}
           }, {
             path: "history/:examiner",
             component: HistoryComponent,
             data: { breadcrumb: "History" }
           }, {
             path: "records",
-            component: RecordsComponent
+            component: RecordsComponent,
+            data: {breadcrumb : "Records"}
           }, {
             path: "reports",
             component: ReportComponent,
@@ -1566,20 +1622,24 @@ const routes: Routes = [{
         data: { breadcrumb: "Examination Details" }
       }, {
         path: "correspondence",
-        component: BillingCorrespondanceComponent
+        component: BillingCorrespondanceComponent,
+        data: {breadcrumb: "Correspondence"}
       }, {
         path: "examination",
-        component: ExaminationComponent
+        component: ExaminationComponent,
+        data: {breadcrumb: "Examination"}
       }, {
         path: "history",
-        component: HistoryComponent
+        component: HistoryComponent,
+        data: {breadcrumb: "History"}
       }, {
         path: "history/:examiner",
         component: HistoryComponent,
         data: { breadcrumb: "History" }
       }, {
         path: "records",
-        component: RecordsComponent
+        component: RecordsComponent,
+        data: {breadcrumb : "Records"}
       }, {
         path: "reports",
         component: ReportComponent,
@@ -1634,20 +1694,24 @@ const routes: Routes = [{
               data: { breadcrumb: "Billable Item" },
             }, {
               path: "correspondence",
-              component: BillingCorrespondanceComponent
+              component: BillingCorrespondanceComponent,
+              data: {breadcrumb: "Correspondence"}
             }, {
               path: "examination",
-              component: ExaminationComponent
+              component: ExaminationComponent,
+              data: {breadcrumb: "Examination"}
             }, {
               path: "history",
-              component: HistoryComponent
+              component: HistoryComponent,
+              data: {breadcrumb: "History"}
             }, {
               path: "history/:examiner",
               component: HistoryComponent,
               data: { breadcrumb: "History" }
             }, {
               path: "records",
-              component: RecordsComponent
+              component: RecordsComponent,
+              data: {breadcrumb : "Records"}
             }, {
               path: "reports",
               component: ReportComponent,
@@ -1722,7 +1786,7 @@ const routes: Routes = [{
     {
       path: "add-location/:status/:examiner",
       component: AddEditServiceLocationComponent,
-      data: { breadcrumb: "Add Location" }
+      data: { breadcrumb: "New" }
     },
     {
       path: "edit-location/:id",
