@@ -54,4 +54,8 @@ export class BillingService {
   searchPayor(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.searchPayor, data)
   }
+
+  generateCMS1500Form(claimID,billableId,billId): Observable<any>{
+    return this.http.get(environment.baseUrl + api_endpoint.CMS1500Form + claimID + '/' + billableId + '/' + billId)
+  }
 }
