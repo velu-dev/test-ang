@@ -500,12 +500,12 @@ const routes: Routes = [{
   {
     path: "edit-location/:id",
     component: AddEditServiceLocationComponent,
-    data: { breadcrumb: "Edit " }
+    data: { breadcrumb: "Service Location" }
   },
   {
     path: "edit-location/:id/:status/:examiner",
     component: AddEditServiceLocationComponent,
-    data: { breadcrumb: "Edit" }
+    data: { breadcrumb: "Service Location" }
   }]
 
 },
@@ -923,7 +923,7 @@ const routes: Routes = [{
       {
         path: "edit-location/:id",
         component: AddEditServiceLocationComponent,
-        data: { breadcrumb: "Edit" }
+        data: { breadcrumb: "Service Location" }
       }]
 
     },
@@ -1385,7 +1385,7 @@ const routes: Routes = [{
       {
         path: "edit-location/:id",
         component: AddEditServiceLocationComponent,
-        data: { breadcrumb: "Edit" }
+        data: { breadcrumb: "Service Location" }
       }]
 
     },
@@ -1791,12 +1791,12 @@ const routes: Routes = [{
     {
       path: "edit-location/:id",
       component: AddEditServiceLocationComponent,
-      data: { breadcrumb: "Edit " }
+      data: { breadcrumb: "Service Location" }
     },
     {
       path: "edit-location/:id/:status/:examiner",
       component: AddEditServiceLocationComponent,
-      data: { breadcrumb: "Edit" }
+      data: { breadcrumb: "Service Location" }
     }]
   },
   {
