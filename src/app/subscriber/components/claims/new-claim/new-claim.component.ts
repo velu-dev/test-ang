@@ -854,8 +854,33 @@ export class NewClaimComponent implements OnInit {
       if (this.claimChanges) {
         this.submitClaim('close')
       }
-      // this.routeDashboard();
-      this.router.navigate(['/subscriber/appointment/appointment-details', this.claimId, res.data.id])
+      let baseUrl = "";
+      let role = this.cookieService.get('role_id')
+      console.log(role)
+      switch (role) {
+        case '1':
+          baseUrl = "/admin";
+          break;
+        case '2':
+          baseUrl = "/subscriber/";
+          break;
+        case '3':
+          baseUrl = "/subscriber/manager/";
+          break;
+        case '4':
+          baseUrl = "/subscriber/staff/";
+          break;
+        case '11':
+          baseUrl = "/subscriber/examiner/";
+          break;
+        default:
+          baseUrl = "/admin";
+          break;
+      }
+
+      console.log()
+      // this.router.navigate(['/subscriber/appointment/appointment-details', this.claimId, res.data.id])
+      this.router.navigate([baseUrl + "claimants/claimant/" + this.claimant_id + "/claim/" + this.claimId + "/billable-item/" + res.data.id])
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })

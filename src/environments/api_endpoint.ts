@@ -159,5 +159,6 @@ export const api_endpoint = {
     updateDiagnosisCode: 'billing/diagnosis/update-diagnosis',
     removeBillItem: 'billing/remove-bill-line-item/',
     updatePayor: 'billing/update-payor/',
-    searchPayor: 'billing/payor-search'
+    searchPayor: 'billing/payor-search',
+    CMS1500Form: 'billing/generate-hcfa-1500/'
 }

@@ -231,12 +231,12 @@ export class BilllableBillingComponent implements OnInit {
     this.payorCtrl.valueChanges.subscribe(res => {
       if (res && res.length > 2) {
         this.billingService.searchPayor({ search: res }).subscribe(payor => {
-          if(payor.data){
+          if (payor.data) {
             this.payors = payor.data
-          }else{
+          } else {
             this.payors = [];
           }
-          
+
         });
       }
     })
@@ -280,14 +280,14 @@ export class BilllableBillingComponent implements OnInit {
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)
-      if(billing.data.payor_id){
-        this.payorCtrl.patchValue(billing.data.payor_id + ' - '+ billing.data.payor_name)
+      if (billing.data.payor_id) {
+        this.payorCtrl.patchValue(billing.data.payor_id + ' - ' + billing.data.payor_name)
       }
-     
+
       if (billing.data && billing.data.billing_line_items) {
         billing.data.billing_line_items.map((item, index) => {
           let firstData = {};
-          this.addRow();
+          this.addRow(1);
           firstData = {
             id: item.id,
             item_description: item.item_description,
@@ -311,7 +311,7 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  clearPayorCtrl(){
+  clearPayorCtrl() {
     this.payorCtrl.reset()
   }
   icdData = [];
@@ -559,22 +559,25 @@ export class BilllableBillingComponent implements OnInit {
     });
   }
 
-  addRow() {
+  addRow(status?: number) {
     // if (this.getFormControls.controls && this.getFormControls.controls.length >= 12) {
     //   this.alertService.openSnackBar("Maximum 12", 'error');
     //   return
     // }
-    let newRowStatus = true
-    for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].status == 'INVALID') {
-        newRowStatus = false;
+    if (status != 1) {
+      let newRowStatus = true
+      for (var j in this.getFormControls.controls) {
+        if (this.getFormControls.controls[j].status == 'INVALID') {
+          newRowStatus = false;
+        }
+      }
+
+      if (!newRowStatus) {
+        this.alertService.openSnackBar("Please fill existing data", 'error');
+        return;
       }
     }
 
-    if (!newRowStatus) {
-      this.alertService.openSnackBar("Please fill existing data", 'error');
-      return;
-    }
 
     const control = this.userTable.get('tableRows') as FormArray;
     control.push(this.initiateForm());
@@ -706,12 +709,21 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   updatePayor(e) {
-    this.payorCtrl.patchValue(e.payor_id + ' - '+ e.payor_name)
+    this.payorCtrl.patchValue(e.payor_id + ' - ' + e.payor_name)
     this.billingService.updatePayor(this.billingId, e.id).subscribe(payor => {
       console.log(payor);
       this.alertService.openSnackBar("Payor changed successfully", "success");
     }, err => {
       this.alertService.openSnackBar(err.error.message, "error");
+    })
+  }
+
+  VMC1500Submit() {
+    this.billingService.generateCMS1500Form(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(cms => {
+      saveAs(cms.cms_1500_signed_file_url, cms.cms_1500_file_name, '_self');
+      this.alertService.openSnackBar("CMS1500 generated successfully", "success");
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
     })
   }
 }
