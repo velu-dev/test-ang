@@ -313,11 +313,53 @@
                                                         formControlName="procedure_code">
                                                 </mat-form-field>
                                             </td>
-                                            <td>
-                                                <mat-form-field appearance="outline" class="w-100">
+                                            <td class="bill-modifier">
+                                                
+                                                <!-- <mat-form-field appearance="outline" class="w-100">
                                                     <input matInput [dropSpecialCharacters]="false" type="text"
                                                         mask="9{8}" autocomplete="off" formControlName="modifier">
+                                                </mat-form-field> -->
+
+                                                <!-- <mat-form-field appearance="outline">
+                                                    <input matInput>
                                                 </mat-form-field>
+
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput>
+                                                </mat-form-field>
+
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput>
+                                                </mat-form-field> -->
+
+                                                <mat-form-field class="chip-list">
+                                                    <mat-chip-list #chipList aria-label="Modifier selection">
+                                                      <mat-chip
+                                                        *ngFor="let modifier of modifier_"
+                                                        [removable]="removable"
+                                                        (removed)="remove(modifier)">
+                                                        {{modifier}}
+                                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                      </mat-chip>
+                                                      <input
+                                                        #modifierInput
+                                                        [formControl]="modifierCtrl"
+                                                        [matAutocomplete]="auto"
+                                                        [matChipInputFor]="chipList"
+                                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                        [matChipInputAddOnBlur]="addOnBlur"
+                                                        (matChipInputTokenEnd)="add($event)">
+                                                    </mat-chip-list>
+                                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                                      <mat-option *ngFor="let modifier of filteredFruits | async" [value]="modifier">
+                                                        {{modifier}}
+                                                      </mat-option>
+                                                    </mat-autocomplete>
+                                                  </mat-form-field>
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
