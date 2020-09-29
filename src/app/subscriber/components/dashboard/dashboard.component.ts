@@ -10,6 +10,10 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 export class DashboardComponent implements OnInit {
   role: any;
   constructor(public router: Router, private logger: NGXLogger, private cookieService: CookieService) {
+   
+  }
+
+  ngOnInit() {
     this.role = this.cookieService.get('role_id')
     switch (this.role) {
       case '1':
@@ -28,9 +32,6 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(["/subscriber/examiner"]);
         break;
     }
-  }
-
-  ngOnInit() {
   }
   navigate(menu) {
     this.router.navigate([this.router.url + menu])
