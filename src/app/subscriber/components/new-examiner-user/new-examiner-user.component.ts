@@ -351,14 +351,14 @@ export class NewExaminerUserComponent implements OnInit {
     })
   }
 
-  locationDataSearch: any =[];
+  locationDataSearch: any = [];
   private _filterLocation(value: string): string[] {
     // if (typeof (value) == 'number') {
     //   return;
     // }
     const filterValue = value == undefined ? '' : value && value.toLowerCase();
     return this.locationDataSearch.filter(option => option.street1 && option.street1.toLowerCase().includes(filterValue) || option.street2 && option.street2.toLowerCase().includes(filterValue)
-      ||  option.city && option.city.toLowerCase().includes(filterValue) || option.state_name && option.state_name.toLowerCase().includes(filterValue) || option.zip_code && option.zip_code.includes(filterValue));
+      || option.city && option.city.toLowerCase().includes(filterValue) || option.state_name && option.state_name.toLowerCase().includes(filterValue) || option.zip_code && option.zip_code.includes(filterValue));
   }
 
 
@@ -494,6 +494,29 @@ export class NewExaminerUserComponent implements OnInit {
         this.userForm.controls.role_id.disable();
         this.userForm.controls.SameAsSubscriber.disable();
         this.userForm.get('sign_in_email_id').updateValueAndValidity();
+        let role = this.cookieService.get('role_id')
+        let baseUrl: any;
+        switch (role) {
+          case '1':
+            baseUrl = "/admin/users";
+            break;
+          case '2':
+            baseUrl = "/subscriber/users";
+            break;
+          case '3':
+            baseUrl = "/subscriber/manager/users";
+            break;
+          case '4':
+            baseUrl = "/subscriber/staff/users";
+            break;
+          case '11':
+            baseUrl = "/subscriber/examiner/users";
+            break;
+          default:
+            baseUrl = "/admin/users";
+            break;
+        }
+        this.router.navigate([baseUrl + "/examiner", this.examinerId])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })

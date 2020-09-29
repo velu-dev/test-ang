@@ -59,156 +59,168 @@ export class ExaminationCalanderViewComponent implements OnInit {
   events: EventInput[] = [
     {
       title: "Will Smith",
-      start: "2020-06-15T04:00:00.453Z",
-      end: "2020-06-15T04:30:00.453Z",
+      start: "2020-09-28T04:00:00.453Z",
+      end: "2020-09-28T04:30:00.453Z",
+      backgroundColor: "#FFC400"
+    },
+    {
+      title: "Will Smith",
+      start: "2020-09-28T04:00:00.453Z",
+      end: "2020-09-28T04:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Anthony Hopkins",
-      start: "2020-06-16T05:00:00.453Z",
-      end: "2020-06-16T06:30:00.453Z",
+      start: "2020-09-28T05:00:00.453Z",
+      end: "2020-09-28T09:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-06-18T07:00:00.453Z",
-      end: "2020-06-18T07:30:00.453Z",
+      start: "2020-09-28T07:00:00.453Z",
+      end: "2020-09-28T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-06-18T07:00:00.453Z",
-      end: "2020-06-18T07:30:00.453Z",
+      start: "2020-09-28T07:00:00.453Z",
+      end: "2020-09-28T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-06-18T07:00:00.453Z",
-      end: "2020-06-18T07:30:00.453Z",
+      start: "2020-09-28T07:00:00.453Z",
+      end: "2020-09-28T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-06-18T07:00:00.453Z",
-      end: "2020-06-18T07:30:00.453Z",
+      start: "2020-09-02T07:00:00.453Z",
+      end: "2020-09-02T07:30:00.453Z",
+      backgroundColor: "#72E396"
+    },
+    {
+      title: "Paul Newman",
+      start: "2020-09-03T07:00:00.453Z",
+      end: "2020-09-03T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Paul Newman",
-      start: "2020-06-18T07:00:00.453Z",
-      end: "2020-06-18T07:30:00.453Z",
-      backgroundColor: "#FFC400"
-    },
-    {
-      title: "Paul Newman",
-      start: "2020-06-18T07:00:00.453Z",
-      end: "2020-06-18T07:30:00.453Z",
+      start: "2020-09-04T07:00:00.453Z",
+      end: "2020-09-04T07:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Charles Chaplin",
-      start: "2020-06-20T08:00:00.453Z",
-      end: "2020-06-20T08:30:00.453Z",
+      start: "2020-09-30T08:00:00.453Z",
+      end: "2020-09-30T08:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Johnny Depp",
-      start: "2020-06-01T09:00:00.453Z",
-      end: "2020-06-01T09:30:00.453Z",
+      start: "2020-09-27T09:00:00.453Z",
+      end: "2020-09-27T09:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "James Cagney",
-      start: "2020-06-03T10:00:00.453Z",
-      end: "2020-06-03T10:30:00.453Z",
+      start: "2020-09-28T10:00:00.453Z",
+      end: "2020-09-28T10:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
       title: "Morgan Freeman",
-      start: "2020-06-04T05:00:00.453Z",
-      end: "2020-06-04T05:30:00.453Z",
+      start: "2020-09-29T05:00:00.453Z",
+      end: "2020-09-29T05:50:00.453Z",
+      backgroundColor: "#FFC400"
+    }, 
+    {
+      title: "Morgan George",
+      start: "2020-09-07T05:00:00.453Z",
+      end: "2020-09-08T05:50:00.453Z",
       backgroundColor: "#FFC400"
     }, {
       title: "Henry Fonda",
-      start: "2020-06-05T04:23:55.453Z",
+      start: "2020-09-05T30:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Bruce Lee",
-      start: "2020-06-05T05:23:55.453Z",
+      start: "2020-09-30T05:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Steve McQueen",
-      start: "2020-06-05T06:23:55.453Z",
+      start: "2020-09-29T09:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "James Stewart",
-      start: "2020-06-06T07:23:55.453Z",
+      start: "2020-09-29T07:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Laurence Olivier",
-      start: "2020-06-07T08:23:55.453Z",
+      start: "2020-09-29T08:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
       title: "Cary Grant",
-      start: "2020-06-08T09:23:55.453Z",
+      start: "2020-09-29T09:23:55.453Z",
       backgroundColor: "#72E396"
     },
     {
-      start: '2020-02-09',
-      end: '2020-02-09',
+      start: '2020-09-08',
+      end: '2020-09-08',
       rendering: 'background',
       overlap: false,
       color: '#f72222'
     },
     {
       title: "Spencer Tracy",
-      start: "2020-06-10T10:23:55.453Z",
+      start: "2020-09-26T10:23:55.453Z",
       backgroundColor: "#72E396"
     }, {
       title: "Shah Rukh Khan",
-      start: "2020-06-11T09:23:55.453Z",
+      start: "2020-09-21T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Leonardo DiCaprio",
-      start: "2020-06-12T09:23:55.453Z",
+      start: "2020-09-30T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Gregory Peck",
-      start: "2020-06-13T09:23:55.453Z",
+      start: "2020-09-29T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Sidney Poitier",
-      start: "2020-06-14T09:23:55.453Z",
+      start: "2020-09-28T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Daniel Day-Lewis",
-      start: "2020-06-15T09:23:55.453Z",
+      start: "2020-09-27T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
-      start: '2020-02-16',
-      end: '2020-02-16',
+      start: '2020-09-28',
+      end: '2020-09-28',
       rendering: 'background',
       overlap: false,
       color: '#f72222'
     },
     {
       title: "Humphrey Bogart",
-      start: "2020-06-16T09:23:55.453Z",
+      start: "2020-09-15T09:23:55.453Z",
       backgroundColor: "#FF3366"
     },
     {
       title: "Tom Hanks",
-      start: "2020-06-16T09:23:55.453Z",
+      start: "2020-09-16T09:23:55.453Z",
       backgroundColor: "#FF3366"
     }]
   calendarVisible = true;

@@ -25,9 +25,8 @@ export class ClaimService {
   searchEAMSAttorney(attorney): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.searchAttorney, attorney)
   }
-  searchEAMSAdmin(attorney): Observable<any> {
-    if (attorney.search != "")
-      return this.http.post(environment.baseUrl + api_endpoint.searchAttorney, attorney)
+  searchEAMSAdmin(admin): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.searchEamsAdmin, admin)
   }
   createClaim(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createClaim, data)
