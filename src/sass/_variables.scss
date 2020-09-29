@@ -1085,13 +1085,18 @@ input:-webkit-autofill {
     }
   }
   .no {
-    border-color: $danger;
     background-color: $white;
     color: $danger;
+    border-color: $danger;
     @extend .btn_;
     &:hover {
       background-color: $danger;
       color: $white;
+    }
+    &:focus,
+    &::-moz-focus-inner {
+      outline: none !important;
+      border: none !important;
     }
   }
 

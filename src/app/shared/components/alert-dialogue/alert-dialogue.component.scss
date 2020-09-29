@@ -12,6 +12,7 @@
       max-width: 50px;
       margin: 0px auto;
       padding-right: 10px;
+      height: 70px;
     }
   }
   .mat-card-description {
@@ -30,7 +31,10 @@
       &:hover {
         box-shadow: $box-shadow-1;
       }
-      &:focus,
+      &:focus {
+        outline: none !important;
+        border: none !important;
+      }
       &::-moz-focus-inner {
         outline: none !important;
         border: none !important;

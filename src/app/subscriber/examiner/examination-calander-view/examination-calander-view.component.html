@@ -10,6 +10,7 @@
     <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="dateChanged()"
         style="visibility: hidden;">
     <mat-datepicker #picker></mat-datepicker>
+    <mat-divider></mat-divider>
  <div style="height:100%">
     <full-calendar #calendar *ngIf="options" [eventLimit]="options.eventLimit" [themeSystem]="'standard'"
     [bootstrapFontAwesome]="true" [businessHours]="options.businessHours" [editable]="false" [events]="calendarEvents"
