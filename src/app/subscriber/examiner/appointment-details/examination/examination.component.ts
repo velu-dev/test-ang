@@ -65,9 +65,11 @@ export class ExaminationComponent implements OnInit {
   }
   isLoading: any = false;
   alldocuments = [];
+  billingData: any;
   getData() {
     this.isLoading = true;
     this.ondemandService.getBilling(this.claim_id, this.billableId).subscribe(res => {
+      this.billingData = res;
       this.examinationDocuments = new MatTableDataSource(res.documets);
       this.isLoading = false;
     }, error => {

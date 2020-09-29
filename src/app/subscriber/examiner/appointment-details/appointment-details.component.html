@@ -468,7 +468,7 @@
             <span class="note p-l-10">This would be a brief description on the benefits of these services</span></div>
     </div>
     <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100">
-        <div class="simple-card" [routerLink]="[status.url]">
+        <div class="simple-card" (click)="clickNav(status.url)">
             <i [class]="status.icon"></i>
             <div class="p-l-10 text-center">
                 <h4>{{status.name}}</h4>
@@ -477,31 +477,7 @@
             </div>
         </div>
     </div>
-    <!-- <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="simple-card" [routerLink]="['../../history']">
-            <h4>History</h4>
-            <span>Status</span>
-        </div>
-    </div>
-    <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="simple-card">
-            <h4>Records</h4>
-            <span>Status</span>
-        </div>
-    </div>
-    <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="simple-card">
-            <h4>Examination</h4>
-            <span>Status</span>
-        </div>
-    </div>
-    <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="simple-card">
-            <h4>Report</h4>
-            <span>Status</span>
-        </div>
-    </div> -->
-    <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100">
+    <!-- <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100">
         <div class="simple-card billing-status-active bg_light" (click)="billingNev()">
             <i class="fa fa-usd"></i>
             <div class="p-l-10 text-center">
@@ -510,7 +486,7 @@
                 <div *ngIf="!progressStatus?.billing"></div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 <div class="border-dashed-blue m-t-20" *ngIf="isDisplayStatus.status"></div>
