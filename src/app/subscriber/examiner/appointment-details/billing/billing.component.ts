@@ -6,13 +6,13 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { NGXLogger } from 'ngx-logger';
-import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 @Component({
   selector: 'app-billable-billing',
   templateUrl: './billing.component.html',
@@ -77,12 +77,11 @@ export class BilllableBillingComponent implements OnInit {
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
+  filteredmodifier: Observable<string[]>;
   modifier_: string[] = ['96'];
-  allFruits: string[] = ['93', '94', '95', '96'];
-
-  @ViewChild('fruitInput', {static: false}) fruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto', {static: false}) matAutocomplete: MatAutocomplete;
+  modiferList: string[] = ['93', '94', '95', '96'];
+  @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
+  //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
 
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
@@ -143,51 +142,74 @@ export class BilllableBillingComponent implements OnInit {
       }
     })
 
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+    this.filteredmodifier = this.fruitCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+      map((fruit: string | null) => fruit ? this._filter(fruit) : this.modiferList.slice()));
 
   }
 
-  add(event: MatChipInputEvent): void {
+  openAuto(e,trigger: MatAutocompleteTrigger) {
+    e.stopPropagation()
+    trigger.openPanel();
+  }
+
+  add(event: MatChipInputEvent, group: FormGroup): void {
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
-    if (!this.matAutocomplete.isOpen) {
-      const input = event.input;
-      const value = event.value;
+    return;
+    // if (!this.matAutocomplete.isOpen) {
+    //   const input = event.input;
+    //   const value = event.value;
 
-      // Add our fruit
-      if ((value || '').trim()) {
-        this.modifier_.push(value.trim());
-      }
+    //   if (group.value.modifierList.length > 4) {
+    //     this.alertService.openSnackBar("Maximum 4 value", "error");
+    //     return;
+    //   }
+    //   // Add our fruit
+    //   if ((value || '').trim()) {
+    //     let data = group.value.modifierList
+    //     data.push(value.trim())
+    //     group.get('modifierList').setValue(data);
+    //     group.get('modifierList').updateValueAndValidity();
+    //   }
 
-      // Reset the input value
-      if (input) {
-        input.value = '';
-      }
+    //   // Reset the input value
+    //   if (input) {
+    //     input.value = '';
+    //   }
 
-      this.fruitCtrl.setValue(null);
-    }
+    // }
   }
 
-  remove(fruit: string): void {
-    const index = this.modifier_.indexOf(fruit);
+  remove(val: string, group: FormGroup): void {
+    const index = group.value.modifierList.indexOf(val);
 
     if (index >= 0) {
-      this.modifier_.splice(index, 1);
+      group.get('modifierList').value.splice(index, 1);
     }
+    group.get('modifierList').updateValueAndValidity();
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.modifier_.push(event.option.viewValue);
-    //this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+  selected(event: MatAutocompleteSelectedEvent, group: FormGroup): void {
+    if (group.value.modifierList.length > 0 && group.value.modifierList.includes(event.option.viewValue)) {
+      this.alertService.openSnackBar("Already added", "error");
+      this.fruitCtrl.reset()
+      return;
+    }
+    if (group.value.modifierList.length > 3) {
+      this.fruitCtrl.reset()
+      this.alertService.openSnackBar("Maximum 4 value", "error");
+      return;
+    }
+    let modify = group.value.modifierList;
+    modify.push(event.option.viewValue)
+    group.get('modifierList').setValue(modify)
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.modiferList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
 
@@ -288,8 +310,11 @@ export class BilllableBillingComponent implements OnInit {
         billing.data.billing_line_items.map((item, index) => {
           let firstData = {};
           this.addRow(1);
+          let modifier = item.modifier ? item.modifier.split('-') : [];
+          billing.data.billing_line_items[index].modifierList = modifier;
           firstData = {
             id: item.id,
+            modifierList: modifier,
             item_description: item.item_description,
             procedure_code: item.procedure_code,
             modifier: item.modifier,
@@ -548,13 +573,13 @@ export class BilllableBillingComponent implements OnInit {
       id: [''],
       item_description: ['', Validators.required],
       procedure_code: ['', [Validators.required]],
-      //modifier: [''],
-      modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
+      modifierList: [[]],
+      modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
       units: ['', [Validators.required]],
       charge: ['', [Validators.required]],
-      payment: [''],
-      balance: [''],
-      total_charge: [''],
+      payment: [0],
+      balance: [0],
+      total_charge: [0],
       isEditable: [true]
     });
   }
@@ -614,11 +639,14 @@ export class BilllableBillingComponent implements OnInit {
     if (group.untouched) {
       return;
     }
+
+    let moidfier = group.value.modifierList.toString();
+    moidfier = moidfier ? moidfier.replaceAll(',', '-') : null
     let data = {
       id: group.value.id,
       item_description: group.value.item_description,
       procedure_code: group.value.procedure_code,
-      modifier: group.value.modifier,
+      modifier: moidfier,
       units: group.value.units,
       charge: group.value.charge,
       total_charge: this.calculateTotal()
@@ -659,17 +687,21 @@ export class BilllableBillingComponent implements OnInit {
       this.deleteRow(i, group);
       return
     }
+
     let data = {
       id: this.billingData.billing_line_items[i].id,
       item_description: this.billingData.billing_line_items[i].item_description,
       procedure_code: this.billingData.billing_line_items[i].procedure_code,
       modifier: this.billingData.billing_line_items[i].modifier,
+      modifierList: this.billingData.billing_line_items[i].modifierList,
       units: this.billingData.billing_line_items[i].units,
       charge: this.billingData.billing_line_items[i].charge,
       payment: 0,
-      balance: 1,
+      balance: 0,
       isEditable: [false]
     }
+    let modifier = data.modifier ? data.modifier.split('-') : [];
+    data.modifierList = modifier;
     group.patchValue(data);
     group.get('isEditable').setValue(false);
 
@@ -711,7 +743,6 @@ export class BilllableBillingComponent implements OnInit {
   updatePayor(e) {
     this.payorCtrl.patchValue(e.payor_id + ' - ' + e.payor_name)
     this.billingService.updatePayor(this.billingId, e.id).subscribe(payor => {
-      console.log(payor);
       this.alertService.openSnackBar("Payor changed successfully", "success");
     }, err => {
       this.alertService.openSnackBar(err.error.message, "error");

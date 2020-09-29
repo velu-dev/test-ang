@@ -337,25 +337,26 @@
                                                 </mat-form-field> -->
 
                                                 <mat-form-field class="chip-list">
-                                                    <mat-chip-list #chipList aria-label="Modifier selection">
+                                                    <mat-chip-list #chipList aria-label="Modifier selection"  formControlName="modifierList">
                                                       <mat-chip
-                                                        *ngFor="let modifier of modifier_"
+                                                        *ngFor="let modifier of group.value.modifierList"
                                                         [removable]="removable"
-                                                        (removed)="remove(modifier)">
+                                                        (removed)="remove(modifier,group)">
                                                         {{modifier}}
                                                         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                                                       </mat-chip>
                                                       <input
                                                         #modifierInput
                                                         formControlName="modifier"
-                                                        [matAutocomplete]="auto"
+                                                        [matAutocomplete]="auto1"
                                                         [matChipInputFor]="chipList"
                                                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                                         [matChipInputAddOnBlur]="addOnBlur"
-                                                        (matChipInputTokenEnd)="add($event)">
+                                                        #trigger="matAutocompleteTrigger"  
+                                                        (matChipInputTokenEnd)="add($event,group)" (click)="openAuto($event,trigger)">
                                                     </mat-chip-list>
-                                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                                                      <mat-option *ngFor="let modifier of filteredFruits | async" [value]="modifier">
+                                                    <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selected($event,group)">
+                                                      <mat-option *ngFor="let modifier of filteredmodifier | async" [value]="modifier">
                                                         {{modifier}}
                                                       </mat-option>
                                                     </mat-autocomplete>
@@ -406,7 +407,7 @@
                                                 {{group.get('procedure_code').value}}
                                             </td>
                                             <td>
-                                                {{group.get('modifier').value}}
+                                                {{group.get('modifierList').value}}
                                             </td>
                                             <td>
                                                 {{group.get('units').value}}
