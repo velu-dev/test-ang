@@ -11,7 +11,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from '../../service/claim.service';
 import { Observable } from 'rxjs';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
-import * as moment from 'moment';
+import * as moment from 'moment-timezone';
 import { NGXLogger } from 'ngx-logger';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -22,9 +22,9 @@ export interface PeriodicElement1 {
   date: string;
 }
 export const MY_CUSTOM_FORMATS = {
-  parseInput: 'MM-DD-YYYY hh:mm A Z',
-  fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
-  datePickerInput: 'MM-DD-YYYY hh:mm A Z',
+  parseInput: 'MM-DD-YYYY hh:mm A z',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A z',
+  datePickerInput: 'MM-DD-YYYY hh:mm A z',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
@@ -281,6 +281,16 @@ export class AppointmentDetailsComponent implements OnInit {
   claimant_name = "";
   examinationStatusForm: FormGroup;
   loadForms() {
+
+  }
+
+  changeDateType(date) {
+    if (date) {
+      let timezone = moment.tz.guess();
+      return moment(date).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+    } else {
+      return null
+    }
 
   }
   ngOnInit() {

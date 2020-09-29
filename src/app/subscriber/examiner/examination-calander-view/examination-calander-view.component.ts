@@ -34,9 +34,9 @@ export class ExaminationCalanderViewComponent implements OnInit {
       }
     },
     header: {
-      right: 'prev next today',
-      left: 'title',
-      center: 'myCustomButton dayGridMonth,timeGridWeek,timeGridDay'
+      center: '',
+      left: 'today prev next title',
+      right: 'myCustomButton dayGridMonth,timeGridWeek,timeGridDay'
     },
     eventLimit: true,
     views: {

@@ -180,7 +180,7 @@ export class BilllableBillingComponent implements OnInit {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.modifier_.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
+    //this.fruitInput.nativeElement.value = '';
     this.fruitCtrl.setValue(null);
   }
 
