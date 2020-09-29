@@ -291,8 +291,8 @@ export class AppointmentDetailsComponent implements OnInit {
     } else {
       return null
     }
-
   }
+
   ngOnInit() {
     this.billable_item = this.formBuilder.group({
       id: [{ value: '', disable: true }],

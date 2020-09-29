@@ -140,7 +140,7 @@
               </div>
 
               <span class="custom-list" *ngIf="element.type == 'custom'">
-                <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
+                <a class="text-success" *ngIf="!correspondData.is_exam_type_changed" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
                 <a class="text-danger m-l-10" *ngIf="!correspondData.is_exam_type_changed"
                   (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
               </span>

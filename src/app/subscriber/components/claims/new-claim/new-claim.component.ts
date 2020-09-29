@@ -1320,6 +1320,14 @@ export class NewClaimComponent implements OnInit {
     }
     return errorCount;
   }
+  changeDateType(date) {
+    if (date) {
+      let timezone = moment.tz.guess();
+      return moment(date).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+    } else {
+      return null
+    }
+  }
   procedure_type(procuderalCode) {
   }
   selectedFile: File;
