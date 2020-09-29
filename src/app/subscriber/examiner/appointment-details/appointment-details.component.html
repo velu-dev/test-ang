@@ -673,7 +673,7 @@
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Intake Call Date & Time</mat-label>
-                            <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
+                            <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [value]="changeDateType(billable_item?.value?.intake_call?.call_date)" formControlName="call_date"
                                 autocomplete="off" [min]="minDate" [max]="todayDate.intake" [owlDateTime]="intake">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="intake"
                                 [disabled]="!isEditBillableItem">
