@@ -1,6 +1,6 @@
 <mat-card class="m-card appointments">
     <mat-card-header class="p-b-3">
-        <div fxLayout="row wrap" fxFlex="100">
+        <!-- <div fxLayout="row wrap" fxFlex="100">
             <div fxFlex="50">
                 <div class="m-0 content-wrapper-main-title p-t-3">Examinations</div>
             </div>
@@ -15,11 +15,11 @@
 
 
             </div>
-        </div>
+        </div> -->
 
     </mat-card-header>
     <mat-divider></mat-divider>
-    <div *ngIf="!isCalenderVIew">
+    <!-- <div *ngIf="!isCalenderVIew">
 
         <mat-card-content class="p-t-3  m-b-0">
             <div class="table-filter">
@@ -27,10 +27,6 @@
                     placeholder="Search by name, claim number, examiner, etc.">
                 <mat-icon>search</mat-icon>
             </div>
-            <!-- <span class="spacer"></span>
-            <button mat-icon-button class="filter-icon" (click)="exportData()">
-                <img class="icon-16" [src]="xls" alt="export" />
-            </button> -->
         </mat-card-content>
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
@@ -52,31 +48,6 @@
 
                         <span *ngIf="columnName[i] == 'Examiner'">{{element?.examiner_first_name}}
                             {{element?.examiner_middle_name}} {{element?.examiner_last_name}}</span>
-                        <!-- <span *ngIf="i == (columnsToDisplay.length-1)">
-                            <span class="user-disable-enable" *ngIf="tabIndex != 1"> <button mat-icon-button
-                                    [matMenuTriggerFor]="review_doc">
-                                    <mat-icon>more_vert</mat-icon>
-                                </button>
-                                <mat-menu #review_doc="matMenu">
-                                    <button mat-menu-item>
-                                        <span>Cover Letter
-                                        </span>
-                                    </button>
-                                    <button mat-menu-item>
-                                        <span>History
-                                        </span>
-                                    </button>
-                                    <button mat-menu-item>
-                                        <span>Record Summary
-                                        </span>
-                                    </button>
-
-                                    <button mat-menu-item>
-                                        <span>Report Template</span>
-                                    </button>
-                                </mat-menu>
-                            </span>
-                        </span> -->
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
@@ -108,9 +79,9 @@
             <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
         </div>
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
-    </div>
+    </div> -->
 
-    <div flLayout="row wrap" class="fc_calender" *ngIf="isCalenderVIew">
+    <div flLayout="row wrap" class="fc_calender">
         <div fxFlex="100">
             <div>
                 <div class="exa_status">
