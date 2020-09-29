@@ -652,7 +652,7 @@
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
-                                formControlName="appointment_scheduled_date_time" autocomplete="off"
+                                formControlName="appointment_scheduled_date_time" [value]="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)" autocomplete="off"
                                 [owlDateTime]="appointment">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"
                                 [disabled]="!isEditBillableItem">
