@@ -64,7 +64,7 @@ export class ExaminationComponent implements OnInit {
     })
   }
   isLoading: any = false;
-  alldocuments = [];
+  alldocuments:any;
   billingData: any;
   getData() {
     this.isLoading = true;
