@@ -72,8 +72,9 @@
             class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Upload the scanned copies of the documents used in the examination. Use the upload function
         to add the documents to this list.</p>
-      <div fxLayout="row wrap" class="w-100" *ngIf="!billingData.is_exam_type_changed">
-        <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100" *ngIf="!alldocuments.is_exam_type_changed">
+      <div fxLayout="row wrap" class="w-100" *ngIf="!billingData?.is_exam_type_changed">
+        <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100"
+          *ngIf="!alldocuments?.is_exam_type_changed">
           <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
           <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput readonly value="{{file | ellipsis:30}}" placeholder="No file chosen">
@@ -86,7 +87,7 @@
             </mat-hint>
           </mat-form-field>
         </div>
-        <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100" *ngIf="!alldocuments.is_exam_type_changed">
+        <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100" *ngIf="!alldocuments?.is_exam_type_changed">
           <button mat-raised-button type="submit" class="filled-gray m-t-15" (click)="uploadFile()">Add</button>
         </div>
       </div>
@@ -111,7 +112,8 @@
                 <span *ngIf="column == 'updatedAt'" class="no-wrap-td">{{element?.updatedAt | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'action'" class="text-center">
                   <a class="text-success" (click)="downloadDocument(element)">Download</a>
-                  <a *ngIf="!billingData.is_exam_type_changed" class="text-danger p-l-20" (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
+                  <a *ngIf="!billingData?.is_exam_type_changed" class="text-danger p-l-20"
+                    (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
                 </span>
               </div>
             </td>
@@ -125,7 +127,7 @@
                     </span></div>
                   <div class="text-center"><span>Action</span><span>
                       <a class="text-success" (click)="downloadDocument(element)">Download</a>
-                      <a *ngIf="!alldocuments.is_exam_type_changed" class="text-danger p-l-20"
+                      <a *ngIf="!alldocuments?.is_exam_type_changed" class="text-danger p-l-20"
                         (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
                     </span></div>
                 </div>

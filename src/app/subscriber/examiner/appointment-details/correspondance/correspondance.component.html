@@ -130,18 +130,18 @@
           <ng-container matColumnDef="recipient_type">
             <th mat-header-cell *matHeaderCellDef>
               <button mat-stroked-button class="outline-success white-btn float-right m-t-5  m-b-5"
-                (click)="openCustomRecipient()" *ngIf="!correspondData.is_exam_type_changed">
+                (click)="openCustomRecipient()" *ngIf="!correspondData?.is_exam_type_changed">
                 <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
               </button></th>
             <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
               <div class="info-alert" (click)="$event.stopPropagation();openAddAddress(element)"
                 *ngIf="element?.message">
-                <span *ngIf="!correspondData.is_exam_type_changed"><i class="fas fa-info-circle"></i>Address incomplete</span>
+                <span *ngIf="!correspondData?.is_exam_type_changed"><i class="fas fa-info-circle"></i>Address incomplete</span>
               </div>
 
               <span class="custom-list" *ngIf="element.type == 'custom'">
-                <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
-                <a class="text-danger m-l-10" *ngIf="!correspondData.is_exam_type_changed"
+                <a class="text-success" *ngIf="!correspondData?.is_exam_type_changed" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
+                <a class="text-danger m-l-10" *ngIf="!correspondData?.is_exam_type_changed"
                   (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
               </span>
             </td>
@@ -166,7 +166,7 @@
 
   <div fxLayout="row wrap" class="action-btns">
     <div fxFlex="33.3" fxFlex.sm="33,3" fxFlex.xs="100">
-      <button [disabled]="correspondData.is_exam_type_changed" mat-stroked-button class="outline-success huge-btn"
+      <button [disabled]="correspondData?.is_exam_type_changed" mat-stroked-button class="outline-success huge-btn"
         (click)="onDemandSubmit()">
         Mail On Demand
       </button>

@@ -71,8 +71,12 @@ export class NewBillableItemComponent implements OnInit {
         this.claimantId = param.claimant_id;
       this.claimService.getClaim(this.claimId).subscribe(claim => {
         this.logger.log("claim", claim);
-        this.claimantId = claim.data.claim_details.claimant_id;
+        this.claimantId = claim.data.claim_details.id;
         //to send claim details exam type
+        this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
+          this.claimant = claimant.data[0]
+          this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
+        })
         this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(res => {
           this.procuderalCodes = res.data;
         })
@@ -83,11 +87,6 @@ export class NewBillableItemComponent implements OnInit {
           }
         })
         this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number, exam_type_code: Examtype.exam_type_code, exam_name: Examtype.exam_name }
-        this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
-          this.claimant = claimant.data[0]
-          this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
-
-        })
       })
       if (param.billable) {
         this.isEdit = true
@@ -183,6 +182,14 @@ export class NewBillableItemComponent implements OnInit {
       this.examinarList = res.data;
     })
 
+  }
+  changeDateType(date) {
+    if (date) {
+      let timezone = moment.tz.guess();
+      return moment(date).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+    } else {
+      return null
+    }
   }
   procedure_type(procuderalCode) {
     if (procuderalCode.modifier)
