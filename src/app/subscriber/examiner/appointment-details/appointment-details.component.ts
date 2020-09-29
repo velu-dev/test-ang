@@ -213,7 +213,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
           this.logger.log(response.data)
           if (response.data.appointments.examiner_id) {
-            this.procedureTypeStatus[1].url = "../../history/" + response.data.appointments.examiner_id;
+            this.procedureTypeStatus[1].url = "/history/" + response.data.appointments.examiner_id;
           }
 
           this.progressStatus = response.data.progress_status
