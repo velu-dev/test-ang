@@ -75,6 +75,7 @@ export const api_endpoint = {
     // callerAffliation: "claims/seed-data/agent_type",
     searchClaimant: "claimant/search",
     searchAttorney: "billing/eams-representatives-search",
+    searchEamsAdmin: "billing/eams-administrator-search",
     getClaims: "claim",
     getClaim: "claim",
     searchEams: "claim/eams-wcab-search/",

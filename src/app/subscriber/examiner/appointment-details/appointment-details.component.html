@@ -468,7 +468,8 @@
             <span class="note p-l-10">This would be a brief description on the benefits of these services</span></div>
     </div>
     <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100">
-        <div class="simple-card" (click)="clickNav(status.url)">
+        <div class="simple-card" [ngClass]="{'billing-status-active bg_light': status.name === 'Billing'}"
+            (click)="clickNav(status.url)">
             <i [class]="status.icon"></i>
             <div class="p-l-10 text-center">
                 <h4>{{status.name}}</h4>
@@ -628,8 +629,9 @@
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
-                                formControlName="appointment_scheduled_date_time" [value]="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)" autocomplete="off"
-                                [owlDateTime]="appointment">
+                                formControlName="appointment_scheduled_date_time"
+                                [value]="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)"
+                                autocomplete="off" [owlDateTime]="appointment">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"
                                 [disabled]="!isEditBillableItem">
                             </mat-datepicker-toggle>

@@ -28,6 +28,7 @@ import { EventEmitter } from 'protractor';
 import * as moment from 'moment';
 import { NGXLogger } from 'ngx-logger';
 import { saveAs } from 'file-saver';
+import { DayTable } from '@fullcalendar/core';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
@@ -158,7 +159,7 @@ export class NewClaimComponent implements OnInit {
   duration = [{ id: 20, value: "20" }, { id: 30, value: "30" }, { id: 45, value: "45" }, { id: 60, value: "60" }]
   ALL_SEED_DATA = ["address_type", "body_part",
     "contact_type", "agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
-    "user_account_status", "user_roles", "procedural_codes", "eams_representatives", "eams_claims_administrator"];
+    "user_account_status", "user_roles", "procedural_codes"];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
   addNewClaimant: boolean;
@@ -209,6 +210,9 @@ export class NewClaimComponent implements OnInit {
   eamsRepresentatives = [];
   eamsClaimsAdministrator = [];
   claimantInfo: any;
+  aattroneyGroupOptions: any;
+  dattroneyGroupOptions: any;
+  claimAdminGroupOptions: any = [];
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -334,10 +338,17 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
-    })
-    // this.aattroneyGroupOptions = this.claimService.seedData("eams_claims_administrator");
-    // this.dattroneyGroupOptions = this.claimService.seedData("eams_claims_administrator");
-    // this.claimAdminGroupOptions = this.claimService.seedData("eams_claims_administrator");
+    });
+    this.claimService.searchEAMSAdmin({ search: "" }).subscribe(res => {
+      this.eamsClaimsAdministrator = res['data'];
+      this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
+      this.claimAdminGroupOptions = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
+    });
+    this.claimService.searchEAMSAttorney({ search: "" }).subscribe(res => {
+      this.eamsRepresentatives = res.data;
+      this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+      this.aattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+    });
     this.ALL_SEED_DATA.map(seed => {
       this.claimService.seedData(seed).subscribe(res => {
         switch (seed) {
@@ -350,29 +361,29 @@ export class NewClaimComponent implements OnInit {
           case "body_part":
             this.bodyPartsList = res.data;
             break;
-          case "eams_claims_administrator":
-            this.eamsClaimsAdministrator = res.data;
-            this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
-            this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
-              .pipe(
-                startWith(''),
-                map(value => this._filterAttroney(value, this.claimAdminList))
-              );
-            break;
-          case "eams_representatives":
-            this.eamsRepresentatives = res.data;
-            this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
-            this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
-              .pipe(
-                startWith(''),
-                map(value => this._filterAttroney(value, this.attroneylist))
-              );
-            this.dattroneyGroupOptions = this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges
-              .pipe(
-                startWith(''),
-                map(value => this._filterAttroney(value, this.attroneylist))
-              );
-            break;
+          // case "eams_claims_administrator":
+          //   this.eamsClaimsAdministrator = res.data;
+          //   this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
+          //   this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
+          //     .pipe(
+          //       startWith(''),
+          //       map(value => this._filterAttroney(value, this.claimAdminList))
+          //     );
+          //   break;
+          // case "eams_representatives":
+          //   this.eamsRepresentatives = res.data;
+          //   this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
+          //   this.dattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
+          //     .pipe(
+          //       startWith(''),
+          //       map(value => this._filterAttroney(value, this.attroneylist))
+          //     );
+          //   this.dattroneyGroupOptions = this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges
+          //     .pipe(
+          //       startWith(''),
+          //       map(value => this._filterAttroney(value, this.attroneylist))
+          //     );
+          //   break;
           case "exam_type":
             this.examTypes = res.data;
             break;
@@ -644,19 +655,56 @@ export class NewClaimComponent implements OnInit {
         this.claimChanges = true;
       }
     );
+    this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges.subscribe(input => {
+      if (input.length >= 3 || input.length == 0) {
+        this.claimService.searchEAMSAdmin({ search: input }).subscribe(res => {
+          let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+          this.claimAdminGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+        })
+      }
+    });
+    this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges.subscribe(input => {
+      if (input.length >= 3 || input.length == 0) {
+        this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
+          let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+          this.aattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+        })
+      }
+    });
+    this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges.subscribe(input => {
+      if (input.length >= 3 || input.length == 0) {
+        this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
+          let ind = this.dattroneyGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+          this.dattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+        })
+      }
+    })
   }
-  aattroneyGroupOptions: Observable<any[]>;
-  dattroneyGroupOptions: Observable<any[]>;
-  claimAdminGroupOptions: Observable<any[]>;
-  private _filterAttroney(value: string, data) {
-    if (value) {
-      return data
-        .map(group => ({ name: group.name, data: _filter(group.data, value) }))
-        .filter(group => group.data.length > 0);
-    }
-
-    return data;
-  }
+  // private _filterAttroney(value: string, data) {
+  //   console.log(value)
+  //   if (value.length >= 3) {
+  //     this.claimService.searchEAMSAttorney({ search: value }).subscribe(res => {
+  //       // if (value) {
+  //       //   return data
+  //       //     .map(group => ({ name: group.name, data: _filter(group.data, value) }))
+  //       //     .filter(group => group.data.length > 0);
+  //       // }
+  //       return [{ name: "EAMS ADJ Addresses", data: [] }, { name: "Simplexam Addresses", data: res.data }];
+  //     });
+  //   }
+  // }
+  // private _filterClaimAdmin(value: string, data) {
+  //   // if (value) {
+  //   //   return data
+  //   //     .map(group => ({ name: group.name, data: _filter(group.data, value) }))
+  //   //     .filter(group => group.data.length > 0);
+  //   // }
+  //   if (value.length >= 3) {
+  //     this.claimService.searchEAMSAdmin({ search: value }).subscribe(res => {
+  //       return [{ name: "EAMS ADJ Addresses", data: [] }, { name: "Simplexam Addresses", data: res.data }];
+  //     });
+  //   }
+  // }
   newClaimant() {
     Object.keys(this.claimant.controls).forEach(key => {
       this.claimant.controls[key].setErrors(null)
@@ -1205,31 +1253,34 @@ export class NewClaimComponent implements OnInit {
           //   claim_admin.push(res)
           // })
           this.claimAdminList = [{ name: "EAMS ADJ Addresses", data: res.data.claims_administrator }, { name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
-          this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges
-            .pipe(
-              startWith(''),
-              map(value => this._filterAttroney(value, this.claimAdminList))
-            );
+          this.claimAdminGroupOptions = this.claimAdminList;
+          // this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges.pipe(
+          //   startWith(''),
+          //   map(value => this._filterClaimAdmin(value, this.claimAdminList))
+          // );
+
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
             console.log("attrony")
             // this.attroneylist = res.data.attroney;
-            let attroney = [];
+            // let attroney = [];
             // res.data.attroney.map(res => {
             //   res.name = res.company_name;
             //   attroney.push(res)
             // })
             this.attroneylist = [{ name: "EAMS ADJ Addresses", data: res.data.attroney }, { name: "Simplexam Addresses", data: this.eamsRepresentatives }];
-            this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
-              .pipe(
-                startWith(''),
-                map(value => this._filterAttroney(value, this.attroneylist))
-              );
-            this.dattroneyGroupOptions = this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges
-              .pipe(
-                startWith(''),
-                map(value => this._filterAttroney(value, this.attroneylist))
-              );
+            this.aattroneyGroupOptions = this.attroneylist;
+            this.dattroneyGroupOptions = this.attroneylist;
+            // this.aattroneyGroupOptions = this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges
+            //   .pipe(
+            //     startWith(''),
+            //     map(value => this._filterAttroney(value, this.attroneylist))
+            //   );
+            // this.dattroneyGroupOptions = this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges
+            //   .pipe(
+            //     startWith(''),
+            //     map(value => this._filterAttroney(value, this.attroneylist))
+            //   );
           }
           this.iseams_entry = true;
         } else {
