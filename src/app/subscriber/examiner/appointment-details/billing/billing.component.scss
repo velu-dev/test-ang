@@ -72,6 +72,12 @@
                 }
             }
         }
+        mat-card-content {
+            .vertical-fixed {
+                min-height: 197px !important;
+                max-height: 197px !important;
+            }
+        }
     }
     .post-payment {
         button {
