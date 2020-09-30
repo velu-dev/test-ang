@@ -2,19 +2,23 @@
     <mat-form-field>
         <mat-label>Select Examiner</mat-label>
         <mat-select>
-            <mat-option *ngFor="let examinar of examinars" [value]="examinar.id">
+            <mat-option (click)="selectExaminer()" value="All">
+                All
+            </mat-option>
+            <mat-option *ngFor="let examinar of examinars" (click)="selectExaminer(examinar)" [value]="examinar.id">
                 {{examinar.first_name + examinar.last_name}}
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="dateChanged()"
+    <input matInput [owlDateTime]="intake" [(ngModel)]="selectedDate" (dateChange)="dateChanged()"
         style="visibility: hidden;">
-    <mat-datepicker #picker></mat-datepicker>
- <div style="height:100%">
-    <full-calendar #calendar *ngIf="options" [eventLimit]="options.eventLimit" [themeSystem]="'standard'"
-    [bootstrapFontAwesome]="true" [businessHours]="options.businessHours" [editable]="false" [events]="calendarEvents"
-    [header]="options.header" [height]="options.height" [customButtons]="options.customButtons" [plugins]="options.plugins"
-    (eventClick)="handleEventClick($event)">
-</full-calendar>
- </div>
+    <owl-date-time [hour12Timer]="true"  [pickerMode]="'dialog'" [pickerType]="'calendar'" (afterPickerClosed)="dateChanged()" #intake>
+    </owl-date-time>
+    <div style="height:100%">
+        <full-calendar #calendar *ngIf="options" [eventLimit]="options.eventLimit" [themeSystem]="'standard'"
+            [bootstrapFontAwesome]="true" [businessHours]="options.businessHours" [editable]="false"
+            [events]="calendarEvents" [header]="options.header" [height]="options.height"
+            [customButtons]="options.customButtons" [plugins]="options.plugins" (eventClick)="handleEventClick($event)">
+        </full-calendar>
+    </div>
 </div>
