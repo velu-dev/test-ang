@@ -47,12 +47,10 @@ export class BilllableBillingComponent implements OnInit {
   columnsToDisplay2 = [];
   expandedElement2;
   columnName2 = [];
-  isMobile2 = false;
-  dataSource3 = new MatTableDataSource([]);
-  columnsToDisplay3 = [];
+  dataSourceDocList = new MatTableDataSource([]);
+  columnsToDisplayDoc = [];
   expandedElement3;
-  columnName3 = [];
-  isMobile3 = false;
+  columnsNameDoc = [];
   filterValue: string;
   file: any;
   documentType: any;
@@ -115,15 +113,6 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName = ["Code", "Name", "Action"]
         this.columnsToDisplay = ['code', 'name', 'action']
       }
-      this.isMobile1 = res;
-      if (res) {
-        this.columnName1 = ["", "Item", "Action"]
-        this.columnsToDisplay1 = ['is_expand', 'code', "action"]
-      } else {
-        this.columnName1 = ["Item", "Procedure Code", "Modifier", "Units", "Charge", "Payment", "Balance", "Action"]
-        this.columnsToDisplay1 = ['item_description', 'procedure_code', 'modifier', 'units', 'charge', 'payment', 'balance', 'action']
-      }
-      this.isMobile2 = res;
       if (res) {
         this.columnName2 = ["", "File Name", "Action"]
         this.columnsToDisplay2 = ['is_expand', 'file_name', "action"]
@@ -132,13 +121,12 @@ export class BilllableBillingComponent implements OnInit {
         this.columnsToDisplay2 = ['doc_image', 'file_name', 'document_type', 'updatedAt', "action"]
       }
 
-      this.isMobile3 = res;
       if (res) {
-        this.columnName3 = ["", "File Name", "Action"]
-        this.columnsToDisplay3 = ['is_expand', 'file_name', "action"]
+        this.columnsNameDoc = ["", "File Name"]
+        this.columnsToDisplayDoc = ['is_expand', 'file_name']
       } else {
-        this.columnName3 = ["", "File Name", "Action", "Date Submitted", "Date Received", "Recipients", "Download"]
-        this.columnsToDisplay3 = ['doc_image', 'file_name', 'action', 'date_submitted', 'date_received', "recipients", "download"]
+        this.columnsNameDoc = ["", "File Name", "Action", "Date", "Recipients", "Download Send Documents", "Download Proof of Service"]
+        this.columnsToDisplayDoc = ['doc_image', 'file_name', 'action', "date", "recipients", 'download', 'download1']
       }
     })
 
@@ -305,7 +293,7 @@ export class BilllableBillingComponent implements OnInit {
       if (billing.data.payor_id) {
         this.payorCtrl.patchValue(billing.data.payor_id + ' - ' + billing.data.payor_name)
       }
-
+      this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
       if (billing.data && billing.data.billing_line_items) {
         billing.data.billing_line_items.map((item, index) => {
           let firstData = {};
@@ -409,19 +397,19 @@ export class BilllableBillingComponent implements OnInit {
   icdExpandID: any;
   expandId1: any;
   expandId2: any;
-  expandId3: any;
+  expandIdDoc: any;
   openElement(element) {
     if (this.isMobile) {
       this.icdExpandID = element.id;
     }
-    if (this.isMobile1) {
-      this.expandId1 = element.id;
-    }
-    if (this.isMobile2) {
+    if (this.isMobile) {
       this.expandId2 = element.id;
     }
-    if (this.isMobile3) {
-      this.expandId3 = element.id;
+  }
+
+  openElementDoc(element) {
+    if (this.isMobile) {
+      this.expandIdDoc = element.id;
     }
   }
   applyFilter(filterValue: string) {
@@ -756,6 +744,23 @@ export class BilllableBillingComponent implements OnInit {
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error");
     })
+  }
+
+  downloadAll(){
+    if(this.billingData.documets_sent_and_received.length == 0){
+      this.alertService.openSnackBar("Document not found", "error");
+      return;
+    }
+    this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(doc => {
+      saveAs(doc.data.file_url, doc.data.file_name, '_self');
+      this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
+    })
+  }
+
+  inOutdownload(data) {
+    saveAs(data.file_url, data.file_name, '_self');
   }
 }
 const ELEMENT_DATA1 = [

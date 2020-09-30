@@ -11,6 +11,7 @@ import { ExaminerService } from '../../service/examiner.service';
 import { formatDate } from '@angular/common';
 import { OWL_DATE_TIME_FORMATS, DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as moment from 'moment';
 @Component({
   selector: 'app-examination-calander-view',
   templateUrl: './examination-calander-view.component.html',
@@ -30,7 +31,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     customButtons: {
       myCustomButton: {
         text: "Select Date",
-        click: () => this.picker.open()
+        click: () => this.intake.open()
       }
     },
     header: {
@@ -54,7 +55,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
 
   }
   @ViewChild("calendar", { static: false }) calendar: FullCalendarComponent;
-  @ViewChild("picker", { static: false }) picker;
+  @ViewChild("intake", { static: false }) intake;
   // calendarComponent: FullCalendarComponent;
   events: EventInput[] = [
     {
@@ -134,7 +135,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
       start: "2020-09-29T05:00:00.453Z",
       end: "2020-09-29T05:50:00.453Z",
       backgroundColor: "#FFC400"
-    }, 
+    },
     {
       title: "Morgan George",
       start: "2020-09-07T05:00:00.453Z",
@@ -231,6 +232,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   examinars = [];
   constructor(public dialog: MatDialog, public examinarService: ExaminerService) {
     this.examinarService.getExaminerList().subscribe(res => {
+      console.log("examinars", res.data)
       this.examinars = res.data;
     })
   }
@@ -251,7 +253,13 @@ export class ExaminationCalanderViewComponent implements OnInit {
     // });
     this.calendarEvents = this.events;
   }
-
+  selectExaminer(examiner?) {
+    if (examiner) {
+      console.log(examiner);
+    } else {
+      console.log("All")
+    }
+  }
   handleEventClick(e) {
     this.openEventDetailDialog(e);
   }
@@ -259,7 +267,8 @@ export class ExaminationCalanderViewComponent implements OnInit {
     // this.openAddEventDialog(e);
   }
   dateChanged() {
-    this.calendar.getApi().gotoDate(this.selectedDate)
+    console.log("fdfdsffs", new Date(this.selectedDate))
+    this.calendar.getApi().gotoDate(new Date(this.selectedDate))
     this.calendar.getApi().changeView("timeGridDay")
   }
 
