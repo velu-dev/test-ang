@@ -475,6 +475,13 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     color: $primarycolor !important;
   }
 }
+.fc-toolbar.fc-header-toolbar {
+  h2 {
+    float: right;
+    padding-top: 5px;
+    font-size: $font-size-10;
+  }
+}
 .fc-head {
   background-color: #f5f6fa;
   tr {
