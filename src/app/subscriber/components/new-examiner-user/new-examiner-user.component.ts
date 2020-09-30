@@ -951,7 +951,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   editAddress(data) {
-    this.router.navigate([this.router.url + '/edit-location', data.id, 2, this.examinerId])
+    this.router.navigate([this.router.url + '/edit-location', data.id, 2])
   }
 
   billingOrgChange(e) {

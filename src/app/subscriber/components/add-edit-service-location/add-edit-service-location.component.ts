@@ -22,6 +22,7 @@ export class AddEditServiceLocationComponent implements OnInit {
   displayedColumns: string[] = ['examiner', 'date_added'];
   dataSource: any;
   editStatus: boolean = true;
+  locatStatus: boolean = false;
   locationId: number = null;
   examinerId: number;
   user: any;
@@ -39,17 +40,19 @@ export class AddEditServiceLocationComponent implements OnInit {
     this.route.params.subscribe(params_res => {
       // this.locationForm.enable();
       // this.editStatus = true;
-      this.pageStatus = params_res.status;
-      this.examinerId = params_res.examiner;
       console.log(params_res)
-      if (params_res.id) {
+      this.pageStatus = params_res.status;
+      this.examinerId = params_res.id;
+      if (params_res.location_id) {
+        this.locatStatus = true;
         this.editStatus = false;
-        this.locationId = params_res.id;
+        this.locationId = params_res.location_id;
         this.getLocation();
       }
-      this.subscriberService.getExaminer(this.examinerId).subscribe(res => {
-        this.examinerName = res.examiner_details.last_name + ' ' + res.examiner_details.first_name + (res.examiner_details.suffix ? ', ' + res.examiner_details.suffix : '')
-      })
+      if (this.examinerId)
+        this.subscriberService.getExaminer(this.examinerId).subscribe(res => {
+          this.examinerName = res.examiner_details.last_name + ' ' + res.examiner_details.first_name + (res.examiner_details.suffix ? ', ' + res.examiner_details.suffix : '')
+        })
     })
   }
   examinerName: string;

@@ -1,16 +1,21 @@
 <div class="billing">
     <!-- ===== Bill Status ==== -->
     <div fxLayout="row wrap" class="p-t-20">
-        <div fxFlex="80" fxFlex.sm="100" fxFlex.xs="100">
-            <div class="main-title p-l-0">Bill Status</div>
-            <p class="description p-l-0">View the Bill’s progress here, from beginning to end.</p>
-            <mat-progress-bar mode="determinate" value="50" class="not-sent p-l-0 m-b-20">
-            </mat-progress-bar>
-            <div class="text-center">Not Sent</div>
+        <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="bill-status">
+            <div class="progress">
+                <div class="main-title p-l-0">Bill Status</div>
+                <p class="description p-l-0">View the Bill’s progress here, from beginning to end.</p>
+                <mat-progress-bar mode="determinate" value="50" class="not-sent p-l-0 m-b-20">
+                </mat-progress-bar>
+            </div>
+            <div class="review-status">
+                <div>Independent Bill Review</div>
+            </div>
+            <!-- <div class="text-center">Not Sent</div> -->
         </div>
-        <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100" class="review-status">
+        <!-- <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100" class="review-status">
             <div>First Bill Review</div>
-        </div>
+        </div> -->
     </div>
     <div fxLayout="row wrap" class="p-t-20">
         <div fxFlex="50">
@@ -315,7 +320,7 @@
                                                 </mat-form-field>
                                             </td>
                                             <td class="bill-modifier">
-                                                
+
                                                 <!-- <mat-form-field appearance="outline" class="w-100">
                                                     <input matInput [dropSpecialCharacters]="false" type="text"
                                                         mask="9{8}" autocomplete="off" formControlName="modifier">
@@ -338,30 +343,29 @@
                                                 </mat-form-field> -->
 
                                                 <mat-form-field class="chip-list">
-                                                    <mat-chip-list #chipList aria-label="Modifier selection"  formControlName="modifierList">
-                                                      <mat-chip
-                                                        *ngFor="let modifier of group.value.modifierList"
-                                                        [removable]="removable"
-                                                        (removed)="remove(modifier,group)">
-                                                        {{modifier}}
-                                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                                                      </mat-chip>
-                                                      <input
-                                                        #modifierInput
-                                                        formControlName="modifier"
-                                                        [matAutocomplete]="auto1"
-                                                        [matChipInputFor]="chipList"
-                                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                                        [matChipInputAddOnBlur]="addOnBlur"
-                                                        #trigger="matAutocompleteTrigger"  
-                                                        (matChipInputTokenEnd)="add($event,group)" (click)="openAuto($event,trigger)">
+                                                    <mat-chip-list #chipList aria-label="Modifier selection"
+                                                        formControlName="modifierList">
+                                                        <mat-chip *ngFor="let modifier of group.value.modifierList"
+                                                            [removable]="removable" (removed)="remove(modifier,group)">
+                                                            {{modifier}}
+                                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                        </mat-chip>
+                                                        <input #modifierInput formControlName="modifier"
+                                                            [matAutocomplete]="auto1" [matChipInputFor]="chipList"
+                                                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                            [matChipInputAddOnBlur]="addOnBlur"
+                                                            #trigger="matAutocompleteTrigger"
+                                                            (matChipInputTokenEnd)="add($event,group)"
+                                                            (click)="openAuto($event,trigger)">
                                                     </mat-chip-list>
-                                                    <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selected($event,group)">
-                                                      <mat-option *ngFor="let modifier of filteredmodifier | async" [value]="modifier">
-                                                        {{modifier}}
-                                                      </mat-option>
+                                                    <mat-autocomplete #auto1="matAutocomplete"
+                                                        (optionSelected)="selected($event,group)">
+                                                        <mat-option *ngFor="let modifier of filteredmodifier | async"
+                                                            [value]="modifier">
+                                                            {{modifier}}
+                                                        </mat-option>
                                                     </mat-autocomplete>
-                                                  </mat-form-field>
+                                                </mat-form-field>
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
@@ -605,7 +609,8 @@
                 Demand</button>
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center">
-            <button mat-stroked-button class="filled-lightgray huge-btn m-b-5" (click)="VMC1500Submit()">View CMS 1500</button>
+            <button mat-stroked-button class="filled-lightgray huge-btn m-b-5" (click)="VMC1500Submit()">View CMS
+                1500</button>
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-right">
             <button mat-stroked-button class="outline-warning huge-btn m-b-5" (click)="downloadAll()">Download All</button>

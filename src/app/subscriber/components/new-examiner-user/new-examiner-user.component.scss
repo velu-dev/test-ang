@@ -45,7 +45,7 @@ mat-card {
     border-radius: 5px;
   }
   mat-form-field {
-    padding: 10px 10px 0px 10px !important;
+    padding: 10px 10px 0px 10px ;
   }
   mat-card-content {
     form {
@@ -149,7 +149,9 @@ mat-card {
     font-weight: $font-weight-base !important;
   }
 }
-
+.county {
+  padding-top: 0px !important;
+}
 .address-list {
   mat-list-item {
     background-color: $light-color;
