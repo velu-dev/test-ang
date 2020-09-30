@@ -4,6 +4,7 @@
             {{locationId ? 'Service Location' : 'Add New Service Location'}}</div>
         <div class="m-0 content-wrapper-main-title" *ngIf="examinerId">Service Location for {{examinerName}}</div>
         <span class="spacer"></span>
+        
         <button mat-stroked-button *ngIf="!editStatus && locationId" class="m-b-5 outline-success" (click)="edit()">
             Edit
         </button>
@@ -27,20 +28,21 @@
                 <div fxFlex="100">
                     <div fxLayout="row wrap">
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                        fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Location Name</mat-label>
-                        <input matInput placeholder="Location Name" formControlName="service_location_name"
-                            autocomplete="off">
-                        <mat-error *ngIf="locationSubmit">Please enter valid location name</mat-error>
-                    </mat-form-field>
+                            fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>Location Name</mat-label>
+                            <input matInput placeholder="Location Name" formControlName="service_location_name"
+                                autocomplete="off">
+                            <mat-error *ngIf="locationSubmit">Please enter valid location name</mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field *ngIf="this.pageStatus == 2" appearance="outline" fxFlex="100" fxFlex.lg="50"
-                        fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>National Provider Identifier (NPI) Number</mat-label>
-                        <input matInput placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
-                            [dropSpecialCharacters]="false" mask="9{15}" formControlName="national_provider_identifier">
-                        <mat-error *ngIf="locationSubmit">Please enter valid NPI number</mat-error>
-                    </mat-form-field>
+                        <mat-form-field *ngIf="this.pageStatus == 2" appearance="outline" fxFlex="100" fxFlex.lg="50"
+                            fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-label>National Provider Identifier (NPI) Number</mat-label>
+                            <input matInput placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
+                                [dropSpecialCharacters]="false" mask="9{15}"
+                                formControlName="national_provider_identifier">
+                            <mat-error *ngIf="locationSubmit">Please enter valid NPI number</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
 

@@ -288,7 +288,7 @@ const routes: Routes = [{
       component: NewExaminerUserComponent,
       data: { breadcrumb: "Examiner" }
     }, {
-      path: "edit-location/:id/:status/:examiner",
+      path: "edit-location/:location_id/:status",
       component: AddEditServiceLocationComponent,
       data: { breadcrumb: "Edit" }
     },
@@ -305,7 +305,11 @@ const routes: Routes = [{
       component: NewExaminerUserComponent,
       data: { breadcrumb: "Examiner" }
     }, {
-      path: "edit-location/:id/:status/:examiner",
+      path: "edit-location/:location_id/:status",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Edit" }
+    }, {
+      path: "edit-location/:id/:status/:location_id",
       component: AddEditServiceLocationComponent,
       data: { breadcrumb: "Edit" }
     },
@@ -493,17 +497,17 @@ const routes: Routes = [{
     data: { breadcrumb: "New" }
   },
   {
-    path: "add-location/:status/:examiner",
+    path: "add-location/:status/:id",
     component: AddEditServiceLocationComponent,
     data: { breadcrumb: "New" }
   },
   {
-    path: "edit-location/:id",
+    path: "edit-location/:location_id",
     component: AddEditServiceLocationComponent,
     data: { breadcrumb: "Service Location" }
   },
   {
-    path: "edit-location/:id/:status/:examiner",
+    path: "edit-location/:location_id/:status/:id",
     component: AddEditServiceLocationComponent,
     data: { breadcrumb: "Service Location" }
   }]
@@ -922,7 +926,7 @@ const routes: Routes = [{
         data: { breadcrumb: "New" }
       },
       {
-        path: "edit-location/:id",
+        path: "edit-location/:location_id",
         component: AddEditServiceLocationComponent,
         data: { breadcrumb: "Service Location" }
       }]
@@ -1225,7 +1229,7 @@ const routes: Routes = [{
           component: NewExaminerUserComponent,
           data: { breadcrumb: "Examiner" }
         }, {
-          path: "edit-location/:id/:status/:examiner",
+          path: "edit-location/:location_id/:status",
           component: AddEditServiceLocationComponent,
           data: { breadcrumb: "Edit" }
         },
@@ -1401,7 +1405,7 @@ const routes: Routes = [{
         data: { breadcrumb: "New" }
       },
       {
-        path: "edit-location/:id",
+        path: "edit-location/:location_id",
         component: AddEditServiceLocationComponent,
         data: { breadcrumb: "Service Location" }
       }]
@@ -1803,17 +1807,17 @@ const routes: Routes = [{
       data: { breadcrumb: "New" }
     },
     {
-      path: "add-location/:status/:examiner",
+      path: "add-location/:status/:id",
       component: AddEditServiceLocationComponent,
       data: { breadcrumb: "New" }
     },
     {
-      path: "edit-location/:id",
+      path: "edit-location/:location_id",
       component: AddEditServiceLocationComponent,
       data: { breadcrumb: "Service Location" }
     },
     {
-      path: "edit-location/:id/:status/:examiner",
+      path: "edit-location/:location_id/:status/:id",
       component: AddEditServiceLocationComponent,
       data: { breadcrumb: "Service Location" }
     }]

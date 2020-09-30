@@ -67,13 +67,16 @@ export class NewBillableItemComponent implements OnInit {
     })
     this.route.params.subscribe(param => {
       this.claimId = param.claim_id;
+      console.log(param)
       if (param.claimant_id)
         this.claimantId = param.claimant_id;
       this.claimService.getClaim(this.claimId).subscribe(claim => {
         this.logger.log("claim", claim);
-        this.claimantId = claim.data.claim_details.id;
+        this.claimantId = claim.data.claimant_details.id;
+        console.log(this.claimantId)
         //to send claim details exam type
         this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
+          console.log(claimant)
           this.claimant = claimant.data[0]
           this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
         })
