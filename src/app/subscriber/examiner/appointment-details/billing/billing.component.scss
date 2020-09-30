@@ -19,18 +19,32 @@
 }
 
 .billing {
-    .review-status {
-        display: table;
-        div {
-            width: 90px;
-            height: 90px;
-            margin: 0px auto;
-            text-align: center;
-            padding: 45px 25px 0 25px;
-            border: 1px solid $light-gray;
-            border-radius: 50%;
-            font-weight: $font-weight-bold;
-            color: $text-gray;
+    .bill-status {
+        .progress {
+            width: calc(100% - 165px);
+            padding-right: 20px;
+            float: left;
+            @media only screen and (max-width: 568px) {
+               width: 100%;
+            }
+        }
+        .review-status {
+            display: table;
+            @media only screen and (max-width: 568px) {
+               text-align: center;
+               margin: 0px auto;
+             }
+            div {
+                width: 90px;
+                height: 90px;
+                margin: 0px auto;
+                text-align: center;
+                padding: 45px 25px 0 25px;
+                border: 1px solid $light-gray;
+                border-radius: 50%;
+                font-weight: $font-weight-bold;
+                color: $text-gray;
+            }
         }
     }
     .bill-id {
