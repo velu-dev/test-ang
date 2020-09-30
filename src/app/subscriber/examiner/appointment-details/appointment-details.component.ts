@@ -13,10 +13,11 @@ import { Observable } from 'rxjs';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment-timezone';
 import { NGXLogger } from 'ngx-logger';
-import { BreadcrumbService } from 'xng-breadcrumb';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { IntercomService } from 'src/app/services/intercom.service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -136,10 +137,13 @@ export class AppointmentDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private logger: NGXLogger,
-    private breadcrumbService: BreadcrumbService,
     private breakpointObserver: BreakpointObserver,
     private router: Router,
+    private intercom: IntercomService,
+    private cookieService: CookieService
   ) {
+    this.intercom.setBillableItem("Billable Item");
+    this.cookieService.set('billableItem', null)
     this.loadForms();
     this.claimService.seedData("intake_contact_type").subscribe(res => {
       this.contactTypes = res.data;
@@ -188,6 +192,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
+       
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -211,6 +216,8 @@ export class AppointmentDetailsComponent implements OnInit {
         this.billable_item.patchValue(bills.data);
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+          this.intercom.setBillableItem(response.data.exam_procedure_name);
+          this.cookieService.set('billableItem', response.data.exam_procedure_name)
           this.logger.log(response.data)
           if (response.data.appointments.examiner_id) {
             this.procedureTypeStatus[1].url = "/history/" + response.data.appointments.examiner_id;

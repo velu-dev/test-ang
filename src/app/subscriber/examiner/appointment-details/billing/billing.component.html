@@ -287,6 +287,7 @@
                                     <th>Item </th>
                                     <th>Procedure Code</th>
                                     <th>Modifier</th>
+                                    <th>Unit Type</th>
                                     <th>Units</th>
                                     <th>Charge</th>
                                     <th>Payment</th>
@@ -364,6 +365,15 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
+                                                        <mat-select formControlName="unitType">
+                                                            <mat-option *ngFor="let state of [{name:'UN - Units'},{name:'MN - Minutes'},{name:'P - Pages'}]" [value]="state.name">
+                                                                {{state.name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field appearance="outline" class="w-100">
                                                     <input matInput type="number" autocomplete="off"
                                                         formControlName="units">
                                                 </mat-form-field>
@@ -408,6 +418,9 @@
                                             </td>
                                             <td>
                                                 {{group.get('modifierList').value}}
+                                            </td>
+                                            <td>
+                                                {{group.get('unitType').value}}
                                             </td>
                                             <td>
                                                 {{group.get('units').value}}

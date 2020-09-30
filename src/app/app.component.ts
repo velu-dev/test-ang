@@ -37,33 +37,50 @@ export class AppComponent {
       }
     })
 
+    this.intercom.getBillableItem().subscribe(bill => {
+      if (!bill) {
+        this.breadcrumbService.set("@Billable Item", "Billable Item")
+      } else {
+        this.breadcrumbService.set("@Billable Item", bill)
+      }
+    })
+
     //this.menu$ = store.pipe(select('breadcrumb'));
     //this.breadcrumbService.set("subscriber/appointment/appointment-details/:claim_id/:bill_id", "sarath22")
 
   }
   ngOnInit() {
-   // this.listenRouting();
+    // this.listenRouting();
     // ROUTES.map(menu => {
     //   let menuData = {};
     //   menuData = menu
     //   menuData['children'] = menu.submenu;
     //   this.menu.push(menuData)
     // })
+    // this.breadcrumbService.set("@Billable Item", "Sarath")
+    let claimant = this.cookieService.get('claimDeatis');
 
-   let claimant =  this.cookieService.get('claimDeatis');
-  
-   if(claimant && claimant != 'null'){
-    this.breadcrumbService.set("@Claimant", claimant)
-   }
+    if (claimant && claimant != 'null') {
+      this.breadcrumbService.set("@Claimant", claimant)
+    }
 
-   let claimNumber =  this.cookieService.get('claimNumber');
-   console.log(claimNumber)
-   if(claimNumber && claimNumber != 'null'){
-    this.breadcrumbService.set("@Claim", claimNumber)
-   }else{
-    this.breadcrumbService.set("@Claim", 'Claim')
-   }
+    let claimNumber = this.cookieService.get('claimNumber');
+    console.log(claimNumber)
+    if (claimNumber && claimNumber != 'null') {
+      this.breadcrumbService.set("@Claim", claimNumber)
+    } else {
+      this.breadcrumbService.set("@Claim", 'Claim')
+    }
+
+    let bill = this.cookieService.get('billableItem');
+    if (!bill) {
+      this.breadcrumbService.set("@Billable Item", "Billable Item")
+    } else {
+      this.breadcrumbService.set("@Billable Item", bill)
+    }
+
   }
+
   onActivate(event) {
     window.scroll(0, 0);
   }

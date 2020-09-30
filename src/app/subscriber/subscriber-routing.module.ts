@@ -111,7 +111,7 @@ const routes: Routes = [{
               children: [{
                 path: "",
                 component: AppointmentDetailsComponent,
-                data: { breadcrumb: "Billable Item" },
+                data: { breadcrumb: { alias: '@Billable Item' } },
               }, {
                 path: "correspondence",
                 component: BillingCorrespondanceComponent,
@@ -187,7 +187,7 @@ const routes: Routes = [{
         children: [{
           path: "",
           component: AppointmentDetailsComponent,
-          data: { breadcrumb: "Billable Item" },
+          data: { breadcrumb: { alias: '@Billable Item' } },
         }, {
           path: "correspondence",
           component: BillingCorrespondanceComponent,
@@ -234,7 +234,7 @@ const routes: Routes = [{
   {
     path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
     component: NewBillableItemComponent,
-    data: { breadcrumb: "Billable Item" },
+    data: { breadcrumb: "Edit Billable Item" },
   }
   ]
 }, {
@@ -399,7 +399,7 @@ const routes: Routes = [{
           children: [{
             path: "",
             component: AppointmentDetailsComponent,
-            data: { breadcrumb: "Billable Item" },
+            data: { breadcrumb: { alias: '@Billable Item' } },
           }, {
             path: "correspondence",
             component: BillingCorrespondanceComponent,
@@ -619,7 +619,7 @@ const routes: Routes = [{
                   children: [{
                     path: "",
                     component: AppointmentDetailsComponent,
-                    data: { breadcrumb: "Billable Item" },
+                    data: { breadcrumb: { alias: '@Billable Item' } },
                   }, {
                     path: "correspondence",
                     component: BillingCorrespondanceComponent,
@@ -695,7 +695,7 @@ const routes: Routes = [{
             children: [{
               path: "",
               component: AppointmentDetailsComponent,
-              data: { breadcrumb: "Billable Item" },
+              data: { breadcrumb: { alias: '@Billable Item' } },
             }, {
               path: "correspondence",
               component: BillingCorrespondanceComponent,
@@ -742,7 +742,7 @@ const routes: Routes = [{
       {
         path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
         component: NewBillableItemComponent,
-        data: { breadcrumb: "Billable Item" },
+        data: { breadcrumb: "Edit Billable Item" },
       }
       ]
     }, {
@@ -841,7 +841,7 @@ const routes: Routes = [{
               children: [{
                 path: "",
                 component: AppointmentDetailsComponent,
-                data: { breadcrumb: "Billable Item" },
+                data: { breadcrumb: { alias: '@Billable Item' } },
               }, {
                 path: "correspondence",
                 component: BillingCorrespondanceComponent,
@@ -1043,7 +1043,7 @@ const routes: Routes = [{
                   children: [{
                     path: "",
                     component: AppointmentDetailsComponent,
-                    data: { breadcrumb: "Billable Item" },
+                    data: { breadcrumb: { alias: '@Billable Item' } },
                   }, {
                     path: "correspondence",
                     component: BillingCorrespondanceComponent,
@@ -1119,7 +1119,7 @@ const routes: Routes = [{
             children: [{
               path: "",
               component: AppointmentDetailsComponent,
-              data: { breadcrumb: "Billable Item" },
+              data: { breadcrumb: { alias: '@Billable Item' } },
             }, {
               path: "correspondence",
               component: BillingCorrespondanceComponent,
@@ -1167,7 +1167,7 @@ const routes: Routes = [{
       {
         path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
         component: NewBillableItemComponent,
-        data: { breadcrumb: "Billable Item" },
+        data: { breadcrumb: "Edit Billable Item" },
       }
       ]
     },
@@ -1319,7 +1319,7 @@ const routes: Routes = [{
               children: [{
                 path: "",
                 component: AppointmentDetailsComponent,
-                data: { breadcrumb: "Billable Item" },
+                data: { breadcrumb: { alias: '@Billable Item' } },
               }, {
                 path: "correspondence",
                 component: BillingCorrespondanceComponent,
@@ -1484,7 +1484,7 @@ const routes: Routes = [{
                 children: [{
                   path: "",
                   component: AppointmentDetailsComponent,
-                  data: { breadcrumb: "Billable Item" },
+                  data: { breadcrumb: { alias: '@Billable Item' } },
                 }, {
                   path: "correspondence",
                   component: BillingCorrespondanceComponent,
@@ -1565,7 +1565,7 @@ const routes: Routes = [{
           children: [{
             path: "",
             component: AppointmentDetailsComponent,
-            data: { breadcrumb: "Billable Item" },
+            data: { breadcrumb: { alias: '@Billable Item' } },
           }, {
             path: "correspondence",
             component: BillingCorrespondanceComponent,
@@ -1623,7 +1623,7 @@ const routes: Routes = [{
     {
       path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
       component: NewBillableItemComponent,
-      data: { breadcrumb: "Billable Item" },
+      data: { breadcrumb: "Edit Billable Item" },
     }
     ]
   },
@@ -1710,7 +1710,7 @@ const routes: Routes = [{
             children: [{
               path: "",
               component: AppointmentDetailsComponent,
-              data: { breadcrumb: "Billable Item" },
+              data: { breadcrumb: { alias: '@Billable Item' } },
             }, {
               path: "correspondence",
               component: BillingCorrespondanceComponent,
