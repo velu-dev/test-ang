@@ -626,7 +626,7 @@
                             </mat-select>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
+                        <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100" *ngIf="!isSuplimental">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
                                 formControlName="appointment_scheduled_date_time"
@@ -640,7 +640,7 @@
                             <mat-error>Please enter valid date & time</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100">
+                        <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100" *ngIf="!isSuplimental">
                             <mat-label>Duration</mat-label>
                             <input matInput placeholder="Minutes" maxlength="3" formControlName="duration"
                                 autocomplete="off">
@@ -648,7 +648,7 @@
                             <mat-error>Please enter valid duration</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
                             <mat-label>Location</mat-label>
                             <mat-select [disabled]="!isEditBillableItem" formControlName="examiner_service_location_id">
                                 <mat-option *ngFor="let address of examinarAddress"

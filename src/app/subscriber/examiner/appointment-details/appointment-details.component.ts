@@ -192,7 +192,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
-       
+
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -324,6 +324,9 @@ export class AppointmentDetailsComponent implements OnInit {
         call_type: [{ value: '', disable: true }],
         call_type_detail: [{ value: '', disable: true }],
         notes: [{ value: '', disable: true }],
+        caller_phone: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+        caller_email: [{ value: '', disable: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        caller_fax: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])]
       })
     })
     this.notesForm = this.formBuilder.group({
@@ -718,13 +721,14 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
-
+  isSuplimental = false;
   procedure_type(procuderalCode) {
     if (procuderalCode.modifier)
       this.modifiers = procuderalCode.modifier;
     this.billable_item.patchValue({
       exam_type: { modifier_id: [] }
     })
+    this.isSuplimental = procuderalCode.exam_procedure_type.includes("SUPP");
   }
 
   docChange(e) {

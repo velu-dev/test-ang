@@ -632,7 +632,10 @@ export class NewClaimComponent implements OnInit {
         call_date: [null],
         call_type: [null],
         call_type_detail: [null],
-        notes: [null]
+        notes: [null],
+        caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       })
 
     })
