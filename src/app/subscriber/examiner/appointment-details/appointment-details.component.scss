@@ -424,6 +424,13 @@
         box-shadow: $shadow-style-one-hover;
     }
 }
+.activity-log {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+}
 
 .grid-list {
     div {
