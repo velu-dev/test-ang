@@ -88,19 +88,19 @@
                 <mat-error>Please enter valid phone number</mat-error>
             </mat-form-field>
 
-
-            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="Email" formControlName="email" autocomplete="off">
-                <mat-error>Please enter valid email</mat-error>
-            </mat-form-field>
-
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Fax</mat-label>
                 <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000"
                     formControlName="fax" autocomplete="off">
                 <mat-error>Please enter valid fax number</mat-error>
             </mat-form-field>
+            
+            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email" formControlName="email" autocomplete="off">
+                <mat-error>Please enter valid email</mat-error>
+            </mat-form-field>
+
             <div *ngIf="daEdit" class="text-center w-100 m-t-10">
 
                 <button mat-stroked-button type="button" (click)="cancel();daEdit = false"
