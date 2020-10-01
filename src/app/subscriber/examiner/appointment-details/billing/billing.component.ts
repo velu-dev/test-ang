@@ -659,7 +659,7 @@ export class BilllableBillingComponent implements OnInit {
     }
 
     let moidfier = group.value.modifierList.toString();
-    moidfier = moidfier ? moidfier.replaceAll(',', '-') : null
+    moidfier = moidfier ? moidfier.replaceAll(',', '-') : null;
     let data = {
       id: group.value.id,
       item_description: group.value.item_description,
@@ -699,11 +699,12 @@ export class BilllableBillingComponent implements OnInit {
 
   getUnitCode(code){
     if(code){
-      this.unitTypes.map(c=>{
-        if(c.unit_type == code){
-          return c.unit_short_code;
+      for(var c in  this.unitTypes){
+        if(this.unitTypes[c].unit_type == code){
+          console.log(this.unitTypes[c].unit_short_code,"code")
+          return this.unitTypes[c].unit_short_code;
         }
-      })
+      }
     }else{
       return null;
     }
