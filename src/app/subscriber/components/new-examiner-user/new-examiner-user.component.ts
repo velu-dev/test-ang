@@ -318,6 +318,7 @@ export class NewExaminerUserComponent implements OnInit {
         middle_name: res.rendering_provider.middle_name,
         rendering_provider_name: res.rendering_provider.rendering_provider_name,
         suffix: res.rendering_provider.suffix,
+        county :  res.rendering_provider.county
         //signature: res.rendering_provider.signature
       }
 
@@ -432,6 +433,7 @@ export class NewExaminerUserComponent implements OnInit {
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       rendering_provider_name: [null, Validators.compose([Validators.maxLength(100)])],
+      county:[null]
     })
   }
 
