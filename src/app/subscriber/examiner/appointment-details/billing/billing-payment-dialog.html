@@ -31,7 +31,7 @@
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Effective Date</mat-label>
                         <input matInput placeholder="MM-DD-YYYY" formControlName="effective_date" autocomplete="off"
-                            [max]="today" [matDatepicker]="date_of_birth1">
+                             [matDatepicker]="date_of_birth1">
                         <mat-datepicker-toggle matSuffix [for]="date_of_birth1"></mat-datepicker-toggle>
                         <mat-datepicker #date_of_birth1></mat-datepicker>
                     </mat-form-field>
@@ -59,7 +59,7 @@
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Deposited Date</mat-label>
                         <input matInput placeholder="MM-DD-YYYY" formControlName="deposit_date" autocomplete="off"
-                            [max]="today" [matDatepicker]="date_of_birth2">
+                             [matDatepicker]="date_of_birth2">
                         <mat-datepicker-toggle matSuffix [for]="date_of_birth2"></mat-datepicker-toggle>
                         <mat-datepicker #date_of_birth2></mat-datepicker>
                         <mat-error>error message here</mat-error>
