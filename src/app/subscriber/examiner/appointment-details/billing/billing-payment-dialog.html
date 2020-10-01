@@ -9,138 +9,158 @@
         <mat-card-content>
             <div fxLayout="row wrap" class="scroll_">
                 <div class="sub-title" fxFlex="100">Payment Information</div>
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Payment Amount</mat-label>
-                    <input matInput placeholder="Payment Amount" autocomplete="off">
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
+                <form fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                    [formGroup]="postPaymentForm">
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Payment Amount</mat-label>
+                        <input matInput type="number" placeholder="Payment Amount" (change)="setTwoNumberDecimal($event)" formControlName="payment_amount"
+                            autocomplete="off">
+                        <mat-error>error message here</mat-error>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Reference Number</mat-label>
-                    <input matInput placeholder="Reference Number" autocomplete="off">
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Reference Number</mat-label>
+                        <input matInput placeholder="Reference Number" formControlName="reference_no"
+                            autocomplete="off">
+                        <mat-error>error message here</mat-error>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Effective Date</mat-label>
-                    <input matInput type="date" placeholder="Effective Date" autocomplete="off">
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Effective Date</mat-label>
+                        <input matInput placeholder="MM-DD-YYYY" formControlName="effective_date" autocomplete="off"
+                            [max]="today" [matDatepicker]="date_of_birth1">
+                        <mat-datepicker-toggle matSuffix [for]="date_of_birth1"></mat-datepicker-toggle>
+                        <mat-datepicker #date_of_birth1></mat-datepicker>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Payment Method</mat-label>
-                    <mat-select>
-                        <mat-option>
-                            Option here
-                        </mat-option>
-                    </mat-select>
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
-                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <div fxLayout="row wrap" class="p-t-20">
-                        <mat-label fxFlex="50"> Deposited</mat-label>
-                        <mat-radio-group aria-label="Select an option" fxFlex="50">
-                            <mat-radio-button value="1">Yes</mat-radio-button>
-                            <mat-radio-button value="2" class="p-l-20">No</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Deposited Date</mat-label>
-                    <input matInput type="date" placeholder="Deposited Date" autocomplete="off">
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Payer Claim Control Number</mat-label>
-                    <input matInput placeholder="Payer Claim Control Number" autocomplete="off">
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
-                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"></div>
-
-                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <div fxLayout="row wrap" class="p-t-20">
-                        <mat-label fxFlex="50"> Penalty</mat-label>
-                        <mat-radio-group aria-label="Select an option" fxFlex="50">
-                            <mat-radio-button value="1">Yes</mat-radio-button>
-                            <mat-radio-button value="2" class="p-l-20">No</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Penalty Amount</mat-label>
-                    <input matInput placeholder="Penalty Amount" autocomplete="off">
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
-
-                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <div fxLayout="row wrap" class="p-t-20">
-                        <mat-label fxFlex="50"> Interest Paid</mat-label>
-                        <mat-radio-group aria-label="Select an option" fxFlex="50">
-                            <mat-radio-button value="1">Yes</mat-radio-button>
-                            <mat-radio-button value="2" class="p-l-20">No</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Interest Paid</mat-label>
-                    <input matInput placeholder="Interest Amount" autocomplete="off">
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
-
-                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <div fxLayout="row wrap" class="p-t-20">
-                        <mat-label fxFlex="50">Close Bill</mat-label>
-                        <mat-radio-group aria-label="Select an option" fxFlex="50">
-                            <mat-radio-button value="1">Yes</mat-radio-button>
-                            <mat-radio-button value="2" class="p-l-20">No</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Write Off Reason</mat-label>
-                    <input matInput placeholder="Write Off Reason" autocomplete="off">
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                    fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>EOR Allowance</mat-label>
-                    <input matInput placeholder="EOR Allowance" autocomplete="off">
-                    <mat-error>error message here</mat-error>
-                </mat-form-field>
-                <div fxFlex="100">
-                    <div fxLayout="row wrap">
-                        <div class="sub-tile" fxFlex="100">Upload Paper EOR</div>
-                        <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100">
-                            <button mat-raised-button class="filled-gray">Select File</button>
-                            <mat-form-field appearance="standard" class="m-l-10">
-                                <input matInput value="{{file | ellipsis:30}}" readonly placeholder="EOR Paper thing that was scanned">
-                                <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                                    accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
-                                <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
-                            </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Payment Method</mat-label>
+                        <mat-select formControlName="payment_method">
+                            <mat-option *ngFor="let payment of paymentTypes" [value]="payment">
+                                {{payment}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>error message here</mat-error>
+                    </mat-form-field>
+                    <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <div fxLayout="row wrap" class="p-t-20">
+                            <mat-label fxFlex="50"> Deposited</mat-label>
+                            <mat-radio-group aria-label="Select an option" fxFlex="50"  (change)="!postPaymentForm.value?.is_deposited ? postPaymentForm.get('deposit_date').disable() : postPaymentForm.get('deposit_date').enable();postPaymentForm.get('deposit_date').reset()"  formControlName="is_deposited">
+                                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                                <mat-radio-button [value]="false" class="p-l-20">No</mat-radio-button>
+                            </mat-radio-group>
                         </div>
                     </div>
-                </div>
-                <div fxFlex="100" class="m-t-20 text-center">
-                    <button mat-stroked-button type="button" (click)="onNoClick()" class="outline-danger">Cancel</button>
-                    <button mat-stroked-button type="button"  class="outline-success text-center m-l-10">Save</button>
-                </div>
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Deposited Date</mat-label>
+                        <input matInput placeholder="MM-DD-YYYY" formControlName="deposit_date" autocomplete="off"
+                            [max]="today" [matDatepicker]="date_of_birth2">
+                        <mat-datepicker-toggle matSuffix [for]="date_of_birth2"></mat-datepicker-toggle>
+                        <mat-datepicker #date_of_birth2></mat-datepicker>
+                        <mat-error>error message here</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Payer Claim Control Number</mat-label>
+                        <input matInput placeholder="Payer Claim Control Number"
+                            formControlName="payor_control_claim_no" autocomplete="off">
+                        <mat-error>error message here</mat-error>
+                    </mat-form-field>
+                    <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"></div>
+
+                    <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <div fxLayout="row wrap" class="p-t-20">
+                            <mat-label fxFlex="50">Penalty</mat-label>
+                            <mat-radio-group aria-label="Select an option" (change)="!postPaymentForm.value?.is_penalty ? postPaymentForm.get('penalty_amount').disable() : postPaymentForm.get('penalty_amount').enable();postPaymentForm.get('penalty_amount').reset();" formControlName="is_penalty" fxFlex="50">
+                                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                                <mat-radio-button [value]="false" class="p-l-20">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Penalty Amount</mat-label>
+                        <input matInput type="number" (change)="setTwoNumberDecimal($event)" placeholder="Penalty Amount" formControlName="penalty_amount"
+                            autocomplete="off">
+                        <mat-error>error message here</mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <div fxLayout="row wrap" class="p-t-20">
+                            <mat-label fxFlex="50"> Interest Paid</mat-label>
+                            <mat-radio-group aria-label="Select an option"
+                                (change)="!postPaymentForm.value?.is_interest_paid ? postPaymentForm.get('interest_paid').disable() : postPaymentForm.get('interest_paid').enable();postPaymentForm.get('interest_paid').reset()"
+                                formControlName="is_interest_paid" fxFlex="50">
+                                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                                <mat-radio-button [value]="false" class="p-l-20">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Interest Paid</mat-label>
+                        <input matInput type="number" (change)="setTwoNumberDecimal($event)" placeholder="Interest Amount"
+                            formControlName="interest_paid" autocomplete="off">
+                        <mat-error>error message here</mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                        <div fxLayout="row wrap" class="p-t-20">
+                            <mat-label fxFlex="50">Close Bill</mat-label>
+                            <mat-radio-group aria-label="Select an option" formControlName="is_bill_closed" fxFlex="50">
+                                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                                <mat-radio-button [value]="false" class="p-l-20">No</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                    </div>
+
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>Write Off Reason</mat-label>
+                        <input matInput placeholder="Write Off Reason" formControlName="write_off_reason"
+                            autocomplete="off">
+                        <mat-error>error message here</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
+                        fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-label>EOR Allowance</mat-label>
+                        <input matInput placeholder="EOR Allowance" formControlName="eor_allowance" autocomplete="off">
+                        <mat-error>error message here</mat-error>
+                    </mat-form-field>
+                    <div fxFlex="100">
+                        <div fxLayout="row wrap">
+                            <div class="sub-tile" fxFlex="100">Upload Paper EOR</div>
+                            <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100">
+                                <button mat-raised-button (click)="uploader.click()" class="filled-gray">Select
+                                    File</button>
+                                <mat-form-field appearance="standard" class="m-l-10">
+                                    <input matInput value="{{file | ellipsis:30}}" readonly
+                                        placeholder="EOR Paper thing that was scanned">
+                                    <input type="file" #uploader hidden (change)="addFile($event)"
+                                        accept=".pdf, .jpg, .jpeg, .png" required>
+                                    <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="100" class="m-t-20 text-center">
+                        <button mat-stroked-button type="button" (click)="onNoClick()"
+                            class="outline-danger">Cancel</button>
+                        <button mat-stroked-button type="button" class="outline-success text-center m-l-10"
+                            (click)="PaymentFormSubmit()">Save</button>
+                    </div>
+                </form>
             </div>
         </mat-card-content>
-       
+
     </div>
 </div>

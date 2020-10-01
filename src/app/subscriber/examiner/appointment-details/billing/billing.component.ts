@@ -6,13 +6,37 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { NGXLogger } from 'ngx-logger';
-import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent, MatAutocompleteTrigger, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { formatDate } from '@angular/common';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { ThirdPartyDraggable } from '@fullcalendar/interaction';
+
+export class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'MM-dd-yyyy', this.locale);
+    } else {
+      return date.toDateString();
+    }
+  }
+}
+export const PICK_FORMATS = {
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
+  display: {
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  }
+};
 @Component({
   selector: 'app-billable-billing',
   templateUrl: './billing.component.html',
@@ -24,7 +48,10 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
+
 })
+
+
 export class BilllableBillingComponent implements OnInit {
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -136,7 +163,7 @@ export class BilllableBillingComponent implements OnInit {
 
   }
 
-  openAuto(e,trigger: MatAutocompleteTrigger) {
+  openAuto(e, trigger: MatAutocompleteTrigger) {
     e.stopPropagation()
     trigger.openPanel();
   }
@@ -212,6 +239,7 @@ export class BilllableBillingComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(BillingPaymentDialog, {
       width: '800px',
+      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, FormDetails: this.billingData.post_payment }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -748,8 +776,8 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  downloadAll(){
-    if(this.billingData.documets_sent_and_received.length == 0){
+  downloadAll() {
+    if (this.billingData.documets_sent_and_received.length == 0) {
       this.alertService.openSnackBar("Document not found", "error");
       return;
     }
@@ -791,18 +819,94 @@ const ELEMENT_DATA3 = [
 @Component({
   selector: 'billing-payment-dialog.html',
   templateUrl: 'billing-payment-dialog.html',
+  providers: [
+    { provide: DateAdapter, useClass: PickDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }
+  ]
 })
 export class BillingPaymentDialog {
   file: any;
+  postPaymentForm: FormGroup;
+  paymentTypes: any = ["Paper Check", "EFT", "Virtual Credit Card"]
   constructor(
-    public dialogRef: MatDialogRef<BillingPaymentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,) {
+    console.log("popup", data)
+    this.postPaymentForm = this.formBuilder.group({
+      id: [],
+      file: [null],
+      is_file_change: [false],
+      claim_id: [this.data.claimId],
+      billable_item_id: [this.data.billableId],
+      payment_amount: [null],
+      reference_no: [null],
+      effective_date: [null],
+      payment_method: [null],
+      is_deposited: [true],
+      deposit_date: [null],
+      payor_control_claim_no: [],
+      is_penalty: [true],
+      penalty_amount: [null],
+      is_interest_paid: [true],
+      interest_paid: [null],
+      is_bill_closed: [true],
+      write_off_reason: [null],
+      eor_allowance: [null],
+    })
+    if (this.data.FormDetails) {
+      this.postPaymentForm.patchValue(this.data.FormDetails)
+    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
+  selectedFile: File;
+  formData = new FormData()
+  addFile(event) {
+    this.selectedFile = null;
+    let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+      if (FileSize > 30) {
+        this.alertService.openSnackBar("This file too long", 'error');
+        return;
+      }
+      this.file = event.target.files[0].name;
+      this.selectedFile = event.target.files[0];
+      this.postPaymentForm.patchValue({ file: this.selectedFile, is_file_change: true })
+    } else {
+      this.selectedFile = null;
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+  }
 
-  addFile(e) {
+  setTwoNumberDecimal($event) {
+    $event.target.value = parseFloat($event.target.value).toFixed(2);
+  }
+
+  PaymentFormSubmit() {
+    Object.keys(this.postPaymentForm.controls).forEach((key) => {
+      if (this.postPaymentForm.get(key).value && typeof (this.postPaymentForm.get(key).value) == 'string')
+        this.postPaymentForm.get(key).setValue(this.postPaymentForm.get(key).value.trim())
+    });
+
+    if (this.postPaymentForm.invalid) {
+      return;
+    }
+    this.formData = null;
+    console.log(this.postPaymentForm.value);
+    Object.keys(this.postPaymentForm.value).map((key, value) => {
+      this.formData.append(key, this.postPaymentForm.value[key])
+    });
+
+    this.billingService.billingPostPayment(this.data.billingId, this.formData).subscribe(post => {
+      console.log(post);
+    }, error => {
+      console.log(error)
+    })
+
 
   }
 
