@@ -370,8 +370,8 @@
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
                                                         <mat-select formControlName="unitType">
-                                                            <mat-option *ngFor="let state of [{name:'UN - Units'},{name:'MN - Minutes'},{name:'P - Pages'}]" [value]="state.name">
-                                                                {{state.name}}
+                                                            <mat-option *ngFor="let unit of unitTypes" [value]="unit.unit_type">
+                                                                {{unit.unit_type}}
                                                             </mat-option>
                                                         </mat-select>
                                                 </mat-form-field>

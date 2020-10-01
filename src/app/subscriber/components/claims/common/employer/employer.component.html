@@ -71,17 +71,18 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Email</mat-label>
-                    <input matInput type="text" placeholder="Email" formControlName="email" autocomplete="off">
-                    <mat-error>Please enter valid email</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Fax</mat-label>
                     <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Fax"
                         formControlName="fax" autocomplete="off">
                     <mat-error>Please enter valid fax number</mat-error>
                 </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" placeholder="Email" formControlName="email" autocomplete="off">
+                    <mat-error>Please enter valid email</mat-error>
+                </mat-form-field>
+
                 <div *ngIf="employerEdit" class="text-center w-100 m-t-10">
 
                     <button mat-stroked-button type="button" (click)="cancel();employerEdit = false"

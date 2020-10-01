@@ -66,7 +66,8 @@
                                     </div>
 
                                     <mat-form-field appearance="outline" fxFlex="100" class="m-t-5">
-                                        <mat-label>Company Name{{user?.organization_type != 'INDV' ? '*' : ''}}</mat-label>
+                                        <mat-label>Company Name{{user?.organization_type != 'INDV' ? '*' : ''}}
+                                        </mat-label>
                                         <input matInput placeholder="Company Name" formControlName="company_name"
                                             autocomplete="off">
                                         <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidcompanyname}}</mat-error>
@@ -112,7 +113,8 @@
                                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                         fxFlex.xs="100">Signature
                                         <br /> <small>
-                                            Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels & Maximum File Size: 500 KB
+                                            Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150
+                                            pixels & Maximum File Size: 500 KB
                                         </small>
                                     </div>
                                     <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
@@ -120,7 +122,7 @@
                                         <div fxLayout="row wrap" fxFlex="100">
                                             <mat-form-field appearance="standard"
                                                 hideRequiredMarker="hideRequiredControl.auto"
-                                                floatLabel="floatLabelControl.auto" >
+                                                floatLabel="floatLabelControl.auto">
                                                 <input matInput [title]="selectedFile" readonly
                                                     [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
                                                     value="12345">
@@ -130,7 +132,8 @@
                                             </mat-form-field>
 
                                             <button matSuffix type="button" (click)="uploader.click()"
-                                                mat-stroked-button class="upload_btn outline-success m-t-2 m-l-10">Upload
+                                                mat-stroked-button
+                                                class="upload_btn outline-success m-t-2 m-l-10">Upload
                                             </button>
 
                                             <div fxFlex="100" *ngIf="!signData" class="m-t-20">
@@ -161,15 +164,15 @@
 
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
-                                        <mat-label>Accounting Email</mat-label>
-                                        <input matInput placeholder="Accounting Email" autocomplete="off">
+                                        <mat-label>Accounting Phone </mat-label>
+                                        <input matInput placeholder="Accounting Phone" autocomplete="off">
                                         <mat-error>error msg here..</mat-error>
                                     </mat-form-field>
 
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
-                                        <mat-label>Accounting Phone </mat-label>
-                                        <input matInput placeholder="Accounting Phone" autocomplete="off">
+                                        <mat-label>Accounting Email</mat-label>
+                                        <input matInput placeholder="Accounting Email" autocomplete="off">
                                         <mat-error>error msg here..</mat-error>
                                     </mat-form-field>
 
@@ -281,7 +284,8 @@
                                         fxFlex.xs="100">Signature
 
                                         <br /><small>
-                                            Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels & Maximum File Size: 500 KB
+                                            Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150
+                                            pixels & Maximum File Size: 500 KB
                                         </small>
                                     </div>
                                     <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
@@ -367,13 +371,14 @@
                                                 <div class="detail"
                                                     [@detailExpand]="expandId === element.id ? 'expanded' : 'collapsed'">
                                                     <div class="responsive-table">
-                                                        <div><span>Invoice Number</span><span> {{element?.invoice_number}}
-                                                        </span></div>
+                                                        <div><span>Invoice Number</span><span>
+                                                                {{element?.invoice_number}}
+                                                            </span></div>
                                                         <div><span>Amount</span><span> {{element?.amount}} </span></div>
                                                         <div><span>Status</span><span> {{element?.status}} </span></div>
                                                         <div><span>Date</span><span> {{element?.date}} </span></div>
                                                         <div><span>Action</span><span><a class="text-success">
-                                                                {{element?.action}} </a></span></div>
+                                                                    {{element?.action}} </a></span></div>
                                                     </div>
                                                 </div>
                                             </td>
