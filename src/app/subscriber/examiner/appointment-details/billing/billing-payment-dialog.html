@@ -152,6 +152,8 @@
                                 </mat-form-field>
                             </div>
                         </div>
+                        <div *ngIf="data?.FormDetails?.post_payment_file_url"><a routerLink="" (click)="fileDownload(data?.FormDetails?.post_payment_file_url)" >File</a>  <button type="button" class="m-b-5" (click)="removeFile()"
+                            mat-stroked-button>Remove </button></div>
                     </div>
                     <div fxFlex="100" class="m-t-20 text-center">
                         <button mat-stroked-button type="button" (click)="onNoClick()"

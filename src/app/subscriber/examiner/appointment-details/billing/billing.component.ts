@@ -851,7 +851,7 @@ export class BillingPaymentDialog {
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,) {
     console.log("popup", data)
     this.postPaymentForm = this.formBuilder.group({
-      id: [],
+      id: [null],
       file: [null],
       is_file_change: [false],
       claim_id: [this.data.claimId, Validators.required],
@@ -874,10 +874,10 @@ export class BillingPaymentDialog {
     if (this.data.FormDetails) {
       this.postPaymentForm.patchValue(this.data.FormDetails)
     }
-    this.postPaymentForm.get('deposit_date').disable();
-    this.postPaymentForm.get('penalty_amount').disable()
-    this.postPaymentForm.get('interest_paid').disable()
-    this.postPaymentForm.get('write_off_reason').disable()
+    this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
+    this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
+    this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').enable() : this.postPaymentForm.get('interest_paid').disable();
+    this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').enable() : this.postPaymentForm.get('write_off_reason').disable();
   }
 
   onNoClick(): void {
@@ -908,27 +908,35 @@ export class BillingPaymentDialog {
   }
   postIsSubmit: boolean = false;
   PaymentFormSubmit() {
+
+    this.postIsSubmit = true;
+    this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.required]) : this.postPaymentForm.get('deposit_date').setValidators([]);
+    this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.required]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
+    this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.required]) : this.postPaymentForm.get('interest_paid').setValidators([]);
+    this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').setValidators([Validators.required]) : this.postPaymentForm.get('write_off_reason').setValidators([]);
+
     Object.keys(this.postPaymentForm.controls).forEach((key) => {
+      this.postPaymentForm.get(key).updateValueAndValidity();
       if (this.postPaymentForm.get(key).value && typeof (this.postPaymentForm.get(key).value) == 'string')
         this.postPaymentForm.get(key).setValue(this.postPaymentForm.get(key).value.trim())
     });
-
     if (this.postPaymentForm.invalid) {
-      this.postIsSubmit = true;
+      this.postPaymentForm.markAllAsTouched();
       return;
     }
-    this.formData = null;
+    this.formData = new FormData();
     console.log(this.postPaymentForm.value);
     Object.keys(this.postPaymentForm.value).map((key, value) => {
+      console.log(key, this.postPaymentForm.value[key])
       this.formData.append(key, this.postPaymentForm.value[key])
     });
 
     this.billingService.billingPostPayment(this.data.billingId, this.formData).subscribe(post => {
       console.log(post);
       if (!this.postPaymentForm.value.id) {
-        this.alertService.openSnackBar("Post payment created successfully", 'error');
+        this.alertService.openSnackBar("Post payment created successfully", 'success');
       } else {
-        this.alertService.openSnackBar("Post payment updated successfully", 'error');
+        this.alertService.openSnackBar("Post payment updated successfully", 'success');
       }
 
       this.dialogRef.close();
@@ -938,6 +946,14 @@ export class BillingPaymentDialog {
     })
 
 
+  }
+
+  fileDownload(url) {
+    saveAs(url, 'EOR File.pdf', '_self');
+  }
+
+  removeFile() {
+    this.postPaymentForm.patchValue({ file: null, is_file_change: true })
   }
 
 }
