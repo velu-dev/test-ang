@@ -697,18 +697,18 @@ export class BilllableBillingComponent implements OnInit {
     return control;
   }
 
-  getUnitCode(code){
-    if(code){
-      for(var c in  this.unitTypes){
-        if(this.unitTypes[c].unit_type == code){
-          console.log(this.unitTypes[c].unit_short_code,"code")
+  getUnitCode(code) {
+    if (code) {
+      for (var c in this.unitTypes) {
+        if (this.unitTypes[c].unit_type == code) {
+          console.log(this.unitTypes[c].unit_short_code, "code")
           return this.unitTypes[c].unit_short_code;
         }
       }
-    }else{
+    } else {
       return null;
     }
-  
+
   }
 
   // submitForm() {
@@ -854,26 +854,30 @@ export class BillingPaymentDialog {
       id: [],
       file: [null],
       is_file_change: [false],
-      claim_id: [this.data.claimId],
-      billable_item_id: [this.data.billableId],
-      payment_amount: [null],
-      reference_no: [null],
-      effective_date: [null],
-      payment_method: [null],
-      is_deposited: [true],
+      claim_id: [this.data.claimId, Validators.required],
+      billable_item_id: [this.data.billableId, Validators.required],
+      payment_amount: [null, Validators.required],
+      reference_no: [null, Validators.required],
+      effective_date: [null, Validators.required],
+      payment_method: [null, Validators.required],
+      is_deposited: [false],
       deposit_date: [null],
       payor_control_claim_no: [],
-      is_penalty: [true],
+      is_penalty: [false],
       penalty_amount: [null],
-      is_interest_paid: [true],
+      is_interest_paid: [false],
       interest_paid: [null],
-      is_bill_closed: [true],
+      is_bill_closed: [false],
       write_off_reason: [null],
       eor_allowance: [null],
     })
     if (this.data.FormDetails) {
       this.postPaymentForm.patchValue(this.data.FormDetails)
     }
+    this.postPaymentForm.get('deposit_date').disable();
+    this.postPaymentForm.get('penalty_amount').disable()
+    this.postPaymentForm.get('interest_paid').disable()
+    this.postPaymentForm.get('write_off_reason').disable()
   }
 
   onNoClick(): void {
@@ -902,7 +906,7 @@ export class BillingPaymentDialog {
   setTwoNumberDecimal($event) {
     $event.target.value = parseFloat($event.target.value).toFixed(2);
   }
-
+  postIsSubmit: boolean = false;
   PaymentFormSubmit() {
     Object.keys(this.postPaymentForm.controls).forEach((key) => {
       if (this.postPaymentForm.get(key).value && typeof (this.postPaymentForm.get(key).value) == 'string')
@@ -910,6 +914,7 @@ export class BillingPaymentDialog {
     });
 
     if (this.postPaymentForm.invalid) {
+      this.postIsSubmit = true;
       return;
     }
     this.formData = null;
@@ -920,8 +925,16 @@ export class BillingPaymentDialog {
 
     this.billingService.billingPostPayment(this.data.billingId, this.formData).subscribe(post => {
       console.log(post);
+      if (!this.postPaymentForm.value.id) {
+        this.alertService.openSnackBar("Post payment created successfully", 'error');
+      } else {
+        this.alertService.openSnackBar("Post payment updated successfully", 'error');
+      }
+
+      this.dialogRef.close();
     }, error => {
-      console.log(error)
+      console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
 
 

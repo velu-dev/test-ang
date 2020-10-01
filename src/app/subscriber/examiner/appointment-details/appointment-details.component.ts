@@ -53,10 +53,10 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
   ]
 })
 export class AppointmentDetailsComponent implements OnInit {
-dataSource1 = ELEMENT_DATA2;
-columnsToDisplay1 = [];
-expandedElement1;
-columnName1 = [];
+  dataSource1 = ELEMENT_DATA2;
+  columnsToDisplay1 = [];
+  expandedElement1;
+  columnName1 = [];
   // displayedColumnsForDocuments: string[] = ['doc_image','file_name', 'updatedAt', 'action'];
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
@@ -186,15 +186,15 @@ columnName1 = [];
       }
     })
     this.isHandset$.subscribe(res => {
-          this.isMobile = res;
-          if (res) {
-            this.columnName = ["", "Task"]
-            this.columnsToDisplay1 = ['is_expand', 'created_by']
-          } else {
-            this.columnName = ["", "Task","Created By", "Created At", "Updated By", "Updated At"]
-            this.columnsToDisplay1 = ["status", 'task','created_by', "created_at", "updated_by", 'updated_at']
-          }
-        })
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Task"]
+        this.columnsToDisplay1 = ['is_expand', 'created_by']
+      } else {
+        this.columnName = ["", "Task", "Created By", "Created At", "Updated By", "Updated At"]
+        this.columnsToDisplay1 = ["status", 'task', 'created_by', "created_at", "updated_by", 'updated_at']
+      }
+    })
 
   }
   isExamTypeChanged = false;
@@ -754,8 +754,6 @@ columnName1 = [];
     })
     if (procuderalCode.exam_procedure_type.includes("SUPP")) {
       this.isSuplimental = true;
-    } else {
-      this.isSuplimental = false;
       this.billable_item.patchValue({
         appointment: {
           appointment_scheduled_date_time: null,
@@ -763,6 +761,8 @@ columnName1 = [];
           examiner_service_location_id: null
         }
       })
+    } else {
+      this.isSuplimental = false;
     }
   }
 
@@ -856,15 +856,15 @@ export class BillableitemPopupComponent {
 
 
 const ELEMENT_DATA2 = [
-  { "id": 1, "task": "Schedule appointment", "created_by": "Steve Simone", "created_at": "06-21-2020", "updated_by": "Marc Simone","updated_at": "06-22-2020"},
-  { "id": 2, "task": "State forms submitted", "created_by": "Steve Simone", "created_at": "06-22-2020", "updated_by": "Steve Simone","updated_at": "06-22-2020"},
-  { "id": 3, "task": "Schedule appointment", "created_by": "Steve Simone", "created_at": "07-04-2020", "updated_by": "Dolores Gonzalez","updated_at": "07-04-2020"},
-  { "id": 4, "task": "History completed", "created_by": "Steve Simone", "created_at": "06-30-2020", "updated_by": "Dolores Gonzalez","updated_at": "06-22-2020"},
-  { "id": 5, "task": "Records summarized", "created_by": " ", "created_at": "", "updated_by": "","updated_at": ""},
-  { "id": 6, "task": "Appointment confirmed", "created_by": "Steve Simone", "created_at": "08-10-2020", "updated_by": "Dolores Gonzalez","updated_at": "08-10-2020"},
-  { "id": 7, "task": "Appointment attended", "created_by": "Steve Simone", "created_at": "08-14-2020", "updated_by": "Dolores Gonzalez","updated_at": "08-14-2020"},
-  { "id": 8, "task": "Report transcribed", "created_by": " ", "created_at": "", "updated_by": "","updated_at": ""},
-  { "id": 8, "task": "Report billed", "created_by": " ", "created_at": "", "updated_by": "","updated_at": ""},
-  { "id": 8, "task": "Bill closed", "created_by": " ", "created_at": "", "updated_by": "","updated_at": ""},
+  { "id": 1, "task": "Schedule appointment", "created_by": "Steve Simone", "created_at": "06-21-2020", "updated_by": "Marc Simone", "updated_at": "06-22-2020" },
+  { "id": 2, "task": "State forms submitted", "created_by": "Steve Simone", "created_at": "06-22-2020", "updated_by": "Steve Simone", "updated_at": "06-22-2020" },
+  { "id": 3, "task": "Schedule appointment", "created_by": "Steve Simone", "created_at": "07-04-2020", "updated_by": "Dolores Gonzalez", "updated_at": "07-04-2020" },
+  { "id": 4, "task": "History completed", "created_by": "Steve Simone", "created_at": "06-30-2020", "updated_by": "Dolores Gonzalez", "updated_at": "06-22-2020" },
+  { "id": 5, "task": "Records summarized", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
+  { "id": 6, "task": "Appointment confirmed", "created_by": "Steve Simone", "created_at": "08-10-2020", "updated_by": "Dolores Gonzalez", "updated_at": "08-10-2020" },
+  { "id": 7, "task": "Appointment attended", "created_by": "Steve Simone", "created_at": "08-14-2020", "updated_by": "Dolores Gonzalez", "updated_at": "08-14-2020" },
+  { "id": 8, "task": "Report transcribed", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
+  { "id": 8, "task": "Report billed", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
+  { "id": 8, "task": "Bill closed", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
 
-  ];
+];

@@ -206,8 +206,6 @@ export class NewBillableItemComponent implements OnInit {
     })
     if (procuderalCode.exam_procedure_type.includes("SUPP")) {
       this.isSuplimental = true;
-    } else {
-      this.isSuplimental = false;
       this.billable_item.patchValue({
         appointment: {
           appointment_scheduled_date_time: null,
@@ -215,6 +213,8 @@ export class NewBillableItemComponent implements OnInit {
           examiner_service_location_id: null
         }
       })
+    } else {
+      this.isSuplimental = false;
     }
   }
   // procedure_type() {
@@ -300,25 +300,27 @@ export class NewBillableItemComponent implements OnInit {
         examiner_id: examinar.id
       }
     })
-    this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
-      this.examinerOptions = []
-      this.examinerOptions = res['data'];
-      this.examinarAddress = this.addressCtrl.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this._filterAddress(value))
-        );
+    if (this.examinarId) {
+      this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
+        this.examinerOptions = []
+        this.examinerOptions = res['data'];
+        this.examinarAddress = this.addressCtrl.valueChanges
+          .pipe(
+            startWith(''),
+            map(value => this._filterAddress(value))
+          );
 
-      if (examinar.address_id) {
-        res.data.map(addr => {
-          if (addr.address_id == examinar.address_id) {
-            this.isAddressSelected = true;
-            this.selectedExaminarAddress = addr;
-          }
-        })
-      }
-      this.address = res.data;
-    })
+        if (examinar.address_id) {
+          res.data.map(addr => {
+            if (addr.address_id == examinar.address_id) {
+              this.isAddressSelected = true;
+              this.selectedExaminarAddress = addr;
+            }
+          })
+        }
+        this.address = res.data;
+      })
+    }
   }
 
   private _filterAddress(value: string): any {

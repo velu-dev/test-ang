@@ -902,7 +902,7 @@ export class NewExaminerUserComponent implements OnInit {
     let regexp = new RegExp('^[0-9]*$'),
       test = regexp.test(this.national_provider_identifier);
     if (this.national_provider_identifier != null && !test) {
-      this.alertService.openSnackBar('Please enter vaild national provider identifier', 'error');
+      this.alertService.openSnackBar('Please enter valid national provider identifier', 'error');
       return;
     }
 
