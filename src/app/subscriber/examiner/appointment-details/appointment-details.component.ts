@@ -208,7 +208,7 @@ columnName1 = [];
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
-       
+
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -219,6 +219,11 @@ columnName1 = [];
         // })
         this.claimService.getProcedureType(bills.data.exam_type_id).subscribe(procedure => {
           this.procuderalCodes = procedure.data;
+          procedure.data.map(proc => {
+            if (proc.exam_procedure_type_id == bills.data.exam_type.exam_procedure_type_id) {
+              this.procedure_type(proc);
+            }
+          })
         })
         this.isBillabbleItemLoading = false;
         if (bills['data'].appointment.examiner_id != null) {
@@ -229,7 +234,9 @@ columnName1 = [];
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
+        console.log(bills.data)
         this.billable_item.patchValue(bills.data);
+        console.log(this.billable_item.value)
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
           this.intercom.setBillableItem(response.data.exam_procedure_name);
@@ -340,6 +347,9 @@ columnName1 = [];
         call_type: [{ value: '', disable: true }],
         call_type_detail: [{ value: '', disable: true }],
         notes: [{ value: '', disable: true }],
+        caller_phone: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+        caller_email: [{ value: null, disable: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        caller_fax: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])]
       })
     })
     this.notesForm = this.formBuilder.group({
@@ -734,13 +744,26 @@ columnName1 = [];
     dialogRef.afterClosed().subscribe(result => {
     });
   }
-
+  isSuplimental = false;
   procedure_type(procuderalCode) {
+    console.log(procuderalCode)
     if (procuderalCode.modifier)
       this.modifiers = procuderalCode.modifier;
     this.billable_item.patchValue({
       exam_type: { modifier_id: [] }
     })
+    if (procuderalCode.exam_procedure_type.includes("SUPP")) {
+      this.isSuplimental = true;
+    } else {
+      this.isSuplimental = false;
+      this.billable_item.patchValue({
+        appointment: {
+          appointment_scheduled_date_time: null,
+          duration: null,
+          examiner_service_location_id: null
+        }
+      })
+    }
   }
 
   docChange(e) {

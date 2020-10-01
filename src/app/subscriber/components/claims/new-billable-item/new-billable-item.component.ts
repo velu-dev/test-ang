@@ -147,6 +147,9 @@ export class NewBillableItemComponent implements OnInit {
         call_type: [null],
         call_type_detail: [null],
         notes: [null],
+        caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       })
 
     })
@@ -194,12 +197,25 @@ export class NewBillableItemComponent implements OnInit {
       return null
     }
   }
+  isSuplimental = false;
   procedure_type(procuderalCode) {
     if (procuderalCode.modifier)
       this.modifiers = procuderalCode.modifier;
     this.billable_item.patchValue({
       exam_type: { modifier_id: [] }
     })
+    if (procuderalCode.exam_procedure_type.includes("SUPP")) {
+      this.isSuplimental = true;
+    } else {
+      this.isSuplimental = false;
+      this.billable_item.patchValue({
+        appointment: {
+          appointment_scheduled_date_time: null,
+          duration: null,
+          examiner_service_location_id: null
+        }
+      })
+    }
   }
   // procedure_type() {
   //   this.billable_item.patchValue({
