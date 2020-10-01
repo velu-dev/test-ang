@@ -24,6 +24,8 @@ export const default_select = '/assets/images/default-select.svg'
 export const alert = '/assets/images/alert.svg'
 export const info = '/assets/images/info.svg'
 export const mp3 = '/assets/images/mp3.svg'
+export const status_complete = '/assets/images/status-complete.svg'
+export const status_inprogress = '/assets/images/status-inprogress.svg'
 
 
 export const roles = [{}, {}]
