@@ -55,11 +55,15 @@ export class BillingService {
     return this.http.post(environment.baseUrl + api_endpoint.searchPayor, data)
   }
 
-  generateCMS1500Form(claimID,billableId,billId): Observable<any>{
+  generateCMS1500Form(claimID, billableId, billId): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.CMS1500Form + claimID + '/' + billableId + '/' + billId)
   }
 
-  billingDownloadAll(claimID,billableId,billId): Observable<any>{
+  billingDownloadAll(claimID, billableId, billId): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.billingDownloadAll + claimID + '/' + billableId + '/' + billId)
+  }
+
+  billingPostPayment(id, data): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.billingPostPayment + id, data)
   }
 }
