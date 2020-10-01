@@ -19,7 +19,7 @@ import * as moment from 'moment';
 })
 export class ExaminationCalanderViewComponent implements OnInit {
   options: any = {
-    height: "parent",
+    // height: "parent",
     businessHours: {
       // days of week. an array of zero-based day of week integers (0=Sunday)
       daysOfWeek: [1, 2, 3, 4, 5], // Monday - Thursday
@@ -41,14 +41,12 @@ export class ExaminationCalanderViewComponent implements OnInit {
     },
     eventLimit: true,
     views: {
-      month: {
-        eventLimit: 1
+      dayGridMonth: { // name of view
+        // titleFormat: { year: 'numeric', month: '2-digit', day: '2-digit' }
+        // other view-specific options here
       },
-      timeGrid: { eventLimit: 4 },
-      timeGridFourDay: {
-        type: 'timeGrid',
-        duration: { days: 4 },
-        buttonText: '4 day'
+      dayGrid: {
+        eventLimit: 3 // adjust to 6 only for timeGridWeek/timeGridDay
       }
     },
     plugins: [dayGridPlugin, interactionPlugin, timeGrigPlugin, bootstrapPlugin]
@@ -57,23 +55,33 @@ export class ExaminationCalanderViewComponent implements OnInit {
   @ViewChild("calendar", { static: false }) calendar: FullCalendarComponent;
   @ViewChild("intake", { static: false }) intake;
   // calendarComponent: FullCalendarComponent;
-  events: EventInput[] = [
+  data = [{
+    id: 1,
+    data: [{
+      title: "Paul Newman",
+      start: "2020-10-03T06:00:00.453Z",
+      end: "2020-10-03T06:30:00.453Z",
+      backgroundColor: "#72E396"
+    },
     {
-      title: "Will Smith",
-      start: "2020-09-28T04:00:00.453Z",
-      end: "2020-09-28T04:30:00.453Z",
+      title: "Paul Newman",
+      start: "2020-09-03T08:00:00.453Z",
+      end: "2020-09-03T08:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
-      title: "Will Smith",
-      start: "2020-09-28T04:00:00.453Z",
-      end: "2020-09-28T04:30:00.453Z",
+      title: "Paul Newman",
+      start: "2020-09-04T07:00:00.453Z",
+      end: "2020-09-04T07:30:00.453Z",
       backgroundColor: "#FFC400"
-    },
-    {
-      title: "Anthony Hopkins",
-      start: "2020-09-28T05:00:00.453Z",
-      end: "2020-09-28T09:30:00.453Z",
+    }]
+  },
+  {
+    id: 2,
+    data: [{
+      title: "Paul Newman",
+      start: "2020-10-03T07:00:00.453Z",
+      end: "2020-10-0307:30:00.453Z",
       backgroundColor: "#FFC400"
     },
     {
@@ -87,14 +95,11 @@ export class ExaminationCalanderViewComponent implements OnInit {
       start: "2020-09-28T07:00:00.453Z",
       end: "2020-09-28T07:30:00.453Z",
       backgroundColor: "#FFC400"
-    },
-    {
-      title: "Paul Newman",
-      start: "2020-09-28T07:00:00.453Z",
-      end: "2020-09-28T07:30:00.453Z",
-      backgroundColor: "#FFC400"
-    },
-    {
+    }]
+  },
+  {
+    id: 3,
+    data: [{
       title: "Paul Newman",
       start: "2020-09-02T07:00:00.453Z",
       end: "2020-09-02T07:30:00.453Z",
@@ -111,8 +116,11 @@ export class ExaminationCalanderViewComponent implements OnInit {
       start: "2020-09-04T07:00:00.453Z",
       end: "2020-09-04T07:30:00.453Z",
       backgroundColor: "#FFC400"
-    },
-    {
+    }]
+  },
+  {
+    id: 4,
+    data: [{
       title: "Charles Chaplin",
       start: "2020-09-30T08:00:00.453Z",
       end: "2020-09-30T08:30:00.453Z",
@@ -129,8 +137,11 @@ export class ExaminationCalanderViewComponent implements OnInit {
       start: "2020-09-28T10:00:00.453Z",
       end: "2020-09-28T10:30:00.453Z",
       backgroundColor: "#FFC400"
-    },
-    {
+    }]
+  },
+  {
+    id: 5,
+    data: [{
       title: "Morgan Freeman",
       start: "2020-09-29T05:00:00.453Z",
       end: "2020-09-29T05:50:00.453Z",
@@ -155,8 +166,11 @@ export class ExaminationCalanderViewComponent implements OnInit {
       title: "Steve McQueen",
       start: "2020-09-29T09:23:55.453Z",
       backgroundColor: "#72E396"
-    },
-    {
+    }]
+  },
+  {
+    id: 6,
+    data: [{
       title: "James Stewart",
       start: "2020-09-29T07:23:55.453Z",
       backgroundColor: "#72E396"
@@ -177,8 +191,11 @@ export class ExaminationCalanderViewComponent implements OnInit {
       rendering: 'background',
       overlap: false,
       color: '#f72222'
-    },
-    {
+    }]
+  },
+  {
+    id: 7,
+    data: [{
       title: "Spencer Tracy",
       start: "2020-09-26T10:23:55.453Z",
       backgroundColor: "#72E396"
@@ -196,8 +213,11 @@ export class ExaminationCalanderViewComponent implements OnInit {
       title: "Gregory Peck",
       start: "2020-09-29T09:23:55.453Z",
       backgroundColor: "#FF3366"
-    },
-    {
+    }]
+  },
+  {
+    id: 8,
+    data: [{
       title: "Sidney Poitier",
       start: "2020-09-28T09:23:55.453Z",
       backgroundColor: "#FF3366"
@@ -213,8 +233,11 @@ export class ExaminationCalanderViewComponent implements OnInit {
       rendering: 'background',
       overlap: false,
       color: '#f72222'
-    },
-    {
+    }]
+  },
+  {
+    id: 9,
+    data: [{
       title: "Humphrey Bogart",
       start: "2020-09-15T09:23:55.453Z",
       backgroundColor: "#FF3366"
@@ -224,6 +247,9 @@ export class ExaminationCalanderViewComponent implements OnInit {
       start: "2020-09-16T09:23:55.453Z",
       backgroundColor: "#FF3366"
     }]
+  }
+  ]
+  events: EventInput[] = [];
   calendarVisible = true;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
@@ -232,7 +258,6 @@ export class ExaminationCalanderViewComponent implements OnInit {
   examinars = [];
   constructor(public dialog: MatDialog, public examinarService: ExaminerService) {
     this.examinarService.getExaminerList().subscribe(res => {
-      console.log("examinars", res.data)
       this.examinars = res.data;
     })
   }
@@ -242,23 +267,34 @@ export class ExaminationCalanderViewComponent implements OnInit {
 
   }
   loadAllEvents() {
-    this.calendarEvents = [];
-    // this.events = this.clients[0].events;
-    // this.selectedClient = "All";
+    let Alldata = [];
+    this.data.map(da => {
+      Alldata.push(da.data)
+    })
 
-    // this.clients.map(res => {
-    //   // res.events.map(event => {
-    //   this.events.concat(res.events);
-    //   // });
-    // });
-    this.calendarEvents = this.events;
+    // console.log();
+    this.calendarEvents = [].concat.apply([], Alldata);
+    // this.calendarEvents = [];
+    // this.calendarEvents = this.events;
   }
-  selectExaminer(examiner?) {
+  selectExaminer(examiner?, index?) {
+    this.calendar.getApi().removeAllEvents();
     if (examiner) {
       console.log(examiner);
     } else {
       console.log("All")
+      this.loadAllEvents();
     }
+    let event = [];
+    this.data.map(res => {
+      if (res.id == index) {
+        event = res.data;
+      }
+    });
+    event.map(ev => {
+      console.log(ev)
+      this.calendar.getApi().addEvent(ev);
+    })
   }
   handleEventClick(e) {
     this.openEventDetailDialog(e);
