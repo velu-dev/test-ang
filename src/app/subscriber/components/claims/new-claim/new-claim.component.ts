@@ -1379,7 +1379,9 @@ export class NewClaimComponent implements OnInit {
       return null
     }
   }
+  isSuplimental = false;
   procedure_type(procuderalCode) {
+    this.isSuplimental = procuderalCode.exam_procedure_type.includes("SUPP");
   }
   selectedFile: File;
   uploadFile(event) {
