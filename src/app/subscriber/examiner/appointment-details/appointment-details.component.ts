@@ -203,6 +203,11 @@ export class AppointmentDetailsComponent implements OnInit {
         // })
         this.claimService.getProcedureType(bills.data.exam_type_id).subscribe(procedure => {
           this.procuderalCodes = procedure.data;
+          procedure.data.map(proc => {
+            if (proc.exam_procedure_type_id == bills.data.exam_type.exam_procedure_type_id) {
+              this.procedure_type(proc);
+            }
+          })
         })
         this.isBillabbleItemLoading = false;
         if (bills['data'].appointment.examiner_id != null) {
@@ -213,7 +218,9 @@ export class AppointmentDetailsComponent implements OnInit {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
+        console.log(bills.data)
         this.billable_item.patchValue(bills.data);
+        console.log(this.billable_item.value)
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
           this.intercom.setBillableItem(response.data.exam_procedure_name);
@@ -325,7 +332,7 @@ export class AppointmentDetailsComponent implements OnInit {
         call_type_detail: [{ value: '', disable: true }],
         notes: [{ value: '', disable: true }],
         caller_phone: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])],
-        caller_email: [{ value: '', disable: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        caller_email: [{ value: null, disable: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         caller_fax: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])]
       })
     })
@@ -723,12 +730,24 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   isSuplimental = false;
   procedure_type(procuderalCode) {
+    console.log(procuderalCode)
     if (procuderalCode.modifier)
       this.modifiers = procuderalCode.modifier;
     this.billable_item.patchValue({
       exam_type: { modifier_id: [] }
     })
-    this.isSuplimental = procuderalCode.exam_procedure_type.includes("SUPP");
+    if (procuderalCode.exam_procedure_type.includes("SUPP")) {
+      this.isSuplimental = true;
+    } else {
+      this.isSuplimental = false;
+      this.billable_item.patchValue({
+        appointment: {
+          appointment_scheduled_date_time: null,
+          duration: null,
+          examiner_service_location_id: null
+        }
+      })
+    }
   }
 
   docChange(e) {

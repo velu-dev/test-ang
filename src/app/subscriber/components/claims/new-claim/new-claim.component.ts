@@ -1384,7 +1384,18 @@ export class NewClaimComponent implements OnInit {
   }
   isSuplimental = false;
   procedure_type(procuderalCode) {
-    this.isSuplimental = procuderalCode.exam_procedure_type.includes("SUPP");
+    if (procuderalCode.exam_procedure_type.includes("SUPP")) {
+      this.isSuplimental = true;
+    } else {
+      this.isSuplimental = false;
+      this.billable_item.patchValue({
+        appointment: {
+          appointment_scheduled_date_time: null,
+          duration: null,
+          examiner_service_location_id: null
+        }
+      })
+    }
   }
   selectedFile: File;
   uploadFile(event) {

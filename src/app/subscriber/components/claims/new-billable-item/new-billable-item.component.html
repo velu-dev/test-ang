@@ -184,6 +184,29 @@
                         </mat-select>
                     </mat-form-field>
 
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                    fxFlex.xs="100">
+                    <mat-label>Caller Phone</mat-label>
+                    <input matInput placeholder="Caller Phone" formControlName="caller_phone"
+                        (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                    <mat-error *ngIf="isBillSubmited">Please enter valid phone</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                    fxFlex.xs="100">
+                    <mat-label>Caller Fax</mat-label>
+                    <input matInput placeholder="Caller Fax" formControlName="caller_fax"
+                        autocomplete="off" (keypress)="numberOnly($event)" mask="(000) 000-0000">
+                    <mat-error *ngIf="isBillSubmited">Please enter valid fax</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                    fxFlex.xs="100">
+                    <mat-label>Caller Email</mat-label>
+                    <input matInput placeholder="Caller Email" formControlName="caller_email"
+                        autocomplete="off">
+                    <mat-error *ngIf="isBillSubmited">Please enter valid email</mat-error>
+                </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Intake Call Notes</mat-label>
                         <input matInput placeholder="Intake Call Notes" formControlName="notes" autocomplete="off">
