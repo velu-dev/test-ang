@@ -107,7 +107,7 @@ export class BilllableBillingComponent implements OnInit {
   modiferList: string[] = ['93', '94', '95', '96'];
   @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
   //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
-
+  unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'P' }, { unit_type: 'Minutes', unit_short_code: 'MN' }]
 
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
@@ -334,7 +334,7 @@ export class BilllableBillingComponent implements OnInit {
             item_description: item.item_description,
             procedure_code: item.procedure_code,
             modifier: item.modifier,
-            unitType: 0,
+            unitType: item.unit_type,
             units: item.units,
             charge: item.charge,
             payment: 0,
@@ -667,7 +667,9 @@ export class BilllableBillingComponent implements OnInit {
       modifier: moidfier,
       units: group.value.units,
       charge: group.value.charge,
-      total_charge: this.calculateTotal()
+      total_charge: this.calculateTotal(),
+      unit_type: group.value.unitType,
+      unit_short_code: this.getUnitCode(group.value.unitType)
       //payment: 0,
       //balance: 1,
       //isEditable: [false]
@@ -695,6 +697,19 @@ export class BilllableBillingComponent implements OnInit {
     return control;
   }
 
+  getUnitCode(code){
+    if(code){
+      this.unitTypes.map(c=>{
+        if(c.unit_type == code){
+          return c.unit_short_code;
+        }
+      })
+    }else{
+      return null;
+    }
+  
+  }
+
   // submitForm() {
   //   const control = this.userTable.get('tableRows') as FormArray;
   //   this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
@@ -714,6 +729,7 @@ export class BilllableBillingComponent implements OnInit {
       modifierList: this.billingData.billing_line_items[i].modifierList,
       units: this.billingData.billing_line_items[i].units,
       charge: this.billingData.billing_line_items[i].charge,
+      unitType: this.billingData.billing_line_items[i].unit_type,
       payment: 0,
       balance: 0,
       isEditable: [false]
