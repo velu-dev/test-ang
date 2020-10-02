@@ -12,6 +12,7 @@ import { formatDate } from '@angular/common';
 import { OWL_DATE_TIME_FORMATS, DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-examination-calander-view',
   templateUrl: './examination-calander-view.component.html',
@@ -399,7 +400,7 @@ export const MY_CUSTOM_FORMATS = {
 export class EventdetailDialog {
   event = { title: "", start: "", end: "", location: "" }
   isEdit = false;
-  constructor(public dialogRef: MatDialogRef<EventdetailDialog>,
+  constructor(private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     console.log(data)
     this.event = data;
@@ -410,5 +411,8 @@ export class EventdetailDialog {
   pickerOpened(p) { }
   saveEvent() {
     this.dialogRef.close(this.event)
+  }
+  viewDetails() {
+    this.router.navigate([this.router.url + "/appointment-details", 2, 7]);
   }
 }
