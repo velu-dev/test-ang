@@ -243,6 +243,9 @@ export class BilllableBillingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.billingData.post_payment = result;
+      }
     });
   }
 
@@ -849,27 +852,26 @@ export class BillingPaymentDialog {
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,) {
-    console.log("popup", data)
     this.postPaymentForm = this.formBuilder.group({
-      id: [null],
+      id: [''],
       file: [null],
       is_file_change: [false],
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
-      payment_amount: [null, Validators.required],
-      reference_no: [null, Validators.required],
-      effective_date: [null, Validators.required],
-      payment_method: [null, Validators.required],
+      payment_amount: ['', Validators.required],
+      reference_no: ['', Validators.required],
+      effective_date: ['', Validators.required],
+      payment_method: ['', Validators.required],
       is_deposited: [false],
-      deposit_date: [null],
-      payor_control_claim_no: [],
+      deposit_date: [''],
+      payor_control_claim_no: [''],
       is_penalty: [false],
-      penalty_amount: [null],
+      penalty_amount: [''],
       is_interest_paid: [false],
-      interest_paid: [null],
+      interest_paid: [''],
       is_bill_closed: [false],
-      write_off_reason: [null],
-      eor_allowance: [null],
+      write_off_reason: [''],
+      eor_allowance: [''],
     })
     if (this.data.FormDetails) {
       this.postPaymentForm.patchValue(this.data.FormDetails)
@@ -932,14 +934,13 @@ export class BillingPaymentDialog {
     });
 
     this.billingService.billingPostPayment(this.data.billingId, this.formData).subscribe(post => {
-      console.log(post);
       if (!this.postPaymentForm.value.id) {
         this.alertService.openSnackBar("Post payment created successfully", 'success');
       } else {
         this.alertService.openSnackBar("Post payment updated successfully", 'success');
       }
 
-      this.dialogRef.close();
+      this.dialogRef.close(post.data);
     }, error => {
       console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
