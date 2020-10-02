@@ -522,7 +522,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 .fc-event,
 .fc-event:hover {
   border: none !important;
-  padding: 5px;
+  padding: 1px 5px !important;
 }
 
 mat-horizontal-stepper {

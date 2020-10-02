@@ -1,12 +1,81 @@
-<h1 mat-dialog-title>Event Details</h1>
+<div class="dialog event-detail">
+  <mat-card-header class="model-header">
+    <div class="content-wrapper-main-title"> <span> <i class="fa fa-circle p-r-5 lv"></i>QME-Claim#1000893 : {{data.title}}</span></div>
+    <span class="spacer"></span>
+    <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div fxLayout="row wrap" class="m-t-10">
+      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
+        <div>Exam </div>
+        <div><a href="#">QME - Qualified Medical Examination</a></div>
+      </div>
+      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
+        <div>Exam Procedure</div>
+        <div>Represented QME Re-Evaluation</div>
+      </div>
+
+      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
+        <div>Examiner Name</div>
+        <div>ZENITH PLEASANTON</div>
+      </div>
+      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
+        <div>Examination Date & Time</div>
+        <div>10-20-2020 01:39 PM IST</div>
+      </div>
+
+      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
+        <div>Duration</div>
+        <div>345 Minutes</div>
+      </div>
+      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
+        <div>Claim #</div>
+        <div>1000893</div>
+      </div>
+      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
+        <div>Claimant Name</div>
+        <div>{{data.title}}</div>
+      </div>
+      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
+        <div>Examination Status</div>
+        <div class="lv">Left Voicemail</div>
+      </div>
+      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
+        <div>Service Location</div>
+        <div>SALCEDO middle MONTEBELLO Colorado - 34532</div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions class="m-b-0" align="right">
+    <button mat-stroked-button>Close</button>
+    <button mat-raised-button class="filled-ternary"> Go to Billable item </button>
+  </mat-card-actions>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1 mat-dialog-title>{{data.title}}</h1>
 <div mat-dialog-content>
   <div class="details" *ngIf="!isEdit">
     <p>Event Name: {{data.title}}</p>
     <p>Start Date: {{data.start | date}}</p>
     <p>End Date: {{data.end | date}}</p>
     <button (click)="isEdit=true">Edit</button>
-  </div>
-  <div class="edit-event" *ngIf="isEdit">
+  </div> -->
+<!-- <div class="edit-event" *ngIf="isEdit">
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <input matInput placeholder="Event Name" name="title" [(ngModel)]="event.title">
@@ -30,9 +99,9 @@
       </mat-form-field>
       <button type="submit" (click)="saveEvent()"> Save</button>
     </form>
-  </div>
-</div>
+  </div> -->
+<!-- </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
   <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-</div>
+</div> -->
