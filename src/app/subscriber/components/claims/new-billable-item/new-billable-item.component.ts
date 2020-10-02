@@ -330,7 +330,6 @@ export class NewBillableItemComponent implements OnInit {
 
   submitBillableItem() {
     this.isBillSubmited = true;
-
     Object.keys(this.billable_item.controls).forEach((key) => {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
@@ -340,7 +339,9 @@ export class NewBillableItemComponent implements OnInit {
     }
     this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
+    this.billable_item.value.claimant_id = this.claimantId;
     if (!this.isEdit) {
+      console.log(this.claimantId, this.billable_item.value)
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
         this._location.back();

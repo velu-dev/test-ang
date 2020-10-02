@@ -402,7 +402,11 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.disable();
     this.billable_item.patchValue(this.billableData);
     this.isEditBillableItem = false;
-
+    this.procuderalCodes.map(proc => {
+      if (proc.exam_procedure_type_id == this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value) {
+        this.procedure_type(proc);
+      }
+    })
   }
   // psychiatric(event) {
   //   this.isChecked = event.checked;
