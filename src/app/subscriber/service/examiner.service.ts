@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { api_endpoint } from 'src/environments/api_endpoint';
 import { HttpClient } from '@angular/common/http';
+import { env } from 'process';
 @Injectable({
   providedIn: 'root'
 })
@@ -63,7 +64,9 @@ export class ExaminerService {
   postDocument(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
   }
-
+  downloadOndemandDocuments(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getSignedURL, data)
+  }
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
