@@ -92,6 +92,11 @@
             <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.file_name}} </td>
           </ng-container>
 
+          <ng-container matColumnDef="simple_service_origin">
+            <th mat-header-cell *matHeaderCellDef>Simple Service Origin </th>
+            <td mat-cell *matCellDef="let element" class="p-l-0"> {{element.simple_service_origin}} </td>
+          </ng-container>
+
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action </th>
             <td mat-cell *matCellDef="let element" class="p-l-0">

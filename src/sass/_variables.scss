@@ -895,6 +895,9 @@ input:-webkit-autofill {
 .text-danger {
   color: $danger;
 }
+.text-ternary {
+  color: $ternary;
+}
 
 // Common font family
 .mat-toolbar,
@@ -931,19 +934,19 @@ input:-webkit-autofill {
       }
     }
   }
-  // .remove-eor {
-  //   background-color: $light-color;
-  //   padding:10px 10px;
-  //   border: 1px solid $gray;
-  //   border-radius: 3px;
-  //   div {
-  //     max-width: 100%;
-
-  //   i {
-  //     text-align: center;
-  //    }
-  //   }
-  // }
+  .eor-file {
+    background-color: $light-color;
+    padding: 6px 10px;
+    border: 1px solid $gray;
+    border-radius: 3px;
+    margin: 5px 0;
+    i.fas {
+      float: right;
+      padding-top: 3px;
+      cursor: pointer;
+      color: $danger;
+    }
+  }
 }
 .dialog {
   mat-card-header {

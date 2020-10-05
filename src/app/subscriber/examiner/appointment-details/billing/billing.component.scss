@@ -25,15 +25,15 @@
             padding-right: 20px;
             float: left;
             @media only screen and (max-width: 568px) {
-               width: 100%;
+                width: 100%;
             }
         }
         .review-status {
             display: table;
             @media only screen and (max-width: 568px) {
-               text-align: center;
-               margin: 0px auto;
-             }
+                text-align: center;
+                margin: 0px auto;
+            }
             div {
                 width: 90px;
                 height: 90px;
@@ -93,6 +93,70 @@
             }
         }
     }
+    .submission-document {
+        mat-card {
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            mat-card-header {
+                .content-wrapper-main-title {
+                    width: 100%;
+                    margin-bottom: 8px;
+                    .info {
+                        line-height: 0.6 !important;
+                    }
+                }
+                .bill-status {
+                    margin-bottom: 8px;
+                    text-align: right;
+                    color: $secondary;
+                    font-size: $font-size-9;
+                    font-weight: $font-weight-bold;
+                }
+            }
+            mat-card-content {
+                div {
+                    div {
+                        &:first-child {
+                            padding-top: 10px;
+                            font-size: $font-size-1;
+                            span {
+                                color: $ternary;
+                                text-decoration: underline;
+                                cursor: pointer;
+                            }
+                        }
+                        &:nth-child(2) {
+                            padding-top: 10px;
+                            font-size: $font-size-1;
+                            font-weight: $font-weight-bold;
+                            span {
+                                &:first-child {
+                                    color: $btn_success;
+                                }
+                                &:nth-child(2) {
+                                    color: $ternary;
+                                }
+                            }
+                        }
+                        &:nth-child(3) {
+                            ul {
+                                margin: 10px 0 0 0;
+                                padding-left: 10px;
+                                li {
+                                    list-style: none;
+                                    &::before {
+                                        content: "-";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     .post-payment {
         button {
             float: right;
@@ -114,7 +178,14 @@
         }
     }
     .documents {
-        @extend .examiner-info;
+        // @extend .examiner-info;
+        mat-card {
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+        }
+
         .document-file-upload {
             mat-form-field {
                 padding: 0 10px 0 10px;
