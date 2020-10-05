@@ -982,19 +982,57 @@ input:-webkit-autofill {
       color: #ff3366;
     }
   }
-  .grid-list {
-    padding-top: 5px;
-    div {
-      &:first-child {
-        min-width: 170px;
-        @media only screen and (max-width: 568px) {
-          min-width: 120px;
-        }
+  .grid-list-event {
+    width: 100%;
+    display: flex;
+    div.value {
+      padding: 10px 0 0 5px;
+      width: 100%;
+      mat-form-field {
+        padding: 0px 10px 0px 0px !important;
       }
-      a {
+      i.fa {
+        padding-left: 10px;
         color: $ternary;
-        text-decoration: underline;
+        cursor: pointer;
       }
+    }
+    div.property {
+      padding-top: 10px;
+      min-width: 180px;
+      width: 100%;
+      max-width: 180px;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-1;
+      color: $text-gray;
+      &::after {
+        content: ":";
+        display: inline-flex;
+        float: right;
+      }
+    }
+  }
+  .default-section {
+    position: relative;
+    .action {
+      position: absolute;
+      top: 50%;
+      right: 4%;
+      .cancel {
+        color: $danger;
+        cursor: pointer;
+      }
+      .save {
+        color: $btn_success;
+        cursor: pointer;
+      }
+    }
+  }
+
+  div {
+    a {
+      color: $ternary;
+      text-decoration: underline;
     }
   }
   mat-card-actions {
