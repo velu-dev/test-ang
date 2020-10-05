@@ -628,7 +628,12 @@ export class AppointmentDetailsComponent implements OnInit {
     saveAs(data.exam_report_file_url, data.file_name, '_self');
     this.alertService.openSnackBar("File downloaded successfully", "success");
   }
-
+  downloadDocumet(element) {
+    this.examinerService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, '_self_');
+    })
+  }
   applyFilter(filterValue: string) {
     this.documentsData.filter = filterValue.trim().toLowerCase();
   }
@@ -659,7 +664,9 @@ export class AppointmentDetailsComponent implements OnInit {
         // this.dataSource = new MatTableDataSource(data);
         this.alertService.openSnackBar("Form Generated Successfully", "success")
         this.formId = "";
-        this.getDocumentData();
+        console.log(res)
+        // this.getDocumentData();
+        this.download(res.data)
       })
     } else {
       this.alertService.openSnackBar('Please select a form', 'error');

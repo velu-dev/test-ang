@@ -129,6 +129,7 @@ export const api_endpoint = {
     postNotes: 'examinations/add-notes',
     formUrl: "form/",
     documentUnit: 'examinations/document/units',
+    getSignedURL: "examinations/get-signed-url",
     //Billable item
     updateExamType: "billable-item/update-examination-status/",
 

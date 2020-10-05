@@ -891,7 +891,7 @@
                                     <span
                                         *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                     <span *ngIf="column == 'action'" class="text-center">
-                                        <a target="_self" class="text-success" (click)="download(element)">Download</a>
+                                        <a target="_self" class="text-success" (click)="downloadDocumet(element)">Download</a>
                                         <a class="text-danger m-l-10"
                                             *ngIf="!element?.isServiceRequested && !isExamTypeChanged"
                                             (click)="deleteDocument(element)">Remove</a>
