@@ -692,6 +692,10 @@ input:-webkit-autofill {
 // Forms overide scss        ========
 // ==================================
 
+.mat-dialog-container {
+  padding: 18px !important;
+}
+
 .mat-form-field {
   line-height: 1.15;
 }
@@ -817,6 +821,13 @@ input:-webkit-autofill {
   background-color: $secondary;
   border-color: $secondary;
 }
+
+.filled-ternary {
+  @extend .btn_;
+  color: $white;
+  background-color: $ternary;
+  border-color: $ternary;
+}
 .outline-danger {
   @extend .btn_;
   color: $danger;
@@ -920,6 +931,19 @@ input:-webkit-autofill {
       }
     }
   }
+  // .remove-eor {
+  //   background-color: $light-color;
+  //   padding:10px 10px;
+  //   border: 1px solid $gray;
+  //   border-radius: 3px;
+  //   div {
+  //     max-width: 100%;
+
+  //   i {
+  //     text-align: center;
+  //    }
+  //   }
+  // }
 }
 .dialog {
   mat-card-header {
@@ -944,6 +968,40 @@ input:-webkit-autofill {
   // .mat-form-field-appearance-outline .mat-form-field-label {
   //   margin-top: -0.25em;
   // }
+}
+
+.event-detail {
+  mat-card-header {
+    .lv {
+      color: #ffc400;
+    }
+    .con {
+      color: #009688;
+    }
+    .not_con {
+      color: #ff3366;
+    }
+  }
+  .grid-list {
+    padding-top: 5px;
+    div {
+      &:first-child {
+        min-width: 170px;
+        @media only screen and (max-width: 568px) {
+          min-width: 120px;
+        }
+      }
+      a {
+        color: $ternary;
+        text-decoration: underline;
+      }
+    }
+  }
+  mat-card-actions {
+    button.filled-ternary {
+      @extend .filled-ternary;
+    }
+  }
 }
 
 .fixed-dialog {
