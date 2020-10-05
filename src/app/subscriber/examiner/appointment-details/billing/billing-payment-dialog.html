@@ -141,7 +141,7 @@
                         <div fxLayout="row wrap">
                             <div class="sub-tile" fxFlex="100">Upload Paper EOR</div>
                             <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100">
-                                <button mat-raised-button (click)="uploader.click()" class="filled-gray">Select
+                                <button type="button" mat-raised-button (click)="uploader.click()" class="filled-gray">Select
                                     File</button>
                                 <mat-form-field appearance="standard" class="m-l-10">
                                     <input matInput value="{{file | ellipsis:30}}" readonly
@@ -158,7 +158,7 @@
                     <div fxFlex="100" class="m-t-20 text-center">
                         <button mat-stroked-button type="button" (click)="onNoClick()"
                             class="outline-danger">Cancel</button>
-                        <button mat-stroked-button type="button" class="outline-success text-center m-l-10"
+                        <button mat-stroked-button class="outline-success text-center m-l-10"
                             (click)="PaymentFormSubmit()">Save</button>
                     </div>
                 </form>
