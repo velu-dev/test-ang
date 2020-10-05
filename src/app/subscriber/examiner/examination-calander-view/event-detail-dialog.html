@@ -1,50 +1,76 @@
 <div class="dialog event-detail">
   <mat-card-header class="model-header">
-    <div class="content-wrapper-main-title"> <span> <i class="fa fa-circle p-r-5 lv"></i>QME-Claim#1000893 : {{data.title}}</span></div>
+    <div class="content-wrapper-main-title"> <span> <i class="fa fa-circle p-r-5 lv"></i>QME-Claim#1000893 :
+        {{data.title}}</span></div>
     <span class="spacer"></span>
     <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content>
     <div fxLayout="row wrap" class="m-t-10">
-      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
-        <div>Exam </div>
-        <div><a href="#">QME - Qualified Medical Examination</a></div>
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Exam </div>
+        <div class="value"><a href="#">QME - Qualified Medical Examination</a></div>
       </div>
-      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
-        <div>Exam Procedure</div>
-        <div>Represented QME Re-Evaluation</div>
-      </div>
-
-      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
-        <div>Examiner Name</div>
-        <div>ZENITH PLEASANTON</div>
-      </div>
-      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
-        <div>Examination Date & Time</div>
-        <div>10-20-2020 01:39 PM IST</div>
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Exam Procedure</div>
+        <div class="value">Represented QME Re-Evaluation</div>
       </div>
 
-      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
-        <div>Duration</div>
-        <div>345 Minutes</div>
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Examiner Name</div>
+        <div class="value">ZENITH PLEASANTON</div>
       </div>
-      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
-        <div>Claim #</div>
-        <div>1000893</div>
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Examination Date & Time</div>
+        <div class="value">10-20-2020 01:39 PM IST</div>
       </div>
-      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
-        <div>Claimant Name</div>
-        <div>{{data.title}}</div>
+
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Duration</div>
+        <div class="value">345 Minutes</div>
       </div>
-      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
-        <div>Examination Status</div>
-        <div class="lv">Left Voicemail</div>
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Claim #</div>
+        <div class="value">1000893</div>
       </div>
-      <div class="grid-list" fxFlex="100" fxFlex.xs="100">
-        <div>Service Location</div>
-        <div>SALCEDO middle MONTEBELLO Colorado - 34532</div>
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Claimant Name</div>
+        <div class="value">{{data.title}}</div>
       </div>
+
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Examination Status</div>
+        <div class="value">Left Voicemail <i class="fa fa-pencil" (click)="isEdit = !isEdit "></i></div>
+        <!-- <div class="value" fxLayout="row wrap" *ngIf="isEdit">
+          <mat-form-field appearance="outline" fxFlex="100" class="w-100">
+            <mat-label>Select an Status</mat-label>
+            <mat-select [(value)]="selected">
+              <mat-option>Left Voicemail</mat-option>
+              <mat-option value="option1">Confirmed</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div> -->
+      </div>
+
+      <div class="grid-list-event default-section" fxFlex="100" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" class="w-100 default-section">
+          <mat-label>Note</mat-label>
+          <textarea matInput placeholder="Note" cdkTextareaAutosize cdkAutosizeMinRows="2"
+            cdkAutosizeMaxRows="2"></textarea>
+          <mat-error>Error msg here</mat-error>
+        </mat-form-field>
+        <div class="action">
+          <mat-icon class="cancel">cancel</mat-icon>
+          <mat-icon class="save">check_circle</mat-icon>
+        </div>
+      </div>
+
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property p-t-0">Service Location</div>
+        <div class="value p-t-0">SALCEDO middle MONTEBELLO Colorado - 34532</div>
+      </div>
+
     </div>
   </mat-card-content>
   <mat-divider></mat-divider>
