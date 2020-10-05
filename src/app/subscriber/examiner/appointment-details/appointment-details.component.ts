@@ -631,7 +631,7 @@ export class AppointmentDetailsComponent implements OnInit {
   downloadDocumet(element) {
     this.examinerService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
-      saveAs(res.signed_file_url, '_self_');
+      saveAs(res.signed_file_url, element.file_name);
     })
   }
   applyFilter(filterValue: string) {

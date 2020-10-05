@@ -239,7 +239,7 @@ export class BilllableBillingComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(BillingPaymentDialog, {
       width: '800px',
-      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, FormDetails: this.billingData.post_payment }
+      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, FormDetails: this.billingData && this.billingData.post_payment ? this.billingData.post_payment : null }
     });
 
     dialogRef.afterClosed().subscribe(result => {
