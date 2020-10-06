@@ -28,13 +28,13 @@
                 <input matInput placeholder="Middle Name/MI" formControlName="middleInitial" autocomplete="off">
               </mat-form-field>
               <div fxFlex="100" class="m-b-20" >  
-                <mat-radio-group class="" formControlName="orgStatus">
+                <mat-radio-group class="" formControlName="orgStatus" (change)="registerForm.get('companyName').reset()">
                   <mat-radio-button value="true" checked>Organization</mat-radio-button>
                   <mat-radio-button value="false" class="p-l-30">Individual</mat-radio-button>
               </mat-radio-group>
               </div>
               <mat-form-field appearance="outline" fxFlex="100" *ngIf="registerForm.value.orgStatus == 'true'">
-                <mat-label>Organization Name *</mat-label>
+                <mat-label>Organization Name*</mat-label>
                 <input matInput placeholder="Organization Name" formControlName="companyName" autocomplete="off">
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidcompanyname}}</mat-error>
               </mat-form-field>
