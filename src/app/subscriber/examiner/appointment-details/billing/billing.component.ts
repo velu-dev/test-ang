@@ -145,8 +145,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName2 = ["", "File Name", "Action"]
         this.columnsToDisplay2 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName2 = ["", "File Name", "Action"]
-        this.columnsToDisplay2 = ['doc_image', 'file_name', "action"]
+        this.columnName2 = ["", "File Name", "Document Source", "Action"]
+        this.columnsToDisplay2 = ['doc_image', 'file_name', 'document_source', "action"]
       }
 
       if (res) {

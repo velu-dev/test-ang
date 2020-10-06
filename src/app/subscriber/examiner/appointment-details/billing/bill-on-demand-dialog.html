@@ -1,76 +1,79 @@
-<div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="recipient">
+<div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="recipient p-t-0">
     <div fxLayout="row wrap">
-      <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="main-title">Recipients <span class="info ondemand-info" matTooltip="The selected parties will receive the documents through the Mail On
+        <div fxFlex="100">
+            <div class="main-title m-b-20">Bill Submission </div>
+        </div>
+        <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+            <div class="main-title">Recipients <span class="info ondemand-info" matTooltip="The selected parties will receive the documents through the Mail On
           Demand Service. Enter the name and address of custom recipients using the button at the bottom."
-            matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
-        <p class="description m-b-3 m-r-10">Use the checkboxes to select the recipients of mailed documents.</p>
-      </div>
-      <!-- <div fxFlex="50" fxFlex.sm="100"  fxFlex.xs="100">
-        <button mat-stroked-button class="outline-success float-right m-t-30 m-b-5" (click)="openCustomRecipient()">
-          <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
-        </button>
-      </div> -->
+                    matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+            <p class="description m-b-3 m-r-10">Use the checkboxes to select the recipients of mailed documents.</p>
+        </div>
     </div>
-<div class="basic-table striped_ vertical-fixed footer-fixed">
-    <table mat-table [dataSource]="recipients" class="mat-elevation-z8 w-100 user-table">
+    <div class="basic-table striped_ vertical-fixed footer-fixed m-t-5">
+        <table mat-table [dataSource]="recipients" class="mat-elevation-z8 w-100 user-table">
 
-      <!-- Checkbox Column -->
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle1() : null"
-            [checked]="selection1.hasValue() && isAllSelected1()"
-            [indeterminate]="selection1.hasValue() && !isAllSelected1()" [aria-label]="checkboxLabel1()">
-          </mat-checkbox>
-          <mat-icon [matMenuTriggerFor]="recipients" id="dropdown-list">arrow_drop_down</mat-icon>
-          <mat-menu #recipients="matMenu">
-            <button mat-menu-item (click)="allOrNone1(true)">
-              <span>All</span>
-            </button>
-            <button mat-menu-item (click)="allOrNone1(false)">
-              <span>None</span>
-            </button>
-          </mat-menu>
-        </th>
-        <td mat-cell *matCellDef="let row" class="width-fixed">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection1.toggle(row) : null"
-            [checked]="selection1.isSelected(row)" [aria-label]="checkboxLabel1(row)">
-          </mat-checkbox>
-        </td>
-      </ng-container>
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle1() : null"
+                        [checked]="selection1.hasValue() && isAllSelected1()"
+                        [indeterminate]="selection1.hasValue() && !isAllSelected1()" [aria-label]="checkboxLabel1()">
+                    </mat-checkbox>
+                    <mat-icon [matMenuTriggerFor]="recipients" id="dropdown-list">arrow_drop_down</mat-icon>
+                    <mat-menu #recipients="matMenu">
+                        <button mat-menu-item (click)="allOrNone1(true)">
+                            <span>All</span>
+                        </button>
+                        <button mat-menu-item (click)="allOrNone1(false)">
+                            <span>None</span>
+                        </button>
+                    </mat-menu>
+                </th>
+                <td mat-cell *matCellDef="let row" class="width-fixed">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection1.toggle(row) : null"
+                        [checked]="selection1.isSelected(row)" [aria-label]="checkboxLabel1(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="recipient_type">
-        <th mat-header-cell *matHeaderCellDef>
-          <button mat-stroked-button class="outline-success white-btn float-right m-t-5  m-b-5"
-            (click)="openCustomRecipient()">
-            <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
-          </button></th>
-          <!-- ;openAddAddress(element) -->
-        <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
-          <div class="info-alert" (click)="$event.stopPropagation()"
-            *ngIf="element?.message">
-            <span><i class="fas fa-info-circle"></i>Address incomplete</span>
-          </div>
+            <!-- Name Column -->
+            <ng-container matColumnDef="recipient_type">
+                <th mat-header-cell *matHeaderCellDef>
+                    <button mat-stroked-button class="outline-success white-btn float-right m-t-5  m-b-5"
+                        (click)="openCustomRecipient()">
+                        <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
+                    </button></th>
+                <!-- ;openAddAddress(element) -->
+                <td mat-cell *matCellDef="let element">
+                    {{element.type != 'custom' ? element.recipient_type : element.name}}
+                    <div class="info-alert" (click)="$event.stopPropagation()" *ngIf="element?.message">
+                        <span><i class="fas fa-info-circle"></i>Address incomplete</span>
+                    </div>
 
-          <span class="custom-list" *ngIf="element.type == 'custom'">
-            <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
-            <a class="text-danger m-l-10"
-              (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
-          </span>
-        </td>
-      </ng-container>
-      <!-- custom_recipient column -->
-      <!-- <ng-container matColumnDef="custom_recipient">
-        <td mat-footer-cell *matFooterCellDef colspan="2" class="text-center" (click)="openCustomRecipient()">
-          <b class="add-custom"><i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient</b>
-        </td>
-      </ng-container> -->
+                    <span class="custom-list" *ngIf="element.type == 'custom'">
+                        <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
+                        <a class="text-danger m-l-10"
+                            (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
+                    </span>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;" (click)="selection1.toggle(row)"></tr>
+        </table>
+        <app-nodata *ngIf="recipients?.filteredData?.length == 0"></app-nodata>
+    </div>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns1;" (click)="selection1.toggle(row)"></tr>
-      <!-- <tr mat-footer-row *matFooterRowDef="['custom_recipient']; sticky: true"></tr> -->
-    </table>
-    <app-nodata *ngIf="recipients?.filteredData?.length == 0"></app-nodata>
-  </div>
-  </div>
+    <!-- ===== actions ==== -->
+    <div class="ondamand-request m-t-30" fxLayout="row wrap">
+        <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-left">
+            <button mat-stroked-button class="outline-warning huge-btn m-b-5">Download Bill and Report</button>
+        </div>
+        <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center">
+            <button mat-stroked-button class="filled-success huge-btn m-b-5">Submit Bill and Report</button>
+        </div>
+        <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-right">
+            <button mat-stroked-button class="outline-danger huge-btn">Cancel</button>
+        </div>
+    </div>
+</div>

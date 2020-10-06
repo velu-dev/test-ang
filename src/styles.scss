@@ -481,7 +481,6 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     background-color: $secondary;
     cursor: pointer;
   }
-  
 }
 .fc-toolbar.fc-header-toolbar {
   h2 {
@@ -597,3 +596,112 @@ image-cropper {
 //     width: 8px !important;
 //   }
 // }
+
+// Correspondence and billing recipient custom css
+.recipient {
+  .main-title {
+    @media only screen and (max-width: 568px) {
+      margin-top: 20px;
+    }
+  }
+
+  .info-alert {
+    color: $info;
+    font-size: $font-size-1;
+    padding: 3px 8px;
+    border-radius: 2px;
+    width: auto;
+    float: right;
+
+    @media only screen and (max-width: 568px) {
+      float: left;
+      margin: 5px 0;
+      width: -webkit-fill-available;
+      border-radius: 4px;
+    }
+    i {
+      margin-right: 10px;
+    }
+  }
+  .ondemand-info {
+    @extend .ondemand-info;
+    i {
+      padding-top: 7px;
+    }
+  }
+
+  th {
+    ::ng-deep .mat-checkbox .mat-checkbox-frame {
+      border-color: $white;
+    }
+    #dropdown-list {
+      vertical-align: middle;
+      margin-top: 10px;
+      line-height: 0.5;
+      padding: 0 0 0 5px;
+    }
+    .mat-checkbox-frame {
+      border-color: $white;
+    }
+  }
+  .basic-table.vertical-fixed {
+    min-height: 290px;
+    height: 290px;
+    overflow: auto;
+    .default-select {
+      float: right;
+      color: $ternary;
+      font-weight: $font-weight-bold;
+    }
+    .custom-list {
+      display: flex;
+      float: right;
+    }
+
+    .width-fixed {
+      width: 25px !important;
+      padding-right: 0px !important;
+    }
+    .white-btn {
+      float: right;
+      background-color: $ternary !important;
+      color: $white;
+      border: 1px solid $ternary;
+    }
+  }
+  .ondamand-request {
+    button {
+      width: 98%;
+      height: 60px !important;
+      font-size: $font-size-10 !important;
+      font-weight: $font-weight-base;
+    }
+    .align-left {
+      text-align: left;
+      @media only screen and (max-width: 568px) {
+        text-align: center;
+      }
+      .outline-warning {
+        @extend .outline-warning;
+      }
+    }
+    .align-center {
+      text-align: center;
+      @media only screen and (max-width: 568px) {
+        text-align: center;
+      }
+      .filled-success {
+        @extend .filled-success;
+      }
+    }
+    .align-right {
+      text-align: right;
+      @media only screen and (max-width: 568px) {
+        text-align: center;
+      }
+      .outline-danger {
+        @extend .outline-danger;
+      }
+    }
+  }
+}
