@@ -590,13 +590,16 @@
                                     <div> <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
                                                 [src]="element?.file_name | fileType" alt=""></span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
+                                        <span *ngIf="column == 'document_source'">
+                                            
+                                            <a class="text-ternary m-r-10">Uploaded</a>
+                                        </span>
                                         <span
                                             *ngIf="column == 'document_type'">{{element?.document_type | titlecase}}</span>
                                         <span
                                             *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                         <span *ngIf="column == 'action'">
                                             <a class="text-success m-r-10" (click)="download(element)">Download</a>
-                                            <a class="text-ternary m-r-10">Upload</a>
                                             <a class="text-danger" *ngIf="!element?.isServiceRequested"
                                                 (click)="deleteDocument(element)">Remove</a>
                                         </span>
@@ -609,6 +612,8 @@
                                         [@detailExpand]="expandId2 == element.id ? 'expanded' : 'collapsed'">
                                         <div class="responsive-table">
                                             <div><span>File Name</span><span> {{element?.file_name}} </span></div>
+                                            <div><span>Document Source</span><span> {{element?.document_source}} </span>
+                                            </div>
                                             <!-- <div><span>Type</span><span> {{element?.type}} </span></div> -->
                                             <!-- <div><span>Date</span><span> {{element?.date}} </span></div> -->
 
@@ -637,20 +642,20 @@
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-left">
             <button mat-stroked-button class="filled-lightgray huge-btn m-b-5" (click)="VMC1500Submit()">View CMS
                 1500</button>
-           
+
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center">
             <!-- <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="billingOnDemand()">Bill On
                 Demand</button> -->
-                <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="openBillOnDemand()">Bill On
-                    Demand</button>
+            <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="openBillOnDemand()">Bill On
+                Demand</button>
 
-                
+
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-right">
             <button mat-stroked-button class="filled-secondary huge-btn" (click)="openDialog()">Post Payment</button>
         </div>
-        
+
     </div>
 
     <div class="border-dashed-blue m-b-20 m-t-20"></div>

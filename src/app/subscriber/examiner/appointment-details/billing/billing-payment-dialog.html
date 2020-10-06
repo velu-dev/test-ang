@@ -144,14 +144,14 @@
                                 <button type="button" mat-raised-button (click)="uploader.click()" class="filled-gray">Select
                                     File</button>
                                 <mat-form-field appearance="standard" class="m-l-10">
-                                    <input matInput value="{{file | ellipsis:30}}" readonly
+                                    <input matInput value="{{listOfFiles | ellipsis:30}}" readonly
                                         placeholder="EOR Paper thing that was scanned">
-                                    <input type="file" #uploader hidden (change)="addFile($event)"
+                                    <input type="file" #uploader multiple hidden (change)="addFile($event)"
                                         accept=".pdf, .jpg, .jpeg, .png" required>
                                     <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
                                 </mat-form-field>
-                                <div class="eor-file">Test uploaded PDF file name here ...  <i class="fas fa-trash-alt"></i></div>
-                                <div class="eor-file">Test uploaded PDF file name here ...  <i class="fas fa-trash-alt"></i></div>
+                                <div class="eor-file" *ngFor="let fl of listOfFiles;let i = index">{{fl}}<i (click)="removeFile(i)" class="fas fa-trash-alt"></i></div>
+                                <!-- <div class="eor-file">Test uploaded PDF file name here ...  <i class="fas fa-trash-alt"></i></div> -->
                                 
                             </div>
                         </div>

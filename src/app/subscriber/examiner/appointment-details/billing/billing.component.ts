@@ -16,6 +16,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { formatDate } from '@angular/common';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { ThirdPartyDraggable } from '@fullcalendar/interaction';
+import { SelectionModel } from '@angular/cdk/collections';
 
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
@@ -144,8 +145,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName2 = ["", "File Name", "Action"]
         this.columnsToDisplay2 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName2 = ["", "File Name", "Action"]
-        this.columnsToDisplay2 = ['doc_image', 'file_name', "action"]
+        this.columnName2 = ["", "File Name", "Document Source", "Action"]
+        this.columnsToDisplay2 = ['doc_image', 'file_name', 'document_source', "action"]
       }
 
       if (res) {
@@ -243,7 +244,7 @@ export class BilllableBillingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.billingData.post_payment = result;
       }
     });
@@ -859,7 +860,8 @@ const ELEMENT_DATA3 = [
 export class BillingPaymentDialog {
   file: any;
   postPaymentForm: FormGroup;
-  paymentTypes: any = ["Paper Check", "EFT", "Virtual Credit Card"]
+  paymentTypes: any = ["Paper Check", "EFT", "Virtual Credit Card"];
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,) {
@@ -896,32 +898,40 @@ export class BillingPaymentDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  selectedFile: File;
   formData = new FormData()
+  fileList: File[] = [];
+  listOfFiles: any[] = [];
   addFile(event) {
-    this.selectedFile = null;
+    this.fileList = []
+    this.listOfFiles = []
     let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
-      if (FileSize > 30) {
-        this.alertService.openSnackBar("This file too long", 'error');
+    for (var i = 0; i <= event.target.files.length - 1; i++) {
+      var selectedFile = event.target.files[i];
+      if (fileTypes.includes(event.target.files[i].name.split('.').pop().toLowerCase())) {
+        var FileSize = event.target.files[i].size / 1024 / 1024; // in MB
+        if (FileSize > 30) {
+          this.alertService.openSnackBar(event.target.files[i].name + " file too long", 'error');
+          return;
+        }
+      } else {
+        this.file = []
+        this.alertService.openSnackBar(event.target.files[i].name + " file is not accepted", 'error');
         return;
       }
-      this.file = event.target.files[0].name;
-      this.selectedFile = event.target.files[0];
-      this.postPaymentForm.patchValue({ file: this.selectedFile, is_file_change: true })
-    } else {
-      this.selectedFile = null;
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
-    }
-  }
+      this.fileList.push(selectedFile);
+      this.listOfFiles.push(selectedFile.name)
 
+    }
+    this.fileUpload.nativeElement.value = "";
+    this.postPaymentForm.patchValue({ is_file_change: true })
+  }
   setTwoNumberDecimal($event) {
     $event.target.value = parseFloat($event.target.value).toFixed(2);
   }
   postIsSubmit: boolean = false;
   PaymentFormSubmit() {
 
+    // return;
     this.postIsSubmit = true;
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.required]) : this.postPaymentForm.get('deposit_date').setValidators([]);
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.required]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
@@ -943,7 +953,9 @@ export class BillingPaymentDialog {
       console.log(key, this.postPaymentForm.value[key])
       this.formData.append(key, this.postPaymentForm.value[key])
     });
-
+    for (let i = 0; i < this.fileList.length; i++) {
+      this.formData.append('file', this.fileList[i])
+    }
     this.billingService.billingPostPayment(this.data.billingId, this.formData).subscribe(post => {
       if (!this.postPaymentForm.value.id) {
         this.alertService.openSnackBar("Post payment created successfully", 'success');
@@ -964,8 +976,10 @@ export class BillingPaymentDialog {
     saveAs(url, 'EOR File.pdf', '_self');
   }
 
-  removeFile() {
+  removeFile(i) {
     this.postPaymentForm.patchValue({ file: null, is_file_change: true })
+    this.listOfFiles.splice(i, 1);
+    this.fileList.splice(i, 1);
   }
 
 }
@@ -977,11 +991,147 @@ export class BillingPaymentDialog {
   templateUrl: 'bill-on-demand-dialog.html',
 })
 export class billingOnDemandDialog {
-
+  recipients: any = new MatTableDataSource([]);
+  selection1 = new SelectionModel<any>(true, []);
+  displayedColumns1: string[] = ['select', 'recipient_type'];
   constructor(
     public dialogRef: MatDialogRef<billingOnDemandDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog) { }
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  masterToggle1() {
+    this.isAllSelected1() ?
+      this.selection1.clear() :
+      this.recipients.data.forEach(row => this.selection1.select(row));
+  }
+
+  isAllSelected1() {
+    if (this.recipients.data) {
+      const numSelected = this.selection1.selected.length;
+      const numRows = this.recipients.data.length;
+      return numSelected === numRows;
+    }
+  }
+
+  checkboxLabel1(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected1() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection1.isSelected(row) ? 'deselect' : 'select'} row ${row.recipient_type + 1}`;
+  }
+
+  allOrNone1(status) {
+    if (!status) {
+      this.selection1.clear()
+    } else {
+      this.recipients.data.forEach(row => this.selection1.select(row))
+    }
+  }
+
+  openCustomRecipient(): void {
+    const dialogRef = this.dialog.open(BillingCustomRecipient, {
+      width: '800px',
+      data: { claim_id: 1, billable_id: 1, isEdit: false }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
+
+  isEditRecipient: boolean = false;
+  editRecipient(element) {
+    this.isEditRecipient = true;
+    const dialogRef = this.dialog.open(BillingCustomRecipient, {
+      width: '800px',
+      data: { claim_id: 1, billable_id: 1, data: element, isEdit: true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      }
+    });
+  }
+
+  deleteRecipient(element) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: "delete" }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+
+      } else {
+        return;
+      }
+    });
+  }
+
+}
+
+@Component({
+  selector: 'billing-custom-recipient',
+  templateUrl: 'billing-custom-recipient.html',
+})
+export class BillingCustomRecipient {
+  customReceipient: any;
+  states: any = [];
+  claim_id: any;
+  billable_id: any;
+  isEdit: any = false;
+  recipientData = {};
+  constructor(
+    public dialogRef: MatDialogRef<BillingCustomRecipient>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private claimService: ClaimService,
+    private alertService: AlertService) {
+    dialogRef.disableClose = true;
+    this.claim_id = data['claim_id'];
+    this.billable_id = data['billable_id'];
+    this.isEdit = data['isEdit'];
+    this.claimService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
+  }
+  ngOnInit() {
+    this.customReceipient = this.formBuilder.group({
+      id: [null],
+      name: [null, Validators.required],
+      street1: [null, Validators.required],
+      street2: [null],
+      city: [null, Validators.required],
+      state_id: [null, Validators.required],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$'), Validators.required])],
+    })
+    if (this.isEdit) {
+      if (this.data["data"].zip_code_plus_4) {
+        this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
+      }
+      this.customReceipient.patchValue(this.data["data"]);
+    }
+  }
+  saveClick() {
+    Object.keys(this.customReceipient.controls).forEach((key) => {
+      if (this.customReceipient.get(key).value && typeof (this.customReceipient.get(key).value) == 'string')
+        this.customReceipient.get(key).setValue(this.customReceipient.get(key).value.trim())
+    });
+    if (this.customReceipient.invalid) {
+      return
+    }
+    // this.onDemandService.createCustomRecipient(this.claim_id, this.billable_id, this.customReceipient.value).subscribe(res => {
+    //   if (res.status) {
+    //     this.alertService.openSnackBar(res.message, "success");
+    //     this.dialogRef.close(res)
+    //   } else {
+    //     this.alertService.openSnackBar(res.message, "error");
+    //   }
+    // })
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
