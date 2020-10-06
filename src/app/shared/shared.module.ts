@@ -30,8 +30,8 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS, OwlDateTimeIntl } from 'ng-pick-datetime';
-// import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
-import { OwlMomentDateTimeModule, OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime-moment';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
+//import { OwlMomentDateTimeModule, OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime-moment';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FileTypePipe } from './pipes/file-type.pipe';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
@@ -112,7 +112,7 @@ export const MY_MOMENT_FORMATS = {
     ExportService,
     UserService,
     CookieService,
-    { provide: OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, useValue: {  } },
+    //{ provide: OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, useValue: {  } },
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
     {
       provide: HTTP_INTERCEPTORS,

@@ -144,7 +144,7 @@
                                 <button type="button" mat-raised-button (click)="uploader.click()" class="filled-gray">Select
                                     File</button>
                                 <mat-form-field appearance="standard" class="m-l-10">
-                                    <input matInput value="{{listOfFiles | ellipsis:30}}" readonly
+                                    <input matInput value="{{listOfFiles}}" readonly
                                         placeholder="EOR Paper thing that was scanned">
                                     <input type="file" #uploader multiple hidden (change)="addFile($event)"
                                         accept=".pdf, .jpg, .jpeg, .png" required>
