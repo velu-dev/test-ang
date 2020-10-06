@@ -369,11 +369,12 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                        <mat-select formControlName="unitType">
-                                                            <mat-option *ngFor="let unit of unitTypes" [value]="unit.unit_type">
-                                                                {{unit.unit_type}}
-                                                            </mat-option>
-                                                        </mat-select>
+                                                    <mat-select formControlName="unitType">
+                                                        <mat-option *ngFor="let unit of unitTypes"
+                                                            [value]="unit.unit_type">
+                                                            {{unit.unit_type}}
+                                                        </mat-option>
+                                                    </mat-select>
                                                 </mat-form-field>
                                             </td>
                                             <td>
@@ -479,22 +480,49 @@
             </mat-card-content>
         </mat-card>
     </div>
+
+    <!-- ===== Examination Submission Documents ==== -->
+    <div fxlayout="row wrap" class="m-t-30 submission-document">
+        <mat-card>
+            <mat-card-header fxLayout="row wrap">
+                <div class="content-wrapper-main-title" fxFlex="50">Represented QME Examination Submission Documents
+                    <span class="info ondemand-info m-l-10"
+                        matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
+                        matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+                <div class="content-wrapper-main-title bill-status" fxFlex="50">Second Submission</div>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <div fxLayout="row wrap">
+                    <div fxFlex="100">See <span>these directions</span> and <span>this example</span> provided by the
+                        state of California.</div>
+                    <div fxFlex="100">Please <span>download</span>, finalize and <span>upload</span> the following
+                        documents:</div>
+                    <div>
+                        <ul>
+                            <li> SBR-1 Provider’s Request for Second Bill Review</li>
+                        </ul>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
     <!-- ===== Bill Items ==== -->
-    <div fxlayout="row wrap" class="m-t-20 post-payment">
+    <!-- <div fxlayout="row wrap" class="m-t-20 post-payment">
         <div fxFlex="100">
             <button mat-stroked-button class="filled-secondary huge-btn" (click)="openDialog()">Close Out Bill</button>
         </div>
-    </div>
+    </div> -->
     <!-- ===== Documents ==== -->
     <div class="documents">
         <mat-card>
             <mat-card-header>
-                <div class="content-wrapper-main-title">Documents</div>
+                <!-- <div class="content-wrapper-main-title m-b-0 m-t-20">Upload Documents</div> -->
             </mat-card-header>
-            <mat-divider></mat-divider>
+            <!-- <mat-divider></mat-divider> -->
             <mat-card-content>
                 <div class="w-100">
-                    <div fxLayout="row wrap" fxFlex="100" class="document-file-upload w-100 m-t-20">
+                    <div fxLayout="row wrap" fxFlex="100" class="document-file-upload w-100">
                         <!-- <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                             appearance="outline" class="m-t-10">
                             <mat-label>Document Type</mat-label>
@@ -544,13 +572,13 @@
                         </div>
                     </div>
                 </div>
-                <div fxLayout="row" class="w-100">
+                <div fxLayout="row" class="w-100 m-t-3">
                     <div class="user-detail vertical-fixed" fxFlex="100">
                         <table mat-table [dataSource]="documentsData" multiTemplateDataRows
                             class="mat-elevation-z8 user-table">
                             <ng-container matColumnDef="{{column}}"
                                 *ngFor="let column of columnsToDisplay2; let i=index">
-                                <th mat-header-cell *matHeaderCellDef >
+                                <th mat-header-cell *matHeaderCellDef>
                                     {{columnName2[i]}} </th>
                                 <td mat-cell *matCellDef="let element">
                                     <span *ngIf="i == 0 && isMobile">
@@ -568,6 +596,7 @@
                                             *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                         <span *ngIf="column == 'action'">
                                             <a class="text-success m-r-10" (click)="download(element)">Download</a>
+                                            <a class="text-ternary m-r-10">Upload</a>
                                             <a class="text-danger" *ngIf="!element?.isServiceRequested"
                                                 (click)="deleteDocument(element)">Remove</a>
                                         </span>
@@ -580,8 +609,8 @@
                                         [@detailExpand]="expandId2 == element.id ? 'expanded' : 'collapsed'">
                                         <div class="responsive-table">
                                             <div><span>File Name</span><span> {{element?.file_name}} </span></div>
-                                            <div><span>Type</span><span> {{element?.type}} </span></div>
-                                            <div><span>Date</span><span> {{element?.date}} </span></div>
+                                            <!-- <div><span>Type</span><span> {{element?.type}} </span></div> -->
+                                            <!-- <div><span>Date</span><span> {{element?.date}} </span></div> -->
 
                                         </div>
                                     </div>
@@ -606,16 +635,22 @@
     <!-- ===== actions ==== -->
     <div class="ondamand-actions m-t-30 m-b-30" fxLayout="row wrap">
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-left">
-            <button mat-stroked-button class="outline-success huge-btn m-b-5" (click)="billingOnDemand()">Bill On
-                Demand</button>
-        </div>
-        <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center">
             <button mat-stroked-button class="filled-lightgray huge-btn m-b-5" (click)="VMC1500Submit()">View CMS
                 1500</button>
+           
+        </div>
+        <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center">
+            <!-- <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="billingOnDemand()">Bill On
+                Demand</button> -->
+                <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="openBillOnDemand()">Bill On
+                    Demand</button>
+
+                
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-right">
-            <button mat-stroked-button class="outline-warning huge-btn m-b-5" (click)="downloadAll()">Download All</button>
+            <button mat-stroked-button class="filled-secondary huge-btn" (click)="openDialog()">Post Payment</button>
         </div>
+        
     </div>
 
     <div class="border-dashed-blue m-b-20 m-t-20"></div>
@@ -636,7 +671,7 @@
                             class="mat-elevation-z8 user-table">
                             <ng-container matColumnDef="{{column}}"
                                 *ngFor="let column of columnsToDisplayDoc; let i=index">
-                                <th mat-header-cell *matHeaderCellDef >
+                                <th mat-header-cell *matHeaderCellDef>
                                     {{columnsNameDoc[i]}} </th>
                                 <td mat-cell *matCellDef="let element">
                                     <span *ngIf="i == 0 && isMobile">
@@ -646,67 +681,71 @@
                                         </mat-icon>
                                     </span>
                                     <div>
-                                        <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType"
-                                            alt=""></span>
+                                        <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
+                                                [src]="element?.file_name | fileType" alt=""></span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                                        <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element.action"><span
-                                            *ngSwitchCase="'MD'">Downloaded</span>
-                                          <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
-                                          <span *ngSwitchCase="'SFTP'">Mailed On Demand</span></span>
+                                        <span *ngIf="column == 'action'" class="no-wrap-td"
+                                            [ngSwitch]="element.action"><span *ngSwitchCase="'MD'">Downloaded</span>
+                                            <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
+                                            <span *ngSwitchCase="'SFTP'">Mailed On Demand</span></span>
                                         <span *ngIf="column == 'date'"
-                                          class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
+                                            class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                                         <span *ngIf="column == 'recipients'"><span
-                                            *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
-                                            {{!last ? ',' : ''}}</span></span>
+                                                *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
+                                                {{!last ? ',' : ''}}</span></span>
                                         <span *ngIf="column == 'download' && element?.send">
-                                          <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
+                                            <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'download1' && element?.received">
-                                          <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
+                                            <a class="text-success"
+                                                (click)="inOutdownload(element?.received)">Download</a>
                                         </span>
-                                      </div>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="expandedDetail">
                                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayDoc.length">
-                                    <div class="detail" [@detailExpand]="expandIdDoc == element.document_id ? 'expanded' : 'collapsed'">
+                                    <div class="detail"
+                                        [@detailExpand]="expandIdDoc == element.document_id ? 'expanded' : 'collapsed'">
                                         <div class="responsive-table">
-                                          <ng-container matColumnDef="doc_image">
-                                    <th mat-header-cell *matHeaderCellDef> </th>
-                                    <td mat-cell *matCellDef="let element" class="file_type_icon"><img [src]="element?.file_name | fileType"
-                                        alt=""></td>
-                                  </ng-container>
-                        
-                                  <div class="no-wrap-td"><span>Action</span>
-                                    <span [ngSwitch]="element.action">
-                                      <p *ngSwitchCase="'MD'" class="m-b-0">Downloaded</p>
-                                      <p *ngSwitchCase="'MES'" class="m-b-0">E-Sign Downloaded</p>
-                                      <p *ngSwitchCase="'SFTP'" class="m-b-0">Mailed On Demand</p>
-                                    </span>
-                                  </div>
-                                  <div class="no-wrap-td"><span>Date</span><span> {{element?.date_of_request | date:'MM-dd-yyyy'}} </span></div>
-                                  <div><span>Recipients</span><span *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
-                                      {{!last ? ',' : ''}}</span></div>
-                                  <div><span> Download Generated Items </span><span *ngIf="element?.send">
-                                      <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
-                                    </span></div>
-                                  <div><span> Download On Demand Proof of Service </span><span *ngIf="element?.received">
-                                      <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
-                                    </span></div>
-                              </div>
-                            </div>
-                                </td>
+                                            <ng-container matColumnDef="doc_image">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element" class="file_type_icon"><img
+                                        [src]="element?.file_name | fileType" alt=""></td>
                             </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="columnsToDisplayDoc;sticky :true"></tr>
-                            <tr mat-row *matRowDef="let element; columns: columnsToDisplayDoc;" class="row"
-                                [class.row]="expandedElement === element" (click)="openElementDoc(element)">
-                            </tr>
-                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
-                        </table>
-                        <app-nodata *ngIf="dataSourceDocList?.filteredData?.length == 0"></app-nodata>
+
+                            <div class="no-wrap-td"><span>Action</span>
+                                <span [ngSwitch]="element.action">
+                                    <p *ngSwitchCase="'MD'" class="m-b-0">Downloaded</p>
+                                    <p *ngSwitchCase="'MES'" class="m-b-0">E-Sign Downloaded</p>
+                                    <p *ngSwitchCase="'SFTP'" class="m-b-0">Mailed On Demand</p>
+                                </span>
+                            </div>
+                            <div class="no-wrap-td"><span>Date</span><span>
+                                    {{element?.date_of_request | date:'MM-dd-yyyy'}} </span></div>
+                            <div><span>Recipients</span><span
+                                    *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
+                                    {{!last ? ',' : ''}}</span></div>
+                            <div><span> Download Generated Items </span><span *ngIf="element?.send">
+                                    <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
+                                </span></div>
+                            <div><span> Download On Demand Proof of Service </span><span *ngIf="element?.received">
+                                    <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
+                                </span></div>
                     </div>
                 </div>
-            </mat-card-content>
-        </mat-card>
+                </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayDoc;sticky :true"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplayDoc;" class="row"
+                    [class.row]="expandedElement === element" (click)="openElementDoc(element)">
+                </tr>
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+                </table>
+                <app-nodata *ngIf="dataSourceDocList?.filteredData?.length == 0"></app-nodata>
     </div>
+</div>
+</mat-card-content>
+</mat-card>
+</div>
 </div>

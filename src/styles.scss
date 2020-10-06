@@ -460,7 +460,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     &:hover {
       background-color: $white !important;
       border: 1px solid $light-gray !important;
-      color: $primarycolor !important;
+      color: $primary !important;
     }
     &:focus {
       box-shadow: none !important;
@@ -470,8 +470,18 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   button.fc-button-active {
     background-color: $white !important;
     border: 1px solid $light-gray !important;
-    color: $primarycolor !important;
+    color: $primary !important;
   }
+}
+.fc-button-primary:disabled {
+  background-color: $secondary;
+  border-color: $secondary;
+  &:hover {
+    color: $secondary;
+    background-color: $secondary;
+    cursor: pointer;
+  }
+  
 }
 .fc-toolbar.fc-header-toolbar {
   h2 {

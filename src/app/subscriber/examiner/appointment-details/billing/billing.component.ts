@@ -144,8 +144,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName2 = ["", "File Name", "Action"]
         this.columnsToDisplay2 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName2 = ["", "File Name", "Type", "Date", "Action"]
-        this.columnsToDisplay2 = ['doc_image', 'file_name', 'document_type', 'updatedAt', "action"]
+        this.columnName2 = ["", "File Name", "Action"]
+        this.columnsToDisplay2 = ['doc_image', 'file_name', "action"]
       }
 
       if (res) {
@@ -246,6 +246,17 @@ export class BilllableBillingComponent implements OnInit {
       if(result){
         this.billingData.post_payment = result;
       }
+    });
+  }
+  openBillOnDemand(): void {
+    const dialogRef = this.dialog.open(billingOnDemandDialog, {
+      width: '800px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      // this.animal = result;
     });
   }
 
@@ -955,6 +966,24 @@ export class BillingPaymentDialog {
 
   removeFile() {
     this.postPaymentForm.patchValue({ file: null, is_file_change: true })
+  }
+
+}
+
+
+
+@Component({
+  selector: 'bill-on-demand-dialog',
+  templateUrl: 'bill-on-demand-dialog.html',
+})
+export class billingOnDemandDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<billingOnDemandDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }
