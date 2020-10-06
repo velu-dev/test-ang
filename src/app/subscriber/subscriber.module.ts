@@ -60,14 +60,14 @@ import { RecordsComponent } from './examiner/appointment-details/records/records
 import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
 import { BillingCorrespondanceComponent, CustomDocuments, CustomRecipient, AddAddress } from './examiner/appointment-details/correspondance/correspondance.component';
-import { BilllableBillingComponent, BillingPaymentDialog } from './examiner/appointment-details/billing/billing.component';
+import { BilllableBillingComponent, BillingPaymentDialog, billingOnDemandDialog } from './examiner/appointment-details/billing/billing.component';
 import { OnDemandService } from './service/on-demand.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { BillingService } from './service/billing.service';
 @NgModule({
   declarations: [
     DashboardComponent,
-    UserComponent, 
+    UserComponent,
     NewUserComponent,
     SubscriberSettingsComponent,
     ManagerDashboardComponent,
@@ -134,7 +134,8 @@ import { BillingService } from './service/billing.service';
     CustomRecipient,
     InActivedialog,
     BillingPaymentDialog,
-    AddAddress
+    AddAddress,
+    billingOnDemandDialog
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -151,6 +152,7 @@ import { BillingService } from './service/billing.service';
     InActivedialog,
     BillingPaymentDialog,
     AddAddress,
+    billingOnDemandDialog
     // DefenseAttorneyComponent,
     // ApplicationAttorneyComponent,
     // DeoComponent,

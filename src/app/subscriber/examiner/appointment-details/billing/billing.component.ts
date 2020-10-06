@@ -248,6 +248,17 @@ export class BilllableBillingComponent implements OnInit {
       }
     });
   }
+  openBillOnDemand(): void {
+    const dialogRef = this.dialog.open(billingOnDemandDialog, {
+      width: '800px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
 
   ngOnInit() {
     this.claimService.getICD10('a').subscribe(icd => {
@@ -955,6 +966,24 @@ export class BillingPaymentDialog {
 
   removeFile() {
     this.postPaymentForm.patchValue({ file: null, is_file_change: true })
+  }
+
+}
+
+
+
+@Component({
+  selector: 'bill-on-demand-dialog',
+  templateUrl: 'bill-on-demand-dialog.html',
+})
+export class billingOnDemandDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<billingOnDemandDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }
