@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { SharedRoutingModule } from './shared-routing.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -29,8 +29,9 @@ import { NgxMaskModule } from 'ngx-mask';
 import { FilterPipe } from './pipes/filter.pipe';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
-import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS, OwlDateTimeIntl } from 'ng-pick-datetime';
+// import { OwlMomentDateTimeModule } from 'ng-pick-datetime/date-time/adapter/moment-adapter/moment-date-time.module';
+import { OwlMomentDateTimeModule, OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS } from 'ng-pick-datetime-moment';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FileTypePipe } from './pipes/file-type.pipe';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
@@ -39,8 +40,8 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { AlertDialogueComponent } from './components/alert-dialogue/alert-dialogue.component';
 
 export const MY_MOMENT_FORMATS = {
-  parseInput: 'MM-DD-YYYY HH:mm A',
-  fullPickerInput: 'MM-DD-YYYY HH:mm A',
+  parseInput: 'MM-DD-YYYY HH:mm A z',
+  fullPickerInput: 'MM-DD-YYYY HH:mm A z',
   datePickerInput: 'MM-DD-YYYY',
   timePickerInput: 'HH:mm:ss',
   monthYearLabel: 'MMM YYYY',
@@ -111,6 +112,7 @@ export const MY_MOMENT_FORMATS = {
     ExportService,
     UserService,
     CookieService,
+    { provide: OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, useValue: {  } },
     { provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS },
     {
       provide: HTTP_INTERCEPTORS,
@@ -131,7 +133,8 @@ export const MY_MOMENT_FORMATS = {
       } as RecaptchaSettings,
     },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
-    BreadcrumbService
+    BreadcrumbService,
+    DatePipe
   ]
 })
 export class SharedModule { }
