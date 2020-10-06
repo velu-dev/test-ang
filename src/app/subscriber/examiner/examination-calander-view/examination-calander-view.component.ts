@@ -400,6 +400,7 @@ export const MY_CUSTOM_FORMATS = {
 export class EventdetailDialog {
   event = { title: "", start: "", end: "", location: "" }
   isEdit = false;
+  textDisable: boolean = true;
   constructor(private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     console.log(data)
