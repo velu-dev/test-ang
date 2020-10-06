@@ -16,6 +16,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { formatDate } from '@angular/common';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { ThirdPartyDraggable } from '@fullcalendar/interaction';
+import { SelectionModel } from '@angular/cdk/collections';
 
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
@@ -977,11 +978,147 @@ export class BillingPaymentDialog {
   templateUrl: 'bill-on-demand-dialog.html',
 })
 export class billingOnDemandDialog {
-
+  recipients: any = new MatTableDataSource([]);
+  selection1 = new SelectionModel<any>(true, []);
+  displayedColumns1: string[] = ['select', 'recipient_type'];
   constructor(
     public dialogRef: MatDialogRef<billingOnDemandDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog) {}
 
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  masterToggle1() {
+    this.isAllSelected1() ?
+      this.selection1.clear() :
+      this.recipients.data.forEach(row => this.selection1.select(row));
+  }
+
+  isAllSelected1() {
+    if (this.recipients.data) {
+      const numSelected = this.selection1.selected.length;
+      const numRows = this.recipients.data.length;
+      return numSelected === numRows;
+    }
+  }
+
+  checkboxLabel1(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected1() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection1.isSelected(row) ? 'deselect' : 'select'} row ${row.recipient_type + 1}`;
+  }
+
+  allOrNone1(status) {
+    if (!status) {
+      this.selection1.clear()
+    } else {
+      this.recipients.data.forEach(row => this.selection1.select(row))
+    }
+  }
+
+  openCustomRecipient(): void {
+    const dialogRef = this.dialog.open(BillingCustomRecipient, {
+      width: '800px',
+      data: { claim_id: 1, billable_id: 1, isEdit: false }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
+
+  isEditRecipient: boolean = false;
+  editRecipient(element) {
+    this.isEditRecipient = true;
+    const dialogRef = this.dialog.open(BillingCustomRecipient, {
+      width: '800px',
+      data: { claim_id: 1, billable_id: 1, data: element, isEdit: true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+       
+      }
+    });
+  }
+
+  deleteRecipient(element) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: "delete" }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+       
+      } else {
+        return;
+      }
+    });
+  }
+
+}
+
+@Component({
+  selector: 'billing-custom-recipient',
+  templateUrl: 'billing-custom-recipient.html',
+})
+export class BillingCustomRecipient {
+  customReceipient: any;
+  states: any = [];
+  claim_id: any;
+  billable_id: any;
+  isEdit: any = false;
+  recipientData = {};
+  constructor(
+    public dialogRef: MatDialogRef<BillingCustomRecipient>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private claimService: ClaimService,
+    private alertService: AlertService) {
+    dialogRef.disableClose = true;
+    this.claim_id = data['claim_id'];
+    this.billable_id = data['billable_id'];
+    this.isEdit = data['isEdit'];
+    this.claimService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
+  }
+  ngOnInit() {
+    this.customReceipient = this.formBuilder.group({
+      id: [null],
+      name: [null, Validators.required],
+      street1: [null, Validators.required],
+      street2: [null],
+      city: [null, Validators.required],
+      state_id: [null, Validators.required],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$'), Validators.required])],
+    })
+    if (this.isEdit) {
+      if (this.data["data"].zip_code_plus_4) {
+        this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
+      }
+      this.customReceipient.patchValue(this.data["data"]);
+    }
+  }
+  saveClick() {
+    Object.keys(this.customReceipient.controls).forEach((key) => {
+      if (this.customReceipient.get(key).value && typeof (this.customReceipient.get(key).value) == 'string')
+        this.customReceipient.get(key).setValue(this.customReceipient.get(key).value.trim())
+    });
+    if (this.customReceipient.invalid) {
+      return
+    }
+    // this.onDemandService.createCustomRecipient(this.claim_id, this.billable_id, this.customReceipient.value).subscribe(res => {
+    //   if (res.status) {
+    //     this.alertService.openSnackBar(res.message, "success");
+    //     this.dialogRef.close(res)
+    //   } else {
+    //     this.alertService.openSnackBar(res.message, "error");
+    //   }
+    // })
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
