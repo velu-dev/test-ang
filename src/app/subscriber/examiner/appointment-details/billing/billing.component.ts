@@ -144,8 +144,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName2 = ["", "File Name", "Action"]
         this.columnsToDisplay2 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName2 = ["", "File Name", "Action"]
-        this.columnsToDisplay2 = ['doc_image', 'file_name', "action"]
+        this.columnName2 = ["", "File Name", "Document Source", "Action"]
+        this.columnsToDisplay2 = ['doc_image', 'file_name', 'document_source', "action"]
       }
 
       if (res) {
@@ -243,7 +243,7 @@ export class BilllableBillingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.billingData.post_payment = result;
       }
     });
@@ -980,7 +980,7 @@ export class billingOnDemandDialog {
 
   constructor(
     public dialogRef: MatDialogRef<billingOnDemandDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();
