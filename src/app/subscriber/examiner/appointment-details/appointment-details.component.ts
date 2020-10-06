@@ -664,9 +664,7 @@ export class AppointmentDetailsComponent implements OnInit {
         // this.dataSource = new MatTableDataSource(data);
         this.alertService.openSnackBar("Form Generated Successfully", "success")
         this.formId = "";
-        console.log(res)
-        // this.getDocumentData();
-        this.download(res.data)
+        saveAs(res.data.exam_report_file_url, res.data.file_name, '_self');
       })
     } else {
       this.alertService.openSnackBar('Please select a form', 'error');
