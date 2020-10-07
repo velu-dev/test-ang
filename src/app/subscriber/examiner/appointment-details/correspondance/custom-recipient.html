@@ -43,7 +43,8 @@
                     fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>State*</mat-label>
                     <mat-select formControlName="state_id">
-                        <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                        <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
+                            {{state.state}}
                         </mat-option>
                     </mat-select>
                     <mat-error>Please select state</mat-error>

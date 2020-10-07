@@ -110,7 +110,8 @@
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>State</mat-label>
                             <mat-select formControlName="state">
-                                <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
+                                    {{state.state}}
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="mailingSubmit">Please enter valid state</mat-error>
@@ -196,7 +197,8 @@
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Default Injury State</mat-label>
                                 <mat-select formControlName="default_injury_state">
-                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
+                                        {{state.state}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="billingSubmit">Please enter valid state</mat-error>
@@ -300,7 +302,8 @@
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>State</mat-label>
                             <mat-select formControlName="state">
-                                <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
+                                    {{state.state}}
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="billingSubmit">Please enter valid state</mat-error>
@@ -379,7 +382,8 @@
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Default Injury State</mat-label>
                                 <mat-select formControlName="default_injury_state">
-                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
+                                        {{state.state}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="renderingSubmit">Please enter valid state</mat-error>
