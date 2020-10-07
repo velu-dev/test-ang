@@ -165,5 +165,7 @@ export const api_endpoint = {
     searchPayor: 'billing/payor-search',
     CMS1500Form: 'billing/generate-hcfa-1500/',
     billingDownloadAll: 'billing/download-all/',
-    billingPostPayment: 'billing/post-payment/'
+    billingPostPayment: 'billing/post-payment/',
+    getBillLine: 'billing/bill-line-item/',
+    getPostPayment: 'billing/post-payment-details/'
 }
