@@ -13,7 +13,8 @@
                         Save
                     </button>
                 </span>
-                <button class="close-model" color="warn" *ngIf="fromPop" (click)="cancel();daEdit = false" > <i class="fa fa-close"></i> close </button>
+                <button class="close-model" color="warn" *ngIf="fromPop" (click)="cancel();daEdit = false"> <i
+                        class="fa fa-close"></i> close </button>
             </div>
         </div>
     </div>
@@ -50,7 +51,7 @@
                 <mat-label>Street Address 1{{fromPop ? "*" : ""}}</mat-label>
                 <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
                     cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
-                    <mat-error>Please enter valid street address 1</mat-error>
+                <mat-error>Please enter valid street address 1</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -68,7 +69,8 @@
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>State{{fromPop ? "*" : ""}}</mat-label>
                 <mat-select formControlName="state">
-                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}} -
+                        {{state.state}}
                     </mat-option>
                 </mat-select>
                 <mat-error>Please enter valid state</mat-error>
@@ -94,7 +96,7 @@
                     formControlName="fax" autocomplete="off">
                 <mat-error>Please enter valid fax number</mat-error>
             </mat-form-field>
-            
+
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Email</mat-label>
                 <input matInput placeholder="Email" formControlName="email" autocomplete="off">

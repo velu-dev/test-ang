@@ -1,6 +1,7 @@
 <div class="dialog">
     <mat-card-header class="model-header">
-        <div class="content-wrapper-main-title">{{ licenseForm.value.id || data?.editStatus? 'Edit License' : 'Add License'}}</div>
+        <div class="content-wrapper-main-title">
+            {{ licenseForm.value.id || data?.editStatus? 'Edit License' : 'Add License'}}</div>
         <span class="spacer"></span>
         <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
     </mat-card-header>
@@ -12,7 +13,8 @@
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>License Number</mat-label>
-                    <input matInput placeholder="License Number" mask="9A{15}" [dropSpecialCharacters]="false" formControlName="license_number" autocomplete="off">
+                    <input matInput placeholder="License Number" mask="9A{15}" [dropSpecialCharacters]="false"
+                        formControlName="license_number" autocomplete="off">
                     <mat-error>Please enter valid License Number</mat-error>
                 </mat-form-field>
 
@@ -20,7 +22,8 @@
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>License State</mat-label>
                     <mat-select formControlName="state_id">
-                        <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                        <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
+                            {{state.state}}
                         </mat-option>
                     </mat-select>
                     <mat-error>Please select valid License state</mat-error>

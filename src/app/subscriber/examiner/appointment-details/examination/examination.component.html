@@ -112,8 +112,8 @@
                 <span *ngIf="column == 'updatedAt'" class="no-wrap-td">{{element?.updatedAt | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'action'" class="text-center">
                   <a class="text-success" (click)="downloadDocument(element)">Download</a>
-                  <a *ngIf="!billingData?.is_exam_type_changed" class="text-danger p-l-20"
-                    (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
+                  <a *ngIf="!billingData?.is_exam_type_changed && !element?.isServiceRequested"
+                    class="text-danger p-l-20" (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
                 </span>
               </div>
             </td>

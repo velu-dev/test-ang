@@ -4,7 +4,7 @@
             {{locationId ? 'Service Location' : 'Add New Service Location'}}</div>
         <div class="m-0 content-wrapper-main-title" *ngIf="examinerId">Service Location for {{examinerName}}</div>
         <span class="spacer"></span>
-        
+
         <button mat-stroked-button *ngIf="!editStatus && locationId" class="m-b-5 outline-success" (click)="edit()">
             Edit
         </button>
@@ -74,7 +74,7 @@
                     <mat-label>State *</mat-label>
                     <mat-select formControlName="state">
                         <mat-option *ngFor="let state of states" [value]="state.id">
-                            {{state.state}}
+                            {{state.state_code}} - {{state.state}}
                         </mat-option>
                     </mat-select>
                     <mat-error *ngIf="locationSubmit">Please select valid state</mat-error>

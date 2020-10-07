@@ -492,6 +492,32 @@ export class NewClaimComponent implements OnInit {
   prevStep() {
     this.step--;
   }
+  claimantState = {};
+  caState = {};
+  empState = {};
+  aaState = {};
+  daState = {};
+  deuState = {};
+  changeState(state, type) {
+    this.states.map(res => {
+      console.log((res.id == state) || (res.state == state))
+      if ((res.id == state) || (res.state == state)) {
+        if (type == 'claimant') {
+          this.claimantState = res;
+        } else if (type == 'ca') {
+          this.caState = res;
+        } else if (type == 'emp') {
+          this.empState = res;
+        } else if (type == 'aa') {
+          this.aaState = res;
+        } else if (type == 'da') {
+          this.daState = res;
+        } else if (type == 'deu') {
+          this.deuState = res;
+        }
+      }
+    })
+  }
   ngOnInit() {
     this.advanceSearch = this.formBuilder.group({
       first_name: [],

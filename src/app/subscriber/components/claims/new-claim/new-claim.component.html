@@ -215,8 +215,13 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <mat-select formControlName="state">
-                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state}}
+                                <mat-select formControlName="state"
+                                    (selectionChange)="changeState($event.value, 'claimant')">
+                                    <mat-select-trigger>
+                                        {{claimantState.state_code}}
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
+                                        {{state.state}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid state</mat-error>
@@ -517,7 +522,7 @@
                                 <input matInput placeholder="Adjuster Name" formControlName="name" autocomplete="off">
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="changeStateoutline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Street Address 1</mat-label>
                                 <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize
@@ -541,8 +546,9 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <mat-select formControlName="state">
-                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                <mat-select formControlName="state" (selectionChange)="changeState($event.value, 'ca')">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
+                                        - {{state.state}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Please enter valid state</mat-error>
@@ -637,8 +643,10 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <mat-select formControlName="state">
-                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                <mat-select formControlName="state"
+                                    (selectionChange)="changeState($event.value, 'emp')">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
+                                        - {{state.state}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Please enter valid state</mat-error>
@@ -739,8 +747,9 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <mat-select formControlName="state">
-                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                <mat-select formControlName="state" (selectionChange)="changeState($event.value, 'aa')">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
+                                        - {{state.state}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Please enter valid state</mat-error>
@@ -841,8 +850,9 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <mat-select formControlName="state">
-                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                <mat-select formControlName="state" (selectionChange)="changeState($event.value, 'da')">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
+                                        - {{state.state}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Please enter valid state</mat-error>
@@ -927,8 +937,10 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
-                                <mat-select formControlName="state">
-                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state}}
+                                <mat-select formControlName="state"
+                                    (selectionChange)="changeState($event.value, 'deu')">
+                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
+                                        - {{state.state}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-error>Please enter valid state</mat-error>

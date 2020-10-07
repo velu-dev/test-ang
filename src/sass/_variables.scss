@@ -73,6 +73,7 @@ $border-light: #efefef;
 $yellow: #f2cf3c;
 $light_green: #b5cc18;
 $icon-gray: #a7a7a7;
+$text-light: #707070;
 
 //alert colors
 $text-success: rgb(3, 90, 6);
@@ -984,6 +985,21 @@ input:-webkit-autofill {
     .not_con {
       color: #ff3366;
     }
+    .content-wrapper-main-title {
+      margin-bottom: 0px !important;
+      font-size: $font-size-13;
+    }
+  }
+  .small-value {
+    color: $text-light;
+    font-size: $font-size-1;
+  }
+  .divider {
+    background-color: $light-color;
+    height: 2px;
+    width: 100%;
+    margin: 10px auto;
+    display: block;
   }
   .grid-list-event {
     width: 100%;
@@ -991,6 +1007,7 @@ input:-webkit-autofill {
     div.value {
       padding: 10px 0 0 5px;
       width: 100%;
+      color: $text-light;
       mat-form-field {
         padding: 0px 10px 0px 0px !important;
       }

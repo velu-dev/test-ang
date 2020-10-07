@@ -1,43 +1,38 @@
 <div class="dialog event-detail">
   <mat-card-header class="model-header">
-    <div class="content-wrapper-main-title"> <span> <i class="fa fa-circle p-r-5 lv"></i>QME-Claim#1000893 :
-        {{data.title}}</span></div>
+    <div class="content-wrapper-main-title"> <span> <i class="fa fa-circle p-r-5 lv"></i>{{data.title}}</span></div>
     <span class="spacer"></span>
     <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
   </mat-card-header>
-  <mat-divider></mat-divider>
+  <div class="small-value">Monday, October 12 | 10:30 - 11:30am</div>
+  <div class="small-value p-t-5"> Service Location : SALCEDO middle MONTEBELLO Colorado - 34532</div>
   <mat-card-content>
     <div fxLayout="row wrap" class="m-t-10">
+
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
-        <div class="property">Exam </div>
-        <div class="value"><a href="#">QME - Qualified Medical Examination</a></div>
+        <div class="property">Examiner</div>
+        <div class="value">ZENITH PLEASANTON</div>
       </div>
+
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
-        <div class="property">Exam Procedure</div>
+        <div class="property">Claimant</div>
+        <div class="value">{{data.title}}</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Exam Procedure Type</div>
         <div class="value">Represented QME Re-Evaluation</div>
       </div>
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
-        <div class="property">Examiner Name</div>
-        <div class="value">ZENITH PLEASANTON</div>
-      </div>
-      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
-        <div class="property">Examination Date & Time</div>
-        <div class="value">10-20-2020 01:39 PM IST</div>
-      </div>
-
-      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
-        <div class="property">Duration</div>
-        <div class="value">345 Minutes</div>
-      </div>
-      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
-        <div class="property">Claim #</div>
+        <div class="property">Claim Number</div>
         <div class="value">1000893</div>
       </div>
-      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
-        <div class="property">Claimant Name</div>
-        <div class="value">{{data.title}}</div>
-      </div>
+
+      <div class="divider"></div>
+
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Examination Status</div>
@@ -53,6 +48,34 @@
         </div> -->
       </div>
 
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Claimant Phone </div>
+        <div class="value">(777) 777-7777</div>
+      </div>
+
+
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Claimant Email </div>
+        <div class="value">mgl@gmail.com</div>
+      </div>
+
+      <!-- <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Exam </div>
+        <div class="value"><a href="#">QME - Qualified Medical Examination</a></div>
+      </div>
+
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Examination Date & Time</div>
+        <div class="value">10-20-2020 01:39 PM IST</div>
+      </div>
+
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Duration</div>
+        <div class="value">345 Minutes</div>
+      </div> -->
+
+
+
       <div class="grid-list-event default-section" fxFlex="100" fxFlex.xs="100">
         <mat-form-field appearance="outline" fxFlex="100" class="w-100 default-section">
           <mat-label>Note</mat-label>
@@ -67,10 +90,10 @@
         </div>
       </div>
 
-      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+      <!-- <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property p-t-0">Service Location</div>
         <div class="value p-t-0">SALCEDO middle MONTEBELLO Colorado - 34532</div>
-      </div>
+      </div> -->
 
     </div>
   </mat-card-content>
