@@ -253,6 +253,7 @@ export class BilllableBillingComponent implements OnInit {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
       width: '800px',
       // data: {name: this.name, animal: this.animal}
+      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1047,8 +1048,8 @@ export class BillingPaymentDialog {
 
   }
 
-  fileDownload(url) {
-    saveAs(url, 'EOR File.pdf', '_self');
+  fileDownload(file) {
+    saveAs(file.post_payment_file_url, file.file_name, '_self');
   }
 
   removeFile(i) {
@@ -1058,9 +1059,9 @@ export class BillingPaymentDialog {
     this.alertService.openSnackBar("File deleted successfully!", 'success');
   }
 
-  removeFileEdit(i) {
+  removeFileEdit(i,file) {
 
-    this.billingService.deleteDocument(this.paymentDetails.paper_eor_document_id[i]).subscribe(res => {
+    this.billingService.deleteDocument(file.id).subscribe(res => {
       this.paymentDetails.exam_report_file_url.splice(i, 1)
       this.alertService.openSnackBar("File deleted successfully!", 'success');
     }, error => {
@@ -1174,13 +1175,13 @@ export class BillingCustomRecipient {
   recipientData = {};
   constructor(
     public dialogRef: MatDialogRef<BillingCustomRecipient>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private claimService: ClaimService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, public billingService: BillingService,
     private alertService: AlertService) {
     dialogRef.disableClose = true;
     this.claim_id = data['claim_id'];
     this.billable_id = data['billable_id'];
     this.isEdit = data['isEdit'];
-    this.claimService.seedData("state").subscribe(res => {
+    this.billingService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
   }

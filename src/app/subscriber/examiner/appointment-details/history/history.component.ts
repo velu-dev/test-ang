@@ -132,7 +132,7 @@ export class HistoryComponent implements OnInit {
 
     this.onDemandService.OnDemandhistory(data).subscribe(history => {
       this.rushRequest = false;
-      this.download({ file_url: history.data.exam_report_signed_file_url, file_name:  history.data.exam_report_file_name })
+      this.download({ file_url: history.data.file_url, file_name:  history.data.file_name })
       this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully!", 'success');
     }, error => {
       console.log(error);

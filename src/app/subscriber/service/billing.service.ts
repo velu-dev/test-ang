@@ -74,4 +74,16 @@ export class BillingService {
   getPostPayment(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getPostPayment + id)
   }
+
+  postBillRecipient(claimID, billableId, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.postBillRecipient + claimID + '/' + billableId, data)
+  }
+
+  getBillRecipient(claimID, billableId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getBillRecipient + claimID + '/' + billableId)
+  }
+
+  seedData(data): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
+  }
 }
