@@ -237,15 +237,15 @@ export class BilllableBillingComponent implements OnInit {
   payorCtrl = new FormControl();
 
 
-  openDialog(): void {
+  openDialog(status?: boolean, group?): void {
     const dialogRef = this.dialog.open(BillingPaymentDialog, {
       width: '800px',
-      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, FormDetails: this.billingData && this.billingData.post_payment ? this.billingData.post_payment : null }
+      data: { status: status, id: group ? group.get('post_payment_id').value : null, billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.billingData.post_payment = result;
+        this.getBillLineItem();
       }
     });
   }
@@ -318,7 +318,7 @@ export class BilllableBillingComponent implements OnInit {
 
     this.getDocumentData();
     this.getBillingDetails();
-
+    this.getBillLineItem()
     //table
     this.touchedRows = [];
     this.userTable = this.fb.group({
@@ -328,6 +328,7 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   getBillingDetails() {
+
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
@@ -337,12 +338,61 @@ export class BilllableBillingComponent implements OnInit {
         this.payorCtrl.patchValue(billing.data.payor_id + ' - ' + billing.data.payor_name)
       }
       this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
-      if (billing.data && billing.data.billing_line_items) {
-        billing.data.billing_line_items.map((item, index) => {
+      // if (billing.data && billing.data.billing_line_items) {
+      //   billing.data.billing_line_items.map((item, index) => {
+      //     let firstData = {};
+      //     this.addRow(1);
+      //     let modifier = item.modifier ? item.modifier.split('-') : [];
+      //     billing.data.billing_line_items[index].modifierList = modifier;
+      //     firstData = {
+      //       id: item.id,
+      //       modifierList: modifier,
+      //       item_description: item.item_description,
+      //       procedure_code: item.procedure_code,
+      //       modifier: item.modifier,
+      //       unitType: item.unit_type,
+      //       units: item.units,
+      //       charge: item.charge,
+      //       payment: 0,
+      //       balance: 1,
+      //       isEditable: [true]
+      //     }
+      //     if (item.is_post_payment) {
+      //       this.getFormControls.controls[index].get('item_description').setValidators([]);
+      //       this.getFormControls.controls[index].get('procedure_code').setValidators([]);
+      //       this.getFormControls.controls[index].get('units').setValidators([]);
+      //       this.getFormControls.controls[index].get('charge').setValidators([]);
+      //       this.getFormControls.controls[index].get('item_description').updateValueAndValidity();
+      //       this.getFormControls.controls[index].get('procedure_code').updateValueAndValidity();
+      //       this.getFormControls.controls[index].get('units').updateValueAndValidity();
+      //       this.getFormControls.controls[index].get('charge').updateValueAndValidity();
+      //     }
+      //     this.getFormControls.controls[index].patchValue(firstData)
+      //     if (this.getFormControls.controls[index].status == "VALID") {
+      //       this.getFormControls.controls[index].get('isEditable').setValue(false);
+      //     }
+      //   })
+
+      // }
+    }, error => {
+      this.logger.error(error)
+    })
+  }
+  billing_line_items: any;
+  getBillLineItem() {
+    this.touchedRows = [];
+    this.userTable = this.fb.group({
+      tableRows: this.fb.array([])
+    });
+    this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId).subscribe(line => {
+      console.log("line", line)
+      if (line.data) {
+        this.billing_line_items = line.data;
+        line.data.map((item, index) => {
           let firstData = {};
           this.addRow(1);
           let modifier = item.modifier ? item.modifier.split('-') : [];
-          billing.data.billing_line_items[index].modifierList = modifier;
+          line.data[index].modifierList = modifier;
           firstData = {
             id: item.id,
             modifierList: modifier,
@@ -354,7 +404,19 @@ export class BilllableBillingComponent implements OnInit {
             charge: item.charge,
             payment: 0,
             balance: 1,
-            isEditable: [true]
+            isEditable: [true],
+            is_post_payment: item.is_post_payment,
+            post_payment_id: item.post_payment_id
+          }
+          if (item.is_post_payment) {
+            this.getFormControls.controls[index].get('item_description').setValidators([]);
+            this.getFormControls.controls[index].get('procedure_code').setValidators([]);
+            this.getFormControls.controls[index].get('units').setValidators([]);
+            this.getFormControls.controls[index].get('charge').setValidators([]);
+            this.getFormControls.controls[index].get('item_description').updateValueAndValidity();
+            this.getFormControls.controls[index].get('procedure_code').updateValueAndValidity();
+            this.getFormControls.controls[index].get('units').updateValueAndValidity();
+            this.getFormControls.controls[index].get('charge').updateValueAndValidity();
           }
           this.getFormControls.controls[index].patchValue(firstData)
           if (this.getFormControls.controls[index].status == "VALID") {
@@ -613,7 +675,9 @@ export class BilllableBillingComponent implements OnInit {
       payment: [0],
       balance: [0],
       total_charge: [0],
-      isEditable: [true]
+      isEditable: [true],
+      is_post_payment: [],
+      post_payment_id: []
     });
   }
 
@@ -648,7 +712,7 @@ export class BilllableBillingComponent implements OnInit {
         this.alertService.openSnackBar("Bill Line Item deleted successfully", 'success');
         const control = this.userTable.get('tableRows') as FormArray;
         control.removeAt(index);
-        this.billingData.billing_line_items.splice(index, 1)
+        this.billing_line_items.splice(index, 1)
         return
       }, err => {
         this.alertService.openSnackBar(err.error.message, 'error');
@@ -656,7 +720,7 @@ export class BilllableBillingComponent implements OnInit {
     } else {
       const control = this.userTable.get('tableRows') as FormArray;
       control.removeAt(index);
-      this.billingData.billing_line_items.splice(index, 1)
+      this.billing_line_items.splice(index, 1)
     }
   }
 
@@ -738,14 +802,14 @@ export class BilllableBillingComponent implements OnInit {
     }
 
     let data = {
-      id: this.billingData.billing_line_items[i].id,
-      item_description: this.billingData.billing_line_items[i].item_description,
-      procedure_code: this.billingData.billing_line_items[i].procedure_code,
-      modifier: this.billingData.billing_line_items[i].modifier,
-      modifierList: this.billingData.billing_line_items[i].modifierList,
-      units: this.billingData.billing_line_items[i].units,
-      charge: this.billingData.billing_line_items[i].charge,
-      unitType: this.billingData.billing_line_items[i].unit_type,
+      id: this.billing_line_items[i].id,
+      item_description: this.billing_line_items[i].item_description,
+      procedure_code: this.billing_line_items[i].procedure_code,
+      modifier: this.billing_line_items[i].modifier,
+      modifierList: this.billing_line_items[i].modifierList,
+      units: this.billing_line_items[i].units,
+      charge: this.billing_line_items[i].charge,
+      unitType: this.billing_line_items[i].unit_type,
       payment: 0,
       balance: 0,
       isEditable: [false]
@@ -862,6 +926,7 @@ export class BillingPaymentDialog {
   postPaymentForm: FormGroup;
   paymentTypes: any = ["Paper Check", "EFT", "Virtual Credit Card"];
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+  paymentDetails: any;
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,) {
@@ -876,23 +941,35 @@ export class BillingPaymentDialog {
       effective_date: ['', Validators.required],
       payment_method: ['', Validators.required],
       is_deposited: [false],
-      deposit_date: [''],
+      deposit_date: [],
       payor_control_claim_no: [''],
       is_penalty: [false],
-      penalty_amount: [''],
+      penalty_amount: [],
       is_interest_paid: [false],
-      interest_paid: [''],
+      interest_paid: [],
       is_bill_closed: [false],
       write_off_reason: [''],
       eor_allowance: [''],
     })
-    if (this.data.FormDetails) {
-      this.postPaymentForm.patchValue(this.data.FormDetails)
-    }
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
     this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').enable() : this.postPaymentForm.get('interest_paid').disable();
     this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').enable() : this.postPaymentForm.get('write_off_reason').disable();
+    if (data.status) {
+      this.billingService.getPostPayment(data.id).subscribe(pay => {
+        console.log(pay)
+        this.paymentDetails = pay.data
+        this.postPaymentForm.patchValue(pay.data);
+        this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
+        this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
+        this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').enable() : this.postPaymentForm.get('interest_paid').disable();
+        this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').enable() : this.postPaymentForm.get('write_off_reason').disable();
+      }, error => {
+
+      })
+
+    }
+
   }
 
   onNoClick(): void {
@@ -930,8 +1007,6 @@ export class BillingPaymentDialog {
   }
   postIsSubmit: boolean = false;
   PaymentFormSubmit() {
-
-    // return;
     this.postIsSubmit = true;
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.required]) : this.postPaymentForm.get('deposit_date').setValidators([]);
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.required]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
@@ -980,6 +1055,17 @@ export class BillingPaymentDialog {
     this.postPaymentForm.patchValue({ file: null, is_file_change: true })
     this.listOfFiles.splice(i, 1);
     this.fileList.splice(i, 1);
+    this.alertService.openSnackBar("File deleted successfully!", 'success');
+  }
+
+  removeFileEdit(i) {
+
+    this.billingService.deleteDocument(this.paymentDetails.paper_eor_document_id[i]).subscribe(res => {
+      this.paymentDetails.exam_report_file_url.splice(i, 1)
+      this.alertService.openSnackBar("File deleted successfully!", 'success');
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
 
 }

@@ -66,4 +66,12 @@ export class BillingService {
   billingPostPayment(id, data): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.billingPostPayment + id, data)
   }
+
+  getBillLineItem(claimID, billableId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getBillLine + claimID + '/' + billableId)
+  }
+
+  getPostPayment(id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getPostPayment + id)
+  }
 }
