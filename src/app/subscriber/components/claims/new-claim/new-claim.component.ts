@@ -492,7 +492,7 @@ export class NewClaimComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-  claimantState = {};
+  claimantState:any = {};
   caState = {};
   empState = {};
   aaState = {};
