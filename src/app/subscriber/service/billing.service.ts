@@ -86,4 +86,8 @@ export class BillingService {
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
+
+  removeRecipient(id): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + id)
+  }
 }
