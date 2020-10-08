@@ -50,7 +50,7 @@
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Street Address 1 * </mat-label>
+                    <mat-label>Street Address 1* </mat-label>
                     <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off">
                     <mat-error *ngIf="locationSubmit">Please enter valid street address</mat-error>
                 </mat-form-field>
@@ -64,14 +64,14 @@
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>City *</mat-label>
+                    <mat-label>City*</mat-label>
                     <input matInput placeholder="City" formControlName="city" autocomplete="off">
                     <mat-error *ngIf="locationSubmit">Please enter valid city</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>State *</mat-label>
+                    <mat-label>State*</mat-label>
                     <mat-select formControlName="state">
                         <mat-option *ngFor="let state of states" [value]="state.id">
                             {{state.state_code}} - {{state.state}}
@@ -82,7 +82,7 @@
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
-                    <mat-label>Zip Code *</mat-label>
+                    <mat-label>Zip Code*</mat-label>
                     <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
                         formControlName="zip_code" autocomplete="off">
                     <mat-error *ngIf="locationSubmit">Please enter valid zip code</mat-error>
@@ -120,7 +120,7 @@
                 <div fxFlex="100">
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                         fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Service Type *</mat-label>
+                        <mat-label>Service Type*</mat-label>
                         <mat-select formControlName="service_code_id">
                             <mat-option *ngFor="let address of addressType" [value]="address.id">
                                 {{address?.service_code}} - {{address?.service_name}}</mat-option>

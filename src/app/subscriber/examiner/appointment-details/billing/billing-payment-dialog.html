@@ -150,7 +150,7 @@
                                         accept=".pdf, .jpg, .jpeg, .png" required>
                                     <!-- <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint> -->
                                 </mat-form-field>
-                                <div class="eor-file" *ngFor="let fl of paymentDetails?.exam_report_file_url;let i = index">{{fl.file_name}}<i (click)="removeFileEdit(i)" class="fas fa-trash-alt"></i></div>
+                                <div class="eor-file" *ngFor="let fl of paymentDetails?.exam_report_file_url;let i = index"><a routerLink (click)="fileDownload(fl)">{{fl.file_name}}</a><i (click)="removeFileEdit(i,fl)" class="fas fa-trash-alt"></i></div>
                                 <div class="eor-file" *ngFor="let fl of listOfFiles;let i = index">{{fl}}<i (click)="removeFile(i)" class="fas fa-trash-alt"></i></div>
                                 <!-- <div class="eor-file">Test uploaded PDF file name here ...  <i class="fas fa-trash-alt"></i></div> -->
                                 

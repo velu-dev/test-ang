@@ -519,8 +519,8 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="100">
-                        <mat-label>Note</mat-label>
-                        <textarea formControlName="examination_notes" matInput placeholder="Note" cdkTextareaAutosize
+                        <mat-label>Notes</mat-label>
+                        <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     </mat-form-field>
                 </div>
@@ -780,7 +780,7 @@
                     *ngIf="documentType == 7">
                     <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
                     <mat-form-field appearance="standard" class="p-l-10 w-100">
-                        <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
+                        <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" multiple
                             accept=".mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
                         <mat-hint>Supported file formats: .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>

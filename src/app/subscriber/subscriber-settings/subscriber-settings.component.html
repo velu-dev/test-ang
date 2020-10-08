@@ -124,7 +124,7 @@
                                                 hideRequiredMarker="hideRequiredControl.auto"
                                                 floatLabel="floatLabelControl.auto">
                                                 <input matInput [title]="selectedFile" readonly
-                                                    [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
+                                                    [value]="selectedFile | ellipsis:50" placeholder="No file chosen"
                                                     value="12345">
                                                 <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
                                                     (change)="fileChangeEvent($event)" id="uploadFile">
@@ -133,7 +133,7 @@
 
                                             <button matSuffix type="button" (click)="uploader.click()"
                                                 mat-stroked-button
-                                                class="upload_btn outline-success m-t-2 m-l-10">Upload
+                                                class="upload_btn outline-success m-t-3">Upload
                                             </button>
 
                                             <div fxFlex="100" *ngIf="!signData" class="m-t-20">
@@ -295,7 +295,7 @@
                                                 hideRequiredMarker="hideRequiredControl.auto"
                                                 floatLabel="floatLabelControl.auto" class="w-100">
                                                 <input matInput [title]="selectedFile" readonly
-                                                    [value]="selectedFile | ellipsis:30" placeholder="No file chosen"
+                                                    [value]="selectedFile | ellipsis:50" placeholder="No file chosen"
                                                     value="12345">
                                                 <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
                                                     (change)="fileChangeEvent($event)" id="uploadFile">
