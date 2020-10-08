@@ -64,6 +64,7 @@ import { BilllableBillingComponent, BillingPaymentDialog, billingOnDemandDialog,
 import { OnDemandService } from './service/on-demand.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { BillingService } from './service/billing.service';
+import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -166,7 +167,8 @@ import { BillingService } from './service/billing.service';
     SubscriberRoutingModule,
     SharedModule,
     FullCalendarModule,
-    ImageCropperModule
+    ImageCropperModule,
+    NgxSpinnerModule
   ],
   providers: [
     SubscriberUserService,

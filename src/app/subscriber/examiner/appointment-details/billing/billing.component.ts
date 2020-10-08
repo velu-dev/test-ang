@@ -387,7 +387,6 @@ export class BilllableBillingComponent implements OnInit {
       tableRows: this.fb.array([])
     });
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId).subscribe(line => {
-      console.log("line", line)
       if (line.data) {
         this.billing_line_items = line.data;
         line.data.map((item, index) => {
@@ -782,7 +781,6 @@ export class BilllableBillingComponent implements OnInit {
     if (code) {
       for (var c in this.unitTypes) {
         if (this.unitTypes[c].unit_type == code) {
-          console.log(this.unitTypes[c].unit_short_code, "code")
           return this.unitTypes[c].unit_short_code;
         }
       }
@@ -932,6 +930,7 @@ export class BillingPaymentDialog {
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,) {
+    dialogRef.disableClose = true;
     this.postPaymentForm = this.formBuilder.group({
       id: [''],
       file: [null],
@@ -959,7 +958,6 @@ export class BillingPaymentDialog {
     this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').enable() : this.postPaymentForm.get('write_off_reason').disable();
     if (data.status) {
       this.billingService.getPostPayment(data.id).subscribe(pay => {
-        console.log(pay)
         this.paymentDetails = pay.data;
         pay.data.payment_amount = pay.data.payment_amount ? parseFloat(pay.data.payment_amount).toFixed(2) : pay.data.payment_amount;
         pay.data.interest_paid = pay.data.interest_paid ? parseFloat(pay.data.interest_paid).toFixed(2) : pay.data.interest_paid;
@@ -1028,9 +1026,7 @@ export class BillingPaymentDialog {
       return;
     }
     this.formData = new FormData();
-    console.log(this.postPaymentForm.value);
     Object.keys(this.postPaymentForm.value).map((key, value) => {
-      console.log(key, this.postPaymentForm.value[key])
       this.formData.append(key, this.postPaymentForm.value[key])
     });
     for (let i = 0; i < this.fileList.length; i++) {
@@ -1089,7 +1085,8 @@ export class billingOnDemandDialog {
   constructor(
     public dialogRef: MatDialogRef<billingOnDemandDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, public billingService: BillingService,
-    private alertService: AlertService,) {
+    private alertService: AlertService) {
+    dialogRef.disableClose = true;
     this.billingService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -1132,7 +1129,7 @@ export class billingOnDemandDialog {
   openCustomRecipient(): void {
     const dialogRef = this.dialog.open(BillingCustomRecipient, {
       width: '800px',
-      data: { claim_id: this.data.claimId, billable_id: 1, isEdit: false }
+      data: { claim_id: this.data.claimId, billable_id: this.data.billableId, isEdit: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1147,7 +1144,7 @@ export class billingOnDemandDialog {
     this.isEditRecipient = true;
     const dialogRef = this.dialog.open(BillingCustomRecipient, {
       width: '800px',
-      data: { claim_id: this.data.claimId, billable_id: 1, data: element, isEdit: true }
+      data: { claim_id: this.data.claimId, billable_id: this.data.billableId, data: element, isEdit: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1180,7 +1177,11 @@ export class billingOnDemandDialog {
   }
   getBillRecipient() {
     this.billingService.getBillRecipient(this.data.claimId, this.data.billableId).subscribe(rec => {
-      console.log(rec)
+      rec.data.map(doc => {
+        if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+          this.selection1.select(doc);
+        }
+      })
       this.recipients = new MatTableDataSource(rec.data);
     })
   }
@@ -1201,7 +1202,6 @@ export class billingOnDemandDialog {
     let addressEmpty = false;
     let isClaimant = false;
     this.selection1.selected.map(res => {
-      console.log(res)
       if (res.type == "custom") {
         recipientsDocuments_ids.push(res.id)
       } else {
@@ -1289,6 +1289,19 @@ export class billingOnDemandDialog {
       if (result)
         this.getBillRecipient();
     });
+  }
+
+  downloadAll() {
+    // if (this.billingData.documets_sent_and_received.length == 0) {
+    //   this.alertService.openSnackBar("Document not found", "error");
+    //   return;
+    // }
+    this.billingService.billingDownloadAll(this.data.claimId, this.data.billableId, this.data.billingId).subscribe(doc => {
+      saveAs(doc.data.file_url, doc.data.file_name, '_self');
+      this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
+    })
   }
 
 }
