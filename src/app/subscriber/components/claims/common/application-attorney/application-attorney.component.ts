@@ -71,8 +71,18 @@ export class ApplicationAttorneyComponent implements OnInit {
       this.ApplicantAttorney.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editAA();
     }
+    this.changeState(this.aattorneyDetail.state);
     this.ApplicantAttorney.patchValue(this.aattorneyDetail)
     this.id = this.aattorneyDetail.id;
+  }
+  aaState = {};
+  changeState(state) {
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.aaState = res;
+      }
+    })
   }
   private _filterAttroney(value: string, data) {
     if (value) {

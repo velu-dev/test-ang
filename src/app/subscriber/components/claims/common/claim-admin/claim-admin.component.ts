@@ -66,8 +66,17 @@ export class ClaimAdminComponent implements OnInit {
       this.claimAdminForm.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editCA();
     }
+    this.changeState(this.claimAdmin.state);
     this.claimAdminForm.patchValue(this.claimAdmin)
     this.id = this.claimAdmin.id;
+  }
+  caState = {};
+  changeState(state) {
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.caState = res;
+      }
+    })
   }
   appClaimAdmin(aa) {
     delete aa.id;

@@ -35,7 +35,17 @@ export class EmployerComponent implements OnInit {
     if (this.fromPop) {
       this.editEmployer();
     }
+    this.changeState(this.employerDetail.state)
     this.employer.patchValue(this.employerDetail)
+  }
+  empState = {};
+  changeState(state) {
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.empState = res;
+      } 
+    })
   }
   updateEmployer() {
     Object.keys(this.employer.controls).forEach((key) => {

@@ -598,8 +598,19 @@ export class CustomRecipient {
       if (this.data["data"].zip_code_plus_4) {
         this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
       }
+      this.changeState(this.data['data'].state)
       this.customReceipient.patchValue(this.data["data"]);
     }
+  }
+  recipientState = {};
+  changeState(state) {
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        console.log((res.id == state) || (res.state == state))
+        this.recipientState = res;
+      }
+    })
   }
   saveClick() {
     Object.keys(this.customReceipient.controls).forEach((key) => {
@@ -663,8 +674,17 @@ export class AddAddress {
         gender: [null],
         zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
       });
+      this.changeState(this.userData.state)
       this.claimantForm.patchValue(this.userData)
     }
+  }
+  corresState = {};
+  changeState(state) {
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.corresState = res;
+      }
+    })
   }
   saveClaimant() {
     if (this.claimantForm.invalid) {

@@ -157,8 +157,8 @@ export class NewClaimComponent implements OnInit {
   claimList = [];
   tabIndex = 0;
   duration = [{ id: 20, value: "20" }, { id: 30, value: "30" }, { id: 45, value: "45" }, { id: 60, value: "60" }]
-  ALL_SEED_DATA = ["address_type", "body_part",
-    "contact_type", "agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles", "state",
+  ALL_SEED_DATA = ["state", "address_type", "body_part",
+    "contact_type", "agent_type", "exam_type", "language", "modifier", "object_type", "role_level", "roles",
     "user_account_status", "user_roles", "procedural_codes"];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   intakeComType: string;
@@ -263,6 +263,8 @@ export class NewClaimComponent implements OnInit {
             this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.primary_language_spoken = claimant.data[0].primary_language_spoken ? true : false;
+            this.changeState(claimant.data[0].state, 'claimant');
+            console.log("claimant state", claimant.data[0].state)
             this.claimant.patchValue(claimant.data[0])
             this.isclaimantfill = true;
             this.isClaimantFilled = false;
@@ -299,6 +301,7 @@ export class NewClaimComponent implements OnInit {
           this.isClaimantCreated = true;
           this.isClaimCreated = true;
           this.languageStatus = res.data.claimant_details.certified_interpreter_required;
+          this.changeState(res.data.claimant_details.state, 'claimant')
           this.claimant.patchValue(res.data.claimant_details)
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           this.claim.patchValue({
@@ -476,7 +479,8 @@ export class NewClaimComponent implements OnInit {
         date_of_birth: option.date_of_birth
       }
     })
-    this.primary_language_spoken = option.primary_language_spoken ? true : false
+    this.primary_language_spoken = option.primary_language_spoken ? true : false;
+    this.changeState(option.state, 'claimant')
     this.claimant.patchValue(option);
     this.filteredClaimant.data = [];
 
@@ -500,7 +504,6 @@ export class NewClaimComponent implements OnInit {
   deuState = {};
   changeState(state, type) {
     this.states.map(res => {
-      console.log((res.id == state) || (res.state == state))
       if ((res.id == state) || (res.state == state)) {
         if (type == 'claimant') {
           this.claimantState = res;
@@ -685,27 +688,33 @@ export class NewClaimComponent implements OnInit {
       }
     );
     this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges.subscribe(input => {
-      if (input.length >= 3 || input.length == 0) {
-        this.claimService.searchEAMSAdmin({ search: input }).subscribe(res => {
-          let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
-          this.claimAdminGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
-        })
+      if (input) {
+        if (input.length >= 3 || input.length == 0) {
+          this.claimService.searchEAMSAdmin({ search: input }).subscribe(res => {
+            let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+            this.claimAdminGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+          })
+        }
       }
     });
     this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges.subscribe(input => {
-      if (input.length >= 3 || input.length == 0) {
-        this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
-          let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
-          this.aattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
-        })
+      if (input) {
+        if (input.length >= 3 || input.length == 0) {
+          this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
+            let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+            this.aattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+          })
+        }
       }
     });
     this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges.subscribe(input => {
-      if (input.length >= 3 || input.length == 0) {
-        this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
-          let ind = this.dattroneyGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
-          this.dattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
-        })
+      if (input) {
+        if (input.length >= 3 || input.length == 0) {
+          this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
+            let ind = this.dattroneyGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+            this.dattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+          })
+        }
       }
     })
   }
@@ -1257,15 +1266,18 @@ export class NewClaimComponent implements OnInit {
           if (!this.fromClaimant) {
             this.isClaimantEdit = false;
             this.addNewClaimant = true;
+            this.changeState(res.data.claimant.state, 'claimant')
             this.claimant.patchValue(res.data.claimant)
           }
           if (!this.isClaimantFilled)
+
             this.claim.patchValue({
               claim_details: res.data.claim,
             });
           this.injuryInfodata = res.data.injuryInfodata;
           if (res.data.employer.length == 1) {
             this.employerList = [];
+            this.changeState(res.data.employer[0].state, 'emp')
             this.appEmployer(res.data.employer[0])
           } else {
             this.employerList = res.data.employer;
@@ -1345,19 +1357,21 @@ export class NewClaimComponent implements OnInit {
     this.selectedExaminarAddress = address;
   }
   appAttorney(attroney) {
+    this.changeState(attroney.state, 'aa');
     delete attroney['id'];
     this.claim.patchValue({
       ApplicantAttorney: attroney
     })
   }
   defAttornety(attroney) {
+    this.changeState(attroney.state, 'da');
     delete attroney['id'];
     this.claim.patchValue({
       DefenseAttorney: attroney
     })
   }
   appClaimAdmin(claimadmin) {
-    console.log(claimadmin)
+    this.changeState(claimadmin.state, 'ca');
     delete claimadmin['id'];
     this.claim.patchValue({
       InsuranceAdjuster: claimadmin
@@ -1490,6 +1504,7 @@ export class NewClaimComponent implements OnInit {
     this.openDialog('delete', id);
   }
   appEmployer(employer) {
+    this.changeState(employer.state, 'emp')
     this.claim.patchValue({
       Employer: employer
     })
@@ -1520,6 +1535,7 @@ export class NewClaimComponent implements OnInit {
     this.claim.patchValue({
       DEU: deu
     })
+    this.changeState(deu.state, 'deu')
     this.claim.patchValue({
       DEU: {
         name: this.deuCtrl.value

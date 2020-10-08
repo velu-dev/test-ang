@@ -55,7 +55,7 @@
           <!-- Name Column -->
           <ng-container matColumnDef="form_name">
             <th mat-header-cell *matHeaderCellDef>
-              <button *ngIf="!correspondData.is_exam_type_changed" mat-stroked-button
+              <button *ngIf="!correspondData?.is_exam_type_changed" mat-stroked-button
                 class="outline-success white-btn float-right m-t-5 m-b-5" (click)="openDialog()">
                 <i class="fa fa-file-medical p-r-10"></i> Add Custom Document
               </button>
@@ -66,7 +66,7 @@
               </span>
               <span class="custom-list" *ngIf="element.doc_type == 'custom'">
                 <!-- <a  class="text-success" >Edit</a> -->
-                <a class="text-danger m-l-10" *ngIf="!correspondData.is_exam_type_changed"
+                <a class="text-danger m-l-10" *ngIf="!correspondData?.is_exam_type_changed"
                   (click)="$event.stopPropagation();removeCustomDocument(element)">Remove</a>
               </span>
             </td>

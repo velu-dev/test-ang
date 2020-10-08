@@ -36,6 +36,11 @@ export class AddEditServiceLocationComponent implements OnInit {
     private cookieService: CookieService,
     public dialog: MatDialog
   ) {
+    this.subscriberService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
     this.user = JSON.parse(this.cookieService.get('user'));
     this.route.params.subscribe(params_res => {
       // this.locationForm.enable();
@@ -95,7 +100,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       national_provider_identifier: location.national_provider_identifier,
       is_active: location.is_active.toString(),
     }
-
+    this.changeState(data.state)
     this.locationForm.patchValue(data);
     this.dataSource = new MatTableDataSource(location.examiner_list ? location.examiner_list : []);
     this.examiner_list = location.examiner_list ? location.examiner_list : [];
@@ -120,11 +125,6 @@ export class AddEditServiceLocationComponent implements OnInit {
       //national_provider_identifier: [null],
       is_active: ['true'],
     })
-    this.subscriberService.seedData('state').subscribe(response => {
-      this.states = response['data'];
-    }, error => {
-      console.log("error", error)
-    })
 
     this.subscriberService.seedData('service_code').subscribe(response => {
       this.addressType = response['data'];
@@ -136,7 +136,15 @@ export class AddEditServiceLocationComponent implements OnInit {
       this.locationForm.addControl('national_provider_identifier', new FormControl(null, Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])));
     }
   }
-
+  serviceState = {};
+  changeState(state) {
+    console.log(state, this.states)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.serviceState = res;
+      }
+    })
+  }
   locationFromSubmit() {
     Object.keys(this.locationForm.controls).forEach((key) => {
       if (this.locationForm.get(key).value && typeof (this.locationForm.get(key).value) == 'string')

@@ -218,7 +218,7 @@
                                 <mat-select formControlName="state"
                                     (selectionChange)="changeState($event.value, 'claimant')">
                                     <mat-select-trigger>
-                                        {{claimantState.state_code}}
+                                        {{claimantState?.state_code}}
                                     </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                         {{state.state}}
@@ -547,6 +547,9 @@
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
                                 <mat-select formControlName="state" (selectionChange)="changeState($event.value, 'ca')">
+                                    <mat-select-trigger>
+                                        {{caState.state_code}}
+                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
                                         - {{state.state}}
                                     </mat-option>
@@ -645,6 +648,9 @@
                                 <mat-label>State</mat-label>
                                 <mat-select formControlName="state"
                                     (selectionChange)="changeState($event.value, 'emp')">
+                                    <mat-select-trigger>
+                                        {{empState.state_code}}
+                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
                                         - {{state.state}}
                                     </mat-option>
@@ -748,6 +754,9 @@
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
                                 <mat-select formControlName="state" (selectionChange)="changeState($event.value, 'aa')">
+                                    <mat-select-trigger>
+                                        {{aaState.state_code}}
+                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
                                         - {{state.state}}
                                     </mat-option>
@@ -851,6 +860,9 @@
                                 fxFlex.xs="100">
                                 <mat-label>State</mat-label>
                                 <mat-select formControlName="state" (selectionChange)="changeState($event.value, 'da')">
+                                    <mat-select-trigger>
+                                        {{daState.state_code}}
+                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
                                         - {{state.state}}
                                     </mat-option>
@@ -939,6 +951,9 @@
                                 <mat-label>State</mat-label>
                                 <mat-select formControlName="state"
                                     (selectionChange)="changeState($event.value, 'deu')">
+                                    <mat-select-trigger>
+                                        {{deuState.state_code}}
+                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
                                         - {{state.state}}
                                     </mat-option>

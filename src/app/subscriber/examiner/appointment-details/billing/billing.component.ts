@@ -1176,13 +1176,14 @@ export class BillingCustomRecipient {
     public dialogRef: MatDialogRef<BillingCustomRecipient>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private claimService: ClaimService,
     private alertService: AlertService) {
+    this.claimService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
     dialogRef.disableClose = true;
     this.claim_id = data['claim_id'];
     this.billable_id = data['billable_id'];
     this.isEdit = data['isEdit'];
-    this.claimService.seedData("state").subscribe(res => {
-      this.states = res.data;
-    })
+
   }
   ngOnInit() {
     this.customReceipient = this.formBuilder.group({
@@ -1198,8 +1199,18 @@ export class BillingCustomRecipient {
       if (this.data["data"].zip_code_plus_4) {
         this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
       }
+      this.changeState(this.data['data'].state)
       this.customReceipient.patchValue(this.data["data"]);
     }
+  }
+  recipientState = {};
+  changeState(state) {
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.recipientState = res;
+      }
+    })
   }
   saveClick() {
     Object.keys(this.customReceipient.controls).forEach((key) => {

@@ -280,6 +280,7 @@ export class NewExaminerUserComponent implements OnInit {
         contact_person: res.mailing_address.contact_person,
         notes: res.mailing_address.notes,
       }
+      this.changeState(mailing.state, 'mailing');
       this.mailingAddressForm.patchValue(mailing)
 
       let billing = {
@@ -302,6 +303,7 @@ export class NewExaminerUserComponent implements OnInit {
         suffix: res.billing_provider.suffix,
       }
       this.billingOrgChange(billing.is_person)
+      this.changeState(billing.state, 'billing');
       this.billingProviderForm.patchValue(billing)
 
       let rendering = {
@@ -318,12 +320,13 @@ export class NewExaminerUserComponent implements OnInit {
         middle_name: res.rendering_provider.middle_name,
         rendering_provider_name: res.rendering_provider.rendering_provider_name,
         suffix: res.rendering_provider.suffix,
-        county :  res.rendering_provider.county
+        county: res.rendering_provider.county
         //signature: res.rendering_provider.signature
       }
 
       this.signData = res.rendering_provider.signature ? 'data:image/png;base64,' + res.rendering_provider.signature : null
-      this.renderingOrgChange(rendering.is_person)
+      this.renderingOrgChange(rendering.is_person);
+      this.changeState(rendering['state'], 'render');
       this.renderingForm.patchValue(rendering);
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
@@ -433,7 +436,7 @@ export class NewExaminerUserComponent implements OnInit {
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       rendering_provider_name: [null, Validators.compose([Validators.maxLength(100)])],
-      county:[null]
+      county: [null]
     })
   }
 
@@ -934,6 +937,26 @@ export class NewExaminerUserComponent implements OnInit {
     this.router.navigate([this.router.url + '/add-location/2', this.examinerId])
   }
 
+  cmsState = {};
+  mailingState = {};
+  billingState = {};
+  renderState = {};
+  changeState(state, type) {
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        if (type == 'cms') {
+          this.cmsState = res;
+        } else if (type == 'billing') {
+          this.billingState = res;
+        } else if (type == 'render') {
+          this.renderState = res;
+        } else if (type == 'mailing') {
+          this.mailingState = res;
+        }
+      }
+    })
+  }
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',

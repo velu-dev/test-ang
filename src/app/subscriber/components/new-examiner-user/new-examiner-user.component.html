@@ -109,7 +109,11 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>State</mat-label>
-                            <mat-select formControlName="state">
+                            <mat-select formControlName="state"
+                                (selectionChange)="changeState($event.value, 'mailing')">
+                                <mat-select-trigger>
+                                    {{mailingState?.state_code}}
+                                </mat-select-trigger>
                                 <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                     {{state.state}}
                                 </mat-option>
@@ -196,7 +200,11 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Default Injury State</mat-label>
-                                <mat-select formControlName="default_injury_state">
+                                <mat-select formControlName="default_injury_state"
+                                    (selectionChange)="changeState($event.value, 'billing')">
+                                    <mat-select-trigger>
+                                        {{billingState?.state_code}}
+                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                         {{state.state}}
                                     </mat-option>
@@ -301,7 +309,10 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>State</mat-label>
-                            <mat-select formControlName="state">
+                            <mat-select formControlName="state" (selectionChange)="changeState($event.value, 'cms')">
+                                <mat-select-trigger>
+                                    {{cmsState?.state_code}}
+                                </mat-select-trigger>
                                 <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                     {{state.state}}
                                 </mat-option>
@@ -381,7 +392,11 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Default Injury State</mat-label>
-                                <mat-select formControlName="default_injury_state">
+                                <mat-select formControlName="default_injury_state"
+                                    (selectionChange)="changeState($event.value, 'render')">
+                                    <mat-select-trigger>
+                                        {{ renderState?.state_code}}
+                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                         {{state.state}}
                                     </mat-option>
