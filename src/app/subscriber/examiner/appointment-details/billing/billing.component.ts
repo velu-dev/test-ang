@@ -1201,6 +1201,7 @@ export class billingOnDemandDialog {
     let recipientsDocuments_ids: any = [];
     let addressEmpty = false;
     let isClaimant = false;
+    let isInsurance = false;
     this.selection1.selected.map(res => {
       if (res.type == "custom") {
         recipientsDocuments_ids.push(res.id)
@@ -1214,7 +1215,16 @@ export class billingOnDemandDialog {
       if (res.message) {
         addressEmpty = true;
       }
+
+      if (res.recipient_type && res.recipient_type == 'Insurance Company') {
+        isInsurance = true
+      }
     })
+
+    if (!isInsurance) {
+      this.alertService.openSnackBar('Please select Insurance Company', "error");
+      return;
+    }
 
     let data = {
       claim_id: this.data.claimId,
@@ -1238,6 +1248,7 @@ export class billingOnDemandDialog {
             if (bill.data.exam_report_signed_file_url) {
               recipientsDocuments_ids = [];
               isClaimant = false;
+              isInsurance = false;
               this.selection1.clear();
               this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
             }
@@ -1260,6 +1271,7 @@ export class billingOnDemandDialog {
         if (bill.data.exam_report_signed_file_url) {
           recipientsDocuments_ids = [];
           isClaimant = false;
+          isInsurance = false;
           this.selection1.clear();
           this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
         }
