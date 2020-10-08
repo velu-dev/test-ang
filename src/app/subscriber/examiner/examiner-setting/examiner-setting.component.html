@@ -109,7 +109,7 @@
                             <div fxLayout="row wrap">
                                 <mat-form-field appearance="standard" hideRequiredMarker="hideRequiredControl.auto"
                                     floatLabel="floatLabelControl.auto" class="w-100">
-                                    <input matInput [title]="selectedFile" readonly [value]="selectedFile | ellipsis:30"
+                                    <input matInput [title]="selectedFile" readonly [value]="selectedFile | ellipsis:50"
                                         placeholder="No file chosen" value="12345">
                                     <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
                                         (change)="fileChangeEvent($event)" id="uploadFile">

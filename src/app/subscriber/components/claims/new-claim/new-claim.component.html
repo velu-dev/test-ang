@@ -414,7 +414,7 @@
                                         class="outline-success">
                                         Select File<i class="fa fa-upload p-l-5"></i></button>
                                     <mat-form-field appearance="standard">
-                                        <input matInput [title]="file" readonly [value]="file | ellipsis:30"
+                                        <input matInput [title]="file" readonly [value]="file | ellipsis:50"
                                             placeholder="No file chosen">
                                         <input type="file" #uploader hidden (change)="uploadFile($event)"
                                             id="uploadFile" accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
@@ -522,7 +522,7 @@
                                 <input matInput placeholder="Adjuster Name" formControlName="name" autocomplete="off">
                             </mat-form-field>
 
-                            <mat-form-field appearance="changeStateoutline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Street Address 1</mat-label>
                                 <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize

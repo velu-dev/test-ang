@@ -5,7 +5,7 @@
             <button type="button" (click)="uploader.click()" mat-stroked-button color="primary" class="outline-success">
                 Select File<i class="fa fa-upload p-l-5"></i></button>
             <mat-form-field appearance="standard">
-                <input matInput [title]="file" readonly [value]="file | ellipsis:30" placeholder="No file chosen">
+                <input matInput [title]="file" readonly [value]="file | ellipsis:50" placeholder="No file chosen">
                 <input type="file" #uploader hidden (change)="uploadFile($event)" id="uploadFile"
                     accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
                 <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
@@ -61,7 +61,7 @@
         <app-nodata *ngIf="correspondenceSource?.filteredData?.length == 0"></app-nodata>
 
     </div> -->
-    <div class="user-detail  vertical-fixed">
+    <div class="user-detail  vertical-fixed m-t-5">
         <table mat-table [dataSource]="correspondenceSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
             matSort>
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
