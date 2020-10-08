@@ -4,10 +4,23 @@
     <span class="spacer"></span>
     <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
   </mat-card-header>
-  <div class="small-value p-t-5"><strong>Examination Date & Time </strong>: Monday, October 12 2020 | 10:30 - 11:30am PDT</div>
-  <div class="small-value p-t-5"> <strong>Service Location</strong> : SALCEDO middle MONTEBELLO Colorado - 34532</div>
-  <mat-card-content>
-    <div fxLayout="row wrap" class="m-t-10">
+  <mat-divider class="m-t-10"></mat-divider>
+  <!-- <div class="small-value p-t-5"><strong> Date & Time </strong>: </div>
+  <div class="small-value p-t-5"> <strong>Service </strong> : </div> -->
+  <mat-card-content class="m-b-0">
+    <div fxLayout="row wrap">
+
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Examination</div>
+        <div class="value">Monday, October 12 2020 | 10:30 - 11:30 AM PDT</div>
+      </div>
+
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Location</div>
+        <div class="value"> SALCEDO middle MONTEBELLO Colorado - 34532</div>
+      </div>
+
+      <div class="divider"></div>
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Examiner</div>
