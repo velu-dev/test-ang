@@ -71,7 +71,7 @@ export class CorrespondanceComponent implements OnInit {
   ngOnInit() {
     this.correspondForm = this.formBuilder.group({
       file: ['', Validators.compose([Validators.required])],
-      note: ['', Validators.compose([Validators.required])]
+      note: ['']
     });
 
     this.claimService.getcorrespondence(this.claimId).subscribe(correspondRes => {
