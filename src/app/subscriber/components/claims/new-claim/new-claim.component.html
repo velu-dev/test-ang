@@ -217,9 +217,6 @@
                                 <mat-label>State</mat-label>
                                 <mat-select formControlName="state"
                                     (selectionChange)="changeState($event.value, 'claimant')">
-                                    <mat-select-trigger>
-                                        {{claimantState.state_code}}
-                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                         {{state.state}}
                                     </mat-option>
