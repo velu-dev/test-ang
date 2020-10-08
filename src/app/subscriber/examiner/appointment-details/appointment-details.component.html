@@ -984,7 +984,7 @@
                 <ng-container matColumnDef="expandedDetail">
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay1.length">
                         <div class="detail" [@detailExpand]="expandId1 == element.id ? 'expanded' : 'collapsed'">
-                            <div class="resposive-table">
+                            <div class="responsive-table">
                                 <div><span>Task</span> {{element?.task}} </div>
                                 <div><span>Created By</span> {{element?.created_by}} </div>
                                 <div><span>Created At</span> {{element?.created_at}} </div>
