@@ -1202,6 +1202,7 @@ export class billingOnDemandDialog {
     let addressEmpty = false;
     let isClaimant = false;
     let isInsurance = false;
+    let isInsuranceAddress = false;
     this.selection1.selected.map(res => {
       if (res.type == "custom") {
         recipientsDocuments_ids.push(res.id)
@@ -1219,10 +1220,18 @@ export class billingOnDemandDialog {
       if (res.recipient_type && res.recipient_type == 'Insurance Company') {
         isInsurance = true
       }
+
+      if (res.recipient_type && res.recipient_type == 'Insurance Company' && res.message) {
+        isInsuranceAddress = true
+      }
     })
 
     if (!isInsurance) {
       this.alertService.openSnackBar('Please select Insurance Company', "error");
+      return;
+    }
+    if (isInsuranceAddress) {
+      this.alertService.openSnackBar('Insurance Company address is mandatory', "error");
       return;
     }
 
