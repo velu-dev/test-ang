@@ -17,7 +17,8 @@ import { formatDate } from '@angular/common';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { ThirdPartyDraggable } from '@fullcalendar/interaction';
 import { SelectionModel } from '@angular/cdk/collections';
-
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { AddAddress } from '../correspondance/correspondance.component';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -403,8 +404,8 @@ export class BilllableBillingComponent implements OnInit {
             unitType: item.unit_type,
             units: item.units,
             charge: item.charge,
-            payment: 0,
-            balance: 1,
+            payment: item.payment_amount ? item.payment_amount : 0.00,
+            balance: 0,
             isEditable: [true],
             is_post_payment: item.is_post_payment,
             post_payment_id: item.post_payment_id
@@ -739,7 +740,7 @@ export class BilllableBillingComponent implements OnInit {
     }
 
     let moidfier = group.value.modifierList.toString();
-    moidfier = moidfier ? moidfier.replaceAll(',', '-') : null;
+    moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
     let data = {
       id: group.value.id,
       item_description: group.value.item_description,
@@ -762,7 +763,7 @@ export class BilllableBillingComponent implements OnInit {
       } else {
         this.alertService.openSnackBar("Bill Line Item created successfully", 'success');
       }
-      this.billingData.billing_line_items.push(group.value)
+      this.billing_line_items.push(group.value)
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -829,7 +830,7 @@ export class BilllableBillingComponent implements OnInit {
     let total = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
-        total += this.getFormControls.controls[j].value.charge
+        total += parseInt(this.getFormControls.controls[j].value.charge)
       }
     }
     return total;
@@ -839,7 +840,7 @@ export class BilllableBillingComponent implements OnInit {
     let total = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
-        total += this.getFormControls.controls[j].value.charge - this.getFormControls.controls[j].value.payment
+        total += parseInt(this.getFormControls.controls[j].value.charge) - parseInt(this.getFormControls.controls[j].value.payment)
       }
     }
     return total;
@@ -849,7 +850,7 @@ export class BilllableBillingComponent implements OnInit {
     let total = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.payment) {
-        total += this.getFormControls.controls[j].value.payment
+        total += parseInt(this.getFormControls.controls[j].value.payment)
       }
     }
     return total;
@@ -912,7 +913,7 @@ const ELEMENT_DATA3 = [
 
 ];
 
-
+//post payment 
 @Component({
   selector: 'billing-payment-dialog.html',
   templateUrl: 'billing-payment-dialog.html',
@@ -959,7 +960,10 @@ export class BillingPaymentDialog {
     if (data.status) {
       this.billingService.getPostPayment(data.id).subscribe(pay => {
         console.log(pay)
-        this.paymentDetails = pay.data
+        this.paymentDetails = pay.data;
+        pay.data.payment_amount = pay.data.payment_amount ? parseFloat(pay.data.payment_amount).toFixed(2) : pay.data.payment_amount;
+        pay.data.interest_paid = pay.data.interest_paid ? parseFloat(pay.data.interest_paid).toFixed(2) : pay.data.interest_paid;
+        pay.data.penalty_amount = pay.data.penalty_amount ? parseFloat(pay.data.penalty_amount).toFixed(2) : pay.data.penalty_amount;
         this.postPaymentForm.patchValue(pay.data);
         this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
         this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
@@ -1059,7 +1063,7 @@ export class BillingPaymentDialog {
     this.alertService.openSnackBar("File deleted successfully!", 'success');
   }
 
-  removeFileEdit(i,file) {
+  removeFileEdit(i, file) {
 
     this.billingService.deleteDocument(file.id).subscribe(res => {
       this.paymentDetails.exam_report_file_url.splice(i, 1)
@@ -1072,7 +1076,7 @@ export class BillingPaymentDialog {
 }
 
 
-
+//recipient select
 @Component({
   selector: 'bill-on-demand-dialog',
   templateUrl: 'bill-on-demand-dialog.html',
@@ -1081,9 +1085,16 @@ export class billingOnDemandDialog {
   recipients: any = new MatTableDataSource([]);
   selection1 = new SelectionModel<any>(true, []);
   displayedColumns1: string[] = ['select', 'recipient_type'];
+  states: any;
   constructor(
     public dialogRef: MatDialogRef<billingOnDemandDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, public billingService: BillingService,
+    private alertService: AlertService,) {
+    this.billingService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
+    this.getBillRecipient();
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -1121,11 +1132,12 @@ export class billingOnDemandDialog {
   openCustomRecipient(): void {
     const dialogRef = this.dialog.open(BillingCustomRecipient, {
       width: '800px',
-      data: { claim_id: 1, billable_id: 1, isEdit: false }
+      data: { claim_id: this.data.claimId, billable_id: 1, isEdit: false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.getBillRecipient();
       }
     });
   }
@@ -1135,12 +1147,12 @@ export class billingOnDemandDialog {
     this.isEditRecipient = true;
     const dialogRef = this.dialog.open(BillingCustomRecipient, {
       width: '800px',
-      data: { claim_id: 1, billable_id: 1, data: element, isEdit: true }
+      data: { claim_id: this.data.claimId, billable_id: 1, data: element, isEdit: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-
+        this.getBillRecipient();
       }
     });
   }
@@ -1153,15 +1165,135 @@ export class billingOnDemandDialog {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-
+        this.billingService.removeRecipient(element.id).subscribe(res => {
+          if (res.status) {
+            this.getBillRecipient();
+            this.alertService.openSnackBar(res.message, "success")
+          } else {
+            this.alertService.openSnackBar(res.message, "error")
+          }
+        });
       } else {
         return;
       }
     });
   }
+  getBillRecipient() {
+    this.billingService.getBillRecipient(this.data.claimId, this.data.billableId).subscribe(rec => {
+      console.log(rec)
+      this.recipients = new MatTableDataSource(rec.data);
+    })
+  }
+
+
+  download(data) {
+    saveAs(data.exam_report_file_url, data.file_name, '_self');
+    this.alertService.openSnackBar("File downloaded successfully", "success");
+  }
+
+  billingOnDemand() {
+
+    if (this.selection1.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Recipient(s)', "error");
+      return;
+    }
+    let recipientsDocuments_ids: any = [];
+    let addressEmpty = false;
+    let isClaimant = false;
+    this.selection1.selected.map(res => {
+      console.log(res)
+      if (res.type == "custom") {
+        recipientsDocuments_ids.push(res.id)
+      } else {
+        if (res.recipient_type.toLowerCase() != 'claimant') {
+          recipientsDocuments_ids.push(res.data.id)
+        } else {
+          isClaimant = true
+        }
+      }
+      if (res.message) {
+        addressEmpty = true;
+      }
+    })
+
+    let data = {
+      claim_id: this.data.claimId,
+      document_category_id: 8,
+      billable_item_id: this.data.billableId,
+      service_request_type_id: 5,
+      bill_id: this.data.billingId,
+      //documents_ids: [1753, 1755],
+      recipients_id: recipientsDocuments_ids,
+      isClaimant: isClaimant
+    }
+
+    if (addressEmpty) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: '500px',
+        data: { title: 'Bill on demand', message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.data) {
+          this.billingService.onDemandBilling(data).subscribe(bill => {
+            if (bill.data.exam_report_signed_file_url) {
+              recipientsDocuments_ids = [];
+              isClaimant = false;
+              this.selection1.clear();
+              this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
+            }
+            if (bill.data.bill_on_demand_signed_zip_file_url) {
+              setTimeout(() => {
+                this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+              }, 1000);
+
+            }
+            this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
+          })
+        } else {
+          return;
+        }
+      })
+    } else {
+      this.billingService.onDemandBilling(data).subscribe(bill => {
+        if (bill.data.exam_report_signed_file_url) {
+          recipientsDocuments_ids = [];
+          isClaimant = false;
+          this.selection1.clear();
+          this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
+        }
+        if (bill.data.bill_on_demand_signed_zip_file_url) {
+          setTimeout(() => {
+            this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+          }, 1000);
+
+        }
+        this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    }
+
+  }
+
+  typeIfRecipient = "";
+  openAddAddress(element): void {
+    this.typeIfRecipient = element.recipient_type;
+    const dialogRef = this.dialog.open(AddAddress, {
+      width: '800px',
+      data: { type: this.typeIfRecipient, data: element.data, state: this.states }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.getBillRecipient();
+    });
+  }
 
 }
 
+//bill recipient Add/Edit
 @Component({
   selector: 'billing-custom-recipient',
   templateUrl: 'billing-custom-recipient.html',
@@ -1210,14 +1342,14 @@ export class BillingCustomRecipient {
     if (this.customReceipient.invalid) {
       return
     }
-    // this.onDemandService.createCustomRecipient(this.claim_id, this.billable_id, this.customReceipient.value).subscribe(res => {
-    //   if (res.status) {
-    //     this.alertService.openSnackBar(res.message, "success");
-    //     this.dialogRef.close(res)
-    //   } else {
-    //     this.alertService.openSnackBar(res.message, "error");
-    //   }
-    // })
+    this.billingService.postBillRecipient(this.claim_id, this.billable_id, this.customReceipient.value).subscribe(res => {
+      if (res.status) {
+        this.alertService.openSnackBar(res.message, "success");
+        this.dialogRef.close(res)
+      } else {
+        this.alertService.openSnackBar(res.message, "error");
+      }
+    })
   }
   onNoClick(): void {
     this.dialogRef.close();

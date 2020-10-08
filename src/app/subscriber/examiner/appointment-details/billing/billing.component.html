@@ -437,7 +437,7 @@
                                                 {{group.get('payment').value | number : '1.2-2'}}
                                             </td>
                                             <td>
-                                                {{(group.get('charge').value - group.get('payment').value) | number : '1.2-2'}}
+                                                {{(group.get('charge').value) | number : '1.2-2'}}
                                             </td>
                                             <td class="no-wrap-td">
                                                 <!-- <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon> -->
@@ -464,7 +464,7 @@
                                         <td></td>
                                         <td>{{calculateTotal() | number : '1.2-2'}}</td>
                                         <td>{{calculateTotalPayment() | number : '1.2-2' }}</td>
-                                        <td><span class="text-danger">{{calculateTotalBal() | number : '1.2-2'}}</span>
+                                        <td><span class="text-danger">{{calculateTotal() - calculateTotalPayment() | number : '1.2-2'}}</span>
                                         </td>
                                         <td></td>
                                     </tr>
