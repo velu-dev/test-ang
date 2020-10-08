@@ -993,6 +993,9 @@ input:-webkit-autofill {
   .small-value {
     color: $text-light;
     font-size: $font-size-1;
+    strong {
+      color: $text-gray;
+    }
   }
   .divider {
     background-color: $light-color;
