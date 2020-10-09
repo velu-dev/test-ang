@@ -950,7 +950,7 @@ export class BillingPaymentDialog {
       interest_paid: [],
       is_bill_closed: [false],
       write_off_reason: [''],
-      eor_allowance: [''],
+      eor_allowance: [],
     })
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
@@ -962,6 +962,7 @@ export class BillingPaymentDialog {
         pay.data.payment_amount = pay.data.payment_amount ? parseFloat(pay.data.payment_amount).toFixed(2) : pay.data.payment_amount;
         pay.data.interest_paid = pay.data.interest_paid ? parseFloat(pay.data.interest_paid).toFixed(2) : pay.data.interest_paid;
         pay.data.penalty_amount = pay.data.penalty_amount ? parseFloat(pay.data.penalty_amount).toFixed(2) : pay.data.penalty_amount;
+        pay.data.penalty_amount = pay.data.eor_allowance ? parseFloat(pay.data.eor_allowance).toFixed(2) : pay.data.eor_allowance;
         this.postPaymentForm.patchValue(pay.data);
         this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
         this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
@@ -1175,8 +1176,10 @@ export class billingOnDemandDialog {
       }
     });
   }
+  recipientsData: any;
   getBillRecipient() {
     this.billingService.getBillRecipient(this.data.claimId, this.data.billableId).subscribe(rec => {
+      this.recipientsData = rec.data;
       rec.data.map(doc => {
         if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
           this.selection1.select(doc);
@@ -1256,9 +1259,12 @@ export class billingOnDemandDialog {
           this.billingService.onDemandBilling(data).subscribe(bill => {
             if (bill.data.exam_report_signed_file_url) {
               recipientsDocuments_ids = [];
-              isClaimant = false;
-              isInsurance = false;
               this.selection1.clear();
+              this.recipientsData.map(doc => {
+                if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+                  this.selection1.select(doc);
+                }
+              })
               this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
             }
             if (bill.data.bill_on_demand_signed_zip_file_url) {
@@ -1279,9 +1285,12 @@ export class billingOnDemandDialog {
       this.billingService.onDemandBilling(data).subscribe(bill => {
         if (bill.data.exam_report_signed_file_url) {
           recipientsDocuments_ids = [];
-          isClaimant = false;
-          isInsurance = false;
           this.selection1.clear();
+          this.recipientsData.map(doc => {
+            if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+              this.selection1.select(doc);
+            }
+          })
           this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
         }
         if (bill.data.bill_on_demand_signed_zip_file_url) {
