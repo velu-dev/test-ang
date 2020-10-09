@@ -19,6 +19,8 @@ import { ThirdPartyDraggable } from '@fullcalendar/interaction';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 import { AddAddress } from '../correspondance/correspondance.component';
+import { CookieService } from 'src/app/shared/services/cookie.service';
+import { IntercomService } from 'src/app/services/intercom.service';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -116,7 +118,11 @@ export class BilllableBillingComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     public billingService: BillingService,
-    private fb: FormBuilder,) {
+    private fb: FormBuilder,
+    private intercom: IntercomService,
+    private cookieService: CookieService) {
+      this.intercom.setBillNo('Bill');
+      this.cookieService.set('billNo', null)
     this.route.params.subscribe(param => {
       this.paramsId = param;
       if (!param.billingId) {
@@ -264,9 +270,9 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimService.getICD10('a').subscribe(icd => {
-      this.filteredICD = icd[3];
-    });
+    // this.claimService.getICD10('a').subscribe(icd => {
+    //   this.filteredICD = icd[3];
+    // });
 
     this.icdCtrl.valueChanges.subscribe(res => {
       if (res) {
@@ -333,6 +339,12 @@ export class BilllableBillingComponent implements OnInit {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
+      if (this.billingData.bill_no) {
+        this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
+        this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
+      }else{
+        this.intercom.setBillNo('Bill');
+      }
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.logger.log("billing", billing)

@@ -10,6 +10,7 @@ export class IntercomService {
   public claimantName = new Subject<any>();
   public claimNumber = new Subject<any>();
   public billableItem = new Subject<any>();
+  public billNo = new Subject<any>();
   constructor() { }
   public setUser(status): any {
     this.cusname.next(status);
@@ -49,5 +50,13 @@ export class IntercomService {
 
   public getBillableItem(): Observable<any> {
     return this.billableItem.asObservable();
+  }
+
+  public setBillNo(status): any {
+    this.billNo.next(status);
+  }
+
+  public getBillNo(): Observable<any> {
+    return this.billNo.asObservable();
   }
 }

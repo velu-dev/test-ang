@@ -139,11 +139,11 @@ const routes: Routes = [{
               }, {
                 path: "billing",
                 component: BilllableBillingComponent,
-                data: { breadcrumb: "Bill" }
+                data: { breadcrumb: { alias: '@Bill' } }
               }, {
                 path: "billing/:billingId",
                 component: BilllableBillingComponent,
-                data: { breadcrumb: "Bill" }
+                data: { breadcrumb: { alias: '@Bill' } }
               }]
             }]
           }, {
@@ -215,11 +215,11 @@ const routes: Routes = [{
         }, {
           path: "billing",
           component: BilllableBillingComponent,
-          data: { breadcrumb: "Bill" }
+          data: { breadcrumb: { alias: '@Bill' } }
         }, {
           path: "billing/:billingId",
           component: BilllableBillingComponent,
-          data: { breadcrumb: "Bill" }
+          data: { breadcrumb: { alias: '@Bill' } }
         }]
       }]
     }
@@ -359,11 +359,11 @@ const routes: Routes = [{
     }, {
       path: "billing",
       component: BilllableBillingComponent,
-      data: { breadcrumb: "Bill" }
+      data: { breadcrumb: { alias: '@Bill' } }
     }, {
       path: "billing/:billingId",
       component: BilllableBillingComponent,
-      data: { breadcrumb: "Bill" }
+      data: { breadcrumb: { alias: '@Bill' } }
     }]
   }]
 },
@@ -431,11 +431,11 @@ const routes: Routes = [{
           }, {
             path: "billing",
             component: BilllableBillingComponent,
-            data: { breadcrumb: "Bill" }
+            data: { breadcrumb: { alias: '@Bill' } }
           }, {
             path: "billing/:billingId",
             component: BilllableBillingComponent,
-            data: { breadcrumb: "Bill" }
+            data: { breadcrumb: { alias: '@Bill' } }
           }]
         }]
       }, {
@@ -526,7 +526,7 @@ const routes: Routes = [{
   }, {
     path: ":claim_id/:billId/edit-billing/:billingId",
     component: BilllableBillingComponent,
-    data: { breadcrumb: "Bill" }
+    data: { breadcrumb: { alias: '@Bill' } }
   }]
 },
 {
@@ -651,11 +651,11 @@ const routes: Routes = [{
                   }, {
                     path: "billing",
                     component: BilllableBillingComponent,
-                    data: { breadcrumb: "Bill" }
+                    data: { breadcrumb: { alias: '@Bill' } }
                   }, {
                     path: "billing/:billingId",
                     component: BilllableBillingComponent,
-                    data: { breadcrumb: "Bill" }
+                    data: { breadcrumb: { alias: '@Bill' } }
                   }]
                 }]
               }, {
@@ -727,11 +727,11 @@ const routes: Routes = [{
             }, {
               path: "billing",
               component: BilllableBillingComponent,
-              data: { breadcrumb: "Bill" }
+              data: { breadcrumb: { alias: '@Bill' } }
             }, {
               path: "billing/:billingId",
               component: BilllableBillingComponent,
-              data: { breadcrumb: "Bill" }
+              data: { breadcrumb: { alias: '@Bill' } }
             }]
           }]
         }
@@ -801,11 +801,11 @@ const routes: Routes = [{
         }, {
           path: "billing",
           component: BilllableBillingComponent,
-          data: { breadcrumb: "Bill" }
+          data: { breadcrumb: { alias: '@Bill' } }
         }, {
           path: "billing/:billingId",
           component: BilllableBillingComponent,
-          data: { breadcrumb: "Bill" }
+          data: { breadcrumb: { alias: '@Bill' } }
         }]
       }]
     },
@@ -873,11 +873,11 @@ const routes: Routes = [{
               }, {
                 path: "billing",
                 component: BilllableBillingComponent,
-                data: { breadcrumb: "Bill" }
+                data: { breadcrumb: { alias: '@Bill' } }
               }, {
                 path: "billing/:billingId",
                 component: BilllableBillingComponent,
-                data: { breadcrumb: "Bill" }
+                data: { breadcrumb: { alias: '@Bill' } }
               }]
             }]
           }, {
@@ -945,7 +945,7 @@ const routes: Routes = [{
       }, {
         path: ":claim_id/:billId/edit-billing/:billingId",
         component: BilllableBillingComponent,
-        data: { breadcrumb: "Edit" }
+        data: { breadcrumb: { alias: '@Bill' } }
       }]
     },
     {
@@ -1075,11 +1075,11 @@ const routes: Routes = [{
                   }, {
                     path: "billing",
                     component: BilllableBillingComponent,
-                    data: { breadcrumb: "Bill" }
+                    data: { breadcrumb: { alias: '@Bill' } }
                   }, {
                     path: "billing/:billingId",
                     component: BilllableBillingComponent,
-                    data: { breadcrumb: "Bill" }
+                    data: { breadcrumb: { alias: '@Bill' } }
                   }]
                 }]
               }, {
@@ -1151,11 +1151,11 @@ const routes: Routes = [{
             }, {
               path: "billing",
               component: BilllableBillingComponent,
-              data: { breadcrumb: "Bill" }
+              data: { breadcrumb: { alias: '@Bill' } }
             }, {
               path: "billing/:billingId",
               component: BilllableBillingComponent,
-              data: { breadcrumb: "Bill" }
+              data: { breadcrumb: { alias: '@Bill' } }
             }]
           }]
         }
@@ -1279,11 +1279,11 @@ const routes: Routes = [{
         }, {
           path: "billing",
           component: BilllableBillingComponent,
-          data: { breadcrumb: "Bill" }
+          data: { breadcrumb: { alias: '@Bill' } }
         }, {
           path: "billing/:billingId",
           component: BilllableBillingComponent,
-          data: { breadcrumb: "Bill" }
+          data: { breadcrumb: { alias: '@Bill' } }
         }]
       }]
     },
@@ -1351,11 +1351,11 @@ const routes: Routes = [{
               }, {
                 path: "billing",
                 component: BilllableBillingComponent,
-                data: { breadcrumb: "Bill" }
+                data: { breadcrumb: { alias: '@Bill' } }
               }, {
                 path: "billing/:billingId",
                 component: BilllableBillingComponent,
-                data: { breadcrumb: "Bill" }
+                data: { breadcrumb: { alias: '@Bill' } }
               }]
             }]
           }, {
@@ -1516,11 +1516,11 @@ const routes: Routes = [{
                 }, {
                   path: "billing",
                   component: BilllableBillingComponent,
-                  data: { breadcrumb: "Bill" }
+                  data: { breadcrumb: { alias: '@Bill' } }
                 }, {
                   path: "billing/:billingId",
                   component: BilllableBillingComponent,
-                  data: { breadcrumb: "Bill" }
+                  data: { breadcrumb: { alias: '@Bill' } }
                 }]
               }]
             }, {
@@ -1597,11 +1597,11 @@ const routes: Routes = [{
           }, {
             path: "billing",
             component: BilllableBillingComponent,
-            data: { breadcrumb: "Bill" }
+            data: { breadcrumb: { alias: '@Bill' } }
           }, {
             path: "billing/:billingId",
             component: BilllableBillingComponent,
-            data: { breadcrumb: "Bill" }
+            data: { breadcrumb: { alias: '@Bill' } }
           }]
         }]
       }
@@ -1670,11 +1670,11 @@ const routes: Routes = [{
       }, {
         path: "billing",
         component: BilllableBillingComponent,
-        data: { breadcrumb: "Bill" }
+        data: { breadcrumb: { alias: '@Bill' } }
       }, {
         path: "billing/:billingId",
         component: BilllableBillingComponent,
-        data: { breadcrumb: "Bill" }
+        data: { breadcrumb: { alias: '@Bill' } }
       }]
     }]
   },
@@ -1742,11 +1742,11 @@ const routes: Routes = [{
             }, {
               path: "billing",
               component: BilllableBillingComponent,
-              data: { breadcrumb: "Bill" }
+              data: { breadcrumb: { alias: '@Bill' } }
             }, {
               path: "billing/:billingId",
               component: BilllableBillingComponent,
-              data: { breadcrumb: "Bill" }
+              data: { breadcrumb: { alias: '@Bill' } }
             }]
           }]
         }, {
