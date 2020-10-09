@@ -1448,7 +1448,7 @@ export class NewClaimComponent implements OnInit {
   note: string = null;
   documents_ids = [];
   correspondFormSubmit() {
-    if (this.file == null || this.note == null || this.note.trim() == '') {
+    if (this.file == null) {
       return;
     }
     let formData = new FormData()

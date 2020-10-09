@@ -112,7 +112,7 @@ export class CorrespondanceComponent implements OnInit {
     //   this.correspondForm.get('file').markAsTouched();
     //   return;
     // }
-    if (this.file == null || this.note == null || this.note.trim() == '') {
+    if (this.file == null) {
       return;
     }
     let formData = new FormData()
