@@ -75,12 +75,15 @@ export class ApplicationAttorneyComponent implements OnInit {
     this.ApplicantAttorney.patchValue(this.aattorneyDetail)
     this.id = this.aattorneyDetail.id;
   }
-  aaState = {};
-  changeState(state) {
-    console.log(state)
+  aaState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.aaState = state_code;
+      return
+    }
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
-        this.aaState = res;
+        this.aaState = res.state_code;
       }
     })
   }

@@ -167,5 +167,9 @@ export const api_endpoint = {
     billingDownloadAll: 'billing/download-all/',
     billingPostPayment: 'billing/post-payment/',
     getBillLine: 'billing/bill-line-item/',
-    getPostPayment: 'billing/post-payment-details/'
+    getPostPayment: 'billing/post-payment-details/',
+
+    //Calendar 
+
+    getCalendarEvents: "calendar/all",
 }

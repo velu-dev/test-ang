@@ -384,6 +384,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   openAddAddress(element): void {
     this.logger.log(element.data)
     this.typeIfRecipient = element.recipient_type;
+
     const dialogRef = this.dialog.open(AddAddress, {
       width: '800px',
       data: { type: this.typeIfRecipient, data: element.data, state: this.states }
@@ -674,15 +675,19 @@ export class AddAddress {
         gender: [null],
         zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
       });
-      this.changeState(this.userData.state)
+      this.changeState(this.userData.state, this.userData.state_code)
       this.claimantForm.patchValue(this.userData)
     }
   }
-  corresState = {};
-  changeState(state) {
+  corresState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.corresState = state_code;
+    }
     this.states.map(res => {
-      if ((res.id == state) || (res.state == state)) {
-        this.corresState = res;
+      if ((res.id == state) || (res.state_code == state)) {
+        console.log(res);
+        this.corresState = res.state_code;
       }
     })
   }

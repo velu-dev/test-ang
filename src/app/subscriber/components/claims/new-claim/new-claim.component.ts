@@ -496,27 +496,43 @@ export class NewClaimComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-  claimantState = {};
-  caState = {};
-  empState = {};
-  aaState = {};
-  daState = {};
-  deuState = {};
-  changeState(state, type) {
+  claimantState: any;
+  caState: any;
+  empState: any;
+  aaState: any;
+  daState: any;
+  deuState: any;
+  changeState(state, type, state_code?) {
+    if (state_code) {
+      if (type == 'claimant') {
+        this.claimantState = state_code;
+      } else if (type == 'ca') {
+        this.caState = state_code;
+      } else if (type == 'emp') {
+        this.empState = state_code;
+      } else if (type == 'aa') {
+        this.aaState = state_code;
+      } else if (type == 'da') {
+        this.daState = state_code;
+      } else if (type == 'deu') {
+        this.deuState = state_code;
+      }
+      return;
+    }
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
         if (type == 'claimant') {
-          this.claimantState = res;
+          this.claimantState = res.state_code;
         } else if (type == 'ca') {
-          this.caState = res;
+          this.caState = res.state_code;
         } else if (type == 'emp') {
-          this.empState = res;
+          this.empState = res.state_code;
         } else if (type == 'aa') {
-          this.aaState = res;
+          this.aaState = res.state_code;
         } else if (type == 'da') {
-          this.daState = res;
+          this.daState = res.state_code;
         } else if (type == 'deu') {
-          this.deuState = res;
+          this.deuState = res.state_code;
         }
       }
     })

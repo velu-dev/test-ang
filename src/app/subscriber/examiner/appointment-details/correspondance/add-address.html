@@ -52,7 +52,7 @@
                         <mat-label>State*</mat-label>
                         <mat-select formControlName="state" (selectionChange)="changeState($event.value)">
                             <mat-select-trigger>
-                                {{corresState?.state_code}}
+                                {{corresState}}
                             </mat-select-trigger>
                             <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                 {{state.state}}

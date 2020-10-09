@@ -90,6 +90,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       street2: location.street2,
       city: location.city,
       state: location.state,
+      state_code: location.state_code,
       zip_code: location.zip_code,
       phone_no: location.phone_no,
       fax_no: location.fax_no,
@@ -100,7 +101,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       national_provider_identifier: location.national_provider_identifier,
       is_active: location.is_active.toString(),
     }
-    this.changeState(data.state)
+    this.changeState(data.state, data.state_code)
     this.locationForm.patchValue(data);
     this.dataSource = new MatTableDataSource(location.examiner_list ? location.examiner_list : []);
     this.examiner_list = location.examiner_list ? location.examiner_list : [];
@@ -136,12 +137,16 @@ export class AddEditServiceLocationComponent implements OnInit {
       this.locationForm.addControl('national_provider_identifier', new FormControl(null, Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])));
     }
   }
-  serviceState = {};
-  changeState(state) {
+  serviceState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.serviceState = state_code;
+      return;
+    }
     console.log(state, this.states)
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
-        this.serviceState = res;
+        this.serviceState = res.state_code;
       }
     })
   }

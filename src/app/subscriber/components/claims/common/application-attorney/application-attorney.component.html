@@ -69,7 +69,7 @@
                 <mat-label>State{{fromPop ? "*" : ""}}</mat-label>
                 <mat-select formControlName="state" (selectionChange)="changeState($event.value)">
                     <mat-select-trigger>
-                        {{aaState?.state_code}}
+                        {{aaState}}
                     </mat-select-trigger>
                     <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}} -
                         {{state.state}}
