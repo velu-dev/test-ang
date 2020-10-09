@@ -38,7 +38,7 @@ export class CorrespondanceComponent implements OnInit {
   documents_ids = [];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   file: any = null;
-  note: string = null;
+  note: string = '';
   dataSource: any;
   columnName = []
   columnsToDisplay = [];

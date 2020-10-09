@@ -1445,7 +1445,7 @@ export class NewClaimComponent implements OnInit {
 
   }
   file: any = null;
-  note: string = null;
+  note: string = '';
   documents_ids = [];
   correspondFormSubmit() {
     if (this.file == null) {
