@@ -270,9 +270,9 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.claimService.getICD10('a').subscribe(icd => {
-    //   this.filteredICD = icd[3];
-    // });
+    this.claimService.getICD10('a').subscribe(icd => {
+      this.filteredICD = icd[3];
+    });
 
     this.icdCtrl.valueChanges.subscribe(res => {
       if (res) {
@@ -484,8 +484,9 @@ export class BilllableBillingComponent implements OnInit {
       this.billingService.updateDiagnosisCode(data).subscribe(code => {
         this.IcdDataSource = new MatTableDataSource(this.icdData);
         this.selectedIcd = { code: "", name: "" };
-        this.alertService.openSnackBar("ICD data added succssfully", "success");
+        this.alertService.openSnackBar("ICD data added successfully", "success");
         this.icdCtrl.reset();
+        this.filteredICD = [];
         this.logger.log("icd 10 data", this.icdData)
       }, error => {
         this.logger.error(error)
@@ -502,7 +503,7 @@ export class BilllableBillingComponent implements OnInit {
         this.billingService.updateDiagnosisCode(data).subscribe(code => {
           this.IcdDataSource = new MatTableDataSource(this.icdData);
           this.selectedIcd = { code: "", name: "" };
-          this.alertService.openSnackBar("ICD data removed succssfully", "success");
+          this.alertService.openSnackBar("ICD data removed successfully", "success");
           this.icdCtrl.reset();
           this.logger.log("icd 10 data", this.icdData)
         }, error => {
