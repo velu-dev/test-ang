@@ -15,7 +15,7 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Payment Amount*</mat-label>
-                        <input matInput type="number" placeholder="Payment Amount" (change)="setTwoNumberDecimal($event)" formControlName="payment_amount"
+                        <input matInput type="number" min="0" placeholder="Payment Amount" (change)="setTwoNumberDecimal($event)" formControlName="payment_amount"
                             autocomplete="off">
                         <mat-error *ngIf="postIsSubmit">Please enter valid Payment Amount</mat-error>
                     </mat-form-field>
@@ -89,7 +89,7 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Penalty Amount</mat-label>
-                        <input matInput type="number" (change)="setTwoNumberDecimal($event)" placeholder="Penalty Amount" formControlName="penalty_amount"
+                        <input matInput type="number" min="0" (change)="setTwoNumberDecimal($event)" placeholder="Penalty Amount" formControlName="penalty_amount"
                             autocomplete="off">
                             <mat-error *ngIf="postIsSubmit">Please enter valid Penalty Amount</mat-error>
                     </mat-form-field>
@@ -109,7 +109,7 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Interest Paid</mat-label>
-                        <input matInput type="number" (change)="setTwoNumberDecimal($event)" placeholder="Interest Amount"
+                        <input matInput type="number" min="0" (change)="setTwoNumberDecimal($event)" placeholder="Interest Amount"
                             formControlName="interest_paid" autocomplete="off">
                             <mat-error>Please enter valid Interest Paid</mat-error>
                     </mat-form-field>
@@ -135,7 +135,7 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>EOR Allowance</mat-label>
-                        <input matInput type="number" (change)="setTwoNumberDecimal($event)" placeholder="EOR Allowance" formControlName="eor_allowance" autocomplete="off">
+                        <input matInput type="number" min="0" (change)="setTwoNumberDecimal($event)" placeholder="EOR Allowance" formControlName="eor_allowance" autocomplete="off">
                         <mat-error *ngIf="postIsSubmit">Please enter valid EOR Allowance</mat-error>
                     </mat-form-field>
                     <div fxFlex="100">

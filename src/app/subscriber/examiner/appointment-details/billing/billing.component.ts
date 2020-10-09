@@ -121,8 +121,8 @@ export class BilllableBillingComponent implements OnInit {
     private fb: FormBuilder,
     private intercom: IntercomService,
     private cookieService: CookieService) {
-      this.intercom.setBillNo('Bill');
-      this.cookieService.set('billNo', null)
+    this.intercom.setBillNo('Bill');
+    this.cookieService.set('billNo', null)
     this.route.params.subscribe(param => {
       this.paramsId = param;
       if (!param.billingId) {
@@ -342,7 +342,7 @@ export class BilllableBillingComponent implements OnInit {
       if (this.billingData.bill_no) {
         this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
         this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
-      }else{
+      } else {
         this.intercom.setBillNo('Bill');
       }
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
@@ -683,8 +683,8 @@ export class BilllableBillingComponent implements OnInit {
       modifierList: [[]],
       modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
       unitType: [''],
-      units: ['', [Validators.required]],
-      charge: ['', [Validators.required]],
+      units: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      charge: ['', Validators.compose([Validators.required, Validators.min(0)])],
       payment: [0],
       balance: [0],
       total_charge: [0],
@@ -949,7 +949,7 @@ export class BillingPaymentDialog {
       is_file_change: [false],
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
-      payment_amount: ['', Validators.required],
+      payment_amount: ['', Validators.compose([Validators.required,Validators.min(0)])],
       reference_no: ['', Validators.required],
       effective_date: ['', Validators.required],
       payment_method: ['', Validators.required],
@@ -957,12 +957,12 @@ export class BillingPaymentDialog {
       deposit_date: [],
       payor_control_claim_no: [''],
       is_penalty: [false],
-      penalty_amount: [],
+      penalty_amount: [,Validators.compose([Validators.min(0)])],
       is_interest_paid: [false],
-      interest_paid: [],
+      interest_paid: [,Validators.compose([Validators.min(0)])],
       is_bill_closed: [false],
       write_off_reason: [''],
-      eor_allowance: [],
+      eor_allowance: [,Validators.compose([Validators.min(0)])],
     })
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
@@ -1024,10 +1024,10 @@ export class BillingPaymentDialog {
   postIsSubmit: boolean = false;
   PaymentFormSubmit() {
     this.postIsSubmit = true;
-    this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.required]) : this.postPaymentForm.get('deposit_date').setValidators([]);
-    this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.required]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
-    this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.required]) : this.postPaymentForm.get('interest_paid').setValidators([]);
-    this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').setValidators([Validators.required]) : this.postPaymentForm.get('write_off_reason').setValidators([]);
+    this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('deposit_date').setValidators([]);
+    this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.compose([Validators.required,Validators.min(0)])]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
+    this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.compose([Validators.required,Validators.min(0)])]) : this.postPaymentForm.get('interest_paid').setValidators([]);
+    this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('write_off_reason').setValidators([]);
 
     Object.keys(this.postPaymentForm.controls).forEach((key) => {
       this.postPaymentForm.get(key).updateValueAndValidity();
