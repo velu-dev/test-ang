@@ -135,7 +135,7 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>EOR Allowance</mat-label>
-                        <input matInput placeholder="EOR Allowance" formControlName="eor_allowance" autocomplete="off">
+                        <input matInput type="number" (change)="setTwoNumberDecimal($event)" placeholder="EOR Allowance" formControlName="eor_allowance" autocomplete="off">
                         <mat-error *ngIf="postIsSubmit">Please enter valid EOR Allowance</mat-error>
                     </mat-form-field>
                     <div fxFlex="100">
