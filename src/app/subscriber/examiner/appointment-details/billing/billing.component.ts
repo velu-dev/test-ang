@@ -962,7 +962,7 @@ export class BillingPaymentDialog {
         pay.data.payment_amount = pay.data.payment_amount ? parseFloat(pay.data.payment_amount).toFixed(2) : pay.data.payment_amount;
         pay.data.interest_paid = pay.data.interest_paid ? parseFloat(pay.data.interest_paid).toFixed(2) : pay.data.interest_paid;
         pay.data.penalty_amount = pay.data.penalty_amount ? parseFloat(pay.data.penalty_amount).toFixed(2) : pay.data.penalty_amount;
-        pay.data.penalty_amount = pay.data.eor_allowance ? parseFloat(pay.data.eor_allowance).toFixed(2) : pay.data.eor_allowance;
+        pay.data.eor_allowance = pay.data.eor_allowance ? parseFloat(pay.data.eor_allowance).toFixed(2) : pay.data.eor_allowance;
         this.postPaymentForm.patchValue(pay.data);
         this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
         this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
