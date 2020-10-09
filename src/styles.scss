@@ -599,10 +599,8 @@ image-cropper {
 
 // Correspondence and billing recipient custom css
 .recipient {
-  .main-title {
-    @media only screen and (max-width: 568px) {
-      margin-top: 20px;
-    }
+  .content-wrapper-main-title {
+    color: $text-dark;
   }
 
   .info-alert {
