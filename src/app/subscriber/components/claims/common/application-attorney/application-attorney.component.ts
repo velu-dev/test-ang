@@ -35,9 +35,11 @@ export class ApplicationAttorneyComponent implements OnInit {
     private claimService: ClaimService,
     public dialogRef: MatDialogRef<ApplicationAttorneyComponent>,
     private alertService: AlertService) {
-    this.claimService.seedData("state").subscribe(res => {
-      this.states = res.data;
-    })
+    // this.claimService.seedData("state").subscribe(res => {
+    //   this.states = res.data;
+    // })
+    console.log(this.aattorneyDetail)
+    // this.changeState(this.aattorneyDetail['state'], this.aattorneyDetail['state_code']);
     this.claimService.seedData('eams_claims_administrator').subscribe(res => {
       this.eamsRepresentatives = res.data;
       this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
@@ -71,8 +73,25 @@ export class ApplicationAttorneyComponent implements OnInit {
       this.ApplicantAttorney.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editAA();
     }
+    console.log(this.aattorneyDetail)
+    if (this.fromPop) {
+      this.aattorneyDetail.state = this.aattorneyDetail.state_name;
+    }
+    this.changeState(this.aattorneyDetail.state, this.aattorneyDetail.state_code);
     this.ApplicantAttorney.patchValue(this.aattorneyDetail)
     this.id = this.aattorneyDetail.id;
+  }
+  aaState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.aaState = state_code;
+      return
+    }
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.aaState = res.state_code;
+      }
+    })
   }
   private _filterAttroney(value: string, data) {
     if (value) {

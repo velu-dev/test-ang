@@ -272,6 +272,7 @@ export class NewExaminerUserComponent implements OnInit {
         street2: res.mailing_address.street2,
         city: res.mailing_address.city,
         state: res.mailing_address.state,
+        state_code: res.mailing_address.state_code,
         zip_code: res.mailing_address.zip_code,
         phone_no1: res.mailing_address.phone_no1,
         phone_no2: res.mailing_address.phone_no2,
@@ -280,6 +281,7 @@ export class NewExaminerUserComponent implements OnInit {
         contact_person: res.mailing_address.contact_person,
         notes: res.mailing_address.notes,
       }
+      this.changeState(mailing.state, 'mailing', mailing.state_code);
       this.mailingAddressForm.patchValue(mailing)
 
       let billing = {
@@ -293,6 +295,7 @@ export class NewExaminerUserComponent implements OnInit {
         street2: res.billing_provider.street2,
         city: res.billing_provider.city,
         state: res.billing_provider.state,
+        state_code: res.billing_provider.state_code,
         zip_code: res.billing_provider.zip_code,
         phone_no1: res.billing_provider.phone_no1,
         first_name: res.billing_provider.first_name,
@@ -302,6 +305,8 @@ export class NewExaminerUserComponent implements OnInit {
         suffix: res.billing_provider.suffix,
       }
       this.billingOrgChange(billing.is_person)
+      this.changeState(billing.state, 'billing');
+      this.changeState(billing.state, 'cms', billing.state_code);
       this.billingProviderForm.patchValue(billing)
 
       let rendering = {
@@ -318,12 +323,14 @@ export class NewExaminerUserComponent implements OnInit {
         middle_name: res.rendering_provider.middle_name,
         rendering_provider_name: res.rendering_provider.rendering_provider_name,
         suffix: res.rendering_provider.suffix,
-        county :  res.rendering_provider.county
+        county: res.rendering_provider.county
         //signature: res.rendering_provider.signature
       }
 
       this.signData = res.rendering_provider.signature ? 'data:image/png;base64,' + res.rendering_provider.signature : null
-      this.renderingOrgChange(rendering.is_person)
+      this.renderingOrgChange(rendering.is_person);
+      console.log(res)
+      this.changeState(rendering['default_injury_state'], 'render');
       this.renderingForm.patchValue(rendering);
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
@@ -433,7 +440,7 @@ export class NewExaminerUserComponent implements OnInit {
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       rendering_provider_name: [null, Validators.compose([Validators.maxLength(100)])],
-      county:[null]
+      county: [null]
     })
   }
 
@@ -934,6 +941,38 @@ export class NewExaminerUserComponent implements OnInit {
     this.router.navigate([this.router.url + '/add-location/2', this.examinerId])
   }
 
+  cmsState: any;
+  mailingState: any;
+  billingState: any;
+  renderState: any;
+  changeState(state, type, state_code?) {
+    if (state_code) {
+      if (type == 'cms') {
+        this.cmsState = state_code;
+      } else if (type == 'billing') {
+        this.billingState = state_code;
+      } else if (type == 'render') {
+        this.renderState = state_code;
+      } else if (type == 'mailing') {
+        this.mailingState = state_code;
+      }
+      return
+    }
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        if (type == 'cms') {
+          this.cmsState = res.state_code;
+        } else if (type == 'billing') {
+          this.billingState = res.state_code;
+        } else if (type == 'render') {
+          this.renderState = res.state_code;
+        } else if (type == 'mailing') {
+          this.mailingState = res.state_code;
+        }
+      }
+    })
+  }
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
@@ -1006,6 +1045,12 @@ export class NewExaminerUserComponent implements OnInit {
         return this.states[i].state
       }
   }
+  getStateCode(id){
+    for (var i in this.states)
+    if (id == this.states[i].id) {
+      return this.states[i].state_code;
+    }
+  }
 }
 
 @Component({
@@ -1029,6 +1074,7 @@ export class LicenseDialog {
       state_id: [null, Validators.compose([Validators.required])],
     });
     if (data.details) {
+      this.changeState(data.details.state, data.details.state_code);
       this.licenseForm.patchValue(data.details)
     }
 
@@ -1042,9 +1088,20 @@ export class LicenseDialog {
     if (this.licenseForm.invalid) {
       return;
     }
-
+    this.changeState(this.licenseForm.value.state_id)
     console.log(this.licenseForm.value)
     this.dialogRef.close(this.licenseForm.value);
+  }
+  licenceState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.licenceState = state_code;
+    }
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.licenceState = res.state_code;
+      }
+    })
   }
 
   onNoClick(): void {

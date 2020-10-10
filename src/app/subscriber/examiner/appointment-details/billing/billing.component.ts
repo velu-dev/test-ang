@@ -340,8 +340,8 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
       if (this.billingData.bill_no) {
-        this.intercom.setBillNo(this.billingData.agent_short_code + this.billingData.bill_no);
-        this.cookieService.set('billNo', this.billingData.agent_short_code + this.billingData.bill_no)
+        this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
+        this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
       } else {
         this.intercom.setBillNo('Bill');
       }
@@ -1372,13 +1372,13 @@ export class BillingCustomRecipient {
     public dialogRef: MatDialogRef<BillingCustomRecipient>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, public billingService: BillingService,
     private alertService: AlertService) {
+    this.billingService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
     dialogRef.disableClose = true;
     this.claim_id = data['claim_id'];
     this.billable_id = data['billable_id'];
     this.isEdit = data['isEdit'];
-    this.billingService.seedData("state").subscribe(res => {
-      this.states = res.data;
-    })
   }
   ngOnInit() {
     this.customReceipient = this.formBuilder.group({
@@ -1394,8 +1394,18 @@ export class BillingCustomRecipient {
       if (this.data["data"].zip_code_plus_4) {
         this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
       }
+      this.changeState(this.data['data'].state)
       this.customReceipient.patchValue(this.data["data"]);
     }
+  }
+  recipientState = {};
+  changeState(state) {
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.recipientState = res.state_code;
+      }
+    })
   }
   saveClick() {
     Object.keys(this.customReceipient.controls).forEach((key) => {

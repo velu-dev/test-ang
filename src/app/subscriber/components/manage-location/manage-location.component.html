@@ -36,7 +36,7 @@
                             </mat-icon>
                         </span>
                         <span *ngIf="column == 'street1'"> {{element.street1}} {{element.street2}} {{element.city}}
-                            {{element.state_name}} - {{element.zip_code}}</span>
+                            {{element.state_code}} - {{element.zip_code}}</span>
                         <span
                             *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
                         <span
@@ -79,7 +79,7 @@
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Address</span><span>{{element.street1}} {{element.street2}} {{element.city}}
-                                        {{element.state_name}} - {{element.zip_code}}</span></div>
+                                        {{element.state_code}} - {{element.zip_code}}</span></div>
                                 <div><span>Service Type</span><span>
                                         {{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}
                                     </span></div>

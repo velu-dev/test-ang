@@ -171,4 +171,8 @@ export const api_endpoint = {
     postBillRecipient: 'billing/add-custom-recipient/',
     getBillRecipient: 'billing/custom-recipient/',
 
+
+    //Calendar 
+
+    getCalendarEvents: "calendar/all",
 }

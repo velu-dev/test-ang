@@ -170,7 +170,10 @@
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>State</mat-label>
-          <mat-select formControlName="state">
+          <mat-select formControlName="state" (selectionChange)="changeState($event.value)">
+            <mat-select-trigger>
+              {{claimantState}}
+            </mat-select-trigger>
             <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} - {{state.state}}
             </mat-option>
           </mat-select>
