@@ -6,7 +6,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { NGXLogger } from 'ngx-logger';
-import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent, MatAutocompleteTrigger, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent, MatAutocompleteTrigger, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatSort } from '@angular/material';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
@@ -112,7 +112,7 @@ export class BilllableBillingComponent implements OnInit {
   @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
   //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
   unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }, { unit_type: 'Minutes', unit_short_code: 'MJ' }]
-
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -340,13 +340,14 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
       if (this.billingData.bill_no) {
-        this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
-        this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
+        this.intercom.setBillNo(this.billingData.agent_short_code + this.billingData.bill_no);
+        this.cookieService.set('billNo', this.billingData.agent_short_code + this.billingData.bill_no)
       } else {
         this.intercom.setBillNo('Bill');
       }
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
+      this.IcdDataSource.sort = this.sort;
       this.logger.log("billing", billing)
       if (billing.data.payor_id) {
         this.payorCtrl.patchValue(billing.data.payor_id + ' - ' + billing.data.payor_name)
@@ -870,7 +871,13 @@ export class BilllableBillingComponent implements OnInit {
   updatePayor(e) {
     this.payorCtrl.patchValue(e.payor_id + ' - ' + e.payor_name)
     this.billingService.updatePayor(this.billingId, e.id).subscribe(payor => {
-      this.alertService.openSnackBar("Payor changed successfully", "success");
+      if (this.billingData.payor) {
+        this.alertService.openSnackBar("Payor changed successfully", "success");
+      } else {
+        this.alertService.openSnackBar("Payor added successfully", "success");
+        this.billingData.payor = payor.data.payor_id;
+      }
+
     }, err => {
       this.alertService.openSnackBar(err.error.message, "error");
     })
@@ -950,7 +957,7 @@ export class BillingPaymentDialog {
       is_file_change: [false],
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
-      payment_amount: ['', Validators.compose([Validators.required,Validators.min(0)])],
+      payment_amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
       reference_no: ['', Validators.required],
       effective_date: ['', Validators.required],
       payment_method: ['', Validators.required],
@@ -958,12 +965,12 @@ export class BillingPaymentDialog {
       deposit_date: [],
       payor_control_claim_no: [''],
       is_penalty: [false],
-      penalty_amount: [,Validators.compose([Validators.min(0)])],
+      penalty_amount: [, Validators.compose([Validators.min(0)])],
       is_interest_paid: [false],
-      interest_paid: [,Validators.compose([Validators.min(0)])],
+      interest_paid: [, Validators.compose([Validators.min(0)])],
       is_bill_closed: [false],
       write_off_reason: [''],
-      eor_allowance: [,Validators.compose([Validators.min(0)])],
+      eor_allowance: [, Validators.compose([Validators.min(0)])],
     })
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
@@ -1026,8 +1033,8 @@ export class BillingPaymentDialog {
   PaymentFormSubmit() {
     this.postIsSubmit = true;
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('deposit_date').setValidators([]);
-    this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.compose([Validators.required,Validators.min(0)])]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
-    this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.compose([Validators.required,Validators.min(0)])]) : this.postPaymentForm.get('interest_paid').setValidators([]);
+    this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
+    this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('interest_paid').setValidators([]);
     this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('write_off_reason').setValidators([]);
 
     Object.keys(this.postPaymentForm.controls).forEach((key) => {
