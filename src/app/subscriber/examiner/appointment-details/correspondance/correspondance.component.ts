@@ -382,8 +382,8 @@ export class BillingCorrespondanceComponent implements OnInit {
 
   typeIfRecipient = "";// ["Claimant", "Insurance Company", "DEU Office", "Applicant Attorney", "Defense Attroney"]
   openAddAddress(element): void {
-    this.logger.log(element.data)
     this.typeIfRecipient = element.recipient_type;
+
     const dialogRef = this.dialog.open(AddAddress, {
       width: '800px',
       data: { type: this.typeIfRecipient, data: element.data, state: this.states }
@@ -580,6 +580,7 @@ export class CustomRecipient {
     this.claim_id = data['claim_id'];
     this.billable_id = data['billable_id'];
     this.isEdit = data['isEdit'];
+    this.changeState(this.data['data'].state, this.data['data'].state_code)
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -592,14 +593,31 @@ export class CustomRecipient {
       street2: [null],
       city: [null, Validators.required],
       state_id: [null, Validators.required],
+      state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$'), Validators.required])],
     })
     if (this.isEdit) {
+      this.data['data'].state_id = this.data['data'].state;
       if (this.data["data"].zip_code_plus_4) {
         this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
       }
+      this.changeState(this.data['data'].state, this.data['data'].state_code)
       this.customReceipient.patchValue(this.data["data"]);
     }
+  }
+  recipientState = {};
+  changeState(state, state_code?) {
+
+    if (state_code) {
+      this.recipientState = state_code;
+      return;
+    }
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        console.log((res.id == state) || (res.state == state))
+        this.recipientState = res.state_code;
+      }
+    })
   }
   saveClick() {
     Object.keys(this.customReceipient.controls).forEach((key) => {
@@ -663,8 +681,21 @@ export class AddAddress {
         gender: [null],
         zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
       });
+      this.changeState(this.userData.state, this.userData.state_code)
       this.claimantForm.patchValue(this.userData)
     }
+  }
+  corresState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.corresState = state_code;
+    }
+    this.states.map(res => {
+      if ((res.id == state) || (res.state_code == state)) {
+        console.log(res);
+        this.corresState = res.state_code;
+      }
+    })
   }
   saveClaimant() {
     if (this.claimantForm.invalid) {

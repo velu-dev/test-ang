@@ -42,6 +42,9 @@ export class EditClaimComponent implements OnInit {
   ) {
     this.intercom.setClaimant("Claimant");
     this.intercom.setClaimNumber("Claim");
+    this.claimService.seedData('state').subscribe(res => {
+      this.states = res.data;
+    })
     this.claimService.seedData("body_part").subscribe(res => {
       this.bodyParts = res.data;
     })
@@ -70,9 +73,6 @@ export class EditClaimComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimService.seedData('state').subscribe(res => {
-      this.states = res.data;
-    })
   }
   navigateBillable() {
     this.router.navigate([this.router.url + '/new-billable-item'])

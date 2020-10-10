@@ -38,7 +38,7 @@ export class CorrespondanceComponent implements OnInit {
   documents_ids = [];
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   file: any = null;
-  note: string = null;
+  note: string = '';
   dataSource: any;
   columnName = []
   columnsToDisplay = [];
@@ -112,7 +112,7 @@ export class CorrespondanceComponent implements OnInit {
     //   this.correspondForm.get('file').markAsTouched();
     //   return;
     // }
-    if (this.file == null || this.note == null || this.note.trim() == '') {
+    if (this.file == null) {
       return;
     }
     let formData = new FormData()

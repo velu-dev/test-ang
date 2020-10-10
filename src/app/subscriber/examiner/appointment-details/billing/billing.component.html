@@ -82,15 +82,13 @@
                 <div fxLayout="row wrap" class="p-t-20">
                     <div fxFlex="33.3" fxFlex.xs="100">
                         <div class="p-b-5"><b>Billing Provider</b></div>
-                        <div *ngIf="billingData?.billing_is_person"> {{billingData?.billing_last_name}}
-                            {{billingData?.billing_first_name}}{{billingData?.billing_suffix ? (', '+ billingData?.billing_suffix) : ''}}
+                        <div *ngIf="billingData?.billing_is_person"> {{billingData?.billing_first_name}} {{billingData?.billing_last_name}}{{billingData?.billing_suffix ? (', '+ billingData?.billing_suffix) : ''}}
                         </div>
                         <div *ngIf="!billingData?.billing_is_person">{{billingData?.billing_provider_name}}</div>
                     </div>
                     <div fxFlex="33.3" fxFlex.xs="100">
                         <div class="p-b-5"><b>Rendering Provider</b></div>
-                        <div *ngIf="billingData?.rendering_is_persion"> {{billingData?.rendr_last_name}}
-                            {{billingData?.rendr_first_name}}{{billingData?.rendr_suffix ? (', '+ billingData?.rendr_suffix) : ''}}
+                        <div *ngIf="billingData?.rendering_is_persion">{{billingData?.rendr_first_name}} {{billingData?.rendr_last_name}}{{billingData?.rendr_suffix ? (', '+ billingData?.rendr_suffix) : ''}}
                         </div>
                         <div *ngIf="!billingData?.rendering_is_persion">{{billingData?.rendering_provider_name}}</div>
                     </div>
@@ -98,7 +96,7 @@
                         <div class="p-b-5"><b>Service Location</b> </div>
                         <div>{{billingData?.service_location?.street1 }} {{billingData?.service_location?.street2 }}
                             {{billingData?.service_location?.city}}
-                            {{billingData?.service_location?.state }} - {{billingData?.service_location?.zip_code }}
+                            {{billingData?.state_code }} - {{billingData?.service_location?.zip_code }}
                         </div>
                     </div>
                 </div>
@@ -379,13 +377,13 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput type="number" autocomplete="off"
+                                                    <input matInput min="0" type="number" autocomplete="off"
                                                         formControlName="units">
                                                 </mat-form-field>
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput type="number" autocomplete="off"
+                                                    <input matInput min="0" type="number" autocomplete="off"
                                                         formControlName="charge" (change)="setTwoNumberDecimal($event)">
                                                 </mat-form-field>
                                             </td>

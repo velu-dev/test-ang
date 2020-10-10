@@ -64,10 +64,12 @@
                 <input matInput placeholder="City" formControlName="city" autocomplete="off">
                 <mat-error>Please enter valid City</mat-error>
             </mat-form-field>
-
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>State{{fromPop ? "*" : ""}}</mat-label>
-                <mat-select formControlName="state">
+                <mat-select formControlName="state" (selectionChange)="changeState($event.value)">
+                    <mat-select-trigger>
+                        {{aaState}}
+                    </mat-select-trigger>
                     <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}} -
                         {{state.state}}
                     </mat-option>

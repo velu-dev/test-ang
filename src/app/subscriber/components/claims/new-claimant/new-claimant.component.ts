@@ -95,6 +95,11 @@ export class NewClaimantComponent implements OnInit {
     private intercom: IntercomService,
     private cookieService: CookieService
   ) {
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
     this.intercom.setClaimant("claimant");
     this.route.params.subscribe(param => {
       this.claimantId = param.claimant_id;
@@ -169,14 +174,6 @@ export class NewClaimantComponent implements OnInit {
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
     })
 
-
-
-    this.claimService.seedData('state').subscribe(response => {
-      this.states = response['data'];
-    }, error => {
-      console.log("error", error)
-    })
-
     this.claimService.seedData('language').subscribe(response => {
       this.languageList = response['data'];
     }, error => {
@@ -198,7 +195,8 @@ export class NewClaimantComponent implements OnInit {
       this.intercom.setClaimant(res['data'][0].first_name + ' ' + res['data'][0].last_name);
       this.claimantInfo = res['data'][0];
       this.languageStatus = res['data'][0].certified_interpreter_required;
-      this.claimNumber = res['data'][0].claim_numbers.map(data => data.claim_number)
+      this.claimNumber = res['data'][0].claim_numbers.map(data => data.claim_number);
+      this.changeState(res['data'][0].state, res['data'][0].state_code)
       this.claimantForm.patchValue(res['data'][0])
     }, error => {
 
@@ -330,7 +328,18 @@ export class NewClaimantComponent implements OnInit {
   billableNavigate() {
     this.router.navigate(['/subscriber/billable-item']);
   }
-
+  claimantState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.claimantState = state_code;
+      return;
+    }
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.claimantState = res.state_code;
+      }
+    })
+  }
   newClaim() {
     this.router.navigate([this.router.url + '/new-claim'])
   }

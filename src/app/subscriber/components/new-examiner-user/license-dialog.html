@@ -21,7 +21,10 @@
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>License State</mat-label>
-                    <mat-select formControlName="state_id">
+                    <mat-select formControlName="state_id" (selectionChange)="changeState($event.value)">
+                        <mat-select-trigger>
+                            {{licenceState}}
+                        </mat-select-trigger>
                         <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                             {{state.state}}
                         </mat-option>

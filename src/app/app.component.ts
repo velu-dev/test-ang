@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { IntercomService } from './services/intercom.service';
 import { CookieService } from './shared/services/cookie.service';
+import { ClaimService } from './subscriber/service/claim.service';
 Auth.configure(environment.Amplify);
 @Component({
   selector: 'app-root',
@@ -24,7 +25,10 @@ export class AppComponent {
   constructor(private _router: Router, private store: Store<{ breadcrumb: any }>,
     private breadcrumbService: BreadcrumbService,
     private intercom: IntercomService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService, private claimService: ClaimService) {
+    this.claimService.seedData('state').subscribe(res => {
+      this.cookieService.set("states", res.data);
+    })
     this.intercom.getClaimant().subscribe(name => {
       this.breadcrumbService.set("@Claimant", name)
     })
@@ -45,19 +49,16 @@ export class AppComponent {
       }
     })
 
-    //this.menu$ = store.pipe(select('breadcrumb'));
-    //this.breadcrumbService.set("subscriber/appointment/appointment-details/:claim_id/:bill_id", "sarath22")
+    this.intercom.getBillNo().subscribe(billno => {
+      if (!billno) {
+        this.breadcrumbService.set("@Bill", "Bill")
+      } else {
+        this.breadcrumbService.set("@Bill", billno)
+      }
+    })
 
   }
   ngOnInit() {
-    // this.listenRouting();
-    // ROUTES.map(menu => {
-    //   let menuData = {};
-    //   menuData = menu
-    //   menuData['children'] = menu.submenu;
-    //   this.menu.push(menuData)
-    // })
-    // this.breadcrumbService.set("@Billable Item", "Sarath")
     let claimant = this.cookieService.get('claimDeatis');
 
     if (claimant && claimant != 'null') {
@@ -65,7 +66,6 @@ export class AppComponent {
     }
 
     let claimNumber = this.cookieService.get('claimNumber');
-    console.log(claimNumber)
     if (claimNumber && claimNumber != 'null') {
       this.breadcrumbService.set("@Claim", claimNumber)
     } else {
@@ -79,63 +79,30 @@ export class AppComponent {
       this.breadcrumbService.set("@Billable Item", bill)
     }
 
+    let billno = this.cookieService.get('billNo');
+    if (!billno) {
+      this.breadcrumbService.set("@Bill", "Bill")
+    } else {
+      this.breadcrumbService.set("@Bill", billno)
+    }
+
   }
 
   onActivate(event) {
     window.scroll(0, 0);
   }
-  // listenRouting() {
-  //   let routerUrl: string, target: any;
-  //   this._router.events.subscribe((router: any) => {
-  //     routerUrl = router.urlAfterRedirects;
-  //     if (routerUrl && typeof routerUrl === 'string') {
-  //       target = this.menu;
-  //       this.breadcrumbList = [];
-  //       let routerSplit = routerUrl.split("/")
-  //       if (!routerSplit.includes("edit-claim")) {
-  //         localStorage.removeItem("isName")
-  //         localStorage.removeItem("exam_type")
-  //         localStorage.removeItem("claim_number")
-  //         localStorage.removeItem("name")
-  //       }
-  //       routerSplit.shift();
-  //       let menu_join = "";
-  //       routerSplit.map(res => {
-  //         menu_join = menu_join + "/" + res;
-  //         this.menu.map(menu_name => {
-  //           if (res == "*") {
-  //             this.breadcrumbList.push(menu_name)
-  //           } else {
-  //             if (menu_name.path == menu_join) {
-  //               this.breadcrumbList.push(menu_name)
-  //             }
-  //             menu_name.submenu.map(sub => {
-  //               if (!isNaN(Number(res))) {
-  //                 let mm = menu_join.split("/")
-  //                 mm.shift();
-  //                 mm.pop();
-  //                 let menu = '/' + mm.join('/') + '/update'
-  //                 if (menu == sub.path) {
-  //                   this.breadcrumbList.push(sub)
-  //                 }
-  //               }
-  //               if (sub.path == "new-claim") {
-  //                 this.breadcrumbList.push(sub)
-  //               }
-  //               if (sub.path == menu_join) {
-  //                 this.breadcrumbList.push(sub)
-  //               }
-  //             })
-  //           }
 
-  //         })
-  //       })
-  //       let breadcrumb = this.breadcrumbList
-  //       if (breadcrumb.length != 0) {
-  //         // console.log(breadcrumb)
-  //         this.store.dispatch(new breadcrumbActions.AddBreadcrumb(breadcrumb));
-  //       }
-  //     }
-  //   });
-  // }
+}
+
+export class StateController {
+  states = [];
+  constructor(private claimService: ClaimService) {
+    this.claimService.seedData('state').subscribe(res => {
+      this.states = res.data;
+    })
+  }
+
+  get getState() {
+    return this.states;
+  }
 }
