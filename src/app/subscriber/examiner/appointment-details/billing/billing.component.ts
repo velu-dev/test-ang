@@ -113,6 +113,8 @@ export class BilllableBillingComponent implements OnInit {
   //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
   unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }, { unit_type: 'Minutes', unit_short_code: 'MJ' }]
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  billDocumentList: any;
+
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -317,6 +319,12 @@ export class BilllableBillingComponent implements OnInit {
 
     this.claimService.seedData('modifier').subscribe(type => {
       this.modifiers = type['data']
+    })
+
+    this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId).subscribe(doc => {
+      this.billDocumentList = doc.data
+    }, error => {
+
     })
 
     // this.claimService.seedData('workcompedi_payor_details').subscribe(type => {

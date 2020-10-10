@@ -96,7 +96,7 @@
                         <div class="p-b-5"><b>Service Location</b> </div>
                         <div>{{billingData?.service_location?.street1 }} {{billingData?.service_location?.street2 }}
                             {{billingData?.service_location?.city}}
-                            {{billingData?.state_code }} - {{billingData?.service_location?.zip_code }}
+                            {{billingData?.state_code }} {{billingData?.service_location?.zip_code ? '- ' + billingData?.service_location?.zip_code : '' }}
                         </div>
                     </div>
                 </div>
@@ -722,8 +722,8 @@
                     <div fxFlex="100">Please download, finalize and upload the following
                         documents:</div>
                     <div>
-                        <ul>
-                            <li> SBR-1 Provider’s Request for Second Bill Review</li>
+                        <ul *ngFor="let doc of this.billDocumentList?.document_info">
+                            <!-- <li> {{doc}}</li> -->
                         </ul>
                     </div>
                 </div>

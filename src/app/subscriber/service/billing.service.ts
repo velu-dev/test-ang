@@ -90,4 +90,8 @@ export class BillingService {
   removeRecipient(id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + id)
   }
+
+  getBillDocument(claimID, billableId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getBillDocument + claimID + '/' + billableId)
+  }
 }
