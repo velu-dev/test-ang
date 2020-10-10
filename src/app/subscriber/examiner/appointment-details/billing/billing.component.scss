@@ -264,4 +264,46 @@ th {
     position: sticky;
     top: 0; /* Don't forget this, required for the stickiness */
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-  }
+}
+
+// .bill-line-mobile {
+//     table {
+//         width: 100%;
+//         tbody {
+//             tr {
+//                 &:nth-child(odd) {
+//                     background-color: $light-color;
+//                 }
+//                 td {
+//                     mat-accordion {
+//                         mat-expansion-panel {
+//                           mat-expansion-panel-header {
+//                             padding-left:0 !important;
+//                         }
+//                         }
+//                     }
+//                     mat-card {
+//                         padding: 5px;
+//                         div {
+//                             display: flex;
+//                             div {
+//                                 padding: 5px 2px;
+//                             }
+//                             div.bill-property {
+//                                 width: 35%;
+//                                 font-weight: bold;
+//                                 &::after {
+//                                     content: ":";
+//                                     text-align: right;
+//                                 }
+//                             }
+//                             div.value {
+//                                 width: 65%;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
