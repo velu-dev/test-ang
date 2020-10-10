@@ -656,7 +656,7 @@
                             <mat-select [disabled]="!isEditBillableItem" formControlName="examiner_service_location_id">
                                 <mat-option *ngFor="let address of examinarAddress"
                                     (click)="changeExaminarAddress(address)" [value]="address.address_id">
-                                    {{address.street1}} {{address.street2}} {{address.city}} {{address.state_name}}
+                                    {{address.street1}} {{address.street2}} {{address.city}} {{address.state_code}}
                                     {{address.zip_code+(address.zip_code_plus_4 != null ? "-"+address.zip_code_plus_4 : "")}}
                                 </mat-option>
                             </mat-select>
@@ -799,7 +799,7 @@
                 <!-- </span> -->
             </div>
             <div fxLayout="row wrap" *ngIf="isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
-                <span class="error">Exam type was changed in claim Unable to upload documents in this section</span>
+                <!-- <span class="error">Exam type was changed in claim Unable to upload documents in this section</span> -->
             </div>
             <div *ngIf="!isExamTypeChanged" fxLayout="row wrap" fxFlex="100" class="m-t-20">
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
@@ -891,7 +891,8 @@
                                     <span
                                         *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                     <span *ngIf="column == 'action'" class="text-center">
-                                        <a target="_self" class="text-success" (click)="$event.stopPropagation();downloadDocumet(element)">Download</a>
+                                        <a target="_self" class="text-success"
+                                            (click)="$event.stopPropagation();downloadDocumet(element)">Download</a>
                                         <a class="text-danger m-l-10"
                                             *ngIf="!element?.isServiceRequested && !isExamTypeChanged"
                                             (click)="$event.stopPropagation();deleteDocument(element)">Remove</a>

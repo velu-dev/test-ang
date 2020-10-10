@@ -66,7 +66,9 @@ export class ClaimAdminComponent implements OnInit {
       this.claimAdminForm.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editCA();
     }
-    console.log(this.claimAdmin)
+    if (this.fromPop) {
+      this.claimAdmin.state = this.claimAdmin.state_name;
+    }
     this.changeState(this.claimAdmin.state, this.claimAdmin.state_code);
     this.claimAdminForm.patchValue(this.claimAdmin)
     this.id = this.claimAdmin.id;

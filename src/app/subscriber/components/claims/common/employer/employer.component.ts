@@ -36,6 +36,9 @@ export class EmployerComponent implements OnInit {
     if (this.fromPop) {
       this.editEmployer();
     }
+    if (this.fromPop) {
+      this.employerDetail.state = this.employerDetail.state_name;
+    }
     this.changeState(this.employerDetail.state, this.employerDetail.state_code)
     this.employer.patchValue(this.employerDetail)
   }

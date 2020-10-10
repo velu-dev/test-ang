@@ -113,7 +113,7 @@
   <mat-divider></mat-divider>
   <mat-card-actions class="m-b-0" align="right">
     <button mat-stroked-button>Close</button>
-    <button mat-raised-button class="filled-ternary"> Go to Billable item </button>
+    <button mat-raised-button mat-dialog-close (click)="viewDetails()" class="filled-ternary"> Go to Billable item </button>
   </mat-card-actions>
 </div>
 

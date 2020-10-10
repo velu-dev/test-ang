@@ -38,13 +38,12 @@
                     <input matInput placeholder="City" formControlName="city" autocomplete="off">
                     <mat-error>Please enter city</mat-error>
                 </mat-form-field>
-
                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>State*</mat-label>
                     <mat-select formControlName="state_id" (selectionChange)="changeState($event.value)">
                         <mat-select-trigger>
-                            {{recipientState.state_code}}
+                            {{recipientState}}
                         </mat-select-trigger>
                         <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                             {{state.state}}

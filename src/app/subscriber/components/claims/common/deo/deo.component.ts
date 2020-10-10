@@ -62,6 +62,9 @@ export class DeoComponent implements OnInit {
       this.editDEU();
     }
     this.deuId = this.deuDetail.id;
+    if (this.fromPop) {
+      this.deuDetail.state = this.deuDetail.state_name;
+    }
     this.changeState(this.deuDetail.state, this.deuDetail.state_code);
     this.DEU.patchValue(this.deuDetail);
     console.log(this.deuDetail)

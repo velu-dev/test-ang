@@ -74,6 +74,9 @@ export class DefenseAttorneyComponent implements OnInit {
       this.DefanceAttorney.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editDA();
     }
+    if (this.fromPop) {
+      this.dattorneyDetail.state = this.dattorneyDetail.state_name;
+    }
     this.changeState(this.dattorneyDetail.state, this.dattorneyDetail.state_code);
     this.DefanceAttorney.patchValue(this.dattorneyDetail);
     this.id = this.dattorneyDetail.id;

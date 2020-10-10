@@ -1045,6 +1045,12 @@ export class NewExaminerUserComponent implements OnInit {
         return this.states[i].state
       }
   }
+  getStateCode(id){
+    for (var i in this.states)
+    if (id == this.states[i].id) {
+      return this.states[i].state_code;
+    }
+  }
 }
 
 @Component({
@@ -1068,6 +1074,7 @@ export class LicenseDialog {
       state_id: [null, Validators.compose([Validators.required])],
     });
     if (data.details) {
+      this.changeState(data.details.state, data.details.state_code);
       this.licenseForm.patchValue(data.details)
     }
 
@@ -1081,12 +1088,15 @@ export class LicenseDialog {
     if (this.licenseForm.invalid) {
       return;
     }
-
+    this.changeState(this.licenseForm.value.state_id)
     console.log(this.licenseForm.value)
     this.dialogRef.close(this.licenseForm.value);
   }
   licenceState: any;
-  changeState(state) {
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.licenceState = state_code;
+    }
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
         this.licenceState = res.state_code;
