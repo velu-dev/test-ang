@@ -402,7 +402,7 @@
                                             </td>
 
                                             <td class="no-wrap-td">
-                                                <a class="text-success" (click)="doneRow(group)">
+                                                <a class="text-success" (click)="doneRow(group,i)">
                                                     Save
                                                 </a>
                                                 <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
@@ -589,7 +589,7 @@
                                             <div class="flex">
                                                 <div class="bill-property">Action </div>
                                                 <div class="editable">
-                                                    <a class="text-success" (click)="doneRow(group)">
+                                                    <a class="text-success" (click)="doneRow(group,i)">
                                                         Save
                                                     </a>
                                                     <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
@@ -723,7 +723,7 @@
                         documents:</div>
                     <div>
                         <ul *ngFor="let doc of this.billDocumentList?.document_info">
-                            <!-- <li> {{doc}}</li> -->
+                            <li> {{doc}}</li>
                         </ul>
                     </div>
                 </div>
