@@ -1395,7 +1395,7 @@ export class BillingCustomRecipient {
     console.log(state)
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
-        this.recipientState = res;
+        this.recipientState = res.state_code;
       }
     })
   }
