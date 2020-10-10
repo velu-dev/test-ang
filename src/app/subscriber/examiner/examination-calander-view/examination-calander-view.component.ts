@@ -92,25 +92,25 @@ export class ExaminationCalanderViewComponent implements OnInit {
   //   })
   //   this.calendarEvents = [].concat.apply([], Alldata);
   // }
-  // selectExaminer(examiner?, index?) {
-  //   this.calendar.getApi().removeAllEvents();
-  //   if (examiner) {
-  //     console.log(examiner);
-  //   } else {
-  //     console.log("All")
-  //     this.loadAllEvents();
-  //   }
-  //   let event = [];
-  //   this.data.map(res => {
-  //     if (res.id == index) {
-  //       event = res.data;
-  //     }
-  //   });
-  //   event.map(ev => {
-  //     console.log(ev)
-  //     this.calendar.getApi().addEvent(ev);
-  //   })
-  // }
+  selectExaminer(examiner?, index?) {
+    //   this.calendar.getApi().removeAllEvents();
+    //   if (examiner) {
+    //     console.log(examiner);
+    //   } else {
+    //     console.log("All")
+    //     this.loadAllEvents();
+    //   }
+    //   let event = [];
+    //   this.data.map(res => {
+    //     if (res.id == index) {
+    //       event = res.data;
+    //     }
+    //   });
+    //   event.map(ev => {
+    //     console.log(ev)
+    //     this.calendar.getApi().addEvent(ev);
+    //   })
+  }
   handleEventClick(e) {
     console.log(e)
     this.openEventDetailDialog(e);
@@ -214,7 +214,7 @@ export const MY_CUSTOM_FORMATS = {
   ]
 })
 export class EventdetailDialog {
-  event = {}
+  event = { title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
   isEdit = false;
   textDisable: boolean = true;
   constructor(private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
