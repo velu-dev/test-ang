@@ -124,6 +124,7 @@ export class BilllableBillingComponent implements OnInit {
     this.intercom.setBillNo('Bill');
     this.cookieService.set('billNo', null)
     this.route.params.subscribe(param => {
+      console.log(param)
       this.paramsId = param;
       if (!param.billingId) {
         this.billingService.billCreate(param.claim_id, param.billId).subscribe(bill => {
@@ -1197,6 +1198,7 @@ export class billingOnDemandDialog {
           this.selection1.select(doc);
         }
       })
+      console.log(rec.data);
       this.recipients = new MatTableDataSource(rec.data);
     })
   }
@@ -1321,6 +1323,7 @@ export class billingOnDemandDialog {
 
   typeIfRecipient = "";
   openAddAddress(element): void {
+    console.log(element)
     this.typeIfRecipient = element.recipient_type;
     const dialogRef = this.dialog.open(AddAddress, {
       width: '800px',
@@ -1386,13 +1389,17 @@ export class BillingCustomRecipient {
       if (this.data["data"].zip_code_plus_4) {
         this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
       }
-      this.changeState(this.data['data'].state)
+      this.data['data'].state_id = this.data['data'].state;
+      this.changeState(this.data['data'].state, this.data['data'].state_code);
       this.customReceipient.patchValue(this.data["data"]);
     }
   }
   recipientState = {};
-  changeState(state) {
-    console.log(state)
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.recipientState = state_code;
+      return;
+    }
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
         this.recipientState = res.state_code;

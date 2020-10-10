@@ -1,6 +1,6 @@
 <div class="dialog event-detail">
   <mat-card-header class="model-header">
-    <div class="content-wrapper-main-title"> <span> <i class="fa fa-circle p-r-5 lv"></i>{{data.title}}</span></div>
+    <div class="content-wrapper-main-title"> <span> <i class="fa fa-circle p-r-5 lv"></i>{{event?.title}}</span></div>
     <span class="spacer"></span>
     <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
   </mat-card-header>
@@ -12,36 +12,36 @@
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Examination</div>
-        <div class="value">Monday, October 12 2020 | 10:30 - 11:30 AM PDT</div>
+        <div class="value">{{changeDateType(event.start)}}</div>
       </div>
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Location</div>
-        <div class="value"> SALCEDO middle MONTEBELLO Colorado - 34532</div>
+        <div class="value"> {{event?.location}}</div>
       </div>
 
       <div class="divider"></div>
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Examiner</div>
-        <div class="value">ZENITH PLEASANTON</div>
+        <div class="value">{{event?.examiner_name}}</div>
       </div>
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Claimant</div>
-        <div class="value">{{data.title}}</div>
+        <div class="value">{{event.claimant_name}}</div>
       </div>
 
       <div class="divider"></div>
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Exam Procedure Type</div>
-        <div class="value">Represented QME Re-Evaluation</div>
+        <div class="value">{{event?.exam_procedure_name}} - {{event?.exam_name}}</div>
       </div>
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Claim Number</div>
-        <div class="value">1000893</div>
+        <div class="value">{{event?.claim_number}}</div>
       </div>
 
       <div class="divider"></div>
@@ -49,7 +49,7 @@
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Examination Status</div>
-        <div class="value">Left Voicemail <i class="fa fa-pencil" (click)="isEdit = !isEdit "></i></div>
+        <div class="value">{{event?.status}} <i class="fa fa-pencil" (click)="isEdit = !isEdit "></i></div>
         <!-- <div class="value" fxLayout="row wrap" *ngIf="isEdit">
           <mat-form-field appearance="outline" fxFlex="100" class="w-100">
             <mat-label>Select an Status</mat-label>
@@ -63,13 +63,13 @@
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Claimant Phone </div>
-        <div class="value">(777) 777-7777</div>
+        <div class="value">{{event?.phone_no_1 | mask : "(000) 000-0000"}}</div>
       </div>
 
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Claimant Email </div>
-        <div class="value">mgl@gmail.com</div>
+        <div class="value">{{event?.email}}</div>
       </div>
 
       <!-- <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
@@ -92,8 +92,8 @@
       <div class="grid-list-event default-section" fxFlex="100" fxFlex.xs="100">
         <mat-form-field appearance="outline" fxFlex="100" class="w-100 default-section">
           <mat-label>Notes</mat-label>
-          <textarea [disabled]="textDisable" matInput placeholder="Notes" cdkTextareaAutosize cdkAutosizeMinRows="2"
-            cdkAutosizeMaxRows="2"></textarea>
+          <textarea [disabled]="textDisable" matInput placeholder="Notes" [(ngModel)]="event.description"
+            cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"></textarea>
           <mat-error>Error msg here</mat-error>
         </mat-form-field>
         <div class="action">
@@ -112,8 +112,9 @@
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions class="m-b-0" align="right">
-    <button mat-stroked-button>Close</button>
-    <button mat-raised-button mat-dialog-close (click)="viewDetails()" class="filled-ternary"> Go to Billable item </button>
+    <button mat-stroked-button mat-dialog-close>Close</button>
+    <button mat-raised-button mat-dialog-close (click)="viewDetails()" class="filled-ternary"> Go to Billable item
+    </button>
   </mat-card-actions>
 </div>
 

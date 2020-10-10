@@ -659,7 +659,7 @@
                                         </span>
                                         <div>
                                             <span *ngIf="column == 'address'"> {{element?.street1}} {{element?.street2}}
-                                                {{element?.city}} {{element?.state}} - {{element?.zip_code}}</span>
+                                                {{element?.city}} {{element?.state_code}} - {{element?.zip_code}}</span>
                                             <span
                                                 *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
                                             <span
@@ -751,7 +751,7 @@
                                         </div>
                                         <div class="address" mat-line> {{locationData?.street1 }}
                                             {{locationData?.street2 }} {{locationData?.city}}
-                                            {{locationData?.state_name }} - {{locationData?.zip_code }}</div>
+                                            {{locationData?.state_code }} - {{locationData?.zip_code }}</div>
                                     </mat-list-item>
                                 </mat-list>
                             </div>

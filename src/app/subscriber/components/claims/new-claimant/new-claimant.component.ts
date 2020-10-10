@@ -196,7 +196,7 @@ export class NewClaimantComponent implements OnInit {
       this.claimantInfo = res['data'][0];
       this.languageStatus = res['data'][0].certified_interpreter_required;
       this.claimNumber = res['data'][0].claim_numbers.map(data => data.claim_number);
-      this.changeState(res['data'][0].state, res['data'][0].state_code)
+      this.changeState(res['data'][0].state, res['data'][0].state_code);
       this.claimantForm.patchValue(res['data'][0])
     }, error => {
 
@@ -330,15 +330,18 @@ export class NewClaimantComponent implements OnInit {
   }
   claimantState: any;
   changeState(state, state_code?) {
+    if ((state_code != null) || (state != null)) {
+      return;
+    }
     if (state_code) {
       this.claimantState = state_code;
       return;
     }
-    this.states.map(res => {
-      if ((res.id == state) || (res.state == state)) {
-        this.claimantState = res.state_code;
-      }
-    })
+      this.states.map(res => {
+        if ((res.id == state) || (res.state == state)) {
+          this.claimantState = res.state_code;
+        }
+      })
   }
   newClaim() {
     this.router.navigate([this.router.url + '/new-claim'])

@@ -56,201 +56,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   @ViewChild("calendar", { static: false }) calendar: FullCalendarComponent;
   @ViewChild("intake", { static: false }) intake;
   // calendarComponent: FullCalendarComponent;
-  data = [{
-    id: 1,
-    data: [{
-      title: "Paul Newman",
-      start: "2020-10-03T06:00:00.453Z",
-      end: "2020-10-03T06:30:00.453Z",
-      backgroundColor: "#72E396"
-    },
-    {
-      title: "Paul Newman",
-      start: "2020-09-03T08:00:00.453Z",
-      end: "2020-09-03T08:30:00.453Z",
-      backgroundColor: "#FFC400"
-    },
-    {
-      title: "Paul Newman",
-      start: "2020-09-04T07:00:00.453Z",
-      end: "2020-09-04T07:30:00.453Z",
-      backgroundColor: "#FFC400"
-    }]
-  },
-  {
-    id: 2,
-    data: [{
-      title: "Paul Newman",
-      start: "2020-10-03T07:00:00.453Z",
-      end: "2020-10-0307:30:00.453Z",
-      backgroundColor: "#FFC400"
-    },
-    {
-      title: "Paul Newman",
-      start: "2020-09-28T07:00:00.453Z",
-      end: "2020-09-28T07:30:00.453Z",
-      backgroundColor: "#FFC400"
-    },
-    {
-      title: "Paul Newman",
-      start: "2020-09-28T07:00:00.453Z",
-      end: "2020-09-28T07:30:00.453Z",
-      backgroundColor: "#FFC400"
-    }]
-  },
-  {
-    id: 3,
-    data: [{
-      title: "Paul Newman",
-      start: "2020-09-02T07:00:00.453Z",
-      end: "2020-09-02T07:30:00.453Z",
-      backgroundColor: "#72E396"
-    },
-    {
-      title: "Paul Newman",
-      start: "2020-09-03T07:00:00.453Z",
-      end: "2020-09-03T07:30:00.453Z",
-      backgroundColor: "#FFC400"
-    },
-    {
-      title: "Paul Newman",
-      start: "2020-09-04T07:00:00.453Z",
-      end: "2020-09-04T07:30:00.453Z",
-      backgroundColor: "#FFC400"
-    }]
-  },
-  {
-    id: 4,
-    data: [{
-      title: "Charles Chaplin",
-      start: "2020-09-30T08:00:00.453Z",
-      end: "2020-09-30T08:30:00.453Z",
-      backgroundColor: "#FFC400"
-    },
-    {
-      title: "Johnny Depp",
-      start: "2020-09-27T09:00:00.453Z",
-      end: "2020-09-27T09:30:00.453Z",
-      backgroundColor: "#FFC400"
-    },
-    {
-      title: "James Cagney",
-      start: "2020-09-28T10:00:00.453Z",
-      end: "2020-09-28T10:30:00.453Z",
-      backgroundColor: "#FFC400"
-    }]
-  },
-  {
-    id: 5,
-    data: [{
-      title: "Morgan Freeman",
-      start: "2020-09-29T05:00:00.453Z",
-      end: "2020-09-29T05:50:00.453Z",
-      backgroundColor: "#FFC400"
-    },
-    {
-      title: "Morgan George",
-      start: "2020-09-07T05:00:00.453Z",
-      end: "2020-09-08T05:50:00.453Z",
-      backgroundColor: "#FFC400"
-    }, {
-      title: "Henry Fonda",
-      start: "2020-09-05T30:23:55.453Z",
-      backgroundColor: "#72E396"
-    },
-    {
-      title: "Bruce Lee",
-      start: "2020-09-30T05:23:55.453Z",
-      backgroundColor: "#72E396"
-    },
-    {
-      title: "Steve McQueen",
-      start: "2020-09-29T09:23:55.453Z",
-      backgroundColor: "#72E396"
-    }]
-  },
-  {
-    id: 6,
-    data: [{
-      title: "James Stewart",
-      start: "2020-09-29T07:23:55.453Z",
-      backgroundColor: "#72E396"
-    },
-    {
-      title: "Laurence Olivier",
-      start: "2020-09-29T08:23:55.453Z",
-      backgroundColor: "#72E396"
-    },
-    {
-      title: "Cary Grant",
-      start: "2020-09-29T09:23:55.453Z",
-      backgroundColor: "#72E396"
-    },
-    {
-      start: '2020-09-08',
-      end: '2020-09-08',
-      rendering: 'background',
-      overlap: false,
-      color: '#f72222'
-    }]
-  },
-  {
-    id: 7,
-    data: [{
-      title: "Spencer Tracy",
-      start: "2020-09-26T10:23:55.453Z",
-      backgroundColor: "#72E396"
-    }, {
-      title: "Shah Rukh Khan",
-      start: "2020-09-21T09:23:55.453Z",
-      backgroundColor: "#FF3366"
-    },
-    {
-      title: "Leonardo DiCaprio",
-      start: "2020-09-30T09:23:55.453Z",
-      backgroundColor: "#FF3366"
-    },
-    {
-      title: "Gregory Peck",
-      start: "2020-09-29T09:23:55.453Z",
-      backgroundColor: "#FF3366"
-    }]
-  },
-  {
-    id: 8,
-    data: [{
-      title: "Sidney Poitier",
-      start: "2020-09-28T09:23:55.453Z",
-      backgroundColor: "#FF3366"
-    },
-    {
-      title: "Daniel Day-Lewis",
-      start: "2020-09-27T09:23:55.453Z",
-      backgroundColor: "#FF3366"
-    },
-    {
-      start: '2020-09-28',
-      end: '2020-09-28',
-      rendering: 'background',
-      overlap: false,
-      color: '#f72222'
-    }]
-  },
-  {
-    id: 9,
-    data: [{
-      title: "Humphrey Bogart",
-      start: "2020-09-15T09:23:55.453Z",
-      backgroundColor: "#FF3366"
-    },
-    {
-      title: "Tom Hanks",
-      start: "2020-09-16T09:23:55.453Z",
-      backgroundColor: "#FF3366"
-    }]
-  }
-  ]
-  events: EventInput[] = [];
+  events = [];
   calendarVisible = true;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
@@ -259,7 +65,16 @@ export class ExaminationCalanderViewComponent implements OnInit {
   examinars = [];
   constructor(public dialog: MatDialog, public examinarService: ExaminerService) {
     this.examinarService.getCalendarEvent().subscribe(event => {
-      console.log(event)
+      let eventSource = [];
+      event.data.map(res => {
+        eventSource.push({
+          title: res.title,
+          start: res.start,
+          end: res.end,
+          extendedProps: res
+        })
+      });
+      this.calendarEvents = eventSource;
     })
     this.examinarService.getExaminerList().subscribe(res => {
       this.examinars = res.data;
@@ -267,40 +82,37 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadAllEvents();
+    // this.loadAllEvents();
 
   }
-  loadAllEvents() {
-    let Alldata = [];
-    this.data.map(da => {
-      Alldata.push(da.data)
-    })
-
-    // console.log();
-    this.calendarEvents = [].concat.apply([], Alldata);
-    // this.calendarEvents = [];
-    // this.calendarEvents = this.events;
-  }
-  selectExaminer(examiner?, index?) {
-    this.calendar.getApi().removeAllEvents();
-    if (examiner) {
-      console.log(examiner);
-    } else {
-      console.log("All")
-      this.loadAllEvents();
-    }
-    let event = [];
-    this.data.map(res => {
-      if (res.id == index) {
-        event = res.data;
-      }
-    });
-    event.map(ev => {
-      console.log(ev)
-      this.calendar.getApi().addEvent(ev);
-    })
-  }
+  // loadAllEvents() {
+  //   let Alldata = [];
+  //   this.data.map(da => {
+  //     Alldata.push(da.data)
+  //   })
+  //   this.calendarEvents = [].concat.apply([], Alldata);
+  // }
+  // selectExaminer(examiner?, index?) {
+  //   this.calendar.getApi().removeAllEvents();
+  //   if (examiner) {
+  //     console.log(examiner);
+  //   } else {
+  //     console.log("All")
+  //     this.loadAllEvents();
+  //   }
+  //   let event = [];
+  //   this.data.map(res => {
+  //     if (res.id == index) {
+  //       event = res.data;
+  //     }
+  //   });
+  //   event.map(ev => {
+  //     console.log(ev)
+  //     this.calendar.getApi().addEvent(ev);
+  //   })
+  // }
   handleEventClick(e) {
+    console.log(e)
     this.openEventDetailDialog(e);
   }
   handleDateClick(e) {
@@ -313,9 +125,10 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
 
   openEventDetailDialog(e): void {
+    console.log(e.event)
     const dialogRef = this.dialog.open(EventdetailDialog, {
       width: '550px',
-      data: { title: e.event.title, start: e.event.start, end: e.event.end }
+      data: e.event.extendedProps
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -401,7 +214,7 @@ export const MY_CUSTOM_FORMATS = {
   ]
 })
 export class EventdetailDialog {
-  event = { title: "", start: "", end: "", location: "" }
+  event = {}
   isEdit = false;
   textDisable: boolean = true;
   constructor(private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
@@ -415,6 +228,14 @@ export class EventdetailDialog {
   pickerOpened(p) { }
   saveEvent() {
     this.dialogRef.close(this.event)
+  }
+  changeDateType(date) {
+    if (date) {
+      let timezone = moment.tz.guess();
+      return moment(date).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+    } else {
+      return null
+    }
   }
   viewDetails() {
     this.router.navigate([this.router.url + "/appointment-details", 2, 7]);

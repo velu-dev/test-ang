@@ -580,7 +580,6 @@ export class CustomRecipient {
     this.claim_id = data['claim_id'];
     this.billable_id = data['billable_id'];
     this.isEdit = data['isEdit'];
-    this.changeState(this.data['data'].state, this.data['data'].state_code)
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -665,6 +664,7 @@ export class AddAddress {
     this.states = data["state"];
     this.userData = data["data"];
     this.type = data["type"];
+    console.log(data)
   }
   ngOnInit() {
     this.isLoading = false;
