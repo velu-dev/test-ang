@@ -62,9 +62,23 @@ export class DeoComponent implements OnInit {
       this.editDEU();
     }
     this.deuId = this.deuDetail.id;
+    this.changeState(this.deuDetail.state, this.deuDetail.state_code);
     this.DEU.patchValue(this.deuDetail);
     console.log(this.deuDetail)
     this.deuCtrl.setValue(this.deuDetail.name);
+  }
+  deuState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.deuState = state_code;
+      return
+    }
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.deuState = res.state_code;
+      }
+    })
   }
   appAttorney(sdsd) {
 

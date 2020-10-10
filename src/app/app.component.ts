@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { IntercomService } from './services/intercom.service';
 import { CookieService } from './shared/services/cookie.service';
+import { ClaimService } from './subscriber/service/claim.service';
 Auth.configure(environment.Amplify);
 @Component({
   selector: 'app-root',
@@ -24,7 +25,10 @@ export class AppComponent {
   constructor(private _router: Router, private store: Store<{ breadcrumb: any }>,
     private breadcrumbService: BreadcrumbService,
     private intercom: IntercomService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService, private claimService: ClaimService) {
+    this.claimService.seedData('state').subscribe(res => {
+      this.cookieService.set("states", res.data);
+    })
     this.intercom.getClaimant().subscribe(name => {
       this.breadcrumbService.set("@Claimant", name)
     })
@@ -88,4 +92,17 @@ export class AppComponent {
     window.scroll(0, 0);
   }
 
+}
+
+export class StateController {
+  states = [];
+  constructor(private claimService: ClaimService) {
+    this.claimService.seedData('state').subscribe(res => {
+      this.states = res.data;
+    })
+  }
+
+  get getState() {
+    return this.states;
+  }
 }

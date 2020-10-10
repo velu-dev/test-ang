@@ -31,6 +31,9 @@ export class ExaminerService {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteAddress + id)
   }
 
+  getCalendarEvent(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getCalendarEvents)
+  }
   getExaminerList(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getExaminerList)
   }

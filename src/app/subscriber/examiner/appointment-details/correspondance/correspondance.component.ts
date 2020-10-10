@@ -384,6 +384,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   openAddAddress(element): void {
     this.logger.log(element.data)
     this.typeIfRecipient = element.recipient_type;
+
     const dialogRef = this.dialog.open(AddAddress, {
       width: '800px',
       data: { type: this.typeIfRecipient, data: element.data, state: this.states }
@@ -598,8 +599,19 @@ export class CustomRecipient {
       if (this.data["data"].zip_code_plus_4) {
         this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
       }
+      this.changeState(this.data['data'].state)
       this.customReceipient.patchValue(this.data["data"]);
     }
+  }
+  recipientState = {};
+  changeState(state) {
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        console.log((res.id == state) || (res.state == state))
+        this.recipientState = res;
+      }
+    })
   }
   saveClick() {
     Object.keys(this.customReceipient.controls).forEach((key) => {
@@ -663,8 +675,21 @@ export class AddAddress {
         gender: [null],
         zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
       });
+      this.changeState(this.userData.state, this.userData.state_code)
       this.claimantForm.patchValue(this.userData)
     }
+  }
+  corresState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.corresState = state_code;
+    }
+    this.states.map(res => {
+      if ((res.id == state) || (res.state_code == state)) {
+        console.log(res);
+        this.corresState = res.state_code;
+      }
+    })
   }
   saveClaimant() {
     if (this.claimantForm.invalid) {

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MatDialog } from '@angular/material';
+import { stat } from 'fs';
 
 @Component({
   selector: 'app-employer',
@@ -35,7 +36,20 @@ export class EmployerComponent implements OnInit {
     if (this.fromPop) {
       this.editEmployer();
     }
+    this.changeState(this.employerDetail.state, this.employerDetail.state_code)
     this.employer.patchValue(this.employerDetail)
+  }
+  empState: any;
+  changeState(state, state_code?) {
+    if (state_code) {
+      this.empState = state_code;
+      return
+    }
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.empState = res.state_code;
+      }
+    })
   }
   updateEmployer() {
     Object.keys(this.employer.controls).forEach((key) => {

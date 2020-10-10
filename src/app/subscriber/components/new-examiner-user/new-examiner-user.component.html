@@ -109,7 +109,11 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>State</mat-label>
-                            <mat-select formControlName="state">
+                            <mat-select formControlName="state"
+                                (selectionChange)="changeState($event.value, 'mailing')">
+                                <mat-select-trigger>
+                                    {{mailingState}}
+                                </mat-select-trigger>
                                 <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                     {{state.state}}
                                 </mat-option>
@@ -196,7 +200,11 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Default Injury State</mat-label>
-                                <mat-select formControlName="default_injury_state">
+                                <mat-select formControlName="default_injury_state"
+                                    (selectionChange)="changeState($event.value, 'billing')">
+                                    <mat-select-trigger>
+                                        {{billingState}}
+                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                         {{state.state}}
                                     </mat-option>
@@ -300,8 +308,11 @@
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>State</mat-label>
-                            <mat-select formControlName="state">
+                            <mat-label>State1</mat-label>
+                            <mat-select formControlName="state" (selectionChange)="changeState($event.value, 'cms')">
+                                <mat-select-trigger>
+                                    {{cmsState}}
+                                </mat-select-trigger>
                                 <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                     {{state.state}}
                                 </mat-option>
@@ -381,7 +392,11 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Default Injury State</mat-label>
-                                <mat-select formControlName="default_injury_state">
+                                <mat-select formControlName="default_injury_state"
+                                    (selectionChange)="changeState($event.value, 'render')">
+                                    <mat-select-trigger>
+                                        {{ renderState}}
+                                    </mat-select-trigger>
                                     <mat-option *ngFor="let state of states" [value]="state.id">{{state.state_code}} -
                                         {{state.state}}
                                     </mat-option>
@@ -504,7 +519,7 @@
                                         <!-- Name Column -->
                                         <ng-container matColumnDef="license_state">
                                             <th mat-header-cell *matHeaderCellDef> License State </th>
-                                            <td mat-cell *matCellDef="let element"> {{getState(element.state_id)}}</td>
+                                            <td mat-cell *matCellDef="let element"> {{element.state_code}}</td>
                                         </ng-container>
 
                                         <!-- Weight Column -->
@@ -711,7 +726,7 @@
                                         (click)="addressOnChange(option)"
                                         value="{{option?.street1 }} {{option?.street2 }} {{option?.city}} {{option?.state_name }} {{option?.zip_code }}">
                                         {{option?.street1 }} {{option?.street2 }} {{option?.city}}
-                                        {{option?.state_name }} {{option?.zip_code }}
+                                        {{option?.state_code }} {{option?.zip_code }}
                                     </mat-option>
                                     <mat-option *ngIf="(filteredOptions | async)?.length == 0" disabled>Not found
                                     </mat-option>

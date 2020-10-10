@@ -121,8 +121,8 @@ export class BilllableBillingComponent implements OnInit {
     private fb: FormBuilder,
     private intercom: IntercomService,
     private cookieService: CookieService) {
-      this.intercom.setBillNo('Bill');
-      this.cookieService.set('billNo', null)
+    this.intercom.setBillNo('Bill');
+    this.cookieService.set('billNo', null)
     this.route.params.subscribe(param => {
       this.paramsId = param;
       if (!param.billingId) {
@@ -342,7 +342,7 @@ export class BilllableBillingComponent implements OnInit {
       if (this.billingData.bill_no) {
         this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
         this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
-      }else{
+      } else {
         this.intercom.setBillNo('Bill');
       }
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
@@ -1364,13 +1364,13 @@ export class BillingCustomRecipient {
     public dialogRef: MatDialogRef<BillingCustomRecipient>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, public billingService: BillingService,
     private alertService: AlertService) {
+    this.billingService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
     dialogRef.disableClose = true;
     this.claim_id = data['claim_id'];
     this.billable_id = data['billable_id'];
     this.isEdit = data['isEdit'];
-    this.billingService.seedData("state").subscribe(res => {
-      this.states = res.data;
-    })
   }
   ngOnInit() {
     this.customReceipient = this.formBuilder.group({
@@ -1386,8 +1386,18 @@ export class BillingCustomRecipient {
       if (this.data["data"].zip_code_plus_4) {
         this.data["data"].zip_code = this.data["data"].zip_code + '-' + this.data["data"].zip_code_plus_4;
       }
+      this.changeState(this.data['data'].state)
       this.customReceipient.patchValue(this.data["data"]);
     }
+  }
+  recipientState = {};
+  changeState(state) {
+    console.log(state)
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.recipientState = res;
+      }
+    })
   }
   saveClick() {
     Object.keys(this.customReceipient.controls).forEach((key) => {

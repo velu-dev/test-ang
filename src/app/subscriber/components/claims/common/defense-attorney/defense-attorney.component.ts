@@ -74,8 +74,22 @@ export class DefenseAttorneyComponent implements OnInit {
       this.DefanceAttorney.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editDA();
     }
+    this.changeState(this.dattorneyDetail.state, this.dattorneyDetail.state_code);
     this.DefanceAttorney.patchValue(this.dattorneyDetail);
     this.id = this.dattorneyDetail.id;
+  }
+  daState: any;
+  changeState(state, state_code?) {
+    console.log(state_code);
+    if (state_code) {
+      this.daState = state_code;
+      return
+    }
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.daState = res.state_code;
+      }
+    })
   }
   defAttornety(da) {
     delete da.id;
