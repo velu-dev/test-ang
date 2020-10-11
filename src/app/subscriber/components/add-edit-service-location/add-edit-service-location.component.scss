@@ -114,6 +114,16 @@ div.advanced_search_expand {
       mat-form-field {
         padding: 10px 10px 0px 10px !important;
       }
+      .checkbox_ {
+        background-color: $light-color;
+        padding: 10px 20px;
+        margin-top: 10px;
+        margin-left: 10px;
+        width: max-content;
+        display: block;
+        float: left;
+        margin-right: 10px;
+      }
     }
   }
 }

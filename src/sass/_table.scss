@@ -370,6 +370,8 @@ tr.detail-row {
   table {
     width: 100%;
     tbody {
+      // max-height: 300px;
+      // overflow: auto;
       tr {
         &:nth-child(odd) {
           background-color: $light-color;

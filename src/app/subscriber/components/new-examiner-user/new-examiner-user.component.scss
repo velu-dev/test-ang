@@ -152,6 +152,16 @@ mat-card {
 .county {
   padding-top: 0px !important;
 }
+.checkbox_ {
+  background-color: $light-color;
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-left: 0px;
+  width: max-content;
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
 .address-list {
   mat-list-item {
     background-color: $light-color;

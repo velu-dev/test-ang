@@ -237,7 +237,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                        <div class="sub-title p-l-10 " fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                             CMS 1500 Box 33
                         </div>
 
@@ -283,6 +283,10 @@
                                     formControlName="billing_provider_name" autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid billing provider name</mat-error>
                             </mat-form-field>
+                        </div>
+
+                        <div fxFlex="100">
+                            <mat-checkbox class="checkbox_ m-t-0">Same as Mailing Address</mat-checkbox>
                         </div>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
@@ -338,7 +342,7 @@
 
                         <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <div fxLayout="row wrap">
-                                <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                                <div class="sub-title p-l-10 " fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                                     CMS 1500 Box 33a
                                 </div>
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="100"
@@ -355,7 +359,7 @@
 
                         <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <div fxLayout="row wrap">
-                                <div class="sub-title" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                                <div class="sub-title p-l-10 " fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                                     CMS 1500 Box 33b
                                 </div>
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="100"
@@ -771,6 +775,15 @@
                                         Number</div>
                                     <p fxFlex="100" class="m-t-5 p-l-5">Enter NPI Number for the Service Location.</p>
                                     <div class="sub-title" fxFlex="100">CMS 1500 Box 32 a</div>
+
+                                    <div fxFlex="100" class="m-t-20">
+                                        <mat-checkbox class="checkbox_ m-t-0">Same as Billing Provider NPI Number</mat-checkbox>
+                                       </div>
+
+                                    <div fxFlex="100">
+                                        <mat-checkbox class="checkbox_ m-t-10">Same as Rendering Provider NPI Number</mat-checkbox>
+                                    </div>
+
                                     <mat-form-field fxFlex="100" class="m-t-20">
                                         <mat-label>National Provider Identifier (NPI) Number</mat-label>
                                         <input matInput pattern="^[0-9]*$"
