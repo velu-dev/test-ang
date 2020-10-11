@@ -214,7 +214,7 @@ export const MY_CUSTOM_FORMATS = {
   ]
 })
 export class EventdetailDialog {
-  event = { title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
+  event: any = { title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
   isEdit = false;
   textDisable: boolean = true;
   constructor(private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
