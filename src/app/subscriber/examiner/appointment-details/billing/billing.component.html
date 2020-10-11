@@ -27,7 +27,7 @@
     </div>
 
     <div class="border-dashed-blue"></div>
-
+    
     <!-- ===== Examiner information ==== -->
     <div class="examiner-info">
         <mat-card>
@@ -205,7 +205,7 @@
                     </button>
                 </div> -->
                 <div fxLayout="row wrap" class="m-t-10">
-                    <div class="user-detail vertical-fixed hide-mobile">
+                    <div #scrollBottom  class="user-detail vertical-fixed hide-mobile">
                         <!-- <table mat-table [dataSource]="dataSource1" multiTemplateDataRows
                             class="mat-elevation-z8 user-table" matSort>
                             <ng-container matColumnDef="{{column}}"
@@ -708,7 +708,7 @@
     <div fxlayout="row wrap" class="m-t-30 submission-document">
         <mat-card>
             <mat-card-header fxLayout="row wrap">
-                <div class="content-wrapper-main-title" fxFlex="50">Represented QME Examination Submission Documents
+                <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}} Examination Submission Documents
                     <span class="info ondemand-info m-l-10"
                         matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
                         matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>

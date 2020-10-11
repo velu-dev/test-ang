@@ -114,7 +114,7 @@ export class BilllableBillingComponent implements OnInit {
   unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }, { unit_type: 'Minutes', unit_short_code: 'MJ' }]
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   billDocumentList: any;
-
+  @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -270,6 +270,12 @@ export class BilllableBillingComponent implements OnInit {
       // console.log('The dialog was closed');
       // this.animal = result;
     });
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.scrollBottom.nativeElement.scrollTop = this.scrollBottom.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
   ngOnInit() {
@@ -735,6 +741,11 @@ export class BilllableBillingComponent implements OnInit {
 
     const control = this.userTable.get('tableRows') as FormArray;
     control.push(this.initiateForm());
+    if (status != 1) {
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 500);
+    }
   }
 
   deleteRow(index: number, group) {
