@@ -1211,6 +1211,7 @@ export class billingOnDemandDialog {
   getBillRecipient() {
     this.billingService.getBillRecipient(this.data.claimId, this.data.billableId).subscribe(rec => {
       this.recipientsData = rec.data;
+      this.selection1.clear()
       rec.data.map(doc => {
         if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
           this.selection1.select(doc);
