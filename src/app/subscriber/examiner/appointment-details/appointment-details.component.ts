@@ -256,7 +256,7 @@ export class AppointmentDetailsComponent implements OnInit {
             this.isDisplayStatus.isDeposition = false;
             this.claimService.seedData('examination_status').subscribe(curres => {
               this.examinationStatus = curres.data;
-            })
+            });
           } else if (response.data.procedure_type == "Deposition") {
             this.isDisplayStatus.isExaminar = false;
             this.isDisplayStatus.isDeposition = true;
@@ -287,8 +287,8 @@ export class AppointmentDetailsComponent implements OnInit {
               }
             }
           })
-
-          this.examinationStatusForm.patchValue(response.data.appointments)
+          console.log(response.data.appointments)
+          this.examinationStatusForm.patchValue(response.data.appointments);
           if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
             this.appointmentStatus = true;
           } else {

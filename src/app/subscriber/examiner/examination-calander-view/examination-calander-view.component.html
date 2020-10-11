@@ -7,7 +7,7 @@
             </mat-option>
             <mat-option *ngFor="let examinar of examinars; let i=index" (click)="selectExaminer(examinar, i)"
                 [value]="examinar.id">
-                {{examinar.first_name + examinar.last_name}}
+                {{examinar.first_name + " " + examinar.last_name}}
             </mat-option>
         </mat-select>
     </mat-form-field>

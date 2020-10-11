@@ -34,6 +34,9 @@ export class ExaminerService {
   getCalendarEvent(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getCalendarEvents)
   }
+  getExaminerCalendarEvent(examiner_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getCalendarEvents + "/" + examiner_id)
+  }
   getExaminerList(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getExaminerList)
   }

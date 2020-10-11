@@ -13,6 +13,8 @@ import { OWL_DATE_TIME_FORMATS, DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { ClaimService } from '../../service/claim.service';
 @Component({
   selector: 'app-examination-calander-view',
   templateUrl: './examination-calander-view.component.html',
@@ -64,18 +66,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   selectedDate = "";
   examinars = [];
   constructor(public dialog: MatDialog, public examinarService: ExaminerService) {
-    this.examinarService.getCalendarEvent().subscribe(event => {
-      // let eventSource = [];
-      // event.data.map(res => {
-      //   eventSource.push({
-      //     title: res.title,
-      //     start: res.start,
-      //     end: res.end,
-      //     extendedProps: res
-      //   })
-      // });
-      this.calendarEvents = event.data;
-    })
+    this.loadAllEvents();
     this.examinarService.getExaminerList().subscribe(res => {
       this.examinars = res.data;
     })
@@ -85,21 +76,21 @@ export class ExaminationCalanderViewComponent implements OnInit {
     // this.loadAllEvents();
 
   }
-  // loadAllEvents() {
-  //   let Alldata = [];
-  //   this.data.map(da => {
-  //     Alldata.push(da.data)
-  //   })
-  //   this.calendarEvents = [].concat.apply([], Alldata);
-  // }
+  loadAllEvents() {
+    this.examinarService.getCalendarEvent().subscribe(event => {
+      this.calendarEvents = event.data;
+    })
+  }
   selectExaminer(examiner?, index?) {
-    //   this.calendar.getApi().removeAllEvents();
-    //   if (examiner) {
-    //     console.log(examiner);
-    //   } else {
-    //     console.log("All")
-    //     this.loadAllEvents();
-    //   }
+    this.calendar.getApi().removeAllEvents();
+    if (examiner) {
+      this.examinarService.getExaminerCalendarEvent(examiner.id).subscribe(event => {
+        this.calendarEvents = event.data;
+      })
+    } else {
+      console.log("All")
+      this.loadAllEvents();
+    }
     //   let event = [];
     //   this.data.map(res => {
     //     if (res.id == index) {
@@ -214,13 +205,24 @@ export const MY_CUSTOM_FORMATS = {
   ]
 })
 export class EventdetailDialog {
-  event = { title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
+  event = { billable_item_id: "", claim_id: "", title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
   isEdit = false;
   textDisable: boolean = true;
-  constructor(private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(data.extendedProps)
+  examinationStatus = [];
+  constructor(private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
+    this.claimService.seedData('examination_status').subscribe(curres => {
+      this.examinationStatus = curres.data;
+      this.examinationStatus.map(res => {
+        if (res.examination_status == data.extendedProps.status) {
+          this.examination_status = res.id;
+        }
+      })
+    });
+
     this.event = data.extendedProps;
+    this.examination_notes = data.extendedProps.description;
+
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -236,6 +238,26 @@ export class EventdetailDialog {
     } else {
       return null
     }
+  }
+  examination_notes = '';
+  examination_status = null;
+  updateStatus() {
+    let data = {
+      id: this.event['appointment_id'],
+      examination_status: this.examination_status,
+      examination_notes: this.examination_notes
+    }
+    this.examinerService.updateExaminationStatus(data).subscribe(res => {
+      // if (data.examination_status != "") {
+      //   this.alertService.openSnackBar("Examiner status Updated Successfully", 'success');
+      // }
+      if (data.examination_notes != "") {
+        this.alertService.openSnackBar("Examiner notes Updates Successfully", "success");
+      }
+
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
   viewDetails(claim_id, billable_id) {
     this.router.navigate([this.router.url + "/appointment-details", claim_id, billable_id]);
