@@ -65,16 +65,16 @@ export class ExaminationCalanderViewComponent implements OnInit {
   examinars = [];
   constructor(public dialog: MatDialog, public examinarService: ExaminerService) {
     this.examinarService.getCalendarEvent().subscribe(event => {
-      let eventSource = [];
-      event.data.map(res => {
-        eventSource.push({
-          title: res.title,
-          start: res.start,
-          end: res.end,
-          extendedProps: res
-        })
-      });
-      this.calendarEvents = eventSource;
+      // let eventSource = [];
+      // event.data.map(res => {
+      //   eventSource.push({
+      //     title: res.title,
+      //     start: res.start,
+      //     end: res.end,
+      //     extendedProps: res
+      //   })
+      // });
+      this.calendarEvents = event.data;
     })
     this.examinarService.getExaminerList().subscribe(res => {
       this.examinars = res.data;
@@ -128,7 +128,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     console.log(e.event)
     const dialogRef = this.dialog.open(EventdetailDialog, {
       width: '550px',
-      data: e.event.extendedProps
+      data: e.event
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -219,8 +219,8 @@ export class EventdetailDialog {
   textDisable: boolean = true;
   constructor(private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(data)
-    this.event = data;
+    console.log(data.extendedProps)
+    this.event = data.extendedProps;
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -237,7 +237,7 @@ export class EventdetailDialog {
       return null
     }
   }
-  viewDetails() {
-    this.router.navigate([this.router.url + "/appointment-details", 2, 7]);
+  viewDetails(claim_id, billable_id) {
+    this.router.navigate([this.router.url + "/appointment-details", claim_id, billable_id]);
   }
 }
