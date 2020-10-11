@@ -113,6 +113,8 @@ export class BilllableBillingComponent implements OnInit {
   //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
   unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }, { unit_type: 'Minutes', unit_short_code: 'MJ' }]
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  billDocumentList: any;
+
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -319,6 +321,12 @@ export class BilllableBillingComponent implements OnInit {
       this.modifiers = type['data']
     })
 
+    this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId).subscribe(doc => {
+      this.billDocumentList = doc.data
+    }, error => {
+
+    })
+
     // this.claimService.seedData('workcompedi_payor_details').subscribe(type => {
     //   this.payors = type['data']
     // })
@@ -340,7 +348,7 @@ export class BilllableBillingComponent implements OnInit {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
-      if (this.billingData.bill_no) {
+      if (this.billingData && this.billingData.bill_no) {
         this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
         this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
       } else {
@@ -744,7 +752,7 @@ export class BilllableBillingComponent implements OnInit {
     group.get('isEditable').setValue(true);
   }
 
-  doneRow(group: FormGroup) {
+  doneRow(group: FormGroup, index) {
     if (group.status == "INVALID") {
       group.markAllAsTouched();
       return;
@@ -777,7 +785,9 @@ export class BilllableBillingComponent implements OnInit {
       } else {
         this.alertService.openSnackBar("Bill Line Item created successfully", 'success');
       }
-      this.billing_line_items.push(group.value)
+      let modifier = line.data.modifier ? line.data.modifier.split('-') : [];
+      this.billing_line_items[index] = line.data;
+      this.billing_line_items[index].modifierList = modifier;
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
