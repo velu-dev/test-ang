@@ -114,7 +114,7 @@ export class BilllableBillingComponent implements OnInit {
   unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }, { unit_type: 'Minutes', unit_short_code: 'MJ' }]
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   billDocumentList: any;
-
+  @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -155,8 +155,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnName2 = ["", "File Name", "Action"]
         this.columnsToDisplay2 = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName2 = ["", "File Name", "Document Source", "Action"]
-        this.columnsToDisplay2 = ['doc_image', 'file_name', 'document_source', "action"]
+        this.columnName2 = ["", "File Name", "Download Partial Document", "Complete", "Action"]
+        this.columnsToDisplay2 = ['doc_image', 'file_name', 'partial', 'complete', "action"]
       }
 
       if (res) {
@@ -272,6 +272,12 @@ export class BilllableBillingComponent implements OnInit {
     });
   }
 
+  scrollToBottom(): void {
+    try {
+      this.scrollBottom.nativeElement.scrollTop = this.scrollBottom.nativeElement.scrollHeight;
+    } catch (err) { }
+  }
+
   ngOnInit() {
     this.claimService.getICD10('a').subscribe(icd => {
       this.filteredICD = icd[3];
@@ -321,11 +327,7 @@ export class BilllableBillingComponent implements OnInit {
       this.modifiers = type['data']
     })
 
-    this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId).subscribe(doc => {
-      this.billDocumentList = doc.data
-    }, error => {
 
-    })
 
     // this.claimService.seedData('workcompedi_payor_details').subscribe(type => {
     //   this.payors = type['data']
@@ -336,6 +338,7 @@ export class BilllableBillingComponent implements OnInit {
     this.getDocumentData();
     this.getBillingDetails();
     this.getBillLineItem()
+    this.getBillDocument();
     //table
     this.touchedRows = [];
     this.userTable = this.fb.group({
@@ -549,8 +552,19 @@ export class BilllableBillingComponent implements OnInit {
     // }
   }
   getDocumentData() {
-    this.billingService.getDocumentData(this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {
-      this.documentsData = new MatTableDataSource(res.data);
+    // this.billingService.getDocumentData(this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {
+    //   this.documentsData = new MatTableDataSource(res.data);
+    // }, error => {
+    //   this.documentsData = new MatTableDataSource([]);
+    // })
+  }
+
+  getBillDocument() {
+    this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId).subscribe(doc => {
+      this.billDocumentList = doc.data
+      doc.data.document_list[0].id = 999
+      doc.data.document_list[1].id = 9999
+      this.documentsData = new MatTableDataSource(doc.data.document_list);
     }, error => {
       this.documentsData = new MatTableDataSource([]);
     })
@@ -727,6 +741,11 @@ export class BilllableBillingComponent implements OnInit {
 
     const control = this.userTable.get('tableRows') as FormArray;
     control.push(this.initiateForm());
+    if (status != 1) {
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 500);
+    }
   }
 
   deleteRow(index: number, group) {
@@ -1211,6 +1230,7 @@ export class billingOnDemandDialog {
   getBillRecipient() {
     this.billingService.getBillRecipient(this.data.claimId, this.data.billableId).subscribe(rec => {
       this.recipientsData = rec.data;
+      this.selection1.clear()
       rec.data.map(doc => {
         if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
           this.selection1.select(doc);

@@ -27,7 +27,7 @@
     </div>
 
     <div class="border-dashed-blue"></div>
-
+    
     <!-- ===== Examiner information ==== -->
     <div class="examiner-info">
         <mat-card>
@@ -205,7 +205,7 @@
                     </button>
                 </div> -->
                 <div fxLayout="row wrap" class="m-t-10">
-                    <div class="user-detail vertical-fixed hide-mobile">
+                    <div #scrollBottom  class="user-detail vertical-fixed hide-mobile">
                         <!-- <table mat-table [dataSource]="dataSource1" multiTemplateDataRows
                             class="mat-elevation-z8 user-table" matSort>
                             <ng-container matColumnDef="{{column}}"
@@ -581,7 +581,7 @@
                                                 <div class="bill-property">Payment</div>
                                                 <div class="editable"> {{group.value.payment | number : '1.2-2'}}</div>
                                             </div>
-                                            <div>
+                                            <div class="flex">
                                                 <div class="bill-property">Balance</div>
                                                 <div class="editable">
                                                     {{(group.get('charge').value) | number : '1.2-2'}}</div>
@@ -708,7 +708,7 @@
     <div fxlayout="row wrap" class="m-t-30 submission-document">
         <mat-card>
             <mat-card-header fxLayout="row wrap">
-                <div class="content-wrapper-main-title" fxFlex="50">Represented QME Examination Submission Documents
+                <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}} Examination Submission Documents
                     <span class="info ondemand-info m-l-10"
                         matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
                         matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
@@ -812,17 +812,21 @@
                                     </span>
                                     <div> <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
                                                 [src]="element?.file_name | fileType" alt=""></span>
-                                        <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                                        <span *ngIf="column == 'document_source'">
+                                        <span *ngIf="column == 'file_name'">{{element?.form_name}}</span>
+                                        <span *ngIf="column == 'partial'">
 
-                                            <a class="text-ternary m-r-10">Uploaded</a>
+                                            <a class="text-ternary m-r-10" (click)="download(element?.partial_document)" *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}</a>
+                                        </span>
+                                        <span *ngIf="column == 'complete'">
+
+                                            <a class="text-ternary m-r-10" (click)="uploader.click()">Upload Competed Form</a>
                                         </span>
                                         <span
                                             *ngIf="column == 'document_type'">{{element?.document_type | titlecase}}</span>
                                         <span
                                             *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                         <span *ngIf="column == 'action'">
-                                            <a class="text-success m-r-10" (click)="download(element)">Download</a>
+                                            <!-- <a class="text-success m-r-10" (click)="download(element)">Download</a> -->
                                             <a class="text-danger" *ngIf="!element?.isServiceRequested"
                                                 (click)="deleteDocument(element)">Remove</a>
                                         </span>
