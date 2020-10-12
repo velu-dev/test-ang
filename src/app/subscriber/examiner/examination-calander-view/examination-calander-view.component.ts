@@ -66,7 +66,9 @@ export class ExaminationCalanderViewComponent implements OnInit {
   calendarEvents: EventInput[];
   selectedDate = "";
   examinars = [];
-  constructor(public dialog: MatDialog, public examinarService: ExaminerService) {
+  roleId: any;
+  constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService) {
+    this.roleId = this.cookieService.get("role_id");
     this.loadAllEvents();
     this.examinarService.getExaminerList().subscribe(res => {
       this.examinars = res.data;
@@ -210,10 +212,13 @@ export class EventdetailDialog {
   isEdit = false;
   textDisable: boolean = true;
   examinationStatus = [];
-  eventStatus: any
+  eventStatus: any;
+  eventStatusID: any;
+  eventNotes = "";
   constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
     this.eventStatus = data.extendedProps.status;
+    this.eventNotes = data.extendedProps.description;
     this.claimService.seedData('examination_status').subscribe(curres => {
       this.examinationStatus = curres.data;
       this.getExaminationStatus(data.extendedProps)
@@ -227,6 +232,7 @@ export class EventdetailDialog {
     this.examinationStatus.map(res => {
       if (res.examination_status == data.status) {
         this.examination_status = res.id;
+        this.eventStatusID = res.id;
       }
     })
   }
@@ -257,10 +263,11 @@ export class EventdetailDialog {
       this.examinationStatus.map(exam => {
         if (exam.id == res.data.examination_status) {
           this.examination_status = exam.id;
-          // this.event.status = exam.examination_status;
+          this.eventStatusID = exam.examination_status;
           this.eventStatus = exam.examination_status;
         }
       })
+      this.eventNotes = res.data.examination_notes;
       this.examination_status = res.data.examination_status;
       this.examination_notes = res.data.examination_notes;
       this.textDisable = true;
@@ -276,6 +283,12 @@ export class EventdetailDialog {
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
+  }
+  cancel() {
+    this.examination_notes = this.eventNotes;
+    this.examination_status = this.eventStatusID;
+    this.textDisable = true;
+    this.isEdit = false;
   }
   viewDetails(claim_id, billable_id, claimant_id) {
     let baseUrl = "";

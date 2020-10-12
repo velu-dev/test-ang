@@ -184,14 +184,12 @@ export class AppointmentDetailsComponent implements OnInit {
         this.columnName = ["", "Name", "Uploaded On ", "Action"]
         this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'action']
       }
-    })
-    this.isHandset$.subscribe(res => {
-      this.isMobile = res;
+
       if (res) {
-        this.columnName = ["", "Task"]
+        this.columnName1 = ["", "Task"]
         this.columnsToDisplay1 = ['is_expand', 'created_by']
       } else {
-        this.columnName = ["", "Task", "Created By", "Created At", "Updated By", "Updated At"]
+        this.columnName1 = ["", "Task", "Created By", "Created At", "Updated By", "Updated At"]
         this.columnsToDisplay1 = ["status", 'task', 'created_by', "created_at", "updated_by", 'updated_at']
       }
     })
@@ -550,10 +548,12 @@ export class AppointmentDetailsComponent implements OnInit {
         return 'records';
       case 3:
         return 'examination';
+      // case 4:
+      //   return 'transcription'
       case 4:
-        return 'transcription'
-      case 5:
         return 'report';
+      case 5:
+        return 'billing';
       default:
         return 'form';
     }

@@ -103,10 +103,10 @@
 
       </div>
 
-      <div fxFlex="100" class="text-center">
-        <button mat-stroked-button *ngIf="!textDisable" (click)="textDisable = true; isEdit = false" type="button"
+      <div fxFlex="100" class="text-center" *ngIf="!textDisable" >
+        <button mat-stroked-button (click)="cancel()" type="button"
           class="outline-danger m-r-10">Cancel</button>
-        <button mat-stroked-button class="outline-success text-center m-r-5" *ngIf="!textDisable"
+        <button mat-stroked-button class="outline-success text-center m-r-5"
           (click)="updateStatus()">Save</button>
       </div>
 
