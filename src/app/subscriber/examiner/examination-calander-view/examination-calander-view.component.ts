@@ -215,7 +215,7 @@ export class EventdetailDialog {
   eventStatus: any;
   eventStatusID: any;
   eventNotes = "";
-  constructor( private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
+  constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
     this.eventStatus = data.extendedProps.status;
     this.eventNotes = data.extendedProps.description;
