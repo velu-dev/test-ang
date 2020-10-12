@@ -633,6 +633,13 @@ export class BilllableBillingComponent implements OnInit {
     this.alertService.openSnackBar("File downloaded successfully", "success");
   }
 
+  downloadDocumet(element) {
+    this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.file_name);
+    })
+  }
+
   docChange(e) {
     this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } };
     this.fileUpload.nativeElement.value = "";

@@ -94,4 +94,8 @@ export class BillingService {
   getBillDocument(claimID, billableId): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getBillDocument + claimID + '/' + billableId)
   }
+
+  downloadOndemandDocuments(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getSignedURL, data)
+  }
 }
