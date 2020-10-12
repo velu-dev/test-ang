@@ -94,16 +94,6 @@ export class ExaminationCalanderViewComponent implements OnInit {
     } else {
       this.loadAllEvents();
     }
-    //   let event = [];
-    //   this.data.map(res => {
-    //     if (res.id == index) {
-    //       event = res.data;
-    //     }
-    //   });
-    //   event.map(ev => {
-    //     console.log(ev)
-    //     this.calendar.getApi().addEvent(ev);
-    //   })
   }
   handleEventClick(e) {
     console.log(e)
@@ -238,7 +228,7 @@ export class EventdetailDialog {
   }
   onNoClick(): void {
     this.dialogRef.close();
-  }
+  } 
   pickerOpened(p) { }
   saveEvent() {
     this.dialogRef.close(this.event)
