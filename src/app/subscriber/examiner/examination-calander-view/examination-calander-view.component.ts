@@ -210,20 +210,22 @@ export class EventdetailDialog {
   isEdit = false;
   textDisable: boolean = true;
   examinationStatus = [];
+  eventStatus: any
   constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
+    this.eventStatus = data.extendedProps.status;
     this.claimService.seedData('examination_status').subscribe(curres => {
       this.examinationStatus = curres.data;
-      this.getExaminationStatus(data)
+      this.getExaminationStatus(data.extendedProps)
     });
 
     this.event = data.extendedProps;
     this.examination_notes = data.extendedProps.description;
 
   }
-  getExaminationStatus(data){
+  getExaminationStatus(data) {
     this.examinationStatus.map(res => {
-      if (res.examination_status == data.extendedProps.status) {
+      if (res.examination_status == data.status) {
         this.examination_status = res.id;
       }
     })
@@ -252,9 +254,20 @@ export class EventdetailDialog {
       examination_notes: this.examination_notes
     }
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
-      // if (data.examination_status != "") {
-      //   this.alertService.openSnackBar("Examiner status Updated Successfully", 'success');
-      // }
+      this.examinationStatus.map(exam => {
+        if (exam.id == res.data.examination_status) {
+          this.examination_status = exam.id;
+          // this.event.status = exam.examination_status;
+          this.eventStatus = exam.examination_status;
+        }
+      })
+      this.examination_status = res.data.examination_status;
+      this.examination_notes = res.data.examination_notes;
+      this.textDisable = true;
+      this.isEdit = false;
+      if (data.examination_status != "") {
+        this.alertService.openSnackBar("Examiner status Updated Successfully", 'success');
+      }
       if (data.examination_notes != "") {
         this.alertService.openSnackBar("Examiner notes Updates Successfully", "success");
       }

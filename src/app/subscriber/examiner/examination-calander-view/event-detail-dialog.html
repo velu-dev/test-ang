@@ -66,14 +66,14 @@
       <div fxFlex="100">
         <button mat-raised-button *ngIf="textDisable" (click)="textDisable = false; isEdit= true" class="filled-gray float-right">
           Edit</button>
-        <button mat-raised-button *ngIf="!textDisable" (click)="textDisable = true; isEdit = false; updateStatus()"
+        <button mat-raised-button *ngIf="!textDisable" (click)="updateStatus()"
           class="filled-success float-right">
           Save</button>
       </div>
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Examination Status</div>
-        <div class="value" *ngIf="!isEdit">{{event?.status}}</div>
+        <div class="value" *ngIf="!isEdit">{{eventStatus}}</div>
         <div class="value" fxLayout="row wrap" *ngIf="isEdit">
           <mat-form-field appearance="outline" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>Choose an Status</mat-label>
@@ -107,7 +107,7 @@
         <button mat-stroked-button *ngIf="!textDisable" (click)="textDisable = true; isEdit = false" type="button"
           class="outline-danger m-r-10">Cancel</button>
         <button mat-stroked-button class="outline-success text-center m-r-5" *ngIf="!textDisable"
-          (click)="textDisable = true; isEdit = false; updateStatus()">Save</button>
+          (click)="updateStatus()">Save</button>
       </div>
 
       <div class="divider"></div>
