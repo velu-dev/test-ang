@@ -982,7 +982,7 @@ export class NewClaimComponent implements OnInit {
 
       console.log()
       // this.router.navigate(['/subscriber/appointment/appointment-details', this.claimId, res.data.id])
-      this.router.navigate([baseUrl + "claimants/claimant/" + this.claimant_id + "/claim/" + this.claimId + "/billable-item/" + res.data.id])
+      this.router.navigate([baseUrl + "claimants/claimant/" + this.claimant_id + "/claim/" + this.claimId + "/billable-item/" + res.data.id]);
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
