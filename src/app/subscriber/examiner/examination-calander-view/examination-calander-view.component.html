@@ -1,13 +1,13 @@
 <div class="app-calendar">
     <mat-form-field>
         <mat-label>Select Examiner</mat-label>
-        <mat-select>
-            <mat-option (click)="selectExaminer()" value="All">
+        <mat-select [(ngModel)]="examinerId">
+            <mat-option (click)="selectExaminer()" [value]="0">
                 All
             </mat-option>
             <mat-option *ngFor="let examinar of examinars; let i=index" (click)="selectExaminer(examinar, i)"
                 [value]="examinar.id">
-                {{examinar.first_name + " " + examinar.last_name}}
+                {{examinar.first_name + " " + examinar.last_name + " "+ examinar.middle_name}}
             </mat-option>
         </mat-select>
     </mat-form-field>

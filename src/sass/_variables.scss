@@ -1004,6 +1004,17 @@ input:-webkit-autofill {
     margin: 10px auto;
     display: block;
   }
+  .float-right {
+    float: right;
+    margin-right: 10px;
+  }
+  .filled-gray {
+    @extend .filled-gray;
+  }
+  .filled-success {
+    @extend .filled-success;
+  }
+
   .grid-list-event {
     width: 100%;
     display: flex;

@@ -15,6 +15,7 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClaimService } from '../../service/claim.service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 @Component({
   selector: 'app-examination-calander-view',
   templateUrl: './examination-calander-view.component.html',
@@ -81,6 +82,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
       this.calendarEvents = event.data;
     })
   }
+  examinerId = 0;
   selectExaminer(examiner?, index?) {
     this.calendar.getApi().removeAllEvents();
     if (examiner) {
@@ -88,7 +90,6 @@ export class ExaminationCalanderViewComponent implements OnInit {
         this.calendarEvents = event.data;
       })
     } else {
-      console.log("All")
       this.loadAllEvents();
     }
     //   let event = [];
@@ -209,20 +210,25 @@ export class EventdetailDialog {
   isEdit = false;
   textDisable: boolean = true;
   examinationStatus = [];
-  constructor(private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
+  eventStatus: any
+  constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
+    this.eventStatus = data.extendedProps.status;
     this.claimService.seedData('examination_status').subscribe(curres => {
       this.examinationStatus = curres.data;
-      this.examinationStatus.map(res => {
-        if (res.examination_status == data.extendedProps.status) {
-          this.examination_status = res.id;
-        }
-      })
+      this.getExaminationStatus(data.extendedProps)
     });
 
     this.event = data.extendedProps;
     this.examination_notes = data.extendedProps.description;
 
+  }
+  getExaminationStatus(data) {
+    this.examinationStatus.map(res => {
+      if (res.examination_status == data.status) {
+        this.examination_status = res.id;
+      }
+    })
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -248,9 +254,20 @@ export class EventdetailDialog {
       examination_notes: this.examination_notes
     }
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
-      // if (data.examination_status != "") {
-      //   this.alertService.openSnackBar("Examiner status Updated Successfully", 'success');
-      // }
+      this.examinationStatus.map(exam => {
+        if (exam.id == res.data.examination_status) {
+          this.examination_status = exam.id;
+          // this.event.status = exam.examination_status;
+          this.eventStatus = exam.examination_status;
+        }
+      })
+      this.examination_status = res.data.examination_status;
+      this.examination_notes = res.data.examination_notes;
+      this.textDisable = true;
+      this.isEdit = false;
+      if (data.examination_status != "") {
+        this.alertService.openSnackBar("Examiner status Updated Successfully", 'success');
+      }
       if (data.examination_notes != "") {
         this.alertService.openSnackBar("Examiner notes Updates Successfully", "success");
       }
@@ -259,7 +276,31 @@ export class EventdetailDialog {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
-  viewDetails(claim_id, billable_id) {
-    this.router.navigate([this.router.url + "/appointment-details", claim_id, billable_id]);
+  viewDetails(claim_id, billable_id, claimant_id) {
+    let baseUrl = "";
+    let role = this.cookieService.get('role_id')
+    console.log(role)
+    switch (role) {
+      case '1':
+        baseUrl = "/admin";
+        break;
+      case '2':
+        baseUrl = "/subscriber/";
+        break;
+      case '3':
+        baseUrl = "/subscriber/manager/";
+        break;
+      case '4':
+        baseUrl = "/subscriber/staff/";
+        break;
+      case '11':
+        baseUrl = "/subscriber/examiner/";
+        break;
+      default:
+        baseUrl = "/admin";
+        break;
+    }
+    this.router.navigate([baseUrl + "claimants/claimant/" + claimant_id + "/claim/" + claim_id + "/billable-item/" + billable_id]);
+    // this.router.navigate([this.router.url + "/appointment-details", claim_id, billable_id]);
   }
 }
