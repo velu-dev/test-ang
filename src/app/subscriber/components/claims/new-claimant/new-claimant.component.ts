@@ -330,7 +330,7 @@ export class NewClaimantComponent implements OnInit {
   }
   claimantState: any;
   changeState(state, state_code?) {
-    if ((state_code != null) || (state != null)) {
+    if (state == null) {
       return;
     }
     if (state_code) {
