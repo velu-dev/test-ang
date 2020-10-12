@@ -66,7 +66,9 @@ export class ExaminationCalanderViewComponent implements OnInit {
   calendarEvents: EventInput[];
   selectedDate = "";
   examinars = [];
-  constructor(public dialog: MatDialog, public examinarService: ExaminerService) {
+  roleId: any;
+  constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService) {
+    this.roleId = this.cookieService.get("role_id");
     this.loadAllEvents();
     this.examinarService.getExaminerList().subscribe(res => {
       this.examinars = res.data;
@@ -213,7 +215,7 @@ export class EventdetailDialog {
   eventStatus: any;
   eventStatusID: any;
   eventNotes = "";
-  constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
+  constructor( private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
     this.eventStatus = data.extendedProps.status;
     this.eventNotes = data.extendedProps.description;
