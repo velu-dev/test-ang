@@ -602,7 +602,9 @@ image-cropper {
   .content-wrapper-main-title {
     color: $text-dark;
   }
-
+.main-title {
+  font-weight: $font-weight-bold;
+}
   .info-alert {
     color: $info;
     font-size: $font-size-1;
