@@ -265,12 +265,13 @@ export class EventdetailDialog {
       this.examination_notes = res.data.examination_notes;
       this.textDisable = true;
       this.isEdit = false;
-      if (data.examination_status != "") {
-        this.alertService.openSnackBar("Examiner status Updated Successfully", 'success');
-      }
-      if (data.examination_notes != "") {
-        this.alertService.openSnackBar("Examiner notes Updates Successfully", "success");
-      }
+      this.alertService.openSnackBar(res.message, 'success');
+      // if (data.examination_status != "") {
+      //   this.alertService.openSnackBar("Examiner status Updated Successfully", 'success');
+      // }
+      // if (data.examination_notes != "") {
+      //   this.alertService.openSnackBar("Examiner notes Updates Successfully", "success");
+      // }
 
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
