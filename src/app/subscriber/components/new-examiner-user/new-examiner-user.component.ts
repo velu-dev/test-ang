@@ -305,7 +305,7 @@ export class NewExaminerUserComponent implements OnInit {
         suffix: res.billing_provider.suffix,
       }
       this.billingOrgChange(billing.is_person)
-      this.changeState(billing.state, 'billing');
+      this.changeState(billing.default_injury_state, 'billing', res.billing_provider.default_injury_state_code);
       this.changeState(billing.state, 'cms', billing.state_code);
       this.billingProviderForm.patchValue(billing)
 
@@ -330,7 +330,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.signData = res.rendering_provider.signature ? 'data:image/png;base64,' + res.rendering_provider.signature : null
       this.renderingOrgChange(rendering.is_person);
       console.log(res)
-      this.changeState(rendering['default_injury_state'], 'render');
+      this.changeState(rendering['default_injury_state'], 'render', res.rendering_provider.default_injury_state_code);
       this.renderingForm.patchValue(rendering);
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
@@ -1045,10 +1045,38 @@ export class NewExaminerUserComponent implements OnInit {
         return this.states[i].state
       }
   }
-  getStateCode(id){
+  getStateCode(id) {
     for (var i in this.states)
-    if (id == this.states[i].id) {
-      return this.states[i].state_code;
+      if (id == this.states[i].id) {
+        return this.states[i].state_code;
+      }
+  }
+
+  sameAsMailling(e) {
+    if (e.checked) {
+      this.billingProviderForm.patchValue(this.mailingAddressForm.value)
+      this.changeState(this.mailingAddressForm.value.state, 'cms')
+    } else {
+      let addresEmpty = {
+        street1: null,
+        street2: null,
+        city: null,
+        state: null,
+        zip_code: null,
+        phone_no1: null,
+      }
+      this.billingProviderForm.patchValue(addresEmpty);
+    }
+  }
+  npiChange(e, i) {
+    if (e.checked) {
+      if (i == 1) {
+        this.national_provider_identifier = this.billingProviderForm.value.national_provider_identifier
+      } else {
+        this.national_provider_identifier = this.renderingForm.value.national_provider_identifier
+      }
+    } else {
+      this.national_provider_identifier = null;
     }
   }
 }

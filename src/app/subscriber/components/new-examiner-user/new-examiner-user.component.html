@@ -214,7 +214,7 @@
                         </div>
                         <div fxFlex="100">
                             <mat-radio-group class="p-l-15" formControlName="is_person"
-                                (change)="billingOrgChange($event.value)">
+                                (change)="billingOrgChange($event.value);this.billingProviderForm.get('tax_id').reset()">
                                 <mat-radio-button [value]="true">Individual
                                 </mat-radio-button>
                                 <mat-radio-button [value]="false" class="p-l-10">
@@ -231,7 +231,7 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Tax ID</mat-label>
-                                <input matInput placeholder="Tax ID" mask='00-0000000' formControlName="tax_id"
+                                <input matInput placeholder="Tax ID" [mask]="billingProviderForm.value.is_person ? '000-00-0000' : '00-0000000'" formControlName="tax_id"
                                     autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid tax ID</mat-error>
                             </mat-form-field>
@@ -286,7 +286,7 @@
                         </div>
 
                         <div fxFlex="100">
-                            <mat-checkbox class="checkbox_ m-t-0">Same as Mailing Address</mat-checkbox>
+                            <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-0">Same as Mailing Address</mat-checkbox>
                         </div>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
@@ -312,7 +312,7 @@
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>State1</mat-label>
+                            <mat-label>State</mat-label>
                             <mat-select formControlName="state" (selectionChange)="changeState($event.value, 'cms')">
                                 <mat-select-trigger>
                                     {{cmsState}}
@@ -776,13 +776,17 @@
                                     <p fxFlex="100" class="m-t-5 p-l-5">Enter NPI Number for the Service Location.</p>
                                     <div class="sub-title" fxFlex="100">CMS 1500 Box 32 a</div>
 
-                                    <div fxFlex="100" class="m-t-20">
+                                    <!-- <div fxFlex="100" class="m-t-20">
                                         <mat-checkbox class="checkbox_ m-t-0">Same as Billing Provider NPI Number</mat-checkbox>
                                        </div>
 
                                     <div fxFlex="100">
                                         <mat-checkbox class="checkbox_ m-t-10">Same as Rendering Provider NPI Number</mat-checkbox>
-                                    </div>
+                                    </div> -->
+
+                                    <div  fxFlex="100" *ngFor="let item of ['Same as Billing Provider NPI Number','Same as Rendering Provider NPI Number'];  let i = index">
+                                        <mat-checkbox [checked]="selected === i" (change)="selected = i" (change)="npiChange($event,i)">{{item}}</mat-checkbox>
+                                      </div>
 
                                     <mat-form-field fxFlex="100" class="m-t-20">
                                         <mat-label>National Provider Identifier (NPI) Number</mat-label>
