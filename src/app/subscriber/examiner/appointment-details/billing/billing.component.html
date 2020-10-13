@@ -27,7 +27,7 @@
     </div>
 
     <div class="border-dashed-blue"></div>
-    
+
     <!-- ===== Examiner information ==== -->
     <div class="examiner-info">
         <mat-card>
@@ -82,13 +82,15 @@
                 <div fxLayout="row wrap" class="p-t-20">
                     <div fxFlex="33.3" fxFlex.xs="100">
                         <div class="p-b-5"><b>Billing Provider</b></div>
-                        <div *ngIf="billingData?.billing_is_person"> {{billingData?.billing_last_name}} {{billingData?.billing_first_name}}{{billingData?.billing_suffix ? (', '+ billingData?.billing_suffix) : ''}}
+                        <div *ngIf="billingData?.billing_is_person"> {{billingData?.billing_last_name}}
+                            {{billingData?.billing_first_name}}{{billingData?.billing_suffix ? (', '+ billingData?.billing_suffix) : ''}}
                         </div>
                         <div *ngIf="!billingData?.billing_is_person">{{billingData?.billing_provider_name}}</div>
                     </div>
                     <div fxFlex="33.3" fxFlex.xs="100">
                         <div class="p-b-5"><b>Rendering Provider</b></div>
-                        <div *ngIf="billingData?.rendering_is_persion">{{billingData?.rendr_last_name}} {{billingData?.rendr_first_name}}{{billingData?.rendr_suffix ? (', '+ billingData?.rendr_suffix) : ''}}
+                        <div *ngIf="billingData?.rendering_is_persion">{{billingData?.rendr_last_name}}
+                            {{billingData?.rendr_first_name}}{{billingData?.rendr_suffix ? (', '+ billingData?.rendr_suffix) : ''}}
                         </div>
                         <div *ngIf="!billingData?.rendering_is_persion">{{billingData?.rendering_provider_name}}</div>
                     </div>
@@ -96,7 +98,8 @@
                         <div class="p-b-5"><b>Service Location</b> </div>
                         <div>{{billingData?.service_location?.street1 }} {{billingData?.service_location?.street2 }}
                             {{billingData?.service_location?.city}}
-                            {{billingData?.state_code }} {{billingData?.service_location?.zip_code ? '- ' + billingData?.service_location?.zip_code : '' }}
+                            {{billingData?.state_code }}
+                            {{billingData?.service_location?.zip_code ? '- ' + billingData?.service_location?.zip_code : '' }}
                         </div>
                     </div>
                 </div>
@@ -205,7 +208,7 @@
                     </button>
                 </div> -->
                 <div fxLayout="row wrap" class="m-t-10">
-                    <div #scrollBottom  class="user-detail vertical-fixed hide-mobile">
+                    <div #scrollBottom class="user-detail vertical-fixed hide-mobile">
                         <!-- <table mat-table [dataSource]="dataSource1" multiTemplateDataRows
                             class="mat-elevation-z8 user-table" matSort>
                             <ng-container matColumnDef="{{column}}"
@@ -708,7 +711,8 @@
     <div fxlayout="row wrap" class="m-t-30 submission-document">
         <mat-card>
             <mat-card-header fxLayout="row wrap">
-                <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}} Examination Submission Documents
+                <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}}
+                    Examination Submission Documents
                     <span class="info ondemand-info m-l-10"
                         matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
                         matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
@@ -815,11 +819,13 @@
                                         <span *ngIf="column == 'file_name'">{{element?.form_name}}</span>
                                         <span *ngIf="column == 'partial'">
 
-                                            <a class="text-ternary m-r-10" (click)="download(element?.partial_document)" *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}</a>
+                                            <a class="text-ternary m-r-10" (click)="download(element?.partial_document)"
+                                                *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}</a>
                                         </span>
                                         <span *ngIf="column == 'complete'">
 
-                                            <a class="text-ternary m-r-10" (click)="uploader.click()">Upload Competed Form</a>
+                                            <a class="text-ternary m-r-10" (click)="uploader.click()">Upload Competed
+                                                Form</a>
                                         </span>
                                         <span
                                             *ngIf="column == 'document_type'">{{element?.document_type | titlecase}}</span>
@@ -912,7 +918,7 @@
                                             {{ expandIdDoc == element.document_id ? 'remove_circle' : 'add_circle'}}
                                         </mat-icon>
                                     </span>
-                                    <div>
+                                    <div *ngIf="element?.action != 'POST PAYMENT PAPER EOR'">
                                         <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
                                                 [src]="element?.file_name | fileType" alt=""></span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
@@ -926,11 +932,25 @@
                                                 *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
                                                 {{!last ? ',' : ''}}</span></span>
                                         <span *ngIf="column == 'download' && element?.send">
-                                            <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
+                                            <a class="text-success" (click)="downloadDocumet(element?.send)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'download1' && element?.received">
                                             <a class="text-success"
-                                                (click)="inOutdownload(element?.received)">Download</a>
+                                                (click)="downloadDocumet(element?.received)">Download</a>
+                                        </span>
+                                    </div>
+                                    <div *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
+                                        <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
+                                                [src]="element?.file_name | fileType" alt=""></span>
+                                        <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
+                                        <span *ngIf="column == 'action'" class="no-wrap-td">{{element?.action}}</span>
+                                        <span *ngIf="column == 'date'"
+                                            class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
+                                        <span *ngIf="column == 'recipients'"></span>
+                                        <span *ngIf="column == 'download'">
+                                            <a class="text-success" (click)="downloadDocumet(element)">Download</a>
+                                        </span>
+                                        <span *ngIf="column == 'download1'">
                                         </span>
                                     </div>
                                 </td>
@@ -959,10 +979,10 @@
                                     *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
                                     {{!last ? ',' : ''}}</span></div>
                             <div><span> Download Generated Items </span><span *ngIf="element?.send">
-                                    <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
+                                    <a class="text-success" (click)="downloadDocumet(element?.send)">Download</a>
                                 </span></div>
                             <div><span> Download On Demand Proof of Service </span><span *ngIf="element?.received">
-                                    <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
+                                    <a class="text-success" (click)="downloadDocumet(element?.received)">Download</a>
                                 </span></div>
                     </div>
                 </div>

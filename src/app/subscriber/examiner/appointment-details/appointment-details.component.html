@@ -760,7 +760,7 @@
                     </mat-hint>
                 </mat-form-field>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
-                    *ngIf="documentType == null || documentType != 7">
+                    *ngIf="documentType == null || documentType != 6">
                     <button type="button" mat-stroked-button class="filled-gray" (click)="uploader.click()">Select
                         File
                         <!-- <i class="fa fa-upload p-l-5"></i> -->
@@ -777,13 +777,13 @@
                 </div>
 
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
-                    *ngIf="documentType == 7">
+                    *ngIf="documentType == 6">
                     <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
                     <mat-form-field appearance="standard" class="p-l-10 w-100">
                         <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                            accept=".mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
-                        <mat-hint>Supported file formats: .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
+                            accept=".pdf, .doc, .docx, .xls, .xlsx, .csv, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
+                        <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
