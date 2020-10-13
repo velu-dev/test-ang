@@ -1008,6 +1008,11 @@ input:-webkit-autofill {
     float: right;
     margin-right: 10px;
   }
+  .mini-btn {
+    @extend .mini-btn;
+    height: 26px !important;
+    min-width: 60px !important;
+  }
   .filled-gray {
     @extend .filled-gray;
   }
