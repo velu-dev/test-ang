@@ -86,14 +86,14 @@ export class ReportComponent implements OnInit {
 
   ngOnInit() {
     this.getReport();
-    this.onDemandService.seedData('document_category').subscribe(type => {
-      type.data.map(data => {
-        if (data.id == 6 || data.id == 7) {
-          this.documentList.push(data);
-        }
-      })
-      this.documentType = 6;
-    })
+    // this.onDemandService.seedData('document_category').subscribe(type => {
+    //   type.data.map(data => {
+    //     if (data.id == 6 || data.id == 7) {
+    //       this.documentList.push(data);
+    //     }
+    //   })
+    //   this.documentType = 6;
+    // })
   }
   getReport() {
     this.onDemandService.getTranscription(this.paramsId.claim_id, this.paramsId.billId).subscribe(report => {
@@ -168,12 +168,8 @@ export class ReportComponent implements OnInit {
     this.file = [];
     this.selectedFiles = null
     this.selectedFiles = event.target.files;
-    let fileTypes;
-    if (this.documentType == 6) {
-      fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv'];
-    } else {
-      fileTypes = ['mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
-    }
+    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv','mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
+  
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
@@ -209,7 +205,7 @@ export class ReportComponent implements OnInit {
     }
 
     // this.formData.append('file', this.selectedFile);
-    this.formData.append('document_category_id', this.documentType.toString());
+    this.formData.append('document_category_id', '6');
     this.formData.append('claim_id', this.paramsId.claim_id.toString());
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
     for (let i = 0; i < this.selectedFiles.length; i++) {

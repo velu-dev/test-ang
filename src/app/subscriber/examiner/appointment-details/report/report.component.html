@@ -21,28 +21,28 @@
         On Demand Transcription & Report Building.</p>
 
       <div fxLayout="row wrap" class="upload-sec w-100 m-b-10" *ngIf="!reportData?.is_exam_type_changed">
-        <mat-form-field fxFLex="30" fxFlex.sm="100" fxFlex.xs="100" appearance="outline" class="m-t-10">
+        <!-- <mat-form-field fxFLex="30" fxFlex.sm="100" fxFlex.xs="100" appearance="outline" class="m-t-10">
           <mat-label>Select Type</mat-label>
           <mat-select [(ngModel)]="documentType" (selectionChange)="docChange($event.value)">
             <mat-option *ngFor="let doc of documentList" [value]="doc.id">
               {{doc.document_category_name}}
             </mat-option>
           </mat-select>
-        </mat-form-field>
-        <div fxFlex="50" *ngIf="documentType == 6" fxFlex.sm="100" fxFlex.xs="100" class="upload-file">
+        </mat-form-field> -->
+        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="upload-file">
           <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
           <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
             <input type="file" #uploader hidden (change)="addFile($event)" multiple
-              accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
-            <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
+              accept=".pdf, .doc, .docx, .xls, .xlsx, .csv, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
+            <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
             <mat-hint *ngIf="errors.file.isError">
               <mat-error>{{errors.file.error}}</mat-error>
             </mat-hint>
           </mat-form-field>
         </div>
 
-        <div fxFlex="50" *ngIf="documentType == 7" fxFlex.sm="100" fxFlex.xs="100" class="upload-file m-l-10">
+        <!-- <div fxFlex="50" *ngIf="documentType == 7" fxFlex.sm="100" fxFlex.xs="100" class="upload-file m-l-10">
           <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
           <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
@@ -53,7 +53,7 @@
               <mat-error>{{errors.file.error}}</mat-error>
             </mat-hint>
           </mat-form-field>
-        </div>
+        </div> -->
 
         <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100">
           <button mat-raised-button class="filled-gray m-t-15" type="button" (click)="uploadFile()">Add</button>

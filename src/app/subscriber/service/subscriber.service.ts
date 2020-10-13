@@ -56,4 +56,8 @@ export class SubscriberService {
     return this.http.get(environment.baseUrl + api_endpoint.getExaminerUser + id);
   }
 
+  getMaillingAddress(id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getMaillingAddress + id);
+  }
+
 }

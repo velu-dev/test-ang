@@ -245,6 +245,40 @@ export class AddEditServiceLocationComponent implements OnInit {
 
   }
 
+  maillingAddress: any;
+  sameAsMailling(e) {
+    if (e.checked) {
+      if (!this.maillingAddress) {
+        this.subscriberService.getMaillingAddress(this.examinerId).subscribe(address => {
+          address.data.notes = null;
+          address.data.contact_person = null;
+          address.data.phone_no =  address.data.phone_no1
+          this.maillingAddress = address.data
+          this.locationForm.patchValue(address.data)
+          this.changeState(address.data.state, address.data.state_code)
+        }, error => {
+          console.log(error.error.message);
+        })
+      } else {
+        this.locationForm.patchValue(this.maillingAddress)
+        this.changeState(this.maillingAddress.state, this.maillingAddress.state_code)
+      }
+
+    } else {
+      let addresEmpty = {
+        street1: null,
+        street2: null,
+        city: null,
+        state: null,
+        zip_code: null,
+        phone_no: null,
+        fax_no: null,
+        email: null
+      }
+      this.locationForm.patchValue(addresEmpty);
+    }
+  }
+
   opendialog(examiner): void {
     const dialogRef = this.dialog.open(InActivedialog, {
       width: '500px',
