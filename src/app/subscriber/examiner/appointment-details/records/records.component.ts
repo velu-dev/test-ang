@@ -287,7 +287,7 @@ export class RecordsComponent implements OnInit {
       service_provider_id: this.recordData.documets[0].service_provider_id // default 3
     }
     this.onDemandService.requestCreate(data).subscribe(record => {
-      this.alertService.openSnackBar("Mail On Demand created successfully!", 'success');
+      this.alertService.openSnackBar("Record Summary On Demand created successfully!", 'success');
     }, error => {
       console.log(error)
       this.alertService.openSnackBar(error.error.message, 'error');
