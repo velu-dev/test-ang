@@ -175,4 +175,5 @@ export const api_endpoint = {
     //Calendar 
 
     getCalendarEvents: "calendar/all",
+    getSingleEvent: "calendar/single-event/"
 }

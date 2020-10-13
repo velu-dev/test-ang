@@ -109,6 +109,10 @@ const routes: Routes = [{
             }, {
               path: "billable-item/:billId",
               children: [{
+                path: "appointment/:examiner_id",
+                component: AppointmentComponent,
+                data: { breadcrumb: "Calendar" }
+              },{
                 path: "",
                 component: AppointmentDetailsComponent,
                 data: { breadcrumb: { alias: '@Billable Item' } },
@@ -185,6 +189,10 @@ const routes: Routes = [{
       }, {
         path: "billable-item/:billId",
         children: [{
+          path: "appointment/:examiner_id",
+          component: AppointmentComponent,
+          data: { breadcrumb: "Calendar" }
+        },{
           path: "",
           component: AppointmentDetailsComponent,
           data: { breadcrumb: { alias: '@Billable Item' } },
@@ -401,6 +409,10 @@ const routes: Routes = [{
         }, {
           path: "billable-item/:billId",
           children: [{
+            path: "appointment/:examiner_id",
+            component: AppointmentComponent,
+            data: { breadcrumb: "Calendar" }
+          },{
             path: "",
             component: AppointmentDetailsComponent,
             data: { breadcrumb: { alias: '@Billable Item' } },
@@ -621,6 +633,10 @@ const routes: Routes = [{
                 }, {
                   path: "billable-item/:billId",
                   children: [{
+                    path: "appointment/:examiner_id",
+                    component: AppointmentComponent,
+                    data: { breadcrumb: "Calendar" }
+                  },{
                     path: "",
                     component: AppointmentDetailsComponent,
                     data: { breadcrumb: { alias: '@Billable Item' } },
@@ -697,6 +713,10 @@ const routes: Routes = [{
           }, {
             path: "billable-item/:billId",
             children: [{
+              path: "appointment/:examiner_id",
+              component: AppointmentComponent,
+              data: { breadcrumb: "Calendar" }
+            },{
               path: "",
               component: AppointmentDetailsComponent,
               data: { breadcrumb: { alias: '@Billable Item' } },
@@ -843,6 +863,10 @@ const routes: Routes = [{
             }, {
               path: "billable-item/:billId",
               children: [{
+                path: "appointment/:examiner_id",
+                component: AppointmentComponent,
+                data: { breadcrumb: "Calendar" }
+              },{
                 path: "",
                 component: AppointmentDetailsComponent,
                 data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1045,6 +1069,10 @@ const routes: Routes = [{
                 }, {
                   path: "billable-item/:billId",
                   children: [{
+                    path: "appointment/:examiner_id",
+                    component: AppointmentComponent,
+                    data: { breadcrumb: "Calendar" }
+                  },{
                     path: "",
                     component: AppointmentDetailsComponent,
                     data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1121,6 +1149,10 @@ const routes: Routes = [{
           }, {
             path: "billable-item/:billId",
             children: [{
+              path: "appointment/:examiner_id",
+              component: AppointmentComponent,
+              data: { breadcrumb: "Calendar" }
+            },{
               path: "",
               component: AppointmentDetailsComponent,
               data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1321,6 +1353,10 @@ const routes: Routes = [{
             }, {
               path: "billable-item/:billId",
               children: [{
+                path: "appointment/:examiner_id",
+                component: AppointmentComponent,
+                data: { breadcrumb: "Calendar" }
+              },{
                 path: "",
                 component: AppointmentDetailsComponent,
                 data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1486,6 +1522,10 @@ const routes: Routes = [{
               }, {
                 path: "billable-item/:billId",
                 children: [{
+                  path: "appointment/:examiner_id",
+                  component: AppointmentComponent,
+                  data: { breadcrumb: "Calendar" }
+                },{
                   path: "",
                   component: AppointmentDetailsComponent,
                   data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1567,6 +1607,10 @@ const routes: Routes = [{
         }, {
           path: "billable-item/:billId",
           children: [{
+            path: "appointment/:examiner_id",
+            component: AppointmentComponent,
+            data: { breadcrumb: "Calendar" }
+          },{
             path: "",
             component: AppointmentDetailsComponent,
             data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1712,6 +1756,10 @@ const routes: Routes = [{
           }, {
             path: "billable-item/:billId",
             children: [{
+              path: "appointment/:examiner_id",
+              component: AppointmentComponent,
+              data: { breadcrumb: "Calendar" }
+            },{
               path: "",
               component: AppointmentDetailsComponent,
               data: { breadcrumb: { alias: '@Billable Item' } },

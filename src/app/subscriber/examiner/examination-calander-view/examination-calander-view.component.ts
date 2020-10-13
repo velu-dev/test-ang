@@ -12,7 +12,7 @@ import { formatDate } from '@angular/common';
 import { OWL_DATE_TIME_FORMATS, DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClaimService } from '../../service/claim.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
@@ -24,13 +24,18 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 export class ExaminationCalanderViewComponent implements OnInit {
   options: any = {
     // height: "parent",
-    // businessHours: {
-    // days of week. an array of zero-based day of week integers (0=Sunday)
-    // daysOfWeek: [1, 2, 3, 4, 5], // Monday - Thursday
+    businessHours: {
+      // days of week. an array of zero-based day of week integers (0=Sunday)
+      daysOfWeek: [0, 1, 2, 3, 4, 5, 6], // Monday - Thursday
 
-    // startTime: '10:00', // a start time (10am in this example)
-    // endTime: '18:00', // an end time (6pm in this example)
-    // },
+      startTime: '06:00', // a start time (10am in this example)
+      endTime: '20:00', // an end time (6pm in this example)
+    },
+    eventTimeFormat: { // like '14:30:00'
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    },
     editable: false,
     customButtons: {
       myCustomButton: {
@@ -67,29 +72,61 @@ export class ExaminationCalanderViewComponent implements OnInit {
   selectedDate = "";
   examinars = [];
   roleId: any;
-  constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService) {
-    this.roleId = this.cookieService.get("role_id");
-    this.loadAllEvents();
+  examinerId: any;
+  appointmentId: any;
+  constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService) {
+    this.route.params.subscribe(param => {
+      console.log(param)
+      if (param.examiner_id) {
+        this.examinerId = param.examiner_id;
+        this.appointmentId = param.billId
+        this.selectExaminer(this.examinerId, false);
+      } else {
+        this.loadAllEvents();
+      }
+    })
     this.examinarService.getExaminerList().subscribe(res => {
       this.examinars = res.data;
     })
+    this.roleId = this.cookieService.get("role_id");
+
   }
 
+  ngAfterViewInit() {
+    if (this.examinerId)
+      this.getSingleEvent();
+  }
+  getSingleEvent() {
+    this.examinarService.getSingleEvent(this.examinerId, this.appointmentId).subscribe(res => {
+      this.selectedDate = res.data[0].start;
+      this.dateChanged()
+    }, error => {
+      this.calendarEvents = [];
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
   ngOnInit() {
-    // this.loadAllEvents();
 
   }
   loadAllEvents() {
     this.examinarService.getCalendarEvent().subscribe(event => {
       this.calendarEvents = event.data;
+    }, error => {
+      console.log("error", error.error.message);
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
-  examinerId = 0;
-  selectExaminer(examiner?, index?) {
-    this.calendar.getApi().removeAllEvents();
+  selectExaminer(examiner?, status?) {
+    if (status)
+      this.calendar.getApi().removeAllEvents();
     if (examiner) {
-      this.examinarService.getExaminerCalendarEvent(examiner.id).subscribe(event => {
-        this.calendarEvents = event.data;
+      this.examinarService.getExaminerCalendarEvent(examiner).subscribe(event => {
+        if (event.data) {
+          this.calendarEvents = event.data;
+        }
+      }, error => {
+        this.calendarEvents = []
+        this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.loadAllEvents();
@@ -105,7 +142,8 @@ export class ExaminationCalanderViewComponent implements OnInit {
   dateChanged() {
     console.log("fdfdsffs", new Date(this.selectedDate))
     this.calendar.getApi().gotoDate(new Date(this.selectedDate))
-    this.calendar.getApi().changeView("timeGridDay")
+    this.calendar.getApi().changeView("timeGridDay");
+    this.calendar.getApi().scrollToTime("15:30:00")
   }
 
   openEventDetailDialog(e): void {
@@ -209,7 +247,7 @@ export class EventdetailDialog {
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
     this.eventStatus = data.extendedProps.status;
     this.eventNotes = data.extendedProps.description;
-    this.claimService.seedData('examination_status').subscribe(curres => {
+    this.claimService.seedData('calendar_examination_status').subscribe(curres => {
       this.examinationStatus = curres.data;
       this.getExaminationStatus(data.extendedProps)
     });
