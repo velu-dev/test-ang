@@ -88,6 +88,8 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.selection1.clear();
     }
     this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
+      this.selection1.clear();
+      this.selection.clear();
       this.correspondData = res;
       res.documets.map(doc => {
         if (doc.is_mandatory) {

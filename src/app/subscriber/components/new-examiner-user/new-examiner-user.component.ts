@@ -79,6 +79,7 @@ export class NewExaminerUserComponent implements OnInit {
   selectedUser: any = {}
   texonomySearch = new FormControl();
   texonomyFilteredOptions: Observable<any>;
+  selected: any;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   //@ViewChild(MatSort, { static: false }) sort: MatSort;
   //@ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
