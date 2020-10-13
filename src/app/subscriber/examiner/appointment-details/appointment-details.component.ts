@@ -196,6 +196,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   }
   isExamTypeChanged = false;
+  examinerId = null;
   loadDatas() {
     this.procedureTypeList = [];
     this.modifiers = [];
@@ -206,7 +207,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
-
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -225,6 +225,7 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         this.isBillabbleItemLoading = false;
         if (bills['data'].appointment.examiner_id != null) {
+          this.examinerId = bills['data'].appointment.examiner_id;
           let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examiner_service_location_id }
           this.examinarChange(ex)
         }
@@ -312,7 +313,17 @@ export class AppointmentDetailsComponent implements OnInit {
   loadForms() {
 
   }
-
+  openCalendar() {
+    if (this.examinerId == null) {
+      this.alertService.openSnackBar("Examiner is not available for this event!", "error");
+      return;
+    }
+    if (this.billableData.appointment.appointment_scheduled_date_time == null) {
+      this.alertService.openSnackBar("Examination Date & Time is not available!", "error");
+      return
+    }
+    this.router.navigate([this.router.url + "/appointment", this.examinerId]);
+  }
   changeDateType(date) {
     if (date) {
       let timezone = moment.tz.guess();

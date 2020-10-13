@@ -542,7 +542,7 @@
                     class="filled-success edit_btn hide-mobile"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Save</button><br /><br />
             </span>
-            <button mat-raised-button class="filled-gray calender_btn">View on Calendar</button>
+            <button mat-raised-button class="filled-gray calender_btn" (click)="openCalendar()">View on Calendar</button>
         </div>
     </div>
 </mat-card>
