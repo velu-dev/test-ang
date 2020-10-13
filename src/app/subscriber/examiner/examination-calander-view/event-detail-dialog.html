@@ -46,6 +46,18 @@
 
       <div class="divider"></div>
 
+      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Claimant Phone </div>
+        <div class="value">{{event?.phone_no_1 | mask : "(000) 000-0000"}}</div>
+      </div>
+
+
+      <div class="grid-list-event m-b-10" fxFlex="100" fxFlex.xs="100">
+        <div class="property">Claimant Email </div>
+        <div class="value">{{event?.email}}</div>
+      </div>
+
+      <div class="divider"></div>
 
       <!-- <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Examination Status</div>
@@ -62,13 +74,15 @@
           </mat-form-field>
         </div>
       </div> -->
-     
+
       <div fxFlex="100">
-        <button mat-raised-button *ngIf="textDisable" (click)="textDisable = false; isEdit= true" class="filled-gray float-right">
+        <button mat-raised-button *ngIf="textDisable" (click)="textDisable = false; isEdit= true"
+          class="filled-gray float-right mini-btn">
           Edit</button>
-        <button mat-raised-button *ngIf="!textDisable" (click)="updateStatus()"
-          class="filled-success float-right">
+        <button mat-raised-button *ngIf="!textDisable" (click)="updateStatus()" class="filled-success float-right mini-btn">
           Save</button>
+        <button mat-stroked-button *ngIf="!textDisable" (click)="cancel()" type="button"
+          class="outline-danger m-r-10 float-right mini-btn">Cancel</button>
       </div>
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
@@ -103,25 +117,13 @@
 
       </div>
 
-      <div fxFlex="100" class="text-center" *ngIf="!textDisable" >
+      <!-- <div fxFlex="100" class="text-center" *ngIf="!textDisable" >
         <button mat-stroked-button (click)="cancel()" type="button"
           class="outline-danger m-r-10">Cancel</button>
         <button mat-stroked-button class="outline-success text-center m-r-5"
           (click)="updateStatus()">Save</button>
-      </div>
+      </div> -->
 
-      <div class="divider"></div>
-
-      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
-        <div class="property">Claimant Phone </div>
-        <div class="value">{{event?.phone_no_1 | mask : "(000) 000-0000"}}</div>
-      </div>
-
-
-      <div class="grid-list-event m-b-10" fxFlex="100" fxFlex.xs="100">
-        <div class="property">Claimant Email </div>
-        <div class="value">{{event?.email}}</div>
-      </div>
 
       <!-- <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Exam </div>
