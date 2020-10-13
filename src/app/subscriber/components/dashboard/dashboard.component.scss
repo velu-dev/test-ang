@@ -1,1 +1,96 @@
 @import "variables";
+@import "table";
+
+.dashboard-card {
+    div {
+        div {
+            mat-card {
+                height: 50px;
+                border: 1px solid $light-gray;
+                box-shadow: none;
+                cursor: pointer;
+                &:hover {
+                    .simple-card {
+                        i,
+                        h4 {
+                            color: $secondary;
+                        }
+                    }
+                }
+                .simple-card {
+                    display: flex;
+                    i {
+                        font-size: 40px;
+                        color: $menu-light;
+                    }
+                    h4 {
+                        margin-top: 0px;
+                        font-size: $font-size-10;
+                        color: $black;
+                        text-align: center;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.dashboard-list {
+    // table {
+       
+    // }
+
+    .user-table {
+        margin: 10px 5px 0px 5px;
+        min-height: 60vh;
+
+        table {
+            width: 100%;
+        }
+
+        tr.example-detail-row {
+            height: 0;
+        }
+
+        tr.example-element-row:not(.example-expanded-row):hover {
+            background: $light-color;
+        }
+
+        tr.example-element-row:not(.example-expanded-row):active {
+            background: #efefef;
+        }
+
+        .example-element-row td {
+            border-bottom-width: 0;
+        }
+
+        .example-element-detail {
+            overflow: hidden;
+            display: flex;
+        }
+
+        .example-element-diagram {
+            min-width: 80px;
+            border: 2px solid black;
+            padding: 8px;
+            font-weight: lighter;
+            margin: 8px 0;
+            height: 104px;
+        }
+
+        .example-element-symbol {
+            font-weight: bold;
+            font-size: 40px;
+            line-height: normal;
+        }
+
+        .example-element-description {
+            padding: 16px;
+        }
+
+        .example-element-description-attribution {
+            opacity: 0.5;
+        }
+    }
+}
