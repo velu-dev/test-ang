@@ -76,7 +76,7 @@
       </div> -->
 
       <div fxFlex="100">
-        <button mat-raised-button *ngIf="textDisable" (click)="textDisable = false; isEdit= true"
+        <button mat-raised-button *ngIf="textDisable" (click)="edit()"
           class="filled-gray float-right mini-btn">
           Edit</button>
         <button mat-raised-button *ngIf="!textDisable" (click)="updateStatus()"
