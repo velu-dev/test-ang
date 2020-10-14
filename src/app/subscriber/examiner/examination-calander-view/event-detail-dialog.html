@@ -1,7 +1,7 @@
 <div class="dialog event-detail">
   <mat-card-header class="model-header">
     <div class="content-wrapper-main-title"> <span> <i class="fa fa-circle p-r-5"
-          [ngStyle]="{'color': data?.backgroundColor}"></i>{{data?.title}}</span></div>
+          [ngStyle]="{'color': selectedEventColor}"></i>{{data?.title}}</span></div>
     <span class="spacer"></span>
     <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
   </mat-card-header>
@@ -76,8 +76,7 @@
       </div> -->
 
       <div fxFlex="100">
-        <button mat-raised-button *ngIf="textDisable" (click)="edit()"
-          class="filled-gray float-right mini-btn">
+        <button mat-raised-button *ngIf="textDisable" (click)="edit()" class="filled-gray float-right mini-btn">
           Edit</button>
         <button mat-raised-button *ngIf="!textDisable" (click)="updateStatus()"
           class="filled-success float-right mini-btn">
@@ -93,7 +92,8 @@
           <mat-form-field appearance="outline" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
             <mat-label>Choose an Status</mat-label>
             <mat-select [(ngModel)]="examination_status">
-              <mat-option *ngFor="let examination_status of examinationStatus" [value]="examination_status.id">
+              <mat-option *ngFor="let examination_status of examinationStatus"
+                (click)="eventcolorChange(examination_status)" [value]="examination_status.id">
                 {{examination_status.examination_status}}
               </mat-option>
             </mat-select>
@@ -106,7 +106,7 @@
           <mat-label>Notes</mat-label>
           <textarea [disabled]="textDisable" matInput placeholder="Notes" [(ngModel)]="examination_notes"
             cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"></textarea>
-          <mat-error>Error msg here</mat-error>
+          <mat-error></mat-error>
         </mat-form-field>
         <!-- <div class="action">
           <mat-icon *ngIf="!textDisable" (click)="textDisable = true; isEdit = false" class="cancel">cancel</mat-icon>

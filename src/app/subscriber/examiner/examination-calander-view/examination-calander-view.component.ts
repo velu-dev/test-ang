@@ -247,8 +247,10 @@ export class EventdetailDialog {
   constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
     dialogRef.disableClose = true;
+    this.selectedEventColor = data.backgroundColor;
     this.eventStatus = data.extendedProps.status;
     this.eventNotes = data.extendedProps.description;
+    console.log(data.extendedProps);
     this.claimService.seedData('calendar_examination_status').subscribe(curres => {
       this.examinationStatus = curres.data;
       this.getExaminationStatus(data.extendedProps)
@@ -289,6 +291,7 @@ export class EventdetailDialog {
   }
   examination_notes = '';
   examination_status = null;
+  selectedEventColor: any;
   updateStatus() {
     let data = {
       id: this.event['appointment_id'],
@@ -308,6 +311,7 @@ export class EventdetailDialog {
       this.examination_notes = res.data.examination_notes;
       this.textDisable = true;
       this.isEdit = false;
+      this.selectedEventColor = this.eventColor;
       this.alertService.openSnackBar(res.message, 'success');
       // if (data.examination_status != "") {
       //   this.alertService.openSnackBar("Examiner status Updated Successfully", 'success');
@@ -319,6 +323,10 @@ export class EventdetailDialog {
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
+  }
+  eventColor = "";
+  eventcolorChange(examination) {
+    this.eventColor = examination.color;
   }
   cancel() {
     this.examination_notes = this.eventNotes;
