@@ -490,7 +490,7 @@ export class BilllableBillingComponent implements OnInit {
         this.alertService.openSnackBar("Already added", 'error');
         return
       }
-
+      this.filteredICD = [];
       this.icdData = this.IcdDataSource.data;
       this.icdData.push(this.selectedIcd)
       let data = { id: this.billingId, diagnosis_code: this.icdData }
@@ -508,24 +508,34 @@ export class BilllableBillingComponent implements OnInit {
     }
   }
   removeICD(icd) {
-    let index = 0;
-    this.icdData.map(res => {
-      if (res.code == icd.code) {
-        this.icdData.splice(index, 1);
-        let data = { id: this.billingId, diagnosis_code: this.icdData }
-        this.billingService.updateDiagnosisCode(data).subscribe(code => {
-          this.IcdDataSource = new MatTableDataSource(this.icdData);
-          this.selectedIcd = { code: "", name: "" };
-          this.alertService.openSnackBar("ICD data removed successfully", "success");
-          this.icdCtrl.reset();
-          this.logger.log("icd 10 data", this.icdData)
-        }, error => {
-          this.logger.error(error)
+    this.openDialogDiagnosis('remove', icd);
+  }
+
+  openDialogDiagnosis(dialogue, icd) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        let index = 0;
+        this.icdData.map(res => {
+          if (res.code == icd.code) {
+            this.icdData.splice(index, 1);
+            let data = { id: this.billingId, diagnosis_code: this.icdData }
+            this.billingService.updateDiagnosisCode(data).subscribe(code => {
+              this.IcdDataSource = new MatTableDataSource(this.icdData);
+              this.selectedIcd = { code: "", name: "" };
+              this.alertService.openSnackBar("ICD data removed successfully", "success");
+              this.icdCtrl.reset();
+            }, error => {
+              this.logger.error(error)
+            })
+          }
+          index = index + 1;
         })
       }
-      index = index + 1;
     })
-
   }
   icdExpandID: any;
   expandId1: any;
@@ -756,22 +766,34 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   deleteRow(index: number, group) {
+    this.openDialogBillLine('remove', index, group);
 
-    if (group.value.id) {
-      this.billingService.removeBillItem(group.value.id).subscribe(del => {
-        this.alertService.openSnackBar("Bill Line Item deleted successfully", 'success');
-        const control = this.userTable.get('tableRows') as FormArray;
-        control.removeAt(index);
-        this.billing_line_items.splice(index, 1)
-        return
-      }, err => {
-        this.alertService.openSnackBar(err.error.message, 'error');
-      })
-    } else {
-      const control = this.userTable.get('tableRows') as FormArray;
-      control.removeAt(index);
-      this.billing_line_items.splice(index, 1)
-    }
+  }
+
+  openDialogBillLine(dialogue, index, group) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        if (group.value.id) {
+          this.billingService.removeBillItem(group.value.id).subscribe(del => {
+            this.alertService.openSnackBar("Bill Line Item deleted successfully", 'success');
+            const control = this.userTable.get('tableRows') as FormArray;
+            control.removeAt(index);
+            this.billing_line_items.splice(index, 1)
+            return
+          }, err => {
+            this.alertService.openSnackBar(err.error.message, 'error');
+          })
+        } else {
+          const control = this.userTable.get('tableRows') as FormArray;
+          control.removeAt(index);
+          this.billing_line_items.splice(index, 1)
+        }
+      }
+    })
   }
 
   editRow(group: FormGroup) {
@@ -1079,6 +1101,8 @@ export class BillingPaymentDialog {
       if (this.postPaymentForm.get(key).value && typeof (this.postPaymentForm.get(key).value) == 'string')
         this.postPaymentForm.get(key).setValue(this.postPaymentForm.get(key).value.trim())
     });
+    this.postPaymentForm.value.effective_date = new Date(this.postPaymentForm.value.effective_date).toDateString();
+    this.postPaymentForm.value.deposit_date = this.postPaymentForm.value.deposit_date ? new Date(this.postPaymentForm.value.deposit_date).toDateString() : null;
     if (this.postPaymentForm.invalid) {
       this.postPaymentForm.markAllAsTouched();
       return;
