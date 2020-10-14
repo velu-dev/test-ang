@@ -75,18 +75,19 @@ export class ExaminationCalanderViewComponent implements OnInit {
   examinerId: any;
   appointmentId: any;
   constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService) {
-    this.route.params.subscribe(param => {
-      console.log(param)
-      if (param.examiner_id) {
-        this.examinerId = param.examiner_id;
-        this.appointmentId = param.billId
-        this.selectExaminer(this.examinerId, false);
-      } else {
-        this.loadAllEvents();
-      }
-    })
     this.examinarService.getExaminerList().subscribe(res => {
       this.examinars = res.data;
+
+      this.route.params.subscribe(param => {
+        console.log(param)
+        if (param.examiner_id) {
+          this.examinerId = param.examiner_id;
+          this.appointmentId = param.billId
+          this.selectExaminer(this.examinerId, false);
+        } else {
+          this.loadAllEvents();
+        }
+      })
     })
     this.roleId = this.cookieService.get("role_id");
 
@@ -98,7 +99,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
   getSingleEvent() {
     this.examinarService.getSingleEvent(this.examinerId, this.appointmentId).subscribe(res => {
-      this.selectedDate = res.data[0].start;
+      this.selectedDate = res.data.start;
       this.dateChanged()
     }, error => {
       this.calendarEvents = [];
@@ -245,6 +246,7 @@ export class EventdetailDialog {
   eventNotes = "";
   constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
+    dialogRef.disableClose = true;
     this.eventStatus = data.extendedProps.status;
     this.eventNotes = data.extendedProps.description;
     this.claimService.seedData('calendar_examination_status').subscribe(curres => {
@@ -278,6 +280,12 @@ export class EventdetailDialog {
     } else {
       return null
     }
+  }
+  edit() {
+    this.textDisable = false;
+    this.isEdit = true;
+    this.examination_notes = this.eventNotes;
+    this.examination_status = this.eventStatusID;
   }
   examination_notes = '';
   examination_status = null;
