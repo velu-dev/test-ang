@@ -542,7 +542,7 @@ export class BilllableBillingComponent implements OnInit {
 
   openElementDoc(element) {
     if (this.isMobile) {
-      this.expandIdDoc = element.id;
+      this.expandIdDoc = element.document_id;
     }
   }
   applyFilter(filterValue: string) {

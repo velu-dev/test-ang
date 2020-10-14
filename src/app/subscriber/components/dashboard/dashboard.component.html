@@ -1,4 +1,4 @@
- <div fxLayout="column" fxLayoutGap="25px">
+<div fxLayout="column" fxLayoutGap="25px">
     <div fxLayout="row wrap">
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card (click)="openMenu('intake')" matRipple class="br-top m-t-15 mat-card-details text-center">
@@ -80,8 +80,7 @@
         </div>
     </div>
 </div>
-<!-- 
-<div fxLayout="column" fxLayoutGap="25px" class="dashboard-card">
+<!-- <div fxLayout="column" fxLayoutGap="25px" class="dashboard-card">
     <div fxLayout="row wrap">
         <div fxFlex="25" fxFlex.xl="25" fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100" class="p-5">
             <mat-card matRipple class="m-t-15">
@@ -129,39 +128,33 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
                     {{columnName[i]}} </th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="i == 0 && isMobile">
+                    <span *ngIf="i == 0">
                         <mat-icon mat-raised-button
                             [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
                             {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                         </mat-icon>
                     </span>
                     <div>
-                        <span *ngIf="column == 'claimant_name'">{{element?.last_name}},
-                            {{element?.first_name}}</span>
-                        <span *ngIf="column == 'procedure_type'">{{element?.procedure_type}} </span>
-                        <span
-                            *ngIf="column == 'examiner'">{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}}</span>
-                        <span *ngIf="column == 'dos'">{{element?.dos}}<small class="p-l-10"><span
-                                    class="fa fa-clock-o"></span>&nbsp; 9:13 AM</small></span>
-                        <span *ngIf="column == 'bill_date'">{{element?.bill_date}}</span>
-                        <span *ngIf="column == 'status'">{{element?.status}}</span>
+                        <span *ngIf="column == 'claimant_name'">{{element?.claimant_name}}</span>
+                        <span *ngIf="column == 'examiner_name'">{{element?.examiner_name}}</span>
+                        <span *ngIf="column == 'exam_procedure_type'">{{element?.exam_procedure_type}}</span>
+                        <span *ngIf="column == 'standing'">{{element?.standing}}</span>
+                        <span *ngIf="column == 'dos'">{{element?.dos}}</span>
+                        <span *ngIf="column == 'critical'">{{element?.critical}}</span>
                     </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="expandedDetail">
                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                     <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                        <div class="resposive-table">
-                            <div><span>Claimant</span> {{element?.last_name}}, {{element?.first_name}} </div>
-                            <div><span>Procedure Type</span> {{element?.procedure_type}} </div>
-                            <div>
-                                <span>Examiner</span>{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}}
-                            </div>
-                            <div><span>Date of service /<br />
-                                    Date Item Received</span> {{element?.dos}}<small class="p-l-10"><span
-                                        class="fa fa-clock-o"></span>&nbsp; 9:13 AM</small> </div>
-                            <div><span>Bill Date</span> {{element?.bill_date}} </div>
-                            <div><span>Status</span> {{element?.status}} </div>
+                        <div class="responsive-table">
+                            <div><span>Correspondence</span> {{element?.correspondence}}</div>
+                            <div><span>History</span> {{element?.history}}</div>
+                            <div><span>Records</span> {{element?.records}}</div>
+                            <div><span>Examination</span> {{element?.examination}}</div>
+                            <div><span>Report</span> {{element?.report}}</div>
+                            <div><span>Transcription</span> {{element?.transcription}}</div>
+                            <div><span>Billing</span> {{element?.billing}}</div>
                         </div>
                     </div>
                 </td>
@@ -175,4 +168,4 @@
         <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </div>
     <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
-</div> -->
+</div>  -->
