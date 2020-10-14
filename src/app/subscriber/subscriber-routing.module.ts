@@ -6,8 +6,6 @@ import { NewUserComponent } from './components/new-user/new-user.component';
 import { StaffDashboardComponent } from './staff/staff-dashboard/staff-dashboard.component';
 import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
 import { SubscriberSettingsComponent } from './subscriber-settings/subscriber-settings.component';
-import { ManageUserComponent } from './manager/manage-user/manage-user.component';
-import { ManageNewUserComponent } from './manager/manage-new-user/manage-new-user.component';
 import { ClaimListComponent } from './components/claims/claim-list/claim-list.component';
 import { NewClaimantComponent } from './components/claims/new-claimant/new-claimant.component';
 import { NewClaimComponent } from './components/claims/new-claim/new-claim.component';
@@ -17,15 +15,12 @@ import { ExaminerDashboardComponent } from './examiner/examiner-dashboard/examin
 import { ExaminerSettingComponent } from './examiner/examiner-setting/examiner-setting.component';
 import { AppointmentComponent } from './examiner/appointment/appointment.component';
 import { ExaminerManageAddressComponent } from './staff/examiner-manage-address/examiner-manage-address.component';
-import { ExaminerListComponent } from './staff/examiner-list/examiner-list.component';
 import { AppointmentDetailsComponent } from './examiner/appointment-details/appointment-details.component';
 import { ManageLocationComponent } from './components/manage-location/manage-location.component';
-import { EditAddressComponent } from './staff/edit-address/edit-address.component';
 import { EditClaimComponent } from './components/claims/edit-claim/edit-claim.component';
 import { NewBillableItemComponent } from './components/claims/new-billable-item/new-billable-item.component';
 import { BillingComponent } from './components/billing/billing.component';
 import { NewBillingComponent } from './components/new-billing/new-billing.component';
-import { EditBillingComponent } from './components/edit-billing/edit-billing.component';
 import { ClaimantAwaitingComponent } from './components/dashboard/claimant-awaiting/claimant-awaiting.component';
 import { ClaimAwaitingComponent } from './components/dashboard/claim-awaiting/claim-awaiting.component';
 import { BillableItemAwaitingComponent } from './components/dashboard/billable-item-awaiting/billable-item-awaiting.component';
@@ -1235,7 +1230,7 @@ const routes: Routes = [{
         data: { breadcrumb: "Users" }
       }, {
         path: "new",
-        component: ManageNewUserComponent,
+        component: NewUserComponent,
         data: { breadcrumb: "New Staff" }
       }, {
         path: "edit/:id",
