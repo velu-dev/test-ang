@@ -2,11 +2,12 @@
 @import "table";
 
 .dashboard-card {
+    margin-bottom: 20px;
     div {
         div {
             mat-card {
                 height: 50px;
-                border: 1px solid $light-gray;
+                border: 2px solid $menu-light;
                 box-shadow: none;
                 cursor: pointer;
                 &:hover {

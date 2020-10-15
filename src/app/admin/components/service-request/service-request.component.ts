@@ -39,8 +39,8 @@ export class ServiceRequestComponent implements OnInit {
         this.columnName = ["", "Subscriber Name", "Servive Status"]
         this.columnsToDisplay = ['is_expand', 'subscriber_first_name', "service_request_transmit_status"]
       } else {
-        this.columnName = ["Subscriber Name", "Subscriber Account", "Requester Name", "Claim Reference", "Service Type", "Request Date Time", "Request Reference", "Service Priority", "Service Provider Name", "Service Provider Account", "Service Status"]
-        this.columnsToDisplay = ['subscriber_first_name', 'subscriber_account_no', 'requester_first_name', 'claim_number', 'service_request_type', 'date_of_request', 'request_reference_id', 'service_priority', 'service_provider', 'service_provider_account_no', 'service_request_transmit_status']
+        this.columnName = ["Subscriber Name", "Subscriber Account", "Requester Name", "Claim #","Reference #", "Service Type", "Request Date Time", "Request Reference", "Service Priority", "Service Provider Name", "Service Provider Account", "Service Status"]
+        this.columnsToDisplay = ['subscriber_first_name', 'subscriber_account_no', 'requester_first_name', 'claim_number','reference_no', 'service_request_type', 'date_of_request', 'request_reference_id', 'service_priority', 'service_provider', 'service_provider_account_no', 'service_request_transmit_status']
       }
     });
     this.userService.getServiceRequests().subscribe(res => {

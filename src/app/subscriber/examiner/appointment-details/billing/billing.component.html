@@ -288,7 +288,7 @@
                         </table> -->
 
                         <form [formGroup]="userTable">
-                            <table class="table table-border billing-table" [ngClass]="{'table-dark': mode}">
+                            <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
                                 <thead class="text-nowrap">
                                     <th>Item </th>
                                     <th>Procedure Code</th>
@@ -744,26 +744,10 @@
     <div class="documents">
         <mat-card>
             <mat-card-header>
-                <!-- <div class="content-wrapper-main-title m-b-0 m-t-20">Upload Documents</div> -->
             </mat-card-header>
-            <!-- <mat-divider></mat-divider> -->
             <mat-card-content>
-                <div class="w-100">
+                <!-- <div class="w-100">
                     <div fxLayout="row wrap" fxFlex="100" class="document-file-upload w-100">
-                        <!-- <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
-                            appearance="outline" class="m-t-10">
-                            <mat-label>Document Type</mat-label>
-                            <mat-select [(ngModel)]="documentType" (selectionChange)="docChange($event.value)">
-                                <mat-option *ngFor="let doc of documentList" [value]="doc.id">
-                                    {{doc.document_category_name}}
-                                </mat-option>
-                            </mat-select>
-                            <mat-hint *ngIf="errors.doc_type.isError">
-                                <mat-error>
-                                    {{errors.doc_type.error}}
-                                </mat-error>
-                            </mat-hint>
-                        </mat-form-field> -->
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_">
                             <button type="button" mat-stroked-button class="filled-gray"
                                 (click)="uploader.click()">Select File
@@ -778,28 +762,18 @@
                                 </mat-hint>
                             </mat-form-field>
                         </div>
-                        <!-- 
-                        <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
-                            *ngIf="documentType == 7">
-                            <button mat-raised-button class="filled-gray">Select File</button>
-                            <mat-form-field appearance="standard" class="p-l-10 w-100">
-                                <input matInput value="{{file | ellipsis:30}}" readonly placeholder="No file chosen">
-                                <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                                    accept=".mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
-                                <mat-hint>Supported file formats: .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
-                               
-                            </mat-form-field>
-                        </div> -->
-
-
                         <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                             <button mat-stroked-button type="button" class="filled-gray add-btn p-r-20 m-t-20"
                                 (click)="uploadFile()">Add
                             </button>
                         </div>
                     </div>
-                </div>
-                <div fxLayout="row" class="w-100 m-t-15">
+                </div> -->
+                <div fxLayout="row wrap" class="w-100 m-t-15">
+                    <div fxFlex="100">
+                        <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5"><i
+                                class="fa fa-file-medical p-r-10"></i> Add Custom Document</button>
+                    </div>
                     <div class="user-detail vertical-fixed" fxFlex="100">
                         <table mat-table [dataSource]="documentsData" multiTemplateDataRows
                             class="mat-elevation-z8 user-table">
@@ -824,8 +798,10 @@
                                         </span>
                                         <span *ngIf="column == 'complete'">
 
-                                            <a class="text-ternary m-r-10" (click)="uploader.click()">Upload Competed
-                                                Form</a>
+                                            <a class="m-r-10 no-wrap-td" (click)="uploader.click()">
+                                                Upload Competed Form 
+                                                <i class="fa fa-upload m-b-3" matTooltip="Upload Competed Form" matTooltipPosition="above"></i>
+                                            </a>
                                         </span>
                                         <span
                                             *ngIf="column == 'document_type'">{{element?.document_type | titlecase}}</span>
@@ -833,32 +809,51 @@
                                             *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                         <span *ngIf="column == 'action'">
                                             <!-- <a class="text-success m-r-10" (click)="download(element)">Download</a> -->
-                                            <a class="text-danger" *ngIf="!element?.isServiceRequested"
-                                                (click)="deleteDocument(element)">Remove</a>
+                                            <a class="text-danger no-wrap-td" *ngIf="!element?.isServiceRequested"
+                                                (click)="deleteDocument(element)">Remove and Reupload
+                                            </a>
                                         </span>
                                     </div>
                                 </td>
+                                <!-- <td mat-footer-cell *matFooterCellDef colspan="3"> Test </td> -->
                             </ng-container>
+                            <!-- <ng-container matColumnDef="custom_doc">
+                                <td mat-footer-cell *matFooterCellDef colspan="5" class="text-center bg-light">
+                                    <b class="add-custom"><i class="fa fa-file-medical p-r-10"></i> Add Custom Document</b>
+                                </td>
+                            </ng-container>  -->
                             <ng-container matColumnDef="expandedDetail">
                                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay2.length">
                                     <div class="detail"
                                         [@detailExpand]="expandId2 == element.id ? 'expanded' : 'collapsed'">
                                         <div class="responsive-table">
                                             <div><span>File Name</span><span> {{element?.file_name}} </span></div>
-                                            <div><span>Document Source</span><span> {{element?.document_source}} </span>
+                                            <div><span>Download Partial Document</span><span> <a
+                                                        class="text-ternary m-r-10"
+                                                        (click)="download(element?.partial_document)"
+                                                        *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}</a></span>
                                             </div>
-                                            <!-- <div><span>Type</span><span> {{element?.type}} </span></div> -->
+                                            <div><span>Complete</span><span> <a class="text-ternary m-r-10"
+                                                        (click)="uploader.click()">Upload Competed
+                                                        Form</a></span>
+                                            </div>
+                                            <div><span>Action</span><span><a class="text-danger"
+                                                        *ngIf="!element?.isServiceRequested"
+                                                        (click)="deleteDocument(element)">Remove and Reupload
+                                                    </a></span></div>
                                             <!-- <div><span>Date</span><span> {{element?.date}} </span></div> -->
 
                                         </div>
                                     </div>
                                 </td>
+                                <!-- <td mat-footer-cell *matFooterCellDef> Test </td> -->
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="columnsToDisplay2;sticky :true"></tr>
                             <tr mat-row *matRowDef="let element; columns: columnsToDisplay2;" class="row"
                                 [class.row]="expandedElement === element" (click)="openElement(element)">
                             </tr>
                             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+                            <!-- <tr mat-footer-row *matFooterRowDef="['custom_doc']; sticky: true"></tr> -->
                         </table>
                         <app-nodata *ngIf="documentsData?.filteredData?.length == 0"></app-nodata>
                     </div>
@@ -932,7 +927,8 @@
                                                 *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
                                                 {{!last ? ',' : ''}}</span></span>
                                         <span *ngIf="column == 'download' && element?.send">
-                                            <a class="text-success" (click)="downloadDocumet(element?.send)">Download</a>
+                                            <a class="text-success"
+                                                (click)="downloadDocumet(element?.send)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'download1' && element?.received">
                                             <a class="text-success"

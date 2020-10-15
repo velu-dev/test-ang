@@ -43,31 +43,65 @@ tr.detail-row {
     min-width: $width-100;
     background-color: $table-solid;
     padding: 8px;
-    font-weight: lighter;
     margin: 5px 0;
+    @media only screen and (max-width: 568px) {
+      min-width: $width-100;
+      background-color: $table-solid;
+      padding: 8px;
+      margin: 5px 0;
+    }
+
     div {
-      width: 100%;
-      display: flex;
+      width: auto;
+      display: inherit;
+      float: left;
+      padding-right: 25px;
+      @media only screen and (max-width: 568px) {
+        width: $width-100;
+        display: flex;
+      }
       span {
         padding: 0;
         align-self: baseline;
         word-break: break-word;
+        @media only screen and (max-width: 568px) {
+          padding: 0;
+          align-self: baseline;
+          word-break: break-word;
+        }
         &:first-child {
-          min-width: 120px;
+          min-width: auto;
           width: 100%;
-          max-width: 120px;
+          max-width: auto;
           font-weight: $font-weight-bold;
           font-size: $font-size-1;
-          color: $text-gray;
+          color: $ternary;
+          @media only screen and (max-width: 568px) {
+            min-width: 120px;
+            width: 100%;
+            max-width: 120px;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-1;
+            color: $text-gray;
+          }
           &::after {
             content: ":";
-            display: inline-flex;
+            display: contents;
             float: right;
             padding-right: 5px;
+            @media only screen and (max-width: 568px) {
+              content: ":";
+              display: inline-flex;
+              float: right;
+              padding-right: 5px;
+            }
           }
         }
         &:nth-child(2) {
           font-weight: $font-weight-base;
+          @media only screen and (max-width: 568px) {
+            font-weight: $font-weight-base;
+          }
         }
       }
     }
@@ -240,7 +274,7 @@ tr.detail-row {
 
 // Bill line item table custom css
 
-.billing-table {
+.res-table {
   width: $width-100;
   border-collapse: collapse;
   table-layout: fixed;
@@ -334,7 +368,7 @@ tr.detail-row {
     tr.bill-value {
       td {
         padding: 12px 10px !important;
-        overflow-wrap:break-word;
+        overflow-wrap: break-word;
       }
       td.no-wrap-td {
         @media screen and (max-width: 1024px) and (min-width: 768px) {
@@ -362,8 +396,8 @@ tr.detail-row {
     }
   }
 }
-.billing-table tr th,
-.billing-table tr td {
+.res-table tr th,
+.res-table tr td {
   border: 1px solid $light-color;
 }
 
