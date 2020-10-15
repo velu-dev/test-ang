@@ -62,7 +62,8 @@
                 <div class="text-center w-100 m-t-10">
                     <button mat-stroked-button type="button" class="outline-danger"
                         (click)="onNoClick()">Cancel</button>
-                    <button mat-stroked-button type="submit" class="m-l-10 outline-success" (click)="saveClick()">Save
+                    <button mat-stroked-button [disabled]="isSubmit" type="submit" class="m-l-10 outline-success"
+                        (click)="saveClick()">Save
                     </button>
                 </div>
             </form>

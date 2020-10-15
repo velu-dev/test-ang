@@ -97,9 +97,9 @@ export class AppComponent {
 export class StateController {
   states = [];
   constructor(private claimService: ClaimService) {
-    this.claimService.seedData('state').subscribe(res => {
-      this.states = res.data;
-    })
+    // this.claimService.seedData('state').subscribe(res => {
+    //   this.states = res.data;
+    // })
   }
 
   get getState() {

@@ -144,7 +144,6 @@ export class ExaminationCalanderViewComponent implements OnInit {
     console.log("fdfdsffs", new Date(this.selectedDate))
     this.calendar.getApi().gotoDate(new Date(this.selectedDate))
     this.calendar.getApi().changeView("timeGridDay");
-    this.calendar.getApi().scrollToTime("15:30:00")
   }
 
   openEventDetailDialog(e): void {
@@ -154,12 +153,14 @@ export class ExaminationCalanderViewComponent implements OnInit {
       data: e.event
     });
     dialogRef.afterClosed().subscribe(result => {
+      let data = { title: "", start: "", end: "", backgroundColor: "",extendedProps: "" }
       if (result) {
-        e.event.remove();
-        result.start = new Date(result.start)
-        result.end = new Date(result.end)
+        // e.event.remove();
+        // result.start = new Date(result.start)
+        // result.end = new Date(result.end)
+        // e.event.backgroundColor = result
         // this.calendarEvents = this.calendarEvents.concat(result);
-        this.calendar.getApi().addEvent(result)
+        // this.calendar.getApi().addEvent(e.event)
       }
     });
   }
@@ -244,14 +245,17 @@ export class EventdetailDialog {
   eventStatus: any;
   eventStatusID: any;
   eventNotes = "";
+  statusName = "";
   constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
     dialogRef.disableClose = true;
     this.selectedEventColor = data.backgroundColor;
+    this.eventColor = data.backgroundColor;
     this.eventStatus = data.extendedProps.status;
     this.eventNotes = data.extendedProps.description;
-    console.log(data.extendedProps);
-    this.claimService.seedData('calendar_examination_status').subscribe(curres => {
+
+    this.statusName = this.data.extendedProps.is_deposition ? 'deposition_status' : 'examination_status'
+    this.claimService.seedData(this.data.extendedProps.is_deposition ? 'deposition_status' : 'calendar_examination_status').subscribe(curres => {
       this.examinationStatus = curres.data;
       this.getExaminationStatus(data.extendedProps)
     });
@@ -269,7 +273,7 @@ export class EventdetailDialog {
     })
   }
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(this.selectedEventColor);
   }
   pickerOpened(p) { }
   saveEvent() {
