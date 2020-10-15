@@ -574,6 +574,7 @@ export class CustomRecipient {
   billable_id: any;
   isEdit: any = false;
   recipientData = {};
+  isSubmit = false;
   constructor(
     public dialogRef: MatDialogRef<CustomRecipient>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private claimService: ClaimService,
@@ -628,9 +629,11 @@ export class CustomRecipient {
     if (this.customReceipient.invalid) {
       return
     }
+    this.isSubmit = true;
     this.onDemandService.createCustomRecipient(this.claim_id, this.billable_id, this.customReceipient.value).subscribe(res => {
       if (res.status) {
         this.alertService.openSnackBar(res.message, "success");
+        this.isSubmit = false;
         this.dialogRef.close(res)
       } else {
         this.alertService.openSnackBar(res.message, "error");
@@ -656,6 +659,7 @@ export class AddAddress {
   type = "";
   isLoading = false;
   claimantForm: FormGroup;
+  isSubmit = false;
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddAddress>,
@@ -703,8 +707,10 @@ export class AddAddress {
     if (this.claimantForm.invalid) {
       return
     }
+    this.isSubmit = true;
     this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
       this.alertService.openSnackBar("Claimant updated successfully!", 'success');
+      this.isSubmit = false;
       this.dialogRef.close(true);
     }, error => {
       this.alertService.openSnackBar(error.error, 'error');
