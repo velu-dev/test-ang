@@ -648,7 +648,7 @@ export class NewExaminerUserComponent implements OnInit {
       // this.locationSubmit();
     }
     this.tab = i
-    if (i == 0)
+    //if (i == 0)
       if (i == 4) {
         this.locationAddStatus = false;
       }

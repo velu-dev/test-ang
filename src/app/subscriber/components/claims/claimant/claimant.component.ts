@@ -97,7 +97,7 @@ export class ClaimantComponent implements OnInit {
       this.dataSource.sort = this.sort;
 
       this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.claim_number && data.claim_number.includes(filter));
+        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.date_of_injury && data.date_of_injury.includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.claim_number && data.claim_number.toLowerCase().includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
