@@ -51,8 +51,8 @@ export class DashboardComponent implements OnInit {
         this.columnName = ["", "Claimant", "Action"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["Claimant", "Procedure Type", "Examiner", "Date of service / Date Item Received", "Bill Date", "Status"]
-        this.columnsToDisplay = ['claimant_name', 'procedure_type', "examiner", "dos", 'bill_date', 'status']
+        this.columnName = ["", "Claimant", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date of Item Received", "Critical"]
+        this.columnsToDisplay = ['is_expand','claimant_name', 'examiner_name', "exam_procedure_type", "standing", 'dos', 'critical']
       }
     })
   }
@@ -80,9 +80,9 @@ export class DashboardComponent implements OnInit {
 
   expandId: any;
   openElement(element) {
-    if (this.isMobile) {
+    // if (this.isMobile) {
       this.expandId = element.id;
-    }
+    // }
   }
   navigate(menu) {
     this.router.navigate([this.router.url + menu])
@@ -96,11 +96,9 @@ export class DashboardComponent implements OnInit {
 
 
 const ELEMENT_DATA = [
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Not Sent", },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Accepted" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Sent" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Not Sent" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Accepted" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Not Sent" },
-
+  { "id": 1, "claimant_name": "Sam, Toucan", "examiner_name": "Denzel Washington", "exam_procedure_type": "QME", "standing": "Correspondence Not Sent", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
+  { "id": 2, "claimant_name": "Tiger, Tony", "examiner_name": "Jessica Simpson", "exam_procedure_type": "QME", "standing": "Appointment Awaiting Date", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
+  { "id": 3, "claimant_name": "Chocula, Count", "examiner_name": "Jennifer Lopez", "exam_procedure_type": "QME", "standing": "Appointment 06-30-2020", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
+ // { "id": 132, "claimant_name": "Mariyappan", "examiner_name": "Venkatesan", "exam_procedure_type": "", "standing": "", "dos": "", "critical": "", "correspondence": "", "history": "", "records": "", "examination":"", "report":"", "transcription":"", "billing":""},
+ 
 ];

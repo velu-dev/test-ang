@@ -845,9 +845,14 @@
                                         [@detailExpand]="expandId2 == element.id ? 'expanded' : 'collapsed'">
                                         <div class="responsive-table">
                                             <div><span>File Name</span><span> {{element?.file_name}} </span></div>
-                                            <div><span>Document Source</span><span> {{element?.document_source}} </span>
+                                            <div><span>Download Partial Document</span><span>  <a class="text-ternary m-r-10" (click)="download(element?.partial_document)"
+                                                *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}</a></span>
                                             </div>
-                                            <!-- <div><span>Type</span><span> {{element?.type}} </span></div> -->
+                                            <div><span>Complete</span><span>   <a class="text-ternary m-r-10" (click)="uploader.click()">Upload Competed
+                                                Form</a></span>
+                                            </div>
+                                            <div><span>Action</span><span><a class="text-danger" *ngIf="!element?.isServiceRequested"
+                                                (click)="deleteDocument(element)">Remove</a></span></div>
                                             <!-- <div><span>Date</span><span> {{element?.date}} </span></div> -->
 
                                         </div>
