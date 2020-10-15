@@ -652,6 +652,7 @@ export class NewExaminerUserComponent implements OnInit {
       if (i == 4) {
         this.locationAddStatus = false;
       }
+      this.selected = -1
   }
 
   mailingAddressSubmit() {
@@ -1072,9 +1073,9 @@ export class NewExaminerUserComponent implements OnInit {
   npiChange(e, i) {
     if (e.checked) {
       if (i == 1) {
-        this.national_provider_identifier = this.billingProviderForm.value.national_provider_identifier
-      } else {
         this.national_provider_identifier = this.renderingForm.value.national_provider_identifier
+      } else {
+        this.national_provider_identifier = this.billingProviderForm.value.national_provider_identifier
       }
     } else {
       this.national_provider_identifier = null;
