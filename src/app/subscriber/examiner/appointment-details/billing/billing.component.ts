@@ -1102,7 +1102,7 @@ export class BillingPaymentDialog {
         this.postPaymentForm.get(key).setValue(this.postPaymentForm.get(key).value.trim())
     });
     this.postPaymentForm.value.effective_date = new Date(this.postPaymentForm.value.effective_date).toDateString();
-    this.postPaymentForm.value.deposit_date = this.postPaymentForm.value.deposit_date ? new Date(this.postPaymentForm.value.deposit_date).toDateString() : null;
+    this.postPaymentForm.value.deposit_date = this.postPaymentForm.value.deposit_date ? new Date(this.postPaymentForm.value.deposit_date).toDateString() : [];
     if (this.postPaymentForm.invalid) {
       this.postPaymentForm.markAllAsTouched();
       return;
