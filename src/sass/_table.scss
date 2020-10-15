@@ -274,7 +274,7 @@ tr.detail-row {
 
 // Bill line item table custom css
 
-.billing-table {
+.res-table {
   width: $width-100;
   border-collapse: collapse;
   table-layout: fixed;
@@ -396,8 +396,8 @@ tr.detail-row {
     }
   }
 }
-.billing-table tr th,
-.billing-table tr td {
+.res-table tr th,
+.res-table tr td {
   border: 1px solid $light-color;
 }
 

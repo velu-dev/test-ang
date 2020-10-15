@@ -935,6 +935,12 @@ input:-webkit-autofill {
       }
     }
   }
+  .float-right {
+    float: right;
+  }
+  .res-table {
+    width: 99%;
+  }
   .eor-file {
     background-color: $light-color;
     padding: 6px 10px;
