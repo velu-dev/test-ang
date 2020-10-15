@@ -802,6 +802,8 @@
                                                 Upload Competed Form 
                                                 <i class="fa fa-upload m-b-3" matTooltip="Upload Competed Form" matTooltipPosition="above"></i>
                                             </a>
+                                            <input type="file" #uploader hidden (change)="addFile($event)" hidden
+                                            accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
                                         </span>
                                         <span
                                             *ngIf="column == 'document_type'">{{element?.document_type | titlecase}}</span>
@@ -835,7 +837,10 @@
                                             </div>
                                             <div><span>Complete</span><span> <a class="text-ternary m-r-10"
                                                         (click)="uploader.click()">Upload Competed
-                                                        Form</a></span>
+                                                        Form</a>
+                                                        <input type="file" #uploader hidden (change)="addFile($event)" hidden
+                                                        accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+                                                    </span>
                                             </div>
                                             <div><span>Action</span><span><a class="text-danger"
                                                         *ngIf="!element?.isServiceRequested"
