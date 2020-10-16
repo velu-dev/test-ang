@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { api_endpoint } from 'src/environments/api_endpoint';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { InterceptorSkipHeader } from 'src/app/authentication/services/authentication.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ClaimService {
-
+  private headers = new HttpHeaders().set(InterceptorSkipHeader, '');
   constructor(private http: HttpClient) { }
   getClaimant(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getClaimantDetails, {})
@@ -109,7 +110,7 @@ export class ClaimService {
   }
   getICD10(term): Observable<any> {
     console.log(term)
-    return this.http.get("https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&authenticity_token=&terms=" + term)
+    return this.http.get("https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&authenticity_token=&terms=" + term, { headers: this.headers })
 
   }
   getBillings(): Observable<any> {

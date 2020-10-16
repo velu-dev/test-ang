@@ -125,7 +125,7 @@
                 <ng-container matColumnDef="expandedDetail">
                     <td mat-cell *matCellDef="let element;let i" [attr.colspan]="displayedColumns.length">
                         <div class="detail" [@detailExpand]="expandId == i ? 'expanded' : 'collapsed'">
-                            <div class="responsive-table">
+                            <div class="responsive-table" (click)="gotoBilling(element)">
                                 <div><span>Bill #</span><span> {{element?.bill_no}}</span></div>
                                 <div><span>Claim #</span><span> {{element?.claim_number}}</span></div>
                                 <div><span>Claimant Name</span><span> {{element?.claimant_last_name}}, {{element?.claimant_first_name}} </span></div>
