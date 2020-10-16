@@ -692,7 +692,7 @@ export class AppointmentDetailsComponent implements OnInit {
   pickerOpened(type) {
     if (type = 'intake') {
       let date = moment();
-      this.minDate = date.subtract(60, 'days');
+      this.minDate =  date.subtract(1, 'year');
       this.todayDate.intake = new Date();
       this.todayDate.intake = new Date();
     } else {
