@@ -794,7 +794,7 @@
                                         <span *ngIf="column == 'partial'">
 
                                             <a class="text-ternary m-r-10" (click)="download(element?.partial_document)"
-                                                *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}</a>
+                                                *ngIf="element?.partial_document">{{element?.partial_document?.file_name}} <i class="fas fa-download"></i></a>
                                         </span>
                                         <span *ngIf="column == 'complete'">
 
@@ -836,7 +836,7 @@
                                                         *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}</a></span>
                                             </div>
                                             <div><span>Complete</span><span> <a class="text-ternary m-r-10"
-                                                        (click)="uploader.click()">Upload Competed
+                                                        (click)="uploader.click()">Upload Completed
                                                         Form</a>
                                                         <input type="file" #uploader hidden (change)="addFile($event)" hidden
                                                         accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
