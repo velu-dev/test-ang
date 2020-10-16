@@ -74,7 +74,19 @@ export class ExaminationCalanderViewComponent implements OnInit {
   roleId: any;
   examinerId: any;
   appointmentId: any;
+  calendar_examination_status = [];
+  deposition_status = [];
   constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService) {
+    ['deposition_status', 'calendar_examination_status'].map(seed => {
+      this.examinarService.seedData(seed).subscribe(curres => {
+        if (seed == 'deposition_status') {
+          this.deposition_status = curres.data;
+        }
+        if (seed == 'calendar_examination_status') {
+          this.calendar_examination_status = curres.data;
+        }
+      });
+    })
     this.examinarService.getExaminerList().subscribe(res => {
       this.examinars = res.data;
 
@@ -147,20 +159,23 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
 
   openEventDetailDialog(e): void {
-    console.log(e.event)
+    let data = {
+      event: e.event,
+      calendar_examination_status: this.calendar_examination_status,
+      deposition_status: this.deposition_status
+    }
     const dialogRef = this.dialog.open(EventdetailDialog, {
       width: '550px',
-      data: e.event
+      data: data,
+
     });
     dialogRef.afterClosed().subscribe(result => {
-      let data = { title: "", start: "", end: "", backgroundColor: "",extendedProps: "" }
       if (result) {
-        // e.event.remove();
-        // result.start = new Date(result.start)
-        // result.end = new Date(result.end)
-        // e.event.backgroundColor = result
-        // this.calendarEvents = this.calendarEvents.concat(result);
-        // this.calendar.getApi().addEvent(e.event)
+        if (this.examinerId) {
+          this.selectExaminer(this.examinerId, false);
+        } else {
+          this.loadAllEvents();
+        }
       }
     });
   }
@@ -202,12 +217,6 @@ export const PICK_FORMATS = {
     dateA11yLabel: 'MM-DD-YYYY',
     monthYearA11yLabel: 'MMMM YYYY',
   },
-  // display: {
-  //   dateInput: 'input',
-  //   monthYearLabel: { year: 'numeric', month: 'short' },
-  //   dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
-  //   monthYearA11yLabel: { year: 'numeric', month: 'long' }
-  // }
 };
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
@@ -246,34 +255,68 @@ export class EventdetailDialog {
   eventStatusID: any;
   eventNotes = "";
   statusName = "";
+  eventDetail = {
+    title: "", start: "", end: "", backgroundColor: "",
+    extendedProps: {
+      appointment_id: "",
+      billable_item_id: "",
+      claim_id: "",
+      claim_number: "",
+      claimant_id: "",
+      claimant_name: "",
+      description: null,
+      email: null,
+      exam_name: "",
+      exam_procedure_id: "",
+      exam_procedure_name: "",
+      exam_procedure_type: "",
+      examiner_id: null,
+      examiner_name: "",
+      is_deposition: null,
+      location: "",
+      phone_no_1: null,
+      procedure_type: "",
+      status: "",
+      status_color: "",
+      supervisor_id: null
+    }
+  }
   constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
+    console.log(data.event)
+    this.eventDetail = { title: data.event.title, start: data.event.start, end: data.event.end, backgroundColor: data.event.backgroundColor, extendedProps: data.event.extendedProps };
     dialogRef.disableClose = true;
-    this.selectedEventColor = data.backgroundColor;
-    this.eventColor = data.backgroundColor;
-    this.eventStatus = data.extendedProps.status;
-    this.eventNotes = data.extendedProps.description;
+    this.selectedEventColor = data.event.backgroundColor ? data.event.backgroundColor : "#3788d8";
+    this.eventColor = data.event.backgroundColor ? data.event.backgroundColor : "#3788d8";;
+    this.eventStatus = data.event.extendedProps.status;
+    this.eventNotes = data.event.extendedProps.description;
 
-    this.statusName = this.data.extendedProps.is_deposition ? 'deposition_status' : 'examination_status'
-    this.claimService.seedData(this.data.extendedProps.is_deposition ? 'deposition_status' : 'calendar_examination_status').subscribe(curres => {
-      this.examinationStatus = curres.data;
-      this.getExaminationStatus(data.extendedProps)
-    });
-
-    this.event = data.extendedProps;
-    this.examination_notes = data.extendedProps.description;
-
+    this.statusName = this.data.event.extendedProps.is_deposition ? 'deposition_status' : 'examination_status';
+    console.log("dfdsff", data)
+    if (this.statusName == 'deposition_status') {
+      this.examinationStatus = data.deposition_status;
+      this.getExaminationStatus(data.event.extendedProps)
+    }
+    if (this.statusName == 'examination_status') {
+      this.examinationStatus = data.calendar_examination_status;
+      this.getExaminationStatus(data.event.extendedProps)
+    }
+    this.event = data.event.extendedProps;
+    this.examination_notes = data.event.extendedProps.description;
+    // this.claimService.seedData(this.data.extendedProps.is_deposition ? 'deposition_status' : 'calendar_examination_status').subscribe(curres => {
+    //   this.examinationStatus = curres.data;
+    //   this.getExaminationStatus(data.extendedProps)
+    // });
   }
   getExaminationStatus(data) {
     this.examinationStatus.map(res => {
-      if (res.examination_status == data.status) {
+      console.log(res.examination_status, data.status)
+      if (res[this.statusName] == data.status) {
+        console.log("tes")
         this.examination_status = res.id;
         this.eventStatusID = res.id;
       }
     })
-  }
-  onNoClick(): void {
-    this.dialogRef.close(this.selectedEventColor);
   }
   pickerOpened(p) { }
   saveEvent() {
@@ -295,7 +338,8 @@ export class EventdetailDialog {
   }
   examination_notes = '';
   examination_status = null;
-  selectedEventColor: any;
+  selectedEventColor: any = "#3788d8";
+  status = "";
   updateStatus() {
     let data = {
       id: this.event['appointment_id'],
@@ -305,6 +349,8 @@ export class EventdetailDialog {
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
       this.examinationStatus.map(exam => {
         if (exam.id == res.data.examination_status) {
+          console.log(this.eventDetail, exam.examination_status)
+          this.status = exam.examination_status;
           this.examination_status = exam.id;
           this.eventStatusID = exam.examination_status;
           this.eventStatus = exam.examination_status;
@@ -316,14 +362,7 @@ export class EventdetailDialog {
       this.textDisable = true;
       this.isEdit = false;
       this.selectedEventColor = this.eventColor;
-      this.alertService.openSnackBar(res.message, 'success');
-      // if (data.examination_status != "") {
-      //   this.alertService.openSnackBar("Examiner status Updated Successfully", 'success');
-      // }
-      // if (data.examination_notes != "") {
-      //   this.alertService.openSnackBar("Examiner notes Updates Successfully", "success");
-      // }
-
+      this.eventDetail.backgroundColor = this.eventColor;
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -337,6 +376,11 @@ export class EventdetailDialog {
     this.examination_status = this.eventStatusID;
     this.textDisable = true;
     this.isEdit = false;
+  }
+  onNoClick(): void {
+    console.log(this.status, this.eventDetail.extendedProps)
+    this.eventDetail['status'] = this.status;
+    this.dialogRef.close(this.eventDetail);
   }
   viewDetails(claim_id, billable_id, claimant_id) {
     let baseUrl = "";
