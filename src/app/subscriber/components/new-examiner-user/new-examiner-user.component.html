@@ -729,7 +729,7 @@
                                 <mat-autocomplete #addressAutocomplete="matAutocomplete">
                                     <mat-option *ngFor="let option of (filteredOptions | async)"
                                         (click)="addressOnChange(option)"
-                                        value="{{option?.street1 }} {{option?.street2 }} {{option?.city}} {{option?.state_name }} {{option?.zip_code }}">
+                                        value="{{option?.street1 }} {{option?.street2 }} {{option?.city}} {{option?.state_code}} {{option?.zip_code }}">
                                         {{option?.street1 }} {{option?.street2 }} {{option?.city}}
                                         {{option?.state_code }} {{option?.zip_code }}
                                     </mat-option>

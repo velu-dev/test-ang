@@ -900,6 +900,7 @@ export class NewExaminerUserComponent implements OnInit {
   addressOnChange(data) {
     this.locationData = null;
     this.locationData = data;
+    this.selected = -1
   }
 
   locationSubmit() {
