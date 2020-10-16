@@ -263,7 +263,7 @@ export class NewClaimComponent implements OnInit {
             this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.primary_language_spoken = claimant.data[0].primary_language_spoken ? true : false;
-            this.changeState(claimant.data[0].state, 'claimant');
+            this.changeState(claimant.data[0].state, 'claimant',claimant.data[0].state_code);
             console.log("claimant state", claimant.data[0].state)
             this.claimant.patchValue(claimant.data[0])
             this.isclaimantfill = true;
