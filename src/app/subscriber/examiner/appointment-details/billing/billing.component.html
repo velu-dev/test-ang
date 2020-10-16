@@ -800,7 +800,7 @@
 
                                             <a class="m-r-10 no-wrap-td" (click)="uploader.click()">
                                                 Upload Competed Form 
-                                                <i class="fa fa-upload m-b-3" matTooltip="Upload Competed Form" matTooltipPosition="above"></i>
+                                                <i class="fa fa-upload m-b-3"></i>
                                             </a>
                                             <input type="file" #uploader hidden (change)="addFile($event)" hidden
                                             accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
@@ -833,11 +833,11 @@
                                             <div><span>Download Partial Document</span><span> <a
                                                         class="text-ternary m-r-10"
                                                         (click)="download(element?.partial_document)"
-                                                        *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}</a></span>
+                                                        *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}  <i class="fas fa-download"></i></a></span>
                                             </div>
                                             <div><span>Complete</span><span> <a class="text-ternary m-r-10"
                                                         (click)="uploader.click()">Upload Completed
-                                                        Form</a>
+                                                        Form <i class="fa fa-upload m-b-3"></i></a>
                                                         <input type="file" #uploader hidden (change)="addFile($event)" hidden
                                                         accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
                                                     </span>
