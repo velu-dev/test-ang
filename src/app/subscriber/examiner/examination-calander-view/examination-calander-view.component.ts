@@ -76,7 +76,10 @@ export class ExaminationCalanderViewComponent implements OnInit {
   appointmentId: any;
   calendar_examination_status = [];
   deposition_status = [];
+  months = [];
   constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService) {
+    let currentMonth = moment().month() + 1;
+    this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
     ['deposition_status', 'calendar_examination_status'].map(seed => {
       this.examinarService.seedData(seed).subscribe(curres => {
         if (seed == 'deposition_status') {
@@ -95,6 +98,8 @@ export class ExaminationCalanderViewComponent implements OnInit {
         if (param.examiner_id) {
           this.examinerId = param.examiner_id;
           this.appointmentId = param.billId
+          if (this.examinerId)
+            this.getSingleEvent();
           this.selectExaminer(this.examinerId, false);
         } else {
           this.loadAllEvents();
@@ -104,12 +109,8 @@ export class ExaminationCalanderViewComponent implements OnInit {
     this.roleId = this.cookieService.get("role_id");
 
   }
-
-  ngAfterViewInit() {
-    if (this.examinerId)
-      this.getSingleEvent();
-  }
   getSingleEvent() {
+    console.log("Sdasdsdad")
     this.examinarService.getSingleEvent(this.examinerId, this.appointmentId).subscribe(res => {
       this.selectedDate = res.data.start;
       this.dateChanged()
@@ -119,10 +120,10 @@ export class ExaminationCalanderViewComponent implements OnInit {
     })
   }
   ngOnInit() {
-
+    // this.calendar.getApi().trigger
   }
   loadAllEvents() {
-    this.examinarService.getCalendarEvent().subscribe(event => {
+    this.examinarService.getCalendarEvent(this.months).subscribe(event => {
       this.calendarEvents = event.data;
     }, error => {
       console.log("error", error.error.message);
@@ -133,7 +134,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     if (status)
       this.calendar.getApi().removeAllEvents();
     if (examiner) {
-      this.examinarService.getExaminerCalendarEvent(examiner).subscribe(event => {
+      this.examinarService.getExaminerCalendarEvent(examiner, this.months).subscribe(event => {
         if (event.data) {
           this.calendarEvents = event.data;
         }
@@ -171,10 +172,12 @@ export class ExaminationCalanderViewComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.examinerId) {
-          this.selectExaminer(this.examinerId, false);
-        } else {
-          this.loadAllEvents();
+        if (result.isChange) {
+          if (this.examinerId) {
+            this.selectExaminer(this.examinerId, false);
+          } else {
+            this.loadAllEvents();
+          }
         }
       }
     });
@@ -340,6 +343,7 @@ export class EventdetailDialog {
   examination_status = null;
   selectedEventColor: any = "#3788d8";
   status = "";
+  isUpdated: boolean = false;
   updateStatus() {
     let data = {
       id: this.event['appointment_id'],
@@ -347,9 +351,10 @@ export class EventdetailDialog {
       examination_notes: this.examination_notes
     }
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
+      this.isUpdated = true;
       this.examinationStatus.map(exam => {
         if (exam.id == res.data.examination_status) {
-          console.log(this.eventDetail, exam.examination_status)
+          Object.getOwnPropertyDescriptor(this.eventDetail.extendedProps.status, exam.examination_status);
           this.status = exam.examination_status;
           this.examination_status = exam.id;
           this.eventStatusID = exam.examination_status;
@@ -378,8 +383,7 @@ export class EventdetailDialog {
     this.isEdit = false;
   }
   onNoClick(): void {
-    console.log(this.status, this.eventDetail.extendedProps)
-    this.eventDetail['status'] = this.status;
+    this.eventDetail['isChange'] = this.isUpdated;
     this.dialogRef.close(this.eventDetail);
   }
   viewDetails(claim_id, billable_id, claimant_id) {
