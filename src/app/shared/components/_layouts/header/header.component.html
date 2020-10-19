@@ -6,6 +6,20 @@
         </button>
          <div [ngClass]="{'opened': isOpen, 'closed': !isOpen}" class="hide-mobile"></div>
         <img [src]="nav_logo" alt="logo" class="p-l-5">
+        <!-- <div class="searchable-dropdown"> 
+            <mat-form-field class="searchable-dropdown">
+                <mat-label>Favorite food</mat-label>
+                <mat-select>
+                  <mat-option>
+                    <p>Test <br>test <br>test <br>test <br>test <br>test </p>
+                  </mat-option>
+
+                  <mat-option>
+                    <p>Test <br>test <br>test <br>test <br>test <br>test </p>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+         </div> -->
         <span flex class="spacer"></span>
         <mat-card-actions>
             <div fxLayout="row">
@@ -20,7 +34,8 @@
                     </mat-icon>
                 </button>
                 -->
-               <div class="support-btn hide-mobile p-r-20"><a href="javaScript:void(0)">Help</a>|<a (click)="logout()">Log-Out</a></div>
+                <div class="support-btn hide-mobile p-r-20"><a href="javaScript:void(0)">Help</a>|<a
+                        (click)="logout()">Log-Out</a></div>
                 <div *ngIf="user">
                     <button mat-icon-button [title]="user?.first_name" [matMenuTriggerFor]="settings">
                         <div class="welcome_t">
@@ -55,7 +70,7 @@
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
-                <span >Logout</span>
+                <span>Logout</span>
             </button>
         </mat-menu>
 
