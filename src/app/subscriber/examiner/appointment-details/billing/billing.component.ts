@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
-import { shareReplay, map, startWith } from 'rxjs/operators';
+import { shareReplay, map, startWith, debounceTime, switchMap } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
@@ -283,16 +283,11 @@ export class BilllableBillingComponent implements OnInit {
       this.filteredICD = icd[3];
     });
 
-    this.icdCtrl.valueChanges.subscribe(res => {
-      if (res) {
-        this.icdSearched = true;
+    this.icdCtrl.valueChanges
+      .pipe(
+        debounceTime(300),
+      ).subscribe(value => { this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
 
-        this.claimService.getICD10(res).subscribe(icd => {
-          this.filteredICD = [];
-          this.filteredICD = icd[3];
-        });
-      }
-    })
 
     this.billingService.searchPayor({ search: null }).subscribe(payor => {
       this.payors = payor.data
