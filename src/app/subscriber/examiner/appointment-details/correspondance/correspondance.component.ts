@@ -55,6 +55,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   selection1 = new SelectionModel<any>(true, []);
   claim_id: any;
   billableId: any;
+  examinerId: any;
   isLoading: boolean = false;
   correspondData: any;
   states = [];
@@ -66,6 +67,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.claim_id = params.claim_id;
       this.billableId = params.billId;
+      this.examinerId = params.examiner_id;
       this.getData();
     })
     this.isHandset$.subscribe(res => {
@@ -197,6 +199,10 @@ export class BillingCorrespondanceComponent implements OnInit {
   ngOnInit() {
   }
   downloadForms(sign) {
+    if (!this.examinerId) {
+      this.alertService.openSnackBar('Please select Examiner', "error");
+      return;
+    }
     if (this.selection.selected.length == 0) {
       this.alertService.openSnackBar('Please select Document(s)', "error");
       return;
@@ -251,7 +257,8 @@ export class BillingCorrespondanceComponent implements OnInit {
       custom_documents_ids: custom_documents_ids,
       recipients_ids: recipientsDocuments_ids,
       custom_recipients_ids: recipientsCustom_documents_ids,
-      hide_sign: signHide
+      hide_sign: signHide,
+      examiner_id: this.examinerId
     }
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
@@ -419,6 +426,10 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
 
   onDemandSubmit() {
+    if (!this.examinerId) {
+      this.alertService.openSnackBar('Please select Examiner', "error");
+      return;
+    }
     if (this.selection.selected.length == 0 && this.selection1.selected.length == 0) {
       this.alertService.openSnackBar('Please select Document(s) & Recipient(s)', "error");
       return;
@@ -468,7 +479,8 @@ export class BillingCorrespondanceComponent implements OnInit {
       documents_ids: documents_ids,
       custom_documents_ids: custom_documents_ids,
       recipients_ids: recipientsDocuments_ids,
-      custom_recipients_ids: recipientsCustom_documents_ids
+      custom_recipients_ids: recipientsCustom_documents_ids,
+      examiner_id: this.examinerId
     }
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
