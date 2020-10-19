@@ -31,11 +31,11 @@ export class ExaminerService {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteAddress + id)
   }
 
-  getCalendarEvent(): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.getCalendarEvents)
+  getCalendarEvent(months?): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getCalendarEvents, { "fetch_event_months": months })
   }
-  getExaminerCalendarEvent(examiner_id): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.getCalendarEvents + "/" + examiner_id)
+  getExaminerCalendarEvent(examiner_id, months?): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getCalendarEvents + "/" + examiner_id, { "fetch_event_months": months })
   }
   getExaminerList(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getExaminerList)
