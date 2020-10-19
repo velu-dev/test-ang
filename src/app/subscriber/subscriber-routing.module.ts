@@ -107,12 +107,17 @@ const routes: Routes = [{
                 path: "appointment/:examiner_id",
                 component: AppointmentComponent,
                 data: { breadcrumb: "Calendar" }
-              },{
+              }, {
                 path: "",
                 component: AppointmentDetailsComponent,
                 data: { breadcrumb: { alias: '@Billable Item' } },
               }, {
                 path: "correspondence",
+                component: BillingCorrespondanceComponent,
+                data: { breadcrumb: "Correspondence" },
+              },
+              {
+                path: "correspondence/:examiner_id",
                 component: BillingCorrespondanceComponent,
                 data: { breadcrumb: "Correspondence" },
               }, {
@@ -187,7 +192,7 @@ const routes: Routes = [{
           path: "appointment/:examiner_id",
           component: AppointmentComponent,
           data: { breadcrumb: "Calendar" }
-        },{
+        }, {
           path: "",
           component: AppointmentDetailsComponent,
           data: { breadcrumb: { alias: '@Billable Item' } },
@@ -195,6 +200,10 @@ const routes: Routes = [{
           path: "correspondence",
           component: BillingCorrespondanceComponent,
           data: { breadcrumb: "Correspondence" }
+        }, {
+          path: "correspondence/:examiner_id",
+          component: BillingCorrespondanceComponent,
+          data: { breadcrumb: "Correspondence" },
         }, {
           path: "examination",
           component: ExaminationComponent,
@@ -340,6 +349,10 @@ const routes: Routes = [{
       component: BillingCorrespondanceComponent,
       data: { breadcrumb: "Correspondence" }
     }, {
+      path: "correspondence/:examiner_id",
+      component: BillingCorrespondanceComponent,
+      data: { breadcrumb: "Correspondence" },
+    }, {
       path: "examination",
       component: ExaminationComponent,
       data: { breadcrumb: "Examination" }
@@ -407,7 +420,7 @@ const routes: Routes = [{
             path: "appointment/:examiner_id",
             component: AppointmentComponent,
             data: { breadcrumb: "Calendar" }
-          },{
+          }, {
             path: "",
             component: AppointmentDetailsComponent,
             data: { breadcrumb: { alias: '@Billable Item' } },
@@ -415,6 +428,10 @@ const routes: Routes = [{
             path: "correspondence",
             component: BillingCorrespondanceComponent,
             data: { breadcrumb: "Correspondence" }
+          }, {
+            path: "correspondence/:examiner_id",
+            component: BillingCorrespondanceComponent,
+            data: { breadcrumb: "Correspondence" },
           }, {
             path: "examination",
             component: ExaminationComponent,
@@ -631,7 +648,7 @@ const routes: Routes = [{
                     path: "appointment/:examiner_id",
                     component: AppointmentComponent,
                     data: { breadcrumb: "Calendar" }
-                  },{
+                  }, {
                     path: "",
                     component: AppointmentDetailsComponent,
                     data: { breadcrumb: { alias: '@Billable Item' } },
@@ -639,6 +656,10 @@ const routes: Routes = [{
                     path: "correspondence",
                     component: BillingCorrespondanceComponent,
                     data: { breadcrumb: "Correspondence" }
+                  }, {
+                    path: "correspondence/:examiner_id",
+                    component: BillingCorrespondanceComponent,
+                    data: { breadcrumb: "Correspondence" },
                   }, {
                     path: "examination",
                     component: ExaminationComponent,
@@ -711,7 +732,7 @@ const routes: Routes = [{
               path: "appointment/:examiner_id",
               component: AppointmentComponent,
               data: { breadcrumb: "Calendar" }
-            },{
+            }, {
               path: "",
               component: AppointmentDetailsComponent,
               data: { breadcrumb: { alias: '@Billable Item' } },
@@ -719,6 +740,10 @@ const routes: Routes = [{
               path: "correspondence",
               component: BillingCorrespondanceComponent,
               data: { breadcrumb: "Correspondence" }
+            }, {
+              path: "correspondence/:examiner_id",
+              component: BillingCorrespondanceComponent,
+              data: { breadcrumb: "Correspondence" },
             }, {
               path: "examination",
               component: ExaminationComponent,
@@ -794,6 +819,10 @@ const routes: Routes = [{
           component: BillingCorrespondanceComponent,
           data: { breadcrumb: "Correspondence" }
         }, {
+          path: "correspondence/:examiner_id",
+          component: BillingCorrespondanceComponent,
+          data: { breadcrumb: "Correspondence" },
+        }, {
           path: "examination",
           component: ExaminationComponent,
           data: { breadcrumb: "Examination" }
@@ -861,7 +890,7 @@ const routes: Routes = [{
                 path: "appointment/:examiner_id",
                 component: AppointmentComponent,
                 data: { breadcrumb: "Calendar" }
-              },{
+              }, {
                 path: "",
                 component: AppointmentDetailsComponent,
                 data: { breadcrumb: { alias: '@Billable Item' } },
@@ -869,6 +898,10 @@ const routes: Routes = [{
                 path: "correspondence",
                 component: BillingCorrespondanceComponent,
                 data: { breadcrumb: "Correspondence" }
+              }, {
+                path: "correspondence/:examiner_id",
+                component: BillingCorrespondanceComponent,
+                data: { breadcrumb: "Correspondence" },
               }, {
                 path: "examination",
                 component: ExaminationComponent,
@@ -1067,7 +1100,7 @@ const routes: Routes = [{
                     path: "appointment/:examiner_id",
                     component: AppointmentComponent,
                     data: { breadcrumb: "Calendar" }
-                  },{
+                  }, {
                     path: "",
                     component: AppointmentDetailsComponent,
                     data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1075,6 +1108,10 @@ const routes: Routes = [{
                     path: "correspondence",
                     component: BillingCorrespondanceComponent,
                     data: { breadcrumb: "Correspondence" }
+                  }, {
+                    path: "correspondence/:examiner_id",
+                    component: BillingCorrespondanceComponent,
+                    data: { breadcrumb: "Correspondence" },
                   }, {
                     path: "examination",
                     component: ExaminationComponent,
@@ -1147,7 +1184,7 @@ const routes: Routes = [{
               path: "appointment/:examiner_id",
               component: AppointmentComponent,
               data: { breadcrumb: "Calendar" }
-            },{
+            }, {
               path: "",
               component: AppointmentDetailsComponent,
               data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1155,6 +1192,10 @@ const routes: Routes = [{
               path: "correspondence",
               component: BillingCorrespondanceComponent,
               data: { breadcrumb: "Correspondence" }
+            }, {
+              path: "correspondence/:examiner_id",
+              component: BillingCorrespondanceComponent,
+              data: { breadcrumb: "Correspondence" },
             }, {
               path: "examination",
               component: ExaminationComponent,
@@ -1284,6 +1325,10 @@ const routes: Routes = [{
           component: BillingCorrespondanceComponent,
           data: { breadcrumb: "Correspondence" }
         }, {
+          path: "correspondence/:examiner_id",
+          component: BillingCorrespondanceComponent,
+          data: { breadcrumb: "Correspondence" },
+        }, {
           path: "examination",
           component: ExaminationComponent,
           data: { breadcrumb: "Examination" }
@@ -1351,7 +1396,7 @@ const routes: Routes = [{
                 path: "appointment/:examiner_id",
                 component: AppointmentComponent,
                 data: { breadcrumb: "Calendar" }
-              },{
+              }, {
                 path: "",
                 component: AppointmentDetailsComponent,
                 data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1359,6 +1404,10 @@ const routes: Routes = [{
                 path: "correspondence",
                 component: BillingCorrespondanceComponent,
                 data: { breadcrumb: "Correspondence" }
+              }, {
+                path: "correspondence/:examiner_id",
+                component: BillingCorrespondanceComponent,
+                data: { breadcrumb: "Correspondence" },
               }, {
                 path: "examination",
                 component: ExaminationComponent,
@@ -1520,7 +1569,7 @@ const routes: Routes = [{
                   path: "appointment/:examiner_id",
                   component: AppointmentComponent,
                   data: { breadcrumb: "Calendar" }
-                },{
+                }, {
                   path: "",
                   component: AppointmentDetailsComponent,
                   data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1528,6 +1577,10 @@ const routes: Routes = [{
                   path: "correspondence",
                   component: BillingCorrespondanceComponent,
                   data: { breadcrumb: "Correspondence" }
+                }, {
+                  path: "correspondence/:examiner_id",
+                  component: BillingCorrespondanceComponent,
+                  data: { breadcrumb: "Correspondence" },
                 }, {
                   path: "examination",
                   component: ExaminationComponent,
@@ -1605,7 +1658,7 @@ const routes: Routes = [{
             path: "appointment/:examiner_id",
             component: AppointmentComponent,
             data: { breadcrumb: "Calendar" }
-          },{
+          }, {
             path: "",
             component: AppointmentDetailsComponent,
             data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1613,6 +1666,10 @@ const routes: Routes = [{
             path: "correspondence",
             component: BillingCorrespondanceComponent,
             data: { breadcrumb: "Correspondence" }
+          }, {
+            path: "correspondence/:examiner_id",
+            component: BillingCorrespondanceComponent,
+            data: { breadcrumb: "Correspondence" },
           }, {
             path: "examination",
             component: ExaminationComponent,
@@ -1687,6 +1744,10 @@ const routes: Routes = [{
         component: BillingCorrespondanceComponent,
         data: { breadcrumb: "Correspondence" }
       }, {
+        path: "correspondence/:examiner_id",
+        component: BillingCorrespondanceComponent,
+        data: { breadcrumb: "Correspondence" },
+      }, {
         path: "examination",
         component: ExaminationComponent,
         data: { breadcrumb: "Examination" }
@@ -1754,7 +1815,7 @@ const routes: Routes = [{
               path: "appointment/:examiner_id",
               component: AppointmentComponent,
               data: { breadcrumb: "Calendar" }
-            },{
+            }, {
               path: "",
               component: AppointmentDetailsComponent,
               data: { breadcrumb: { alias: '@Billable Item' } },
@@ -1762,6 +1823,10 @@ const routes: Routes = [{
               path: "correspondence",
               component: BillingCorrespondanceComponent,
               data: { breadcrumb: "Correspondence" }
+            }, {
+              path: "correspondence/:examiner_id",
+              component: BillingCorrespondanceComponent,
+              data: { breadcrumb: "Correspondence" },
             }, {
               path: "examination",
               component: ExaminationComponent,

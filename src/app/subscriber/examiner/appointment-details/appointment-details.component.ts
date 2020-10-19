@@ -245,6 +245,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.logger.log(response.data)
           if (response.data.appointments.examiner_id) {
             this.procedureTypeStatus[1].url = "/history/" + response.data.appointments.examiner_id;
+            this.procedureTypeStatus[0].url = "/correspondence/" + response.data.appointments.examiner_id
           }
 
           this.progressStatus = response.data.progress_status
@@ -692,7 +693,7 @@ export class AppointmentDetailsComponent implements OnInit {
   pickerOpened(type) {
     if (type = 'intake') {
       let date = moment();
-      this.minDate =  date.subtract(1, 'year');
+      this.minDate = date.subtract(1, 'year');
       this.todayDate.intake = new Date();
       this.todayDate.intake = new Date();
     } else {
