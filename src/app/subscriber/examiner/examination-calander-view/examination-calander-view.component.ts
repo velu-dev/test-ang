@@ -110,7 +110,6 @@ export class ExaminationCalanderViewComponent implements OnInit {
 
   }
   getSingleEvent() {
-    console.log("Sdasdsdad")
     this.examinarService.getSingleEvent(this.examinerId, this.appointmentId).subscribe(res => {
       this.selectedDate = res.data.start;
       this.dateChanged()
@@ -250,7 +249,7 @@ export const MY_CUSTOM_FORMATS = {
   ]
 })
 export class EventdetailDialog {
-  event = { claimant_id: "", billable_item_id: "", claim_id: "", title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
+  event = { duration: "", claimant_id: "", billable_item_id: "", claim_id: "", title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
   isEdit = false;
   textDisable: boolean = true;
   examinationStatus = [];
