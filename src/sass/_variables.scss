@@ -718,6 +718,11 @@ input:-webkit-autofill {
   color: rgba(0, 0, 0, 0.7) !important;
 }
 
+.cdk-overlay-pane {
+  @media only screen and (max-width: 568px) {
+  max-width: 90vw !important;
+  }
+}
 // Safari browser Form fields disabled label color
 
 @media not all and (min-resolution: 0.001dpcm) {
@@ -926,6 +931,9 @@ input:-webkit-autofill {
     max-height: 80vh;
     overflow-y: auto;
     overflow-x: hidden;
+    @media only screen and (max-width: 568px) { 
+      max-height: 60vh;
+    }
     button.filled-gray {
       @extend .filled-gray;
     }
@@ -965,6 +973,9 @@ input:-webkit-autofill {
     max-height: 80vh;
     overflow-y: auto;
     overflow-x: hidden;
+    @media only screen and (max-width: 568px) { 
+      max-height: 60vh;
+    }
     mat-form-field {
       padding: 10px 10px 0px 0px !important;
     }
@@ -1050,6 +1061,11 @@ input:-webkit-autofill {
       font-weight: $font-weight-bold;
       font-size: $font-size-1;
       color: $text-gray;
+      @media only screen and (max-width: 568px) {
+      min-width: 110px;
+      width: 100%;
+      max-width: 110px;
+      }
       &::after {
         content: ":";
         display: inline-flex;
