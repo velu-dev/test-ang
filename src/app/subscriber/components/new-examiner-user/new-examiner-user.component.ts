@@ -1059,7 +1059,7 @@ export class NewExaminerUserComponent implements OnInit {
     if (e.checked) {
       let addAddress = {
         street1: this.mailingAddressForm.value.street1,
-        street2: this.mailingAddressForm.value.street1,
+        street2: this.mailingAddressForm.value.street2,
         city: this.mailingAddressForm.value.city,
         state: this.mailingAddressForm.value.state,
         zip_code: this.mailingAddressForm.value.zip_code,
