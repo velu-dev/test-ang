@@ -649,10 +649,10 @@ export class NewExaminerUserComponent implements OnInit {
     }
     this.tab = i
     //if (i == 0)
-      if (i == 4) {
-        this.locationAddStatus = false;
-      }
-      this.selected = -1
+    if (i == 4) {
+      this.locationAddStatus = false;
+    }
+    this.selected = -1
   }
 
   mailingAddressSubmit() {
@@ -1057,7 +1057,15 @@ export class NewExaminerUserComponent implements OnInit {
 
   sameAsMailling(e) {
     if (e.checked) {
-      this.billingProviderForm.patchValue(this.mailingAddressForm.value)
+      let addAddress = {
+        street1: this.mailingAddressForm.value.street1,
+        street2: this.mailingAddressForm.value.street1,
+        city: this.mailingAddressForm.value.city,
+        state: this.mailingAddressForm.value.state,
+        zip_code: this.mailingAddressForm.value.zip_code,
+        phone_no1: this.mailingAddressForm.value.phone_no1,
+      }
+      this.billingProviderForm.patchValue(addAddress)
       this.changeState(this.mailingAddressForm.value.state, 'cms')
     } else {
       let addresEmpty = {
