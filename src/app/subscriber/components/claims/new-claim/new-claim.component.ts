@@ -263,7 +263,7 @@ export class NewClaimComponent implements OnInit {
             this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.primary_language_spoken = claimant.data[0].primary_language_spoken ? true : false;
-            this.changeState(claimant.data[0].state, 'claimant',claimant.data[0].state_code);
+            this.changeState(claimant.data[0].state, 'claimant', claimant.data[0].state_code);
             console.log("claimant state", claimant.data[0].state)
             this.claimant.patchValue(claimant.data[0])
             this.isclaimantfill = true;
@@ -1035,89 +1035,90 @@ export class NewClaimComponent implements OnInit {
       this.claimantChanges = false;
       let data = this.claimant.value;
       data['certified_interpreter_required'] = this.languageStatus;
-      data['date_of_birth'] = new Date(this.claimant.value.date_of_birth).toDateString();
-      if (!this.isClaimantEdit) {
-        this.claimService.createClaimant(this.claimant.value).subscribe(res => {
-          this.claimant_id = res.data.id;
-          this.alertService.openSnackBar(res.message, "success");
-          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
-          // this.claimant.patchValue({
-          //   id: res.data.id
-          // })
-          this.claim.patchValue({
-            claim_details: {
-              claimant_id: res.data.id,
-              claimant_name: this.claimantDetails.claimant_name,
-              date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
-            }
-          });
-          this.billable_item.patchValue({
-            claimant_id: res.data.id,
-            claim_details: {
-              claimant_id: res.data.id,
-              claimant_name: this.claimantDetails.claimant_name,
-              date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
-            }
-          })
-          this.isClaimantCreated = true;
-          this.isClaimantEdit = true;
-          this.claimantChanges = false;
-          if (status == 'next') {
-            this.logger.log("check")
+      // data['date_of_birth'] = new Date(this.claimant.value.date_of_birth).toDateString();
+      console.log(data)
+      // if (!this.isClaimantEdit) {
+      //   this.claimService.createClaimant(this.claimant.value).subscribe(res => {
+      //     this.claimant_id = res.data.id;
+      //     this.alertService.openSnackBar(res.message, "success");
+      //     this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
+      //     // this.claimant.patchValue({
+      //     //   id: res.data.id
+      //     // })
+      //     this.claim.patchValue({
+      //       claim_details: {
+      //         claimant_id: res.data.id,
+      //         claimant_name: this.claimantDetails.claimant_name,
+      //         date_of_birth: res.data.date_of_birth,
+      //         phone_no_1: res.data.phone_no_1
+      //       }
+      //     });
+      //     this.billable_item.patchValue({
+      //       claimant_id: res.data.id,
+      //       claim_details: {
+      //         claimant_id: res.data.id,
+      //         claimant_name: this.claimantDetails.claimant_name,
+      //         date_of_birth: res.data.date_of_birth,
+      //         phone_no_1: res.data.phone_no_1
+      //       }
+      //     })
+      //     this.isClaimantCreated = true;
+      //     this.isClaimantEdit = true;
+      //     this.claimantChanges = false;
+      //     if (status == 'next') {
+      //       this.logger.log("check")
 
-            this.stepper.next();
-          } else if (status == 'save') {
-            this.routeDashboard();
-          } else if (status == 'close') {
-            this.routeDashboard();
-          }
+      //       this.stepper.next();
+      //     } else if (status == 'save') {
+      //       this.routeDashboard();
+      //     } else if (status == 'close') {
+      //       this.routeDashboard();
+      //     }
 
-        }, error => {
-          this.logger.log(error)
-          this.isClaimantCreated = false;
-          this.alertService.openSnackBar(error.error.message, 'error');
-          this.stepper.previous();
-        })
-      } else {
-        let data = this.claimant.value;
-        data['id'] = this.claimant_id;
-        if (this.claimantChanges)
-          this.logger.log("update")
-        this.claimService.updateClaimant(data).subscribe(res => {
-          this.alertService.openSnackBar(res.message, "success");
-          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
-          this.claimantChanges = false;
-          this.claim.patchValue({
-            claim_details: {
-              claimant_name: this.claimantDetails.claimant_name,
-              date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
-            }
-          });
-          this.billable_item.patchValue({
-            claimant_id: res.data.id,
-            claim_details: {
-              claimant_id: res.data.id,
-              claimant_name: this.claimantDetails.claimant_name,
-              date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
-            }
-          })
-          if (status == 'next') {
-            this.stepper.next();
-          } else if (status == 'save') {
-            this.routeDashboard();
-          } else if (status == 'close') {
-            this.routeDashboard();
-          }
-        }, error => {
-          this.isClaimantCreated = false;
-          this.alertService.openSnackBar(error.error.message, 'error');
-          this.stepper.previous();
-        })
-      }
+      //   }, error => {
+      //     this.logger.log(error)
+      //     this.isClaimantCreated = false;
+      //     this.alertService.openSnackBar(error.error.message, 'error');
+      //     this.stepper.previous();
+      //   })
+      // } else {
+      //   let data = this.claimant.value;
+      //   data['id'] = this.claimant_id;
+      //   if (this.claimantChanges)
+      //     this.logger.log("update")
+      //   this.claimService.updateClaimant(data).subscribe(res => {
+      //     this.alertService.openSnackBar(res.message, "success");
+      //     this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
+      //     this.claimantChanges = false;
+      //     this.claim.patchValue({
+      //       claim_details: {
+      //         claimant_name: this.claimantDetails.claimant_name,
+      //         date_of_birth: res.data.date_of_birth,
+      //         phone_no_1: res.data.phone_no_1
+      //       }
+      //     });
+      //     this.billable_item.patchValue({
+      //       claimant_id: res.data.id,
+      //       claim_details: {
+      //         claimant_id: res.data.id,
+      //         claimant_name: this.claimantDetails.claimant_name,
+      //         date_of_birth: res.data.date_of_birth,
+      //         phone_no_1: res.data.phone_no_1
+      //       }
+      //     })
+      //     if (status == 'next') {
+      //       this.stepper.next();
+      //     } else if (status == 'save') {
+      //       this.routeDashboard();
+      //     } else if (status == 'close') {
+      //       this.routeDashboard();
+      //     }
+      //   }, error => {
+      //     this.isClaimantCreated = false;
+      //     this.alertService.openSnackBar(error.error.message, 'error');
+      //     this.stepper.previous();
+      //   })
+      // }
     } else {
       if (this.claimant.invalid) {
         return;

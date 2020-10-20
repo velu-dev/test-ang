@@ -1,12 +1,12 @@
 <div class="app-calendar">
     <mat-form-field *ngIf="roleId != 11">
         <mat-label>Select Examiner</mat-label>
-        <mat-select [(ngModel)]="examinerId">
+        <mat-select [(value)]="examinerId">
             <mat-option (click)="selectExaminer()" [value]="0">
                 All
             </mat-option>
             <mat-option *ngFor="let examinar of examinars; let i=index" (click)="selectExaminer(examinar.id)"
-                [value]="examinar.id">
+                value="{{examinar.id}}">
                 {{examinar?.first_name + " " + examinar?.last_name + " "+ examinar?.middle_name}},
                 {{examinar?.suffix}}
             </mat-option>

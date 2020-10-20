@@ -41,6 +41,14 @@ export class ExaminationCalanderViewComponent implements OnInit {
       myCustomButton: {
         text: "Select Date",
         click: () => this.intake.open()
+      },
+      prev: {
+        text: '<',
+        click: this.calendarPrev.bind(this)
+      },
+      next: {
+        text: '>',
+        click: this.calendarNext.bind(this)
       }
     },
     header: {
@@ -125,51 +133,51 @@ export class ExaminationCalanderViewComponent implements OnInit {
     })
   }
   ngOnInit() {
-    // this.calendarDef = this.calendar.getApi();
+
   }
   ngAfterViewInit() {
-    let el1 = this.elementRef.nativeElement.querySelector(('[aria-label="prev"]'))
-    if (el1)
-      el1.addEventListener('click', this.calendarPrev.bind(this));
-    let el2 = this.elementRef.nativeElement.querySelector(('[aria-label="next"]'))
-    if (el2)
-      el2.addEventListener('click', this.calendarNext.bind(this));
+    // let el1 = this.elementRef.nativeElement.querySelector(('[aria-label="prev"]'))
+    // if (el1)
+    //   el1.addEventListener('click', this.calendarPrev.bind(this));
+    // let el2 = this.elementRef.nativeElement.querySelector(('[aria-label="next"]'))
+    // if (el2)
+    //   el2.addEventListener('click', this.calendarNext.bind(this));
   }
 
   calendarPrev(event?) {
-    console.log("Prev");
-    // let date = this.calendar.getApi().getDate();
-    // let currentMonth = moment(date).month() + 1;
-    // if (currentMonth == 12) {
-    //   this.months = [currentMonth - 1, currentMonth, 1];
-    // } else if (currentMonth == 1) {
-    //   this.months = [currentMonth, currentMonth + 1];
-    // } else {
-    //   this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
-    // }
-    // if (this.examinerId) {
-    //   this.selectExaminer(this.examinerId, false);
-    // } else {
-    //   this.loadAllEvents();
-    // }
+    this.calendar.getApi().prev();
+    let date = this.calendar.getApi().getDate();
+    let currentMonth = moment(date).month() + 1;
+    if (currentMonth == 12) {
+      this.months = [currentMonth - 1, currentMonth, 1];
+    } else if (currentMonth == 1) {
+      this.months = [currentMonth, currentMonth + 1];
+    } else {
+      this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
+    }
+    if (this.examinerId) {
+      this.selectExaminer(this.examinerId, false);
+    } else {
+      this.loadAllEvents();
+    }
   }
-  calendarNext(event) {
-    console.log("Next")
-    // let date = this.calendar.getApi().getDate();
-    // let currentMonth = moment(date).month() + 1;
+  calendarNext(event?) {
+    this.calendar.getApi().next();
+    let date = this.calendar.getApi().getDate();
+    let currentMonth = moment(date).month() + 1;
 
-    // if (currentMonth == 12) {
-    //   this.months = [currentMonth - 1, currentMonth, 1];
-    // } else if (currentMonth == 1) {
-    //   this.months = [currentMonth, currentMonth + 1];
-    // } else {
-    //   this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
-    // }
-    // if (this.examinerId) {
-    //   this.selectExaminer(this.examinerId, false);
-    // } else {
-    //   this.loadAllEvents();
-    // }
+    if (currentMonth == 12) {
+      this.months = [currentMonth - 1, currentMonth, 1];
+    } else if (currentMonth == 1) {
+      this.months = [currentMonth, currentMonth + 1];
+    } else {
+      this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
+    }
+    if (this.examinerId) {
+      this.selectExaminer(this.examinerId, false);
+    } else {
+      this.loadAllEvents();
+    }
   }
   loadAllEvents() {
     this.examinarService.getCalendarEvent(this.months).subscribe(event => {
