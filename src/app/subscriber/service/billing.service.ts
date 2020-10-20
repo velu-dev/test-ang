@@ -98,4 +98,9 @@ export class BillingService {
   downloadOndemandDocuments(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.getSignedURL, data)
   }
+
+  postBillingCompleteDoc(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.postBillingComplete, data)
+  }
+
 }
