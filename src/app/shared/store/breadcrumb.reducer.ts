@@ -18,7 +18,6 @@ export function breadcrumbreducer(
   // console.log(state, action)
   switch (action['type']) {
     case breadcrumActions.BreadcrumActions.LIST: {
-      console.log("log state", state)
       return {
         ...state
       }

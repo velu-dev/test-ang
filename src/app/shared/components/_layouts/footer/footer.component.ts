@@ -8,8 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class FooterComponent implements OnInit {
   @Input('footerFrom') footerFrom;
   constructor() {
-    console.log(this.footerFrom)
-   }
+  }
 
   ngOnInit() {
   }

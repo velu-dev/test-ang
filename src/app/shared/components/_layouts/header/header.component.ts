@@ -190,7 +190,6 @@ export class HeaderComponent implements OnInit {
   }
 
   getRole(role) {
-    console.log("role", role);
     switch (role) {
       case 1:
         return 'Admin';

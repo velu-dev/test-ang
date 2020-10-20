@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ElementRef } from '@angular/core';
 import { FullCalendarComponent } from "@fullcalendar/angular";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import timeGrigPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { EventInput } from '@fullcalendar/core';
+import { EventInput, memoize } from '@fullcalendar/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ExaminerService } from '../../service/examiner.service';
@@ -55,7 +55,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
         // other view-specific options here
       },
       dayGrid: {
-        eventLimit: 3 // adjust to 6 only for timeGridWeek/timeGridDay
+        eventLimit: 4 // adjust to 6 only for timeGridWeek/timeGridDay
       }
     },
     plugins: [dayGridPlugin, interactionPlugin, timeGrigPlugin, bootstrapPlugin]
@@ -72,14 +72,21 @@ export class ExaminationCalanderViewComponent implements OnInit {
   selectedDate = "";
   examinars = [];
   roleId: any;
-  examinerId: any;
+  examinerId: any = 0;
   appointmentId: any;
   calendar_examination_status = [];
   deposition_status = [];
   months = [];
-  constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService) {
+  calendarDef: any;
+  constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
     let currentMonth = moment().month() + 1;
-    this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
+    if (currentMonth == 12) {
+      this.months = [currentMonth - 1, currentMonth, 1];
+    } else if (currentMonth == 1) {
+      this.months = [currentMonth, currentMonth + 1];
+    } else {
+      this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
+    }
     ['deposition_status', 'calendar_examination_status'].map(seed => {
       this.examinarService.seedData(seed).subscribe(curres => {
         if (seed == 'deposition_status') {
@@ -92,9 +99,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     })
     this.examinarService.getExaminerList().subscribe(res => {
       this.examinars = res.data;
-
       this.route.params.subscribe(param => {
-        console.log(param)
         if (param.examiner_id) {
           this.examinerId = param.examiner_id;
           this.appointmentId = param.billId
@@ -119,13 +124,55 @@ export class ExaminationCalanderViewComponent implements OnInit {
     })
   }
   ngOnInit() {
-    // this.calendar.getApi().trigger
+    // this.calendarDef = this.calendar.getApi();
+  }
+  ngAfterViewInit() {
+    // let el1 = this.elementRef.nativeElement.querySelector(('[aria-label="prev"]'))
+    // if (el1)
+    //   el1.addEventListener('click', this.calendarPrev.bind(this));
+    // let el2 = this.elementRef.nativeElement.querySelector(('[aria-label="next"]'))
+    // if (el2)
+    //   el2.addEventListener('click', this.calendarNext.bind(this));
+  }
+
+  calendarPrev(event?) {
+    // console.log("dsfdsfdsfsf");
+    // let date = this.calendar.getApi().getDate();
+    // let currentMonth = moment(date).month() + 1;
+    // if (currentMonth == 12) {
+    //   this.months = [currentMonth - 1, currentMonth, 1];
+    // } else if (currentMonth == 1) {
+    //   this.months = [currentMonth, currentMonth + 1];
+    // } else {
+    //   this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
+    // }
+    // if (this.examinerId) {
+    //   this.selectExaminer(this.examinerId, false);
+    // } else {
+    //   this.loadAllEvents();
+    // }
+  }
+  calendarNext(event) {
+    // let date = this.calendar.getApi().getDate();
+    // let currentMonth = moment(date).month() + 1;
+
+    // if (currentMonth == 12) {
+    //   this.months = [currentMonth - 1, currentMonth, 1];
+    // } else if (currentMonth == 1) {
+    //   this.months = [currentMonth, currentMonth + 1];
+    // } else {
+    //   this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
+    // }
+    // if (this.examinerId) {
+    //   this.selectExaminer(this.examinerId, false);
+    // } else {
+    //   this.loadAllEvents();
+    // }
   }
   loadAllEvents() {
     this.examinarService.getCalendarEvent(this.months).subscribe(event => {
       this.calendarEvents = event.data;
     }, error => {
-      console.log("error", error.error.message);
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
@@ -153,7 +200,6 @@ export class ExaminationCalanderViewComponent implements OnInit {
     // this.openAddEventDialog(e);
   }
   dateChanged() {
-    console.log("fdfdsffs", new Date(this.selectedDate))
     this.calendar.getApi().gotoDate(new Date(this.selectedDate))
     this.calendar.getApi().changeView("timeGridDay");
   }
@@ -171,6 +217,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log(result)
         if (result.isChange) {
           if (this.examinerId) {
             this.selectExaminer(this.examinerId, false);
@@ -382,6 +429,7 @@ export class EventdetailDialog {
     this.isEdit = false;
   }
   onNoClick(): void {
+    console.log(this.isUpdated)
     this.eventDetail['isChange'] = this.isUpdated;
     this.dialogRef.close(this.eventDetail);
   }
