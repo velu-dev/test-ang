@@ -534,14 +534,19 @@ export class BilllableBillingComponent implements OnInit {
   }
   icdExpandID: any;
   expandId1: any;
-  expandId2: any;
+  expandId2: any = -1;
   expandIdDoc: any;
   openElement(element) {
     if (this.isMobile) {
       this.icdExpandID = element.id;
     }
+
+  }
+
+  openElementBill(element) {
+    console.log(element);
     if (this.isMobile) {
-      this.expandId2 = element.id;
+      this.expandId2 = element;
     }
   }
 
@@ -578,7 +583,7 @@ export class BilllableBillingComponent implements OnInit {
   selectedFile: File;
   formData = new FormData()
   errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-  addFile(event) {
+  addFile(event, status?) {
     this.selectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
 
@@ -601,6 +606,9 @@ export class BilllableBillingComponent implements OnInit {
       this.errors.doc_type.error = "";
       this.file = event.target.files[0].name;
       this.selectedFile = event.target.files[0];
+      if (status) {
+        this.uploadFile(status)
+      }
     } else {
       this.selectedFile = null;
       this.errors.file.isError = true;
@@ -608,7 +616,7 @@ export class BilllableBillingComponent implements OnInit {
     }
 
   }
-  uploadFile() {
+  uploadFile(status?) {
     if (!this.selectedFile) {
       this.errors.file.isError = true;
       this.errors.file.error = "Please select file";
@@ -624,7 +632,12 @@ export class BilllableBillingComponent implements OnInit {
       this.documentType = null;
       this.formData = new FormData();
       this.file = "";
-      this.getDocumentData();
+      if (status) {
+        this.getBillDocument();
+      } else {
+        this.getDocumentData();
+      }
+
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
       this.alertService.openSnackBar("File added successfully!", 'success');
     }, error => {
@@ -633,9 +646,13 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  download(data) {
-    saveAs(data.exam_report_file_url, data.file_name, '_self');
-    this.alertService.openSnackBar("File downloaded successfully", "success");
+  download(element) {
+    // saveAs(data.exam_report_file_url, data.file_name, '_self');
+    // this.alertService.openSnackBar("File downloaded successfully", "success");
+    this.billingService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.file_name);
+    })
   }
 
   downloadDocumet(element) {
@@ -680,11 +697,11 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  deleteDocument(data) {
-    this.openDialogDocument('delete', data);
+  deleteDocument(data, status) {
+    this.openDialogDocument('delete', data, status);
   }
 
-  openDialogDocument(dialogue, data) {
+  openDialogDocument(dialogue, data, status) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
       data: { name: dialogue, address: true }
@@ -692,7 +709,12 @@ export class BilllableBillingComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.billingService.deleteDocument(data.id).subscribe(res => {
-          this.getDocumentData();
+          if (status) {
+            this.getBillDocument();
+          } else {
+            this.getDocumentData();
+          }
+
           this.alertService.openSnackBar("File deleted successfully!", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
@@ -961,6 +983,46 @@ export class BilllableBillingComponent implements OnInit {
 
   inOutdownload(data) {
     saveAs(data.file_url, data.file_name, '_self');
+  }
+
+  docSelectedFile: File;
+  docFormData = new FormData()
+  docErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+  addCompleteDoc(event, pid) {
+    this.docSelectedFile = null;
+    let fileTypes = ['pdf', 'doc', 'docx', 'png', 'jpeg', 'jpg', 'xls', 'xlsx', 'csv'];
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+      if (FileSize > 30) {
+        this.docErrors.file.isError = true;
+        this.docErrors.file.error = "This file too long";
+        return;
+      }
+      this.docErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+      this.docErrors.doc_type.error = "";
+      this.file = event.target.files[0].name;
+      this.docSelectedFile = event.target.files[0];
+      this.BillingCompleteDocSubmit(pid)
+    } else {
+      this.docSelectedFile = null;
+      this.docErrors.file.isError = true;
+      this.docErrors.file.error = "This file type is not accepted";
+    }
+
+  }
+
+  BillingCompleteDocSubmit(pid) {
+    this.docFormData = new FormData()
+    this.docFormData.append('file', this.docSelectedFile);
+    this.docFormData.append('partial_document_id', pid);
+    this.docFormData.append('claim_id', this.paramsId.claim_id.toString());
+    this.docFormData.append('bill_item_id', this.paramsId.billId.toString());
+    this.billingService.postBillingCompleteDoc(this.docFormData).subscribe(doc => {
+      this.alertService.openSnackBar("File added successfully!", 'success');
+      this.getBillDocument();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
+    })
   }
 }
 const ELEMENT_DATA1 = [

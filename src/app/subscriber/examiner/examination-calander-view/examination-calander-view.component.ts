@@ -117,6 +117,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   getSingleEvent() {
     this.examinarService.getSingleEvent(this.examinerId, this.appointmentId).subscribe(res => {
       this.selectedDate = res.data.start;
+      this.openEventDetailDialog({ event: res.data })
       this.dateChanged()
     }, error => {
       this.calendarEvents = [];
@@ -127,16 +128,16 @@ export class ExaminationCalanderViewComponent implements OnInit {
     // this.calendarDef = this.calendar.getApi();
   }
   ngAfterViewInit() {
-    // let el1 = this.elementRef.nativeElement.querySelector(('[aria-label="prev"]'))
-    // if (el1)
-    //   el1.addEventListener('click', this.calendarPrev.bind(this));
-    // let el2 = this.elementRef.nativeElement.querySelector(('[aria-label="next"]'))
-    // if (el2)
-    //   el2.addEventListener('click', this.calendarNext.bind(this));
+    let el1 = this.elementRef.nativeElement.querySelector(('[aria-label="prev"]'))
+    if (el1)
+      el1.addEventListener('click', this.calendarPrev.bind(this));
+    let el2 = this.elementRef.nativeElement.querySelector(('[aria-label="next"]'))
+    if (el2)
+      el2.addEventListener('click', this.calendarNext.bind(this));
   }
 
   calendarPrev(event?) {
-    // console.log("dsfdsfdsfsf");
+    console.log("Prev");
     // let date = this.calendar.getApi().getDate();
     // let currentMonth = moment(date).month() + 1;
     // if (currentMonth == 12) {
@@ -153,6 +154,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     // }
   }
   calendarNext(event) {
+    console.log("Next")
     // let date = this.calendar.getApi().getDate();
     // let currentMonth = moment(date).month() + 1;
 
@@ -359,7 +361,6 @@ export class EventdetailDialog {
   }
   getExaminationStatus(data) {
     this.examinationStatus.map(res => {
-      console.log(res.examination_status, data.status)
       if (res[this.statusName] == data.status) {
         console.log("tes")
         this.examination_status = res.id;
@@ -394,19 +395,20 @@ export class EventdetailDialog {
     let data = {
       id: this.event['appointment_id'],
       examination_status: this.examination_status,
-      examination_notes: this.examination_notes
+      notes: this.examination_notes
     }
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
+      console.log("issue in cor", res)
       this.isUpdated = true;
       this.examinationStatus.map(exam => {
+        console.log(exam)
         if (exam.id == res.data.examination_status) {
           Object.getOwnPropertyDescriptor(this.eventDetail.extendedProps.status, exam.examination_status);
-          this.status = exam.examination_status;
-          this.examination_status = exam.id;
-          this.eventStatusID = exam.examination_status;
-          this.eventStatus = exam.examination_status;
+          this.status = exam[this.statusName];
+          this.eventStatus = exam[this.statusName];
         }
       })
+      this.eventStatusID = res.data.examination_status;
       this.eventNotes = res.data.examination_notes;
       this.examination_status = res.data.examination_status;
       this.examination_notes = res.data.examination_notes;
@@ -414,6 +416,7 @@ export class EventdetailDialog {
       this.isEdit = false;
       this.selectedEventColor = this.eventColor;
       this.eventDetail.backgroundColor = this.eventColor;
+      this.alertService.openSnackBar(res.message, 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
