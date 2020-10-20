@@ -12,31 +12,37 @@
             box-shadow: $shadow-style-one-hover;
         }
         mat-card-header {
-            padding: 10px 10px 0 10px;
+            padding: 10px 5px 0 10px;
             background-color: $active;
             color: $white;
             .content-wrapper-main-title {
                 color: $white;
                 font-weight: $font-weight-base;
                 font-size: $font-size-1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             mat-icon {
                 cursor: pointer;
             }
         }
         mat-card-content {
-            .heading-one{
+            .heading-one {
                 padding: 25px 5px;
                 width: $width-100;
                 text-align: center;
-                font-size: $font-size-1;
+                font-size: $font-size-10;
                 span {
                     width: 100%;
                     display: block;
-                    font-size:$font-size-h2;
+                    font-size: $font-size-h2;
                 }
             }
-
+            .separation {
+                content: "";
+                border-right: 1px solid $light-color;
+            }
         }
     }
 }
