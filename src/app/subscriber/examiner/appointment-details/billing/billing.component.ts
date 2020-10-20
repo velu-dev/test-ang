@@ -697,11 +697,11 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  deleteDocument(data, status) {
+  deleteDocument(data, status?) {
     this.openDialogDocument('delete', data, status);
   }
 
-  openDialogDocument(dialogue, data, status) {
+  openDialogDocument(dialogue, data, status?) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
       data: { name: dialogue, address: true }
