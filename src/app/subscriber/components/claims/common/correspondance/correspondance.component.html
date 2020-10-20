@@ -61,11 +61,10 @@
         <app-nodata *ngIf="correspondenceSource?.filteredData?.length == 0"></app-nodata>
 
     </div> -->
-    <div class="user-detail  vertical-fixed m-t-5">
-        <table mat-table [dataSource]="correspondenceSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
-            matSort>
+    <div class="user-detail  vertical-fixed default-cursor m-t-5">
+        <table mat-table [dataSource]="correspondenceSource" multiTemplateDataRows class="mat-elevation-z8 user-table">
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+                <th mat-header-cell *matHeaderCellDef>
                     {{columnName[i]}} </th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="i == 0 && isMobile">
