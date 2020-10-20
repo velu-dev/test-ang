@@ -28,6 +28,34 @@
     height: 50px !important;
   }
 }
+// ==================================
+// Default cursor styles ============
+// ==================================
+.default-cursor {
+  table {
+    thead {
+      tr {
+        th {
+          &:hover {
+            cursor: auto !important;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          &:hover {
+            cursor: auto !important;
+          }
+          a {
+            cursor: pointer !important;
+          }
+        }
+      }
+    }
+  }
+}
 
 // ==================================
 // Table Responsive styles   ========
@@ -120,7 +148,7 @@ tr.detail-row {
 }
 
 // ==================================
-// Basic Details   ========
+// Basic Details   ==================
 // ==================================
 
 .basic-table.document_list,

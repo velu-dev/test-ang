@@ -720,7 +720,16 @@ input:-webkit-autofill {
 
 .cdk-overlay-pane {
   @media only screen and (max-width: 568px) {
-  max-width: 90vw !important;
+    max-width: 90vw !important;
+  }
+}
+
+.searchable-dropdown {
+  font-size: $font-size-1;
+  ::ng-deep {
+    .mat-select-panel .mat-optgroup-label, .mat-select-panel .mat-option {
+      height: 7em !important;
+    }
   }
 }
 // Safari browser Form fields disabled label color
@@ -931,7 +940,7 @@ input:-webkit-autofill {
     max-height: 80vh;
     overflow-y: auto;
     overflow-x: hidden;
-    @media only screen and (max-width: 568px) { 
+    @media only screen and (max-width: 568px) {
       max-height: 60vh;
     }
     button.filled-gray {
@@ -973,7 +982,7 @@ input:-webkit-autofill {
     max-height: 80vh;
     overflow-y: auto;
     overflow-x: hidden;
-    @media only screen and (max-width: 568px) { 
+    @media only screen and (max-width: 568px) {
       max-height: 60vh;
     }
     mat-form-field {
@@ -1062,9 +1071,9 @@ input:-webkit-autofill {
       font-size: $font-size-1;
       color: $text-gray;
       @media only screen and (max-width: 568px) {
-      min-width: 110px;
-      width: 100%;
-      max-width: 110px;
+        min-width: 110px;
+        width: 100%;
+        max-width: 110px;
       }
       &::after {
         content: ":";

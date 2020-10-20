@@ -1,1 +1,42 @@
 @import "variables";
+
+.exam-dashboard {
+    padding: 5px;
+    mat-card {
+        padding: 0px;
+        box-shadow: $shadow-style-one !important;
+        background-color: $white;
+        // border: 1px solid $gray;
+        // box-shadow: none;
+        &:hover {
+            box-shadow: $shadow-style-one-hover;
+        }
+        mat-card-header {
+            padding: 10px 10px 0 10px;
+            background-color: $active;
+            color: $white;
+            .content-wrapper-main-title {
+                color: $white;
+                font-weight: $font-weight-base;
+                font-size: $font-size-1;
+            }
+            mat-icon {
+                cursor: pointer;
+            }
+        }
+        mat-card-content {
+            .heading-one{
+                padding: 25px 5px;
+                width: $width-100;
+                text-align: center;
+                font-size: $font-size-1;
+                span {
+                    width: 100%;
+                    display: block;
+                    font-size:$font-size-h2;
+                }
+            }
+
+        }
+    }
+}
