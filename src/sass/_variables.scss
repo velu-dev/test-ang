@@ -910,10 +910,17 @@ input:-webkit-autofill {
 .text-danger {
   color: $danger;
 }
+
+.text-primary {
+  color: $primary;
+}
+
+.text-secondary {
+  color: $secondary;
+}
 .text-ternary {
   color: $ternary;
 }
-
 // Common font family
 .mat-toolbar,
 .mat-toolbar h1,
