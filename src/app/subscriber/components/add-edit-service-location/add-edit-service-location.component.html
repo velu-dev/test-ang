@@ -167,15 +167,15 @@
 
             </form>
         </div>
+       <div class="default-cursor">
         <table mat-table [dataSource]="dataSource" class="user-table w-100" *ngIf="locationId">
-            <!-- Position Column -->
+
             <ng-container matColumnDef="examiner">
                 <th mat-header-cell *matHeaderCellDef>Examiner </th>
                 <td mat-cell *matCellDef="let element"> {{element?.last_name}}
                     {{element?.first_name}}{{element?.suffix ? ', '+element?.suffix : ''}} </td>
             </ng-container>
 
-            <!-- Name Column -->
             <ng-container matColumnDef="date_added">
                 <th mat-header-cell *matHeaderCellDef> Date Added </th>
                 <td mat-cell *matCellDef="let element"> {{element.date_added | date:'MM-dd-yyyy'}} </td>
@@ -186,5 +186,6 @@
             </tr>
         </table>
         <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
+       </div>
     </mat-card-content>
 </mat-card>

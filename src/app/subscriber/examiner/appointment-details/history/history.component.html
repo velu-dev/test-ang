@@ -23,7 +23,7 @@
         <div fxFlex="100">
           <div class="main-title">View Completed Medical History Questionnaire  <span class="info ondemand-info m-l-10" matTooltipPosition="above" matTooltip="The completed Medical History Questionnaire will be available for download from this table."><i class="fa fa-info" aria-hidden="true"></i></span></div>
           <p class="description">Completed document table. </p>
-          <div class="user-detail vertical-fixed">
+          <div class="user-detail vertical-fixed default-cursor">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
               <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">

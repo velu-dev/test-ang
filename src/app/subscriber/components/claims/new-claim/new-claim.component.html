@@ -361,7 +361,7 @@
                     <mat-divider></mat-divider>
                     <mat-card-content class="m-t-15 p-b-15">
                         <div fxLayout="row wrap" fxFlex="100">
-                            <div class="user-table vertical-fixed" fxFlex="100">
+                            <div class="user-table vertical-fixed default-cursor striped_" fxFlex="100">
                                 <table mat-table [dataSource]="dataSource" class="w-100">
                                     <!-- body_parts Column -->
                                     <ng-container matColumnDef="body_part_id">
@@ -435,7 +435,7 @@
                                 </div>
                             </div>
                             <div fxFlex="100" class="m-t-20">
-                                <div class="basic-table document_list w-100 vertical-fixed">
+                                <div class="basic-table document_list w-100 vertical-fixed default-cursor">
                                     <table mat-table [dataSource]="correspondenceSource">
 
                                         <ng-container matColumnDef="doc_image">

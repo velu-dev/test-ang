@@ -136,7 +136,7 @@
                     </button> -->
                 </div>
                 <div fxLayout="row wrap">
-                    <div class="user-detail vertical-fixed">
+                    <div class="user-detail vertical-fixed default-cursor">
                         <table mat-table [dataSource]="IcdDataSource" multiTemplateDataRows
                             class="mat-elevation-z8 user-table" matSort>
                             <ng-container matColumnDef="{{column}}"
@@ -649,7 +649,7 @@
                         <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5" (click)="uploader.click()"><i
                                 class="fa fa-file-medical p-r-10" ></i> Add Custom Document</button>
                     </div>
-                    <div class="user-detail vertical-fixed" fxFlex="100">
+                    <div class="user-detail vertical-fixed default-cursor" fxFlex="100">
                         <table mat-table [dataSource]="documentsData" multiTemplateDataRows
                             class="mat-elevation-z8 user-table">
                             <ng-container matColumnDef="{{column}}"
@@ -787,7 +787,7 @@
                             documents, the date
                             that the actions were performed and the document recipients.</p>
                     </div>
-                    <div class="user-detail vertical-fixed" fxFlex="100">
+                    <div class="user-detail vertical-fixed default-cursor" fxFlex="100">
                         <table mat-table [dataSource]="dataSourceDocList" multiTemplateDataRows
                             class="mat-elevation-z8 user-table">
                             <ng-container matColumnDef="{{column}}"
