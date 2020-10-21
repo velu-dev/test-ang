@@ -1084,8 +1084,6 @@ export class BillingPaymentDialog {
       is_interest_paid: [false],
       interest_paid: [null, Validators.compose([Validators.min(0)])],
       is_bill_closed: [false],
-      write_off_reason: [null],
-      eor_allowance: [null, Validators.compose([Validators.min(0)])],
       post_payment_eor_ids: [this.eorDocumentIds]
     })
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
@@ -1096,8 +1094,23 @@ export class BillingPaymentDialog {
       this.billingService.getPostPayment(data.id).subscribe(pay => {
         this.paymentDetails = pay.data;
         console.log(this.paymentDetails.post_payment_eor_details, "paymentDetails")
-        this.paymentDetails.post_payment_eor_details.map(data => {
-
+        this.paymentDetails.post_payment_eor_details.map((data, index) => {
+          this.addRow();
+          let details = {
+            post_payment_id: data.id,
+            write_off_reason: data.write_off_reason,
+            eor_allowance: data.eor_allowance,
+            claim_id: this.data.claimId,
+            billable_item_id: this.data.billableId,
+            isEditable: [true],
+            file: null,
+            file_name: data.file_name,
+            url: data.exam_report_file_url
+          }
+          this.getFormControls.controls[index].patchValue(details)
+          if (this.getFormControls.controls[index].status == "VALID") {
+            this.getFormControls.controls[index].get('isEditable').setValue(false);
+          }
         })
         pay.data.payment_amount = pay.data.payment_amount ? parseFloat(pay.data.payment_amount).toFixed(2) : pay.data.payment_amount;
         pay.data.interest_paid = pay.data.interest_paid ? parseFloat(pay.data.interest_paid).toFixed(2) : pay.data.interest_paid;
@@ -1223,16 +1236,17 @@ export class BillingPaymentDialog {
   }
 
   //'item', 'procedure_code', 'modifier', 'units', 'charge', 'payment', 'balance', 'action'
-  initiateForm(file): FormGroup {
+  initiateForm(): FormGroup {
     return this.fb.group({
       post_payment_id: [''],
-      write_off_reason: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      write_off_reason: ['', Validators.compose([Validators.required])],
       eor_allowance: ['', Validators.compose([Validators.required, Validators.min(0)])],
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
       isEditable: [true],
-      file: file,
-      file_name: file.name
+      file: null,
+      file_name: null,
+      url: null
     });
   }
 
@@ -1255,16 +1269,21 @@ export class BillingPaymentDialog {
 
       this.file = event.target.files[0].name;
       this.selectedFile = event.target.files[0];
-      this.addRow(event.target.files[0])
+      this.addRow();
+      let file = {
+        file: event.target.files[0],
+        file_name: event.target.files[0].name
+      }
+      this.getFormControls.controls[this.getFormControls.controls.length - 1].patchValue(file)
     } else {
       this.selectedFile = null;
       this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
     }
   }
 
-  addRow(file, status?: number) {
+  addRow() {
     const control = this.userTable.get('tableRows') as FormArray;
-    control.push(this.initiateForm(file));
+    control.push(this.initiateForm());
   }
 
   formEOR = new FormData();
