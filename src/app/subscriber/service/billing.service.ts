@@ -103,4 +103,7 @@ export class BillingService {
     return this.http.post(environment.baseUrl + api_endpoint.postBillingComplete, data)
   }
 
+  postPaymentFileAdd(billID, form): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.postPaymentFileAdd + billID, form)
+  }
 }

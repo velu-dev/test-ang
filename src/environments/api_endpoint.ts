@@ -173,6 +173,7 @@ export const api_endpoint = {
     getBillRecipient: 'billing/custom-recipient/',
     getBillDocument: 'billing/exam-procedure-type-documents/',
     postBillingComplete: 'billing/complete-document-upload',
+    postPaymentFileAdd: 'billing/post-payment-eor/',
 
     //Calendar 
 
