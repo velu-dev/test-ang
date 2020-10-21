@@ -113,7 +113,6 @@ export class ExaminationCalanderViewComponent implements OnInit {
           this.appointmentId = param.billId
           if (this.examinerId)
             this.getSingleEvent();
-          this.selectExaminer(this.examinerId, false);
         } else {
           this.loadAllEvents();
         }
@@ -125,6 +124,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   getSingleEvent() {
     this.examinarService.getSingleEvent(this.examinerId, this.appointmentId).subscribe(res => {
       this.selectedDate = res.data.start;
+      this.selectExaminer(this.examinerId, false);
       this.openEventDetailDialog({ event: res.data })
       this.dateChanged()
     }, error => {
@@ -134,6 +134,11 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
   ngOnInit() {
 
+  }
+  examinername(examiner) {
+    let middle_name = examiner.middle_name ? " " + examiner.middle_name : "";
+    let suffix = examiner.suffix ? ", " + examiner.suffix : "";
+    return examiner.first_name + " " + examiner.last_name + middle_name + suffix
   }
   ngAfterViewInit() {
     // let el1 = this.elementRef.nativeElement.querySelector(('[aria-label="prev"]'))
@@ -187,6 +192,15 @@ export class ExaminationCalanderViewComponent implements OnInit {
     })
   }
   selectExaminer(examiner?, status?) {
+    let date = this.selectedDate
+    let currentMonth = moment(date).month() + 1;
+    if (currentMonth == 12) {
+      this.months = [currentMonth - 1, currentMonth, 1];
+    } else if (currentMonth == 1) {
+      this.months = [currentMonth, currentMonth + 1];
+    } else {
+      this.months = [currentMonth - 1, currentMonth, currentMonth + 1];
+    }
     if (status)
       this.calendar.getApi().removeAllEvents();
     if (examiner) {

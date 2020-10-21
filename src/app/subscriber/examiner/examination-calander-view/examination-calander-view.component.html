@@ -7,8 +7,7 @@
             </mat-option>
             <mat-option *ngFor="let examinar of examinars; let i=index" (click)="selectExaminer(examinar.id)"
                 value="{{examinar.id}}">
-                {{examinar?.first_name + " " + examinar?.last_name + " "+ examinar?.middle_name}},
-                {{examinar?.suffix}}
+                {{examinername(examinar)}}
             </mat-option>
         </mat-select>
     </mat-form-field>
@@ -18,7 +17,7 @@
         (afterPickerClosed)="dateChanged()" #intake>
     </owl-date-time>
     <div style="height:100%">
-        <full-calendar #calendar *ngIf="options" [minTime]="'06:00'" [maxTime]="'21:00'"
+        <full-calendar #calendar *ngIf="options" [minTime]="'06:00'" [maxTime]="'22:00'"
             [eventLimit]="options.eventLimit" [themeSystem]="'standard'" [bootstrapFontAwesome]="true"
             [slotEventOverlap]="false" [eventTimeFormat]="options.eventTimeFormat"
             [businessHours]="options.businessHours" [editable]="false" [events]="calendarEvents" [views]="options.views"
