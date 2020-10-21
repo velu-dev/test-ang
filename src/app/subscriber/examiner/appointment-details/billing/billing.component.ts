@@ -991,26 +991,21 @@ export class BilllableBillingComponent implements OnInit {
 
   docSelectedFile: File;
   docFormData = new FormData()
-  docErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   addCompleteDoc(event, pid) {
     this.docSelectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'png', 'jpeg', 'jpg', 'xls', 'xlsx', 'csv'];
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
-        this.docErrors.file.isError = true;
-        this.docErrors.file.error = "This file too long";
+        this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
         return;
       }
-      this.docErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-      this.docErrors.doc_type.error = "";
       this.file = event.target.files[0].name;
       this.docSelectedFile = event.target.files[0];
       this.BillingCompleteDocSubmit(pid)
     } else {
       this.docSelectedFile = null;
-      this.docErrors.file.isError = true;
-      this.docErrors.file.error = "This file type is not accepted";
+      this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
     }
 
   }
