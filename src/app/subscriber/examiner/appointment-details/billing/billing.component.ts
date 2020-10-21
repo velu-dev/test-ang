@@ -115,6 +115,7 @@ export class BilllableBillingComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   billDocumentList: any;
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
+  states: any;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -172,6 +173,9 @@ export class BilllableBillingComponent implements OnInit {
       startWith(null),
       map((fruit: string | null) => fruit ? this._filter(fruit) : this.modiferList.slice()));
 
+    this.billingService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
   }
 
   openAuto(e, trigger: MatAutocompleteTrigger) {
@@ -263,7 +267,7 @@ export class BilllableBillingComponent implements OnInit {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
       width: '800px',
       // data: {name: this.name, animal: this.animal}
-      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId }
+      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, states: this.states }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1226,9 +1230,7 @@ export class billingOnDemandDialog {
     @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, public billingService: BillingService,
     private alertService: AlertService) {
     dialogRef.disableClose = true;
-    this.billingService.seedData("state").subscribe(res => {
-      this.states = res.data;
-    })
+    this.states = data.states
     this.getBillRecipient();
   }
 
