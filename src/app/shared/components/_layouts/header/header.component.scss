@@ -108,3 +108,30 @@ mat-toolbar-row {
     text-align: center;
   }
 }
+
+.custom-option {
+  width: 100%;
+  height: auto;
+  line-height: 1.5;
+  border-bottom: 1px solid $light-color;
+  ul {
+    padding: 5px 0 5px 0;
+    margin: 0;
+    li {
+      div {
+        font-weight: $font-weight-bold;
+        // color: $black;
+        font-size: $font-size-7;
+      }
+      span {
+        min-width: 150px;
+        display: inline-flex;
+        font-size: $font-size-7;
+        color: $text-gray;
+        .mw {
+          min-width: 48px;
+        }
+      }
+    }
+  }
+}

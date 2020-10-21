@@ -115,6 +115,7 @@ export class BilllableBillingComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   billDocumentList: any;
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
+  states: any;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -172,6 +173,9 @@ export class BilllableBillingComponent implements OnInit {
       startWith(null),
       map((fruit: string | null) => fruit ? this._filter(fruit) : this.modiferList.slice()));
 
+    this.billingService.seedData("state").subscribe(res => {
+      this.states = res.data;
+    })
   }
 
   openAuto(e, trigger: MatAutocompleteTrigger) {
@@ -263,7 +267,7 @@ export class BilllableBillingComponent implements OnInit {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
       width: '800px',
       // data: {name: this.name, animal: this.animal}
-      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId }
+      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, states: this.states }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -697,11 +701,11 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  deleteDocument(data, status) {
+  deleteDocument(data, status?) {
     this.openDialogDocument('delete', data, status);
   }
 
-  openDialogDocument(dialogue, data, status) {
+  openDialogDocument(dialogue, data, status?) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
       data: { name: dialogue, address: true }
@@ -987,26 +991,21 @@ export class BilllableBillingComponent implements OnInit {
 
   docSelectedFile: File;
   docFormData = new FormData()
-  docErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   addCompleteDoc(event, pid) {
     this.docSelectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx', 'png', 'jpeg', 'jpg', 'xls', 'xlsx', 'csv'];
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
-        this.docErrors.file.isError = true;
-        this.docErrors.file.error = "This file too long";
+        this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
         return;
       }
-      this.docErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-      this.docErrors.doc_type.error = "";
       this.file = event.target.files[0].name;
       this.docSelectedFile = event.target.files[0];
       this.BillingCompleteDocSubmit(pid)
     } else {
       this.docSelectedFile = null;
-      this.docErrors.file.isError = true;
-      this.docErrors.file.error = "This file type is not accepted";
+      this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
     }
 
   }
@@ -1226,9 +1225,7 @@ export class billingOnDemandDialog {
     @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, public billingService: BillingService,
     private alertService: AlertService) {
     dialogRef.disableClose = true;
-    this.billingService.seedData("state").subscribe(res => {
-      this.states = res.data;
-    })
+    this.states = data.states
     this.getBillRecipient();
   }
 
