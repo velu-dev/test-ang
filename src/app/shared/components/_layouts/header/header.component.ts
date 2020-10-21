@@ -13,30 +13,69 @@ import { User } from 'src/app/admin/models/user.model';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map, startWith } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import * as headerActions from "./../../../../shared/store/header.actions";
 import * as breadcrumbActions from "./../../../../shared/store/breadcrumb.actions";
 import { UserService } from 'src/app/shared/services/user.service';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { FormControl } from '@angular/forms';
 
+export interface Claimant {
+  examiner: string;
+  name: string;
+  exam_type: string;
+  claim_number: string;
+  dos: string;
+}
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  claimantCtrl = new FormControl();
+  filteredClaimants: Observable<Claimant[]>;
   @Output() isClosed: EventEmitter<any> = new EventEmitter<any>();
-
-  notifications = [
-    { name: "Name here", message: "Message content here", date: new Date() },
-    { name: "Name here", message: "Message content here", date: new Date() },
-    { name: "Name here", message: "Message content here", date: new Date() },
-    { name: "Name here", message: "Message content here", date: new Date() },
-    { name: "Name here", message: "Message content here", date: new Date() },
-    { name: "Name here", message: "Message content here", date: new Date() },
-    { name: "Name here", message: "Message content here", date: new Date() }
-  ]
+  claimants: Claimant[] = [
+    {
+      name: 'Albert Gomez',
+      examiner: 'Lincoln Yee MD',
+      exam_type: 'Examination',
+      claim_number: '2018376761',
+      dos: '06/13/2020',
+    },
+    {
+      name: 'Venkatesan Mariyappan',
+      examiner: 'Martin Sutter',
+      exam_type: 'Deposition',
+      claim_number: 'wc-44859883',
+      dos: '06/13/2020',
+    },
+    {
+      name: 'Sarath Selvaraj SS',
+      examiner: 'Lincoln Yee MD',
+      exam_type: 'Examination',
+      claim_number: '4567435778',
+      dos: '06/13/2020',
+    },
+    {
+      name: 'Rajan Mariappan',
+      examiner: 'Lincoln Yee MD',
+      exam_type: 'Examination',
+      claim_number: '2018376761',
+      dos: '06/13/2020',
+    }
+  ];
+  // notifications = [
+  //   { name: "Name here", message: "Message content here", date: new Date() },
+  //   { name: "Name here", message: "Message content here", date: new Date() },
+  //   { name: "Name here", message: "Message content here", date: new Date() },
+  //   { name: "Name here", message: "Message content here", date: new Date() },
+  //   { name: "Name here", message: "Message content here", date: new Date() },
+  //   { name: "Name here", message: "Message content here", date: new Date() },
+  //   { name: "Name here", message: "Message content here", date: new Date() }
+  // ]
   nav_logo = globals.nav_logo
   profile = globals.profile
   notification_user = globals.notification_user
@@ -89,6 +128,18 @@ export class HeaderComponent implements OnInit {
         this.spinnerService.hide();
       })
     })
+
+    this.filteredClaimants = this.claimantCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(claimant => claimant ? this._filterClaimants(claimant) : this.claimants.slice())
+      );
+
+  }
+  private _filterClaimants(value: string): Claimant[] {
+    const filterValue = value.toLowerCase();
+
+    return this.claimants.filter(claimant => claimant.name.toLowerCase().indexOf(filterValue) === 0);
   }
   ngOnInit() {
     // this.user$ = this.store.pipe(select('header'));

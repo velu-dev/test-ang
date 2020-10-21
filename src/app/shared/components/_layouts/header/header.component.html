@@ -4,22 +4,34 @@
             mat-icon-button (click)="openSidenav()" class="toggle_ show-mobile">
             <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
         </button>
-         <div [ngClass]="{'opened': isOpen, 'closed': !isOpen}" class="hide-mobile"></div>
+        <div [ngClass]="{'opened': isOpen, 'closed': !isOpen}" class="hide-mobile"></div>
         <img [src]="nav_logo" alt="logo" class="p-l-5">
-        <!-- <div class="searchable-dropdown"> 
-            <mat-form-field class="searchable-dropdown">
-                <mat-label>Favorite food</mat-label>
-                <mat-select>
-                  <mat-option>
-                    <p>Test <br>test <br>test <br>test <br>test <br>test </p>
-                  </mat-option>
-
-                  <mat-option>
-                    <p>Test <br>test <br>test <br>test <br>test <br>test </p>
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-         </div> -->
+        <!-- <div class="searchable-dropdown m-t-5 m-l-10 hide-mobile">
+            <form class="example-form">
+                <mat-form-field appearance="outline" hideRequiredMarker="hideRequiredControl.auto"
+                    floatLabel="floatLabelControl.auto" style="width: 400px;">
+                    <input matInput placeholder="Search for Claimant" aria-label="Search for Claimant"
+                        [matAutocomplete]="auto" [formControl]="claimantCtrl">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let claimant of filteredClaimants | async" [value]="claimant.name"
+                            class="custom-option">
+                            <ul>
+                                <li>
+                                    <div>{{claimant.name}}</div>
+                                </li>
+                                <li><span>{{claimant.examiner}}</span><span>
+                                        <div class="mw">Claim #</div>: {{claimant.claim_number}}
+                                    </span></li>
+                                <li><span>{{claimant.exam_type}}</span><span>
+                                        <div class="mw">DOS </div>: {{claimant.dos}}
+                                    </span></li>
+                            </ul>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </form>
+        </div> -->
         <span flex class="spacer"></span>
         <mat-card-actions>
             <div fxLayout="row">
