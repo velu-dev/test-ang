@@ -548,7 +548,6 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   openElementBill(element) {
-    console.log(element);
     if (this.isMobile) {
       this.expandId2 = element;
     }
