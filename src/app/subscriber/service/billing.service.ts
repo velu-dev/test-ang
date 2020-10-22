@@ -106,4 +106,9 @@ export class BillingService {
   postPaymentFileAdd(billID, form): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.postPaymentFileAdd + billID, form)
   }
+
+  eorRemove(id): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.eorRemove + id)
+  }
+
 }

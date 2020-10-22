@@ -174,6 +174,7 @@ export const api_endpoint = {
     getBillDocument: 'billing/exam-procedure-type-documents/',
     postBillingComplete: 'billing/complete-document-upload',
     postPaymentFileAdd: 'billing/post-payment-eor/',
+    eorRemove: 'billing/post-payment-eor-remove/',
 
     //Calendar 
 

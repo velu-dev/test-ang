@@ -514,7 +514,7 @@
                         <mat-select formControlName="examination_status">
                             <mat-option *ngFor="let examination_status of examinationStatus"
                                 [value]="examination_status.id">
-                                {{examination_status[isDisplayStatus.isExaminar ? 'examination_status' : 'deposition_status']}}
+                                {{examination_status[isDisplayStatus.isExaminar ? 'examination_status' : 'examination_status']}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
