@@ -99,7 +99,7 @@
             <mat-select [(ngModel)]="examination_status">
               <mat-option *ngFor="let examination_status of examinationStatus"
                 (click)="eventcolorChange(examination_status)" [value]="examination_status.id">
-                {{examination_status[statusName]}}
+                {{examination_status?.examination_status}}
               </mat-option>
             </mat-select>
           </mat-form-field>

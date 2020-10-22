@@ -1097,7 +1097,8 @@ export class BillingPaymentDialog {
         this.paymentDetails.post_payment_eor_details.map((data, index) => {
           this.addRow();
           let details = {
-            post_payment_id: data.id,
+            id: data.id,
+            post_payment_id: this.paymentDetails.id,
             write_off_reason: data.write_off_reason,
             eor_allowance: data.eor_allowance,
             claim_id: this.data.claimId,
@@ -1115,7 +1116,7 @@ export class BillingPaymentDialog {
         pay.data.payment_amount = pay.data.payment_amount ? parseFloat(pay.data.payment_amount).toFixed(2) : pay.data.payment_amount;
         pay.data.interest_paid = pay.data.interest_paid ? parseFloat(pay.data.interest_paid).toFixed(2) : pay.data.interest_paid;
         pay.data.penalty_amount = pay.data.penalty_amount ? parseFloat(pay.data.penalty_amount).toFixed(2) : pay.data.penalty_amount;
-        pay.data.eor_allowance = pay.data.eor_allowance ? parseFloat(pay.data.eor_allowance).toFixed(2) : pay.data.eor_allowance;
+        // pay.data.eor_allowance = pay.data.eor_allowance ? parseFloat(pay.data.eor_allowance).toFixed(2) : pay.data.eor_allowance;
         this.postPaymentForm.patchValue(pay.data);
         this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
         this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
@@ -1172,7 +1173,7 @@ export class BillingPaymentDialog {
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('deposit_date').setValidators([]);
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
     this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('interest_paid').setValidators([]);
-    this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('write_off_reason').setValidators([]);
+    // this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('write_off_reason').setValidators([]);
 
     Object.keys(this.postPaymentForm.controls).forEach((key) => {
       this.postPaymentForm.get(key).updateValueAndValidity();
@@ -1239,8 +1240,9 @@ export class BillingPaymentDialog {
   initiateForm(): FormGroup {
     return this.fb.group({
       post_payment_id: [''],
-      write_off_reason: ['', Validators.compose([Validators.required])],
-      eor_allowance: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      id: [''],
+      write_off_reason: ['', Validators.compose([])],
+      eor_allowance: ['', Validators.compose([Validators.min(0)])],
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
       isEditable: [true],
@@ -1256,7 +1258,7 @@ export class BillingPaymentDialog {
   }
 
   selectedFile: File;
-  addEOR(event) {
+  addEOR(event, isEdit?, group?) {
     this.selectedFile = null;
     let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
 
@@ -1267,14 +1269,19 @@ export class BillingPaymentDialog {
         return;
       }
 
-      this.file = event.target.files[0].name;
       this.selectedFile = event.target.files[0];
-      this.addRow();
-      let file = {
-        file: event.target.files[0],
-        file_name: event.target.files[0].name
+      if (!isEdit) {
+        this.addRow();
+        let file = {
+          post_payment_id: this.paymentDetails ? this.paymentDetails.id : '',
+          file: event.target.files[0],
+          file_name: event.target.files[0].name
+        }
+        this.getFormControls.controls[this.getFormControls.controls.length - 1].patchValue(file)
+      } else {
+        group.get('file').setValue(event.target.files[0])
+        group.get('file_name').setValue(event.target.files[0].name)
       }
-      this.getFormControls.controls[this.getFormControls.controls.length - 1].patchValue(file)
     } else {
       this.selectedFile = null;
       this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
@@ -1282,6 +1289,18 @@ export class BillingPaymentDialog {
   }
 
   addRow() {
+    let newRowStatus = true
+    for (var j in this.getFormControls.controls) {
+      if (this.getFormControls.controls[j].status == 'INVALID') {
+        newRowStatus = false;
+      }
+    }
+
+    if (!newRowStatus) {
+      this.alertService.openSnackBar("Please fill existing data", 'error');
+      return;
+    }
+
     const control = this.userTable.get('tableRows') as FormArray;
     control.push(this.initiateForm());
   }
@@ -1293,13 +1312,14 @@ export class BillingPaymentDialog {
       group.markAllAsTouched();
       return;
     }
-    if (group.untouched) {
-      return;
-    }
+    // if (group.untouched) {
+    //   return;
+    // }
 
     this.formEOR = new FormData();
 
     this.formEOR.append('file', group.value.file)
+    this.formEOR.append('id', group.value.id)
     this.formEOR.append('write_off_reason', group.value.write_off_reason)
     this.formEOR.append('claim_id', group.value.claim_id.toString())
     this.formEOR.append('billable_item_id', group.value.billable_item_id.toString())
@@ -1311,13 +1331,21 @@ export class BillingPaymentDialog {
       this.eorDocumentIds.push(file.data.id)
       this.alertService.openSnackBar("EOR created successfully", 'success');
     }, error => {
-
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
     group.get('isEditable').setValue(false);
   }
 
   editRow(group: FormGroup) {
     group.get('isEditable').setValue(true);
+  }
+
+  removeEOR(group, index) {
+    this.billingService.eorRemove(group.value.id).subscribe(remove => {
+      this.alertService.openSnackBar("EOR removed successfully", 'success');
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
 
 }

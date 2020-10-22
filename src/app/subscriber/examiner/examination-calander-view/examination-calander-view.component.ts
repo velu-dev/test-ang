@@ -192,7 +192,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     })
   }
   selectExaminer(examiner?, status?) {
-    let date = this.selectedDate
+    let date = this.selectedDate ? this.selectedDate : new Date();
     let currentMonth = moment(date).month() + 1;
     if (currentMonth == 12) {
       this.months = [currentMonth - 1, currentMonth, 1];
@@ -383,7 +383,7 @@ export class EventdetailDialog {
   }
   getExaminationStatus(data) {
     this.examinationStatus.map(res => {
-      if (res[this.statusName] == data.status) {
+      if (res.examination_status == data.status) {
         console.log("tes")
         this.examination_status = res.id;
         this.eventStatusID = res.id;
@@ -427,7 +427,8 @@ export class EventdetailDialog {
         if (exam.id == res.data.examination_status) {
           Object.getOwnPropertyDescriptor(this.eventDetail.extendedProps.status, exam.examination_status);
           this.status = exam[this.statusName];
-          this.eventStatus = exam[this.statusName];
+          this.eventStatus = exam.examination_status;
+          // this.eventColor
         }
       })
       this.eventStatusID = res.data.examination_status;
