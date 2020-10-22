@@ -690,7 +690,7 @@
                                             <!-- <a class="text-success m-r-10" (click)="download(element)">Download</a> -->
                                             <input type="file" #uploader hidden (change)="addCompleteDoc($event,element?.partial_document?.id)" hidden
                                             accept=".pdf" required>
-                                            <a *ngIf="element?.form_action_type != 'C'" class="text-danger no-wrap-td"  (click)="uploader.click()">Remove and Reupload
+                                            <a *ngIf="element?.form_action_type != 'C'" class="text-danger no-wrap-td"  (click)=" element?.completed_document ? uploader.click() : ''">Remove and Reupload
                                             </a>
                                             <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"  (click)="deleteDocument(element?.completed_document,true)">Remove
                                             </a>
