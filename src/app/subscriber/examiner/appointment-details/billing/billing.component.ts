@@ -1137,33 +1137,7 @@ export class BillingPaymentDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  // formData = new FormData()
-  // fileList: File[] = [];
-  // listOfFiles: any[] = [];
-  // addFile(event) {
-  //   this.fileList = []
-  //   this.listOfFiles = []
-  //   let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
-  //   for (var i = 0; i <= event.target.files.length - 1; i++) {
-  //     var selectedFile = event.target.files[i];
-  //     if (fileTypes.includes(event.target.files[i].name.split('.').pop().toLowerCase())) {
-  //       var FileSize = event.target.files[i].size / 1024 / 1024; // in MB
-  //       if (FileSize > 30) {
-  //         this.alertService.openSnackBar(event.target.files[i].name + " file too long", 'error');
-  //         return;
-  //       }
-  //     } else {
-  //       this.file = []
-  //       this.alertService.openSnackBar(event.target.files[i].name + " file is not accepted", 'error');
-  //       return;
-  //     }
-  //     this.fileList.push(selectedFile);
-  //     this.listOfFiles.push(selectedFile.name)
 
-  //   }
-  //   this.fileUpload.nativeElement.value = "";
-  //   this.postPaymentForm.patchValue({ is_file_change: true })
-  // }
   setTwoNumberDecimal($event) {
     $event.target.value = parseFloat($event.target.value).toFixed(2);
   }
@@ -1173,7 +1147,6 @@ export class BillingPaymentDialog {
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('deposit_date').setValidators([]);
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
     this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('interest_paid').setValidators([]);
-    // this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('write_off_reason').setValidators([]);
 
     Object.keys(this.postPaymentForm.controls).forEach((key) => {
       this.postPaymentForm.get(key).updateValueAndValidity();
@@ -1186,13 +1159,6 @@ export class BillingPaymentDialog {
       this.postPaymentForm.markAllAsTouched();
       return;
     }
-    // this.formData = new FormData();
-    // Object.keys(this.postPaymentForm.value).map((key, value) => {
-    //   this.formData.append(key, this.postPaymentForm.value[key])
-    // });
-    // for (let i = 0; i < this.fileList.length; i++) {
-    //   this.formData.append('file', this.fileList[i])
-    // }
 
     this.billingService.billingPostPayment(this.data.billingId, this.postPaymentForm.value).subscribe(post => {
       if (!this.postPaymentForm.value.id) {
@@ -1236,7 +1202,6 @@ export class BillingPaymentDialog {
     this.control = this.userTable.get('tableRows') as FormArray;
   }
 
-  //'item', 'procedure_code', 'modifier', 'units', 'charge', 'payment', 'balance', 'action'
   initiateForm(): FormGroup {
     return this.fb.group({
       post_payment_id: [''],
@@ -1246,8 +1211,9 @@ export class BillingPaymentDialog {
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
       isEditable: [true],
+      isFileChanged: [false],
       file: null,
-      file_name: null,
+      file_name: [null, Validators.required],
       url: null
     });
   }
@@ -1279,6 +1245,8 @@ export class BillingPaymentDialog {
         }
         this.getFormControls.controls[this.getFormControls.controls.length - 1].patchValue(file)
       } else {
+
+        group.get('isFileChanged').setValue(true)
         group.get('file').setValue(event.target.files[0])
         group.get('file_name').setValue(event.target.files[0].name)
       }
@@ -1312,9 +1280,6 @@ export class BillingPaymentDialog {
       group.markAllAsTouched();
       return;
     }
-    // if (group.untouched) {
-    //   return;
-    // }
 
     this.formEOR = new FormData();
 
@@ -1325,10 +1290,12 @@ export class BillingPaymentDialog {
     this.formEOR.append('billable_item_id', group.value.billable_item_id.toString())
     this.formEOR.append('eor_allowance', group.value.eor_allowance)
     this.formEOR.append('post_payment_id', group.value.post_payment_id)
+    this.formEOR.append('isFileChanged', group.value.isFileChanged)
 
     this.billingService.postPaymentFileAdd(this.data.billingId, this.formEOR).subscribe(file => {
       console.log(file);
       this.eorDocumentIds.push(file.data.id)
+      group.patchValue({ id: file.data.id })
       this.alertService.openSnackBar("EOR created successfully", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -1343,6 +1310,8 @@ export class BillingPaymentDialog {
   removeEOR(group, index) {
     this.billingService.eorRemove(group.value.id).subscribe(remove => {
       this.alertService.openSnackBar("EOR removed successfully", 'success');
+      this.paymentDetails.post_payment_eor_details[index] = remove.data;
+      this.getFormControls.controls.splice(index, 1)
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })

@@ -676,7 +676,7 @@
                                             *ngIf="element?.completed_document">{{element?.completed_document?.file_name}} <i class="fas fa-download"></i></a>
 
                                             <a *ngIf="!element?.completed_document && element?.form_action_type != 'C'" class="m-r-10 no-wrap-td" (click)="uploader.click()">
-                                                Upload Competed Form 
+                                                Upload Completed Form 
                                                 <i class="fa fa-upload m-b-3"></i>
                                             </a>
                                             <input type="file" #uploader hidden (change)="addCompleteDoc($event,element?.partial_document?.id)" hidden
