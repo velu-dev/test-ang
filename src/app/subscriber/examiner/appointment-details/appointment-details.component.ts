@@ -372,7 +372,8 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinationStatusForm = this.formBuilder.group({
       id: "",
       examination_status: [{ value: "", disabled: true }, Validators.required],
-      examination_notes: [{ value: "", disabled: true }]
+      examination_notes: [{ value: "", disabled: true }],
+      notes:['']
     })
     this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
@@ -489,6 +490,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   updateExamStatus() {
+    this.examinationStatusForm.patchValue({ notes: this.examinationStatusForm.value.examination_notes })
     this.examinerService.updateExaminationStatus(this.examinationStatusForm.value).subscribe(res => {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
