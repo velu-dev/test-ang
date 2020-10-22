@@ -139,7 +139,7 @@
 
                                         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
                                             <td><a href="" class="text-ternary">{{group.get('file_name').value}}</a>
-                                                <button type="button" (click)="uploader.click()">Reupload</button>
+                                                <button mat-raised-button type="button" (click)="uploader.click()" class="mini-btn filled-gray m-b-5"> Reupload <i class="fa fa-upload m-l-3"></i></button>
                                                 <input type="file" #uploader multiple hidden
                                                     (change)="addEOR($event,true,group)"
                                                     accept=".pdf, .jpg, .jpeg, .png" required>

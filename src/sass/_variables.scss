@@ -968,6 +968,11 @@ input:-webkit-autofill {
     button.filled-gray {
       @extend .filled-gray;
     }
+   button.mini-btn {
+     @extend .mini-btn;
+    height: 26px !important;
+    min-width: 60px !important;
+   }
     .upload-file {
       .mat-form-field {
         width: calc(100% - 125px);
