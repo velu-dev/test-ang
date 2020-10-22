@@ -444,9 +444,10 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 }
 
 // custom calender css
-// .fc-time-grid-event.fc-short .fc-time span {
-//   display: inline;
-// }
+.fc-button {
+  border: 1px solid #d7dae3;
+  text-transform: capitalize;
+}
 .fc-header-toolbar {
   .fc-left {
     h2 {

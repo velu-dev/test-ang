@@ -1035,7 +1035,7 @@ export class NewClaimComponent implements OnInit {
       this.claimantChanges = false;
       let data = this.claimant.value;
       data['certified_interpreter_required'] = this.languageStatus;
-      data['date_of_birth'] = moment(this.claimant.value.date_of_birth).format("YYYY-MM-DD"); //new Date()//.toDateString();
+      data['date_of_birth'] = moment(this.claimant.value.date_of_birth).format("MM-DD-YYYY"); //new Date()//.toDateString();
       if (!this.isClaimantEdit) {
         this.claimService.createClaimant(this.claimant.value).subscribe(res => {
           this.claimant_id = res.data.id;
