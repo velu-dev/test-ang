@@ -192,7 +192,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     })
   }
   selectExaminer(examiner?, status?) {
-    let date = this.selectedDate
+    let date = this.selectedDate ? this.selectedDate : new Date();
     let currentMonth = moment(date).month() + 1;
     if (currentMonth == 12) {
       this.months = [currentMonth - 1, currentMonth, 1];
