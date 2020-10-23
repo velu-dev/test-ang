@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ElementRef, Input } from '@angular/core';
 import { FullCalendarComponent } from "@fullcalendar/angular";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import bootstrapPlugin from '@fullcalendar/bootstrap';
@@ -87,6 +87,8 @@ export class ExaminationCalanderViewComponent implements OnInit {
   months = [];
   calendarDef: any;
   currentMonth = moment().month();
+  @Input('CalendarView') CalendarView;
+  defaultView = "dayGridMonth";
   constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
     this.currentMonth = moment().month();
     let currentMonth = moment().month() + 1;
@@ -135,7 +137,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     })
   }
   ngOnInit() {
-
+    this.defaultView = this.CalendarView ? "timeGridWeek" : "dayGridMonth";
   }
   examinername(examiner) {
     let middle_name = examiner.middle_name ? " " + examiner.middle_name : "";

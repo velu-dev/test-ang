@@ -146,10 +146,12 @@
                             <mat-card-header>
                                 <div class="content-wrapper-main-title">Calendar</div>
                                 <span class="spacer"></span>
-                                <mat-icon>fullscreen</mat-icon>
+                                <mat-icon [routerLink]="['/subscriber/examiner/appointment']">fullscreen
+                                </mat-icon>
                             </mat-card-header>
                             <mat-card-content style="padding: 0px 5px 10px 5px;">
-                                <app-examination-calander-view></app-examination-calander-view>
+                                <app-examination-calander-view [CalendarView]="true">
+                                </app-examination-calander-view>
                             </mat-card-content>
                         </mat-card>
                     </div>
