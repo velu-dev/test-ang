@@ -1,14 +1,14 @@
 <mat-card class="m-card">
-    <mat-card-header>
+    <!-- <mat-card-header>
         <div class="m-0 content-wrapper-main-title">Manage Billing</div>
-        <!-- <span class="spacer"></span>
+        <span class="spacer"></span>
         <button mat-mini-fab [routerLink]="['/subscriber/billing/new']" routerLinkActive="router-link-active"
             [ngClass]="{'hide-mobile': !isMobile, 'floating-btn': isMobile}" class="add-user">
             <mat-icon>add</mat-icon>
-        </button> -->
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content class="p-t-3 m-b-0">
+        </button>
+    </mat-card-header> -->
+    <!-- <mat-divider></mat-divider> -->
+    <mat-card-content>
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                 placeholder="Search by bill number, claim number, etc.">

@@ -1065,7 +1065,7 @@ export class BillingPaymentDialog {
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,
-    private fb: FormBuilder,) {
+    private fb: FormBuilder, public dialog: MatDialog) {
     dialogRef.disableClose = true;
     this.postPaymentForm = this.formBuilder.group({
       id: [''],
@@ -1098,7 +1098,7 @@ export class BillingPaymentDialog {
           this.addRow();
           let details = {
             id: data.id,
-            post_payment_id: this.paymentDetails.id,
+            post_payment_id: this.paymentDetails.id ? this.paymentDetails.id : '',
             write_off_reason: data.write_off_reason,
             eor_allowance: data.eor_allowance,
             claim_id: this.data.claimId,
@@ -1106,7 +1106,8 @@ export class BillingPaymentDialog {
             isEditable: [true],
             file: null,
             file_name: data.file_name,
-            url: data.exam_report_file_url
+            url: data.exam_report_file_url,
+            save_status: true
           }
           this.getFormControls.controls[index].patchValue(details)
           if (this.getFormControls.controls[index].status == "VALID") {
@@ -1126,6 +1127,8 @@ export class BillingPaymentDialog {
 
       })
 
+    } else {
+      this.paymentDetails = { post_payment_eor_details: [] }
     }
 
     this.userTable = this.fb.group({
@@ -1137,43 +1140,28 @@ export class BillingPaymentDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  // formData = new FormData()
-  // fileList: File[] = [];
-  // listOfFiles: any[] = [];
-  // addFile(event) {
-  //   this.fileList = []
-  //   this.listOfFiles = []
-  //   let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
-  //   for (var i = 0; i <= event.target.files.length - 1; i++) {
-  //     var selectedFile = event.target.files[i];
-  //     if (fileTypes.includes(event.target.files[i].name.split('.').pop().toLowerCase())) {
-  //       var FileSize = event.target.files[i].size / 1024 / 1024; // in MB
-  //       if (FileSize > 30) {
-  //         this.alertService.openSnackBar(event.target.files[i].name + " file too long", 'error');
-  //         return;
-  //       }
-  //     } else {
-  //       this.file = []
-  //       this.alertService.openSnackBar(event.target.files[i].name + " file is not accepted", 'error');
-  //       return;
-  //     }
-  //     this.fileList.push(selectedFile);
-  //     this.listOfFiles.push(selectedFile.name)
 
-  //   }
-  //   this.fileUpload.nativeElement.value = "";
-  //   this.postPaymentForm.patchValue({ is_file_change: true })
-  // }
   setTwoNumberDecimal($event) {
     $event.target.value = parseFloat($event.target.value).toFixed(2);
   }
   postIsSubmit: boolean = false;
   PaymentFormSubmit() {
+    let newRowStatus = true
+    for (var j in this.getFormControls.controls) {
+      console.log(this.getFormControls.controls[j].value)
+      if (!this.getFormControls.controls[j].value['save_status']) {
+        newRowStatus = false;
+      }
+    }
+
+    if (!newRowStatus) {
+      this.alertService.openSnackBar("Please save EOR data", 'error');
+      return;
+    }
     this.postIsSubmit = true;
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('deposit_date').setValidators([]);
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
     this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('interest_paid').setValidators([]);
-    // this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('write_off_reason').setValidators([]);
 
     Object.keys(this.postPaymentForm.controls).forEach((key) => {
       this.postPaymentForm.get(key).updateValueAndValidity();
@@ -1181,18 +1169,11 @@ export class BillingPaymentDialog {
         this.postPaymentForm.get(key).setValue(this.postPaymentForm.get(key).value.trim())
     });
     this.postPaymentForm.value.effective_date = new Date(this.postPaymentForm.value.effective_date).toDateString();
-    this.postPaymentForm.value.deposit_date = this.postPaymentForm.value.deposit_date ? new Date(this.postPaymentForm.value.deposit_date).toDateString() : [];
+    this.postPaymentForm.value.deposit_date = this.postPaymentForm.value.deposit_date ? new Date(this.postPaymentForm.value.deposit_date).toDateString() : null;
     if (this.postPaymentForm.invalid) {
       this.postPaymentForm.markAllAsTouched();
       return;
     }
-    // this.formData = new FormData();
-    // Object.keys(this.postPaymentForm.value).map((key, value) => {
-    //   this.formData.append(key, this.postPaymentForm.value[key])
-    // });
-    // for (let i = 0; i < this.fileList.length; i++) {
-    //   this.formData.append('file', this.fileList[i])
-    // }
 
     this.billingService.billingPostPayment(this.data.billingId, this.postPaymentForm.value).subscribe(post => {
       if (!this.postPaymentForm.value.id) {
@@ -1236,7 +1217,6 @@ export class BillingPaymentDialog {
     this.control = this.userTable.get('tableRows') as FormArray;
   }
 
-  //'item', 'procedure_code', 'modifier', 'units', 'charge', 'payment', 'balance', 'action'
   initiateForm(): FormGroup {
     return this.fb.group({
       post_payment_id: [''],
@@ -1246,15 +1226,33 @@ export class BillingPaymentDialog {
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
       isEditable: [true],
+      isFileChanged: [false],
       file: null,
-      file_name: null,
-      url: null
+      file_name: [null],
+      url: null,
+      save_status: [false]
     });
   }
 
   get getFormControls() {
     const control = this.userTable.get('tableRows') as FormArray;
     return control;
+  }
+
+  openFileUpload(){
+       let newRowStatus = true
+      for (var j in this.getFormControls.controls) {
+        console.log(this.getFormControls.controls[j].value)
+        if (!this.getFormControls.controls[j].value['save_status']) {
+          newRowStatus = false;
+        }
+      }
+
+      if (!newRowStatus) {
+        this.alertService.openSnackBar("Please save existing data", 'error');
+        return;
+      }
+    this.fileUpload.nativeElement.click()
   }
 
   selectedFile: File;
@@ -1271,7 +1269,7 @@ export class BillingPaymentDialog {
 
       this.selectedFile = event.target.files[0];
       if (!isEdit) {
-        this.addRow();
+        this.addRow(1);
         let file = {
           post_payment_id: this.paymentDetails ? this.paymentDetails.id : '',
           file: event.target.files[0],
@@ -1279,6 +1277,8 @@ export class BillingPaymentDialog {
         }
         this.getFormControls.controls[this.getFormControls.controls.length - 1].patchValue(file)
       } else {
+
+        group.get('isFileChanged').setValue(true)
         group.get('file').setValue(event.target.files[0])
         group.get('file_name').setValue(event.target.files[0].name)
       }
@@ -1288,19 +1288,7 @@ export class BillingPaymentDialog {
     }
   }
 
-  addRow() {
-    let newRowStatus = true
-    for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].status == 'INVALID') {
-        newRowStatus = false;
-      }
-    }
-
-    if (!newRowStatus) {
-      this.alertService.openSnackBar("Please fill existing data", 'error');
-      return;
-    }
-
+  addRow(status?) {
     const control = this.userTable.get('tableRows') as FormArray;
     control.push(this.initiateForm());
   }
@@ -1312,9 +1300,6 @@ export class BillingPaymentDialog {
       group.markAllAsTouched();
       return;
     }
-    // if (group.untouched) {
-    //   return;
-    // }
 
     this.formEOR = new FormData();
 
@@ -1324,12 +1309,21 @@ export class BillingPaymentDialog {
     this.formEOR.append('claim_id', group.value.claim_id.toString())
     this.formEOR.append('billable_item_id', group.value.billable_item_id.toString())
     this.formEOR.append('eor_allowance', group.value.eor_allowance)
-    this.formEOR.append('post_payment_id', group.value.post_payment_id)
+    this.formEOR.append('post_payment_id', group.value.post_payment_id ? group.value.post_payment_id : '')
+    this.formEOR.append('isFileChanged', group.value.isFileChanged)
 
     this.billingService.postPaymentFileAdd(this.data.billingId, this.formEOR).subscribe(file => {
       console.log(file);
+      if (group.value.id) {
+        this.alertService.openSnackBar("EOR updated successfully", 'success');
+      } else {
+        this.alertService.openSnackBar("EOR created successfully", 'success');
+      }
+
       this.eorDocumentIds.push(file.data.id)
-      this.alertService.openSnackBar("EOR created successfully", 'success');
+      group.patchValue({ id: file.data.id, save_status: true })
+      file.data.file_name = group.value.file_name;
+      this.paymentDetails.post_payment_eor_details.push(file.data)
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -1341,10 +1335,51 @@ export class BillingPaymentDialog {
   }
 
   removeEOR(group, index) {
-    this.billingService.eorRemove(group.value.id).subscribe(remove => {
-      this.alertService.openSnackBar("EOR removed successfully", 'success');
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
+    this.openDialogEOR('Remove', group, index)
+  }
+
+  openDialogEOR(dialogue, group, index) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: dialogue, address: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.billingService.eorRemove(group.value.id).subscribe(remove => {
+          this.alertService.openSnackBar("EOR removed successfully", 'success');
+          this.paymentDetails.post_payment_eor_details.splice(index, 1);
+          this.getFormControls.controls.splice(index, 1);
+          this.eorDocumentIds.splice(index, 1);
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    })
+  }
+
+  cancelEOR(group, index) {
+    if (!group.value.id) {
+      this.getFormControls.controls.splice(index, 1)
+      return;
+    }
+    console.log(this.paymentDetails.post_payment_eor_details)
+    let details = {
+      write_off_reason: this.paymentDetails.post_payment_eor_details[index].write_off_reason,
+      eor_allowance: this.paymentDetails.post_payment_eor_details[index].eor_allowance,
+      file_name: this.paymentDetails.post_payment_eor_details[index].file_name,
+      url: this.paymentDetails.post_payment_eor_details[index].exam_report_file_url,
+      isEditable: false
+    }
+    group.patchValue(details);
+  }
+
+  download(element) {
+    if (!element.value.id) {
+      return;
+    }
+    this.billingService.downloadOndemandDocuments({ file_url: element.value.url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.file_name);
     })
   }
 

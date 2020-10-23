@@ -119,7 +119,7 @@
                     </mat-form-field>
                     <div fxFlex="100" class="m-t-10">
                         <button type="button" mat-raised-button class="filled-gray float-right m-b-5 m-r-5"
-                            (click)="uploader.click()"> <i class="fa fa-file-medical"></i> Add EOR </button>
+                            (click)="openFileUpload()"> <i class="fa fa-file-medical"></i> Add EOR </button>
                         <input type="file" #uploader multiple hidden (change)="addEOR($event)"
                             accept=".pdf, .jpg, .jpeg, .png" required>
                     </div>
@@ -138,8 +138,11 @@
                                         *ngFor="let group of getFormControls.controls ; let i=index">
 
                                         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
-                                            <td><a href="" class="text-ternary">{{group.get('file_name').value}}</a>
-                                                <button type="button" (click)="uploader.click()">Reupload</button>
+                                            <td><a class="text-ternary"
+                                                    (click)="download(group)">{{group.get('file_name').value}}</a>
+                                                <button mat-raised-button type="button" (click)="uploader.click()"
+                                                    class="mini-btn filled-gray m-b-5"> Reupload <i
+                                                        class="fa fa-upload m-l-3"></i></button>
                                                 <input type="file" #uploader multiple hidden
                                                     (change)="addEOR($event,true,group)"
                                                     accept=".pdf, .jpg, .jpeg, .png" required>
@@ -158,12 +161,13 @@
                                             </td>
                                             <td>
                                                 <a class="text-success m-r-10" (click)="saveRow(group,i)">Save</a>
-                                                <a class="text-danger">Remove</a>
+                                                <a class="text-danger" (click)="cancelEOR(group,i)">Cancel</a>
                                             </td>
                                         </tr>
 
                                         <tr *ngIf="!group.get('isEditable').value">
-                                            <td><a href="" class="text-ternary">{{group.get('file_name').value}}</a>
+                                            <td><a (click)="download(group)"
+                                                    class="text-ternary">{{group.get('file_name').value}}</a>
                                             </td>
                                             <td>
                                                 {{group.get('write_off_reason').value}}
@@ -186,9 +190,7 @@
                     <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <div fxLayout="row wrap" class="p-t-20">
                             <mat-label fxFlex="50">Close Bill</mat-label>
-                            <mat-radio-group aria-label="Select an option" formControlName="is_bill_closed"
-                                (change)="!postPaymentForm.value?.is_bill_closed ? postPaymentForm.get('write_off_reason').disable() : postPaymentForm.get('write_off_reason').enable();postPaymentForm.get('write_off_reason').reset()"
-                                fxFlex="50">
+                            <mat-radio-group aria-label="Select an option" formControlName="is_bill_closed" fxFlex="50">
                                 <mat-radio-button [value]="true">Yes</mat-radio-button>
                                 <mat-radio-button [value]="false" class="p-l-20">No</mat-radio-button>
                             </mat-radio-group>

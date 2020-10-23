@@ -546,8 +546,8 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   cancel() {
-    this._location.back();
-    //this.router.navigate(['/subscriber/users'])
+    //this._location.back();
+    this.router.navigate(['/subscriber/users'])
   }
 
   numberOnly(event): boolean {
