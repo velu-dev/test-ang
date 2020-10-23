@@ -119,7 +119,7 @@
                     </mat-form-field>
                     <div fxFlex="100" class="m-t-10">
                         <button type="button" mat-raised-button class="filled-gray float-right m-b-5 m-r-5"
-                            (click)="uploader.click()"> <i class="fa fa-file-medical"></i> Add EOR </button>
+                            (click)="openFileUpload()"> <i class="fa fa-file-medical"></i> Add EOR </button>
                         <input type="file" #uploader multiple hidden (change)="addEOR($event)"
                             accept=".pdf, .jpg, .jpeg, .png" required>
                     </div>

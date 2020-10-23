@@ -1146,6 +1146,18 @@ export class BillingPaymentDialog {
   }
   postIsSubmit: boolean = false;
   PaymentFormSubmit() {
+    let newRowStatus = true
+    for (var j in this.getFormControls.controls) {
+      console.log(this.getFormControls.controls[j].value)
+      if (!this.getFormControls.controls[j].value['save_status']) {
+        newRowStatus = false;
+      }
+    }
+
+    if (!newRowStatus) {
+      this.alertService.openSnackBar("Please save EOR data", 'error');
+      return;
+    }
     this.postIsSubmit = true;
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('deposit_date').setValidators([]);
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
@@ -1227,6 +1239,22 @@ export class BillingPaymentDialog {
     return control;
   }
 
+  openFileUpload(){
+       let newRowStatus = true
+      for (var j in this.getFormControls.controls) {
+        console.log(this.getFormControls.controls[j].value)
+        if (!this.getFormControls.controls[j].value['save_status']) {
+          newRowStatus = false;
+        }
+      }
+
+      if (!newRowStatus) {
+        this.alertService.openSnackBar("Please save existing data", 'error');
+        return;
+      }
+    this.fileUpload.nativeElement.click()
+  }
+
   selectedFile: File;
   addEOR(event, isEdit?, group?) {
     this.selectedFile = null;
@@ -1261,20 +1289,6 @@ export class BillingPaymentDialog {
   }
 
   addRow(status?) {
-    // if (status == 1) {
-    //   let newRowStatus = true
-    //   for (var j in this.getFormControls.controls) {
-    //     console.log(this.getFormControls.controls[j].value)
-    //     if (!this.getFormControls.controls[j].value['save_status']) {
-    //       newRowStatus = false;
-    //     }
-    //   }
-
-    //   if (!newRowStatus) {
-    //     this.alertService.openSnackBar("Please fill existing data", 'error');
-    //     return;
-    //   }
-    // }
     const control = this.userTable.get('tableRows') as FormArray;
     control.push(this.initiateForm());
   }
