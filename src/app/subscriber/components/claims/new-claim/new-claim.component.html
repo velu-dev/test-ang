@@ -160,8 +160,12 @@
                                 <mat-error *ngIf="isClaimantSubmited">Please select a language</mat-error>
                             </mat-form-field>
 
-                            <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
-                                fxFlex.xs="100"></div>
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                                fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Enter Other Language</mat-label>
+                                <input matInput type="text" placeholder="Language" autocomplete="off">
+                                <mat-error>Please enter valid phone number</mat-error>
+                            </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
