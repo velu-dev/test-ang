@@ -721,8 +721,8 @@
                                 </button>
                                 <mat-autocomplete #aaAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of aattroneyGroupOptions" [label]="group.name">
-                                        <mat-option (click)="appAttorney(aa)" *ngFor="let aa of group.data"
-                                            [value]="aa.company_name">
+                                        <mat-option [disabled]="selectedDAttorney == aa.id" (click)="appAttorney(aa)"
+                                            *ngFor="let aa of group.data" [value]="aa.company_name">
                                             {{aa.company_name}}
                                         </mat-option>
                                     </mat-optgroup>
@@ -826,8 +826,8 @@
                                 </button>
                                 <mat-autocomplete #daAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of dattroneyGroupOptions" [label]="group.name">
-                                        <mat-option (click)="defAttornety(aa)" *ngFor="let aa of group.data"
-                                            [value]="aa.company_name">
+                                        <mat-option [disabled]="selectedAAttorney == aa.id" (click)="defAttornety(aa)"
+                                            *ngFor="let aa of group.data" [value]="aa.company_name">
                                             {{aa.company_name}}
                                         </mat-option>
                                     </mat-optgroup>

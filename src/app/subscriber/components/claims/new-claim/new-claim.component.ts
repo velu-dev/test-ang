@@ -1372,19 +1372,27 @@ export class NewClaimComponent implements OnInit {
     this.isAddressSelected = true;
     this.selectedExaminarAddress = address;
   }
+  selectedAAttorney: any;
   appAttorney(attroney) {
-    this.changeState(attroney.state, 'aa');
-    delete attroney['id'];
-    this.claim.patchValue({
-      ApplicantAttorney: attroney
-    })
+    if (this.selectedDAttorney != attroney.id) {
+      this.changeState(attroney.state, 'aa');
+      this.selectedAAttorney = attroney.id;
+      delete attroney['id'];
+      this.claim.patchValue({
+        ApplicantAttorney: attroney
+      })
+    }
   }
+  selectedDAttorney: any;
   defAttornety(attroney) {
-    this.changeState(attroney.state, 'da');
-    delete attroney['id'];
-    this.claim.patchValue({
-      DefenseAttorney: attroney
-    })
+    if (this.selectedAAttorney != attroney.id) {
+      this.selectedDAttorney = attroney.id;
+      this.changeState(attroney.state, 'da');
+      delete attroney['id'];
+      this.claim.patchValue({
+        DefenseAttorney: attroney
+      })
+    }
   }
   appClaimAdmin(claimadmin) {
     this.changeState(claimadmin.state, 'ca');
@@ -1396,9 +1404,11 @@ export class NewClaimComponent implements OnInit {
   clearAutoComplete(form) {
     switch (form) {
       case 'aa':
+        this.selectedAAttorney = null;
         this.claim.get('ApplicantAttorney').reset();
         break;
       case 'da':
+        this.selectedDAttorney = null;
         this.claim.get('DefenseAttorney').reset();
         break;
       case 'ca':
