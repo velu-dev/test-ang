@@ -1,11 +1,11 @@
 <mat-card class="m-card">
-    <mat-card-header>
+    <!-- <mat-card-header>
         <div class="content-wrapper-main-title p-t-10">Service Location</div>
         <span class="spacer"></span>
-        <!-- <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="primary"
+        <button mat-mini-fab aria-label="Example icon-button with a heart icon" color="primary"
             [routerLink]="['/subscriber/location/new-location']" routerLinkActive="router-link-active">
             <mat-icon>add</mat-icon>
-        </button> -->
+        </button>
         <div class="add-new">
             <button mat-stroked-button class="outline-success" [routerLink]="[router.url +'/add-location']"
                 routerLinkActive="router-link-active">
@@ -13,15 +13,19 @@
             </button>
         </div>
     </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content class="p-t-10">
+    <mat-divider></mat-divider> -->
+    <mat-card-content>
 
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)"
                 placeholder="Search by address, service type, phone etc.">
             <mat-icon>search</mat-icon>
         </div>
-
+        <span class="spacer"></span>
+        <button mat-stroked-button class="outline-success float-right" [routerLink]="[router.url +'/add-location']"
+        routerLinkActive="router-link-active">
+        Add New Location
+    </button>
         <div class="user-detail">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
                 matSort>
