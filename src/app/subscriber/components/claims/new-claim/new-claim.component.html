@@ -152,7 +152,7 @@
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Language</mat-label>
                                 <mat-select formControlName="primary_language_spoken"
-                                    (selectionChange)="primryLangChange()" [disabled]="!languageStatus">
+                                    (selectionChange)="primryLangChange();claimant.get('other_language').reset()" [disabled]="!languageStatus">
                                     <mat-option *ngFor="let language of languageList" [value]="language.id">
                                         {{language.language}}
                                     </mat-option>
@@ -160,13 +160,13 @@
                                 <mat-error *ngIf="isClaimantSubmited">Please select a language</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Enter Other Language</mat-label>
-                                <input matInput type="text" placeholder="Language" autocomplete="off">
-                                <mat-error>Please enter valid phone number</mat-error>
-                            </mat-form-field>
-
+                            <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-form-field fxFlex="100" *ngIf="claimant.value.primary_language_spoken == 20" appearance="outline">
+                                  <mat-label>Other Language</mat-label>
+                                  <input matInput formControlName="other_language" placeholder="Other Language" autocomplete="off">
+                                  <mat-error *ngIf="isClaimantSubmited">Please enter other language</mat-error>
+                                </mat-form-field>
+                              </div>
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
