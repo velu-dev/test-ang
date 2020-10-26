@@ -600,10 +600,12 @@
             <mat-divider></mat-divider>
             <mat-card-content>
                 <div fxLayout="row wrap">
-                    <div fxFlex="100">See <span>these directions</span> and <span>this example</span> provided by the
-                        state of California.</div>
-                    <div fxFlex="100">Please download, finalize and upload the following
-                        documents:</div>
+                    <div fxFlex="100">See <span>these directions</span> provided by the state of California.</div>
+                    <!-- <div fxFlex="100">Please download, finalize and upload the following
+                        documents:</div> -->
+                    <div fxFlex="100">Complete the following documents by downloading them, filling them and uploading
+                        them below:
+                    </div>
                     <div>
                         <ul *ngFor="let doc of this.billDocumentList?.document_info">
                             <li> {{doc}}</li>
