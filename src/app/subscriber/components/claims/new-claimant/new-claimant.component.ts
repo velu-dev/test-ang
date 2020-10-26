@@ -171,7 +171,8 @@ export class NewClaimantComponent implements OnInit {
       salutation: [null, Validators.compose([Validators.maxLength(4)])],
       city: [null],
       state: [null],
-      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      other_language: [null]
     })
 
     this.claimService.seedData('language').subscribe(response => {
@@ -208,7 +209,16 @@ export class NewClaimantComponent implements OnInit {
     } else {
       this.claimantForm.get('primary_language_spoken').setValidators([]);
     }
+
+    if (this.claimantForm.value.primary_language_spoken == 20) {
+      this.claimantForm.get('other_language').setValidators([Validators.required]);
+      this.claimantForm.get('other_language').updateValueAndValidity();
+    } else {
+      this.claimantForm.get('other_language').setValidators([]);
+    }
     this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
+    this.claimantForm.get('other_language').updateValueAndValidity();
+
     if (!this.claimantChanges) {
       return;
     }
@@ -337,11 +347,11 @@ export class NewClaimantComponent implements OnInit {
       this.claimantState = state_code;
       return;
     }
-      this.states.map(res => {
-        if ((res.id == state) || (res.state == state)) {
-          this.claimantState = res.state_code;
-        }
-      })
+    this.states.map(res => {
+      if ((res.id == state) || (res.state == state)) {
+        this.claimantState = res.state_code;
+      }
+    })
   }
   newClaim() {
     this.router.navigate([this.router.url + '/new-claim'])
