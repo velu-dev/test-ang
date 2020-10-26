@@ -40,7 +40,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     // })
     console.log(this.aattorneyDetail)
     // this.changeState(this.aattorneyDetail['state'], this.aattorneyDetail['state_code']);
-    this.claimService.seedData('eams_claims_administrator').subscribe(res => {
+    this.claimService.seedData('eams_representatives').subscribe(res => {
       this.eamsRepresentatives = res.data;
       this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
       this.dattroneyGroupOptions = this.ApplicantAttorney.get('company_name')!.valueChanges
