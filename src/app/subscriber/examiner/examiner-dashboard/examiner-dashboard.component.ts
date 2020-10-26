@@ -8,7 +8,7 @@ import { ExaminerService } from '../../service/examiner.service';
   styleUrls: ['./examiner-dashboard.component.scss']
 })
 export class ExaminerDashboardComponent implements OnInit {
-  dashboardData = {};
+  dashboardData: any;
   constructor(private examinerService: ExaminerService, private router: Router) {
     this.getCount();
   }
@@ -19,7 +19,7 @@ export class ExaminerDashboardComponent implements OnInit {
     this.examinerService.getExaminerDashboardData().subscribe(res => {
       this.dashboardData = res.data;
     }, error => {
-      
+
     })
   }
   openMenu(menu) {
