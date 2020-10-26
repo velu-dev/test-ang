@@ -34,8 +34,7 @@
         (afterPickerClosed)="dateChanged()" #intake>
     </owl-date-time>
     <div style="height:100%">
-        <full-calendar #calendar *ngIf="options" [minTime]="'06:00'" [maxTime]="'22:00'"
-            [eventLimit]="options.eventLimit" [themeSystem]="'standard'" [bootstrapFontAwesome]="true"
+        <full-calendar #calendar *ngIf="options" [eventLimit]="options.eventLimit" [themeSystem]="'standard'" [bootstrapFontAwesome]="true"
             [slotEventOverlap]="false" [eventTimeFormat]="options.eventTimeFormat"
             [businessHours]="options.businessHours" [editable]="false" [events]="calendarEvents" [views]="options.views"
             [header]="options.header" [customButtons]="options.customButtons" [plugins]="options.plugins"
