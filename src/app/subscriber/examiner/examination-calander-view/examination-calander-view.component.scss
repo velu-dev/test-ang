@@ -1,0 +1,23 @@
+@import "variables";
+
+.fc_calender {
+    padding: 0 5px;
+    // box-shadow: $box-shadow-1;
+    .exa_status {
+        float: right;
+        p {
+            .lv {
+                color: #F27120;
+                padding-left: 10px;
+            }
+            .con {
+                color: #4FCC24;
+                padding-left: 10px;
+            }
+            .not_con {
+                color: #F27120;
+                padding-left: 10px;
+            }
+        }
+    }
+}
