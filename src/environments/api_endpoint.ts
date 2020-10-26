@@ -180,5 +180,8 @@ export const api_endpoint = {
     //Calendar 
 
     getCalendarEvents: "calendar/all",
-    getSingleEvent: "calendar/single-event/"
+    getSingleEvent: "calendar/single-event/",
+
+    //dashboard
+    getAllData: "examiner-dashboard/all-count-details",
 }
