@@ -1,9 +1,13 @@
 @import "variables";
 
 .alert {
-    .fa-times-circle {
+    display: flex;
+    .alert_info {
+       padding: 0 5px 0 0; 
+    }
+    .alert_close {
         float: right;
-        padding: 5px 0 0 0;
+        padding: 0 0 0 5px;
         cursor: pointer;
     }
 }
