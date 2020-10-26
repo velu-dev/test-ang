@@ -586,6 +586,7 @@ export class NewClaimComponent implements OnInit {
       claim_injuries: [null],
       InsuranceAdjuster: this.formBuilder.group({
         id: [null],
+        payor_id: [null],
         company_name: [null],
         name: [null],
         street1: [null],
@@ -1404,6 +1405,7 @@ export class NewClaimComponent implements OnInit {
     }
   }
   appClaimAdmin(claimadmin) {
+    console.log(claimadmin)
     this.changeState(claimadmin.state, 'ca');
     delete claimadmin['id'];
     this.claim.patchValue({
