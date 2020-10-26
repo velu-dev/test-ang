@@ -567,7 +567,8 @@ export class NewClaimComponent implements OnInit {
       street2: [null],
       city: [null],
       state: [null],
-      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      other_language: [null]
     })
 
     this.claim = this.formBuilder.group({
@@ -1016,6 +1017,14 @@ export class NewClaimComponent implements OnInit {
         this.claimant.get(key).setValue(this.claimant.get(key).value.trim());
     });
     this.logger.log("cxczczcxcz", this.claimant.invalid)
+
+    if (this.claimant.value.primary_language_spoken == 20) {
+      this.claimant.get('other_language').setValidators([Validators.required]);
+      this.claimant.get('other_language').updateValueAndValidity();
+    } else {
+      this.claimant.get('other_language').setValidators([]);
+    }
+    this.claimant.get('other_language').updateValueAndValidity();
     if (this.claimant.invalid) {
       return;
     }
