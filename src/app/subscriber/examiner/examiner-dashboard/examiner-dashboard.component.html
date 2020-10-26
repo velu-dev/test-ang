@@ -69,12 +69,13 @@
                                 <div fxLayout="row wrap">
                                     <div class="heading-one separation" fxFlex="50">
                                         Total
-                                        <span>15</span>
+                                        <span>{{dashboardData?.upcoming_appointments?.total}}</span>
                                     </div>
 
                                     <div class="heading-one" fxFlex="50">
                                         Within the next 10 days
-                                        <span class="text-primary">4</span>
+                                        <span
+                                            class="text-primary">{{dashboardData?.upcoming_appointments?.next_10days_count}}</span>
                                     </div>
                                 </div>
                             </mat-card-content>
@@ -93,7 +94,7 @@
                             <mat-card-content>
                                 <div class="heading-one">
                                     Pending Payment
-                                    <span class="text-success">$79,856.15</span>
+                                    <span class="text-success">${{dashboardData?.billing?.pending_payment}}</span>
                                 </div>
                             </mat-card-content>
                         </mat-card>
@@ -111,7 +112,7 @@
                             <mat-card-content>
                                 <div class="heading-one">
                                     Total
-                                    <span>2</span>
+                                    <span>{{dashboardData?.items_awaiting_reports?.total}}</span>
                                 </div>
                             </mat-card-content>
                         </mat-card>
@@ -130,7 +131,7 @@
                             <mat-card-content>
                                 <div class="heading-one">
                                     Total
-                                    <span>6</span>
+                                    <span>{{dashboardData?.reports_awaiting_approval?.total}}</span>
                                 </div>
                             </mat-card-content>
                         </mat-card>

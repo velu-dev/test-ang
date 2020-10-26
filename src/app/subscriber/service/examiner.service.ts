@@ -102,4 +102,7 @@ export class ExaminerService {
   getSingleEvent(examiner_id, appointment_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getSingleEvent + examiner_id + "/" + appointment_id)
   }
+  getExaminerDashboardData(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getAllData)
+  }
 }
