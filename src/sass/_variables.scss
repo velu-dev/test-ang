@@ -1289,7 +1289,7 @@ input:-webkit-autofill {
     &:focus,
     &::-moz-focus-inner {
       outline: none !important;
-      border: none !important;
+      border: 1px solid $danger !important;
     }
   }
 

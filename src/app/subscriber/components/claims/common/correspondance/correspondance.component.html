@@ -61,7 +61,7 @@
         <app-nodata *ngIf="correspondenceSource?.filteredData?.length == 0"></app-nodata>
 
     </div> -->
-    <div class="user-detail  vertical-fixed default-cursor m-t-5">
+    <div class="user-detail  vertical-fixed default-cursor m-t-20">
         <table mat-table [dataSource]="correspondenceSource" multiTemplateDataRows class="mat-elevation-z8 user-table">
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                 <th mat-header-cell *matHeaderCellDef>

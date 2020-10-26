@@ -248,7 +248,7 @@ export class BilllableBillingComponent implements OnInit {
   icdSearched = false;
   filteredICD: any = [];
 
-  payorCtrl = new FormControl();
+  payorCtrl = new FormControl({value: '', disabled: true});
 
 
   openDialog(status?: boolean, group?): void {
@@ -293,22 +293,22 @@ export class BilllableBillingComponent implements OnInit {
       ).subscribe(value => { this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
 
 
-    this.billingService.searchPayor({ search: null }).subscribe(payor => {
-      this.payors = payor.data
-    });
+    // this.billingService.searchPayor({ search: null }).subscribe(payor => {
+    //   this.payors = payor.data
+    // });
 
-    this.payorCtrl.valueChanges.subscribe(res => {
-      if (res && res.length > 2) {
-        this.billingService.searchPayor({ search: res }).subscribe(payor => {
-          if (payor.data) {
-            this.payors = payor.data
-          } else {
-            this.payors = [];
-          }
+    // this.payorCtrl.valueChanges.subscribe(res => {
+    //   if (res && res.length > 2) {
+    //     this.billingService.searchPayor({ search: res }).subscribe(payor => {
+    //       if (payor.data) {
+    //         this.payors = payor.data
+    //       } else {
+    //         this.payors = [];
+    //       }
 
-        });
-      }
-    })
+    //     });
+    //   }
+    // })
 
     // this.claimService.seedData('bill_ondemand_document_types').subscribe(type => {
     //   this.documentList = type['data']
@@ -1239,19 +1239,19 @@ export class BillingPaymentDialog {
     return control;
   }
 
-  openFileUpload(){
-       let newRowStatus = true
-      for (var j in this.getFormControls.controls) {
-        console.log(this.getFormControls.controls[j].value)
-        if (!this.getFormControls.controls[j].value['save_status']) {
-          newRowStatus = false;
-        }
+  openFileUpload() {
+    let newRowStatus = true
+    for (var j in this.getFormControls.controls) {
+      console.log(this.getFormControls.controls[j].value)
+      if (!this.getFormControls.controls[j].value['save_status']) {
+        newRowStatus = false;
       }
+    }
 
-      if (!newRowStatus) {
-        this.alertService.openSnackBar("Please save existing data", 'error');
-        return;
-      }
+    if (!newRowStatus) {
+      this.alertService.openSnackBar("Please save existing data", 'error');
+      return;
+    }
     this.fileUpload.nativeElement.click()
   }
 
