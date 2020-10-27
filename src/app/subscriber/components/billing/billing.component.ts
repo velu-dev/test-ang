@@ -91,6 +91,10 @@ export class BillingComponent implements OnInit {
   }
 
   gotoBilling(e) {
-    this.router.navigateByUrl(this.router.url + '/' + e.claim_id + '/' + e.billable_item_id + '/' + 'edit-billing' + '/' + e.bill_id)
+    //this.router.navigateByUrl(this.router.url + '/' + e.claim_id + '/' + e.billable_item_id + '/' + 'edit-billing' + '/' + e.bill_id)
+    this.router.navigateByUrl(this.router.url + '/claimant/' + e.claimant_id + '/claim/' + e.claim_id + '/billable-item/' + e.billable_item_id + '/billing/' + e.bill_id)
   }
+
+
+
 }
