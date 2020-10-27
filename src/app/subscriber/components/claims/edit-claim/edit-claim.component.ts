@@ -8,6 +8,7 @@ import { state } from 'src/app/shared/messages/errors'
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { breadcrumbreducer } from 'src/app/shared/store/breadcrumb.reducer';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 @Component({
   selector: 'app-edit-claim',
   templateUrl: './edit-claim.component.html',
@@ -38,7 +39,8 @@ export class EditClaimComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private _location: Location,
-    private intercom: IntercomService
+    private intercom: IntercomService,
+    private cookieService: CookieService
   ) {
     this.intercom.setClaimant("Claimant");
     this.intercom.setClaimNumber("Claim");
@@ -55,6 +57,7 @@ export class EditClaimComponent implements OnInit {
         this.isLoading = true;
         this.claimService.getClaim(param.claim_id).subscribe(res => {
           this.intercom.setClaimant(res['data'].claimant_details.first_name + ' ' + res['data'].claimant_details.last_name);
+          this.cookieService.set('claimDeatis', res['data'].claimant_details.first_name + ' ' + res['data'].claimant_details.last_name)
           this.intercom.setClaimNumber(res.data.claim_details.claim_number);
           console.log(res.data.claimant_details)
           this.dateOfBirth = res.data.claimant_details.date_of_birth;

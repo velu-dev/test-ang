@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
@@ -37,7 +38,7 @@ export class DashboardComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
@@ -52,7 +53,7 @@ export class DashboardComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
         this.columnName = ["", "Claimant", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date of Item Received", "Critical"]
-        this.columnsToDisplay = ['is_expand','claimant_name', 'examiner_name', "exam_procedure_type", "standing", 'dos', 'critical']
+        this.columnsToDisplay = ['is_expand', 'claimant_name', 'examiner_name', "exam_procedure_type", "standing", 'dos', 'critical']
       }
     })
   }
@@ -81,7 +82,7 @@ export class DashboardComponent implements OnInit {
   expandId: any;
   openElement(element) {
     // if (this.isMobile) {
-      this.expandId = element.id;
+    this.expandId = element.id;
     // }
   }
   navigate(menu) {
@@ -96,9 +97,9 @@ export class DashboardComponent implements OnInit {
 
 
 const ELEMENT_DATA = [
-  { "id": 1, "claimant_name": "Sam, Toucan", "examiner_name": "Denzel Washington", "exam_procedure_type": "QME", "standing": "Correspondence Not Sent", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
-  { "id": 2, "claimant_name": "Tiger, Tony", "examiner_name": "Jessica Simpson", "exam_procedure_type": "QME", "standing": "Appointment Awaiting Date", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
-  { "id": 3, "claimant_name": "Chocula, Count", "examiner_name": "Jennifer Lopez", "exam_procedure_type": "QME", "standing": "Appointment 06-30-2020", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
- // { "id": 132, "claimant_name": "Mariyappan", "examiner_name": "Venkatesan", "exam_procedure_type": "", "standing": "", "dos": "", "critical": "", "correspondence": "", "history": "", "records": "", "examination":"", "report":"", "transcription":"", "billing":""},
- 
+  // { "id": 1, "claimant_name": "Sam, Toucan", "examiner_name": "Denzel Washington", "exam_procedure_type": "QME", "standing": "Correspondence Not Sent", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
+  // { "id": 2, "claimant_name": "Tiger, Tony", "examiner_name": "Jessica Simpson", "exam_procedure_type": "QME", "standing": "Appointment Awaiting Date", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
+  // { "id": 3, "claimant_name": "Chocula, Count", "examiner_name": "Jennifer Lopez", "exam_procedure_type": "QME", "standing": "Appointment 06-30-2020", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
+  // { "id": 132, "claimant_name": "Mariyappan", "examiner_name": "Venkatesan", "exam_procedure_type": "", "standing": "", "dos": "", "critical": "", "correspondence": "", "history": "", "records": "", "examination":"", "report":"", "transcription":"", "billing":""},
+
 ];

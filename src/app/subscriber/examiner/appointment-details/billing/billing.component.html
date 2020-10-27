@@ -43,9 +43,8 @@
                             <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payor ID</div>
                             <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
 
-                                <input matInput [formControl]="payorCtrl" [matAutocomplete]="payorAuto"
-                                    placeholder="Search by Payor ID, Name">
-                                <button mat-button *ngIf="payorCtrl.value" (click)="clearPayorCtrl()" matSuffix
+                                <input matInput [formControl]="payorCtrl" >
+                                <!-- <button mat-button *ngIf="payorCtrl.value" (click)="clearPayorCtrl()" matSuffix
                                     mat-icon-button>
                                     <mat-icon>close</mat-icon>
                                 </button>
@@ -57,7 +56,7 @@
                                     <mat-option disabled *ngIf="payors?.length == 0">
                                         Not Found
                                     </mat-option>
-                                </mat-autocomplete>
+                                </mat-autocomplete> -->
                             </mat-form-field>
                         </div>
                         <!-- <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">
@@ -777,8 +776,7 @@
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center">
             <!-- <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="billingOnDemand()">Bill On
                 Demand</button> -->
-            <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="openBillOnDemand()">Bill On
-                Demand</button>
+            <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="openBillOnDemand()">Submit Bill and Report</button>
 
 
         </div>
