@@ -7,6 +7,8 @@ import { ClaimService } from '../../service/claim.service';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { User } from 'src/app/shared/model/user.model';
+import { CookieService } from 'src/app/shared/services/cookie.service';
+import { IntercomService } from 'src/app/services/intercom.service';
 export interface PeriodicElement {
   bill_no: string;
   claim_no: string;
@@ -49,7 +51,9 @@ export class BillingComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
-    public router: Router) {
+    public router: Router,
+    private cookieService: CookieService,
+    private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })
@@ -91,6 +95,15 @@ export class BillingComponent implements OnInit {
   }
 
   gotoBilling(e) {
+    this.intercom.setClaimant(e.claimant_first_name + ' ' + e.claimant_last_name);
+    this.cookieService.set('claimDeatis', e.claimant_first_name + ' ' + e.claimant_last_name)
+    this.intercom.setClaimNumber(e.claim_number);
+    this.cookieService.set('claimNumber', e.claim_number)
+    this.intercom.setBillableItem('Billable Item');
+    this.cookieService.set('billableItem', 'Billable Item')//response.data.exam_procedure_name
+    this.intercom.setBillNo(e.bill_no);
+    this.cookieService.set('billNo', e.bill_no)
+    
     //this.router.navigateByUrl(this.router.url + '/' + e.claim_id + '/' + e.billable_item_id + '/' + 'edit-billing' + '/' + e.bill_id)
     this.router.navigateByUrl(this.router.url + '/claimant/' + e.claimant_id + '/claim/' + e.claim_id + '/billable-item/' + e.billable_item_id + '/billing/' + e.bill_id)
   }
