@@ -63,7 +63,8 @@
                             <mat-card-header>
                                 <div class="content-wrapper-main-title">Upcoming Appointments</div>
                                 <span class="spacer"></span>
-                                <mat-icon>fullscreen</mat-icon>
+                                <mat-icon [routerLink]="['/subscriber/examiner/upcomming-billable-item']">fullscreen
+                                </mat-icon>
                             </mat-card-header>
                             <mat-card-content>
                                 <div fxLayout="row wrap">
@@ -89,7 +90,8 @@
                             <mat-card-header>
                                 <div class="content-wrapper-main-title">Billing</div>
                                 <span class="spacer"></span>
-                                <mat-icon>fullscreen</mat-icon>
+                                <mat-icon [routerLink]="['/subscriber/examiner/billing-collection']">fullscreen
+                                </mat-icon>
                             </mat-card-header>
                             <mat-card-content>
                                 <div class="heading-one">
@@ -107,7 +109,8 @@
                             <mat-card-header>
                                 <div class="content-wrapper-main-title">Items Awaiting Report / Dictation</div>
                                 <span class="spacer"></span>
-                                <mat-icon>fullscreen</mat-icon>
+                                <mat-icon [routerLink]="['/subscriber/examiner/billable-item-awaiting']">fullscreen
+                                </mat-icon>
                             </mat-card-header>
                             <mat-card-content>
                                 <div class="heading-one">
