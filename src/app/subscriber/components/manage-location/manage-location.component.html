@@ -78,7 +78,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length"  (click)="editAddress(element)">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Address</span><span>{{element.street1}} {{element.street2}} {{element.city}}
