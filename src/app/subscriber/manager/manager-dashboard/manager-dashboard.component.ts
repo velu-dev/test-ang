@@ -42,4 +42,11 @@ export class ManagerDashboardComponent implements OnInit {
       this.router.navigate(['subscriber/manager/new-intake'])
     }
   }
+
+  expandId: any;
+  openElement(element) {
+    // if (this.isMobile) {
+    this.expandId = element.id;
+    // }
+  }
 }
