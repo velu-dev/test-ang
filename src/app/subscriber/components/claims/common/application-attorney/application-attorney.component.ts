@@ -26,7 +26,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   ApplicantAttorney: FormGroup;
   attroneylist = [];
   eamsRepresentatives = [];
-  dattroneyGroupOptions: Observable<any[]>;
+  dattroneyGroupOptions: any = [];
   DattroneySelect = true;
   id: any;
   constructor(
@@ -40,15 +40,15 @@ export class ApplicationAttorneyComponent implements OnInit {
     // })
     console.log(this.aattorneyDetail)
     // this.changeState(this.aattorneyDetail['state'], this.aattorneyDetail['state_code']);
-    this.claimService.seedData('eams_representatives').subscribe(res => {
-      this.eamsRepresentatives = res.data;
-      this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
-      this.dattroneyGroupOptions = this.ApplicantAttorney.get('company_name')!.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this._filterAttroney(value, this.attroneylist))
-        );
-    })
+    // this.claimService.seedData('eams_representatives').subscribe(res => {
+    //   this.eamsRepresentatives = res.data;
+    //   this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
+    //   this.dattroneyGroupOptions = this.ApplicantAttorney.get('company_name')!.valueChanges
+    //     .pipe(
+    //       startWith(''),
+    //       map(value => this._filterAttroney(value, this.attroneylist))
+    //     );
+    // })
     this.ApplicantAttorney = this.formBuilder.group({
       id: [],
       company_name: [{ value: null, disabled: true }],
@@ -61,6 +61,15 @@ export class ApplicationAttorneyComponent implements OnInit {
       phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+    });
+    this.ApplicantAttorney.get('company_name')!.valueChanges.subscribe(input => {
+      if (input) {
+        if (input.length >= 3 || input.length == 0) {
+          this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
+            this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+          })
+        }
+      }
     });
   }
   ngOnInit() {

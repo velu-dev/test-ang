@@ -25,21 +25,21 @@ export class ClaimAdminComponent implements OnInit {
   claimAdminForm: FormGroup;
   claimAdminList = []
   eamsClaimsAdministrator = [];
-  claimAdminGroupOptions: Observable<any[]>;
+  claimAdminGroupOptions: any = [];
   CASelect = true;
   @Input('state') states;
   id: any;
   // @Output() isEditComplete = new EventEmitter();
   constructor(public dialogRef: MatDialogRef<ClaimAdminComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
-    this.claimService.seedData('eams_claims_administrator').subscribe(res => {
-      this.eamsClaimsAdministrator = res.data;
-      this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
-      this.claimAdminGroupOptions = this.claimAdminForm.get('company_name')!.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this._filterAttroney(value, this.claimAdminList))
-        );
-    })
+    // this.claimService.seedData('eams_claims_administrator').subscribe(res => {
+    //   this.eamsClaimsAdministrator = res.data;
+    //   this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
+    //   this.claimAdminGroupOptions = this.claimAdminForm.get('company_name')!.valueChanges
+    //     .pipe(
+    //       startWith(''),
+    //       map(value => this._filterAttroney(value, this.claimAdminList))
+    //     );
+    // })
     this.claimAdminForm = this.formBuilder.group({
       id: [],
       company_name: [{ value: null, disabled: true }],
@@ -52,6 +52,15 @@ export class ClaimAdminComponent implements OnInit {
       phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+    });
+    this.claimAdminForm.get('company_name')!.valueChanges.subscribe(input => {
+      if (input) {
+        if (input.length >= 3 || input.length == 0) {
+          this.claimService.searchEAMSAdmin({ search: input }).subscribe(res => {
+            this.claimAdminGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+          })
+        }
+      }
     });
   }
 
