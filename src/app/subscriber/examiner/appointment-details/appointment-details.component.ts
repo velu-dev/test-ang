@@ -597,10 +597,21 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.enable();
   }
   submitBillableItem() {
-    if (this.billable_item.invalid)
-      return
+    if (this.billable_item.invalid){
+      return;
+    }
     console.log(this.billable_item.value)
-    console.log(this.examinationStatusForm.value)
+    console.log(this.examinationDetails, "examinationDetails")
+    console.log(this.examinationStatusForm.value, "examinationStatusForm")
+    console.log(this.billableData, "billableData")
+    if(this.examinationDetails.bill_id){
+      if(this.billableData.exam_type.exam_procedure_type_id != this.billable_item.value.exam_type.exam_procedure_type_id){
+        this.alertService.openSnackBar("Billing already created this billable item", "error");
+        return;
+      }
+    }
+   
+    
     if (this.billable_item.value.appointment.appointment_scheduled_date_time && !this.examinationStatusForm.value.examination_status) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '500px',
