@@ -42,4 +42,10 @@ export class StaffDashboardComponent implements OnInit {
       this.router.navigate(['subscriber/staff/new-intake'])
     }
   }
+  expandId: any;
+  openElement(element) {
+    // if (this.isMobile) {
+    this.expandId = element.id;
+    // }
+  }
 }

@@ -25,22 +25,22 @@ export class DefenseAttorneyComponent implements OnInit {
   attroneylist = [];
   @Input('state') states;
   eamsRepresentatives = [];
-  dattroneyGroupOptions: Observable<any[]>;
+  dattroneyGroupOptions: any = [];
   DattroneySelect = true;
   id: any;
   constructor(public dialogRef: MatDialogRef<DefenseAttorneyComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
-    this.claimService.searchEAMSAttorney('eams_representatives').subscribe(res => {
-      this.eamsRepresentatives = res.data;
-      this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
-      this.dattroneyGroupOptions = this.DefanceAttorney.get('company_name')!.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this._filterAttroney(value, this.attroneylist))
-        );
-    })
+    // this.claimService.searchEAMSAttorney('eams_representatives').subscribe(res => {
+    //   this.eamsRepresentatives = res.data;
+    //   this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
+    //   this.dattroneyGroupOptions = this.DefanceAttorney.get('company_name')!.valueChanges
+    //     .pipe(
+    //       startWith(''),
+    //       map(value => this._filterAttroney(value, this.attroneylist))
+    //     );
+    // })
     this.DefanceAttorney = this.formBuilder.group({
       company_name: [{ value: null, disabled: true }],
       id: [],
@@ -53,6 +53,15 @@ export class DefenseAttorneyComponent implements OnInit {
       phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+    });
+    this.DefanceAttorney.get('company_name')!.valueChanges.subscribe(input => {
+      if (input) {
+        if (input.length >= 3 || input.length == 0) {
+          this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
+            this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+          })
+        }
+      }
     });
   }
   private _filterAttroney(value: string, data) {

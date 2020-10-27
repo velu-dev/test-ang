@@ -103,7 +103,7 @@ export class ClaimantComponent implements OnInit {
     })
   }
   gotoEdit(e) {
-    this.cookieService.set('claimDeatis', e.last_name + ', ' + e.first_name)
+    this.cookieService.set('claimDeatis', e.first_name + ', ' + e.last_name)
     this.router.navigate([this.router.url + "/claimant", e.id])
   }
 
