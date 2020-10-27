@@ -45,7 +45,7 @@
 
                                 <input matInput [formControl]="payorCtrl" [matAutocomplete]="payorAuto"
                                     placeholder="Search by Payor ID, Name">
-                                <button mat-button *ngIf="payorCtrl.value" (click)="clearPayorCtrl()" matSuffix
+                                <!-- <button mat-button *ngIf="payorCtrl.value" (click)="clearPayorCtrl()" matSuffix
                                     mat-icon-button>
                                     <mat-icon>close</mat-icon>
                                 </button>
@@ -57,7 +57,7 @@
                                     <mat-option disabled *ngIf="payors?.length == 0">
                                         Not Found
                                     </mat-option>
-                                </mat-autocomplete>
+                                </mat-autocomplete> -->
                             </mat-form-field>
                         </div>
                         <!-- <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">

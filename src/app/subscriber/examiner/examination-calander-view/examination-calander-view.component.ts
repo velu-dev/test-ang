@@ -133,7 +133,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
       this.dateChanged()
     }, error => {
       this.calendarEvents = [];
-      this.alertService.openSnackBar(error.error.message, 'error');
+      // this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
   ngOnInit() {
@@ -190,7 +190,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     this.examinarService.getCalendarEvent(this.months).subscribe(event => {
       this.calendarEvents = event.data;
     }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
+      // this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
   selectExaminer(examiner?, status?) {
@@ -212,7 +212,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
         }
       }, error => {
         this.calendarEvents = []
-        this.alertService.openSnackBar(error.error.message, 'error');
+        // this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.loadAllEvents();

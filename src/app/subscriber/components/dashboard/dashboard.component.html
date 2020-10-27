@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="25px">
+<!-- <div fxLayout="column" fxLayoutGap="25px">
     <div fxLayout="row wrap">
         <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card (click)="openMenu('intake')" matRipple class="br-top m-t-15 mat-card-details text-center">
@@ -79,11 +79,11 @@
             </mat-card>
         </div>
     </div>
-</div>
-<!-- <div fxLayout="column" fxLayoutGap="25px" class="dashboard-card">
+</div> -->
+<div fxLayout="column" fxLayoutGap="25px" class="dashboard-card">
     <div fxLayout="row wrap">
         <div fxFlex="25" fxFlex.xl="25" fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="m-t-15">
+            <mat-card matRipple class="m-t-15" (click)="openMenu('intake')">
                 <mat-card-content class="simple-card">
                     <div><i class="fa fa-address-card"></i></div>
                     <h4 class="m-t-5">New Claim
@@ -92,7 +92,7 @@
             </mat-card>
         </div>
         <div fxFlex="25" fxFlex.xl="25" fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="m-t-15">
+            <mat-card matRipple class="m-t-15" [routerLink]="['/subscriber/users/new']">
                 <mat-card-content class="simple-card">
                     <div><i class="fa fa-users"></i></div>
                     <h4 class="m-t-0">New Staff / Staff
@@ -101,7 +101,7 @@
             </mat-card>
         </div>
         <div fxFlex="25" fxFlex.xl="25" fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="m-t-15">
+            <mat-card matRipple class="m-t-15" [routerLink]="['/subscriber/new-examiner']">
                 <mat-card-content class="simple-card">
                     <div><i class="fa fa-user-tie"></i></div>
                     <h4 class="m-t-5">New Examiner</h4>
@@ -109,7 +109,7 @@
             </mat-card>
         </div>
         <div fxFlex="25" fxFlex.xl="25" fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="m-t-15">
+            <mat-card matRipple class="m-t-15" [routerLink]="['/subscriber/location/add-location']">
                 <mat-card-content class="simple-card">
                     <div><i class="fa fa-building"></i></div>
                     <h4 class="m-t-5">New Service
@@ -168,4 +168,4 @@
         <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </div>
     <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
-</div>  -->
+</div> 

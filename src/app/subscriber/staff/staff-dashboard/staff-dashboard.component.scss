@@ -1,1 +1,38 @@
 @import "variables";
+@import "table";
+
+.dashboard-card {
+    margin-bottom: 20px;
+    div {
+        div {
+            mat-card {
+                height: 50px;
+                border: 2px solid $menu-light;
+                box-shadow: none;
+                cursor: pointer;
+                &:hover {
+                    .simple-card {
+                        i,
+                        h4 {
+                            color: $secondary;
+                        }
+                    }
+                }
+                .simple-card {
+                    display: flex;
+                    i {
+                        font-size: 40px;
+                        color: $menu-light;
+                    }
+                    h4 {
+                        margin-top: 0px;
+                        font-size: $font-size-10;
+                        color: $black;
+                        text-align: center;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
