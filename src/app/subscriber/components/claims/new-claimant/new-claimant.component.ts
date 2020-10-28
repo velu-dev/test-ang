@@ -234,7 +234,7 @@ export class NewClaimantComponent implements OnInit {
     if (this.claimantForm.invalid) {
       return;
     }
-
+    this.claimantForm.value['date_of_birth'] = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY");
     if (!this.claimantId) {
       this.claimService.createClaimant(this.claimantForm.value).subscribe(res => {
         this.alertService.openSnackBar("Claimant created successfully!", 'success');
