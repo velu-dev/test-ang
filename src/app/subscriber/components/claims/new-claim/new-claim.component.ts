@@ -1017,7 +1017,6 @@ export class NewClaimComponent implements OnInit {
       if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
         this.claimant.get(key).setValue(this.claimant.get(key).value.trim());
     });
-    this.logger.log("cxczczcxcz", this.claimant.invalid)
 
     if (this.claimant.value.primary_language_spoken == 20) {
       this.claimant.get('other_language').setValidators([Validators.required]);
