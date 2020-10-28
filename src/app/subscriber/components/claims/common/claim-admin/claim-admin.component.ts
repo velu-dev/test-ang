@@ -43,6 +43,7 @@ export class ClaimAdminComponent implements OnInit {
     this.claimAdminForm = this.formBuilder.group({
       id: [],
       company_name: [{ value: null, disabled: true }],
+      payor_id: [null],
       name: [{ value: null, disabled: true }],
       street1: [{ value: null, disabled: true }],
       street2: [{ value: null, disabled: true }],
