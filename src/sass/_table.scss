@@ -338,6 +338,11 @@ tr.detail-row {
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         &:first-child {
           width: 100px;
+          a {
+            width: 100%;
+            display: block;
+            overflow-wrap:break-word;
+          }
         }
         .mat-form-field.mat-form-field-appearance-outline .mat-form-field-infix {
           padding: 5px 0 10px 0;

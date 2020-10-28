@@ -104,7 +104,7 @@
         <div fxFlex="50" fxFlex.md="50" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
           fxFlex.xs="100" class="checkbox">
           <div class="p-t-30 p-l-10">
-            <mat-checkbox labelPosition="after" (change)="languageStatus = !languageStatus;langChange()"
+            <mat-checkbox labelPosition="after" (change)="langChange($event);claimantForm.get('primary_language_spoken').reset();"
               formControlName="certified_interpreter_required">Certified Interpreter Required</mat-checkbox>
           </div>
         </div>
@@ -112,7 +112,7 @@
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Language</mat-label>
-          <mat-select formControlName="primary_language_spoken" (selectionChange)="claimantForm.get('other_language').reset()" [disabled]="!languageStatus || !editStatus">
+          <mat-select formControlName="primary_language_spoken" (selectionChange)="claimantForm.get('other_language').reset()">
             <mat-option *ngFor="let language of languageList" [value]="language.id">
               {{language.language}}
             </mat-option>

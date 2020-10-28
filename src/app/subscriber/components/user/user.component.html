@@ -126,9 +126,9 @@
                             <div class="responsive-table">
                                 <div class="symbol"><span>Last Name</span><span> {{element.last_name}} </span></div>
                                 <div class="position"><span>First Name</span><span> {{element.first_name}} </span></div>
-                                <div class="name"><span>Email ID</span><span> {{element.sign_in_email_id}} </span></div>
+                                <div class="name"><span>Email</span><span> {{element.sign_in_email_id}} </span></div>
                                 <div class="weight"><span>Role(s)</span><span> {{element.role_name}} </span></div>
-                                <div class="weight"><span>Enrolled On</span><span> {{element.createdAt}} </span></div>
+                                <div class="weight"><span>Enrolled On</span><span> {{element.createdAt | date:'MM-dd-yyyy'}} </span></div>
                             </div>
                         </div>
                     </td>

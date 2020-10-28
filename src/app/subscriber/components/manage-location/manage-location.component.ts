@@ -54,7 +54,7 @@ export class ManageLocationComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Examiner Name", "Status"]
+        this.columnName = ["", "Examiner", "Status"]
         this.columnsToDisplay = ['is_expand', 'examiner_name', "status"]
       } else {
         this.columnName = ["Address", "Service Type", "Phone", "Examiner", "Status"]

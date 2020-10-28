@@ -205,15 +205,15 @@ export class NewClaimantComponent implements OnInit {
     })
   }
   createClaimant() {
-    if (this.languageStatus) {
+    if (this.claimantForm.value.certified_interpreter_required) {
       this.claimantForm.get('primary_language_spoken').setValidators([Validators.required]);
     } else {
       this.claimantForm.get('primary_language_spoken').setValidators([]);
+      this.claimantForm.get('primary_language_spoken').enable();
     }
 
     if (this.claimantForm.value.primary_language_spoken == 20) {
       this.claimantForm.get('other_language').setValidators([Validators.required]);
-      this.claimantForm.get('other_language').updateValueAndValidity();
     } else {
       this.claimantForm.get('other_language').setValidators([]);
     }
@@ -303,6 +303,11 @@ export class NewClaimantComponent implements OnInit {
     this.editStatus = true;
     this.claimantForm.enable();
     this.claimantChanges = false;
+    if (!this.claimantForm.value.certified_interpreter_required) {
+      this.claimantForm.get('primary_language_spoken').disable();
+    } else {
+      this.claimantForm.get('primary_language_spoken').enable();
+    }
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -313,10 +318,13 @@ export class NewClaimantComponent implements OnInit {
 
   }
 
-  langChange() {
-    this.claimantForm.patchValue({ primary_language_spoken: null })
-    this.claimantForm.get('primary_language_spoken').setValidators([]);
-    this.claimantForm.get('primary_language_spoken').updateValueAndValidity();
+  langChange(event) {
+    this.claimantForm.get('primary_language_spoken').reset();
+    if (event.checked) {
+      this.claimantForm.get('primary_language_spoken').enable();
+    } else {
+      this.claimantForm.get('primary_language_spoken').disable();
+    }
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
