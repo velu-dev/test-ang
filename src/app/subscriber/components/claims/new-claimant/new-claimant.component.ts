@@ -231,7 +231,7 @@ export class NewClaimantComponent implements OnInit {
         this.claimantForm.get(key).setValue(this.claimantForm.get(key).value.trim())
     });
     this.isClaimantSubmited = true;
-    this.claimantForm.value.date_of_birth = new Date(this.claimantForm.value.date_of_birth).toDateString();
+    this.claimantForm.value.date_of_birth = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY"); //new Date()//.toDateString();
     if (this.claimantForm.invalid) {
       return;
     }
