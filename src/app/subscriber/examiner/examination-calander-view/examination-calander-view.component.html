@@ -28,7 +28,7 @@
 
 <div class="app-calendar">
 
-    <input matInput [owlDateTime]="intake" [(ngModel)]="selectedDate" (dateChange)="dateChanged()"
+    <input matInput [owlDateTime]="intake" [(ngModel)]="selectedDate" [min]="minimumDate" (dateChange)="dateChanged()"
         style="visibility: hidden;">
     <owl-date-time [hour12Timer]="true" [pickerMode]="'dialog'" [pickerType]="'calendar'"
         (afterPickerClosed)="dateChanged()" #intake>

@@ -87,6 +87,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   months = [];
   calendarDef: any;
   currentMonth = moment().month();
+  minimumDate = new Date(1900, 0, 1);
   @Input('CalendarView') CalendarView;
   defaultView = "dayGridMonth";
   constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
