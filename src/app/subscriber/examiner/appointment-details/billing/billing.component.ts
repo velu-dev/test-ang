@@ -923,7 +923,7 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   calculateTotal() {
-    let total = 0;
+    let total: any = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
         total += parseFloat(this.getFormControls.controls[j].value.charge)
@@ -933,17 +933,21 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   calculateTotalBal() {
-    let total = 0;
+    let total: any = 0;
+    let payment: any = 0
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
-        total += parseFloat(this.getFormControls.controls[j].value.charge) - parseFloat(this.getFormControls.controls[j].value.payment)
+        total += parseFloat(this.getFormControls.controls[j].value.charge)
+      }
+      if (this.getFormControls.controls[j].value.payment) {
+        payment += parseFloat(this.getFormControls.controls[j].value.payment)
       }
     }
-    return total.toFixed(2);
+    return (total - payment).toFixed(2);
   }
 
   calculateTotalPayment() {
-    let total = 0;
+    let total: any = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.payment) {
         total += parseFloat(this.getFormControls.controls[j].value.payment)
