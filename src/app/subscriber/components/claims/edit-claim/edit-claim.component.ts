@@ -59,7 +59,7 @@ export class EditClaimComponent implements OnInit {
           this.intercom.setClaimant(res['data'].claimant_details.first_name + ' ' + res['data'].claimant_details.last_name);
           this.cookieService.set('claimDeatis', res['data'].claimant_details.first_name + ' ' + res['data'].claimant_details.last_name)
           this.intercom.setClaimNumber(res.data.claim_details.claim_number);
-          console.log(res.data.claimant_details)
+          console.log(res.data)
           this.dateOfBirth = res.data.claimant_details.date_of_birth;
           this.claimantDetail = res.data.claimant_details;
           this.claimDetail = res.data.claim_details;

@@ -1067,6 +1067,7 @@ export class BillingPaymentDialog {
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   paymentDetails: any;
   currentDate = new Date();
+  minimumDate = new Date(1900, 0, 1);
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,

@@ -226,8 +226,10 @@ export class ExaminationCalanderViewComponent implements OnInit {
     // this.openAddEventDialog(e);
   }
   dateChanged() {
-    this.calendar.getApi().gotoDate(new Date(this.selectedDate))
-    this.calendar.getApi().changeView("timeGridDay");
+    if (this.selectedDate) {
+      this.calendar.getApi().gotoDate(new Date(this.selectedDate))
+      this.calendar.getApi().changeView("timeGridDay");
+    }
   }
 
   openEventDetailDialog(e): void {

@@ -84,6 +84,7 @@ export class NewClaimantComponent implements OnInit {
   filterValue: string;
   claimantChanges: boolean = false;
   claimantInfo: any;
+  minimumDate = new Date(1900, 0, 1);
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
