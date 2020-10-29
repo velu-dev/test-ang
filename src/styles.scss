@@ -452,9 +452,11 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 .fc-button .fc-icon {
-  font-size: 10px;
-  width: 10px;
-  height: 10px;
+  @media only screen and (max-width: 568px) {
+    font-size: 10px;
+    width: 10px;
+    height: 10px;
+  }
 }
 .fc-header-toolbar {
   .fc-left {
