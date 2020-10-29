@@ -36,27 +36,32 @@ export class NewUserComponent implements OnInit {
     private _location: Location
   ) {
     this.roles = [];
-    this.store.subscribe(res => {
-      this.activeTitle = res.breadcrumb.active_title;
+    // this.store.subscribe(res => {
+    //   this.activeTitle = res.breadcrumb.active_title;
+    // })
+    this.isAdmin.status = true;
+    this.isAdmin.disabled = true;
+    this.userService.getRoles().subscribe(res => {
+      this.roles.push(res.data[0])
     })
-    if (this.activeTitle.split(" ").includes("User")) {
-    // if (this.activeTitle.split(" ").includes("Admin")) {
-      this.isAdmin.status = true;
-      this.isAdmin.disabled = true;
-      this.userService.getRoles().subscribe(res => {
-        this.roles.push(res.data[0])
-      })
-    } else if (this.activeTitle.split(" ").includes("Subscribers")) {
-      this.isSubscriber.status = true;
-      this.isSubscriber.disabled = true;
-      this.userService.getRoles().subscribe(res => {
-        this.roles = res.data;
-      })
-    } else if (this.activeTitle.split(" ").includes("Vendor")) {
-      this.userService.getVendorRole().subscribe(res => {
-        this.roles = res.data;
-      })
-    }
+    // if (this.activeTitle.split(" ").includes("User")) {
+    // // if (this.activeTitle.split(" ").includes("Admin")) {
+    //   this.isAdmin.status = true;
+    //   this.isAdmin.disabled = true;
+    //   this.userService.getRoles().subscribe(res => {
+    //     this.roles.push(res.data[0])
+    //   })
+    // } else if (this.activeTitle.split(" ").includes("Subscribers")) {
+    //   this.isSubscriber.status = true;
+    //   this.isSubscriber.disabled = true;
+    //   this.userService.getRoles().subscribe(res => {
+    //     this.roles = res.data;
+    //   })
+    // } else if (this.activeTitle.split(" ").includes("Vendor")) {
+    //   this.userService.getVendorRole().subscribe(res => {
+    //     this.roles = res.data;
+    //   })
+    // }
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
         this.isEdit = true;

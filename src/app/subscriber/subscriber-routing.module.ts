@@ -60,7 +60,7 @@ const routes: Routes = [{
 }, {
   path: "new",
   component: NewUserComponent,
-  data: { breadcrumb: "New Staff / Staff Manager" }
+  data: { breadcrumb: "New" }
 },
 {
   path: "claimant-awaiting",
@@ -275,11 +275,11 @@ const routes: Routes = [{
   }, {
     path: "new",
     component: NewUserComponent,
-    data: { breadcrumb: "New Staff / Staff Manager" }
+    data: { breadcrumb: "New" }
   }, {
     path: "edit/:id",
     component: NewUserComponent,
-    data: { breadcrumb: "Staff / Staff Manager" }
+    data: { breadcrumb: "Edit" }
   }, {
     path: "new-examiner",
     children: [

@@ -357,7 +357,6 @@ export class BilllableBillingComponent implements OnInit {
         let index = this.modiferList.indexOf('96');
         this.modiferList.splice(index, 1)
       }
-      console.log(this.modiferList,this.billingData.is_psychological_exam,this.billingData.certified_interpreter_required)
       if (this.billingData && this.billingData.bill_no) {
         this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
         this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
