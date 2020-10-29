@@ -66,7 +66,7 @@ export class ClaimAdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.states)
+    console.log(this.claimAdmin)
     if (this.fromPop) {
       this.dialogRef.disableClose = true;
       this.claimAdminForm.controls["company_name"].setValidators([Validators.required]);
@@ -85,6 +85,7 @@ export class ClaimAdminComponent implements OnInit {
   }
   caState: any;
   changeState(state, state_code?) {
+    console.log(state, state_code)
     if (state_code) {
       this.caState = state_code;
       return
@@ -97,7 +98,7 @@ export class ClaimAdminComponent implements OnInit {
   }
   appClaimAdmin(aa) {
     delete aa.id;
-    console.log(aa)
+    this.changeState(aa.state)
     this.claimAdminForm.patchValue(aa)
   }
   private _filterAttroney(value: string, data) {
