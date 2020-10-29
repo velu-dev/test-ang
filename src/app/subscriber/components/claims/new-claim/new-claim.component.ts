@@ -213,6 +213,7 @@ export class NewClaimComponent implements OnInit {
   aattroneyGroupOptions: any;
   dattroneyGroupOptions: any;
   claimAdminGroupOptions: any = [];
+  minimumDate = new Date(1900, 0, 1);
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,

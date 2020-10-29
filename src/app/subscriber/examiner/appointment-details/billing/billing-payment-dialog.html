@@ -27,11 +27,11 @@
                             autocomplete="off">
                         <mat-error *ngIf="postIsSubmit">Please enter valid Reference Number</mat-error>
                     </mat-form-field>
-
+ 
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Effective Date*</mat-label>
-                        <input matInput placeholder="MM-DD-YYYY" formControlName="effective_date" autocomplete="off"
+                        <input matInput placeholder="MM-DD-YYYY" [min]="minimumDate" formControlName="effective_date" autocomplete="off"
                             [matDatepicker]="effective">
                         <mat-datepicker-toggle matSuffix [for]="effective"></mat-datepicker-toggle>
                         <mat-datepicker #effective></mat-datepicker>
@@ -62,7 +62,7 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Deposited Date</mat-label>
-                        <input matInput placeholder="MM-DD-YYYY" [max]="currentDate" formControlName="deposit_date"
+                        <input matInput placeholder="MM-DD-YYYY" [min]="minimumDate" [max]="currentDate" formControlName="deposit_date"
                             autocomplete="off" [matDatepicker]="deposited">
                         <mat-datepicker-toggle matSuffix [for]="deposited"></mat-datepicker-toggle>
                         <mat-datepicker #deposited></mat-datepicker>

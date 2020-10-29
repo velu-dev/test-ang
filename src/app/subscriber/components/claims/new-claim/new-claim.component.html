@@ -99,7 +99,7 @@
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth*</mat-label>
                                 <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
-                                    [matDatepicker]="date_of_birth" [max]="today" formControlName="date_of_birth">
+                                    [matDatepicker]="date_of_birth" [min]="minimumDate"  [max]="today" formControlName="date_of_birth">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid date of birth</mat-error>
