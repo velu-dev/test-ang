@@ -107,7 +107,6 @@ export class BilllableBillingComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredmodifier: Observable<string[]>;
-  modifier_: string[] = ['96'];
   modiferList: string[] = ['93', '94', '95', '96'];
   @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
   //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
@@ -248,7 +247,7 @@ export class BilllableBillingComponent implements OnInit {
   icdSearched = false;
   filteredICD: any = [];
 
-  payorCtrl = new FormControl({value: '', disabled: true});
+  payorCtrl = new FormControl({ value: '', disabled: true });
 
 
   openDialog(status?: boolean, group?): void {
@@ -314,17 +313,17 @@ export class BilllableBillingComponent implements OnInit {
     //   this.documentList = type['data']
     // })
 
-    this.claimService.getProcedureType(2).subscribe(procedure => {
-      this.eaxmProcuderalCodes = procedure.data;
-    })
+    // this.claimService.getProcedureType(2).subscribe(procedure => {
+    //   this.eaxmProcuderalCodes = procedure.data;
+    // })
 
-    this.claimService.seedData('procedural_codes').subscribe(type => {
-      this.procuderalCodes = type['data']
-    })
+    // this.claimService.seedData('procedural_codes').subscribe(type => {
+    //   this.procuderalCodes = type['data']
+    // })
 
-    this.claimService.seedData('modifier').subscribe(type => {
-      this.modifiers = type['data']
-    })
+    // this.claimService.seedData('modifier').subscribe(type => {
+    //   this.modifiers = type['data']
+    // })
 
 
 
@@ -350,6 +349,15 @@ export class BilllableBillingComponent implements OnInit {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
+      if (!this.billingData.certified_interpreter_required) {
+        let index = this.modiferList.indexOf('93');
+        this.modiferList.splice(index, 1)
+      }
+      if (!this.billingData.is_psychological_exam) {
+        let index = this.modiferList.indexOf('96');
+        this.modiferList.splice(index, 1)
+      }
+      console.log(this.modiferList,this.billingData.is_psychological_exam,this.billingData.certified_interpreter_required)
       if (this.billingData && this.billingData.bill_no) {
         this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
         this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
@@ -575,8 +583,6 @@ export class BilllableBillingComponent implements OnInit {
   getBillDocument() {
     this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId).subscribe(doc => {
       this.billDocumentList = doc.data
-      doc.data.document_list[0].id = 999
-      doc.data.document_list[1].id = 9999
       this.documentsData = new MatTableDataSource(doc.data.document_list);
     }, error => {
       this.documentsData = new MatTableDataSource([]);
@@ -921,30 +927,30 @@ export class BilllableBillingComponent implements OnInit {
     let total = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
-        total += parseInt(this.getFormControls.controls[j].value.charge)
+        total += parseFloat(this.getFormControls.controls[j].value.charge)
       }
     }
-    return total;
+    return total.toFixed(2);
   }
 
   calculateTotalBal() {
     let total = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
-        total += parseInt(this.getFormControls.controls[j].value.charge) - parseInt(this.getFormControls.controls[j].value.payment)
+        total += parseFloat(this.getFormControls.controls[j].value.charge) - parseFloat(this.getFormControls.controls[j].value.payment)
       }
     }
-    return total;
+    return total.toFixed(2);
   }
 
   calculateTotalPayment() {
     let total = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.payment) {
-        total += parseInt(this.getFormControls.controls[j].value.payment)
+        total += parseFloat(this.getFormControls.controls[j].value.payment)
       }
     }
-    return total;
+    return total.toFixed(2);
   }
 
   updatePayor(e) {

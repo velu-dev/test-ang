@@ -420,8 +420,9 @@ export class NewExaminerUserComponent implements OnInit {
       city: [null],
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-      phone_no1: [null, Validators.compose([Validators.required,Validators.pattern('[0-9]+')])],
+      phone_no1: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
       billing_provider_name: [null, Validators.compose([Validators.maxLength(100)])],
+      fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])]
 
     })
 
@@ -1064,6 +1065,7 @@ export class NewExaminerUserComponent implements OnInit {
         state: this.mailingAddressForm.value.state,
         zip_code: this.mailingAddressForm.value.zip_code,
         phone_no1: this.mailingAddressForm.value.phone_no1,
+        fax_no: this.mailingAddressForm.value.fax_no
       }
       this.billingProviderForm.patchValue(addAddress)
       this.changeState(this.mailingAddressForm.value.state, 'cms')
@@ -1075,6 +1077,7 @@ export class NewExaminerUserComponent implements OnInit {
         state: null,
         zip_code: null,
         phone_no1: null,
+        fax_no: null
       }
       this.billingProviderForm.patchValue(addresEmpty);
     }
