@@ -1021,7 +1021,6 @@ export class NewClaimComponent implements OnInit {
 
     if (this.claimant.value.primary_language_spoken == 20) {
       this.claimant.get('other_language').setValidators([Validators.required]);
-      this.claimant.get('other_language').updateValueAndValidity();
     } else {
       this.claimant.get('other_language').setValidators([]);
     }
@@ -1736,6 +1735,12 @@ export class NewClaimComponent implements OnInit {
     this.modifyChange();
     this.billable_item.patchValue({ exam_type: { primary_language_spoken: this.claimant.value.primary_language_spoken } })
     this.primary_language_spoken = this.claimant.value.primary_language_spoken ? true : false
+    if (this.claimant.value.primary_language_spoken == 20) {
+      this.claimant.get('other_language').setValidators([Validators.required]);
+    } else {
+      this.claimant.get('other_language').setValidators([]);
+    }
+    this.claimant.get('other_language').updateValueAndValidity();
   }
   openInjuryDialog(): void {
     const dialogRef = this.dialog.open(InjuryDialog, {

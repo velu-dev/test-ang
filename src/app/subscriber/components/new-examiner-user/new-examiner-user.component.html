@@ -231,8 +231,9 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Tax ID</mat-label>
-                                <input matInput placeholder="Tax ID" [mask]="billingProviderForm.value.is_person ? '000-00-0000' : '00-0000000'" formControlName="tax_id"
-                                    autocomplete="off">
+                                <input matInput placeholder="Tax ID"
+                                    [mask]="billingProviderForm.value.is_person ? '000-00-0000' : '00-0000000'"
+                                    formControlName="tax_id" autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid tax ID</mat-error>
                             </mat-form-field>
                         </div>
@@ -286,7 +287,8 @@
                         </div>
 
                         <div fxFlex="100">
-                            <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-0">Same as Mailing Address</mat-checkbox>
+                            <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-0">Same as Mailing
+                                Address</mat-checkbox>
                         </div>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
@@ -337,12 +339,22 @@
                             <mat-label>Phone*</mat-label>
                             <input matInput placeholder="Phone" (keypress)="numberOnly($event)" mask="(000) 000-0000"
                                 formControlName="phone_no1" autocomplete="off">
-                            <mat-error *ngIf="billingSubmit">Phone number is required for Billing                            </mat-error>
+                            <mat-error *ngIf="billingSubmit">Phone number is required for Billing </mat-error>
                         </mat-form-field>
+
+                        <div fxFlex="100">
+                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-label>Fax</mat-label>
+                                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="fax_no" autocomplete="off">
+                                <mat-error *ngIf="billingSubmit">Please enter valid fax</mat-error>
+                            </mat-form-field>
+                        </div>
 
                         <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <div fxLayout="row wrap">
-                                <div class="sub-title p-l-10 " fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                                <div class="sub-title p-l-10 " fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                                    fxFlex.xs="100">
                                     CMS 1500 Box 33a
                                 </div>
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="100"
@@ -359,7 +371,8 @@
 
                         <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <div fxLayout="row wrap">
-                                <div class="sub-title p-l-10 " fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                                <div class="sub-title p-l-10 " fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
+                                    fxFlex.xs="100">
                                     CMS 1500 Box 33b
                                 </div>
                                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="100"
@@ -784,9 +797,11 @@
                                         <mat-checkbox class="checkbox_ m-t-10">Same as Rendering Provider NPI Number</mat-checkbox>
                                     </div> -->
 
-                                    <div  fxFlex="100" *ngFor="let item of ['Same as Billing Provider NPI Number','Same as Rendering Provider NPI Number'];  let i = index">
-                                        <mat-checkbox [checked]="selected === i" (change)="selected = i" (change)="npiChange($event,i)">{{item}}</mat-checkbox>
-                                      </div>
+                                    <div fxFlex="100"
+                                        *ngFor="let item of ['Same as Billing Provider NPI Number','Same as Rendering Provider NPI Number'];  let i = index">
+                                        <mat-checkbox [checked]="selected === i" (change)="selected = i"
+                                            (change)="npiChange($event,i)">{{item}}</mat-checkbox>
+                                    </div>
 
                                     <mat-form-field fxFlex="100" class="m-t-20">
                                         <mat-label>National Provider Identifier (NPI) Number</mat-label>

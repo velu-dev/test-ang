@@ -447,6 +447,16 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 .fc-button {
   border: 1px solid #d7dae3;
   text-transform: capitalize;
+  @media only screen and (max-width: 568px) {
+    font-size: $font-size-7 !important;
+  }
+}
+.fc-button .fc-icon {
+  @media only screen and (max-width: 568px) {
+    font-size: 10px;
+    width: 10px;
+    height: 10px;
+  }
 }
 .fc-header-toolbar {
   .fc-left {
@@ -487,10 +497,31 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 .fc-toolbar.fc-header-toolbar {
+  @media only screen and (max-width: 568px) {
+    min-height: 90px;
+  }
   h2 {
     float: right;
     padding-top: 5px;
     font-size: $font-size-10;
+  }
+  @media only screen and (max-width: 568px) {
+    display: block;
+  }
+}
+.fc-toolbar {
+  .fc-right {
+    @media only screen and (max-width: 568px) {
+      float: left;
+      padding: 18px 0 0 0;
+      z-index: 99999;
+      width: 100%;
+    }
+  }
+  .fc-button-group {
+    @media only screen and (max-width: 568px) {
+      float: right;
+    }
   }
 }
 .fc-head {

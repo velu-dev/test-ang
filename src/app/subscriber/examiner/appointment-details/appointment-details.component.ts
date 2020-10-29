@@ -350,7 +350,7 @@ export class AppointmentDetailsComponent implements OnInit {
       appointment: this.formBuilder.group({
         examiner_id: [{ value: '', disable: true }],
         appointment_scheduled_date_time: [{ value: '', disable: true }],
-        duration: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
+        duration: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])],
         examiner_service_location_id: [{ value: '', disable: true }]
       }),
       intake_call: this.formBuilder.group({
@@ -373,7 +373,7 @@ export class AppointmentDetailsComponent implements OnInit {
       id: "",
       examination_status: [{ value: "", disabled: true }, Validators.required],
       examination_notes: [{ value: "", disabled: true }],
-      notes:['']
+      notes: ['']
     })
     this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
@@ -390,101 +390,104 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.examinationStatusForm.invalid) {
       return;
     }
-    if (this.examinationStatusForm.value.examination_status == 1) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: 'Examination', message: "This action will remove Examination Date & Time, Duration. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result.data) {
-          this.updateExamStatus()
-        } else {
-          return;
-        }
-      })
-      return
-    }
-    if (this.examinationStatusForm.value.examination_status == 5 && this.examinationDetails.appointments.examination_status == 2) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Rescheduled’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result.data) {
-          this.updateExamStatus()
-        } else {
-          return;
-        }
-      })
-      return
-    }
-
-    if (this.examinationStatusForm.value.examination_status == 6 && this.examinationDetails.appointments.examination_status == 2) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – send bill’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result.data) {
-          this.updateExamStatus()
-        } else {
-          return;
-        }
-      })
-      return
-    }
-
-    if (this.examinationStatusForm.value.examination_status == 7 && this.examinationDetails.appointments.examination_status == 2) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – no bill’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result.data) {
-          this.updateExamStatus()
-        } else {
-          return;
-        }
-      })
-      return
-    }
-
-    if (this.examinationStatusForm.value.examination_status == 8 && this.examinationDetails.appointments.examination_status == 2) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘No show’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result.data) {
-          this.updateExamStatus()
-        } else {
-          return;
-        }
-      })
-      return
-    }
-    if (this.examinationStatusForm.value.examination_status == 9 && this.examinationDetails.appointments.examination_status == 2) {
-      this.alertService.openSnackBar('Please change the ‘Date & Time’ to current date', 'error');
-      return
-    }
-
-    if (this.examinationStatusForm.value.examination_status == 10 && this.examinationDetails.appointments.examination_status == 2) {
-      if (this.currentDate < new Date(this.billable_item.value.appointment.appointment_scheduled_date_time)) {
-        this.alertService.openSnackBar('Appointment date seems to be a future date', 'error');
-        return;
+    console.log(this.examinationStatusForm.value.examination_status, this.examinationDetails.appointments.examination_status)
+    if (this.examinationDetails.procedure_type == "Evaluation" || this.examinationDetails.procedure_type == "Reevaluation") {
+      if (this.examinationStatusForm.value.examination_status == 1) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "This action will remove Examination Date & Time, Duration. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateExamStatus()
+          } else {
+            return;
+          }
+        })
+        return
       }
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Attened’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result.data) {
-          this.updateExamStatus()
-        } else {
+      if (this.examinationStatusForm.value.examination_status == 5 && this.examinationDetails.appointments.examination_status == 2) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Rescheduled’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateExamStatus()
+          } else {
+            return;
+          }
+        })
+        return
+      }
+
+      if (this.examinationStatusForm.value.examination_status == 6 && this.examinationDetails.appointments.examination_status == 2) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – send bill’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateExamStatus()
+          } else {
+            return;
+          }
+        })
+        return
+      }
+
+      if (this.examinationStatusForm.value.examination_status == 7 && this.examinationDetails.appointments.examination_status == 2) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – no bill’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateExamStatus()
+          } else {
+            return;
+          }
+        })
+        return
+      }
+
+      if (this.examinationStatusForm.value.examination_status == 8 && this.examinationDetails.appointments.examination_status == 2) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘No show’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateExamStatus()
+          } else {
+            return;
+          }
+        })
+        return
+      }
+      if (this.examinationStatusForm.value.examination_status == 9 && this.examinationDetails.appointments.examination_status == 2) {
+        this.alertService.openSnackBar('Please change the ‘Date & Time’ to current date', 'error');
+        return
+      }
+
+      if (this.examinationStatusForm.value.examination_status == 10 && this.examinationDetails.appointments.examination_status == 2) {
+        if (this.currentDate < new Date(this.billable_item.value.appointment.appointment_scheduled_date_time)) {
+          this.alertService.openSnackBar('Appointment date seems to be a future date', 'error');
           return;
         }
-      })
-      return
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Attened’ is selected & System will freeze the appointment section. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateExamStatus()
+          } else {
+            return;
+          }
+        })
+        return
+      }
     }
     this.updateExamStatus()
   }
@@ -597,75 +600,71 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.enable();
   }
   submitBillableItem() {
-    if (this.billable_item.invalid){
+
+    if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
+      this.billable_item.get('appointment').get('duration').setValidators([Validators.required]);
+    } else {
+      this.billable_item.get('appointment').get('duration').setValidators([]);
+    }
+    this.billable_item.get('appointment').get('duration').updateValueAndValidity();
+
+    console.log(this.billable_item)
+    if (this.billable_item.invalid) {
       return;
     }
     console.log(this.billable_item.value)
     console.log(this.examinationDetails, "examinationDetails")
     console.log(this.examinationStatusForm.value, "examinationStatusForm")
+    console.log(this.examinationStatusForm.getRawValue().examination_status, "examinationStatusForm getRawValue")
     console.log(this.billableData, "billableData")
-    if(this.examinationDetails.bill_id){
-      if(this.billableData.exam_type.exam_procedure_type_id != this.billable_item.value.exam_type.exam_procedure_type_id){
+    if (this.examinationDetails.bill_id) {
+      if (this.billableData.exam_type.exam_procedure_type_id != this.billable_item.value.exam_type.exam_procedure_type_id) {
         this.alertService.openSnackBar("Billing already created this billable item", "error");
         return;
       }
     }
-   
-    
-    if (this.billable_item.value.appointment.appointment_scheduled_date_time && !this.examinationStatusForm.value.examination_status) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: 'Examination', message: "This updates the Examination Status as 'Not Confirmed'!.Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result.data) {
-          this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
-          this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
-          this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
-            this.isEditBillableItem = false;
-            this.billable_item.disable();
-            this.alertService.openSnackBar(res.message, "success");
-            this.loadDatas();
-            this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
-              this.examinationDetails = response['data']
-            })
-          }, error => {
-            this.alertService.openSnackBar(error.error.message, 'error');
-          })
-        } else {
-          return;
-        }
-      })
-      return
-    }
 
-    if (!this.billable_item.value.appointment.appointment_scheduled_date_time && this.billableData.appointment.appointment_scheduled_date_time) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: 'Examination', message: "This updates the Examination Status as 'No Date' & remove the Duration!. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result.data) {
-          this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
-          this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
-          this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
-            this.isEditBillableItem = false;
-            this.billable_item.disable();
-            this.alertService.openSnackBar(res.message, "success");
-            this.loadDatas();
-            this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
-              this.examinationDetails = response['data']
-            })
-          }, error => {
-            this.alertService.openSnackBar(error.error.message, 'error');
-          })
-        } else {
-          return;
-        }
-      })
-      return
-    }
 
+
+    if (this.examinationDetails.procedure_type == "Evaluation" || this.examinationDetails.procedure_type == "Reevaluation") {
+
+      if (!this.billable_item.value.appointment.appointment_scheduled_date_time && this.billableData.appointment.appointment_scheduled_date_time) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "This updates the Examination Status as 'No Date' & remove the Duration!. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateBillableItem();
+          } else {
+            return;
+          }
+        })
+        return
+      }
+
+
+      if (((this.billable_item.value.appointment.appointment_scheduled_date_time != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.value.appointment.duration != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 2)) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "This updates the Examination Status as 'Not Confirmed'!.Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateBillableItem();
+          } else {
+            return;
+          }
+        })
+        return
+      }
+
+
+    }
+    this.updateBillableItem();
+  }
+
+  updateBillableItem() {
     this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
@@ -680,6 +679,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
+
   getDocumentData() {
     this.examinerService.getDocumentData(this.claim_id, this.billableId).subscribe(res => {
       console.log(res)
