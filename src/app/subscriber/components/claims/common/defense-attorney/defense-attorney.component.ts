@@ -106,6 +106,7 @@ export class DefenseAttorneyComponent implements OnInit {
   }
   defAttornety(da) {
     delete da.id;
+    this.changeState(da.state);
     this.DefanceAttorney.patchValue(da)
   }
   editDA() {
@@ -145,6 +146,7 @@ export class DefenseAttorneyComponent implements OnInit {
   }
   clearAutoComplete() {
     this.DefanceAttorney.reset();
+    this.daState = null;
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;

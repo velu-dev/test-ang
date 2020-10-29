@@ -150,6 +150,7 @@ export class ClaimAdminComponent implements OnInit {
   }
   clearAutoComplete() {
     this.claimAdminForm.reset();
+    this.caState = null;
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
