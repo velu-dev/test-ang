@@ -304,6 +304,7 @@ export class NewExaminerUserComponent implements OnInit {
         middle_name: res.billing_provider.middle_name,
         billing_provider_name: res.billing_provider.billing_provider_name,
         suffix: res.billing_provider.suffix,
+        fax_no: res.billing_provider.fax_no
       }
       this.billingOrgChange(billing.is_person)
       this.changeState(billing.default_injury_state, 'billing', res.billing_provider.default_injury_state_code);
