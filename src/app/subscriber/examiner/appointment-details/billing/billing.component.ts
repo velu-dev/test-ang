@@ -107,7 +107,7 @@ export class BilllableBillingComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredmodifier: Observable<string[]>;
-  modiferList: string[] = ['93', '94', '95', '96'];
+  modiferList: any = ['93', '94', '95', '96'];
   @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
   //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
   unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }, { unit_type: 'Minutes', unit_short_code: 'MJ' }]
@@ -168,9 +168,7 @@ export class BilllableBillingComponent implements OnInit {
       }
     })
 
-    this.filteredmodifier = this.fruitCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.modiferList.slice()));
+    this.filteredmodifier = this.modiferList
 
     this.billingService.seedData("state").subscribe(res => {
       this.states = res.data;
@@ -357,6 +355,7 @@ export class BilllableBillingComponent implements OnInit {
         let index = this.modiferList.indexOf('96');
         this.modiferList.splice(index, 1)
       }
+      this.filteredmodifier = this.modiferList
       if (this.billingData && this.billingData.bill_no) {
         this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
         this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)

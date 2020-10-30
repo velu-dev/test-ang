@@ -252,7 +252,7 @@
                                                     </mat-chip-list>
                                                     <mat-autocomplete #auto1="matAutocomplete"
                                                         (optionSelected)="selected($event,group)">
-                                                        <mat-option *ngFor="let modifier of filteredmodifier | async"
+                                                        <mat-option *ngFor="let modifier of filteredmodifier"
                                                             [value]="modifier">
                                                             {{modifier}}
                                                         </mat-option>
@@ -419,7 +419,7 @@
                                                         <mat-autocomplete #auto1="matAutocomplete"
                                                             (optionSelected)="selected($event,group)">
                                                             <mat-option
-                                                                *ngFor="let modifier of filteredmodifier | async"
+                                                                *ngFor="let modifier of filteredmodifier"
                                                                 [value]="modifier">
                                                                 {{modifier}}
                                                             </mat-option>
