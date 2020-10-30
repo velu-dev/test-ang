@@ -835,13 +835,14 @@ export class BilllableBillingComponent implements OnInit {
 
     let moidfier = group.value.modifierList.toString();
     moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
+    console.log(group.value.charge);
     let data = {
       id: group.value.id,
       item_description: group.value.item_description,
       procedure_code: group.value.procedure_code,
       modifier: moidfier,
       units: group.value.units,
-      charge: group.value.charge ? group.value.charge.toFixed(2) : group.value.charge,
+      charge: group.value.charge ? parseFloat(group.value.charge).toFixed(2) : group.value.charge,
       total_charge: this.calculateTotal(),
       unit_type: group.value.unitType,
       unit_short_code: this.getUnitCode(group.value.unitType)
