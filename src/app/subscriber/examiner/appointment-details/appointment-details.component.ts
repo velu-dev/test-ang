@@ -132,6 +132,7 @@ export class AppointmentDetailsComponent implements OnInit {
   columnName = [];
   displayedColumnsForDocuments = [];
   expandedElement: any;
+  userEmail: any;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -150,6 +151,8 @@ export class AppointmentDetailsComponent implements OnInit {
     private intercom: IntercomService,
     private cookieService: CookieService
   ) {
+    this.userEmail = JSON.parse(this.cookieService.get('user')).sign_in_email_id.split('@').pop();
+    console.log(this.userEmail)
     this.intercom.setBillableItem("Billable Item");
     this.cookieService.set('billableItem', null)
     this.loadForms();
