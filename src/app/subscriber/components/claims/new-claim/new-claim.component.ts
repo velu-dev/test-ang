@@ -1416,12 +1416,15 @@ export class NewClaimComponent implements OnInit {
       case 'aa':
         this.selectedAAttorney = null;
         this.claim.get('ApplicantAttorney').reset();
+        this.aaState = null;
         break;
       case 'da':
         this.selectedDAttorney = null;
+        this.daState = null;
         this.claim.get('DefenseAttorney').reset();
         break;
       case 'ca':
+        this.caState = null;
         this.claim.get('InsuranceAdjuster').reset();
         break;
     }

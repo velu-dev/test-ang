@@ -113,6 +113,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   appAttorney(aa) {
     delete aa.id;
+    this.changeState(aa.state);
     this.ApplicantAttorney.patchValue(aa)
   }
   editAA() {
@@ -152,6 +153,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   clearAutoComplete() {
     this.ApplicantAttorney.reset();
+    this.aaState = null;
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;

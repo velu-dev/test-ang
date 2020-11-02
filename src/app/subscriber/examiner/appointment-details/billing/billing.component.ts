@@ -107,7 +107,7 @@ export class BilllableBillingComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredmodifier: Observable<string[]>;
-  modiferList: string[] = ['93', '94', '95', '96'];
+  modiferList: any = ['93', '94', '95', '96'];
   @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
   //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
   unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }, { unit_type: 'Minutes', unit_short_code: 'MJ' }]
@@ -168,9 +168,7 @@ export class BilllableBillingComponent implements OnInit {
       }
     })
 
-    this.filteredmodifier = this.fruitCtrl.valueChanges.pipe(
-      startWith(null),
-      map((fruit: string | null) => fruit ? this._filter(fruit) : this.modiferList.slice()));
+    this.filteredmodifier = this.modiferList
 
     this.billingService.seedData("state").subscribe(res => {
       this.states = res.data;
@@ -357,7 +355,7 @@ export class BilllableBillingComponent implements OnInit {
         let index = this.modiferList.indexOf('96');
         this.modiferList.splice(index, 1)
       }
-      console.log(this.modiferList,this.billingData.is_psychological_exam,this.billingData.certified_interpreter_required)
+      this.filteredmodifier = this.modiferList
       if (this.billingData && this.billingData.bill_no) {
         this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
         this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
@@ -837,13 +835,14 @@ export class BilllableBillingComponent implements OnInit {
 
     let moidfier = group.value.modifierList.toString();
     moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
+    console.log(group.value.charge);
     let data = {
       id: group.value.id,
       item_description: group.value.item_description,
       procedure_code: group.value.procedure_code,
       modifier: moidfier,
       units: group.value.units,
-      charge: group.value.charge,
+      charge: group.value.charge ? parseFloat(group.value.charge).toFixed(2) : group.value.charge,
       total_charge: this.calculateTotal(),
       unit_type: group.value.unitType,
       unit_short_code: this.getUnitCode(group.value.unitType)
@@ -924,7 +923,7 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   calculateTotal() {
-    let total = 0;
+    let total: any = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
         total += parseFloat(this.getFormControls.controls[j].value.charge)
@@ -934,17 +933,21 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   calculateTotalBal() {
-    let total = 0;
+    let total: any = 0;
+    let payment: any = 0
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.charge) {
-        total += parseFloat(this.getFormControls.controls[j].value.charge) - parseFloat(this.getFormControls.controls[j].value.payment)
+        total += parseFloat(this.getFormControls.controls[j].value.charge)
+      }
+      if (this.getFormControls.controls[j].value.payment) {
+        payment += parseFloat(this.getFormControls.controls[j].value.payment)
       }
     }
-    return total.toFixed(2);
+    return (total - payment).toFixed(2);
   }
 
   calculateTotalPayment() {
-    let total = 0;
+    let total: any = 0;
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].value.payment) {
         total += parseFloat(this.getFormControls.controls[j].value.payment)

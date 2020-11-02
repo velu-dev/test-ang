@@ -4,7 +4,7 @@
         <mat-icon>add</mat-icon>
     </button> -->
  <div class="add-new-user">
-    <button mat-stroked-button class="outline-success"  routerLink="new">Add Staff</button>
+    <button mat-stroked-button class="outline-success"  routerLink="new">Add Staff / Staff Manager</button>
     <button mat-stroked-button class="outline-success m-l-10" routerLink="new-examiner">Add Examiner</button>
  </div>
     <mat-tab-group class="user-list" (selectedTabChange)="tabchange($event.index)">
@@ -110,8 +110,8 @@
                         <span *ngIf="column == 'first_name'" [title]="element[column]">{{element[column] | ellipsis:22 }}</span>
                         <span *ngIf="column == 'createdAt'">{{element[column] | date:'MM-dd-yyyy'}} </span>
                         <span *ngIf="column == 'last_name'" [title]="element[column]">{{element[column] }}</span>
-                        <span *ngIf="column == 'role_name'" [title]="element[column]">{{element.issubscriber ? 'Subscriber, ': ''}}{{element[column] }}</span>
-                        <span *ngIf="column == 'disabled' && !element.issubscriber">
+                        <span *ngIf="column == 'role_name'" [title]="element[column]">{{element[column] }}</span>
+                        <span *ngIf="column == 'disabled' && !element.issubscriber && user.id != element.id">
                             <span *ngIf="tabIndex != 1" class="user-disable-enable" (click)="$event.stopPropagation();onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
                             <span *ngIf="tabIndex == 1" class="user-disable-enable" (click)="$event.stopPropagation();unInvite(element)"> Uninvite </span>
                         </span>

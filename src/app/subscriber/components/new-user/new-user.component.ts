@@ -84,8 +84,7 @@ export class NewUserComponent implements OnInit {
 
     this.userService.getRoles().subscribe(response => {
       response.data.map((role, i) => {
-        console.log(role, i)
-        if (role.id != 11) {
+        if (role.id != 11 && role.id != 2) {
           this.roles.push(role)
         }
       })
@@ -104,6 +103,11 @@ export class NewUserComponent implements OnInit {
             sign_in_email_id: res.data.sign_in_email_id,
             role_id: res.data.role_id,
             suffix: res.data.suffix
+          }
+          if (user.role_id == 2) {
+            let role = { id: 2, role_name: "Subscriber" }
+            this.roles = [];
+            this.roles.push(role)
           }
           this.userForm.patchValue(user)
         })

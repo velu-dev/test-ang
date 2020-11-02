@@ -22,7 +22,7 @@
             <div class="bill-id"><span>Bill : </span> {{billingData?.agent_short_code}}{{billingData?.bill_no}}</div>
         </div>
         <div fxFlex="50">
-            <div class="submission-date"><span>First Bill Review Submission Date:</span> 10-13-2020</div>
+            <div class="submission-date"><span>First Bill Review Submission Date:</span>-</div>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
     <div class="examiner-info">
         <mat-card>
             <mat-card-header>
-                <div class="content-wrapper-main-title p-t-5">Payor Information</div>
+                <div class="content-wrapper-main-title p-t-5">Payer Information</div>
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content>
@@ -40,7 +40,7 @@
                     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
 
                         <div fxLayout="row wrap">
-                            <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payor ID</div>
+                            <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payer ID</div>
                             <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
 
                                 <input matInput [formControl]="payorCtrl" >
@@ -252,7 +252,7 @@
                                                     </mat-chip-list>
                                                     <mat-autocomplete #auto1="matAutocomplete"
                                                         (optionSelected)="selected($event,group)">
-                                                        <mat-option *ngFor="let modifier of filteredmodifier | async"
+                                                        <mat-option *ngFor="let modifier of filteredmodifier"
                                                             [value]="modifier">
                                                             {{modifier}}
                                                         </mat-option>
@@ -350,7 +350,7 @@
                                         <td>{{calculateTotal() | number : '1.2-2'}}</td>
                                         <td>{{calculateTotalPayment() | number : '1.2-2' }}</td>
                                         <td><span
-                                                class="text-danger">{{calculateTotal() - calculateTotalPayment() | number : '1.2-2'}}</span>
+                                                class="text-danger">{{calculateTotalBal() | number : '1.2-2'}}</span>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -419,7 +419,7 @@
                                                         <mat-autocomplete #auto1="matAutocomplete"
                                                             (optionSelected)="selected($event,group)">
                                                             <mat-option
-                                                                *ngFor="let modifier of filteredmodifier | async"
+                                                                *ngFor="let modifier of filteredmodifier"
                                                                 [value]="modifier">
                                                                 {{modifier}}
                                                             </mat-option>
@@ -568,7 +568,7 @@
                                         <div class="grid-list">
                                             <div><b>Total Balance: </b></div>
                                             <div class="text-danger">
-                                                {{calculateTotal() - calculateTotalPayment() | number : '1.2-2'}} </div>
+                                                {{calculateTotalBal() | number : '1.2-2'}} </div>
                                         </div>
                                     </mat-card>
                                 </td>

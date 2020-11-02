@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, Htt
   from '@angular/common/http';
 import { Observable, throwError, from } from 'rxjs';
 import { switchMap } from "rxjs/operators";
-import  Auth  from "@aws-amplify/auth";
+import Auth from "@aws-amplify/auth";
 import { catchError } from "rxjs/operators";
 import { CookieService } from '../services/cookie.service';
 import { Router } from '@angular/router';
@@ -49,9 +49,15 @@ export class TokenInterceptorService implements HttpInterceptor {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           let err: any = error;
-           if(err && err == 'No current user'){
-             this.router.navigate(['/login']);
-           }
+
+          if (err && err == 'No current user') {
+            let url = location.href.split('/').pop();
+            if (url != 'verification') {
+              this.router.navigate(['/login']);
+            }
+
+          }
+
           return throwError(error);
         })
       );
