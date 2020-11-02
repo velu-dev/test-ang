@@ -11,10 +11,10 @@
                 box-shadow: none;
                 cursor: pointer;
                 &:hover {
+                    background-color: $light-color;
                     .simple-card {
-                        i,
                         h4 {
-                            color: $secondary;
+                            color: $ternary;
                         }
                     }
                 }
@@ -38,5 +38,3 @@
 }
 
 // .dashboard-list {}
-    
-

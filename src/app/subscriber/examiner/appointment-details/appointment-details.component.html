@@ -746,7 +746,7 @@
             <div fxLayout="row wrap" *ngIf="!isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
                 <!-- <span *ngIf="!isExamTypeChanged"> -->
                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
-                    appearance="outline" class="p-l-0">
+                    appearance="outline" class="p-l-0 m-t-2">
                     <mat-label>Document Type</mat-label>
                     <mat-select [(ngModel)]="documentType" (selectionChange)="docChange($event.value)">
                         <mat-option *ngFor="let doc of documentList" [value]="doc.id">
@@ -779,7 +779,7 @@
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
                     *ngIf="documentType == 6">
                     <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
-                    <mat-form-field appearance="standard" class="p-l-10 w-100">
+                    <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br">
                         <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" multiple
                             accept=".pdf, .doc, .docx, .xls, .xlsx, .csv, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
@@ -793,7 +793,7 @@
 
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                     <button mat-stroked-button type="button" (click)="uploadFile()"
-                        class="filled-gray p-r-20 m-t-20">Add
+                        class="filled-gray p-r-20">Add
                     </button>
                 </div>
                 <!-- </span> -->
@@ -801,7 +801,7 @@
             <div fxLayout="row wrap" *ngIf="isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
                 <!-- <span class="error">Exam type was changed in claim Unable to upload documents in this section</span> -->
             </div>
-            <div *ngIf="!isExamTypeChanged && userEmail.includes('auriss.com')" fxLayout="row wrap" fxFlex="100" class="m-t-20">
+            <div *ngIf="!isExamTypeChanged" fxLayout="row wrap" fxFlex="100" class="m-t-20">
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                 </div>
 

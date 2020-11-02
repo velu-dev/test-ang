@@ -628,7 +628,7 @@ input:-webkit-autofill {
 .upload_btn {
   border-radius: 2px;
   box-shadow: $box-shadow-2;
-  margin-top: 20px !important;
+  margin-top: 23px !important;
   padding: 0px 10px;
   span {
     padding: 8px 8px 8px 8px;
@@ -968,15 +968,24 @@ input:-webkit-autofill {
     button.filled-gray {
       @extend .filled-gray;
     }
-   button.mini-btn {
-     @extend .mini-btn;
-    height: 26px !important;
-    min-width: 60px !important;
-   }
+    button.mini-btn {
+      @extend .mini-btn;
+      height: 26px !important;
+      min-width: 60px !important;
+    }
     .upload-file {
       .mat-form-field {
+        padding-left: 5px !important;
         width: calc(100% - 125px);
       }
+      .filled-gray {
+        margin-top: 21px !important;
+        vertical-align: top !important;
+      }
+    }
+    .add-file-btn {
+      margin-top: 21px !important;
+      vertical-align: top !important;
     }
   }
   .float-right {

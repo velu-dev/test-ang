@@ -61,6 +61,10 @@ th {
 }
 
 .upload-file {
+    button {
+        margin-top: 17px;
+        vertical-align: top;
+    }
     .mat-form-field {
         width: calc(100% - 125px);
         mat-hint {

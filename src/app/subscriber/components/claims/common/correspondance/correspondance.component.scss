@@ -22,8 +22,9 @@ mat-form-field {
         }
     }
     div {
-        .add-btn {
-            margin-top: 25px;
+        .add-btn, .outline-success {
+            margin-top: 24px;
+            vertical-align: top;
             @media only screen and (max-width: 568px) {
                 margin-top: 0px;
             }
