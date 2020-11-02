@@ -43,6 +43,11 @@ th {
     @media screen and (max-width: 1024px) and (min-width: 768px) {
         margin-left: 0 !important;
     }
+
+    button {
+        margin-top: 17px;
+        vertical-align: top;
+    }
     .mat-form-field {
         width: calc(100% - 125px);
         mat-hint {

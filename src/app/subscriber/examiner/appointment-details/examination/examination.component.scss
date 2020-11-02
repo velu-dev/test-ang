@@ -20,6 +20,10 @@ th {
 }
 
 .upload-file {
+    button {
+        margin-top: 18px;
+        vertical-align: top;
+    }
     .mat-form-field {
        width: calc( 100% - 125px);
         mat-error {

@@ -34,7 +34,7 @@
       }
       .correspondence-file-upload {
         @media only screen and (max-width: 568px) {
-          margin:20px 0 20px 0;
+          margin: 20px 0 20px 0;
         }
         .Upload_ {
           button {
@@ -48,8 +48,10 @@
           }
         }
         div {
-          .btn_success {
-            margin-top: 25px;
+          .btn_success,
+          .outline-success {
+            margin-top: 24px !important;
+            vertical-align: top;
             @media only screen and (max-width: 568px) {
               margin-top: 0px;
             }
@@ -91,19 +93,19 @@
   //   cursor: pointer;
   // }
 }
-  .search-icon {
-    color: $text-gray;
-    padding: 12px;
-    display: block;
-    cursor: pointer;
-  }
+.search-icon {
+  color: $text-gray;
+  padding: 12px;
+  display: block;
+  cursor: pointer;
+}
 .search-icon {
   cursor: pointer;
 }
 
 .selected_lang {
   background-color: $light-color;
-  border-radius: 3px ;
+  border-radius: 3px;
   padding: 5px 20px;
   width: max-content;
   margin-left: 10px;

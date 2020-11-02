@@ -389,7 +389,8 @@
         }
         div {
             .filled-gray {
-                margin-top: 25px;
+                margin-top: 23px;
+                vertical-align: top;
                 @media only screen and (max-width: 568px) {
                     margin-top: 0px;
                 }
