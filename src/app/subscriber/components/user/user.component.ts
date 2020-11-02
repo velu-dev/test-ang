@@ -279,9 +279,11 @@ export class UserComponent implements OnInit {
   editUser(user) {
     console.log(user);
     if (user.role_id == 11) {
-      this.router.navigate(['subscriber/users/examiner', user.id])
+     // this.router.navigate(['subscriber/users/examiner', user.id])
+      this.router.navigateByUrl(this.router.url + '/examiner/' + user.id)
     } else {
-      this.router.navigate(['subscriber/users/edit', user.id])
+      //this.router.navigate(['subscriber/users/edit', user.id])
+      this.router.navigateByUrl(this.router.url + '/edit/' + user.id)
     }
   }
 

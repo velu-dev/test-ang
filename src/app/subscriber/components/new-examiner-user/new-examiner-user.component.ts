@@ -175,12 +175,17 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.verifyRole().subscribe(role => {
-      this.sameAsExaminer = role.status;
-    }, error => {
-      console.log(error.error.status)
-      this.sameAsExaminer = error.error.status;
-    })
+    if (this.user.role_id == 2) {
+      this.userService.verifyRole().subscribe(role => {
+        this.sameAsExaminer = role.status;
+      }, error => {
+        console.log(error.error.status)
+        this.sameAsExaminer = error.error.status;
+      })
+    } else {
+      this.sameAsExaminer = false;
+    }
+
     this.userForm = this.formBuilder.group({
       id: [""],
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],

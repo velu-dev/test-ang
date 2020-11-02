@@ -676,6 +676,71 @@ const routes: Routes = [{
       component: StaffDashboardComponent,
       data: { breadcrumb: { skip: true } }
     }, {
+      path: "users",
+      children: [{
+        path: "",
+        component: UserComponent,
+        data: { breadcrumb: "Users" }
+      }, {
+        path: "new",
+        component: NewUserComponent,
+        data: { breadcrumb: "New" }
+      }, {
+        path: "edit/:id",
+        component: NewUserComponent,
+        data: { breadcrumb: "Edit" }
+      }, {
+        path: "new-examiner",
+        children: [
+          {
+            path: "",
+            component: NewExaminerUserComponent,
+            data: { breadcrumb: "New Examiner" }
+          }, {
+            path: "add-location/:status/:examiner",
+            component: AddEditServiceLocationComponent,
+            data: { breadcrumb: "New" }
+          }
+        ]
+      }, {
+        path: "examiner/:id",
+        children: [{
+          path: "",
+          component: NewExaminerUserComponent,
+          data: { breadcrumb: "Examiner" }
+        }, {
+          path: "edit-location/:location_id/:status",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "Edit" }
+        },
+        {
+          path: "add-location/:status/:examiner",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "New" }
+        }]
+      },
+      {
+        path: "examiner/:id/:status",
+        children: [{
+          path: "",
+          component: NewExaminerUserComponent,
+          data: { breadcrumb: "Examiner" }
+        }, {
+          path: "edit-location/:location_id/:status",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "Edit" }
+        }, {
+          path: "edit-location/:id/:status/:location_id",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "Edit" }
+        },
+        {
+          path: "add-location/:status/:examiner",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "New" }
+        }]
+      }]
+    }, {
       path: "claimant-awaiting",
       children: [
         {
@@ -1191,7 +1256,7 @@ const routes: Routes = [{
     {
       path: "new-staff",
       component: NewUserComponent,
-      data: { breadcrumb: "New Staff" }
+      data: { breadcrumb: "New" }
     },
     {
       path: "",
@@ -1415,10 +1480,10 @@ const routes: Routes = [{
       }, {
         path: "new",
         component: NewUserComponent,
-        data: { breadcrumb: "New Staff" }
+        data: { breadcrumb: "New" }
       }, {
         path: "edit/:id",
-        component: NewExaminerUserComponent,
+        component: NewUserComponent,
         data: { breadcrumb: "Edit" }
       }, {
         path: "new-examiner",

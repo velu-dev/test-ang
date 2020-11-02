@@ -52,7 +52,7 @@
                 fxFlex.xs="100">
                 <mat-label>Select a Role*</mat-label>
                 <mat-select formControlName="role_id" (selectionChange)="clearChangeValue($event)">
-                    <mat-option *ngFor="let role of roles" [value]="role.id">{{role.role_name}}
+                    <mat-option *ngFor="let role of roles" [value]="role?.id">{{role?.role_name}}
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.selectrole}}</mat-error>

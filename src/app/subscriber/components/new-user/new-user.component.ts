@@ -57,6 +57,7 @@ export class NewUserComponent implements OnInit {
   taxonomyList: any;
   specialtyList: any;
   isExaminer: boolean = false;
+  roleList: any = [];
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -83,36 +84,48 @@ export class NewUserComponent implements OnInit {
     delete this.user.logo;
 
     this.userService.getRoles().subscribe(response => {
+      this.roleList = response.data;
       response.data.map((role, i) => {
         if (role.id != 11 && role.id != 2) {
           this.roles.push(role)
         }
       })
-    })
-    this.route.params.subscribe(params_res => {
-      if (params_res.id) {
-        this.isEdit = true;
 
-        this.userService.getEditUser(params_res.id).subscribe(res => {
-          this.userData = res.data;
-          let user = {
-            id: res.data.id,
-            first_name: res.data.first_name,
-            last_name: res.data.last_name,
-            middle_name: res.data.middle_name,
-            sign_in_email_id: res.data.sign_in_email_id,
-            role_id: res.data.role_id,
-            suffix: res.data.suffix
-          }
-          if (user.role_id == 2) {
-            let role = { id: 2, role_name: "Subscriber" }
-            this.roles = [];
-            this.roles.push(role)
-          }
-          this.userForm.patchValue(user)
-        })
-      } else {
-      }
+      this.route.params.subscribe(params_res => {
+        if (params_res.id) {
+          this.isEdit = true;
+
+          this.userService.getEditUser(params_res.id).subscribe(res => {
+            this.userData = res.data;
+            let user = {
+              id: res.data.id,
+              first_name: res.data.first_name,
+              last_name: res.data.last_name,
+              middle_name: res.data.middle_name,
+              sign_in_email_id: res.data.sign_in_email_id,
+              role_id: res.data.role_id,
+              suffix: res.data.suffix
+            }
+
+            if (user.id == this.user.id || this.user.role_id == 4) {
+              let index = this.roleList.findIndex(e => e.id == user.role_id)
+              this.roles = [];
+              this.roles.push(this.roleList[index])
+            }
+
+            if (user.role_id == 2) {
+              let role = { id: 2, role_name: "Subscriber" }
+              this.roles = [];
+              this.roles.push(role)
+            }
+
+
+
+            this.userForm.patchValue(user)
+          })
+        } else {
+        }
+      })
     })
   }
 
@@ -153,7 +166,8 @@ export class NewUserComponent implements OnInit {
 
       this.userService.createUser(this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
-        this.router.navigate(['/subscriber/users'])
+        //this.router.navigate(['/subscriber/users'])
+        this._location.back();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -163,7 +177,8 @@ export class NewUserComponent implements OnInit {
       console.log(this.userForm.value)
       this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully!", 'success');
-        this.router.navigate(['/subscriber/users'])
+        // this.router.navigate(['/subscriber/users'])
+        this._location.back();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
