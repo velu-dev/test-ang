@@ -57,7 +57,7 @@ export class EditClaimComponent implements OnInit {
         this.isLoading = true;
         this.claimService.getClaim(param.claim_id).subscribe(res => {
           this.intercom.setClaimant(res['data'].claimant_details.first_name + ' ' + res['data'].claimant_details.last_name);
-          this.cookieService.set('claimDeatis', res['data'].claimant_details.first_name + ' ' + res['data'].claimant_details.last_name)
+          this.cookieService.set('claimDetails', res['data'].claimant_details.first_name + ' ' + res['data'].claimant_details.last_name)
           this.intercom.setClaimNumber(res.data.claim_details.claim_number);
           console.log(res.data)
           this.dateOfBirth = res.data.claimant_details.date_of_birth;

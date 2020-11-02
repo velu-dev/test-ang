@@ -96,7 +96,7 @@ export class BillingComponent implements OnInit {
 
   gotoBilling(e) {
     this.intercom.setClaimant(e.claimant_first_name + ' ' + e.claimant_last_name);
-    this.cookieService.set('claimDeatis', e.claimant_first_name + ' ' + e.claimant_last_name)
+    this.cookieService.set('claimDetails', e.claimant_first_name + ' ' + e.claimant_last_name)
     this.intercom.setClaimNumber(e.claim_number);
     this.cookieService.set('claimNumber', e.claim_number)
     this.intercom.setBillableItem(e.exam_procedure_name);

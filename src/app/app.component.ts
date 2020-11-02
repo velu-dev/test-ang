@@ -59,7 +59,7 @@ export class AppComponent {
 
   }
   ngOnInit() {
-    let claimant = this.cookieService.get('claimDeatis');
+    let claimant = this.cookieService.get('claimDetails');
 
     if (claimant && claimant != 'null') {
       this.breadcrumbService.set("@Claimant", claimant)
