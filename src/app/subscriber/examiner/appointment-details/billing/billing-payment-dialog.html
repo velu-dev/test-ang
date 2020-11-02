@@ -49,7 +49,7 @@
                         <mat-error *ngIf="postIsSubmit">Please select valid Payment Method</mat-error>
                     </mat-form-field>
                     <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <div fxLayout="row wrap" class="p-t-20">
+                        <div fxLayout="row wrap" class="p-t-30">
                             <mat-label fxFlex="50"> Deposited</mat-label>
                             <mat-radio-group aria-label="Select an option" fxFlex="50"
                                 (change)="!postPaymentForm.value?.is_deposited ? postPaymentForm.get('deposit_date').disable() : postPaymentForm.get('deposit_date').enable();postPaymentForm.get('deposit_date').reset()"
@@ -79,7 +79,7 @@
                     <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"></div>
 
                     <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <div fxLayout="row wrap" class="p-t-20">
+                        <div fxLayout="row wrap" class="p-t-30">
                             <mat-label fxFlex="50">Penalty</mat-label>
                             <mat-radio-group aria-label="Select an option"
                                 (change)="!postPaymentForm.value?.is_penalty ? postPaymentForm.get('penalty_amount').disable() : postPaymentForm.get('penalty_amount').enable();postPaymentForm.get('penalty_amount').reset();"
@@ -99,7 +99,7 @@
                     </mat-form-field>
 
                     <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <div fxLayout="row wrap" class="p-t-20">
+                        <div fxLayout="row wrap" class="p-t-30">
                             <mat-label fxFlex="50"> Interest Paid</mat-label>
                             <mat-radio-group aria-label="Select an option"
                                 (change)="!postPaymentForm.value?.is_interest_paid ? postPaymentForm.get('interest_paid').disable() : postPaymentForm.get('interest_paid').enable();postPaymentForm.get('interest_paid').reset()"
@@ -188,7 +188,7 @@
                     </div>
 
                     <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <div fxLayout="row wrap" class="p-t-20">
+                        <div fxLayout="row wrap" class="p-t-10">
                             <mat-label fxFlex="50">Close Bill</mat-label>
                             <mat-radio-group aria-label="Select an option" formControlName="is_bill_closed" fxFlex="50">
                                 <mat-radio-button [value]="true">Yes</mat-radio-button>
