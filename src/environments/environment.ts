@@ -10,6 +10,8 @@ export const environment = {
   // baseUrl: 'http://192.168.1.122:3000/', //Rajan-local
   // baseUrl: 'http://localhost:3000/', //local
 
+  cookieSecure : false,
+
   Amplify: {
     Auth: {
       identityPoolId: 'us-west-2:e5dd97f0-5920-4932-bd14-c26fa8f988c0',

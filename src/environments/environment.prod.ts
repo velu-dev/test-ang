@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   baseUrl: 'https://dev01api.simplexam.com/', //dev
 
+  cookieSecure : true,
   Amplify: {
     Auth: {
       identityPoolId: 'us-west-2:e5dd97f0-5920-4932-bd14-c26fa8f988c0',
