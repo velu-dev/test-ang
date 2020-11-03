@@ -600,7 +600,6 @@ export class BilllableBillingComponent implements OnInit {
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      console.log(this.selectedFiles[i].name)
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
        
@@ -612,7 +611,7 @@ export class BilllableBillingComponent implements OnInit {
         this.selectedFile = this.selectedFiles[i];
         this.file.push(this.selectedFiles[i].name);
         if (status && this.selectedFiles.length == i+1) {
-       //   this.uploadFile(status)
+          this.uploadFile(status)
         }
       } else {
         this.alertService.openSnackBar(this.selectedFiles[i].name + " file is not accepted", 'error');
