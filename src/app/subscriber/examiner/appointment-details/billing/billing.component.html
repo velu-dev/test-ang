@@ -646,7 +646,7 @@
                 </div> -->
                 <div fxLayout="row wrap" class="w-100 m-t-15">
                     <div fxFlex="100">
-                        <input type="file" #uploader hidden (change)="addFile($event,true)" hidden
+                        <input type="file" #uploader hidden (change)="addFile($event,true)" multiple
                             accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
                         <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5"
                             (click)="uploader.click()"><i class="fa fa-file-medical p-r-10"></i> Add Custom
