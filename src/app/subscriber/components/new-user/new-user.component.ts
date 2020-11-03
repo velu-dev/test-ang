@@ -122,6 +122,7 @@ export class NewUserComponent implements OnInit {
 
 
             this.userForm.patchValue(user)
+            this.userForm.get('sign_in_email_id').disable();
           })
         } else {
         }

@@ -206,8 +206,11 @@
                 </mat-icon>
               </span>
               <div>
-                <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType"
-                    alt=""></span>
+                <span *ngIf="column == 'doc_image'" class="file_type_icon"> 
+                  <!-- <img [src]="element?.file_name | fileType"  alt=""> -->
+                  <mat-icon *ngIf="element?.file_processing_status == 'PASS'" class="text-success">check_circle</mat-icon>
+                  <mat-icon *ngIf="element?.file_processing_status == 'FAIL'" class="text-danger">error</mat-icon>
+                </span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element.action"><span
                     *ngSwitchCase="'MD'">Downloaded</span>
@@ -224,7 +227,7 @@
                 <span *ngIf="column == 'download1' && element?.received">
                   <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
                 </span>
-                <span *ngIf="column == 'further_info'"> Further Information</span>
+                <span *ngIf="column == 'further_info'">{{element?.file_processing_message}}</span>
               </div>
             </td>
           </ng-container>
