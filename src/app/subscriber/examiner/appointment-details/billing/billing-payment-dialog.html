@@ -117,7 +117,11 @@
                             placeholder="Interest Amount" formControlName="interest_paid" autocomplete="off">
                         <mat-error>Please enter valid Interest Paid</mat-error>
                     </mat-form-field>
-                    <div fxFlex="100" class="m-t-10">
+                    <div fxFlex="70" fxFlex.sm="100" fxFlex.xs="100" class="note">
+                        <mat-icon>info</mat-icon> Note : Supported file formats: .pdf, .jpg, .jpeg, .png
+                    </div>
+                    
+                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="m-t-10">
                         <button type="button" mat-raised-button class="filled-gray float-right m-b-5 m-r-5"
                             (click)="openFileUpload()"> <i class="fa fa-file-medical"></i> Add EOR </button>
                         <input type="file" #uploader multiple hidden (change)="addEOR($event)"
