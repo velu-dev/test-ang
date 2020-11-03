@@ -208,7 +208,6 @@
               <div>
                 <span *ngIf="column == 'doc_image'" class="file_type_icon"> 
                   <!-- <img [src]="element?.file_name | fileType"  alt=""> -->
-                  <mat-icon *ngIf="element?.file_processing_status == 'PASS'" class="text-success">check_circle</mat-icon>
                   <mat-icon *ngIf="element?.file_processing_status == 'FAIL'" class="text-danger">error</mat-icon>
                 </span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
