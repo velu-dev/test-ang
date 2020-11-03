@@ -186,46 +186,46 @@
             padding: 0;
         }
 
-        .document-file-upload {
-            mat-form-field {
-                padding: 0 10px 0 10px;
-            }
-            @media only screen and (max-width: 568px) {
-                margin-bottom: 20px;
-            }
-            .Upload_ {
-                button {
-                    width: 120px;
-                }
-                mat-form-field {
-                    width: calc(100% - 150px);
-                    @media only screen and (max-width: 568px) {
-                        width: $width-100 !important;
-                    }
-                }
-            }
-            div {
-                .filled-gray {
-                    margin-top: 25px;
-                    @media only screen and (max-width: 568px) {
-                        margin-top: 0px;
-                    }
-                }
-                .add-btn {
-                    @media screen and (max-width: 1024px) and (min-width: 768px) {
-                        margin-bottom: 10px !important;
-                    }
-                }
-            }
-            .Upload_ {
-                .mat-hint {
-                    width: 100%;
-                    mat-error {
-                        float: right;
-                    }
-                }
-            }
-        }
+        // .document-file-upload {
+        //     mat-form-field {
+        //         padding: 0 10px 0 10px;
+        //     }
+        //     @media only screen and (max-width: 568px) {
+        //         margin-bottom: 20px;
+        //     }
+        //     .Upload_ {
+        //         button {
+        //             width: 120px;
+        //         }
+        //         mat-form-field {
+        //             width: calc(100% - 150px);
+        //             @media only screen and (max-width: 568px) {
+        //                 width: $width-100 !important;
+        //             }
+        //         }
+        //     }
+        //     div {
+        //         .filled-gray {
+        //             margin-top: 25px;
+        //             @media only screen and (max-width: 568px) {
+        //                 margin-top: 0px;
+        //             }
+        //         }
+        //         .add-btn {
+        //             @media screen and (max-width: 1024px) and (min-width: 768px) {
+        //                 margin-bottom: 10px !important;
+        //             }
+        //         }
+        //     }
+        //     .Upload_ {
+        //         .mat-hint {
+        //             width: 100%;
+        //             mat-error {
+        //                 float: right;
+        //             }
+        //         }
+        //     }
+        // }
 
         .add-custom {
             color: $ternary !important;
