@@ -589,37 +589,36 @@ export class BilllableBillingComponent implements OnInit {
 
   selectedFile: File;
   formData = new FormData()
+  selectedFiles: FileList;
   errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   addFile(event, status?) {
+    this.selectedFiles = null;
     this.selectedFile = null;
+    this.file = []
+    this.selectedFiles = event.target.files;
+
     let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
 
-    // let fileTypes;
-    // if (this.documentType != 7) {
-    //   fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv'];
-    // } else {
-    //   fileTypes = ['mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
-    // }
-
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
-      if (FileSize > 30) {
-        this.errors.file.isError = true;
-        this.errors.file.error = "This file too long";
-        // this.alertService.openSnackBar("This file too long", 'error');
-        return;
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
+        var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
+       
+        if (FileSize > 30) {
+          this.fileUpload.nativeElement.value = "";
+          this.alertService.openSnackBar(this.selectedFiles[i].name + " file too long", 'error');
+          return;
+        }
+        this.selectedFile = this.selectedFiles[i];
+        this.file.push(this.selectedFiles[i].name);
+        if (status && this.selectedFiles.length == i+1) {
+          this.uploadFile(status)
+        }
+      } else {
+        this.alertService.openSnackBar(this.selectedFiles[i].name + " file is not accepted", 'error');
+        this.selectedFile = null;
+        this.selectedFiles = null;
+        this.fileUpload.nativeElement.value = "";
       }
-      this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-      this.errors.doc_type.error = "";
-      this.file = event.target.files[0].name;
-      this.selectedFile = event.target.files[0];
-      if (status) {
-        this.uploadFile(status)
-      }
-    } else {
-      this.selectedFile = null;
-      this.errors.file.isError = true;
-      this.errors.file.error = "This file type is not accepted";
     }
 
   }
@@ -629,10 +628,14 @@ export class BilllableBillingComponent implements OnInit {
       this.errors.file.error = "Please select file";
       return;
     }
-    this.formData.append('file', this.selectedFile);
+    //this.formData.append('file', this.selectedFile);
     this.formData.append('document_category_id', '8');
     this.formData.append('claim_id', this.paramsId.claim_id);
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
+
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.formData.append('file', this.selectedFiles[i]);
+    }
     this.billingService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
@@ -705,7 +708,7 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   deleteDocument(data, status?) {
-    this.openDialogDocument('delete', data, status);
+    this.openDialogDocument('remove', data, status);
   }
 
   openDialogDocument(dialogue, data, status?) {
