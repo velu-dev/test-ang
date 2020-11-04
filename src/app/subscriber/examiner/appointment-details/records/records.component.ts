@@ -202,7 +202,7 @@ export class RecordsComponent implements OnInit {
       //this.alertService.openSnackBar("Please select file", 'error');
       return;
     }
-
+    this.formData = new FormData();
     this.formData.append('document_category_id', '4');
     this.formData.append('claim_id', this.paramsId.claim_id.toString());
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
@@ -288,6 +288,7 @@ export class RecordsComponent implements OnInit {
     }
     this.onDemandService.requestCreate(data).subscribe(record => {
       this.alertService.openSnackBar("Record Summary On Demand created successfully!", 'success');
+      this.getRecord();
     }, error => {
       console.log(error)
       this.alertService.openSnackBar(error.error.message, 'error');
