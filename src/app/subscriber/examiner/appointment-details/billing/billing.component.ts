@@ -581,7 +581,9 @@ export class BilllableBillingComponent implements OnInit {
   getBillDocument() {
     this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId).subscribe(doc => {
       this.billDocumentList = doc.data
-      this.documentsData = new MatTableDataSource(doc.data.document_list);
+      if (doc.data.document_list) {
+        this.documentsData = new MatTableDataSource(doc.data.document_list);
+      }
     }, error => {
       this.documentsData = new MatTableDataSource([]);
     })
@@ -602,7 +604,7 @@ export class BilllableBillingComponent implements OnInit {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
-       
+
         if (FileSize > 30) {
           this.fileUpload.nativeElement.value = "";
           this.alertService.openSnackBar(this.selectedFiles[i].name + " file too long", 'error');
@@ -610,7 +612,7 @@ export class BilllableBillingComponent implements OnInit {
         }
         this.selectedFile = this.selectedFiles[i];
         this.file.push(this.selectedFiles[i].name);
-        if (status && this.selectedFiles.length == i+1) {
+        if (status && this.selectedFiles.length == i + 1) {
           this.uploadFile(status)
         }
       } else {
