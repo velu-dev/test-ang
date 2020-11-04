@@ -203,7 +203,7 @@ export class ReportComponent implements OnInit {
       this.errors.file.error = "Please select file";
       return;
     }
-
+    this.formData = new FormData();
     // this.formData.append('file', this.selectedFile);
     this.formData.append('document_category_id', '6');
     this.formData.append('claim_id', this.paramsId.claim_id.toString());

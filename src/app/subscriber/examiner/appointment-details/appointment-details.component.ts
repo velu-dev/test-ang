@@ -755,9 +755,9 @@ export class AppointmentDetailsComponent implements OnInit {
 
     let fileTypes;
     if (this.documentType != 7) {
-      fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv'];
+      fileTypes = ['pdf', 'doc', 'docx'];
     } else {
-      fileTypes = ['mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
+      fileTypes = ['pdf', 'doc', 'docx', 'mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
     }
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {

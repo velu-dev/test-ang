@@ -644,11 +644,11 @@
                 </div> -->
                 <div fxLayout="row wrap" class="w-100 m-t-15">
                     <div fxFlex="70" fxFlex.sm="100" fxFlex.xs="100" class="note">
-                        <mat-icon>info</mat-icon> Note : Supported file formats: .pdf, .doc, .docx, .xls, .xlsx, .csv
+                        <mat-icon>info</mat-icon> Note : Supported file formats: .pdf, .doc, .docx
                     </div>
                     <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
                         <input type="file" #uploader hidden (change)="addFile($event,true)" multiple
-                            accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
+                            accept=".pdf, .doc, .docx" required>
                         <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5"
                             (click)="uploader.click()"><i class="fa fa-file-medical p-r-10"></i> Add Custom
                             Document</button>
@@ -689,7 +689,7 @@
                                             </a>
                                             <input type="file" #uploader hidden
                                                 (change)="addCompleteDoc($event,element?.partial_document?.id)" hidden
-                                                accept=".pdf, .doc, .docx, .png, .jpeg, .jpg, .xls, .xlsx, .csv"
+                                                accept=".pdf, .doc, .docx"
                                                 required>
                                         </span>
                                         <span
