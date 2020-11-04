@@ -13,8 +13,8 @@
                 <mat-form-field appearance="standard" class="p-l-10 w-100">
                     <input matInput readonly value="{{file | ellipsis:50}}" placeholder="No file chosen">
                     <input type="file" #uploader hidden (change)="selectFile($event)" id="uploadFile"
-                        accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" multiple required>
-                    <mat-hint>Supported file formats: .pdf, .doc, .docx, .excel, .csv</mat-hint>
+                        accept=".pdf, .doc, .docx" multiple required>
+                    <mat-hint>Supported file formats: .pdf, .doc, .docx</mat-hint>
                     <mat-hint *ngIf="errors.status">
                         <mat-error>{{errors.message}}</mat-error>
                     </mat-hint>

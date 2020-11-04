@@ -1479,7 +1479,7 @@ export class NewClaimComponent implements OnInit {
   selectedFile: File;
   uploadFile(event) {
 
-    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv']
+    let fileTypes = ['pdf', 'doc', 'docx']
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB

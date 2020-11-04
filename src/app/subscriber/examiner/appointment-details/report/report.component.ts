@@ -168,7 +168,7 @@ export class ReportComponent implements OnInit {
     this.file = [];
     this.selectedFiles = null
     this.selectedFiles = event.target.files;
-    let fileTypes = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv','mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
+    let fileTypes = ['pdf', 'doc', 'docx','mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
   
 
     for (let i = 0; i < this.selectedFiles.length; i++) {

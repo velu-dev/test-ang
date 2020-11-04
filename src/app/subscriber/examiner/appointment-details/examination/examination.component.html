@@ -79,8 +79,8 @@
           <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput readonly value="{{file | ellipsis:50}}" placeholder="No file chosen">
             <input type="file" #uploader multiple (change)="addFile($event)" hidden
-              accept=".pdf, .doc, .docx, .xls, .xlsx, .csv" required>
-            <mat-hint class="w-100">Supported file formats: .pdf, .doc, .docx, .excel, .csv
+              accept=".pdf, .doc, .docx" required>
+            <mat-hint class="w-100">Supported file formats: .pdf, .doc, .docx
               <span *ngIf="error.status">
                 <mat-error>{{error.message}}</mat-error>
               </span>
