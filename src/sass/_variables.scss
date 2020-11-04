@@ -1022,6 +1022,12 @@ input:-webkit-autofill {
       color: $danger;
     }
   }
+  .bill-line-mobile {
+    @extend .bill-line-mobile;
+    mat-form-field {
+      width: 45%;
+    }
+  }
 }
 .dialog {
   mat-card-header {
