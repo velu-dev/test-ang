@@ -782,7 +782,7 @@
                     <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br">
                         <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                            accept=".pdf, .doc, .docx, .xls, .xlsx, .csv, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
+                            accept=".pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
                         <mat-hint>Supported file formats: .pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
@@ -825,7 +825,7 @@
                     <mat-tab label="Correspondence"></mat-tab>
                     <mat-tab label="History"> </mat-tab>
                     <mat-tab label="Records"> </mat-tab>
-                    <mat-tab label="Examination"></mat-tab>
+                    <mat-tab label="Examination" *ngIf="examinationDetails?.procedure_type != 'Supplemental'"></mat-tab>
                     <!-- <mat-tab label="Transcription"></mat-tab> -->
                     <mat-tab label="Report"></mat-tab>
                     <mat-tab label="Billing"></mat-tab>
