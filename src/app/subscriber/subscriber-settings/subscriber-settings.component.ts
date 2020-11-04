@@ -20,6 +20,14 @@ import { shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 
+export interface PeriodicElement {
+  credit_card: string;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {credit_card: 'AmericanExpress card ending in 1234'},
+  {credit_card: 'Visa card ending in 1234'},
+];
 @Component({
   selector: 'app-subscribersettings',
   templateUrl: './subscriber-settings.component.html',
@@ -46,6 +54,7 @@ export class SubscriberSettingsComponent implements OnInit {
 
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   profile_bg = globals.profile_bg;
+  visa_card = globals.visa_card;
   user: any;
   currentUser: any;
   userForm: FormGroup;
@@ -64,6 +73,10 @@ export class SubscriberSettingsComponent implements OnInit {
   signData: any;
   selectedFile: any = null;
   isSubmitted = false;
+  myControl = new FormControl();
+  options: string[] = ['AmericanExpress card ending in 1234', 'Visa card ending in 1234'];
+  displayedColumns: string[] = ['card_img', 'credit_card', 'action'];
+  dataSource1 = ELEMENT_DATA;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
