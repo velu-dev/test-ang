@@ -24,12 +24,12 @@
             </a>
         </span>
         <mat-nav-list>
-            <span *ngFor="let menuItem of menuItems">
+            <span *ngFor="let menuItem of menuItems" >
                 <a class="menu-card-title menu-group m-b-50">{{isOpen ? menuItem.group : menuItem.short_group}}</a>
                 <a *ngFor="let menu of menuItem.menu" (click)="navigate()" [routerLink]="menu.path"
-                    routerLinkActive="active-list-item" class="list-nav" mat-list-item>
+                    routerLinkActive="active-list-item" class="list-nav" mat-list-item [title]="menu.title">
                     <!-- <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> -->
-                    <i class="fa fa-{{menu.icon}} p-r-10"></i>
+                    <i class="fa fa-{{menu.icon}} p-r-10" ></i>
                     <span class="expanded_"> {{menu.title }}</span>
                 </a>
             </span>
