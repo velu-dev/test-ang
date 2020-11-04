@@ -60,7 +60,7 @@ const ELEMENT_DATA2: PeriodicElement12[] = [
   styleUrls: ['./service-request-details.component.scss']
 })
 export class ServiceRequestDetailsComponent implements OnInit {
-  displayedColumns: string[] = ['transmitted_file_name', 'file_name',];
+  displayedColumns: string[] = [ 'file_name','transmitted_file_name'];
   requestDocuments: any;
   receivedDocuments: any;
   displayedColumns1: string[] = ['document_transmission_type', 'createdAt', 'transmission_status', 'transmission_message'];
