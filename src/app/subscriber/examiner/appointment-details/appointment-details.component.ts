@@ -292,7 +292,7 @@ export class AppointmentDetailsComponent implements OnInit {
               }
             }
           })
-          console.log(response.data.appointments)
+
           this.examinationStatusForm.patchValue(response.data.appointments);
           if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
             this.appointmentStatus = true;
@@ -309,12 +309,19 @@ export class AppointmentDetailsComponent implements OnInit {
           this.examinationDetails.exam_type_code = bills.data.exam_type_code;
           this.examinationDetails.exam_type_name = bills.data.exam_type_name;
 
-
           if (this.examinationDetails.procedure_type == "Supplemental") {
-            console.log(this.examinationDetails.procedure_type);
-            console.log(this.documentList);
             let ind = this.documentList.findIndex(element => element.id == 5);
             this.documentList.splice(ind, 1);
+          }
+          if (this.examinationDetails.procedure_type == "Deposition") {
+            let documentListArr = [6, 8, 9];
+            let documentList: any = this.documentList;
+            this.documentList = []
+            documentList.map(data => {
+              if (documentListArr.includes(data.id)) {
+                this.documentList.push(data);
+              }
+            })
           }
         }, error => {
           this.dataSource = new MatTableDataSource([]);
@@ -695,17 +702,19 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinerService.getDocumentData(this.claim_id, this.billableId).subscribe(res => {
       console.log(res)
       this.documentTabData = res['data'];
-      this.tabChanges(this.tabIndex)
+      this.tabChanges(this.tabIndexDetails)
     }, error => {
       this.documentsData = new MatTableDataSource([]);
     })
   }
   tabData = [];
+  tabIndexDetails: any;
   tabChanges(event) {
-    this.tabIndex = event
+    this.tabIndex = event.index;
+    this.tabIndexDetails = event;
     this.filterValue = '';
     this.documentsData = new MatTableDataSource([])
-    this.tabData = this.documentTabData ? this.documentTabData[this.tabNames(event)] : []
+    this.tabData = this.documentTabData ? this.documentTabData[event ? event.tab.textLabel.toLowerCase() : ''] : []
     this.documentsData = new MatTableDataSource(this.tabData);
     this.documentsData.sort = this.sort;
     this.documentsData.filterPredicate = function (data, filter: string): boolean {
@@ -732,46 +741,7 @@ export class AppointmentDetailsComponent implements OnInit {
     })
   }
 
-  tabNames(index) {
-    if(this.examinationDetails.procedure_type == 'Supplemental'){
-      switch (index) {
-        case 0:
-          return 'correspondence';
-        case 1:
-          return 'history';
-        case 2:
-          return 'records';
-        // case 3:
-        //   return 'examination';
-        case 3:
-          return 'report';
-        case 4:
-          return 'billing';
-        default:
-          return 'form';
-      }
-    }else{
-      switch (index) {
-        case 0:
-          return 'correspondence';
-        case 1:
-          return 'history';
-        case 2:
-          return 'records';
-        case 3:
-          return 'examination';
-        case 4:
-          return 'report';
-        case 5:
-          return 'billing';
-        default:
-          return 'form';
-      }
-    }
-   
-
-  }
-
+ 
   selectedFile: File;
   formData = new FormData()
   errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
