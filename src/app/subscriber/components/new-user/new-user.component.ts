@@ -123,6 +123,9 @@ export class NewUserComponent implements OnInit {
 
             this.userForm.patchValue(user)
             this.userForm.get('sign_in_email_id').disable();
+            if (this.user.role_id != 2 &&  user.role_id == 2) {
+              this.userForm.disable();
+            }
           })
         } else {
         }

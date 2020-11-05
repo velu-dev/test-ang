@@ -48,8 +48,8 @@
                             <mat-label>Email ID*</mat-label>
                             <input matInput placeholder="Email" formControlName="sign_in_email_id" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
-                            <mat-hint *ngIf="!isEdit">Note : Once registered with an email id then it cannot be
-                                changed/modified.</mat-hint>
+                            <mat-hint>Note : This email id has been registered for login and cannot be changed.
+                            </mat-hint>
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
@@ -64,7 +64,7 @@
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
-                                (click)="userSubmit()">Save</button>
+                                (click)="userSubmit()" [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber">Save</button>
                         </div>
                     </form>
                 </mat-card-content>

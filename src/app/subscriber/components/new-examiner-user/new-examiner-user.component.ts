@@ -175,16 +175,12 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   ngOnInit() {
-   // if (this.user.role_id == 2) {
-      this.userService.verifyRole().subscribe(role => {
-        this.sameAsExaminer = role.status;
-      }, error => {
-        console.log(error.error.status)
-        this.sameAsExaminer = error.error.status;
-      })
-    // } else {
-    //   this.sameAsExaminer = false;
-    // }
+    this.userService.verifyRole().subscribe(role => {
+      this.sameAsExaminer = role.status;
+    }, error => {
+      console.log(error.error.status)
+      this.sameAsExaminer = error.error.status;
+    })
 
     this.userForm = this.formBuilder.group({
       id: [""],
@@ -363,6 +359,9 @@ export class NewExaminerUserComponent implements OnInit {
         console.log(this.locationDataSearch)
 
       })
+      if (this.user.role_id != 2 && user.SameAsSubscriber) {
+        this.userForm.disable();
+      }
     })
   }
 
