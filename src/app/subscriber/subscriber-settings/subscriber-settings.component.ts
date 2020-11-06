@@ -253,7 +253,7 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   onSuccess(token) {
     this.stripeService.createPaymentIntent(token.paymentMethod.id).subscribe(res => {
-      if (res.status == "succeeded") {
+      if (res.data.status == "succeeded") {
         // alert("Success");
         this.alertService.openSnackBar("Card added", 'success');
         this.isAddCreditCard = false;
