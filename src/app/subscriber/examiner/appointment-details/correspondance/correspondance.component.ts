@@ -370,7 +370,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   deleteRecipient(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: "remove this recipient" , address: true}
+      data: { name: "remove this recipient", address: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -482,6 +482,33 @@ export class BillingCorrespondanceComponent implements OnInit {
       custom_recipients_ids: recipientsCustom_documents_ids,
       examiner_id: this.examinerId
     }
+
+    if (documents_ids.includes(3)) {
+      if (!recipientsDocuments_ids.includes(1) || !recipientsDocuments_ids.includes(2)) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: "Mail On Demand", message: "Please select Claimant & Insurance Company in recipient and try again!", ok: true, no: false, type: "warning", warning: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          return
+        })
+        return;
+      }
+    }
+
+    if (documents_ids.includes(36)) {
+      if (!recipientsDocuments_ids.includes(1)) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: "Mail On Demand", message: "Please select Claimant in recipient and try again!", ok: true, no: false, type: "warning", warning: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          return
+        })
+        return;
+      }
+    }
+
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '500px',

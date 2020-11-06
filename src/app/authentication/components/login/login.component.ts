@@ -94,7 +94,6 @@ export class LoginComponent implements OnInit {
         this.redirectUrls.map(redirect => {
           if (redirect.role_id == res['data'].role_id) {
             this.alertService.openSnackBar(success.loginSuccess, 'success');
-            console.log(redirect.redirect_url)
             this.router.navigate([redirect.redirect_url]);
             this.cookieService.set("homeUrl", redirect.redirect_url)
             this.spinnerService.hide();

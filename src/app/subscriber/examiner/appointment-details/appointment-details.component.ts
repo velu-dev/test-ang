@@ -244,7 +244,6 @@ export class AppointmentDetailsComponent implements OnInit {
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
           this.intercom.setBillableItem(response.data.exam_procedure_name);
           this.cookieService.set('billableItem', response.data.exam_procedure_name)
-          this.logger.log(response.data)
           if (response.data.appointments.examiner_id) {
             this.procedureTypeStatus[1].url = "/history/" + response.data.appointments.examiner_id;
             this.procedureTypeStatus[0].url = "/correspondence/" + response.data.appointments.examiner_id
