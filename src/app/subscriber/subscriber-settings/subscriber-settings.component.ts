@@ -218,9 +218,10 @@ export class SubscriberSettingsComponent implements OnInit {
     const cardStyle = {
       base: {
         color: '#32325d',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontFamily: 'lato',
         fontSmoothing: 'antialiased',
         fontSize: '16px',
+        border :'1px solid red',
         '::placeholder': {
           color: '#aab7c4',
         },
