@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { CognitoService } from 'src/app/shared/services/cognito.service';
 import { Router } from '@angular/router';
@@ -19,14 +19,15 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
+import { StripeService } from '../service/stripe.service';
 
 export interface PeriodicElement {
   credit_card: string;
 }
-
+declare var Stripe: any;
 const ELEMENT_DATA: PeriodicElement[] = [
-  {credit_card: 'AmericanExpress card ending in 1234'},
-  {credit_card: 'Visa card ending in 1234'},
+  { credit_card: 'AmericanExpress card ending in 1234' },
+  { credit_card: 'Visa card ending in 1234' },
 ];
 @Component({
   selector: 'app-subscribersettings',
@@ -51,7 +52,11 @@ export class SubscriberSettingsComponent implements OnInit {
   expandedElement;
   isMobile = false;
   columnName = [];
-
+  card: any;
+  cardHandler = this.onChange.bind(this);
+  cardError: string;
+  stripe: any;
+  elements: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   profile_bg = globals.profile_bg;
   visa_card = globals.visa_card;
@@ -77,6 +82,9 @@ export class SubscriberSettingsComponent implements OnInit {
   options: string[] = ['AmericanExpress card ending in 1234', 'Visa card ending in 1234'];
   displayedColumns: string[] = ['card_img', 'credit_card', 'action'];
   dataSource1 = ELEMENT_DATA;
+  isAddCreditCard: boolean = false;
+  @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
+  billing = { address: { city: "", country: "US", line1: "", line2: "", state: null, postal_code: "" }, email: "", name: "", phone: "" };
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -91,6 +99,8 @@ export class SubscriberSettingsComponent implements OnInit {
     private intercom: IntercomService,
     public dialog: MatDialog,
     private breakpointObserver: BreakpointObserver,
+    private stripeService: StripeService,
+    private cd: ChangeDetectorRef
   ) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -185,7 +195,98 @@ export class SubscriberSettingsComponent implements OnInit {
 
   selectedTabChange(event) {
   }
-
+  publicKey: any;
+  addCard() {
+    this.stripeService.getPK().subscribe(res => {
+      this.isAddCreditCard = true;
+      this.publicKey = res.token;
+      this.initiateCardElement();
+    })
+  }
+  onChange({ error }) {
+    if (error) {
+      this.cardError = error.message;
+    } else {
+      this.cardError = null;
+    }
+    this.cd.detectChanges();
+  }
+  initiateCardElement() {
+    this.stripe = Stripe(this.publicKey); // use your test publishable key
+    this.elements = this.stripe.elements();
+    // Giving a base style here, but most of the style is in scss file
+    const cardStyle = {
+      base: {
+        color: '#32325d',
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    };
+    this.card = this.elements.create('card', { cardStyle });
+    this.card.mount(this.cardInfo.nativeElement);
+    this.card.addEventListener('change', this.cardHandler);
+    // this.card.blur();
+    // document.getElementsByName("cvc")[0].type = 'password';
+  }
+  async createStripeToken() {
+    this.stripe.createPaymentMethod({
+      type: 'card',
+      card: this.card,
+      billing_details: this.billing,
+    }).then(res => {
+      console.log(res)
+      if (res.paymentMethod) {
+        this.onSuccess(res);
+      }
+      if (res.error) {
+        this.onError(res);
+      }
+    });
+  }
+  onSuccess(token) {
+    this.stripeService.createPaymentIntent(token.paymentMethod.id).subscribe(res => {
+      if (res.data.status == "succeeded") {
+        // alert("Success");
+        this.alertService.openSnackBar("Card added", 'success');
+        this.isAddCreditCard = false;
+      } else {
+        this.stripe.confirmCardPayment(res.data.client_secret, {
+          // type: 'card',
+          payment_method: {
+            card: this.card,
+            billing_details: this.billing
+          }
+        }).then(res => {
+          console.log(res)
+          // if (res.paymentMethod) {
+          //   // this.onSuccess(res);
+          // }
+          // if (res.error) {
+          //   this.onError(res);
+          // }
+        })
+      }
+    })
+    // this.dialogRef.close({token});
+  }
+  onError(error) {
+    console.log(error)
+    if (error.message) {
+      this.cardError = error.message;
+    }
+  }
+  ngOnDestroy() {
+    this.card.removeEventListener('change', this.cardHandler);
+    this.card.destroy();
+  }
   expandId: any;
   openElement(element) {
     if (this.isMobile) {

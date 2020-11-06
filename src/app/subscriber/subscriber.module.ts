@@ -65,6 +65,7 @@ import { OnDemandService } from './service/on-demand.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { BillingService } from './service/billing.service';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { StripeService } from './service/stripe.service';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -177,6 +178,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     SubscriberService,
     OnDemandService,
     BillingService,
+    StripeService,
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: [] }
   ]

@@ -184,4 +184,8 @@ export const api_endpoint = {
 
     //dashboard
     getAllData: "examiner-dashboard/all-count-details",
+
+    //stripe
+    getPublicKey : "payment/publishable-token",
+    createPaymentIntent: "payment/create-payment-intent"
 }
