@@ -561,9 +561,13 @@
                                                 <div id="card-info" #cardInfo></div>
                                             </div>
                                         </div>
-                                        <button type="submit" mat-raised-button class="filled-success"
-                                            (click)="createStripeToken()">Save
-                                            Card</button>
+                                      <div  class="text-center w-100 p-t-10">
+                                          <button  mat-stroked-button type="button"
+                                          class="outline-danger">Cancel</button>
+                                        <button type="submit" mat-stroked-button class="outline-success m-l-10"
+                                        (click)="createStripeToken()">Save
+                                        Card</button>
+                                      </div>
         
                                         <!-- </form> -->
                                     </div>
