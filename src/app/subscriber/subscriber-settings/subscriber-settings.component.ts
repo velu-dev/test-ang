@@ -221,7 +221,6 @@ export class SubscriberSettingsComponent implements OnInit {
         fontFamily: 'lato',
         fontSmoothing: 'antialiased',
         fontSize: '16px',
-        border :'1px solid red',
         '::placeholder': {
           color: '#aab7c4',
         },
