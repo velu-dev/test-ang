@@ -418,7 +418,7 @@
                                                 class="fa fa-file-medical"></i> Add Card</button>
                                     </div>
                                 </form>
-                                <div fxLayout="row wrap">
+                                <div fxLayout="row wrap" *ngIf="!isAddCreditCard">
                                     <div class="user-table p-l-10" fxFlex="100">
                                         <table mat-table [dataSource]="dataSource1" class="w-100">
 
@@ -457,7 +457,6 @@
                                     </div>
                                 </div>
                             </mat-card-content>
-
                         </div>
 
 
@@ -468,7 +467,7 @@
                                     <div id="example5-paymentRequest">
                                         <!--Stripe paymentRequestButton Element inserted here-->
                                     </div>
-                                    <fieldset>
+                                    <fieldset *ngIf="isAddCreditCard">
                                         <!-- <legend class="card-only" data-tid="elements_examples.form.pay_with_card">Pay
                                             with card</legend>
                                         <legend class="payment-request-available"
@@ -476,11 +475,11 @@
                                         </legend> -->
                                         <div class="row">
                                             <div class="field">
-                                                <label for="name"
-                                                    data-tid="elements_examples.form.name_label">Name On Card*</label>
-                                                <input id="name"
-                                                    data-tid="elements_examples.form.name_placeholder" class="input"
-                                                    type="text" placeholder="Full Name" required="" autocomplete="name">
+                                                <label for="name" data-tid="elements_examples.form.name_label">Name On
+                                                    Card*</label>
+                                                <input id="name" data-tid="elements_examples.form.name_placeholder"
+                                                    class="input" type="text" placeholder="Full Name" required=""
+                                                    autocomplete="name">
                                             </div>
                                         </div>
                                         <!-- <div class="row">
@@ -522,23 +521,25 @@
                                                 </div>
                                                 <div class="field" fxFlex="50">
                                                     <label for="street_address_1"
-                                                        data-tid="elements_examples.form.address_label">Street Address 1</label>
+                                                        data-tid="elements_examples.form.address_label">Street Address
+                                                        1</label>
                                                     <input id="street_address_1"
                                                         data-tid="elements_examples.form.address_placeholder"
-                                                        class="input" type="text" placeholder="Street Address 1" required=""
-                                                        autocomplete="address-line1">
+                                                        class="input" type="text" placeholder="Street Address 1"
+                                                        required="" autocomplete="address-line1">
                                                 </div>
                                                 <div class="field" fxFlex="50">
                                                     <label for="street_address_2"
-                                                        data-tid="elements_examples.form.address_label">Street Address 2</label>
+                                                        data-tid="elements_examples.form.address_label">Street Address
+                                                        2</label>
                                                     <input id="street_address_2"
                                                         data-tid="elements_examples.form.address_placeholder"
-                                                        class="input" type="text" placeholder="Street Address 2" required=""
-                                                        autocomplete="address-line1">
+                                                        class="input" type="text" placeholder="Street Address 2"
+                                                        required="" autocomplete="address-line1">
                                                 </div>
                                             </div>
-                                            <div class="row" data-locale-reversible  fxLayout="row wrap">
-                                                <div class="field"  fxFlex="50">
+                                            <div class="row" data-locale-reversible fxLayout="row wrap">
+                                                <div class="field" fxFlex="50">
                                                     <label for="example5-city"
                                                         data-tid="elements_examples.form.city_label">City</label>
                                                     <input id="example5-city"
@@ -556,15 +557,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="field">
-                                                <label for="example5-card"
-                                                    data-tid="elements_examples.form.card_label">Card</label>
-                                                <div id="example5-card" class="input"></div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" mat-raised-button class="filled-success">Save Card</button>
                                     </fieldset>
+                                    <div class="row">
+                                        <div class="field">
+                                            <label for="example5-card"
+                                                data-tid="elements_examples.form.card_label">Card</label>
+                                            <div id="card-info" #cardInfo></div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" mat-raised-button class="filled-success">Save
+                                        Card</button>
+
                                 </form>
                             </div>
                         </mat-card>
