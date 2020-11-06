@@ -83,7 +83,6 @@ export class AppointmentDetailsComponent implements OnInit {
   documentList: any;
   documentTabData: any;
   filterValue: String;
-  tabIndex = 0;
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
@@ -710,7 +709,6 @@ export class AppointmentDetailsComponent implements OnInit {
   tabData = [];
   tabIndexDetails: any;
   tabChanges(event) {
-    this.tabIndex = event.index;
     this.tabIndexDetails = event;
     this.filterValue = '';
     this.documentsData = new MatTableDataSource([])
