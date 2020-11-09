@@ -1,25 +1,26 @@
 @import "variables";
+@import "../alert-dialog/alert-dialog.component.scss";
 
-.user-disable {
-  .mat-card-title {
-    text-align: center;
-  }
-  .disable-actions {
-    text-align: center;
-    .btn {
-      border-radius: 50px;
-      font-size: $font-size-1;
-      box-shadow: $box-shadow-3;
-      font-weight: $font-weight-bold;
-      height: 35px;
-      cursor: pointer;
-      &:hover {
-        box-shadow: $box-shadow-1;
-      }
-      &:focus, &::-moz-focus-inner {
-        outline: none !important;
-        border: none !important;
-      }
-    }
-  }
-}
+// .user-disable {
+//   .mat-card-title {
+//     text-align: center;
+//   }
+//   .disable-actions {
+//     text-align: center;
+//     .btn {
+//       border-radius: 50px;
+//       font-size: $font-size-1;
+//       box-shadow: $box-shadow-3;
+//       font-weight: $font-weight-bold;
+//       height: 35px;
+//       cursor: pointer;
+//       &:hover {
+//         box-shadow: $box-shadow-1;
+//       }
+//       &:focus, &::-moz-focus-inner {
+//         outline: none !important;
+//         border: none !important;
+//       }
+//     }
+//   }
+// }

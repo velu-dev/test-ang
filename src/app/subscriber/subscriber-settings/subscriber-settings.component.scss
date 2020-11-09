@@ -318,3 +318,10 @@ fieldset {
 // .pay-type.example5 .success .reset path {
 //   fill: #fff;
 // }
+
+.StripeElement {
+  width: 98%;
+  padding: 11px 15px 11px 5px;
+  border: 1px solid $ternary;
+  border-radius: 3px;
+}
