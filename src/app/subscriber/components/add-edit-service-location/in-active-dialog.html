@@ -9,9 +9,8 @@
 
 
 
-<div class="error-message">
+<!-- <div class="error-message">
   <div class="alert-title text-center">Service Location is already Assigned to <br/>
-    <!-- <span>'Venkatesan Mariyappan <small>(+3more)</small> '. -->
       <span>'{{examiner[0].last_name}}  {{examiner[0].first_name}}{{examiner[0].suffix ? ', '+examiner[0].suffix : ''}} <small *ngIf="examiner?.length > 1">(+{{examiner?.length - 1}}more)</small> '.
       
   </span></div>
@@ -22,4 +21,29 @@
 <div mat-dialog-actions class="disable-actions text-center p-t-25">
   <button mat-raised-button (click)="onNoClick()" class="no m-r-5">No</button>
   <button mat-button (click)="onYesClick()" class="yes">Yes</button>
+</div> -->
+
+
+
+<div class="confirm-dialog confirm-dialog-popup info-alert">
+  <div mat-dialog-title class="mat-card-title w-100">
+    <img [src]="info" alt="alert" class="text-center">
+    <div class="inline">
+      Service Location
+      <div class="mat-card-description">
+        Service Location is already Assigned to <br/>
+        <span><strong>'{{examiner[0].last_name}} {{examiner[0].first_name}}{{examiner[0].suffix ? ', '+examiner[0].suffix : ''}}
+          <small *ngIf="examiner?.length > 1">(+{{examiner?.length - 1}}more)</small> '.</strong></span>
+        <div>Do you want to Proceed this?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note info-message"><b>Note:</b> If you want re-assign to your Service Location, Please contact
+    Platform Administrator
+  </div>
+  <div mat-dialog-actions class="disable-actions text-center p-t-25">
+    <button mat-stroked-button (click)="onNoClick()" class="no m-r-5">No</button>
+    <button mat-stroked-button (click)="onYesClick()" class="yes">Yes</button>
+  </div>
 </div>

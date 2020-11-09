@@ -741,9 +741,6 @@ image-cropper {
   }
 }
 
-
-
-
 // Confirm dialog common style
 .confirm-dialog {
   .mat-card-title {
@@ -755,9 +752,9 @@ image-cropper {
 
     img {
       max-width: 50px;
-      margin: 0px auto;
+      // margin: 0px auto;
       padding-right: 10px;
-      height: 70px;
+      // height: 70px;
     }
   }
   .mat-card-description {
@@ -800,5 +797,25 @@ image-cropper {
     color: $info;
     background-color: $info-bg;
     border: 1px solid $info-border;
+  }
+}
+
+.confirm-dialog-popup {
+  font-size: $font-size-1;
+  width: $width-100;
+  line-height: 1.8;
+  .mat-card-title {
+    width: 95%;
+    padding: 10px;
+    margin: 0 !important;
+    img {
+      max-width: 50px;
+      margin: 0px;
+      padding-right: 10px;
+      // height: 70px;
+    }
+  }
+  .mat-card-description {
+    line-height: 1.8;
   }
 }
