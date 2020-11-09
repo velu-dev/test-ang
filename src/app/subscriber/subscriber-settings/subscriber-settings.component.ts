@@ -307,8 +307,11 @@ export class SubscriberSettingsComponent implements OnInit {
     }
   }
   ngOnDestroy() {
-    this.card.removeEventListener('change', this.cardHandler);
-    this.card.destroy();
+    if( this.card){
+      this.card.removeEventListener('change', this.cardHandler);
+      this.card.destroy();
+    }
+    
   }
   expandId: any;
   openElement(element) {
