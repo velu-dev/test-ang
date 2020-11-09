@@ -67,7 +67,7 @@ export class InjuryComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-isMobile = false;
+  isMobile = false;
   constructor(public dialog: MatDialog, private claimService: ClaimService, public alertService: AlertService, private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -149,7 +149,7 @@ isMobile = false;
   deleteInjury(data, index) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: 'delete', address: true }
+      data: { name: 'delete', address: true, title: data.body_part }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {

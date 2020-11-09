@@ -146,19 +146,19 @@ export class CorrespondanceComponent implements OnInit {
     })
   }
 
-  deletecorrespondence(id) {
-    this.openDialog('delete', id);
+  deletecorrespondence(data) {
+    this.openDialog('delete', data);
   }
 
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.claimService.deleteCorrespondence(data).subscribe(deleteRes => {
-          let type = this.correspondenceSource.data.findIndex(element => element.id == data);
+        this.claimService.deleteCorrespondence(data.id).subscribe(deleteRes => {
+          let type = this.correspondenceSource.data.findIndex(element => element.id == data.id);
           const tabledata = this.correspondenceSource.data;
           tabledata.splice(type, 1);
           this.documents_ids.splice(type, 1)

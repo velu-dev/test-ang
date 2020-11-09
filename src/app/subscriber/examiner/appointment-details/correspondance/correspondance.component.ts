@@ -346,7 +346,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     console.log(SelectedIds)
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: "remove this document", address: true }
+      data: { name: "remove this document", address: true, title: element.form_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -370,7 +370,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   deleteRecipient(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: "remove this recipient", address: true }
+      data: { name: "remove this recipient", address: true, title: (element.name ? element.name : "") }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -241,7 +241,7 @@ export class UserComponent implements OnInit {
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, title: user.first_name }
+      data: { name: dialogue, title: user.last_name + " " + user.first_name + " " + user.last_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -263,7 +263,7 @@ export class UserComponent implements OnInit {
   openDialogInvite(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, title: user.first_name }
+      data: { name: dialogue, title: user.last_name + " " + user.first_name + " " + user.last_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {

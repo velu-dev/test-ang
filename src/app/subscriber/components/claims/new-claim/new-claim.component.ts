@@ -1000,7 +1000,7 @@ export class NewClaimComponent implements OnInit {
     // }
   }
   cancel() {
-    this.openDialogCancel('cancel', null)
+    this.openDialogCancel('cancel', "Cancle Create")
   }
   examtypeChange(type) {
     this.logger.log(type);
@@ -1539,8 +1539,8 @@ export class NewClaimComponent implements OnInit {
     })
   }
 
-  deletecorrespondence(id) {
-    this.openDialog('delete', id);
+  deletecorrespondence(data) {
+    this.openDialog('delete', data);
   }
   appEmployer(employer) {
     this.changeState(employer.state, 'emp')
@@ -1552,12 +1552,12 @@ export class NewClaimComponent implements OnInit {
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.claimService.deleteCorrespondence(data).subscribe(deleteRes => {
-          let type = this.correspondenceSource.data.findIndex(element => element.id == data);
+        this.claimService.deleteCorrespondence(data.id).subscribe(deleteRes => {
+          let type = this.correspondenceSource.data.findIndex(element => element.id == data.id);
           const tabledata = this.correspondenceSource.data;
           tabledata.splice(type, 1);
           this.documents_ids.splice(type, 1)
@@ -1609,7 +1609,7 @@ export class NewClaimComponent implements OnInit {
   openDialogCancel(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: data }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
@@ -1664,9 +1664,10 @@ export class NewClaimComponent implements OnInit {
   }
 
   deleteInjury(data, index) {
+    let body_part = this.bodyPart(data);
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: 'delete', address: true }
+      data: { name: 'delete', address: true, title: body_part }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
