@@ -64,7 +64,7 @@ export class ExaminationComponent implements OnInit {
     })
   }
   isLoading: any = false;
-  alldocuments:any;
+  alldocuments: any;
   billingData: any;
   getData() {
     this.isLoading = true;
@@ -177,7 +177,7 @@ export class ExaminationComponent implements OnInit {
   removeDocument(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: "delete", address: true }
+      data: { name: "delete", address: true, title: element.file_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {

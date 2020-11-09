@@ -306,7 +306,7 @@ export class RecordsComponent implements OnInit {
   openDialogDelete(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {

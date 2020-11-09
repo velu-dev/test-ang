@@ -168,8 +168,8 @@ export class ReportComponent implements OnInit {
     this.file = [];
     this.selectedFiles = null
     this.selectedFiles = event.target.files;
-    let fileTypes = ['pdf', 'doc', 'docx','mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
-  
+    let fileTypes = ['pdf', 'doc', 'docx', 'mp3', 'wav', 'm4a', 'wma', 'dss', 'ds2', 'dct'];
+
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
@@ -306,7 +306,7 @@ export class ReportComponent implements OnInit {
   openDialogDelete(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {

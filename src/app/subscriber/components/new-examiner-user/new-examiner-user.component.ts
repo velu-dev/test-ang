@@ -985,7 +985,7 @@ export class NewExaminerUserComponent implements OnInit {
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: "Service Location" }
     });
 
     dialogRef.afterClosed().subscribe(result => {
