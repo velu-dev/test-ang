@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import * as globals from './../../../globals';
 
 @Component({
   selector: 'app-add-edit-service-location',
@@ -13,7 +14,6 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
   styleUrls: ['./add-edit-service-location.component.scss']
 })
 export class AddEditServiceLocationComponent implements OnInit {
-
   locationForm: FormGroup;
   states: any;
   addressType: any;
@@ -312,6 +312,9 @@ export class AddEditServiceLocationComponent implements OnInit {
   templateUrl: 'in-active-dialog.html',
 })
 export class InActivedialog {
+
+  info = globals.info
+  alert = globals.alert
   examiner: any;
   constructor(
     public dialogRef: MatDialogRef<InActivedialog>,
