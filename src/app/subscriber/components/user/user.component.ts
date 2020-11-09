@@ -235,27 +235,27 @@ export class UserComponent implements OnInit {
   }
 
   unInvite(e) {
-    this.openDialogInvite('uninvite', e.id);
+    this.openDialogInvite('uninvite', e);
 
   }
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue }
+      data: { name: dialogue, title: user.first_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        if (this.user.role_id == 3) { 
-          
+        if (this.user.role_id == 3) {
+
           this.userService.disableManageUser(user.id, !user.status).subscribe(res => {
             this.getUser(this.selectedRoleId, this.tabName);
           })
-        }else{ 
-        this.userService.disableUser(user.id, !user.status).subscribe(res => {
-          this.getUser(this.selectedRoleId, this.tabName);
-        })
-      }
+        } else {
+          this.userService.disableUser(user.id, !user.status).subscribe(res => {
+            this.getUser(this.selectedRoleId, this.tabName);
+          })
+        }
       }
     });
   }
@@ -263,7 +263,7 @@ export class UserComponent implements OnInit {
   openDialogInvite(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue }
+      data: { name: dialogue, title: user.first_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -279,7 +279,7 @@ export class UserComponent implements OnInit {
   editUser(user) {
     console.log(user);
     if (user.role_id == 11) {
-     // this.router.navigate(['subscriber/users/examiner', user.id])
+      // this.router.navigate(['subscriber/users/examiner', user.id])
       this.router.navigateByUrl(this.router.url + '/examiner/' + user.id)
     } else {
       //this.router.navigate(['subscriber/users/edit', user.id])

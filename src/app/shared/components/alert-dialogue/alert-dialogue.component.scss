@@ -1,59 +1,59 @@
 @import "variables";
 
-.confirm-dialog {
-  .mat-card-title {
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: $font-size-10;
-    font-weight: $font-weight-bold;
-    display: flex;
+// .confirm-dialog {
+//   .mat-card-title {
+//     border-radius: 5px;
+//     padding: 10px 15px;
+//     font-size: $font-size-10;
+//     font-weight: $font-weight-bold;
+//     display: flex;
 
-    img {
-      max-width: 50px;
-      margin: 0px auto;
-      padding-right: 10px;
-      height: 70px;
-    }
-  }
-  .mat-card-description {
-    font-size: $font-size-1;
-    font-weight: $font-weight-medium;
-  }
-  .disable-actions {
-    text-align: center;
-    .btn {
-      border-radius: 50px;
-      font-size: $font-size-1;
-      box-shadow: $box-shadow-3;
-      font-weight: $font-weight-bold;
-      height: 35px;
-      cursor: pointer;
-      &:hover {
-        box-shadow: $box-shadow-1;
-      }
-      &:focus {
-        outline: none !important;
-        border: none !important;
-      }
-      &::-moz-focus-inner {
-        outline: none !important;
-        border: none !important;
-      }
-    }
-  }
-}
+//     img {
+//       max-width: 50px;
+//       margin: 0px auto;
+//       padding-right: 10px;
+//       height: 70px;
+//     }
+//   }
+//   .mat-card-description {
+//     font-size: $font-size-1;
+//     font-weight: $font-weight-medium;
+//   }
+//   .disable-actions {
+//     text-align: center;
+//     .btn {
+//       border-radius: 50px;
+//       font-size: $font-size-1;
+//       box-shadow: $box-shadow-3;
+//       font-weight: $font-weight-bold;
+//       height: 35px;
+//       cursor: pointer;
+//       &:hover {
+//         box-shadow: $box-shadow-1;
+//       }
+//       &:focus {
+//         outline: none !important;
+//         border: none !important;
+//       }
+//       &::-moz-focus-inner {
+//         outline: none !important;
+//         border: none !important;
+//       }
+//     }
+//   }
+// }
 
-.warning-alert {
-  .mat-card-title {
-    color: $warning;
-    background-color: $warning-bg;
-    border: 1px solid $warning-border;
-  }
-}
-.info-alert {
-  .mat-card-title {
-    color: $info;
-    background-color: $info-bg;
-    border: 1px solid $info-border;
-  }
-}
+// .confirm-dialog.warning-alert {
+//   .mat-card-title {
+//     color: $warning;
+//     background-color: $warning-bg;
+//     border: 1px solid $warning-border;
+//   }
+// }
+// .confirm-dialog.info-alert {
+//   .mat-card-title {
+//     color: $info;
+//     background-color: $info-bg;
+//     border: 1px solid $info-border;
+//   }
+// }

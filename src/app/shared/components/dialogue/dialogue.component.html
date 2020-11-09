@@ -1,12 +1,30 @@
-<div class="user-disable" >
+<!-- <div class="user-disable" >
   <div mat-dialog-title class="mat-card-title" *ngIf="!data.address">Are you sure you want to {{data.name}} this user?</div>
   <div mat-dialog-title class="mat-card-title" *ngIf="data.address">Are you sure you want to {{data.name}}?</div>
   <div mat-dialog-actions class="disable-actions text-center p-t-25">
     <button mat-stroked-button  (click)="onNoClick()" class="no m-r-5">No</button>
     <button mat-stroked-button (click)="onYesClick()"  class="yes">Yes</button>
   </div>
+</div> -->
+
+
+
+
+<div class="confirm-dialog info-alert">
+  <div mat-dialog-title class="mat-card-title">
+    <!-- <img [src]="alert" alt="alert" class="text-center" *ngIf="data.warning"> -->
+    <img [src]="info" alt="alert" class="text-center">
+    <div class="inline">
+      <span>{{data?.title| titlecase}}</span>
+      <!-- User -->
+      <div class="mat-card-description">
+        <div *ngIf="!data.address">Are you sure you want to {{data.name}} this user?</div>
+        <div *ngIf="data.address">Are you sure you want to {{data.name}}?</div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="disable-actions text-center p-t-25" fxFlex="80">
+    <button mat-stroked-button (click)="onNoClick()" class="no m-r-5">No</button>
+    <button mat-stroked-button (click)="onYesClick()" class="yes">Yes</button>
+  </div>
 </div>
-
-
-
-
