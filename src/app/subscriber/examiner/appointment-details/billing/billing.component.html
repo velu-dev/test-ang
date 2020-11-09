@@ -29,7 +29,7 @@
     <div class="border-dashed-blue"></div>
 
     <!-- ===== Examiner information ==== -->
-    <div class="examiner-info">
+    <!-- <div class="examiner-info">
         <mat-card>
             <mat-card-header>
                 <div class="content-wrapper-main-title p-t-5">Payer Information</div>
@@ -38,38 +38,19 @@
             <mat-card-content>
                 <div fxLayout="row wrap" class="p-t-20">
                     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-
                         <div fxLayout="row wrap">
                             <div fxFlex="15" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">Payer ID</div>
                             <mat-form-field appearance="outline" fxFlex="85" fxFlex.sm="100" fxFlex.xs="100">
 
                                 <input matInput [formControl]="payorCtrl">
-                                <!-- <button mat-button *ngIf="payorCtrl.value" (click)="clearPayorCtrl()" matSuffix
-                                    mat-icon-button>
-                                    <mat-icon>close</mat-icon>
-                                </button>
-                                <mat-autocomplete #payorAuto="matAutocomplete">
-                                    <mat-option (click)="updatePayor(payor)" *ngFor="let payor of payors"
-                                        [value]="payor.id">
-                                        {{payor?.payor_id}} - {{payor?.payor_name}}
-                                    </mat-option>
-                                    <mat-option disabled *ngIf="payors?.length == 0">
-                                        Not Found
-                                    </mat-option>
-                                </mat-autocomplete> -->
+                            
                             </mat-form-field>
                         </div>
-                        <!-- <mat-select [(ngModel)]="payorId" (selectionChange)="updatePayor($event.value)">
-                                        <mat-option *ngFor="let payor of payors" [value]="payor.id"
-                                            >
-                                            {{payor?.payor_id}} - {{payor?.payor_name}}
-                                        </mat-option>
-                                    </mat-select> -->
                     </div>
                 </div>
             </mat-card-content>
         </mat-card>
-    </div>
+    </div> -->
     <!-- ===== Examiner information ==== -->
     <div class="examiner-info">
         <mat-card>

@@ -68,7 +68,6 @@ export class BilllableBillingComponent implements OnInit {
   expandedElement;
   isMobile = false;
   columnName = [];
-  dataSource1 = ELEMENT_DATA1;
   columnsToDisplay1 = [];
   expandedElement1;
   columnName1 = [];
@@ -245,8 +244,6 @@ export class BilllableBillingComponent implements OnInit {
   icdSearched = false;
   filteredICD: any = [];
 
-  payorCtrl = new FormControl({ value: '', disabled: true });
-
 
   openDialog(status?: boolean, group?): void {
     const dialogRef = this.dialog.open(BillingPaymentDialog, {
@@ -365,10 +362,7 @@ export class BilllableBillingComponent implements OnInit {
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.IcdDataSource.sort = this.sort;
-      this.logger.log("billing", billing)
-      if (billing.data.payor_id) {
-        this.payorCtrl.patchValue(billing.data.payor_id + ' - ' + billing.data.payor_name)
-      }
+      //this.logger.log("billing", billing)
       this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
       // if (billing.data && billing.data.billing_line_items) {
       //   billing.data.billing_line_items.map((item, index) => {
@@ -461,9 +455,7 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  clearPayorCtrl() {
-    this.payorCtrl.reset()
-  }
+  
   icdData = [];
   selectedIcd = { code: "", name: "" };
   selectICD(icd) {
@@ -961,20 +953,6 @@ export class BilllableBillingComponent implements OnInit {
     return total.toFixed(2);
   }
 
-  updatePayor(e) {
-    this.payorCtrl.patchValue(e.payor_id + ' - ' + e.payor_name)
-    this.billingService.updatePayor(this.billingId, e.id).subscribe(payor => {
-      if (this.billingData.payor) {
-        this.alertService.openSnackBar("Payor changed successfully", "success");
-      } else {
-        this.alertService.openSnackBar("Payor added successfully", "success");
-        this.billingData.payor = payor.data.payor_id;
-      }
-
-    }, err => {
-      this.alertService.openSnackBar(err.error.message, "error");
-    })
-  }
 
   VMC1500Submit() {
     this.billingService.generateCMS1500Form(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(cms => {
@@ -1037,27 +1015,6 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 }
-const ELEMENT_DATA1 = [
-  { "id": 1384, "item": "UQME", "procedure_code": "ML 101", "modifier": "96", "units": "1", "charge": "2200.00", "payment": "0", "balance": "2200.00" },
-  { "id": 1384, "item": "UQME", "procedure_code": "ML 101", "modifier": "96", "units": "1", "charge": "2200.00", "payment": "0", "balance": "2200.00" },
-  { "id": 1384, "item": "UQME", "procedure_code": "ML 101", "modifier": "96", "units": "1", "charge": "2200.00", "payment": "0", "balance": "2200.00" },
-
-];
-// const ELEMENT_DATA2 = [
-//   { "id": 123, "file_name": "Finalized and Signed Report.pdf", "type": "Report", "date": "05-25-2019" },
-//   { "id": 1, "file_name": "Submission Cover Letter", "type": "Attachment", "date": "05-25-2019" },
-//   { "id": 2, "file_name": "Finalized and Signed Report.pdf", "type": "Report", "date": "05-25-2019" },
-//   { "id": 3, "file_name": "Submission Cover Letter", "type": "Attachment", "date": "05-25-2019" },
-//   { "id": 4, "file_name": "Finalized and Signed Report.pdf", "type": "Report", "date": "05-25-2019" },
-//   { "id": 5, "file_name": "Submission Cover Letter", "type": "Attachment", "date": "05-25-2019" },
-
-// ];
-const ELEMENT_DATA3 = [
-  { "id": 6, "file_name": "Appointment Notification Letter", "action": "Mailed On Demand", "date_submitted": "05-25-2019", "date_received": "05-25-2019", "recipients": "Claimant, Claims Adjuster, Applicant Attorney Defense Attorney, Employer, DEU Office", "download": "Download", },
-  { "id": 5, "file_name": "QME 110 - QME Appointment Notification Form", "action": "Downloaded", "date_submitted": "05-25-2019", "date_received": "05-25-2019", "recipients": "", "download": "Download", },
-  { "id": 9, "file_name": "QME 122 - AME or QME Declaration of Service of…", "action": "Downloaded", "date_submitted": "05-25-2019", "date_received": "05-25-2019", "recipients": "", "download": "Download", },
-
-];
 
 //post payment 
 @Component({
