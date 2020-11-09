@@ -242,6 +242,10 @@ export class AppointmentDetailsComponent implements OnInit {
         console.log(this.billable_item.value)
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+          this.intercom.setClaimant(response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name);
+          this.cookieService.set('claimDetails', response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name)
+          this.intercom.setClaimNumber(response.data.claim_details.claim_number);
+          this.cookieService.set('claimNumber', response.data.claim_details.claim_number)
           this.intercom.setBillableItem(response.data.exam_procedure_name);
           this.cookieService.set('billableItem', response.data.exam_procedure_name)
           if (response.data.appointments.examiner_id) {
@@ -738,7 +742,7 @@ export class AppointmentDetailsComponent implements OnInit {
     })
   }
 
- 
+
   selectedFile: File;
   formData = new FormData()
   errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
