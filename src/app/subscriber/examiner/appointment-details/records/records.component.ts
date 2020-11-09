@@ -246,15 +246,17 @@ export class RecordsComponent implements OnInit {
     this.selection.selected.map(res => {
       document_ids.push(res.document_id)
     })
-    if (document_ids.length == 1) {
-      saveAs(this.selection.selected[0].file_url, this.selection.selected[0].file_name, '_self');
-      this.alertService.openSnackBar("File downloaded successfully", 'success');
-      this.selection.clear();
-      return;
-    }
+    // if (document_ids.length == 1) {
+    //   saveAs(this.selection.selected[0].file_url, this.selection.selected[0].file_name, '_self');
+    //   this.alertService.openSnackBar("File downloaded successfully", 'success');
+    //   this.selection.clear();
+    //   this.getRecord();
+    //   return;
+    // }
     this.onDemandService.recordDownload(this.paramsId.claim_id, this.paramsId.billId, { documents_ids: document_ids }).subscribe(record => {
       saveAs(record.data.file_url, record.data.file_name, '_self');
       this.selection.clear();
+      this.getRecord();
       this.alertService.openSnackBar("File downloaded successfully", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');

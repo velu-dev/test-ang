@@ -58,7 +58,10 @@ export class HistoryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getHistory();
+  }
 
+  getHistory() {
     this.onDemandService.getHistory(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
       this.historyData = history;
       this.historyData.documets_sent_and_received.map(inFile => {
@@ -132,8 +135,9 @@ export class HistoryComponent implements OnInit {
 
     this.onDemandService.OnDemandhistory(data).subscribe(history => {
       this.rushRequest = false;
-      this.download({ file_url: history.data.file_url, file_name:  history.data.file_name })
+      this.download({ file_url: history.data.file_url, file_name: history.data.file_name })
       this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully!", 'success');
+      this.getHistory();
     }, error => {
       console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');

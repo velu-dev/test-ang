@@ -247,16 +247,18 @@ export class ReportComponent implements OnInit {
       document_ids.push(res.document_id)
     })
 
-    if (document_ids.length == 1) {
-      saveAs(this.selection.selected[0].file_url, this.selection.selected[0].file_name, '_self');
-      this.alertService.openSnackBar("File downloaded successfully", 'success');
-      this.selection.clear();
-      return;
-    }
+    // if (document_ids.length == 1) {
+    //   saveAs(this.selection.selected[0].file_url, this.selection.selected[0].file_name, '_self');
+    //   this.alertService.openSnackBar("File downloaded successfully", 'success');
+    //   this.selection.clear();
+    //   this.getReport();
+    //   return;
+    // }
     this.onDemandService.reportDownload(this.paramsId.claim_id, this.paramsId.billId, { documents_ids: document_ids }).subscribe(record => {
       saveAs(record.data.file_url, record.data.file_name, '_self');
       this.alertService.openSnackBar("File downloaded successfully", 'success');
       this.selection.clear();
+      this.getReport();
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })

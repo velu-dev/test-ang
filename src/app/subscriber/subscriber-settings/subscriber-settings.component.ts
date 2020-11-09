@@ -84,7 +84,7 @@ export class SubscriberSettingsComponent implements OnInit {
   dataSource1 = ELEMENT_DATA;
   isAddCreditCard: boolean = false;
   @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
-  billing = { address: { city: "", country: "US", line1: "", line2: "", state: null, postal_code: "" }, email: "", name: "", phone: "" };
+
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -149,7 +149,21 @@ export class SubscriberSettingsComponent implements OnInit {
       this.userForm.patchValue(userDetails)
     })
   }
+  billings: FormGroup;
   ngOnInit() {
+    this.billings = this.formBuilder.group({
+      // address: { city: "", country: "US", line1: "", line2: "", state: null, postal_code: "" },
+      name: ["", Validators.compose([Validators.required])],
+      email: ["", Validators.compose([Validators.email])],
+      phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      address: this.formBuilder.group({
+        city: [""],
+        country: ["US"],
+        line1: [""],
+        line2: [""],
+        state: [""]
+      })
+    })
     let user = JSON.parse(this.cookieService.get('user'));
     this.currentUser = user;
     this.userPasswrdForm = this.formBuilder.group({
@@ -236,14 +250,23 @@ export class SubscriberSettingsComponent implements OnInit {
     // this.card.blur();
     // document.getElementsByName("cvc")[0].type = 'password';
   }
+  isCardSubmit = false;
   async createStripeToken() {
-    this.stripe.createPaymentMethod({
+    this.isCardSubmit = true;
+    let billingData = this.billings.value;
+    for (var propName in billingData) {
+      if (billingData[propName] === null || billingData[propName] === "") {
+        delete billingData[propName];
+      }
+    }
+    let data = {
       type: 'card',
       card: this.card,
-      billing_details: this.billing,
-    }).then(res => {
-      console.log(res)
+      billing_details: billingData,
+    }
+    this.stripe.createPaymentMethod(data).then(res => {
       if (res.paymentMethod) {
+        this.isCardSubmit = false;
         this.onSuccess(res);
       }
       if (res.error) {
@@ -262,7 +285,7 @@ export class SubscriberSettingsComponent implements OnInit {
           // type: 'card',
           payment_method: {
             card: this.card,
-            billing_details: this.billing
+            billing_details: this.billings.value
           }
         }).then(res => {
           console.log(res)
