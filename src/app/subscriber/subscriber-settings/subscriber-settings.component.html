@@ -567,16 +567,28 @@
                                                     </div>
                                                 </div>
                                             </fieldset>
-                                            <div class="row pay-type" fxLayout="row wrap">
+                                            <!-- <div class="row pay-type" fxLayout="row wrap">
                                                 <div class="field" fxFlex="100">
                                                     <label for="example5-card"
                                                         data-tid="elements_examples.form.card_label">Card</label>
                                                     <div id="card-info" #cardInfo></div>
                                                 </div>
+                                            </div> -->
+                                            <!-- </fieldset> -->
+                                            <div class="row pay-type" fxLayout="row wrap">
+                                                <div class="field p-l-20" fxFlex="100">
+                                                    <label for="example5-card"
+                                                        data-tid="elements_examples.form.card_label">Card</label>
+                                                    <div id="card-info" #cardInfo></div>
+                                                </div>
                                             </div>
-                                            <button type="submit" mat-raised-button class="filled-success"
-                                                (click)="createStripeToken()">Save
-                                                Card</button>
+                                            <div class="text-center w-100 p-t-10">
+                                                <button mat-stroked-button type="button"
+                                                    class="outline-danger">Cancel</button>
+                                                <button type="submit" mat-stroked-button class="outline-success m-l-10"
+                                                    (click)="createStripeToken()">Save
+                                                    Card</button>
+                                            </div>
 
                                         </form>
                                     </div>

@@ -253,7 +253,7 @@ fieldset {
 }
 
 .pay-type.example5 input,
-.pay-type.example5 button,
+// .pay-type.example5 button,
 .pay-type.example5 select {
   -webkit-animation: 1ms void-animation-out;
   -webkit-appearance: none;
@@ -318,3 +318,10 @@ fieldset {
 // .pay-type.example5 .success .reset path {
 //   fill: #fff;
 // }
+
+.StripeElement {
+  width: 98%;
+  padding: 11px 15px 11px 5px;
+  border: 1px solid $ternary;
+  border-radius: 3px;
+}
