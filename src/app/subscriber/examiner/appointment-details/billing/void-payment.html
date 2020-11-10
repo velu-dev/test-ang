@@ -11,7 +11,7 @@
             <div fxLayout="row wrap" class="scroll_">
                 <div class="sub-title" fxFlex="100">Void Reason</div>
                 <form fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
-                    [formGroup]="postPaymentForm">
+                    [formGroup]="">
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="100" fxFlex.md="100"
                         fxFlex.sm="100" fxFlex.xs="100">
                         <mat-label>Void Reason</mat-label>
@@ -23,7 +23,7 @@
                         <button mat-stroked-button type="button" (click)="onNoClick()"
                             class="outline-danger">Cancel</button>
                         <button mat-stroked-button class="outline-success text-center m-l-10"
-                            (click)="PaymentFormSubmit()">Save</button>
+                            >Save</button>
                     </div>
                 </form>
             </div>
