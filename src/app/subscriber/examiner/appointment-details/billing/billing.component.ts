@@ -257,6 +257,19 @@ export class BilllableBillingComponent implements OnInit {
       }
     });
   }
+
+  openVoidDialog(): void {
+    const dialogRef = this.dialog.open(VoidPayment, {
+      width: '800px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
   openBillOnDemand(): void {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
       width: '800px',
@@ -1694,6 +1707,23 @@ export class BillingCustomRecipient {
       }
     })
   }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
+
+@Component({
+  selector: 'void-payment',
+  templateUrl: 'void-payment.html',
+})
+export class VoidPayment {
+
+  constructor(
+    public dialogRef: MatDialogRef<VoidPayment>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
   onNoClick(): void {
     this.dialogRef.close();
   }

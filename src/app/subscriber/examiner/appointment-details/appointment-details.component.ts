@@ -185,8 +185,8 @@ export class AppointmentDetailsComponent implements OnInit {
         this.columnName = ["", "Name", "Action"]
         this.displayedColumnsForDocuments = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName = ["", "Name", "Uploaded On ", "Action"]
-        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'action']
+        this.columnName = ["", "Name", "Uploaded On ", "Download On Demand Proof of Service", "Action"]
+        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
       }
 
       if (res) {
@@ -731,7 +731,15 @@ export class AppointmentDetailsComponent implements OnInit {
     this.tabIndexDetails = event;
     this.filterValue = '';
     this.documentsData = new MatTableDataSource([])
-    this.tabData = this.documentTabData ? this.documentTabData[event ? event.tab.textLabel.toLowerCase() : ''] : []
+    this.tabData = this.documentTabData ? this.documentTabData[event ? event.tab.textLabel.toLowerCase() : ''] : [];
+    if (this.tabIndexDetails.index == 0) {
+      this.columnName = ["", "Name", "Uploaded On ", "Download On Demand Proof of Service", "Action"]
+      this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
+    } else {
+      this.columnName = ["", "Name", "Uploaded On ", "Action"]
+      this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'action']
+    }
+
     this.documentsData = new MatTableDataSource(this.tabData);
     this.documentsData.sort = this.sort;
     this.documentsData.filterPredicate = function (data, filter: string): boolean {
