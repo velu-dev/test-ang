@@ -999,8 +999,8 @@ export class NewClaimComponent implements OnInit {
     // })
     // }
   }
-  cancel() {
-    this.openDialogCancel('cancel', "Cancle Create")
+  cancel(title) {
+    this.openDialogCancel('cancel', "Create " + title)
   }
   examtypeChange(type) {
     this.logger.log(type);
