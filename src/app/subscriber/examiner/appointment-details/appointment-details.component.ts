@@ -524,7 +524,8 @@ export class AppointmentDetailsComponent implements OnInit {
         }
       })
       this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
-      this.examinationDetails.appointments = { examination_notes: res.data.examination_notes, examination_status: res.data.examination_status }
+      this.examinationDetails.appointments = { examination_notes: res.data.examination_notes, examination_status: res.data.examination_status };
+      this.loadDatas();
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -610,7 +611,22 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   clickNav(url) {
     if (url != "/billing") {
-      this.router.navigate([this.router.url + url]);
+      if (url == "/correspondence") {
+        if ((this.examinationStatusForm.get('examination_status').value == 1) || (this.billable_item.get(['appointment', "appointment_scheduled_date_time"]).value == "") || (this.billable_item.get(['appointment', "duration"]).value == "")) {
+          console.log(this.examinationStatusForm.get('examination_status').value)
+          console.log(this.billable_item.get(['appointment', "appointment_scheduled_date_time"]).value)
+          console.log(this.billable_item.get(['appointment', "duration"]).value)
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px',
+            data: { title: 'No values provided for appointment date & time and duration', message: "correspondence is not allowed", yes: false, ok: true, no: false, type: "info", info: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            return
+          })
+        } else {
+          this.router.navigate([this.router.url + url]);
+        }
+      }
     } else {
       this.billingNev();
     }
