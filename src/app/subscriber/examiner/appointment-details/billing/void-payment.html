@@ -1,0 +1,33 @@
+<ngx-spinner type="ball-clip-rotate" size="medium"></ngx-spinner>
+<div fxLayout="row wrap">
+    <div fxFlex="100" class="payment-dialog dialog custom-dialog">
+        <mat-card-header class="model-header">
+            <div class="content-wrapper-main-title p-t-3">Void Payment </div>
+            <span class="spacer"></span>
+            <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div fxLayout="row wrap" class="scroll_">
+                <div class="sub-title" fxFlex="100">Void Reason</div>
+                <form fxLayout="row wrap" fxFlex="100" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
+                    [formGroup]="postPaymentForm">
+                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="100" fxFlex.md="100"
+                        fxFlex.sm="100" fxFlex.xs="100">
+                        <mat-label>Void Reason</mat-label>
+                        <input matInput type="text" placeholder="Void Reason" autocomplete="off">
+                        <mat-error>error msg here</mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="100" class="m-t-20 text-center">
+                        <button mat-stroked-button type="button" (click)="onNoClick()"
+                            class="outline-danger">Cancel</button>
+                        <button mat-stroked-button class="outline-success text-center m-l-10"
+                            (click)="PaymentFormSubmit()">Save</button>
+                    </div>
+                </form>
+            </div>
+        </mat-card-content>
+
+    </div>
+</div>

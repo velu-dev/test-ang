@@ -799,6 +799,13 @@ image-cropper {
     border: 1px solid $info-border;
   }
 }
+.confirm-dialog.error-alert {
+  .mat-card-title {
+    color: $error;
+    background-color: $error-bg;
+    border: 1px solid $error-border;
+  }
+}
 
 .confirm-dialog-popup {
   font-size: $font-size-1;
