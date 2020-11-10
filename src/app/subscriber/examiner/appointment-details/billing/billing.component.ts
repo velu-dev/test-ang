@@ -114,6 +114,7 @@ export class BilllableBillingComponent implements OnInit {
   billDocumentList: any;
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
   states: any;
+  incompleteInformation: any;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -122,6 +123,7 @@ export class BilllableBillingComponent implements OnInit {
     private fb: FormBuilder,
     private intercom: IntercomService,
     private cookieService: CookieService) {
+
     this.intercom.setBillNo('Bill');
     this.cookieService.set('billNo', null)
     this.route.params.subscribe(param => {
@@ -137,7 +139,12 @@ export class BilllableBillingComponent implements OnInit {
       } else {
         this.billingId = param.billingId
       }
+      this.billingService.getIncompleteInfo(param.claim_id, param.billId).subscribe(res => {
 
+      }, error => {
+        console.log(error);
+        this.incompleteInformation = error.error.data;
+      })
       this.logger.log(this.billingId, "billing id")
 
     })
