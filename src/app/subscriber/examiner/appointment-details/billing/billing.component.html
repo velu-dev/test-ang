@@ -51,6 +51,35 @@
             </mat-card-content>
         </mat-card>
     </div> -->
+
+    <!-- ===== incomplete information ==== -->
+    <div class="incomplete-info" *ngIf="!isIncompleteError">
+        <mat-card>
+            <mat-card-header>
+                <div class="content-wrapper-main-title text-danger">Incomplete Information</div>
+            </mat-card-header>
+            <mat-divider class="border-red"></mat-divider>
+            <mat-card-content>
+                <div fxLayout="row wrap" class="p-t-10">
+                    <div class="incomplete-modules" fxFlex="100">
+                        <ul>
+                            <li *ngFor="let incompleteInfo of incompleteInformation">
+                                <mat-icon>error</mat-icon> {{incompleteInfo}}
+                            </li>
+                            <!-- <li><mat-icon>error</mat-icon> Claim Details Incomplete</li>
+                         <li><mat-icon>error</mat-icon> Claim Injury Details Incomplete</li>
+                         <li><mat-icon>error</mat-icon> Claims Administrator Details Incomplete</li>
+                         <li><mat-icon>error</mat-icon> Appointment Details Incomplete</li>
+                         <li><mat-icon>error</mat-icon> Examiner Service Location Details Incomplete</li>
+                         <li><mat-icon>error</mat-icon> Billing Provider Details Incomplete</li>
+                         <li><mat-icon>error</mat-icon> Rendering Provider Details Incomplete</li> -->
+                        </ul>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
     <!-- ===== Examiner information ==== -->
     <div class="examiner-info">
         <mat-card>
@@ -670,8 +699,7 @@
                                             </a>
                                             <input type="file" #uploader hidden
                                                 (change)="addCompleteDoc($event,element?.partial_document?.id)" hidden
-                                                accept=".pdf, .doc, .docx"
-                                                required>
+                                                accept=".pdf, .doc, .docx" required>
                                         </span>
                                         <span
                                             *ngIf="column == 'document_type'">{{element?.document_type | titlecase}}</span>

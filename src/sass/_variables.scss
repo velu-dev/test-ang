@@ -58,7 +58,8 @@ $progress-error: #f27120;
 $ternary-color: #6464fa;
 
 //Extra colors
-$green: #65ff88;
+// $green: #65ff88;
+$green: #4FCC24;
 $white: #ffffff;
 $black: #000000;
 $gray: #ccc;
@@ -83,7 +84,7 @@ $bg-success: rgb(76, 175, 80);
 $bg-error: rgba(255, 54, 54, 0.05);
 $bg-warning: rgba(255, 178, 54, 0.4);
 $bg-error-style-one: #ff8f8f;
-$btn_success: #00cc00 !default;
+$btn_success: #4FCC24 !default;
 $btn_close: #ebebf2;
 $accent: #ff4081;
 $disabled: rgba(0, 0, 0, 0.12);
@@ -96,7 +97,8 @@ $btn-light-color: #e3e3fa;
 
 //
 $warning-light: #ffc400;
-$danger: #ff3366;
+// $danger: #ff3366;
+$danger: #db2828;
 
 //table odd row color
 $table-solid: #f8f8f8;
@@ -941,12 +943,10 @@ input:-webkit-autofill {
   margin-top: 10px;
   padding: 5px;
   mat-icon {
-      font-size: $font-size-9;
-      vertical-align: middle;
+    font-size: $font-size-9;
+    vertical-align: middle;
   }
 }
-
-
 
 // Common font family
 .mat-toolbar,
@@ -1003,7 +1003,7 @@ input:-webkit-autofill {
       vertical-align: top !important;
     }
   }
-  .note  {
+  .note {
     @extend .note;
   }
   .float-right {
@@ -1268,6 +1268,12 @@ input:-webkit-autofill {
   border: 1px dashed $ternary;
   display: block;
   margin: 10px 0;
+}
+
+//border-red
+.border-red {
+  border-color: $danger;
+  display: block;
 }
 
 // On Demand Pages Information Icon

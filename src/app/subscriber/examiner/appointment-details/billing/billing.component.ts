@@ -114,6 +114,8 @@ export class BilllableBillingComponent implements OnInit {
   billDocumentList: any;
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
   states: any;
+  incompleteInformation: any;
+  isIncompleteError: any;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -122,6 +124,7 @@ export class BilllableBillingComponent implements OnInit {
     private fb: FormBuilder,
     private intercom: IntercomService,
     private cookieService: CookieService) {
+
     this.intercom.setBillNo('Bill');
     this.cookieService.set('billNo', null)
     this.route.params.subscribe(param => {
@@ -137,7 +140,12 @@ export class BilllableBillingComponent implements OnInit {
       } else {
         this.billingId = param.billingId
       }
-
+      this.billingService.getIncompleteInfo(param.claim_id, param.billId).subscribe(res => {
+        this.isIncompleteError = true;
+      }, error => {
+        this.isIncompleteError = false;
+        this.incompleteInformation = error.error.data;
+      })
       this.logger.log(this.billingId, "billing id")
 
     })
@@ -468,7 +476,7 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  
+
   icdData = [];
   selectedIcd = { code: "", name: "" };
   selectICD(icd) {
@@ -524,7 +532,7 @@ export class BilllableBillingComponent implements OnInit {
   openDialogDiagnosis(dialogue, icd) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: "Diagnosis Codes" }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
@@ -719,9 +727,10 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   openDialogDocument(dialogue, data, status?) {
+    console.log(data)
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
@@ -807,7 +816,7 @@ export class BilllableBillingComponent implements OnInit {
   openDialogBillLine(dialogue, index, group) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: "Billing Line Item" }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
@@ -1324,9 +1333,10 @@ export class BillingPaymentDialog {
   }
 
   openDialogEOR(dialogue, group, index) {
+
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: group.value.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
@@ -1454,7 +1464,7 @@ export class billingOnDemandDialog {
   deleteRecipient(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: "delete" }
+      data: { name: "delete", title: element.name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1722,7 +1732,7 @@ export class VoidPayment {
 
   constructor(
     public dialogRef: MatDialogRef<VoidPayment>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();

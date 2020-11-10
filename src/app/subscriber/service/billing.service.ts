@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, ObservedValueOf, Observer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { api_endpoint } from 'src/environments/api_endpoint';
+import { retry } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -110,5 +111,7 @@ export class BillingService {
   eorRemove(id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.eorRemove + id)
   }
-
+  getIncompleteInfo(claim_id, bill_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getIncompleteinfo + claim_id + "/" + bill_id)
+  }
 }

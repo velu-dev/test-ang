@@ -176,6 +176,7 @@ export const api_endpoint = {
     postBillingComplete: 'billing/complete-document-upload',
     postPaymentFileAdd: 'billing/post-payment-eor/',
     eorRemove: 'billing/post-payment-eor-remove/',
+    getIncompleteinfo: "billing/validate-837p-csv/",
 
     //Calendar 
 
@@ -186,6 +187,6 @@ export const api_endpoint = {
     getAllData: "examiner-dashboard/all-count-details",
 
     //stripe
-    getPublicKey : "payment/publishable-token",
+    getPublicKey: "payment/publishable-token",
     createPaymentIntent: "payment/create-payment-intent"
 }
