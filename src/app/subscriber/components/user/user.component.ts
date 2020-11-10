@@ -268,7 +268,7 @@ export class UserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.userService.postUninvite(user).subscribe(resUninvite => {
+        this.userService.postUninvite(user.id).subscribe(resUninvite => {
           console.log(resUninvite);
           this.getUser(this.selectedRoleId, this.tabName)
         })
