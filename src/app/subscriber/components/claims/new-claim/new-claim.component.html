@@ -99,7 +99,8 @@
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Date of Birth*</mat-label>
                                 <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
-                                    [matDatepicker]="date_of_birth" [min]="minimumDate"  [max]="today" formControlName="date_of_birth">
+                                    [matDatepicker]="date_of_birth" [min]="minimumDate" [max]="today"
+                                    formControlName="date_of_birth">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
                                 <mat-datepicker #date_of_birth disabled="false"></mat-datepicker>
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid date of birth</mat-error>
@@ -152,7 +153,8 @@
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Language</mat-label>
                                 <mat-select formControlName="primary_language_spoken"
-                                    (selectionChange)="primryLangChange();claimant.get('other_language').reset()" [disabled]="!languageStatus">
+                                    (selectionChange)="primryLangChange();claimant.get('other_language').reset()"
+                                    [disabled]="!languageStatus">
                                     <mat-option *ngFor="let language of languageList" [value]="language.id">
                                         {{language.language}}
                                     </mat-option>
@@ -160,13 +162,16 @@
                                 <mat-error *ngIf="isClaimantSubmited">Please select a language</mat-error>
                             </mat-form-field>
 
-                            <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-form-field fxFlex="100" *ngIf="claimant.value.primary_language_spoken == 20" appearance="outline">
-                                  <mat-label>Other Language</mat-label>
-                                  <input matInput formControlName="other_language" placeholder="Other Language" autocomplete="off">
-                                  <mat-error *ngIf="isClaimantSubmited">Please enter other language</mat-error>
+                            <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-form-field fxFlex="100" *ngIf="claimant.value.primary_language_spoken == 20"
+                                    appearance="outline">
+                                    <mat-label>Other Language</mat-label>
+                                    <input matInput formControlName="other_language" placeholder="Other Language"
+                                        autocomplete="off">
+                                    <mat-error *ngIf="isClaimantSubmited">Please enter other language</mat-error>
                                 </mat-form-field>
-                              </div>
+                            </div>
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
@@ -242,7 +247,7 @@
                             <div class="text-center w-100 m-b-10 action-button">
 
                                 <button mat-stroked-button type="button" class="m-r-10 outline-danger"
-                                    (click)="cancel()">Cancel</button>
+                                    (click)="cancel('Claimant')">Cancel</button>
 
                                 <button mat-stroked-button type="submit" class="m-r-10 outline-light_green"
                                     (click)="createClaimant('close')">
@@ -470,8 +475,7 @@
                                                     (click)="downloadDoc(element?.exam_report_file_url,element?.file_name )">
                                                     Download
                                                 </a>
-                                                <a class="text-danger m-l-10"
-                                                    (click)="deletecorrespondence(element)">
+                                                <a class="text-danger m-l-10" (click)="deletecorrespondence(element)">
                                                     Remove
                                                 </a>
                                             </td>
@@ -722,8 +726,8 @@
                                 <mat-autocomplete #aaAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of aattroneyGroupOptions" [label]="group.name">
                                         <!-- [disabled]="selectedDAttorney == aa.id" -->
-                                        <mat-option  (click)="appAttorney(aa)"
-                                            *ngFor="let aa of group.data" [value]="aa.company_name">
+                                        <mat-option (click)="appAttorney(aa)" *ngFor="let aa of group.data"
+                                            [value]="aa.company_name">
                                             {{aa.company_name}}
                                         </mat-option>
                                     </mat-optgroup>
@@ -828,8 +832,8 @@
                                 <mat-autocomplete #daAuto="matAutocomplete">
                                     <mat-optgroup *ngFor="let group of dattroneyGroupOptions" [label]="group.name">
                                         <!-- [disabled]="selectedAAttorney == aa.id" -->
-                                        <mat-option (click)="defAttornety(aa)"
-                                            *ngFor="let aa of group.data" [value]="aa.company_name">
+                                        <mat-option (click)="defAttornety(aa)" *ngFor="let aa of group.data"
+                                            [value]="aa.company_name">
                                             {{aa.company_name}}
                                         </mat-option>
                                     </mat-optgroup>
@@ -1002,7 +1006,7 @@
                                 <button mat-stroked-button type="button" class="m-r-10 outline-warning"
                                     matStepperPrevious>Previous</button>
                                 <button mat-stroked-button type="button" class="m-r-10 outline-danger"
-                                    (click)="cancel()">Cancel</button>
+                                    (click)="cancel('Claim')">Cancel</button>
                                 <button mat-stroked-button type="submit" class="m-r-10 outline-light_green"
                                     (click)="submitClaim('save')">
                                     Save & Close</button>
@@ -1260,7 +1264,7 @@
                                 <button mat-stroked-button type="button" class="m-r-10 outline-warning"
                                     matStepperPrevious>Previous</button>
                                 <button mat-stroked-button type="button" class="m-r-10 outline-danger"
-                                    (click)="cancel()">Cancel</button>
+                                    (click)="cancel('Billable Item')">Cancel</button>
                                 <button mat-stroked-button class="m-r-10 outline-light_green"
                                     (click)="submitBillableItem()">
                                     Save & Close </button>

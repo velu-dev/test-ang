@@ -852,7 +852,7 @@ export class NewExaminerUserComponent implements OnInit {
   openDialogLicense(dialogue, e, i) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: e.license_number }
     });
 
     dialogRef.afterClosed().subscribe(result => {
