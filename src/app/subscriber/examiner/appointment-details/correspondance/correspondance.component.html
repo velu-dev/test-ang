@@ -223,8 +223,8 @@
                 <span *ngIf="column == 'download' && element?.send">
                   <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
                 </span>
-                <span *ngIf="column == 'download1' && element?.received">
-                  <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
+                <span *ngIf="column == 'download1' && element?.proof_of_service_file_name">
+                  <a class="text-success" (click)="inOutdownload({file_url: element?.proof_of_service_file_url,file_name: element?.proof_of_service_file_name})">Download</a>
                 </span>
                 <span *ngIf="column == 'further_info'">{{element?.file_processing_message}}</span>
               </div>
