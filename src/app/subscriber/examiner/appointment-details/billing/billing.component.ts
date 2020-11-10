@@ -468,7 +468,7 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  
+
   icdData = [];
   selectedIcd = { code: "", name: "" };
   selectICD(icd) {
@@ -524,7 +524,7 @@ export class BilllableBillingComponent implements OnInit {
   openDialogDiagnosis(dialogue, icd) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: "Diagnosis Codes" }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
@@ -719,9 +719,10 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   openDialogDocument(dialogue, data, status?) {
+    console.log(data)
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
@@ -807,7 +808,7 @@ export class BilllableBillingComponent implements OnInit {
   openDialogBillLine(dialogue, index, group) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: "Billing Line Item" }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
@@ -1324,9 +1325,10 @@ export class BillingPaymentDialog {
   }
 
   openDialogEOR(dialogue, group, index) {
+
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: group.value.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
@@ -1454,7 +1456,7 @@ export class billingOnDemandDialog {
   deleteRecipient(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: "delete" }
+      data: { name: "delete", title: element.name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -1722,7 +1724,7 @@ export class VoidPayment {
 
   constructor(
     public dialogRef: MatDialogRef<VoidPayment>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();
