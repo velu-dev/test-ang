@@ -259,7 +259,7 @@ export class NewExaminerUserComponent implements OnInit {
         last_name: res.examiner_details.last_name,
         middle_name: res.examiner_details.middle_name,
         company_name: res.examiner_details.company_name,
-        sign_in_email_id: res.examiner_details.sign_in_email_id,
+      //  sign_in_email_id: res.examiner_details.sign_in_email_id,
         role_id: res.examiner_details.role_id,
         suffix: res.examiner_details.suffix,
         SameAsSubscriber: res.examiner_details.SameAsSubscriber
@@ -495,7 +495,7 @@ export class NewExaminerUserComponent implements OnInit {
     }
     this.selectedUser = this.userForm.value;
     if (!this.isEdit) {
-      this.userService.createExaminerUser(this.userForm.value).subscribe(res => {
+      this.userService.createExaminerUser(this.userForm.getRawValue()).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
         this.examinerId = res.data.id;
         // this.router.navigate(['/subscriber/users'])
@@ -506,10 +506,10 @@ export class NewExaminerUserComponent implements OnInit {
         this.isEdit = true;
         this.createStatus = true;
         this.userForm.patchValue({ id: res.data.id })
-        this.userForm.controls.sign_in_email_id.disable();
+        //this.userForm.controls.sign_in_email_id.disable();
         this.userForm.controls.role_id.disable();
         this.userForm.controls.SameAsSubscriber.disable();
-        this.userForm.get('sign_in_email_id').updateValueAndValidity();
+        this.userForm.get('role_id').updateValueAndValidity();
         let role = this.cookieService.get('role_id')
         let baseUrl: any;
         switch (role) {
@@ -539,7 +539,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     }
     else {
-      this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
+      this.userService.updateEditUser(this.userForm.getRawValue().id, this.userForm.getRawValue()).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully!", 'success');
         this.examinerId = res.data.id
         // this.router.navigate(['/subscriber/users'])

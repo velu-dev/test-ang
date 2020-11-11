@@ -153,8 +153,8 @@ export class UserComponent implements OnInit {
         this.columnName = ["", "Last Name", "Disable User"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabledExaminer"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Enrolled On","Disable User"]
-        this.columnsToDisplay = ['last_name', 'first_name', 'createdAt',  "disabledExaminer"]
+        this.columnName = ["Last Name", "First Name", "Enrolled On", "Disable User"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'createdAt', "disabledExaminer"]
       }
     } else {
       if (this.isMobile) {
@@ -179,7 +179,7 @@ export class UserComponent implements OnInit {
       this.columnName[this.columnName.length - 1] = "Disable Examiner"
       this.tabName = 'examiners'
     }
-   
+
 
 
     this.users = this.allUser[this.tabName];
@@ -261,7 +261,29 @@ export class UserComponent implements OnInit {
       this.openDialog('disable', id);
     }
   }
+  diasbleExaminer(user) {
+    if (this.tabIndex == 2) {
+      this.openDialogExaminerDisable('enable', user)
+    } else {
+      this.openDialogExaminerDisable('disable', user)
+    }
+   
+  }
 
+  openDialogExaminerDisable(name, user) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: name, title: user.last_name + " " + user.first_name + " " + user.middle_name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.userService.diasbleExaminer(user.id, !user.status).subscribe(exam => {
+          this.getUser(this.selectedRoleId, this.tabName);
+        })
+      }
+    });
+  }
   unInvite(e) {
     this.openDialogInvite('uninvite', e);
 
