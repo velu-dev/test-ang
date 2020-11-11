@@ -52,6 +52,7 @@ export const api_endpoint = {
     deleteLicense: 'subscriber/examiner/remove-license/',
     verifyRole: 'subscriber/examiner/verify-role',
     verifyUserRole: 'subscriber/examiner/verify-user-role',
+    examinerDisable: 'subscriber/disable-examiner/',
 
     //loction
     getLocationDetails: 'subscriber/examiner/service-location-list/',

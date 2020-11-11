@@ -43,7 +43,7 @@
                             <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidsuffix}}</mat-error>
                         </mat-form-field>
-                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
+                        <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Email ID*</mat-label>
                             <input matInput placeholder="Email" formControlName="sign_in_email_id" autocomplete="off">
@@ -59,7 +59,7 @@
                                 </mat-option>
                             </mat-select>
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.selectrole}}</mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
                         <div class="text-center w-100 m-t-10">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>

@@ -852,6 +852,7 @@ export class AppointmentDetailsComponent implements OnInit {
       saveAs(res.signed_file_url, element.file_name);
     })
   }
+  
   applyFilter(filterValue: string) {
     this.documentsData.filter = filterValue.trim().toLowerCase();
   }

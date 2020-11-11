@@ -345,7 +345,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     SelectedIds = this.selection.selected;
     console.log(SelectedIds)
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: "remove this document", address: true, title: element.form_name }
     });
 

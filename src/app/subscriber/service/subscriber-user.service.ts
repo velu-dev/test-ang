@@ -112,4 +112,8 @@ export class SubscriberUserService {
     return this.http.post(environment.baseUrl + api_endpoint.subscriberManageDisableUser + id, { status: status })
   }
 
+  diasbleExaminer(id, status): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.examinerDisable + id, { status: status })
+  }
+
 }

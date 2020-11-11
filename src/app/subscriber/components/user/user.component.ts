@@ -66,7 +66,7 @@ export class UserComponent implements OnInit {
     this.user = JSON.parse(this.cookieService.get('user'));
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
-      if (res) {
+      if (this.isMobile) {
         this.columnName = ["", "Last Name", "Disable User"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
@@ -114,6 +114,8 @@ export class UserComponent implements OnInit {
           this.tabchange(1)
         } else if (status == 'disabledUsers') {
           this.tabchange(2)
+        } else if (status == 'examiners') {
+          this.tabchange(3)
         } else {
           this.tabchange(0)
         }
@@ -128,6 +130,8 @@ export class UserComponent implements OnInit {
           this.tabchange(1)
         } else if (status == 'disabledUsers') {
           this.tabchange(2)
+        } else if (status == 'examiners') {
+          this.tabchange(3)
         } else {
           this.tabchange(0)
         }
@@ -144,6 +148,24 @@ export class UserComponent implements OnInit {
     this.users = [];
     this.tabName = ''
     this.tabIndex = event;
+    if (event == 3) {
+      if (this.isMobile) {
+        this.columnName = ["", "Last Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'last_name', "disabledExaminer"]
+      } else {
+        this.columnName = ["Last Name", "First Name", "Enrolled On", "Disable User"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'createdAt', "disabledExaminer"]
+      }
+    } else {
+      if (this.isMobile) {
+        this.columnName = ["", "Last Name", "Disable User"]
+        this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
+      } else {
+        this.columnName = ["Last Name", "First Name", "Email", "Role(s)", "Enrolled On", "Disable User"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
+      }
+    }
+
     if (event == 0) {
       this.columnName[this.columnName.length - 1] = "Disable User"
       this.tabName = 'activeUsers'
@@ -153,7 +175,13 @@ export class UserComponent implements OnInit {
     } else if (event == 2) {
       this.columnName[this.columnName.length - 1] = "Enable User"
       this.tabName = 'disabledUsers'
+    } else if (event == 3) {
+      this.columnName[this.columnName.length - 1] = "Disable Examiner"
+      this.tabName = 'examiners'
     }
+
+
+
     this.users = this.allUser[this.tabName];
     this.users.map(user => {
       user.enroll = moment(user.createdAt).format("MM-DD-YYYY")
@@ -233,7 +261,29 @@ export class UserComponent implements OnInit {
       this.openDialog('disable', id);
     }
   }
+  diasbleExaminer(user) {
+    if (this.tabIndex == 2) {
+      this.openDialogExaminerDisable('enable', user)
+    } else {
+      this.openDialogExaminerDisable('disable', user)
+    }
+   
+  }
 
+  openDialogExaminerDisable(name, user) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '350px',
+      data: { name: name, title: user.last_name + " " + user.first_name + " " + user.middle_name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.userService.diasbleExaminer(user.id, !user.status).subscribe(exam => {
+          this.getUser(this.selectedRoleId, this.tabName);
+        })
+      }
+    });
+  }
   unInvite(e) {
     this.openDialogInvite('uninvite', e);
 
