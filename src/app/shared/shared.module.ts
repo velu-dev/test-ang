@@ -38,6 +38,7 @@ import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.com
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { AlertDialogueComponent } from './components/alert-dialogue/alert-dialogue.component';
+import { BillingAlertComponent } from './components/billingalert/billing-alert.component';
 
 export const MY_MOMENT_FORMATS = {
   parseInput: 'MM-DD-YYYY HH:mm A z',
@@ -59,14 +60,16 @@ export const MY_MOMENT_FORMATS = {
     EllipsisPipe,
     FilterPipe,
     FileTypePipe,
-    AlertDialogComponent
+    AlertDialogComponent,
+    BillingAlertComponent
   ],
   entryComponents: [
     AlertComponent,
     DialogueComponent,
     AlertDialogueComponent,
     NodataComponent,
-    AlertDialogComponent
+    AlertDialogComponent,
+    BillingAlertComponent
   ],
   imports: [
     CommonModule,

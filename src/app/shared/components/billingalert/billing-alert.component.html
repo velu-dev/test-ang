@@ -1,0 +1,37 @@
+<!-- <div class="user-disable">
+  <div mat-dialog-title class="mat-card-title">{{data?.title}}</div>
+  <div class="note" *ngIf="data?.subTitle">{{data.subTitle}}</div>
+  <div mat-dialog-actions class="disable-actions text-center p-t-25">
+    <button mat-raised-button (click)="onNoClick()" class="no m-r-5">OK</button>
+  </div>
+</div> -->
+
+<div class="confirm-dialog error-alert">
+  <div mat-dialog-title class="mat-card-title">
+    <img [src]="error" alt="alert" class="text-center">
+    <div class="inline">
+      <div class="mat-card-description">
+        <div>{{data?.title}} <br />
+          <ul>
+            <li *ngFor="let incompleteInfo of data.incompleteInformation">
+              <!-- <mat-icon>error</mat-icon>  -->
+              {{incompleteInfo}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="disable-actions text-center p-t-15" fxFlex="80">
+    <button mat-stroked-button (click)="onNoClick()" class="yes m-r-5">OK</button>
+  </div>
+</div>
+
+
+<!-- <div class="error-message">
+  <div mat-dialog-title class="mat-card-title">{{data?.title}}</div>
+  <div class="note">{{data?.title}} <br/> {{data?.subTitle}}</div>
+</div>
+<div mat-dialog-actions class="disable-actions text-center p-t-25">
+  <button mat-stroked-button (click)="onNoClick()" class="cancel m-r-5">OK</button>
+</div> -->

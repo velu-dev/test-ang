@@ -21,6 +21,8 @@ import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue
 import { AddAddress } from '../correspondance/correspondance.component';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
+import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -1504,115 +1506,124 @@ export class billingOnDemandDialog {
   }
 
   billingOnDemand() {
+    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId).subscribe(res => {
 
-    if (this.selection1.selected.length == 0) {
-      this.alertService.openSnackBar('Please select Recipient(s)', "error");
-      return;
-    }
-    let recipientsDocuments_ids: any = [];
-    let addressEmpty = false;
-    let isClaimant = false;
-    let isInsurance = false;
-    let isInsuranceAddress = false;
-    this.selection1.selected.map(res => {
-      if (res.type == "custom") {
-        recipientsDocuments_ids.push(res.id)
-      } else {
-        if (res.recipient_type.toLowerCase() != 'claimant') {
-          recipientsDocuments_ids.push(res.data.id)
+      if (this.selection1.selected.length == 0) {
+        this.alertService.openSnackBar('Please select Recipient(s)', "error");
+        return;
+      }
+      let recipientsDocuments_ids: any = [];
+      let addressEmpty = false;
+      let isClaimant = false;
+      let isInsurance = false;
+      let isInsuranceAddress = false;
+      this.selection1.selected.map(res => {
+        if (res.type == "custom") {
+          recipientsDocuments_ids.push(res.id)
         } else {
-          isClaimant = true
+          if (res.recipient_type.toLowerCase() != 'claimant') {
+            recipientsDocuments_ids.push(res.data.id)
+          } else {
+            isClaimant = true
+          }
         }
+        if (res.message) {
+          addressEmpty = true;
+        }
+
+        if (res.recipient_type && res.recipient_type == 'Insurance Company') {
+          isInsurance = true
+        }
+
+        if (res.recipient_type && res.recipient_type == 'Insurance Company' && res.message) {
+          isInsuranceAddress = true
+        }
+      })
+
+      if (!isInsurance) {
+        this.alertService.openSnackBar('Please select Insurance Company', "error");
+        return;
       }
-      if (res.message) {
-        addressEmpty = true;
+      if (isInsuranceAddress) {
+        this.alertService.openSnackBar('Insurance Company address is mandatory', "error");
+        return;
       }
 
-      if (res.recipient_type && res.recipient_type == 'Insurance Company') {
-        isInsurance = true
+      let data = {
+        claim_id: this.data.claimId,
+        document_category_id: 8,
+        billable_item_id: this.data.billableId,
+        service_request_type_id: 5,
+        bill_id: this.data.billingId,
+        //documents_ids: [1753, 1755],
+        recipients_id: recipientsDocuments_ids,
+        isClaimant: isClaimant
       }
 
-      if (res.recipient_type && res.recipient_type == 'Insurance Company' && res.message) {
-        isInsuranceAddress = true
+      if (addressEmpty) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Bill on demand', message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.billingService.onDemandBilling(data).subscribe(bill => {
+              if (bill.data.exam_report_signed_file_url) {
+                recipientsDocuments_ids = [];
+                this.selection1.clear();
+                this.recipientsData.map(doc => {
+                  if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+                    this.selection1.select(doc);
+                  }
+                })
+                this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
+              }
+              if (bill.data.bill_on_demand_signed_zip_file_url) {
+                setTimeout(() => {
+                  this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+                }, 1000);
+
+              }
+              this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+            }, error => {
+              this.alertService.openSnackBar(error.error.message, 'error');
+            })
+          } else {
+            return;
+          }
+        })
+      } else {
+        this.billingService.onDemandBilling(data).subscribe(bill => {
+          if (bill.data.exam_report_signed_file_url) {
+            recipientsDocuments_ids = [];
+            this.selection1.clear();
+            this.recipientsData.map(doc => {
+              if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+                this.selection1.select(doc);
+              }
+            })
+            this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
+          }
+          if (bill.data.bill_on_demand_signed_zip_file_url) {
+            setTimeout(() => {
+              this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+            }, 1000);
+
+          }
+          this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
       }
-    })
-
-    if (!isInsurance) {
-      this.alertService.openSnackBar('Please select Insurance Company', "error");
-      return;
-    }
-    if (isInsuranceAddress) {
-      this.alertService.openSnackBar('Insurance Company address is mandatory', "error");
-      return;
-    }
-
-    let data = {
-      claim_id: this.data.claimId,
-      document_category_id: 8,
-      billable_item_id: this.data.billableId,
-      service_request_type_id: 5,
-      bill_id: this.data.billingId,
-      //documents_ids: [1753, 1755],
-      recipients_id: recipientsDocuments_ids,
-      isClaimant: isClaimant
-    }
-
-    if (addressEmpty) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+    }, error => {
+      const dialogRef = this.dialog.open(BillingAlertComponent, {
         width: '500px',
-        data: { title: 'Bill on demand', message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        data: { title: 'Incomplete Information', incompleteInformation: error.error.data }
       });
       dialogRef.afterClosed().subscribe(result => {
-        if (result.data) {
-          this.billingService.onDemandBilling(data).subscribe(bill => {
-            if (bill.data.exam_report_signed_file_url) {
-              recipientsDocuments_ids = [];
-              this.selection1.clear();
-              this.recipientsData.map(doc => {
-                if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
-                  this.selection1.select(doc);
-                }
-              })
-              this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
-            }
-            if (bill.data.bill_on_demand_signed_zip_file_url) {
-              setTimeout(() => {
-                this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
-              }, 1000);
-
-            }
-            this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
-          }, error => {
-            this.alertService.openSnackBar(error.error.message, 'error');
-          })
-        } else {
-          return;
-        }
+        return
       })
-    } else {
-      this.billingService.onDemandBilling(data).subscribe(bill => {
-        if (bill.data.exam_report_signed_file_url) {
-          recipientsDocuments_ids = [];
-          this.selection1.clear();
-          this.recipientsData.map(doc => {
-            if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
-              this.selection1.select(doc);
-            }
-          })
-          this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
-        }
-        if (bill.data.bill_on_demand_signed_zip_file_url) {
-          setTimeout(() => {
-            this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
-          }, 1000);
-
-        }
-        this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
-      }, error => {
-        this.alertService.openSnackBar(error.error.message, 'error');
-      })
-    }
-
+    })
   }
 
   typeIfRecipient = "";
