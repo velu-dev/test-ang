@@ -550,6 +550,9 @@ tr.detail-row {
     th {
       min-width: 150px !important;
       white-space: break-spaces !important;
+      &:first-child {
+        min-width: 30px !important;
+      }
     }
   }
 }
