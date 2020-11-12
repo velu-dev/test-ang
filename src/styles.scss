@@ -753,7 +753,7 @@ image-cropper {
     font-size: $font-size-10;
     font-weight: $font-weight-bold;
     display: flex;
-    word-break: break-all;
+    word-break: break-word;
 
     img {
       max-width: 50px;
@@ -765,7 +765,7 @@ image-cropper {
   .mat-card-description {
     font-size: $font-size-1;
     font-weight: $font-weight-medium;
-    word-break: break-all;
+    word-break: break-word;
   }
   .disable-actions {
     text-align: center;

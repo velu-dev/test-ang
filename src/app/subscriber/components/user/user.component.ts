@@ -272,8 +272,8 @@ export class UserComponent implements OnInit {
 
   openDialogExaminerDisable(name, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
-      data: { name: name, title: user.last_name + " " + user.first_name + " " + user.middle_name }
+      width: '500px',
+      data: { name: name, title: user.last_name + " " + user.first_name + (user.middle_name ? " " + user.middle_name : '') }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -290,8 +290,8 @@ export class UserComponent implements OnInit {
   }
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
-      data: { name: dialogue, title: user.last_name + " " + user.first_name + " " + user.middle_name }
+      width: '500px',
+      data: { name: dialogue, title: user.last_name + " " + user.first_name  + (user.middle_name ? " " + user.middle_name : '') }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -313,7 +313,7 @@ export class UserComponent implements OnInit {
   openDialogInvite(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '350px',
-      data: { name: dialogue, title: user.last_name + " " + user.first_name + " " + user.middle_name }
+      data: { name: dialogue, title: user.last_name + " " + user.first_name  + (user.middle_name ? " " +user.middle_name : '') }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -14,7 +14,9 @@
                             <mat-checkbox class="checkbox_" formControlName="SameAsSubscriber"
                                 (change)="sameAsSub($event)">Add Examiner Role to Subscriber</mat-checkbox>
                         </div>
-
+                        <div *ngIf="examinerNumber" fxFlex="100" class="p-l-10 m-b-10 m-t-10">
+                            Examiner Number : {{examinerNumber}}
+                        </div>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>First Name*</mat-label>
@@ -63,8 +65,12 @@
                         <div class="text-center w-100 m-t-10">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
-                            <button mat-stroked-button class="m-l-10 outline-success"
-                                (click)="userSubmit()" [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber">Save</button>
+                            <button mat-stroked-button class="m-l-10 outline-light_green" (click)="userSubmit('close')"
+                                [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber">Save &
+                                Close</button>
+                            <button mat-stroked-button class="m-l-10 outline-success" (click)="userSubmit('next')"
+                                [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber">Save &
+                                Next</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -180,8 +186,10 @@
                         <div class="text-center w-100 m-t-10 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
-                            <button mat-stroked-button (click)="mailingAddressSubmit()"
-                                class="m-l-10 outline-success">Save</button>
+                            <button mat-stroked-button (click)="mailingAddressSubmit('close')"
+                                class="m-l-10 outline-light_green">Save & Close</button>
+                            <button mat-stroked-button (click)="mailingAddressSubmit('next')"
+                                class="m-l-10 outline-success">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -346,7 +354,8 @@
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Fax</mat-label>
-                                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000" formControlName="fax_no" autocomplete="off">
+                                <input matInput placeholder="Fax" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                    formControlName="fax_no" autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid fax</mat-error>
                             </mat-form-field>
                         </div>
@@ -389,8 +398,10 @@
                         <div class="text-center w-100 m-t-10 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-light_green"
+                                (click)="billingPrviderSubmit('close')">Save & Close</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
-                                (click)="billingPrviderSubmit()">Save</button>
+                                (click)="billingPrviderSubmit('next')">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -635,8 +646,10 @@
                         <div class="text-center w-100 m-t-30 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-light_green"
+                                (click)="renderingFormSubmit('close')">Save & Close</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
-                                (click)="renderingFormSubmit()">Save</button>
+                                (click)="renderingFormSubmit('next')">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>
