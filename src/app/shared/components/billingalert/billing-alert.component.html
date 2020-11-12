@@ -10,11 +10,12 @@
   <div mat-dialog-title class="mat-card-title">
     <img [src]="error" alt="alert" class="text-center">
     <div class="inline">
-      <div class="mat-card-description">
-        <div>{{data?.title}} <br />
+      <div class="p-l-10">{{data?.title}}</div>
+      <div class="mat-card-description p-l-10">
+        <div  class="incomplete-modules">
           <ul>
             <li *ngFor="let incompleteInfo of data.incompleteInformation">
-              <!-- <mat-icon>error</mat-icon>  -->
+              <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
               {{incompleteInfo}}
             </li>
           </ul>
