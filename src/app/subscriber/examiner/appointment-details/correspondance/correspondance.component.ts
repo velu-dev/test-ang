@@ -369,7 +369,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
   deleteRecipient(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: "remove this recipient", address: true, title: (element.name ? element.name : "") }
     });
 

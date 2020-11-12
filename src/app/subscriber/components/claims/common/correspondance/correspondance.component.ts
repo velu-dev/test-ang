@@ -152,7 +152,7 @@ export class CorrespondanceComponent implements OnInit {
 
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
