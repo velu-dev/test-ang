@@ -14,8 +14,8 @@
                             <mat-checkbox class="checkbox_" formControlName="SameAsSubscriber"
                                 (change)="sameAsSub($event)">Add Examiner Role to Subscriber</mat-checkbox>
                         </div>
-                        <div fxFlex="100" class="p-l-10 m-b-10 m-t-10">
-                            Examiner Number : 1234567890
+                        <div *ngIf="examinerNumber" fxFlex="100" class="p-l-10 m-b-10 m-t-10">
+                            Examiner Number : {{examinerNumber}}
                         </div>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                             fxFlex.sm="50" fxFlex.xs="100">

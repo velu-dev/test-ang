@@ -80,6 +80,7 @@ export class NewExaminerUserComponent implements OnInit {
   texonomySearch = new FormControl();
   texonomyFilteredOptions: Observable<any>;
   selected: any;
+  examinerNumber:any;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   //@ViewChild(MatSort, { static: false }) sort: MatSort;
   //@ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -250,6 +251,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.getExaminerUser(id).subscribe(res => {
       this.userData = res;
+      this.examinerNumber = res.examiner_details.examiner_reference_id
       // if (res.examiner_id == this.user.id) {
       //   this.userForm.disable();
       // }
@@ -498,6 +500,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.userService.createExaminerUser(this.userForm.getRawValue()).subscribe(res => {
         this.alertService.openSnackBar("User created successfully!", 'success');
         this.examinerId = res.data.id;
+        this.examinerNumber = res.data.examiner_reference_id;
         // this.router.navigate(['/subscriber/users'])
         if (this.examinerId == this.user.id) {
           this.intercom.setUserChanges(true);
