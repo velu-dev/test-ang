@@ -63,8 +63,10 @@
                         <div class="text-center w-100 m-t-10">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
+                                <button mat-stroked-button class="m-l-10 outline-success"
+                                (click)="userSubmit('close')" [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber">Save & Close</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
-                                (click)="userSubmit()" [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber">Save</button>
+                                (click)="userSubmit('next')" [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -180,8 +182,10 @@
                         <div class="text-center w-100 m-t-10 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
-                            <button mat-stroked-button (click)="mailingAddressSubmit()"
-                                class="m-l-10 outline-success">Save</button>
+                                <button mat-stroked-button (click)="mailingAddressSubmit('close')"
+                                class="m-l-10 outline-success">Save & Close</button>
+                            <button mat-stroked-button (click)="mailingAddressSubmit('next')"
+                                class="m-l-10 outline-success">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -389,8 +393,10 @@
                         <div class="text-center w-100 m-t-10 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
+                                <button mat-stroked-button class="m-l-10 outline-success"
+                                (click)="billingPrviderSubmit('close')">Save & Close</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
-                                (click)="billingPrviderSubmit()">Save</button>
+                                (click)="billingPrviderSubmit('next')">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -635,8 +641,10 @@
                         <div class="text-center w-100 m-t-30 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
+                                <button mat-stroked-button class="m-l-10 outline-success"
+                                (click)="renderingFormSubmit('close')">Save & Close</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
-                                (click)="renderingFormSubmit()">Save</button>
+                                (click)="renderingFormSubmit('next')">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>

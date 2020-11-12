@@ -259,7 +259,7 @@ export class NewExaminerUserComponent implements OnInit {
         last_name: res.examiner_details.last_name,
         middle_name: res.examiner_details.middle_name,
         company_name: res.examiner_details.company_name,
-      //  sign_in_email_id: res.examiner_details.sign_in_email_id,
+        //  sign_in_email_id: res.examiner_details.sign_in_email_id,
         role_id: res.examiner_details.role_id,
         suffix: res.examiner_details.suffix,
         SameAsSubscriber: res.examiner_details.SameAsSubscriber
@@ -480,7 +480,7 @@ export class NewExaminerUserComponent implements OnInit {
     }
   }
   createStatus: boolean = false;
-  userSubmit() {
+  userSubmit(status?) {
 
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
@@ -511,28 +511,35 @@ export class NewExaminerUserComponent implements OnInit {
         this.userForm.controls.SameAsSubscriber.disable();
         this.userForm.get('role_id').updateValueAndValidity();
         let role = this.cookieService.get('role_id')
-        let baseUrl: any;
-        switch (role) {
-          case '1':
-            baseUrl = "/admin/users";
-            break;
-          case '2':
-            baseUrl = "/subscriber/users";
-            break;
-          case '3':
-            baseUrl = "/subscriber/manager/users";
-            break;
-          case '4':
-            baseUrl = "/subscriber/staff/users";
-            break;
-          case '11':
-            baseUrl = "/subscriber/examiner/users";
-            break;
-          default:
-            baseUrl = "/admin/users";
-            break;
+        // let baseUrl: any;
+        // switch (role) {
+        //   case '1':
+        //     baseUrl = "/admin/users";
+        //     break;
+        //   case '2':
+        //     baseUrl = "/subscriber/users";
+        //     break;
+        //   case '3':
+        //     baseUrl = "/subscriber/manager/users";
+        //     break;
+        //   case '4':
+        //     baseUrl = "/subscriber/staff/users";
+        //     break;
+        //   case '11':
+        //     baseUrl = "/subscriber/examiner/users";
+        //     break;
+        //   default:
+        //     baseUrl = "/admin/users";
+        //     break;
+        // }
+        // this.router.navigate([baseUrl + "/examiner", this.examinerId])
+        if (status == 'next') {
+          this.tabIndex = 1;
+        } else if (status == 'close') {
+          this._location.back();
         }
-        this.router.navigate([baseUrl + "/examiner", this.examinerId])
+        this.userForm.markAsUntouched();
+        this.userForm.updateValueAndValidity();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -543,6 +550,14 @@ export class NewExaminerUserComponent implements OnInit {
         this.alertService.openSnackBar("User updated successfully!", 'success');
         this.examinerId = res.data.id
         // this.router.navigate(['/subscriber/users'])
+        if (status == 'next') {
+          this.tabIndex = 1;
+        } else if (status == 'close') {
+          this._location.back();
+        }
+
+        this.userForm.markAsUntouched();
+        this.userForm.updateValueAndValidity();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -552,8 +567,8 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   cancel() {
-    //this._location.back();
-    this.router.navigate(['/subscriber/users'])
+    this._location.back();
+    //this.router.navigate(['/subscriber/users'])
   }
 
   numberOnly(event): boolean {
@@ -661,7 +676,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.selected = -1
   }
 
-  mailingAddressSubmit() {
+  mailingAddressSubmit(status?) {
     this.mailingSubmit = true;
     Object.keys(this.mailingAddressForm.controls).forEach((key) => {
       if (this.mailingAddressForm.get(key).value && typeof (this.mailingAddressForm.get(key).value) == 'string')
@@ -679,13 +694,20 @@ export class NewExaminerUserComponent implements OnInit {
       } else {
         this.alertService.openSnackBar("Mailing address updated successfully!", 'success');
       }
+      this.mailingAddressForm.markAsUntouched();
+      this.mailingAddressForm.updateValueAndValidity();
+      if (status == 'next') {
+        this.tabIndex = 2;
+      } else if (status == 'close') {
+        this._location.back();
+      }
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
   billingSubmit: boolean = false;
-  billingPrviderSubmit() {
+  billingPrviderSubmit(status?) {
     this.billingSubmit = true;
     if (this.billingProviderForm.value.is_person) {
       this.billingProviderForm.get('first_name').setValidators([Validators.required, Validators.maxLength(50)]);
@@ -715,14 +737,21 @@ export class NewExaminerUserComponent implements OnInit {
       } else {
         this.alertService.openSnackBar("Billing provider updated successfully!", 'success');
       }
-      this.updateFormData(this.examinerId)
+      this.updateFormData(this.examinerId);
+      this.billingProviderForm.markAsUntouched();
+      this.billingProviderForm.updateValueAndValidity();
+      if (status == 'next') {
+        this.tabIndex = 3;
+      } else if (status == 'close') {
+        this._location.back();
+      }
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
   renderingSubmit: boolean = false;
-  renderingFormSubmit() {
+  renderingFormSubmit(status?) {
     this.renderingSubmit = true;
     if (this.renderingForm.value.is_person) {
       this.renderingForm.get('first_name').setValidators([Validators.required, Validators.maxLength(50)]);
@@ -752,7 +781,14 @@ export class NewExaminerUserComponent implements OnInit {
       } else {
         this.alertService.openSnackBar("Rendering provider updated successfully!", 'success');
       }
-      this.updateFormData(this.examinerId)
+      this.updateFormData(this.examinerId);
+      this.renderingForm.markAsUntouched();
+      this.renderingForm.updateValueAndValidity();
+      if (status == 'next') {
+        this.tabIndex = 4;
+      } else if (status == 'close') {
+        this._location.back();
+      }
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
