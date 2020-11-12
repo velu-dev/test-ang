@@ -341,7 +341,7 @@ tr.detail-row {
           a {
             width: 100%;
             display: block;
-            overflow-wrap:break-word;
+            overflow-wrap: break-word;
           }
         }
         .mat-form-field.mat-form-field-appearance-outline .mat-form-field-infix {
@@ -542,5 +542,14 @@ tr.detail-row {
   }
   .mat-expansion-panel-body {
     padding: 0 !important;
+  }
+}
+
+.fixed-column {
+  thead {
+    th {
+      min-width: 150px !important;
+      white-space: break-spaces !important;
+    }
   }
 }

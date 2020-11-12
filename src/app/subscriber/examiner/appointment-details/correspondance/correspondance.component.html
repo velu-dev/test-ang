@@ -193,7 +193,7 @@
           matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and the document recipients."
           matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Monitor the actions performed on this page.</p>
-      <div class="user-detail vertical-fixed default-cursor">
+      <div class="user-detail vertical-fixed default-cursor fixed-column">
         <table mat-table [dataSource]="sentDocuments" multiTemplateDataRows class="mat-elevation-z8 user-table">
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
             <th mat-header-cell *matHeaderCellDef>
