@@ -444,6 +444,10 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 }
 
 // custom calender css
+.fc-event,
+.fc-event:hover {
+  cursor: pointer;
+}
 .fc-button {
   border: 1px solid #d7dae3;
   text-transform: capitalize;
