@@ -25,6 +25,7 @@ export const api_endpoint = {
     followupCall: "admin/service-request/followup-calls",
 
     //Subscriber
+    getDashboardData: "platform-dashboard/dashboard-details",
     getSubscriberUsers: 'subscriber/users',
     getSubscriberRole: 'subscriber/roles',
     getSubscriberUser: 'subscriber/user/',

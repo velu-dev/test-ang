@@ -9,6 +9,9 @@ import { api_endpoint } from 'src/environments/api_endpoint';
 export class SubscriberService {
 
   constructor(private http: HttpClient) { }
+  getDashboardData(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getDashboardData);
+  }
   getClaimantAwait(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getClaimantAwait)
   }
@@ -37,19 +40,19 @@ export class SubscriberService {
     return this.http.post(environment.baseUrl + api_endpoint.updateExistingLocation, data)
   }
 
-  getSingleLocation(id): Observable<any>{
+  getSingleLocation(id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getSingleLocation + id)
   }
 
-  getSingleLocationExaminer(id, examiner): Observable<any>{
-    return this.http.get(environment.baseUrl + api_endpoint.getSingleLocation + id + '/'+ examiner)
+  getSingleLocationExaminer(id, examiner): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getSingleLocation + id + '/' + examiner)
   }
 
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
 
-  removeAssignLocation(userId,locationId): Observable<any> {
+  removeAssignLocation(userId, locationId): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteAssignLocation + userId + '/' + locationId)
   }
   getExaminer(id): Observable<any> {

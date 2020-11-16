@@ -7,7 +7,7 @@ import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { CookieService } from 'src/app/shared/services/cookie.service';
-
+import { SubscriberService } from '../../service/subscriber.service';
 
 export interface PeriodicElement {
   claimant: string;
@@ -38,14 +38,17 @@ export class DashboardComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource: any //new MatTableDataSource(ELEMENT_DATA);
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
 
-  constructor(public router: Router, private logger: NGXLogger, private cookieService: CookieService, private breakpointObserver: BreakpointObserver) {
+  constructor(public router: Router, private logger: NGXLogger, private cookieService: CookieService, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService) {
+    this.subscriberService.getDashboardData().subscribe(res => {
+      this.dataSource = new MatTableDataSource(res.data);
+    })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -53,7 +56,7 @@ export class DashboardComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
         this.columnName = ["", "Claimant", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date of Item Received", "Critical"]
-        this.columnsToDisplay = ['is_expand', 'claimant_name', 'examiner_name', "exam_procedure_type", "standing", 'dos', 'critical']
+        this.columnsToDisplay = ['is_expand', 'claimant_name', 'examiner_name', "exam_procedure_type", "standing", 'date_of_service', 'critical']
       }
     })
   }
@@ -82,7 +85,7 @@ export class DashboardComponent implements OnInit {
   expandId: any;
   openElement(element) {
     // if (this.isMobile) {
-    this.expandId = element.id;
+    this.expandId = element.appointment_id;
     // }
   }
   navigate(menu) {
@@ -97,9 +100,42 @@ export class DashboardComponent implements OnInit {
 
 
 const ELEMENT_DATA = [
-  // { "id": 1, "claimant_name": "Sam, Toucan", "examiner_name": "Denzel Washington", "exam_procedure_type": "QME", "standing": "Correspondence Not Sent", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
-  // { "id": 2, "claimant_name": "Tiger, Tony", "examiner_name": "Jessica Simpson", "exam_procedure_type": "QME", "standing": "Appointment Awaiting Date", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
-  // { "id": 3, "claimant_name": "Chocula, Count", "examiner_name": "Jennifer Lopez", "exam_procedure_type": "QME", "standing": "Appointment 06-30-2020", "dos": "06-21-2020", "critical": "Critical", "correspondence": "Sent", "history": "Completed", "records": "Summarized", "examination":"06-30-2020", "report":"Something", "transcription":"Something", "billing":"Something"},
-  // { "id": 132, "claimant_name": "Mariyappan", "examiner_name": "Venkatesan", "exam_procedure_type": "", "standing": "", "dos": "", "critical": "", "correspondence": "", "history": "", "records": "", "examination":"", "report":"", "transcription":"", "billing":""},
-
-];
+  {
+    "appointment_id": 74,
+    "claimant_first_name": "KIMBERLY",
+    "claimant_last_name": "LAGOW",
+    "claimant_middle_name": "P",
+    "examiner_first_name": "Christopher",
+    "examiner_last_name": "Chow",
+    "examiner_middle_name": "",
+    "exam_procedure_type": "PsyUQMER",
+    "exam_procedure_name": "Psychological Unrepresented QME Re-Evaluation",
+    "standing": "",
+    "date_of_service": "2020-11-26"
+  },
+  {
+    "appointment_id": 162,
+    "claimant_first_name": "KIMBERLY",
+    "claimant_last_name": "LAGOW",
+    "claimant_middle_name": "P",
+    "examiner_first_name": null,
+    "examiner_last_name": null,
+    "examiner_middle_name": null,
+    "exam_procedure_type": "UQME",
+    "exam_procedure_name": "Unrepresented QME",
+    "standing": "",
+    "date_of_service": "2020-09-03"
+  },
+  {
+    "appointment_id": 306,
+    "claimant_first_name": "KIMBERLY",
+    "claimant_last_name": "LAGOW",
+    "claimant_middle_name": "P",
+    "examiner_first_name": "Christopher",
+    "examiner_last_name": "Chow",
+    "examiner_middle_name": "",
+    "exam_procedure_type": "PsyIMESUPP",
+    "exam_procedure_name": "Psychological IME Supplemental",
+    "standing": "Call back to Schedule",
+    "date_of_service": "2020-10-31"
+  }]
