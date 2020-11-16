@@ -191,7 +191,7 @@ export class ManageUserComponent implements OnInit {
   }
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue }
     });
 
@@ -216,7 +216,7 @@ export class ManageUserComponent implements OnInit {
 
   openDialogInvite(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue }
     });
 

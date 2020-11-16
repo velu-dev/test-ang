@@ -9,7 +9,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AlertService } from 'src/app/shared/services/alert.service';
-
+import { saveAs } from 'file-saver';
 export interface PeriodicElement {
   doc_name: string;
   sent_doc_name: string;
@@ -60,7 +60,7 @@ const ELEMENT_DATA2: PeriodicElement12[] = [
   styleUrls: ['./service-request-details.component.scss']
 })
 export class ServiceRequestDetailsComponent implements OnInit {
-  displayedColumns: string[] = [ 'file_name','transmitted_file_name'];
+  displayedColumns: string[] = ['file_name', 'transmitted_file_name'];
   requestDocuments: any;
   receivedDocuments: any;
   displayedColumns1: string[] = ['document_transmission_type', 'createdAt', 'transmission_status', 'transmission_message'];
@@ -75,6 +75,8 @@ export class ServiceRequestDetailsComponent implements OnInit {
   isLoading = false;
   user: any;
   service_request_id: any;
+  requestResponseDocuments: any = new MatTableDataSource([])
+  displayedColumnsReqRes: string[] = ['file_name', 'received_on', 'download'];
   constructor(private cookieService: CookieService, private route: ActivatedRoute, private userService: UserService, public dialog: MatDialog) {
     this.user = JSON.parse(this.cookieService.get('user'));
     this.isLoading = true;
@@ -105,10 +107,15 @@ export class ServiceRequestDetailsComponent implements OnInit {
       this.followupCalls = res.service_request_followup_calls;
       this.dataSource2 = new MatTableDataSource(this.followupCalls)
       this.isLoading = false;
+      this.requestResponseDocuments = new MatTableDataSource(res.service_request_response)
     })
   }
   ngOnInit() {
 
+  }
+
+  download(data) {
+    saveAs(data.url, data.file_name, '_self');
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(ServiceDialog, {

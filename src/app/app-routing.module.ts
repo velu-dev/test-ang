@@ -23,7 +23,8 @@ const routes: Routes = [
     path: "admin",
     component: CommonLayoutComponent,
     canActivate: [AuthGuard],
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    data: { breadcrumb: "Dashboard" }
   },
   //  {
   //   path: "vendor",

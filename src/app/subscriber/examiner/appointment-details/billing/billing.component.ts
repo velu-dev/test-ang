@@ -533,7 +533,7 @@ export class BilllableBillingComponent implements OnInit {
 
   openDialogDiagnosis(dialogue, icd) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true, title: "Diagnosis Codes" }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -731,7 +731,7 @@ export class BilllableBillingComponent implements OnInit {
   openDialogDocument(dialogue, data, status?) {
     console.log(data)
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -817,7 +817,7 @@ export class BilllableBillingComponent implements OnInit {
 
   openDialogBillLine(dialogue, index, group) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true, title: "Billing Line Item" }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -1337,7 +1337,7 @@ export class BillingPaymentDialog {
   openDialogEOR(dialogue, group, index) {
 
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true, title: group.value.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -1465,7 +1465,7 @@ export class billingOnDemandDialog {
 
   deleteRecipient(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: "delete", title: element.name }
     });
 

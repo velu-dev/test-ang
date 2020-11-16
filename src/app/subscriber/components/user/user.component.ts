@@ -312,7 +312,7 @@ export class UserComponent implements OnInit {
 
   openDialogInvite(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, title: user.last_name + " " + user.first_name  + (user.middle_name ? " " +user.middle_name : '') }
     });
 

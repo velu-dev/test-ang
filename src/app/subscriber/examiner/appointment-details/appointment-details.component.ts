@@ -917,7 +917,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true }
     });
     dialogRef.afterClosed().subscribe(result => {

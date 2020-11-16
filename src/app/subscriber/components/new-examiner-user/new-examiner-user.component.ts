@@ -890,7 +890,7 @@ export class NewExaminerUserComponent implements OnInit {
 
   openDialogLicense(dialogue, e, i) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true, title: e.license_number }
     });
 
@@ -1023,7 +1023,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true, title: "Service Location" }
     });
 

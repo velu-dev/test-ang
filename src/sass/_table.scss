@@ -191,6 +191,16 @@ tr.detail-row {
   }
 }
 
+.basic-table.custom-documents {
+  table {
+    tr {
+      td {
+        white-space: normal;
+        word-break: break-all;
+      }
+    }
+  }
+}
 // ==================================
 // Table data no wrap scss   ========
 // ==================================

@@ -1551,7 +1551,7 @@ export class NewClaimComponent implements OnInit {
 
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -1608,7 +1608,7 @@ export class NewClaimComponent implements OnInit {
 
   openDialogCancel(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: dialogue, address: true, title: data }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -1666,7 +1666,7 @@ export class NewClaimComponent implements OnInit {
   deleteInjury(data, index) {
     let body_part = this.bodyPart(data);
     const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '350px',
+      width: '500px',
       data: { name: 'delete', address: true, title: body_part }
     });
     dialogRef.afterClosed().subscribe(result => {
