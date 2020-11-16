@@ -17,6 +17,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import * as moment from 'moment';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { IntercomService } from 'src/app/services/intercom.service';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -62,6 +63,7 @@ export class UserComponent implements OnInit {
     public dialog: MatDialog,
     private alertService: AlertService,
     private cookieService: CookieService,
+    private intercom: IntercomService,
   ) {
     this.user = JSON.parse(this.cookieService.get('user'));
     this.isHandset$.subscribe(res => {
@@ -194,6 +196,10 @@ export class UserComponent implements OnInit {
       return data.last_name.toLowerCase().includes(filter) || (data.first_name && data.first_name.toLowerCase().includes(filter)) || (data.sign_in_email_id && data.sign_in_email_id.toLowerCase().includes(filter)) || (data.role_name && data.role_name.toLowerCase().includes(filter)) || (data.enroll && data.enroll.includes(filter)) || (data.subscriber && data.subscriber.toLowerCase().includes(filter));
     };
     this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    if (this.intercom.getExaminerPage()) {
+      this.tabIndex = 3;
+      this.intercom.setExaminerPage(false);
+    }
   }
 
   selectedRoleId = []
@@ -267,7 +273,7 @@ export class UserComponent implements OnInit {
     } else {
       this.openDialogExaminerDisable('disable', user)
     }
-   
+
   }
 
   openDialogExaminerDisable(name, user) {
@@ -291,7 +297,7 @@ export class UserComponent implements OnInit {
   openDialog(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: dialogue, title: user.last_name + " " + user.first_name  + (user.middle_name ? " " + user.middle_name : '') }
+      data: { name: dialogue, title: user.last_name + " " + user.first_name + (user.middle_name ? " " + user.middle_name : '') }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -313,7 +319,7 @@ export class UserComponent implements OnInit {
   openDialogInvite(dialogue, user) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: dialogue, title: user.last_name + " " + user.first_name  + (user.middle_name ? " " +user.middle_name : '') }
+      data: { name: dialogue, title: user.last_name + " " + user.first_name + (user.middle_name ? " " + user.middle_name : '') }
     });
 
     dialogRef.afterClosed().subscribe(result => {

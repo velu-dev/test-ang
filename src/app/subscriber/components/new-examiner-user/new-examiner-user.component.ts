@@ -176,6 +176,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.intercom.setExaminerPage(true)
     this.userService.verifyRole().subscribe(role => {
       this.sameAsExaminer = role.status;
     }, error => {

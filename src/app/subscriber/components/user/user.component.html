@@ -7,7 +7,7 @@
     <button mat-stroked-button class="outline-success"  routerLink="new">Add Staff / Staff Manager</button>
     <button mat-stroked-button class="outline-success m-l-10" routerLink="new-examiner">Add Examiner</button>
  </div>
-    <mat-tab-group class="user-list" (selectedTabChange)="tabchange($event.index)">
+    <mat-tab-group class="user-list" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabchange($event.index)">
         <!-- ######~~~~~ Active Users ~~~~~##### -->
         <mat-tab>
             <ng-template mat-tab-label>
