@@ -26,9 +26,9 @@ export class AppComponent {
     private breadcrumbService: BreadcrumbService,
     private intercom: IntercomService,
     private cookieService: CookieService, private claimService: ClaimService) {
-    this.claimService.seedData('state').subscribe(res => {
-      this.cookieService.set("states", res.data);
-    })
+    // this.claimService.seedData('state').subscribe(res => {
+    //   this.cookieService.set("states", res.data);
+    // })
     this.intercom.getClaimant().subscribe(name => {
       this.breadcrumbService.set("@Claimant", name)
     })

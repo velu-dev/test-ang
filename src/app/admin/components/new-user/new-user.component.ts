@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Role } from '../../models/role.model';
 import { Store } from '@ngrx/store';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 
 @Component({
   selector: 'app-new-user',
@@ -25,6 +26,7 @@ export class NewUserComponent implements OnInit {
   isAdmin = { status: false, role_id: "", disabled: false }
   isSubscriber = { status: false, role_id: "", disabled: false }
   activeTitle = "";
+  user: any;
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -33,8 +35,10 @@ export class NewUserComponent implements OnInit {
     private alertService: AlertService,
     private router: Router,
     private store: Store<{ breadcrumb: any }>,
-    private _location: Location
+    private _location: Location,
+    private cookieService: CookieService
   ) {
+    this.user = JSON.parse(this.cookieService.get('user'));
     this.roles = [];
     // this.store.subscribe(res => {
     //   this.activeTitle = res.breadcrumb.active_title;
@@ -77,9 +81,9 @@ export class NewUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    let role_id:any = "";
+    let role_id: any = "";
     let disabled = false;
-    
+
     if (this.isAdmin.status) {
       role_id = 1;
       this.isAdmin.role_id = "1";
@@ -94,18 +98,18 @@ export class NewUserComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
-      company_name: [{ value: 'Simplexam', disabled: true },Validators.compose([Validators.maxLength(100)])],
+      company_name: [{ value: this.user.company_name, disabled: true }, Validators.compose([Validators.maxLength(100)])],
       sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: role_id, disabled: disabled }, Validators.required]
     });
   }
 
   userSubmit() {
-    this.userForm.value.company_name = 'Simplexam'
+    this.userForm.value.company_name = this.user.company_name;
     this.isSubmitted = true;
     Object.keys(this.userForm.controls).forEach((key) => {
-      if(this.userForm.get(key).value && typeof(this.userForm.get(key).value) == 'string')
-      this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
+      if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
+        this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
     });
     if (this.userForm.invalid) {
       return;

@@ -261,7 +261,7 @@
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
                             *ngIf="!isSuplimental">
                             <mat-label>Duration</mat-label>
-                            <input matInput placeholder="Minutes" maxlength="3" formControlName="duration"
+                            <input matInput type="number" placeholder="Minutes" maxlength="3" formControlName="duration"
                                 autocomplete="off">
                             <span matSuffix>Minutes</span>
                             <mat-error>Please enter a valid duration between 1 to 450 minutes</mat-error>
@@ -590,7 +590,7 @@
                 </tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
-            <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+            <app-nodata *ngIf="dataSource1?.filteredData?.length == 0"></app-nodata>
         </div>
     </mat-card-content>
 </mat-card>
