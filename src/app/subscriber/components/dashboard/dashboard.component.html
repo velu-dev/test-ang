@@ -142,7 +142,7 @@
                         <span *ngIf="column == 'exam_procedure_type'">{{element?.exam_procedure_type}}</span>
                         <span *ngIf="column == 'standing'">{{element?.standing}}</span>
                         <span *ngIf="column == 'date_of_service'">{{element?.date_of_service}}</span>
-                        <span *ngIf="column == 'critical'">{{element?.critical}}</span>
+                        <span *ngIf="column == 'critical'">{{element?.isCrtical}}</span>
                     </div>
                 </td>
             </ng-container>
@@ -150,13 +150,13 @@
                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                     <div class="detail" [@detailExpand]="expandId == element.appointment_id ? 'expanded' : 'collapsed'">
                         <div class="responsive-table">
-                            <div><span>Correspondence</span> {{element?.correspondence}}</div>
-                            <div><span>History</span> {{element?.history}}</div>
-                            <div><span>Records</span> {{element?.records}}</div>
-                            <div><span>Examination</span> {{element?.examination}}</div>
-                            <div><span>Report</span> {{element?.report}}</div>
-                            <div><span>Transcription</span> {{element?.transcription}}</div>
-                            <div><span>Billing</span> {{element?.billing}}</div>
+                            <div><span>Correspondence</span> {{element?.correspondence_status}}</div>
+                            <div><span>History</span> {{element?.history_status}}</div>
+                            <div><span>Records</span> {{element?.record_status}}</div>
+                            <div><span>Examination</span> {{element?.examination_status}}</div>
+                            <div><span>Report</span> {{element?.reports_status}}</div>
+                            <div><span>Transcription</span> {{element?.transcription_status}}</div>
+                            <div><span>Billing</span> {{element?.billing_status}}</div>
                         </div>
                     </div>
                 </td>

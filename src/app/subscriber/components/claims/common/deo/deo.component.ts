@@ -101,7 +101,8 @@ export class DeoComponent implements OnInit {
     }
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
       this.deoEdit = false;
-      this.DEU.patchValue(res.data)
+      this.DEU.patchValue(res.data);
+      this.deuDetail = res.data;
       this.alertService.openSnackBar("DEU updated successfully", 'success');
       this.DEU.disable();
       if (this.fromPop) {

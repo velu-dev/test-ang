@@ -1183,12 +1183,12 @@ export class NewClaimComponent implements OnInit {
         arrData.push(part)
       }
       for (var j in arrData) {
-        this.injuryInfodata.push(arrData[j])
+        this.injuryInfodata.push(arrData[j]);
       }
-      this.logger.log("injuryInfodata", this.injuryInfodata);
       this.alertService.openSnackBar("Injury added successfully", "success");
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
       this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+      this.isInjuryEdit = false;
     }
   }
   bodyPart(val) {
@@ -1754,6 +1754,7 @@ export class NewClaimComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.isInjuryEdit = false;
         this.injuryInfo = result;
         this.addInjury();
       }
@@ -1783,7 +1784,7 @@ export class InjuryDialog {
   isLoding: boolean = false;
   minDate: any;
   injuryData: any;
-  isEdit: any;
+  isEdit: any = false;
   constructor(
     public dialogRef: MatDialogRef<InjuryDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -1810,6 +1811,7 @@ export class InjuryDialog {
   }
 
   onNoClick(): void {
+    this.isEdit = false;
     this.dialogRef.close(false);
     // if (this.isEdit) {
     //   this.injuryInfo = this.data['injuryData'];

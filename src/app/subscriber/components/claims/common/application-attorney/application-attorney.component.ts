@@ -132,6 +132,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     this.claimService.updateAgent(this.ApplicantAttorney.value.id, { ApplicantAttorney: this.ApplicantAttorney.value }).subscribe(res => {
       // this.isEdit = false;
       this.aaEdit = false;
+      this.aattorneyDetail = res.data;
       this.ApplicantAttorney.patchValue(res.data);
       this.alertService.openSnackBar("Applicant Attorney updated successfully!", 'success')
       this.ApplicantAttorney.disable();
@@ -150,6 +151,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     }
     // this.isEditComplete.emit(true);
     this.ApplicantAttorney.disable();
+    this.ApplicantAttorney.patchValue(this.aattorneyDetail)
   }
   clearAutoComplete() {
     this.ApplicantAttorney.reset();

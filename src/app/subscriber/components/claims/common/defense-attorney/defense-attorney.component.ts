@@ -125,6 +125,7 @@ export class DefenseAttorneyComponent implements OnInit {
     this.claimService.updateAgent(this.DefanceAttorney.value.id, { DefenseAttorney: this.DefanceAttorney.value }).subscribe(res => {
       this.daEdit = false;
       this.DefanceAttorney.patchValue(res.data);
+      this.dattorneyDetail = res.data;
       this.alertService.openSnackBar("Defense Attorney updated successfully!", 'success');
       this.DefanceAttorney.disable();
       if (this.fromPop) {

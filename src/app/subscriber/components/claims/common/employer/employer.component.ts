@@ -67,6 +67,8 @@ export class EmployerComponent implements OnInit {
       this.alertService.openSnackBar("Employer updated successfully", 'success');
       this.employer.disable();
       this.employerEdit = false;
+      this.employer.patchValue(res.data);
+      this.employerDetail = res.data;
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })

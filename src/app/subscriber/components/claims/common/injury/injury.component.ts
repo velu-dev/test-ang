@@ -284,8 +284,6 @@ export class InjuryPopup {
     if (this.isEdit) {
       let date = new Date(this.injuryInfo.date_of_injury)
       let injury = moment(date).format("MM-DD-YYYY")
-      //this.injuryInfo.date_of_injury = new Date(this.injuryInfo.date_of_injury)
-      //this.injuryInfo.date_of_injury = moment( this.injuryInfo.date_of_injury).format("MM-DD-YYYY")
       this.injuryInfo.body_part_id.map(res => {
         let editData = {
           id: this.injuryInfo['id'],
@@ -300,6 +298,7 @@ export class InjuryPopup {
         this.claimService.updateInjury(editData, this.claim_id).subscribe(res => {
           this.alertService.openSnackBar(this.isEdit ? "Injury updated successfully" : "Injury added successfully", 'success')
           this.dialogRef.close();
+          this.isEdit = false;
         }, error => {
           this.alertService.openSnackBar(error.error.message, "error")
         })
