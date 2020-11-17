@@ -222,7 +222,7 @@
                 <!-- Document Name Column -->
                 <ng-container matColumnDef="file_name">
                     <th mat-header-cell *matHeaderCellDef>File Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element?.proof_of_service_file_name}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element?.file_name}} </td>
                 </ng-container>
 
                 <!-- Sent Document Name Column -->
@@ -232,9 +232,9 @@
                 </ng-container>
 
                 <ng-container matColumnDef="download">
-                    <th mat-header-cell *matHeaderCellDef>Download</th>
-                    <td mat-cell *matCellDef="let element">  <a style="cursor: pointer;" target="_self" class="text-success"
-                        (click)="$event.stopPropagation();download({url: element?. proof_of_service_file_url,file_name: element?.proof_of_service_file_name})">Download</a> </td>
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let element">  <a *ngIf="element?.response_type == 'DTM_ACK'" style="cursor: pointer;" target="_self" class="text-success"
+                        (click)="$event.stopPropagation();download({url: element?. file_url,file_name: element?.file_name})">Download</a> </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsReqRes; sticky: true"></tr>
@@ -256,13 +256,13 @@
             <table mat-table [dataSource]="receivedDocuments" class="user-table striped_ w-100">
                 <!-- Document Name Column -->
                 <ng-container matColumnDef="file_name">
-                    <th mat-header-cell *matHeaderCellDef>Response File Name </th>
+                    <th mat-header-cell *matHeaderCellDef>Document Name  </th>
                     <td mat-cell *matCellDef="let element"> {{element.file_name}} </td>
                 </ng-container>
 
                 <!-- Sent Document Name Column -->
                 <ng-container matColumnDef="transmitted_file_name">
-                    <th mat-header-cell *matHeaderCellDef> Received On </th>
+                    <th mat-header-cell *matHeaderCellDef>Received Document Name </th>
                     <td mat-cell *matCellDef="let element"> {{element.transmitted_file_name}} </td>
                 </ng-container>
 

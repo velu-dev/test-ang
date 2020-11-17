@@ -105,6 +105,7 @@ export class SidenavComponent implements OnInit {
   ngAfterViewInit() {
   }
   navigate() {
+    this.intercom.setExaminerPage(false);
     if (this.isMobile || this.isTab) {
       this.sidenav.close();
     }
