@@ -771,7 +771,7 @@ export class BilllableBillingComponent implements OnInit {
       modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
       unitType: [''],
       units: ['', Validators.compose([Validators.required, Validators.min(0)])],
-      charge: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      charge: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(99999999.99)])],
       payment: [0],
       balance: [0],
       total_charge: [0],
@@ -856,7 +856,6 @@ export class BilllableBillingComponent implements OnInit {
 
     let moidfier = group.value.modifierList.toString();
     moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
-    console.log(group.value.charge);
     let data = {
       id: group.value.id,
       item_description: group.value.item_description,

@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
@@ -44,10 +44,13 @@ export class DashboardComponent implements OnInit {
   isMobile = false;
   columnName = [];
   filterValue: string;
-
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(public router: Router, private logger: NGXLogger, private cookieService: CookieService, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService) {
     this.subscriberService.getDashboardData().subscribe(res => {
       this.dataSource = new MatTableDataSource(res.data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
