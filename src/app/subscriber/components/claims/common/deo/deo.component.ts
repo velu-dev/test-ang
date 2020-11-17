@@ -117,6 +117,7 @@ export class DeoComponent implements OnInit {
   deuSelect(deu) {
     deu.id = this.deuId;
     this.DEU.patchValue(deu)
+    this.changeState(deu.state);
     this.DEU.patchValue({
       name: this.deuCtrl.value
     })
