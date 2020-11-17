@@ -54,7 +54,7 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
   ]
 })
 export class AppointmentDetailsComponent implements OnInit {
-  dataSource1 = ELEMENT_DATA2;
+  dataSource1 = new MatTableDataSource();
   columnsToDisplay1 = [];
   expandedElement1;
   columnName1 = [];
