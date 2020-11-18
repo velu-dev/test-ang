@@ -645,6 +645,12 @@ export class AppointmentDetailsComponent implements OnInit {
   editBillable() {
     this.isEditBillableItem = true;
     this.billable_item.enable();
+    if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
+      this.billable_item.get('appointment').get('duration').setValidators([Validators.required]);
+    } else {
+      this.billable_item.get('appointment').get('duration').setValidators([]);
+    }
+    this.billable_item.get('appointment').get('duration').updateValueAndValidity();
   }
   submitBillableItem() {
 

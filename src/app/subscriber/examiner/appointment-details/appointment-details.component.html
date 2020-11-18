@@ -167,11 +167,13 @@
 <div class="border-dashed-blue m-b-50"></div>
 
 <mat-card class="billable-item-info m-b-20">
+    <form [formGroup]="billable_item"
+    (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
     <mat-card-header>
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Call Information</div>
         <span class="spacer"></span>
         <span *ngIf="!isExamTypeChanged">
-            <button class="filled-gray m-b-5"
+            <button type="button" class="filled-gray m-b-5"
                 [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                 *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
             <button class="filled-success m-b-5"
@@ -182,8 +184,7 @@
     <mat-divider> </mat-divider>
     <mat-card-content *ngIf="!isBillabbleItemLoading">
         <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-            <form fxLayout="row wrap" fxFlex="100" [formGroup]="billable_item"
-                (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
+           
                 <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
@@ -348,9 +349,10 @@
                             Save </button>
                     </div>
                 </div>
-            </form>
+            
         </div>
     </mat-card-content>
+</form>
 </mat-card>
 
 <mat-card class="document-info m-t-25" *ngIf="examinationDetails?.procedure_type != 'Cancellation'">
