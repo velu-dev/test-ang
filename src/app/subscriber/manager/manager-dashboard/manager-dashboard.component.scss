@@ -12,9 +12,8 @@
                 cursor: pointer;
                 &:hover {
                     .simple-card {
-                        i,
                         h4 {
-                            color: $secondary;
+                            color: $ternary;
                         }
                     }
                 }
