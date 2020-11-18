@@ -59,7 +59,7 @@ $ternary-color: #6464fa;
 
 //Extra colors
 // $green: #65ff88;
-$green: #4FCC24;
+$green: #4fcc24;
 $white: #ffffff;
 $black: #000000;
 $gray: #ccc;
@@ -84,7 +84,7 @@ $bg-success: rgb(76, 175, 80);
 $bg-error: rgba(255, 54, 54, 0.05);
 $bg-warning: rgba(255, 178, 54, 0.4);
 $bg-error-style-one: #ff8f8f;
-$btn_success: #4FCC24 !default;
+$btn_success: #4fcc24 !default;
 $btn_close: #ebebf2;
 $accent: #ff4081;
 $disabled: rgba(0, 0, 0, 0.12);
@@ -1029,6 +1029,16 @@ input:-webkit-autofill {
     @extend .bill-line-mobile;
     mat-form-field {
       width: 45%;
+    }
+  }
+  .cuctom-document-upload {
+    mat-form-field {
+      mat-hint {
+        width: 100%;
+        mat-error {
+          float: right;
+        }
+      }
     }
   }
 }

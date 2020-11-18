@@ -1540,7 +1540,7 @@ export class NewClaimComponent implements OnInit {
   }
 
   deletecorrespondence(data) {
-    this.openDialog('delete', data);
+    this.openDialog('remove', data);
   }
   appEmployer(employer) {
     this.changeState(employer.state, 'emp')

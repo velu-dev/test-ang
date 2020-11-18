@@ -147,7 +147,7 @@ export class CorrespondanceComponent implements OnInit {
   }
 
   deletecorrespondence(data) {
-    this.openDialog('delete', data);
+    this.openDialog('remove', data);
   }
 
   openDialog(dialogue, data) {
