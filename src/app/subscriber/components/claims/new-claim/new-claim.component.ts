@@ -427,15 +427,27 @@ export class NewClaimComponent implements OnInit {
         // this.changeCommunicationType(type, 'auto');
       }
     })
-    this.searchInput.valueChanges.subscribe(res => {
-      if (res == "") {
-        this.filteredClaimant.data = []
-      } else {
-        this.claimService.searchClaimant({ basic_search: res, isadvanced: this.searchStatus }).subscribe(response => {
-          this.filteredClaimant = response;
-        })
-      }
-    })
+    // this.searchInput.valueChanges.subscribe(res => {
+    //   if (res == "") {
+    //     this.filteredClaimant.data = []
+    //   } else {
+    //     this.claimService.searchClaimant({ basic_search: res, isadvanced: this.searchStatus }).subscribe(response => {
+    //       this.filteredClaimant = response;
+    //     })
+    //   }
+    // })
+
+    this.searchInput.valueChanges
+      .pipe(
+        debounceTime(300),
+      ).subscribe(res => {
+        if (res == '') {
+          this.filteredClaimant.data = []
+        } else {
+          this.claimService.searchClaimant({ basic_search: res, isadvanced: this.searchStatus }).subscribe(response =>
+            this.filteredClaimant = response)
+        }
+      });
     // this.filteredClaimant = this.searchInput.valueChanges
     //   .pipe(
     //     debounceTime(300),
