@@ -864,7 +864,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   deleteDocument(data) {
-    this.openDialog('delete', data);
+    this.openDialog('remove', data);
   }
   formChanges(event) {
 

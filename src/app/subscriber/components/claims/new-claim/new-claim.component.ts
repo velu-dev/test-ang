@@ -1406,14 +1406,14 @@ export class NewClaimComponent implements OnInit {
   }
   selectedDAttorney: any;
   defAttornety(attroney) {
-    if (this.selectedAAttorney != attroney.id) {
-      // this.selectedDAttorney = attroney.id;
-      this.changeState(attroney.state, 'da');
-      delete attroney['id'];
-      this.claim.patchValue({
-        DefenseAttorney: attroney
-      })
-    }
+    // if (this.selectedAAttorney != attroney.id) {
+    // this.selectedDAttorney = attroney.id;
+    this.changeState(attroney.state, 'da');
+    delete attroney['id'];
+    this.claim.patchValue({
+      DefenseAttorney: attroney
+    })
+    // }
   }
   appClaimAdmin(claimadmin) {
     console.log(claimadmin)
@@ -1552,7 +1552,7 @@ export class NewClaimComponent implements OnInit {
   }
 
   deletecorrespondence(data) {
-    this.openDialog('delete', data);
+    this.openDialog('remove', data);
   }
   appEmployer(employer) {
     this.changeState(employer.state, 'emp')
@@ -1850,7 +1850,7 @@ export class InjuryDialog {
       return
     } else {
       if (!(moment(this.injuryInfo.date_of_injury).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
-        this.alertService.openSnackBar("Please select injury date after date of birth", "error")
+        this.alertService.openSnackBar("Please select injury date greater than date of birth", "error")
         return
       }
       if (!(moment(this.injuryInfo.date_of_injury).isSameOrBefore(moment(new Date())))) {

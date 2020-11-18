@@ -135,14 +135,15 @@
                         </mat-icon>
                     </span>
                     <div>
-                        <span
-                            *ngIf="column == 'claimant_name'">{{element?.claimant_first_name}} {{element?.claimant_last_name}}</span>
-                        <span
-                            *ngIf="column == 'examiner_name'">{{element?.examiner_first_name}} {{element?.examiner_last_name}}</span>
+                        <span *ngIf="column == 'claimant_name'">{{element?.claimant_first_name}}
+                            {{element?.claimant_last_name}}</span>
+                        <span *ngIf="column == 'examiner_name'">{{element?.examiner_first_name}}
+                            {{element?.examiner_last_name}}</span>
                         <span *ngIf="column == 'exam_procedure_type'">{{element?.exam_procedure_type}}</span>
                         <span *ngIf="column == 'standing'">{{element?.standing}}</span>
                         <span *ngIf="column == 'date_of_service'">{{element?.date_of_service}}</span>
-                        <span *ngIf="column == 'critical'">{{element?.isCrtical}}</span>
+                        <span *ngIf="column == 'critical'"
+                            [ngClass]="{'text-primary': element?.isCrtical}">{{element?.isCrtical ? "Critical" : "-"}}</span>
                     </div>
                 </td>
             </ng-container>
