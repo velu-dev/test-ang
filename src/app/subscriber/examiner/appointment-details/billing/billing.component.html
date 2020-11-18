@@ -824,7 +824,7 @@
                                         <span *ngIf="column == 'action'" class="no-wrap-td"
                                             [ngSwitch]="element.action"><span *ngSwitchCase="'MD'">Downloaded</span>
                                             <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
-                                            <span *ngSwitchCase="'SFTP'">Mailed On Demand</span></span>
+                                            <span *ngSwitchCase="'SFTP'">Billed On Demand</span></span>
                                         <span *ngIf="column == 'date'"
                                             class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                                         <span *ngIf="column == 'recipients'"><span
@@ -870,7 +870,7 @@
                                 <span [ngSwitch]="element.action">
                                     <p *ngSwitchCase="'MD'" class="m-b-0">Downloaded</p>
                                     <p *ngSwitchCase="'MES'" class="m-b-0">E-Sign Downloaded</p>
-                                    <p *ngSwitchCase="'SFTP'" class="m-b-0">Mailed On Demand</p>
+                                    <p *ngSwitchCase="'SFTP'" class="m-b-0">Billed On Demand</p>
                                 </span>
                             </div>
                             <div class="no-wrap-td"><span>Date</span><span>
