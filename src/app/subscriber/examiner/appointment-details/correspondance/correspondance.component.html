@@ -9,6 +9,27 @@
     </div>
   </div>
 
+    <!-- ===== incomplete information ==== -->
+    <div class="incomplete-info m-l-5">
+      <mat-card>
+          <mat-card-header>
+              <div class="content-wrapper-main-title text-danger">Incomplete Information</div>
+          </mat-card-header>
+          <mat-divider class="border-red"></mat-divider>
+          <mat-card-content>
+              <div fxLayout="row wrap" class="p-t-10">
+                  <div class="incomplete-modules" fxFlex="100">
+                      <ul>
+                          <li><mat-icon>error</mat-icon>  Incomplete Appoitment Details</li>
+                          <li><mat-icon>error</mat-icon>  Incomplete Billing Provider Details</li>
+                          <li><mat-icon>error</mat-icon>  Incomplete Examiner Service Location</li>
+                          <li><mat-icon>error</mat-icon>  Incomplete Rendering Provider Details</li>
+                      </ul>
+                  </div>
+              </div>
+          </mat-card-content>
+      </mat-card>
+  </div>
   <div fxLayout="row wrap" class="p-t-25" *ngIf="!isLoading">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
       <div fxLayout="row wrap">
