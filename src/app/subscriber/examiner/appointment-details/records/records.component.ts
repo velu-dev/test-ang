@@ -173,11 +173,11 @@ export class RecordsComponent implements OnInit {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
-        if (FileSize > 30) {
+        if (FileSize > 2049) {
           this.fileUpload.nativeElement.value = "";
           this.errors.file.isError = true;
-          this.errors.file.error = "This file too long";
-          //this.alertService.openSnackBar("This file too long", 'error');
+          this.errors.file.error = "File size is too large";
+          //this.alertService.openSnackBar("File size is too large", 'error');
           return;
         }
         this.errors = { file: { isError: false, error: "" } }
@@ -198,7 +198,7 @@ export class RecordsComponent implements OnInit {
   uploadFile() {
     if (!this.selectedFile) {
       this.errors.file.isError = true;
-      this.errors.file.error = "Please select file";
+      this.errors.file.error = "Please select a file";
       //this.alertService.openSnackBar("Please select file", 'error');
       return;
     }

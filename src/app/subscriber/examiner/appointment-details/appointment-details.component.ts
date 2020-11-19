@@ -802,8 +802,8 @@ export class AppointmentDetailsComponent implements OnInit {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
         this.errors.file.isError = true;
-        this.errors.file.error = "This file too long";
-        // this.alertService.openSnackBar("This file too long", 'error');
+        this.errors.file.error = "File size is too large";
+        // this.alertService.openSnackBar("File size is too large", 'error');
         return;
       }
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
@@ -826,7 +826,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     if (!this.selectedFile) {
       this.errors.file.isError = true;
-      this.errors.file.error = "Please select file";
+      this.errors.file.error = "Please select a file";
       return;
     }
     this.formData.append('file', this.selectedFile);

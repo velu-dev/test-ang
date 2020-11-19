@@ -177,8 +177,8 @@ export class ReportComponent implements OnInit {
         if (FileSize > 30) {
           this.fileUpload.nativeElement.value = "";
           this.errors.file.isError = true;
-          this.errors.file.error = "This file too long";
-          //this.alertService.openSnackBar("This file too long", 'error');
+          this.errors.file.error = "File size is too large";
+          //this.alertService.openSnackBar("File size is too large", 'error');
           return;
         }
         this.errors = { file: { isError: false, error: "" } }
@@ -200,7 +200,7 @@ export class ReportComponent implements OnInit {
     if (!this.selectedFile) {
       //this.alertService.openSnackBar("Please select file", 'error');
       this.errors.file.isError = true;
-      this.errors.file.error = "Please select file";
+      this.errors.file.error = "Please select a file";
       return;
     }
     this.formData = new FormData();

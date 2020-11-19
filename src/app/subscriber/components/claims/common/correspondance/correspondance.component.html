@@ -80,10 +80,10 @@
                             <br />
                             <small>Note : {{element?.notes}}</small>
                         </span>
-                        <span *ngIf="column == 'uploaded_on'">{{element?.updatedAt |  date:'MM-dd-yyyy' }} <small
+                        <span *ngIf="column == 'uploaded_on'" class="no-wrap-td">{{element?.updatedAt |  date:'MM-dd-yyyy' }} <small
                                 class="p-l-10"><span class="fa fa-clock-o"></span>
                                 {{element?.updatedAt |  date:'hh:mm a' }} </small></span>
-                        <span *ngIf="column == 'action'" class="text-center">
+                        <span *ngIf="column == 'action'" class="text-center no-wrap-td">
                             <a target="_self" class="text-success" (click)="download(element)">
                                 Download
                             </a>
