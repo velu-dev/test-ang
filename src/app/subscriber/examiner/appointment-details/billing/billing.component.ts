@@ -172,8 +172,8 @@ export class BilllableBillingComponent implements OnInit {
         this.columnsNameDoc = ["", "File Name"]
         this.columnsToDisplayDoc = ['is_expand', 'file_name']
       } else {
-        this.columnsNameDoc = ["", "File Name", "Action", "Date", "Recipients", "Download Sent Documents", "Download Proof of Service"]
-        this.columnsToDisplayDoc = ['doc_image', 'file_name', 'action', "date", "recipients", 'download', 'download1']
+        this.columnsNameDoc = ["", "File Name", "Action", "Date", "Recipients", "Download Sent Documents", "Further Information"]
+        this.columnsToDisplayDoc = ['doc_image', 'file_name', 'action', "date", "recipients", 'download', 'payor_response_message']
       }
     })
 
