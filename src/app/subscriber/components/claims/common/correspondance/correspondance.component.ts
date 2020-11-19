@@ -90,7 +90,7 @@ export class CorrespondanceComponent implements OnInit {
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
-        this.alertService.openSnackBar("This file too long", 'error');
+        this.alertService.openSnackBar("File size is too large", 'error');
         return;
       }
       this.selectedFile = event.target.files[0];

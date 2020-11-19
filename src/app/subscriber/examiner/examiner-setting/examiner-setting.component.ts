@@ -190,7 +190,7 @@ export class ExaminerSettingComponent implements OnInit {
       var FileSize = Math.round(event.target.files[0].size / 1000); // in KB
       if (FileSize > 501) {
         this.fileUpload.nativeElement.value = "";
-        //this.alertService.openSnackBar("This file too long", 'error');
+        //this.alertService.openSnackBar("File size is too large", 'error');
         let title = 'Selected Signature File : "' + fileName + '" file size is ' + FileSize + 'KB is too large.'
         this.openDialog(title, 'File size should be upto 500KB !')
         return;
