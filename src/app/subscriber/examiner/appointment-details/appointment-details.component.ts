@@ -858,7 +858,7 @@ export class AppointmentDetailsComponent implements OnInit {
       saveAs(res.signed_file_url, element.file_name);
     })
   }
-  
+
   applyFilter(filterValue: string) {
     this.documentsData.filter = filterValue.trim().toLowerCase();
   }
@@ -924,7 +924,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: dialogue, address: true }
+      data: { name: dialogue, address: true, title: data.file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {

@@ -75,6 +75,14 @@ th {
 .ondemand-status {
     padding: 10px 0px;
 }
+.error-alert {
+    background-color: $error-bg;
+    border: 1px solid $error-border;
+    color: $error;
+    margin-left: 10px;
+    padding: 10px 15px;
+    border-radius: 3px;
+}
 .float-right {
     float: right;
 }

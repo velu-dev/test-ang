@@ -9,6 +9,14 @@
     </div>
   </div>
 
+  <!-- ===== incomplete information ==== -->
+  <div fxLayout="row wrap" class="p-t-10">
+    <div fxFlex="100">
+      <div class="error-alert m-b-10 m-t-10">
+        <i class="fa fa-info-circle p-r-5"></i>Appointment Information Incomplete. Please, check appointment date, time and location. </div>
+    </div>
+  </div>
+
   <div fxLayout="row wrap" class="p-t-25" *ngIf="!isLoading">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
       <div fxLayout="row wrap">
@@ -136,11 +144,13 @@
             <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
               <div class="info-alert" (click)="$event.stopPropagation();openAddAddress(element)"
                 *ngIf="element?.message">
-                <span *ngIf="!correspondData?.is_exam_type_changed"><i class="fas fa-info-circle"></i>Address incomplete</span>
+                <span *ngIf="!correspondData?.is_exam_type_changed"><i class="fas fa-info-circle"></i>Address
+                  incomplete</span>
               </div>
 
               <span class="custom-list" *ngIf="element.type == 'custom'">
-                <a class="text-success" *ngIf="!correspondData?.is_exam_type_changed" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
+                <a class="text-success" *ngIf="!correspondData?.is_exam_type_changed"
+                  (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
                 <a class="text-danger m-l-10" *ngIf="!correspondData?.is_exam_type_changed"
                   (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
               </span>
@@ -206,7 +216,7 @@
                 </mat-icon>
               </span>
               <div>
-                <span *ngIf="column == 'doc_image'" class="file_type_icon"> 
+                <span *ngIf="column == 'doc_image'" class="file_type_icon">
                   <!-- <img [src]="element?.file_name | fileType"  alt=""> -->
                   <mat-icon *ngIf="element?.file_processing_status == 'FAIL'" class="text-danger">error</mat-icon>
                 </span>
@@ -224,7 +234,8 @@
                   <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
                 </span>
                 <span *ngIf="column == 'download1' && element?.proof_of_service_file_name">
-                  <a class="text-success" (click)="inOutdownload({file_url: element?.proof_of_service_file_url,file_name: element?.proof_of_service_file_name})">Download</a>
+                  <a class="text-success"
+                    (click)="inOutdownload({file_url: element?.proof_of_service_file_url,file_name: element?.proof_of_service_file_name})">Download</a>
                 </span>
                 <span *ngIf="column == 'further_info'">{{element?.file_processing_message}}</span>
               </div>
