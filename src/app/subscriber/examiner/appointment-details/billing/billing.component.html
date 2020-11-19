@@ -818,8 +818,9 @@
                                         </mat-icon>
                                     </span>
                                     <div *ngIf="element?.action != 'POST PAYMENT PAPER EOR'">
-                                        <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
-                                                [src]="element?.file_name | fileType" alt=""></span>
+                                        <span *ngIf="column == 'doc_image'" class="file_type_icon"> 
+                                            <mat-icon *ngIf="element?.payor_response_status == 'R'" class="text-danger">error</mat-icon>
+                                        </span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'" class="no-wrap-td"
                                             [ngSwitch]="element.action"><span *ngSwitchCase="'MD'">Downloaded</span>
@@ -835,7 +836,7 @@
                                                 (click)="downloadDocumet(element?.send)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'payor_response_message'">
-                                           {{element?.payor_response_message}}
+                                           {{element?.payor_response_message?.MessageText}}
                                         </span>
                                     </div>
                                     <div *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
@@ -880,8 +881,8 @@
                             <div><span> Download Generated Items </span><span *ngIf="element?.send">
                                     <a class="text-success" (click)="downloadDocumet(element?.send)">Download</a>
                                 </span></div>
-                            <div><span> Download On Demand Proof of Service </span><span *ngIf="element?.received">
-                                    <a class="text-success" (click)="downloadDocumet(element?.received)">Download</a>
+                            <div><span>Further Information </span><span *ngIf="element?.payor_response_message">
+                                {{element?.payor_response_message?.MessageText}}
                                 </span></div>
                     </div>
                 </div>
