@@ -482,7 +482,7 @@
                                         <a target="_self" class="text-success"
                                         (click)="$event.stopPropagation();download({exam_report_file_url : element?.proof_of_service_file_url, file_name : element?.proof_of_service_file_name})">Download</a>
                                     </span>
-                                    <span *ngIf="column == 'action' && !element?.proof_of_service_file_name" class="text-center">
+                                    <span *ngIf="column == 'action' && !element?.proof_of_service_file_name" class="text-center no-wrap-td">
                                         <a target="_self" class="text-success"
                                             (click)="$event.stopPropagation();downloadDocumet(element)">Download</a>
                                         <a class="text-danger m-l-10"
