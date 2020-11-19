@@ -122,7 +122,7 @@ export class ExaminationComponent implements OnInit {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
         if (FileSize > 30) {
           this.fileUpload.nativeElement.value = "";
-          this.alertService.openSnackBar("This file too long", 'error');
+          this.alertService.openSnackBar("File size is too large", 'error');
           return;
         }
         this.selectedFile = this.selectedFiles[i];

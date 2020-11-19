@@ -571,7 +571,7 @@ export class CustomDocuments {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
         if (FileSize > 30) {
           this.fileUpload.nativeElement.value = "";
-          this.errors = { status: true, message: "This file too long" };
+          this.errors = { status: true, message: "File size is too large" };
           return;
         }
         this.selectedFile = this.selectedFiles[i];
