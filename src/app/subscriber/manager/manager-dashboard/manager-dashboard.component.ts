@@ -1,14 +1,25 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { IntercomService } from 'src/app/services/intercom.service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
+import { SubscriberService } from '../../service/subscriber.service';
 
 @Component({
   selector: 'app-manager-dashboard',
   templateUrl: './manager-dashboard.component.html',
-  styleUrls: ['./manager-dashboard.component.scss']
+  styleUrls: ['./manager-dashboard.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ManagerDashboardComponent implements OnInit {
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -22,7 +33,14 @@ export class ManagerDashboardComponent implements OnInit {
   isMobile = false;
   columnName = [];
   filterValue: string;
-  constructor(public router: Router, private breakpointObserver: BreakpointObserver) { 
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  constructor(public router: Router, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService, private cookieService: CookieService, private intercom: IntercomService) {
+    this.subscriberService.getDashboardData().subscribe(res => {
+      this.dataSource = new MatTableDataSource(res.data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -46,7 +64,24 @@ export class ManagerDashboardComponent implements OnInit {
   expandId: any;
   openElement(element) {
     // if (this.isMobile) {
-    this.expandId = element.id;
+    this.expandId = element.appointment_id;
     // }
+  }
+  openExtract(element, type) {
+    this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
+    this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
+    this.intercom.setClaimNumber(element.claim_number);
+    this.cookieService.set('claimNumber', element.claim_number)
+    this.intercom.setBillableItem(element.exam_procedure_name);
+    this.cookieService.set('billableItem', element.exam_procedure_name);
+    // this.intercom.setBillNo(e.bill_no);// When add billing enable this
+    // this.cookieService.set('billNo', e.bill_no)
+    let claimant_id = element.claimant_id;
+    let claim_id = element.claim_id;
+    let billable_id = element.billable_item_id;
+    let examiner_id = "";
+    if (type == "correspondence" || type == "history" || type == "billing")
+      examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
+    this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
   }
 }

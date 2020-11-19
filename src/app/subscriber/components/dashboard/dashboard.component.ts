@@ -59,8 +59,8 @@ export class DashboardComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Claimant", "Action"]
-        this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
+        this.columnName = ["", "Claimant", "Critical"]
+        this.columnsToDisplay = ['is_expand', 'claimant_name', "critical"]
       } else {
         this.columnName = ["", "Claimant", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date of Item Received", "Critical"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', 'examiner_name', "exam_procedure_type", "standing", 'date_of_service', 'critical']

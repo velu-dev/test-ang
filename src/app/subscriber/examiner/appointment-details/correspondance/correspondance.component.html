@@ -10,10 +10,11 @@
   </div>
 
   <!-- ===== incomplete information ==== -->
-  <div fxLayout="row wrap" class="p-t-10">
+  <div fxLayout="row wrap" class="p-t-10" *ngIf="correspondData?.is_appointment_incomplete">
     <div fxFlex="100">
       <div class="error-alert m-b-10 m-t-10">
-        <i class="fa fa-info-circle p-r-5"></i>Appointment Information Incomplete. Please, check appointment date, time and location. </div>
+        <i class="fa fa-info-circle p-r-5"></i>Appointment Information Incomplete. Please, check appointment date, time
+        and location. </div>
     </div>
   </div>
 
