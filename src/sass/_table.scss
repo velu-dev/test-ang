@@ -18,6 +18,8 @@
       color: $dark-gray;
       padding: 0px 10px !important;
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      white-space: break-spaces;
+      word-break: break-word;
     }
     &:hover {
       background-color: $table-solid;
@@ -174,6 +176,8 @@ tr.detail-row {
         color: $dark-gray;
         padding: 0px 10px !important;
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        white-space: break-spaces;
+        word-break: break-word;
         &:first-child {
           img {
             width: 23px;
@@ -196,7 +200,7 @@ tr.detail-row {
     tr {
       td {
         white-space: normal;
-        word-break: break-all;
+        word-break: break-word;
       }
     }
   }

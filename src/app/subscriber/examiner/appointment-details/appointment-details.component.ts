@@ -826,7 +826,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     if (!this.selectedFile) {
       this.errors.file.isError = true;
-      this.errors.file.error = "Please select file";
+      this.errors.file.error = "Please select a file";
       return;
     }
     this.formData.append('file', this.selectedFile);

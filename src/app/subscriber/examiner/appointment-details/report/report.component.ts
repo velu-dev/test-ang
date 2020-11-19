@@ -200,7 +200,7 @@ export class ReportComponent implements OnInit {
     if (!this.selectedFile) {
       //this.alertService.openSnackBar("Please select file", 'error');
       this.errors.file.isError = true;
-      this.errors.file.error = "Please select file";
+      this.errors.file.error = "Please select a file";
       return;
     }
     this.formData = new FormData();
