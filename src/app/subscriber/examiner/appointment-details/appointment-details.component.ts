@@ -646,7 +646,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isEditBillableItem = true;
     this.billable_item.enable();
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
-      this.billable_item.get('appointment').get('duration').setValidators([Validators.required]);
+      this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
       this.billable_item.get('appointment').get('duration').setValidators([]);
     }
@@ -655,7 +655,7 @@ export class AppointmentDetailsComponent implements OnInit {
   submitBillableItem() {
 
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
-      this.billable_item.get('appointment').get('duration').setValidators([Validators.required]);
+      this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
       this.billable_item.get('appointment').get('duration').setValidators([]);
     }
