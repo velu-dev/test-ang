@@ -117,7 +117,7 @@ export class BilllableBillingComponent implements OnInit {
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
   states: any;
   incompleteInformation: any;
-  isIncompleteError: any;
+  isIncompleteError: any = true;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -534,7 +534,7 @@ export class BilllableBillingComponent implements OnInit {
   openDialogDiagnosis(dialogue, icd) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: dialogue, address: true, title: "Diagnosis Codes" }
+      data: { name: dialogue, address: true, title: icd.code + " - " + icd.name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {

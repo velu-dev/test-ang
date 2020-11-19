@@ -143,7 +143,7 @@
                         <span *ngIf="column == 'standing'">{{element?.standing}}</span>
                         <span *ngIf="column == 'date_of_service'">{{element?.date_of_service}}</span>
                         <span *ngIf="column == 'critical'"
-                            [ngClass]="{'text-primary': element?.isCrtical}">{{element?.isCrtical ? "Critical" : "-"}}</span>
+                            [ngClass]="{'text-primary': element?.is_critical}">{{element?.is_critical ? "Critical" : "-"}}</span>
                     </div>
                 </td>
             </ng-container>
