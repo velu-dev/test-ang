@@ -198,7 +198,7 @@ export class RecordsComponent implements OnInit {
   uploadFile() {
     if (!this.selectedFile) {
       this.errors.file.isError = true;
-      this.errors.file.error = "Please select file";
+      this.errors.file.error = "Please select a file";
       //this.alertService.openSnackBar("Please select file", 'error');
       return;
     }

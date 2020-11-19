@@ -141,7 +141,7 @@ export class ExaminationComponent implements OnInit {
     let formData = new FormData();
     if (!this.selectedFile) {
       this.error.status = true;
-      this.error.message = "Please select file";
+      this.error.message = "Please select a file";
       return;
     }
 

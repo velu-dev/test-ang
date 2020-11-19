@@ -588,7 +588,7 @@ export class CustomDocuments {
   isUploading = false;
   uploadFile() {
     if (!this.selectedFile) {
-      this.alertService.openSnackBar("Please select file", 'error');
+      this.alertService.openSnackBar("Please select a file", 'error');
       return;
     }
     this.isUploading = true;
