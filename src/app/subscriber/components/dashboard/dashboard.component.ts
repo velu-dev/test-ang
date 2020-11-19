@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { SubscriberService } from '../../service/subscriber.service';
 
@@ -46,7 +47,10 @@ export class DashboardComponent implements OnInit {
   filterValue: string;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor(public router: Router, private logger: NGXLogger, private cookieService: CookieService, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService) {
+  constructor(public router: Router, private logger: NGXLogger, private cookieService: CookieService,
+    private breakpointObserver: BreakpointObserver,
+    private subscriberService: SubscriberService,
+    private intercom: IntercomService) {
     this.subscriberService.getDashboardData().subscribe(res => {
       this.dataSource = new MatTableDataSource(res.data);
       this.dataSource.paginator = this.paginator;
@@ -100,6 +104,14 @@ export class DashboardComponent implements OnInit {
     }
   }
   openExtract(element, type) {
+    this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
+    this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
+    this.intercom.setClaimNumber(element.claim_number);
+    this.cookieService.set('claimNumber', element.claim_number)
+    this.intercom.setBillableItem(element.exam_procedure_name);
+    this.cookieService.set('billableItem', element.exam_procedure_name);
+    // this.intercom.setBillNo(e.bill_no);// When add billing enable this
+    // this.cookieService.set('billNo', e.bill_no)
     let claimant_id = element.claimant_id;
     let claim_id = element.claim_id;
     let billable_id = element.billable_item_id;

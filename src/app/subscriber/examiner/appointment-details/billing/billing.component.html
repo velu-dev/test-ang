@@ -834,9 +834,8 @@
                                             <a class="text-success"
                                                 (click)="downloadDocumet(element?.send)">Download</a>
                                         </span>
-                                        <span *ngIf="column == 'download1' && element?.received">
-                                            <a class="text-success"
-                                                (click)="downloadDocumet(element?.received)">Download</a>
+                                        <span *ngIf="column == 'payor_response_message'">
+                                           {{element?.payor_response_message}}
                                         </span>
                                     </div>
                                     <div *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
@@ -850,7 +849,7 @@
                                         <span *ngIf="column == 'download'">
                                             <a class="text-success" (click)="downloadDocumet(element)">Download</a>
                                         </span>
-                                        <span *ngIf="column == 'download1'">
+                                        <span *ngIf="column == 'payor_response_message'">
                                         </span>
                                     </div>
                                 </td>
