@@ -121,7 +121,7 @@
         </div>
     </div>
 </div>
- 
+
 
 <div fxLayout="column" fxLayoutGap="25px" class="dashboard-list">
     <div class="user-detail">
@@ -132,31 +132,42 @@
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="i == 0">
                         <mat-icon mat-raised-button
-                            [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
-                            {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                            [ngClass]="{'table-expand': expandId == element.appointment_id, 'expand-close': !(expandId == element.appointment_id)}">
+                            {{ expandId == element.appointment_id ? 'remove_circle' : 'add_circle'}}
                         </mat-icon>
                     </span>
                     <div>
-                        <span *ngIf="column == 'claimant_name'">{{element?.claimant_name}}</span>
-                        <span *ngIf="column == 'examiner_name'">{{element?.examiner_name}}</span>
+                        <span *ngIf="column == 'claimant_name'">{{element?.claimant_first_name}}
+                            {{element?.claimant_last_name}}</span>
+                        <span *ngIf="column == 'examiner_name'">{{element?.examiner_first_name}}
+                            {{element?.examiner_last_name}}</span>
                         <span *ngIf="column == 'exam_procedure_type'">{{element?.exam_procedure_type}}</span>
                         <span *ngIf="column == 'standing'">{{element?.standing}}</span>
-                        <span *ngIf="column == 'dos'">{{element?.dos}}</span>
-                        <span *ngIf="column == 'critical'">{{element?.critical}}</span>
+                        <span *ngIf="column == 'date_of_service'">{{element?.date_of_service}}</span>
+                        <span *ngIf="column == 'critical'"
+                            [ngClass]="{'text-primary': element?.is_critical}">{{element?.is_critical ? "Critical" : "-"}}</span>
                     </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="expandedDetail">
                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                    <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                    <div class="detail" [@detailExpand]="expandId == element.appointment_id ? 'expanded' : 'collapsed'">
                         <div class="responsive-table">
-                            <div><span>Correspondence</span> {{element?.correspondence}}</div>
-                            <div><span>History</span> {{element?.history}}</div>
-                            <div><span>Records</span> {{element?.records}}</div>
-                            <div><span>Examination</span> {{element?.examination}}</div>
-                            <div><span>Report</span> {{element?.report}}</div>
-                            <div><span>Transcription</span> {{element?.transcription}}</div>
-                            <div><span>Billing</span> {{element?.billing}}</div>
+                            <div (click)="openExtract(element, 'correspondence' )"><span>Correspondence</span>
+                                {{element?.correspondence_status}}</div>
+                            <div (click)="openExtract(element,'history')"><span>History</span>
+                                {{element?.history_status}}</div>
+                            <div (click)="openExtract(element,'records')"><span>Records</span>
+                                {{element?.record_status}}</div>
+                            <div (click)="openExtract(element, 'examination')"><span>Examination</span>
+                                {{element?.examination_status}}</div>
+                            <div (click)="openExtract(element, 'reports')"><span>Report</span>
+                                {{element?.reports_status}}</div>
+                            <!-- <div (click)="openExtract(element,'reports')"><span>Transcription</span>
+                                {{element?.transcription_status}}
+                            </div> -->
+                            <div (click)="openExtract(element,'billing')"> <span>Billing</span>
+                                {{element?.billing_status}}</div>
                         </div>
                     </div>
                 </td>
@@ -170,4 +181,4 @@
         <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </div>
     <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
-</div> 
+</div>
