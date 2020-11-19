@@ -99,46 +99,12 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['subscriber/new-intake'])
     }
   }
+  openExtract(element, type) {
+    let claimant_id = element.claimant_id;
+    let claim_id = element.claim_id;
+    let billable_id = element.billable_item_id;
+    let examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
+    console.log(element)
+    this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
+  }
 }
-
-
-const ELEMENT_DATA = [
-  {
-    "appointment_id": 74,
-    "claimant_first_name": "KIMBERLY",
-    "claimant_last_name": "LAGOW",
-    "claimant_middle_name": "P",
-    "examiner_first_name": "Christopher",
-    "examiner_last_name": "Chow",
-    "examiner_middle_name": "",
-    "exam_procedure_type": "PsyUQMER",
-    "exam_procedure_name": "Psychological Unrepresented QME Re-Evaluation",
-    "standing": "",
-    "date_of_service": "2020-11-26"
-  },
-  {
-    "appointment_id": 162,
-    "claimant_first_name": "KIMBERLY",
-    "claimant_last_name": "LAGOW",
-    "claimant_middle_name": "P",
-    "examiner_first_name": null,
-    "examiner_last_name": null,
-    "examiner_middle_name": null,
-    "exam_procedure_type": "UQME",
-    "exam_procedure_name": "Unrepresented QME",
-    "standing": "",
-    "date_of_service": "2020-09-03"
-  },
-  {
-    "appointment_id": 306,
-    "claimant_first_name": "KIMBERLY",
-    "claimant_last_name": "LAGOW",
-    "claimant_middle_name": "P",
-    "examiner_first_name": "Christopher",
-    "examiner_last_name": "Chow",
-    "examiner_middle_name": "",
-    "exam_procedure_type": "PsyIMESUPP",
-    "exam_procedure_name": "Psychological IME Supplemental",
-    "standing": "Call back to Schedule",
-    "date_of_service": "2020-10-31"
-  }]
