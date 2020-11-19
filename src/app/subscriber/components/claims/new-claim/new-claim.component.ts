@@ -29,6 +29,7 @@ import * as moment from 'moment';
 import { NGXLogger } from 'ngx-logger';
 import { saveAs } from 'file-saver';
 import { DayTable } from '@fullcalendar/core';
+import { IntercomService } from 'src/app/services/intercom.service';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
@@ -225,8 +226,10 @@ export class NewClaimComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private _location: Location,
     private logger: NGXLogger,
+    private intercom: IntercomService,
     private loader: NgxSpinnerService) {
     // this.logger.log(moment.)
+    this.intercom.setClaimant(null);
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })
@@ -254,6 +257,8 @@ export class NewClaimComponent implements OnInit {
 
         this.claimService.getSingleClaimant(this.claimant_id).subscribe(claimant => {
           if (claimant.status) {
+            this.intercom.setClaimant( claimant.data[0].first_name + ' ' +  claimant.data[0].last_name);
+            this.cookieService.set('claimDetails', claimant.data[0].first_name + ' ' +  claimant.data[0].last_name)
             this.logger.log("claimant", claimant)
             this.claimantInfo = claimant.data[0]
             this.isRemoveSearchRemove = true;
@@ -1489,6 +1494,7 @@ export class NewClaimComponent implements OnInit {
     }
   }
   selectedFile: File;
+  fileErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   uploadFile(event) {
 
     let fileTypes = ['pdf', 'doc', 'docx']
@@ -1496,7 +1502,9 @@ export class NewClaimComponent implements OnInit {
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
-        this.alertService.openSnackBar("File size is too large", 'error');
+        this.fileErrors.file.isError = true;
+        this.fileErrors.file.error = "File size is too large";
+        // this.alertService.openSnackBar("File size is too large", 'error');
         return;
       }
       this.selectedFile = event.target.files[0];
@@ -1504,8 +1512,9 @@ export class NewClaimComponent implements OnInit {
       this.file = event.target.files[0].name;
     } else {
       this.selectedFile = null;
-      //this.errorMessage = 'This file type is not accepted';
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
+      this.fileErrors.file.isError = true;
+      this.fileErrors.file.error = "This file type is not accepted";
+      //this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
 
   }
@@ -1514,6 +1523,8 @@ export class NewClaimComponent implements OnInit {
   documents_ids = [];
   correspondFormSubmit() {
     if (this.file == null) {
+      this.fileErrors.file.isError = true;
+      this.fileErrors.file.error = "Please select file";
       return;
     }
     let formData = new FormData()

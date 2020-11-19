@@ -428,6 +428,9 @@
                                         <input type="file" #uploader hidden (change)="uploadFile($event)"
                                             id="uploadFile" accept=".pdf, .doc, .docx," required>
                                         <mat-hint>Supported file formats: .pdf, .doc, .docx</mat-hint>
+                                        <mat-hint align="end" *ngIf="fileErrors.file.isError">
+                                            <mat-error>{{fileErrors.file.error}}</mat-error>
+                                        </mat-hint>
                                     </mat-form-field>
                                 </div>
 
@@ -438,7 +441,7 @@
                                         placeholder="Note">
                                 </mat-form-field>
                                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                                    <button mat-stroked-button type="button" [disabled]="(file == null)"
+                                    <button mat-stroked-button type="button"
                                         (click)="correspondFormSubmit();" class="outline-success p-r-20 m-t-20">Add
                                     </button>
                                 </div>
