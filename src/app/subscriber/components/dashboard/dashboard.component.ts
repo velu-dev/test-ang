@@ -103,8 +103,9 @@ export class DashboardComponent implements OnInit {
     let claimant_id = element.claimant_id;
     let claim_id = element.claim_id;
     let billable_id = element.billable_item_id;
-    let examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
-    console.log(element)
+    let examiner_id = "";
+    if (type == "correspondence" || type == "history" || type == "billing")
+      examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
     this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
   }
 }
