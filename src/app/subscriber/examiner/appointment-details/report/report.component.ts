@@ -219,7 +219,7 @@ export class ReportComponent implements OnInit {
       this.file = [];
       this.getReport();
       this.errors = { file: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully!", 'success');
+      this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
@@ -290,7 +290,7 @@ export class ReportComponent implements OnInit {
       service_provider_id: this.reportData.documets[0].service_provider_id // default 3
     }
     this.onDemandService.requestCreate(data).subscribe(record => {
-      this.alertService.openSnackBar("Transcribe and Compile created successfully!", 'success');
+      this.alertService.openSnackBar("Transcribe and Compile created successfully", 'success');
       this.getReport();
     }, error => {
       console.log(error);
@@ -312,7 +312,7 @@ export class ReportComponent implements OnInit {
       if (result['data']) {
         this.onDemandService.deleteDocument(data.document_id).subscribe(res => {
           this.getReport();
-          this.alertService.openSnackBar("File deleted successfully!", 'success');
+          this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })

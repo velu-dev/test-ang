@@ -11,9 +11,9 @@ export class AlertService {
     }
     async openSnackBar(message, action) {
         if (message)
-            if (!message.includes("!")) {
-                message = message + "!"
-            }
+            // if (!message.includes("!")) {
+            //     message = message + "!"
+            // }
         this.snackBar.openFromComponent(AlertComponent, {
             duration: 6 * 1000,
             data: { message: message, action: action },

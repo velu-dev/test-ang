@@ -220,7 +220,7 @@ export class RecordsComponent implements OnInit {
       this.file = [];
       this.getRecord();
       this.errors = { file: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully!", 'success');
+      this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
@@ -289,7 +289,7 @@ export class RecordsComponent implements OnInit {
       service_provider_id: this.recordData.documets[0].service_provider_id // default 3
     }
     this.onDemandService.requestCreate(data).subscribe(record => {
-      this.alertService.openSnackBar("Record Summary On Demand created successfully!", 'success');
+      this.alertService.openSnackBar("Record Summary On Demand created successfully", 'success');
       this.getRecord();
     }, error => {
       console.log(error)
@@ -312,7 +312,7 @@ export class RecordsComponent implements OnInit {
       if (result['data']) {
         this.onDemandService.deleteDocument(data.document_id).subscribe(res => {
           this.getRecord();
-          this.alertService.openSnackBar("File deleted successfully!", 'success');
+          this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
@@ -352,7 +352,7 @@ export class RecordsComponent implements OnInit {
       })
       this.dataSource = new MatTableDataSource(data)
       //this.dataSource = new MatTableDataSource(record.documets)
-      this.alertService.openSnackBar("Page number updated successfully!", 'success');
+      this.alertService.openSnackBar("Page number updated successfully", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })

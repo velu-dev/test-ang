@@ -684,7 +684,7 @@ export class BilllableBillingComponent implements OnInit {
       }
 
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully!", 'success');
+      this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
@@ -736,7 +736,7 @@ export class BilllableBillingComponent implements OnInit {
         }, 1000);
 
       }
-      this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+      this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -761,7 +761,7 @@ export class BilllableBillingComponent implements OnInit {
             this.getDocumentData();
           }
 
-          this.alertService.openSnackBar("File deleted successfully!", 'success');
+          this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
@@ -1049,7 +1049,7 @@ export class BilllableBillingComponent implements OnInit {
     this.docFormData.append('claim_id', this.paramsId.claim_id.toString());
     this.docFormData.append('bill_item_id', this.paramsId.billId.toString());
     this.billingService.postBillingCompleteDoc(this.docFormData).subscribe(doc => {
-      this.alertService.openSnackBar("File added successfully!", 'success');
+      this.alertService.openSnackBar("File added successfully", 'success');
       this.getBillDocument();
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error");
@@ -1210,14 +1210,14 @@ export class BillingPaymentDialog {
 
   removeFile(i) {
     this.postPaymentForm.patchValue({ file: null, is_file_change: true })
-    this.alertService.openSnackBar("File deleted successfully!", 'success');
+    this.alertService.openSnackBar("File deleted successfully", 'success');
   }
 
   removeFileEdit(i, file) {
 
     this.billingService.deleteDocument(file.id).subscribe(res => {
       this.paymentDetails.exam_report_file_url.splice(i, 1)
-      this.alertService.openSnackBar("File deleted successfully!", 'success');
+      this.alertService.openSnackBar("File deleted successfully", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -1601,7 +1601,7 @@ export class billingOnDemandDialog {
                 }, 1000);
 
               }
-              this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+              this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
             }, error => {
               this.alertService.openSnackBar(error.error.message, 'error');
             })
@@ -1627,7 +1627,7 @@ export class billingOnDemandDialog {
             }, 1000);
 
           }
-          this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+          this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })

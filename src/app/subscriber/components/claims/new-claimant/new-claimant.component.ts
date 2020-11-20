@@ -238,7 +238,7 @@ export class NewClaimantComponent implements OnInit {
     this.claimantForm.value['date_of_birth'] = moment(this.claimantForm.value.date_of_birth).format("MM-DD-YYYY");
     if (!this.claimantId) {
       this.claimService.createClaimant(this.claimantForm.value).subscribe(res => {
-        this.alertService.openSnackBar("Claimant created successfully!", 'success');
+        this.alertService.openSnackBar("Claimant created successfully", 'success');
         this.editStatus = false;
         this.claimantForm.disable();
         this._location.back();
@@ -250,7 +250,7 @@ export class NewClaimantComponent implements OnInit {
       })
     } else {
       this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
-        this.alertService.openSnackBar("Claimant updated successfully!", 'success');
+        this.alertService.openSnackBar("Claimant updated successfully", 'success');
         this.getSingleClaimant()
         this.editStatus = false;
         this.claimantForm.disable();

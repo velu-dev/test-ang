@@ -748,7 +748,7 @@ export class AddAddress {
     }
     this.isSubmit = true;
     this.claimService.updateClaimant(this.claimantForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Claimant updated successfully!", 'success');
+      this.alertService.openSnackBar("Claimant updated successfully", 'success');
       this.isSubmit = false;
       this.dialogRef.close(true);
     }, error => {
