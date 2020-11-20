@@ -134,7 +134,7 @@ export class ApplicationAttorneyComponent implements OnInit {
       this.aaEdit = false;
       this.aattorneyDetail = res.data;
       this.ApplicantAttorney.patchValue(res.data);
-      this.alertService.openSnackBar("Applicant Attorney updated successfully!", 'success')
+      this.alertService.openSnackBar("Applicant Attorney updated successfully", 'success')
       this.ApplicantAttorney.disable();
       if (this.fromPop) {
         this.dialogRef.close(true);

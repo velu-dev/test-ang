@@ -1496,7 +1496,7 @@ export class NewClaimComponent implements OnInit {
   selectedFile: File;
   fileErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   uploadFile(event) {
-
+    this.fileErrors.file.isError = false;
     let fileTypes = ['pdf', 'doc', 'docx']
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
@@ -1553,6 +1553,7 @@ export class NewClaimComponent implements OnInit {
       //this.correspondForm.reset();
       this.file = null;
       this.note = null;
+      this.fileErrors.file.isError = false;
       this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       this.logger.log(error);

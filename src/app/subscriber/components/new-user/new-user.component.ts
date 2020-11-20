@@ -169,7 +169,7 @@ export class NewUserComponent implements OnInit {
     if (!this.isEdit) {
 
       this.userService.createUser(this.userForm.value).subscribe(res => {
-        this.alertService.openSnackBar("User created successfully!", 'success');
+        this.alertService.openSnackBar("User created successfully", 'success');
         //this.router.navigate(['/subscriber/users'])
         this._location.back();
       }, error => {
@@ -180,7 +180,7 @@ export class NewUserComponent implements OnInit {
     else {
       console.log(this.userForm.value)
       this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
-        this.alertService.openSnackBar("User updated successfully!", 'success');
+        this.alertService.openSnackBar("User updated successfully", 'success');
         // this.router.navigate(['/subscriber/users'])
         this._location.back();
       }, error => {

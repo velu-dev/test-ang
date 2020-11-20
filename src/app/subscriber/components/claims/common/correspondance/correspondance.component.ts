@@ -83,14 +83,18 @@ export class CorrespondanceComponent implements OnInit {
   }
 
   selectedFile: File;
+  fileErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   uploadFile(event) {
-    this.selectedFile = null;
+    // this.selectedFile = null;
+    this.fileErrors.file.isError = false;
     let fileTypes = ['pdf', 'doc', 'docx']
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
-        this.alertService.openSnackBar("File size is too large", 'error');
+        this.fileErrors.file.isError = true;
+        this.fileErrors.file.error = "File size is too large";
+        // this.alertService.openSnackBar("File size is too large", 'error');
         return;
       }
       this.selectedFile = event.target.files[0];
@@ -98,8 +102,10 @@ export class CorrespondanceComponent implements OnInit {
       this.file = event.target.files[0].name;
     } else {
       this.selectedFile = null;
+      this.fileErrors.file.isError = true;
+      this.fileErrors.file.error = "This file type is not accepted";
       //this.errorMessage = 'This file type is not accepted';
-      this.alertService.openSnackBar("This file type is not accepted", 'error');
+      // this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
 
   }
@@ -113,6 +119,8 @@ export class CorrespondanceComponent implements OnInit {
     //   return;
     // }
     if (this.file == null) {
+      this.fileErrors.file.isError = true;
+      this.fileErrors.file.error = "Please select file";
       return;
     }
     let formData = new FormData()
@@ -136,6 +144,7 @@ export class CorrespondanceComponent implements OnInit {
       this.selectedFile = null;
       this.file = null;
       this.note = '';
+      this.fileErrors.file.isError = false;
       //this.correspondForm.reset();
       this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {

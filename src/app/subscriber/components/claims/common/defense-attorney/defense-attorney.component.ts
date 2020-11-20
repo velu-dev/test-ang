@@ -126,7 +126,7 @@ export class DefenseAttorneyComponent implements OnInit {
       this.daEdit = false;
       this.DefanceAttorney.patchValue(res.data);
       this.dattorneyDetail = res.data;
-      this.alertService.openSnackBar("Defense Attorney updated successfully!", 'success');
+      this.alertService.openSnackBar("Defense Attorney updated successfully", 'success');
       this.DefanceAttorney.disable();
       if (this.fromPop) {
         this.dialogRef.close(true);

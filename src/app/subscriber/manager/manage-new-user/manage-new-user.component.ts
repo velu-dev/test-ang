@@ -101,7 +101,7 @@ export class ManageNewUserComponent implements OnInit {
       })
     } else {
       this.userService.updateEditUser(this.userForm.value.id, this.userForm.value).subscribe(res => {
-        this.alertService.openSnackBar("User updated successfully!", 'success');
+        this.alertService.openSnackBar("User updated successfully", 'success');
         this._location.back();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');

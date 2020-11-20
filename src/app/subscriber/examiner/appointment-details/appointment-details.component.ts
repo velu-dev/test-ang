@@ -841,7 +841,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.file = "";
       this.getDocumentData();
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully!", 'success');
+      this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
@@ -903,7 +903,7 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.notesForm.invalid)
       return
     this.examinerService.postNotes(this.notesForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Notes Updated successfully!", 'success');
+      this.alertService.openSnackBar("Notes Updated successfully", 'success');
       this.saveButtonStatus = false;
       this.notesForm.disable();
       this.isNotesEdit = false;
@@ -938,7 +938,7 @@ export class AppointmentDetailsComponent implements OnInit {
           })
           this.documentsData = new MatTableDataSource(this.tabData);
           this.getDocumentData();
-          this.alertService.openSnackBar("File deleted successfully!", 'success');
+          this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
