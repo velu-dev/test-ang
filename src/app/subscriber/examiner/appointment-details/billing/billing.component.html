@@ -73,7 +73,7 @@
         </mat-card>
     </div>
 
-    <div class="incomplete-info" style="display: none;">
+    <div class="incomplete-info" *ngIf="payerResponse.length">
         <mat-card>
             <mat-card-header>
                 <div class="content-wrapper-main-title text-danger">Payer Feedback</div>
@@ -83,7 +83,7 @@
                 <div fxLayout="row wrap" class="p-t-10">
                     <div class="incomplete-modules" fxFlex="100">
                         <ul>
-                            <li><mat-icon>error</mat-icon> Recived Date - Message</li>
+                            <li *ngFor="let payer of payerResponse"><mat-icon>error</mat-icon>{{payer?.status_date | date:'MM-dd-yyyy' }} - {{payer?.MessageText}}</li>
                         </ul>
                     </div>
                 </div>
@@ -854,12 +854,13 @@
                                                 (click)="downloadDocumet(element?.send)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'payor_response_message'">
-                                           {{element?.payor_response_message?.MessageText}}
+                                           {{element?.payor_response_message?.length ? element?.payor_response_message[0]?._attributes?.MessageText :  element?.payor_response_message?._attributes?.MessageText}}
                                         </span>
                                     </div>
                                     <div *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
-                                        <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
-                                                [src]="element?.file_name | fileType" alt=""></span>
+                                        <span *ngIf="column == 'doc_image'" class="file_type_icon"> 
+                                            <!-- <img [src]="element?.file_name | fileType" alt=""> -->
+                                            </span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'" class="no-wrap-td">{{element?.action}}</span>
                                         <span *ngIf="column == 'date'"

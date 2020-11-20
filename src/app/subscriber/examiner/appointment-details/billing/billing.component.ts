@@ -142,7 +142,7 @@ export class BilllableBillingComponent implements OnInit {
       } else {
         this.billingId = param.billingId
       }
-      this.billingService.getIncompleteInfo(param.claim_id, param.billId).subscribe(res => {
+      this.billingService.getIncompleteInfo(param.claim_id, param.billId, { isPopupValidate: false }).subscribe(res => {
         this.isIncompleteError = true;
       }, error => {
         this.isIncompleteError = false;
@@ -362,11 +362,29 @@ export class BilllableBillingComponent implements OnInit {
     });
 
   }
-
+  payerResponse: any = [];
   getBillingDetails() {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
+      if(!billing.data){
+        return;
+      }
+      // this.payerResponse = billing.data.payor_response_messages;
+      for (let payer in billing.data.payor_response_messages) {
+        if (billing.data.payor_response_messages[payer].payor_response_message.length){
+          for(let arr in billing.data.payor_response_messages[payer].payor_response_message){
+            billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date =  billing.data.payor_response_messages[payer].status_date;
+            this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes);
+          }
+
+        }else{
+          billing.data.payor_response_messages[payer].payor_response_message._attributes.status_date =  billing.data.payor_response_messages[payer].status_date;
+          this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message._attributes);
+        }
+      }
+      console.log(this.payerResponse)
+
       if (!this.billingData.certified_interpreter_required) {
         let index = this.modiferList.indexOf('93');
         this.modiferList.splice(index, 1)
@@ -1505,7 +1523,7 @@ export class billingOnDemandDialog {
   }
 
   billingOnDemand() {
-    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId).subscribe(res => {
+    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId, { isPopupValidate: true }).subscribe(res => {
 
       if (this.selection1.selected.length == 0) {
         this.alertService.openSnackBar('Please select Recipient(s)', "error");

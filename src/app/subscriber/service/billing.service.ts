@@ -111,7 +111,7 @@ export class BillingService {
   eorRemove(id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.eorRemove + id)
   }
-  getIncompleteInfo(claim_id, bill_id): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.getIncompleteinfo + claim_id + "/" + bill_id)
+  getIncompleteInfo(claim_id, bill_id, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getIncompleteinfo + claim_id + "/" + bill_id, data)
   }
 }
