@@ -270,6 +270,7 @@
           <div><span> Download On Demand Proof of Service </span><span *ngIf="element?.received">
               <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
             </span></div>
+            <div><span>Further Information</span><span>{{element?.file_processing_message}}</span></div>
       </div>
     </div>
     </td>

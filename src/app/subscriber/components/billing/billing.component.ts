@@ -66,8 +66,8 @@ export class BillingComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Bill #", "Action"]
-        this.displayedColumns = ['is_expand', 'bill_no', 'action']
+        this.columnName = ["", "Bill #", "Status"]
+        this.displayedColumns = ['is_expand', 'bill_no', 'status']
       } else {
         this.columnName = ["Bill #", "Claim #", "Claimant Name", "Examiner", "Bill Total", "Status"]
         this.displayedColumns = ['bill_no', 'claim_number', 'claimant_first_name', "examiner_first_name", "paid_amt", "status"]

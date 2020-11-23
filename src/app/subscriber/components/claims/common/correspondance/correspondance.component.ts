@@ -59,8 +59,8 @@ export class CorrespondanceComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'file_name', "action"]
+        this.columnName = ["", "Name"]
+        this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
         this.columnName = ["", "Name", "Uploaded On ", "Action"]
         this.columnsToDisplay = ['doc_image', 'file_name', 'uploaded_on', "action"]
