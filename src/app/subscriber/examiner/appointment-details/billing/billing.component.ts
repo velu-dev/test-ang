@@ -367,23 +367,24 @@ export class BilllableBillingComponent implements OnInit {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
-      if(!billing.data){
+      if (!billing.data) {
         return;
       }
       // this.payerResponse = billing.data.payor_response_messages;
       for (let payer in billing.data.payor_response_messages) {
-        if (billing.data.payor_response_messages[payer].payor_response_message.length){
-          for(let arr in billing.data.payor_response_messages[payer].payor_response_message){
-            billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date =  billing.data.payor_response_messages[payer].status_date;
-            this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes);
-          }
+        if (billing.data.payor_response_messages[payer].payor_response_status == 'R') {
+          if (billing.data.payor_response_messages[payer].payor_response_message.length) {
+            for (let arr in billing.data.payor_response_messages[payer].payor_response_message) {
+              billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
+              this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes);
+            }
 
-        }else{
-          billing.data.payor_response_messages[payer].payor_response_message._attributes.status_date =  billing.data.payor_response_messages[payer].status_date;
-          this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message._attributes);
+          } else {
+            billing.data.payor_response_messages[payer].payor_response_message._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
+            this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message._attributes);
+          }
         }
       }
-      console.log(this.payerResponse)
 
       if (!this.billingData.certified_interpreter_required) {
         let index = this.modiferList.indexOf('93');
