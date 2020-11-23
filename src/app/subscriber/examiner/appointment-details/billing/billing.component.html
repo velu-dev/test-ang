@@ -694,14 +694,14 @@
                                         <span *ngIf="column == 'file_name'">{{element?.form_name}}</span>
                                         <span *ngIf="column == 'partial'">
 
-                                            <a class="text-ternary m-r-10" (click)="download(element?.partial_document)"
-                                                *ngIf="element?.partial_document">{{element?.partial_document?.file_name}}
+                                            <a class="text-ternary m-r-10" (click)="getGenerateBillingForm(element?.partial_document?.id)"
+                                                *ngIf="element?.partial_document">Generate & Download
                                                 <i class="fas fa-download"></i></a>
                                         </span>
                                         <span *ngIf="column == 'complete'">
                                             <a class="text-ternary m-r-10"
-                                                (click)="download(element?.completed_document)"
-                                                *ngIf="element?.completed_document">{{element?.completed_document?.file_name}}
+                                                (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
+                                                *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly ? 'Generate & Download' : element?.completed_document?.file_name}}
                                                 <i class="fas fa-download"></i></a>
 
                                             <a *ngIf="!element?.completed_document && element?.form_action_type != 'C'"
@@ -710,7 +710,7 @@
                                                 <i class="fa fa-upload m-b-3"></i>
                                             </a>
                                             <input type="file" #uploader hidden
-                                                (change)="addCompleteDoc($event,element?.partial_document?.id)" hidden
+                                                (change)="addCompleteDoc($event,element?.id)" hidden
                                                 accept=".pdf, .doc, .docx" required>
                                         </span>
                                         <span
@@ -720,7 +720,7 @@
                                         <span *ngIf="column == 'action'">
                                             <!-- <a class="text-success m-r-10" (click)="download(element)">Download</a> -->
                                             <input type="file" #uploader hidden
-                                                (change)="addCompleteDoc($event,element?.partial_document?.id)" hidden
+                                                (change)="addCompleteDoc($event,element?.id)" hidden
                                                 accept=".pdf" required>
                                             <a *ngIf="element?.form_action_type != 'C'" class="text-danger no-wrap-td"
                                                 (click)=" element?.completed_document ? uploader.click() : ''">Remove

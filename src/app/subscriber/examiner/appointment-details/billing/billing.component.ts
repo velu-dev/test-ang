@@ -692,6 +692,16 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
+  getGenerateBillingForm(id) {
+    this.billingService.generateBillingForm(this.paramsId.claim_id, this.paramsId.billId, id).subscribe(billing => {
+      console.log(billing)
+      saveAs(billing.data.exam_report_file_url, billing.data.file_name);
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
+    })
+  }
+
   download(element) {
     // saveAs(data.exam_report_file_url, data.file_name, '_self');
     // this.alertService.openSnackBar("File downloaded successfully", "success");
@@ -1046,7 +1056,7 @@ export class BilllableBillingComponent implements OnInit {
   BillingCompleteDocSubmit(pid) {
     this.docFormData = new FormData()
     this.docFormData.append('file', this.docSelectedFile);
-    this.docFormData.append('partial_document_id', pid);
+    this.docFormData.append('form_id', pid);
     this.docFormData.append('claim_id', this.paramsId.claim_id.toString());
     this.docFormData.append('bill_item_id', this.paramsId.billId.toString());
     this.billingService.postBillingCompleteDoc(this.docFormData).subscribe(doc => {

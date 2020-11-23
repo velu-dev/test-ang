@@ -76,7 +76,7 @@ export class ServiceRequestDetailsComponent implements OnInit {
   user: any;
   service_request_id: any;
   requestResponseDocuments: any = new MatTableDataSource([])
-  displayedColumnsReqRes: string[] = ['file_name', 'received_on', 'download'];
+  displayedColumnsReqRes: string[] = ['file_name', 'received_on', 'status', 'download'];
   constructor(private cookieService: CookieService, private route: ActivatedRoute, private userService: UserService, public dialog: MatDialog) {
     this.user = JSON.parse(this.cookieService.get('user'));
     this.isLoading = true;
