@@ -55,8 +55,8 @@ export class UpdateBillableItemComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Exam Type", "Status"]
-        this.columnsToDisplay = ['is_expand', 'procedure_type_name', "status"]
+        this.columnName = ["", "Exam Type"]
+        this.columnsToDisplay = ['is_expand', 'procedure_type_name']
       } else {
         this.columnName = ["Exam Type", "Date of Service / Date Item Received", "Examiner", "Status"]
         this.columnsToDisplay = ['procedure_type_name', 'appointment_scheduled_date_time', 'examiner_name', "status"]

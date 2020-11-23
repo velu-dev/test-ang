@@ -78,7 +78,7 @@
                 <ng-container matColumnDef="expandedDetail">
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
-                            <div class="responsive-table">
+                            <div class="responsive-table"  (click)="isMobile && (tabIndex == 0 || tabIndex == 1 || tabIndex == 3) ? editUser(element):''">
                                 <div class="symbol"><span>Last Name</span><span> {{element.last_name}} </span></div>
                                 <div class="position"><span>First Name</span><span> {{element.first_name}} </span></div>
                                 <div class="name"><span>Email</span><span> {{element.sign_in_email_id}} </span></div>
