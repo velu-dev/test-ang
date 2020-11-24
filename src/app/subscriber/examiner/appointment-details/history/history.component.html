@@ -6,13 +6,13 @@
             <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class"></mat-progress-bar>
             <div class="text-center">{{historyData?.on_demand_status}}</div>
         </div>
-        <div fxFlex="100" class="text-center m-t-20 m-b-20" *ngIf="historyData?.on_demand_status != 'In Progress'">
+        <div fxFlex="100" class="text-center m-t-20 m-b-20" *ngIf="historyData?.on_demand_status == 'Unsent' || historyData?.on_demand_status == 'Completed' || historyData?.on_demand_status == 'Error' || historyData?.on_demand_status == 'Cancelled'">
           <mat-checkbox [disabled]="historyData?.is_exam_type_changed" [(ngModel)]="rushRequest" >Rush Request?</mat-checkbox>
       </div>
-      <div fxFlex="100" class="text-center m-t-20 m-b-20" *ngIf="historyData?.on_demand_status == 'In Progress'">
+      <div fxFlex="100" class="text-center m-t-20 m-b-20" *ngIf="historyData?.on_demand_status && historyData?.on_demand_status != 'Unsent' && historyData?.on_demand_status != 'Completed' && historyData?.on_demand_status != 'Error' && historyData?.on_demand_status != 'Cancelled'">
         <div class="info-alert"><strong>Date Requested :</strong> {{historyData?.date_of_request | date:'MM-dd-yyyy' }} <span class="p-l-20"><strong>Rush Request? :</strong> {{historyData?.is_rush_request ? 'Yes' : 'No'}}</span></div>
       </div>
-        <div fxFlex="100" *ngIf="historyData?.on_demand_status != 'In Progress'" class="text-center m-t-20 m-b-20 action-btns">
+        <div fxFlex="100"  *ngIf="historyData?.on_demand_status == 'Unsent' || historyData?.on_demand_status == 'Completed' || historyData?.on_demand_status == 'Error' || historyData?.on_demand_status == 'Cancelled'" class="text-center m-t-20 m-b-20 action-btns">
             <button [disabled]="historyData?.is_exam_type_changed" mat-stroked-button class="outline-success huge-btn" (click)="onDemandSubmit()"> Click Here for Medical History Questionnaire On
                 Demand</button>
         </div>
