@@ -1316,16 +1316,16 @@ export class NewClaimComponent implements OnInit {
             this.claim.patchValue({
               claim_details: res.data.claim,
             });
-          // res.data.injuryInfodata.map(injury => {
-          //   let inj = injury;
-          //   console.log(injury);
-          //   inj.date_of_injury = injury.date_of_injury.split("T")[0];
-          //   inj.continuous_trauma_start_date = moment(injury.continuous_trauma_start_date).format("MM-DD-YYYY");
-          //   inj.continuous_trauma_end_date = moment(injury.continuous_trauma_end_date).format("MM-DD-YYYY");
-          //   console.log(inj)
-          //   this.injuryInfodata.push(inj)
-          // })
-          this.injuryInfodata = res.data.injuryInfodata;
+          res.data.injuryInfodata.map(injury => {
+            let inj = injury;
+            console.log(injury);
+            inj.date_of_injury = injury.date_of_injury ? moment(injury.date_of_injury.split("T")[0]) : null;
+            inj.continuous_trauma_start_date = injury.continuous_trauma_start_date ? moment(injury.continuous_trauma_start_date.split("T")[0]) : null;
+            inj.continuous_trauma_end_date = injury.continuous_trauma_end_date ? moment(injury.continuous_trauma_end_date.split("T")[0]) : null;
+            console.log(inj)
+            this.injuryInfodata.push(inj)
+          })
+          // this.injuryInfodata  = res.data.injuryInfodata;
           if (res.data.employer.length == 1) {
             this.employerList = [];
             this.changeState(res.data.employer[0].state, 'emp')
@@ -1505,7 +1505,7 @@ export class NewClaimComponent implements OnInit {
   selectedFile: File;
   fileErrors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   uploadFile(event) {
-    this.fileErrors.file.isError = false;
+
     let fileTypes = ['pdf', 'doc', 'docx']
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
@@ -1562,7 +1562,6 @@ export class NewClaimComponent implements OnInit {
       //this.correspondForm.reset();
       this.file = null;
       this.note = null;
-      this.fileErrors.file.isError = false;
       this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       this.logger.log(error);
