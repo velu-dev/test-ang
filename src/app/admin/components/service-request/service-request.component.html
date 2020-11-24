@@ -34,7 +34,7 @@
                             <span
                                 *ngIf="column == 'service_provider_account_no'">{{element?.service_provider_account_no}}</span>
                             <span
-                                *ngIf="column == 'service_request_transmit_status'">{{element?.service_request_transmit_status}}</span>
+                                *ngIf="column == 'service_request_transmit_status'" [ngClass]="element?.service_request_transmit_status == 'ERROR' ? 'text-danger' : ''">{{element?.service_request_transmit_status}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -54,7 +54,7 @@
                                 <div><span>Service Provider Name</span><span>{{element?.subscriber_first_name}} </span></div>
                                 <div><span>Service Provider Account</span><span>{{element?.service_provider_account_no}}
                                 </span></div>
-                                <div><span>Service Status</span><span>{{element?.service_request_transmit_status}} </span></div>
+                                <div><span>Service Status</span><span class="text-danger">{{element?.service_request_transmit_status}} </span></div>
 
                             </div>
                         </div>

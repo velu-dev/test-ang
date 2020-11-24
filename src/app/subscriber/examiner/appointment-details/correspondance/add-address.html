@@ -1,4 +1,5 @@
 <span *ngIf="!isLoading">
+  <mat-card-content style="max-height: 30vh;">
     <app-claim-admin *ngIf="type == 'Insurance Company'" [state]="states" [fromPop]="true" [claim_admin]="userData">
     </app-claim-admin>
     <app-application-attorney *ngIf="type == 'Applicant Attorney'" [fromPop]="true" [aattorney]="userData"
@@ -8,6 +9,7 @@
     </app-defense-attorney>
     <app-deo *ngIf="type == 'DEU Office'" [fromPop]="true" [deu]="userData" [state]="states"></app-deo>
     <app-employer *ngIf="type == 'Employer'" [fromPop]="true" [employer]="userData" [state]="states"></app-employer>
+  </mat-card-content>
     <!-- <app-new-claimant *ngIf="type == 'Claimant'" [fromPop]="true" [claimantId]="userData.id"></app-new-claimant> -->
     <div *ngIf="type == 'Claimant'" class="dialog fixed-dialog custom-dialog">
         <mat-card-header class="model-header">

@@ -75,7 +75,7 @@
               </span>
               <span class="custom-list" *ngIf="element.doc_type == 'custom'">
                 <!-- <a  class="text-success" >Edit</a> -->
-                <a class="text-danger m-l-10" *ngIf="!correspondData?.is_exam_type_changed"
+                <a class="text-danger m-l-10" *ngIf="!correspondData?.is_exam_type_changed && !element?.isServiceRequested"
                   (click)="$event.stopPropagation();removeCustomDocument(element)">Remove</a>
               </span>
             </td>
@@ -270,6 +270,7 @@
           <div><span> Download On Demand Proof of Service </span><span *ngIf="element?.received">
               <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
             </span></div>
+            <div><span>Further Information</span><span>{{element?.file_processing_message}}</span></div>
       </div>
     </div>
     </td>

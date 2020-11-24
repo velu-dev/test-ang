@@ -151,7 +151,6 @@ export class AppointmentDetailsComponent implements OnInit {
     private cookieService: CookieService
   ) {
     this.userEmail = JSON.parse(this.cookieService.get('user')).sign_in_email_id.toLowerCase();
-    console.log(this.userEmail)
     this.intercom.setBillableItem("Billable Item");
     this.cookieService.set('billableItem', null)
     this.loadForms();
@@ -646,7 +645,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isEditBillableItem = true;
     this.billable_item.enable();
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
-      this.billable_item.get('appointment').get('duration').setValidators([Validators.required]);
+      this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
       this.billable_item.get('appointment').get('duration').setValidators([]);
     }
@@ -655,7 +654,7 @@ export class AppointmentDetailsComponent implements OnInit {
   submitBillableItem() {
 
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
-      this.billable_item.get('appointment').get('duration').setValidators([Validators.required]);
+      this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
       this.billable_item.get('appointment').get('duration').setValidators([]);
     }
@@ -841,7 +840,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.file = "";
       this.getDocumentData();
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully!", 'success');
+      this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
@@ -903,7 +902,7 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.notesForm.invalid)
       return
     this.examinerService.postNotes(this.notesForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Notes Updated successfully!", 'success');
+      this.alertService.openSnackBar("Notes Updated successfully", 'success');
       this.saveButtonStatus = false;
       this.notesForm.disable();
       this.isNotesEdit = false;
@@ -938,7 +937,7 @@ export class AppointmentDetailsComponent implements OnInit {
           })
           this.documentsData = new MatTableDataSource(this.tabData);
           this.getDocumentData();
-          this.alertService.openSnackBar("File deleted successfully!", 'success');
+          this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })

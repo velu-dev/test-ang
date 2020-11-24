@@ -119,6 +119,7 @@ tr.detail-row {
             display: contents;
             float: right;
             padding-right: 5px;
+            color: $text-gray;
             @media only screen and (max-width: 568px) {
               content: ":";
               display: inline-flex;

@@ -179,6 +179,7 @@ export const api_endpoint = {
     postPaymentFileAdd: 'billing/post-payment-eor/',
     eorRemove: 'billing/post-payment-eor-remove/',
     getIncompleteinfo: "billing/validate-837p-csv/",
+    generateBillingForm: 'billing/generate-form/',
 
     //Calendar 
 

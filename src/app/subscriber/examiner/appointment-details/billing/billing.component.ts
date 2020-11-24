@@ -142,7 +142,7 @@ export class BilllableBillingComponent implements OnInit {
       } else {
         this.billingId = param.billingId
       }
-      this.billingService.getIncompleteInfo(param.claim_id, param.billId).subscribe(res => {
+      this.billingService.getIncompleteInfo(param.claim_id, param.billId, { isPopupValidate: false }).subscribe(res => {
         this.isIncompleteError = true;
       }, error => {
         this.isIncompleteError = false;
@@ -362,11 +362,30 @@ export class BilllableBillingComponent implements OnInit {
     });
 
   }
-
+  payerResponse: any = [];
   getBillingDetails() {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
+      if (!billing.data) {
+        return;
+      }
+      // this.payerResponse = billing.data.payor_response_messages;
+      for (let payer in billing.data.payor_response_messages) {
+        if (billing.data.payor_response_messages[payer].payor_response_status == 'R') {
+          if (billing.data.payor_response_messages[payer].payor_response_message.length) {
+            for (let arr in billing.data.payor_response_messages[payer].payor_response_message) {
+              billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
+              this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes);
+            }
+
+          } else {
+            billing.data.payor_response_messages[payer].payor_response_message._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
+            this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message._attributes);
+          }
+        }
+      }
+
       if (!this.billingData.certified_interpreter_required) {
         let index = this.modiferList.indexOf('93');
         this.modiferList.splice(index, 1)
@@ -666,10 +685,20 @@ export class BilllableBillingComponent implements OnInit {
       }
 
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully!", 'success');
+      this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
+    })
+  }
+
+  getGenerateBillingForm(id) {
+    this.billingService.generateBillingForm(this.paramsId.claim_id, this.paramsId.billId, id).subscribe(billing => {
+      console.log(billing)
+      saveAs(billing.data.exam_report_file_url, billing.data.file_name);
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
     })
   }
 
@@ -718,7 +747,7 @@ export class BilllableBillingComponent implements OnInit {
         }, 1000);
 
       }
-      this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+      this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -743,7 +772,7 @@ export class BilllableBillingComponent implements OnInit {
             this.getDocumentData();
           }
 
-          this.alertService.openSnackBar("File deleted successfully!", 'success');
+          this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
@@ -1027,11 +1056,11 @@ export class BilllableBillingComponent implements OnInit {
   BillingCompleteDocSubmit(pid) {
     this.docFormData = new FormData()
     this.docFormData.append('file', this.docSelectedFile);
-    this.docFormData.append('partial_document_id', pid);
+    this.docFormData.append('form_id', pid);
     this.docFormData.append('claim_id', this.paramsId.claim_id.toString());
     this.docFormData.append('bill_item_id', this.paramsId.billId.toString());
     this.billingService.postBillingCompleteDoc(this.docFormData).subscribe(doc => {
-      this.alertService.openSnackBar("File added successfully!", 'success');
+      this.alertService.openSnackBar("File added successfully", 'success');
       this.getBillDocument();
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error");
@@ -1192,14 +1221,14 @@ export class BillingPaymentDialog {
 
   removeFile(i) {
     this.postPaymentForm.patchValue({ file: null, is_file_change: true })
-    this.alertService.openSnackBar("File deleted successfully!", 'success');
+    this.alertService.openSnackBar("File deleted successfully", 'success');
   }
 
   removeFileEdit(i, file) {
 
     this.billingService.deleteDocument(file.id).subscribe(res => {
       this.paymentDetails.exam_report_file_url.splice(i, 1)
-      this.alertService.openSnackBar("File deleted successfully!", 'success');
+      this.alertService.openSnackBar("File deleted successfully", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -1505,7 +1534,7 @@ export class billingOnDemandDialog {
   }
 
   billingOnDemand() {
-    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId).subscribe(res => {
+    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId, { isPopupValidate: true }).subscribe(res => {
 
       if (this.selection1.selected.length == 0) {
         this.alertService.openSnackBar('Please select Recipient(s)', "error");
@@ -1583,7 +1612,7 @@ export class billingOnDemandDialog {
                 }, 1000);
 
               }
-              this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+              this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
             }, error => {
               this.alertService.openSnackBar(error.error.message, 'error');
             })
@@ -1609,7 +1638,7 @@ export class billingOnDemandDialog {
             }, 1000);
 
           }
-          this.alertService.openSnackBar("Billing On Demand created successfully!", 'success');
+          this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })

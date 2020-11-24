@@ -154,7 +154,7 @@ export class InjuryComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.claimService.deleteInjury(data.id).subscribe(res => {
-          this.alertService.openSnackBar("Injury deleted successfully!", "success")
+          this.alertService.openSnackBar("Injury deleted successfully", "success")
           this.getInjury();
           this.injuryDetails.splice(index, 1);
           this.dataSource = new MatTableDataSource(this.injuryDetails)

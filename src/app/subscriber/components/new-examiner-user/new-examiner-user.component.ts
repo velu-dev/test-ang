@@ -499,7 +499,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.selectedUser = this.userForm.value;
     if (!this.isEdit) {
       this.userService.createExaminerUser(this.userForm.getRawValue()).subscribe(res => {
-        this.alertService.openSnackBar("User created successfully!", 'success');
+        this.alertService.openSnackBar("User created successfully", 'success');
         this.examinerId = res.data.id;
         this.examinerNumber = res.data.examiner_reference_id;
         // this.router.navigate(['/subscriber/users'])
@@ -551,7 +551,7 @@ export class NewExaminerUserComponent implements OnInit {
     }
     else {
       this.userService.updateEditUser(this.userForm.getRawValue().id, this.userForm.getRawValue()).subscribe(res => {
-        this.alertService.openSnackBar("User updated successfully!", 'success');
+        this.alertService.openSnackBar("User updated successfully", 'success');
         this.examinerId = res.data.id
         // this.router.navigate(['/subscriber/users'])
         if (status == 'next') {
@@ -694,9 +694,9 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
       if (!this.mailingAddressForm.value.id) {
-        this.alertService.openSnackBar("Mailing address added successfully!", 'success');
+        this.alertService.openSnackBar("Mailing address added successfully", 'success');
       } else {
-        this.alertService.openSnackBar("Mailing address updated successfully!", 'success');
+        this.alertService.openSnackBar("Mailing address updated successfully", 'success');
       }
       this.mailingAddressForm.markAsUntouched();
       this.mailingAddressForm.updateValueAndValidity();
@@ -737,9 +737,9 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
 
       if (!this.billingProviderForm.value.id) {
-        this.alertService.openSnackBar("Billing provider added successfully!", 'success');
+        this.alertService.openSnackBar("Billing provider added successfully", 'success');
       } else {
-        this.alertService.openSnackBar("Billing provider updated successfully!", 'success');
+        this.alertService.openSnackBar("Billing provider updated successfully", 'success');
       }
       this.updateFormData(this.examinerId);
       this.billingProviderForm.markAsUntouched();
@@ -781,9 +781,9 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe(render => {
 
       if (!this.renderingForm.value.id) {
-        this.alertService.openSnackBar("Rendering provider added successfully!", 'success');
+        this.alertService.openSnackBar("Rendering provider added successfully", 'success');
       } else {
-        this.alertService.openSnackBar("Rendering provider updated successfully!", 'success');
+        this.alertService.openSnackBar("Rendering provider updated successfully", 'success');
       }
       this.updateFormData(this.examinerId);
       this.renderingForm.markAsUntouched();

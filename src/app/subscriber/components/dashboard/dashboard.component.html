@@ -151,6 +151,15 @@
                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                     <div class="detail" [@detailExpand]="expandId == element.appointment_id ? 'expanded' : 'collapsed'">
                         <div class="responsive-table">
+                            <section class="show-mobile">
+                                <div><span>Claimant</span>{{element?.claimant_first_name}}
+                                    {{element?.claimant_last_name}}</div>
+                                <div><span>Examiner</span>{{element?.examiner_first_name}}
+                                    {{element?.examiner_last_name}}</div>
+                                <div><span>Exam Procedure Type</span>{{element?.exam_procedure_type}}</div>
+                                <div><span>Standing</span>{{element?.standing}}</div>
+                                <div><span>Date of Service / Date of Item Received</span>{{element?.date_of_service}}</div>
+                            </section>
                             <div (click)="openExtract(element, 'correspondence' )"><span>Correspondence</span>
                                 {{element?.correspondence_status}}</div>
                             <div (click)="openExtract(element,'history')"><span>History</span>

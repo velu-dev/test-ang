@@ -127,7 +127,7 @@ export class HistoryComponent implements OnInit {
     }
     // this.onDemandService.requestCreate(data).subscribe(history => {
     //   this.rushRequest = false;
-    //   this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully!", 'success');
+    //   this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully", 'success');
     // }, error => {
     //   console.log(error);
     //   this.alertService.openSnackBar(error.error.message, 'error');
@@ -136,7 +136,7 @@ export class HistoryComponent implements OnInit {
     this.onDemandService.OnDemandhistory(data).subscribe(history => {
       this.rushRequest = false;
       this.download({ file_url: history.data.file_url, file_name: history.data.file_name })
-      this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully!", 'success');
+      this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully", 'success');
       this.getHistory();
     }, error => {
       console.log(error);
