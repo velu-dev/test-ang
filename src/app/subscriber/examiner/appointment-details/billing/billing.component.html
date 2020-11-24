@@ -83,7 +83,10 @@
                 <div fxLayout="row wrap" class="p-t-10">
                     <div class="incomplete-modules" fxFlex="100">
                         <ul>
-                            <li *ngFor="let payer of payerResponse"><mat-icon>error</mat-icon>{{payer?.status_date | date:'MM-dd-yyyy' }} - {{payer?.MessageText}}</li>
+                            <li *ngFor="let payer of payerResponse">
+                                <mat-icon>error</mat-icon>{{payer?.status_date | date:'MM-dd-yyyy' }} -
+                                {{payer?.MessageText}}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -689,12 +692,13 @@
                                         </mat-icon>
                                     </span>
                                     <div> <span *ngIf="column == 'doc_image'" class="file_type_icon">
-                                         <!-- <img [src]="element?.file_name | fileType" alt=""> -->
+                                            <!-- <img [src]="element?.file_name | fileType" alt=""> -->
                                         </span>
                                         <span *ngIf="column == 'file_name'">{{element?.form_name}}</span>
                                         <span *ngIf="column == 'partial'">
 
-                                            <a class="text-ternary m-r-10" (click)="getGenerateBillingForm(element?.partial_document?.id)"
+                                            <a class="text-ternary m-r-10"
+                                                (click)="getGenerateBillingForm(element?.partial_document?.id)"
                                                 *ngIf="element?.partial_document">Generate & Download
                                                 <i class="fas fa-download"></i></a>
                                         </span>
@@ -720,8 +724,8 @@
                                         <span *ngIf="column == 'action'">
                                             <!-- <a class="text-success m-r-10" (click)="download(element)">Download</a> -->
                                             <input type="file" #uploader hidden
-                                                (change)="addCompleteDoc($event,element?.id)" hidden
-                                                accept=".pdf" required>
+                                                (change)="addCompleteDoc($event,element?.id)" hidden accept=".pdf"
+                                                required>
                                             <a *ngIf="element?.form_action_type != 'C'" class="text-danger no-wrap-td"
                                                 (click)=" element?.completed_document ? uploader.click() : ''">Remove
                                                 and Reupload
@@ -837,8 +841,9 @@
                                         </mat-icon>
                                     </span>
                                     <div *ngIf="element?.action != 'POST PAYMENT PAPER EOR'">
-                                        <span *ngIf="column == 'doc_image'" class="file_type_icon"> 
-                                            <mat-icon *ngIf="element?.payor_response_status == 'R'" class="text-danger">error</mat-icon>
+                                        <span *ngIf="column == 'doc_image'" class="file_type_icon">
+                                            <mat-icon *ngIf="element?.payor_response_status == 'R'" class="text-danger">
+                                                error</mat-icon>
                                         </span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'" class="no-wrap-td"
@@ -855,13 +860,13 @@
                                                 (click)="downloadDocumet(element?.send)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'payor_response_message'">
-                                           {{element?.payor_response_message?.length ? element?.payor_response_message[0]?._attributes?.MessageText :  element?.payor_response_message?._attributes?.MessageText}}
+                                            {{element?.payor_response_message?.length ? element?.payor_response_message[0]?._attributes?.MessageText :  element?.payor_response_message?._attributes?.MessageText}}
                                         </span>
                                     </div>
                                     <div *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
-                                        <span *ngIf="column == 'doc_image'" class="file_type_icon"> 
+                                        <span *ngIf="column == 'doc_image'" class="file_type_icon">
                                             <!-- <img [src]="element?.file_name | fileType" alt=""> -->
-                                            </span>
+                                        </span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'" class="no-wrap-td">{{element?.action}}</span>
                                         <span *ngIf="column == 'date'"
@@ -879,15 +884,15 @@
                                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayDoc.length">
                                     <div class="detail"
                                         [@detailExpand]="expandIdDoc == element.document_id ? 'expanded' : 'collapsed'">
-                                        <div class="responsive-table">
+                                        <!-- <div class="responsive-table">
                                             <ng-container matColumnDef="doc_image">
                                 <th mat-header-cell *matHeaderCellDef> </th>
-                                <td mat-cell *matCellDef="let element" class="file_type_icon">
-                                    <!-- <img [src]="element?.file_name | fileType" alt=""> -->
-                                </td>
-                            </ng-container>
+                                <td mat-cell *matCellDef="let element" class="file_type_icon"> -->
+                                        <!-- <img [src]="element?.file_name | fileType" alt=""> -->
+                                        <!-- </td> -->
+                                        <!-- </ng-container> -->
 
-                            <div class="no-wrap-td"><span>Action</span>
+                                        <!-- <div class="no-wrap-td"><span>Action</span>
                                 <span [ngSwitch]="element.action">
                                     <p *ngSwitchCase="'MD'" class="m-b-0">Downloaded</p>
                                     <p *ngSwitchCase="'MES'" class="m-b-0">E-Sign Downloaded</p>
@@ -903,22 +908,53 @@
                                     <a class="text-success" (click)="downloadDocumet(element?.send)">Download</a>
                                 </span></div>
                             <div><span>Further Information </span><span *ngIf="element?.payor_response_message">
-                                {{element?.payor_response_message?.MessageText}}
-                                </span></div>
+                                    {{element?.payor_response_message?.MessageText}}
+                                </span></div> -->
+                                        <!-- </div> -->
+                                        <div class="responsive-table">
+                                            <section *ngIf="element?.action != 'POST PAYMENT PAPER EOR'">
+                                                <div><span>File Name</span>{{element?.file_name}}</div>
+                                                <div [ngSwitch]="element.action"><span>Action</span>
+                                                    <p *ngSwitchCase="'MD'">Downloaded</p>
+                                                    <p *ngSwitchCase="'MES'">E-Sign Downloaded</p>
+                                                    <p *ngSwitchCase="'SFTP'">Billed On Demand</p>
+                                                </div>
+                                                <div><span>Date</span>{{element?.date_of_request | date:'MM-dd-yyyy'}}
+                                                </div>
+                                                <div><span>Recipients</span>{{rec?.name}} {{!last ? ',' : ''}}</div>
+                                                <div><span>Download Sent Documents </span><a class="text-success"
+                                                        (click)="downloadDocumet(element?.send)">Download</a></div>
+                                                <div><span>Further Information</span>
+                                                    {{element?.payor_response_message?.length ? element?.payor_response_message[0]?._attributes?.MessageText :  element?.payor_response_message?._attributes?.MessageText}}
+                                                </div>
+                                            </section>
+
+                                            <section *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
+                                                <div><span>File Name</span>{{element?.file_name}}</div>
+                                                <div [ngSwitch]="element.action"><span>Action</span>
+                                                    {{element?.action}}
+                                                </div>
+                                                <div><span>Date</span>{{element?.date_of_request | date:'MM-dd-yyyy'}}
+                                                </div>
+                                                <div><span>Recipients</span></div>
+                                                <div><span>Download Sent Documents </span><a class="text-success"
+                                                        (click)="downloadDocumet(element)">Download</a></div>
+                                                <div><span>Further Information</span></div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplayDoc;sticky :true"></tr>
+                            <tr mat-row *matRowDef="let element; columns: columnsToDisplayDoc;" class="row"
+                                [class.row]="expandedElement === element" (click)="openElementDoc(element)">
+                            </tr>
+                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+                        </table>
+                        <app-nodata *ngIf="dataSourceDocList?.filteredData?.length == 0"></app-nodata>
                     </div>
                 </div>
-                </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="columnsToDisplayDoc;sticky :true"></tr>
-                <tr mat-row *matRowDef="let element; columns: columnsToDisplayDoc;" class="row"
-                    [class.row]="expandedElement === element" (click)="openElementDoc(element)">
-                </tr>
-                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
-                </table>
-                <app-nodata *ngIf="dataSourceDocList?.filteredData?.length == 0"></app-nodata>
+            </mat-card-content>
+        </mat-card>
     </div>
-</div>
-</mat-card-content>
-</mat-card>
-</div>
 </div>
