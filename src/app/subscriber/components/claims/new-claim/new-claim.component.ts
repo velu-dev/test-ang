@@ -257,8 +257,8 @@ export class NewClaimComponent implements OnInit {
 
         this.claimService.getSingleClaimant(this.claimant_id).subscribe(claimant => {
           if (claimant.status) {
-            this.intercom.setClaimant( claimant.data[0].first_name + ' ' +  claimant.data[0].last_name);
-            this.cookieService.set('claimDetails', claimant.data[0].first_name + ' ' +  claimant.data[0].last_name)
+            this.intercom.setClaimant(claimant.data[0].first_name + ' ' + claimant.data[0].last_name);
+            this.cookieService.set('claimDetails', claimant.data[0].first_name + ' ' + claimant.data[0].last_name)
             this.logger.log("claimant", claimant)
             this.claimantInfo = claimant.data[0]
             this.isRemoveSearchRemove = true;
@@ -996,7 +996,7 @@ export class NewClaimComponent implements OnInit {
           baseUrl = "/subscriber/examiner/";
           break;
         default:
-          baseUrl = "/admin";
+          baseUrl = "/";
           break;
       }
 
@@ -1316,6 +1316,15 @@ export class NewClaimComponent implements OnInit {
             this.claim.patchValue({
               claim_details: res.data.claim,
             });
+          // res.data.injuryInfodata.map(injury => {
+          //   let inj = injury;
+          //   console.log(injury);
+          //   inj.date_of_injury = injury.date_of_injury.split("T")[0];
+          //   inj.continuous_trauma_start_date = moment(injury.continuous_trauma_start_date).format("MM-DD-YYYY");
+          //   inj.continuous_trauma_end_date = moment(injury.continuous_trauma_end_date).format("MM-DD-YYYY");
+          //   console.log(inj)
+          //   this.injuryInfodata.push(inj)
+          // })
           this.injuryInfodata = res.data.injuryInfodata;
           if (res.data.employer.length == 1) {
             this.employerList = [];

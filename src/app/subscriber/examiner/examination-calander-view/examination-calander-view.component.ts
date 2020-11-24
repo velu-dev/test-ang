@@ -485,7 +485,7 @@ export class EventdetailDialog {
         baseUrl = "/subscriber/examiner/";
         break;
       default:
-        baseUrl = "/admin";
+        baseUrl = "/";
         break;
     }
     this.router.navigate([baseUrl + "claimants/claimant/" + claimant_id + "/claim/" + claim_id + "/billable-item/" + billable_id]);
