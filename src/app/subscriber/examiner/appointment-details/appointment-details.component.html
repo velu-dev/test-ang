@@ -199,41 +199,8 @@
                             </mat-select>
                             <mat-error>Please select Exam Procedure Type</mat-error>
                         </mat-form-field>
-
-                        <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <div fxLayout="row wrap">
-                                <mat-form-field appearance="outline" fxFlex="100">
-                                    <mat-label>Modifiers</mat-label>
-                                    <mat-select formControlName="modifier_id" multiple
-                                        (selectionChange)="modifyChange()">
-                                        <mat-option *ngFor="let modifier of modifiers" [value]="modifier.id">
-                                            {{modifier.modifier_code}} - {{modifier.modifier}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-hint *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)">
-                                        <span *ngIf="!primary_language_spoken">Note: No language selected.
-                                            Please
-                                            select
-                                            it from Claimant's section!</span>
-
-                                    </mat-hint>
-                                </mat-form-field>
-                                <div fxFlex="100" *ngIf="billable_item.value.exam_type?.modifier_id?.includes(2)">
-                                    <div class="selected_lang" *ngIf="primary_language_spoken">
-                                        {{selectedLanguage?.language}}</div>
-                                </div>
-                            </div>
-
-                        </div> -->
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
-                        <!-- <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-checkbox class="mat-check m-b-20" [(ngModel)]="isChecked"
-                                [disabled]="!isEditBillableItem" [ngModelOptions]="{standalone: true}"
-                                (change)="psychiatric($event)" labelPosition="after">
-                                Psych
-                            </mat-checkbox>
-                        </div> -->
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Examiner</mat-label>
                             <mat-select formControlName="examiner_id">
@@ -362,8 +329,7 @@
     <mat-divider> </mat-divider>
     <mat-card-content >
         <div fxLayout="row wrap">
-            <div fxLayout="row wrap" *ngIf="!isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
-                <!-- <span *ngIf="!isExamTypeChanged"> -->
+            <!-- <div fxLayout="row wrap" *ngIf="!isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                     appearance="outline" class="p-l-0 m-t-2">
                     <mat-label>Document Type</mat-label>
@@ -382,7 +348,6 @@
                     *ngIf="documentType == null || documentType != 6">
                     <button type="button" mat-stroked-button class="filled-gray" (click)="uploader.click()">Select
                         File
-                        <!-- <i class="fa fa-upload p-l-5"></i> -->
                     </button>
                     <mat-form-field appearance="standard">
                         <input matInput [(ngModel)]="file" readonly placeholder="No file chosen">
@@ -415,11 +380,11 @@
                         class="filled-gray p-r-20">Add
                     </button>
                 </div>
-                <!-- </span> -->
-            </div>
-            <div fxLayout="row wrap" *ngIf="isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
-                <!-- <span class="error">Exam type was changed in claim Unable to upload documents in this section</span> -->
-            </div>
+             
+            </div> -->
+            <!-- <div fxLayout="row wrap" *ngIf="isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
+               
+            </div> -->
             <div *ngIf="!isExamTypeChanged" fxLayout="row wrap" fxFlex="100" class="m-t-20">
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                 </div>
@@ -440,14 +405,6 @@
                 </div>
             </div>
             <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-                <!-- <mat-tab-group fxFlex="100" (selectedTabChange)="tabChanges($event.index);">
-                    <mat-tab label="Correspondence"></mat-tab>
-                    <mat-tab label="History"> </mat-tab>
-                    <mat-tab label="Records"> </mat-tab>
-                    <mat-tab label="Examination" *ngIf="examinationDetails?.procedure_type != 'Supplemental'"></mat-tab>
-                    <mat-tab label="Report"></mat-tab>
-                    <mat-tab label="Billing"></mat-tab>
-                </mat-tab-group> -->
                 <mat-tab-group fxFlex="100"  (selectedTabChange)="tabChanges($event);">
                     <mat-tab *ngFor="let doc of procedureTypeList" label="{{doc.name}}"></mat-tab>
                 </mat-tab-group>
