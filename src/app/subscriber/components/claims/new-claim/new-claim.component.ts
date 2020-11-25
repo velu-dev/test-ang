@@ -952,7 +952,7 @@ export class NewClaimComponent implements OnInit {
   //     this.examinarAddress = res.data;
   //   })
   // }
-  submitBillableItem() {
+  submitBillableItem(state?) {
     this.isBillSubmited = true;
     Object.keys(this.billable_item.controls).forEach((key) => {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
@@ -999,10 +999,12 @@ export class NewClaimComponent implements OnInit {
           baseUrl = "/";
           break;
       }
-
-      console.log()
       // this.router.navigate(['/subscriber/appointment/appointment-details', this.claimId, res.data.id])
-      this.router.navigate([baseUrl + "claimants/claimant/" + this.claimant_id + "/claim/" + this.claimId + "/billable-item/" + res.data.id]);
+      if (state == 'close') {
+        this.router.navigate([baseUrl])
+      } else {
+        this.router.navigate([baseUrl + "claimants/claimant/" + this.claimant_id + "/claim/" + this.claimId + "/billable-item/" + res.data.id]);
+      }
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
