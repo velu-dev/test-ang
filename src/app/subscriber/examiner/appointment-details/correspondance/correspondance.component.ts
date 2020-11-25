@@ -60,6 +60,9 @@ export class BillingCorrespondanceComponent implements OnInit {
   correspondData: any;
   states = [];
   statusBarValues = { value: null, status: '', class: '' }
+  statusOfAppointment = { isEmptyNoDate: false, IsEmptyAppointmentDate: false, isEmptyDuration: false, isEmptyLocation: false }
+  is_appointment_incomplete = false;
+  error_message = "";
   constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
@@ -93,6 +96,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.selection1.clear();
       this.selection.clear();
       this.correspondData = res;
+      this.statusOfAppointment = { isEmptyNoDate: !res.is_appointment_no_date_present, IsEmptyAppointmentDate: !res.is_appointment_date_time_present, isEmptyDuration: !res.is_appointment_duration_present, isEmptyLocation: !res.is_appointment_location_present }
       res.documets.map(doc => {
         if (doc.is_mandatory) {
           this.selection.select(doc);
@@ -216,7 +220,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     // if (addressEmpty) {
     //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
     //     width: '350px',
-    //     data: { message: "Recipient address not silled in some recipient'(s). Would you like to countinue?", yes: true, no: true }
+    //  !   data: { message: "Recipient address not silled in some recipient'(s). Would you like to countinue?", yes: true, no: true }
     //   });
     //   dialogRef.afterClosed().subscribe(result => {
     //     if (result) {
@@ -226,6 +230,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     //     }
     //   })
     // }
+
     let signHide = false;
     if (sign) {
       signHide = sign;
@@ -238,7 +243,27 @@ export class BillingCorrespondanceComponent implements OnInit {
       } else {
         documents_ids.push(res.id)
       }
-    })
+    });
+    if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
+      console.log(this.statusOfAppointment)
+      if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '350px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.. Would you like to countinue?", yes: true, no: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.getDocs(documents_ids, custom_documents_ids, signHide);
+          } else {
+            return
+          }
+        })
+      }
+    } else {
+      this.getDocs(documents_ids, custom_documents_ids, signHide);
+    }
+
+  }
+  getDocs(documents_ids, custom_documents_ids, signHide) {
     let recipientsDocuments_ids: any = [];
     let recipientsCustom_documents_ids: any = [];
     let addressEmpty = false;
@@ -307,7 +332,6 @@ export class BillingCorrespondanceComponent implements OnInit {
         }
       });
     }
-
   }
   download(url, name) {
     saveAs(url, name, '_self');
@@ -519,6 +543,26 @@ export class BillingCorrespondanceComponent implements OnInit {
       })
       return;
     }
+    if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
+      console.log(this.statusOfAppointment)
+      if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '350px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.. Would you like to countinue?", yes: true, no: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.getOndemandDocs(data);
+          } else {
+            return
+          }
+        })
+      }
+    } else {
+      this.getOndemandDocs(data);
+    }
+
+  }
+  getOndemandDocs(data) {
     this.onDemandService.onDemandCorrespondence(data).subscribe(record => {
       this.alertService.openSnackBar("Mail On Demand created successfully", 'success');
       if (record.data.file_url) {

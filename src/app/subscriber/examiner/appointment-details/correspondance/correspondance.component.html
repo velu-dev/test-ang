@@ -9,14 +9,13 @@
     </div>
   </div>
 
-  <!-- ===== incomplete information ==== -->
-  <div fxLayout="row wrap" class="p-t-10" *ngIf="correspondData?.is_appointment_incomplete">
+  <!-- ===== incomplete information ====
+  <div fxLayout="row wrap" class="p-t-10" *ngIf="is_appointment_incomplete">
     <div fxFlex="100">
       <div class="error-alert m-b-10 m-t-10">
-        <i class="fa fa-info-circle p-r-5"></i>Appointment Information Incomplete. Please, check appointment date, time
-        and location. </div>
+        <i class="fa fa-info-circle p-r-5"></i>{{error_message}} </div>
     </div>
-  </div>
+  </div> -->
 
   <div fxLayout="row wrap" class="p-t-25" *ngIf="!isLoading">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
@@ -75,7 +74,8 @@
               </span>
               <span class="custom-list" *ngIf="element.doc_type == 'custom'">
                 <!-- <a  class="text-success" >Edit</a> -->
-                <a class="text-danger m-l-10" *ngIf="!correspondData?.is_exam_type_changed && !element?.isServiceRequested"
+                <a class="text-danger m-l-10"
+                  *ngIf="!correspondData?.is_exam_type_changed && !element?.isServiceRequested"
                   (click)="$event.stopPropagation();removeCustomDocument(element)">Remove</a>
               </span>
             </td>
@@ -270,7 +270,7 @@
           <div><span> Download On Demand Proof of Service </span><span *ngIf="element?.received">
               <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
             </span></div>
-            <div><span>Further Information</span><span>{{element?.file_processing_message}}</span></div>
+          <div><span>Further Information</span><span>{{element?.file_processing_message}}</span></div>
       </div>
     </div>
     </td>
