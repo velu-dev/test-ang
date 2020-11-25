@@ -410,6 +410,22 @@ export class AppointmentDetailsComponent implements OnInit {
       return;
     }
     console.log(this.examinationStatusForm.value.examination_status, this.examinationDetails.appointments.examination_status)
+    if (this.examinationDetails.procedure_type == "Deposition") {
+      if (this.examinationStatusForm.value.examination_status == 11) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "This action will remove Examination Date & Time, Duration. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateExamStatus()
+          } else {
+            return;
+          }
+        })
+        return
+      }
+    }
     if (this.examinationDetails.procedure_type == "Evaluation" || this.examinationDetails.procedure_type == "Reevaluation") {
       if (this.examinationStatusForm.value.examination_status == 1) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
@@ -676,11 +692,41 @@ export class AppointmentDetailsComponent implements OnInit {
       }
     }
 
+    if (this.examinationDetails.procedure_type == "Deposition") {
+      if (!this.billable_item.value.appointment.appointment_scheduled_date_time && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.value.examination_status != 11) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition Date' & remove the Duration!. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateBillableItem();
+          } else {
+            return;
+          }
+        })
+        return
+      }
 
+      if (((this.billable_item.value.appointment.appointment_scheduled_date_time != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.value.appointment.duration != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 12)) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition'!.Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateBillableItem();
+          } else {
+            return;
+          }
+        })
+        return
+      }
+    }
 
     if (this.examinationDetails.procedure_type == "Evaluation" || this.examinationDetails.procedure_type == "Reevaluation") {
 
-      if (!this.billable_item.value.appointment.appointment_scheduled_date_time && this.billableData.appointment.appointment_scheduled_date_time) {
+      if (!this.billable_item.value.appointment.appointment_scheduled_date_time && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.value.examination_status != 1) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: { title: 'Examination', message: "This updates the Examination Status as 'No Date' & remove the Duration!. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
