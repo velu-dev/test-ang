@@ -141,7 +141,7 @@
                             {{element?.examiner_last_name}}</span>
                         <span *ngIf="column == 'exam_procedure_type'">{{element?.exam_procedure_type}}</span>
                         <span *ngIf="column == 'standing'">{{element?.standing}}</span>
-                        <span *ngIf="column == 'date_of_service'">{{element?.date_of_service}}</span>
+                        <span *ngIf="column == 'date_of_service'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'critical'"
                             [ngClass]="{'text-primary': element?.is_critical}">{{element?.is_critical ? "Critical" : "-"}}</span>
                     </div>
@@ -158,7 +158,8 @@
                                     {{element?.examiner_last_name}}</div>
                                 <div><span>Exam Procedure Type</span>{{element?.exam_procedure_type}}</div>
                                 <div><span>Standing</span>{{element?.standing}}</div>
-                                <div><span>Date of Service / Date of Item Received</span>{{element?.date_of_service}}</div>
+                                <div><span>Date of Service / Date of Item
+                                        Received</span>{{element?.date_of_service | date:'MM-dd-yyyy'}}</div>
                             </section>
                             <div (click)="openExtract(element, 'correspondence' )"><span>Correspondence</span>
                                 {{element?.correspondence_status}}</div>
