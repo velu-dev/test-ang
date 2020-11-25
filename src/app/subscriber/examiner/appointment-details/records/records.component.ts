@@ -173,7 +173,7 @@ export class RecordsComponent implements OnInit {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
-        if (FileSize > 2049) {
+        if (FileSize > 3073) {
           this.fileUpload.nativeElement.value = "";
           this.errors.file.isError = true;
           this.errors.file.error = "File size is too large";
