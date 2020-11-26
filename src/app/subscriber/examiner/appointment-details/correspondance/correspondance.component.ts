@@ -248,7 +248,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       console.log(this.statusOfAppointment)
       if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '350px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.. Would you like to countinue?", yes: true, no: true }
+          width: '350px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.. Would you like to countinue?", yes: true, no: true, type: "warning" }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
@@ -257,6 +257,8 @@ export class BillingCorrespondanceComponent implements OnInit {
             return
           }
         })
+      } else {
+        this.getDocs(documents_ids, custom_documents_ids, signHide);
       }
     } else {
       this.getDocs(documents_ids, custom_documents_ids, signHide);
