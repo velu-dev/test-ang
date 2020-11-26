@@ -9,8 +9,8 @@
 
 <div class="confirm-dialog" [ngClass]="{'warning-alert':  data.type =='warning', 'info-alert': data.type=='info'}">
   <div mat-dialog-title class="mat-card-title">
-    <img [src]="alert" alt="alert" class="text-center" *ngIf="data.warning">
-    <img [src]="info" alt="alert" class="text-center" *ngIf="data.info">
+    <img [src]="alert" alt="alert" class="text-center" *ngIf="data.type =='warning'">
+    <img [src]="info" alt="alert" class="text-center" *ngIf="data.type=='info'">
     <div class="inline">
       {{data?.title}}
       <div class="mat-card-description">

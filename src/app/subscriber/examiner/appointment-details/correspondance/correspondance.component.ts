@@ -248,7 +248,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       console.log(this.statusOfAppointment)
       if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '350px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.. Would you like to countinue?", yes: true, no: true, type: "warning" }
+          width: '500px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location. Would you like to countinue?", yes: true, no: true, type: "warning" }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
@@ -290,7 +290,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '500px',
-        data: { title: signHide ? "Download" : 'E-Sign & Download', message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        data: { title: signHide ? "Download" : 'E-Sign & Download', message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true, warning: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
@@ -549,7 +549,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       console.log(this.statusOfAppointment)
       if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '350px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.. Would you like to countinue?", yes: true, no: true }
+          width: '500px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.. Would you like to countinue?", yes: true, no: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
