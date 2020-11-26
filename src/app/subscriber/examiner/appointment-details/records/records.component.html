@@ -24,8 +24,7 @@
           <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
           <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
-            <input type="file" #uploader hidden (change)="addFile($event)" multiple
-              accept=".pdf, .doc, .docx" required>
+            <input type="file" #uploader hidden (change)="addFile($event)" multiple accept=".pdf, .doc, .docx" required>
             <mat-hint>Supported file formats: .pdf, .doc, .docx</mat-hint>
             <mat-hint *ngIf="errors.file.isError">
               <mat-error>{{errors.file.error}}</mat-error>
@@ -80,9 +79,9 @@
                   (click)="$event.stopPropagation()">
                 <div class="action-buttons">
 
-                  <button *ngIf="!element.isEdit && !recordData?.is_exam_type_changed" (click)="$event.stopPropagation();element.isEdit = true"
-                    mat-icon-button class="text-success" aria-label="Example icon-button with a heart icon"
-                    matTooltipPosition="right" matTooltip="Edit">
+                  <button *ngIf="!element.isEdit && !recordData?.is_exam_type_changed"
+                    (click)="$event.stopPropagation();element.isEdit = true" mat-icon-button class="text-success"
+                    aria-label="Example icon-button with a heart icon" matTooltipPosition="right" matTooltip="Edit">
                     <mat-icon>edit</mat-icon>
                   </button>
                   <button *ngIf="element.isEdit"
@@ -108,7 +107,9 @@
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action </th>
             <td mat-cell *matCellDef="let element" class="p-l-0">
-              <a *ngIf="!recordData?.is_exam_type_changed" (click)="$event.stopPropagation();deleteDocument(element)" class="text-danger text-center  no-wrap-td">Remove</a>
+              <a *ngIf="!recordData?.is_exam_type_changed && !element?.isServiceRequested"
+                (click)="$event.stopPropagation();deleteDocument(element)"
+                class="text-danger text-center  no-wrap-td">Remove</a>
             </td>
           </ng-container>
 
@@ -127,8 +128,10 @@
   <div fxLayout="row wrap" class="ondemand_request">
     <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100">
       <div>
-        <mat-checkbox [disabled]="recordData?.is_exam_type_changed" [(ngModel)]="rushRequest">Rush Request?</mat-checkbox>
-        <button mat-stroked-button [disabled]="recordData?.is_exam_type_changed" (click)="onDemandSubmit()" class="outline-success huge-btn">
+        <mat-checkbox [disabled]="recordData?.is_exam_type_changed" [(ngModel)]="rushRequest">Rush Request?
+        </mat-checkbox>
+        <button mat-stroked-button [disabled]="recordData?.is_exam_type_changed" (click)="onDemandSubmit()"
+          class="outline-success huge-btn">
           Record Summary On Demand
         </button>
       </div>

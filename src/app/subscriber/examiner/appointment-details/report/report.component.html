@@ -100,7 +100,8 @@
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action </th>
             <td mat-cell *matCellDef="let element" class="p-l-0 no-wrap-td">
-              <a *ngIf="!reportData?.is_exam_type_changed" (click)="$event.stopPropagation();deleteDocument(element)"
+              <a *ngIf="!reportData?.is_exam_type_changed  && !element?.isServiceRequested"
+                (click)="$event.stopPropagation();deleteDocument(element)"
                 class="text-danger text-center no-wrap-td">Remove</a>
             </td>
           </ng-container>
@@ -121,7 +122,8 @@
       <div>
         <mat-checkbox [disabled]="reportData?.is_exam_type_changed" [(ngModel)]="rushRequest">Rush Request?
         </mat-checkbox>
-        <button [disabled]="reportData?.is_exam_type_changed" mat-stroked-button (click)="onDemandSubmit()" class="outline-success huge-btn">
+        <button [disabled]="reportData?.is_exam_type_changed" mat-stroked-button (click)="onDemandSubmit()"
+          class="outline-success huge-btn">
           Transcribe and Compile
         </button>
       </div>
