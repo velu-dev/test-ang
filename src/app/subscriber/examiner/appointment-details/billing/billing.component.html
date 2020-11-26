@@ -243,8 +243,9 @@
                                             (click)="rowSelected(group)">
                                             <td>
                                                 <mat-form-field appearance="outline" *ngIf="i != 0">
-                                                    <input matInput type="text" [disabled]="" autocomplete="off"
-                                                        formControlName="item_description">
+                                                    <input matInput type="text" name="item_description"
+                                                        autocomplete="off" formControlName="item_description"
+                                                        pattern="[a-zA-Z0-9/.& -]+">
                                                 </mat-form-field>
                                                 <span *ngIf="i == 0">
                                                     {{group.get('item_description').value}}
@@ -252,8 +253,8 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline">
-                                                    <input matInput type="text" autocomplete="off"
-                                                        formControlName="procedure_code">
+                                                    <input matInput type="text" name="procedure_code" autocomplete="off"
+                                                        formControlName="procedure_code" pattern="[a-zA-Z0-9/.& -]+">
                                                 </mat-form-field>
                                             </td>
                                             <td class="bill-modifier">

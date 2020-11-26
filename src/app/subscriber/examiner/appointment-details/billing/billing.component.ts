@@ -794,8 +794,8 @@ export class BilllableBillingComponent implements OnInit {
   initiateForm(): FormGroup {
     return this.fb.group({
       id: [''],
-      item_description: ['', Validators.required],
-      procedure_code: ['', [Validators.required]],
+      item_description: ['', Validators.compose([Validators.required])],
+      procedure_code: ['', Validators.compose([Validators.required])],
       modifierList: [[]],
       modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
       unitType: [''],
