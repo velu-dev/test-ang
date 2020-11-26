@@ -42,12 +42,17 @@
                 <div>{{serviceRequestDetails?.due_date}}</div>
             </div>
             <div class="grid-list" fxFlex="50" fxFlex.xs="100">
-                <div>Status</div>
+                <div>Transmission Status</div>
                 <div>{{serviceRequestDetails?.service_request_transmit_status}}</div>
             </div>
             <div class="grid-list" fxFlex="50" fxFlex.xs="100">
                 <div>Completion Date </div>
                 <div>{{serviceRequestDetails?.date_of_service_completion}}</div>
+            </div>
+
+            <div class="grid-list" fxFlex="50" fxFlex.xs="100">
+                <div>Service Provider Status </div>
+                <div>{{serviceRequestDetails?.service_provider_status}}</div>
             </div>
         </div>
         <!-- <form fxLayout="row wrap" class="p-t-10">
