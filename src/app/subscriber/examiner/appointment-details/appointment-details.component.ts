@@ -414,10 +414,13 @@ export class AppointmentDetailsComponent implements OnInit {
       if (this.examinationStatusForm.value.examination_status == 11) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Examination', message: "This action will remove Examination Date & Time, Duration. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
+          data: { title: 'Deposition', message: "This action will remove Examination Date & Time, Duration. Would you like you save the staus?", yes: true, no: true, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
+            this.billable_item.patchValue({
+              appointment: { duration: "", appointment_scheduled_date_time: "" }
+            })
             this.updateExamStatus()
           } else {
             return;
