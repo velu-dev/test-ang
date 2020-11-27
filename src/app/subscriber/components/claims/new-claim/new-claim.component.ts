@@ -1246,7 +1246,7 @@ export class NewClaimComponent implements OnInit {
             body_part_id: [result['body_part_id'][i]],
             date_of_injury: new Date(result['date_of_injury']).toDateString(),
             continuous_trauma: result['continuous_trauma'],
-            continuous_trauma_start_date: result['continuous_trauma_end_date'] ? new Date(result['continuous_trauma_start_date']).toDateString() : null,
+            continuous_trauma_start_date: result['continuous_trauma_start_date'] ? new Date(result['continuous_trauma_start_date']).toDateString() : null,
             continuous_trauma_end_date: result['continuous_trauma_end_date'] ? new Date(result['continuous_trauma_end_date']).toDateString() : null,
             injury_notes: result['injury_notes'],
             diagram_url: result['diagram_url'],
