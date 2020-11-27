@@ -1173,11 +1173,12 @@ export class BillingPaymentDialog {
 
   }
   writeoff(id) {
-    this.writeoffReason.map(res => {
-      if (res.id === id) {
-        return res.name;
+    for(var i in this.writeoffReason){
+      if (this.writeoffReason[i].id == id) {
+        console.log(this.writeoffReason[i])
+        return this.writeoffReason[i].name;
       }
-    })
+    }
   }
   onNoClick(): void {
     this.dialogRef.close();
