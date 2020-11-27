@@ -220,7 +220,12 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="m-b-10">
-                <div fxLayout="row wrap" class="m-t-10">
+                <div fxLayout="row wrap">
+                    <div fxFlex="100" class="note">
+                        <mat-icon>info</mat-icon> Note : Item and Procedure code can have alphanumeric, hyphen and forward slash
+                    </div>
+                </div>
+                <div fxLayout="row wrap">
                     <div #scrollBottom class="user-detail vertical-fixed hide-mobile">
 
                         <form [formGroup]="userTable">

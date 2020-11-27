@@ -1,5 +1,5 @@
 <span *ngIf="!isLoading">
-  <mat-card-content style="max-height: 30vh;">
+  <mat-card-content>
     <app-claim-admin *ngIf="type == 'Insurance Company'" [state]="states" [fromPop]="true" [claim_admin]="userData">
     </app-claim-admin>
     <app-application-attorney *ngIf="type == 'Applicant Attorney'" [fromPop]="true" [aattorney]="userData"
