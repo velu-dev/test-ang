@@ -1059,7 +1059,7 @@ export class BilllableBillingComponent implements OnInit {
     this.docFormData = new FormData()
     if (pid.form_name && pid.form_name.toLowerCase() == 'report') {
       this.docFormData.append('isReportUpload', 'true');
-    }else{
+    } else {
       this.docFormData.append('isReportUpload', 'false');
     }
     this.docFormData.append('file', this.docSelectedFile);
@@ -1135,7 +1135,7 @@ export class BillingPaymentDialog {
           let details = {
             id: data.id,
             post_payment_id: this.paymentDetails.id ? this.paymentDetails.id : '',
-            write_off_reason: data.write_off_reason,
+            write_off_reason_id: data.write_off_reason_id,
             eor_allowance: data.eor_allowance,
             claim_id: this.data.claimId,
             billable_item_id: this.data.billableId,
@@ -1171,6 +1171,13 @@ export class BillingPaymentDialog {
       tableRows: this.fb.array([])
     });
 
+  }
+  writeoff(id) {
+    this.writeoffReason.map(res => {
+      if (res.id === id) {
+        return res.name;
+      }
+    })
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -1361,10 +1368,11 @@ export class BillingPaymentDialog {
       group.patchValue({ id: file.data.id, save_status: true })
       file.data.file_name = group.value.file_name;
       this.paymentDetails.post_payment_eor_details.push(file.data)
-      group.get('isEditable').setValue(false);
+
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
+    group.get('isEditable').setValue(false);
   }
 
   editRow(group: FormGroup) {
@@ -1402,7 +1410,7 @@ export class BillingPaymentDialog {
     }
     console.log(this.paymentDetails.post_payment_eor_details)
     let details = {
-      write_off_reason: this.paymentDetails.post_payment_eor_details[index].write_off_reason,
+      write_off_reason_id: this.paymentDetails.post_payment_eor_details[index].write_off_reason_id,
       eor_allowance: this.paymentDetails.post_payment_eor_details[index].eor_allowance,
       file_name: this.paymentDetails.post_payment_eor_details[index].file_name,
       url: this.paymentDetails.post_payment_eor_details[index].exam_report_file_url,

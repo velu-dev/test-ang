@@ -186,7 +186,7 @@
                                                     class="text-ternary">{{group.get('file_name').value}}</a>
                                             </td>
                                             <td>
-                                                {{group.get('write_off_reason').value}}
+                                                {{writeoff(group.get('write_off_reason_id').value)}}
                                             </td>
                                             <td>
                                                 {{group.get('eor_allowance').value}}
@@ -233,7 +233,7 @@
                                                         <div class="bill-property">Write Off Reason</div>
                                                         <div class="editable">
                                                             <mat-form-field appearance="outline" class="w-100">
-                                                                <input matInput formControlName="write_off_reason"
+                                                                <input matInput formControlName="write_off_reason_id"
                                                                     placeholder="Write Off Reason" type="text"
                                                                     autocomplete="off">
                                                             </mat-form-field>
@@ -290,7 +290,7 @@
                                                             <div class="flex">
                                                                 <div class="bill-property">Write Off Reason</div>
                                                                 <div class="value">
-                                                                    {{group.get('write_off_reason').value}}
+                                                                    {{group.get('write_off_reason_id').value}}
                                                                 </div>
                                                             </div>
                                                             <div class="flex">
