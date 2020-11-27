@@ -1136,6 +1136,7 @@ export class BillingPaymentDialog {
             id: data.id,
             post_payment_id: this.paymentDetails.id ? this.paymentDetails.id : '',
             write_off_reason_id: data.write_off_reason_id,
+            write_off_other_reason: data.write_off_other_reason,
             eor_allowance: data.eor_allowance,
             claim_id: this.data.claimId,
             billable_item_id: this.data.billableId,
@@ -1175,7 +1176,6 @@ export class BillingPaymentDialog {
   writeoff(id) {
     for(var i in this.writeoffReason){
       if (this.writeoffReason[i].id == id) {
-        console.log(this.writeoffReason[i])
         return this.writeoffReason[i].name;
       }
     }
