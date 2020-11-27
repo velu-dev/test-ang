@@ -614,9 +614,11 @@ export class BilllableBillingComponent implements OnInit {
 
   getBillDocument() {
     this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId).subscribe(doc => {
-      this.billDocumentList = doc.data
-      if (doc.data.document_list) {
-        this.documentsData = new MatTableDataSource(doc.data.document_list);
+      this.billDocumentList = doc.data;
+      if (doc.data) {
+        if (doc.data.document_list) {
+          this.documentsData = new MatTableDataSource(doc.data.document_list);
+        }
       }
     }, error => {
       this.documentsData = new MatTableDataSource([]);
@@ -1057,7 +1059,7 @@ export class BilllableBillingComponent implements OnInit {
     this.docFormData = new FormData()
     if (pid.form_name && pid.form_name.toLowerCase() == 'report') {
       this.docFormData.append('isReportUpload', 'true');
-    }else{
+    } else {
       this.docFormData.append('isReportUpload', 'false');
     }
     this.docFormData.append('file', this.docSelectedFile);
@@ -1091,10 +1093,12 @@ export class BillingPaymentDialog {
   paymentDetails: any;
   currentDate = new Date();
   minimumDate = new Date(1900, 0, 1);
+  writeoffReason = [];
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,
     private fb: FormBuilder, public dialog: MatDialog) {
+    console.log(data)
     dialogRef.disableClose = true;
     this.postPaymentForm = this.formBuilder.group({
       id: [''],
@@ -1114,6 +1118,9 @@ export class BillingPaymentDialog {
       interest_paid: [null, Validators.compose([Validators.min(0)])],
       is_bill_closed: [false],
       post_payment_eor_ids: [this.eorDocumentIds]
+    });
+    this.billingService.seedData("write_off_reason").subscribe(res => {
+      this.writeoffReason = res.data;
     })
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
@@ -1128,7 +1135,7 @@ export class BillingPaymentDialog {
           let details = {
             id: data.id,
             post_payment_id: this.paymentDetails.id ? this.paymentDetails.id : '',
-            write_off_reason: data.write_off_reason,
+            write_off_reason_id: data.write_off_reason_id,
             eor_allowance: data.eor_allowance,
             claim_id: this.data.claimId,
             billable_item_id: this.data.billableId,
@@ -1165,7 +1172,13 @@ export class BillingPaymentDialog {
     });
 
   }
-
+  writeoff(id) {
+    this.writeoffReason.map(res => {
+      if (res.id === id) {
+        return res.name;
+      }
+    })
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -1250,7 +1263,8 @@ export class BillingPaymentDialog {
     return this.fb.group({
       post_payment_id: [''],
       id: [''],
-      write_off_reason: ['', Validators.compose([])],
+      write_off_reason_id: ['', Validators.compose([])],
+      write_off_other_reason: ['', Validators.compose([])],
       eor_allowance: ['', Validators.compose([Validators.min(0)])],
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
@@ -1329,17 +1343,18 @@ export class BillingPaymentDialog {
       group.markAllAsTouched();
       return;
     }
-
+    console.log(group.value)
     this.formEOR = new FormData();
 
     this.formEOR.append('file', group.value.file)
     this.formEOR.append('id', group.value.id)
-    this.formEOR.append('write_off_reason', group.value.write_off_reason)
+    this.formEOR.append('write_off_reason_id', group.value.write_off_reason_id)
     this.formEOR.append('claim_id', group.value.claim_id.toString())
     this.formEOR.append('billable_item_id', group.value.billable_item_id.toString())
     this.formEOR.append('eor_allowance', group.value.eor_allowance)
     this.formEOR.append('post_payment_id', group.value.post_payment_id ? group.value.post_payment_id : '')
     this.formEOR.append('isFileChanged', group.value.isFileChanged)
+    this.formEOR.append('write_off_other_reason', String(group.value.write_off_other_reason))
 
     this.billingService.postPaymentFileAdd(this.data.billingId, this.formEOR).subscribe(file => {
       console.log(file);
@@ -1353,6 +1368,7 @@ export class BillingPaymentDialog {
       group.patchValue({ id: file.data.id, save_status: true })
       file.data.file_name = group.value.file_name;
       this.paymentDetails.post_payment_eor_details.push(file.data)
+
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
@@ -1394,7 +1410,7 @@ export class BillingPaymentDialog {
     }
     console.log(this.paymentDetails.post_payment_eor_details)
     let details = {
-      write_off_reason: this.paymentDetails.post_payment_eor_details[index].write_off_reason,
+      write_off_reason_id: this.paymentDetails.post_payment_eor_details[index].write_off_reason_id,
       eor_allowance: this.paymentDetails.post_payment_eor_details[index].eor_allowance,
       file_name: this.paymentDetails.post_payment_eor_details[index].file_name,
       url: this.paymentDetails.post_payment_eor_details[index].exam_report_file_url,
