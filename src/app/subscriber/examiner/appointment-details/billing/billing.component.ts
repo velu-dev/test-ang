@@ -1256,7 +1256,7 @@ export class BillingPaymentDialog {
     return this.fb.group({
       post_payment_id: [''],
       id: [''],
-      write_off_reason: ['', Validators.compose([])],
+      write_off_reason_id: ['', Validators.compose([])],
       write_off_other_reason: ['', Validators.compose([])],
       eor_allowance: ['', Validators.compose([Validators.min(0)])],
       claim_id: [this.data.claimId, Validators.required],
@@ -1341,7 +1341,7 @@ export class BillingPaymentDialog {
 
     this.formEOR.append('file', group.value.file)
     this.formEOR.append('id', group.value.id)
-    this.formEOR.append('write_off_reason', group.value.write_off_reason)
+    this.formEOR.append('write_off_reason_id', group.value.write_off_reason_id)
     this.formEOR.append('claim_id', group.value.claim_id.toString())
     this.formEOR.append('billable_item_id', group.value.billable_item_id.toString())
     this.formEOR.append('eor_allowance', group.value.eor_allowance)
