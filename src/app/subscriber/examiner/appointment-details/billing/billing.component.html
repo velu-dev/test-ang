@@ -245,7 +245,7 @@
                                                 <mat-form-field appearance="outline" *ngIf="i != 0">
                                                     <input matInput type="text" name="item_description"
                                                         autocomplete="off" formControlName="item_description"
-                                                        pattern="[a-zA-Z0-9/.& -]+">
+                                                        pattern="[a-zA-Z0-9/ -]+">
                                                 </mat-form-field>
                                                 <span *ngIf="i == 0">
                                                     {{group.get('item_description').value}}
@@ -254,7 +254,7 @@
                                             <td>
                                                 <mat-form-field appearance="outline">
                                                     <input matInput type="text" name="procedure_code" autocomplete="off"
-                                                        formControlName="procedure_code" pattern="[a-zA-Z0-9/.& -]+">
+                                                        formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
                                                 </mat-form-field>
                                             </td>
                                             <td class="bill-modifier">
@@ -403,7 +403,7 @@
                                                 <div class="editable">
                                                     <mat-form-field appearance="outline" *ngIf="i != 0">
                                                         <input matInput type="text" [disabled]="" autocomplete="off"
-                                                            formControlName="item_description">
+                                                            formControlName="item_description" pattern="[a-zA-Z0-9/ -]+">
                                                     </mat-form-field>
                                                     <span *ngIf="i == 0">
                                                         {{group.get('item_description').value}}
@@ -415,7 +415,7 @@
                                                 <div class="editable">
                                                     <mat-form-field appearance="outline">
                                                         <input matInput type="text" autocomplete="off"
-                                                            formControlName="procedure_code">
+                                                            formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
                                                     </mat-form-field>
                                                 </div>
                                             </div>
@@ -715,7 +715,7 @@
                                                 <i class="fa fa-upload m-b-3"></i>
                                             </a>
                                             <input type="file" #uploader hidden
-                                                (change)="addCompleteDoc($event,element?.id)" hidden
+                                                (change)="addCompleteDoc($event,element)" hidden
                                                 accept=".pdf, .doc, .docx" required>
                                         </span>
                                         <span
@@ -725,7 +725,7 @@
                                         <span *ngIf="column == 'action'">
                                             <!-- <a class="text-success m-r-10" (click)="download(element)">Download</a> -->
                                             <input type="file" #uploader hidden
-                                                (change)="addCompleteDoc($event,element?.id)" hidden accept=".pdf"
+                                                (change)="addCompleteDoc($event,element)" hidden accept=".pdf"
                                                 required>
                                             <a *ngIf="element?.form_action_type != 'C'" class="text-danger no-wrap-td"
                                                 (click)=" element?.completed_document ? uploader.click() : ''">Remove
