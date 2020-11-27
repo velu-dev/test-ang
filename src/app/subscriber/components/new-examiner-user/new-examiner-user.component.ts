@@ -803,7 +803,7 @@ export class NewExaminerUserComponent implements OnInit {
 
     const dialogRef = this.dialog.open(LicenseDialog, {
       width: '800px',
-      data: { states: this.states, details: data, editStatus: this.editStatus }
+      data: { states: this.states, details: data, editStatus: data && data.id ? true : false }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -826,8 +826,6 @@ export class NewExaminerUserComponent implements OnInit {
         //     return;
         //   }
         // })
-        console.log(result);
-        console.log(this.editStatus)
         for (var i in this.licenseData) {
           if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
             this.alertService.openSnackBar('Already added', 'error');
