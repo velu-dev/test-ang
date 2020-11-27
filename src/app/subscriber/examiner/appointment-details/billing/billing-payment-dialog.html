@@ -153,11 +153,20 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput formControlName="write_off_reason"
-                                                        placeholder="Write Off Reason" type="text" autocomplete="off">
+                                                    <mat-label>Write Off Reason</mat-label>
+                                                    <mat-select formControlName="write_off_reason">
+                                                        <mat-option *ngFor="let writeoff of writeoffReason"
+                                                            [value]="writeoff.id" placeholder="Write Off Reason">
+                                                            {{writeoff.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                    <!-- <input matInput formControlName="write_off_reason"
+                                                        placeholder="Write Off Reason" type="text" autocomplete="off"> -->
                                                 </mat-form-field>
-                                                <mat-form-field appearance="outline"  class="w-100 p-t-0">
-                                                    <input matInput  placeholder="Other write off reason"  autocomplete="off">
+                                                <mat-form-field appearance="outline" class="w-100 p-t-0"
+                                                    *ngIf="group.value.write_off_reason ==4">
+                                                    <input matInput placeholder="Other write off reason"
+                                                        formControlName="write_off_other_reason" autocomplete="off">
                                                 </mat-form-field>
                                             </td>
                                             <td>
@@ -200,8 +209,8 @@
                         <form [formGroup]="userTable">
                             <table>
                                 <tbody>
-                                    <ng-container  formArrayName="tableRows"
-                                    *ngFor="let group of getFormControls.controls ; let i=index">
+                                    <ng-container formArrayName="tableRows"
+                                        *ngFor="let group of getFormControls.controls ; let i=index">
                                         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
                                             class="editable-bill">
                                             <td>
@@ -229,7 +238,8 @@
                                                                     autocomplete="off">
                                                             </mat-form-field>
                                                             <mat-form-field appearance="outline" class="w-100 p-t-0">
-                                                                <input matInput  placeholder="Other write off reason"  autocomplete="off">
+                                                                <input matInput placeholder="Other write off reason"
+                                                                    autocomplete="off">
                                                             </mat-form-field>
                                                         </div>
                                                     </div>
@@ -247,8 +257,10 @@
                                                     <div class="flex">
                                                         <div class="bill-property">Action </div>
                                                         <div class="editable">
-                                                            <a class="text-success m-r-10" (click)="saveRow(group,i)">Save</a>
-                                                            <a class="text-danger" (click)="cancelEOR(group,i)">Cancel</a>
+                                                            <a class="text-success m-r-10"
+                                                                (click)="saveRow(group,i)">Save</a>
+                                                            <a class="text-danger"
+                                                                (click)="cancelEOR(group,i)">Cancel</a>
                                                         </div>
                                                     </div>
                                                 </mat-card>

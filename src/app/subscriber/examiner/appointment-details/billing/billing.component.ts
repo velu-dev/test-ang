@@ -614,9 +614,11 @@ export class BilllableBillingComponent implements OnInit {
 
   getBillDocument() {
     this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId).subscribe(doc => {
-      this.billDocumentList = doc.data
-      if (doc.data.document_list) {
-        this.documentsData = new MatTableDataSource(doc.data.document_list);
+      this.billDocumentList = doc.data;
+      if (doc.data) {
+        if (doc.data.document_list) {
+          this.documentsData = new MatTableDataSource(doc.data.document_list);
+        }
       }
     }, error => {
       this.documentsData = new MatTableDataSource([]);
@@ -1086,10 +1088,12 @@ export class BillingPaymentDialog {
   paymentDetails: any;
   currentDate = new Date();
   minimumDate = new Date(1900, 0, 1);
+  writeoffReason = [];
   constructor(
     public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,
     private fb: FormBuilder, public dialog: MatDialog) {
+    console.log(data)
     dialogRef.disableClose = true;
     this.postPaymentForm = this.formBuilder.group({
       id: [''],
@@ -1109,6 +1113,9 @@ export class BillingPaymentDialog {
       interest_paid: [null, Validators.compose([Validators.min(0)])],
       is_bill_closed: [false],
       post_payment_eor_ids: [this.eorDocumentIds]
+    });
+    this.billingService.seedData("write_off_reason").subscribe(res => {
+      this.writeoffReason = res.data;
     })
     this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
     this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
@@ -1160,7 +1167,6 @@ export class BillingPaymentDialog {
     });
 
   }
-
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -1246,6 +1252,7 @@ export class BillingPaymentDialog {
       post_payment_id: [''],
       id: [''],
       write_off_reason: ['', Validators.compose([])],
+      write_off_other_reason: ['', Validators.compose([])],
       eor_allowance: ['', Validators.compose([Validators.min(0)])],
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
@@ -1324,7 +1331,7 @@ export class BillingPaymentDialog {
       group.markAllAsTouched();
       return;
     }
-
+    console.log(group.value)
     this.formEOR = new FormData();
 
     this.formEOR.append('file', group.value.file)
@@ -1335,6 +1342,7 @@ export class BillingPaymentDialog {
     this.formEOR.append('eor_allowance', group.value.eor_allowance)
     this.formEOR.append('post_payment_id', group.value.post_payment_id ? group.value.post_payment_id : '')
     this.formEOR.append('isFileChanged', group.value.isFileChanged)
+    this.formEOR.append('write_off_other_reason', String(group.value.write_off_other_reason))
 
     this.billingService.postPaymentFileAdd(this.data.billingId, this.formEOR).subscribe(file => {
       console.log(file);
@@ -1348,10 +1356,10 @@ export class BillingPaymentDialog {
       group.patchValue({ id: file.data.id, save_status: true })
       file.data.file_name = group.value.file_name;
       this.paymentDetails.post_payment_eor_details.push(file.data)
+      group.get('isEditable').setValue(false);
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
-    group.get('isEditable').setValue(false);
   }
 
   editRow(group: FormGroup) {
