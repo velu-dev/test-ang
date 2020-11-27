@@ -1057,8 +1057,13 @@ export class BilllableBillingComponent implements OnInit {
 
   BillingCompleteDocSubmit(pid) {
     this.docFormData = new FormData()
+    if (pid.form_name && pid.form_name.toLowerCase() == 'report') {
+      this.docFormData.append('isReportUpload', 'true');
+    }else{
+      this.docFormData.append('isReportUpload', 'false');
+    }
     this.docFormData.append('file', this.docSelectedFile);
-    this.docFormData.append('form_id', pid);
+    this.docFormData.append('form_id', pid.id);
     this.docFormData.append('claim_id', this.paramsId.claim_id.toString());
     this.docFormData.append('bill_item_id', this.paramsId.billId.toString());
     this.billingService.postBillingCompleteDoc(this.docFormData).subscribe(doc => {
