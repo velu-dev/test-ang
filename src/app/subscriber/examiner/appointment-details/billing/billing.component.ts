@@ -1177,7 +1177,11 @@ export class BillingPaymentDialog {
     let other = group.write_off_other_reason != null ? "-" + group.write_off_other_reason : ""
     for (var i in this.writeoffReason) {
       if (this.writeoffReason[i].id == group.write_off_reason_id) {
-        return this.writeoffReason[i].name + other;
+        if (other == "") {
+          return this.writeoffReason[i].name + other;
+        } else {
+          return this.writeoffReason[i].name;
+        }
       }
     }
   }

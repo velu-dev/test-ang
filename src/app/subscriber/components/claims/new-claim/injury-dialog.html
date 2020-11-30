@@ -10,7 +10,9 @@
         <div fxLayout="row wrap" fxFlex="100" class="m-t-20">
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Body Parts</mat-label>
-                <mat-select multiple [(ngModel)]="injuryInfo.body_part_id">
+                <input matInput placeholder="Body Part" [value]="bodyPart(injuryInfo.body_part_id)" *ngIf="isEdit"
+                    [disabled]="isEdit">
+                <mat-select multiple [(ngModel)]="injuryInfo.body_part_id" *ngIf="!isEdit">
                     <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts.id">
                         {{bodyParts.body_part_code}} - {{bodyParts.body_part_name}}</mat-option>
                 </mat-select>

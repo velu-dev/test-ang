@@ -214,7 +214,13 @@ export class InjuryPopup {
     }
     dialogRef.disableClose = true;
   }
-
+  bodyPart(bodypart) {
+    for (var i in this.bodyPartsList) {
+      if (this.bodyPartsList[i].id == bodypart[0]) {
+        return this.bodyPartsList[i].body_part_code + "-" + this.bodyPartsList[i].body_part_name
+      }
+    }
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -288,10 +294,10 @@ export class InjuryPopup {
         let editData = {
           id: this.injuryInfo['id'],
           body_part_id: [res],
-          date_of_injury: injury,
+          date_of_injury: injury ? new Date(injury) : null,
           continuous_trauma: this.injuryInfo.continuous_trauma,
-          continuous_trauma_start_date: this.injuryInfo.continuous_trauma_start_date,
-          continuous_trauma_end_date: this.injuryInfo.continuous_trauma_end_date,
+          continuous_trauma_start_date: this.injuryInfo.continuous_trauma_start_date ? new Date(this.injuryInfo.continuous_trauma_start_date) : null,
+          continuous_trauma_end_date: this.injuryInfo.continuous_trauma_end_date ? new Date(this.injuryInfo.continuous_trauma_end_date) : null,
           injury_notes: this.injuryInfo.injury_notes,
           diagram_url: this.injuryInfo.diagram_url
         }

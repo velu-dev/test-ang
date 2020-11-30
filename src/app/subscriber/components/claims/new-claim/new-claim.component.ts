@@ -1842,7 +1842,13 @@ export class InjuryDialog {
     }
     this.isLoding = false;
   }
-
+  bodyPart(bodypart) {
+    for (var i in this.bodyPartsList) {
+      if (this.bodyPartsList[i].id == bodypart[0]) {
+        return this.bodyPartsList[i].body_part_code + "-" + this.bodyPartsList[i].body_part_name
+      }
+    }
+  }
   onNoClick(): void {
     this.isEdit = false;
     this.dialogRef.close(false);
@@ -1861,6 +1867,7 @@ export class InjuryDialog {
     //   this.dialogRef.close(false);
     // }
   }
+  isInjurySubmit = false;
   addInjury() {
     if (this.injuryInfo.body_part_id.length == 0) {
       this.alertService.openSnackBar("Please select body part", "error")
