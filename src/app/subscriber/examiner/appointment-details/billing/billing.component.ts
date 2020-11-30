@@ -1174,11 +1174,11 @@ export class BillingPaymentDialog {
 
   }
   writeoff(group) {
-    // let other = group.write_off_other_reason != null ? group.write_off_other_reason : ""
+    let other = group.write_off_other_reason != null ? group.write_off_other_reason : ""
     for (var i in this.writeoffReason) {
       if (this.writeoffReason[i].id == group.write_off_reason_id) {
-        if (group.write_off_other_reason != "") {
-          return group.write_off_other_reason;
+        if (other != "") {
+          return other;
         } else {
           return this.writeoffReason[i].name;
         }
