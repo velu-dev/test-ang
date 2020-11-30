@@ -155,8 +155,8 @@ export class UserComponent implements OnInit {
         this.columnName = ["", "Last Name", "Disable User"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabledExaminer"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Enrolled On", "Disable User", 'Examiner']
-        this.columnsToDisplay = ['last_name', 'first_name', 'createdAt', "disabledExaminer", 'login']
+        this.columnName = ["Last Name", "First Name", "Enrolled On", "Login Allowed ", "Disable User"]
+        this.columnsToDisplay = ['last_name', 'first_name', 'createdAt', "login", "disabledExaminer"]
       }
     } else {
       if (this.isMobile) {
@@ -178,7 +178,7 @@ export class UserComponent implements OnInit {
       this.columnName[this.columnName.length - 1] = "Enable User"
       this.tabName = 'disabledUsers'
     } else if (event == 3) {
-      this.columnName[this.columnName.length - 2] = "Disable Examiner"
+      this.columnName[this.columnName.length - 1] = "Disable Examiner"
       this.tabName = 'examiners'
     }
 

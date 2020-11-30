@@ -499,14 +499,14 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
-    
+
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
     });
-    if(this.isEmailId){
-      this.userForm.controls.sign_in_email_id.setValidators(Validators.compose([Validators.required ,Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]))
-    }else{
+    if (this.isEmailId) {
+      this.userForm.controls.sign_in_email_id.setValidators(Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]))
+    } else {
       this.userForm.controls.sign_in_email_id.setValidators([])
     }
     this.userForm.controls.sign_in_email_id.updateValueAndValidity();
@@ -531,10 +531,14 @@ export class NewExaminerUserComponent implements OnInit {
         this.userForm.controls.sign_in_email_id.disable();
         this.userForm.controls.role_id.disable();
         this.userForm.controls.SameAsSubscriber.disable();
-        if(this.isEmailId){
+        if (this.isEmailId) {
           this.userForm.controls.is_examiner_with_email.setValue(false);
-          this.isEmailId = false;
-          this.userData.examiner_details.is_examiner_login = false;
+          this.isEmailId = true;
+          if (this.userData) {
+            this.userData.examiner_details.is_examiner_login = true;
+          } else {
+            this.userData = { examiner_details: { is_examiner_login: true } }
+          }
         }
         this.userForm.get('role_id').updateValueAndValidity();
         if (status == 'next') {
@@ -545,6 +549,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.userForm.markAsUntouched();
         this.userForm.updateValueAndValidity();
       }, error => {
+        this.tabIndex = 0;
         this.alertService.openSnackBar(error.error.message, 'error');
       })
 
@@ -553,12 +558,18 @@ export class NewExaminerUserComponent implements OnInit {
       this.userService.updateEditUser(this.userForm.getRawValue().id, this.userForm.getRawValue()).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully", 'success');
         this.examinerId = res.data.id;
-        if(this.isEmailId){
+        if (this.isEmailId) {
+          this.userForm.controls.sign_in_email_id.disable();
           this.userForm.controls.is_examiner_with_email.setValue(false)
-          this.isEmailId = false;
-          this.userData.examiner_details.is_examiner_login = false;
+          this.isEmailId = true;
+          if (this.userData) {
+            this.userData.examiner_details.is_examiner_login = true;
+          } else {
+            this.userData = { examiner_details: { is_examiner_login: true } }
+          }
+
         }
-      
+
         // this.router.navigate(['/subscriber/users'])
         if (status == 'next') {
           this.tabIndex = 1;
@@ -569,6 +580,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.userForm.markAsUntouched();
         this.userForm.updateValueAndValidity();
       }, error => {
+        this.tabIndex = 0;
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
