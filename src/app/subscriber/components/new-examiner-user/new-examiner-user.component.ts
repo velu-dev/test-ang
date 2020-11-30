@@ -80,7 +80,8 @@ export class NewExaminerUserComponent implements OnInit {
   texonomySearch = new FormControl();
   texonomyFilteredOptions: Observable<any>;
   selected: any;
-  examinerNumber:any;
+  examinerNumber: any;
+  isEmailId: boolean = false;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   //@ViewChild(MatSort, { static: false }) sort: MatSort;
   //@ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -189,10 +190,11 @@ export class NewExaminerUserComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
-      //sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required],
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
-      SameAsSubscriber: [{ value: false, disabled: this.isEdit }]
+      SameAsSubscriber: [{ value: false, disabled: this.isEdit }],
+      is_examiner_with_email: [false]
     });
     this.userForm.patchValue({ role_id: 11 })
 
@@ -248,6 +250,16 @@ export class NewExaminerUserComponent implements OnInit {
 
   }
 
+  enableEmail(status) {
+    if (status) {
+      this.userForm.get('sign_in_email_id').enable();
+    } else {
+      this.userForm.get('sign_in_email_id').disable();
+      this.userForm.get('sign_in_email_id').setValue([])
+    }
+
+  }
+
   updateFormData(id) {
 
     this.userService.getExaminerUser(id).subscribe(res => {
@@ -262,7 +274,7 @@ export class NewExaminerUserComponent implements OnInit {
         last_name: res.examiner_details.last_name,
         middle_name: res.examiner_details.middle_name,
         company_name: res.examiner_details.company_name,
-        //  sign_in_email_id: res.examiner_details.sign_in_email_id,
+        sign_in_email_id: res.examiner_details.sign_in_email_id.includes('@') ? res.examiner_details.sign_in_email_id : '',
         role_id: res.examiner_details.role_id,
         suffix: res.examiner_details.suffix,
         SameAsSubscriber: res.examiner_details.SameAsSubscriber
@@ -487,10 +499,17 @@ export class NewExaminerUserComponent implements OnInit {
 
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
+    
     Object.keys(this.userForm.controls).forEach((key) => {
       if (this.userForm.get(key).value && typeof (this.userForm.get(key).value) == 'string')
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
     });
+    if(this.isEmailId){
+      this.userForm.controls.sign_in_email_id.setValidators(Validators.compose([Validators.required ,Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]))
+    }else{
+      this.userForm.controls.sign_in_email_id.setValidators([])
+    }
+    this.userForm.controls.sign_in_email_id.updateValueAndValidity();
     if (this.userForm.invalid) {
       window.scrollTo(0, 0)
       this.userForm.markAllAsTouched();
@@ -502,7 +521,6 @@ export class NewExaminerUserComponent implements OnInit {
         this.alertService.openSnackBar("User created successfully", 'success');
         this.examinerId = res.data.id;
         this.examinerNumber = res.data.examiner_reference_id;
-        // this.router.navigate(['/subscriber/users'])
         if (this.examinerId == this.user.id) {
           this.intercom.setUserChanges(true);
           this.selectedUser = this.user;
@@ -510,33 +528,15 @@ export class NewExaminerUserComponent implements OnInit {
         this.isEdit = true;
         this.createStatus = true;
         this.userForm.patchValue({ id: res.data.id })
-        //this.userForm.controls.sign_in_email_id.disable();
+        this.userForm.controls.sign_in_email_id.disable();
         this.userForm.controls.role_id.disable();
         this.userForm.controls.SameAsSubscriber.disable();
+        if(this.isEmailId){
+          this.userForm.controls.is_examiner_with_email.setValue(false);
+          this.isEmailId = false;
+          this.userData.examiner_details.is_examiner_login = false;
+        }
         this.userForm.get('role_id').updateValueAndValidity();
-        let role = this.cookieService.get('role_id')
-        // let baseUrl: any;
-        // switch (role) {
-        //   case '1':
-        //     baseUrl = "/admin/users";
-        //     break;
-        //   case '2':
-        //     baseUrl = "/subscriber/users";
-        //     break;
-        //   case '3':
-        //     baseUrl = "/subscriber/manager/users";
-        //     break;
-        //   case '4':
-        //     baseUrl = "/subscriber/staff/users";
-        //     break;
-        //   case '11':
-        //     baseUrl = "/subscriber/examiner/users";
-        //     break;
-        //   default:
-        //     baseUrl = "/admin/users";
-        //     break;
-        // }
-        // this.router.navigate([baseUrl + "/examiner", this.examinerId])
         if (status == 'next') {
           this.tabIndex = 1;
         } else if (status == 'close') {
@@ -552,7 +552,13 @@ export class NewExaminerUserComponent implements OnInit {
     else {
       this.userService.updateEditUser(this.userForm.getRawValue().id, this.userForm.getRawValue()).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully", 'success');
-        this.examinerId = res.data.id
+        this.examinerId = res.data.id;
+        if(this.isEmailId){
+          this.userForm.controls.is_examiner_with_email.setValue(false)
+          this.isEmailId = false;
+          this.userData.examiner_details.is_examiner_login = false;
+        }
+      
         // this.router.navigate(['/subscriber/users'])
         if (status == 'next') {
           this.tabIndex = 1;

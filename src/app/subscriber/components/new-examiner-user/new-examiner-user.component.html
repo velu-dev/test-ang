@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card >
     <mat-card-content>
         <mat-tab-group class="user-list" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabchange($event.index)">
             <!-- ######~~~~~Examiner ~~~~~##### -->
@@ -6,7 +6,7 @@
                 <ng-template mat-tab-label>
                     <span>Examiner</span>
                 </ng-template>
-                <mat-card-content class="p-b-15">
+                <mat-card-content class="p-b-15" >
                     <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                         [formGroup]="userForm">
                         <div fxFlex="100"
@@ -45,7 +45,10 @@
                             <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidsuffix}}</mat-error>
                         </mat-form-field>
-                        <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
+                        <div fxFlex="100" *ngIf="!userData?.examiner_details?.is_examiner_login">
+                            <mat-checkbox class="checkbox_" formControlName="is_examiner_with_email" [(ngModel)]="isEmailId" (change)="enableEmail(isEmailId)">Enable Examiner Login</mat-checkbox>
+                        </div>
+                        <mat-form-field *ngIf="isEmailId || userData?.examiner_details?.is_examiner_login" appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Email ID*</mat-label>
                             <input matInput placeholder="Email" formControlName="sign_in_email_id" autocomplete="off">
@@ -53,7 +56,7 @@
                             <mat-hint>Note : This email id has been registered for login and cannot be changed.
                             </mat-hint>
                         </mat-form-field>
-                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
+                        <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Select a Role*</mat-label>
                             <mat-select formControlName="role_id">
