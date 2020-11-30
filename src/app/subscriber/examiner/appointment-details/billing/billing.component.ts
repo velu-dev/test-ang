@@ -1038,7 +1038,7 @@ export class BilllableBillingComponent implements OnInit {
   docFormData = new FormData()
   addCompleteDoc(event, pid) {
     this.docSelectedFile = null;
-    let fileTypes = ['pdf', 'doc', 'docx', 'png', 'jpeg', 'jpg', 'xls', 'xlsx', 'csv'];
+    let fileTypes = ['pdf', 'doc', 'docx'];
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
