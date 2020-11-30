@@ -70,6 +70,7 @@
                         <span *ngIf="column == 'disabledExaminer' && !element.issubscriber && user.id != element.id">
                             <span *ngIf="tabIndex != 1" class="user-disable-enable" (click)="$event.stopPropagation();diasbleExaminer(element)">Disable</span>
                         </span>
+                        <span *ngIf="column == 'login' && !element?.sign_in_email_id?.includes('@')" class="user-disable-enable" >Enable Login</span>
                         <!-- <span *ngIf="column == 'action' && tabIndex == 0" (click)="editUser(element)">  <button mat-icon-button class="edit" matTooltip="Edit" matTooltipPosition="before">
                             <span class="fa fa-pencil-alt"></span>
                         </button></span> -->
