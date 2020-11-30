@@ -1173,10 +1173,11 @@ export class BillingPaymentDialog {
     });
 
   }
-  writeoff(id) {
-    for(var i in this.writeoffReason){
-      if (this.writeoffReason[i].id == id) {
-        return this.writeoffReason[i].name;
+  writeoff(group) {
+    let other = group.write_off_other_reason != null ? "-" + group.write_off_other_reason : ""
+    for (var i in this.writeoffReason) {
+      if (this.writeoffReason[i].id == group.write_off_reason_id) {
+        return this.writeoffReason[i].name + other;
       }
     }
   }
@@ -1264,8 +1265,8 @@ export class BillingPaymentDialog {
     return this.fb.group({
       post_payment_id: [''],
       id: [''],
-      write_off_reason_id: ['', Validators.compose([])],
-      write_off_other_reason: ['', Validators.compose([])],
+      write_off_reason_id: [null, Validators.compose([])],
+      write_off_other_reason: [null, Validators.compose([])],
       eor_allowance: ['', Validators.compose([Validators.min(0)])],
       claim_id: [this.data.claimId, Validators.required],
       billable_item_id: [this.data.billableId, Validators.required],
@@ -1424,9 +1425,10 @@ export class BillingPaymentDialog {
     if (!element.value.id) {
       return;
     }
+    console.log(element.value)
     this.billingService.downloadOndemandDocuments({ file_url: element.value.url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
-      saveAs(res.signed_file_url, element.file_name);
+      saveAs(res.signed_file_url, element.value.file_name);
     })
   }
 

@@ -186,7 +186,7 @@
                                                     class="text-ternary">{{group.get('file_name').value}}</a>
                                             </td>
                                             <td>
-                                                {{writeoff(group.get('write_off_reason_id').value)}}
+                                                {{writeoff(group.value)}}
                                             </td>
                                             <td>
                                                 {{group.get('eor_allowance').value}}
@@ -290,7 +290,8 @@
                                                             <div class="flex">
                                                                 <div class="bill-property">Write Off Reason</div>
                                                                 <div class="value">
-                                                                    {{writeoff(group.get('write_off_reason_id').value)}}
+                                                                    {{writeoff(group.value)}}
+                                                                    <!-- {{group.get('write_off_other_reason').value}} -->
                                                                 </div>
                                                             </div>
                                                             <div class="flex">
