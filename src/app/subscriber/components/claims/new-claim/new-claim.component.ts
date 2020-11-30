@@ -1275,6 +1275,7 @@ export class NewClaimComponent implements OnInit {
   }
   eamsStatus: boolean = false;
   searchEAMS() {
+    this.injuryInfodata = [];
     this.eamsStatus = true;
     if (this.emasSearchInput.invalid) {
       return;

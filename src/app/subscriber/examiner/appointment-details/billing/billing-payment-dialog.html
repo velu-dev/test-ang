@@ -156,7 +156,8 @@
                                                     <mat-label>Write Off Reason</mat-label>
                                                     <mat-select formControlName="write_off_reason_id">
                                                         <mat-option *ngFor="let writeoff of writeoffReason"
-                                                            [value]="writeoff.id" placeholder="Write Off Reason">
+                                                            [value]="writeoff.id"
+                                                            placeholder="Write Off Reason">
                                                             {{writeoff.name}}
                                                         </mat-option>
                                                     </mat-select>
@@ -166,7 +167,8 @@
                                                 <mat-form-field appearance="outline" class="w-100 p-t-0"
                                                     *ngIf="group.value.write_off_reason_id ==4">
                                                     <input matInput placeholder="Other write off reason"
-                                                        formControlName="write_off_other_reason" autocomplete="off">
+                                                        formControlName="write_off_other_reason" required
+                                                        autocomplete="off">
                                                 </mat-form-field>
                                             </td>
                                             <td>
