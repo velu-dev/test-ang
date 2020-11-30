@@ -194,7 +194,7 @@ export class PickDateAdapter extends NativeDateAdapter {
 })
 export class InjuryPopup {
   claim_id: any = "";
-  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+  injuryInfo = { id: null, body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   today = new Date();
   bodyPartsList = [];
   isEdit: any;
@@ -210,7 +210,13 @@ export class InjuryPopup {
     this.isEdit = data['isEdit'];
     this.date_of_birth = data['date_of_birth'];
     if (this.isEdit) {
-      this.injuryInfo = data['data'];
+      this.injuryInfo.body_part_id = data["data"]["body_part_id"];
+      this.injuryInfo.continuous_trauma = data["data"]["continuous_trauma"];
+      this.injuryInfo.continuous_trauma_end_date = data["data"]["continuous_trauma_end_date"] ? data["data"]["continuous_trauma_end_date"].split("T")[0] : null,
+        this.injuryInfo.continuous_trauma_start_date = data["data"]["continuous_trauma_start_date"] ? data["data"]["continuous_trauma_start_date"].split("T")[0] : null;
+      this.injuryInfo.date_of_injury = data["data"]["date_of_injury"] ? data["data"]["date_of_injury"].split("T")[0] : null;
+      this.injuryInfo.injury_notes = data["data"]["injury_notes"];
+      this.injuryInfo.id = data["data"]["id"];
     }
     dialogRef.disableClose = true;
   }
@@ -288,16 +294,16 @@ export class InjuryPopup {
     }
 
     if (this.isEdit) {
-      let date = new Date(this.injuryInfo.date_of_injury)
-      let injury = moment(date).format("MM-DD-YYYY")
+      // let date = new Date(this.injuryInfo.date_of_injury)
+      // let injury = moment(date).format("MM-DD-YYYY")
       this.injuryInfo.body_part_id.map(res => {
         let editData = {
           id: this.injuryInfo['id'],
           body_part_id: [res],
-          date_of_injury: injury ? new Date(injury) : null,
+          date_of_injury: this.injuryInfo.date_of_injury ? moment(this.injuryInfo.date_of_injury).format("MM-DD-YYYY") : null,
           continuous_trauma: this.injuryInfo.continuous_trauma,
-          continuous_trauma_start_date: this.injuryInfo.continuous_trauma_start_date ? new Date(this.injuryInfo.continuous_trauma_start_date) : null,
-          continuous_trauma_end_date: this.injuryInfo.continuous_trauma_end_date ? new Date(this.injuryInfo.continuous_trauma_end_date) : null,
+          continuous_trauma_start_date: this.injuryInfo.continuous_trauma_start_date ? moment(this.injuryInfo.continuous_trauma_start_date).format("MM-DD-YYYY") : null,
+          continuous_trauma_end_date: this.injuryInfo.continuous_trauma_end_date ? moment(this.injuryInfo.continuous_trauma_end_date).format("MM-DD-YYYY") : null,
           injury_notes: this.injuryInfo.injury_notes,
           diagram_url: this.injuryInfo.diagram_url
         }
@@ -325,7 +331,7 @@ export class InjuryPopup {
       }
       let count = 0;
       arrData.map(row => {
-        row.date_of_injury = moment(row.date_of_injury).format("MM-DD-YYYY")
+        // row.date_of_injury = moment(row.date_of_injury).format("MM-DD-YYYY")
         this.claimService.updateInjury(row, this.claim_id).subscribe(res => {
           this.dialogRef.close();
           console.log(arrData.length, count);
