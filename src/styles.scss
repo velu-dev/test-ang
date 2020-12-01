@@ -518,6 +518,10 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     float: right;
     padding-top: 5px;
     font-size: $font-size-10;
+    @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) { 
+    font-size: $font-size-1;
+    padding-top: 10px;
+    }
   }
   @media only screen and (max-width: 568px) {
     display: block;
@@ -724,6 +728,11 @@ image-cropper {
       height: 60px !important;
       font-size: $font-size-10 !important;
       font-weight: $font-weight-base;
+      @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) {
+        white-space: break-spaces;
+        overflow-wrap: break-word;
+        line-height: inherit;
+      }
     }
     .align-left {
       text-align: left;
@@ -776,6 +785,7 @@ image-cropper {
     font-size: $font-size-1;
     font-weight: $font-weight-medium;
     word-break: break-word;
+    height: auto !important;
   }
   .disable-actions {
     text-align: center;
