@@ -593,14 +593,18 @@ input:-webkit-autofill {
     color: $text-dark;
     border: 1px solid $light-gray;
     font-weight: $font-weight-bold;
-    padding: 5px 10px;
+    padding: 4px 10px;
     border-radius: 50px;
     height: 25px !important;
     cursor: pointer;
     outline: none;
+    display: inline-flex;
     &:hover,
     &:focus {
       outline: none;
+    }
+    i {
+      padding: 2px 5px 0 0;
     }
   }
 }
@@ -1084,6 +1088,8 @@ input:-webkit-autofill {
     .content-wrapper-main-title {
       margin-bottom: 0px !important;
       font-size: $font-size-10;
+      width: 100%;
+      overflow-wrap: anywhere;
     }
   }
   .small-value {
@@ -1123,6 +1129,8 @@ input:-webkit-autofill {
       padding: 10px 0 0 5px;
       width: 100%;
       color: $text-light;
+      white-space: normal;
+      word-break: break-all;
       mat-form-field {
         padding: 0px 10px 0px 0px !important;
       }
