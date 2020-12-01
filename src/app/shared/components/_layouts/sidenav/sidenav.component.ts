@@ -66,12 +66,12 @@ export class SidenavComponent implements OnInit {
       if (info == true) {
         this.is_subscriber = this.cookieService.get('is_subscriber');
         if (this.is_subscriber) {
-          // this.userService.verifyUserRole().subscribe(role => {
-          //   this.sameAsExaminer = role.status;
-          // }, error => {
-          //   console.log(error.error.status)
-          //   this.sameAsExaminer = false;
-          // })
+          this.userService.verifyUserRole().subscribe(role => {
+            this.sameAsExaminer = role.status;
+          }, error => {
+            console.log(error.error.status)
+            this.sameAsExaminer = false;
+          })
         }
       }
     })
