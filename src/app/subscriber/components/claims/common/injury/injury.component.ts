@@ -10,6 +10,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { date_of_birth } from 'src/app/shared/messages/errors';
 
 export interface PeriodicElement {
   body_part: string;
@@ -208,7 +209,7 @@ export class InjuryPopup {
     this.bodyPartsList = data['body_parts'];
     this.claim_id = data['claim_id'];
     this.isEdit = data['isEdit'];
-    this.date_of_birth = data['date_of_birth'];
+    this.date_of_birth = new Date(data['date_of_birth']);
     if (this.isEdit) {
       this.injuryInfo.body_part_id = data["data"]["body_part_id"];
       this.injuryInfo.continuous_trauma = data["data"]["continuous_trauma"];
@@ -237,6 +238,10 @@ export class InjuryPopup {
     }
   }
   addInjury() {
+    let date_of_birth = moment(this.date_of_birth, "MM-DD-YYYY");
+    let injury_date = this.injuryInfo.date_of_injury ? moment(this.injuryInfo.date_of_injury, "MM-DD-YYYY") : null;
+    let ct_start_date = this.injuryInfo.continuous_trauma_start_date ? moment(this.injuryInfo.continuous_trauma_start_date, "MM-DD-YYYY") : null;
+    let ct_end_date = this.injuryInfo.continuous_trauma_end_date ? moment(this.injuryInfo.continuous_trauma_end_date, "MM-DD-YYYY") : null;
     if (this.injuryInfo.body_part_id.length == 0) {
       this.alertService.openSnackBar("Please select body part", "error")
       return
@@ -245,35 +250,35 @@ export class InjuryPopup {
       this.alertService.openSnackBar("Please select injury date", "error")
       return
     } else {
-      if (!(moment(this.injuryInfo.date_of_injury).isSameOrAfter(moment(this.date_of_birth)))) {
+      if (!(injury_date.isSameOrAfter(date_of_birth))) {
         this.alertService.openSnackBar("Please select injury date greater than date of birth", "error")
         return
       }
-      if (!(moment(this.injuryInfo.date_of_injury).isSameOrBefore(moment(new Date())))) {
+      if (!(moment(injury_date).isSameOrBefore(moment(new Date())))) {
         this.alertService.openSnackBar("Please select injury date before today", "error");
         return
       }
     }
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
-        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrAfter(moment(this.date_of_birth)))) {
+        if (!(ct_start_date.isSameOrAfter(date_of_birth))) {
           this.alertService.openSnackBar("Continues trauma Start date should after date of birth", "error")
           return
         }
-        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(new Date())))) {
+        if (!(ct_start_date.isSameOrBefore(moment(new Date())))) {
           this.alertService.openSnackBar("Continues trauma Start date should be before today", "error");
           return
         }
         if (this.injuryInfo.continuous_trauma_end_date) {
-          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrAfter(moment(this.date_of_birth)))) {
+          if (!(ct_end_date.isSameOrAfter(date_of_birth))) {
             this.alertService.openSnackBar("Continues trauma End date should after date of birth", "error")
             return
           }
-          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrBefore(moment(new Date())))) {
+          if (!(ct_end_date.isSameOrBefore(moment(new Date())))) {
             this.alertService.openSnackBar("Continues trauma End date should be before today", "error");
             return
           }
-          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
+          if (!(ct_start_date.isSameOrBefore(ct_end_date))) {
             this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
             return
           }
@@ -343,6 +348,9 @@ export class InjuryPopup {
         count = count + 1;
       })
     }
+  }
+  changeEvent() {
+    this.date_of_birth = moment(this.date_of_birth, "MM-DD-YYYY");// moment(this.claimant.date_of_birth);
   }
   cancel() {
     this.dialogRef.close('no');
