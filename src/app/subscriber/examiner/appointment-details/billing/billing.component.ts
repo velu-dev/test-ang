@@ -1173,6 +1173,14 @@ export class BillingPaymentDialog {
     });
 
   }
+  setRequired(group) {
+    if (group.get('write_off_reason_id').value == 4) {
+      group.get('write_off_other_reason').setValidators([Validators.required])
+    } else {
+      group.get('write_off_other_reason').clearValidators()
+      group.get('write_off_other_reason').updateValueAndValidity()
+    }
+  }
   writeoff(group) {
     let other = group.write_off_other_reason != null ? group.write_off_other_reason : ""
     for (var i in this.writeoffReason) {

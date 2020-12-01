@@ -471,7 +471,7 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimantEdit = false;
   selectClaimant(option) {
-    this.logger.log(option)
+    // this.logger.log(option)
     this.claimant_id = option.id;
     this.isClaimantEdit = true;
     this.claimant.reset();
@@ -499,6 +499,8 @@ export class NewClaimComponent implements OnInit {
     })
     this.primary_language_spoken = option.primary_language_spoken ? true : false;
     this.changeState(option.state, 'claimant')
+    // console.log("Option ", option.date_of_birth);
+    option.date_of_birth = moment(option.date_of_birth);
     this.claimant.patchValue(option);
     this.filteredClaimant.data = [];
 
@@ -1312,7 +1314,8 @@ export class NewClaimComponent implements OnInit {
             this.isClaimantEdit = false;
             this.addNewClaimant = true;
             this.changeState(res.data.claimant.state, 'claimant')
-            this.claimant.patchValue(res.data.claimant)
+            this.claimant.patchValue(res.data.claimant);
+
           }
           if (!this.isClaimantFilled)
 
@@ -1870,6 +1873,11 @@ export class InjuryDialog {
   }
   isInjurySubmit = false;
   addInjury() {
+    let date_of_birth = moment(this.claimant.date_of_birth, "MM-DD-YYYY");
+    let injury_date = this.injuryInfo.date_of_injury ? moment(this.injuryInfo.date_of_injury, "MM-DD-YYYY") : null;
+    let ct_start_date = this.injuryInfo.continuous_trauma_start_date ? moment(this.injuryInfo.continuous_trauma_start_date, "MM-DD-YYYY") : null;
+    let ct_end_date = this.injuryInfo.continuous_trauma_end_date ? moment(this.injuryInfo.continuous_trauma_end_date, "MM-DD-YYYY") : null;
+    // console.log(date_of_birth, injury_date, ct_start_date, ct_end_date);
     if (this.injuryInfo.body_part_id.length == 0) {
       this.alertService.openSnackBar("Please select body part", "error")
       return
@@ -1878,35 +1886,35 @@ export class InjuryDialog {
       this.alertService.openSnackBar("Please select injury date", "error")
       return
     } else {
-      if (!(moment(this.injuryInfo.date_of_injury).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
+      if (!(injury_date.isSameOrAfter(date_of_birth))) {
         this.alertService.openSnackBar("Please select injury date greater than date of birth", "error")
         return
       }
-      if (!(moment(this.injuryInfo.date_of_injury).isSameOrBefore(moment(new Date())))) {
+      if (!(moment(injury_date).isSameOrBefore(moment(new Date())))) {
         this.alertService.openSnackBar("Please select injury date before today", "error");
         return
       }
     }
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
-        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
+        if (!(ct_start_date.isSameOrAfter(date_of_birth))) {
           this.alertService.openSnackBar("Continues trauma Start date should after date of birth", "error")
           return
         }
-        if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(new Date())))) {
+        if (!(ct_start_date.isSameOrBefore(moment(new Date())))) {
           this.alertService.openSnackBar("Continues trauma Start date should be before today", "error");
           return
         }
         if (this.injuryInfo.continuous_trauma_end_date) {
-          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrAfter(moment(this.claimant.date_of_birth)))) {
+          if (!(ct_end_date.isSameOrAfter(date_of_birth))) {
             this.alertService.openSnackBar("Continues trauma End date should after date of birth", "error")
             return
           }
-          if (!(moment(this.injuryInfo.continuous_trauma_end_date).isSameOrBefore(moment(new Date())))) {
+          if (!(ct_end_date.isSameOrBefore(moment(new Date())))) {
             this.alertService.openSnackBar("Continues trauma End date should be before today", "error");
             return
           }
-          if (!(moment(this.injuryInfo.continuous_trauma_start_date).isSameOrBefore(moment(this.injuryInfo.continuous_trauma_end_date)))) {
+          if (!(ct_start_date.isSameOrBefore(ct_end_date))) {
             this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
             return
           }
@@ -1929,7 +1937,7 @@ export class InjuryDialog {
 
   }
   changeEvent() {
-    this.minDate = moment(this.claimant.date_of_birth);
+    this.minDate = moment(this.claimant.date_of_birth, "MM-DD-YYYY");// moment(this.claimant.date_of_birth);
   }
   ctChange() {
     if (!this.injuryInfo.continuous_trauma) {
