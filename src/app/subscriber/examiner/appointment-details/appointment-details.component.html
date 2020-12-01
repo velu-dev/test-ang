@@ -159,7 +159,8 @@
                     class="filled-success edit_btn hide-mobile hide-sm"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Save</button><br /><br />
             </span>
-            <button mat-raised-button class="filled-gray calender_btn" (click)="openCalendar()">View on Calendar</button>
+            <button mat-raised-button class="filled-gray calender_btn" (click)="openCalendar()">View on
+                Calendar</button>
         </div>
     </div>
 </mat-card>
@@ -167,24 +168,23 @@
 <div class="border-dashed-blue m-b-50"></div>
 
 <mat-card class="billable-item-info m-b-20">
-    <form [formGroup]="billable_item"
-    (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
-    <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Call Information</div>
-        <span class="spacer"></span>
-        <span *ngIf="!isExamTypeChanged">
-            <button type="button" class="filled-gray m-b-5"
-                [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
-                *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
-            <button class="filled-success m-b-5"
-                [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
-                *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
-        </span>
-    </mat-card-header>
-    <mat-divider> </mat-divider>
-    <mat-card-content *ngIf="!isBillabbleItemLoading">
-        <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-           
+    <form [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
+        <mat-card-header>
+            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Call Information</div>
+            <span class="spacer"></span>
+            <span *ngIf="!isExamTypeChanged">
+                <button type="button" class="filled-gray m-b-5"
+                    [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                    *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
+                <button class="filled-success m-b-5"
+                    [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                    *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
+            </span>
+        </mat-card-header>
+        <mat-divider> </mat-divider>
+        <mat-card-content *ngIf="!isBillabbleItemLoading">
+            <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
+
                 <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
@@ -203,7 +203,7 @@
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="appointment">
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Examiner</mat-label>
-                            <mat-select formControlName="examiner_id">
+                            <mat-select formControlName="examiner_id" disabled>
                                 <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
                                     [value]="examinar.id">
                                     {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}
@@ -229,8 +229,8 @@
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
                             *ngIf="!isSuplimental">
                             <mat-label>Duration</mat-label>
-                            <input matInput type="number" placeholder="Minutes" min="1" max="450" maxlength="3" formControlName="duration"
-                                autocomplete="off">
+                            <input matInput type="number" placeholder="Minutes" min="1" max="450" maxlength="3"
+                                formControlName="duration" autocomplete="off">
                             <span matSuffix>Minutes</span>
                             <mat-error>Please enter a valid duration between 1 to 450 minutes</mat-error>
                         </mat-form-field>
@@ -316,10 +316,10 @@
                             Save </button>
                     </div>
                 </div>
-            
-        </div>
-    </mat-card-content>
-</form>
+
+            </div>
+        </mat-card-content>
+    </form>
 </mat-card>
 
 <mat-card class="document-info m-t-25" *ngIf="examinationDetails?.procedure_type != 'Cancellation'">
@@ -327,7 +327,7 @@
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents</div>
     </mat-card-header>
     <mat-divider> </mat-divider>
-    <mat-card-content >
+    <mat-card-content>
         <div fxLayout="row wrap">
             <!-- <div fxLayout="row wrap" *ngIf="!isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
@@ -386,7 +386,8 @@
                
             </div> -->
 
-            <div *ngIf="!isExamTypeChanged  && userEmail.includes('auriss.com')" fxLayout="row wrap" fxFlex="100" class="m-t-20">
+            <div *ngIf="!isExamTypeChanged  && userEmail.includes('auriss.com')" fxLayout="row wrap" fxFlex="100"
+                class="m-t-20">
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50">
                 </div>
 
@@ -406,7 +407,7 @@
                 </div>
             </div>
             <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-                <mat-tab-group fxFlex="100"  (selectedTabChange)="tabChanges($event);">
+                <mat-tab-group fxFlex="100" (selectedTabChange)="tabChanges($event);">
                     <mat-tab *ngFor="let doc of procedureTypeList" label="{{doc.name}}"></mat-tab>
                 </mat-tab-group>
                 <div class="table-filter">
@@ -414,7 +415,7 @@
                         placeholder="Search by file name, date" autocomplete="off">
                     <mat-icon>search</mat-icon>
                 </div>
-               
+
                 <div class="user-detail  vertical-fixed default-cursor">
                     <table mat-table [dataSource]="documentsData" multiTemplateDataRows
                         class="mat-elevation-z8 user-table" matSort>
@@ -435,12 +436,13 @@
                                             [src]="element?.file_name | fileType" alt=""></span>
                                     <span *ngIf="column == 'file_name'"> {{element.file_name}} </span>
                                     <span
-                                        *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>                                       
+                                        *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
                                     <span *ngIf="column == 'pfs' && element?.proof_of_service_file_name">
                                         <a target="_self" class="text-success"
-                                        (click)="$event.stopPropagation();download({exam_report_file_url : element?.proof_of_service_file_url, file_name : element?.proof_of_service_file_name})">Download</a>
+                                            (click)="$event.stopPropagation();download({exam_report_file_url : element?.proof_of_service_file_url, file_name : element?.proof_of_service_file_name})">Download</a>
                                     </span>
-                                    <span *ngIf="column == 'action' && !element?.proof_of_service_file_name" class="text-center no-wrap-td">
+                                    <span *ngIf="column == 'action' && !element?.proof_of_service_file_name"
+                                        class="text-center no-wrap-td">
                                         <a target="_self" class="text-success"
                                             (click)="$event.stopPropagation();downloadDocumet(element)">Download</a>
                                         <a class="text-danger m-l-10"

@@ -688,7 +688,7 @@ export class NewClaimComponent implements OnInit {
         primary_language_spoken: [null]
       }),
       appointment: this.formBuilder.group({
-        examiner_id: [null],
+        examiner_id: [null, Validators.compose([Validators.required])],
         appointment_scheduled_date_time: [null],
         duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
         examiner_service_location_id: [null]

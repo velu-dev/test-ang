@@ -209,13 +209,13 @@ export class InjuryPopup {
     this.bodyPartsList = data['body_parts'];
     this.claim_id = data['claim_id'];
     this.isEdit = data['isEdit'];
-    this.date_of_birth = new Date(data['date_of_birth']);
+    this.date_of_birth = moment(data['date_of_birth']);
     if (this.isEdit) {
       this.injuryInfo.body_part_id = data["data"]["body_part_id"];
       this.injuryInfo.continuous_trauma = data["data"]["continuous_trauma"];
-      this.injuryInfo.continuous_trauma_end_date = data["data"]["continuous_trauma_end_date"] ? data["data"]["continuous_trauma_end_date"].split("T")[0] : null,
-        this.injuryInfo.continuous_trauma_start_date = data["data"]["continuous_trauma_start_date"] ? data["data"]["continuous_trauma_start_date"].split("T")[0] : null;
-      this.injuryInfo.date_of_injury = data["data"]["date_of_injury"] ? data["data"]["date_of_injury"].split("T")[0] : null;
+      this.injuryInfo.continuous_trauma_end_date = data["data"]["continuous_trauma_end_date"] ? moment(data["data"]["continuous_trauma_end_date"].split("T")[0]) : null,
+        this.injuryInfo.continuous_trauma_start_date = data["data"]["continuous_trauma_start_date"] ? moment(data["data"]["continuous_trauma_start_date"].split("T")[0]) : null;
+      this.injuryInfo.date_of_injury = data["data"]["date_of_injury"] ? moment(data["data"]["date_of_injury"].split("T")[0]) : null;
       this.injuryInfo.injury_notes = data["data"]["injury_notes"];
       this.injuryInfo.id = data["data"]["id"];
     }
@@ -238,7 +238,7 @@ export class InjuryPopup {
     }
   }
   addInjury() {
-    let date_of_birth = moment(this.date_of_birth, "MM-DD-YYYY");
+    let date_of_birth = moment(this.date_of_birth, 'MM-DD-YYYY')//.format('MM-DD-YYYY[T]HH:mm:ss');// moment(this.date_of_birth, "MM-DD-YYYY");
     let injury_date = this.injuryInfo.date_of_injury ? moment(this.injuryInfo.date_of_injury, "MM-DD-YYYY") : null;
     let ct_start_date = this.injuryInfo.continuous_trauma_start_date ? moment(this.injuryInfo.continuous_trauma_start_date, "MM-DD-YYYY") : null;
     let ct_end_date = this.injuryInfo.continuous_trauma_end_date ? moment(this.injuryInfo.continuous_trauma_end_date, "MM-DD-YYYY") : null;
@@ -254,7 +254,7 @@ export class InjuryPopup {
         this.alertService.openSnackBar("Please select injury date greater than date of birth", "error")
         return
       }
-      if (!(moment(injury_date).isSameOrBefore(moment(new Date())))) {
+      if (!(injury_date.isSameOrBefore(moment(new Date())))) {
         this.alertService.openSnackBar("Please select injury date before today", "error");
         return
       }

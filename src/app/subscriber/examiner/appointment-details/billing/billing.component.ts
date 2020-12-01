@@ -111,7 +111,7 @@ export class BilllableBillingComponent implements OnInit {
   modiferList: any = ['93', '94', '95', '96'];
   @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
   //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
-  unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }, { unit_type: 'Minutes', unit_short_code: 'MJ' }]
+  unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }];// { unit_type: 'Minutes', unit_short_code: 'MJ' }]
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   billDocumentList: any;
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;

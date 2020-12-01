@@ -248,7 +248,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       console.log(this.statusOfAppointment)
       if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location. Would you like to continue?", yes: true, no: true, type: "warning" }
+          width: '500px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.", yes: true, no: true, type: "warning" }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
