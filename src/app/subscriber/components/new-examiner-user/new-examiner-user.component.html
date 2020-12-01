@@ -46,9 +46,9 @@
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidsuffix}}</mat-error>
                         </mat-form-field>
                         <div fxFlex="100" *ngIf="!userData?.examiner_details?.is_examiner_login">
-                            <mat-checkbox class="checkbox_" formControlName="is_examiner_with_email" [(ngModel)]="isEmailId" (change)="enableEmail(isEmailId)">Enable Examiner Login</mat-checkbox>
+                            <mat-checkbox class="checkbox_ m-t-0" formControlName="is_examiner_with_email" [(ngModel)]="isEmailId" (change)="enableEmail(isEmailId)">Enable Examiner Login</mat-checkbox>
                         </div>
-                        <mat-form-field *ngIf="isEmailId || userData?.examiner_details?.is_examiner_login" appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
+                        <mat-form-field *ngIf="isEmailId || userData?.examiner_details?.is_examiner_login" appearance="outline" fxFlex="50" fxFlex.xs="100" fxFlex.sm="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Email ID*</mat-label>
                             <input matInput placeholder="Email" formControlName="sign_in_email_id" autocomplete="off">
