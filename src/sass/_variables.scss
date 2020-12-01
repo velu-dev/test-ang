@@ -1345,7 +1345,7 @@ input:-webkit-autofill {
   .yes {
     background-color: $white;
     color: $btn-success;
-    border-color: $btn-success;
+    border-color: $btn-success !important;
     @extend .btn_;
     &:hover {
       background-color: $btn-success;
