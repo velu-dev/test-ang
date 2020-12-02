@@ -1,8 +1,23 @@
 @import "variables";
 @import "table";
 
-.user-list {
-    @media only screen and (min-device-width: 1280px) and (max-device-width: 1350px) {
-        max-width: 65%;
+mat-card {
+    .user-list {
+        @media only screen and (min-device-width: 1280px) and (max-device-width: 1350px) {
+            max-width: 65%;
+        }
+    }
+    mat-card-content {
+        .table-filter {
+            @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+                margin-top: 10px !important;
+            }
+            input {
+                @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+                    box-shadow: $box-shadow-7 !important;
+                    margin-bottom: 5px;
+                }
+            }
+        }
     }
 }
