@@ -47,7 +47,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       // this.editStatus = true;
       console.log(params_res)
       this.pageStatus = params_res.status;
-      this.examinerId = params_res.id;
+      this.examinerId = params_res.examiner;
       if (params_res.location_id) {
         this.locatStatus = true;
         this.editStatus = false;

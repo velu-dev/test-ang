@@ -255,7 +255,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.get('sign_in_email_id').enable();
     } else {
       this.userForm.get('sign_in_email_id').disable();
-      this.userForm.get('sign_in_email_id').setValue([])
+      this.userForm.get('sign_in_email_id').setValue('')
     }
 
   }
