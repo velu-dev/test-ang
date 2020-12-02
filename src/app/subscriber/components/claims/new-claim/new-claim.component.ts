@@ -1814,7 +1814,7 @@ export class NewClaimComponent implements OnInit {
 })
 export class InjuryDialog {
   @Output('opened') openedStream: EventEmitter;
-  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+  injuryInfo = { body_part_id: [], date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
   bodyPartsList = [];
   today = new Date();
   claimant: any;
@@ -1873,6 +1873,7 @@ export class InjuryDialog {
   }
   isInjurySubmit = false;
   addInjury() {
+    console.log(this.injuryInfo.body_part_id)
     let date_of_birth = moment(this.claimant.date_of_birth, "MM-DD-YYYY");
     let injury_date = this.injuryInfo.date_of_injury ? moment(this.injuryInfo.date_of_injury, "MM-DD-YYYY") : null;
     let ct_start_date = this.injuryInfo.continuous_trauma_start_date ? moment(this.injuryInfo.continuous_trauma_start_date, "MM-DD-YYYY") : null;

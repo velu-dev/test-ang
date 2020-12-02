@@ -195,7 +195,7 @@ export class PickDateAdapter extends NativeDateAdapter {
 })
 export class InjuryPopup {
   claim_id: any = "";
-  injuryInfo = { id: null, body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+  injuryInfo = { id: null, body_part_id: [], date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   today = new Date();
   bodyPartsList = [];
   isEdit: any;
