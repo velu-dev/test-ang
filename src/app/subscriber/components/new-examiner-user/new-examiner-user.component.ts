@@ -1073,7 +1073,12 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   editAddress(data) {
-    this.router.navigate([this.router.url + '/edit-location', data.id, 2, this.examinerId])
+    if(this.router.url.includes('new-examiner')){
+      this.router.navigate([this.router.url + '/edit-location', data.id, 2, this.examinerId])
+    }else{
+      this.router.navigate([this.router.url + '/edit-location', data.id, 2])
+    }
+   
   }
 
   billingOrgChange(e) {
