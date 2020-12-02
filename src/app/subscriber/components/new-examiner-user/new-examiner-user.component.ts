@@ -255,7 +255,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.get('sign_in_email_id').enable();
     } else {
       this.userForm.get('sign_in_email_id').disable();
-      this.userForm.get('sign_in_email_id').setValue([])
+      this.userForm.get('sign_in_email_id').setValue('')
     }
 
   }
@@ -371,8 +371,6 @@ export class NewExaminerUserComponent implements OnInit {
 
       this.examinerService.searchAddress({ basic_search: '', isadvanced: false }, this.examinerId).subscribe(value => {
         this.locationDataSearch = value.data;
-        console.log(this.locationDataSearch)
-
       })
       if (this.user.role_id != 2 && user.SameAsSubscriber) {
         this.userForm.disable();
@@ -520,6 +518,9 @@ export class NewExaminerUserComponent implements OnInit {
       this.userService.createExaminerUser(this.userForm.getRawValue()).subscribe(res => {
         this.alertService.openSnackBar("User created successfully", 'success');
         this.examinerId = res.data.id;
+        this.examinerService.searchAddress({ basic_search: '', isadvanced: false }, this.examinerId).subscribe(value => {
+          this.locationDataSearch = value.data;
+        })
         this.examinerNumber = res.data.examiner_reference_id;
         if (this.examinerId == this.user.id) {
           this.intercom.setUserChanges(true);
@@ -587,9 +588,24 @@ export class NewExaminerUserComponent implements OnInit {
 
 
   }
-
+  role: any;
   cancel() {
-    this._location.back();
+    // this._location.back();
+    this.role = this.cookieService.get('role_id')
+    switch (this.role) {
+      case '2':
+        this.router.navigate(["/subscriber/users"]);
+        break;
+      case '3':
+        this.router.navigate(["/subscriber/manager/users"]);
+        break;
+      case '4':
+        this.router.navigate(["/subscriber/staff/users"]);
+        break;
+      default:
+        this._location.back();
+        break;
+    }
     //this.router.navigate(['/subscriber/users'])
   }
 
