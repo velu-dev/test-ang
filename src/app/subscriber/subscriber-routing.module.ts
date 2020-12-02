@@ -288,7 +288,7 @@ const routes: Routes = [{
         component: NewExaminerUserComponent,
         data: { breadcrumb: "New Examiner" }
       }, {
-        path: "add-location/:status/:examiner",
+        path: "add-location/:status/:id",
         component: AddEditServiceLocationComponent,
         data: { breadcrumb: "New" }
       }
@@ -697,7 +697,7 @@ const routes: Routes = [{
             component: NewExaminerUserComponent,
             data: { breadcrumb: "New Examiner" }
           }, {
-            path: "add-location/:status/:examiner",
+            path: "add-location/:status/:id",
             component: AddEditServiceLocationComponent,
             data: { breadcrumb: "New" }
           }
@@ -1493,7 +1493,7 @@ const routes: Routes = [{
             component: NewExaminerUserComponent,
             data: { breadcrumb: "New Examiner" }
           }, {
-            path: "add-location/:status/:examiner",
+            path: "add-location/:status/:id",
             component: AddEditServiceLocationComponent,
             data: { breadcrumb: "New" }
           }
