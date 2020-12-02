@@ -728,11 +728,11 @@ image-cropper {
       height: 60px !important;
       font-size: $font-size-10 !important;
       font-weight: $font-weight-base;
-      @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) {
+      // @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) {
         white-space: break-spaces;
         overflow-wrap: break-word;
         line-height: inherit;
-      }
+      // }
     }
     .align-left {
       text-align: left;
@@ -773,6 +773,7 @@ image-cropper {
     font-weight: $font-weight-bold;
     display: flex;
     word-break: break-word;
+    height: inherit;
 
     img {
       max-width: 50px;
@@ -785,7 +786,6 @@ image-cropper {
     font-size: $font-size-1;
     font-weight: $font-weight-medium;
     word-break: break-word;
-    height: auto !important;
   }
   .disable-actions {
     text-align: center;
