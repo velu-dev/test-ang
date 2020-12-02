@@ -55,6 +55,10 @@ const routes: Routes = [{
       path: "add-location/:status/:examiner",
       component: AddEditServiceLocationComponent,
       data: { breadcrumb: "New" }
+    }, {
+      path: "edit-location/:location_id/:status/:id",
+      component: AddEditServiceLocationComponent,
+      data: { breadcrumb: "Edit" }
     }
   ]
 }, {
@@ -291,6 +295,11 @@ const routes: Routes = [{
         path: "add-location/:status/:id",
         component: AddEditServiceLocationComponent,
         data: { breadcrumb: "New" }
+      },
+      {
+        path: "edit-location/:location_id/:status/:id",
+        component: AddEditServiceLocationComponent,
+        data: { breadcrumb: "Edit" }
       }
     ]
   }, {
@@ -700,6 +709,10 @@ const routes: Routes = [{
             path: "add-location/:status/:id",
             component: AddEditServiceLocationComponent,
             data: { breadcrumb: "New" }
+          }, {
+            path: "edit-location/:location_id/:status/:id",
+            component: AddEditServiceLocationComponent,
+            data: { breadcrumb: "Edit" }
           }
         ]
       }, {
@@ -1250,6 +1263,10 @@ const routes: Routes = [{
           path: "add-location/:status/:examiner",
           component: AddEditServiceLocationComponent,
           data: { breadcrumb: "New" }
+        }, {
+          path: "edit-location/:location_id/:status/:id",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "Edit" }
         }
       ]
     },
@@ -1496,6 +1513,10 @@ const routes: Routes = [{
             path: "add-location/:status/:id",
             component: AddEditServiceLocationComponent,
             data: { breadcrumb: "New" }
+          }, {
+            path: "edit-location/:location_id/:status/:id",
+            component: AddEditServiceLocationComponent,
+            data: { breadcrumb: "Edit" }
           }
         ]
       }, {
