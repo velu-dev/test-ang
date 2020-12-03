@@ -5,8 +5,9 @@
             <div class="progress">
                 <div class="main-title p-l-0">Bill Status</div>
                 <p class="description p-l-0">View the Bill’s progress here, from beginning to end.</p>
-                <mat-progress-bar mode="determinate" value="50" class="not-sent p-l-0 m-b-20">
+                <mat-progress-bar mode="determinate"value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class">
                 </mat-progress-bar>
+                <div class="text-center">{{billingData?.on_demand_progress_status}}</div>
             </div>
             <div class="review-status">
                 <div>First Bill Review</div>
@@ -22,7 +23,7 @@
             <div class="bill-id"><span>Bill : </span> {{billingData?.agent_short_code}}{{billingData?.bill_no}}</div>
         </div>
         <div fxFlex="50">
-            <div class="submission-date"><span>First Bill Review Submission Date:</span>-</div>
+            <div class="submission-date"><span>First Bill Review Submission Date : </span>{{billingData?.bill_first_submission_date |  date:'MM-dd-yyyy'}}</div>
         </div>
     </div>
 
