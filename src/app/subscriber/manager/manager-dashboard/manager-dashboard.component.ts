@@ -63,9 +63,11 @@ export class ManagerDashboardComponent implements OnInit {
 
   expandId: any;
   openElement(element) {
-    // if (this.isMobile) {
-    this.expandId = element.appointment_id;
-    // }
+    if (this.expandId && this.expandId == element.appointment_id) {
+      this.expandId = null;
+    } else {
+      this.expandId = element.appointment_id;
+    }
   }
   openExtract(element, type) {
     this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);

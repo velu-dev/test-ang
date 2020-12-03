@@ -91,9 +91,11 @@ export class DashboardComponent implements OnInit {
 
   expandId: any;
   openElement(element) {
-    // if (this.isMobile) {
-    this.expandId = element.appointment_id;
-    // }
+    if (this.expandId && this.expandId == element.appointment_id) {
+      this.expandId = null;
+    } else {
+      this.expandId = element.appointment_id;
+    }
   }
   navigate(menu) {
     this.router.navigate([this.router.url + menu])

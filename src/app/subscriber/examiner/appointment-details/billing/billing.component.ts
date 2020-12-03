@@ -581,20 +581,27 @@ export class BilllableBillingComponent implements OnInit {
   expandId2: any = -1;
   expandIdDoc: any;
   openElement(element) {
-    if (this.isMobile) {
-      this.icdExpandID = element.id;
-    }
-
+    if (this.isMobile)
+      if (this.icdExpandID && this.icdExpandID == element.id) {
+        this.icdExpandID = null;
+      } else {
+        this.icdExpandID = element.id;
+      }
   }
 
   openElementBill(element) {
-    if (this.isMobile) {
-      this.expandId2 = element;
-    }
+    if (this.isMobile)
+      if (this.expandId2 && this.expandId2 == element.id) {
+        this.expandId2 = null;
+      } else {
+        this.expandId2 = element.id;
+      }
   }
 
   openElementDoc(element) {
-    if (this.isMobile) {
+    if (this.expandIdDoc && this.expandIdDoc == element.document_id) {
+      this.expandIdDoc = null;
+    } else {
       this.expandIdDoc = element.document_id;
     }
   }

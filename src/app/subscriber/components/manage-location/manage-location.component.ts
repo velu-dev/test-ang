@@ -141,9 +141,12 @@ export class ManageLocationComponent implements OnInit {
   expandId: any;
   openElement(element) {
     //this.router.navigate(['/subscriber/claims/', element.id])
-    if (this.isMobile) {
-      this.expandId = element.id;
-    }
+    if (this.isMobile)
+      if (this.expandId && this.expandId == element.id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.id;
+      }
   }
 
 }

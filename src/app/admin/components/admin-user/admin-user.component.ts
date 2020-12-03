@@ -63,7 +63,7 @@ export class AdminUserComponent implements OnInit {
         this.columnName = ["", "Last Name", "Disable User"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
-        this.columnName = [ "Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User"]
+        this.columnName = ["Last Name", "First Name", "Email", "Role", "Enrolled On", "Disable User"]
         this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', 'createdAt', "disabled"]
       }
     })
@@ -71,7 +71,7 @@ export class AdminUserComponent implements OnInit {
     this.getUser([1]);
   }
   ngOnInit() {
-    
+
   }
   getUser(roles) {
     this.userService.getUsers(roles).subscribe(response => {
@@ -103,7 +103,7 @@ export class AdminUserComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.isLoading = false;
-    this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -124,7 +124,7 @@ export class AdminUserComponent implements OnInit {
           "Enrolled On": moment(res.createdAt).format("MM-DD-YYYY")
         })
       })
-      this.exportService.exportExcel(data, "Admin-Users"+moment().format('MM-DD-YYYYhh:mm'))
+      this.exportService.exportExcel(data, "Admin-Users" + moment().format('MM-DD-YYYYhh:mm'))
     }
   }
   onDisable(data, user) {
@@ -155,8 +155,11 @@ export class AdminUserComponent implements OnInit {
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      this.expandId = element.id;
-      // element.isExpand = !element.isExpand;
+      if (this.expandId && this.expandId == element.id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.id;
+      }
     }
   }
 }

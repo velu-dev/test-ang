@@ -178,9 +178,12 @@ export class ManageUserComponent implements OnInit {
   }
   expandId: any;
   openElement(element) {
-    if (this.isMobile) {
-      this.expandId = element.id;
-    }
+    if (this.isMobile)
+      if (this.expandId && this.expandId == element.id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.id;
+      }
   }
   onDisable(data, id) {
     if (this.tabIndex == 2) {

@@ -146,9 +146,12 @@ export class ClaimListComponent implements OnInit {
   expandId: any;
   openElement(element) {
     this.router.navigate(['/subscriber/claims/', element.id])
-    if (this.isMobile) {
-      this.expandId = element.claim_id;
-    }
+    if (this.isMobile)
+      if (this.expandId && this.expandId == element.claim_id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.claim_id;
+      }
   }
   editClaim(element) {
     console.log(element)

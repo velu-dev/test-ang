@@ -335,9 +335,12 @@ export class NewClaimantComponent implements OnInit {
   }
   expandId: any;
   openElement(element) {
-    if (this.isMobile) {
-      this.expandId = element;
-    }
+    if (this.isMobile)
+      if (this.expandId && this.expandId == element) {
+        this.expandId = null;
+      } else {
+        this.expandId = element;
+      }
   }
 
   claimNavigate(element?) {

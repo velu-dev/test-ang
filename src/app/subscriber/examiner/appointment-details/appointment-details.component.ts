@@ -1058,7 +1058,11 @@ export class AppointmentDetailsComponent implements OnInit {
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      this.expandId = element.id;
+      if (this.expandId && this.expandId == element.id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.id;
+      }
     }
   }
   expandId1: any;

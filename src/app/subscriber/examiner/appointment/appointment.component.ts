@@ -93,10 +93,12 @@ export class AppointmentComponent implements OnInit {
   openElement(element) {
     console.log(element)
     //this.router.navigate(['/subscriber/examiner/appointment-details'])
-    if (this.isMobile) {
-      this.expandId = element.id;
-      // element.isExpand = !element.isExpand;
-    }
+    if (this.isMobile)
+      if (this.expandId && this.expandId == element.id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.id;
+      }
   }
   navigate(element) {
     this.router.navigate([this.router.url + '/appointment-details', element.claim_id, element.bill_item_id])

@@ -64,7 +64,7 @@ export class UserComponent implements OnInit {
         this.columnName = ["", "Last Name", "Disable User"]
         this.columnsToDisplay = ['is_expand', 'last_name', "disabled"]
       } else {
-        this.columnName = ["Last Name", "First Name", "Email", "Role", "Company","Account Number", "Subscribed On", "Disable User"]
+        this.columnName = ["Last Name", "First Name", "Email", "Role", "Company", "Account Number", "Subscribed On", "Disable User"]
         this.columnsToDisplay = ['last_name', 'first_name', 'sign_in_email_id', 'role_name', "organization_name", "account_no", 'createdAt', "disabled"]
       }
     })
@@ -148,7 +148,7 @@ export class UserComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (data, sortHeaderId) =>(typeof(data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }
 
   navigate() {
@@ -162,26 +162,29 @@ export class UserComponent implements OnInit {
   }
   exportData() {
     let data = [];
-    if(this.users.length > 0){
-    this.users.map(res => {
-      data.push({
-        "Last Name": res.last_name,
-        "First Name": res.first_name,
-        "Email": res.sign_in_email_id,
-        "Role": res.role_name,
-        "Company": res.organization_name,
-        "Account Number": res.account_no,
-        "Enrolled On": moment(res.createdAt).format("MM-DD-YYYY")
+    if (this.users.length > 0) {
+      this.users.map(res => {
+        data.push({
+          "Last Name": res.last_name,
+          "First Name": res.first_name,
+          "Email": res.sign_in_email_id,
+          "Role": res.role_name,
+          "Company": res.organization_name,
+          "Account Number": res.account_no,
+          "Enrolled On": moment(res.createdAt).format("MM-DD-YYYY")
+        })
       })
-    })
-    this.exportService.exportExcel(data, "Subscriber-Users" + moment().format('MM-DD-YYYYhh:mm'))
+      this.exportService.exportExcel(data, "Subscriber-Users" + moment().format('MM-DD-YYYYhh:mm'))
     }
   }
   expandId: any;
   openElement(element) {
-    if (this.isMobile) {
-      this.expandId = element.id;
-    }
+    if (this.isMobile)
+      if (this.expandId && this.expandId == element.id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.id;
+      }
   }
   onDisable(data, id) {
     if (this.tabIndex == 2) {

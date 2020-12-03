@@ -102,9 +102,12 @@ export class HistoryComponent implements OnInit {
 
   expandId: any;
   openElement(element) {
-    if (this.isMobile) {
-      this.expandId = element.document_id;
-    }
+    if (this.isMobile)
+      if (this.expandId && this.expandId == element.document_id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.document_id;
+      }
 
   }
 

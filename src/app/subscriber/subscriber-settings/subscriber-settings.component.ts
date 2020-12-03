@@ -307,16 +307,20 @@ export class SubscriberSettingsComponent implements OnInit {
     }
   }
   ngOnDestroy() {
-    if( this.card){
+    if (this.card) {
       this.card.removeEventListener('change', this.cardHandler);
       this.card.destroy();
     }
-    
+
   }
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      this.expandId = element.id;
+      if (this.expandId && this.expandId == element.id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.id;
+      }
     }
   }
 

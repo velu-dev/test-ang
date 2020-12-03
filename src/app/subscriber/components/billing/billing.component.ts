@@ -89,9 +89,12 @@ export class BillingComponent implements OnInit {
 
   expandId: any;
   openElement(element) {
-    if (this.isMobile) {
-      this.expandId = element;
-    }
+    if (this.isMobile)
+      if (this.expandId && this.expandId == element) {
+        this.expandId = null;
+      } else {
+        this.expandId = element;
+      }
   }
 
   gotoBilling(e) {
@@ -103,7 +106,7 @@ export class BillingComponent implements OnInit {
     this.cookieService.set('billableItem', e.exam_procedure_name)//response.data.exam_procedure_name
     this.intercom.setBillNo(e.bill_no);
     this.cookieService.set('billNo', e.bill_no)
-    
+
     //this.router.navigateByUrl(this.router.url + '/' + e.claim_id + '/' + e.billable_item_id + '/' + 'edit-billing' + '/' + e.bill_id)
     this.router.navigateByUrl(this.router.url + '/claimant/' + e.claimant_id + '/claim/' + e.claim_id + '/billable-item/' + e.billable_item_id + '/billing/' + e.bill_id)
   }

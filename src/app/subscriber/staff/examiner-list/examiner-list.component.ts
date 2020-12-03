@@ -70,13 +70,16 @@ export class ExaminerListComponent implements OnInit {
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      this.expandId = element.id;
-      // element.isExpand = !element.isExpand;
+      if (this.expandId && this.expandId == element.id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.id;
+      }
     }
   }
 
   onDisable(data, user) {
-    this.router.navigate(['/subscriber/location/new-location',user.id])
+    this.router.navigate(['/subscriber/location/new-location', user.id])
   }
 
 }
