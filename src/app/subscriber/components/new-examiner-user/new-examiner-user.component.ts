@@ -558,7 +558,7 @@ export class NewExaminerUserComponent implements OnInit {
     else {
       this.userService.updateEditUser(this.userForm.getRawValue().id, this.userForm.getRawValue()).subscribe(res => {
         this.alertService.openSnackBar("User updated successfully", 'success');
-        this.examinerId = res.data.id;
+        //this.examinerId = res.data.id;
         if (this.isEmailId) {
           this.userForm.controls.sign_in_email_id.disable();
           this.userForm.controls.is_examiner_with_email.setValue(false)
@@ -1076,7 +1076,12 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   editAddress(data) {
-    this.router.navigate([this.router.url + '/edit-location', data.id, 2])
+    if(this.router.url.includes('new-examiner')){
+      this.router.navigate([this.router.url + '/edit-location', data.id, 2, this.examinerId])
+    }else{
+      this.router.navigate([this.router.url + '/edit-location', data.id, 2])
+    }
+   
   }
 
   billingOrgChange(e) {
