@@ -166,7 +166,7 @@
                                                 </mat-form-field>
                                                 <mat-form-field appearance="outline" class="w-100 p-t-0"
                                                     *ngIf="group.value.write_off_reason_id ==4">
-                                                    <input matInput placeholder="Other write off reason"
+                                                    <input matInput placeholder="Other write off reason" pattern="^(?=.*[a-zA-Z])[a-zA-Z0-9]+$"
                                                         formControlName="write_off_other_reason" autocomplete="off">
                                                 </mat-form-field>
                                             </td>

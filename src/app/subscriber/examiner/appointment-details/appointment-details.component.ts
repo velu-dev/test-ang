@@ -663,6 +663,7 @@ export class AppointmentDetailsComponent implements OnInit {
   editBillable() {
     this.isEditBillableItem = true;
     this.billable_item.enable();
+    this.billable_item.get('appointment').get('examiner_id').disable();
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
       this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
