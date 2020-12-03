@@ -469,6 +469,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.isSubmitted = false;
     if (e.checked) {
       this.formInit();
+      this.isEmailId = false;
       this.userForm.disable();
       this.userService.getProfile().subscribe(res => {
         this.userData = res;
