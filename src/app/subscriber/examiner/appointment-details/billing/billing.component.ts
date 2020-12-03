@@ -362,11 +362,34 @@ export class BilllableBillingComponent implements OnInit {
     });
 
   }
+  statusBarValues = { value: null, status: '', class: '' }
+  statusBarChanges(status) {
+    switch (status) {
+      case 'Unsent':
+        this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
+        break;
+      case 'In Progress':
+        this.statusBarValues = { value: 50, status: status, class: 'sent' }
+        break;
+      case 'Completed':
+        this.statusBarValues = { value: 100, status: status, class: 'complete' }
+        break;
+      case 'Error':
+        this.statusBarValues = { value: 50, status: status, class: 'error' }
+        break;
+
+      default:
+        this.statusBarValues = { value: 0, status: 'Error', class: 'error' }
+        break;
+    }
+  }
+
   payerResponse: any = [];
   getBillingDetails() {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
       this.billingData = billing.data;
+      this.statusBarChanges(this.billingData.on_demand_progress_status);
       if (!billing.data) {
         return;
       }
