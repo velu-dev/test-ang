@@ -20,7 +20,8 @@
         this list.</p>
 
       <div fxLayout="row wrap" class="upload-sec">
-        <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100" *ngIf="!recordData?.is_exam_type_changed">
+        <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100"
+          *ngIf="!recordData?.is_exam_type_changed && !recordData?.isExaminerDisabled ">
           <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
           <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
@@ -31,7 +32,8 @@
             </mat-hint>
           </mat-form-field>
         </div>
-        <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100" *ngIf="!recordData?.is_exam_type_changed">
+        <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100"
+          *ngIf="!recordData?.is_exam_type_changed && !recordData?.isExaminerDisabled">
           <button mat-raised-button class="filled-gray m-t-15" type="button" (click)="uploadFile()">Add</button>
         </div>
       </div>
@@ -79,7 +81,7 @@
                   (click)="$event.stopPropagation()">
                 <div class="action-buttons">
 
-                  <button *ngIf="!element.isEdit && !recordData?.is_exam_type_changed"
+                  <button *ngIf="!element.isEdit && !recordData?.is_exam_type_changed && !recordData?.isExaminerDisabled"
                     (click)="$event.stopPropagation();element.isEdit = true" mat-icon-button class="text-success"
                     aria-label="Example icon-button with a heart icon" matTooltipPosition="right" matTooltip="Edit">
                     <mat-icon>edit</mat-icon>
@@ -107,7 +109,7 @@
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action </th>
             <td mat-cell *matCellDef="let element" class="p-l-0">
-              <a *ngIf="!recordData?.is_exam_type_changed && !element?.isServiceRequested"
+              <a *ngIf="!recordData?.is_exam_type_changed && !element?.isServiceRequested && !recordData?.isExaminerDisabled"
                 (click)="$event.stopPropagation();deleteDocument(element)"
                 class="text-danger text-center  no-wrap-td">Remove</a>
             </td>
@@ -128,9 +130,9 @@
   <div fxLayout="row wrap" class="ondemand_request">
     <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100">
       <div>
-        <mat-checkbox [disabled]="recordData?.is_exam_type_changed" [(ngModel)]="rushRequest">Rush Request?
+        <mat-checkbox [disabled]="recordData?.is_exam_type_changed && recordData?.isExaminerDisabled" [(ngModel)]="rushRequest">Rush Request?
         </mat-checkbox>
-        <button mat-stroked-button [disabled]="recordData?.is_exam_type_changed" (click)="onDemandSubmit()"
+        <button mat-stroked-button [disabled]="recordData?.is_exam_type_changed && recordData?.isExaminerDisabled" (click)="onDemandSubmit()"
           class="outline-success huge-btn">
           Record Summary On Demand
         </button>

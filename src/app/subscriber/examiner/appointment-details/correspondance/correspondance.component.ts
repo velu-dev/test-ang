@@ -63,6 +63,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   statusOfAppointment = { isEmptyNoDate: false, IsEmptyAppointmentDate: false, isEmptyDuration: false, isEmptyLocation: false }
   is_appointment_incomplete = false;
   error_message = "";
+  isExaminerChange = true;
   constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
