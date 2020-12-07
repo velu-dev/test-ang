@@ -1414,14 +1414,15 @@ export class NewClaimComponent implements OnInit {
   }
   selectedAAttorney: any;
   appAttorney(attroney) {
-    if (this.selectedDAttorney != attroney.id) {
-      this.changeState(attroney.state, 'aa');
-      // this.selectedAAttorney = attroney.id;
-      delete attroney['id'];
-      this.claim.patchValue({
-        ApplicantAttorney: attroney
-      })
-    }
+    console.log(attroney)
+    // if (this.selectedDAttorney != attroney.id) {
+    this.changeState(attroney.state, 'aa');
+    // this.selectedAAttorney = attroney.id;
+    delete attroney['id'];
+    this.claim.patchValue({
+      ApplicantAttorney: attroney
+    })
+    // }
   }
   selectedDAttorney: any;
   defAttornety(attroney) {

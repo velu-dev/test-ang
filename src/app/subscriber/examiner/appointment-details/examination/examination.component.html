@@ -72,8 +72,7 @@
             class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Upload the scanned copies of the documents used in the examination. Use the upload function
         to add the documents to this list.</p>
-      <div fxLayout="row wrap" class="w-100"
-        *ngIf="!billingData?.is_exam_type_changed && !billingData?.isExaminerDisabled">
+      <div fxLayout="row wrap" class="w-100"  *ngIf="!(billingData?.is_exam_type_changed || billingData?.isExaminerDisabled)">
         <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100"
           *ngIf="!alldocuments?.is_exam_type_changed && !alldocuments?.isExaminerDisabled">
           <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
@@ -113,7 +112,7 @@
                 <span *ngIf="column == 'updatedAt'" class="no-wrap-td">{{element?.updatedAt | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'action'" class="text-center">
                   <a class="text-success" (click)="downloadDocument(element)">Download</a>
-                  <a *ngIf="!billingData?.is_exam_type_changed && !element?.isServiceRequested && !billingData?.isExaminerDisabled"
+                  <a *ngIf="!element?.isServiceRequested && !(billingData?.is_exam_type_changed || billingData?.isExaminerDisabled)"
                     class="text-danger p-l-20" (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
                 </span>
               </div>
@@ -128,7 +127,7 @@
                     </span></div>
                   <div class="text-center"><span>Action</span><span>
                       <a class="text-success" (click)="downloadDocument(element)">Download</a>
-                      <a *ngIf="!alldocuments?.is_exam_type_changed && !alldocuments?.isExaminerDisabled"
+                      <a *ngIf="!(alldocuments?.is_exam_type_changed || alldocuments?.isExaminerDisabled)"
                         class="text-danger p-l-20" (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
                     </span></div>
                 </div>

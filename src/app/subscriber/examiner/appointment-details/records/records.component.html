@@ -81,18 +81,21 @@
                   (click)="$event.stopPropagation()">
                 <div class="action-buttons">
 
-                  <button *ngIf="!element.isEdit && !recordData?.is_exam_type_changed && !recordData?.isExaminerDisabled"
+                  <button
+                    *ngIf="!element.isEdit && !(recordData?.is_exam_type_changed || recordData?.isExaminerDisabled)"
                     (click)="$event.stopPropagation();element.isEdit = true" mat-icon-button class="text-success"
                     aria-label="Example icon-button with a heart icon" matTooltipPosition="right" matTooltip="Edit">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button *ngIf="element.isEdit"
+                  <button
+                    *ngIf="element.isEdit && !(recordData?.is_exam_type_changed || recordData?.isExaminerDisabled)"
                     (click)="$event.stopPropagation();pageNumberSave(element);element.isEdit = false" mat-icon-button
                     class="text-success" aria-label="Example icon-button with a heart icon" matTooltipPosition="right"
                     matTooltip="Save">
                     <mat-icon>done</mat-icon>
                   </button>
-                  <button *ngIf="element.isEdit"
+                  <button
+                    *ngIf="element.isEdit && !(recordData?.is_exam_type_changed || recordData?.isExaminerDisabled)"
                     (click)="$event.stopPropagation();element.isEdit = false;element.page_number = element.oldPage"
                     mat-icon-button class="text-danger" aria-label="Example icon-button with a heart icon"
                     matTooltipPosition="right" matTooltip="Cancel">
@@ -109,7 +112,7 @@
           <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Action </th>
             <td mat-cell *matCellDef="let element" class="p-l-0">
-              <a *ngIf="!recordData?.is_exam_type_changed && !element?.isServiceRequested && !recordData?.isExaminerDisabled"
+              <a *ngIf="!element?.isServiceRequested && !(recordData?.is_exam_type_changed|| recordData?.isExaminerDisabled)"
                 (click)="$event.stopPropagation();deleteDocument(element)"
                 class="text-danger text-center  no-wrap-td">Remove</a>
             </td>
@@ -130,10 +133,11 @@
   <div fxLayout="row wrap" class="ondemand_request">
     <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100">
       <div>
-        <mat-checkbox [disabled]="recordData?.is_exam_type_changed && recordData?.isExaminerDisabled" [(ngModel)]="rushRequest">Rush Request?
+        <mat-checkbox [disabled]="recordData?.is_exam_type_changed || recordData?.isExaminerDisabled"
+          [(ngModel)]="rushRequest">Rush Request?
         </mat-checkbox>
-        <button mat-stroked-button [disabled]="recordData?.is_exam_type_changed && recordData?.isExaminerDisabled" (click)="onDemandSubmit()"
-          class="outline-success huge-btn">
+        <button mat-stroked-button [disabled]="recordData?.is_exam_type_changed || recordData?.isExaminerDisabled"
+          (click)="onDemandSubmit()" class="outline-success huge-btn">
           Record Summary On Demand
         </button>
       </div>

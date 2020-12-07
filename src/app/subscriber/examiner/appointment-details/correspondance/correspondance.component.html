@@ -63,7 +63,7 @@
           <!-- Name Column -->
           <ng-container matColumnDef="form_name">
             <th mat-header-cell *matHeaderCellDef>
-              <button *ngIf="!correspondData?.is_exam_type_changed  && !correspondData?.isExaminerDisabled"
+              <button *ngIf="!(correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled)"
                 mat-stroked-button class="outline-success white-btn float-right m-t-5 m-b-5" (click)="openDialog()">
                 <i class="fa fa-file-medical p-r-10"></i> Add Custom Document
               </button>
@@ -74,8 +74,9 @@
               </span>
               <span class="custom-list" *ngIf="element.doc_type == 'custom'">
                 <!-- <a  class="text-success" >Edit</a> -->
-                <a class="text-danger m-l-10" *ngIf="!correspondData?.is_exam_type_changed && !element?.isServiceRequested && !!correspondData?.isExaminerDisabled
-                  " (click)="$event.stopPropagation();removeCustomDocument(element)">Remove</a>
+                <a class="text-danger m-l-10"
+                  *ngIf="!(correspondData?.is_exam_type_changed ||correspondData?.isExaminerDisabled ) && !element?.isServiceRequested"
+                  (click)="$event.stopPropagation();removeCustomDocument(element)">Remove</a>
               </span>
             </td>
           </ng-container>
@@ -139,7 +140,7 @@
             <th mat-header-cell *matHeaderCellDef>
               <button mat-stroked-button class="outline-success white-btn float-right m-t-5  m-b-5"
                 (click)="openCustomRecipient()"
-                *ngIf="!correspondData?.is_exam_type_changed && !correspondData?.isExaminerDisabled">
+                *ngIf="!(correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled)">
                 <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
               </button></th>
             <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
@@ -155,7 +156,7 @@
                   *ngIf="!correspondData?.is_exam_type_changed && !correspondData?.isExaminerDisabled"
                   (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
                 <a class="text-danger m-l-10"
-                  *ngIf="!correspondData?.is_exam_type_changed && !correspondData?.isExaminerDisabled"
+                  *ngIf="!(correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled)"
                   (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
               </span>
             </td>
@@ -180,19 +181,19 @@
 
   <div fxLayout="row wrap" class="action-btns">
     <div fxFlex="33.3" fxFlex.sm="33,3" fxFlex.xs="100">
-      <button [disabled]="correspondData?.is_exam_type_changed && correspondData?.isExaminerDisabled" mat-stroked-button
+      <button [disabled]="correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled" mat-stroked-button
         class="outline-success huge-btn" (click)="onDemandSubmit()">
         Mail On Demand
       </button>
     </div>
 
     <div fxFlex="33.3" fxFlex.sm="33,3" fxFlex.xs="100" class="text-center">
-      <button (click)="downloadForms(false)" mat-stroked-button class="outline-light_green huge-btn">
+      <button (click)="downloadForms(false)" mat-stroked-button class="outline-light_green huge-btn" [disabled]="correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled">
         E-Sign and Download
       </button>
     </div>
     <div fxFlex="33.3" fxFlex.sm="33,3" fxFlex.xs="100">
-      <button (click)="downloadForms(true)" mat-stroked-button class="outline-warning float-right huge-btn">
+      <button (click)="downloadForms(true)" mat-stroked-button class="outline-warning float-right huge-btn" [disabled]="correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled">
         Download
       </button>
     </div>
