@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatTableDataSource } from '@angular/material';
+import { ExaminerService } from 'src/app/subscriber/service/examiner.service';
 
 @Component({
   selector: 'app-billing-collection',
@@ -23,13 +24,13 @@ export class BillingCollectionComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource: any = new MatTableDataSource([])
+    billingData: any = new MatTableDataSource([])
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -43,6 +44,12 @@ export class BillingCollectionComponent implements OnInit {
   }
 
   ngOnInit() {
+     
+    this.examinerService.getDashboardBilling().subscribe(res => {
+      this.billingData = new MatTableDataSource(res.data);
+    }, error => {
+      this.billingData = new MatTableDataSource([])
+    })
   }
   expandId: any;
   openElement(element) {

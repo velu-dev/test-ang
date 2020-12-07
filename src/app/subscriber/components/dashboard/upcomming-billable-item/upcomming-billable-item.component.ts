@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { ExaminerService } from 'src/app/subscriber/service/examiner.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-upcomming-billable-item',
   templateUrl: './upcomming-billable-item.component.html',
@@ -22,50 +24,56 @@ export class UpcommingBillableItemComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource: any = new MatTableDataSource([])
+  upcomingAppointment: any = new MatTableDataSource([])
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
-  constructor(private breakpointObserver: BreakpointObserver) {
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  constructor(private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
+    private _location: Location) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "Claimant", "Action"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["Claimant", "Procedure Type", "Examiner", "Date of service / Date Item Received", "Service Location", "History On Demand", "Records On Demand", "Examination  Status"]
-        this.columnsToDisplay = ['claimant_name', 'procedure_type', "examiner", "dos", 'service_location', 'history_on_demand', 'records_on_demand', 'exam_Status']
+        this.columnName = ["Claimant", "Exam Procedure Type", "Location", "Date of service / Date Item Received", "History", "Records", 'Icon']
+        this.columnsToDisplay = ['claimant', 'procedure_type', "location", "dos", 'history_on_demand', 'records_on_demand', 'icon']
       }
     })
   }
 
   ngOnInit() {
+
+    this.examinerService.getUpcomingAppointment().subscribe(res => {
+      this.upcomingAppointment = new MatTableDataSource(res.data);
+      this.upcomingAppointment.paginator = this.paginator;
+      this.upcomingAppointment.sort = this.sort;
+    }, error => {
+      this.upcomingAppointment = new MatTableDataSource([])
+    })
   }
-  expandId: any;
+  expandId: any = null;
   openElement(element) {
     if (this.isMobile)
-      if (this.expandId && this.expandId == element.id) {
+      if (this.expandId && this.expandId == element) {
         this.expandId = null;
       } else {
-        this.expandId = element.id;
+        this.expandId = element;
       }
   }
   applyFilter(filterValue: string) {
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+    this.upcomingAppointment.filter = filterValue.trim().toLowerCase();
+    if (this.upcomingAppointment.paginator) {
+      this.upcomingAppointment.paginator.firstPage();
+    }
+  }
+
+  back() {
+    this._location.back();
   }
 
 }
-const ELEMENT_DATA = [
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "service_location": "123 Boulevard avenue - Los Angeles", "history_on_demand": "Complete", "records_on_demand": "In Progress", "exam_Status": "Not Confirmed" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "service_location": "123 Boulevard avenue - Los Angeles", "history_on_demand": "Accepted", "records_on_demand": "Complete", "exam_Status": "Left Voicemail" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "service_location": "123 Boulevard avenue - Los Angeles", "history_on_demand": "Sent", "records_on_demand": "Sent", "exam_Status": "Confirmed" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "service_location": "123 Boulevard avenue - Los Angeles", "history_on_demand": "Complete", "records_on_demand": "In Progress", "exam_Status": "Not Confirmed" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "service_location": "123 Boulevard avenue - Los Angeles", "history_on_demand": "Accepted", "records_on_demand": "Sent", "exam_Status": "Confirmed" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "service_location": "123 Boulevard avenue - Los Angeles", "history_on_demand": "Complete", "records_on_demand": "In Progress", "exam_Status": "Not Confirmed" },
-
-];
