@@ -3,8 +3,8 @@
 
 mat-card {
     .user-list {
-        @media only screen and (min-device-width: 1280px) and (max-device-width: 1350px) {
-            max-width: 65%;
+        @media only screen and (min-device-width: 1020px) and (max-device-width: 1350px) {
+            max-width: 60%;
         }
     }
     mat-card-content {
