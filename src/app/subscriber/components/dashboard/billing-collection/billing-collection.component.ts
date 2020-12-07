@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatTableDataSource } from '@angular/material';
-
+import { ExaminerService } from 'src/app/subscriber/service/examiner.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-billing-collection',
   templateUrl: './billing-collection.component.html',
@@ -23,50 +24,52 @@ export class BillingCollectionComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource: any = new MatTableDataSource([])
+    billingData: any = new MatTableDataSource([])
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
+    private _location: Location) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "Claimant", "Action"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["Claimant", "Procedure Type", "Examiner", "Date of service / Date Item Received", "Bill Date", "Status"]
-        this.columnsToDisplay = ['claimant_name', 'procedure_type', "examiner", "dos", 'bill_date', 'status']
+        this.columnName = ["Claimant", "Exam Procedure Type", "Date of service", "Charge", "Date Of First Submission", "Balance Due", "Icon"]
+        this.columnsToDisplay = ['claimant_name', 'procedure_type', "dos", "charge", 'bill_date', 'balance', 'icon']
       }
     })
   }
 
   ngOnInit() {
+     
+    this.examinerService.getDashboardBilling().subscribe(res => {
+      this.billingData = new MatTableDataSource(res.data);
+    }, error => {
+      this.billingData = new MatTableDataSource([])
+    })
   }
   expandId: any;
   openElement(element) {
     if (this.isMobile)
-      if (this.expandId && this.expandId == element.id) {
+      if (this.expandId && this.expandId == element) {
         this.expandId = null;
       } else {
-        this.expandId = element.id;
+        this.expandId = element;
       }
   }
   applyFilter(filterValue: string) {
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+    this.billingData.filter = filterValue.trim().toLowerCase();
+    if (this.billingData.paginator) {
+      this.billingData.paginator.firstPage();
+    }
+  }
+
+  back() {
+    this._location.back();
   }
 
 }
-const ELEMENT_DATA = [
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Not Sent", },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Accepted" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Sent" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Not Sent" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Accepted" },
-  { "id": 132, "last_name": "Mariyappan", "first_name": "Venkatesan", "procedure_type": "Examination", "ex_lastname": "Jorge", "ex_firstname": "Sanchez", "ex_suffix": "M.D.", "dos": "12-10-2020", "bill_date": "10-25-2020", "status": "Not Sent" },
-
-];

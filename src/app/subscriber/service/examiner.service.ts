@@ -105,4 +105,16 @@ export class ExaminerService {
   getExaminerDashboardData(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getAllData)
   }
+
+  getUpcomingAppointment(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.upcomingAppointment)
+  }
+
+  getDashboardBilling(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.dashboardBilling)
+  }
+
+  getItemsAwaiting(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.itemsAwaiting)
+  }
 }
