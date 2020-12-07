@@ -16,40 +16,44 @@
                     <ng-container *ngIf="columnName[i] == 'Icon'">
                         <th mat-header-cell *matHeaderCellDef> <mat-icon (click)="back()">fullscreen_exit</mat-icon></th>
                     </ng-container>
-                    <td mat-cell *matCellDef="let element" (click)="!isMobile ? navigateBillableEdit(element):''">
+                    <td mat-cell *matCellDef="let element;let m" (click)="!isMobile ? navigateBillableEdit(element):''">
                         <span *ngIf="i == 0 && isMobile">
                             <mat-icon mat-raised-button
-                                [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
-                                {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                                [ngClass]="{'table-expand': expandId == m, 'expand-close': !(expandId == m)}">
+                                {{ expandId == m ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name}}, {{element?.claimant_first_name}}</span>
-                            <span *ngIf="column == 'claim_number'">{{element?.claim_number}} </span>
-                            <span *ngIf="column == 'examiner'">{{element?.ex_last_name}} {{element?.ex_first_name}}{{element?.ex_suffix ? ', '+element?.ex_suffix : ''}}</span>
-                            <span *ngIf="column == 'procedure_type'">{{element?.procedure_type_name}}</span>
-                            <span *ngIf="column == 'created_date'">{{element?.created_date}}<small class="p-l-10">
-                                <span *ngIf="element?.created_time" class="fa fa-clock-o"></span>&nbsp;  {{element?.created_time}}</small></span>
+                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}} {{element?.first_name}}</span>
+                            <span *ngIf="column == 'procedure_type'">{{element?.exam_type_code}} - {{element?.procedure_type}}</span>
+                            <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
+                            <span *ngIf="column == 'due_date'">{{element?.due_date | date:'MM-dd-yyyy'}}</span>
+                            <span *ngIf="column == 'report'"><a routerLink (click)="goToReport(element)">Go To Report Service</a></span>
+                            <span *ngIf="column == 'status'">{{element?.status}}</span>
+                            <span *ngIf="column == 'compiled_report'">{{element?.compiled_report}}</span>
+                            <span *ngIf="column == 'final_report'"><button type="button">Upload Final Report</button></span>
                         </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                        <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                    <td mat-cell *matCellDef="let element;let n" [attr.colspan]="columnsToDisplay.length">
+                        <div class="detail" [@detailExpand]="expandId == n ? 'expanded' : 'collapsed'">
                             <div class="responsive-table" (click)="navigateBillableEdit(element)">
-                                <div><span>Claimant</span><span> {{element?.claimant_last_name}}, {{element?.claimant_first_name}} </span></div>
-                                <div><span>Claim Number</span><span> {{element?.claim_number}} </span></div>
-                                <div><span>Examiner</span><span>{{element?.ex_last_name}} {{element?.ex_first_name}}{{element?.ex_suffix ? ', '+element?.ex_suffix : ''}} </span></div>
-                                <div><span>Procedure Type</span><span> {{element?.procedure_type_name}} </span></div>
-                                <div><span>Date Created</span><span> {{element?.created_date}}<small class="p-l-10">
-                                    <p *ngIf="element?.created_time" class="fa fa-clock-o"></p>&nbsp;{{element?.created_time}}</small> </span></div>
+                                <div><span>Claimant</span><span> {{element?.last_name}}, {{element?.first_name}} </span></div>
+                                <div><span>Exam Procedure Type</span><span> {{element?.exam_type_code}} - {{element?.procedure_type}} </span></div>
+                                <div><span>Date of service / Date Item Received</span><span>{{element?.date_of_service | date:'MM-dd-yyyy'}} </span></div>
+                                <div><span>Date Due</span><span> {{element?.due_date | date:'MM-dd-yyyy'}} </span></div>
+                                <div><span>Report SimpleService</span><span> <a>Go To Report Service</a></span></div>
+                                <div><span>Status</span><span> {{element?.status}}</span></div>
+                                <div><span>Compiled Report</span><span>{{element?.compiled_report}}</span></div>
+                                <div><span>Upload Final Report</span><span> <button type="button">Upload Final Report</button></span></div>
                             </div>
                         </div>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
-                    [class.row]="expandedElement === element" (click)="openElement(element)">
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;let j" class="row"
+                    [class.row]="expandedElement === element" (click)="openElement(j)">
                 </tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>

@@ -14,42 +14,35 @@
                             {{columnName[i]}} </th>
                     </ng-container>
                     <ng-container *ngIf="columnName[i] == 'Icon'">
-                        <th mat-header-cell *matHeaderCellDef> <mat-icon>fullscreen_exit</mat-icon></th>
+                        <th mat-header-cell *matHeaderCellDef> <mat-icon (click)="back()">fullscreen_exit</mat-icon></th>
                     </ng-container>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element;let m">
                         <span *ngIf="i == 0 && isMobile">
                             <mat-icon mat-raised-button
-                                [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
-                                {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
+                                [ngClass]="{'table-expand': expandId == m, 'expand-close': !(expandId == m)}">
+                                {{ expandId == m ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}},
-                                {{element?.first_name}}</span>
-                            <span *ngIf="column == 'procedure_type'">{{element?.procedure_type}} </span>
-                            <span
-                                *ngIf="column == 'examiner'">{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}}</span>
-                            <span *ngIf="column == 'dos'">{{element?.dos}}<small class="p-l-10"><span
-                                        class="fa fa-clock-o"></span>&nbsp; 9:13 AM</small></span>
-                            <span *ngIf="column == 'bill_date'">{{element?.bill_date}}</span>
-                            <span *ngIf="column == 'status'">{{element?.status}}</span>
+                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}} {{element?.first_name}}</span>
+                            <span *ngIf="column == 'procedure_type'">{{element?.exam_type_code}} - {{element?.procedure_type}}</span>
+                            <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
+                            <span *ngIf="column == 'charge'">{{element?.charge ? '$ ' + element?.charge : '' }}</span>
+                            <span *ngIf="column == 'bill_date'">{{element?.bill_first_submission_date}}</span>
+                            <span *ngIf="column == 'balance'">{{element?.balance ? '$ ' + element?.balance : ''}}</span>
                         </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                        <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                    <td mat-cell *matCellDef="let element;let n" [attr.colspan]="columnsToDisplay.length">
+                        <div class="detail" [@detailExpand]="expandId == n ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
-                                <div><span>Claimant</span><span> {{element?.last_name}}, {{element?.first_name}} </span></div>
-                                <div><span>Procedure Type</span><span> {{element?.procedure_type}} </span></div>
-                                <div>
-                                    <span>Examiner</span><span>{{element?.ex_lastname}}{{element?.ex_firstname}},{{element?.ex_suffix}}
-                                </span></div>
-                                <div><span>Date of service /<br />
-                                        Date Item Received</span><span> {{element?.dos}}<small class="p-l-10"><p
-                                            class="fa fa-clock-o"></p>&nbsp; 9:13 AM</small> </span></div>
-                                <div><span>Bill Date</span><span> {{element?.bill_date}} </span></div>
-                                <div><span>Status</span><span> {{element?.status}} </span></div>
+                                <div><span>Claimant</span><span> {{element?.last_name}} {{element?.first_name}} </span></div>
+                                <div><span>Exam Procedure Type</span><span>{{element?.exam_type_code}} - {{element?.procedure_type}}</span></div>
+                                <div><span>Date of service</span><span>{{element?.date_of_service | date:'MM-dd-yyyy'}}</span></div>
+                                <div><span>Charge</span><span>{{element?.charge ? '$ ' + element?.charge : '' }}</span></div>
+                                <div><span>Date Of First Submission</span><span>{{element?.bill_first_submission_date}}</span></div>
+                                <div><span>Balance Due</span><span>{{element?.balance ? '$ ' + element?.balance : ''}}</span></div>
                             </div>
                         </div>
                     </td>

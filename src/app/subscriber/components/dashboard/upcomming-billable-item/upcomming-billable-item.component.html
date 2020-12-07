@@ -32,7 +32,7 @@
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
                           
                             <span *ngIf="column == 'history_on_demand'">{{element?.history_response_file}}</span>
-                            <span *ngIf="column == 'records_on_demand'">{{element?.records_response_file}}</span>
+                            <span *ngIf="column == 'records_on_demand' && element?.history_response_file">{{element?.records_response_file}}</span>
                         </div>
                     </td>
                 </ng-container>
