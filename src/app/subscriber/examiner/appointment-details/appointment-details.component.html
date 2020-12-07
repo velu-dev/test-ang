@@ -141,7 +141,7 @@
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     </mat-form-field>
                 </div>
-                <div *ngIf="!(isExaminationStatusEdit || billableData?.isExaminerDisabled)" class="text-center w-100">
+                <div *ngIf="isExaminationStatusEdit && !billableData?.isExaminerDisabled" class="text-center w-100">
                     <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>
                     <button mat-stroked-button class="m-l-10 outline-success" type="submit"
                         (click)="examinationStatusSubmit()">Save
