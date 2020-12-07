@@ -7,6 +7,8 @@ import { SubscriberService } from 'src/app/subscriber/service/subscriber.service
 import { Router } from '@angular/router';
 import { MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import * as moment from 'moment';
+import { ExaminerService } from 'src/app/subscriber/service/examiner.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-billable-item-awaiting',
   templateUrl: './billable-item-awaiting.component.html',
@@ -36,6 +38,8 @@ export class BillableItemAwaitingComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
     private subscriberService: SubscriberService,
     private router: Router,
+    private _location: Location,
+    private examinerService: ExaminerService,
     public dialog: MatDialog) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -43,23 +47,23 @@ export class BillableItemAwaitingComponent implements OnInit {
         this.columnName = ["", "Claimant"]
         this.columnsToDisplay = ['is_expand', 'claimant_name']
       } else {
-        this.columnName = ["Claimant", "Claim Number", "Examiner", "Procedure Type", "Date Created"]
-        this.columnsToDisplay = ['claimant_name', 'claim_number', "examiner", "procedure_type", "created_date"]
+        this.columnName = ["Claimant", "Exam Procedure Type", "Date of service / Date Item Received", "Date Due", "Report SimpleService", "Status", "Compiled Report", "Upload Final Report", "Icon"]
+        this.columnsToDisplay = ['claimant_name', 'procedure_type', "dos", "due_date", "report", "status", "compiled_report", "final_report", "icon"]
       }
     })
   }
 
   ngOnInit() {
-    this.subscriberService.getBillableAwait().subscribe(billable => {
-      billable.data.map(bill => {
-        bill.date_of_birth = bill.date_of_birth ? moment(bill.date_of_birth).format("MM-DD-YYYY") : '';
-        bill.claimant_name = bill.claimant_last_name + ', ' + bill.claimant_first_name;
-        bill.created_date = bill.createdAt ? moment(bill.createdAt).format("MM-DD-YYYY") : '';
-        bill.created_time = bill.createdAt ? moment(bill.createdAt).format("hh:mm a") : '';
-        bill.examiner = bill.ex_last_name + ' ' + bill.ex_first_name + '' + (bill.ex_suffix ? ', ' + bill.ex_suffix : '');
-        bill.procedure_type = bill.procedure_type_name;
-      })
-      console.log(billable);
+    this.examinerService.getItemsAwaiting().subscribe(billable => {
+      // billable.data.map(bill => {
+      //   bill.date_of_birth = bill.date_of_birth ? moment(bill.date_of_birth).format("MM-DD-YYYY") : '';
+      //   bill.claimant_name = bill.claimant_last_name + ', ' + bill.claimant_first_name;
+      //   bill.created_date = bill.createdAt ? moment(bill.createdAt).format("MM-DD-YYYY") : '';
+      //   bill.created_time = bill.createdAt ? moment(bill.createdAt).format("hh:mm a") : '';
+      //   bill.examiner = bill.ex_last_name + ' ' + bill.ex_first_name + '' + (bill.ex_suffix ? ', ' + bill.ex_suffix : '');
+      //   bill.procedure_type = bill.procedure_type_name;
+      // })
+      // console.log(billable);
       this.dataSource = new MatTableDataSource(billable.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -89,6 +93,10 @@ export class BillableItemAwaitingComponent implements OnInit {
 
   navigateBillableEdit(e) {
     this.router.navigate([this.router.url + '/billable-item/edit-billable-item', e.claim_id, e.claimant_id, e.id])
+  }
+
+  back() {
+    this._location.back();
   }
 
 }
