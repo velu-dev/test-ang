@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
@@ -10,6 +10,7 @@ import { ExaminerService } from 'src/app/subscriber/service/examiner.service';
 import { Location } from '@angular/common';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-billable-item-awaiting',
   templateUrl: './billable-item-awaiting.component.html',
@@ -36,12 +37,14 @@ export class BillableItemAwaitingComponent implements OnInit {
   isMobile = false;
   columnName = [];
   filterValue: string;
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(private breakpointObserver: BreakpointObserver,
     private router: Router,
     private _location: Location,
     private examinerService: ExaminerService,
     public dialog: MatDialog,
     private cookieService: CookieService,
+    private alertService: AlertService,
     private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -99,6 +102,55 @@ export class BillableItemAwaitingComponent implements OnInit {
 
   back() {
     this._location.back();
+  }
+  selectedFile: File;
+  formData = new FormData();
+  errors = { file: { isError: false, error: "" } }
+  uploadFile(element,e) {
+    this.selectedFile = null;
+    this.selectedFile = element.target.files[0];
+   
+    let fileTypes = ['pdf', 'doc', 'docx'];
+      if (fileTypes.includes(this.selectedFile.name.split('.').pop().toLowerCase())) {
+        var FileSize = this.selectedFile.size / 1024 / 1024; // in MB
+        if (FileSize > 3073) {
+          this.fileUpload.nativeElement.value = "";
+          this.errors.file.isError = true;
+          this.errors.file.error = "File size is too large";
+          this.alertService.openSnackBar("File size is too large", 'error');
+          return;
+        }
+        this.errors = { file: { isError: false, error: "" } }
+      } else {
+        this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        this.errors.file.isError = true;
+        this.errors.file.error = "This file type is not accepted";
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
+      }
+    
+    if (!this.selectedFile) {
+      this.alertService.openSnackBar("Please select file", 'error');
+      this.errors.file.isError = true;
+      this.errors.file.error = "Please select a file";
+      return;
+    }
+    this.formData = new FormData();
+    this.formData.append('file', this.selectedFile);
+    this.formData.append('document_category_id', '6');
+    this.formData.append('claim_id', e.claim_id.toString());
+    this.formData.append('bill_item_id', e.bill_item_id.toString());
+    this.formData.append('isReportUpload', 'true');
+    this.examinerService.postDocument(this.formData).subscribe(res => {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.formData = new FormData();
+      this.errors = { file: { isError: false, error: "" } }
+      this.alertService.openSnackBar("File added successfully", 'success');
+    }, error => {
+      this.fileUpload.nativeElement.value = "";
+      this.selectedFile = null;
+    })
   }
 
   goToReport(e) {

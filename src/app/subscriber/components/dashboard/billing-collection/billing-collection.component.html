@@ -29,7 +29,7 @@
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'charge'">{{element?.charge ? '$ ' + element?.charge : '' }}</span>
                             <span *ngIf="column == 'bill_date'">{{element?.bill_first_submission_date}}</span>
-                            <span *ngIf="column == 'balance'">{{element?.balance ? '$ ' + element?.balance : ''}}</span>
+                            <span *ngIf="column == 'balance'">{{element?.balance_due ? '$ ' + element?.balance_due : ''}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -42,7 +42,7 @@
                                 <div><span>Date of service</span><span>{{element?.date_of_service | date:'MM-dd-yyyy'}}</span></div>
                                 <div><span>Charge</span><span>{{element?.charge ? '$ ' + element?.charge : '' }}</span></div>
                                 <div><span>Date Of First Submission</span><span>{{element?.bill_first_submission_date}}</span></div>
-                                <div><span>Balance Due</span><span>{{element?.balance ? '$ ' + element?.balance : ''}}</span></div>
+                                <div><span>Balance Due</span><span>{{element?.balance_due ? '$ ' + element?.balance_due : ''}}</span></div>
                             </div>
                         </div>
                     </td>
