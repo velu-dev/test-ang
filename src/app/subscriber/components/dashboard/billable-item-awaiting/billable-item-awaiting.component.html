@@ -5,7 +5,7 @@
                 [placeholder]="'Search by name, claim, examiner, procedure type or date' | ellipsis:50">
             <mat-icon>search</mat-icon>
         </div>
-        <div class="user-detail">
+        <div class="user-detail default-cursor">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
                 matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">

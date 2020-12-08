@@ -1,19 +1,19 @@
 @import "variables";
 @import "table";
 
-mat-card {
+.m-card {
     .user-list {
-        @media only screen and (min-device-width: 1020px) and (max-device-width: 1350px) {
+        @media screen and (max-width: 1350px) and (min-width: 1024px) {
             max-width: 60%;
         }
     }
     mat-card-content {
         .table-filter {
-            @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+            @media screen and (max-width: 1024px) and (min-width: 768px) {
                 margin-top: 10px !important;
             }
             input {
-                @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+                @media screen and (max-width: 1024px) and (min-width: 768px) {
                     box-shadow: $box-shadow-7 !important;
                     margin-bottom: 5px;
                 }
