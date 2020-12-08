@@ -28,11 +28,25 @@
             }
         }
         mat-card-content {
+            .flex_ {
+                height: auto;
+                @media only screen and (min-device-width: 1820px) and (max-device-width: 2800px) {
+                    min-height: 100px;
+                }
+            }
             .heading-one {
-                padding: 25px 5px;
+                padding: 40px 5px;
                 width: $width-100;
                 text-align: center;
                 font-size: $font-size-10;
+
+                @media only screen and (min-device-width: 1080px) and (max-device-width: 1820px) {
+                    padding: 30px 5px;
+                    min-height: 80px;
+                }
+                @media only screen and (min-device-width: 1820px) and (max-device-width: 2800px) {
+                    padding: 65px 5px;
+                }
                 span {
                     width: 100%;
                     display: block;
