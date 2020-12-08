@@ -10,7 +10,8 @@
 <!-- ###~~~~~ Claim section  ~~~~~###-->
 <div class="claim_info m-t-20" fxLayout="row wrap">
     <div fxFlex="100">
-        <app-claim *ngIf="!isLoading" [state]="states" [claim]="claimDetail"></app-claim>
+        <app-claim *ngIf="!isLoading" [is_billable_item_available]="is_billable_item_available"
+            (examType)="changeExamType($event)" [state]="states" [claim]="claimDetail"></app-claim>
     </div>
 </div>
 
@@ -27,8 +28,8 @@
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content class="p-b-15">
-                <app-update-billable-item *ngIf="!isLoading" [claim_id]="claimId" [claimant_id]="claimantDetail?.id"
-                    [state]="states"></app-update-billable-item>
+                <app-update-billable-item *ngIf="!isLoading" (billableitemCount)="billableitemCount($event)"
+                    [claim_id]="claimId" [claimant_id]="claimantDetail?.id" [state]="states"></app-update-billable-item>
             </mat-card-content>
         </mat-card>
     </div>
@@ -93,7 +94,7 @@
 <!-- ###~~~~~ DEU Office ~~~~~###-->
 <div class="deu_office m-t-25" fxLayout="row wrap">
     <div fxFlex="100">
-        <app-deo *ngIf="!isLoading" [state]="states" [deu]="deuDetail">
+        <app-deo *ngIf="!isLoading && claimDetail.exam_type_id !=3" [state]="states" [deu]="deuDetail">
         </app-deo>
     </div>
 </div>

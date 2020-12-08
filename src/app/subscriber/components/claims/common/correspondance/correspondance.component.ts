@@ -75,7 +75,7 @@ export class CorrespondanceComponent implements OnInit {
     });
 
     this.claimService.getcorrespondence(this.claimId).subscribe(correspondRes => {
-      console.log(correspondRes);
+      // console.log(correspondRes);
       this.correspondenceSource = new MatTableDataSource(correspondRes['data'])
     }, error => {
       console.log(error);
@@ -98,7 +98,7 @@ export class CorrespondanceComponent implements OnInit {
         return;
       }
       this.selectedFile = event.target.files[0];
-      console.log(" this.selectedFile", this.selectedFile);
+      // console.log(" this.selectedFile", this.selectedFile);
       this.file = event.target.files[0].name;
     } else {
       this.selectedFile = null;

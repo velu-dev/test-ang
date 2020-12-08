@@ -246,7 +246,6 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
     });
     if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
-      console.log(this.statusOfAppointment)
       if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px', data: { title: "Appointment Information Incomplete", message: "Please check the appointment date, time and location.", yes: true, no: true, type: "warning" }
@@ -373,7 +372,6 @@ export class BillingCorrespondanceComponent implements OnInit {
   removeCustomDocument(element) {
     let SelectedIds = [];
     SelectedIds = this.selection.selected;
-    console.log(SelectedIds)
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
       data: { name: "remove this document", address: true, title: element.form_name }
@@ -550,7 +548,6 @@ export class BillingCorrespondanceComponent implements OnInit {
       return;
     }
     if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
-      console.log(this.statusOfAppointment)
       if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.", ok: true, no: false, type: "warning", warning: true }
@@ -575,7 +572,6 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
       this.getData();
     }, error => {
-      console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
@@ -704,7 +700,6 @@ export class CustomRecipient {
     }
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
-        console.log((res.id == state) || (res.state == state))
         this.recipientState = res.state_code;
       }
     })
@@ -758,7 +753,6 @@ export class AddAddress {
     this.states = data["state"];
     this.userData = data["data"];
     this.type = data["type"];
-    console.log(data)
   }
   ngOnInit() {
     this.isLoading = false;
@@ -786,7 +780,6 @@ export class AddAddress {
     }
     this.states.map(res => {
       if ((res.id == state) || (res.state_code == state)) {
-        console.log(res);
         this.corresState = res.state_code;
       }
     })
