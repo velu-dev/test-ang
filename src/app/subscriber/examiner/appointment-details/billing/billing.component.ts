@@ -1071,8 +1071,14 @@ export class BilllableBillingComponent implements OnInit {
     let fileTypes = ['pdf', 'doc', 'docx'];
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
-      if (FileSize > 30) {
-        this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
+      if (FileSize > 501) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: event.target.files[0].name, message: "File size is too large. Contact your organization's Simplexam Admin",  yes: false, ok: true, no: false, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+        })
+       // this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
         return;
       }
       this.file = event.target.files[0].name;

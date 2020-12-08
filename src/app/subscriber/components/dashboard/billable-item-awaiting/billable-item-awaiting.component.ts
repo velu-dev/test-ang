@@ -123,9 +123,6 @@ export class BillableItemAwaitingComponent implements OnInit {
           dialogRef.afterClosed().subscribe(result => {
           })
           this.fileUpload.nativeElement.value = "";
-          this.errors.file.isError = true;
-          this.errors.file.error = "File size is too large";
-          this.alertService.openSnackBar("File size is too large", 'error');
           return;
         }
         this.errors = { file: { isError: false, error: "" } }
