@@ -54,7 +54,7 @@ export class BillableItemAwaitingComponent implements OnInit {
         this.columnName = ["", "Claimant"]
         this.columnsToDisplay = ['is_expand', 'claimant_name']
       } else {
-        this.columnName = ["Claimant", "Exam Procedure Type", "Date of service / Date Item Received", "Date Due", "Report SimpleService", "Status", "Compiled Report", "Upload Final Report", "Icon"]
+        this.columnName = ["Claimant", "Exam Procedure Type", "Date Of Service / Date Item Received", "Date Due", "Report SimpleService", "Status", "Compiled Report", "Upload Final Report", "Icon"]
         this.columnsToDisplay = ['claimant_name', 'procedure_type', "dos", "due_date", "report", "status", "compiled_report", "final_report", "icon"]
       }
     })
@@ -74,10 +74,10 @@ export class BillableItemAwaitingComponent implements OnInit {
       this.dataSource = new MatTableDataSource(billable.data)
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.claim_number && data.claim_number.includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.created_date && data.created_date.includes(filter)) || (data.created_time && data.created_time.toLowerCase().includes(filter)) || (data.procedure_type && data.procedure_type.toLowerCase().includes(filter));
-      };
-      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      // this.dataSource.filterPredicate = function (data, filter: string): boolean {
+      //   return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.claim_number && data.claim_number.includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.created_date && data.created_date.includes(filter)) || (data.created_time && data.created_time.toLowerCase().includes(filter)) || (data.procedure_type && data.procedure_type.toLowerCase().includes(filter));
+      // };
+     // this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     }, error => {
       this.dataSource = new MatTableDataSource([])
     })
@@ -123,9 +123,6 @@ export class BillableItemAwaitingComponent implements OnInit {
           dialogRef.afterClosed().subscribe(result => {
           })
           this.fileUpload.nativeElement.value = "";
-          this.errors.file.isError = true;
-          this.errors.file.error = "File size is too large";
-          this.alertService.openSnackBar("File size is too large", 'error');
           return;
         }
         this.errors = { file: { isError: false, error: "" } }

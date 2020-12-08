@@ -21,7 +21,7 @@ export class EditClaimComponent implements OnInit {
   panelOpenState = false;
   claimId: any;
   claimantDetail: any = {};
-  claimDetail = {};
+  claimDetail = { exam_type_id: null };
   claimAdminDetail = {};
   aAttorneyDetail = {};
   dAttorneyDetail = {};
@@ -33,6 +33,7 @@ export class EditClaimComponent implements OnInit {
   dateOfBirth: any;
   bodyParts = [];
   employerEdit: any;
+  is_billable_item_available: any;
   constructor(private claimService: ClaimService,
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -59,10 +60,11 @@ export class EditClaimComponent implements OnInit {
           this.intercom.setClaimant(res['data'].claimant_details.first_name + ' ' + res['data'].claimant_details.last_name);
           this.cookieService.set('claimDetails', res['data'].claimant_details.first_name + ' ' + res['data'].claimant_details.last_name)
           this.intercom.setClaimNumber(res.data.claim_details.claim_number);
-          console.log(res.data)
           this.dateOfBirth = res.data.claimant_details.date_of_birth;
           this.claimantDetail = res.data.claimant_details;
           this.claimDetail = res.data.claim_details;
+          this.claimDetail['is_billable_item_available'] = res.data.is_billable_item_available;
+          this.is_billable_item_available = res.data.is_billable_item_available;
           this.claimAdminDetail = res.data.agent_details.InsuranceAdjuster;
           this.employeDetail = res.data.agent_details.Employer;
           this.aAttorneyDetail = res.data.agent_details.ApplicantAttorney;
@@ -74,7 +76,24 @@ export class EditClaimComponent implements OnInit {
       }
     })
   }
-
+  public changeExamType(exam_type_id: any): void {
+    if (exam_type_id == 3) {
+      this.claimDetail['exam_type_id'] = exam_type_id;
+    } else {
+      this.claimDetail['exam_type_id'] = exam_type_id;
+    }
+  }
+  billableItemCount = 0;
+  public billableitemCount(count: any): void {
+    this.billableItemCount = count;
+    if (count == 0) {
+      this.is_billable_item_available = false;
+      this.claimDetail['is_billable_item_available'] = false;
+    } else {
+      this.is_billable_item_available = true;
+      this.claimDetail['is_billable_item_available'] = true;
+    }
+  }
   ngOnInit() {
   }
   navigateBillable() {

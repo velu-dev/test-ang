@@ -130,7 +130,6 @@ export class BilllableBillingComponent implements OnInit {
     this.intercom.setBillNo('Bill');
     this.cookieService.set('billNo', null)
     this.route.params.subscribe(param => {
-      console.log(param)
       this.paramsId = param;
       if (!param.billingId) {
         this.billingService.billCreate(param.claim_id, param.billId).subscribe(bill => {
@@ -275,7 +274,6 @@ export class BilllableBillingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
       // this.animal = result;
     });
   }
@@ -288,7 +286,6 @@ export class BilllableBillingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // console.log('The dialog was closed');
       // this.animal = result;
     });
   }
@@ -726,7 +723,6 @@ export class BilllableBillingComponent implements OnInit {
 
   getGenerateBillingForm(id) {
     this.billingService.generateBillingForm(this.paramsId.claim_id, this.paramsId.billId, id).subscribe(billing => {
-      console.log(billing)
       saveAs(billing.data.exam_report_file_url, billing.data.file_name);
       this.alertService.openSnackBar("File downloaded successfully", "success");
     }, error => {
@@ -790,7 +786,6 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   openDialogDocument(dialogue, data, status?) {
-    console.log(data)
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
       data: { name: dialogue, address: true, title: data.file_name }
@@ -1071,8 +1066,14 @@ export class BilllableBillingComponent implements OnInit {
     let fileTypes = ['pdf', 'doc', 'docx'];
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
-      if (FileSize > 30) {
-        this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
+      if (FileSize > 501) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: event.target.files[0].name, message: "File size is too large. Contact your organization's Simplexam Admin",  yes: false, ok: true, no: false, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+        })
+       // this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
         return;
       }
       this.file = event.target.files[0].name;
@@ -1128,7 +1129,6 @@ export class BillingPaymentDialog {
     public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,
     private fb: FormBuilder, public dialog: MatDialog) {
-    console.log(data)
     dialogRef.disableClose = true;
     this.postPaymentForm = this.formBuilder.group({
       id: [''],
@@ -1159,7 +1159,6 @@ export class BillingPaymentDialog {
     if (data.status) {
       this.billingService.getPostPayment(data.id).subscribe(pay => {
         this.paymentDetails = pay.data;
-        console.log(this.paymentDetails.post_payment_eor_details, "paymentDetails")
         this.paymentDetails.post_payment_eor_details.map((data, index) => {
           this.addRow();
           let details = {
@@ -1234,7 +1233,6 @@ export class BillingPaymentDialog {
   PaymentFormSubmit() {
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
-      console.log(this.getFormControls.controls[j].value)
       if (!this.getFormControls.controls[j].value['save_status']) {
         newRowStatus = false;
       }
@@ -1270,7 +1268,6 @@ export class BillingPaymentDialog {
 
       this.dialogRef.close(post.data);
     }, error => {
-      console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
     })
 
@@ -1329,7 +1326,6 @@ export class BillingPaymentDialog {
   openFileUpload() {
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
-      console.log(this.getFormControls.controls[j].value)
       if (!this.getFormControls.controls[j].value['save_status']) {
         newRowStatus = false;
       }
@@ -1387,7 +1383,6 @@ export class BillingPaymentDialog {
       group.markAllAsTouched();
       return;
     }
-    console.log(group.value)
     this.formEOR = new FormData();
 
     this.formEOR.append('file', group.value.file)
@@ -1401,7 +1396,6 @@ export class BillingPaymentDialog {
     this.formEOR.append('write_off_other_reason', String(group.value.write_off_other_reason))
 
     this.billingService.postPaymentFileAdd(this.data.billingId, this.formEOR).subscribe(file => {
-      console.log(file);
       if (group.value.id) {
         this.alertService.openSnackBar("EOR updated successfully", 'success');
       } else {
@@ -1452,7 +1446,6 @@ export class BillingPaymentDialog {
       this.getFormControls.controls.splice(index, 1)
       return;
     }
-    console.log(this.paymentDetails.post_payment_eor_details)
     let details = {
       write_off_reason_id: this.paymentDetails.post_payment_eor_details[index].write_off_reason_id,
       eor_allowance: this.paymentDetails.post_payment_eor_details[index].eor_allowance,
@@ -1467,7 +1460,6 @@ export class BillingPaymentDialog {
     if (!element.value.id) {
       return;
     }
-    console.log(element.value)
     this.billingService.downloadOndemandDocuments({ file_url: element.value.url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
       saveAs(res.signed_file_url, element.value.file_name);
@@ -1588,7 +1580,6 @@ export class billingOnDemandDialog {
           this.selection1.select(doc);
         }
       })
-      console.log(rec.data);
       this.recipients = new MatTableDataSource(rec.data);
     })
   }
@@ -1722,7 +1713,6 @@ export class billingOnDemandDialog {
 
   typeIfRecipient = "";
   openAddAddress(element): void {
-    console.log(element)
     this.typeIfRecipient = element.recipient_type;
     const dialogRef = this.dialog.open(AddAddress, {
       width: '800px',

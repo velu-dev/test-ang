@@ -47,7 +47,6 @@ export class ExaminationComponent implements OnInit {
   uploadedDocument: any = new MatTableDataSource([]);
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog) {
     this.route.params.subscribe(params => {
-      console.log(params)
       this.claim_id = params.claim_id;
       this.billableId = params.billId;
       this.getData();
@@ -153,7 +152,6 @@ export class ExaminationComponent implements OnInit {
     }
     this.ondemandService.uploadExaminationDocument(formData).subscribe(res => {
       if (res.status) {
-        console.log(res)
         this.alertService.openSnackBar(res.message, 'success');
         this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";

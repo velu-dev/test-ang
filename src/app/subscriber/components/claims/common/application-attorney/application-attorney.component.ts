@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 export const _filter = (opt: any[], value: string): string[] => {
-  console.log("opt", opt);
+  // console.log("opt", opt);
   const filterValue = value.toLowerCase();
 
   return opt.filter(item => item.company_name.toLowerCase().indexOf(filterValue) === 0);
@@ -38,7 +38,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     // this.claimService.seedData("state").subscribe(res => {
     //   this.states = res.data;
     // })
-    console.log(this.aattorneyDetail)
+    // console.log(this.aattorneyDetail)
     // this.changeState(this.aattorneyDetail['state'], this.aattorneyDetail['state_code']);
     // this.claimService.seedData('eams_representatives').subscribe(res => {
     //   this.eamsRepresentatives = res.data;
@@ -82,7 +82,7 @@ export class ApplicationAttorneyComponent implements OnInit {
       this.ApplicantAttorney.controls["zip_code"].setValidators([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')]);
       this.editAA();
     }
-    console.log(this.aattorneyDetail)
+    // console.log(this.aattorneyDetail)
     if (this.fromPop) {
       this.aattorneyDetail.state = this.aattorneyDetail.state_name;
     }

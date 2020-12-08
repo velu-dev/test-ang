@@ -915,7 +915,8 @@
                         </div>
                     </mat-card-content>
                 </mat-card>
-                <mat-card class="m-t-20 m-b-20 def_attorney_info">
+                <mat-card class="m-t-20 m-b-20 def_attorney_info"
+                    *ngIf="claim.get(['claim_details', 'exam_type_id']).value != 3">
                     <mat-card-header>
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">DEU Office </div>
@@ -967,7 +968,8 @@
                                     <mat-select-trigger>
                                         {{deuState}}
                                     </mat-select-trigger>
-                                    <mat-option *ngFor="let state of states" [value]="state.state">{{state.state_code}}
+                                    <mat-option *ngFor="let state of states" [value]="state.state">
+                                        {{state.state_code}}
                                         - {{state.state}}
                                     </mat-option>
                                 </mat-select>
@@ -1004,24 +1006,23 @@
                                 <input matInput placeholder="Email" formControlName="email" autocomplete="off">
                                 <mat-error>Please enter valid email</mat-error>
                             </mat-form-field>
-
-                            <div class="text-center w-100 m-t-10 m-b-10 action-button" fxFlex="100">
-                                <button mat-stroked-button type="button" class="m-r-10 outline-warning"
-                                    matStepperPrevious>Previous</button>
-                                <button mat-stroked-button type="button" class="m-r-10 outline-danger"
-                                    (click)="cancel('Claim')">Cancel</button>
-                                <button mat-stroked-button type="submit" class="m-r-10 outline-light_green"
-                                    (click)="submitClaim('save')">
-                                    Save & Close</button>
-                                <button mat-stroked-button type="submit" class="m-r-10 outline-success"
-                                    (click)="submitClaim('next')">Save & Next
-                                </button>
-                            </div>
                         </div>
-
                     </mat-card-content>
                 </mat-card>
-
+                <mat-card class="m-t-20 m-b-20 def_attorney_info">
+                    <div class="text-center w-100 m-t-10 m-b-10 action-button" fxFlex="100">
+                        <button mat-stroked-button type="button" class="m-r-10 outline-warning"
+                            matStepperPrevious>Previous</button>
+                        <button mat-stroked-button type="button" class="m-r-10 outline-danger"
+                            (click)="cancel('Claim')">Cancel</button>
+                        <button mat-stroked-button type="submit" class="m-r-10 outline-light_green"
+                            (click)="submitClaim('save')">
+                            Save & Close</button>
+                        <button mat-stroked-button type="submit" class="m-r-10 outline-success"
+                            (click)="submitClaim('next')">Save & Next
+                        </button>
+                    </div>
+                </mat-card>
             </form>
         </mat-step>
         <mat-step [stepControl]="billable_item">
