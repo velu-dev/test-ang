@@ -55,8 +55,8 @@
 
 <div fxLayout="column" fxLayoutGap="25px">
     <div fxLayout="row wrap">
-        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <div fxLayout="row wrap">
+        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" style="min-height: 100vh;display:flex">
+            <div fxLayout="row wrap" fxFlex>
                 <div fxFlex="100">
                     <div class="exam-dashboard">
                         <mat-card>
@@ -67,7 +67,7 @@
                                 </mat-icon>
                             </mat-card-header>
                             <mat-card-content>
-                                <div fxLayout="row wrap">
+                                <div fxLayout="row wrap" class="flex_">
                                     <div class="heading-one separation" fxFlex="50">
                                         Total
                                         <span>{{dashboardData?.upcoming_appointments?.total}}</span>
@@ -94,7 +94,7 @@
                                 </mat-icon>
                             </mat-card-header>
                             <mat-card-content>
-                                <div class="heading-one">
+                                <div class="heading-one flex_">
                                     Pending Payment
                                     <span class="text-success">${{dashboardData?.billing?.pending_payment}}</span>
                                 </div>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <div fxFlex="100">
+                <div fxFlex="100" class="m-t-10">
                     <div class="exam-dashboard">
                         <mat-card>
                             <mat-card-header>
@@ -113,7 +113,7 @@
                                 </mat-icon>
                             </mat-card-header>
                             <mat-card-content>
-                                <div fxLayout="row wrap">
+                                <div fxLayout="row wrap" class="flex_">
                                     <div class="heading-one separation" fxFlex="50">
                                         Total
                                         <span>{{dashboardData?.items_awaiting_reports?.total}}</span>
@@ -170,7 +170,7 @@
             </div>
         </div>
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <div fxLayout="row wrap">
+            <div fxLayout="row wrap" fxFlex>
                 <div fxFlex="100">
                     <div class="exam-dashboard">
                         <mat-card>
