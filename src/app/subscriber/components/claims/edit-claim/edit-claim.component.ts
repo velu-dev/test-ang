@@ -21,7 +21,7 @@ export class EditClaimComponent implements OnInit {
   panelOpenState = false;
   claimId: any;
   claimantDetail: any = {};
-  claimDetail = {};
+  claimDetail = { exam_type_id: null };
   claimAdminDetail = {};
   aAttorneyDetail = {};
   dAttorneyDetail = {};
