@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
@@ -10,6 +10,9 @@ import { ExaminerService } from 'src/app/subscriber/service/examiner.service';
 import { Location } from '@angular/common';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { saveAs } from 'file-saver';
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 @Component({
   selector: 'app-billable-item-awaiting',
   templateUrl: './billable-item-awaiting.component.html',
@@ -36,12 +39,14 @@ export class BillableItemAwaitingComponent implements OnInit {
   isMobile = false;
   columnName = [];
   filterValue: string;
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(private breakpointObserver: BreakpointObserver,
     private router: Router,
     private _location: Location,
     private examinerService: ExaminerService,
     public dialog: MatDialog,
     private cookieService: CookieService,
+    private alertService: AlertService,
     private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -100,6 +105,58 @@ export class BillableItemAwaitingComponent implements OnInit {
   back() {
     this._location.back();
   }
+  selectedFile: File;
+  formData = new FormData();
+  errors = { file: { isError: false, error: "" } }
+  uploadFile(element,e) {
+    this.selectedFile = null;
+    this.selectedFile = element.target.files[0];
+   
+    let fileTypes = ['pdf', 'doc', 'docx'];
+      if (fileTypes.includes(this.selectedFile.name.split('.').pop().toLowerCase())) {
+        var FileSize = this.selectedFile.size / 1024 / 1024; // in MB
+        if (FileSize > 501) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px',
+            data: { title: this.selectedFile.name, message: "File size is too large. Contact your organization's Simplexam Admin",  yes: false, ok: true, no: false, type: "info", info: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+          })
+          this.fileUpload.nativeElement.value = "";
+          return;
+        }
+        this.errors = { file: { isError: false, error: "" } }
+      } else {
+        this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        this.errors.file.isError = true;
+        this.errors.file.error = "This file type is not accepted";
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
+      }
+    
+    if (!this.selectedFile) {
+      this.alertService.openSnackBar("Please select file", 'error');
+      this.errors.file.isError = true;
+      this.errors.file.error = "Please select a file";
+      return;
+    }
+    this.formData = new FormData();
+    this.formData.append('file', this.selectedFile);
+    this.formData.append('document_category_id', '6');
+    this.formData.append('claim_id', e.claim_id.toString());
+    this.formData.append('bill_item_id', e.bill_item_id.toString());
+    this.formData.append('isReportUpload', 'true');
+    this.examinerService.postDocument(this.formData).subscribe(res => {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.formData = new FormData();
+      this.errors = { file: { isError: false, error: "" } }
+      this.alertService.openSnackBar("File added successfully", 'success');
+    }, error => {
+      this.fileUpload.nativeElement.value = "";
+      this.selectedFile = null;
+    })
+  }
 
   goToReport(e) {
     this.intercom.setClaimant(e.first_name + ' ' + e.last_name);
@@ -109,6 +166,13 @@ export class BillableItemAwaitingComponent implements OnInit {
     this.intercom.setBillableItem(e.exam_procedure_name);
     this.cookieService.set('billableItem', e.exam_procedure_name)
     this.router.navigate(['/subscriber/examiner/claimants/claimant/' + e.claimant_id + '/claim/' + e.claim_id + '/billable-item/' + e.bill_item_id + '/reports'])
+  }
+
+  downloadDocumet(element) {
+    this.examinerService.downloadOndemandDocuments({ file_url: element.compiled_report_file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.compiled_report_file_name);
+    })
   }
 
 }

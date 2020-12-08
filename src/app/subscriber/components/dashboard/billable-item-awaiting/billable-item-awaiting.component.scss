@@ -1,8 +1,14 @@
+@import "variables";
 @import "table";
+
 mat-card {
     padding: 10px;
     box-shadow: $shadow-style-one !important;
     &:hover {
         box-shadow: $shadow-style-one-hover;
     }
+}
+.filled-lightgray-1 {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-7;
 }

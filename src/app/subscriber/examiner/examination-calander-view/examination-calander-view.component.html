@@ -38,7 +38,7 @@
             [bootstrapFontAwesome]="true" [slotEventOverlap]="false" [eventTimeFormat]="options.eventTimeFormat"
             [businessHours]="options.businessHours" [editable]="false" [events]="calendarEvents" [views]="options.views"
             [header]="options.header" [customButtons]="options.customButtons" [plugins]="options.plugins"
-            (eventClick)="handleEventClick($event)">
+            (eventClick)="handleEventClick($event)" [defaultView]="defaultView">
         </full-calendar>
     </div>
 </div>
