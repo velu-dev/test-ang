@@ -6,6 +6,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ExaminerService } from 'src/app/subscriber/service/examiner.service';
 import { Location } from '@angular/common';
+import { saveAs } from 'file-saver';
+import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-upcomming-billable-item',
   templateUrl: './upcomming-billable-item.component.html',
@@ -33,6 +35,7 @@ export class UpcommingBillableItemComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
+    private alertService: AlertService,
     private _location: Location) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -74,6 +77,13 @@ export class UpcommingBillableItemComponent implements OnInit {
 
   back() {
     this._location.back();
+  }
+
+  downloadDocumet(element) {
+    this.examinerService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.file_name);
+    })
   }
 
 }
