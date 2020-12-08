@@ -14,7 +14,7 @@
                             {{columnName[i]}} </th>
                     </ng-container>
                     <ng-container *ngIf="columnName[i] == 'Icon'">
-                        <th mat-header-cell *matHeaderCellDef> <mat-icon (click)="back()">fullscreen_exit</mat-icon></th>
+                        <th mat-header-cell *matHeaderCellDef> <mat-icon (click)="back()" class="p-t-10">fullscreen_exit</mat-icon></th>
                     </ng-container>
                     <td mat-cell *matCellDef="let element;let m">
                         <span *ngIf="i == 0 && isMobile">
@@ -27,13 +27,12 @@
                             <span *ngIf="column == 'claimant_name'">{{element?.last_name}} {{element?.first_name}}</span>
                             <span *ngIf="column == 'procedure_type'">{{element?.exam_type_code}} - {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}}</span>
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
-                            <span *ngIf="column == 'due_date'">{{element?.bill_due_date | date:'MM-dd-yyyy'}}</span>
-                            <span *ngIf="column == 'report'"><a routerLink (click)="goToReport(element)">Go To Report Service</a></span>
+                            <span *ngIf="column == 'due_date'">{{element?.due_date | date:'MM-dd-yyyy'}}</span>
+                            <span *ngIf="column == 'report'"><a routerLink (click)="goToReport(element)" class="text-ternary">Go To Report Service</a></span>
                             <span *ngIf="column == 'status'">{{element?.status}}</span>
-                            <span *ngIf="column == 'compiled_report'"><a routerLink (click)="downloadDocumet(element)">{{element?.compiled_report_file_name}}</a></span>
-                            <span *ngIf="column == 'final_report' && element?.compiled_report_file_name"><button type="button" (click)="uploader.click()">Upload Final Report</button>
-                                <input type="file" #uploader hidden (change)="uploadFile($event, element)"
-                                accept=".pdf, .doc, .docx" required>
+                            <span *ngIf="column == 'compiled_report'"><a routerLink (click)="downloadDocumet(element)"  class="text-ternary">{{element?.compiled_report_file_name}}</a></span>
+                            <span *ngIf="column == 'final_report' && element?.compiled_report_file_name"><button type="button" (click)="uploader.click()"   mat-raised-button class="mini-btn filled-lightgray-1">Upload Final Report</button>
+                                <input type="file" #uploader hidden (change)="uploadFile($event, element)" accept=".pdf, .doc, .docx" required>
                             </span>
                         </div>
                     </td>
@@ -46,7 +45,7 @@
                                 <div><span>Exam Procedure Type</span><span> {{element?.exam_type_code}} - {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}} </span></div>
                                 <div><span>Date of service / Date Item Received</span><span>{{element?.date_of_service | date:'MM-dd-yyyy'}} </span></div>
                                 <div><span>Date Due</span><span> {{element?.bill_due_date | date:'MM-dd-yyyy'}} </span></div>
-                                <div><span>Report SimpleService</span><span> <a>Go To Report Service</a></span></div>
+                                <div><span>Report SimpleService</span><span> <a class="text-ternary">Go To Report Service</a></span></div>
                                 <div><span>Status</span><span> {{element?.status}}</span></div>
                                 <div><span>Compiled Report</span><span><a routerLink (click)="downloadDocumet(element)">{{element?.compiled_report_file_name}}</a></span></div>
                                 <div><span>Upload Final Report</span><span *ngIf="element?.compiled_report_file_name"> <button type="button" (click)="uploader.click()">Upload Final Report</button>

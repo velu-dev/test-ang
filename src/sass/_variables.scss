@@ -64,7 +64,10 @@ $white: #ffffff;
 $black: #000000;
 $gray: #ccc;
 $text-gray: #5b626b;
+// $text-gray: #767676;
+$lightgray:#E0E1E2;
 $dark-gray: #4d4f5c;
+// $light-gray: #a2a1a1;
 $light-gray: #a2a1a1;
 $text-dark: #45515f;
 $menu-active: #383838; //Menu active background
@@ -852,6 +855,13 @@ input:-webkit-autofill {
   background-color: $light-color;
   border-color: $light-color;
 }
+
+.filled-lightgray-1 {
+  @extend .btn_;
+  color: $text-gray;
+  background-color: $lightgray;
+  border-color: $light-color;
+}
 .filled-secondary {
   @extend .btn_;
   color: $white;
@@ -924,6 +934,9 @@ input:-webkit-autofill {
     color: $text-gray;
     cursor: not-allowed;
   }
+}
+.underline {
+  text-decoration: underline;
 }
 
 .text-success {
