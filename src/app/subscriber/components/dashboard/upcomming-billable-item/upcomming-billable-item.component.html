@@ -26,7 +26,7 @@
                         </span>
                         <div>
                             <span *ngIf="column == 'claimant'">{{element?.last_name}} {{element?.first_name}}</span>
-                            <span *ngIf="column == 'procedure_type'">{{element?.exam_type_code}} - {{element?.procedure_type}} </span>
+                            <span *ngIf="column == 'procedure_type'">{{element?.exam_type_code}} - {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}} </span>
                             <span
                                 *ngIf="column == 'location'">{{element?.street1}} {{element?.street2}} {{element?.city}} {{element?.state_name}} {{element?.zip_code}}</span>
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
@@ -41,7 +41,7 @@
                         <div class="detail" [@detailExpand]="expandId == n ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Claimant</span><span> {{element?.last_name}} {{element?.first_name}} </span></div>
-                                <div><span>Procedure Type</span><span> {{element?.exam_type_code}} - {{element?.procedure_type}} </span></div>
+                                <div><span>Procedure Type</span><span> {{element?.exam_type_code}} - {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}} </span></div>
                                 <div>
                                     <span>Location</span><span>{{element?.street1}} {{element?.street2}} {{element?.city}} {{element?.state_name}} {{element?.zip_code}}
                                 </span></div>
