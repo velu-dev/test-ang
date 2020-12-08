@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-billable-item-awaiting',
   templateUrl: './billable-item-awaiting.component.html',
@@ -161,6 +162,13 @@ export class BillableItemAwaitingComponent implements OnInit {
     this.intercom.setBillableItem(e.exam_procedure_name);
     this.cookieService.set('billableItem', e.exam_procedure_name)
     this.router.navigate(['/subscriber/examiner/claimants/claimant/' + e.claimant_id + '/claim/' + e.claim_id + '/billable-item/' + e.bill_item_id + '/reports'])
+  }
+
+  downloadDocumet(element) {
+    this.examinerService.downloadOndemandDocuments({ file_url: element.compiled_report_file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.compiled_report_file_name);
+    })
   }
 
 }

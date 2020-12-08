@@ -31,8 +31,8 @@
                                 *ngIf="column == 'location'">{{element?.street1}} {{element?.street2}} {{element?.city}} {{element?.state_name}} {{element?.zip_code}}</span>
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
                           
-                            <span *ngIf="column == 'history_on_demand'">{{element?.history_response_file}}</span>
-                            <span *ngIf="column == 'records_on_demand' && element?.history_response_file">{{element?.records_response_file}}</span>
+                            <span *ngIf="column == 'history_on_demand'"><a roterLink (click)="downloadDocumet({file_name:element?.history_response_file,file_url:element?.history_response_url})">{{element?.history_response_file}}</a></span>
+                            <span *ngIf="column == 'records_on_demand'"><a roterLink (click)="downloadDocumet({file_name:element?.records_response_file,file_url:element?.records_response_url})">{{element?.records_response_file}}</a></span>
                         </div>
                     </td>
                 </ng-container>

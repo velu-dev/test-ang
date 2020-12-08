@@ -30,8 +30,8 @@
                             <span *ngIf="column == 'due_date'">{{element?.due_date | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'report'"><a routerLink (click)="goToReport(element)" class="text-ternary">Go To Report Service</a></span>
                             <span *ngIf="column == 'status'">{{element?.status}}</span>
-                            <span *ngIf="column == 'compiled_report'"><a class="text-ternary underline">{{element?.compiled_report_file_name}}</a></span>
-                            <span *ngIf="column == 'final_report' && element?.compiled_report_file_name"><button type="button" (click)="uploader.click()"  mat-raised-button class="mini-btn filled-lightgray-1">Upload Final Report</button>
+                            <span *ngIf="column == 'compiled_report'"><a routerLink (click)="downloadDocumet(element)"  class="text-ternary">{{element?.compiled_report_file_name}}</a></span>
+                            <span *ngIf="column == 'final_report' && element?.compiled_report_file_name"><button type="button" (click)="uploader.click()"   mat-raised-button class="mini-btn filled-lightgray-1">Upload Final Report</button>
                                 <input type="file" #uploader hidden (change)="uploadFile($event, element)" multiple
                                 accept=".pdf, .doc, .docx" required>
                             </span>
