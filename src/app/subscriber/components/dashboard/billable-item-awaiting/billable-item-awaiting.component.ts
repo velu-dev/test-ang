@@ -12,6 +12,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 @Component({
   selector: 'app-billable-item-awaiting',
   templateUrl: './billable-item-awaiting.component.html',
@@ -114,7 +115,13 @@ export class BillableItemAwaitingComponent implements OnInit {
     let fileTypes = ['pdf', 'doc', 'docx'];
       if (fileTypes.includes(this.selectedFile.name.split('.').pop().toLowerCase())) {
         var FileSize = this.selectedFile.size / 1024 / 1024; // in MB
-        if (FileSize > 3073) {
+        if (FileSize > 501) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px',
+            data: { title: this.selectedFile.name, message: "File size is too large. Contact your organization's Simplexam Admin",  yes: false, ok: true, no: false, type: "info", info: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+          })
           this.fileUpload.nativeElement.value = "";
           this.errors.file.isError = true;
           this.errors.file.error = "File size is too large";
