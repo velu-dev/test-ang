@@ -590,7 +590,6 @@ export class NewClaimComponent implements OnInit {
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       other_language: [null]
     })
-
     this.claim = this.formBuilder.group({
       claim_details: this.formBuilder.group({
         id: [null],
@@ -1024,9 +1023,7 @@ export class NewClaimComponent implements OnInit {
     this.openDialogCancel('cancel', "Create " + title)
   }
   examtypeChange(type) {
-    this.logger.log(type);
     this.claimService.getProcedureType(type.id).subscribe(res => {
-      this.logger.log(res.data);
       this.procuderalCodes = res.data;
     })
   }

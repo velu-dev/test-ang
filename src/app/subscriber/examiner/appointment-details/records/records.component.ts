@@ -93,7 +93,6 @@ export class RecordsComponent implements OnInit {
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.claim_id, this.paramsId.billId).subscribe(record => {
       this.recordData = record;
-      console.log(record)
       record.documets.map(data => {
         data.page_number = data.no_of_units;
         data.isEdit = false;
@@ -293,7 +292,6 @@ export class RecordsComponent implements OnInit {
       this.alertService.openSnackBar("Record Summary On Demand created successfully", 'success');
       this.getRecord();
     }, error => {
-      console.log(error)
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }

@@ -293,7 +293,6 @@ export class ReportComponent implements OnInit {
       this.alertService.openSnackBar("Transcribe and Compile created successfully", 'success');
       this.getReport();
     }, error => {
-      console.log(error);
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
@@ -323,7 +322,6 @@ export class ReportComponent implements OnInit {
   }
 
   docChange(e) {
-    console.log(e)
     this.fileUpload.nativeElement.value = "";
     this.selectedFile = null;
     this.selectedFiles = null;

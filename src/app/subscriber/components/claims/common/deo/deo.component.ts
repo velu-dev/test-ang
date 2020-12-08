@@ -67,7 +67,7 @@ export class DeoComponent implements OnInit {
     }
     this.changeState(this.deuDetail.state, this.deuDetail.state_code);
     this.DEU.patchValue(this.deuDetail);
-    console.log(this.deuDetail)
+    // console.log(this.deuDetail)
     this.deuCtrl.setValue(this.deuDetail.name);
   }
   deuState: any;
@@ -76,7 +76,7 @@ export class DeoComponent implements OnInit {
       this.deuState = state_code;
       return
     }
-    console.log(state)
+    // console.log(state)
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
         this.deuState = res.state_code;

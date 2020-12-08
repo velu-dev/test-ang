@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 export const _filter = (opt: any[], value: string): string[] => {
-  console.log("opt", opt);
+  // console.log("opt", opt);
   const filterValue = value.toLowerCase();
 
   return opt.filter(item => item.company_name.toLowerCase().indexOf(filterValue) === 0);
@@ -66,7 +66,7 @@ export class ClaimAdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.claimAdmin)
+    // console.log(this.claimAdmin)
     if (this.fromPop) {
       this.dialogRef.disableClose = true;
       this.claimAdminForm.controls["company_name"].setValidators([Validators.required]);
@@ -85,7 +85,7 @@ export class ClaimAdminComponent implements OnInit {
   }
   caState: any;
   changeState(state, state_code?) {
-    console.log(state, state_code)
+    // console.log(state, state_code)
     if (state_code) {
       this.caState = state_code;
       return

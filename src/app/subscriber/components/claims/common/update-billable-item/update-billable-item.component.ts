@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
@@ -42,6 +42,8 @@ export class UpdateBillableItemComponent implements OnInit {
   @Input('state') states;
   @Input('claim_id') claimId;
   @Input('claimant_id') claimantId;
+  @Output() billableitemCount: EventEmitter<any> = new EventEmitter<any>();
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -55,10 +57,10 @@ export class UpdateBillableItemComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Exam Type"]
+        this.columnName = ["", "Exam Procedure Type"]
         this.columnsToDisplay = ['is_expand', 'procedure_type_name']
       } else {
-        this.columnName = ["Exam Type", "Date of Service / Date Item Received", "Examiner", "Status"]
+        this.columnName = ["Exam Procedure Type", "Date of Service / Date Item Received", "Examiner", "Status"]
         this.columnsToDisplay = ['procedure_type_name', 'appointment_scheduled_date_time', 'examiner_name', "status"]
       }
     })
@@ -66,7 +68,7 @@ export class UpdateBillableItemComponent implements OnInit {
 
   ngOnInit() {
     this.claimService.getbillableItem(this.claimId).subscribe(billRes => {
-      console.log("billRes", billRes)
+      this.billableitemCount.emit(billRes.data.count)
       this.dataSource = new MatTableDataSource(billRes['data'])
     }, error => {
       this.dataSource = new MatTableDataSource([])

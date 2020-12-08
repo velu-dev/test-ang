@@ -86,14 +86,14 @@ export class DefenseAttorneyComponent implements OnInit {
     if (this.fromPop) {
       this.dattorneyDetail.state = this.dattorneyDetail.state_name;
     }
-    console.log(this.dattorneyDetail)
+    // console.log(this.dattorneyDetail)
     this.changeState(this.dattorneyDetail.state, this.dattorneyDetail.state_code);
     this.DefanceAttorney.patchValue(this.dattorneyDetail);
     this.id = this.dattorneyDetail.id;
   }
   daState: any;
   changeState(state, state_code?) {
-    console.log(state_code);
+    // console.log(state_code);
     if (state_code) {
       this.daState = state_code;
       return

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -13,6 +13,9 @@ import { IntercomService } from 'src/app/services/intercom.service';
 export class ClaimComponent implements OnInit {
   @Input('claim') claimDetail;
   @Input('state') states;
+  @Input('is_billable_item_available') is_billable_item_available;
+  @Output() examType: EventEmitter<any> = new EventEmitter<any>();
+
   isEdit = false;
   claim: FormGroup;
   examTypes = [];
@@ -37,12 +40,17 @@ export class ClaimComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.claimDetail);
     this.internalReferanceNumber = this.claimDetail.internal_reference;
+    console.log(this.is_billable_item_available)
     this.claim.patchValue(this.claimDetail);
   }
   editClick() {
     this.claim.enable();
+    if (this.is_billable_item_available) {
+      this.claim.get('exam_type_id').disable();
+    } else {
+      this.claim.get('exam_type_id').enable();
+    }
     this.isEdit = !this.isEdit;
     this.claim.patchValue(this.claimDetail);
   }
@@ -59,10 +67,11 @@ export class ClaimComponent implements OnInit {
       return;
     }
     this.claimService.updateClaim(this.claim.value, this.claim.value.id).subscribe(res => {
+      this.examType.emit(res.data.exam_type_id);
       if (this.claim.value.claim_number) {
         this.intercom.setClaimNumber(this.claim.value.claim_number);
         this.cookieService.set('claimNumber', this.claim.value.claim_number)
-      }else{
+      } else {
         this.intercom.setClaimNumber('Claim');
       }
 
