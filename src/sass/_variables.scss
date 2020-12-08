@@ -65,7 +65,7 @@ $black: #000000;
 $gray: #ccc;
 $text-gray: #5b626b;
 // $text-gray: #767676;
-$lightgray:#E0E1E2;
+$lightgray: #e0e1e2;
 $dark-gray: #4d4f5c;
 // $light-gray: #a2a1a1;
 $light-gray: #a2a1a1;
@@ -415,7 +415,7 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
     box-shadow: $shadow-style-one-hover;
   }
   min-height: calc(100vh - 240px);
-  @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) {
+  @media screen and (max-width: 1024px) and (min-width: 481px) {
     min-height: calc(100vh - 350px);
   }
 }
@@ -1414,56 +1414,55 @@ input:-webkit-autofill {
   // }
 }
 
-
 // incomplete inforamation
 .incomplete-info {
   margin-top: 20px;
   mat-card {
-      box-shadow: $shadow-style-one !important;
-      &:hover {
-          box-shadow: $shadow-style-one-hover;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+      box-shadow: $shadow-style-one-hover;
+    }
+    mat-card-header {
+      .content-wrapper-main-title {
+        font-weight: $font-weight-bold;
       }
-      mat-card-header {
-          .content-wrapper-main-title {
-              font-weight: $font-weight-bold;
-          }
-          mat-divider {
-              border-color: $error;
-          }
+      mat-divider {
+        border-color: $error;
       }
-      mat-card-content {
-          .incomplete-modules {
-              ul {
-                  margin: 0;
-                  padding: 0;
-                  width: 100%;
-                  li {
-                      list-style: none;
-                      width: 50%;
-                      float: left;
-                      color: $error;
-                      padding-top: 10px;
-                      @media only screen and (max-width: 568px) {
-                          width: 100%;
-                          padding-top: 10px;
-                      }
-                      &:first-child,
-                      &:nth-child(2) {
-                          padding-top: 0;
-                          @media only screen and (max-width: 568px) {
-                              padding-top: 10px;
-                          }
-                      }
-                      mat-icon {
-                          vertical-align: sub;
-                          width: auto;
-                          height: auto;
-                          padding-right: 5px;
-                          font-size: $font-size-9;
-                      }
-                  }
+    }
+    mat-card-content {
+      .incomplete-modules {
+        ul {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          li {
+            list-style: none;
+            width: 50%;
+            float: left;
+            color: $error;
+            padding-top: 10px;
+            @media only screen and (max-width: 568px) {
+              width: 100%;
+              padding-top: 10px;
+            }
+            &:first-child,
+            &:nth-child(2) {
+              padding-top: 0;
+              @media only screen and (max-width: 568px) {
+                padding-top: 10px;
               }
+            }
+            mat-icon {
+              vertical-align: sub;
+              width: auto;
+              height: auto;
+              padding-right: 5px;
+              font-size: $font-size-9;
+            }
           }
+        }
       }
+    }
   }
 }

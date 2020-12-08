@@ -30,7 +30,7 @@
         mat-card-content {
             .flex_ {
                 height: auto;
-                @media only screen and (min-device-width: 1820px) and (max-device-width: 2800px) {
+                @media screen and (max-width: 2800px) and (min-width: 1820px) {
                     min-height: 100px;
                 }
             }
@@ -39,13 +39,12 @@
                 width: $width-100;
                 text-align: center;
                 font-size: $font-size-10;
-
-                @media only screen and (min-device-width: 1080px) and (max-device-width: 1820px) {
+                @media screen and (max-width: 1820px) and (min-width: 1080px) {
                     padding: 30px 5px;
                     min-height: 80px;
                 }
-                @media only screen and (min-device-width: 1820px) and (max-device-width: 2800px) {
-                    padding: 65px 5px;
+                @media screen and (max-width: 2800px) and (min-width: 1820px) {
+                    padding: 55px 5px;
                 }
                 span {
                     width: 100%;
