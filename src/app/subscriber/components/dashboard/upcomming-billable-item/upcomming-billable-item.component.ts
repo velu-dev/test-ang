@@ -8,6 +8,7 @@ import { ExaminerService } from 'src/app/subscriber/service/examiner.service';
 import { Location } from '@angular/common';
 import { saveAs } from 'file-saver';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import * as moment from 'moment';
 @Component({
   selector: 'app-upcomming-billable-item',
   templateUrl: './upcomming-billable-item.component.html',
@@ -41,10 +42,10 @@ export class UpcommingBillableItemComponent implements OnInit {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "Claimant", "Action"]
-        this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
+        this.columnsToDisplay = ['is_expand', 'claimant', "disabled"]
       } else {
         this.columnName = ["Claimant", "Exam Procedure Type", "Location", "Date of service / Date Item Received", "History", "Records", 'Icon']
-        this.columnsToDisplay = ['claimant', 'procedure_type', "location", "dos", 'history_on_demand', 'records_on_demand', 'icon']
+        this.columnsToDisplay = ['claimant', 'type', "location", "dos", 'history_on_demand', 'records_on_demand', 'icon']
       }
     })
   }
@@ -52,6 +53,12 @@ export class UpcommingBillableItemComponent implements OnInit {
   ngOnInit() {
 
     this.examinerService.getUpcomingAppointment().subscribe(res => {
+      res.data.map(data=>{
+        data.claimant = data.last_name + ' ' + data.first_name;
+        data.type = data.exam_type_code + ' - ' + (data.procedure_type == 'Evaluation' || data.procedure_type == 'Reevaluation' ? 'Examination' : data.procedure_type);
+        data.dos = data.date_of_service ? moment(data.date_of_service , 'MM-dd-yyyy'): '';
+      })
+      console.log( res.data)
       this.upcomingAppointment = new MatTableDataSource(res.data);
       this.upcomingAppointment.paginator = this.paginator;
       this.upcomingAppointment.sort = this.sort;
