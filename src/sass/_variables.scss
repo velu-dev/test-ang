@@ -813,7 +813,20 @@ input:-webkit-autofill {
 .btn_ {
   height: 40px;
   min-width: 100px;
+  // &:disabled {
+  //   background-color: inherit !important;
+  //   color: $disabled;
+  //   border: 1px solid $disabled;
+  //   cursor: not-allowed;
+  // }
 }
+// button[disabled] {
+//   &:hover {
+//     background-color: inherit !important;
+//     color: $disabled;
+//     border: 1px solid $disabled;
+//   }
+// }
 .huge-btn {
   font-size: $font-size-9;
   height: 50px;

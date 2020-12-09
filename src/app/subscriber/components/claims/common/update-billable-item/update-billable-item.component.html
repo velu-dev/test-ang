@@ -28,7 +28,7 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
-    <div class="user-detail vertical-fixed default-cursor">
+    <div class="user-detail vertical-fixed">
         <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table">
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                 <th mat-header-cell *matHeaderCellDef>

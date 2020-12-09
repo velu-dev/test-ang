@@ -110,19 +110,8 @@ export class ExaminationCalanderViewComponent implements OnInit {
         }
       });
     })
-    this.examinarService.getExaminerList().subscribe(res => {
-      this.examinars = res.data;
-      this.route.params.subscribe(param => {
-        if (param.examiner_id) {
-          this.examinerId = param.examiner_id;
-          this.appointmentId = param.billId
-          if (this.examinerId)
-            this.getSingleEvent();
-        } else {
-          this.loadAllEvents();
-        }
-      })
-    })
+    
+   
     this.roleId = this.cookieService.get("role_id");
 
   }
@@ -138,6 +127,21 @@ export class ExaminationCalanderViewComponent implements OnInit {
     })
   }
   ngOnInit() {
+    if (!this.CalendarView) {
+      this.examinarService.getExaminerList().subscribe(res => {
+        this.examinars = res.data;
+        this.route.params.subscribe(param => {
+          if (param.examiner_id) {
+            this.examinerId = param.examiner_id;
+            this.appointmentId = param.billId
+            if (this.examinerId)
+              this.getSingleEvent();
+          } else {
+            this.loadAllEvents();
+          }
+        })
+      })
+    }
     this.defaultView = this.CalendarView ? "timeGridWeek" : "dayGridMonth";
   }
   examinername(examiner) {
