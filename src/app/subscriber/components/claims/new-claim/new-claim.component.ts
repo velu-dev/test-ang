@@ -1702,14 +1702,14 @@ export class NewClaimComponent implements OnInit {
     let body_part = this.bodyPart(data);
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: 'delete', address: true, title: body_part }
+      data: { name: 'remove', address: true, title: body_part }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.injuryInfodata.splice(index, 1);
         this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
         this.dataSource = new MatTableDataSource(this.injuryInfodata);
-        this.alertService.openSnackBar("Injury deleted successfully", "success");
+        this.alertService.openSnackBar("Injury removed successfully", "success");
       }
     })
 
