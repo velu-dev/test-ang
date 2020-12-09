@@ -5,7 +5,8 @@
             <div class="progress">
                 <div class="main-title p-l-0">Bill Status</div>
                 <p class="description p-l-0">View the Bill’s progress here, from beginning to end.</p>
-                <mat-progress-bar mode="determinate"value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class">
+                <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}"
+                    [ngClass]="statusBarValues?.class">
                 </mat-progress-bar>
                 <div class="text-center">{{billingData?.on_demand_progress_status}}</div>
             </div>
@@ -23,7 +24,8 @@
             <div class="bill-id"><span>Bill : </span> {{billingData?.agent_short_code}}{{billingData?.bill_no}}</div>
         </div>
         <div fxFlex="50">
-            <div class="submission-date"><span>First Bill Review Submission Date : </span>{{billingData?.bill_first_submission_date |  date:'MM-dd-yyyy'}}</div>
+            <div class="submission-date"><span>First Bill Review Submission Date :
+                </span>{{billingData?.bill_first_submission_date |  date:'MM-dd-yyyy'}}</div>
         </div>
     </div>
 
@@ -223,7 +225,8 @@
             <mat-card-content class="m-b-10">
                 <div fxLayout="row wrap">
                     <div fxFlex="100" class="note">
-                        <mat-icon>info</mat-icon> Note : Item and Procedure code can have alphanumeric, hyphen and forward slash
+                        <mat-icon>info</mat-icon> Note : Item and Procedure code can have alphanumeric, hyphen and
+                        forward slash
                     </div>
                 </div>
                 <div fxLayout="row wrap">
@@ -409,7 +412,8 @@
                                                 <div class="editable">
                                                     <mat-form-field appearance="outline" *ngIf="i != 0">
                                                         <input matInput type="text" [disabled]="" autocomplete="off"
-                                                            formControlName="item_description" pattern="[a-zA-Z0-9/ -]+">
+                                                            formControlName="item_description"
+                                                            pattern="[a-zA-Z0-9/ -]+">
                                                     </mat-form-field>
                                                     <span *ngIf="i == 0">
                                                         {{group.get('item_description').value}}
@@ -731,9 +735,10 @@
                                         <span *ngIf="column == 'action'">
                                             <!-- <a class="text-success m-r-10" (click)="download(element)">Download</a> -->
                                             <input type="file" #uploader hidden
-                                                (change)="addCompleteDoc($event,element)" hidden accept=".pdf, .doc, .docx"
-                                                required>
-                                            <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X'" class="text-danger no-wrap-td"
+                                                (change)="addCompleteDoc($event,element)" hidden
+                                                accept=".pdf, .doc, .docx" required>
+                                            <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X'"
+                                                class="text-danger no-wrap-td"
                                                 (click)=" element?.completed_document ? uploader.click() : ''">Remove
                                                 and Reupload
                                             </a>
@@ -853,10 +858,11 @@
                                                 error</mat-icon>
                                         </span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                                        <span *ngIf="column == 'action'" class="no-wrap-td"
-                                            [ngSwitch]="element.action"><span *ngSwitchCase="'MD'">Downloaded</span>
+                                        <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element.action">
+                                            <span *ngSwitchCase="'BD'">Downloaded</span>
                                             <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
-                                            <span *ngSwitchCase="'SFTP'">Billed On Demand</span></span>
+                                            <span *ngSwitchCase="'SFTP'">Billed On Demand</span>
+                                        </span>
                                         <span *ngIf="column == 'date'"
                                             class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                                         <span *ngIf="column == 'recipients'"><span
@@ -864,7 +870,7 @@
                                                 {{!last ? ',' : ''}}</span></span>
                                         <span *ngIf="column == 'download' && element?.send">
                                             <a class="text-success"
-                                                (click)="downloadDocumet(element?.send)">Download</a>
+                                                (click)="$event.stopPropagation();downloadDocumet(element?.send)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'payor_response_message'">
                                             {{element?.payor_response_message?.length ? element?.payor_response_message[0]?._attributes?.MessageText :  element?.payor_response_message?._attributes?.MessageText}}
@@ -880,7 +886,7 @@
                                             class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                                         <span *ngIf="column == 'recipients'"></span>
                                         <span *ngIf="column == 'download'">
-                                            <a class="text-success" (click)="downloadDocumet(element)">Download</a>
+                                            <a class="text-success" (click)="$event.stopPropagation();downloadDocumet(element)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'payor_response_message'">
                                         </span>
@@ -945,7 +951,7 @@
                                                 </div>
                                                 <div><span>Recipients</span></div>
                                                 <div><span>Download Sent Documents </span><a class="text-success"
-                                                        (click)="downloadDocumet(element)">Download</a></div>
+                                                        (click)="$event.stopPropagation();downloadDocumet(element)">Download</a></div>
                                                 <div><span>Further Information</span></div>
                                             </section>
                                         </div>

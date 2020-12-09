@@ -424,7 +424,12 @@ export class BilllableBillingComponent implements OnInit {
       this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
       this.IcdDataSource = new MatTableDataSource(this.icdData);
       this.IcdDataSource.sort = this.sort;
-      //this.logger.log("billing", billing)
+      billing.data.documets_sent_and_received.map(doccc => {
+        if (doccc.file_name == "DOCUMENTS_1140121036_BILL_20201209_051281_819.pdf") {
+          this.logger.log("billing", doccc)
+        }
+      })
+
       this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
       // if (billing.data && billing.data.billing_line_items) {
       //   billing.data.billing_line_items.map((item, index) => {
@@ -1069,11 +1074,11 @@ export class BilllableBillingComponent implements OnInit {
       if (FileSize > 501) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: event.target.files[0].name, message: "File size is too large. Contact your organization's Simplexam Admin",  yes: false, ok: true, no: false, type: "info", info: true }
+          data: { title: event.target.files[0].name, message: "File size is too large. Contact your organization's Simplexam Admin", yes: false, ok: true, no: false, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
         })
-       // this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
+        // this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
         return;
       }
       this.file = event.target.files[0].name;
