@@ -267,12 +267,12 @@
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Intake Caller</mat-label>
-                            <input matInput placeholder="Intake Caller" formControlName="caller_name"
+                            <mat-label>Intake Contact</mat-label>
+                            <input matInput placeholder="Intake Contact" formControlName="caller_name"
                                 autocomplete="off">
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Caller Affiliation</mat-label>
+                            <mat-label>Intake Contact Affiliation</mat-label>
                             <mat-select formControlName="caller_affiliation">
                                 <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                     {{caller.agent_type_name}}</mat-option>
@@ -280,8 +280,8 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Intake Call Date & Time</mat-label>
-                            <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
+                            <mat-label>Intake Date</mat-label>
+                            <!-- <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
                                 [value]="changeDateType(billable_item?.value?.intake_call?.call_date)"
                                 formControlName="call_date" autocomplete="off" [min]="minDate" [max]="todayDate.intake"
                                 [owlDateTime]="intake">
@@ -290,7 +290,14 @@
                             </mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>
                             </owl-date-time>
-                            <mat-error>Please enter valid date & time</mat-error>
+                            <mat-error>Please enter valid date & time</mat-error> -->
+
+                            <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
+                            [matDatepicker]="call_date" [min]="minDate" [max]="todayDate.intake"
+                            formControlName="call_date">
+                        <mat-datepicker-toggle matSuffix [for]="call_date"></mat-datepicker-toggle>
+                        <mat-datepicker #call_date disabled="false"></mat-datepicker>
+                        <mat-error>Please enter valid date</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -302,29 +309,29 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Caller Phone</mat-label>
-                            <input matInput placeholder="Caller Phone" formControlName="caller_phone"
+                            <mat-label>Intake Contact Phone</mat-label>
+                            <input matInput placeholder="Intake Contact Phone" formControlName="caller_phone"
                                 (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
                             <mat-error>Please enter valid phone</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Caller Fax</mat-label>
-                            <input matInput placeholder="Caller Fax" formControlName="caller_fax" autocomplete="off"
+                            <mat-label>Intake Contact Fax</mat-label>
+                            <input matInput placeholder="Intake Contact Fax" formControlName="caller_fax" autocomplete="off"
                                 (keypress)="numberOnly($event)" mask="(000) 000-0000">
                             <mat-error>Please enter valid fax</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Caller Email</mat-label>
-                            <input matInput placeholder="Caller Email" formControlName="caller_email"
+                            <mat-label>Intake Contact Email</mat-label>
+                            <input matInput placeholder="Intake Contact Email" formControlName="caller_email"
                                 autocomplete="off">
                             <mat-error>Please enter valid email</mat-error>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Intake Call Notes</mat-label>
-                            <input matInput placeholder="Intake Call Notes" formControlName="notes" autocomplete="off">
+                            <mat-label>Intake Notes</mat-label>
+                            <input matInput placeholder="Intake Notes" formControlName="notes" autocomplete="off">
                         </mat-form-field>
                     </div>
                     <div class="text-center w-100 m-t-10 m-b-10 action-button" *ngIf="isEditBillableItem">
