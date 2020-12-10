@@ -11,7 +11,7 @@
                 <div class="text-center">{{billingData?.on_demand_progress_status}}</div>
             </div>
             <div class="review-status">
-                <div>First Bill Review</div>
+                <div>{{billingData?.bill_status ? (billingData?.bill_status | titlecase) : 'Awaiting Billing'}}</div>
             </div>
             <!-- <div class="text-center">Not Sent</div> -->
         </div>
@@ -25,7 +25,7 @@
         </div>
         <div fxFlex="50">
             <div class="submission-date"><span>First Bill Review Submission Date :
-                </span>{{billingData?.bill_first_submission_date |  date:'MM-dd-yyyy'}}</div>
+                </span>{{billingData?.bill_first_submission_date ? (billingData?.bill_first_submission_date |  date:'MM-dd-yyyy') : billingData?.on_demand_progress_status}}</div>
         </div>
     </div>
 

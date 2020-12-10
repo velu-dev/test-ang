@@ -287,6 +287,9 @@ export class BilllableBillingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       // this.animal = result;
+      if(result){
+        this.getBillingDetails();
+      }
     });
   }
 
@@ -1484,6 +1487,7 @@ export class billingOnDemandDialog {
   selection1 = new SelectionModel<any>(true, []);
   displayedColumns1: string[] = ['select', 'recipient_type'];
   states: any;
+  onDemandStatus:boolean = false;
   constructor(
     public dialogRef: MatDialogRef<billingOnDemandDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, public billingService: BillingService,
@@ -1494,7 +1498,7 @@ export class billingOnDemandDialog {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(this.onDemandStatus);
   }
 
   masterToggle1() {
@@ -1674,6 +1678,7 @@ export class billingOnDemandDialog {
                 }, 1000);
 
               }
+             this.onDemandStatus = true;
               this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
             }, error => {
               this.alertService.openSnackBar(error.error.message, 'error');
@@ -1700,6 +1705,7 @@ export class billingOnDemandDialog {
             }, 1000);
 
           }
+          this.onDemandStatus = true;
           this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
@@ -1737,6 +1743,7 @@ export class billingOnDemandDialog {
     // }
     this.billingService.billingDownloadAll(this.data.claimId, this.data.billableId, this.data.billingId).subscribe(doc => {
       saveAs(doc.data.file_url, doc.data.file_name, '_self');
+      this.onDemandStatus = true;
       this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error");
