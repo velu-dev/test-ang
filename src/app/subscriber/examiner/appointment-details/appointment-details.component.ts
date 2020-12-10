@@ -132,6 +132,7 @@ export class AppointmentDetailsComponent implements OnInit {
   displayedColumnsForDocuments = [];
   expandedElement: any;
   userEmail: any;
+  locationId: any;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -211,6 +212,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         console.log(bills);
         this.billableData = bills.data;
+
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -237,8 +239,14 @@ export class AppointmentDetailsComponent implements OnInit {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
-        console.log(bills.data)
         this.billable_item.patchValue(bills.data);
+        if (bills.data.appointment.is_virtual_location) {
+          this.billable_item.patchValue({
+            appointment: {
+              examiner_service_location_id: "0"
+            }
+          })
+        }
         console.log(this.billable_item.value)
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
@@ -371,7 +379,10 @@ export class AppointmentDetailsComponent implements OnInit {
         examiner_id: [{ value: '', disable: true }],
         appointment_scheduled_date_time: [{ value: '', disable: true }],
         duration: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])],
-        examiner_service_location_id: [{ value: '', disable: true }]
+        examiner_service_location_id: [{ value: null, disable: true }],
+        is_virtual_location: [false],
+        conference_url: [null],
+        conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [{ value: '', disable: true }],
@@ -685,11 +696,6 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.billable_item.invalid) {
       return;
     }
-    console.log(this.billable_item.value)
-    console.log(this.examinationDetails, "examinationDetails")
-    console.log(this.examinationStatusForm.value, "examinationStatusForm")
-    console.log(this.examinationStatusForm.getRawValue().examination_status, "examinationStatusForm getRawValue")
-    console.log(this.billableData, "billableData")
     if (this.examinationDetails.bill_id) {
       if (this.billableData.exam_type.exam_procedure_type_id != this.billable_item.value.exam_type.exam_procedure_type_id) {
         this.alertService.openSnackBar("Billing already created this billable item", "error");
@@ -768,6 +774,13 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   updateBillableItem() {
+    if (this.billable_item.value.appointment.is_virtual_location) {
+      this.billable_item.patchValue({
+        appointment: {
+          examiner_service_location_id: null
+        }
+      })
+    }
     this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
@@ -825,10 +838,21 @@ export class AppointmentDetailsComponent implements OnInit {
       this.todayDate.appointment = new Date();
     }
   }
+  VserviceLocation() {
+    this.billable_item.patchValue({
+      appointment: {
+        is_virtual_location: true,
+        examiner_service_location_id: "0"
+      }
+    })
+  }
   changeExaminarAddress(address) {
     this.billable_item.patchValue({
       appointment: {
-        examiner_service_location_id: address.address_id
+        is_virtual_location: false,
+        examiner_service_location_id: address.address_id,
+        conference_url: null,
+        conference_phone: null
       }
     })
   }

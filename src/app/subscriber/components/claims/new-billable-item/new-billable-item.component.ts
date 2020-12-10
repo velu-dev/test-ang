@@ -99,12 +99,12 @@ export class NewBillableItemComponent implements OnInit {
             this.primary_language_spoken = true;
           }
           this.isChecked = res.data.exam_type.is_psychiatric;
-          this.claimService.seedData("modifier").subscribe(res => {
-            this.modifierList = res.data;
+          this.claimService.seedData("modifier").subscribe(seed => {
+            this.modifierList = seed.data;
             if (this.isChecked) {
               this.modifiers = this.modifierList;
             } else {
-              res.data.map(modifier => {
+              seed.data.map(modifier => {
                 if (modifier.modifier_code != "96")
                   this.modifiers.push(modifier);
               })
@@ -138,7 +138,10 @@ export class NewBillableItemComponent implements OnInit {
         examiner_id: [null, Validators.required],
         appointment_scheduled_date_time: [null],
         duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
-        examiner_service_location_id: [null]
+        examiner_service_location_id: [null],
+        is_virtual_location: [false],
+        conference_url: [null],
+        conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [null],
@@ -276,13 +279,23 @@ export class NewBillableItemComponent implements OnInit {
       this.todayDate.appointment = new Date();
     }
   }
-
+  VserviceLocation() {
+    this.billable_item.patchValue({
+      appointment: {
+        is_virtual_location: true,
+        examiner_service_location_id: null
+      }
+    })
+  }
   isAddressSelected = false;
   selectedExaminarAddress: any = {};
   changeExaminarAddress(address) {
     this.billable_item.patchValue({
       appointment: {
-        examiner_service_location_id: address.address_id
+        is_virtual_location: false,
+        examiner_service_location_id: address.address_id,
+        conference_url: null,
+        conference_phone: null
       }
     })
     this.isAddressSelected = true;

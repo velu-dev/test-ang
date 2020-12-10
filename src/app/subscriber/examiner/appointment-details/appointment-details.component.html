@@ -234,17 +234,35 @@
                             <span matSuffix>Minutes</span>
                             <mat-error>Please enter a valid duration between 1 to 450 minutes</mat-error>
                         </mat-form-field>
-
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                             *ngIf="!isSuplimental">
                             <mat-label>Location</mat-label>
                             <mat-select [disabled]="!isEditBillableItem" formControlName="examiner_service_location_id">
+                                <mat-option (click)="VserviceLocation()" [value]="'0'">
+                                    Virtual Service Location
+                                </mat-option>
                                 <mat-option *ngFor="let address of examinarAddress"
                                     (click)="changeExaminarAddress(address)" [value]="address.address_id">
                                     {{address.street1}} {{address.street2}} {{address.city}} {{address.state_code}}
                                     {{address.zip_code+(address.zip_code_plus_4 != null ? "-"+address.zip_code_plus_4 : "")}}
                                 </mat-option>
                             </mat-select>
+                        </mat-form-field>
+                        <div fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
+                        </div>
+                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                            *ngIf="billable_item?.value?.appointment?.is_virtual_location">
+                            <mat-label>Conference URL</mat-label>
+                            <input matInput placeholder="Conference URL" formControlName="conference_url"
+                                autocomplete="off">
+                            <mat-error>Please enter a valid Conference URL</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                            *ngIf="billable_item?.value?.appointment?.is_virtual_location">
+                            <mat-label>Conference Phone</mat-label>
+                            <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                placeholder="Conference Phone" formControlName="conference_phone" autocomplete="off">
+                            <mat-error>Please enter a valid Conference Phone</mat-error>
                         </mat-form-field>
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">

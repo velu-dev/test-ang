@@ -694,7 +694,10 @@ export class NewClaimComponent implements OnInit {
         examiner_id: [null, Validators.compose([Validators.required])],
         appointment_scheduled_date_time: [null],
         duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
-        examiner_service_location_id: [null]
+        examiner_service_location_id: [null],
+        is_virtual_location: [false],
+        conference_url: [null],
+        conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [null],
@@ -925,6 +928,15 @@ export class NewClaimComponent implements OnInit {
       })
     }
   }
+
+  VserviceLocation() {
+    this.billable_item.patchValue({
+      appointment: {
+        is_virtual_location: true,
+        examiner_service_location_id: null
+      }
+    })
+  }
   examinarId: any;
   examinarChange(examinar) {
     this.examinarAddress = new Observable()
@@ -933,7 +945,7 @@ export class NewClaimComponent implements OnInit {
     this.isAddressSelected = false;
     this.examinarId = examinar.id;
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
-      this.examinerOptions = []
+      this.examinerOptions = [];
       this.examinerOptions = res['data'];
       this.examinarAddress = this.addressCtrl.valueChanges
         .pipe(
@@ -1407,7 +1419,10 @@ export class NewClaimComponent implements OnInit {
     this.logger.log(address)
     this.billable_item.patchValue({
       appointment: {
-        examiner_service_location_id: address.address_id
+        is_virtual_location: false,
+        examiner_service_location_id: address.address_id,
+        conference_url: null,
+        conference_phone: null
       }
     })
     this.isAddressSelected = true;
