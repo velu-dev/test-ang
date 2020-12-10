@@ -888,7 +888,7 @@ export class BilllableBillingComponent implements OnInit {
       if (result['data']) {
         if (group.value.id) {
           this.billingService.removeBillItem(group.value.id).subscribe(del => {
-            this.alertService.openSnackBar("Bill Line Item deleted successfully", 'success');
+            this.alertService.openSnackBar("Bill Line Item removed successfully", 'success');
             const control = this.userTable.get('tableRows') as FormArray;
             control.removeAt(index);
             this.billing_line_items.splice(index, 1)
@@ -940,7 +940,7 @@ export class BilllableBillingComponent implements OnInit {
       if (data.id) {
         this.alertService.openSnackBar("Bill Line Item updated successfully", 'success');
       } else {
-        this.alertService.openSnackBar("Bill Line Item created successfully", 'success');
+        this.alertService.openSnackBar("Bill Line Item added successfully", 'success');
       }
       let modifier = line.data.modifier ? line.data.modifier.split('-') : [];
       this.billing_line_items[index] = line.data;
@@ -1561,7 +1561,7 @@ export class billingOnDemandDialog {
   deleteRecipient(element) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: "delete", title: element.name }
+      data: { name: "remove this recipient", address: true, title: element.name }
     });
 
     dialogRef.afterClosed().subscribe(result => {
