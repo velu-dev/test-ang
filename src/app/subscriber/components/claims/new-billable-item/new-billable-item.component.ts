@@ -9,6 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment';
 import { NGXLogger } from 'ngx-logger';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter } from '@angular/material';
+import { formatDate } from '@angular/common';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'MM-DD-YYYY hh:mm A Z',
   fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
@@ -19,12 +22,34 @@ export const MY_CUSTOM_FORMATS = {
   monthYearA11yLabel: 'MMMM YYYY',
 };
 
+export const PICK_FORMATS = {
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
+  display: {
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+export class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'MM-dd-yyyy', this.locale);;
+    } else {
+      return date.toDateString();
+    }
+  }
+}
 
 @Component({
   selector: 'app-new-billable-item',
   templateUrl: './new-billable-item.component.html',
   styleUrls: ['./new-billable-item.component.scss'],
-  providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }]
+  providers: [ { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+  { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }]
 })
 export class NewBillableItemComponent implements OnInit {
   billable_item: FormGroup;

@@ -5,7 +5,7 @@ import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogu
 import { ExaminerService } from '../../service/examiner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, NativeDateAdapter, MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from '../../service/claim.service';
@@ -19,6 +19,8 @@ import { map, shareReplay } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { formatDate } from '@angular/common';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -33,6 +35,26 @@ export const MY_CUSTOM_FORMATS = {
   monthYearA11yLabel: 'MMMM YYYY',
 };
 
+export const PICK_FORMATS = {
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
+  display: {
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+export class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'MM-dd-yyyy', this.locale);;
+    } else {
+      return date.toDateString();
+    }
+  }
+}
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
   { file_name: "Appointment Notification Letter", date: "01-02-2020" },
@@ -44,7 +66,9 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
   selector: 'app-appointment-details',
   templateUrl: './appointment-details.component.html',
   styleUrls: ['./appointment-details.component.scss'],
-  providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS },],
+  providers: [{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
