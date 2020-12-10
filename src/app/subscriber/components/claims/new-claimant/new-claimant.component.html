@@ -93,14 +93,14 @@
           </mat-select>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid handedness</mat-error>
         </mat-form-field> -->
-
+      
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Social Security Number</mat-label>
           <input matInput mask="000-00-0000" placeholder="999-99-9999" formControlName="ssn" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid SSN</mat-error>
         </mat-form-field>
-
+        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div>
         <div fxFlex="50" fxFlex.md="50" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
           fxFlex.xs="100" class="checkbox">
           <div class="p-t-30 p-l-10">
@@ -151,7 +151,7 @@
           <mat-error *ngIf="isClaimantSubmited">Please enter valid email</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Street Address 1</mat-label>
           <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
@@ -159,14 +159,14 @@
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Street Address 2</mat-label>
           <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
             placeholder="Street Address 2" formControlName="street2" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
-        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div>
+        <!-- <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div> -->
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>City</mat-label>

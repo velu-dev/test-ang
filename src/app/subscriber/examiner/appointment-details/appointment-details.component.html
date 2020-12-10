@@ -253,7 +253,7 @@
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                             *ngIf="billable_item?.value?.appointment?.is_virtual_location">
                             <mat-label>Conference URL</mat-label>
-                            <input matInput placeholder="Conference URL" formControlName="conference_url"
+                            <input matInput placeholder="To be provided by the scheduling party" formControlName="conference_url"
                                 autocomplete="off">
                             <mat-error>Please enter a valid Conference URL</mat-error>
                         </mat-form-field>
@@ -261,7 +261,7 @@
                             *ngIf="billable_item?.value?.appointment?.is_virtual_location">
                             <mat-label>Conference Phone</mat-label>
                             <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                placeholder="Conference Phone" formControlName="conference_phone" autocomplete="off">
+                                placeholder="To be provided by the scheduling party" formControlName="conference_phone" autocomplete="off">
                             <mat-error>Please enter a valid Conference Phone</mat-error>
                         </mat-form-field>
                     </div>
