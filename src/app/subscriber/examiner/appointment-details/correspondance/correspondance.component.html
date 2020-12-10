@@ -233,8 +233,7 @@
                 <span *ngIf="column == 'date'"
                   class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'recipients'"><span
-                    *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
-                    {{!last ? ',' : ''}}</span></span>
+                    *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last ? ', ' : ''}}</span></span>
                 <span *ngIf="column == 'download' && element?.send">
                   <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
                 </span>
@@ -266,8 +265,7 @@
             </span>
           </div>
           <div class="no-wrap-td"><span>Date</span><span> {{element?.date_of_request | date:'MM-dd-yyyy'}} </span></div>
-          <div><span>Recipients</span><span *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
-              {{!last ? ',' : ''}}</span></div>
+          <div><span>Recipients</span><span *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last ? ', ' : ''}}</span></div>
           <div><span> Download Generated Items </span><span *ngIf="element?.send">
               <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
             </span></div>
