@@ -866,8 +866,7 @@
                                         <span *ngIf="column == 'date'"
                                             class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
                                         <span *ngIf="column == 'recipients'"><span
-                                                *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}
-                                                {{!last ? ',' : ''}}</span></span>
+                                                *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last ? ', ' : ''}}</span></span>
                                         <span *ngIf="column == 'download' && element?.send">
                                             <a class="text-success"
                                                 (click)="$event.stopPropagation();downloadDocumet(element?.send)">Download</a>
