@@ -10,12 +10,23 @@
         <div fxLayout="row wrap" fxFlex="100" class="m-t-20">
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Body Parts</mat-label>
-                <input matInput placeholder="Body Part" [value]="bodyPart(injuryInfo.body_part_id)" *ngIf="isEdit"
-                    [disabled]="isEdit">
-                <mat-select multiple [(ngModel)]="injuryInfo.body_part_id" *ngIf="!isEdit">
-                    <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts.id">
-                        {{bodyParts.body_part_code}} - {{bodyParts.body_part_name}}</mat-option>
-                </mat-select>
+                <mat-chip-list #bodypartList aria-label="Body part selection">
+                    <mat-chip *ngFor="let body_part of bodyParts" [selectable]="selectable" [removable]="removable"
+                        (removed)="remove(body_part)"[disabled]="isEdit" >
+                        {{body_part}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Body Part" #fruitInput [formControl]="bodyPartCtrl" [matAutocomplete]="auto"
+                        [matChipInputFor]="bodypartList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
+                        [disabled]="isEdit">
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let body_part of filteredBodyParts | async" (click)="selectBodypart(body_part)"
+                        [value]="body_part.id">
+                        {{body_part.body_part_code}} - {{body_part.body_part_name}}
+                    </mat-option>
+                </mat-autocomplete>
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">

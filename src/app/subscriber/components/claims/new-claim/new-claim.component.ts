@@ -14,7 +14,10 @@ import {
   MatStepper,
   MAT_DATE_LOCALE,
   MatDialogRef,
-  MAT_DIALOG_DATA
+  MAT_DIALOG_DATA,
+  MatAutocomplete,
+  MatAutocompleteSelectedEvent,
+  MatChipInputEvent
 } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { Location } from '@angular/common';
@@ -30,6 +33,7 @@ import { NGXLogger } from 'ngx-logger';
 import { saveAs } from 'file-saver';
 import { DayTable } from '@fullcalendar/core';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
@@ -575,7 +579,7 @@ export class NewClaimComponent implements OnInit {
       date_of_birth: [null, Validators.required],
       gender: [null],
       email: ["", Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
-      handedness: [null],
+      // handedness: [null],
       primary_language_not_english: [null],
       primary_language_spoken: [null],
       certified_interpreter_required: [null],
@@ -1820,6 +1824,18 @@ export class InjuryDialog {
   minDate: any;
   injuryData: any;
   isEdit: any = false;
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  bodyPartCtrl = new FormControl();
+  filteredBodyParts: Observable<string[]>;
+  bodyParts: string[] = [];
+  @ViewChild('fruitInput', { static: false }) fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
+
   constructor(
     public dialogRef: MatDialogRef<InjuryDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -1830,10 +1846,18 @@ export class InjuryDialog {
     this.isLoding = true;
     this.claimant = data['claimant']
     this.bodyPartsList = data['bodyparts'];
+    this.filteredBodyParts = this.bodyPartCtrl.valueChanges.pipe(
+      startWith(null),
+      map((body_part: string | null) => body_part ? this._filter(body_part) : this.bodyPartsList.slice()));
     this.isEdit = data['isEdit'];
     if (data['isEdit']) {
-
-      this.logger.info(data['injuryData']);
+      data['injuryData'].body_part_id.map(id => {
+        this.bodyPartsList.map(bp => {
+          if (bp.id == id) {
+            this.bodyParts.push(bp.body_part_code + " - " + bp.body_part_name)
+          }
+        })
+      })
       this.injuryInfo.body_part_id = data['injuryData'].body_part_id;
       this.injuryInfo.date_of_injury = data['injuryData'].date_of_injury ? new Date(data['injuryData'].date_of_injury) : "";
       this.injuryInfo.continuous_trauma = data['injuryData'].continuous_trauma;
@@ -1843,6 +1867,52 @@ export class InjuryDialog {
       this.injuryData = data['injuryData']
     }
     this.isLoding = false;
+  }
+  add(event: MatChipInputEvent): void {
+    // Add fruit only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
+
+      // Add our fruit
+      if ((value || '').trim()) {
+        this.bodyParts.push(value.trim());
+      }
+
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
+
+      this.bodyPartCtrl.setValue(null);
+    }
+  }
+
+  remove(body_part: string): void {
+    console.log(body_part)
+    const index = this.bodyParts.indexOf(body_part);
+
+    if (index >= 0) {
+      this.injuryInfo.body_part_id.splice(index, 1)
+      this.bodyParts.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    console.log(event.option)
+    this.bodyParts.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.bodyPartCtrl.setValue(null);
+  }
+  selectBodypart(body_part) {
+    this.injuryInfo.body_part_id.push(body_part.id)
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value;
+
+    return this.bodyPartsList.filter(body_part => body_part.body_part_name.toLowerCase().indexOf(filterValue) === 0);
   }
   bodyPart(bodypart) {
     for (var i in this.bodyPartsList) {
@@ -1871,12 +1941,10 @@ export class InjuryDialog {
   }
   isInjurySubmit = false;
   addInjury() {
-    console.log(this.injuryInfo.body_part_id)
     let date_of_birth = moment(this.claimant.date_of_birth, "MM-DD-YYYY");
     let injury_date = this.injuryInfo.date_of_injury ? moment(this.injuryInfo.date_of_injury, "MM-DD-YYYY") : null;
     let ct_start_date = this.injuryInfo.continuous_trauma_start_date ? moment(this.injuryInfo.continuous_trauma_start_date, "MM-DD-YYYY") : null;
     let ct_end_date = this.injuryInfo.continuous_trauma_end_date ? moment(this.injuryInfo.continuous_trauma_end_date, "MM-DD-YYYY") : null;
-    // console.log(date_of_birth, injury_date, ct_start_date, ct_end_date);
     if (this.injuryInfo.body_part_id.length == 0) {
       this.alertService.openSnackBar("Please select body part", "error")
       return
