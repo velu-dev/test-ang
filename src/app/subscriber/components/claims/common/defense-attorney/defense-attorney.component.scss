@@ -2,6 +2,11 @@
 
 .float-right {
     text-align: right;
+    button {
+        @media only screen and (max-width: 568px) {
+            margin-top: 12px;
+        }
+    }
     .close-model {
         color: $text-dark;
         border: 1px solid $light-gray;

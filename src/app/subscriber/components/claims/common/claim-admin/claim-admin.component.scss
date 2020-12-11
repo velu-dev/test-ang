@@ -1,6 +1,11 @@
 @import "variables";
 .float-right {
     text-align: right;
+    button {
+        @media only screen and (max-width: 568px) {
+            margin-top: 12px;
+        }
+    }
     .close-model {
         color: $text-dark;
         border: 1px solid $light-gray;
@@ -12,4 +17,3 @@
         padding: 10px 10px 0px 10px !important;
     }
 }
-

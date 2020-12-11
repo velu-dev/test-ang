@@ -1063,6 +1063,14 @@ input:-webkit-autofill {
     }
   }
   .cuctom-document-upload {
+    .info-alert {
+      padding: 10px 15px;
+      color: $info;
+      background-color: $info-bg;
+      border: 1px solid $info-border;
+      width: fit-content;
+      border-radius: 5px;
+  }
     mat-form-field {
       mat-hint {
         width: 100%;

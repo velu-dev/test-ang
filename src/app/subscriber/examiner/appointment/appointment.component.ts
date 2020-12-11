@@ -25,7 +25,7 @@ import * as moment from 'moment';
   ]
 })
 export class AppointmentComponent implements OnInit {
-  isCalenderVIew = false;
+  isCalenderVIew = true;
   xls = globals.xls
   completed = globals.completed
   left_voicemail = globals.left_voicemail
@@ -34,7 +34,7 @@ export class AppointmentComponent implements OnInit {
   dataSource: any;
   filterAll: any;
   roles = [];
-  isCalender : boolean =true;
+  isCalender : boolean =false;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -66,8 +66,8 @@ export class AppointmentComponent implements OnInit {
     this.examinerService.getExaminationDetails().subscribe(res => {
       console.log(res)
       res['data'].map(data => {
-        data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
-        data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
+        //data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
+       // data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
       })
       this.appointmentsData = res['data'];
       this.dataSource = new MatTableDataSource(res['data']);
@@ -102,7 +102,7 @@ export class AppointmentComponent implements OnInit {
       }
   }
   navigate(element) {
-    this.router.navigate([this.router.url + '/appointment-details', element.claim_id, element.bill_item_id])
+    //this.router.navigate([this.router.url + '/appointment-details', element.claim_id, element.bill_item_id])
   }
 
   // exportData() {
@@ -131,9 +131,10 @@ export class AppointmentComponent implements OnInit {
     });
   }
   CalenderVIew(status) {
+    this.isCalenderVIew = status;
     this.dataSource = new MatTableDataSource([])
     this.getData()
-    this.isCalenderVIew = status;
+    
   }
 
 }

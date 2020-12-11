@@ -1,19 +1,18 @@
-<mat-card class="m-card appointments m-b-10" *ngIf="!isCalender">
+<div  *ngIf="!isCalenderVIew">
+<mat-card class="m-card appointments m-b-10">
     <mat-card-header class="p-b-3">
         <div fxLayout="row wrap" fxFlex="100">
             <div fxFlex="100">
-                <button (click)="CalenderVIew(true)" mat-icon-button [ngClass]="{'active': isCalenderVIew}">
-                    <span class="fa fa-calendar-day"></span>
-                </button>
-                <button (click)="CalenderVIew(false)" mat-icon-button [ngClass]="{'active': !isCalenderVIew}">
-                    <span class="fa fa-th-list"></span>
-                </button>
+                <div class="toggle-switch p-t-5 p-l-5">
+                    <mat-icon class="active" matTooltip="Calender View"  (click)="CalenderVIew(true);isCalender=true" [ngClass]="{'active': isCalenderVIew}">event</mat-icon>
+                    <mat-icon  matTooltip="List View" (click)="calViewChange(false)" (click)="CalenderVIew(false);isCalender=false" [ngClass]="{'active': !isCalenderVIew}">view_list</mat-icon>
+                </div>
             </div>
         </div>
 
     </mat-card-header>
     <mat-divider></mat-divider>
-    <div *ngIf="!isCalenderVIew">
+    <div >
         <mat-card-content class="p-t-3  m-b-0">
             <div class="table-filter">
                 <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
@@ -33,14 +32,20 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="columnName[i] == 'Location'">{{element[column].street1 }}
-                            {{element[column].street2}}
-                            {{element[column].city}} {{element[column].state}} {{element[column].zip_code}}</span>
-                        <span
+                        <span *ngIf="column == 'location'">{{element?.location?.street1 }}
+                            {{element?.location?.street2}}
+                            {{element?.location?.city}} {{element?.location?.state}} {{element?.location?.zip_code}}</span>
+                            <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name }} {{element?.claimant_first_name }} </span> 
+                            <span *ngIf="column == 'appointment_date'">{{element?.appointment_scheduled_date_time |  date:'MM-dd-yyyy'}} </span>
+                            <span *ngIf="column == 'appointment_time'">{{element?.appointment_scheduled_date_time | date:'hh:mm a'}} </span>
+                            <span *ngIf="column == 'procedure'">{{element?.exam_procedure_name}}</span>
+                            <span *ngIf="column == 'interperter_needed'">{{element?.certified_interpreter_required ? 'Yes' : 'No' }}</span>
+                            <span *ngIf="column == 'days_until'">{{element?.days_until }}</span>
+                        <!-- <span
                             *ngIf="columnName[i] != 'Location' && columnName[i] != 'Examiner'">{{element[column] }}</span>
 
                         <span *ngIf="columnName[i] == 'Examiner'">{{element?.examiner_first_name}}
-                            {{element?.examiner_middle_name}} {{element?.examiner_last_name}}</span>
+                            {{element?.examiner_middle_name}} {{element?.examiner_last_name}}</span> -->
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
@@ -48,17 +53,16 @@
                         [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
-                                <div><span>Claim Number</span><span> {{element?.claim_number}} </span></div>
-                                <div><span>Examiner</span><span> {{element?.examiner_first_name}}
-                                        {{element?.examiner_middle_name}} {{element?.examiner_last_name}}</span></div>
-                                <div><span>Exam Type</span><span> {{element?.exam_type_code}} </span></div>
-                                <div><span>Location</span><span>{{element?.location?.street1 }}
-                                        {{element?.location?.street2}}
-                                        {{element?.location?.city}} {{element?.location?.state}}
-                                        {{element?.location?.zip_code}} </span></div>
-                                <div><span>Date</span><span> {{element?.appointment_scheduled_date_time }}
+                                <!-- <div><span>Location</span><span>{{element?.location?.street1 }}
+                                    {{element?.location?.street2}}
+                                    {{element?.location?.city}} {{element?.location?.state}} {{element?.location?.zip_code}}</span></div> -->
+                                <div><span>Claimant Name</span><span>{{element?.claimant_last_name }} {{element?.claimant_first_name }}</span></div>
+                                <div><span>Appointment Date</span><span>{{element?.appointment_scheduled_date_time |  date:'MM-dd-yyyy'}}</span></div>
+                                <div><span>Appointment Time</span><span>{{element?.appointment_scheduled_date_time | date:'h:mm a'}}</span></div>
+                                <div><span>Procedure</span><span>{{element?.exam_procedure_name}}</span></div>
+                                <div><span>Interperter Needed</span><span>{{element?.certified_interpreter_required ? 'Yes' : 'No' }}
                                     </span></div>
-                                <div><span>Status</span><span> {{element?.status}} </span></div>
+                                <div><span>Days Until</span><span>{{element?.days_until }}</span></div>
                             </div>
                         </div>
                     </td>
@@ -89,8 +93,8 @@
         </div>
     </div> -->
 </mat-card>
+</div>
 
-
-<mat-card class="m-card appointments"  *ngIf="isCalender">
-    <app-examination-calander-view></app-examination-calander-view>
+<mat-card class="m-card appointments"  *ngIf="isCalenderVIew">
+    <app-examination-calander-view (view)="CalenderVIew($event)" ></app-examination-calander-view>
 </mat-card>

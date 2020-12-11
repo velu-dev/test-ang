@@ -18,7 +18,10 @@
           matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">Upload record documents and select the documents to send to the record summarizers from
         this list.</p>
-
+      <div class="info-alert m-b-10 m-t-10">
+        <i class="fa fa-info-circle p-r-5"></i>Automatic Page count available for .pdf documents only & should not
+        exceed 300 dpi
+      </div>
       <div fxLayout="row wrap" class="upload-sec">
         <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100"
           *ngIf="!recordData?.is_exam_type_changed && !recordData?.isExaminerDisabled ">
