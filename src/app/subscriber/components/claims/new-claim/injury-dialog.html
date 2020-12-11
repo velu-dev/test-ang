@@ -12,14 +12,13 @@
                 <mat-label>Body Parts</mat-label>
                 <mat-chip-list #bodypartList aria-label="Body part selection">
                     <mat-chip *ngFor="let body_part of bodyParts" [selectable]="selectable" [removable]="removable"
-                        (removed)="remove(body_part)"[disabled]="isEdit" >
+                        (removed)="remove(body_part)" [disabled]="isEdit">
                         {{body_part}}
                         <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                     </mat-chip>
                     <input placeholder="Body Part" #fruitInput [formControl]="bodyPartCtrl" [matAutocomplete]="auto"
                         [matChipInputFor]="bodypartList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
-                        [disabled]="isEdit">
+                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" [disabled]="isEdit">
                 </mat-chip-list>
                 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                     <mat-option *ngFor="let body_part of filteredBodyParts | async" (click)="selectBodypart(body_part)"

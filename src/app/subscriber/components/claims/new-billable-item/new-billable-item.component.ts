@@ -47,7 +47,7 @@ export class PickDateAdapter extends NativeDateAdapter {
   selector: 'app-new-billable-item',
   templateUrl: './new-billable-item.component.html',
   styleUrls: ['./new-billable-item.component.scss'],
-  providers: [ { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  providers: [{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
   { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
   { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }]
 })
@@ -238,7 +238,10 @@ export class NewBillableItemComponent implements OnInit {
         appointment: {
           appointment_scheduled_date_time: null,
           duration: null,
-          examiner_service_location_id: null
+          examiner_service_location_id: null,
+          is_virtual_location: false,
+          conference_url: null,
+          conference_phone: null
         }
       })
     } else {

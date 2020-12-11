@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef, MatDialog, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { Component, OnInit, Input, Inject, ElementRef, ViewChild } from '@angular/core';
+import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef, MatDialog, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatAutocomplete, MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -9,8 +9,10 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, startWith } from 'rxjs/operators';
 import { date_of_birth } from 'src/app/shared/messages/errors';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { FormControl } from '@angular/forms';
 
 export interface PeriodicElement {
   body_part: string;
@@ -204,16 +206,41 @@ export class InjuryPopup {
   isEdit: any;
   id: any;
   date_of_birth: any;
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  bodyPartCtrl = new FormControl();
+  filteredBodyParts: Observable<string[]>;
+  bodyParts: string[] = [];
+  @ViewChild('fruitInput', { static: false }) fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
   constructor(
     private claimService: ClaimService,
     public dialogRef: MatDialogRef<InjuryPopup>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public alertService: AlertService) {
-    this.bodyPartsList = data['body_parts'];
+    // this.bodyPartsList = data['body_parts'];
+    data['body_parts'].map(bp => {
+      let body_part = bp;
+      body_part.body_part_with_code = (bp.body_part_code + " - " + bp.body_part_name)
+      this.bodyPartsList.push(body_part);
+    })
+    this.filteredBodyParts = this.bodyPartCtrl.valueChanges.pipe(
+      startWith(null),
+      map((body_part: string | null) => body_part ? this._filter(body_part) : this.bodyPartsList.slice()));
     this.claim_id = data['claim_id'];
     this.isEdit = data['isEdit'];
     this.date_of_birth = moment(data['date_of_birth']);
     if (this.isEdit) {
+      data['data'].body_part_id.map(id => {
+        this.bodyPartsList.map(bp => {
+          if (bp.id == id) {
+            this.bodyParts.push(bp.body_part_code + " - " + bp.body_part_name)
+          }
+        })
+      })
       this.injuryInfo.body_part_id = data["data"]["body_part_id"];
       this.injuryInfo.continuous_trauma = data["data"]["continuous_trauma"];
       this.injuryInfo.continuous_trauma_end_date = data["data"]["continuous_trauma_end_date"] ? moment(data["data"]["continuous_trauma_end_date"].split("T")[0]) : null,
@@ -223,6 +250,51 @@ export class InjuryPopup {
       this.injuryInfo.id = data["data"]["id"];
     }
     dialogRef.disableClose = true;
+  }
+  add(event: MatChipInputEvent): void {
+    // Add fruit only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
+
+      // Add our fruit
+      if ((value || '').trim()) {
+        this.bodyParts.push(value.trim());
+      }
+
+      // Reset the input value
+      if (input) {
+        input.value = '';
+      }
+
+      this.bodyPartCtrl.setValue(null);
+    }
+  }
+
+  remove(body_part: string): void {
+    console.log(body_part)
+    const index = this.bodyParts.indexOf(body_part);
+
+    if (index >= 0) {
+      this.injuryInfo.body_part_id.splice(index, 1)
+      this.bodyParts.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    console.log(event.option)
+    this.bodyParts.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.bodyPartCtrl.setValue(null);
+  }
+  selectBodypart(body_part) {
+    this.injuryInfo.body_part_id.push(body_part.id)
+  }
+
+  private _filter(value: string): string[] {
+    let filterValue = value;
+    return this.bodyPartsList.filter(body_part => body_part.body_part_with_code.toLowerCase().indexOf(filterValue) >= 0);
   }
   bodyPart(bodypart) {
     for (var i in this.bodyPartsList) {

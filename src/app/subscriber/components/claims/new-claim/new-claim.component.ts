@@ -579,7 +579,7 @@ export class NewClaimComponent implements OnInit {
       date_of_birth: [null, Validators.required],
       gender: [null],
       email: ["", Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
-      // handedness: [null],
+      handedness: [null],
       primary_language_not_english: [null],
       primary_language_spoken: [null],
       certified_interpreter_required: [null],
@@ -1517,10 +1517,14 @@ export class NewClaimComponent implements OnInit {
         appointment: {
           appointment_scheduled_date_time: null,
           duration: null,
-          examiner_service_location_id: null
+          examiner_service_location_id: null,
+          is_virtual_location: false,
+          conference_url: null,
+          conference_phone: null
         }
       })
     } else {
+
       this.isSuplimental = false;
     }
   }
@@ -1860,7 +1864,11 @@ export class InjuryDialog {
     dialogRef.disableClose = true;
     this.isLoding = true;
     this.claimant = data['claimant']
-    this.bodyPartsList = data['bodyparts'];
+    data['bodyparts'].map(bp => {
+      let body_part = bp;
+      body_part.body_part_with_code = (bp.body_part_code + " - " + bp.body_part_name)
+      this.bodyPartsList.push(body_part);
+    })
     this.filteredBodyParts = this.bodyPartCtrl.valueChanges.pipe(
       startWith(null),
       map((body_part: string | null) => body_part ? this._filter(body_part) : this.bodyPartsList.slice()));
@@ -1926,8 +1934,7 @@ export class InjuryDialog {
 
   private _filter(value: string): string[] {
     const filterValue = value;
-
-    return this.bodyPartsList.filter(body_part => body_part.body_part_name.toLowerCase().indexOf(filterValue) === 0);
+    return this.bodyPartsList.filter(body_part => body_part.body_part_with_code.toLowerCase().indexOf(filterValue) >= 0);
   }
   bodyPart(bodypart) {
     for (var i in this.bodyPartsList) {
