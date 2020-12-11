@@ -81,7 +81,7 @@
                                 [src]="element?.file_name | fileType" alt=""></span>
                         <span *ngIf="column == 'file_name'"><b class="p-t-5">{{element?.file_name}}</b>
                             <br />
-                            <small>Note : {{element?.notes}}</small>
+                            <small class="hide-mobile">Note : {{element?.notes}}</small>
                         </span>
                         <span *ngIf="column == 'uploaded_on'"
                             class="no-wrap-td">{{element?.updatedAt |  date:'MM-dd-yyyy' }} <small class="p-l-10"><span

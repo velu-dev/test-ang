@@ -2,15 +2,38 @@
 @import "table";
 
 .appointments {
-    .floating-button {
-        button {
-            float: right;
+    .toggle-switch {
+        float: left;
+        width: auto;
+        mat-icon {
+            background-color: $light-color;
+            // border: 1px solid $white;
+            padding: 6px 8px;
+            cursor: pointer;
+            color: $text-gray;
+            &:nth-child(2) {
+                margin-right: 20px;
+            }
+            &:hover {
+                background-color: $secondary;
+                color: $white;
+                opacity: 0.5;
+            }
         }
-        button.active {
-            background-color: #e3fcec;
-            color: $btn_success;
+        mat-icon.active {
+            background-color: $secondary;
+            color: $white;
         }
     }
+    // .floating-button {
+    //     button {
+    //         float: right;
+    //     }
+    //     button.active {
+    //         background-color: #e3fcec;
+    //         color: $btn_success;
+    //     }
+    // }
     .fc_calender {
         padding: 5px;
         // box-shadow: $box-shadow-1;

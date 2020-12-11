@@ -10,6 +10,11 @@ mat-form-field {
         margin-top: 20px;
         margin-bottom: 20px;
     }
+    mat-form-field {
+        @media only screen and (max-width: 568px) {
+            padding-left: 0px !important;
+        }
+    }
     .Upload_ {
         button {
             width: 120px;
@@ -18,13 +23,14 @@ mat-form-field {
             width: calc(100% - 140px);
             padding-right: 0px;
             @media only screen and (max-width: 568px) {
-                width: calc(100% - 20px);
-                // padding-right: 10px !important;
+                width: calc(100% - 10px);
+                padding-left: 0px !important;
             }
         }
     }
     div {
-        .add-btn, .outline-success {
+        .add-btn,
+        .outline-success {
             margin-top: 24px;
             vertical-align: top;
             @media only screen and (max-width: 568px) {

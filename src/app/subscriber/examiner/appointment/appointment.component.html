@@ -2,12 +2,10 @@
     <mat-card-header class="p-b-3">
         <div fxLayout="row wrap" fxFlex="100">
             <div fxFlex="100">
-                <button (click)="CalenderVIew(true);isCalender=true" mat-icon-button [ngClass]="{'active': isCalenderVIew}">
-                    <span class="fa fa-calendar-day"></span>
-                </button>
-                <button (click)="CalenderVIew(false);isCalender=false" mat-icon-button [ngClass]="{'active': !isCalenderVIew}">
-                    <span class="fa fa-th-list"></span>
-                </button>
+                <div class="toggle-switch p-t-5 p-l-5">
+                    <mat-icon class="active" matTooltip="Calender View"  (click)="CalenderVIew(true);isCalender=true" [ngClass]="{'active': isCalenderVIew}">event</mat-icon>
+                    <mat-icon  matTooltip="List View" (click)="calViewChange(false)" (click)="CalenderVIew(false);isCalender=false" [ngClass]="{'active': !isCalenderVIew}">view_list</mat-icon>
+                </div>
             </div>
         </div>
 
@@ -54,17 +52,16 @@
                         [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
-                                <div><span>Claim Number</span><span> {{element?.claim_number}} </span></div>
-                                <div><span>Examiner</span><span> {{element?.examiner_first_name}}
-                                        {{element?.examiner_middle_name}} {{element?.examiner_last_name}}</span></div>
-                                <div><span>Exam Type</span><span> {{element?.exam_type_code}} </span></div>
-                                <div><span>Location</span><span>{{element?.location?.street1 }}
-                                        {{element?.location?.street2}}
-                                        {{element?.location?.city}} {{element?.location?.state}}
-                                        {{element?.location?.zip_code}} </span></div>
-                                <div><span>Date</span><span> {{element?.appointment_scheduled_date_time }}
+                                <!-- <div><span>Location</span><span>{{element?.location?.street1 }}
+                                    {{element?.location?.street2}}
+                                    {{element?.location?.city}} {{element?.location?.state}} {{element?.location?.zip_code}}</span></div> -->
+                                <div><span>Claimant Name</span><span>{{element?.claimant_last_name }} {{element?.claimant_first_name }}</span></div>
+                                <div><span>Appointment Date</span><span>{{element?.appointment_scheduled_date_time |  date:'MM-dd-yyyy'}}</span></div>
+                                <div><span>Appointment Time</span><span>{{element?.appointment_scheduled_date_time | date:'h:mm a'}}</span></div>
+                                <div><span>Procedure</span><span>{{element?.exam_type_code }}</span></div>
+                                <div><span>Interperter Needed</span><span>{{element?.certified_interpreter_required ? 'Yes' : 'No' }}
                                     </span></div>
-                                <div><span>Status</span><span> {{element?.status}} </span></div>
+                                <div><span>Days Until</span><span>{{element?.days_until }}</span></div>
                             </div>
                         </div>
                     </td>
