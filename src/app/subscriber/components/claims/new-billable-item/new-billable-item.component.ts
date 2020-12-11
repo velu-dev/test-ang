@@ -225,6 +225,14 @@ export class NewBillableItemComponent implements OnInit {
       return null
     }
   }
+  examTypeChange(value) {
+    this.procuderalCodes.map(res => {
+      if (res.exam_procedure_type_id == value) {
+        console.log(res)
+        this.procedure_type(res);
+      }
+    })
+  }
   isSuplimental = false;
   procedure_type(procuderalCode) {
     if (procuderalCode.modifier)

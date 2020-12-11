@@ -67,7 +67,8 @@
                 <div fxLayout="row wrap" fxFlex="100" formGroupName="exam_type">
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
                         <mat-label>Exam Procedure Type*</mat-label>
-                        <mat-select formControlName="exam_procedure_type_id">
+                        <mat-select formControlName="exam_procedure_type_id"
+                            (selectionChange)="examTypeChange($event.value)">
                             <mat-option *ngFor="let procuderalCode of procuderalCodes"
                                 [value]="procuderalCode.exam_procedure_type_id"
                                 (click)="procedure_type(procuderalCode)">
@@ -167,15 +168,16 @@
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                         *ngIf="billable_item?.value?.appointment?.is_virtual_location">
                         <mat-label>Conference URL</mat-label>
-                        <input matInput placeholder="To be provided by the scheduling party" formControlName="conference_url"
-                            autocomplete="off">
+                        <input matInput placeholder="To be provided by the scheduling party"
+                            formControlName="conference_url" autocomplete="off">
                         <mat-error>Please enter a valid Conference URL</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                         *ngIf="billable_item?.value?.appointment?.is_virtual_location">
                         <mat-label>Conference Phone</mat-label>
                         <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                            placeholder="To be provided by the scheduling party" formControlName="conference_phone" autocomplete="off">
+                            placeholder="To be provided by the scheduling party" formControlName="conference_phone"
+                            autocomplete="off">
                         <mat-error>Please enter a valid Conference Phone</mat-error>
                     </mat-form-field>
                 </div>
@@ -201,11 +203,10 @@
                         <mat-datepicker #intake disabled="false"></mat-datepicker> -->
                         <!-- <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>
                         </owl-date-time> -->
-                          <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
-                                [matDatepicker]="call_date" [min]="minDate" [max]="todayDate.intake"
-                                formControlName="call_date">
-                            <mat-datepicker-toggle matSuffix [for]="call_date"></mat-datepicker-toggle>
-                            <mat-datepicker #call_date disabled="false"></mat-datepicker>
+                        <input matInput placeholder="MM-DD-YYYY" autocomplete="off" [matDatepicker]="call_date"
+                            [min]="minDate" [max]="todayDate.intake" formControlName="call_date">
+                        <mat-datepicker-toggle matSuffix [for]="call_date"></mat-datepicker-toggle>
+                        <mat-datepicker #call_date disabled="false"></mat-datepicker>
                         <mat-error>Please enter valid date</mat-error>
                     </mat-form-field>
 
@@ -233,7 +234,8 @@
 
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Intake Contact Email</mat-label>
-                        <input matInput placeholder="Intake Contact Email" formControlName="caller_email" autocomplete="off">
+                        <input matInput placeholder="Intake Contact Email" formControlName="caller_email"
+                            autocomplete="off">
                         <mat-error *ngIf="isBillSubmited">Please enter valid email</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
