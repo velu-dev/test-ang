@@ -29,7 +29,7 @@
                     <div fxLayout="row wrap">
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                             fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Location Name</mat-label>
+                            <mat-label>Location Name*</mat-label>
                             <input matInput placeholder="Location Name" formControlName="service_location_name"
                                 autocomplete="off">
                             <mat-error *ngIf="locationSubmit">Please enter valid location name</mat-error>
@@ -46,8 +46,9 @@
                     </div>
                 </div>
 
-                <div fxFlex="100"  *ngIf="this.pageStatus == 2">
-                    <mat-checkbox class="checkbox_ m-t-0" (change)="sameAsMailling($event)">Mailing Address is also a Service Location</mat-checkbox>
+                <div fxFlex="100" *ngIf="this.pageStatus == 2">
+                    <mat-checkbox class="checkbox_ m-t-0" (change)="sameAsMailling($event)">Mailing Address is also a
+                        Service Location</mat-checkbox>
                 </div>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
@@ -167,25 +168,26 @@
 
             </form>
         </div>
-       <div class="default-cursor">
-        <table mat-table [dataSource]="dataSource" class="user-table w-100" *ngIf="locationId">
+        <div class="default-cursor">
+            <table mat-table [dataSource]="dataSource" class="user-table w-100" *ngIf="locationId">
 
-            <ng-container matColumnDef="examiner">
-                <th mat-header-cell *matHeaderCellDef>Examiner </th>
-                <td mat-cell *matCellDef="let element"> {{element?.last_name}}
-                    {{element?.first_name}}{{element?.suffix ? ', '+element?.suffix : ''}} </td>
-            </ng-container>
+                <ng-container matColumnDef="examiner">
+                    <th mat-header-cell *matHeaderCellDef>Examiner </th>
+                    <td mat-cell *matCellDef="let element"> {{element?.last_name}}
+                        {{element?.first_name}}{{element?.suffix ? ', '+element?.suffix : ''}} </td>
+                </ng-container>
 
-            <ng-container matColumnDef="date_added">
-                <th mat-header-cell *matHeaderCellDef> Date Added </th>
-                <td mat-cell *matCellDef="let element"> {{element.date_added | date:'MM-dd-yyyy'}} </td>
-            </ng-container>
+                <ng-container matColumnDef="date_added">
+                    <th mat-header-cell *matHeaderCellDef> Date Added </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date_added | date:'MM-dd-yyyy'}} </td>
+                </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;let element" (click)="nevigateExaminer(element)">
-            </tr>
-        </table>
-        <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
-       </div>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;let element"
+                    (click)="nevigateExaminer(element)">
+                </tr>
+            </table>
+            <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
+        </div>
     </mat-card-content>
 </mat-card>

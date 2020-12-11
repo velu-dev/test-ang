@@ -262,6 +262,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
+
         this.billable_item.patchValue(bills.data);
         if (bills.data.appointment.is_virtual_location) {
           this.billable_item.patchValue({
@@ -384,6 +385,15 @@ export class AppointmentDetailsComponent implements OnInit {
     } else {
       return null
     }
+  }
+  service_location_name: any;
+  serviceLocationChange(value) {
+    this.examinarAddress.map(address => {
+      if (address.address_id == value) {
+        this.service_location_name = address.service_location_name;
+      }
+    })
+
   }
 
   ngOnInit() {
@@ -656,6 +666,12 @@ export class AppointmentDetailsComponent implements OnInit {
     })
     this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
       this.examinarAddress = res['data'];
+      res.data.map(address => {
+        if (address.address_id == this.billableData.appointment.examiner_service_location_id) {
+          console.log(address)
+          this.service_location_name = address.service_location_name;
+        }
+      })
     })
   }
   openPopup() {

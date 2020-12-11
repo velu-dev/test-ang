@@ -691,6 +691,7 @@
                                             </mat-icon>
                                         </span>
                                         <div>
+                                            <span *ngIf="column == 'service_location_name'"> {{element?.service_location_name}}</span>
                                             <span *ngIf="column == 'address'"> {{element?.street1}} {{element?.street2}}
                                                 {{element?.city}} {{element?.state_code}} - {{element?.zip_code}}</span>
                                             <span

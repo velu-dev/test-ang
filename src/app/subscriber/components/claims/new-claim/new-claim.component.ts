@@ -520,6 +520,10 @@ export class NewClaimComponent implements OnInit {
   prevStep() {
     this.step--;
   }
+  service_lcation_name: any;
+  serviceLocationChange(value) {
+    this.service_lcation_name = value;
+  }
   claimantState: any;
   caState: any;
   empState: any;

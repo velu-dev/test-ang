@@ -123,8 +123,8 @@ export class NewExaminerUserComponent implements OnInit {
         this.columnName = ["", "Address", "Action"]
         this.columnsToDisplay = ['is_expand', 'address', "action"]
       } else {
-        this.columnName = ["Address", "Service Type", "Phone", "NPI Number", "Action"]
-        this.columnsToDisplay = ['address', 'service', 'phone_no', 'npi_number', "action"]
+        this.columnName = ["Location Name", "Address", "Service Type", "Phone", "NPI Number", "Action"]
+        this.columnsToDisplay = ['service_location_name', 'address', 'service', 'phone_no', 'npi_number', "action"]
       }
     })
     this.user = JSON.parse(this.cookieService.get('user'));
@@ -1077,12 +1077,12 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   editAddress(data) {
-    if(this.router.url.includes('new-examiner')){
+    if (this.router.url.includes('new-examiner')) {
       this.router.navigate([this.router.url + '/edit-location', data.id, 2, this.examinerId])
-    }else{
+    } else {
       this.router.navigate([this.router.url + '/edit-location', data.id, 2])
     }
-   
+
   }
 
   billingOrgChange(e) {

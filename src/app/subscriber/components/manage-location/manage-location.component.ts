@@ -57,8 +57,8 @@ export class ManageLocationComponent implements OnInit {
         this.columnName = ["", "Examiner", "Status"]
         this.columnsToDisplay = ['is_expand', 'examiner_name', "status"]
       } else {
-        this.columnName = ["Address", "Service Type", "Phone", "Examiner", "Status"]
-        this.columnsToDisplay = ['street1', 'service', 'phone_no', 'examiner_name', "status"]
+        this.columnName = ["Location Name", "Address", "Service Type", "Phone", "Examiner", "Status"]
+        this.columnsToDisplay = ['service_name', 'street1', 'service', 'phone_no', 'examiner_name', "status"]
       }
     })
   }

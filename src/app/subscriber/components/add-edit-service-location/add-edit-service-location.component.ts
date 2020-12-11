@@ -111,7 +111,7 @@ export class AddEditServiceLocationComponent implements OnInit {
   ngOnInit() {
     this.locationForm = this.formBuilder.group({
       id: [null],
-      service_location_name: [null],
+      service_location_name: [null, Validators.required],
       street1: [null, Validators.required],
       street2: [null],
       city: [null, Validators.required],
@@ -252,7 +252,7 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.subscriberService.getMaillingAddress(this.examinerId).subscribe(address => {
           address.data.notes = null;
           address.data.contact_person = null;
-          address.data.phone_no =  address.data.phone_no1
+          address.data.phone_no = address.data.phone_no1
           this.maillingAddress = address.data
           this.locationForm.patchValue(address.data)
           this.changeState(address.data.state, address.data.state_code)

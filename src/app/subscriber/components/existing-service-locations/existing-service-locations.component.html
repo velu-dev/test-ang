@@ -8,17 +8,17 @@
             <mat-form-field appearance="fill" fxFlex="100" hideRequiredMarker="hideRequiredControl.auto"
                 floatLabel="floatLabelControl.auto" class="w-100 m-t-20">
                 <!-- <input matInput placeholder="Search Existing Service Locations" autocomplete="off" class="p-l-10"> -->
-                <input matInput placeholder="Search Existing Service Locations"
-                [matAutocomplete]="addressAutocomplete" [formControl]="addresssearch" class="p-l-10" autocomplete="off">
-            <mat-autocomplete #addressAutocomplete="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions?.data"
-                    (click)="addressOnChange(option)" [value]="option.city">
-                    {{option?.street1 }} {{option?.street2 }} {{option?.city}}
-                    {{option?.state_name }} {{option?.zip_code }}
-                </mat-option>
-                <mat-option *ngIf="filteredOptions?.data?.length == 0">Not found
-                </mat-option>
-            </mat-autocomplete>
+                <input matInput placeholder="Search Existing Service Locations" [matAutocomplete]="addressAutocomplete"
+                    [formControl]="addresssearch" class="p-l-10" autocomplete="off">
+                <mat-autocomplete #addressAutocomplete="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions?.data" (click)="addressOnChange(option)"
+                        [value]="option.city">
+                        {{option?.service_location_name}} - {{option?.street1 }} {{option?.street2 }} {{option?.city}}
+                        {{option?.state_name }} {{option?.zip_code }}
+                    </mat-option>
+                    <mat-option *ngIf="filteredOptions?.data?.length == 0">Not found
+                    </mat-option>
+                </mat-autocomplete>
                 <span matSuffix class="search-icon icons">
                     <mat-icon>search</mat-icon>
                 </span>
@@ -26,10 +26,11 @@
                     <span>Please enter valid service location</span></mat-error>
             </mat-form-field>
             <div fxFlex="100">
-            <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0" class="float-right outline-success m-t-5" (click)="locationRoute()">
-               Create Service Location
-            </button>
-        </div>
+                <button mat-stroked-button *ngIf="filteredOptions?.data?.length == 0"
+                    class="float-right outline-success m-t-5" (click)="locationRoute()">
+                    Create Service Location
+                </button>
+            </div>
             <div class="address-list" fxFlex="100" *ngIf="locationData">
                 <mat-list>
                     <mat-list-item>
@@ -40,13 +41,14 @@
                                 </strong>
                             </div>
                         </div>
-                        <div class="address" mat-line>  {{locationData?.street1 }} {{locationData?.street2 }} {{locationData?.city}}
+                        <div class="address" mat-line> {{locationData?.street1 }} {{locationData?.street2 }}
+                            {{locationData?.city}}
                             {{locationData?.state_name }} - {{locationData?.zip_code }}</div>
                     </mat-list-item>
                 </mat-list>
             </div>
 
-          
+
 
             <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100" fxFlex.xs="100">
                 <div fxLayout="row wrap" class="p-l-10">
@@ -58,8 +60,8 @@
                     <mat-form-field fxFlex="100" class="m-t-20">
                         <mat-label>National Provider Identifier (NPI) Number</mat-label>
                         <input matInput placeholder="National Provider Identifier (NPI) Number" autocomplete="off"
-                                [dropSpecialCharacters]="false" mask="9{15}"
-                                [(ngModel)]="national_provider_identifier" required>
+                            [dropSpecialCharacters]="false" mask="9{15}" [(ngModel)]="national_provider_identifier"
+                            required>
                         <mat-error>Please enter valid NPI number</mat-error>
                     </mat-form-field>
                 </div>
@@ -73,7 +75,3 @@
         </div>
     </mat-card-content>
 </mat-card>
-
-
-
-
