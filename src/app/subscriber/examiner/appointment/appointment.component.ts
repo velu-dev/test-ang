@@ -66,8 +66,8 @@ export class AppointmentComponent implements OnInit {
     this.examinerService.getExaminationDetails().subscribe(res => {
       console.log(res)
       res['data'].map(data => {
-        data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
-        data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
+        //data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
+       // data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
       })
       this.appointmentsData = res['data'];
       this.dataSource = new MatTableDataSource(res['data']);

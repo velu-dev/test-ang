@@ -1,4 +1,5 @@
-<mat-card class="m-card appointments m-b-10" *ngIf="!isCalenderVIew">
+<div  *ngIf="!isCalenderVIew">
+<mat-card class="m-card appointments m-b-10">
     <mat-card-header class="p-b-3">
         <div fxLayout="row wrap" fxFlex="100">
             <div fxFlex="100">
@@ -36,8 +37,8 @@
                             {{element?.location?.city}} {{element?.location?.state}} {{element?.location?.zip_code}}</span>
                             <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name }} {{element?.claimant_first_name }} </span> 
                             <span *ngIf="column == 'appointment_date'">{{element?.appointment_scheduled_date_time |  date:'MM-dd-yyyy'}} </span>
-                            <span *ngIf="column == 'appointment_time'">{{element?.appointment_scheduled_date_time | date:'h:mm a'}} </span>
-                            <span *ngIf="column == 'procedure'">{{element?.exam_type_code }} </span>
+                            <span *ngIf="column == 'appointment_time'">{{element?.appointment_scheduled_date_time | date:'hh:mm a'}} </span>
+                            <span *ngIf="column == 'procedure'">{{element?.exam_procedure_name}}</span>
                             <span *ngIf="column == 'interperter_needed'">{{element?.certified_interpreter_required ? 'Yes' : 'No' }}</span>
                             <span *ngIf="column == 'days_until'">{{element?.days_until }}</span>
                         <!-- <span
@@ -58,7 +59,7 @@
                                 <div><span>Claimant Name</span><span>{{element?.claimant_last_name }} {{element?.claimant_first_name }}</span></div>
                                 <div><span>Appointment Date</span><span>{{element?.appointment_scheduled_date_time |  date:'MM-dd-yyyy'}}</span></div>
                                 <div><span>Appointment Time</span><span>{{element?.appointment_scheduled_date_time | date:'h:mm a'}}</span></div>
-                                <div><span>Procedure</span><span>{{element?.exam_type_code }}</span></div>
+                                <div><span>Procedure</span><span>{{element?.exam_procedure_name}}</span></div>
                                 <div><span>Interperter Needed</span><span>{{element?.certified_interpreter_required ? 'Yes' : 'No' }}
                                     </span></div>
                                 <div><span>Days Until</span><span>{{element?.days_until }}</span></div>
@@ -92,7 +93,7 @@
         </div>
     </div> -->
 </mat-card>
-
+</div>
 
 <mat-card class="m-card appointments"  *ngIf="isCalenderVIew">
     <app-examination-calander-view (view)="CalenderVIew($event)" ></app-examination-calander-view>
