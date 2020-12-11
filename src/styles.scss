@@ -519,8 +519,8 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     padding-top: 5px;
     font-size: $font-size-10;
     @media screen and (max-width: 1024px) and (min-width: 481px) {
-    font-size: $font-size-1;
-    padding-top: 10px;
+      font-size: $font-size-1;
+      padding-top: 10px;
     }
   }
   @media only screen and (max-width: 568px) {
@@ -627,6 +627,14 @@ image-cropper {
     color: $black;
     padding-left: 10px;
   }
+  .info-alert {
+    padding: 10px 15px;
+    color: $info;
+    background-color: $info-bg;
+    border: 1px solid $info-border;
+    width: fit-content;
+    border-radius: 5px;
+  }
   .description {
     margin-top: 5px;
     padding-left: 10px;
@@ -728,9 +736,9 @@ image-cropper {
       height: 60px !important;
       font-size: $font-size-10 !important;
       font-weight: $font-weight-base;
-        white-space: break-spaces;
-        overflow-wrap: break-word;
-        line-height: inherit;
+      white-space: break-spaces;
+      overflow-wrap: break-word;
+      line-height: inherit;
     }
     .align-left {
       text-align: left;
