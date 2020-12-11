@@ -234,7 +234,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billableId = params.billId;
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
-        console.log(bills);
         this.billableData = bills.data;
 
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
@@ -271,7 +270,6 @@ export class AppointmentDetailsComponent implements OnInit {
             }
           })
         }
-        console.log(this.billable_item.value)
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
           this.intercom.setClaimant(response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name);
@@ -286,7 +284,6 @@ export class AppointmentDetailsComponent implements OnInit {
           }
 
           this.progressStatus = response.data.progress_status
-          console.log(this.progressStatus)
           this.notesForm.patchValue({
             exam_notes: response.data.exam_notes,
           })
@@ -445,7 +442,6 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.examinationStatusForm.invalid) {
       return;
     }
-    console.log(this.examinationStatusForm.value.examination_status, this.examinationDetails.appointments.examination_status)
     if (this.examinationDetails.procedure_type == "Deposition") {
       if (this.examinationStatusForm.value.examination_status == 11) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
@@ -585,7 +581,6 @@ export class AppointmentDetailsComponent implements OnInit {
     })
   }
   cancel() {
-    console.log(this.examinationDetails.appointments)
     this.examinationStatusForm.patchValue(this.examinationDetails.appointments);
     this.examinationStatusForm.disable();
     this.isExaminationStatusEdit = false;
@@ -716,7 +711,6 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
 
-    console.log(this.billable_item)
     if (this.billable_item.invalid) {
       return;
     }
@@ -822,7 +816,6 @@ export class AppointmentDetailsComponent implements OnInit {
 
   getDocumentData() {
     this.examinerService.getDocumentData(this.claim_id, this.billableId).subscribe(res => {
-      console.log(res)
       this.documentTabData = res['data'];
       this.tabChanges(this.tabIndexDetails)
     }, error => {
@@ -1076,9 +1069,15 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
+  examTypeChange(value) {
+    this.procuderalCodes.map(res => {
+      if (res.exam_procedure_type_id == value) {
+        this.procedure_type(res);
+      }
+    })
+  }
   isSuplimental = false;
   procedure_type(procuderalCode) {
-    console.log(procuderalCode)
     if (procuderalCode.modifier)
       this.modifiers = procuderalCode.modifier;
     this.billable_item.patchValue({

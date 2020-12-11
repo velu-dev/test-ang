@@ -1509,8 +1509,17 @@ export class NewClaimComponent implements OnInit {
       return null
     }
   }
+  examTypeChange(value) {
+    this.procuderalCodes.map(res => {
+      if (res.exam_procedure_type_id == value) {
+        this.procedure_type(res);
+
+      }
+    })
+  }
   isSuplimental = false;
   procedure_type(procuderalCode) {
+    console.log(procuderalCode)
     if (procuderalCode.exam_procedure_type.includes("SUPP")) {
       this.isSuplimental = true;
       this.billable_item.patchValue({
