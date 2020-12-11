@@ -1933,7 +1933,9 @@ export class InjuryDialog {
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value;
+    let filterValue = "";
+    if (typeof (value) == 'string')
+      filterValue = value.toLowerCase();
     return this.bodyPartsList.filter(body_part => body_part.body_part_with_code.toLowerCase().indexOf(filterValue) >= 0);
   }
   bodyPart(bodypart) {
@@ -1946,20 +1948,6 @@ export class InjuryDialog {
   onNoClick(): void {
     this.isEdit = false;
     this.dialogRef.close(false);
-    // if (this.isEdit) {
-    //   this.injuryInfo = this.data['injuryData'];
-    //   if (this.injuryInfo.continuous_trauma) {
-    //     if (this.injuryInfo.continuous_trauma_start_date) {
-    //     } else {
-    //       this.injuryInfo.continuous_trauma = false;
-    //     }
-    //   }
-    //   if (this.injuryInfo.body_part_id != null)
-    //     // this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
-    //     this.dialogRef.close(this.injuryInfo);
-    // } else {
-    //   this.dialogRef.close(false);
-    // }
   }
   isInjurySubmit = false;
   addInjury() {
@@ -2033,12 +2021,6 @@ export class InjuryDialog {
       this.injuryInfo.continuous_trauma_start_date = null;
       this.injuryInfo.continuous_trauma_end_date = null;
     }
-    // if (this.injuryInfo.date_of_injury) {
-    //   this.injuryInfo.continuous_trauma = false;
-    //   return
-    // } else {
-    //   this.alertService.openSnackBar("Please Select Injury Date", "error");
-    // }
   }
 
 }

@@ -293,7 +293,9 @@ export class InjuryPopup {
   }
 
   private _filter(value: string): string[] {
-    let filterValue = value;
+    let filterValue = "";
+    if (typeof (value) == 'string')
+      filterValue = value.toLowerCase();
     return this.bodyPartsList.filter(body_part => body_part.body_part_with_code.toLowerCase().indexOf(filterValue) >= 0);
   }
   bodyPart(bodypart) {
