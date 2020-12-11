@@ -3,17 +3,44 @@
 .fc_calender {
     padding: 0 5px;
     // box-shadow: $box-shadow-1;
+    .toggle-switch {
+        float: left;
+        width: auto;
+        mat-icon {
+            background-color: $light-color;
+            // border: 1px solid $white;
+            padding: 6px 8px;
+            cursor: pointer;
+            color: $text-gray;
+            &:nth-child(2) {
+                margin-right: 20px;
+            }
+            &:hover {
+                background-color: $secondary;
+                color: $white;
+                opacity: 0.5;
+            }
+        }
+        mat-icon.active {
+            background-color: $secondary;
+            color: $white;
+        }
+    }
+    .select-examiner {
+        width: calc(100% - 110px);
+        float: left;
+    }
     .exa_status {
         float: right;
         p {
             .lv {
-                color: #F27120;
+                color: #f27120;
             }
             .con {
-                color: #4FCC24;
+                color: #4fcc24;
             }
             .not_con {
-                color: #F27120;
+                color: #f27120;
             }
         }
     }

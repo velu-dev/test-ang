@@ -1,26 +1,19 @@
-<!-- <mat-card class="m-card appointments">
+<mat-card class="m-card appointments m-b-10" *ngIf="!isCalender">
     <mat-card-header class="p-b-3">
-    <div fxLayout="row wrap" fxFlex="100">
-            <div fxFlex="50">
-                <div class="m-0 content-wrapper-main-title p-t-3">Examinations</div>
-            </div>
-            <div fxFlex="50" class="floating-button">
-                <span class="spacer"></span>
+        <div fxLayout="row wrap" fxFlex="100">
+            <div fxFlex="100">
                 <button (click)="CalenderVIew(true)" mat-icon-button [ngClass]="{'active': isCalenderVIew}">
                     <span class="fa fa-calendar-day"></span>
                 </button>
                 <button (click)="CalenderVIew(false)" mat-icon-button [ngClass]="{'active': !isCalenderVIew}">
                     <span class="fa fa-th-list"></span>
                 </button>
-
-
             </div>
-        </div> 
+        </div>
 
     </mat-card-header>
     <mat-divider></mat-divider>
-  <div *ngIf="!isCalenderVIew">
-
+    <div *ngIf="!isCalenderVIew">
         <mat-card-content class="p-t-3  m-b-0">
             <div class="table-filter">
                 <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
@@ -79,9 +72,9 @@
             <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
         </div>
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
-    </div> 
+    </div>
 
-    <div flLayout="row wrap" class="fc_calender">
+    <!-- <div flLayout="row wrap" class="fc_calender">
         <div fxFlex="100">
             <div>
                 <div class="exa_status">
@@ -94,23 +87,10 @@
                 <app-examination-calander-view></app-examination-calander-view>
             </div>
         </div>
-    </div>
-</mat-card> -->
-
-
-<mat-card class="m-card appointments">
-    <!-- <div flLayout="row wrap">
-        <div fxFlex="100"> -->
-            <!-- <div>
-                <div class="exa_status">
-                    <p class="float-right">
-                        <span> <i class="fa fa-circle p-r-5 lv"></i> Left Voicemail</span>
-                        <span> <i class="fa fa-circle p-r-5 con"></i> Confirmed</span>
-                        <span> <i class="fa fa-circle p-r-5 not_con"></i> Not Confirmed</span>
-                    </p>
-                </div> -->
-            <app-examination-calander-view></app-examination-calander-view>
-            <!-- </div> -->
-        <!-- </div>
     </div> -->
+</mat-card>
+
+
+<mat-card class="m-card appointments"  *ngIf="isCalender">
+    <app-examination-calander-view></app-examination-calander-view>
 </mat-card>

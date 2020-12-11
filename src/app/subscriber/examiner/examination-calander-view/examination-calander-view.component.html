@@ -1,6 +1,10 @@
 <div fxLayout="row wrap" class="fc_calender m-t-5">
-    <div fxFlex="30" fxFlex.sm="30" fxFlex.xs="100">
-        <mat-form-field *ngIf="roleId != 11">
+    <div fxFlex="40" fxFlex.sm="40" fxFlex.xs="100">
+        <div class="toggle-switch">
+            <mat-icon class="active" matTooltip="Calender View">event</mat-icon>
+            <mat-icon  matTooltip="List View">view_list</mat-icon>
+        </div>
+        <mat-form-field *ngIf="roleId != 11" class="select-examiner">
             <mat-label>Select Examiner</mat-label>
             <mat-select [(value)]="examinerId">
                 <mat-option (click)="selectExaminer()" [value]="0">
@@ -13,7 +17,7 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <div fxFlex="70" fxFlex.sm="70" fxFlex.xs="100">
+    <div fxFlex="60" fxFlex.sm="60" fxFlex.xs="100">
         <div>
             <div class="exa_status">
                 <p class="float-right m-b-0">
@@ -27,8 +31,7 @@
 </div>
 
 <div class="app-calendar">
-
-    <input matInput [owlDateTime]="intake" [(ngModel)]="selectedDate" [min]="minimumDate" (dateChange)="dateChanged()"
+ <input matInput [owlDateTime]="intake" [(ngModel)]="selectedDate" [min]="minimumDate" (dateChange)="dateChanged()"
         style="visibility: hidden;">
     <owl-date-time [hour12Timer]="true" [pickerMode]="'dialog'" [pickerType]="'calendar'"
         (afterPickerClosed)="dateChanged()" #intake>

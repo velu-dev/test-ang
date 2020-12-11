@@ -34,6 +34,7 @@ export class AppointmentComponent implements OnInit {
   dataSource: any;
   filterAll: any;
   roles = [];
+  isCalender : boolean =true;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -49,37 +50,37 @@ export class AppointmentComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver, private router: Router,
     private examinerService: ExaminerService, private exportService: ExportService
   ) {
-    // this.isHandset$.subscribe(res => {
-    //   this.isMobile = res;
-    //   if (res) {
-    //     this.columnName = ["", "Name", "Status"]
-    //     this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
-    //   } else {
-    //     this.columnName = ["Name", "Claim Number", "Examiner", "Exam Type", "Location", "Date", "Status"]
-    //     this.columnsToDisplay = ['claimant_name', 'claim_number', 'examiner', 'exam_type_code', 'location', 'appointment_scheduled_date_time', "status"]
-    //   }
-    // })
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Service Location"]
+        this.columnsToDisplay = ['is_expand', 'location']
+      } else {
+        this.columnName = ["Service Location", "Claimant Name", "Appointment Date", "Appointment Time", "Procedure", "Interpreter Needed", "Days Until"]
+        this.columnsToDisplay = ['location', 'claimant_name', 'appointment_date', 'appointment_time',"procedure", 'interperter_needed', 'days_until']
+      }
+    })
   }
   appointmentsData = []
   ngOnInit() {
-    // this.examinerService.getExaminationDetails().subscribe(res => {
-    //   console.log(res)
-    //   res['data'].map(data => {
-    //     data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
-    //     data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
-    //   })
-    //   this.appointmentsData = res['data'];
-    //   this.dataSource = new MatTableDataSource(res['data']);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    //   this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-    //   this.dataSource.filterPredicate = function (data, filter: string): boolean {
-    //     return data.examiner_name && data.examiner_name.toLowerCase().includes(filter) || (data.claimant_name && data.claimant_name.toLowerCase().includes(filter)) || (data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter)) || (data.location.street1 && data.location.street1.toLowerCase().includes(filter)) || (data.location.street2 && data.location.street2.toLowerCase().includes(filter)) || (data.location.city && data.location.city.toLowerCase().includes(filter)) || (data.location.state && data.location.state.toLowerCase().includes(filter)) || (data.location.zip_code && data.location.zip_code.toString().toLowerCase().includes(filter)) || (data.claim_number && data.claim_number.includes(filter) || data.appointment_scheduled_date_time && data.appointment_scheduled_date_time.includes(filter));
-    //   };
-    // }, error => {
-    //   console.log(error);
-    //   this.dataSource = new MatTableDataSource([])
-    // })
+    this.examinerService.getExaminationDetails().subscribe(res => {
+      console.log(res)
+      res['data'].map(data => {
+        data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
+        data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
+      })
+      this.appointmentsData = res['data'];
+      this.dataSource = new MatTableDataSource(res['data']);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      this.dataSource.filterPredicate = function (data, filter: string): boolean {
+        return data.examiner_name && data.examiner_name.toLowerCase().includes(filter) || (data.claimant_name && data.claimant_name.toLowerCase().includes(filter)) || (data.exam_type_code && data.exam_type_code.toLowerCase().includes(filter)) || (data.location.street1 && data.location.street1.toLowerCase().includes(filter)) || (data.location.street2 && data.location.street2.toLowerCase().includes(filter)) || (data.location.city && data.location.city.toLowerCase().includes(filter)) || (data.location.state && data.location.state.toLowerCase().includes(filter)) || (data.location.zip_code && data.location.zip_code.toString().toLowerCase().includes(filter)) || (data.claim_number && data.claim_number.includes(filter) || data.appointment_scheduled_date_time && data.appointment_scheduled_date_time.includes(filter));
+      };
+    }, error => {
+      console.log(error);
+      this.dataSource = new MatTableDataSource([])
+    })
   }
 
   applyFilter(filterValue: string) {
