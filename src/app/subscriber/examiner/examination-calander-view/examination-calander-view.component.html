@@ -1,8 +1,8 @@
 <div fxLayout="row wrap" class="fc_calender m-t-5">
     <div fxFlex="40" fxFlex.sm="40" fxFlex.xs="100">
         <div class="toggle-switch">
-            <mat-icon class="active" matTooltip="Calender View">event</mat-icon>
-            <mat-icon  matTooltip="List View">view_list</mat-icon>
+            <mat-icon class="active" matTooltip="Calender View" (click)="calViewChange(true)">event</mat-icon>
+            <mat-icon  matTooltip="List View" (click)="calViewChange(false)">view_list</mat-icon>
         </div>
         <mat-form-field *ngIf="roleId != 11" class="select-examiner">
             <mat-label>Select Examiner</mat-label>
