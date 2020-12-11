@@ -579,7 +579,7 @@ export class NewClaimComponent implements OnInit {
       date_of_birth: [null, Validators.required],
       gender: [null],
       email: ["", Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
-      // handedness: [null],
+      handedness: [null],
       primary_language_not_english: [null],
       primary_language_spoken: [null],
       certified_interpreter_required: [null],
@@ -1517,10 +1517,14 @@ export class NewClaimComponent implements OnInit {
         appointment: {
           appointment_scheduled_date_time: null,
           duration: null,
-          examiner_service_location_id: null
+          examiner_service_location_id: null,
+          is_virtual_location: false,
+          conference_url: null,
+          conference_phone: null
         }
       })
     } else {
+
       this.isSuplimental = false;
     }
   }
@@ -1860,7 +1864,11 @@ export class InjuryDialog {
     dialogRef.disableClose = true;
     this.isLoding = true;
     this.claimant = data['claimant']
-    this.bodyPartsList = data['bodyparts'];
+    data['bodyparts'].map(bp => {
+      let body_part = bp;
+      body_part.body_part_with_code = (bp.body_part_code + " - " + bp.body_part_name)
+      this.bodyPartsList.push(body_part);
+    })
     this.filteredBodyParts = this.bodyPartCtrl.valueChanges.pipe(
       startWith(null),
       map((body_part: string | null) => body_part ? this._filter(body_part) : this.bodyPartsList.slice()));
@@ -1925,9 +1933,10 @@ export class InjuryDialog {
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value;
-
-    return this.bodyPartsList.filter(body_part => body_part.body_part_name.toLowerCase().indexOf(filterValue) === 0);
+    let filterValue = "";
+    if (typeof (value) == 'string')
+      filterValue = value.toLowerCase();
+    return this.bodyPartsList.filter(body_part => body_part.body_part_with_code.toLowerCase().indexOf(filterValue) >= 0);
   }
   bodyPart(bodypart) {
     for (var i in this.bodyPartsList) {
@@ -1939,20 +1948,6 @@ export class InjuryDialog {
   onNoClick(): void {
     this.isEdit = false;
     this.dialogRef.close(false);
-    // if (this.isEdit) {
-    //   this.injuryInfo = this.data['injuryData'];
-    //   if (this.injuryInfo.continuous_trauma) {
-    //     if (this.injuryInfo.continuous_trauma_start_date) {
-    //     } else {
-    //       this.injuryInfo.continuous_trauma = false;
-    //     }
-    //   }
-    //   if (this.injuryInfo.body_part_id != null)
-    //     // this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
-    //     this.dialogRef.close(this.injuryInfo);
-    // } else {
-    //   this.dialogRef.close(false);
-    // }
   }
   isInjurySubmit = false;
   addInjury() {
@@ -2026,12 +2021,6 @@ export class InjuryDialog {
       this.injuryInfo.continuous_trauma_start_date = null;
       this.injuryInfo.continuous_trauma_end_date = null;
     }
-    // if (this.injuryInfo.date_of_injury) {
-    //   this.injuryInfo.continuous_trauma = false;
-    //   return
-    // } else {
-    //   this.alertService.openSnackBar("Please Select Injury Date", "error");
-    // }
   }
 
 }

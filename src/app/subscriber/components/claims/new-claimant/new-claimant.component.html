@@ -47,7 +47,6 @@
           <input matInput placeholder="Last Name" formControlName="last_name" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">{{errorMessages.entervalidlastname}}</mat-error>
         </mat-form-field>
-
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Suffix</mat-label>
@@ -55,16 +54,16 @@
           <mat-error *ngIf="isClaimantSubmited">Alphabets, Periods, Slash and Hyphen are allowed</mat-error>
         </mat-form-field>
         <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
-          fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Salutation</mat-label>
-          <input matInput placeholder="Salutation" formControlName="salutation" autocomplete="off">
-        </mat-form-field> -->
+        fxFlex.sm="50" fxFlex.xs="100">
+        <mat-label>Salutation</mat-label>
+        <input matInput placeholder="Salutation" formControlName="salutation" autocomplete="off">
+      </mat-form-field> -->
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Date of Birth*</mat-label>
-          <input matInput placeholder="MM-DD-YYYY" formControlName="date_of_birth" autocomplete="off" [min]="minimumDate" [max]="today"
-            [matDatepicker]="date_of_birth">
+          <input matInput placeholder="MM-DD-YYYY" formControlName="date_of_birth" autocomplete="off"
+            [min]="minimumDate" [max]="today" [matDatepicker]="date_of_birth">
           <mat-datepicker-toggle matSuffix [for]="date_of_birth"></mat-datepicker-toggle>
           <mat-datepicker #date_of_birth [disabled]="!editStatus"></mat-datepicker>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid date of birth</mat-error>
@@ -83,7 +82,7 @@
           </mat-select>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid state</mat-error>
         </mat-form-field>
-        <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Handedness</mat-label>
           <mat-select formControlName="handedness">
@@ -92,7 +91,7 @@
             <mat-option value="A">Ambidextrous</mat-option>
           </mat-select>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid handedness</mat-error>
-        </mat-form-field> -->
+        </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
@@ -104,7 +103,8 @@
         <div fxFlex="50" fxFlex.md="50" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
           fxFlex.xs="100" class="checkbox">
           <div class="p-t-30 p-l-10">
-            <mat-checkbox labelPosition="after" (change)="langChange($event);claimantForm.get('primary_language_spoken').reset();"
+            <mat-checkbox labelPosition="after"
+              (change)="langChange($event);claimantForm.get('primary_language_spoken').reset();"
               formControlName="certified_interpreter_required">Certified Interpreter Required</mat-checkbox>
           </div>
         </div>
@@ -112,14 +112,14 @@
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>Language</mat-label>
-          <mat-select formControlName="primary_language_spoken" (selectionChange)="claimantForm.get('other_language').reset()">
+          <mat-select formControlName="primary_language_spoken"
+            (selectionChange)="claimantForm.get('other_language').reset()">
             <mat-option *ngFor="let language of languageList" [value]="language.id">
               {{language.language}}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="isClaimantSubmited">Please select a valid language</mat-error>
         </mat-form-field>
-
         <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
           <mat-form-field fxFlex="100" *ngIf="claimantForm.value.primary_language_spoken == 20" appearance="outline">
             <mat-label>Other Language</mat-label>
@@ -151,22 +151,22 @@
           <mat-error *ngIf="isClaimantSubmited">Please enter valid email</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
-          fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50"
+          fxFlex.xs="100">
           <mat-label>Street Address 1</mat-label>
           <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
             placeholder="Street Address 1" formControlName="street1" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
-          fxFlex.sm="50" fxFlex.xs="100">
+        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50"
+          fxFlex.xs="100">
           <mat-label>Street Address 2</mat-label>
           <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
             placeholder="Street Address 2" formControlName="street2" autocomplete="off"></textarea>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
-        <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div>
+        <!-- <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100"></div> -->
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
           <mat-label>City</mat-label>

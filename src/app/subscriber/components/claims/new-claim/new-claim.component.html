@@ -92,8 +92,7 @@
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Suffix</mat-label>
                                 <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
-                                <mat-error *ngIf="isClaimantSubmited">Alphabets, Periods, Slash and Hyphen are allowed
-                                </mat-error>
+                                <mat-error *ngIf="isClaimantSubmited">Alphabets, Periods, Slash and Hyphen are allowed</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
@@ -120,7 +119,6 @@
                                 </mat-select>
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid gender</mat-error>
                             </mat-form-field>
-
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Handedness</mat-label>
@@ -1216,16 +1214,16 @@
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100" *ngIf="billable_item?.value?.appointment?.is_virtual_location">
                                     <mat-label>Conference URL</mat-label>
-                                    <input matInput placeholder="Conference URL" formControlName="conference_url"
-                                        autocomplete="off">
+                                    <input matInput placeholder="To be provided by the scheduling party"
+                                        formControlName="conference_url" autocomplete="off">
                                     <mat-error>Please enter a valid Conference URL</mat-error>
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100" *ngIf="billable_item?.value?.appointment?.is_virtual_location">
                                     <mat-label>Conference Phone</mat-label>
                                     <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                        placeholder="Conference Phone" formControlName="conference_phone"
-                                        autocomplete="off">
+                                        placeholder="To be provided by the scheduling party"
+                                        formControlName="conference_phone" autocomplete="off">
                                     <mat-error>Please enter a valid Conference Phone</mat-error>
                                 </mat-form-field>
                             </div>
