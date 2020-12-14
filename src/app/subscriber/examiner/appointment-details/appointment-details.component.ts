@@ -235,7 +235,9 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
-
+        if (this.billableData.appointment.examiner_service_location_id == null) {
+          this.service_location_name = '0';
+        }
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -388,6 +390,10 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   service_location_name: any;
   serviceLocationChange(value) {
+    if (value == 0) {
+      this.service_location_name = "0";
+      return;
+    }
     this.examinarAddress.map(address => {
       if (address.address_id == value) {
         this.service_location_name = address.service_location_name;
@@ -668,7 +674,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.examinarAddress = res['data'];
       res.data.map(address => {
         if (address.address_id == this.billableData.appointment.examiner_service_location_id) {
-          console.log(address)
           this.service_location_name = address.service_location_name;
         }
       })
