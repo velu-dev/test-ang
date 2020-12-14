@@ -39,7 +39,7 @@ import { BreadcrumbModule } from 'xng-breadcrumb';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { AlertDialogueComponent } from './components/alert-dialogue/alert-dialogue.component';
 import { BillingAlertComponent } from './components/billingalert/billing-alert.component';
-
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 export const MY_MOMENT_FORMATS = {
   parseInput: 'MM-DD-YYYY HH:mm A z',
   fullPickerInput: 'MM-DD-YYYY HH:mm A z',
@@ -82,7 +82,8 @@ export const MY_MOMENT_FORMATS = {
     NgxMaskModule.forRoot(),
     OwlDateTimeModule, OwlNativeDateTimeModule, OwlMomentDateTimeModule,
     TextMaskModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    NgxMatSelectSearchModule
   ],
   exports: [
     MaterialModule,
@@ -107,7 +108,8 @@ export const MY_MOMENT_FORMATS = {
     TextMaskModule,
     FileTypePipe,
     AlertDialogComponent,
-    BreadcrumbModule
+    BreadcrumbModule,
+    NgxMatSelectSearchModule
   ],
   providers: [
     CognitoService,

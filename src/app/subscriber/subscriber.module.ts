@@ -66,6 +66,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { BillingService } from './service/billing.service';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { StripeService } from './service/stripe.service';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -171,7 +172,8 @@ import { StripeService } from './service/stripe.service';
     SharedModule,
     FullCalendarModule,
     ImageCropperModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxMatSelectSearchModule
   ],
   providers: [
     SubscriberUserService,

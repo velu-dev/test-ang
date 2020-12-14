@@ -44,6 +44,7 @@
     "ngx-image-cropper": "^3.1.9",
     "ngx-logger": "^4.1.3",
     "ngx-mask": "^8.1.7",
+    "ngx-mat-select-search": "^3.1.4",
     "ngx-skeleton-loader": "^1.2.6",
     "ngx-spinner": "^8.1.0",
     "rxjs": "~6.4.0",
