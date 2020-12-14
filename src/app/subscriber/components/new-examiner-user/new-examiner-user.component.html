@@ -1,4 +1,4 @@
-<mat-card >
+<mat-card>
     <mat-card-content>
         <mat-tab-group class="user-list" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabchange($event.index)">
             <!-- ######~~~~~Examiner ~~~~~##### -->
@@ -6,7 +6,7 @@
                 <ng-template mat-tab-label>
                     <span>Examiner</span>
                 </ng-template>
-                <mat-card-content class="p-b-15" >
+                <mat-card-content class="p-b-15">
                     <form fxLayout="row wrap" class="m-t-10" (keydown.enter)="$event.target.tagName == 'TEXTAREA'"
                         [formGroup]="userForm">
                         <div fxFlex="100"
@@ -46,10 +46,13 @@
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidsuffix}}</mat-error>
                         </mat-form-field>
                         <div fxFlex="100" *ngIf="!userData?.examiner_details?.is_examiner_login">
-                            <mat-checkbox class="checkbox_ m-t-0" formControlName="is_examiner_with_email" [(ngModel)]="isEmailId" (change)="enableEmail(isEmailId)">Enable Examiner Login</mat-checkbox>
+                            <mat-checkbox class="checkbox_ m-t-0" formControlName="is_examiner_with_email"
+                                [(ngModel)]="isEmailId" (change)="enableEmail(isEmailId)">Enable Examiner Login
+                            </mat-checkbox>
                         </div>
-                        <mat-form-field *ngIf="isEmailId || userData?.examiner_details?.is_examiner_login" appearance="outline" fxFlex="50" fxFlex.xs="100" fxFlex.sm="50"
-                            fxFlex.sm="50" fxFlex.xs="100">
+                        <mat-form-field *ngIf="isEmailId || userData?.examiner_details?.is_examiner_login"
+                            appearance="outline" fxFlex="50" fxFlex.xs="100" fxFlex.sm="50" fxFlex.sm="50"
+                            fxFlex.xs="100">
                             <mat-label>Email ID*</mat-label>
                             <input matInput placeholder="Email" formControlName="sign_in_email_id" autocomplete="off">
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
@@ -398,6 +401,38 @@
                             </div>
                         </div>
 
+
+                        <!-- <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                            Upload W9 Document
+                        </div>
+
+                        <div fxLayout="row wrap" class="w-100 p-l-5 m-b-20">
+                            <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100">
+                                <button mat-raised-button class="filled-gray">Select File</button>
+                                <mat-form-field appearance="standard" class="p-l-10 w-100">
+                                    <input matInput readonly value="{{file | ellipsis:50}}"
+                                        placeholder="No file chosen">
+                                    <input type="file" #uploader multiple (change)="addFile($event)" hidden
+                                        accept=".pdf, .doc, .docx" required>
+                                    <mat-hint class="w-100">Supported file formats: .pdf, .doc, .docx
+                                        <span *ngIf="billingSubmit">
+                                            <mat-error>Error Message Here...</mat-error>
+                                        </span>
+                                    </mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100">
+                                <button mat-raised-button class="filled-gray m-t-20">Add</button>
+                            </div>
+
+                            <div fxFlex="60">
+                                <div class="w9-doc">
+                                    <img [src]="pdf" alt=""> w9 document file name.pdf
+                                    <a class="text-danger">Remove and Reupload </a>
+                                </div>
+                            </div>
+                        </div> -->
+
                         <div class="text-center w-100 m-t-10 m-b-20">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
@@ -691,13 +726,15 @@
                                             </mat-icon>
                                         </span>
                                         <div>
-                                            <span *ngIf="column == 'service_location_name'"> {{element?.service_location_name}}</span>
+                                            <span *ngIf="column == 'service_location_name'">
+                                                {{element?.service_location_name}}</span>
                                             <span *ngIf="column == 'address'"> {{element?.street1}} {{element?.street2}}
                                                 {{element?.city}} {{element?.state_code}} - {{element?.zip_code}}</span>
                                             <span
-                                                *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
-                                            <span
-                                                *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
+                                                *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name
+                                                ? ' - '+element?.service_name : ''}}</span>
+                                            <span *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no
+                                                | mask:'(000) 000-0000') : '' }}</span>
                                             <span
                                                 *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
                                             <span *ngIf="column == 'action'" class="no-wrap-td">
@@ -722,7 +759,8 @@
                                                 <div><span>Service Type</span><span> {{element?.service_code}} -
                                                         {{element?.service_name}} </span></div>
                                                 <div><span>Phone</span><span>
-                                                        {{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}
+                                                        {{element?.phone_no ? (element?.phone_no | mask:'(000)
+                                                        000-0000') : '' }}
                                                     </span></div>
                                                 <div><span>NPI Number</span><span>
                                                         {{element?.national_provider_identifier}}
@@ -770,7 +808,8 @@
                                     <mat-icon>search</mat-icon>
                                 </span>
                                 <mat-error>
-                                    <span>Please enter valid service location</span></mat-error>
+                                    <span>Please enter valid service location</span>
+                                </mat-error>
                             </mat-form-field>
 
                             <div class="address-list" fxFlex="100" *ngIf="locationData">
