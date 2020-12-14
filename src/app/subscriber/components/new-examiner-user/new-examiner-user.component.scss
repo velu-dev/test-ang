@@ -45,7 +45,7 @@ mat-card {
     border-radius: 5px;
   }
   mat-form-field {
-    padding: 10px 10px 0px 10px ;
+    padding: 10px 10px 0px 10px;
   }
   mat-card-content {
     form {
@@ -115,6 +115,35 @@ mat-card {
           }
         }
       }
+      .upload-file {
+        button {
+          margin-top: 18px;
+          vertical-align: top;
+        }
+        .mat-form-field {
+          width: calc(100% - 130px);
+          mat-error {
+            float: right;
+          }
+        }
+      }
+      .w9-doc {
+        width: fit-content;
+        margin: 10px 0 0 5px;
+        padding: 10px 15px;
+        background: $light-color;
+        border: 1px solid $gray;
+        border-radius: 3px;
+        img {
+          padding-right: 5px;
+          vertical-align: middle;
+        }
+        a {
+          float: right;
+          text-decoration: none;
+          padding-left: 20px;
+        }
+      }
       .add-license {
         button {
           float: right;
@@ -152,6 +181,18 @@ mat-card {
 .sub-title {
   small {
     font-weight: $font-weight-base !important;
+  }
+}
+.upload-file {
+  button {
+    margin-top: 18px;
+    vertical-align: top;
+  }
+  .mat-form-field {
+    width: calc(100% - 125px);
+    mat-error {
+      float: right;
+    }
   }
 }
 .county {

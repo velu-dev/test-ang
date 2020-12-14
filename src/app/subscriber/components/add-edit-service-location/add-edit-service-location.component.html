@@ -138,7 +138,7 @@
 
 
 
-                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                <div fxFlex="100" fxFlex.lg="100" fxFlex.xl="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100"
                     class="p-l-10 m-b-20" *ngIf="locationId">
                     <mat-label class="m-t-10 p-b-10 display-block">Location status</mat-label>
                     <mat-radio-group class="" formControlName="is_active" (change)="locationStatus($event)">
@@ -146,13 +146,56 @@
                         <mat-radio-button value="false" class="p-l-10">Inactive</mat-radio-button>
                     </mat-radio-group>
                 </div>
-
-                <mat-form-field appearance="outline" fxFlex="100">
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100" fxFlex.xl="100"
+                    fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>Location Contact Person </mat-label>
                     <input matInput placeholder="Location Contact Person" formControlName="contact_person"
                         autocomplete="off">
                     <mat-error *ngIf="locationSubmit">Please enter valid location contact person</mat-error>
                 </mat-form-field>
+
+                <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Primary Contact Person </mat-label>
+                    <input matInput placeholder="Primary Contact Person" formControlName="contact_person"
+                        autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid location contact person</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Primary Contact Phone </mat-label>
+                    <input matInput placeholder="Primary Contact Phone" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid phone</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Alternate Contact Person 1</mat-label>
+                    <input matInput placeholder="Alternate Contact Person 1" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid Alternate contact person</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Alternate Contact Phone 1</mat-label>
+                    <input matInput placeholder="Alternate Contact Phone 1" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid phone</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Alternate Contact Person 2</mat-label>
+                    <input matInput placeholder="Alternate Contact Person 2" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid location contact person</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                    fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-label>Alternate Contact Phone 2</mat-label>
+                    <input matInput placeholder="Alternate Contact Phone 2" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid phone</mat-error>
+                </mat-form-field> -->
 
                 <mat-form-field appearance="outline" fxFlex="100">
                     <mat-label>Notes </mat-label>

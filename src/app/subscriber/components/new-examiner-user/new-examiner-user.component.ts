@@ -18,6 +18,7 @@ import { ExaminerService } from '../../service/examiner.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
+import * as globals from '../../../globals';
 
 @Component({
   selector: 'app-new-examiner-user',
@@ -82,6 +83,7 @@ export class NewExaminerUserComponent implements OnInit {
   selected: any;
   examinerNumber: any;
   isEmailId: boolean = false;
+  pdf =globals.pdf;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   //@ViewChild(MatSort, { static: false }) sort: MatSort;
   //@ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
