@@ -619,10 +619,10 @@ export class BilllableBillingComponent implements OnInit {
 
   openElementBill(element) {
     if (this.isMobile)
-      if (this.expandId2 && this.expandId2 == element.id) {
+      if (this.expandId2 && this.expandId2 == element) {
         this.expandId2 = null;
       } else {
-        this.expandId2 = element.id;
+        this.expandId2 = element;
       }
   }
 

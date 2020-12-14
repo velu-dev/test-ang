@@ -6,7 +6,7 @@
 
         <mat-toolbar>
             <button type="button" (click)="openSidenav()" aria-label="Toggle sidenav" mat-icon-button class="toggle_">
-                <mat-icon aria-label="Side nav menu_open icon">menu_open</mat-icon>
+                <mat-icon aria-label="Side nav menu icon" [matTooltip]="isOpen ? 'collapse' : 'Expand'" matTooltipPosition="right">menu</mat-icon>
             </button>
             <span class="spacer"></span>
             <img [src]="icon_logo" alt="Simplexam Logo" class="icon-logo expanded_" (click)="mainPage()">
