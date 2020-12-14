@@ -416,7 +416,6 @@ export class InjuryPopup {
         // row.date_of_injury = moment(row.date_of_injury).format("MM-DD-YYYY")
         this.claimService.updateInjury(row, this.claim_id).subscribe(res => {
           this.dialogRef.close();
-          console.log(arrData.length, count);
           if (arrData.length == count)
             this.alertService.openSnackBar(this.isEdit ? "Injury updated successfully" : "Claim Injury added successfully", 'success')
         }, error => {

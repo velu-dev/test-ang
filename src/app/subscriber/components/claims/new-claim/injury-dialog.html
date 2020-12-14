@@ -10,12 +10,22 @@
         <div fxLayout="row wrap" fxFlex="100" class="m-t-20">
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Body Parts</mat-label>
-                <input matInput placeholder="Body Part" [value]="bodyPart(injuryInfo.body_part_id)" *ngIf="isEdit"
+                <mat-select [(ngModel)]="injuryInfo.body_part_id" placeholder="Body Part" [multiple]="true">
+                    <mat-option>
+                        <ngx-mat-select-search [formControl]="bodyPartCtrl" placeholderLabel="Find Body Part"
+                            i18n-placeholderLabel noEntriesFoundLabel="No Matching Body Part Found"
+                            i18n-noEntriesFoundLabel></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option *ngFor="let body_part of filteredBodyParts | async" [value]="body_part.id">
+                        {{body_part.body_part_code}} - {{body_part.body_part_name}}
+                    </mat-option>
+                </mat-select>
+                <!-- <input matInput placeholder="Body Part" [value]="bodyPart(injuryInfo.body_part_id)" *ngIf="isEdit"
                     [disabled]="isEdit">
                 <mat-select multiple [(ngModel)]="injuryInfo.body_part_id" *ngIf="!isEdit">
                     <mat-option *ngFor="let bodyParts of bodyPartsList" [value]="bodyParts.id">
                         {{bodyParts.body_part_code}} - {{bodyParts.body_part_name}}</mat-option>
-                </mat-select>
+                </mat-select> -->
                 <!-- <mat-chip-list #bodypartList aria-label="Body part selection">
                     <mat-chip *ngFor="let body_part of bodyParts" [selectable]="selectable" [removable]="removable"
                         (removed)="remove(body_part)" [disabled]="isEdit">
