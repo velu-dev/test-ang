@@ -338,7 +338,10 @@ export class NewBillableItemComponent implements OnInit {
     this.selectedExaminarAddress = address;
   }
 
-
+  service_lcation_name: any;
+  serviceLocationChange(value) {
+    this.service_lcation_name = value;
+  }
   examinarChange(examinar) {
     this.addressCtrl.setValue('');
     this.selectedExaminarAddress = '';

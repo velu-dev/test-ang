@@ -287,7 +287,7 @@ export class BilllableBillingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       // this.animal = result;
-      if(result){
+      if (result) {
         this.getBillingDetails();
       }
     });
@@ -619,18 +619,20 @@ export class BilllableBillingComponent implements OnInit {
 
   openElementBill(element) {
     if (this.isMobile)
-      if (this.expandId2 && this.expandId2 == element.id) {
+      if (this.expandId2 && this.expandId2 == element) {
         this.expandId2 = null;
       } else {
-        this.expandId2 = element.id;
+        this.expandId2 = element;
       }
   }
 
   openElementDoc(element) {
-    if (this.expandIdDoc && this.expandIdDoc == element.document_id) {
-      this.expandIdDoc = null;
-    } else {
-      this.expandIdDoc = element.document_id;
+    if (this.isMobile) {
+      if (this.expandIdDoc && this.expandIdDoc == element.document_id) {
+        this.expandIdDoc = null;
+      } else {
+        this.expandIdDoc = element.document_id;
+      }
     }
   }
   applyFilter(filterValue: string) {
@@ -1487,7 +1489,7 @@ export class billingOnDemandDialog {
   selection1 = new SelectionModel<any>(true, []);
   displayedColumns1: string[] = ['select', 'recipient_type'];
   states: any;
-  onDemandStatus:boolean = false;
+  onDemandStatus: boolean = false;
   constructor(
     public dialogRef: MatDialogRef<billingOnDemandDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, public billingService: BillingService,
@@ -1678,7 +1680,7 @@ export class billingOnDemandDialog {
                 }, 1000);
 
               }
-             this.onDemandStatus = true;
+              this.onDemandStatus = true;
               this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
             }, error => {
               this.alertService.openSnackBar(error.error.message, 'error');

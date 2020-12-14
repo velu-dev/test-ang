@@ -242,9 +242,9 @@
                                 (selectionChange)="serviceLocationChange($event.value)"
                                 formControlName="examiner_service_location_id">
                                 <mat-select-trigger>
-                                    {{service_location_name}}
+                                    {{service_location_name == '0' ? "Virtual Service Location" : service_location_name }}
                                 </mat-select-trigger>
-                                <mat-option (click)="VserviceLocation()" [value]="'0'">
+                                <mat-option (click)="VserviceLocation()" value="0">
                                     Virtual Service Location
                                 </mat-option>
                                 <mat-option *ngFor="let address of examinarAddress"
