@@ -730,8 +730,7 @@
                                                 {{element?.service_location_name}}</span>
                                             <span *ngIf="column == 'address'"> {{element?.street1}} {{element?.street2}}
                                                 {{element?.city}} {{element?.state_code}} - {{element?.zip_code}}</span>
-                                            <span
-                                                *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name
+                                            <span *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name
                                                 ? ' - '+element?.service_name : ''}}</span>
                                             <span *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no
                                                 | mask:'(000) 000-0000') : '' }}</span>
@@ -798,7 +797,8 @@
                                     <mat-option *ngFor="let option of (filteredOptions | async)"
                                         (click)="addressOnChange(option)"
                                         value="{{option?.street1 }} {{option?.street2 }} {{option?.city}} {{option?.state_code}} {{option?.zip_code }}">
-                                        {{option?.street1 }} {{option?.street2 }} {{option?.city}}
+                                        {{option?.service_name}} - {{option?.street1 }} {{option?.street2 }}
+                                        {{option?.city}}
                                         {{option?.state_code }} {{option?.zip_code }}
                                     </mat-option>
                                     <mat-option *ngIf="(filteredOptions | async)?.length == 0" disabled>Not found

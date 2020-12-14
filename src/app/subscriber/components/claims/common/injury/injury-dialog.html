@@ -13,7 +13,7 @@
                 <mat-select [(ngModel)]="injuryInfo.body_part_id" placeholder="Body Part" [multiple]="true">
                     <mat-option>
                         <ngx-mat-select-search [formControl]="bodyPartCtrl" placeholderLabel="Find Body Part"
-                            i18n-placeholderLabel noEntriesFoundLabel="'No Matching Body Part Found'"
+                            i18n-placeholderLabel noEntriesFoundLabel="No Matching Body Part Found"
                             i18n-noEntriesFoundLabel></ngx-mat-select-search>
                     </mat-option>
                     <mat-option *ngFor="let body_part of filteredBodyParts | async" [value]="body_part.id">
