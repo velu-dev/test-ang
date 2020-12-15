@@ -22,22 +22,23 @@
 
       <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
         <div class="property">Location</div>
-        <div class="value"></div>
+        <div class="value">{{event?.is_virtual_location ? "Virtual Service Location" :event?.service_location_name }}
+        </div>
       </div>
 
-      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+      <div class="grid-list-event" *ngIf="!event?.is_virtual_location" fxFlex="100" fxFlex.xs="100">
         <div class="property">Address</div>
         <div class="value"> {{event?.location}}</div>
       </div>
 
-      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+      <div class="grid-list-event" *ngIf="event?.is_virtual_location" fxFlex="100" fxFlex.xs="100">
         <div class="property">Conference URL</div>
-        <div class="value"> </div>
+        <div class="value">{{event?.conference_url}} </div>
       </div>
 
-      <div class="grid-list-event" fxFlex="100" fxFlex.xs="100">
+      <div class="grid-list-event" *ngIf="event?.is_virtual_location" fxFlex="100" fxFlex.xs="100">
         <div class="property">Conference Phone</div>
-        <div class="value"></div>
+        <div class="value">{{event?.conference_phone}}</div>
       </div>
 
       <div class="divider"></div>
