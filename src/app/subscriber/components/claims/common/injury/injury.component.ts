@@ -133,7 +133,7 @@ export class InjuryComponent implements OnInit {
       if (result != 'no') {
         this.ngOnInit();
       } else {
-        this.getInjury();
+        // this.getInjury();
       }
     });
   }
