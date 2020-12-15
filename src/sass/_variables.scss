@@ -1165,7 +1165,7 @@ input:-webkit-autofill {
       width: 100%;
       color: $text-light;
       white-space: normal;
-      word-break: break-all;
+      word-break: break-word;
       mat-form-field {
         padding: 0px 10px 0px 0px !important;
       }
