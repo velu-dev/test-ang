@@ -89,7 +89,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   currentMonth = moment().month();
   minimumDate = new Date(1900, 0, 1);
   @Input('CalendarView') CalendarView;
-  @Output() view =  new EventEmitter() ;
+  @Output() view = new EventEmitter();
   defaultView = "dayGridMonth";
   constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
     this.currentMonth = moment().month();
@@ -111,8 +111,8 @@ export class ExaminationCalanderViewComponent implements OnInit {
         }
       });
     })
-    
-   
+
+
     this.roleId = this.cookieService.get("role_id");
 
   }
@@ -145,7 +145,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
     }
     this.defaultView = this.CalendarView ? "timeGridWeek" : "dayGridMonth";
   }
-  calViewChange(status){
+  calViewChange(status) {
     console.log(new Date())
     this.view.emit(status);
   }
@@ -334,7 +334,7 @@ export const MY_CUSTOM_FORMATS = {
   ]
 })
 export class EventdetailDialog {
-  event = { duration: "", claimant_id: "", billable_item_id: "", claim_id: "", title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
+  event = { is_virtual_location: null, service_location_name: "", conference_url: "", conference_phone: "", duration: "", claimant_id: "", billable_item_id: "", claim_id: "", title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
   isEdit = false;
   textDisable: boolean = true;
   examinationStatus = [];
