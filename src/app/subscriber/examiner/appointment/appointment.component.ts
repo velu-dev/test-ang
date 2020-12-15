@@ -26,7 +26,7 @@ import { MatDialog } from '@angular/material';
   ]
 })
 export class AppointmentComponent implements OnInit {
-  isCalenderVIew = false;
+  isCalenderVIew = true;
   xls = globals.xls
   completed = globals.completed
   left_voicemail = globals.left_voicemail
@@ -48,7 +48,7 @@ export class AppointmentComponent implements OnInit {
   disabled = false;
   filterValue;
   tabIndex;
-  @ViewChild(ExaminationCalanderViewComponent, { static: false }) examinationCalanderView: ExaminationCalanderViewComponent
+  @ViewChild(ExaminationCalanderViewComponent, { static: true }) examinationCalanderView: ExaminationCalanderViewComponent
   constructor(private breakpointObserver: BreakpointObserver, private router: Router,
     private examinerService: ExaminerService, private exportService: ExportService, public dialog: MatDialog
   ) {
@@ -128,8 +128,8 @@ export class AppointmentComponent implements OnInit {
       claimant_id: e.claimant_id,
       billable_item_id: e.billable_item_id,
       claim_id: e.claim_id,
-      location: e.street1 ? e.street1.concat(' ', e.street2, ' ', e.city, ' ', e.state, ' ', e.zip_code) : '',
-      examiner_name: e.examiner_first_name ? e.examiner_last_name.concat(' ', e.examiner_first_name, ' ', e.examiner_middle_name) : '',
+      location: e.street1 ? e.street1.concat(' ', e.street2, ' ', e.city, ' ', e.state, ' ', e.zip_code, '-' + e.zip_code_plus_4) : '',
+      examiner_name: e.examiner_first_name ? e.examiner_last_name.concat(' ', e.examiner_first_name, ' ', e.examiner_middle_name, ' ', e.examiner_suffix) : '',
       is_virtual_location: e.is_virtual_location,
       conference_url: e.conference_url,
       conference_phone: e.conference_phone,
@@ -149,14 +149,17 @@ export class AppointmentComponent implements OnInit {
         exam_procedure_name: e.exam_procedure_name,
         exam_procedure_type: e.exam_procedure_type,
         examiner_id: e.examiner_id,
-        examiner_name: e.examiner_first_name ? e.examiner_last_name.concat(' ', e.examiner_first_name, ' ', e.examiner_middle_name) : '',
+        examiner_name: e.examiner_first_name ? e.examiner_last_name.concat(' ', e.examiner_first_name, ' ', e.examiner_middle_name, ' ', e.examiner_suffix) : '',
         is_deposition: null,
-        location: e.street1 ? e.street1.concat(' ', e.street2, ' ', e.city, ' ', e.state, ' ', e.zip_code) : '',
+        location: e.street1 ? e.street1.concat(' ', e.street2, ' ', e.city, ' ', e.state, ' ', e.zip_code,'-' + e.zip_code_plus_4) : '',
         phone_no_1: e.claimant_phone_no_1,
         procedure_type: "",
         status: e.status,
         status_color: e.status_color,
-        supervisor_id: e.supervisor_id
+        supervisor_id: e.supervisor_id,
+        conference_url: e.conference_url,
+        conference_phone: e.conference_phone,
+        service_location_name: e.service_location_name,
       }
     }
     let data = {
