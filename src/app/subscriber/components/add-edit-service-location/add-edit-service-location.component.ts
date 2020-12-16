@@ -95,7 +95,12 @@ export class AddEditServiceLocationComponent implements OnInit {
       phone_no: location.phone_no,
       fax_no: location.fax_no,
       email: location.email,
-      contact_person: location.contact_person,
+      primary_contact: location.primary_contact,
+      primary_contact_phone: location.primary_contact_phone,
+      alternate_contact_1: location.alternate_contact_1,
+      alternate_contact_1_phone: location.alternate_contact_1_phone,
+      alternate_contact_2: location.alternate_contact_2,
+      alternate_contact_2_phone: location.alternate_contact_2_phone,
       notes: location.notes,
       service_code_id: location.service_code_id,
       national_provider_identifier: location.national_provider_identifier,
@@ -120,7 +125,12 @@ export class AddEditServiceLocationComponent implements OnInit {
       phone_no: [null],
       fax_no: [null],
       email: [null, Validators.compose([Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
-      contact_person: [null],
+      primary_contact: [null],
+      primary_contact_phone: [null],
+      alternate_contact_1: [null],
+      alternate_contact_1_phone: [null],
+      alternate_contact_2: [null],
+      alternate_contact_2_phone: [null],
       notes: [null],
       service_code_id: [null, Validators.required],
       //national_provider_identifier: [null],
@@ -251,7 +261,12 @@ export class AddEditServiceLocationComponent implements OnInit {
       if (!this.maillingAddress) {
         this.subscriberService.getMaillingAddress(this.examinerId).subscribe(address => {
           address.data.notes = null;
-          address.data.contact_person = null;
+          address.data.primary_contact = null;
+          address.data.primary_contact_phone = null;
+          address.data.alternate_contact_1 = null;
+          address.data.alternate_contact_1_phone = null;
+          address.data.alternate_contact_2 = null;
+          address.data.alternate_contact_2_phone = null;
           address.data.phone_no = address.data.phone_no1
           this.maillingAddress = address.data
           this.locationForm.patchValue(address.data)
