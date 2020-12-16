@@ -255,12 +255,14 @@
                         <div fxLayout="row" class="w-100 upload-w9 m-b-20">
                             <div fxFlex="50" class="upload" fxFlex.sm="100" fxFlex.xs="100">
                                 <div class="title">W-9 Form</div>
-                                <button mat-raised-button class="filled-gray">Upload</button>
-                                <!-- <div fxLayout="row wrap"  class="w9-doc-filename">
+                                <button type="button" mat-raised-button (click)="uploaderBilling.click()" class="filled-gray">{{file ? 'Reupload' : 'Upload'}}</button>
+                                <input type="file" #uploaderBilling (change)="addFile($event)" hidden
+                                accept=".pdf" required>
+                                <div fxLayout="row wrap" *ngIf="file" class="w9-doc-filename">
                                     <div>
-                                        <a href="" class="text-ternary">W-9 Document file name comes here.pdf <i class="fas fa-download p-l-5"></i></a>
+                                        <a (click)="downloadDocumet({file_name:file,file_url:w9Url})"  [routerLink]="[]" class="text-ternary">{{file}} <i class="fas fa-download p-l-5"></i></a>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
 
                         </div>

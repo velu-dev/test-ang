@@ -134,7 +134,7 @@
                             {{ expandId == element.appointment_id ? 'remove_circle' : 'add_circle'}}
                         </mat-icon>
                     </span>
-                    <div>
+                    <div  (click)="navigateBillableItem(element)">
                         <span *ngIf="column == 'claimant_name'">{{element?.claimant_first_name}}
                             {{element?.claimant_last_name}}</span>
                         <span *ngIf="column == 'examiner_name'">{{element?.examiner_first_name}}
