@@ -54,7 +54,7 @@ export const api_endpoint = {
     verifyRole: 'subscriber/examiner/verify-role',
     verifyUserRole: 'subscriber/examiner/verify-user-role',
     examinerDisable: 'subscriber/disable-examiner/',
-    upcomingAppointment : 'examiner-dashboard/upcoming-appointments',
+    upcomingAppointment: 'examiner-dashboard/upcoming-appointments',
     dashboardBilling: 'examiner-dashboard/billing',
     itemsAwaiting: 'examiner-dashboard/items-awaiting-reports',
 
@@ -116,6 +116,7 @@ export const api_endpoint = {
     getPrimaryAddress: 'subscriber/primary-billing-locations',
     updateAgents: 'claim/update-agents/',
     updateInjury: 'claim/update-injuries/',
+    addinjury: "claim/add-injuries/",
     deleteInjury: 'claim/injuries-remove/',
     getInjury: "claim/injuries-list/",
     getBillings: "billing/details/",

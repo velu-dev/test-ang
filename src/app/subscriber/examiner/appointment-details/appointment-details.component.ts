@@ -822,6 +822,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
+    this.billable_item.value.appointment.examinar_id = this.examinerId;
     this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
       this.isEditBillableItem = false;
       this.billable_item.disable();

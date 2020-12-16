@@ -57,7 +57,7 @@ export class NewBillableItemComponent implements OnInit {
   procuderalCodes: any = [];
   examinarList: any;
   duration = [{ id: 20, value: "20" }, { id: 30, value: "30" }, { id: 45, value: "45" }, { id: 60, value: "60" }]
-  examinarAddress: Observable<any[]>;
+  examinarAddress = [];
   examinarId: any;
   addressCtrl = new FormControl();
   examinerOptions: any = [];
@@ -338,9 +338,13 @@ export class NewBillableItemComponent implements OnInit {
     this.selectedExaminarAddress = address;
   }
 
-  service_lcation_name: any;
+  service_location_name: any;
   serviceLocationChange(value) {
-    this.service_lcation_name = value;
+    this.examinarAddress.map(res => {
+      if (res.street1 == value) {
+        this.service_location_name = res.service_location_name;
+      }
+    })
   }
   examinarChange(examinar) {
     this.addressCtrl.setValue('');
@@ -356,11 +360,12 @@ export class NewBillableItemComponent implements OnInit {
       this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
         this.examinerOptions = []
         this.examinerOptions = res['data'];
-        this.examinarAddress = this.addressCtrl.valueChanges
-          .pipe(
-            startWith(''),
-            map(value => this._filterAddress(value))
-          );
+        this.examinarAddress = res.data;
+        // this.examinarAddress = this.addressCtrl.valueChanges
+        //   .pipe(
+        //     startWith(''),
+        //     map(value => this._filterAddress(value))
+        //   );
 
         if (examinar.address_id) {
           res.data.map(addr => {
