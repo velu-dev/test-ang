@@ -208,7 +208,7 @@
                             <mat-select formControlName="examiner_id" disabled>
                                 <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
                                     [value]="examinar.id">
-                                    {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}
+                                    {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}} {{examinar.suffix}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
