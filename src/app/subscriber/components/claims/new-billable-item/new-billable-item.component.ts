@@ -340,6 +340,9 @@ export class NewBillableItemComponent implements OnInit {
 
   service_location_name: any;
   serviceLocationChange(value) {
+    if (value == '0') {
+      this.service_location_name = "0";
+    }
     this.examinarAddress.map(res => {
       if (res.street1 == value) {
         this.service_location_name = res.service_location_name;
