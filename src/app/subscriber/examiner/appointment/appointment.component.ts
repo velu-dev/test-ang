@@ -58,8 +58,8 @@ export class AppointmentComponent implements OnInit {
         this.columnName = ["", "Service Location"]
         this.columnsToDisplay = ['is_expand', 'location_name']
       } else {
-        this.columnName = ["Location Name", "Service Location", "Claimant Name", "Appointment Date", "Appointment Time", "Procedure", "Interpreter Needed", "Days Until"]
-        this.columnsToDisplay = ['location_name', 'location', 'claimant_name', 'appointment_date', 'appointment_time', "procedure", 'interperter_needed', 'days_until']
+        this.columnName = ["Location Name", "Service Location", "Claimant Name", "Examiner", "Appointment Date", "Appointment Time", "Procedure", "Interpreter Needed", "Days Until"]
+        this.columnsToDisplay = ['location_name', 'location', 'claimant_name', 'examiner', 'appointment_date', 'appointment_time', "procedure", 'interperter_needed', 'days_until']
       }
     })
   }
@@ -69,7 +69,14 @@ export class AppointmentComponent implements OnInit {
       console.log(res)
       res['data'].map(data => {
         //data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
-        // data.examiner_name = data.examiner_first_name + ' ' + data.examiner_middle_name + ' ' + data.examiner_last_name
+        data.location_name = data.is_virtual_location ? "Virtual Service Location" : data.service_location_name
+        data.location = data.street1 ? [data.street1, data.street2, data.city, data.state, data.zip_code, data.zip_code_plus_4 ? '- ' + data.zip_code_plus_4 : null].filter(Boolean).join(" ") : ''
+        data.examiner = data.examiner_first_name ? [data.examiner_last_name, data.examiner_first_name, data.examiner_middle_name, data.examiner_suffix].filter(Boolean).join(" ") : ''
+        data.interperter_needed = data.certified_interpreter_required ? 'Yes' : 'No';
+        data.days_until = data.days_until == 0 ? 'Today' : data.days_until;
+        data.appointment_date = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
+        data.appointment_time = data.start && data.end ? moment(data.start).format("hh:mm a") + ' - ' + moment(data.end).format("hh:mm a"): '';
+
       })
       this.appointmentsData = res['data'];
       this.dataSource = new MatTableDataSource(res['data']);
@@ -113,6 +120,13 @@ export class AppointmentComponent implements OnInit {
     this.getData()
 
   }
+  examinationStatus:any[] = [];
+  depositionStatus:any[] = [];
+  examinationData(data){
+    console.log(data);
+    this.examinationStatus = data.examination;
+    this.depositionStatus = data.deposition;
+  }
   extendedProps: any
   handleEventClick(e) {
     this.openEventDetailDialog(e);
@@ -123,13 +137,13 @@ export class AppointmentComponent implements OnInit {
       title: e.title,
       start: e.start,
       end: e.end,
-      backgroundColor: e.backgroundColor,
+      backgroundColor: e.status_color,
       duration: e.duration,
       claimant_id: e.claimant_id,
       billable_item_id: e.billable_item_id,
       claim_id: e.claim_id,
-      location: e.street1 ? e.street1.concat(' ', e.street2, ' ', e.city, ' ', e.state, ' ', e.zip_code, '-' + e.zip_code_plus_4) : '',
-      examiner_name: e.examiner_first_name ? e.examiner_last_name.concat(' ', e.examiner_first_name, ' ', e.examiner_middle_name, ' ', e.examiner_suffix) : '',
+      location: e.street1 ? [e.street1, e.street2, e.city, e.state, e.zip_code, e.zip_code_plus_4 ? '- ' + e.zip_code_plus_4 : null].filter(Boolean).join(" ") : '',
+      examiner_name: e.examiner_first_name ? [e.examiner_last_name, e.examiner_first_name, e.examiner_middle_name, e.examiner_suffix].filter(Boolean).join(" ") : '',
       is_virtual_location: e.is_virtual_location,
       conference_url: e.conference_url,
       conference_phone: e.conference_phone,
@@ -141,7 +155,7 @@ export class AppointmentComponent implements OnInit {
         claim_id: e.claim_id,
         claim_number: e.claim_number,
         claimant_id: e.claimant_id,
-        claimant_name: e.claimant_first_name ? e.claimant_last_name.concat(' ', e.claimant_first_name, ' ', e.claimant_middle_name) : '',
+        claimant_name: e.claimant_first_name ? [e.claimant_last_name, e.claimant_first_name, e.claimant_middle_name].filter(Boolean).join(" ") : '',
         description: e.description,
         email: e.claimant_email,
         exam_name: e.exam_type_name,
@@ -149,14 +163,15 @@ export class AppointmentComponent implements OnInit {
         exam_procedure_name: e.exam_procedure_name,
         exam_procedure_type: e.exam_procedure_type,
         examiner_id: e.examiner_id,
-        examiner_name: e.examiner_first_name ? e.examiner_last_name.concat(' ', e.examiner_first_name, ' ', e.examiner_middle_name, ' ', e.examiner_suffix) : '',
+        examiner_name: e.examiner_first_name ? [e.examiner_last_name, e.examiner_first_name, e.examiner_middle_name, e.examiner_suffix].filter(Boolean).join(" ") : '',
         is_deposition: null,
-        location: e.street1 ? e.street1.concat(' ', e.street2, ' ', e.city, ' ', e.state, ' ', e.zip_code,'-' + e.zip_code_plus_4) : '',
+        location: e.street1 ? [e.street1, e.street2, e.city, e.state, e.zip_code, e.zip_code_plus_4 ? '- ' + e.zip_code_plus_4 : null].filter(Boolean).join(" ") : '',
         phone_no_1: e.claimant_phone_no_1,
         procedure_type: "",
         status: e.status,
         status_color: e.status_color,
         supervisor_id: e.supervisor_id,
+        is_virtual_location: e.is_virtual_location,
         conference_url: e.conference_url,
         conference_phone: e.conference_phone,
         service_location_name: e.service_location_name,
@@ -164,8 +179,8 @@ export class AppointmentComponent implements OnInit {
     }
     let data = {
       event: event,
-      calendar_examination_status: [],
-      deposition_status: []
+      calendar_examination_status: this.examinationStatus,
+      deposition_status: this.depositionStatus
     }
     const dialogRef = this.dialog.open(EventdetailDialog, {
       width: '550px',
