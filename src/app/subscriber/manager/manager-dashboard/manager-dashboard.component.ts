@@ -47,7 +47,7 @@ export class ManagerDashboardComponent implements OnInit {
         this.columnName = ["", "Claimant", "Action"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
-        this.columnName = ["", "Claimant", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date of Item Received", "Critical"]
+        this.columnName = ["", "Claimant", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date Item Received", "Critical"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', 'examiner_name', "exam_procedure_type", "standing", 'dos', 'critical']
       }
     })
@@ -85,5 +85,17 @@ export class ManagerDashboardComponent implements OnInit {
     if (type == "correspondence" || type == "history" || type == "billing")
       examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
     this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
+  }
+
+  navigateBillableItem(element){
+    this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
+    this.intercom.setClaimNumber(element.claim_number);
+    this.cookieService.set('claimNumber', element.claim_number)
+    this.intercom.setBillableItem(element.exam_procedure_name);
+    this.cookieService.set('billableItem', element.exam_procedure_name);
+    let claimant_id = element.claimant_id;
+    let claim_id = element.claim_id;
+    let billable_id = element.billable_item_id;
+    this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
   }
 }

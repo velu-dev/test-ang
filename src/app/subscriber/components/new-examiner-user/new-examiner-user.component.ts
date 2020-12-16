@@ -19,7 +19,7 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 import { IntercomService } from 'src/app/services/intercom.service';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 import * as globals from '../../../globals';
-
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-new-examiner-user',
   templateUrl: './new-examiner-user.component.html',
@@ -83,8 +83,12 @@ export class NewExaminerUserComponent implements OnInit {
   selected: any;
   examinerNumber: any;
   isEmailId: boolean = false;
-  pdf =globals.pdf;
+  pdf = globals.pdf;
+  file: any;
+  w9Url: any;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
+  @ViewChild('uploaderBilling', { static: true }) fileUploadBilling: ElementRef;
+
   //@ViewChild(MatSort, { static: false }) sort: MatSort;
   //@ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   private paginator: MatPaginator;
@@ -324,6 +328,8 @@ export class NewExaminerUserComponent implements OnInit {
         suffix: res.billing_provider.suffix,
         fax_no: res.billing_provider.fax_no
       }
+      this.file = res.billing_provider.w9_form_file_name;
+      this.w9Url = res.billing_provider.w9_form_file_url
       this.billingOrgChange(billing.is_person)
       this.changeState(billing.default_injury_state, 'billing', res.billing_provider.default_injury_state_code);
       this.changeState(billing.state, 'cms', billing.state_code);
@@ -432,17 +438,19 @@ export class NewExaminerUserComponent implements OnInit {
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       default_injury_state: [null],
       is_person: [true],
-      national_provider_identifier: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
-      dol_provider_number: ["", Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(10)])],
+      national_provider_identifier: [null, Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])],
+      dol_provider_number: [null, Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(10)])],
       tax_id: [null],
-      street1: [null],
-      street2: [null],
-      city: [null],
+      street1: [''],
+      street2: [''],
+      city: [''],
       state: [null],
-      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no1: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
-      billing_provider_name: [null, Validators.compose([Validators.maxLength(100)])],
-      fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])]
+      billing_provider_name: ['', Validators.compose([Validators.maxLength(100)])],
+      fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      file: [''],
+      isFileChanged: [false]
 
     })
 
@@ -750,6 +758,49 @@ export class NewExaminerUserComponent implements OnInit {
     })
   }
 
+  billingSelectedFile: File;
+
+
+  errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+  addFile(event) {
+    
+    this.billingSelectedFile = null;
+    let fileTypes = ['pdf']
+
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+      if (FileSize > 30) {
+        this.errors.file.isError = true;
+        this.errors.file.error = "File size is too large";
+        this.alertService.openSnackBar("File size is too large", 'error');
+        return;
+      }
+      this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+      this.errors.doc_type.error = "";
+      this.file = event.target.files[0].name;
+      this.billingSelectedFile = event.target.files[0];
+      this.billingProviderForm.get('isFileChanged').patchValue(true);
+      this.billingProviderForm.get('file').patchValue(this.billingSelectedFile);
+      this.w9Url = null;
+      this.fileUploadBilling.nativeElement.value = "";
+    } else {
+      this.billingSelectedFile = null;
+      this.errors.file.isError = true;
+      this.fileUploadBilling.nativeElement.value = "";
+      this.errors.file.error = "This file type is not accepted";
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+
+  }
+
+  downloadDocumet(element) {
+    if( element.file_url)
+    this.examinerService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.file_name);
+    })
+  }
+
   billingSubmit: boolean = false;
   billingPrviderSubmit(status?) {
     this.billingSubmit = true;
@@ -762,11 +813,19 @@ export class NewExaminerUserComponent implements OnInit {
       this.billingProviderForm.get('last_name').setValidators([]);
       this.billingProviderForm.get('billing_provider_name').setValidators([Validators.required, Validators.maxLength(100)]);
     }
-
+    let formData = new FormData()
     Object.keys(this.billingProviderForm.controls).forEach((key) => {
       this.billingProviderForm.get(key).updateValueAndValidity();
-      if (this.billingProviderForm.get(key).value && typeof (this.billingProviderForm.get(key).value) == 'string')
+      if (this.billingProviderForm.get(key).value && typeof (this.billingProviderForm.get(key).value) == 'string') {
         this.billingProviderForm.get(key).setValue(this.billingProviderForm.get(key).value.trim())
+      }
+      if (this.billingProviderForm.get(key).value == null) {
+        this.billingProviderForm.get(key).setValue('');
+      }
+      if (key != 'file') {
+        formData.append(key, this.billingProviderForm.get(key).value.toString())
+      }
+
     });
     if (this.billingProviderForm.invalid) {
       window.scrollTo(0, 0)
@@ -774,7 +833,11 @@ export class NewExaminerUserComponent implements OnInit {
       return;
     }
 
-    this.userService.updateBillingProvider(this.examinerId, this.billingProviderForm.value).subscribe(mail => {
+    if (this.billingSelectedFile) {
+      formData.append('file', this.billingSelectedFile)
+    }
+
+    this.userService.updateBillingProvider(this.examinerId, formData).subscribe(mail => {
 
       if (!this.billingProviderForm.value.id) {
         this.alertService.openSnackBar("Billing provider added successfully", 'success');
