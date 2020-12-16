@@ -115,37 +115,71 @@ mat-card {
           }
         }
       }
-      .upload-file {
-        // button {
-        //   margin-top: 18px;
-        //   vertical-align: top;
-        // }
-        // .mat-form-field {
-        //   width: calc(100% - 130px);
-        //   mat-error {
-        //     float: right;
-        //   }
-        // }
-        .w9-doc {
-          // float: left;
-          width: fit-content;
-          margin: 10px 0 0 5px;
-          padding: 8px 15px;
-          background: $light-color;
-          border: 1px solid $gray;
-          border-radius: 3px;
-          img {
-            padding-right: 5px;
-            vertical-align: middle;
+      .upload-w9 {
+        padding-left: 10px;
+        .upload {
+          .title {
+            float: left;
+            font-weight: $font-weight-bold;
+            margin: 13px 0 0 5px;
           }
+          button {
+            float: left;
+            margin-left: 20px;
+          }
+        }
+      }
+
+      .w9-doc-filename {
+        width: 96%;
+        div {
+          width: fit-content;
+          margin: 5px 0 0 5px;
+          padding: 8px 0px;
+          // background: $light-color;
+          // border: 1px solid $gray;
+          border-radius: 3px;
+          // img {
+          //   padding-right: 10px;
+          //   vertical-align: middle;
+          // }
           a {
-            float: right;
             text-decoration: none;
-            padding-left: 20px;
             cursor: pointer;
           }
         }
       }
+      // .upload-file {
+      //   // button {
+      //   //   margin-top: 18px;
+      //   //   vertical-align: top;
+      //   // }
+      //   // .mat-form-field {
+      //   //   width: calc(100% - 130px);
+      //   //   mat-error {
+      //   //     float: right;
+      //   //   }
+      //   // }
+      //   .w9-doc {
+      //     // float: left;
+      //     width: fit-content;
+      //     margin: 10px 0 0 5px;
+      //     padding: 8px 15px;
+      //     background: $light-color;
+      //     border: 1px solid $gray;
+      //     border-radius: 3px;
+      //     img {
+      //       padding-right: 5px;
+      //       vertical-align: middle;
+      //     }
+      //     a {
+      //       float: right;
+      //       text-decoration: none;
+      //       padding-left: 20px;
+      //       cursor: pointer;
+      //     }
+      //   }
+      // }
 
       .add-license {
         button {

@@ -252,18 +252,17 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
-                            Upload W-9 Form 
-                        </div>
-
-                        <div fxLayout="row wrap" class="w-100 p-l-5 m-b-20">
-                            <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100">
+                        <div fxLayout="row" class="w-100 upload-w9 m-b-20">
+                            <div fxFlex="50" class="upload" fxFlex.sm="100" fxFlex.xs="100">
+                                <div class="title">W-9 Form</div>
                                 <button mat-raised-button class="filled-gray">Upload</button>
-                                <div class="w9-doc">
-                                    <img [src]="pdf" alt="">w9 document file name.pdf
-                                    <a class="text-danger">Remove and Reupload </a>
-                                </div>
+                                <!-- <div fxLayout="row wrap"  class="w9-doc-filename">
+                                    <div>
+                                        <a href="" class="text-ternary">W-9 Document file name comes here.pdf <i class="fas fa-download p-l-5"></i></a>
+                                    </div>
+                                </div> -->
                             </div>
+
                         </div>
 
                         <!-- <div fxLayout="row wrap" class="w-100 p-l-5 m-b-20">
@@ -805,8 +804,7 @@
                                     autocomplete="off">
                                 <mat-autocomplete #addressAutocomplete="matAutocomplete">
                                     <mat-option *ngFor="let option of (filteredOptions | async)"
-                                        (click)="addressOnChange(option)"
-                                        value="{{option?.service_location_name }}">
+                                        (click)="addressOnChange(option)" value="{{option?.service_location_name }}">
                                         {{option?.service_location_name}} - {{option?.street1 }} {{option?.street2 }}
                                         {{option?.city}}
                                         {{option?.state_code }} {{option?.zip_code }}
@@ -828,7 +826,8 @@
                                         <div class="name" mat-line>
                                             <div>
                                                 <strong>
-                                                    <i class="fa fa-building-o"></i>{{locationData?.service_location_name}}
+                                                    <i
+                                                        class="fa fa-building-o"></i>{{locationData?.service_location_name}}
                                                 </strong>
                                             </div>
                                         </div>
