@@ -1164,7 +1164,7 @@
                                     <mat-select formControlName="examiner_id">
                                         <mat-option *ngFor="let examinar of examinarList"
                                             (click)="examinarChange(examinar)" [value]="examinar.id">
-                                            {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}, {{examinar.suffix}}
+                                            {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}{{examinar.suffix != "" ? ", "+ examinar.suffix : ""}}
                                         </mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="isBillSubmited">Please select Examiner</mat-error>
