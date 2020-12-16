@@ -741,7 +741,7 @@
                                             <span
                                                 *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name
                                                 ? ' - '+element?.service_name : ''}}</span>
-                                            <span *ngIf="column == 'phone_no'">{{element?.phone_no ? (element?.phone_no
+                                            <span *ngIf="column == 'phone_no'">{{element?.primary_contact_phone ? (element?.primary_contact_phone
                                                 | mask:'(000) 000-0000') : '' }}</span>
                                             <span
                                                 *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
