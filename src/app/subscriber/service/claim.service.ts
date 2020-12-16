@@ -88,6 +88,9 @@ export class ClaimService {
   updateInjury(data, claim_id) {
     return this.http.put(environment.baseUrl + api_endpoint.updateInjury + claim_id, data)
   }
+  addInjury(data, claim_id): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.addinjury + claim_id, data);
+  }
   deleteInjury(id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteInjury + id)
   }

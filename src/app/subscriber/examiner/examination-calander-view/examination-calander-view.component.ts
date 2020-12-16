@@ -90,6 +90,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   minimumDate = new Date(1900, 0, 1);
   @Input('CalendarView') CalendarView;
   @Output() view = new EventEmitter();
+  @Output() statusData = new EventEmitter();
   defaultView = "dayGridMonth";
   constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
     this.currentMonth = moment().month();
@@ -148,6 +149,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   calViewChange(status) {
     console.log(new Date())
     this.view.emit(status);
+    this.statusData.emit({ examination: this.calendar_examination_status, deposition: this.deposition_status })
   }
   examinername(examiner) {
     let middle_name = examiner.middle_name ? " " + examiner.middle_name : "";

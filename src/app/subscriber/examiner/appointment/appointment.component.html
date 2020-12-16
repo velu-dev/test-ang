@@ -32,16 +32,18 @@
                                 {{ expandId == m ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="column == 'location_name'">{{element?.service_location_name }}</span>
-                        <span *ngIf="column == 'location'">{{element?.street1 }}
+                        <span *ngIf="column == 'location_name'">{{element?.is_virtual_location ? "Virtual Service Location" : element?.service_location_name }}</span>
+                        <span *ngIf="column == 'location' && !element?.is_virtual_location">{{element?.street1 }}
                             {{element?.street2}}
-                            {{element?.city}} {{element?.state}} {{element?.zip_code}}</span>
+                            {{element?.city}} {{element?.state}} {{element?.zip_code}}{{element?.zip_code_plus_4 ? '-'+element?.zip_code_plus_4 : ''}}</span>
+                            <span *ngIf="column == 'location' && element?.is_virtual_location">{{element?.conference_url }} {{element?.conference_phone ? ' - '+(element?.conference_phone | mask:'(000) 000-0000') : '' }} </span>
                             <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name }} {{element?.claimant_first_name }} </span> 
+                            <span *ngIf="column == 'examiner'">{{element?.examiner_last_name}} {{element?.examiner_first_name}} {{element?.examiner_middle_name}} {{element?.examiner_suffix}}</span>
                             <span *ngIf="column == 'appointment_date'">{{element?.appointment_scheduled_date_time |  date:'MM-dd-yyyy'}} </span>
                             <span *ngIf="column == 'appointment_time'">{{element?.start | date:'h:mm a'}} - {{element?.end | date:'h:mm a'}} </span>
                             <span *ngIf="column == 'procedure'">{{element?.exam_procedure_name}}</span>
                             <span *ngIf="column == 'interperter_needed'">{{element?.certified_interpreter_required ? 'Yes' : 'No' }}</span>
-                            <span *ngIf="column == 'days_until'">{{element?.days_until }}</span>
+                            <span *ngIf="column == 'days_until'">{{element?.days_until == 0 ? 'Today' : element?.days_until }}</span>
                         <!-- <span
                             *ngIf="columnName[i] != 'Location' && columnName[i] != 'Examiner'">{{element[column] }}</span>
 
@@ -97,5 +99,5 @@
 </div>
 
 <mat-card class="m-card appointments"  *ngIf="isCalenderVIew">
-    <app-examination-calander-view (view)="CalenderVIew($event)" ></app-examination-calander-view>
+    <app-examination-calander-view (view)="CalenderVIew($event)" (statusData)="examinationData($event)"></app-examination-calander-view>
 </mat-card>
