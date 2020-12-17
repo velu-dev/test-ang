@@ -101,5 +101,5 @@
 </div>
 
 <mat-card class="m-card appointments"  *ngIf="isCalenderVIew">
-    <app-examination-calander-view (view)="CalenderVIew($event)" (statusData)="examinationData($event)"></app-examination-calander-view>
+    <app-examination-calander-view (view)="CalenderVIew($event)" (statusData)="examinationData($event)" (getList)="getCalenderList()"></app-examination-calander-view>
 </mat-card>
