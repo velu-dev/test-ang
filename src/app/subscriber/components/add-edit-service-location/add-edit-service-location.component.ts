@@ -261,15 +261,16 @@ export class AddEditServiceLocationComponent implements OnInit {
       if (!this.maillingAddress) {
         this.subscriberService.getMaillingAddress(this.examinerId).subscribe(address => {
           address.data.notes = null;
-          address.data.primary_contact = null;
-          address.data.primary_contact_phone = null;
-          address.data.alternate_contact_1 = null;
-          address.data.alternate_contact_1_phone = null;
-          address.data.alternate_contact_2 = null;
-          address.data.alternate_contact_2_phone = null;
-          address.data.phone_no = address.data.phone_no1
           this.maillingAddress = address.data
-          this.locationForm.patchValue(address.data)
+          this.locationForm.patchValue(address.data);
+          this.locationForm.patchValue({
+            primary_contact: address.data.contact_person,
+            primary_contact_phone: address.data.phone_no1,
+            alternate_contact_1: "",
+            alternate_contact_1_phone: "",
+            alternate_contact_2: "",
+            alternate_contact_2_phone: "",
+          })
           this.changeState(address.data.state, address.data.state_code)
         }, error => {
           console.log(error.error.message);

@@ -157,57 +157,46 @@
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Primary Contact</mat-label>
-                    <input matInput placeholder="Primary Contact" formControlName="primary_contact" autocomplete="off"
-                        [required]="locationForm.get('primary_contact_phone').value != ''">
-                    <mat-error *ngIf="locationSubmit">Please enter valid location contact person</mat-error>
+                    <input matInput placeholder="Primary Contact" formControlName="primary_contact" autocomplete="off">
+                    <!-- <mat-error *ngIf="locationSubmit">Please enter valid location contact person</mat-error> -->
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Primary Contact Phone </mat-label>
                     <input matInput placeholder="Primary Contact Phone" (keypress)="numberOnly($event)"
-                        mask="(000) 000-0000" formControlName="primary_contact_phone"
-                        [required]="locationForm.get('primary_contact').value != ''"
-                        autocomplete="off">
-                    <mat-error *ngIf="locationSubmit">Please enter valid phone</mat-error>
+                        mask="(000) 000-0000" formControlName="primary_contact_phone" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid phone number </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Alternate Contact 1</mat-label>
-                    <input matInput placeholder="Alternate Contact 1"
-                        [required]="locationForm.get('alternate_contact_1_phone').value != ''"
-                        formControlName="alternate_contact_1" autocomplete="off">
-                    <mat-error *ngIf="locationSubmit">Please enter valid Alternate contact person</mat-error>
+                    <input matInput placeholder="Alternate Contact 1" formControlName="alternate_contact_1" autocomplete="off">
+                    <!-- <mat-error *ngIf="locationSubmit">Please enter valid Alternate contact person</mat-error> -->
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Alternate Contact Phone 1</mat-label>
-                    <input matInput placeholder="Alternate Contact Phone 1"
-                        [required]="locationForm.get('alternate_contact_1').value != ''"
-                        (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                        formControlName="alternate_contact_1_phone" autocomplete="off">
-                    <mat-error *ngIf="locationSubmit">Please enter valid phone</mat-error>
+                    <input matInput placeholder="Alternate Contact Phone 1" (keypress)="numberOnly($event)"
+                        mask="(000) 000-0000" formControlName="alternate_contact_1_phone" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid phone number</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Alternate Contact 2</mat-label>
-                    <input matInput placeholder="Alternate Contact 2"
-                        [required]="locationForm.get('alternate_contact_2_phone').value != ''"
-                        formControlName="alternate_contact_2" autocomplete="off">
-                    <mat-error *ngIf="locationSubmit">Please enter valid location contact person</mat-error>
+                    <input matInput placeholder="Alternate Contact 2" formControlName="alternate_contact_2" autocomplete="off">
+                    <!-- <mat-error *ngIf="locationSubmit">Please enter valid location contact person</mat-error> -->
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Alternate Contact Phone 2</mat-label>
-                    <input matInput placeholder="Alternate Contact Phone 2"
-                        [required]="locationForm.get('alternate_contact_2').value != ''"
-                        (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                        formControlName="alternate_contact_2_phone" autocomplete="off">
-                    <mat-error *ngIf="locationSubmit">Please enter valid phone</mat-error>
+                    <input matInput placeholder="Alternate Contact Phone 2" (keypress)="numberOnly($event)"
+                        mask="(000) 000-0000" formControlName="alternate_contact_2_phone" autocomplete="off">
+                    <mat-error *ngIf="locationSubmit">Please enter valid phone number</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="100">
