@@ -265,8 +265,8 @@ export class ExaminationCalanderViewComponent implements OnInit {
             this.selectExaminer(this.examinerId, false);
           } else {
             this.loadAllEvents();
-            this.getList.emit();
           }
+          this.getList.emit();
         }
       }
     });
