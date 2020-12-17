@@ -191,9 +191,9 @@ export class AddEditServiceLocationComponent implements OnInit {
       this.subscriberService.updateExaminerLocation(this.examinerId, this.locationForm.value).subscribe(location => {
         //console.log(location)
         if (this.locationForm.value.id) {
-          this.alertService.openSnackBar('Location updated successfully', 'success');
+          this.alertService.openSnackBar('Service Location Updated Successfully', 'success');
         } else {
-          this.alertService.openSnackBar('Location created successfully', 'success');
+          this.alertService.openSnackBar('Service Location Created Successfully', 'success');
         }
         this.router.navigate(['/subscriber/users/examiner', this.examinerId, 1])
       }, error => {
@@ -206,9 +206,9 @@ export class AddEditServiceLocationComponent implements OnInit {
       this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
         //console.log(location)
         if (this.locationForm.value.id) {
-          this.alertService.openSnackBar('Location updated successfully', 'success');
+          this.alertService.openSnackBar('Service Location Updated Successfully', 'success');
         } else {
-          this.alertService.openSnackBar('Location created successfully', 'success');
+          this.alertService.openSnackBar('Service Location Created Successfully', 'success');
         }
 
         this.router.navigate(['/subscriber/location'])
@@ -317,9 +317,9 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
           //console.log(location)
           if (this.locationForm.value.id) {
-            this.alertService.openSnackBar('Location updated successfully', 'success');
+            this.alertService.openSnackBar('Service Location Updated Successfully', 'success');
           } else {
-            this.alertService.openSnackBar('Location created successfully', 'success');
+            this.alertService.openSnackBar('Service Location Created Successfully', 'success');
           }
 
           this.router.navigate(['/subscriber/location'])
