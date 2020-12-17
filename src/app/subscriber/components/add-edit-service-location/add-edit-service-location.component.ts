@@ -60,12 +60,14 @@ export class AddEditServiceLocationComponent implements OnInit {
         })
     })
   }
+  locationData = {};
   examinerName: string;
   getLocation() {
 
     if (this.pageStatus == 2) {
       this.subscriberService.getSingleLocationExaminer(this.locationId, this.examinerId).subscribe(locations => {
-        this.locationUpdate(locations.data['0'])
+        this.locationUpdate(locations.data['0']);
+        this.locationData = locations.data['0'];
         locations.data['0'].examiner_list.map(data => {
           if (data.id == this.examinerId) {
             this.examinerName = data.last_name + ' ' + data.first_name + (data.suffix ? ', ' + data.suffix : '')
@@ -76,12 +78,13 @@ export class AddEditServiceLocationComponent implements OnInit {
     } else {
       this.subscriberService.getSingleLocation(this.locationId).subscribe(locations => {
         this.locationUpdate(locations.data['0'])
-
+        this.locationData = locations.data['0'];
       })
     }
   }
 
   locationUpdate(details) {
+    console.log(details)
     let location = details
     let data = {
       id: location.id,
@@ -153,7 +156,6 @@ export class AddEditServiceLocationComponent implements OnInit {
       this.serviceState = state_code;
       return;
     }
-    console.log(state, this.states)
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
         this.serviceState = res.state_code;
@@ -257,6 +259,7 @@ export class AddEditServiceLocationComponent implements OnInit {
 
   maillingAddress: any;
   sameAsMailling(e) {
+    console.log(e.checked)
     if (e.checked) {
       if (!this.maillingAddress) {
         this.subscriberService.getMaillingAddress(this.examinerId).subscribe(address => {
@@ -287,6 +290,14 @@ export class AddEditServiceLocationComponent implements OnInit {
           this.locationForm.patchValue(addresEmpty);
         })
       } else {
+        this.locationForm.patchValue({
+          primary_contact: this.maillingAddress.contact_person,
+          primary_contact_phone: this.maillingAddress.phone_no1,
+          alternate_contact_1: "",
+          alternate_contact_1_phone: this.maillingAddress.phone_no2,
+          alternate_contact_2: "",
+          alternate_contact_2_phone: "",
+        })
         this.locationForm.patchValue(this.maillingAddress)
         this.changeState(this.maillingAddress.state, this.maillingAddress.state_code)
       }
@@ -302,7 +313,15 @@ export class AddEditServiceLocationComponent implements OnInit {
         fax_no: null,
         email: null
       }
-      this.locationForm.patchValue(addresEmpty);
+      this.locationForm.patchValue({
+        primary_contact: this.locationData['primary_contact'],
+        primary_contact_phone: this.locationData['primary_contact_phone'],
+        alternate_contact_1: this.locationData['alternate_contact_1'],
+        alternate_contact_1_phone: this.locationData['alternate_contact_1_phone'],
+        alternate_contact_2: this.locationData['alternate_contact_2'],
+        alternate_contact_2_phone: this.locationData['alternate_contact_2_phone'],
+      })
+      this.locationForm.patchValue(this.locationData);
     }
   }
 
