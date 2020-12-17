@@ -777,10 +777,10 @@ image-cropper {
     padding: 10px 15px;
     font-size: $font-size-10;
     font-weight: $font-weight-bold;
-    display: flex;
+    // display: flex;
+    display:-webkit-box;
     word-break: break-word;
-    height: inherit;
-
+    // height: inherit;
     img {
       max-width: 50px;
       // margin: 0px auto;

@@ -197,7 +197,7 @@ export class ExaminerManageAddressComponent implements OnInit {
     console.log(addressDetails)
     this.examinerService.postExaminerAddressOther(addressDetails, this.examinerId).subscribe(response => {
       console.log(response)
-      this.alertService.openSnackBar("Location created successfully", 'success');
+      this.alertService.openSnackBar("Service Location Created Successfully", 'success');
       this.router.navigate(['/subscriber/location/new-location'])
     }, error => {
       console.log(error);
@@ -213,7 +213,7 @@ export class ExaminerManageAddressComponent implements OnInit {
       console.log(this.searchAddressSubmitDetails)
       this.examinerService.postExistAddress(this.searchAddressSubmitDetails).subscribe(response => {
         console.log(response)
-        this.alertService.openSnackBar("Location added successfully", 'success');
+        this.alertService.openSnackBar("Service Location Added Successfully", 'success');
         this.router.navigate(['/subscriber/location/new-location'])
       }, error => {
         console.log(error);
@@ -261,7 +261,7 @@ export class ExaminerManageAddressComponent implements OnInit {
       this.searchAddressDetails.push(data)
       this.searchAddressSubmitDetails.push(details)
     } else {
-      this.alertService.openSnackBar("Location already added", 'error');
+      this.alertService.openSnackBar("Service Location Already Added", 'error');
     }
 
   }
