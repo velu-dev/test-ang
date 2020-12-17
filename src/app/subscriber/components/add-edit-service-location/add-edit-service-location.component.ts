@@ -267,7 +267,7 @@ export class AddEditServiceLocationComponent implements OnInit {
             primary_contact: address.data.contact_person,
             primary_contact_phone: address.data.phone_no1,
             alternate_contact_1: "",
-            alternate_contact_1_phone: "",
+            alternate_contact_1_phone: address.data.phone_no2,
             alternate_contact_2: "",
             alternate_contact_2_phone: "",
           })
