@@ -89,6 +89,7 @@ tr.detail-row {
       @media only screen and (max-width: 568px) {
         width: $width-100;
         display: flex;
+        padding: 0 0 5px 0;
       }
       span {
         padding: 0;
@@ -106,6 +107,7 @@ tr.detail-row {
           font-weight: $font-weight-bold;
           font-size: $font-size-1;
           color: $ternary;
+          position: relative;
           @media only screen and (max-width: 568px) {
             min-width: 120px;
             width: 100%;
@@ -120,6 +122,9 @@ tr.detail-row {
             float: right;
             padding-right: 5px;
             color: $text-gray;
+            position: absolute;
+            top: 0px;
+            right: 0;
             @media only screen and (max-width: 568px) {
               content: ":";
               display: inline-flex;
@@ -481,9 +486,14 @@ tr.detail-row {
                 padding: 5px 2px;
                 width: 35%;
                 font-weight: bold;
+                position: relative;
+                overflow-wrap: break-word;
                 &::after {
                   content: ":";
-                  text-align: right;
+                  float: right;
+                  position: absolute;
+                  top: 6;
+                  right: 0;
                 }
               }
               div.value {
@@ -509,9 +519,14 @@ tr.detail-row {
             padding: 5px 2px;
             width: 35%;
             font-weight: bold;
+            position: relative;
+            overflow-wrap: break-word;
             &::after {
               content: ":";
-              text-align: right;
+              float: right;
+              position: absolute;
+              top: 6;
+              right: 0;
             }
           }
           div.editable {

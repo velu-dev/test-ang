@@ -778,7 +778,7 @@ image-cropper {
     font-size: $font-size-10;
     font-weight: $font-weight-bold;
     // display: flex;
-    display:-webkit-box;
+    display: -webkit-box;
     word-break: break-word;
     // height: inherit;
     img {
@@ -787,11 +787,20 @@ image-cropper {
       padding-right: 10px;
       // height: 70px;
     }
+    .inline {
+      max-width: 85%;
+      @media only screen and (max-width: 568px) {
+        max-width: 75%;
+      }
+    }
   }
   .mat-card-description {
     font-size: $font-size-1;
     font-weight: $font-weight-medium;
     word-break: break-word;
+    div {
+      width: 100%;
+    }
   }
   .disable-actions {
     text-align: center;
