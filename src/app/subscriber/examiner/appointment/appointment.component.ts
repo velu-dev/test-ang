@@ -192,7 +192,9 @@ export class AppointmentComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-
+        if (result.isChange) {
+          this.getCalenderList();
+        }
       }
     });
   }
