@@ -1183,6 +1183,7 @@ input:-webkit-autofill {
       font-weight: $font-weight-bold;
       font-size: $font-size-1;
       color: $text-gray;
+      position: relative;
       @media only screen and (max-width: 568px) {
         min-width: 110px;
         width: 100%;
@@ -1192,6 +1193,9 @@ input:-webkit-autofill {
         content: ":";
         display: inline-flex;
         float: right;
+        position: absolute;
+        top: 10px;
+        right: 0;
       }
     }
   }
