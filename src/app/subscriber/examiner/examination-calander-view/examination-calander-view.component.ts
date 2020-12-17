@@ -71,6 +71,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
   @ViewChild("calendar", { static: false }) calendar: FullCalendarComponent;
   @ViewChild("intake", { static: false }) intake;
+  
   // calendarComponent: FullCalendarComponent;
   events = [];
   calendarVisible = true;
@@ -91,6 +92,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   @Input('CalendarView') CalendarView;
   @Output() view = new EventEmitter();
   @Output() statusData = new EventEmitter();
+  @Output() getList = new EventEmitter();
   defaultView = "dayGridMonth";
   constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
     this.currentMonth = moment().month();
@@ -263,6 +265,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
             this.selectExaminer(this.examinerId, false);
           } else {
             this.loadAllEvents();
+            this.getList.emit();
           }
         }
       }

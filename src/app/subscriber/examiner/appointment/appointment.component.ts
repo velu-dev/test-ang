@@ -65,6 +65,10 @@ export class AppointmentComponent implements OnInit {
   }
   appointmentsData = []
   ngOnInit() {
+    this.getCalenderList();
+  }
+
+  getCalenderList() {
     this.examinerService.getExaminationDetails().subscribe(res => {
       console.log(res)
       res['data'].map(data => {
@@ -75,7 +79,7 @@ export class AppointmentComponent implements OnInit {
         data.interperter_needed = data.certified_interpreter_required ? 'Yes' : 'No';
         data.days_until = data.days_until == 0 ? 'Today' : data.days_until;
         data.appointment_date = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
-        data.appointment_time = data.start && data.end ? moment(data.start).format("hh:mm a") + ' - ' + moment(data.end).format("hh:mm a"): '';
+        data.appointment_time = data.start && data.end ? moment(data.start).format("hh:mm a") + ' - ' + moment(data.end).format("hh:mm a") : '';
 
       })
       this.appointmentsData = res['data'];
@@ -120,10 +124,9 @@ export class AppointmentComponent implements OnInit {
     this.getData()
 
   }
-  examinationStatus:any[] = [];
-  depositionStatus:any[] = [];
-  examinationData(data){
-    console.log(data);
+  examinationStatus: any[] = [];
+  depositionStatus: any[] = [];
+  examinationData(data) {
     this.examinationStatus = data.examination;
     this.depositionStatus = data.deposition;
   }
@@ -189,7 +192,9 @@ export class AppointmentComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-
+        if (result.isChange) {
+          this.getCalenderList();
+        }
       }
     });
   }

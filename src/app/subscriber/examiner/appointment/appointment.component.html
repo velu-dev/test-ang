@@ -5,7 +5,7 @@
             <div fxFlex="100">
                 <div class="toggle-switch p-t-5 p-l-5">
                     <mat-icon class="active" matTooltip="Calender View"  (click)="CalenderVIew(true);isCalender=true" [ngClass]="{'active': isCalenderVIew}">event</mat-icon>
-                    <mat-icon  matTooltip="List View" (click)="CalenderVIew(false);isCalender=false" [ngClass]="{'active': !isCalenderVIew}">view_list</mat-icon>
+                    <mat-icon  matTooltip="List View for all Upcoming Appointments" (click)="CalenderVIew(false);isCalender=false" [ngClass]="{'active': !isCalenderVIew}">view_list</mat-icon>
                 </div>
             </div>
         </div>
@@ -16,7 +16,7 @@
         <mat-card-content class="p-t-3  m-b-0">
             <div class="table-filter">
                 <input (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
-                    placeholder="Search by name, claim number, examiner, etc.">
+                    placeholder="Search by name, examiner, etc.">
                 <mat-icon>search</mat-icon>
             </div>
         </mat-card-content>
@@ -36,7 +36,7 @@
                         <span *ngIf="column == 'location' && !element?.is_virtual_location">{{element?.street1 }}
                             {{element?.street2}}
                             {{element?.city}} {{element?.state}} {{element?.zip_code}}{{element?.zip_code_plus_4 ? '-'+element?.zip_code_plus_4 : ''}}</span>
-                            <span *ngIf="column == 'location' && element?.is_virtual_location">{{element?.conference_url }} {{element?.conference_phone ? ' - '+(element?.conference_phone | mask:'(000) 000-0000') : '' }} </span>
+                            <span *ngIf="column == 'location' && element?.is_virtual_location">{{element?.conference_url }} {{element?.conference_phone && element?.conference_url ? ' - ' : '' }} {{element?.conference_phone | mask:'(000) 000-0000'}}</span>
                             <span *ngIf="column == 'claimant_name'">{{element?.claimant_last_name }} {{element?.claimant_first_name }} </span> 
                             <span *ngIf="column == 'examiner'">{{element?.examiner_last_name}} {{element?.examiner_first_name}} {{element?.examiner_middle_name}} {{element?.examiner_suffix}}</span>
                             <span *ngIf="column == 'appointment_date'">{{element?.appointment_scheduled_date_time |  date:'MM-dd-yyyy'}} </span>
@@ -101,5 +101,5 @@
 </div>
 
 <mat-card class="m-card appointments"  *ngIf="isCalenderVIew">
-    <app-examination-calander-view (view)="CalenderVIew($event)" (statusData)="examinationData($event)"></app-examination-calander-view>
+    <app-examination-calander-view (view)="CalenderVIew($event)" (statusData)="examinationData($event)" (getList)="getCalenderList()"></app-examination-calander-view>
 </mat-card>
