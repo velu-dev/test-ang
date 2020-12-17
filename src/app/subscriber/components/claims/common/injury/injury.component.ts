@@ -411,18 +411,18 @@ export class InjuryPopup {
         };
         arrData.push(part)
       }
-      let count = 0;
-      arrData.map(row => {
-        // row.date_of_injury = moment(row.date_of_injury).format("MM-DD-YYYY")
-        this.claimService.updateInjury(row, this.claim_id).subscribe(res => {
-          this.dialogRef.close();
-          if (arrData.length == count)
-            this.alertService.openSnackBar(this.isEdit ? "Injury updated successfully" : "Claim Injury added successfully", 'success')
-        }, error => {
-          this.alertService.openSnackBar(error.error.message, "error")
-        })
-        count = count + 1;
+
+      // let count = 0;
+      // arrData.map(row => {
+      this.claimService.addInjury(arrData, this.claim_id).subscribe(res => {
+        // if (arrData.length == count)
+        this.dialogRef.close();
+        this.alertService.openSnackBar(this.isEdit ? "Injury updated successfully" : "Claim Injury added successfully", 'success')
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, "error")
       })
+      //   count = count + 1;
+      // })
     }
   }
   changeEvent() {
