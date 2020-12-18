@@ -763,7 +763,7 @@ export class NewExaminerUserComponent implements OnInit {
 
   errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   addFile(event) {
-    
+
     this.billingSelectedFile = null;
     let fileTypes = ['pdf']
 
@@ -794,11 +794,11 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   downloadDocumet(element) {
-    if( element.file_url)
-    this.examinerService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
-      this.alertService.openSnackBar("File downloaded successfully", "success");
-      saveAs(res.signed_file_url, element.file_name);
-    })
+    if (element.file_url)
+      this.examinerService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+        this.alertService.openSnackBar("File downloaded successfully", "success");
+        saveAs(res.signed_file_url, element.file_name);
+      })
   }
 
   billingSubmit: boolean = false;
@@ -912,25 +912,8 @@ export class NewExaminerUserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
       if (result) {
-        // this.userService.createLicense(this.examinerId, result).subscribe(license => {
-        //   let data = this.licenceDataSource.data;
-        //   if (result.id) {
-        //     data.splice(index, 1);
-        //   }
-        //   data.push(license.data);
-        //   this.licenceDataSource = new MatTableDataSource(data)
-        // }, error => {
-        //   this.alertService.openSnackBar(error.error.message, 'error');
-        // })
-
-        // this.licenseData.map(lic=>{
-        //   if(lic.license_number == result.license_number && lic.state_id == result.state_id){
-        //     this.alertService.openSnackBar('Already added', 'error');
-        //     return;
-        //   }
-        // })
         for (var i in this.licenseData) {
-          if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
+          if (this.licenseData[i].license_number == result.license_number || this.licenseData[i].state_id == result.state_id) {
             this.alertService.openSnackBar('Already added', 'error');
             this.editStatus = false;
             return;
@@ -938,39 +921,13 @@ export class NewExaminerUserComponent implements OnInit {
         }
         if (!result.id) {
           if (this.editStatus) {
-            // for (var i in this.licenseData) {
-            //   if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
-            //     this.alertService.openSnackBar('Already added', 'error');
-            //     this.editStatus = false;
-            //     return;
-            //   }
-            // }
             this.licenseData.splice(index, 1);
             //this.editStatus = false
           } else {
-            // for (var i in this.licenseData) {
-            //   if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
-            //     this.alertService.openSnackBar('Already added', 'error');
-            //     this.editStatus = false;
-            //     return;
-            //   }
-            // }
+
           }
         } else {
-          // if (this.editStatus) {
-          //   for (var i in this.licenseData) {
-          //     if (this.licenseData[i].license_number == result.license_number && this.licenseData[i].state_id == result.state_id) {
-          //       this.alertService.openSnackBar('Already added', 'error');
-          //       this.editStatus = false;
-          //       return;
-          //     }
-          //   }
-          //   this.licenseData.splice(index, 1);
-          // }else{ 
-          // this.licenseData.splice(index, 1);
-          // }
-
-          this.licenseData.splice(index, 1);
+          //this.licenseData.splice(index, 1);
         }
         this.editStatus = false;
         this.licenseData.push(result);
@@ -1258,6 +1215,7 @@ export class LicenseDialog {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
   ) {
+    console.log(data)
     dialogRef.disableClose = true;
     this.states = data.states;
 

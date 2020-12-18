@@ -80,8 +80,12 @@ export class AppointmentComponent implements OnInit {
         data.days_until = data.days_until == 0 ? 'Today' : data.days_until;
         data.appointment_date = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
         data.appointment_time = data.start && data.end ? moment(data.start).format("hh:mm a") + ' - ' + moment(data.end).format("hh:mm a") : '';
-
+        var end = moment();
+        var start = moment(data.appointment_scheduled_date_time);
+        moment.duration(start.diff(end)).asDays();
+        data.days = Math.round(moment.duration(start.diff(end)).asDays())
       })
+      console.log(res['data'])
       this.appointmentsData = res['data'];
       this.dataSource = new MatTableDataSource(res['data']);
       this.dataSource.paginator = this.paginator;
