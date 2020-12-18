@@ -852,11 +852,23 @@ export class AppointmentDetailsComponent implements OnInit {
     this.documentsData = new MatTableDataSource([])
     this.tabData = this.documentTabData ? this.documentTabData[event ? event.tab.textLabel.toLowerCase() : ''] : [];
     if (this.tabIndexDetails.index == 0) {
-      this.columnName = ["", "Name", "Uploaded On ", "Download On Demand Proof of Service", "Action"]
-      this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
+      if (this.isMobile) {
+        this.columnName = ["", "Name"]
+        this.displayedColumnsForDocuments = ['is_expand', 'file_name']
+      }
+      else {
+        this.columnName = ["", "Name", "Uploaded On ", "Download On Demand Proof of Service", "Action"]
+        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
+      }
     } else {
-      this.columnName = ["", "Name", "Uploaded On ", "Action"]
-      this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'action']
+      if (this.isMobile) {
+        this.columnName = ["", "Name"]
+        this.displayedColumnsForDocuments = ['is_expand', 'file_name']
+      }
+      else {
+        this.columnName = ["", "Name", "Uploaded On ", "Action"]
+        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'action']
+      }
     }
 
     this.documentsData = new MatTableDataSource(this.tabData);

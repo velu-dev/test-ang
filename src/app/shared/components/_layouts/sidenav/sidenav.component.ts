@@ -87,6 +87,9 @@ export class SidenavComponent implements OnInit {
     })
     this.isTablet.subscribe(res => {
       this.isTab = res;
+      if (this.isTab) {
+        this.isOpen = false
+      }
     })
     this.loaderService.hide();
 
