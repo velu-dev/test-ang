@@ -917,7 +917,7 @@ export class NewExaminerUserComponent implements OnInit {
           console.log("with")
           for (var i in this.licenseData) {
             if (i != index) {
-              if (this.licenseData[i].license_number == result.license_number || this.licenseData[i].state_id == result.state_id) {
+              if (this.licenseData[i].state_id == result.state_id) {
                 this.alertService.openSnackBar('Already added', 'error');
                 this.editStatus = false;
                 return;
@@ -941,7 +941,7 @@ export class NewExaminerUserComponent implements OnInit {
           console.log("without")
           for (var i in this.licenseData) {
             if (i != index) {
-              if (this.licenseData[i].license_number == result.license_number || this.licenseData[i].state_id == result.state_id) {
+              if (this.licenseData[i].state_id == result.state_id) {
                 this.alertService.openSnackBar('Already added', 'error');
                 this.editStatus = false;
                 return;
