@@ -1225,7 +1225,12 @@ export class LicenseDialog {
       state_id: [null, Validators.compose([Validators.required])],
     });
     if (data.details) {
-      this.changeState(data.details.state, data.details.state_code);
+      if(data.id){
+        this.changeState(data.details.state, data.details.state_code);
+      }else{
+        this.changeState(data.details.state_id);
+      }
+      
       this.licenseForm.patchValue(data.details)
     }
 
@@ -1239,8 +1244,7 @@ export class LicenseDialog {
     if (this.licenseForm.invalid) {
       return;
     }
-    this.changeState(this.licenseForm.value.state_id)
-    console.log(this.licenseForm.value)
+    this.changeState(this.licenseForm.get('state_id').value)
     this.dialogRef.close(this.licenseForm.value);
   }
   licenceState: any;

@@ -77,15 +77,18 @@ export class AppointmentComponent implements OnInit {
         data.location = data.street1 ? [data.street1, data.street2, data.city, data.state, data.zip_code, data.zip_code_plus_4 ? '- ' + data.zip_code_plus_4 : null].filter(Boolean).join(" ") : ''
         data.examiner = data.examiner_first_name ? [data.examiner_last_name, data.examiner_first_name, data.examiner_middle_name, data.examiner_suffix].filter(Boolean).join(" ") : ''
         data.interperter_needed = data.certified_interpreter_required ? 'Yes' : 'No';
-        data.days_until = data.days_until == 0 ? 'Today' : data.days_until;
         data.appointment_date = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
         data.appointment_time = data.start && data.end ? moment(data.start).format("hh:mm a") + ' - ' + moment(data.end).format("hh:mm a") : '';
-        var end = moment();
-        var start = moment(data.appointment_scheduled_date_time);
-        moment.duration(start.diff(end)).asDays();
-        data.days = Math.round(moment.duration(start.diff(end)).asDays())
+        if (data.appointment_scheduled_date_time) {
+          var end = moment((moment()).format("MM-DD-YYYY"));
+          var start = moment(moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY"));
+          moment.duration(start.diff(end)).asDays();
+          data.days = Math.round(moment.duration(start.diff(end)).asDays())
+        } else {
+          data.days = null
+        }
+        data.days_until = data.days == 0 ? 'Today' : data.days;
       })
-      console.log(res['data'])
       this.appointmentsData = res['data'];
       this.dataSource = new MatTableDataSource(res['data']);
       this.dataSource.paginator = this.paginator;

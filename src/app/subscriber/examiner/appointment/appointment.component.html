@@ -43,7 +43,7 @@
                             <span *ngIf="column == 'appointment_time'">{{element?.start | date:'h:mm a'}} - {{element?.end | date:'h:mm a'}} </span>
                             <span *ngIf="column == 'procedure'">{{element?.exam_procedure_name}}</span>
                             <span *ngIf="column == 'interperter_needed'">{{element?.certified_interpreter_required ? 'Yes' : 'No' }}</span>
-                            <span *ngIf="column == 'days_until'">{{element?.days_until == 0 ? 'Today' : element?.days_until }}</span>
+                            <span *ngIf="column == 'days_until'">{{element?.days == 0 ? 'Today' : element?.days }}</span>
                         <!-- <span
                             *ngIf="columnName[i] != 'Location' && columnName[i] != 'Examiner'">{{element[column] }}</span>
 
@@ -67,7 +67,7 @@
                                 <div><span>Procedure</span><span>{{element?.exam_procedure_name}}</span></div>
                                 <div><span>Interperter Needed</span><span>{{element?.certified_interpreter_required ? 'Yes' : 'No' }}
                                     </span></div>
-                                <div><span>Days Until</span><span>{{element?.days_until == 0 ? 'Today' : element?.days_until }}</span></div>
+                                <div><span>Days Until</span><span>{{element?.days == 0 ? 'Today' : element?.days }}</span></div>
                             </div>
                         </div>
                     </td>
