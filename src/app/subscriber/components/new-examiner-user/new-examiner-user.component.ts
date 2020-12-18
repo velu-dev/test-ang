@@ -368,12 +368,13 @@ export class NewExaminerUserComponent implements OnInit {
           data.address = data.street1;
           data.service = data.service_name ? data.service_code + ' - ' + data.service_name : '';
           data.npi_number = data.national_provider_identifier;
+          data.service_location_name = data.service_location_name;
         })
       }
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return (data.service && data.service.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.npi_number && data.npi_number.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter));
+        return (data.service_location_name && data.service_location_name.toLowerCase().includes(filter)) ||  (data.service && data.service.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.npi_number && data.npi_number.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
 
@@ -902,7 +903,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
   licenseData: any = [];
   editStatus: boolean = false;
-  openLicense(data?: any, index?: number) {
+  openLicense(data?: any, index?) {
 
     const dialogRef = this.dialog.open(LicenseDialog, {
       width: '800px',
@@ -911,28 +912,55 @@ export class NewExaminerUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
 
+      //With ID
       if (result) {
-        for (var i in this.licenseData) {
-          if (this.licenseData[i].license_number == result.license_number || this.licenseData[i].state_id == result.state_id) {
-            this.alertService.openSnackBar('Already added', 'error');
-            this.editStatus = false;
-            return;
+        if (result.id) {
+          console.log("with")
+          for (var i in this.licenseData) {
+            if (i != index) {
+              if (this.licenseData[i].state_id == result.state_id) {
+                this.alertService.openSnackBar('Already added', 'error');
+                this.editStatus = false;
+                return;
+              }
+            }
           }
-        }
-        if (!result.id) {
           if (this.editStatus) {
-            this.licenseData.splice(index, 1);
-            //this.editStatus = false
-          } else {
-
+            this.licenseData[index] = result;
+            this.licenceDataSource = new MatTableDataSource(this.licenseData)
+            return
           }
-        } else {
-          //this.licenseData.splice(index, 1);
+          this.editStatus = false;
+          this.licenseData.push(result);
+          this.licenceDataSource = new MatTableDataSource(this.licenseData)
+          return
         }
-        this.editStatus = false;
-        this.licenseData.push(result);
-        this.licenceDataSource = new MatTableDataSource(this.licenseData)
-        console.log(this.licenseData)
+
+
+        //Without ID
+        if (!result.id) {
+          console.log("without")
+          for (var i in this.licenseData) {
+            if (i != index) {
+              if (this.licenseData[i].state_id == result.state_id) {
+                this.alertService.openSnackBar('Already added', 'error');
+                this.editStatus = false;
+                return;
+              }
+            }
+          }
+          if (this.editStatus) {
+            this.licenseData[index] = result;
+            this.licenceDataSource = new MatTableDataSource(this.licenseData)
+            return
+          }
+
+          this.editStatus = false;
+          this.licenseData.push(result);
+          this.licenceDataSource = new MatTableDataSource(this.licenseData)
+          console.log(this.licenseData)
+        }
+
       }
 
     });
@@ -1065,7 +1093,7 @@ export class NewExaminerUserComponent implements OnInit {
       }
       return
     }
-    console.log(state)
+    //console.log(state)
     this.states.map(res => {
       if ((res.id == state) || (res.state == state)) {
         if (type == 'cms') {
@@ -1225,7 +1253,12 @@ export class LicenseDialog {
       state_id: [null, Validators.compose([Validators.required])],
     });
     if (data.details) {
-      this.changeState(data.details.state, data.details.state_code);
+      if (data.id) {
+        this.changeState(data.details.state, data.details.state_code);
+      } else {
+        this.changeState(data.details.state_id);
+      }
+
       this.licenseForm.patchValue(data.details)
     }
 
@@ -1239,8 +1272,7 @@ export class LicenseDialog {
     if (this.licenseForm.invalid) {
       return;
     }
-    this.changeState(this.licenseForm.value.state_id)
-    console.log(this.licenseForm.value)
+    this.changeState(this.licenseForm.get('state_id').value)
     this.dialogRef.close(this.licenseForm.value);
   }
   licenceState: any;
