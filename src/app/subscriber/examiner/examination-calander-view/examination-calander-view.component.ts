@@ -145,6 +145,8 @@ export class ExaminationCalanderViewComponent implements OnInit {
           }
         })
       })
+    }else{
+      this.loadAllEvents();
     }
     this.defaultView = this.CalendarView ? "timeGridWeek" : "dayGridMonth";
   }
