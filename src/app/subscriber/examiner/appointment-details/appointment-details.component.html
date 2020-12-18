@@ -208,7 +208,8 @@
                             <mat-select formControlName="examiner_id" disabled>
                                 <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
                                     [value]="examinar.id">
-                                    {{examinar.first_name}} {{examinar.middle_name}} {{examinar.last_name}}{{examinar.suffix ? (", "+ examinar.suffix) : ""}}
+                                    {{examinar.first_name}} {{examinar.middle_name}}
+                                    {{examinar.last_name}}{{examinar.suffix ? (", "+ examinar.suffix) : ""}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -540,57 +541,62 @@
     </mat-card-content>
 </mat-card>
 
-<!-- <mat-card class="activity-log m-t-25">
+<mat-card class="activity-log m-t-25">
     <mat-card-header>
         <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Task Activity Log</div>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
         <div class="user-detail default-cursor m-t-10">
-            <table mat-table [dataSource]="dataSource1" multiTemplateDataRows class="mat-elevation-z8 user-table">
-                <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay1; let i=index">
+            <table mat-table [dataSource]="activityLog" multiTemplateDataRows class="mat-elevation-z8 user-table">
+                <ng-container matColumnDef="{{column}}"
+                    *ngFor="let column of activityDisplayedColumnsForDocuments; let i=index">
                     <th mat-header-cell *matHeaderCellDef>
-                        {{columnName1[i]}} </th>
+                        {{activityColumnName[i]}} </th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="i == 0 && isMobile">
                             <mat-icon mat-raised-button
-                                [ngClass]="{'table-expand': expandId1 == element.id, 'expand-close': !(expandId1 == element.id)}">
-                                {{ expandId1 == element.id ? 'remove_circle' : 'add_circle'}}
+                                [ngClass]="{'table-expand': actionLogexpandId == element.id, 'expand-close': !(actionLogexpandId == element.id)}">
+                                {{ actionLogexpandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
                         <div>
                             <span *ngIf="column == 'status'">
                                 <img [src]="status_complete" alt="test">
                             </span>
-                            <span *ngIf="column == 'task'">{{element?.task}}</span>
-                            <span *ngIf="column == 'task'">{{element?.task}}</span>
-                            <span *ngIf="column == 'created_by'">{{element?.created_by}}</span>
-                            <span *ngIf="column == 'created_at'">{{element?.created_at}}</span>
-                            <span *ngIf="column == 'updated_by'">{{element?.updated_by}}</span>
-                            <span *ngIf="column == 'updated_at'">{{element?.updated_at}}</span>
+                            <span *ngIf="column == 'task'">{{element?.action_details}}</span>
+                            <!-- <span *ngIf="column == 'task'">{{element?.task}}</span> -->
+                            <span *ngIf="column == 'created_by'">{{element?.first_name}} {{element?.last_name}}
+                                {{element?.suffix ? (", "+element?.suffix) : "" }}</span>
+                            <span *ngIf="column == 'createdAt'">{{element?.createdAt}}</span>
+                            <span *ngIf="column == 'updated_by'">{{element?.updated_by}}{{actionLogexpandId}}
+                                {{element.id}}</span>
+                            <span *ngIf="column == 'updatedAt'">{{element?.updatedAt}}</span>
                         </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay1.length">
-                        <div class="detail" [@detailExpand]="expandId1 == element.id ? 'expanded' : 'collapsed'">
+                    <td mat-cell *matCellDef="let element" [attr.colspan]="activityDisplayedColumnsForDocuments.length">
+                        <div class="detail"
+                            [@detailExpand]="actionLogexpandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Task</span> {{element?.task}} </div>
-                                <div><span>Created By</span> {{element?.created_by}} </div>
-                                <div><span>Created At</span> {{element?.created_at}} </div>
+                                <div><span>Created By</span> {{element?.action_by}} </div>
+                                <div><span>Created At</span> {{element?.first_name}} {{element?.last_name}}
+                                    {{element?.suffix ? (", "+element?.suffix) : "" }} </div>
                                 <div><span>Updated By</span> {{element?.updated_by}} </div>
-                                <div><span>Updated At</span> {{element?.updated_at}} </div>
+                                <div><span>Updated At</span> {{element?.updatedAt}} </div>
                             </div>
                         </div>
                     </td>
                 </ng-container>
-                <tr mat-header-row *matHeaderRowDef="columnsToDisplay1; sticky: true"></tr>
-                <tr mat-row *matRowDef="let element; columns: columnsToDisplay1;" class="row"
+                <tr mat-header-row *matHeaderRowDef="activityDisplayedColumnsForDocuments; sticky: true"></tr>
+                <tr mat-row *matRowDef="let element; columns: activityDisplayedColumnsForDocuments;" class="row"
                     [class.row]="expandedElement === element" (click)="openElement1(element)">
                 </tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
-            <app-nodata *ngIf="dataSource1?.filteredData?.length == 0"></app-nodata>
+            <app-nodata *ngIf="activityLog?.filteredData?.length == 0"></app-nodata>
         </div>
     </mat-card-content>
-</mat-card> -->
+</mat-card>

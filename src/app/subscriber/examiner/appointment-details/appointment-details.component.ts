@@ -154,6 +154,8 @@ export class AppointmentDetailsComponent implements OnInit {
   disableExaminationArr: any = [5, 6, 7, 8, 10];
   columnName = [];
   displayedColumnsForDocuments = [];
+  activityColumnName = [];
+  activityDisplayedColumnsForDocuments = [];
   expandedElement: any;
   userEmail: any;
   locationId: any;
@@ -164,6 +166,7 @@ export class AppointmentDetailsComponent implements OnInit {
     );
   // isMobile = false;
   currentDate = new Date();
+  activityLog: any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -214,11 +217,11 @@ export class AppointmentDetailsComponent implements OnInit {
       }
 
       if (res) {
-        this.columnName1 = ["", "Task"]
-        this.columnsToDisplay1 = ['is_expand', 'created_by']
+        this.activityColumnName = ["", "Task"]
+        this.activityDisplayedColumnsForDocuments = ['is_expand', 'created_by']
       } else {
-        this.columnName1 = ["", "Task", "Created By", "Created At", "Updated By", "Updated At"]
-        this.columnsToDisplay1 = ["status", 'task', 'created_by', "created_at", "updated_by", 'updated_at']
+        this.activityColumnName = ["", "Task", "Created By", "Created At", "Updated By", "Updated At"]
+        this.activityDisplayedColumnsForDocuments = ["status", 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
       }
     })
 
@@ -229,9 +232,12 @@ export class AppointmentDetailsComponent implements OnInit {
     this.procedureTypeList = [];
     this.modifiers = [];
     this.route.params.subscribe(params => {
-      this.claim_id = params.claim_id;
-
       this.billableId = params.billId;
+      this.claim_id = params.claim_id;
+      this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
+        this.activityLog = new MatTableDataSource(res.data);
+        this.activityLog.sort = this.sort;
+      })
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
@@ -1139,10 +1145,14 @@ export class AppointmentDetailsComponent implements OnInit {
       }
     }
   }
-  expandId1: any;
+  actionLogexpandId = "";
   openElement1(element) {
     if (this.isMobile) {
-      this.expandId1 = element.id;
+      if (this.actionLogexpandId && this.actionLogexpandId == element.id) {
+        this.actionLogexpandId = null;
+      } else {
+        this.actionLogexpandId = element.id;
+      }
     }
   }
   billingNev() {

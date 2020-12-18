@@ -184,6 +184,7 @@ export const api_endpoint = {
     eorRemove: 'billing/post-payment-eor-remove/',
     getIncompleteinfo: "billing/validate-837p-csv/",
     generateBillingForm: 'billing/generate-form/',
+    activityLog: 'action-log/action-list/',
 
     //Calendar 
 

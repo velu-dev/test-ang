@@ -132,4 +132,7 @@ export class ClaimService {
   billCreate(cliam, bill): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createbill + cliam + '/' + bill, {})
   }
+  getActivityLog(claim_id, bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.activityLog + claim_id + "/" + bill_item_id)
+  }
 }
