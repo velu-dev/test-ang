@@ -182,6 +182,7 @@ export class SubscriberSettingsComponent implements OnInit {
         company_name: [''],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         signature: [''],
+        county: [''],
         is_new_signature: [false]
       });
 
@@ -194,6 +195,7 @@ export class SubscriberSettingsComponent implements OnInit {
         suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
         sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
         signature: [''],
+        county: [''],
         is_new_signature: [false]
       });
     }

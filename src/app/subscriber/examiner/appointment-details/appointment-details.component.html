@@ -543,7 +543,7 @@
 
 <mat-card class="activity-log m-t-25">
     <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Task Activity Log</div>
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Action Log</div>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
@@ -561,17 +561,14 @@
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'status'">
-                                <img [src]="status_complete" alt="test">
-                            </span>
                             <span *ngIf="column == 'task'">{{element?.action_details}}</span>
                             <!-- <span *ngIf="column == 'task'">{{element?.task}}</span> -->
                             <span *ngIf="column == 'created_by'">{{element?.first_name}} {{element?.last_name}}
                                 {{element?.suffix ? (", "+element?.suffix) : "" }}</span>
-                            <span *ngIf="column == 'createdAt'">{{element?.createdAt}}</span>
+                            <span *ngIf="column == 'createdAt'">{{element?.createdAt | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'updated_by'">{{element?.updated_by}}{{actionLogexpandId}}
                                 {{element.id}}</span>
-                            <span *ngIf="column == 'updatedAt'">{{element?.updatedAt}}</span>
+                            <span *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy'}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -581,11 +578,11 @@
                             [@detailExpand]="actionLogexpandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Task</span> {{element?.task}} </div>
-                                <div><span>Created By</span> {{element?.action_by}} </div>
-                                <div><span>Created At</span> {{element?.first_name}} {{element?.last_name}}
+                                <div><span>Created By</span> {{element?.first_name}} {{element?.last_name}}
                                     {{element?.suffix ? (", "+element?.suffix) : "" }} </div>
+                                <div><span>Created At</span> {{element?.createdAt | date:'MM-dd-yyyy'}} </div>
                                 <div><span>Updated By</span> {{element?.updated_by}} </div>
-                                <div><span>Updated At</span> {{element?.updatedAt}} </div>
+                                <div><span>Updated At</span> {{element?.updatedAt | date:'MM-dd-yyyy'}} </div>
                             </div>
                         </div>
                     </td>

@@ -217,10 +217,10 @@ export class AppointmentDetailsComponent implements OnInit {
       }
 
       if (res) {
-        this.activityColumnName = ["", "Task"]
+        this.activityColumnName = ["", "Action"]
         this.activityDisplayedColumnsForDocuments = ['is_expand', 'created_by']
       } else {
-        this.activityColumnName = ["", "Task", "Created By", "Created At", "Updated By", "Updated At"]
+        this.activityColumnName = ["", "Action", "Created By", "Created At", "Updated By", "Updated At"]
         this.activityDisplayedColumnsForDocuments = ["status", 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
       }
     })

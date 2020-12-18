@@ -71,7 +71,8 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex="100" fxFlex.md="30" fxFlex.lg="30"
                             fxFlex.xl="30" fxFlex.sm="50" fxFlex.xs="100" class=" m-t-5">
                             <mat-label>Middle Name/MI</mat-label>
-                            <input matInput placeholder="Middle Name/MI" formControlName="middle_name" autocomplete="off">
+                            <input matInput placeholder="Middle Name/MI" formControlName="middle_name"
+                                autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidmiddlename}}</mat-error>
                         </mat-form-field>
 
@@ -88,13 +89,26 @@
                             <input matInput placeholder="Suffix" formControlName="suffix" autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidsuffix}}</mat-error>
                         </mat-form-field>
-
+                        <!-- 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="100" fxFlex.lg="100"
                             fxFlex.xl="100" fxFlex.sm="100" class="m-t-5  p-r-10">
                             <mat-label>Signin Email*</mat-label>
                             <input matInput placeholder="Signin Email" formControlName="sign_in_email_id"
                                 autocomplete="off">
                             <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
+                        </mat-form-field> -->
+                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                            fxFlex.sm="100" fxFlex.xs="100">
+                            <mat-label>Signin Email*</mat-label>
+                            <input matInput placeholder="Signin Email" formControlName="sign_in_email_id"
+                                autocomplete="off">
+                            <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidemail}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                            fxFlex.sm="100" fxFlex.xs="100">
+                            <mat-label>County</mat-label>
+                            <input matInput placeholder="County" formControlName="county" autocomplete="off">
+                            <!-- <mat-error>Error Message Here...</mat-error> -->
                         </mat-form-field>
 
                         <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
