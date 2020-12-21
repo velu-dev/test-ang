@@ -576,8 +576,7 @@
                         <div>
                             <span *ngIf="column == 'task'">{{element?.action_details}}</span>
                             <!-- <span *ngIf="column == 'task'">{{element?.task}}</span> -->
-                            <span *ngIf="column == 'created_by'">{{element?.first_name}} {{element?.last_name}}
-                                {{element?.suffix ? (", "+element?.suffix) : "" }}</span>
+                            <span *ngIf="column == 'created_by'">{{element?.first_name}} {{element?.last_name}}{{element?.suffix ? (", "+element?.suffix) : "" }}</span>
                             <span *ngIf="column == 'createdAt'">{{element?.createdAt | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'updated_by'">{{element?.updated_by}}{{actionLogexpandId}}
                                 {{element.id}}</span>
@@ -590,9 +589,8 @@
                         <div class="detail"
                             [@detailExpand]="actionLogexpandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
-                                <div><span>Task</span> {{element?.task}} </div>
-                                <div><span>Created By</span> {{element?.first_name}} {{element?.last_name}}
-                                    {{element?.suffix ? (", "+element?.suffix) : "" }} </div>
+                                <!-- <div><span>Action</span> {{element?.task}} </div> -->
+                                <div><span>Created By</span> {{element?.first_name}} {{element?.last_name}}{{element?.suffix ? (", "+element?.suffix) : "" }} </div>
                                 <div><span>Created At</span> {{element?.createdAt | date:'MM-dd-yyyy'}} </div>
                                 <div><span>Updated By</span> {{element?.updated_by}} </div>
                                 <div><span>Updated At</span> {{element?.updatedAt | date:'MM-dd-yyyy'}} </div>

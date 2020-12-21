@@ -65,6 +65,7 @@ export class ExaminerSettingComponent implements OnInit {
         last_name: res.data.last_name,
         middle_name: res.data.middle_name,
         sign_in_email_id: res.data.sign_in_email_id,
+        county: res.data.county,
       }
       this.userForm.patchValue(userDetails)
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null

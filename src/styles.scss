@@ -748,6 +748,10 @@ image-cropper {
       .outline-warning {
         @extend .outline-warning;
       }
+      .note {
+        font-size: $font-size-7;
+        color: $ternary;
+      }
     }
     .align-center {
       text-align: center;

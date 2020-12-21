@@ -18,7 +18,7 @@
 
         <div class="table-filter">
             <input matInput (keyup)="applyFilter($event.target.value)"
-                placeholder="Search by address, service type, phone etc.">
+                placeholder="Search by Location Name, address, etc.">
             <mat-icon>search</mat-icon>
         </div>
         <span class="spacer"></span>
@@ -45,7 +45,7 @@
                         <span
                             *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span>
                         <span *ngIf="column == 'phone_no'"
-                            class="no-wrap-td">{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span>
+                            class="no-wrap-td">{{element?.primary_contact_phone ? (element?.primary_contact_phone |  mask:'(000) 000-0000') : '' }}</span>
                         <span *ngIf="column == 'examiner_name'">
                             <span
                                 *ngIf="element?.examiner && element?.examiner?.length == 1">{{element?.examiner[0].last_name}}
