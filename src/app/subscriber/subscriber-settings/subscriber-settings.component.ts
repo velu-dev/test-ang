@@ -132,6 +132,7 @@ export class SubscriberSettingsComponent implements OnInit {
           suffix: res.data.suffix,
           company_name: res.data.company_name,
           sign_in_email_id: res.data.sign_in_email_id,
+          county: res.data.county,
         }
       } else {
         userDetails = {
@@ -143,6 +144,7 @@ export class SubscriberSettingsComponent implements OnInit {
           suffix: res.data.suffix,
           company_name: res.data.company_name,
           sign_in_email_id: res.data.sign_in_email_id,
+          county: res.data.county,
         }
       }
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
