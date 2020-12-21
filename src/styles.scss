@@ -527,6 +527,12 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     display: block;
   }
 }
+.fc-day-header.fc-widget-header {
+  @media only screen and (max-width: 568px) {
+    text-transform: capitalize !important;
+    padding: 5px 0px;
+  }
+}
 .fc-toolbar {
   .fc-right {
     @media only screen and (max-width: 568px) {
