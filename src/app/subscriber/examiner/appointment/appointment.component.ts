@@ -80,10 +80,10 @@ export class AppointmentComponent implements OnInit {
         data.appointment_date = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
         data.appointment_time = data.start && data.end ? moment(data.start).format("hh:mm a") + ' - ' + moment(data.end).format("hh:mm a") : '';
         if (data.appointment_scheduled_date_time) {
-          var end = moment((moment()).format("MM-DD-YYYY"));
-          var start = moment(moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY"));
-          moment.duration(start.diff(end)).asDays();
-          data.days = Math.round(moment.duration(start.diff(end)).asDays())
+          let startConvert =  moment(data.appointment_scheduled_date_time).format('YYYY-MM-DD').toString();
+          var end = moment().format('YYYY-MM-DD').toString();
+          var start = moment(startConvert);
+          data.days = Math.round( moment.duration(start.diff(end)).asDays())
         } else {
           data.days = null
         }

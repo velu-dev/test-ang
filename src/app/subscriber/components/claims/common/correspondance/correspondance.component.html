@@ -103,8 +103,8 @@
                     <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                         <div class="responsive-table">
                             <!-- <div><span>File Name</span><span>{{element?.file_name}}</span></div> -->
-                            <div><span>Note</span><span> {{element?.notes}}</span></div>
-                            <div><span>Uploaded On</span><span> {{element?.updatedAt |  date:'MM-dd-yyyy' }} <small
+                            <div><span>Note</span><span>{{element?.notes}}</span></div>
+                            <div><span>Uploaded On</span><span>{{element?.updatedAt |  date:'MM-dd-yyyy' }} <small
                                         class="p-l-10"><i class="fa fa-clock-o"></i>
                                         {{element?.updatedAt |  date:'hh:mm a' }} </small> </span></div>
                             <div><span>Action</span><span>
