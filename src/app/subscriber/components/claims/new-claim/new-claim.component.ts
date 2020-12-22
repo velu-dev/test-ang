@@ -829,13 +829,11 @@ export class NewClaimComponent implements OnInit {
       if (this.claimId) {
         this.claimService.getClaim(this.claimId).subscribe(res => {
           this.claim.patchValue({
-            claim_details: res.data.claim_details,
-            claim_injuries: res.data.claim_injuries,
-            InsuranceAdjuster: res.data.agent_details.InsuranceAdjuster,
-            Employer: res.data.agent_details.Employer,
-            ApplicantAttorney: res.data.agent_details.ApplicantAttorney,
-            DefenseAttorney: res.data.agent_details.DefenseAttorney,
-            DEU: res.data.agent_details.DEU,
+            InsuranceAdjuster: { id: res.data.agent_details.InsuranceAdjuster.id },
+            Employer: { id: res.data.agent_details.Employer.id },
+            ApplicantAttorney: { id: res.data.agent_details.ApplicantAttorney.id },
+            DefenseAttorney: { id: res.data.agent_details.DefenseAttorney.id },
+            DEU: { id: res.data.agent_details.DEU.id },
           })
           console.log(this.claim.value)
         })
@@ -1662,9 +1660,19 @@ export class NewClaimComponent implements OnInit {
     })
   }
   deuSelect(deu) {
-    deu.id = "";
+    // deu.id = ;
     this.claim.patchValue({
-      DEU: deu
+      DEU: {
+        city: deu.city,
+        email: deu.email,
+        fax: deu.fax,
+        name: deu.name,
+        phone: deu.phone,
+        state: deu.state,
+        street1: deu.street1,
+        street2: deu.street2,
+        zip_code: deu.zip_code
+      }
     })
     this.changeState(deu.state, 'deu')
     this.claim.patchValue({
