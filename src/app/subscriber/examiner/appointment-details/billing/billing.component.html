@@ -764,6 +764,49 @@
                                     [attr.colspan]="columnsToDisplay2.length">
                                     <div class="detail" [@detailExpand]="expandId2 == k ? 'expanded' : 'collapsed'">
                                         <div class="responsive-table">
+                                            <div>
+                                                <span>File Name</span>
+                                                <span> {{element?.form_name}} </span>
+                                            </div> 
+                                            <div>
+                                                <span>Download Partial Document</span>
+                                                <span> <a class="text-ternary m-r-10"
+                                                    (click)="getGenerateBillingForm(element?.partial_document?.id)"
+                                                    *ngIf="element?.partial_document">Generate & Download
+                                                    <i class="fas fa-download"></i></a></span>
+                                            </div> 
+                                            <div>
+                                                <span>Complete</span>
+                                                <span> <a class="text-ternary m-r-10"
+                                                    (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
+                                                    *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly ? 'Generate & Download' : element?.completed_document?.file_name}}
+                                                    <i class="fas fa-download"></i></a>
+    
+                                                <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"
+                                                    class="m-r-10 no-wrap-td" (click)="uploader.click()">
+                                                    Upload Completed Form
+                                                    <i class="fa fa-upload m-b-3"></i>
+                                                </a>
+                                                <input type="file" #uploader hidden
+                                                    (change)="addCompleteDoc($event,element)" hidden
+                                                    accept=".pdf, .doc, .docx" required></span>
+                                            </div> 
+                                            <div>
+                                                <span>Action</span>
+                                                <span> <input type="file" #uploader hidden
+                                                    (change)="addCompleteDoc($event,element)" hidden
+                                                    accept=".pdf, .doc, .docx" required>
+                                                <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X'"
+                                                    class="text-danger no-wrap-td"
+                                                    (click)=" element?.completed_document ? uploader.click() : ''">Remove
+                                                    and Reupload
+                                                </a>
+                                                <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"
+                                                    (click)="deleteDocument(element?.completed_document,true)">Remove
+                                                </a> </span>
+                                            </div> 
+                                        </div>
+                                        <!-- <div class="responsive-table">
                                             <div><span>File Name</span><span> {{element?.file_name}} </span></div>
                                             <div><span>Download Partial Document</span><span> <a
                                                         class="text-ternary m-r-10"
@@ -784,9 +827,9 @@
                                                     </a>
                                                     <a class="text-danger" *ngIf="element?.form_name == 'Custom'"
                                                         (click)="deleteDocument(element)">Remove </a></span></div>
-                                            <!-- <div><span>Date</span><span> {{element?.date}} </span></div> -->
+                                             <div><span>Date</span><span> {{element?.date}} </span></div> 
 
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </td>
                                 <!-- <td mat-footer-cell *matFooterCellDef> Test </td> -->
@@ -929,7 +972,7 @@
                                         <!-- </div> -->
                                         <div class="responsive-table">
                                             <section *ngIf="element?.action != 'POST PAYMENT PAPER EOR'">
-                                                <div><span>File Name</span>{{element?.file_name}}</div>
+                                                <!-- <div><span>File Name</span>{{element?.file_name}}</div> -->
                                                 <div [ngSwitch]="element.action"><span>Action</span>
                                                     <p *ngSwitchCase="'MD'">Downloaded</p>
                                                     <p *ngSwitchCase="'MES'">E-Sign Downloaded</p>
@@ -946,7 +989,7 @@
                                             </section>
 
                                             <section *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
-                                                <div><span>File Name</span>{{element?.file_name}}</div>
+                                                <!-- <div><span>File Name</span>{{element?.file_name}}</div> -->
                                                 <div [ngSwitch]="element.action"><span>Action</span>
                                                     {{element?.action}}
                                                 </div>

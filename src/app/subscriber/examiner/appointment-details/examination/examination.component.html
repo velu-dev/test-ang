@@ -114,7 +114,7 @@
                     alt=""></span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'updatedAt'" class="no-wrap-td">{{element?.updatedAt | date:'MM-dd-yyyy'}}</span>
-                <span *ngIf="column == 'action'" class="text-center">
+                <span *ngIf="column == 'action'" class="text-center no-wrap-td">
                   <a class="text-success" (click)="downloadDocument(element)">Download</a>
                   <a *ngIf="!element?.isServiceRequested && !(billingData?.is_exam_type_changed || billingData?.isExaminerDisabled)"
                     class="text-danger p-l-20" (click)="$event.stopPropagation();removeDocument(element)">Remove</a>
@@ -126,10 +126,10 @@
             <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
               <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                 <div class="responsive-table">
-                  <div><span>File Name</span><span> {{element?.file_name}} </span></div>
+                  <!-- <div><span>File Name</span><span> {{element?.file_name}} </span></div> -->
                   <div class="no-wrap-td"><span>Date Uploaded</span><span> {{element?.updatedAt | date:'MM-dd-yyyy'}}
                     </span></div>
-                  <div class="text-center"><span>Action</span><span>
+                  <div><span>Action</span><span>
                       <a class="text-success" (click)="downloadDocument(element)">Download</a>
                       <a *ngIf="!(alldocuments?.is_exam_type_changed || alldocuments?.isExaminerDisabled)"
                         class="text-danger p-l-20" (click)="$event.stopPropagation();removeDocument(element)">Remove</a>

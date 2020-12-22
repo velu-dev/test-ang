@@ -767,6 +767,15 @@ image-cropper {
       .filled-success {
         @extend .filled-success;
       }
+      .info-alert {
+        color: $info;
+        background-color: $info-bg;
+        border: 1px solid $info-border;
+        padding: 19px 15px;
+        width: -webkit-fill-available;
+        margin: 0px auto;
+        border-radius: 4px;
+    }
     }
     .align-right {
       text-align: right;
