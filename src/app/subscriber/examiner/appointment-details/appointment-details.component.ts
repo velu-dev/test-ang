@@ -498,7 +498,16 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
+      if (this.examinationStatusForm.value.examination_status == 10 && !this.billable_item.getRawValue().appointment.appointment_scheduled_date_time){
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px', data: { title: "Examination", message: "Appointment is Not Scheduled", ok: true, no: false, type: "warning", warning: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          return
 
+        })
+        return
+      }
       if (this.examinationStatusForm.value.examination_status == 10 && moment(this.billable_item.getRawValue().appointment.appointment_scheduled_date_time) >= moment()) {
         //this.alertService.openSnackBar('Future appointment status cannot be changed to ATTENDED.', 'error');
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
