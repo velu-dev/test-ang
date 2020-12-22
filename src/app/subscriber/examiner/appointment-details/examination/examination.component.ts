@@ -54,8 +54,8 @@ export class ExaminationComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "File Name", "Action"]
-        this.columnsToDisplay = ['is_expand', 'file_name', 'action']
+        this.columnName = ["", "File Name"]
+        this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
         this.columnName = ["", "File Name", "Date Uploaded", "Action"]
         this.columnsToDisplay = ['doc_image', 'file_name', "updatedAt", 'action']
