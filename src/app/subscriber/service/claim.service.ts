@@ -35,6 +35,9 @@ export class ClaimService {
   updateClaim(data, id): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.updateClaim + id, data)
   }
+  updateClaimAll(data, id): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updateClaimAll + id, data)
+  }
   createClaimant(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createClaimant, data)
   }

@@ -219,6 +219,7 @@ export class NewClaimComponent implements OnInit {
   dattroneyGroupOptions: any;
   claimAdminGroupOptions: any = [];
   minimumDate = new Date(1900, 0, 1);
+  currentTab = "";
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -825,10 +826,25 @@ export class NewClaimComponent implements OnInit {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
+      if (this.claimId) {
+        this.claimService.getClaim(this.claimId).subscribe(res => {
+          this.claim.patchValue({
+            claim_details: res.data.claim_details,
+            claim_injuries: res.data.claim_injuries,
+            InsuranceAdjuster: res.data.agent_details.InsuranceAdjuster,
+            Employer: res.data.agent_details.Employer,
+            ApplicantAttorney: res.data.agent_details.ApplicantAttorney,
+            DefenseAttorney: res.data.agent_details.DefenseAttorney,
+            DEU: res.data.agent_details.DEU,
+          })
+          console.log(this.claim.value)
+        })
+      }
       if (this.claimant.invalid) {
         return
       }
       if (this.claimantChanges) {
+
         this.createClaimant('tab');
       }
       this.titleName = " Claim";
@@ -847,6 +863,7 @@ export class NewClaimComponent implements OnInit {
   isClaimCreated = false;
   submitClaim(status) {
     this.isClaimSubmited = true;
+    this.currentTab = "claim";
     // if (!this.claimChanges) {
     //   if (status == 'next') {
     //     this.stepper.next();
@@ -875,7 +892,6 @@ export class NewClaimComponent implements OnInit {
     }
     this.logger.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
     if (!this.claimId) {
-      this.logger.log(claim)
       this.claimService.createClaim(claim).subscribe(res => {
         this.logger.log(res);
         let examtype = "";
@@ -909,7 +925,7 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
-      this.claimService.updateClaim(this.claim.value.claim_details, this.claimId).subscribe(res => {
+      this.claimService.updateClaimAll(claim, this.claimId).subscribe(res => {
         let examtype = "";
 
         this.examTypes.map(exam => {
@@ -917,7 +933,6 @@ export class NewClaimComponent implements OnInit {
             examtype = exam.exam_type_code + " - " + exam.exam_name;
           }
         })
-        this.logger.log(res.data)
         this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: examtype, wcab_number: res.data.wcab_number }
         this.alertService.openSnackBar(res.message, 'success');
         if (status == 'next') {
@@ -974,6 +989,7 @@ export class NewClaimComponent implements OnInit {
   //   })
   // }
   submitBillableItem(state?) {
+    this.currentTab = "billable_item"
     this.isBillSubmited = true;
     Object.keys(this.billable_item.controls).forEach((key) => {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
@@ -991,12 +1007,12 @@ export class NewClaimComponent implements OnInit {
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
       //this._location.back();
-      if (this.claimantChanges) {
-        this.createClaimant('close')
-      }
-      if (this.claimChanges) {
-        this.submitClaim('close')
-      }
+      // if (this.claimantChanges) {
+      //   this.createClaimant('close')
+      // }
+      // if (this.claimChanges) {
+      //   this.submitClaim('close')
+      // }
       let baseUrl = "";
       let role = this.cookieService.get('role_id')
       console.log(role)
@@ -1051,6 +1067,7 @@ export class NewClaimComponent implements OnInit {
   claimDetails = { claim_number: "", exam_type_id: "", wcab_number: "" }
   isClaimantCreated = false;
   createClaimant(status) {
+    this.currentTab = "claimant";
     this.isClaimantSubmited = true;
     Object.keys(this.claimant.controls).forEach((key) => {
       if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
@@ -1550,16 +1567,19 @@ export class NewClaimComponent implements OnInit {
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
+        this.file = null;
         this.fileErrors.file.isError = true;
         this.fileErrors.file.error = "File size is too large";
         // this.alertService.openSnackBar("File size is too large", 'error');
         return;
       }
       this.selectedFile = event.target.files[0];
-      this.logger.log(" this.selectedFile", this.selectedFile);
+      this.fileErrors.file.isError = false;
+      this.fileErrors.file.error = "";
       this.file = event.target.files[0].name;
     } else {
       this.selectedFile = null;
+      this.file = null;
       this.fileErrors.file.isError = true;
       this.fileErrors.file.error = "This file type is not accepted";
       //this.alertService.openSnackBar("This file type is not accepted", 'error');
@@ -1570,12 +1590,13 @@ export class NewClaimComponent implements OnInit {
   note: string = '';
   documents_ids = [];
   correspondFormSubmit() {
+    console.log(this.claim.value)
     if (this.file == null) {
       this.fileErrors.file.isError = true;
       this.fileErrors.file.error = "Please select file";
       return;
     }
-    let formData = new FormData()
+    let formData = new FormData();
     formData.append('file', this.selectedFile);
     formData.append('notes', this.note);
     if (this.claim.value.claim_details.id) {
