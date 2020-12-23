@@ -77,10 +77,10 @@
                 <div class="note m-t-0"><i class="fas fa-info-circle p-r-5"></i>Includes CMS-1500 & W-9</div>
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center">
-            <button *ngIf="data?.on_demand_progress_status != 'In Progress'" mat-stroked-button class="filled-success huge-btn m-b-5" (click)="billingOnDemand()">Bill On Demand</button>
-            <div class="info-alert" *ngIf="data?.on_demand_progress_status == 'In Progress'">
+            <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="billingOnDemand()">Bill On Demand</button>
+            <!-- <div class="info-alert" *ngIf="data?.on_demand_progress_status == 'In Progress'">
                 Date Requested : -
-            </div>
+            </div> -->
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-right">
             <button mat-stroked-button class="outline-danger huge-btn" (click)="dialogRef.close(onDemandStatus)">Cancel</button>
