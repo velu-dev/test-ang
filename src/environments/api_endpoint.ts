@@ -186,6 +186,7 @@ export const api_endpoint = {
     getIncompleteinfo: "billing/validate-837p-csv/",
     generateBillingForm: 'billing/generate-form/',
     activityLog: 'action-log/action-list/',
+    activityLogUpdate: 'billing/update-actionlog',
 
     //Calendar 
 

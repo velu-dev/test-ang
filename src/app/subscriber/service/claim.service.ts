@@ -138,4 +138,7 @@ export class ClaimService {
   getActivityLog(claim_id, bill_item_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.activityLog + claim_id + "/" + bill_item_id)
   }
+  updateActionLog(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.activityLogUpdate, data)
+  }
 }

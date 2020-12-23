@@ -269,10 +269,10 @@
             <p  *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last ? ', ' : ''}}</p>
           </span></div>
           <div><span>Download Generated Items </span><span *ngIf="element?.send">
-              <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
+              <a class="text-success" (click)="inOutdownload(element)">Download</a>
             </span></div>
           <div><span>Download On Demand Proof of Service </span><span *ngIf="element?.received">
-              <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
+              <a class="text-success" (click)="inOutdownload(element)">Download</a>
             </span></div>
           <div><span>Further Information</span><span>{{element?.file_processing_message}}</span></div>
       </div>

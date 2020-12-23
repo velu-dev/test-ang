@@ -1568,7 +1568,7 @@ export class billingOnDemandDialog {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.billingService.removeRecipient(element.id, { request_type: "correspondence", claim_id: this.data.claimId_, billable_item_id: this.data.billableId }).subscribe(res => {
+        this.billingService.removeRecipient(element.id, { request_type: "billing", claim_id: this.data.claimId_, billable_item_id: this.data.billableId }).subscribe(res => {
           if (res.status) {
             this.getBillRecipient();
             this.alertService.openSnackBar(res.message, "success")

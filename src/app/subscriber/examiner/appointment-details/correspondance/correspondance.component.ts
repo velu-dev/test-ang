@@ -301,7 +301,6 @@ export class BillingCorrespondanceComponent implements OnInit {
         if (result.data) {
           this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
             if (res.status) {
-              //this.alertService.openSnackBar(res.message, "success");
               let data = res.data;
               documents_ids = [];
               custom_documents_ids = [];
@@ -323,7 +322,6 @@ export class BillingCorrespondanceComponent implements OnInit {
     } else {
       this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
         if (res.status) {
-          //this.alertService.openSnackBar(res.message, "success");
           let data = res.data;
           documents_ids = [];
           custom_documents_ids = [];
@@ -582,6 +580,9 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
 
   inOutdownload(data) {
+    console.log(data)
+    this.claimService.updateActionLog({ "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [data.document_id] }).subscribe(res => {
+    })
     saveAs(data.file_url, data.file_name, '_self');
   }
 
