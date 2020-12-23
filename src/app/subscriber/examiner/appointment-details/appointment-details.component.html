@@ -584,11 +584,13 @@
                         <div>
                             <span *ngIf="column == 'task'">{{element?.action_details}}</span>
                             <!-- <span *ngIf="column == 'task'">{{element?.task}}</span> -->
-                            <span *ngIf="column == 'created_by'">{{element?.first_name}}
-                                {{element?.last_name}}{{element?.suffix ? (", "+element?.suffix) : "" }}</span>
+                            <span *ngIf="column == 'created_by'">{{element?.created_by_first_name}}
+                                {{element?.created_by_last_name}}{{element?.created_by_suffix ? (",
+                                "+element?.created_by_suffix) : "" }}</span>
                             <span *ngIf="column == 'createdAt'">{{element?.createdAt | date:'MM-dd-yyyy h:mm a'}}</span>
-                            <span *ngIf="column == 'updated_by'">{{element?.updated_by}}
-                                {{element.id}}</span>
+                            <span *ngIf="column == 'updated_by'">{{element?.updated_by_first_name}}
+                                {{element?.updated_by_last_name}}{{element?.updated_by_suffix ? (",
+                                "+element?.updated_by_suffix) : "" }}</span>
                             <span *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy h:mm a'}}</span>
                         </div>
                     </td>
@@ -599,10 +601,13 @@
                             [@detailExpand]="actionLogexpandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <!-- <div><span>Action</span> {{element?.task}} </div> -->
-                                <div><span>Created By</span> {{element?.first_name}}
-                                    {{element?.last_name}}{{element?.suffix ? (", "+element?.suffix) : "" }} </div>
+                                <div><span>Created By</span> {{element?.created_by_first_name}}
+                                    {{element?.created_by_last_name}}{{element?.created_by_suffix ? (",
+                                    "+element?.created_by_suffix) : "" }} </div>
                                 <div><span>Created At</span> {{element?.createdAt | date:'MM-dd-yyyy h:mm a'}} </div>
-                                <div><span>Updated By</span> {{element?.updated_by}} </div>
+                                <div><span>Updated By</span> {{element?.updated_by_first_name}}
+                                    {{element?.updated_by_last_name}}{{element?.updated_by_suffix ? (",
+                                    "+element?.updated_by_suffix) : "" }}</div>
                                 <div><span>Updated At</span> {{element?.updatedAt | date:'MM-dd-yyyy h:mm a'}} </div>
                             </div>
                         </div>
