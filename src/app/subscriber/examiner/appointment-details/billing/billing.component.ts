@@ -282,7 +282,7 @@ export class BilllableBillingComponent implements OnInit {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
       width: '800px',
       // data: {name: this.name, animal: this.animal}
-      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, states: this.states }
+      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, states: this.states, on_demand_progress_status: this.billingData.on_demand_progress_status}
     });
 
     dialogRef.afterClosed().subscribe(result => {
