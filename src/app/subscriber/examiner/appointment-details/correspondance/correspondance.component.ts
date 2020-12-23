@@ -268,12 +268,15 @@ export class BillingCorrespondanceComponent implements OnInit {
   getDocs(documents_ids, custom_documents_ids, signHide) {
     let recipientsDocuments_ids: any = [];
     let recipientsCustom_documents_ids: any = [];
+    let selected_recipients: any = [];
     let addressEmpty = false;
     this.selection1.selected.map(res => {
       if (res.type == "custom") {
         recipientsCustom_documents_ids.push(res.id)
+        selected_recipients.push(res);
       } else {
         recipientsDocuments_ids.push(res.id)
+        selected_recipients.push(res.data);
       }
       if (res.message) {
         addressEmpty = true;
@@ -285,8 +288,10 @@ export class BillingCorrespondanceComponent implements OnInit {
       recipients_ids: recipientsDocuments_ids,
       custom_recipients_ids: recipientsCustom_documents_ids,
       hide_sign: signHide,
-      examiner_id: this.examinerId
+      examiner_id: this.examinerId,
+      selected_recipients: selected_recipients
     }
+
     if (addressEmpty) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '500px',
