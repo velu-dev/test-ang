@@ -187,10 +187,10 @@
                 <span *ngIf="column == 'date_of_communication' && element?.received"
                   class="no-wrap-td">{{element?.received?.date_of_communication | date:'MM-dd-yyyy' }}</span>
                 <span *ngIf="column == 'download' && element?.send">
-                  <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
+                  <a class="text-success" (click)="inOutdownload(element?.send, element)">Download</a>
                 </span>
                 <span *ngIf="column == 'download1' && element?.received">
-                  <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
+                  <a class="text-success" (click)="inOutdownload(element?.received, element)">Download</a>
                 </span>
               </div>
             </td>
