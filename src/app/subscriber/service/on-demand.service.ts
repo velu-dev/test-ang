@@ -56,8 +56,8 @@ export class OnDemandService {
   removeDocument(id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.removeCustomDocument + id)
   }
-  removeRecipient(id): Observable<any> {
-    return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + id)
+  removeRecipient(id, data?): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + id, data)
   }
   getBilling(claim_id, bill_item_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.bilingList + claim_id + "/" + bill_item_id)

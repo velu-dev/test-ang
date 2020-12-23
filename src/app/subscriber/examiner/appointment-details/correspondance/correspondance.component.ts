@@ -403,7 +403,7 @@ export class BillingCorrespondanceComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.onDemandService.removeRecipient(element.id).subscribe(res => {
+        this.onDemandService.removeRecipient(element.id, { request_type: "correspondence", claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
           if (res.status) {
             this.getData();
             this.alertService.openSnackBar(res.message, "success")

@@ -88,8 +88,8 @@ export class BillingService {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
 
-  removeRecipient(id): Observable<any> {
-    return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + id)
+  removeRecipient(id, data?): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + id, data)
   }
 
   getBillDocument(claimID, billableId): Observable<any> {
@@ -116,7 +116,7 @@ export class BillingService {
     return this.http.post(environment.baseUrl + api_endpoint.getIncompleteinfo + claim_id + "/" + bill_id, data)
   }
 
-  generateBillingForm(claimID,billableId,formId): Observable<any> {
+  generateBillingForm(claimID, billableId, formId): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.generateBillingForm + claimID + '/' + billableId + '/' + formId)
   }
 }

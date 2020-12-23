@@ -5,7 +5,7 @@ import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogu
 import { ExaminerService } from '../../service/examiner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { MatTableDataSource, MatSort, NativeDateAdapter, MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE } from '@angular/material';
+import { MatTableDataSource, MatSort, NativeDateAdapter, MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE, MatPaginator } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from '../../service/claim.service';
@@ -87,7 +87,7 @@ export class AppointmentDetailsComponent implements OnInit {
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -167,6 +167,7 @@ export class AppointmentDetailsComponent implements OnInit {
   // isMobile = false;
   currentDate = new Date();
   activityLog: any;
+  activityFilterValue: string;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -226,6 +227,13 @@ export class AppointmentDetailsComponent implements OnInit {
     })
 
   }
+
+  applyActivityFilter(filterValue: string) {
+    this.activityLog.filter = filterValue.trim().toLowerCase();
+    if (this.activityLog.paginator) {
+      this.activityLog.paginator.firstPage();
+    }
+  }
   isExamTypeChanged = false;
   examinerId = null;
   loadDatas() {
@@ -237,6 +245,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
         this.activityLog = new MatTableDataSource(res.data);
         this.activityLog.sort = this.sort;
+        this.activityLog.paginator = this.paginator;
       })
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
