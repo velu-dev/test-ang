@@ -101,6 +101,7 @@ export class CorrespondanceComponent implements OnInit {
       // console.log(" this.selectedFile", this.selectedFile);
       this.file = event.target.files[0].name;
     } else {
+      this.file = null;
       this.selectedFile = null;
       this.fileErrors.file.isError = true;
       this.fileErrors.file.error = "This file type is not accepted";
