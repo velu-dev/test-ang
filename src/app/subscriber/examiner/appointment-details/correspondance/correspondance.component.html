@@ -142,7 +142,8 @@
                 (click)="openCustomRecipient()"
                 *ngIf="!(correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled)">
                 <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
-              </button></th>
+              </button>
+            </th>
             <td mat-cell *matCellDef="let element"> {{element.type != 'custom' ? element.recipient_type : element.name}}
               <div class="info-alert-a" (click)="$event.stopPropagation();openAddAddress(element)"
                 *ngIf="element?.message">
@@ -188,12 +189,14 @@
     </div>
 
     <div fxFlex="33.3" fxFlex.sm="33,3" fxFlex.xs="100" class="text-center">
-      <button (click)="downloadForms(false)" mat-stroked-button class="outline-light_green huge-btn" [disabled]="correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled">
+      <button (click)="downloadForms(false)" mat-stroked-button class="outline-light_green huge-btn"
+        [disabled]="correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled">
         E-Sign and Download
       </button>
     </div>
     <div fxFlex="33.3" fxFlex.sm="33,3" fxFlex.xs="100">
-      <button (click)="downloadForms(true)" mat-stroked-button class="outline-warning float-right huge-btn" [disabled]="correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled">
+      <button (click)="downloadForms(true)" mat-stroked-button class="outline-warning float-right huge-btn"
+        [disabled]="correspondData?.is_exam_type_changed || correspondData?.isExaminerDisabled">
         Download
       </button>
     </div>
@@ -230,10 +233,11 @@
                     *ngSwitchCase="'MD'">Downloaded</span>
                   <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
                   <span *ngSwitchCase="'SFTP'">Mailed On Demand</span></span>
-                <span *ngIf="column == 'date'"
-                  class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
+                <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date_of_request |
+                  date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'recipients'"><span
-                    *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last ? ', ' : ''}}</span></span>
+                    *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last ? ', ' :
+                    ''}}</span></span>
                 <span *ngIf="column == 'download' && element?.send">
                   <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
                 </span>
@@ -266,13 +270,13 @@
           </div>
           <div class="no-wrap-td"><span>Date</span><span>{{element?.date_of_request | date:'MM-dd-yyyy'}} </span></div>
           <div><span>Recipients</span><span>
-            <p  *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last ? ', ' : ''}}</p>
-          </span></div>
+              <p *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last ? ', ' : ''}}</p>
+            </span></div>
           <div><span>Download Generated Items </span><span *ngIf="element?.send">
-              <a class="text-success" (click)="inOutdownload(element)">Download</a>
+              <a class="text-success" (click)="inOutdownload(element?.send, element)">Download</a>
             </span></div>
           <div><span>Download On Demand Proof of Service </span><span *ngIf="element?.received">
-              <a class="text-success" (click)="inOutdownload(element)">Download</a>
+              <a class="text-success" (click)="inOutdownload(element?.received, element)">Download</a>
             </span></div>
           <div><span>Further Information</span><span>{{element?.file_processing_message}}</span></div>
       </div>

@@ -53,8 +53,8 @@ export class OnDemandService {
   documentUnit(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.documentUnit, data)
   }
-  removeDocument(id): Observable<any> {
-    return this.http.delete(environment.baseUrl + api_endpoint.removeCustomDocument + id + "/" + 9)
+  removeDocument(id, document_category_id): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeCustomDocument + id + "/" + document_category_id)
   }
   removeRecipient(id, data?): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + id + "/" + data.request_type, data)
