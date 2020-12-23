@@ -282,7 +282,7 @@ export class BilllableBillingComponent implements OnInit {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
       width: '800px',
       // data: {name: this.name, animal: this.animal}
-      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, states: this.states, on_demand_progress_status: this.billingData.on_demand_progress_status}
+      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, states: this.states, on_demand_progress_status: this.billingData.on_demand_progress_status }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -912,6 +912,10 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   doneRow(group: FormGroup, index) {
+    Object.keys(group.controls).forEach((key) => {
+      if (group.get(key).value && typeof (group.get(key).value) == 'string')
+        group.get(key).setValue(group.get(key).value.trim())
+    });
     if (group.status == "INVALID") {
       group.markAllAsTouched();
       return;
