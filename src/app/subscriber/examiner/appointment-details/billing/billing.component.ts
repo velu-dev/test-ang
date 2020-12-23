@@ -560,7 +560,7 @@ export class BilllableBillingComponent implements OnInit {
       this.filteredICD = [];
       this.icdData = this.IcdDataSource.data;
       this.icdData.push(this.selectedIcd)
-      let data = { id: this.billingId, diagnosis_code: this.icdData }
+      let data = { id: this.billingId, claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, diagnosis_code: this.icdData }
       this.billingService.updateDiagnosisCode(data).subscribe(code => {
         this.IcdDataSource = new MatTableDataSource(this.icdData);
         this.selectedIcd = { code: "", name: "" };
@@ -752,6 +752,8 @@ export class BilllableBillingComponent implements OnInit {
   downloadDocumet(element) {
     this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
+      this.claimService.updateActionLog({ type: "billing", "document_category_id": 9, "claim_id": this.paramsId.claim_id, "billable_item_id":  this.paramsId.billId, "documents_ids": [element.document_id] }).subscribe(res => {
+      })
       saveAs(res.signed_file_url, element.file_name);
     })
   }
@@ -941,7 +943,7 @@ export class BilllableBillingComponent implements OnInit {
       //isEditable: [false]
     }
 
-    this.billingService.createBillLine(this.billingId, this.paramsId.billId, data).subscribe(line => {
+    this.billingService.createBillLine(this.billingId, this.paramsId.billId, this.paramsId.claim_id, data).subscribe(line => {
       group.get('id').setValue(line.data.id);
       if (data.id) {
         this.alertService.openSnackBar("Bill Line Item updated successfully", 'success');
