@@ -19,7 +19,8 @@
       <p class="description">Upload record documents and select the documents to send to the record summarizers from
         this list.</p>
       <div class="info-alert m-b-10 m-t-10">
-        <i class="fa fa-info-circle p-r-5"></i>Automatic Page count is available only for .pdf documents & should not exceed 300 dpi
+        <i class="fa fa-info-circle p-r-5"></i>Automatic Page count is available only for .pdf documents & should not
+        exceed 300 dpi
       </div>
       <div fxLayout="row wrap" class="upload-sec">
         <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100"
@@ -178,11 +179,11 @@
                     [src]="element?.file_name | fileType" alt=""></span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'no_of_units'">{{element?.no_of_units}}</span>
-                <span *ngIf="column == 'service_priority'"
-                  class="no-wrap-td">{{element?.service_priority == 'rush' ? 'Yes' : ''}}
+                <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ?
+                  'Yes' : ''}}
                   {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
-                <span *ngIf="column == 'date_of_request'"
-                  class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
+                <span *ngIf="column == 'date_of_request'" class="no-wrap-td">{{element?.date_of_request |
+                  date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'date_of_communication' && element?.received"
                   class="no-wrap-td">{{element?.received?.date_of_communication | date:'MM-dd-yyyy' }}</span>
                 <span *ngIf="column == 'download' && element?.send">
@@ -210,12 +211,14 @@
                   <!-- <div class="no-wrap-td"><span>Date Requested</span><span> {{element?.request_date}} </span></div> -->
                   <div><span>Download Record Document</span>
                     <span *ngIf="element?.send">
-                      <a class="text-success" (click)="inOutdownload(element?.send)">Download</a>
-                    </span></div>
+                      <a class="text-success" (click)="inOutdownload(element?.send, element)">Download</a>
+                    </span>
+                  </div>
                   <div><span>Download Record Summary</span>
                     <span *ngIf="element?.received">
-                      <a class="text-success" (click)="inOutdownload(element?.received)">Download</a>
-                    </span></div>
+                      <a class="text-success" (click)="inOutdownload(element?.received, element)">Download</a>
+                    </span>
+                  </div>
                 </div>
               </div>
             </td>

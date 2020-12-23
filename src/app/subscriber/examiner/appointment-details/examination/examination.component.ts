@@ -180,7 +180,7 @@ export class ExaminationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.ondemandService.removeDocument(element.id).subscribe(res => {
+        this.ondemandService.removeDocument(element.id, 5).subscribe(res => {
           if (res.status) {
             let i = 0;
             this.alldocuments.map(dd => {

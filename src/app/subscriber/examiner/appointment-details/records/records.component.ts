@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { ClaimService } from 'src/app/subscriber/service/claim.service';
 
 @Component({
   selector: 'app-records',
@@ -54,6 +55,7 @@ export class RecordsComponent implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertService,
     public dialog: MatDialog,
+    public claimService: ClaimService,
     private onDemandService: OnDemandService) {
 
 
@@ -264,7 +266,9 @@ export class RecordsComponent implements OnInit {
 
   }
 
-  inOutdownload(data) {
+  inOutdownload(data, element) {
+    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": element.claim_id, "billable_item_id": element.billable_item_id, "documents_ids": [element.document_id] }).subscribe(res => {
+    })
     saveAs(data.file_url, data.file_name);
   }
 

@@ -382,7 +382,7 @@ export class BillingCorrespondanceComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.onDemandService.removeDocument(element.id).subscribe(res => {
+        this.onDemandService.removeDocument(element.id, 9).subscribe(res => {
           if (res.status) {
             this.alertService.openSnackBar(res.message, "success")
             let index = SelectedIds.indexOf(element.id);
@@ -579,9 +579,9 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
   }
 
-  inOutdownload(data) {
+  inOutdownload(data, element) {
     console.log(data)
-    this.claimService.updateActionLog({ "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [data.document_id] }).subscribe(res => {
+    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.document_id] }).subscribe(res => {
     })
     saveAs(data.file_url, data.file_name, '_self');
   }
