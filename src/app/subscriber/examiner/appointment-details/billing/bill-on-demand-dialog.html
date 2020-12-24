@@ -77,12 +77,11 @@
                 <div class="note m-t-0"><i class="fas fa-info-circle p-r-5"></i>Includes CMS-1500 & W-9</div>
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center">
-            <button [disabled]="data?.on_demand_progress_status == 'In Progress'" mat-stroked-button class="filled-success huge-btn m-b-5" (click)="billingOnDemand()">Bill On Demand</button>
+            <button [disabled]="data?.on_demand_progress_status == 'In Progress'"mat-stroked-button class="filled-success huge-btn m-b-5" (click)="billingOnDemand()">Bill On Demand</button>
+            <div class="note m-t-0"><i class="fas fa-info-circle p-r-5"></i>Request made on : {{data?.last_bill_on_demand_request_date | date:'MM-dd-yyyy hh:mm a'}} In Progress</div>
             <!-- <div class="info-alert" *ngIf="data?.on_demand_progress_status == 'In Progress'">
-                Date Requested : -
+                Request made on: 2020-12-25 10:30 AM in progress
             </div> -->
-            <div class="note m-t-0" *ngIf="data?.on_demand_progress_status == 'In Progress'">
-                <i class="fas fa-info-circle p-r-5"></i>Request made on : {{data?.last_bill_on_demand_request_date | date:'MM-dd-yyyy hh:mm a'}} In Progress</div>
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-right">
             <button mat-stroked-button class="outline-danger huge-btn" (click)="dialogRef.close(onDemandStatus)">Cancel</button>

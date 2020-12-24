@@ -115,6 +115,7 @@ export class ExaminationComponent implements OnInit {
   addFile(event) {
     this.selectedFiles = event.target.files;
     this.selectedFile = null;
+    this.file = [];
     let fileTypes = ['pdf', 'doc', 'docx']
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
