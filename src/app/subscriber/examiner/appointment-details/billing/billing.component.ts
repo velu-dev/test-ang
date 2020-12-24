@@ -1067,12 +1067,12 @@ export class BilllableBillingComponent implements OnInit {
       this.alertService.openSnackBar("Document not found", "error");
       return;
     }
-    this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(doc => {
-      saveAs(doc.data.file_url, doc.data.file_name, '_self');
-      this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, "error");
-    })
+    // this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(doc => {
+    //   saveAs(doc.data.file_url, doc.data.file_name, '_self');
+    //   this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
+    // }, error => {
+    //   this.alertService.openSnackBar(error.error.message, "error");
+    // })
   }
 
   inOutdownload(data) {
@@ -1618,7 +1618,7 @@ export class billingOnDemandDialog {
         this.alertService.openSnackBar('Please select Recipient(s)', "error");
         return;
       }
-
+      let selected_recipients = []
       let recipientsDocuments_ids: any = [];
       let addressEmpty = false;
       let isClaimant = false;
@@ -1627,7 +1627,9 @@ export class billingOnDemandDialog {
       this.selection1.selected.map(res => {
         if (res.type == "custom") {
           recipientsDocuments_ids.push(res.id)
+          selected_recipients.push(res)
         } else {
+          selected_recipients.push(res.data)
           if (res.recipient_type.toLowerCase() != 'claimant') {
             recipientsDocuments_ids.push(res.data.id)
           } else {
@@ -1664,7 +1666,8 @@ export class billingOnDemandDialog {
         bill_id: this.data.billingId,
         //documents_ids: [1753, 1755],
         recipients_id: recipientsDocuments_ids,
-        isClaimant: isClaimant
+        isClaimant: isClaimant,
+        selected_recipients: selected_recipients
       }
       if (!this.data.is_w9_form) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
@@ -1833,19 +1836,29 @@ export class billingOnDemandDialog {
         data: { title: 'Bill on demand', message: "W9 Form not included. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
       });
       dialogRef.afterClosed().subscribe(result => {
-        if(result.data){
+        if (result.data) {
           this.downloadMethod();
         }
       })
       return
-    }else{
+    } else {
       this.downloadMethod()
     }
-    
+
   }
 
-  downloadMethod(){
-    this.billingService.billingDownloadAll(this.data.claimId, this.data.billableId, this.data.billingId).subscribe(doc => {
+  downloadMethod() {
+    let selected_recipients = []
+    this.selection1.selected.map(res => {
+      if (res.type == "custom") {
+        selected_recipients.push(res)
+      } else {
+        selected_recipients.push(res.data)
+
+      }
+
+    })
+    this.billingService.billingDownloadAll(this.data.claimId, this.data.billableId, this.data.billingId, { selected_recipients: selected_recipients }).subscribe(doc => {
       saveAs(doc.data.file_url, doc.data.file_name, '_self');
       this.onDemandStatus = true;
       this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
