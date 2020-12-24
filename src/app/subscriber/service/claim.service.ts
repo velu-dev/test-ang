@@ -82,8 +82,9 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + api_endpoint.getcorrespondence + id)
   }
 
-  deleteCorrespondence(id) {
-    return this.http.delete(environment.baseUrl + api_endpoint.deleteCorrespondence + id)
+  deleteCorrespondence(id, type?) {
+    let type1 = type? "/"+type : "";
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteCorrespondence + id +type1)
   }
   updateAgent(id, value): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.updateAgents + id, value)
