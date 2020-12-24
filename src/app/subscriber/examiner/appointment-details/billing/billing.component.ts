@@ -1682,6 +1682,7 @@ export class billingOnDemandDialog {
               dialogRef.afterClosed().subscribe(result => {
                 if (result.data) {
                   this.billingService.onDemandBilling(data).subscribe(bill => {
+                    this.data.on_demand_progress_status = 'In Progress';
                     if (bill.data.exam_report_signed_file_url) {
                       recipientsDocuments_ids = [];
                       this.selection1.clear();
@@ -1709,6 +1710,7 @@ export class billingOnDemandDialog {
               })
             } else {
               this.billingService.onDemandBilling(data).subscribe(bill => {
+                this.data.on_demand_progress_status = 'In Progress';
                 if (bill.data.exam_report_signed_file_url) {
                   recipientsDocuments_ids = [];
                   this.selection1.clear();
@@ -1744,6 +1746,7 @@ export class billingOnDemandDialog {
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
             this.billingService.onDemandBilling(data).subscribe(bill => {
+              this.data.on_demand_progress_status = 'In Progress';
               if (bill.data.exam_report_signed_file_url) {
                 recipientsDocuments_ids = [];
                 this.selection1.clear();
@@ -1779,6 +1782,7 @@ export class billingOnDemandDialog {
                 this.selection1.select(doc);
               }
             })
+            this.data.on_demand_progress_status = 'In Progress';
             this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
           }
           if (bill.data.bill_on_demand_signed_zip_file_url) {
