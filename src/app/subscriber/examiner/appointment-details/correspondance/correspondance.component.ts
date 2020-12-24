@@ -482,6 +482,7 @@ export class BillingCorrespondanceComponent implements OnInit {
 
     let documents_ids: any = [];
     let custom_documents_ids: any = [];
+    let selected_recipients: any = [];
     this.selection.selected.map(res => {
       if (res.doc_type == "custom") {
         custom_documents_ids.push(res.id)
@@ -495,8 +496,10 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.selection1.selected.map(res => {
       if (res.type == "custom") {
         recipientsCustom_documents_ids.push(res.id)
+        selected_recipients.push(res);
       } else {
         recipientsDocuments_ids.push(res.id)
+        selected_recipients.push(res.data);
       }
       if (res.message) {
         addressEmpty = true;
@@ -511,7 +514,8 @@ export class BillingCorrespondanceComponent implements OnInit {
       custom_documents_ids: custom_documents_ids,
       recipients_ids: recipientsDocuments_ids,
       custom_recipients_ids: recipientsCustom_documents_ids,
-      examiner_id: this.examinerId
+      examiner_id: this.examinerId,
+      selected_recipients: selected_recipients
     }
 
     if (documents_ids.includes(3)) {
@@ -579,8 +583,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
   }
 
-  inOutdownload(data, element) {
-    console.log(data)
+  inOutdownload(data, element?) {
     this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.document_id] }).subscribe(res => {
     })
     saveAs(data.file_url, data.file_name, '_self');

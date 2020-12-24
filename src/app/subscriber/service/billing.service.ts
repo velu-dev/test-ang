@@ -36,8 +36,8 @@ export class BillingService {
     return this.http.get(environment.baseUrl + api_endpoint.getbilling + id + '/' + billId)
   }
 
-  createBillLine(billId, billableId, data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.createBillLineItem + billId + '/' + billableId, data)
+  createBillLine(billId, billableId, claim_id, data): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.createBillLineItem + billId + '/' + billableId + '/' + claim_id, data)
   }
 
   updateDiagnosisCode(data): Observable<any> {
@@ -60,8 +60,8 @@ export class BillingService {
     return this.http.get(environment.baseUrl + api_endpoint.CMS1500Form + claimID + '/' + billableId + '/' + billId)
   }
 
-  billingDownloadAll(claimID, billableId, billId): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.billingDownloadAll + claimID + '/' + billableId + '/' + billId)
+  billingDownloadAll(claimID, billableId, billId, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.billingDownloadAll + claimID + '/' + billableId + '/' + billId, data)
   }
 
   billingPostPayment(id, data): Observable<any> {
