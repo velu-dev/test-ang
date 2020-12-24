@@ -579,8 +579,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
   }
 
-  inOutdownload(data, element) {
-    console.log(data)
+  inOutdownload(data, element?) {
     this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.document_id] }).subscribe(res => {
     })
     saveAs(data.file_url, data.file_name, '_self');

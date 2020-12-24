@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { saveAs } from 'file-saver';
+import { ClaimService } from 'src/app/subscriber/service/claim.service';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -49,16 +50,21 @@ export class ReportComponent implements OnInit {
   documentType: any = 6;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   statusBarValues = { value: null, status: '', class: '' }
-
+  claim_id: any;
+  billable_item_id: any;
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private alertService: AlertService,
     public dialog: MatDialog,
+    public claimService: ClaimService,
     private onDemandService: OnDemandService) {
 
 
     this.route.params.subscribe(param => {
+      console.log(param)
       this.paramsId = param;
+      this.claim_id = param.claim_id;
+      this.billable_item_id = param.billId;
     })
 
     this.isHandset$.subscribe(res => {
@@ -265,7 +271,10 @@ export class ReportComponent implements OnInit {
 
   }
 
-  inOutdownload(data) {
+  inOutdownload(data, element) {
+    console.log(element)
+    this.claimService.updateActionLog({ type: "report", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billable_item_id, "documents_ids": [element.document_id] }).subscribe(res => {
+    })
     saveAs(data.file_url, data.file_name);
   }
 
