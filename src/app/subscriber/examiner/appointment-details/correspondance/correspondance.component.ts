@@ -246,7 +246,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
     });
     if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
-      if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
+      if ((this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) && this.correspondData.exam_procedure_type.toLowerCase() != 'supplemental') {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px', data: { title: "Appointment Information Incomplete", message: "Please check the appointment date, time and location.", yes: true, no: true, type: "warning" }
         });
