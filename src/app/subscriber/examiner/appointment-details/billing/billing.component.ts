@@ -282,7 +282,11 @@ export class BilllableBillingComponent implements OnInit {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
       width: '800px',
       // data: {name: this.name, animal: this.animal}
-      data: { billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId, states: this.states, on_demand_progress_status: this.billingData.on_demand_progress_status }
+      data: {
+        billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId,
+        states: this.states, on_demand_progress_status: this.billingData.on_demand_progress_status, is_w9_form: this.billingData.is_w9_form,
+        last_bill_on_demand_request_date: this.billingData.last_bill_on_demand_request_date
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -752,7 +756,7 @@ export class BilllableBillingComponent implements OnInit {
   downloadDocumet(element) {
     this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
-      this.claimService.updateActionLog({ type: "billing", "document_category_id": 9, "claim_id": this.paramsId.claim_id, "billable_item_id":  this.paramsId.billId, "documents_ids": [element.document_id] }).subscribe(res => {
+      this.claimService.updateActionLog({ type: "billing", "document_category_id": 9, "claim_id": this.paramsId.claim_id, "billable_item_id": this.paramsId.billId, "documents_ids": [element.document_id] }).subscribe(res => {
       })
       saveAs(res.signed_file_url, element.file_name);
     })
@@ -1063,12 +1067,12 @@ export class BilllableBillingComponent implements OnInit {
       this.alertService.openSnackBar("Document not found", "error");
       return;
     }
-    this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(doc => {
-      saveAs(doc.data.file_url, doc.data.file_name, '_self');
-      this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, "error");
-    })
+    // this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(doc => {
+    //   saveAs(doc.data.file_url, doc.data.file_name, '_self');
+    //   this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
+    // }, error => {
+    //   this.alertService.openSnackBar(error.error.message, "error");
+    // })
   }
 
   inOutdownload(data) {
@@ -1614,6 +1618,7 @@ export class billingOnDemandDialog {
         this.alertService.openSnackBar('Please select Recipient(s)', "error");
         return;
       }
+      let selected_recipients = []
       let recipientsDocuments_ids: any = [];
       let addressEmpty = false;
       let isClaimant = false;
@@ -1622,7 +1627,9 @@ export class billingOnDemandDialog {
       this.selection1.selected.map(res => {
         if (res.type == "custom") {
           recipientsDocuments_ids.push(res.id)
+          selected_recipients.push(res)
         } else {
+          selected_recipients.push(res.data)
           if (res.recipient_type.toLowerCase() != 'claimant') {
             recipientsDocuments_ids.push(res.data.id)
           } else {
@@ -1659,7 +1666,79 @@ export class billingOnDemandDialog {
         bill_id: this.data.billingId,
         //documents_ids: [1753, 1755],
         recipients_id: recipientsDocuments_ids,
-        isClaimant: isClaimant
+        isClaimant: isClaimant,
+        selected_recipients: selected_recipients
+      }
+      if (!this.data.is_w9_form) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Bill on demand', message: "W9 Form not included. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result)
+          if (result.data) {
+            if (addressEmpty) {
+              const dialogRef = this.dialog.open(AlertDialogueComponent, {
+                width: '500px',
+                data: { title: 'Bill on demand', message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+              });
+              dialogRef.afterClosed().subscribe(result => {
+                if (result.data) {
+                  this.billingService.onDemandBilling(data).subscribe(bill => {
+                    this.data.on_demand_progress_status = 'In Progress';
+                    if (bill.data.exam_report_signed_file_url) {
+                      recipientsDocuments_ids = [];
+                      this.selection1.clear();
+                      this.recipientsData.map(doc => {
+                        if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+                          this.selection1.select(doc);
+                        }
+                      })
+                      this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
+                    }
+                    if (bill.data.bill_on_demand_signed_zip_file_url) {
+                      setTimeout(() => {
+                        this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+                      }, 1000);
+
+                    }
+                    this.onDemandStatus = true;
+                    this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
+                  }, error => {
+                    this.alertService.openSnackBar(error.error.message, 'error');
+                  })
+                } else {
+                  return;
+                }
+              })
+            } else {
+              this.billingService.onDemandBilling(data).subscribe(bill => {
+                this.data.on_demand_progress_status = 'In Progress';
+                if (bill.data.exam_report_signed_file_url) {
+                  recipientsDocuments_ids = [];
+                  this.selection1.clear();
+                  this.recipientsData.map(doc => {
+                    if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+                      this.selection1.select(doc);
+                    }
+                  })
+                  this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
+                }
+                if (bill.data.bill_on_demand_signed_zip_file_url) {
+                  setTimeout(() => {
+                    this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+                  }, 1000);
+
+                }
+                this.onDemandStatus = true;
+                this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
+              }, error => {
+                this.alertService.openSnackBar(error.error.message, 'error');
+              })
+            }
+          }
+        })
+        return
       }
 
       if (addressEmpty) {
@@ -1670,6 +1749,7 @@ export class billingOnDemandDialog {
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
             this.billingService.onDemandBilling(data).subscribe(bill => {
+              this.data.on_demand_progress_status = 'In Progress';
               if (bill.data.exam_report_signed_file_url) {
                 recipientsDocuments_ids = [];
                 this.selection1.clear();
@@ -1705,6 +1785,7 @@ export class billingOnDemandDialog {
                 this.selection1.select(doc);
               }
             })
+            this.data.on_demand_progress_status = 'In Progress';
             this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
           }
           if (bill.data.bill_on_demand_signed_zip_file_url) {
@@ -1749,7 +1830,35 @@ export class billingOnDemandDialog {
     //   this.alertService.openSnackBar("Document not found", "error");
     //   return;
     // }
-    this.billingService.billingDownloadAll(this.data.claimId, this.data.billableId, this.data.billingId).subscribe(doc => {
+    if (!this.data.is_w9_form) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: '500px',
+        data: { title: 'Bill on demand', message: "W9 Form not included. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.data) {
+          this.downloadMethod();
+        }
+      })
+      return
+    } else {
+      this.downloadMethod()
+    }
+
+  }
+
+  downloadMethod() {
+    let selected_recipients = []
+    this.selection1.selected.map(res => {
+      if (res.type == "custom") {
+        selected_recipients.push(res)
+      } else {
+        selected_recipients.push(res.data)
+
+      }
+
+    })
+    this.billingService.billingDownloadAll(this.data.claimId, this.data.billableId, this.data.billingId, { selected_recipients: selected_recipients }).subscribe(doc => {
       saveAs(doc.data.file_url, doc.data.file_name, '_self');
       this.onDemandStatus = true;
       this.alertService.openSnackBar("Document(s) downloaded successfully", "success");

@@ -167,7 +167,7 @@ export class CorrespondanceComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.claimService.deleteCorrespondence(data.id).subscribe(deleteRes => {
+        this.claimService.deleteCorrespondence(data.id, 1).subscribe(deleteRes => {
           let type = this.correspondenceSource.data.findIndex(element => element.id == data.id);
           const tabledata = this.correspondenceSource.data;
           tabledata.splice(type, 1);

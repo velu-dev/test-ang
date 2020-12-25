@@ -141,7 +141,7 @@ export class NewClaimComponent implements OnInit {
   injuryInfodata = []
   searchStatus: boolean = false;
   advanceSearch: any;
-  injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+  injuryInfo = { id: null, body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   claimantList = [];
   bodyParts = new FormControl();
   bodyPartsList = [];
@@ -821,21 +821,22 @@ export class NewClaimComponent implements OnInit {
     });
 
   }
-
   selectionChange(event) {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant";
     } else if (event.selectedIndex == 1) {
       if (this.claimId) {
         this.claimService.getClaim(this.claimId).subscribe(res => {
+          this.injuryInfodata = res.data.claim_injuries;
+          this.dataSource = new MatTableDataSource(this.injuryInfodata);
           this.claim.patchValue({
+            claim_injuries: res.data.claim_injuries,
             InsuranceAdjuster: { id: res.data.agent_details.InsuranceAdjuster.id },
             Employer: { id: res.data.agent_details.Employer.id },
             ApplicantAttorney: { id: res.data.agent_details.ApplicantAttorney.id },
             DefenseAttorney: { id: res.data.agent_details.DefenseAttorney.id },
             DEU: { id: res.data.agent_details.DEU.id },
           })
-          console.log(this.claim.value)
         })
       }
       if (this.claimant.invalid) {
@@ -891,7 +892,6 @@ export class NewClaimComponent implements OnInit {
     this.logger.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
     if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
-        this.logger.log(res);
         let examtype = "";
         this.examTypes.map(exam => {
           if (res.data.exam_type_id == exam.id) {
@@ -909,12 +909,25 @@ export class NewClaimComponent implements OnInit {
         this.billable_item.patchValue({
           claim_id: res.data.id
         })
-        this.alertService.openSnackBar(res.message, 'success');
-        if (status == 'next') {
-          this.stepper.next();
-        } else if (status == 'save') {
-          this.routeDashboard();
-        }
+        this.claimService.getClaim(this.claimId).subscribe(res => {
+          this.injuryInfodata = res.data.claim_injuries;
+          this.dataSource = new MatTableDataSource(this.injuryInfodata);
+          this.claim.patchValue({
+            claim_injuries: res.data.claim_injuries,
+            InsuranceAdjuster: { id: res.data.agent_details.InsuranceAdjuster.id },
+            Employer: { id: res.data.agent_details.Employer.id },
+            ApplicantAttorney: { id: res.data.agent_details.ApplicantAttorney.id },
+            DefenseAttorney: { id: res.data.agent_details.DefenseAttorney.id },
+            DEU: { id: res.data.agent_details.DEU.id },
+          })
+          this.alertService.openSnackBar(res.message, 'success');
+          if (status == 'next') {
+
+            this.stepper.next();
+          } else if (status == 'save') {
+            this.routeDashboard();
+          }
+        })
         this.claimChanges = false;
         this.isClaimCreated = true;
       }, error => {
@@ -923,6 +936,7 @@ export class NewClaimComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
+      claim['claim_injuries'] = this.injuryInfodata;
       this.claimService.updateClaimAll(claim, this.claimId).subscribe(res => {
         let examtype = "";
 
@@ -1217,11 +1231,10 @@ export class NewClaimComponent implements OnInit {
       }
       this.dataSource = new MatTableDataSource(this.injuryInfodata);
       this.alertService.openSnackBar("Injury edited successfully", "success");
-      this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+      this.injuryInfo = { id: null, body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
       this.isInjuryEdit = false;
     } else {
       let arrData = [];
-      // if (this.injuryInfo['body_part_id'] != null)
       this.logger.log(this.injuryInfo)
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
@@ -1240,7 +1253,7 @@ export class NewClaimComponent implements OnInit {
       }
       this.alertService.openSnackBar("Injury added successfully", "success");
       this.dataSource = new MatTableDataSource(this.injuryInfodata)
-      this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+      this.injuryInfo = { id: null, body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
       this.isInjuryEdit = false;
     }
   }
@@ -1293,7 +1306,7 @@ export class NewClaimComponent implements OnInit {
           a = a + 1;
         }
         this.dataSource = new MatTableDataSource(this.injuryInfodata)
-        this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+        this.injuryInfo = { id: null, body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
         this.loader.hide();
         this.alertService.openSnackBar("Injury updated successfully", "success");
       } else {
@@ -1646,7 +1659,7 @@ export class NewClaimComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.claimService.deleteCorrespondence(data.id).subscribe(deleteRes => {
+        this.claimService.deleteCorrespondence(data.id, 1).subscribe(deleteRes => {
           let type = this.correspondenceSource.data.findIndex(element => element.id == data.id);
           const tabledata = this.correspondenceSource.data;
           tabledata.splice(type, 1);
@@ -1772,7 +1785,7 @@ export class NewClaimComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.injuryInfodata.splice(index, 1);
-        this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+        this.injuryInfo = { id: null, body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
         this.dataSource = new MatTableDataSource(this.injuryInfodata);
         this.alertService.openSnackBar("Injury removed successfully", "success");
       }
@@ -1781,7 +1794,7 @@ export class NewClaimComponent implements OnInit {
   }
 
   injuryCancel() {
-    this.injuryInfo = { body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
+    this.injuryInfo = { id: null, body_part_id: null, date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null }
   }
   psychiatric(event) {
     this.isChecked = event.checked;
@@ -1877,7 +1890,7 @@ export class NewClaimComponent implements OnInit {
 })
 export class InjuryDialog {
   @Output('opened') openedStream: EventEmitter;
-  injuryInfo = { body_part_id: [], date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
+  injuryInfo = { id: null, body_part_id: [], date_of_injury: null, continuous_trauma: false, continuous_trauma_start_date: null, continuous_trauma_end_date: null, injury_notes: null, diagram_url: null };
   bodyPartsList = [];
   today = new Date();
   claimant: any;
@@ -1923,6 +1936,7 @@ export class InjuryDialog {
           }
         })
       })
+      // this.injuryInfo.id = data['injuryData'].body_part_id;
       this.injuryInfo.body_part_id = data['injuryData'].body_part_id;
       this.injuryInfo.date_of_injury = data['injuryData'].date_of_injury ? new Date(data['injuryData'].date_of_injury) : "";
       this.injuryInfo.continuous_trauma = data['injuryData'].continuous_trauma;
