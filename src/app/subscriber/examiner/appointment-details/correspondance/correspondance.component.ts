@@ -212,25 +212,10 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.alertService.openSnackBar('Please select Document(s)', "error");
       return;
     }
-    // let addressEmpty = false;
-    // this.selection1.selected.map(res => {
-    //   if (res.message) {
-    //     addressEmpty = true;
-    //   }
-    // })
-    // if (addressEmpty) {
-    //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
-    //     width: '350px',
-    //  !   data: { message: "Recipient address not silled in some recipient'(s). Would you like to continue?", yes: true, no: true }
-    //   });
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     if (result) {
-
-    //     } else {
-    //       return
-    //     }
-    //   })
-    // }
+    if (this.selection1.selected.length > 12) {
+      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+      return;
+    }
 
     let signHide = false;
     if (sign) {
@@ -246,7 +231,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
     });
     if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
-      if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
+      if ((this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) && this.correspondData.exam_procedure_type.toLowerCase() != 'supplemental') {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px', data: { title: "Appointment Information Incomplete", message: "Please check the appointment date, time and location.", yes: true, no: true, type: "warning" }
         });
@@ -473,12 +458,11 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.alertService.openSnackBar('Please select Recipient(s)', "error");
       return;
     }
-    // let addressEmpty = false;
-    // this.selection1.selected.map(res => {
-    //   if (res.message) {
-    //     addressEmpty = true;
-    //   }
-    // })
+    if (this.selection1.selected.length > 12) {
+      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+      return;
+    }
+    
 
     let documents_ids: any = [];
     let custom_documents_ids: any = [];
