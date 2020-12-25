@@ -1618,6 +1618,11 @@ export class billingOnDemandDialog {
         this.alertService.openSnackBar('Please select Recipient(s)', "error");
         return;
       }
+
+      if (this.selection1.selected.length > 12) {
+        this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+        return;
+      }
       let selected_recipients = []
       let recipientsDocuments_ids: any = [];
       let addressEmpty = false;
@@ -1830,6 +1835,10 @@ export class billingOnDemandDialog {
     //   this.alertService.openSnackBar("Document not found", "error");
     //   return;
     // }
+    if (this.selection1.selected.length > 12) {
+      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+      return;
+    }
     if (!this.data.is_w9_form) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '500px',
