@@ -611,30 +611,35 @@ export class CustomDocuments {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  selectedFile: File;
+  selectedFile: FileList;
   selectedFiles: FileList;
   file: any = [];
   errors = { status: false, message: "" }
   selectFile(event) {
+    let fileTypes = ['pdf', 'doc', 'docx']
+    if (!(fileTypes.includes(event.target.files[event.target.files.length - 1].name.split('.').pop().toLowerCase()))) {
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+      return;
+    }
     this.selectedFiles = event.target.files;
     this.selectedFile = null;
-    let fileTypes = ['pdf', 'doc', 'docx']
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
+        this.selectedFile = this.selectedFiles;
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
         if (FileSize > 30) {
           this.fileUpload.nativeElement.value = "";
           this.errors = { status: true, message: "File size is too large" };
           return;
         }
-        this.selectedFile = this.selectedFiles[i];
         this.file.push(this.selectedFiles[i].name);
         this.logger.info(this.file)
       } else {
         //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
-        this.errors = { status: true, message: "This file type is not accepted" };
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
+        // this.errors = { status: true, message: "This file type is not accepted" };
       }
     }
 

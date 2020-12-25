@@ -218,11 +218,11 @@ export class AppointmentDetailsComponent implements OnInit {
       }
 
       if (res) {
-        this.activityColumnName = ["", "Action"]
-        this.activityDisplayedColumnsForDocuments = ['is_expand', 'created_by']
+        this.activityColumnName = ["", "Type", "Action", "Action"]
+        this.activityDisplayedColumnsForDocuments = ['is_expand', 'module', 'task', 'created_by']
       } else {
-        this.activityColumnName = ["", "Action", "Created By", "Created At", "Updated By", "Updated At"]
-        this.activityDisplayedColumnsForDocuments = ["status", 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
+        this.activityColumnName = ["", "Type", "Action", "Created By", "Created At", "Updated By", "Updated At"]
+        this.activityDisplayedColumnsForDocuments = ["status", 'module', 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
       }
     })
 
@@ -507,7 +507,7 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
-      if (this.examinationStatusForm.value.examination_status == 10 && !this.billable_item.getRawValue().appointment.appointment_scheduled_date_time){
+      if (this.examinationStatusForm.value.examination_status == 10 && !this.billable_item.getRawValue().appointment.appointment_scheduled_date_time) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px', data: { title: "Examination", message: "Appointment is Not Scheduled", ok: true, no: false, type: "warning", warning: true }
         });

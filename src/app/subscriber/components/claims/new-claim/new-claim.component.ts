@@ -1072,6 +1072,11 @@ export class NewClaimComponent implements OnInit {
   }
   examtypeChange(type) {
     this.claimService.getProcedureType(type.id).subscribe(res => {
+      this.billable_item.patchValue({
+        exam_type: {
+          exam_procedure_type_id: null
+        }
+      })
       this.procuderalCodes = res.data;
     })
   }
