@@ -16,6 +16,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClaimService } from '../../service/claim.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 @Component({
   selector: 'app-examination-calander-view',
   templateUrl: './examination-calander-view.component.html',
@@ -375,9 +376,9 @@ export class EventdetailDialog {
       supervisor_id: null
     }
   }
-  constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router, public dialogRef: MatDialogRef<EventdetailDialog>,
+  constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router,
+     public dialogRef: MatDialogRef<EventdetailDialog>,public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
-    console.log(data.event)
     this.eventDetail = { title: data.event.title, start: data.event.start, end: data.event.end, backgroundColor: data.event.backgroundColor, extendedProps: data.event.extendedProps };
     dialogRef.disableClose = true;
     this.selectedEventColor = data.event.backgroundColor ? data.event.backgroundColor : "#3788d8";
@@ -386,7 +387,6 @@ export class EventdetailDialog {
     this.eventNotes = data.event.extendedProps.description;
 
     this.statusName = this.data.event.extendedProps.is_deposition ? 'deposition_status' : 'examination_status';
-    console.log("dfdsff", data)
     if (this.statusName == 'deposition_status') {
       this.examinationStatus = data.deposition_status;
       this.getExaminationStatus(data.event.extendedProps)
@@ -405,7 +405,6 @@ export class EventdetailDialog {
   getExaminationStatus(data) {
     this.examinationStatus.map(res => {
       if (res.examination_status == data.status) {
-        console.log("tes")
         this.examination_status = res.id;
         this.eventStatusID = res.id;
       }
@@ -435,16 +434,24 @@ export class EventdetailDialog {
   status = "";
   isUpdated: boolean = false;
   updateStatus() {
+    if (this.examination_status == 10 && moment(this.data.event.start) >= moment()) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: '500px', data: { title: "Examination", message: "Future appointment status cannot be changed to ATTENDED.", ok: true, no: false, type: "warning", warning: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        return
+
+      })
+      return
+    }
     let data = {
       id: this.event['appointment_id'],
       examination_status: this.examination_status,
       notes: this.examination_notes
     }
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
-      console.log("issue in cor", res)
       this.isUpdated = true;
       this.examinationStatus.map(exam => {
-        console.log(exam)
         if (exam.id == res.data.examination_status) {
           Object.getOwnPropertyDescriptor(this.eventDetail.extendedProps.status, exam.examination_status);
           this.status = exam[this.statusName];
@@ -483,7 +490,6 @@ export class EventdetailDialog {
   viewDetails(claim_id, billable_id, claimant_id) {
     let baseUrl = "";
     let role = this.cookieService.get('role_id')
-    console.log(role)
     switch (role) {
       case '1':
         baseUrl = "/admin";

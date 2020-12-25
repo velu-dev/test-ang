@@ -757,6 +757,7 @@ image-cropper {
       .note {
         font-size: $font-size-7;
         color: $ternary;
+        padding-top: 4px;
       }
     }
     .align-center {
@@ -769,8 +770,12 @@ image-cropper {
       }
       .note {
         font-size: $font-size-7;
-        color: $ternary;
+        color: $warning;
         text-align: left;
+        display: inline-flex;
+        i {
+          padding: 4px 5px 0 0;
+        }
       }
     //   .info-alert {
     //     color: $info;

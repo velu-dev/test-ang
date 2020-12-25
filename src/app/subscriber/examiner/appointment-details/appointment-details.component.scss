@@ -424,12 +424,34 @@
     &:hover {
         box-shadow: $shadow-style-one-hover;
     }
+    mat-card-content {
+        form {
+            mat-form-field {
+                width: calc(50% - 10px);
+                @media screen and (max-width: 1024px) and (min-width: 768px) {
+                    width: calc(50% - 150px);
+                }
+                @media only screen and (max-width: 568px) { 
+                    width: calc(100% - 150px);
+                }
+            }
+            button {
+                margin: 15px 0 0 10px;
+            }
+        }
+    }
+    .user-detail {
+        min-height: auto;
+    }
 }
 .activity-log {
     padding: 10px;
     box-shadow: $shadow-style-one !important;
     &:hover {
         box-shadow: $shadow-style-one-hover;
+    }
+    .user-detail {
+        min-height: auto;
     }
 }
 
