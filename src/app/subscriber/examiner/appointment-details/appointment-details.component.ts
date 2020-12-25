@@ -168,9 +168,9 @@ export class AppointmentDetailsComponent implements OnInit {
   currentDate = new Date();
   activityLog: any;
   activityFilterValue: string;
-  dataSource2 = ELEMENT_DATA;
+  dataSource2 = new MatTableDataSource([]);
   columnsToDisplays = [];
-  notecolumnName =[]
+  notecolumnName = []
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -228,11 +228,11 @@ export class AppointmentDetailsComponent implements OnInit {
         this.activityDisplayedColumnsForDocuments = ["status", 'module', 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
       }
       if (res) {
-        this.notecolumnName = ["", "Task"]
-        this.columnsToDisplays = ['is_expand', 'task']
+        this.notecolumnName = ["", "Notes"]
+        this.columnsToDisplays = ['is_expand', 'notes']
       } else {
-        this.notecolumnName = ["Task", "Notes", "Date Created", "User"]
-        this.columnsToDisplays = ['task', 'notes', "date_created", 'user']
+        this.notecolumnName = ["Notes", "Date Created", "User"]
+        this.columnsToDisplays = ['notes', "date_created", 'user']
       }
     })
 
@@ -1208,11 +1208,11 @@ export class AppointmentDetailsComponent implements OnInit {
     }
   }
   expandIdnote: any;
-openElement2(element) {
-  if (this.isMobile) {
-    this.expandIdnote = element.id;
-   }
-}
+  openElement2(element) {
+    if (this.isMobile) {
+      this.expandIdnote = element.id;
+    }
+  }
   billingNev() {
     if (!this.examinationDetails.bill_id) {
       this.claimService.billCreate(this.claim_id, this.billableId).subscribe(bill => {
@@ -1298,8 +1298,8 @@ const ELEMENT_DATA2 = [
 ];
 
 const ELEMENT_DATA = [
-{ "id": 132, "task": "",  "notes": "Schedule appointment",  "date_created": "12-26-2020 10:00 AM",  "user": "Venkatesan Mariyappan, Md", },
-{ "id": 133, "task": "",  "notes": "State forms submitted",  "date_created": "12-26-2020 10:00 AM",  "user": "Rajan Mariappan, Md", },
-{ "id": 134, "task": "",  "notes": "Appointment attended",  "date_created": "12-26-2020 05:00 AM",  "user": "Ganesan Marappan, Md", },
-{ "id": 135, "task": "",  "notes": "Report billed",  "date_created": "12-26-2020 03:00 AM",  "user": "Venkatesan Mariyappan, Md", },
+  { "id": 132, "task": "", "notes": "Schedule appointment", "date_created": "12-26-2020 10:00 AM", "user": "Venkatesan Mariyappan, Md", },
+  { "id": 133, "task": "", "notes": "State forms submitted", "date_created": "12-26-2020 10:00 AM", "user": "Rajan Mariappan, Md", },
+  { "id": 134, "task": "", "notes": "Appointment attended", "date_created": "12-26-2020 05:00 AM", "user": "Ganesan Marappan, Md", },
+  { "id": 135, "task": "", "notes": "Report billed", "date_created": "12-26-2020 03:00 AM", "user": "Venkatesan Mariyappan, Md", },
 ];

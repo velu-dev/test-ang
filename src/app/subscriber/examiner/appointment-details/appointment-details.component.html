@@ -557,7 +557,7 @@
 
         </form>
         <div class="table-filter">
-            <input matInput autocomplete="off" placeholder="Search by task, notes, date created, user">
+            <input matInput autocomplete="off" placeholder="Search by notes, date created, user">
             <mat-icon>search</mat-icon>
         </div>
         <div class="user-detail default-cursor">
@@ -574,7 +574,7 @@
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'task'">{{element?.task}}</span>
+                            <!-- <span *ngIf="column == 'task'">{{element?.task}}</span> -->
                             <span *ngIf="column == 'notes'">{{element?.notes}}</span>
                             <span *ngIf="column == 'date_created'">{{element?.date_created}}</span>
                             <span *ngIf="column == 'user'">{{element?.user}}</span>
@@ -598,7 +598,7 @@
                 </tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
-            <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+            <app-nodata *ngIf="dataSource2?.filteredData?.length == 0"></app-nodata>
         </div>
 
         <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
