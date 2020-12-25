@@ -810,11 +810,11 @@ input:-webkit-autofill {
   transition: none !important;
   opacity: 0 !important;
 }
-button {
-  &:disabled {
-    opacity: .5;
-  }
-}
+// button {
+//   &:disabled {
+//     opacity: .5;
+//   }
+// }
 
 .btn_ {
   height: 40px;
@@ -867,6 +867,9 @@ button {
   color: $white;
   background-color: $btn_success;
   border-color: $btn_success;
+  &:disabled {
+        opacity: .5;
+      }
 }
 .filled-lightgray {
   @extend .btn_;
