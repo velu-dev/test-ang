@@ -1253,7 +1253,6 @@ export class AppointmentDetailsComponent implements OnInit {
         notes.data[0].create = notes.data[0].createdAt ? moment(notes.data[0].createdAt).format('MM-DD-yyyy hh:mm a') : null;
         notes.data[0].name = notes.data[0].user.first_name + ' ' + notes.data[0].user.last_name + ' ' + notes.data[0].user.suffix
         tabledata.unshift(notes.data[0]);
-        console.log(notes.data[0])
         this.notesDataSource = new MatTableDataSource(tabledata);
         this.notesDataSource.sort = this.sortNote;
         this.notesDataSource.paginator = this.paginatorNote;
