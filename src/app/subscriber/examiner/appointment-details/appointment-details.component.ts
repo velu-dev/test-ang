@@ -1244,7 +1244,8 @@ export class AppointmentDetailsComponent implements OnInit {
 
   noteError: boolean = false;
   notesSubmit(note) {
-
+    if (this.notesForm.get('notes').value && typeof (this.notesForm.get('notes').value) == 'string')
+      this.notesForm.get('notes').setValue(this.notesForm.get('notes').value.trim())
     this.notesForm.get('notes').setValidators(Validators.required)
     this.notesForm.get('notes').updateValueAndValidity();
     if (this.notesForm.invalid) {
@@ -1256,7 +1257,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.notesForm.get('notes').updateValueAndValidity();
     if (note && this.notes.trim()) {
       this.noteError = false;
-      let data = { notes: note.trim(), bill_item_id: this.billableId}
+      let data = { notes: note.trim(), bill_item_id: this.billableId }
       this.examinerService.addNotes(data).subscribe(notes => {
         this.alertService.openSnackBar("Note added successfully", 'success');
         const tabledata = this.notesDataSource.data ? this.notesDataSource.data : this.notesDataSource.data = [];
