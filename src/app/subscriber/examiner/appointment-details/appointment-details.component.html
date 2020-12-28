@@ -666,17 +666,15 @@
                             <span *ngIf="column == 'task'">{{element?.action_details}}</span>
                             <span *ngIf="column == 'created_by'">{{(element?.created_by?.first_name ?
                                 element?.created_by?.first_name : "") + " "
-                                +(element?.created_by?.last_name ? element?.created_by?.last_name : "") + "
-                                "+(element?.created_by?.suffix ?
-                                (","+element?.created_by?.suffix) : "" )}}</span>
+                                +(element?.created_by?.last_name ? element?.created_by?.last_name :
+                                "")+(element?.created_by?.suffix ?(", "+element?.created_by?.suffix) : "" )}}</span>
                             <span *ngIf="column == 'createdAt'">{{element?.createdAt == "-" ? element?.createdAt :
                                 (element?.createdAt |
                                 date:'MM-dd-yyyy h:mm a')}}</span>
                             <span *ngIf="column == 'updated_by'">{{(element?.updated_by?.first_name ?
                                 element?.updated_by?.first_name : "") + " "
-                                +(element?.updated_by?.last_name ? element?.updated_by?.last_name : "") + "
-                                "+(element?.updated_by?.suffix ?
-                                (","+element?.updated_by?.suffix) : "" )}}</span>
+                                +(element?.updated_by?.last_name ? element?.updated_by?.last_name :
+                                "")+(element?.updated_by?.suffix ?(", "+element?.updated_by?.suffix) : "" )}}</span>
                             <span *ngIf="column == 'updatedAt'">{{element?.updatedAt == "-" ? element?.updatedAt :
                                 (element?.updatedAt |
                                 date:'MM-dd-yyyy h:mm a')}}</span>
@@ -688,19 +686,19 @@
                         <div class="detail"
                             [@detailExpand]="actionLogexpandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
-                                <div><span>Type</span> {{element?.module}} </div>
-                                <div><span>Created By</span> {{(element?.created_by?.first_name ?
+                                <div><span>Type</span>{{element?.module}} </div>
+                                <div><span>Created By</span>{{(element?.created_by?.first_name ?
                                     element?.created_by?.first_name : "") + " "
-                                    +(element?.created_by?.last_name ? element?.created_by?.last_name : "") + "
-                                    "+(element?.created_by?.suffix ?
-                                    (","+element?.created_by?.suffix) : "" )}}</div>
-                                <div><span>Created At</span> {{element?.createdAt == "-" ? element?.createdAt :
+                                    +(element?.created_by?.last_name ? element?.created_by?.last_name :
+                                    "")+(element?.created_by?.suffix ?(", "+element?.created_by?.suffix) : "" )}}</div>
+                                <div><span>Created At</span>{{element?.createdAt == "-" ? element?.createdAt :
                                     (element?.createdAt |
                                     date:'MM-dd-yyyy h:mm a')}}</div>
-                                <div><span>Updated By</span> {{element?.updated_by?.first_name + " "
-                                    +element?.updated_by?.last_name + " "+(element?.updated_by?.suffix ?
-                                    (","+element?.updated_by?.suffix) : "" )}}</div>
-                                <div><span>Updated At</span> {{element?.updatedAt == "-" ? element?.updatedAt :
+                                <div><span>Updated By</span>{{(element?.updated_by?.first_name ?
+                                    element?.updated_by?.first_name : "") + " "
+                                    +(element?.updated_by?.last_name ? element?.updated_by?.last_name :
+                                    "")+(element?.updated_by?.suffix ?(", "+element?.updated_by?.suffix) : "" )}}</div>
+                                <div><span>Updated At</span>{{element?.updatedAt == "-" ? element?.updatedAt :
                                     (element?.updatedAt |
                                     date:'MM-dd-yyyy h:mm a')}} </div>
                             </div>
