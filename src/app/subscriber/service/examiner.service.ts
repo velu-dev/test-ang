@@ -117,4 +117,14 @@ export class ExaminerService {
   getItemsAwaiting(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.itemsAwaiting)
   }
+
+  getNotes(bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getNotes + bill_item_id)
+  }
+
+  addNotes(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.addNotes, data)
+  }
+
+
 }
