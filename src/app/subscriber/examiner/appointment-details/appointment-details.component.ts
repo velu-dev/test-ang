@@ -168,7 +168,7 @@ export class AppointmentDetailsComponent implements OnInit {
   currentDate = new Date();
   activityLog: any;
   activityFilterValue: string;
-  dataSource2 = ELEMENT_DATA;
+  dataSource2 = new MatTableDataSource([]);
   columnsToDisplays = [];
   notecolumnName = []
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
@@ -221,18 +221,18 @@ export class AppointmentDetailsComponent implements OnInit {
       }
 
       if (res) {
-        this.activityColumnName = ["", "Type", "Action", "Action"]
-        this.activityDisplayedColumnsForDocuments = ['is_expand', 'module', 'task', 'created_by']
+        this.activityColumnName = ["", "Action"]
+        this.activityDisplayedColumnsForDocuments = ['is_expand','task']
       } else {
         this.activityColumnName = ["", "Type", "Action", "Created By", "Created At", "Updated By", "Updated At"]
         this.activityDisplayedColumnsForDocuments = ["status", 'module', 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
       }
       if (res) {
-        this.notecolumnName = ["", "Task"]
-        this.columnsToDisplays = ['is_expand', 'task']
+        this.notecolumnName = ["", "Notes"]
+        this.columnsToDisplays = ['is_expand', 'notes']
       } else {
-        this.notecolumnName = ["Task", "Notes", "Date Created", "User"]
-        this.columnsToDisplays = ['task', 'notes', "date_created", 'user']
+        this.notecolumnName = ["Notes", "Date Created", "User"]
+        this.columnsToDisplays = ['notes', "date_created", 'user']
       }
     })
 
@@ -1298,11 +1298,4 @@ const ELEMENT_DATA2 = [
   { "id": 8, "task": "Report billed", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
   { "id": 8, "task": "Bill closed", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
 
-];
-
-const ELEMENT_DATA = [
-  { "id": 132, "task": "", "notes": "Schedule appointment", "date_created": "12-26-2020 10:00 AM", "user": "Venkatesan Mariyappan, Md", },
-  { "id": 133, "task": "", "notes": "State forms submitted", "date_created": "12-26-2020 10:00 AM", "user": "Rajan Mariappan, Md", },
-  { "id": 134, "task": "", "notes": "Appointment attended", "date_created": "12-26-2020 05:00 AM", "user": "Ganesan Marappan, Md", },
-  { "id": 135, "task": "", "notes": "Report billed", "date_created": "12-26-2020 03:00 AM", "user": "Venkatesan Mariyappan, Md", },
 ];
