@@ -630,7 +630,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   updateExamStatus() {
-    this.examinationStatusForm.patchValue({ notes: this.examinationStatusForm.value.examination_notes })
+    this.examinationStatusForm.patchValue({ notes: this.examinationStatusForm.value.examination_notes.trim() })
     this.examinerService.updateExaminationStatus(this.examinationStatusForm.value).subscribe(res => {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
@@ -1244,9 +1244,8 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   notesSubmit(note) {
-    console.log(this.notes)
     if (note && note.trim()) {
-      let data = { notes: note, bill_item_id: this.billableId, action_list_id: 1 }
+      let data = { notes: note.trim(), bill_item_id: this.billableId, action_list_id: 1 }
       this.examinerService.addNotes(data).subscribe(notes => {
         this.alertService.openSnackBar("Note added successfully", 'success');
         const tabledata = this.notesDataSource.data ? this.notesDataSource.data : this.notesDataSource.data = [];

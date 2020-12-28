@@ -447,7 +447,7 @@ export class EventdetailDialog {
     let data = {
       id: this.event['appointment_id'],
       examination_status: this.examination_status,
-      notes: this.examination_notes
+      notes: this.examination_notes.trim()
     }
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
       this.isUpdated = true;
