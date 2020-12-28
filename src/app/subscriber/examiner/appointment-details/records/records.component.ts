@@ -267,7 +267,7 @@ export class RecordsComponent implements OnInit {
   }
 
   inOutdownload(data, element) {
-    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": element.claim_id, "billable_item_id": element.billable_item_id, "documents_ids": [element.document_id] }).subscribe(res => {
+    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 4, "claim_id": element.claim_id, "billable_item_id": element.billable_item_id, "documents_ids": [element.document_id] }).subscribe(res => {
     })
     saveAs(data.file_url, data.file_name);
   }
