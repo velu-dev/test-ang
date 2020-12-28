@@ -270,7 +270,7 @@ export class AppointmentDetailsComponent implements OnInit {
       })
       this.examinerService.getNotes(this.billableId).subscribe(notes => {
         notes.data.map(data => {
-          data.create = data.createdAt ? moment(data.createdAt).format('MM-dd-yyyy hh:mm a') : null;
+          data.create = data.createdAt ? moment(data.createdAt).format('MM-DD-yyyy hh:mm a') : null;
           data.name = data.user.first_name + ' ' + data.user.last_name + ' ' + data.user.suffix
         })
         this.notesDataSource = new MatTableDataSource(notes.data);
@@ -1250,8 +1250,12 @@ export class AppointmentDetailsComponent implements OnInit {
       this.examinerService.addNotes(data).subscribe(notes => {
         this.alertService.openSnackBar("Note added successfully", 'success');
         const tabledata = this.notesDataSource.data ? this.notesDataSource.data : this.notesDataSource.data = [];
+        notes.data[0].create = notes.data[0].createdAt ? moment(notes.data[0].createdAt).format('MM-DD-yyyy hh:mm a') : null;
+        notes.data[0].name = notes.data[0].user.first_name + ' ' + notes.data[0].user.last_name + ' ' + notes.data[0].user.suffix
         tabledata.unshift(notes.data[0]);
         this.notesDataSource = new MatTableDataSource(tabledata);
+        this.notesDataSource.sort = this.sortNote;
+        this.notesDataSource.paginator = this.paginatorNote;
         this.notes = null;
       }, err => {
         this.alertService.openSnackBar(err.error.message, 'error');

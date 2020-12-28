@@ -396,7 +396,7 @@ export class EventdetailDialog {
       this.getExaminationStatus(data.event.extendedProps)
     }
     this.event = data.event.extendedProps;
-    this.examination_notes = data.event.extendedProps.description;
+   // this.examination_notes = data.event.extendedProps.description;
     // this.claimService.seedData(this.data.extendedProps.is_deposition ? 'deposition_status' : 'calendar_examination_status').subscribe(curres => {
     //   this.examinationStatus = curres.data;
     //   this.getExaminationStatus(data.extendedProps)
@@ -425,7 +425,7 @@ export class EventdetailDialog {
   edit() {
     this.textDisable = false;
     this.isEdit = true;
-    this.examination_notes = this.eventNotes;
+   // this.examination_notes = this.eventNotes;
     this.examination_status = this.eventStatusID;
   }
   examination_notes = '';
@@ -462,7 +462,7 @@ export class EventdetailDialog {
       this.eventStatusID = res.data.examination_status;
       this.eventNotes = res.data.examination_notes;
       this.examination_status = res.data.examination_status;
-      this.examination_notes = res.data.examination_notes;
+      this.examination_notes = '';
       this.textDisable = true;
       this.isEdit = false;
       this.selectedEventColor = this.eventColor;
@@ -477,7 +477,7 @@ export class EventdetailDialog {
     this.eventColor = examination.color;
   }
   cancel() {
-    this.examination_notes = this.eventNotes;
+   // this.examination_notes = this.eventNotes;
     this.examination_status = this.eventStatusID;
     this.textDisable = true;
     this.isEdit = false;
