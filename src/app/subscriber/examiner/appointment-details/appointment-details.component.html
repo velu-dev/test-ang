@@ -544,7 +544,7 @@
                     <textarea matInput placeholder="Notes" cdkTextareaAutosize
                     cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" autocomplete="off" [ngModelOptions]="{standalone: true}" [(ngModel)]="notes"></textarea>
                 </mat-form-field>
-                <button mat-stroked-button class="m-r-10 outline-success" (click)="notesSubmit(notes)">Save</button>
+                <button mat-stroked-button class="m-r-10 outline-success" [disabled]="!notes" (click)="notesSubmit(notes)">Save</button>
                 <!-- <mat-form-field appearance="outline" fxFlex="100">
                         <textarea matInput formControlName="exam_notes" placeholder="Notes" cdkTextareaAutosize
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
