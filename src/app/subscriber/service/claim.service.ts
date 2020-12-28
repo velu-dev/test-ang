@@ -83,8 +83,8 @@ export class ClaimService {
   }
 
   deleteCorrespondence(id, type?) {
-    let type1 = type? "/"+type : "";
-    return this.http.delete(environment.baseUrl + api_endpoint.deleteCorrespondence + id +type1)
+    let type1 = type ? "/" + type : "";
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteCorrespondence + id + type1)
   }
   updateAgent(id, value): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.updateAgents + id, value)
@@ -139,7 +139,8 @@ export class ClaimService {
   getActivityLog(claim_id, bill_item_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.activityLog + claim_id + "/" + bill_item_id)
   }
-  updateActionLog(data): Observable<any> {
+  updateActionLog(data, is_billable_item_document?): Observable<any> {
+    data.is_billable_item_document = is_billable_item_document ? true : false;
     return this.http.post(environment.baseUrl + api_endpoint.activityLogUpdate, data)
   }
 }

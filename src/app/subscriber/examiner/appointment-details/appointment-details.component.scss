@@ -429,14 +429,17 @@
             mat-form-field {
                 width: calc(50% - 10px);
                 @media screen and (max-width: 1024px) and (min-width: 768px) {
-                    width: calc(50% - 150px);
-                }
-                @media only screen and (max-width: 568px) { 
                     width: calc(100% - 150px);
+                }
+                @media only screen and (max-width: 568px) {
+                    width: 100%;
                 }
             }
             button {
                 margin: 15px 0 0 10px;
+                @media only screen and (max-width: 568px) {
+                    margin: 0 0 10px 0;
+                }
             }
         }
     }

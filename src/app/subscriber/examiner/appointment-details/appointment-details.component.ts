@@ -224,8 +224,8 @@ export class AppointmentDetailsComponent implements OnInit {
       }
 
       if (res) {
-        this.activityColumnName = ["", "Type", "Action", "Action"]
-        this.activityDisplayedColumnsForDocuments = ['is_expand', 'module', 'task', 'created_by']
+        this.activityColumnName = ["", "Action"]
+        this.activityDisplayedColumnsForDocuments = ['is_expand','task']
       } else {
         this.activityColumnName = ["", "Type", "Action", "Created By", "Created At", "Updated By", "Updated At"]
         this.activityDisplayedColumnsForDocuments = ["status", 'module', 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
@@ -1031,6 +1031,9 @@ export class AppointmentDetailsComponent implements OnInit {
   downloadDocumet(element) {
     this.examinerService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
+      this.claimService.updateActionLog({ type: "Intake", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.id] }, true).subscribe(log => {
+
+      })
       saveAs(res.signed_file_url, element.file_name);
     })
   }
@@ -1104,7 +1107,7 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.examinerService.deleteDocument(data.id).subscribe(res => {
+        this.examinerService.deleteDocument(data.id, true).subscribe(res => {
           let i = 0;
           this.tabData.map(dd => {
             if (dd.id == data.id) {
