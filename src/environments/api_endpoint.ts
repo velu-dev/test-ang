@@ -75,7 +75,7 @@ export const api_endpoint = {
     getClaimantDetails: "claimant/details",
     createClaim: "claim/create",
     updateClaim: "claim/update/",
-    updateClaimAll:"claim/claim-update/",
+    updateClaimAll: "claim/claim-update/",
     createClaimant: "claimant/create",
     updateClaimant: "claimant/update/",
     // callerAffliation: "claims/seed-data/agent_type",
@@ -141,6 +141,8 @@ export const api_endpoint = {
     getSignedURL: "examinations/get-signed-url",
     //Billable item
     updateExamType: "billable-item/update-examination-status/",
+    getNotes: 'notes/',
+    addNotes: 'notes/add-note',
 
     //on-demand
     getRecords: 'billing/ondemand/records/',

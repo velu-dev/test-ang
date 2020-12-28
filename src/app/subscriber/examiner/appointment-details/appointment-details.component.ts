@@ -86,8 +86,10 @@ export class AppointmentDetailsComponent implements OnInit {
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild('MatSortActivity', { static: true }) sort: MatSort;
+  @ViewChild('MatPaginatorActivity', { static: true }) paginator: MatPaginator;
+  @ViewChild('MatSortNote', { static: true }) sortNote: MatSort;
+  @ViewChild('MatPaginatorNote', { static: true }) paginatorNote: MatPaginator;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -168,9 +170,10 @@ export class AppointmentDetailsComponent implements OnInit {
   currentDate = new Date();
   activityLog: any;
   activityFilterValue: string;
-  dataSource2 = new MatTableDataSource([]);
+  notesDataSource = new MatTableDataSource([]);
   columnsToDisplays = [];
-  notecolumnName = []
+  notecolumnName = [];
+  notes: any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -232,7 +235,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.columnsToDisplays = ['is_expand', 'notes']
       } else {
         this.notecolumnName = ["Notes", "Date Created", "User"]
-        this.columnsToDisplays = ['notes', "date_created", 'user']
+        this.columnsToDisplays = ['notes', "createdAt", 'name']
       }
     })
 
@@ -244,6 +247,14 @@ export class AppointmentDetailsComponent implements OnInit {
       this.activityLog.paginator.firstPage();
     }
   }
+  noteFilterValue: any;
+  applyNotesFilter(filterValue: string) {
+    this.notesDataSource.filter = filterValue.trim().toLowerCase();
+    if (this.notesDataSource.paginator) {
+      this.notesDataSource.paginator.firstPage();
+    }
+  }
+
   isExamTypeChanged = false;
   examinerId = null;
   loadDatas() {
@@ -256,6 +267,17 @@ export class AppointmentDetailsComponent implements OnInit {
         this.activityLog = new MatTableDataSource(res.data);
         this.activityLog.sort = this.sort;
         this.activityLog.paginator = this.paginator;
+      })
+      this.examinerService.getNotes(this.billableId).subscribe(notes => {
+        notes.data.map(data => {
+          data.create = data.createdAt ? moment(data.createdAt).format('MM-DD-yyyy hh:mm a') : null;
+          data.name = data.user.first_name + ' ' + data.user.last_name + ' ' + data.user.suffix
+        })
+        this.notesDataSource = new MatTableDataSource(notes.data);
+        this.notesDataSource.sort = this.sortNote;
+        this.notesDataSource.paginator = this.paginatorNote;
+      }, error => {
+
       })
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
@@ -312,9 +334,9 @@ export class AppointmentDetailsComponent implements OnInit {
           }
 
           this.progressStatus = response.data.progress_status
-          this.notesForm.patchValue({
-            exam_notes: response.data.exam_notes,
-          })
+          // this.notesForm.patchValue({
+          //   exam_notes: response.data.exam_notes,
+          // })
           if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
             this.isDisplayStatus.isExaminar = true;
             this.isDisplayStatus.isDeposition = false;
@@ -353,6 +375,7 @@ export class AppointmentDetailsComponent implements OnInit {
           })
 
           this.examinationStatusForm.patchValue(response.data.appointments);
+          this.examinationStatusForm.patchValue({ notes: '', examination_notes: '' });
           if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
             this.appointmentStatus = true;
           } else {
@@ -602,30 +625,12 @@ export class AppointmentDetailsComponent implements OnInit {
         return
       }
 
-      // if (this.examinationStatusForm.value.examination_status == 10 && this.examinationDetails.appointments.examination_status == 2) {
-      //   if (this.currentDate < new Date(this.billable_item.value.appointment.appointment_scheduled_date_time)) {
-      //     this.alertService.openSnackBar('Appointment date seems to be a future date', 'error');
-      //     return;
-      //   }
-      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
-      //     width: '500px',
-      //     data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Attened’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
-      //   });
-      //   dialogRef.afterClosed().subscribe(result => {
-      //     if (result.data) {
-      //       this.updateExamStatus()
-      //     } else {
-      //       return;
-      //     }
-      //   })
-      //   return
-      // }
     }
     this.updateExamStatus()
   }
 
   updateExamStatus() {
-    this.examinationStatusForm.patchValue({ notes: this.examinationStatusForm.value.examination_notes })
+    this.examinationStatusForm.patchValue({ notes: this.examinationStatusForm.value.examination_notes.trim() })
     this.examinerService.updateExaminationStatus(this.examinationStatusForm.value).subscribe(res => {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
@@ -1213,7 +1218,7 @@ export class AppointmentDetailsComponent implements OnInit {
   expandIdnote: any;
   openElement2(element) {
     if (this.isMobile) {
-      this.expandIdnote = element.id;
+      this.expandIdnote = element;
     }
   }
   billingNev() {
@@ -1235,6 +1240,26 @@ export class AppointmentDetailsComponent implements OnInit {
       return false;
     }
     return true;
+
+  }
+
+  notesSubmit(note) {
+    if (note && note.trim()) {
+      let data = { notes: note.trim(), bill_item_id: this.billableId, action_list_id: 1 }
+      this.examinerService.addNotes(data).subscribe(notes => {
+        this.alertService.openSnackBar("Note added successfully", 'success');
+        const tabledata = this.notesDataSource.data ? this.notesDataSource.data : this.notesDataSource.data = [];
+        notes.data[0].create = notes.data[0].createdAt ? moment(notes.data[0].createdAt).format('MM-DD-yyyy hh:mm a') : null;
+        notes.data[0].name = notes.data[0].user.first_name + ' ' + notes.data[0].user.last_name + ' ' + notes.data[0].user.suffix
+        tabledata.unshift(notes.data[0]);
+        this.notesDataSource = new MatTableDataSource(tabledata);
+        this.notesDataSource.sort = this.sortNote;
+        this.notesDataSource.paginator = this.paginatorNote;
+        this.notes = null;
+      }, err => {
+        this.alertService.openSnackBar(err.error.message, 'error');
+      })
+    }
 
   }
 }
@@ -1284,18 +1309,3 @@ export class BillableitemPopupComponent {
   }
 
 }
-
-
-const ELEMENT_DATA2 = [
-  { "id": 1, "task": "Schedule appointment", "created_by": "Steve Simone", "created_at": "06-21-2020", "updated_by": "Marc Simone", "updated_at": "06-22-2020" },
-  { "id": 2, "task": "State forms submitted", "created_by": "Steve Simone", "created_at": "06-22-2020", "updated_by": "Steve Simone", "updated_at": "06-22-2020" },
-  { "id": 3, "task": "Schedule appointment", "created_by": "Steve Simone", "created_at": "07-04-2020", "updated_by": "Dolores Gonzalez", "updated_at": "07-04-2020" },
-  { "id": 4, "task": "History completed", "created_by": "Steve Simone", "created_at": "06-30-2020", "updated_by": "Dolores Gonzalez", "updated_at": "06-22-2020" },
-  { "id": 5, "task": "Records summarized", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
-  { "id": 6, "task": "Appointment confirmed", "created_by": "Steve Simone", "created_at": "08-10-2020", "updated_by": "Dolores Gonzalez", "updated_at": "08-10-2020" },
-  { "id": 7, "task": "Appointment attended", "created_by": "Steve Simone", "created_at": "08-14-2020", "updated_by": "Dolores Gonzalez", "updated_at": "08-14-2020" },
-  { "id": 8, "task": "Report transcribed", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
-  { "id": 8, "task": "Report billed", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
-  { "id": 8, "task": "Bill closed", "created_by": " ", "created_at": "", "updated_by": "", "updated_at": "" },
-
-];
