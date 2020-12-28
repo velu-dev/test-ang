@@ -42,8 +42,9 @@ export class OnDemandService {
     return this.http.post(environment.baseUrl + api_endpoint.create_custom_recipient + claim_id + "/" + bill_item_id, data)
   }
 
-  deleteDocument(id): Observable<any> {
-    return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id)
+  deleteDocument(id, is_billable_item_document?): Observable<any> {
+    let isBillableItemDocument = is_billable_item_document ? true : false
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id + "/" + isBillableItemDocument)
   }
 
   postDocument(data): Observable<any> {
