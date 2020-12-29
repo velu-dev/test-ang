@@ -175,14 +175,16 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.onDemandService.uploadDocument(result).subscribe(res => {
-        if (res.status) {
-          this.alertService.openSnackBar(res.message, "success");
-          this.getData();
-        } else {
-          this.alertService.openSnackBar(res.message, "error");
-        }
-      })
+      if (result) {
+        this.onDemandService.uploadDocument(result).subscribe(res => {
+          if (res.status) {
+            this.alertService.openSnackBar(res.message, "success");
+            this.getData();
+          } else {
+            this.alertService.openSnackBar(res.message, "error");
+          }
+        })
+      }
       // if (result) {
       //   this.getData();
       // }
@@ -462,7 +464,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
       return;
     }
-    
+
 
     let documents_ids: any = [];
     let custom_documents_ids: any = [];
@@ -539,6 +541,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       return;
     }
     if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
+      console.log(this.statusOfAppointment)
       if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.", ok: true, no: false, type: "warning", warning: true }
@@ -600,6 +603,8 @@ export class CustomDocuments {
   file: any = [];
   errors = { status: false, message: "" }
   selectFile(event) {
+    this.selectedFiles = null;
+    this.file = [];
     let fileTypes = ['pdf', 'doc', 'docx']
     if (!(fileTypes.includes(event.target.files[event.target.files.length - 1].name.split('.').pop().toLowerCase()))) {
       this.alertService.openSnackBar("This file type is not accepted", 'error');
@@ -618,7 +623,6 @@ export class CustomDocuments {
           return;
         }
         this.file.push(this.selectedFiles[i].name);
-        this.logger.info(this.file)
       } else {
         //this.selectedFile = null;
         this.fileUpload.nativeElement.value = "";
