@@ -45,8 +45,8 @@ export class BillingService {
     return this.http.post(environment.baseUrl + api_endpoint.updateDiagnosisCode, data)
   }
 
-  removeBillItem(id): Observable<any> {
-    return this.http.delete(environment.baseUrl + api_endpoint.removeBillItem + id)
+  removeBillItem(id, claim_id?, billable_id?): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeBillItem + id + "/" + claim_id + "/" + billable_id)
   }
 
   updatePayor(billId, payor): Observable<any> {

@@ -593,7 +593,7 @@ export class BilllableBillingComponent implements OnInit {
         this.icdData.map(res => {
           if (res.code == icd.code) {
             this.icdData.splice(index, 1);
-            let data = { id: this.billingId, diagnosis_code: this.icdData }
+            let data = { claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, id: this.billingId, diagnosis_code: this.icdData }
             this.billingService.updateDiagnosisCode(data).subscribe(code => {
               this.IcdDataSource = new MatTableDataSource(this.icdData);
               this.selectedIcd = { code: "", name: "" };
@@ -895,7 +895,7 @@ export class BilllableBillingComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         if (group.value.id) {
-          this.billingService.removeBillItem(group.value.id).subscribe(del => {
+          this.billingService.removeBillItem(group.value.id, this.paramsId.claim_id, this.paramsId.billId,).subscribe(del => {
             this.alertService.openSnackBar("Bill Line Item removed successfully", 'success');
             const control = this.userTable.get('tableRows') as FormArray;
             control.removeAt(index);
