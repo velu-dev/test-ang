@@ -374,7 +374,7 @@ export class NewExaminerUserComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.dataSource.filterPredicate = function (data, filter: string): boolean {
-        return (data.service_location_name && data.service_location_name.toLowerCase().includes(filter)) ||  (data.service && data.service.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.npi_number && data.npi_number.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter));
+        return (data.service_location_name && data.service_location_name.toLowerCase().includes(filter)) || (data.service && data.service.toLowerCase().includes(filter)) || (data.phone_no && data.phone_no.includes(filter)) || (data.street1 && data.street1.toLowerCase().includes(filter)) || (data.street2 && data.street2.toLowerCase().includes(filter)) || (data.city && data.city.toLowerCase().includes(filter)) || (data.state_name && data.state_name.toLowerCase().includes(filter)) || (data.zip_code && data.zip_code.includes(filter)) || (data.npi_number && data.npi_number.toLowerCase().includes(filter)) || (data.service_code && data.service_code.toString().toLowerCase().includes(filter));
       };
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
 
@@ -557,7 +557,8 @@ export class NewExaminerUserComponent implements OnInit {
         if (status == 'next') {
           this.tabIndex = 1;
         } else if (status == 'close') {
-          this._location.back();
+          // this._location.back();
+          this.cancel()
         }
         this.userForm.markAsUntouched();
         this.userForm.updateValueAndValidity();
@@ -587,7 +588,8 @@ export class NewExaminerUserComponent implements OnInit {
         if (status == 'next') {
           this.tabIndex = 1;
         } else if (status == 'close') {
-          this._location.back();
+          // this._location.back();
+          this.cancel();
         }
 
         this.userForm.markAsUntouched();
@@ -752,7 +754,8 @@ export class NewExaminerUserComponent implements OnInit {
       if (status == 'next') {
         this.tabIndex = 2;
       } else if (status == 'close') {
-        this._location.back();
+        //this._location.back();
+        this.cancel();
       }
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -851,7 +854,8 @@ export class NewExaminerUserComponent implements OnInit {
       if (status == 'next') {
         this.tabIndex = 3;
       } else if (status == 'close') {
-        this._location.back();
+        //this._location.back();
+        this.cancel()
       }
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
@@ -895,7 +899,8 @@ export class NewExaminerUserComponent implements OnInit {
       if (status == 'next') {
         this.tabIndex = 4;
       } else if (status == 'close') {
-        this._location.back();
+        // this._location.back();
+        this.cancel();
       }
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
