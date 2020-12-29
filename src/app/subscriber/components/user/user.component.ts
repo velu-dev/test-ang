@@ -144,6 +144,7 @@ export class UserComponent implements OnInit {
   }
   tabName: string;
   tabchange(event) {
+    this.paginator.pageIndex = 0;
     this.filterValue = '';
     this.selectedRoleId = [];
     this.dataSource = [];
@@ -304,7 +305,7 @@ export class UserComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result['data']) {
+      if (result && result['data']) {
         if (this.user.role_id == 3) {
 
           this.userService.disableManageUser(user.id, !user.status).subscribe(res => {

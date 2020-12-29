@@ -12,7 +12,9 @@ export class DialogueComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogueComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      dialogRef.disableClose = true;
+     }
   ngOnInit() {
 
   }

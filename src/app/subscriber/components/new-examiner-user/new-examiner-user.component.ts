@@ -717,7 +717,7 @@ export class NewExaminerUserComponent implements OnInit {
       if (this.billingProviderForm.touched)
         this.billingPrviderSubmit();
     } else if (this.tab == 3) {
-      if (this.renderingForm.touched)
+      if (this.renderingForm.touched || this.licenseChangeStatus)
         this.renderingFormSubmit();
     } else if (this.tab == 4) {
       // if (this.loca.touched)
@@ -908,6 +908,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
   licenseData: any = [];
   editStatus: boolean = false;
+  licenseChangeStatus:boolean = false;
   openLicense(data?: any, index?) {
 
     const dialogRef = this.dialog.open(LicenseDialog, {
@@ -932,10 +933,12 @@ export class NewExaminerUserComponent implements OnInit {
           }
           if (this.editStatus) {
             this.licenseData[index] = result;
+            this.licenseChangeStatus = true;
             this.licenceDataSource = new MatTableDataSource(this.licenseData)
             return
           }
           this.editStatus = false;
+          this.licenseChangeStatus = true;
           this.licenseData.push(result);
           this.licenceDataSource = new MatTableDataSource(this.licenseData)
           return
@@ -956,11 +959,13 @@ export class NewExaminerUserComponent implements OnInit {
           }
           if (this.editStatus) {
             this.licenseData[index] = result;
+            this.licenseChangeStatus = true;
             this.licenceDataSource = new MatTableDataSource(this.licenseData)
             return
           }
 
           this.editStatus = false;
+          this.licenseChangeStatus = true;
           this.licenseData.push(result);
           this.licenceDataSource = new MatTableDataSource(this.licenseData)
           console.log(this.licenseData)
