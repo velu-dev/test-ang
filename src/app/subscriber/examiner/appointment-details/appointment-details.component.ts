@@ -225,7 +225,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
       if (res) {
         this.activityColumnName = ["", "Action"]
-        this.activityDisplayedColumnsForDocuments = ['is_expand','task']
+        this.activityDisplayedColumnsForDocuments = ['is_expand', 'task']
       } else {
         this.activityColumnName = ["", "Type", "Action", "Created By", "Created At", "Updated By", "Updated At"]
         this.activityDisplayedColumnsForDocuments = ["status", 'module', 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
@@ -269,13 +269,16 @@ export class AppointmentDetailsComponent implements OnInit {
         this.activityLog.paginator = this.paginator;
       })
       this.examinerService.getNotes(this.billableId).subscribe(notes => {
-        notes.data.map(data => {
-          data.create = data.createdAt ? moment(data.createdAt).format('MM-DD-yyyy hh:mm a') : null;
-          data.name = data.user.first_name + ' ' + data.user.last_name + ' ' + data.user.suffix
-        })
-        this.notesDataSource = new MatTableDataSource(notes.data);
-        this.notesDataSource.sort = this.sortNote;
-        this.notesDataSource.paginator = this.paginatorNote;
+        if(notes.data){
+          notes.data.map(data => {
+            data.create = data.createdAt ? moment(data.createdAt).format('MM-DD-yyyy hh:mm a') : null;
+            data.name = data.user.first_name + ' ' + data.user.last_name + ' ' + data.user.suffix
+          })
+          this.notesDataSource = new MatTableDataSource(notes.data);
+          this.notesDataSource.sort = this.sortNote;
+          this.notesDataSource.paginator = this.paginatorNote;
+        }
+       
       }, error => {
 
       })
@@ -482,7 +485,7 @@ export class AppointmentDetailsComponent implements OnInit {
       })
     })
     this.notesForm = this.formBuilder.group({
-      exam_notes: [null],
+      notes: [null],
       bill_item_id: [this.billableId]
     })
     this.examinationStatusForm = this.formBuilder.group({
@@ -494,7 +497,6 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
     })
-    this.notesForm.disable();
     this.billable_item.disable();
   }
   isExaminationStatusEdit = false;
@@ -649,6 +651,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   cancel() {
     this.examinationStatusForm.patchValue(this.examinationDetails.appointments);
+    this.examinationStatusForm.patchValue({ notes: '', examination_notes: '' });
     this.examinationStatusForm.disable();
     this.isExaminationStatusEdit = false;
   }
@@ -1074,31 +1077,31 @@ export class AppointmentDetailsComponent implements OnInit {
       this.alertService.openSnackBar('Please select a form', 'error');
     }
   }
-  notesEdit() {
-    this.notesForm.enable();
-    this.isNotesEdit = true;
-  }
-  noteSubmit() {
-    if (this.notesForm.invalid)
-      return
-    this.examinerService.postNotes(this.notesForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Notes Updated successfully", 'success');
-      this.saveButtonStatus = false;
-      this.notesForm.disable();
-      this.isNotesEdit = false;
-      this.loadDatas();
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
+  // notesEdit() {
+  //   this.notesForm.enable();
+  //   this.isNotesEdit = true;
+  // }
+  // noteSubmit() {
+  //   if (this.notesForm.invalid)
+  //     return
+  //   this.examinerService.postNotes(this.notesForm.value).subscribe(res => {
+  //     this.alertService.openSnackBar("Notes Updated successfully", 'success');
+  //     this.saveButtonStatus = false;
+  //     this.notesForm.disable();
+  //     this.isNotesEdit = false;
+  //     this.loadDatas();
+  //   }, error => {
+  //     this.alertService.openSnackBar(error.error.message, 'error');
+  //   })
 
-  }
+  // }
 
-  noteCancel() {
-    this.saveButtonStatus = false;
-    this.isNotesEdit = false;
-    this.notesForm.disable();
-    this.notesForm.patchValue({ exam_notes: this.examinationDetails.exam_notes })
-  }
+  // noteCancel() {
+  //   this.saveButtonStatus = false;
+  //   this.isNotesEdit = false;
+  //   this.notesForm.disable();
+  //   this.notesForm.patchValue({ exam_notes: this.examinationDetails.exam_notes })
+  // }
 
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
@@ -1243,9 +1246,22 @@ export class AppointmentDetailsComponent implements OnInit {
 
   }
 
+  noteError: boolean = false;
   notesSubmit(note) {
-    if (note && note.trim()) {
-      let data = { notes: note.trim(), bill_item_id: this.billableId, action_list_id: 1 }
+    if (this.notesForm.get('notes').value && typeof (this.notesForm.get('notes').value) == 'string')
+      this.notesForm.get('notes').setValue(this.notesForm.get('notes').value.trim())
+    this.notesForm.get('notes').setValidators(Validators.required)
+    this.notesForm.get('notes').updateValueAndValidity();
+    if (this.notesForm.invalid) {
+      this.noteError = true;
+      return;
+    }
+
+    this.notesForm.get('notes').setValidators([])
+    this.notesForm.get('notes').updateValueAndValidity();
+    if (note && this.notes.trim()) {
+      this.noteError = false;
+      let data = { notes: note.trim(), bill_item_id: this.billableId }
       this.examinerService.addNotes(data).subscribe(notes => {
         this.alertService.openSnackBar("Note added successfully", 'success');
         const tabledata = this.notesDataSource.data ? this.notesDataSource.data : this.notesDataSource.data = [];
@@ -1255,10 +1271,16 @@ export class AppointmentDetailsComponent implements OnInit {
         this.notesDataSource = new MatTableDataSource(tabledata);
         this.notesDataSource.sort = this.sortNote;
         this.notesDataSource.paginator = this.paginatorNote;
-        this.notes = null;
+        this.notesForm.reset()
       }, err => {
         this.alertService.openSnackBar(err.error.message, 'error');
       })
+    } else {
+      if (this.notes) {
+        this.notes = this.notes.trim();
+        this.notesForm.reset()
+      }
+      this.noteError = true;
     }
 
   }
