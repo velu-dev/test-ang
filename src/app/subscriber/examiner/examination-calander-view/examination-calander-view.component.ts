@@ -477,7 +477,7 @@ export class EventdetailDialog {
     this.eventColor = examination.color;
   }
   cancel() {
-   // this.examination_notes = this.eventNotes;
+    this.examination_notes = '';
     this.examination_status = this.eventStatusID;
     this.textDisable = true;
     this.isEdit = false;
