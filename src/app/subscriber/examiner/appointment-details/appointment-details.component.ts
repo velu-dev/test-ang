@@ -269,13 +269,16 @@ export class AppointmentDetailsComponent implements OnInit {
         this.activityLog.paginator = this.paginator;
       })
       this.examinerService.getNotes(this.billableId).subscribe(notes => {
-        notes.data.map(data => {
-          data.create = data.createdAt ? moment(data.createdAt).format('MM-DD-yyyy hh:mm a') : null;
-          data.name = data.user.first_name + ' ' + data.user.last_name + ' ' + data.user.suffix
-        })
-        this.notesDataSource = new MatTableDataSource(notes.data);
-        this.notesDataSource.sort = this.sortNote;
-        this.notesDataSource.paginator = this.paginatorNote;
+        if(notes.data){
+          notes.data.map(data => {
+            data.create = data.createdAt ? moment(data.createdAt).format('MM-DD-yyyy hh:mm a') : null;
+            data.name = data.user.first_name + ' ' + data.user.last_name + ' ' + data.user.suffix
+          })
+          this.notesDataSource = new MatTableDataSource(notes.data);
+          this.notesDataSource.sort = this.sortNote;
+          this.notesDataSource.paginator = this.paginatorNote;
+        }
+       
       }, error => {
 
       })

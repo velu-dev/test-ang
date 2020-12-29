@@ -73,14 +73,14 @@ export class AppComponent {
     }
 
     let bill = this.cookieService.get('billableItem');
-    if (!bill) {
+    if (!bill || bill == 'null') {
       this.breadcrumbService.set("@Billable Item", "Billable Item")
     } else {
       this.breadcrumbService.set("@Billable Item", bill)
     }
 
     let billno = this.cookieService.get('billNo');
-    if (!billno) {
+    if (!billno || billno == 'null') {
       this.breadcrumbService.set("@Bill", "Bill")
     } else {
       this.breadcrumbService.set("@Bill", billno)
