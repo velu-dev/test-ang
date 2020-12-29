@@ -12,7 +12,9 @@ export class AlertDialogComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<AlertDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    dialogRef.disableClose = true;
+  }
   ngOnInit() {
 
   }

@@ -889,7 +889,7 @@ export class NewClaimComponent implements OnInit {
     if (this.iseams_entry) {
       claim['claim_details'].iseams_entry = this.iseams_entry;
     }
-    this.logger.log("!this.isEdit ||  !this.isClaimantEdit", this.claimId)
+    this.fileErrors.file.isError = false;
     if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
         let examtype = "";
@@ -1614,6 +1614,7 @@ export class NewClaimComponent implements OnInit {
     }
     let formData = new FormData();
     formData.append('file', this.selectedFile);
+    this.note = this.note.trim();
     formData.append('notes', this.note);
     if (this.claim.value.claim_details.id) {
       formData.append('claim_id', this.claim.value.claim_details.id)

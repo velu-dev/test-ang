@@ -124,8 +124,9 @@ export class CorrespondanceComponent implements OnInit {
       this.fileErrors.file.error = "Please select file";
       return;
     }
-    let formData = new FormData()
+    let formData = new FormData();
     formData.append('file', this.selectedFile);
+    this.note = this.note.trim();
     formData.append('notes', this.note);
     if (this.claimId) {
       formData.append('claim_id', this.claimId)
