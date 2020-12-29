@@ -648,6 +648,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   cancel() {
     this.examinationStatusForm.patchValue(this.examinationDetails.appointments);
+    this.examinationStatusForm.patchValue({ notes: '', examination_notes: '' });
     this.examinationStatusForm.disable();
     this.isExaminationStatusEdit = false;
   }
