@@ -220,6 +220,7 @@ export class NewClaimComponent implements OnInit {
   claimAdminGroupOptions: any = [];
   minimumDate = new Date(1900, 0, 1);
   currentTab = "";
+  appointment_scheduled_date_time: any = null;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -1541,9 +1542,9 @@ export class NewClaimComponent implements OnInit {
   changeDateType(date) {
     if (date) {
       let timezone = moment.tz.guess();
-      return moment(date).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+      return this.appointment_scheduled_date_time = moment(date.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
     } else {
-      return null
+      return this.appointment_scheduled_date_time = null;
     }
   }
   examTypeChange(value) {
@@ -1569,6 +1570,7 @@ export class NewClaimComponent implements OnInit {
           conference_phone: null
         }
       })
+      this.appointment_scheduled_date_time = null
     } else {
 
       this.isSuplimental = false;

@@ -78,6 +78,7 @@ export class NewBillableItemComponent implements OnInit {
   examTypes: any;
   isLoading = false;
   modifierList = [];
+  appointment_scheduled_date_time: any = null;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -219,10 +220,11 @@ export class NewBillableItemComponent implements OnInit {
   }
   changeDateType(date) {
     if (date) {
+      console.log(date.toString())
       let timezone = moment.tz.guess();
-      return moment(date).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+      return this.appointment_scheduled_date_time = moment(date.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
     } else {
-      return null
+      return this.appointment_scheduled_date_time = null
     }
   }
   examTypeChange(value) {
