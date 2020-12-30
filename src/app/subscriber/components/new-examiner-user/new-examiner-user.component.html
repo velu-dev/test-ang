@@ -587,21 +587,19 @@
                                     <table mat-table [dataSource]="licenceDataSource" class="user-table w-100">
                                         <!-- Position Column -->
                                         <ng-container matColumnDef="license_number">
-                                            <th mat-header-cell *matHeaderCellDef>License Number </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.license_number}}
-                                            </td>
+                                            <th mat-header-cell *matHeaderCellDef>License Number</th>
+                                            <td mat-cell *matCellDef="let element"> {{element.license_number}}</td>
                                         </ng-container>
 
                                         <!-- Name Column -->
                                         <ng-container matColumnDef="license_state">
-                                            <th mat-header-cell *matHeaderCellDef> License State </th>
-                                            <td mat-cell *matCellDef="let element"> {{getStateCode(element.state_id)}}
-                                            </td>
+                                            <th mat-header-cell *matHeaderCellDef>License State</th>
+                                            <td mat-cell *matCellDef="let element"> {{getStateCode(element.state_id)}}</td>
                                         </ng-container>
 
                                         <!-- Weight Column -->
                                         <ng-container matColumnDef="action">
-                                            <th mat-header-cell *matHeaderCellDef class="text-center"> Action </th>
+                                            <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
                                             <td mat-cell *matCellDef="let element;let i = index" class="text-center">
                                                 <a class="text-success" (click)="editLicense(element,i)">
                                                     Edit
@@ -726,8 +724,7 @@
                                 <ng-container matColumnDef="{{column}}"
                                     *ngFor="let column of columnsToDisplay; let i=index">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                        [disabled]="columnName[i] == 'Action'">
-                                        {{columnName[i]}} </th>
+                                        [disabled]="columnName[i] == 'Action'">{{columnName[i]}}</th>
                                     <td mat-cell *matCellDef="let element; let i = index">
                                         <span *ngIf="i == 0 && isMobile">
                                             <mat-icon mat-raised-button
@@ -736,9 +733,8 @@
                                             </mat-icon>
                                         </span>
                                         <div>
-                                            <span *ngIf="column == 'service_location_name'">
-                                                {{element?.service_location_name}}</span>
-                                            <span *ngIf="column == 'address'"> {{element?.street1}} {{element?.street2}}
+                                            <span *ngIf="column == 'service_location_name'">{{element?.service_location_name}}</span>
+                                            <span *ngIf="column == 'address'">{{element?.street1}} {{element?.street2}}
                                                 {{element?.city}} {{element?.state_code}} - {{element?.zip_code}}</span>
                                             <span
                                                 *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name
@@ -763,18 +759,13 @@
                                         <div class="detail"
                                             [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                                             <div class="responsive-table">
-                                                <div><span>Address</span><span> {{element.street1}} {{element.street2}}
-                                                        {{element.city}} {{element.state_name}} - {{element.zip_code}}
-                                                    </span></div>
-                                                <div><span>Service Type</span><span> {{element?.service_code}} -
-                                                        {{element?.service_name}} </span></div>
-                                                <div><span>Phone</span><span>
-                                                        {{element?.phone_no ? (element?.phone_no | mask:'(000)
-                                                        000-0000') : '' }}
-                                                    </span></div>
-                                                <div><span>NPI Number</span><span>
-                                                        {{element?.national_provider_identifier}}
-                                                    </span></div>
+                                                <div><span>Address</span><span>{{element.street1}} {{element.street2}}
+                                                        {{element.city}} {{element.state_name}} - {{element.zip_code}}</span></div>
+                                                <div><span>Service Type</span><span>{{element?.service_code}} -
+                                                        {{element?.service_name}}</span></div>
+                                                <div><span>Phone</span><span>{{element?.phone_no ? (element?.phone_no | mask:'(000)
+                                                        000-0000') : '' }}</span></div>
+                                                <div><span>NPI Number</span><span>{{element?.national_provider_identifier}}</span></div>
                                             </div>
                                         </div>
                                     </td>

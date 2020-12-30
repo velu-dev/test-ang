@@ -69,7 +69,7 @@
                         </span>
                         <span *ngIf="column == 'sign_in_email_id'" [title]="element[column]">{{element[column] }}</span>
                         <span *ngIf="column == 'first_name'" [title]="element[column]">{{element[column] | ellipsis:22 }}</span>
-                        <span *ngIf="column == 'createdAt'">{{element[column] | date:'MM-dd-yyyy'}} </span>
+                        <span *ngIf="column == 'createdAt'">{{element[column] | date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'last_name'" [title]="element[column]">{{element[column] }}</span>
                         <span *ngIf="column == 'role_name'" [title]="element[column]">{{element[column] }}</span>
                         <span *ngIf="column == 'disabled'">
@@ -85,10 +85,10 @@
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
-                                <div class="symbol"><span>Last Name</span><span> {{element.last_name}} </span></div>
-                                <div class="position"><span>First Name</span><span> {{element.first_name}} </span></div>
-                                <div class="name"><span>Email ID</span><span> {{element.sign_in_email_id}} </span></div>
-                                <div class="weight"><span>Role</span><span> {{element.role_name}} </span></div>
+                                <div class="symbol"><span>Last Name</span><span>{{element.last_name}}</span></div>
+                                <div class="position"><span>First Name</span><span>{{element.first_name}}</span></div>
+                                <div class="name"><span>Email ID</span><span>{{element.sign_in_email_id}}</span></div>
+                                <div class="weight"><span>Role</span><span>{{element.role_name}}</span></div>
                             </div>
                         </div>
                     </td>
