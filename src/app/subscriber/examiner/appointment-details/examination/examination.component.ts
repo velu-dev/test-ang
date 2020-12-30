@@ -10,6 +10,7 @@ import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
+import { ClaimService } from 'src/app/subscriber/service/claim.service';
 export interface PeriodicElement {
   name: string;
 }
@@ -45,7 +46,7 @@ export class ExaminationComponent implements OnInit {
   billableId: any;
   examinationDocuments: any;
   uploadedDocument: any = new MatTableDataSource([]);
-  constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog) {
+  constructor(private claimService: ClaimService, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog) {
     this.route.params.subscribe(params => {
       this.claim_id = params.claim_id;
       this.billableId = params.billId;
@@ -171,6 +172,9 @@ export class ExaminationComponent implements OnInit {
   }
   downloadDocument(element) {
     this.alertService.openSnackBar("File downloaded successfully", "success");
+    this.claimService.updateActionLog({ type: "examination", "document_category_id": 5, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.id] }).subscribe(res => {
+
+    })
     saveAs(element.exam_report_file_url, element.file_name, '_self');
   }
   removeDocument(element) {
