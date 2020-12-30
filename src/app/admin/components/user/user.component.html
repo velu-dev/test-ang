@@ -63,8 +63,7 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="column == 'last_name'" [title]="element?.last_name">
-                            {{element?.last_name | ellipsis:22}} </span>
+                        <span *ngIf="column == 'last_name'" [title]="element?.last_name">{{element?.last_name | ellipsis:22}}</span>
                         <span *ngIf="column == 'first_name'"
                             [title]="element?.first_name">{{element?.first_name | ellipsis:22}}</span>
                         <span *ngIf="column == 'sign_in_email_id'"
@@ -74,10 +73,10 @@
                             [title]="element?.organization_name">{{element?.organization_type == 'INDV' ? '-' : element?.organization_name | ellipsis:22 }}</span>
                         <span *ngIf="column == 'account_no'"
                             [title]="element?.account_no">{{element?.account_no }}</span>
-                        <span *ngIf="column == 'createdAt'">{{element[column] | date:'MM-dd-yyyy'}} </span>
+                        <span *ngIf="column == 'createdAt'">{{element[column] | date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="i == (columnsToDisplay.length-1)">
                             <span class="user-disable-enable" *ngIf="tabIndex != 1"
-                                (click)="onDisable($event, element)"> {{element.status ? 'Disable' : 'Enable' }}</span>
+                                (click)="onDisable($event, element)">{{element.status ? 'Disable' : 'Enable' }}</span>
                             <!-- <span class="user-disable-enable" *ngIf="tabIndex == 1"  (click)="onDisable($event, element)"> Cancel </span> -->
                         </span>
                     </td>
@@ -86,14 +85,13 @@
                     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
-                                <div class="symbol"><span>Last Name</span><span> {{element.last_name}} </span></div>
-                                <div class="position"><span>First Name</span><span> {{element.first_name}} </span></div>
-                                <div class="name"><span>Email ID</span><span> {{element.sign_in_email_id}} </span></div>
-                                <div class="weight"><span>Role</span><span> {{element.role_name}} </span></div>
-                                <div class="weight"><span>Company</span><span> {{element.organization_name}} </span></div>
-                                <div class="weight"><span>Account Number</span><span> {{element.account_no}} </span></div>
-                                <div class="role_name"><span>Subscribed On</span><span>
-                                    {{element.createdAt | date:'MM-dd-yyyy'}} </span></div>
+                                <div class="symbol"><span>Last Name</span><span>{{element.last_name}}</span></div>
+                                <div class="position"><span>First Name</span><span>{{element.first_name}}</span></div>
+                                <div class="name"><span>Email ID</span><span>{{element.sign_in_email_id}}</span></div>
+                                <div class="weight"><span>Role</span><span>{{element.role_name}}</span></div>
+                                <div class="weight"><span>Company</span><span>{{element.organization_name}}</span></div>
+                                <div class="weight"><span>Account Number</span><span>{{element.account_no}}</span></div>
+                                <div class="role_name"><span>Subscribed On</span><span>{{element.createdAt | date:'MM-dd-yyyy'}}</span></div>
                             </div>
                         </div>
                     </td>

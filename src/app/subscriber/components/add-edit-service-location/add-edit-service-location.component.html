@@ -217,14 +217,14 @@
             <table mat-table [dataSource]="dataSource" class="user-table w-100" *ngIf="locationId">
 
                 <ng-container matColumnDef="examiner">
-                    <th mat-header-cell *matHeaderCellDef>Examiner </th>
-                    <td mat-cell *matCellDef="let element"> {{element?.last_name}}
-                        {{element?.first_name}}{{element?.suffix ? ', '+element?.suffix : ''}} </td>
+                    <th mat-header-cell *matHeaderCellDef>Examiner</th>
+                    <td mat-cell *matCellDef="let element">{{element?.last_name}}
+                        {{element?.first_name}}{{element?.suffix ? ', '+element?.suffix : ''}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="date_added">
-                    <th mat-header-cell *matHeaderCellDef> Date Added </th>
-                    <td mat-cell *matCellDef="let element"> {{element.date_added | date:'MM-dd-yyyy'}} </td>
+                    <th mat-header-cell *matHeaderCellDef>Date Added</th>
+                    <td mat-cell *matCellDef="let element">{{element.date_added | date:'MM-dd-yyyy'}}</td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
