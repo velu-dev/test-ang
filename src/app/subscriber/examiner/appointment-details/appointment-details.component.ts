@@ -257,6 +257,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   isExamTypeChanged = false;
   examinerId = null;
+  examinerName = "";
   loadDatas() {
     this.procedureTypeList = [];
     this.modifiers = [];
@@ -269,7 +270,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.activityLog.paginator = this.paginator;
       })
       this.examinerService.getNotes(this.billableId).subscribe(notes => {
-        if(notes.data){
+        if (notes.data) {
           notes.data.map(data => {
             data.create = data.createdAt ? moment(data.createdAt).format('MM-DD-yyyy hh:mm a') : null;
             data.name = data.user.first_name + ' ' + data.user.last_name + ' ' + data.user.suffix
@@ -278,7 +279,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.notesDataSource.sort = this.sortNote;
           this.notesDataSource.paginator = this.paginatorNote;
         }
-       
+
       }, error => {
 
       })
@@ -308,6 +309,11 @@ export class AppointmentDetailsComponent implements OnInit {
         if (bills['data'].appointment.examiner_id != null) {
           this.examinerId = bills['data'].appointment.examiner_id;
           let ex = { id: bills['data'].appointment.examiner_id, address_id: bills['data'].appointment.examiner_service_location_id }
+          // this.examinarList.map(examinar => {
+          //   if (examinar.id === this.billableData.appointment.examiner_id) {
+          //     this.examinerName = examinar.first_name + " " + examinar.middle_name + " " + examinar.last_name + " " + (examinar.suffix ? (", " + examinar.suffix) : "");
+          //   }
+          // })
           this.examinarChange(ex)
         }
         if (bills['data'].exam_type.primary_language_spoken) {
