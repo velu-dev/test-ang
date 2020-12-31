@@ -1634,7 +1634,7 @@ export class billingOnDemandDialog {
           recipientsDocuments_ids.push(res.id)
           selected_recipients.push(res)
         } else {
-          selected_recipients.push(res.data)
+          selected_recipients.push(res)
           if (res.recipient_type.toLowerCase() != 'claimant') {
             recipientsDocuments_ids.push(res.data.id)
           } else {
@@ -1708,6 +1708,11 @@ export class billingOnDemandDialog {
                       }, 1000);
 
                     }
+                    if (bill.data.dtm_file_url) {
+                      setTimeout(() => {
+                        this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
+                      }, 2000);
+                    }
                     this.onDemandStatus = true;
                     this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
                   }, error => {
@@ -1736,6 +1741,11 @@ export class billingOnDemandDialog {
                     this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
                   }, 1000);
 
+                }
+                if (bill.data.dtm_file_url) {
+                  setTimeout(() => {
+                    this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
+                  }, 2000);
                 }
                 this.onDemandStatus = true;
                 this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
@@ -1774,6 +1784,11 @@ export class billingOnDemandDialog {
                 }, 1000);
 
               }
+              if (bill.data.dtm_file_url) {
+                setTimeout(() => {
+                  this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
+                }, 2000);
+              }
               this.onDemandStatus = true;
               this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
             }, error => {
@@ -1802,6 +1817,12 @@ export class billingOnDemandDialog {
               this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
             }, 1000);
 
+          }
+
+          if (bill.data.dtm_file_url) {
+            setTimeout(() => {
+              this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
+            }, 2000);
           }
           this.onDemandStatus = true;
           this.alertService.openSnackBar("Billing On Demand created successfully", 'success');

@@ -174,6 +174,7 @@ export class AppointmentDetailsComponent implements OnInit {
   columnsToDisplays = [];
   notecolumnName = [];
   notes: any;
+  appointment_scheduled_date_time: any = null;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -322,6 +323,7 @@ export class AppointmentDetailsComponent implements OnInit {
         }
 
         this.billable_item.patchValue(bills.data);
+        this.changeDateType(bills.data.appointment.appointment_scheduled_date_time)
         if (bills.data.appointment.is_virtual_location) {
           this.billable_item.patchValue({
             appointment: {
@@ -440,9 +442,9 @@ export class AppointmentDetailsComponent implements OnInit {
   changeDateType(date) {
     if (date) {
       let timezone = moment.tz.guess();
-      return moment(date).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+      return this.appointment_scheduled_date_time = moment(date.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
     } else {
-      return null
+      return this.appointment_scheduled_date_time = null
     }
   }
   service_location_name: any;
@@ -525,6 +527,7 @@ export class AppointmentDetailsComponent implements OnInit {
             this.billable_item.patchValue({
               appointment: { duration: "", appointment_scheduled_date_time: "" }
             })
+            this.appointment_scheduled_date_time = null;
             this.updateExamStatus()
           } else {
             return;
@@ -548,7 +551,7 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
-      if (this.examinationStatusForm.value.examination_status == 10 && !this.billable_item.getRawValue().appointment.appointment_scheduled_date_time) {
+      if (this.examinationStatusForm.value.examination_status == 10 && !this.examinationDetails.appointments.appointment_scheduled_date_time) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px', data: { title: "Examination", message: "Appointment is Not Scheduled", ok: true, no: false, type: "warning", warning: true }
         });
@@ -558,7 +561,7 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
-      if (this.examinationStatusForm.value.examination_status == 10 && moment(this.billable_item.getRawValue().appointment.appointment_scheduled_date_time) >= moment()) {
+      if (this.examinationStatusForm.value.examination_status == 10 && moment(this.examinationDetails.appointments.appointment_scheduled_date_time) >= moment()) {
         //this.alertService.openSnackBar('Future appointment status cannot be changed to ATTENDED.', 'error');
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px', data: { title: "Examination", message: "Future appointment status cannot be changed to ATTENDED.", ok: true, no: false, type: "warning", warning: true }
@@ -1192,6 +1195,7 @@ export class AppointmentDetailsComponent implements OnInit {
           conference_phone: null
         }
       })
+      this.appointment_scheduled_date_time = null;
     } else {
       this.isSuplimental = false;
     }

@@ -125,7 +125,7 @@
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
             <form [formGroup]="examinationStatusForm">
                 <div fxLayout="row wrap">
-                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-20">{{isDisplayStatus.name}}
+                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">{{isDisplayStatus.name}}
                         Status</div>
                     <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="100" fxFlex.xs="100">
                         <mat-label>Choose an option</mat-label>
@@ -222,7 +222,8 @@
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
                                 formControlName="appointment_scheduled_date_time"
-                                [value]="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)"
+                                [value]="appointment_scheduled_date_time"
+                                (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)"
                                 autocomplete="off" [owlDateTime]="appointment">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"
                                 [disabled]="!isEditBillableItem">

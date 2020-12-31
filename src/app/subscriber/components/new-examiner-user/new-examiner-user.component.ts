@@ -887,7 +887,7 @@ export class NewExaminerUserComponent implements OnInit {
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
     this.renderingForm.value.signature = sign;
     this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe(render => {
-
+      this.licenseChangeStatus = false;
       if (!this.renderingForm.value.id) {
         this.alertService.openSnackBar("Rendering provider added successfully", 'success');
       } else {
@@ -934,12 +934,14 @@ export class NewExaminerUserComponent implements OnInit {
           if (this.editStatus) {
             this.licenseData[index] = result;
             this.licenseChangeStatus = true;
+            this.alertService.openSnackBar('License Updated Successfully', 'success');
             this.licenceDataSource = new MatTableDataSource(this.licenseData)
             return
           }
           this.editStatus = false;
           this.licenseChangeStatus = true;
           this.licenseData.push(result);
+          this.alertService.openSnackBar('License Added Successfully', 'success');
           this.licenceDataSource = new MatTableDataSource(this.licenseData)
           return
         }
@@ -960,6 +962,7 @@ export class NewExaminerUserComponent implements OnInit {
           if (this.editStatus) {
             this.licenseData[index] = result;
             this.licenseChangeStatus = true;
+            this.alertService.openSnackBar('License Updated Successfully', 'success');
             this.licenceDataSource = new MatTableDataSource(this.licenseData)
             return
           }
@@ -967,6 +970,7 @@ export class NewExaminerUserComponent implements OnInit {
           this.editStatus = false;
           this.licenseChangeStatus = true;
           this.licenseData.push(result);
+          this.alertService.openSnackBar('License Added Successfully', 'success');
           this.licenceDataSource = new MatTableDataSource(this.licenseData)
           console.log(this.licenseData)
         }
@@ -996,11 +1000,13 @@ export class NewExaminerUserComponent implements OnInit {
       if (result['data']) {
         if (!e.id) {
           this.licenseData.splice(i, 1);
+          this.alertService.openSnackBar('License Removed Successfully', 'success');
           this.licenceDataSource = new MatTableDataSource(this.licenseData)
           return
         }
         this.userService.deleteLicense(e.id).subscribe(license => {
           this.licenseData.splice(i, 1);
+          this.alertService.openSnackBar('License Removed Successfully', 'success');
           this.licenceDataSource = new MatTableDataSource(this.licenseData)
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
