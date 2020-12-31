@@ -1634,7 +1634,7 @@ export class billingOnDemandDialog {
           recipientsDocuments_ids.push(res.id)
           selected_recipients.push(res)
         } else {
-          selected_recipients.push(res.data)
+          selected_recipients.push(res)
           if (res.recipient_type.toLowerCase() != 'claimant') {
             recipientsDocuments_ids.push(res.data.id)
           } else {
