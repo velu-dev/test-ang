@@ -1072,7 +1072,7 @@ export class NewClaimComponent implements OnInit {
     this.openDialogCancel('cancel', "Create " + title)
   }
   examtypeChange(type) {
-    this.claimService.getProcedureType(type.id).subscribe(res => {
+    this.claimService.getProcedureType(type).subscribe(res => {
       this.billable_item.patchValue({
         exam_type: {
           exam_procedure_type_id: null
