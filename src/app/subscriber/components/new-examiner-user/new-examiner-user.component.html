@@ -876,10 +876,10 @@
                                 <button mat-stroked-button type="button" class="outline-danger"
                                     (click)="locationCancel()">Cancel</button>
                                 <button mat-stroked-button
-                                    *ngIf="(filteredOptions | async)?.length != 0 || ((filteredOptions | async)?.length >= 1 || locationData != null)"
+                                    *ngIf="(filteredOptions | async)?.length != 0 || ((filteredOptions | async)?.length >= 1 || locationData)"
                                     class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>
                                 <button mat-stroked-button
-                                    *ngIf="(filteredOptions | async)?.length == 0 && locationData == null"
+                                    *ngIf="(filteredOptions | async)?.length == 0 && !locationData"
                                     class="m-l-10 outline-success" (click)="locationRoute()">
                                     Create Service Location
                                 </button>
