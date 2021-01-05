@@ -48,7 +48,7 @@ export class ManagerDashboardComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
       } else {
         this.columnName = ["", "Claimant", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date Item Received", "Critical"]
-        this.columnsToDisplay = ['is_expand', 'claimant_name', 'examiner_name', "exam_procedure_type", "standing", 'dos', 'critical']
+        this.columnsToDisplay = ['is_expand', 'claimant_name', 'examiner_name', "exam_procedure_name", "standing", 'dos', 'critical']
       }
     })
   }
