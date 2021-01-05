@@ -868,8 +868,8 @@ input:-webkit-autofill {
   background-color: $btn_success;
   border-color: $btn_success;
   &:disabled {
-        opacity: .5;
-      }
+    opacity: 0.5;
+  }
 }
 .filled-lightgray {
   @extend .btn_;
@@ -1079,7 +1079,7 @@ input:-webkit-autofill {
       border: 1px solid $info-border;
       width: fit-content;
       border-radius: 5px;
-  }
+    }
     mat-form-field {
       mat-hint {
         width: 100%;
@@ -1468,13 +1468,14 @@ input:-webkit-autofill {
       .incomplete-modules {
         ul {
           margin: 0;
-          padding: 0;
+          padding-left: 22px;
           width: 100%;
           li {
-            list-style: none;
+            list-style: disc;
             width: 50%;
             float: left;
-            color: $error;
+            // color: $error;
+            color: $text-gray;
             padding-top: 10px;
             @media only screen and (max-width: 568px) {
               width: 100%;
@@ -1496,7 +1497,38 @@ input:-webkit-autofill {
             }
           }
         }
+        mat-accordion {
+          mat-expansion-panel-header {
+            mat-panel-title {
+              mat-icon {
+                font-size: $font-size-9 ;
+              }
+            }
+          }
+        }
       }
     }
   }
 }
+
+
+// .incomplete-details {
+//   padding: 0 10px 0 10px;
+//   .title {
+//     color: $text-dark;
+//     font-weight: $font-weight-bold;
+//     font-size: $font-size-1;
+//     padding-bottom: 10px;
+//   }
+//   mat-divider {
+//     padding-bottom: 10px;
+//   }
+//   .list {
+//     color: $text-dark;
+//     font-size: $font-size-7;
+//     mat-icon {
+//       vertical-align: middle;
+//       font-size: $font-size-7;
+//     }
+//   }
+// }

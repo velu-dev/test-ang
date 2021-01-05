@@ -57,20 +57,71 @@
     </div> -->
 
     <!-- ===== incomplete information ==== -->
-    <div class="incomplete-info" *ngIf="!isIncompleteError">
+    <div class="incomplete-info">
+        <!-- <div class="incomplete-info" *ngIf="!isIncompleteError"> -->
         <mat-card>
             <mat-card-header>
                 <div class="content-wrapper-main-title text-danger">Incomplete Information</div>
             </mat-card-header>
             <mat-divider class="border-red"></mat-divider>
             <mat-card-content>
-                <div fxLayout="row wrap" class="p-t-10">
+                <div fxLayout="row wrap" class="p-t-10 m-t-10">
                     <div class="incomplete-modules" fxFlex="100">
-                        <ul>
+                        <!-- <ul>
                             <li *ngFor="let incompleteInfo of incompleteInformation">
-                                <mat-icon>error</mat-icon> {{incompleteInfo}}
+                                <mat-icon>error</mat-icon> {{incompleteInfo}}<mat-icon  class="p-t-10" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">more_horiz</mat-icon> 
+                                <mat-menu #menu="matMenu" class="incomplete-details">
+                                    <div class="title">
+                                       <b>{{incompleteInfo}}</b>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                    <div class="list"><mat-icon>trending_flat</mat-icon>Phone number</div>
+                                    <div class="list"><mat-icon>trending_flat</mat-icon>Email</div>
+                                </mat-menu>
                             </li>
-                        </ul>
+                        </ul> -->
+                    </div>
+                </div>
+                <div fxLayout="row wrap" class="m-t-10 incomplete-modules">
+                    <div fxFlex="50" style="padding:5px" *ngIf="!isIncompleteError">
+                        <mat-accordion>
+                            <mat-expansion-panel  *ngFor="let incompleteInfo of incompleteInformation">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title class="text-danger">
+                                    <mat-icon> error</mat-icon> {{incompleteInfo}}
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <div>
+                                  <ul>
+                                      <li>Email</li>
+                                      <li>Phone number</li>
+                                      <li>Street Address 1</li>
+                                      <li>City</li>
+                                      <li>State</li>
+                                  </ul>
+                              </div>
+                            </mat-expansion-panel>
+                          </mat-accordion>
+                    </div>
+
+                    <div fxFlex="50" style="padding:5px">
+                        <mat-accordion>
+                            <mat-expansion-panel>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title class="text-danger">
+                                    <mat-icon class="p-r-10"> error</mat-icon> Test
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                              <div>
+                                  <ul>
+                                      <li><mat-icon>trending_flat</mat-icon>Phone number</li>
+                                      <li><mat-icon>trending_flat</mat-icon>Phone number</li>
+                                      <li><mat-icon>trending_flat</mat-icon>Phone number</li>
+                                      <li><mat-icon>trending_flat</mat-icon>Phone number</li>
+                                  </ul>
+                              </div>
+                            </mat-expansion-panel>
+                          </mat-accordion>
                     </div>
                 </div>
             </mat-card-content>
