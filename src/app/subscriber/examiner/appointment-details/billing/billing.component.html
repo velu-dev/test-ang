@@ -64,7 +64,7 @@
             </mat-card-header>
             <mat-divider class="border-red"></mat-divider>
             <mat-card-content>
-                <div fxLayout="row wrap" class="p-t-10">
+                <!-- <div fxLayout="row wrap" class="p-t-10">
                     <div class="incomplete-modules" fxFlex="100">
                         <ul>
                             <li *ngFor="let incompleteInfo of incompleteInformation">
@@ -72,24 +72,20 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-                <!-- <div fxLayout="row wrap" class="m-t-10 incomplete-modules">
-                    <div fxFlex="50" style="padding:5px">
+                </div> -->
+                <div fxLayout="row wrap" class="m-t-10 incomplete-modules">
+                    <div fxFlex="50" style="padding:5px" >
                         <mat-accordion>
-                            <mat-expansion-panel>
-                              <mat-expansion-panel-header>
+                            <mat-expansion-panel *ngFor="let incompleteInfo of incompleteInformation;let odd=odd;" >
+                              <mat-expansion-panel-header *ngIf="odd">
                                 <mat-panel-title class="text-danger">
-                                    <mat-icon> error</mat-icon> Test
+                                    <mat-icon> error</mat-icon> {{incompleteInfo.name}}
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
-                              <div>
-                                  <ul>
-                                      <li>Email</li>
-                                      <li>Phone number</li>
-                                      <li>Street Address 1</li>
-                                      <li>City</li>
-                                      <li>State</li>
-                                  </ul>
+                              <div *ngIf="odd">
+                                <ul>
+                                    <li *ngFor="let val of incompleteInfo.value">{{val}}</li>
+                                </ul>
                               </div>
                             </mat-expansion-panel>
                           </mat-accordion>
@@ -97,25 +93,21 @@
 
                     <div fxFlex="50" style="padding:5px">
                         <mat-accordion>
-                            <mat-expansion-panel>
-                              <mat-expansion-panel-header>
+                            <mat-expansion-panel *ngFor="let incompleteInfo of incompleteInformation;let even=even;">
+                              <mat-expansion-panel-header *ngIf="even">
                                 <mat-panel-title class="text-danger">
-                                    <mat-icon class="p-r-10"> error</mat-icon> Test
+                                    <mat-icon > error</mat-icon> {{incompleteInfo.name}}
                                 </mat-panel-title>
                               </mat-expansion-panel-header>
-                              <div>
+                              <div *ngIf="even">
                                 <ul>
-                                    <li>Email</li>
-                                    <li>Phone number</li>
-                                    <li>Street Address 1</li>
-                                    <li>City</li>
-                                    <li>State</li>
+                                    <li *ngFor="let val of incompleteInfo.value">{{val}}</li>
                                 </ul>
                               </div>
                             </mat-expansion-panel>
                           </mat-accordion>
                     </div>
-                </div> -->
+                </div> 
             </mat-card-content>
         </mat-card>
     </div>
