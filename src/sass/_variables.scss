@@ -1468,16 +1468,16 @@ input:-webkit-autofill {
       .incomplete-modules {
         ul {
           margin: 0;
-          padding: 0;
-          // padding-left: 22px; // Incompleted information Expanded item left padding
+          // padding: 0;
+          padding-left: 22px; // Incompleted information Expanded item left padding
           width: 100%;
           li {
-            list-style: none;// Incompleted information details text style
-            // list-style: disc;
+           // list-style: none;// Incompleted information details text style
+            list-style: disc;
             width: 50%;
             float: left;
-            color: $error;
-            // color: $text-gray;// Incompleted information details text Color
+            //color: $error;
+            color: $text-gray;// Incompleted information details text Color
             padding-top: 10px;
             @media only screen and (max-width: 568px) {
               width: 100%;
