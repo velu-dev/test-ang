@@ -1366,7 +1366,10 @@ export class NewClaimComponent implements OnInit {
             this.addNewClaimant = true;
             this.changeState(res.data.claimant.state, 'claimant')
             this.claimant.patchValue(res.data.claimant);
-
+            this.claimant.patchValue({
+              state: res.data.claimant.state_id
+            })
+            this.changeState(res.data.claimant.state_id, 'claimant');
           }
           if (!this.isClaimantFilled)
 
