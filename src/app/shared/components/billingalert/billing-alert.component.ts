@@ -7,7 +7,7 @@ import * as globals from './../../../globals';
   styleUrls: ['./billing-alert.component.scss']
 })
 export class BillingAlertComponent implements OnInit {
-
+  expandDetailName = "";
   error = globals.error
   constructor(
     public dialog: MatDialog,

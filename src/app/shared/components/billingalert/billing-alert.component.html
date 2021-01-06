@@ -12,12 +12,22 @@
     <div class="inline">
       <div class="p-l-10">{{data?.title}}</div>
       <div class="mat-card-description p-l-10">
-        <div  class="incomplete-modules">
+        <div class="incomplete-modules">
           <ul>
-            <li *ngFor="let incompleteInfo of data.incompleteInformation">
+            <li *ngFor="let incompleteInfo of data?.incompleteInformation">
               <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-              {{incompleteInfo}}
+              {{incompleteInfo?.name}}
+              <i class="fas fa-angle-down" (click)="expandDetailName = incompleteInfo?.name"></i>
+              <div *ngIf="expandDetailName == incompleteInfo?.name">
+                <ol *ngFor="let value of incompleteInfo?.value">
+                  <li>{{value}}</li>
+                </ol>
+                <div *ngIf="incompleteInfo?.value.length == 0" class="no-data">
+                  No Data Found
+                </div>
+              </div>
             </li>
+            <br />
           </ul>
         </div>
       </div>

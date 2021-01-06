@@ -62,7 +62,8 @@
             // float: left;
             color: $error;
             width: $width-100;
-            padding-top: 5px;
+            padding: 5px 0 5px 0;
+            display: inline-block;
             i {
                 // vertical-align: sub;
                 width: auto;
@@ -70,6 +71,34 @@
                 padding-right: 5px;
                 // font-size: $font-size-9;
             }
+            i.fas {
+                padding: 5px 0 0 0 ;
+                cursor: pointer;
+                float: right;
+                color: $text-light;
+            }
+            div {
+                background: $warning-bg;
+                /* border: 1px solid red; */
+                display: inline-block;
+                border-radius: 3px;
+                ol {
+                    li {
+                        width: 50%;
+                        float: left;
+                        list-style: disc;
+                        display: list-item;
+                        color: $warning;
+                    }
+                }
+                .no-data {
+                    padding: 10px 0;
+                    color: $text-gray !important;
+                    text-align: center;
+                }
+            }
+
+
         }
     }
 }
