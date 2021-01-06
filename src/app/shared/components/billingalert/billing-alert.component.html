@@ -17,14 +17,16 @@
             <li *ngFor="let incompleteInfo of data?.incompleteInformation">
               <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
               {{incompleteInfo?.name}}
-              <i class="fas fa-angle-down" (click)="expandDetailName = incompleteInfo?.name"></i>
+              <i class="fas" *ngIf="incompleteInfo?.value.length != 0"
+                [ngClass]="{'fa-angle-down': expandDetailName != incompleteInfo?.name,'fa-angle-up': expandDetailName == incompleteInfo?.name}"
+                (click)="expandDetailName = incompleteInfo?.name"></i>
               <div *ngIf="expandDetailName == incompleteInfo?.name">
                 <ol *ngFor="let value of incompleteInfo?.value">
                   <li>{{value}}</li>
                 </ol>
-                <div *ngIf="incompleteInfo?.value.length == 0" class="no-data">
+                <!-- <div *ngIf="incompleteInfo?.value.length == 0" class="no-data">
                   No Data Found
-                </div>
+                </div> -->
               </div>
             </li>
             <br />
