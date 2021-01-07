@@ -32,6 +32,7 @@ $error-border: #db2828;
 // WARNING
 $warning: #a3501c;
 $warning-bg: #fcddca;
+$warning-bg-light:#fdf4ef;
 $warning-border: #a3501c;
 
 // SUCCESS
@@ -1459,6 +1460,13 @@ input:-webkit-autofill {
     mat-card-header {
       .content-wrapper-main-title {
         font-weight: $font-weight-bold;
+        width: $width-100;
+        margin-bottom: 0;
+        button {
+          float: right;
+          margin-top: -5px;
+          max-width: fit-content;
+        }
       }
       mat-divider {
         border-color: $error;
@@ -1466,18 +1474,54 @@ input:-webkit-autofill {
     }
     mat-card-content {
       .incomplete-modules {
+        div {
+          div {
+            span {
+              padding-top: 10px;
+              display: block;
+              mat-icon {
+                vertical-align: sub;
+                width: auto;
+                height: auto;
+                padding-right: 5px;
+                font-size: $font-size-9;
+              }
+            }
+            .incomplete-details {
+              background-color: $warning-bg-light;
+              display: flex;
+              padding: 5px;
+              margin: 5px;
+              border-radius: 3px;
+              ol {
+                width: 100%;
+                padding-left: 37px;
+                li {
+                  list-style: disc;
+                  color: $warning;
+                  width: 50%;
+                  float: left;
+                  @media only screen and (max-width: 568px) {
+                    width: 100%;
+                    padding-top: 10px;
+                  }
+                }
+              }
+            }
+          }
+        }
         ul {
           margin: 0;
-          // padding: 0;
-          padding-left: 22px; // Incompleted information Expanded item left padding
+          padding: 0;
+          // padding-left: 22px; // Incompleted information Expanded item left padding
           width: 100%;
           li {
-           // list-style: none;// Incompleted information details text style
-            list-style: disc;
+            list-style: none; // Incompleted information details text style
+            // list-style: disc;
             width: 50%;
             float: left;
             //color: $error;
-            color: $text-gray;// Incompleted information details text Color
+            color: $text-gray; // Incompleted information details text Color
             padding-top: 10px;
             @media only screen and (max-width: 568px) {
               width: 100%;
@@ -1497,13 +1541,32 @@ input:-webkit-autofill {
               padding-right: 5px;
               font-size: $font-size-9;
             }
+            .incomplete-details {
+              background-color: $warning-bg;
+              display: flex;
+              padding: 5px;
+              margin: 5px;
+              border-radius: 3px;
+              ol {
+                width: 100%;
+                padding-left: 37px;
+                li {
+                  list-style: disc;
+                  color: $warning;
+                  @media only screen and (max-width: 568px) {
+                    width: 100%;
+                    padding-top: 10px;
+                  }
+                }
+              }
+            }
           }
         }
         mat-accordion {
           mat-expansion-panel-header {
             mat-panel-title {
               mat-icon {
-                font-size: $font-size-9 ;
+                font-size: $font-size-9;
               }
             }
           }
@@ -1512,7 +1575,6 @@ input:-webkit-autofill {
     }
   }
 }
-
 
 // .incomplete-details {
 //   padding: 0 10px 0 10px;

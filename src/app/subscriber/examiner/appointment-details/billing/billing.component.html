@@ -26,7 +26,8 @@
         </div>
         <div fxFlex="50">
             <div class="submission-date"><span>First Bill Review Submission Date :
-                </span>{{billingData?.bill_first_submission_date ? (billingData?.bill_first_submission_date |  date:'MM-dd-yyyy') : billingData?.on_demand_progress_status}}</div>
+                </span>{{billingData?.bill_first_submission_date ? (billingData?.bill_first_submission_date |
+                date:'MM-dd-yyyy') : billingData?.on_demand_progress_status}}</div>
         </div>
     </div>
 
@@ -60,7 +61,11 @@
     <div class="incomplete-info" *ngIf="!isIncompleteError">
         <mat-card>
             <mat-card-header>
-                <div class="content-wrapper-main-title text-danger">Incomplete Information</div>
+                <div class="content-wrapper-main-title text-danger">Incomplete Information
+                    <button mat-raised-button class="filled-gray m-b-5" (click)="expandDetailName = !expandDetailName">
+                        Collapse <i class="p-l-5 fas"[ngClass]="{'fa-angle-down': expandDetailName,'fa-angle-up': !expandDetailName}"></i>
+                    </button>
+                </div>
             </mat-card-header>
             <mat-divider class="border-red"></mat-divider>
             <mat-card-content>
@@ -73,8 +78,8 @@
                         </ul>
                     </div>
                 </div> -->
-                <div fxLayout="row wrap" class="m-t-10 incomplete-modules">
-                    <div fxFlex="50" style="padding:5px" >
+                <div fxLayout="row wrap" class="m-t-10">
+                    <!-- <div fxFlex="50" style="padding:5px" >
                         <mat-accordion>
                             <mat-expansion-panel *ngFor="let incompleteInfo of incompleteInformation;let odd=odd;" >
                               <mat-expansion-panel-header *ngIf="odd">
@@ -106,8 +111,23 @@
                               </div>
                             </mat-expansion-panel>
                           </mat-accordion>
+                    </div> -->
+                    <div fxFlex="100" class="incomplete-modules">
+                        <div fxLayout="row wrap">
+                            <div *ngFor="let incompleteInfo of incompleteInformation" fxFlex="50" fxFlex.xs="100"
+                                fxFlex.sm="100">
+                                <span class="text-danger">
+                                    <mat-icon> error</mat-icon> {{incompleteInfo.name}}
+                                </span>
+                                <div class="incomplete-details" *ngIf="!expandDetailName">
+                                    <ol>
+                                        <li *ngFor="let val of incompleteInfo.value">{{val}}</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div> 
+                </div>
             </mat-card-content>
         </mat-card>
     </div>
@@ -145,14 +165,16 @@
                     <div fxFlex="33.3" fxFlex.xs="100">
                         <div class="p-b-5"><b>Billing Provider</b></div>
                         <div *ngIf="billingData?.billing_is_person"> {{billingData?.billing_last_name}}
-                            {{billingData?.billing_first_name}}{{billingData?.billing_suffix ? (', '+ billingData?.billing_suffix) : ''}}
+                            {{billingData?.billing_first_name}}{{billingData?.billing_suffix ? (', '+
+                            billingData?.billing_suffix) : ''}}
                         </div>
                         <div *ngIf="!billingData?.billing_is_person">{{billingData?.billing_provider_name}}</div>
                     </div>
                     <div fxFlex="33.3" fxFlex.xs="100">
                         <div class="p-b-5"><b>Rendering Provider</b></div>
                         <div *ngIf="billingData?.rendering_is_persion">{{billingData?.rendr_last_name}}
-                            {{billingData?.rendr_first_name}}{{billingData?.rendr_suffix ? (', '+ billingData?.rendr_suffix) : ''}}
+                            {{billingData?.rendr_first_name}}{{billingData?.rendr_suffix ? (', '+
+                            billingData?.rendr_suffix) : ''}}
                         </div>
                         <div *ngIf="!billingData?.rendering_is_persion">{{billingData?.rendering_provider_name}}</div>
                     </div>
@@ -161,7 +183,8 @@
                         <div>{{billingData?.service_location?.street1 }} {{billingData?.service_location?.street2 }}
                             {{billingData?.service_location?.city}}
                             {{billingData?.state_code }}
-                            {{billingData?.service_location?.zip_code ? '- ' + billingData?.service_location?.zip_code : '' }}
+                            {{billingData?.service_location?.zip_code ? '- ' + billingData?.service_location?.zip_code :
+                            '' }}
                         </div>
                     </div>
                 </div>
@@ -355,7 +378,8 @@
                                             </td>
                                             <td>
                                                 <span class="text-danger">
-                                                    {{group.value.charge - group.value.payment | number : '1.2-2'}}</span>
+                                                    {{group.value.charge - group.value.payment | number :
+                                                    '1.2-2'}}</span>
                                             </td>
 
                                             <td class="no-wrap-td">
@@ -608,7 +632,8 @@
                                                             <a *ngIf="i != 0" class="text-danger m-l-10"
                                                                 (click)="deleteRow(i,group)">
                                                                 Remove
-                                                            </a></div>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </mat-card>
 
@@ -662,7 +687,8 @@
                     Examination Submission Documents
                     <span class="info ondemand-info m-l-10"
                         matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
-                        matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+                        matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span>
+                </div>
                 <div class="content-wrapper-main-title bill-status" fxFlex="50">Original Submission</div>
             </mat-card-header>
             <mat-divider></mat-divider>
@@ -714,7 +740,7 @@
                 </div> -->
                 <div class="info-alert m-t-20">
                     <i class="fa fa-info-circle p-r-5"></i>Uploaded documents should not exceed 300 dpi
-                  </div>
+                </div>
                 <div fxLayout="row wrap" class="w-100">
                     <div fxFlex="70" fxFlex.sm="100" fxFlex.xs="100" class="note">
                         <mat-icon>info</mat-icon> Note : Supported file formats: .pdf, .doc, .docx
@@ -753,7 +779,8 @@
                                         <span *ngIf="column == 'complete'">
                                             <a class="text-ternary m-r-10"
                                                 (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
-                                                *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly ? 'Generate & Download' : element?.completed_document?.file_name}}
+                                                *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly
+                                                ? 'Generate & Download' : element?.completed_document?.file_name}}
                                                 <i class="fas fa-download"></i></a>
 
                                             <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"
@@ -765,10 +792,10 @@
                                                 (change)="addCompleteDoc($event,element)" hidden
                                                 accept=".pdf, .doc, .docx" required>
                                         </span>
-                                        <span
-                                            *ngIf="column == 'document_type'">{{element?.document_type | titlecase}}</span>
-                                        <span
-                                            *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy hh:mm a'}}</span>
+                                        <span *ngIf="column == 'document_type'">{{element?.document_type |
+                                            titlecase}}</span>
+                                        <span *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy
+                                            hh:mm a'}}</span>
                                         <span *ngIf="column == 'action'">
                                             <!-- <a class="text-success m-r-10" (click)="download(element)">Download</a> -->
                                             <input type="file" #uploader hidden
@@ -800,44 +827,47 @@
                                             <div>
                                                 <span>File Name</span>
                                                 <span> {{element?.form_name}} </span>
-                                            </div> 
+                                            </div>
                                             <div>
                                                 <span>Download Partial Document</span>
                                                 <span> <a class="text-ternary m-r-10"
-                                                    (click)="getGenerateBillingForm(element?.partial_document?.id)"
-                                                    *ngIf="element?.partial_document">Generate & Download
-                                                    <i class="fas fa-download"></i></a></span>
-                                            </div> 
+                                                        (click)="getGenerateBillingForm(element?.partial_document?.id)"
+                                                        *ngIf="element?.partial_document">Generate & Download
+                                                        <i class="fas fa-download"></i></a></span>
+                                            </div>
                                             <div>
                                                 <span>Complete</span>
                                                 <span> <a class="text-ternary m-r-10"
-                                                    (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
-                                                    *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly ? 'Generate & Download' : element?.completed_document?.file_name}}
-                                                    <i class="fas fa-download"></i></a>
-    
-                                                <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"
-                                                    class="m-r-10 no-wrap-td" (click)="uploader.click()">
-                                                    Upload Completed Form
-                                                    <i class="fa fa-upload m-b-3"></i>
-                                                </a>
-                                                <input type="file" #uploader hidden
-                                                    (change)="addCompleteDoc($event,element)" hidden
-                                                    accept=".pdf, .doc, .docx" required></span>
-                                            </div> 
+                                                        (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
+                                                        *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly
+                                                        ? 'Generate & Download' :
+                                                        element?.completed_document?.file_name}}
+                                                        <i class="fas fa-download"></i></a>
+
+                                                    <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"
+                                                        class="m-r-10 no-wrap-td" (click)="uploader.click()">
+                                                        Upload Completed Form
+                                                        <i class="fa fa-upload m-b-3"></i>
+                                                    </a>
+                                                    <input type="file" #uploader hidden
+                                                        (change)="addCompleteDoc($event,element)" hidden
+                                                        accept=".pdf, .doc, .docx" required></span>
+                                            </div>
                                             <div>
                                                 <span>Action</span>
                                                 <span> <input type="file" #uploader hidden
-                                                    (change)="addCompleteDoc($event,element)" hidden
-                                                    accept=".pdf, .doc, .docx" required>
-                                                <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X'"
-                                                    class="text-danger no-wrap-td"
-                                                    (click)=" element?.completed_document ? uploader.click() : ''">Remove
-                                                    and Reupload
-                                                </a>
-                                                <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"
-                                                    (click)="deleteDocument(element?.completed_document,true)">Remove
-                                                </a> </span>
-                                            </div> 
+                                                        (change)="addCompleteDoc($event,element)" hidden
+                                                        accept=".pdf, .doc, .docx" required>
+                                                    <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X'"
+                                                        class="text-danger no-wrap-td"
+                                                        (click)=" element?.completed_document ? uploader.click() : ''">Remove
+                                                        and Reupload
+                                                    </a>
+                                                    <a *ngIf="element?.form_name == 'Custom'"
+                                                        class="text-danger no-wrap-td"
+                                                        (click)="deleteDocument(element?.completed_document,true)">Remove
+                                                    </a> </span>
+                                            </div>
                                         </div>
                                         <!-- <div class="responsive-table">
                                             <div><span>File Name</span><span> {{element?.file_name}} </span></div>
@@ -942,16 +972,19 @@
                                             <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
                                             <span *ngSwitchCase="'SFTP'">Billed On Demand</span>
                                         </span>
-                                        <span *ngIf="column == 'date'"
-                                            class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
+                                        <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date_of_request |
+                                            date:'MM-dd-yyyy'}}</span>
                                         <span *ngIf="column == 'recipients'"><span
-                                                *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last ? ', ' : ''}}</span></span>
+                                                *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last
+                                                ? ', ' : ''}}</span></span>
                                         <span *ngIf="column == 'download' && element?.send">
                                             <a class="text-success"
                                                 (click)="$event.stopPropagation();downloadDocumet(element?.send)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'payor_response_message'">
-                                            {{element?.payor_response_message?.length ? element?.payor_response_message[0]?._attributes?.MessageText :  element?.payor_response_message?._attributes?.MessageText}}
+                                            {{element?.payor_response_message?.length ?
+                                            element?.payor_response_message[0]?._attributes?.MessageText :
+                                            element?.payor_response_message?._attributes?.MessageText}}
                                         </span>
                                     </div>
                                     <div *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
@@ -960,11 +993,12 @@
                                         </span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'" class="no-wrap-td">{{element?.action}}</span>
-                                        <span *ngIf="column == 'date'"
-                                            class="no-wrap-td">{{element?.date_of_request | date:'MM-dd-yyyy'}}</span>
+                                        <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date_of_request |
+                                            date:'MM-dd-yyyy'}}</span>
                                         <span *ngIf="column == 'recipients'"></span>
                                         <span *ngIf="column == 'download'">
-                                            <a class="text-success" (click)="$event.stopPropagation();downloadDocumet(element)">Download</a>
+                                            <a class="text-success"
+                                                (click)="$event.stopPropagation();downloadDocumet(element)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'payor_response_message'">
                                         </span>
@@ -1016,7 +1050,9 @@
                                                 <div><span>Download Sent Documents </span><a class="text-success"
                                                         (click)="downloadDocumet(element?.send)">Download</a></div>
                                                 <div><span>Further Information</span>
-                                                    {{element?.payor_response_message?.length ? element?.payor_response_message[0]?._attributes?.MessageText :  element?.payor_response_message?._attributes?.MessageText}}
+                                                    {{element?.payor_response_message?.length ?
+                                                    element?.payor_response_message[0]?._attributes?.MessageText :
+                                                    element?.payor_response_message?._attributes?.MessageText}}
                                                 </div>
                                             </section>
 
@@ -1029,7 +1065,8 @@
                                                 </div>
                                                 <div><span>Recipients</span></div>
                                                 <div><span>Download Sent Documents </span><a class="text-success"
-                                                        (click)="$event.stopPropagation();downloadDocumet(element)">Download</a></div>
+                                                        (click)="$event.stopPropagation();downloadDocumet(element)">Download</a>
+                                                </div>
                                                 <div><span>Further Information</span></div>
                                             </section>
                                         </div>
