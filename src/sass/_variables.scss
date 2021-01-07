@@ -1465,7 +1465,7 @@ input:-webkit-autofill {
         button {
           float: right;
           margin-top: -5px;
-          max-width: fit-content;
+          min-width: 105px;
         }
       }
       mat-divider {
