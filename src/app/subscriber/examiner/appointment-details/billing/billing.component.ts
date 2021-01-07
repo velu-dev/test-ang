@@ -1860,25 +1860,36 @@ export class billingOnDemandDialog {
     //   this.alertService.openSnackBar("Document not found", "error");
     //   return;
     // }
-    if (this.selection1.selected.length > 12) {
-      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
-      return;
-    }
-    if (!this.data.is_w9_form) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId, { isPopupValidate: true }).subscribe(res => {
+      if (this.selection1.selected.length > 12) {
+        this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+        return;
+      }
+      if (!this.data.is_w9_form) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Bill on demand', message: "W9 Form not included. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.downloadMethod();
+          }
+        })
+        return
+      } else {
+        this.downloadMethod()
+      }
+    }, error => {
+      const dialogRef = this.dialog.open(BillingAlertComponent, {
         width: '500px',
-        data: { title: 'Bill on demand', message: "W9 Form not included. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true, proceed: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
           this.downloadMethod();
         }
       })
-      return
-    } else {
-      this.downloadMethod()
-    }
-
+    })
   }
 
   downloadMethod() {

@@ -20,6 +20,9 @@ export class BillingAlertComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close({ data: false });
   }
+  onProceedClick(): void {
+    this.dialogRef.close({ data: true });
+  }
   // onYesClick(): void {
   //   this.dialogRef.close(
   //     { data: true }
