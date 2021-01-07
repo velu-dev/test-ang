@@ -62,8 +62,9 @@
         <mat-card>
             <mat-card-header>
                 <div class="content-wrapper-main-title text-danger">Incomplete Information
-                    <button mat-raised-button class="filled-gray m-b-5" (click)="expandDetailName = !expandDetailName">
-                        Collapse <i class="p-l-5 fas"[ngClass]="{'fa-angle-down': expandDetailName,'fa-angle-up': !expandDetailName}"></i>
+                    <button mat-raised-button class="filled-gray m-b-5" (click)="isExpandDetail = !isExpandDetail">
+                        {{isExpandDetail ? "Collapse" : "Expand"}} <i class="p-l-5 fas"
+                            [ngClass]="{'fa-angle-down': isExpandDetail,'fa-angle-up': !isExpandDetail}"></i>
                     </button>
                 </div>
             </mat-card-header>
@@ -119,7 +120,7 @@
                                 <span class="text-danger">
                                     <mat-icon> error</mat-icon> {{incompleteInfo.name}}
                                 </span>
-                                <div class="incomplete-details" *ngIf="!expandDetailName">
+                                <div class="incomplete-details" *ngIf="isExpandDetail">
                                     <ol>
                                         <li *ngFor="let val of incompleteInfo.value">{{val}}</li>
                                     </ol>

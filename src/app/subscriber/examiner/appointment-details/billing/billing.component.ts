@@ -118,7 +118,7 @@ export class BilllableBillingComponent implements OnInit {
   states: any;
   incompleteInformation: any;
   isIncompleteError: any = true;
-  expandDetailName = "";
+  isExpandDetail = true;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
