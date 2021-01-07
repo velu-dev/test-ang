@@ -1834,7 +1834,7 @@ export class billingOnDemandDialog {
     }, error => {
       const dialogRef = this.dialog.open(BillingAlertComponent, {
         width: '500px',
-        data: { title: 'Incomplete Information', incompleteInformation: error.error.data }
+        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         return
@@ -1883,7 +1883,7 @@ export class billingOnDemandDialog {
     }, error => {
       const dialogRef = this.dialog.open(BillingAlertComponent, {
         width: '500px',
-        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true, proceed: true }
+        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: false, cancel: true, proceed: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {

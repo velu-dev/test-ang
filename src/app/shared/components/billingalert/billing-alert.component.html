@@ -15,12 +15,12 @@
         <div class="incomplete-modules">
           <ul>
             <li *ngFor="let incompleteInfo of data?.incompleteInformation">
-             <span>
-              <i class="fa fa-exclamation-circle" aria-hidden="true"></i>{{incompleteInfo?.name}}
-              <i class="fas" *ngIf="incompleteInfo?.value.length != 0"
-                [ngClass]="{'fa-angle-down': expandDetailName != incompleteInfo?.name,'fa-angle-up': expandDetailName == incompleteInfo?.name}"
-                (click)="expandDetailName = incompleteInfo?.name"></i>
-             </span>
+              <span>
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>{{incompleteInfo?.name}}
+                <i class="fas" *ngIf="incompleteInfo?.value.length != 0"
+                  [ngClass]="{'fa-angle-down': expandDetailName != incompleteInfo?.name,'fa-angle-up': expandDetailName == incompleteInfo?.name}"
+                  (click)="expandDetailName = incompleteInfo?.name"></i>
+              </span>
               <div *ngIf="expandDetailName == incompleteInfo?.name">
                 <ol *ngFor="let value of incompleteInfo?.value">
                   <li>{{value}}</li>
@@ -37,8 +37,8 @@
     </div>
   </div>
   <div mat-dialog-actions class="disable-actions text-center p-t-15" fxFlex="80">
-    <button mat-stroked-button (click)="onNoClick()" class="yes m-r-5">OK</button>
-    <!-- <button mat-stroked-button class="no m-r-5">Cancel</button> -->
+    <button mat-stroked-button (click)="onNoClick()" *ngIf="data?.ok" class="yes m-r-5">OK</button>
+    <button mat-stroked-button (click)="onNoClick()" *ngIf="data?.cancel" class="no m-r-5">Cancel</button>
     <button mat-stroked-button (click)="onProceedClick()" *ngIf="data?.proceed" class="yes m-r-5">Proceed</button>
   </div>
 </div>
