@@ -72,7 +72,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   }
   @ViewChild("calendar", { static: false }) calendar: FullCalendarComponent;
   @ViewChild("intake", { static: false }) intake;
-  
+
   // calendarComponent: FullCalendarComponent;
   events = [];
   calendarVisible = true;
@@ -146,7 +146,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
           }
         })
       })
-    }else{
+    } else {
       this.loadAllEvents();
     }
     this.defaultView = this.CalendarView ? "timeGridWeek" : "dayGridMonth";
@@ -377,7 +377,7 @@ export class EventdetailDialog {
     }
   }
   constructor(private cookieService: CookieService, private claimService: ClaimService, private router: Router,
-     public dialogRef: MatDialogRef<EventdetailDialog>,public dialog: MatDialog,
+    public dialogRef: MatDialogRef<EventdetailDialog>, public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any, private examinerService: ExaminerService, private alertService: AlertService) {
     this.eventDetail = { title: data.event.title, start: data.event.start, end: data.event.end, backgroundColor: data.event.backgroundColor, extendedProps: data.event.extendedProps };
     dialogRef.disableClose = true;
@@ -396,7 +396,7 @@ export class EventdetailDialog {
       this.getExaminationStatus(data.event.extendedProps)
     }
     this.event = data.event.extendedProps;
-   // this.examination_notes = data.event.extendedProps.description;
+    // this.examination_notes = data.event.extendedProps.description;
     // this.claimService.seedData(this.data.extendedProps.is_deposition ? 'deposition_status' : 'calendar_examination_status').subscribe(curres => {
     //   this.examinationStatus = curres.data;
     //   this.getExaminationStatus(data.extendedProps)
@@ -425,7 +425,7 @@ export class EventdetailDialog {
   edit() {
     this.textDisable = false;
     this.isEdit = true;
-   // this.examination_notes = this.eventNotes;
+    // this.examination_notes = this.eventNotes;
     this.examination_status = this.eventStatusID;
   }
   examination_notes = '';
@@ -456,17 +456,17 @@ export class EventdetailDialog {
           Object.getOwnPropertyDescriptor(this.eventDetail.extendedProps.status, exam.examination_status);
           this.status = exam[this.statusName];
           this.eventStatus = exam.examination_status;
-          // this.eventColor
         }
       })
+      this.selectedEventColor = res.data.examination_status_color;
+      this.eventDetail.backgroundColor = res.data.examination_status_color;
       this.eventStatusID = res.data.examination_status;
       this.eventNotes = res.data.examination_notes;
       this.examination_status = res.data.examination_status;
       this.examination_notes = '';
       this.textDisable = true;
       this.isEdit = false;
-      this.selectedEventColor = this.eventColor;
-      this.eventDetail.backgroundColor = this.eventColor;
+      // this.selectedEventColor = this.eventColor;
       this.alertService.openSnackBar(res.message, 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
