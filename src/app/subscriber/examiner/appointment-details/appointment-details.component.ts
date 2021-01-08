@@ -1131,6 +1131,7 @@ loadActivity(){
           })
           this.documentsData = new MatTableDataSource(this.tabData);
           this.getDocumentData();
+          this.loadActivity();
           this.alertService.openSnackBar("File deleted successfully", 'success');
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
