@@ -23,6 +23,13 @@ export class BillingAlertComponent implements OnInit {
   onProceedClick(): void {
     this.dialogRef.close({ data: true });
   }
+  onExpandClick(value) {
+    if (this.expandDetailName == value) {
+      this.expandDetailName = ""
+    } else {
+      this.expandDetailName = value;
+    }
+  }
   // onYesClick(): void {
   //   this.dialogRef.close(
   //     { data: true }

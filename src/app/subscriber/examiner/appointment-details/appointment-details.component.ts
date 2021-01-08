@@ -255,7 +255,13 @@ export class AppointmentDetailsComponent implements OnInit {
       this.notesDataSource.paginator.firstPage();
     }
   }
-
+loadActivity(){
+  this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
+    this.activityLog = new MatTableDataSource(res.data);
+    this.activityLog.sort = this.sort;
+    this.activityLog.paginator = this.paginator;
+  })
+}
   isExamTypeChanged = false;
   examinerId = null;
   examinerName = "";
@@ -265,11 +271,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.billableId = params.billId;
       this.claim_id = params.claim_id;
-      this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
-        this.activityLog = new MatTableDataSource(res.data);
-        this.activityLog.sort = this.sort;
-        this.activityLog.paginator = this.paginator;
-      })
+      this.loadActivity();
       this.examinerService.getNotes(this.billableId).subscribe(notes => {
         if (notes.data) {
           notes.data.map(data => {
@@ -1044,7 +1046,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinerService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
       this.claimService.updateActionLog({ type: "Intake", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.id] }, true).subscribe(log => {
-
+        this.loadActivity();
       })
       saveAs(res.signed_file_url, element.file_name);
     })
