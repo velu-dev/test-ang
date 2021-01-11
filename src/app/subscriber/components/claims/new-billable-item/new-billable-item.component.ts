@@ -402,6 +402,7 @@ export class NewBillableItemComponent implements OnInit {
     this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.billable_item.value.claimant_id = this.claimantId;
+    this.billable_item.value.claim_id = +this.claimId;
     if (!this.isEdit) {
       console.log(this.claimantId, this.billable_item.value)
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
