@@ -90,61 +90,61 @@ export class NewBillableItemComponent implements OnInit {
     this.isLoading = true;
     this.claimService.seedData('exam_type').subscribe(res => {
       this.examTypes = res.data;
-    })
-    this.route.params.subscribe(param => {
-      this.claimId = param.claim_id;
-      console.log(param)
-      if (param.claimant_id)
-        this.claimantId = param.claimant_id;
-      this.claimService.getClaim(this.claimId).subscribe(claim => {
-        this.logger.log("claim", claim);
-        this.claimantId = claim.data.claimant_details.id;
-        console.log(this.claimantId)
-        //to send claim details exam type
-        this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
-          console.log(claimant)
-          this.claimant = claimant.data[0]
-          this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
-        })
-        this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(res => {
-          this.procuderalCodes = res.data;
-        })
-        let Examtype = { exam_type_code: "", exam_name: "" };
-        this.examTypes.map(exam => {
-          if (exam.id == claim.data.claim_details.exam_type_id) {
-            Examtype = exam;
-          }
-        })
-        this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number, exam_type_code: Examtype.exam_type_code, exam_name: Examtype.exam_name }
-      })
-      if (param.billable) {
-        this.isEdit = true
-        this.billableId = param.billable;
-        this.claimService.getBillableItemSingle(param.billable).subscribe(res => {
-          if (res['data'].exam_type.primary_language_spoken) {
-            this.primary_language_spoken = true;
-          }
-          this.isChecked = res.data.exam_type.is_psychiatric;
-          this.claimService.seedData("modifier").subscribe(seed => {
-            this.modifierList = seed.data;
-            if (this.isChecked) {
-              this.modifiers = this.modifierList;
-            } else {
-              seed.data.map(modifier => {
-                if (modifier.modifier_code != "96")
-                  this.modifiers.push(modifier);
-              })
+      this.route.params.subscribe(param => {
+        this.claimId = param.claim_id;
+        console.log(param)
+        if (param.claimant_id)
+          this.claimantId = param.claimant_id;
+        this.claimService.getClaim(this.claimId).subscribe(claim => {
+          this.logger.log("claim", claim);
+          this.claimantId = claim.data.claimant_details.id;
+          console.log(this.claimantId)
+          //to send claim details exam type
+          this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
+            console.log(claimant)
+            this.claimant = claimant.data[0]
+            this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
+          })
+          this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(res => {
+            this.procuderalCodes = res.data;
+          })
+          let Examtype = { exam_type_code: "", exam_name: "" };
+          this.examTypes.map(exam => {
+            if (exam.id == claim.data.claim_details.exam_type_id) {
+              Examtype = exam;
             }
           })
-          this.billable_item.patchValue(res['data'])
-          //this.examinarChange(res['data'].)
-          if (res['data'].appointment.examiner_id != null) {
-            let ex = { value: res['data'].appointment.examiner_id, address_id: res['data'].appointment.examiner_service_location_id }
-            this.examinarChange(ex)
-          }
-          this.contactType = res['data'].intake_call.call_type
+          this.claimDetails = { claim_number: claim.data.claim_details.claim_number, exam_type_id: claim.data.claim_details.exam_type_id, wcab_number: claim.data.claim_details.wcab_number, exam_type_code: Examtype.exam_type_code, exam_name: Examtype.exam_name }
         })
-      }
+        if (param.billable) {
+          this.isEdit = true
+          this.billableId = param.billable;
+          this.claimService.getBillableItemSingle(param.billable).subscribe(res => {
+            if (res['data'].exam_type.primary_language_spoken) {
+              this.primary_language_spoken = true;
+            }
+            this.isChecked = res.data.exam_type.is_psychiatric;
+            this.claimService.seedData("modifier").subscribe(seed => {
+              this.modifierList = seed.data;
+              if (this.isChecked) {
+                this.modifiers = this.modifierList;
+              } else {
+                seed.data.map(modifier => {
+                  if (modifier.modifier_code != "96")
+                    this.modifiers.push(modifier);
+                })
+              }
+            })
+            this.billable_item.patchValue(res['data'])
+            //this.examinarChange(res['data'].)
+            if (res['data'].appointment.examiner_id != null) {
+              let ex = { value: res['data'].appointment.examiner_id, address_id: res['data'].appointment.examiner_service_location_id }
+              this.examinarChange(ex)
+            }
+            this.contactType = res['data'].intake_call.call_type
+          })
+        }
+      })
     })
     this.isLoading = false;
   }
