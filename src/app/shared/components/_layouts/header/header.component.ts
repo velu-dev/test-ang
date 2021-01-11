@@ -134,7 +134,12 @@ export class HeaderComponent implements OnInit {
         startWith(''),
         map(claimant => claimant ? this._filterClaimants(claimant) : this.claimants.slice())
       );
-
+      window.onresize = () => {
+       this.ngOnInit();
+       this.isOpen = this.inputSideNav.opened;
+       this.isClosed.emit(this.isOpen)
+      };
+      
   }
   private _filterClaimants(value: string): Claimant[] {
     const filterValue = value.toLowerCase();
