@@ -17,7 +17,7 @@
     td {
       color: $dark-gray;
       padding: 0px 10px !important;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid $table-border;
       white-space: break-spaces;
       word-break: break-word;
     }
