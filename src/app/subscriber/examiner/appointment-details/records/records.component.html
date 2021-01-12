@@ -1,10 +1,10 @@
 <div class="billable-item-status">
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100">
-      <div class="main-title">Record Review On Demand Status <span class="info ondemand-info m-l-10"
+      <div class="main-title">Record Summary On Demand Status <span class="info ondemand-info m-l-10"
           matTooltip="The Record Summarizer will send progress updates that will be reflected in the status here."
           matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">View the progress of Record Review service here.</p>
+      <p class="description">View the progress of Record Summary service here.</p>
       <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class">
       </mat-progress-bar>
       <div class="text-center">{{recordData?.on_demand_status}}</div>
@@ -141,7 +141,7 @@
         </mat-checkbox>
         <button mat-stroked-button [disabled]="recordData?.is_exam_type_changed || recordData?.isExaminerDisabled"
           (click)="onDemandSubmit()" class="outline-success huge-btn">
-          Record Review On Demand
+          Record Summary On Demand
         </button>
       </div>
     </div>
@@ -161,7 +161,7 @@
           matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and the document recipients."
           matTooltipPosition="above">
           <i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">This table lists the record document that were sent to be review.</p>
+      <p class="description">This table lists the record document that were sent to be Summary.</p>
 
       <div class="user-detail vertical-fixed default-cursor">
         <table mat-table [dataSource]="dataSoruceOut" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
@@ -213,7 +213,7 @@
                       <a class="text-success" (click)="inOutdownload(element?.send, element)">Download</a>
                     </span>
                   </div>
-                  <div><span>Download Record Review</span>
+                  <div><span>Download Record Summary</span>
                     <span *ngIf="element?.received">
                       <a class="text-success" (click)="inOutdownload(element?.received, element)">Download</a>
                     </span>
@@ -235,11 +235,11 @@
 
   <!-- <div fxLayout="row wrap" class="proof-of-service m-t-50">
     <div fxFlex="100">
-      <div class="main-title">View Completed Record Review <span class="info ondemand-info m-l-10"
+      <div class="main-title">View Completed Record Summary <span class="info ondemand-info m-l-10"
           matTooltipPosition="above"
           matTooltip="If there are multiple documents, they will be returned in a zipped folder.">
           <i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">The Record Review will be available on this table when it is completed. </p>
+      <p class="description">The Record Summary will be available on this table when it is completed. </p>
       <div class="user-detail vertical-fixed">
         <table mat-table [dataSource]="dataSoruceIn" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay1; let i=index">

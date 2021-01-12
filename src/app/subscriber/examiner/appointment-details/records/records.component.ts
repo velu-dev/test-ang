@@ -69,7 +69,7 @@ export class RecordsComponent implements OnInit {
         this.columnName = ["", "File Name"]
         this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
-        this.columnName = ["", "File Name", "Document Pages", "Rush Request?", "Date Requested ", "Date Received", "Download Record Document", "Download Record Review"]
+        this.columnName = ["", "File Name", "Document Pages", "Rush Request?", "Date Requested ", "Date Received", "Download Record Document", "Download Record Summary"]
         this.columnsToDisplay = ['doc_image', 'file_name', 'no_of_units', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
       }
     })
@@ -293,7 +293,7 @@ export class RecordsComponent implements OnInit {
       service_provider_id: this.recordData.documets[0].service_provider_id // default 3
     }
     this.onDemandService.requestCreate(data).subscribe(record => {
-      this.alertService.openSnackBar("Record Review On Demand created successfully", 'success');
+      this.alertService.openSnackBar("Record Summary On Demand created successfully", 'success');
       this.getRecord();
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
