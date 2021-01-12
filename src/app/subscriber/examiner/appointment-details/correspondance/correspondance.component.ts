@@ -570,8 +570,14 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
   }
 
-  inOutdownload(data, element?) {
-    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.document_id], is_proof_of_service: true }).subscribe(res => {
+  inOutdownload(data, element?, status?) {
+    let is_proof_of_service: any;
+    if (status == 'download') {
+      is_proof_of_service = false;
+    } else {
+      is_proof_of_service = true;
+    }
+    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.document_id], is_proof_of_service: is_proof_of_service }).subscribe(res => {
     })
     saveAs(data.file_url, data.file_name, '_self');
   }
