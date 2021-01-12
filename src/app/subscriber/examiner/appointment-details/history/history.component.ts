@@ -5,9 +5,10 @@ import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -38,7 +39,7 @@ export class HistoryComponent implements OnInit {
   inFile: any = [];
   statusBarValues = { value: null, status: '', class: '' }
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
-    private onDemandService: OnDemandService, private alertService: AlertService) {
+    private onDemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog) {
 
     this.route.params.subscribe(param => {
       this.paramsId = param;
@@ -136,11 +137,22 @@ export class HistoryComponent implements OnInit {
     // })
 
     this.onDemandService.OnDemandhistory(data).subscribe(history => {
+      
       this.rushRequest = false;
       this.download({ file_url: history.data.file_url, file_name: history.data.file_name })
       this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully", 'success');
       this.getHistory();
     }, error => {
+      if (error.error && error.error.error.data.length) {
+        const dialogRef = this.dialog.open(BillingAlertComponent, {
+          width: '500px',
+          data: { title: 'Incomplete Information', incompleteInformation: error.error.error.data, ok: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          return
+        })
+        return;
+      }
       this.alertService.openSnackBar(error.error.message, 'error');
     })
 
