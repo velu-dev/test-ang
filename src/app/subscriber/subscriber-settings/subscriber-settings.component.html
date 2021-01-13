@@ -485,9 +485,9 @@
                                                             data-tid="elements_examples.form.name_placeholder"
                                                             class="input" type="text" placeholder="Full Name"
                                                             formControlName="name" autocomplete="name">
-                                                        <mat-error *ngIf="!billings.hasError('required')">
+                                                        <!-- <mat-error *ngIf="!billings.hasError('required')">
                                                             Please enter a valid email address
-                                                        </mat-error>
+                                                        </mat-error> -->
                                                     </div>
                                                 </div>
 
@@ -511,48 +511,50 @@
                                                                 placeholder="Email" autocomplete="address-line1">
                                                         </div>
                                                     </div>
-                                                    <div formGroupName="address">
-                                                        <div class="field" fxFlex="50">
-                                                            <label for="street_address_1"
-                                                                data-tid="elements_examples.form.address_label">Street
-                                                                Address
-                                                                1</label>
-                                                            <input id="street_address_1" matInput name="line1"
-                                                                data-tid="elements_examples.form.address_placeholder"
-                                                                class="input" type="text" placeholder="Street Address 1"
-                                                                formControlName="line1" autocomplete="address-line1">
-                                                        </div>
-                                                        <div class="field" fxFlex="50">
-                                                            <label for="street_address_2"
-                                                                data-tid="elements_examples.form.address_label">Street
-                                                                Address
-                                                                2</label>
-                                                            <input id="street_address_2" matInput name="line2"
-                                                                data-tid="elements_examples.form.address_placeholder"
-                                                                class="input" type="text" placeholder="Street Address 2"
-                                                                formControlName="line2" autocomplete="address-line1">
-                                                        </div>
+                                                    <!-- <div formGroupName="address"> -->
+                                                    <div class="field" fxFlex="50">
+                                                        <label for="street_address_1"
+                                                            data-tid="elements_examples.form.address_label">Street
+                                                            Address
+                                                            1</label>
+                                                        <input id="street_address_1" matInput name="line1"
+                                                            data-tid="elements_examples.form.address_placeholder"
+                                                            class="input" type="text" placeholder="Street Address 1"
+                                                            formControlName="address_line1"
+                                                            autocomplete="address-line1">
+                                                    </div>
+                                                    <div class="field" fxFlex="50">
+                                                        <label for="street_address_2"
+                                                            data-tid="elements_examples.form.address_label">Street
+                                                            Address
+                                                            2</label>
+                                                        <input id="street_address_2" matInput name="line2"
+                                                            data-tid="elements_examples.form.address_placeholder"
+                                                            class="input" type="text" placeholder="Street Address 2"
+                                                            formControlName="address_line2"
+                                                            autocomplete="address-line1">
+                                                    </div>
 
-                                                        <div class="row" data-locale-reversible fxLayout="row wrap">
-                                                            <div class="field" fxFlex="50">
-                                                                <label for="example5-city"
-                                                                    data-tid="elements_examples.form.city_label">City</label>
-                                                                <input id="example5-city" matInput name="city"
-                                                                    data-tid="elements_examples.form.city_placeholder"
-                                                                    class="input" type="text" placeholder="City"
-                                                                    formControlName="city"
-                                                                    autocomplete="address-level2">
-                                                            </div>
-                                                            <div class="field" fxFlex="50">
-                                                                <label for="example5-state"
-                                                                    data-tid="elements_examples.form.state_label">State</label>
-                                                                <input id="example5-state" matInput name="state"
-                                                                    data-tid="elements_examples.form.state_placeholder"
-                                                                    class="input empty" type="text"
-                                                                    formControlName="state" placeholder="State"
-                                                                    autocomplete="address-level1">
-                                                            </div>
+                                                    <div class="row" data-locale-reversible fxLayout="row wrap">
+                                                        <div class="field" fxFlex="50">
+                                                            <label for="example5-city"
+                                                                data-tid="elements_examples.form.city_label">City</label>
+                                                            <input id="example5-city" matInput name="city"
+                                                                data-tid="elements_examples.form.city_placeholder"
+                                                                class="input" type="text" placeholder="City"
+                                                                formControlName="address_city"
+                                                                autocomplete="address-level2">
                                                         </div>
+                                                        <div class="field" fxFlex="50">
+                                                            <label for="example5-state"
+                                                                data-tid="elements_examples.form.state_label">State</label>
+                                                            <input id="example5-state" matInput name="state"
+                                                                data-tid="elements_examples.form.state_placeholder"
+                                                                class="input empty" type="text" formControlName="address_state"
+                                                                placeholder="address_state"
+                                                                autocomplete="address-level1">
+                                                        </div>
+                                                        <!-- </div> -->
                                                     </div>
                                                 </div>
                                             </fieldset>

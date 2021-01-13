@@ -158,13 +158,14 @@ export class SubscriberSettingsComponent implements OnInit {
       name: ["", Validators.compose([Validators.required])],
       email: ["", Validators.compose([Validators.email])],
       phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      address: this.formBuilder.group({
-        city: [""],
-        country: ["US"],
-        line1: [""],
-        line2: [""],
-        state: [""]
-      })
+      // address: this.formBuilder.group({
+      address_city: [""],
+      address_country: ["US"],
+      address_line1: [""],
+      address_line2: [""],
+      address_state: [""],
+      address_zip: [""]
+      // })
     })
     let user = JSON.parse(this.cookieService.get('user'));
     this.currentUser = user;
@@ -268,15 +269,19 @@ export class SubscriberSettingsComponent implements OnInit {
       card: this.card,
       billing_details: billingData,
     }
-    this.stripe.createPaymentMethod(data).then(res => {
-      if (res.paymentMethod) {
-        this.isCardSubmit = false;
-        this.onSuccess(res);
-      }
-      if (res.error) {
-        this.onError(res);
-      }
-    });
+    console.log(this.card)
+    this.stripe.createToken(this.card).then(res => {
+      console.log(res)
+    })
+    // this.stripe.createPaymentMethod(data).then(res => {
+    //   if (res.paymentMethod) {
+    //     this.isCardSubmit = false;
+    //     this.onSuccess(res);
+    //   }
+    //   if (res.error) {
+    //     this.onError(res);
+    //   }
+    // });
   }
   onSuccess(token) {
     this.stripeService.createPaymentIntent(token.paymentMethod.id).subscribe(res => {
@@ -441,7 +446,7 @@ export class SubscriberSettingsComponent implements OnInit {
       if (result == null) {
         this.selectedFile = null
         this.signData = this.user['signature'] ? 'data:image/png;base64,' + this.user['signature'] : result;
-       
+
       } else {
         this.userForm.patchValue({ is_new_signature: true })
         this.signData = result;
