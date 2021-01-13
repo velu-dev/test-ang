@@ -982,7 +982,7 @@
                                                 ? ', ' : ''}}</span></span>
                                         <span *ngIf="column == 'download' && element?.send">
                                             <a class="text-success"
-                                                (click)="$event.stopPropagation();downloadDocumet(element?.send)">Download</a>
+                                                (click)="$event.stopPropagation();downloadDocumet(element?.send,element)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'payor_response_message'">
                                             {{element?.payor_response_message?.length ?
@@ -1052,7 +1052,7 @@
                                                 </div>
                                                 <div><span>Recipients</span></div>
                                                 <div><span>Download Sent Documents </span><a class="text-success"
-                                                        (click)="downloadDocumet(element?.send)">Download</a></div>
+                                                        (click)="downloadDocumet(element?.send,element)">Download</a></div>
                                                 <div><span>Further Information</span>
                                                     {{element?.payor_response_message?.length ?
                                                     element?.payor_response_message[0]?._attributes?.MessageText :

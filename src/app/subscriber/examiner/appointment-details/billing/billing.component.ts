@@ -754,10 +754,10 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  downloadDocumet(element) {
+  downloadDocumet(element, details?) {
     this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
-      this.claimService.updateActionLog({ type: "billing", "document_category_id": 8, "claim_id": this.paramsId.claim_id, "billable_item_id": this.paramsId.billId, "documents_ids": [element.document_id] }).subscribe(res => {
+      this.claimService.updateActionLog({ type: "billing", "document_category_id": 8, "claim_id": this.paramsId.claim_id, "billable_item_id": this.paramsId.billId, "documents_ids": [element.document_id ? element.document_id : details.document_id] }).subscribe(res => {
       })
       saveAs(res.signed_file_url, element.file_name);
     })
