@@ -630,17 +630,20 @@ export class CustomDocuments {
         }
         this.file.push(this.selectedFiles[i].name);
       } else {
-        //this.selectedFile = null;
+        this.selectedFiles = null;
+        this.file = [];
         this.fileUpload.nativeElement.value = "";
         this.alertService.openSnackBar("This file type is not accepted", 'error');
         // this.errors = { status: true, message: "This file type is not accepted" };
+        console.log(this.selectedFile)
       }
     }
 
   }
   isUploading = false;
   uploadFile() {
-    if (!this.selectedFile) {
+    console.log(this.selectedFiles)
+    if (!this.selectedFiles) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return;
     }
