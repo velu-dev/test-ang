@@ -32,7 +32,7 @@ $error-border: #db2828;
 // WARNING
 $warning: #a3501c;
 $warning-bg: #fcddca;
-$warning-bg-light:#fdf4ef;
+$warning-bg-light: #fdf4ef;
 $warning-border: #a3501c;
 
 // SUCCESS
@@ -106,7 +106,7 @@ $danger: #db2828;
 
 //table odd row color
 $table-solid: #f8f8f8;
-$table-border :rgba(0, 0, 0, 0.05) ;//table data bottom border
+$table-border: rgba(0, 0, 0, 0.05); //table data bottom border
 //class
 // Matero Variables
 //
@@ -675,6 +675,9 @@ input:-webkit-autofill {
 .grid-list {
   width: 100%;
   display: flex;
+  div {
+    position: relative;
+  }
   div,
   span {
     padding: 5px;
@@ -689,8 +692,11 @@ input:-webkit-autofill {
       color: $text-gray;
       &::after {
         content: ":";
-        display: inline-flex;
-        float: right;
+        // display: inline-flex;
+        // float: right;
+        position: absolute;
+        top: 4;
+        right: 0;
       }
     }
   }
