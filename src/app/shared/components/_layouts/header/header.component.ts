@@ -38,34 +38,34 @@ export class HeaderComponent implements OnInit {
   filteredClaimants: Observable<Claimant[]>;
   @Output() isClosed: EventEmitter<any> = new EventEmitter<any>();
   claimants: Claimant[] = [
-    {
-      name: 'Albert Gomez',
-      examiner: 'Lincoln Yee MD',
-      exam_type: 'Examination',
-      claim_number: '2018376761',
-      dos: '06/13/2020',
-    },
-    {
-      name: 'Venkatesan Mariyappan',
-      examiner: 'Martin Sutter',
-      exam_type: 'Deposition',
-      claim_number: 'wc-44859883',
-      dos: '06/13/2020',
-    },
-    {
-      name: 'Sarath Selvaraj SS',
-      examiner: 'Lincoln Yee MD',
-      exam_type: 'Examination',
-      claim_number: '4567435778',
-      dos: '06/13/2020',
-    },
-    {
-      name: 'Rajan Mariappan',
-      examiner: 'Lincoln Yee MD',
-      exam_type: 'Examination',
-      claim_number: '2018376761',
-      dos: '06/13/2020',
-    }
+    // {
+    //   name: 'Albert Gomez',
+    //   examiner: 'Lincoln Yee MD',
+    //   exam_type: 'Examination',
+    //   claim_number: '2018376761',
+    //   dos: '06/13/2020',
+    // },
+    // {
+    //   name: 'Venkatesan Mariyappan',
+    //   examiner: 'Martin Sutter',
+    //   exam_type: 'Deposition',
+    //   claim_number: 'wc-44859883',
+    //   dos: '06/13/2020',
+    // },
+    // {
+    //   name: 'Sarath Selvaraj SS',
+    //   examiner: 'Lincoln Yee MD',
+    //   exam_type: 'Examination',
+    //   claim_number: '4567435778',
+    //   dos: '06/13/2020',
+    // },
+    // {
+    //   name: 'Rajan Mariappan',
+    //   examiner: 'Lincoln Yee MD',
+    //   exam_type: 'Examination',
+    //   claim_number: '2018376761',
+    //   dos: '06/13/2020',
+    // }
   ];
   // notifications = [
   //   { name: "Name here", message: "Message content here", date: new Date() },
@@ -134,7 +134,12 @@ export class HeaderComponent implements OnInit {
         startWith(''),
         map(claimant => claimant ? this._filterClaimants(claimant) : this.claimants.slice())
       );
-
+      window.onresize = () => {
+       this.ngOnInit();
+       this.isOpen = this.inputSideNav.opened;
+       this.isClosed.emit(this.isOpen)
+      };
+      
   }
   private _filterClaimants(value: string): Claimant[] {
     const filterValue = value.toLowerCase();

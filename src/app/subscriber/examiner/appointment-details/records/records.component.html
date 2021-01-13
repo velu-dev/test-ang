@@ -161,7 +161,7 @@
           matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and the document recipients."
           matTooltipPosition="above">
           <i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">This table lists the record document that were sent to be summarized.</p>
+      <p class="description">This table lists the record document that were sent to be Summary.</p>
 
       <div class="user-detail vertical-fixed default-cursor">
         <table mat-table [dataSource]="dataSoruceOut" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
@@ -239,7 +239,7 @@
           matTooltipPosition="above"
           matTooltip="If there are multiple documents, they will be returned in a zipped folder.">
           <i class="fa fa-info" aria-hidden="true"></i></span></div>
-      <p class="description">The record summary will be available on this table when it is completed. </p>
+      <p class="description">The Record Summary will be available on this table when it is completed. </p>
       <div class="user-detail vertical-fixed">
         <table mat-table [dataSource]="dataSoruceIn" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay1; let i=index">
