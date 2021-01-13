@@ -570,8 +570,14 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
   }
 
-  inOutdownload(data, element?) {
-    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.document_id], is_proof_of_service: true }).subscribe(res => {
+  inOutdownload(data, element?, status?) {
+    let is_proof_of_service: any;
+    if (status == 'download') {
+      is_proof_of_service = false;
+    } else {
+      is_proof_of_service = true;
+    }
+    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.document_id], is_proof_of_service: is_proof_of_service }).subscribe(res => {
     })
     saveAs(data.file_url, data.file_name, '_self');
   }
@@ -624,17 +630,20 @@ export class CustomDocuments {
         }
         this.file.push(this.selectedFiles[i].name);
       } else {
-        //this.selectedFile = null;
+        this.selectedFiles = null;
+        this.file = [];
         this.fileUpload.nativeElement.value = "";
         this.alertService.openSnackBar("This file type is not accepted", 'error');
         // this.errors = { status: true, message: "This file type is not accepted" };
+        console.log(this.selectedFile)
       }
     }
 
   }
   isUploading = false;
   uploadFile() {
-    if (!this.selectedFile) {
+    console.log(this.selectedFiles)
+    if (!this.selectedFiles) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return;
     }
