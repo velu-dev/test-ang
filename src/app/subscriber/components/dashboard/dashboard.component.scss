@@ -52,17 +52,17 @@
                                 padding: 5px 10px;
                                 border-radius: 3px;
                                 @media screen and (min-width: 1024px) {
-                                    margin-right: 20px;
+                                    margin: 5px 0 5px 20px;
                                     min-width: 100px;
-                                    &:last-child {
-                                        margin-right: 0;
-                                    }
+                                    // &:last-child {
+                                    //     margin-right: 0;
+                                    // }
                                 }
                                 @media screen and (max-width: 1024px) and (min-width: 481px) {
-                                    margin-right: 20px;
-                                    &:last-child {
-                                        margin-right: 0;
-                                    }
+                                    margin: 5px 0 5px 20px;
+                                    // &:last-child {
+                                    //     margin-right: 0;
+                                    // }
                                 }
 
                                 @media screen and (max-width: 568px) {

@@ -92,7 +92,7 @@ tr.detail-row {
         padding: 0 0 5px 0;
       }
       span {
-        padding: 0;
+        // padding: 0;
         align-self: baseline;
         word-break: break-word;
         @media only screen and (max-width: 568px) {
@@ -108,6 +108,7 @@ tr.detail-row {
           font-size: $font-size-1;
           color: $ternary;
           position: relative;
+          padding: 0 10px 0 0;
           @media only screen and (max-width: 568px) {
             min-width: 120px;
             width: 100%;
@@ -118,13 +119,13 @@ tr.detail-row {
           }
           &::after {
             content: ":";
-            display: contents;
-            float: right;
-            padding-right: 5px;
-            color: $text-gray;
+            // display: inline-flex;
+            // float: right;
+            // padding-right: 5px;
             position: absolute;
-            top: 0px;
-            right: 0;
+            top: 0;
+            right: 2px;
+            color: $text-gray;
             @media only screen and (max-width: 568px) {
               content: ":";
               display: inline-flex;
