@@ -236,9 +236,7 @@ export class SubscriberSettingsComponent implements OnInit {
         this.columnsToDisplay = ['invoice_number', 'amount', "status", "date", "action",]
       }
     })
-    this.userService.listCard().subscribe(res => {
-      this.cardDataSource = new MatTableDataSource(res.data)
-    })
+    this.listCard();
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)
       this.user = res.data;
@@ -277,6 +275,15 @@ export class SubscriberSettingsComponent implements OnInit {
       this.userForm.patchValue(userDetails)
     })
     this.dataSourceList.data = TREE_DATA;/* Tree view */
+  }
+  listCard() {
+    this.userService.listCard().subscribe(res => {
+      this.cardDataSource = new MatTableDataSource(res.data)
+    })
+  }
+  isViewInit: boolean = false;
+  ngAfterViewInit() {
+    this.isViewInit = true;
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   billings: FormGroup;
@@ -344,6 +351,7 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   publicKey: any;
   addCard() {
+    this.hideCard = false;
     this.stripeService.getPK().subscribe(res => {
       this.isAddCreditCard = true;
       this.publicKey = res.token;
@@ -402,7 +410,6 @@ export class SubscriberSettingsComponent implements OnInit {
       card: this.card,
       billing_details: billingData,
     }
-    console.log(this.card)
     this.stripe.createToken(this.card, {
       name: this.billings.value.name,
       address_line1: this.billings.value.address_line1,
@@ -412,9 +419,11 @@ export class SubscriberSettingsComponent implements OnInit {
       address_zip: this.billings.value.address_zip,
       address_country: this.billings.value.address_country
     }).then(res => {
-      console.log(res)
       this.userService.createCard({ source: res.token.id }).subscribe(card => {
-        console.log(card)
+        this.listCard();
+        this.hideCard = true;
+        this.billings.reset();
+        this.isAddCreditCard = false;
       })
     })
     // this.stripe.createPaymentMethod(data).then(res => {
@@ -426,6 +435,12 @@ export class SubscriberSettingsComponent implements OnInit {
     //     this.onError(res);
     //   }
     // });
+  }
+  hideCard = false;
+  cancleAddCard() {
+    this.hideCard = true;
+    this.billings.reset();
+    this.isAddCreditCard = false;
   }
   onSuccess(token) {
     this.stripeService.createPaymentIntent(token.paymentMethod.id).subscribe(res => {

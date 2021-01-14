@@ -429,8 +429,9 @@
                                         </mat-autocomplete>
                                     </mat-form-field>
                                     <div fxFlex="50">
-                                        <button mat-raised-button (click)="addCard()" class="float-right filled-gray"><i
-                                                class="fa fa-file-medical"></i> Add Card</button>
+                                        <button mat-raised-button *ngIf="!isAddCreditCard" (click)="addCard()"
+                                            class="float-right filled-gray"><i class="fa fa-file-medical"></i> Add
+                                            Card</button>
                                     </div>
                                 </form>
                                 <div fxLayout="row wrap" *ngIf="!isAddCreditCard">
@@ -498,7 +499,8 @@
                                                             data-tid="elements_examples.form.address_label">Phone</label>
                                                         <input id="phone" matInput name="phone"
                                                             data-tid="elements_examples.form.address_placeholder"
-                                                            class="input" type="text" placeholder="Phone"
+                                                            class="input" type="text" (keypress)="numberOnly($event)"
+                                                            mask="(000) 000-0000" placeholder="Phone"
                                                             formControlName="phone" autocomplete="address-line1">
                                                     </div>
                                                     <div class="field" fxFlex="50">
@@ -533,7 +535,8 @@
                                                             autocomplete="address-line1">
                                                     </div>
 
-                                                    <div data-locale-reversible class="row" fxFlex="100" fxLayout="row wrap">
+                                                    <div data-locale-reversible class="row" fxFlex="100"
+                                                        fxLayout="row wrap">
                                                         <div class="field" fxFlex="50">
                                                             <label for="example5-city"
                                                                 data-tid="elements_examples.form.city_label">City</label>
@@ -549,8 +552,7 @@
                                                             <input id="example5-state" matInput name="state"
                                                                 data-tid="elements_examples.form.state_placeholder"
                                                                 class="input empty" type="text"
-                                                                formControlName="address_state"
-                                                                placeholder="address_state"
+                                                                formControlName="address_state" placeholder="State"
                                                                 autocomplete="address-level1">
                                                         </div>
                                                         <!-- </div> -->
@@ -560,13 +562,14 @@
                                             <div class="row pay-type" fxLayout="row wrap">
                                                 <div class="field p-l-20" fxFlex="100">
                                                     <label for="example5-card"
-                                                        data-tid="elements_examples.form.card_label">Card</label>
-                                                    <div id="card-info" #cardInfo></div>
+                                                        data-tid="elements_examples.form.card_label"
+                                                        *ngIf="isAddCreditCard">Card</label>
+                                                    <div *ngIf="!hideCard" id="card-info" #cardInfo></div>
                                                 </div>
                                             </div>
-                                            <div class="text-center w-100 p-t-10">
-                                                <button mat-stroked-button type="button"
-                                                    class="outline-danger">Cancel</button>
+                                            <div class="text-center w-100 p-t-10" *ngIf="isAddCreditCard">
+                                                <button mat-stroked-button type="button" class="outline-danger"
+                                                    (click)="cancleAddCard()">Cancel</button>
                                                 <button type="submit" mat-stroked-button class="outline-success m-l-10"
                                                     (click)="createStripeToken()">Save
                                                     Card</button>
