@@ -11,6 +11,8 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
+import { IntercomService } from 'src/app/services/intercom.service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 export interface PeriodicElement {
   name: string;
 }
@@ -46,10 +48,27 @@ export class ExaminationComponent implements OnInit {
   billableId: any;
   examinationDocuments: any;
   uploadedDocument: any = new MatTableDataSource([]);
-  constructor(private claimService: ClaimService, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog) {
+  constructor(private claimService: ClaimService, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
+    private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog, private intercom: IntercomService,
+    private cookieService: CookieService) {
     this.route.params.subscribe(params => {
       this.claim_id = params.claim_id;
       this.billableId = params.billId;
+      let ids = {
+        claimant_id: params.claimant_id,
+        claim_id: params.claim_id,
+        billable_item_id: params.billId
+      }
+      this.ondemandService.getBreadcrumbDetails(ids).subscribe(details => {
+        this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
+        this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
+        this.intercom.setClaimNumber(details.data.claim_number);
+        this.cookieService.set('claimNumber', details.data.claim_number)
+        this.intercom.setBillableItem(details.data.exam_procedure_name);
+        this.cookieService.set('billableItem', details.data.exam_procedure_name)
+      }, error => {
+
+      })
       this.getData();
     })
     this.isHandset$.subscribe(res => {

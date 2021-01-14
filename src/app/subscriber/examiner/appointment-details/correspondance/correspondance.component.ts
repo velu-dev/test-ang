@@ -18,6 +18,8 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 import { NGXLogger } from 'ngx-logger';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { CookieService } from 'src/app/shared/services/cookie.service';
+import { IntercomService } from 'src/app/services/intercom.service';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -64,7 +66,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   is_appointment_incomplete = false;
   error_message = "";
   isExaminerChange = true;
-  constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
+  constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService, private intercom: IntercomService, private cookieService: CookieService) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -72,6 +74,21 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.claim_id = params.claim_id;
       this.billableId = params.billId;
       this.examinerId = params.examiner_id;
+      let ids = {
+        claimant_id: params.claimant_id,
+        claim_id: params.claim_id,
+        billable_item_id: params.billId
+      }
+      this.onDemandService.getBreadcrumbDetails(ids).subscribe(details => {
+        this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
+        this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
+        this.intercom.setClaimNumber(details.data.claim_number);
+        this.cookieService.set('claimNumber', details.data.claim_number)
+        this.intercom.setBillableItem(details.data.exam_procedure_name);
+        this.cookieService.set('billableItem', details.data.exam_procedure_name)
+      }, error => {
+
+      })
       this.getData();
     })
     this.isHandset$.subscribe(res => {

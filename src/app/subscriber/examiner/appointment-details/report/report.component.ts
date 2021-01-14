@@ -11,6 +11,8 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { saveAs } from 'file-saver';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
+import { IntercomService } from 'src/app/services/intercom.service';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -57,7 +59,9 @@ export class ReportComponent implements OnInit {
     private alertService: AlertService,
     public dialog: MatDialog,
     public claimService: ClaimService,
-    private onDemandService: OnDemandService) {
+    private onDemandService: OnDemandService,
+    private intercom: IntercomService,
+    private cookieService: CookieService) {
 
 
     this.route.params.subscribe(param => {
@@ -65,6 +69,21 @@ export class ReportComponent implements OnInit {
       this.paramsId = param;
       this.claim_id = param.claim_id;
       this.billable_item_id = param.billId;
+      let ids = {
+        claimant_id: param.claimant_id,
+        claim_id: param.claim_id,
+        billable_item_id: param.billId
+      }
+      this.onDemandService.getBreadcrumbDetails(ids).subscribe(details => {
+        this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
+        this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
+        this.intercom.setClaimNumber(details.data.claim_number);
+        this.cookieService.set('claimNumber', details.data.claim_number)
+        this.intercom.setBillableItem(details.data.exam_procedure_name);
+        this.cookieService.set('billableItem', details.data.exam_procedure_name)
+      }, error => {
+
+      })
     })
 
     this.isHandset$.subscribe(res => {
