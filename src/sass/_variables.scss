@@ -1621,16 +1621,27 @@ input:-webkit-autofill {
         width: 50%;
         min-width: 50%;
         text-align: left;
+        @media screen and (max-width: 568px) {
+          width: 100%;
+        }
       }
       &:nth-child(2) {
         width: 20%;
         min-width: 20%;
         text-align: center;
+        @media screen and (max-width: 568px) {
+          width: 50%;
+          text-align: left;
+       }
       }
       &:nth-child(3) {
         width: 30%;
         min-width: 30%;
         text-align: right;
+        @media screen and (max-width: 568px) {
+          width: 50%;
+          text-align: right;
+       }
       }
     }
     .divider {
