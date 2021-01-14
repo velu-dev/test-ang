@@ -70,7 +70,7 @@ mat-form-field {
 
 .sign-upload {
   .mat-form-field {
-    width: calc( 100% - 145px) !important;
+    width: calc(100% - 145px) !important;
     .upload_btn {
       padding: 0px 10px;
       height: 35px;
@@ -136,9 +136,8 @@ mat-form-field {
   }
 }
 .w-150 {
-  width:150px
+  width: 150px;
 }
-
 
 #example5-paymentRequest {
   max-width: 500px;
@@ -324,4 +323,22 @@ fieldset {
   padding: 11px 15px 11px 5px;
   border: 1px solid $ternary;
   border-radius: 3px;
+}
+
+.payment-history {
+  .charges {
+    .text-right {
+      text-align: right;
+    }
+  }
+  .estimation {
+    @extend .text-right;
+    .divider {
+      display: block;
+      background-color: $lightgray;
+      height: 1px;
+      width: 100%;
+      padding: 5px 0;
+    }
+  }
 }
