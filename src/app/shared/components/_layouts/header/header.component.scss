@@ -5,6 +5,9 @@
   @media only screen and (max-width: 568px) {
     margin-left: 0;
   }
+  @media screen and (max-width: 1024px) and (min-width: 768px) {
+    margin-left: 70px;
+  }
 }
 .closed {
   margin-left: 70px;

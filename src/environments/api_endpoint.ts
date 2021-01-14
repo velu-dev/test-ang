@@ -42,6 +42,7 @@ export const api_endpoint = {
     postExaminerUser: 'subscriber/examiner/create',
     getExaminerUser: 'subscriber/examiner/details/',
     postUninvite: 'subscriber/uninvite-user/',
+    getBreadcrumbDetails: 'billable-item/claimant-claim-details',
 
     //examiner
     createMailingAddress: 'subscriber/examiner/mailing-address-create/',

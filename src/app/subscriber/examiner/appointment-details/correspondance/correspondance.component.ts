@@ -18,6 +18,8 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 import { NGXLogger } from 'ngx-logger';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { CookieService } from 'src/app/shared/services/cookie.service';
+import { IntercomService } from 'src/app/services/intercom.service';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -64,7 +66,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   is_appointment_incomplete = false;
   error_message = "";
   isExaminerChange = true;
-  constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService) {
+  constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService, private intercom: IntercomService, private cookieService: CookieService) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -72,6 +74,21 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.claim_id = params.claim_id;
       this.billableId = params.billId;
       this.examinerId = params.examiner_id;
+      let ids = {
+        claimant_id: params.claimant_id,
+        claim_id: params.claim_id,
+        billable_item_id: params.billId
+      }
+      this.onDemandService.getBreadcrumbDetails(ids).subscribe(details => {
+        this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
+        this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
+        this.intercom.setClaimNumber(details.data.claim_number);
+        this.cookieService.set('claimNumber', details.data.claim_number)
+        this.intercom.setBillableItem(details.data.exam_procedure_name);
+        this.cookieService.set('billableItem', details.data.exam_procedure_name)
+      }, error => {
+
+      })
       this.getData();
     })
     this.isHandset$.subscribe(res => {
@@ -80,8 +97,8 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.columnName = ["", "File Name"]
         this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
-        this.columnName = ["", "File Name", "Action", "Date", "Recipients", "Download Generated Items", "Download On Demand Proof of Service", "Further Information"]
-        this.columnsToDisplay = ['doc_image', 'file_name', 'action', "date", "recipients", 'download', 'download1', 'further_info']
+        this.columnName = ["Ref #", "File Name", "Action", "Date", "Recipients", "Download Generated Items", "Download On Demand Proof of Service", "Further Information"]
+        this.columnsToDisplay = ['request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'download1', 'further_info']
       }
     })
   }
@@ -570,8 +587,14 @@ export class BillingCorrespondanceComponent implements OnInit {
     })
   }
 
-  inOutdownload(data, element?) {
-    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.document_id], is_proof_of_service: true }).subscribe(res => {
+  inOutdownload(data, element?, status?) {
+    let is_proof_of_service: any;
+    if (status == 'download') {
+      is_proof_of_service = false;
+    } else {
+      is_proof_of_service = true;
+    }
+    this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 9, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.document_id], is_proof_of_service: is_proof_of_service }).subscribe(res => {
     })
     saveAs(data.file_url, data.file_name, '_self');
   }
@@ -624,17 +647,20 @@ export class CustomDocuments {
         }
         this.file.push(this.selectedFiles[i].name);
       } else {
-        //this.selectedFile = null;
+        this.selectedFiles = null;
+        this.file = [];
         this.fileUpload.nativeElement.value = "";
         this.alertService.openSnackBar("This file type is not accepted", 'error');
         // this.errors = { status: true, message: "This file type is not accepted" };
+        console.log(this.selectedFile)
       }
     }
 
   }
   isUploading = false;
   uploadFile() {
-    if (!this.selectedFile) {
+    console.log(this.selectedFiles)
+    if (!this.selectedFiles) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return;
     }

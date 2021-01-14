@@ -14,13 +14,117 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx-image-cropper';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource, MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 import { StripeService } from '../service/stripe.service';
+import { FlatTreeControl } from '@angular/cdk/tree';
 
+
+/*Treeview*/
+interface PaymentHistroy {
+  name: string;
+  pages: string;
+  charges: string;
+  children?: PaymentHistroy[];
+}
+const TREE_DATA: PaymentHistroy[] = [
+  // {
+  //   name: 'Venkatesan Mariyappan',
+  //   pages: '',
+  //   charges: '',
+  //   children: [
+  //     { name: 'Report Generated',pages:'55', charges:'$34578.00' },
+  //     { name: 'Report Generated',pages:'55', charges:'$34578.00' },
+  //     { name: 'Report Generated',pages:'55', charges:'$34578.00' },
+  //     { name: 'Report Generated',pages:'55', charges:'$34578.00' }
+  //   ]
+  // },
+  {
+    name: 'Examiner : Rajan Mariappan',
+    pages: '',
+    charges: '$795.60',
+    children: [
+      {
+        name: 'Subscription Charges',
+        pages: '',
+        charges: '$525',
+        children: [
+          { name: '$2.50 postage per packet per recipient', pages: '', charges: '$250.0' },
+          { name: '$0.10 per extra page in packet greater than 10 pages', pages: '', charges: '$250.0' }
+        ]
+      }, {
+        name: 'SimpleService™ Charges',
+        pages: '',
+        charges: '$423',
+        children: [
+          {
+            name: 'Correspondence', pages: '', charges: '$250.0',
+            children: [
+              { name: '$2.50 postage per packet per recipient', pages: '4 items', charges: '$250.0' },
+              { name: '$0.10 per extra page in packet greater than 10 pages', pages: '8 items', charges: '$250.0' }
+
+            ]
+          },
+          {
+            name: 'History', pages: '', charges: '$250.0',
+            children: [
+              { name: '$2.50 postage per packet per recipient', pages: '4 items', charges: '$250.0' },
+              { name: '$0.10 per extra page in packet greater than 10 pages', pages: '8 items', charges: '$250.0' }
+
+            ]
+          },
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Examiner : Venkatesan Mariyappan',
+    pages: '',
+    charges: '$795.60',
+    children: [
+      {
+        name: 'Subscription Charges',
+        pages: '',
+        charges: '$525',
+        children: [
+          { name: '$2.50 postage per packet per recipient', pages: '', charges: '$250.0' },
+          { name: '$0.10 per extra page in packet greater than 10 pages', pages: '', charges: '$250.0' }
+        ]
+      }, {
+        name: 'SimpleService™ Charges',
+        pages: '',
+        charges: '$423',
+        children: [
+          {
+            name: 'Correspondence', pages: '', charges: '$250.0',
+            children: [
+              { name: '$2.50 postage per packet per recipient', pages: '4 items', charges: '$250.0' },
+              { name: '$0.10 per extra page in packet greater than 10 pages', pages: '8 items', charges: '$250.0' }
+
+            ]
+          },
+          {
+            name: 'History', pages: '', charges: '$250.0',
+            children: [
+              { name: '$2.50 postage per packet per recipient', pages: '4 items', charges: '$250.0' },
+              { name: '$0.10 per extra page in packet greater than 10 pages', pages: '8 items', charges: '$250.0' }
+
+            ]
+          },
+        ]
+      },
+    ]
+  },
+];
+/** Flat node with expandable and level information */
+interface ExampleFlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
+}
 export interface PeriodicElement {
   credit_card: string;
 }
@@ -84,6 +188,26 @@ export class SubscriberSettingsComponent implements OnInit {
   cardDataSource: any;
   isAddCreditCard: boolean = false;
   @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
+
+  /* Tree view */
+  private _transformer = (node: PaymentHistroy, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      pages: node.pages,
+      charges: node.charges,
+      level: level,
+    };
+  }
+
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    node => node.level, node => node.expandable);
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer, node => node.level, node => node.expandable, node => node.children);
+
+  dataSourceList = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  /* Tree view end */
 
   constructor(
     private spinnerService: NgxSpinnerService,
@@ -152,7 +276,9 @@ export class SubscriberSettingsComponent implements OnInit {
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
       this.userForm.patchValue(userDetails)
     })
+    this.dataSourceList.data = TREE_DATA;/* Tree view */
   }
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   billings: FormGroup;
   ngOnInit() {
     this.billings = this.formBuilder.group({

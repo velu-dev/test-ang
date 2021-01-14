@@ -181,12 +181,13 @@
                     </div>
                     <div fxFlex="33.3" fxFlex.xs="100">
                         <div class="p-b-5"><b>Service Location</b> </div>
-                        <div>{{billingData?.service_location?.street1 }} {{billingData?.service_location?.street2 }}
+                        <div *ngIf="!billingData?.is_virtual_location">{{billingData?.service_location_name ? billingData?.service_location_name + ' - ' : ''}}{{billingData?.service_location?.street1 }} {{billingData?.service_location?.street2 }}
                             {{billingData?.service_location?.city}}
                             {{billingData?.state_code }}
                             {{billingData?.service_location?.zip_code ? '- ' + billingData?.service_location?.zip_code :
                             '' }}
                         </div>
+                        <div *ngIf="billingData?.is_virtual_location">Virtual Service Location</div>
                     </div>
                 </div>
             </mat-card-content>
@@ -967,11 +968,13 @@
                                             <mat-icon *ngIf="element?.payor_response_status == 'R'" class="text-danger">
                                                 error</mat-icon>
                                         </span>
+                                        <span *ngIf="column == 'request_reference_id'" class="no-wrap-td">{{element?.request_reference_id}}</span>  
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                                        <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element.action">
+                                        <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element?.action">
                                             <span *ngSwitchCase="'BD'">Downloaded</span>
                                             <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
-                                            <span *ngSwitchCase="'SFTP'">Billed On Demand</span>
+                                            <span *ngSwitchCase="'SFTP'"><span *ngIf="!element?.isdtm_request">Billed On Demand</span>
+                                            <span *ngIf="element?.isdtm_request">Mailed On Demand</span></span>
                                         </span>
                                         <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date_of_request |
                                             date:'MM-dd-yyyy'}}</span>
@@ -980,7 +983,7 @@
                                                 ? ', ' : ''}}</span></span>
                                         <span *ngIf="column == 'download' && element?.send">
                                             <a class="text-success"
-                                                (click)="$event.stopPropagation();downloadDocumet(element?.send)">Download</a>
+                                                (click)="$event.stopPropagation();downloadDocumet(element?.send,element)">Download</a>
                                         </span>
                                         <span *ngIf="column == 'payor_response_message'">
                                             {{element?.payor_response_message?.length ?
@@ -992,6 +995,7 @@
                                         <span *ngIf="column == 'doc_image'" class="file_type_icon">
                                             <!-- <img [src]="element?.file_name | fileType" alt=""> -->
                                         </span>
+                                        <span *ngIf="column == 'request_reference_id'" class="no-wrap-td">{{element?.request_reference_id}}</span>  
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'" class="no-wrap-td">{{element?.action}}</span>
                                         <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date_of_request |
@@ -1040,16 +1044,18 @@
                                         <div class="responsive-table">
                                             <section *ngIf="element?.action != 'POST PAYMENT PAPER EOR'">
                                                 <!-- <div><span>File Name</span>{{element?.file_name}}</div> -->
+                                                <div class="no-wrap-td"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
                                                 <div [ngSwitch]="element.action"><span>Action</span>
                                                     <p *ngSwitchCase="'MD'">Downloaded</p>
                                                     <p *ngSwitchCase="'MES'">E-Sign Downloaded</p>
-                                                    <p *ngSwitchCase="'SFTP'">Billed On Demand</p>
+                                                    <p *ngSwitchCase="'SFTP'"><span *ngIf="!element?.isdtm_request">Billed On Demand</span>
+                                                        <span *ngIf="element?.isdtm_request">Mailed On Demand</span></p>
                                                 </div>
                                                 <div><span>Date</span>{{element?.date_of_request | date:'MM-dd-yyyy'}}
                                                 </div>
                                                 <div><span>Recipients</span></div>
                                                 <div><span>Download Sent Documents </span><a class="text-success"
-                                                        (click)="downloadDocumet(element?.send)">Download</a></div>
+                                                        (click)="downloadDocumet(element?.send,element)">Download</a></div>
                                                 <div><span>Further Information</span>
                                                     {{element?.payor_response_message?.length ?
                                                     element?.payor_response_message[0]?._attributes?.MessageText :
@@ -1059,6 +1065,7 @@
 
                                             <section *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
                                                 <!-- <div><span>File Name</span>{{element?.file_name}}</div> -->
+                                                <div class="no-wrap-td"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
                                                 <div [ngSwitch]="element.action"><span>Action</span>
                                                     {{element?.action}}
                                                 </div>

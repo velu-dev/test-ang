@@ -5,9 +5,12 @@ import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
+import { IntercomService } from 'src/app/services/intercom.service';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -38,10 +41,28 @@ export class HistoryComponent implements OnInit {
   inFile: any = [];
   statusBarValues = { value: null, status: '', class: '' }
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
-    private onDemandService: OnDemandService, private alertService: AlertService) {
+    private onDemandService: OnDemandService, private alertService: AlertService, private intercom: IntercomService,
+    public dialog: MatDialog, private cookieService: CookieService) {
 
     this.route.params.subscribe(param => {
       this.paramsId = param;
+      console.log(param);
+      let ids = {
+        claimant_id: param.claimant_id,
+        claim_id: param.claim_id,
+        billable_item_id: param.billId
+      }
+      this.onDemandService.getBreadcrumbDetails(ids).subscribe(details => {
+        console.log(details.data);
+        this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
+        this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
+        this.intercom.setClaimNumber(details.data.claim_number);
+        this.cookieService.set('claimNumber', details.data.claim_number)
+        this.intercom.setBillableItem(details.data.exam_procedure_name);
+        this.cookieService.set('billableItem', details.data.exam_procedure_name)
+      }, error => {
+
+      })
 
     })
 
@@ -51,8 +72,8 @@ export class HistoryComponent implements OnInit {
         this.columnName = ["", "File Name", "Download"]
         this.columnsToDisplay = ['is_expand', 'file_name', 'download']
       } else {
-        this.columnName = ["", "Date Requested", "File Name", "Rush Request?", "Date Received", "Download"]
-        this.columnsToDisplay = ['doc_image', "date_of_request", 'file_name', 'service_priority', "date_of_communication", 'download']
+        this.columnName = ["Ref #", "Date Requested", "File Name", "Rush Request?", "Date Received", "Download"]
+        this.columnsToDisplay = ['request_reference_id', "date_of_request", 'file_name', 'service_priority', "date_of_communication", 'download']
       }
     })
   }
@@ -136,11 +157,22 @@ export class HistoryComponent implements OnInit {
     // })
 
     this.onDemandService.OnDemandhistory(data).subscribe(history => {
+
       this.rushRequest = false;
       this.download({ file_url: history.data.file_url, file_name: history.data.file_name })
       this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully", 'success');
       this.getHistory();
     }, error => {
+      if (error.error && error.error.error.data.length) {
+        const dialogRef = this.dialog.open(BillingAlertComponent, {
+          width: '500px',
+          data: { title: 'Incomplete Information', incompleteInformation: error.error.error.data, ok: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          return
+        })
+        return;
+      }
       this.alertService.openSnackBar(error.error.message, 'error');
     })
 
