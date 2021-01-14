@@ -185,7 +185,7 @@ export class SubscriberSettingsComponent implements OnInit {
   myControl = new FormControl();
   options: string[] = ['AmericanExpress card ending in 1234', 'Visa card ending in 1234'];
   displayedColumns: string[] = ['card_img', 'credit_card', 'action'];
-  dataSource1 = ELEMENT_DATA;
+  cardDataSource: any;
   isAddCreditCard: boolean = false;
   @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
 
@@ -236,7 +236,9 @@ export class SubscriberSettingsComponent implements OnInit {
         this.columnsToDisplay = ['invoice_number', 'amount', "status", "date", "action",]
       }
     })
-
+    this.userService.listCard().subscribe(res => {
+      this.cardDataSource = new MatTableDataSource(res.data)
+    })
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)
       this.user = res.data;
@@ -286,11 +288,11 @@ export class SubscriberSettingsComponent implements OnInit {
       phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       // address: this.formBuilder.group({
       address_city: [""],
-      address_country: ["US"],
       address_line1: [""],
       address_line2: [""],
       address_state: [""],
-      address_zip: [""]
+      address_zip: [""],
+      address_country: ["US"]
       // })
     })
     let user = JSON.parse(this.cookieService.get('user'));
@@ -345,7 +347,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.stripeService.getPK().subscribe(res => {
       this.isAddCreditCard = true;
       this.publicKey = res.token;
-      this.initiateCardElement();
+      this.initiateCardElement(res.token);
     })
   }
   onChange({ error }) {
@@ -356,8 +358,9 @@ export class SubscriberSettingsComponent implements OnInit {
     }
     this.cd.detectChanges();
   }
-  initiateCardElement() {
-    this.stripe = Stripe(this.publicKey); // use your test publishable key
+  initiateCardElement(token) {
+    console.log(token);
+    this.stripe = Stripe(token); // use your test publishable key
     this.elements = this.stripe.elements();
     // Giving a base style here, but most of the style is in scss file
     const cardStyle = {
@@ -375,7 +378,7 @@ export class SubscriberSettingsComponent implements OnInit {
         iconColor: '#fa755a',
       },
     };
-    this.card = this.elements.create('card', { cardStyle });
+    this.card = this.elements.create('card', { hidePostalCode: true, style: cardStyle });
     this.card.mount(this.cardInfo.nativeElement);
     this.card.addEventListener('change', this.cardHandler);
     // this.card.blur();
@@ -383,6 +386,10 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   isCardSubmit = false;
   async createStripeToken() {
+    if (!this.billings.valid) {
+      this.alertService.openSnackBar("Please fill all required fields", "error");
+      return
+    }
     this.isCardSubmit = true;
     let billingData = this.billings.value;
     for (var propName in billingData) {
@@ -396,8 +403,19 @@ export class SubscriberSettingsComponent implements OnInit {
       billing_details: billingData,
     }
     console.log(this.card)
-    this.stripe.createToken(this.card).then(res => {
+    this.stripe.createToken(this.card, {
+      name: this.billings.value.name,
+      address_line1: this.billings.value.address_line1,
+      address_line2: this.billings.value.address_line2,
+      address_city: this.billings.value.address_city,
+      address_state: this.billings.value.address_state,
+      address_zip: this.billings.value.address_zip,
+      address_country: this.billings.value.address_country
+    }).then(res => {
       console.log(res)
+      this.userService.createCard({ source: res.token.id }).subscribe(card => {
+        console.log(card)
+      })
     })
     // this.stripe.createPaymentMethod(data).then(res => {
     //   if (res.paymentMethod) {

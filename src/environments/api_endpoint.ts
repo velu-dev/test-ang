@@ -42,6 +42,7 @@ export const api_endpoint = {
     postExaminerUser: 'subscriber/examiner/create',
     getExaminerUser: 'subscriber/examiner/details/',
     postUninvite: 'subscriber/uninvite-user/',
+    getBreadcrumbDetails: 'billable-item/claimant-claim-details',
 
     //examiner
     createMailingAddress: 'subscriber/examiner/mailing-address-create/',
@@ -54,6 +55,8 @@ export const api_endpoint = {
     verifyRole: 'subscriber/examiner/verify-role',
     verifyUserRole: 'subscriber/examiner/verify-user-role',
     examinerDisable: 'subscriber/disable-examiner/',
+    listCards: "payment/list-all-cards",
+    createCard: "payment/create-card",
     upcomingAppointment: 'examiner-dashboard/upcoming-appointments',
     dashboardBilling: 'examiner-dashboard/billing',
     itemsAwaiting: 'examiner-dashboard/items-awaiting-reports',

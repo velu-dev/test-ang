@@ -9,7 +9,7 @@
         
     </li>
 </ul> -->
-<xng-breadcrumb [separator]="iconTemplate" id="titleCase">
+<xng-breadcrumb [autoGenerate]="false" [separator]="iconTemplate" id="titleCase">
     <ng-container *xngBreadcrumbItem="let breadcrumb; let info; let first = first">
         <mat-icon aria-hidden="false" *ngIf="info && first" aria-label="home icon" class="bread-home">home</mat-icon>
         <ng-container class="breadcrumb-list">{{ breadcrumb }}</ng-container>

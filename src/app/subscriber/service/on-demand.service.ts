@@ -97,4 +97,8 @@ export class OnDemandService {
   OnDemandhistory(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.onDemandHistory, data)
   }
+
+  getBreadcrumbDetails(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getBreadcrumbDetails, data)
+  }
 }
