@@ -324,21 +324,36 @@ fieldset {
   border: 1px solid $ternary;
   border-radius: 3px;
 }
-
-.payment-history {
-  .charges {
-    .text-right {
-      text-align: right;
+mat-tab-group {
+  .payment-history {
+    .charges {
+      mat-form-field {
+        padding-left: 0;
+      }
     }
-  }
-  .estimation {
-    @extend .text-right;
-    .divider {
-      display: block;
-      background-color: $lightgray;
-      height: 1px;
-      width: 100%;
-      padding: 5px 0;
+    .estimation {
+      .divider {
+        content: "";
+        display: block;
+        background-color: $lightgray;
+        height: 1px;
+        width: 100%;
+        margin: 0;
+      }
+      .note {
+        font-size: $font-size-7;
+        margin-top: 0;
+      }
+    }
+    .details {
+      .divider {
+        content: "";
+        display: block;
+        background-color: $lightgray;
+        height: 1px;
+        width: 100%;
+        margin: 0;
+      }
     }
   }
 }

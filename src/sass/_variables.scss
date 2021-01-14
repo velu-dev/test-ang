@@ -1608,3 +1608,43 @@ input:-webkit-autofill {
 //     }
 //   }
 // }
+
+// Tree custom css
+.mat-tree {
+  width: $width-100;
+  .pay-records {
+    width: $width-100;
+    position: relative;
+    span {
+      float: left;
+      &:first-child {
+        width: 50%;
+        min-width: 50%;
+        text-align: left;
+      }
+      &:nth-child(2) {
+        width: 20%;
+        min-width: 20%;
+        text-align: center;
+      }
+      &:nth-child(3) {
+        width: 30%;
+        min-width: 30%;
+        text-align: right;
+      }
+    }
+    .divider {
+      content: "";
+      display: block;
+      background-color: $lightgray;
+      height: 1px;
+      width: 100%;
+      margin: 0;
+      position: absolute;
+      top: 28px;
+    }
+  }
+  .mat-tree-node {
+    min-height: 35px !important;
+  }
+}
