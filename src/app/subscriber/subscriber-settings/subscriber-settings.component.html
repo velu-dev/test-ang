@@ -419,7 +419,8 @@
                         <div class="edit-profile m-t-10 payment-setting">
                             <mat-card-content>
                                 <form fxLayout="row wrap">
-                                    <mat-form-field class="example-full-width" fxFlex="50" appearance="outline">
+                                    <div fxFlex="50"></div>
+                                    <!-- <mat-form-field class="example-full-width" fxFlex="50" appearance="outline">
                                         <input type="text" placeholder="Default payment preference" aria-label="Number"
                                             matInput [formControl]="myControl" [matAutocomplete]="auto">
                                         <mat-autocomplete #auto="matAutocomplete">
@@ -427,9 +428,9 @@
                                                 {{option}}
                                             </mat-option>
                                         </mat-autocomplete>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
                                     <div fxFlex="50">
-                                        <button mat-raised-button (click)="addCard()" class="float-right filled-gray"><i
+                                        <button mat-raised-button (click)="addCard()" class="float-right filled-gray m-b-10"><i
                                                 class="fa fa-file-medical"></i> Add Card</button>
                                     </div>
                                 </form>
