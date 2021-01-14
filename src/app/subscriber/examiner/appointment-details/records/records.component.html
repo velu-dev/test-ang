@@ -174,8 +174,10 @@
                   {{ expandIdOut == element.document_id ? 'remove_circle' : 'add_circle'}}
                 </mat-icon>
               </span>
-              <div> <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
-                    [src]="element?.file_name | fileType" alt=""></span>
+              <div>
+                 <!-- <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
+                    [src]="element?.file_name | fileType" alt=""></span> -->
+                <span *ngIf="column == 'request_reference_id'" class="no-wrap-td">{{element?.request_reference_id }}</span>    
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'no_of_units'">{{element?.no_of_units}}</span>
                 <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ?
@@ -198,6 +200,7 @@
             <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
               <div class="detail" [@detailExpand]="expandIdOut == element.document_id ? 'expanded' : 'collapsed'">
                 <div class="responsive-table">
+                  <div class="no-wrap-td"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
                   <div><span>File Name</span><span>{{element?.file_name}} </span></div>
                   <div class="no-wrap-td"><span>Rush Request?</span><span>
                       {{element?.service_priority == 'rush' ? 'Yes' : ''}}
