@@ -16,4 +16,16 @@ export class StripeService {
   createPaymentIntent(intentId): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.createPaymentIntent, { payment_method: intentId, organization_id: 2 })
   }
+  listCard(): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.listCards)
+  }
+  createCard(card): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.createCard, card)
+  }
+  updateCard(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.updateCard, data)
+  }
+  deleteCard(card): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.deleteCard + card.id + "/" + card.customer)
+  }
 }

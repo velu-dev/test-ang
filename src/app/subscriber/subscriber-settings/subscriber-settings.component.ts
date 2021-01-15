@@ -187,6 +187,7 @@ export class SubscriberSettingsComponent implements OnInit {
   displayedColumns: string[] = ['card_img', 'credit_card', 'action'];
   cardDataSource: any;
   isAddCreditCard: boolean = false;
+  editingCard: any;
   @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
 
   /* Tree view */
@@ -277,7 +278,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.dataSourceList.data = TREE_DATA;/* Tree view */
   }
   listCard() {
-    this.userService.listCard().subscribe(res => {
+    this.stripeService.listCard().subscribe(res => {
       this.cardDataSource = new MatTableDataSource(res.data)
     })
   }
@@ -358,6 +359,13 @@ export class SubscriberSettingsComponent implements OnInit {
       this.initiateCardElement(res.token);
     })
   }
+  isUpdate: boolean = false;
+  editCard(card) {
+    this.isUpdate = true;
+    this.editingCard = card;
+    this.isAddCreditCard = true;
+    this.billings.patchValue(card);
+  }
   onChange({ error }) {
     if (error) {
       this.cardError = error.message;
@@ -394,6 +402,10 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   isCardSubmit = false;
   async createStripeToken() {
+    if (this.isUpdate) {
+      this.updateCard();
+      return
+    }
     if (!this.billings.valid) {
       this.alertService.openSnackBar("Please fill all required fields", "error");
       return
@@ -419,7 +431,7 @@ export class SubscriberSettingsComponent implements OnInit {
       address_zip: this.billings.value.address_zip,
       address_country: this.billings.value.address_country
     }).then(res => {
-      this.userService.createCard({ source: res.token.id }).subscribe(card => {
+      this.stripeService.createCard({ source: res.token.id }).subscribe(card => {
         this.listCard();
         this.hideCard = true;
         this.billings.reset();
@@ -441,6 +453,37 @@ export class SubscriberSettingsComponent implements OnInit {
     this.hideCard = true;
     this.billings.reset();
     this.isAddCreditCard = false;
+  }
+  updateCard() {
+    let card = {
+      id: this.editingCard.id,
+      name: this.billings.value.name,
+      address_line1: this.billings.value.address_line1,
+      address_line2: this.billings.value.address_line2,
+      address_city: this.billings.value.address_city,
+      address_state: this.billings.value.address_state,
+      address_zip: this.billings.value.address_zip,
+      address_country: this.billings.value.address_country,
+      "customer": this.editingCard.customer,
+      "exp_month": 12,
+      "exp_year": 2030,
+    }
+    this.stripeService.updateCard(card).subscribe(res => {
+      this.alertService.openSnackBar(res.message, "success");
+      this.listCard();
+      this.isAddCreditCard = false;
+      this.billings.reset();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
+    })
+  }
+  deleteCard(card) {
+    this.stripeService.deleteCard(card).subscribe(res => {
+      this.alertService.openSnackBar(res.message, "success");
+      this.listCard()
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error")
+    })
   }
   onSuccess(token) {
     this.stripeService.createPaymentIntent(token.paymentMethod.id).subscribe(res => {

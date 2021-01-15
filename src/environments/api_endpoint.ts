@@ -57,6 +57,8 @@ export const api_endpoint = {
     examinerDisable: 'subscriber/disable-examiner/',
     listCards: "payment/list-all-cards",
     createCard: "payment/create-card",
+    updateCard: "payment/update-card",
+    deleteCard: "payment/delete-card/",
     upcomingAppointment: 'examiner-dashboard/upcoming-appointments',
     dashboardBilling: 'examiner-dashboard/billing',
     itemsAwaiting: 'examiner-dashboard/items-awaiting-reports',
