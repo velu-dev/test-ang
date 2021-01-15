@@ -908,9 +908,9 @@ export class NewExaminerUserComponent implements OnInit {
   }
   licenseData: any = [];
   editStatus: boolean = false;
-  licenseChangeStatus:boolean = false;
+  licenseChangeStatus: boolean = false;
   openLicense(data?: any, index?) {
-
+    this.editStatus = index ? true : false;
     const dialogRef = this.dialog.open(LicenseDialog, {
       width: '800px',
       data: { states: this.states, details: data, editStatus: data && data.id ? true : false }
@@ -942,7 +942,9 @@ export class NewExaminerUserComponent implements OnInit {
           this.licenseChangeStatus = true;
           this.licenseData.push(result);
           this.alertService.openSnackBar('License Added Successfully', 'success');
-          this.licenceDataSource = new MatTableDataSource(this.licenseData)
+          console.log(result);
+          this.licenceDataSource = new MatTableDataSource(this.licenseData);
+          console.log(this.licenceDataSource);
           return
         }
 
@@ -962,14 +964,17 @@ export class NewExaminerUserComponent implements OnInit {
           if (this.editStatus) {
             this.licenseData[index] = result;
             this.licenseChangeStatus = true;
+            console.log(this.licenseData)
             this.alertService.openSnackBar('License Updated Successfully', 'success');
-            this.licenceDataSource = new MatTableDataSource(this.licenseData)
+            this.licenceDataSource = new MatTableDataSource(this.licenseData);
+            console.log(this.licenceDataSource);
             return
           }
 
           this.editStatus = false;
           this.licenseChangeStatus = true;
           this.licenseData.push(result);
+          console.log(this.licenseData)
           this.alertService.openSnackBar('License Added Successfully', 'success');
           this.licenceDataSource = new MatTableDataSource(this.licenseData)
           console.log(this.licenseData)

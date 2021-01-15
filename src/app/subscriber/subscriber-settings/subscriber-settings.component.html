@@ -586,7 +586,7 @@
                         <ng-template mat-tab-label>
                             Payment History
                         </ng-template>
-                        <mat-card-content class="payment-history w-100" fxLayout="row wrap">
+                        <!-- <mat-card-content class="payment-history w-100" fxLayout="row wrap">
                             <div class="sub-title" fxFlex="100">Charges</div>
                             <div fxLayout="row wrap" class="charges" fxFlex="100">
                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
@@ -630,17 +630,7 @@
                                 <mat-tree [dataSource]="dataSourceList" [treeControl]="treeControl" class="pay-list">
                                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                                         <button mat-icon-button disabled></button>
-                                        <!-- <div fxFlayout="row wrap" fxFlex="100">
-                                    <div fxFlex="33.3">
-                                        {{node.name}}
-                                    </div>
-                                    <div fxFlex="33.3">
-                                        {{node.pages}}
-                                    </div>
-                                    <div fxFlex="33.3" class="text-right">
-                                        {{node.charges}}
-                                    </div>
-                                </div> -->
+                                     
                                         <div class="pay-records">
                                             <span>{{node.name}}</span>
                                             <span>&nbsp;{{node.pages}}</span>
@@ -664,7 +654,7 @@
                                     </mat-tree-node>
                                 </mat-tree>
                             </div>
-                        </mat-card-content>
+                        </mat-card-content> -->
                     </mat-tab>
                 </mat-tab-group>
             </mat-card>
