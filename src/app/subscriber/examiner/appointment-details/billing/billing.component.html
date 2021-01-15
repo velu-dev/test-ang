@@ -120,7 +120,7 @@
                                 <span class="text-danger">
                                     <mat-icon> error</mat-icon> {{incompleteInfo.name}}
                                 </span>
-                                <div class="incomplete-details" *ngIf="isExpandDetail">
+                                <div class="incomplete-details" *ngIf="isExpandDetail && incompleteInfo?.value?.length > 0">
                                     <ol>
                                         <li *ngFor="let val of incompleteInfo.value">{{val}}</li>
                                     </ol>
@@ -968,7 +968,7 @@
                                             <mat-icon *ngIf="element?.payor_response_status == 'R'" class="text-danger">
                                                 error</mat-icon>
                                         </span>
-                                        <span *ngIf="column == 'request_reference_id'" class="no-wrap-td">{{element?.request_reference_id}}</span>  
+                                        <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'" class="no-wrap-td">{{element?.request_reference_id}}</span>  
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element?.action">
                                             <span *ngSwitchCase="'BD'">Downloaded</span>
@@ -995,7 +995,7 @@
                                         <span *ngIf="column == 'doc_image'" class="file_type_icon">
                                             <!-- <img [src]="element?.file_name | fileType" alt=""> -->
                                         </span>
-                                        <span *ngIf="column == 'request_reference_id'" class="no-wrap-td">{{element?.request_reference_id}}</span>  
+                                        <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'" class="no-wrap-td">{{element?.request_reference_id}}</span>  
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                                         <span *ngIf="column == 'action'" class="no-wrap-td">{{element?.action}}</span>
                                         <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date_of_request |
@@ -1044,7 +1044,7 @@
                                         <div class="responsive-table">
                                             <section *ngIf="element?.action != 'POST PAYMENT PAPER EOR'">
                                                 <!-- <div><span>File Name</span>{{element?.file_name}}</div> -->
-                                                <div class="no-wrap-td"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
+                                                <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
                                                 <div [ngSwitch]="element.action"><span>Action</span>
                                                     <p *ngSwitchCase="'MD'">Downloaded</p>
                                                     <p *ngSwitchCase="'MES'">E-Sign Downloaded</p>
@@ -1065,7 +1065,7 @@
 
                                             <section *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
                                                 <!-- <div><span>File Name</span>{{element?.file_name}}</div> -->
-                                                <div class="no-wrap-td"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
+                                                <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
                                                 <div [ngSwitch]="element.action"><span>Action</span>
                                                     {{element?.action}}
                                                 </div>

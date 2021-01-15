@@ -226,7 +226,7 @@
                 <!-- <span *ngIf="column == 'doc_image'" class="file_type_icon">
                   <mat-icon *ngIf="element?.file_processing_status == 'FAIL'" class="text-danger">error</mat-icon>
                 </span> -->
-                <span *ngIf="column == 'request_reference_id'" class="no-wrap-td">{{element?.request_reference_id}}</span>
+                <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'" class="no-wrap-td">{{element?.request_reference_id}}</span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element.action"><span
                     *ngSwitchCase="'MD'">Downloaded</span>
@@ -260,7 +260,7 @@
 
           <!-- <div><span></span> <img [src]="element?.file_name | fileType" alt="docx"> </div> -->
           <!-- <div><span>File Name</span><span> {{element?.file_name}} </span></div> -->
-           <div class="no-wrap-td"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
+           <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
           <div class="no-wrap-td"><span>Action</span>
             <span [ngSwitch]="element.action">
               <p *ngSwitchCase="'MD'" class="m-b-0">Downloaded</p>
