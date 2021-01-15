@@ -442,7 +442,8 @@
                                             <ng-container matColumnDef="card_img">
                                                 <th mat-header-cell *matHeaderCellDef></th>
                                                 <td mat-cell *matCellDef="let element" class="w-150"> <img
-                                                        [src]="visa_card" alt=""> </td>
+                                                        [src]="showImage(element.brand)" alt="" height="50" width="80">
+                                                </td>
                                             </ng-container>
 
 
@@ -550,11 +551,55 @@
                                                         <div class="field" fxFlex="50">
                                                             <label for="example5-state"
                                                                 data-tid="elements_examples.form.state_label">State</label>
-                                                            <input id="example5-state" matInput name="state"
+                                                            <!-- <input id="example5-state" matInput name="state"
                                                                 data-tid="elements_examples.form.state_placeholder"
                                                                 class="input empty" type="text"
                                                                 formControlName="address_state" placeholder="State"
-                                                                autocomplete="address-level1">
+                                                                autocomplete="address-level1"> -->
+                                                            <mat-select formControlName="address_state"
+                                                                (selectionChange)="changeState($event.value)">
+                                                                <mat-select-trigger>
+                                                                    {{cardState}}
+                                                                </mat-select-trigger>
+                                                                <mat-option *ngFor="let state of states"
+                                                                    [value]="state.state_code">{{state.state_code}} -
+                                                                    {{state.state}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </div>
+                                                        <!-- </div> -->
+                                                    </div>
+                                                    <div data-locale-reversible class="row" fxFlex="100"
+                                                        fxLayout="row wrap" *ngIf="isUpdate">
+                                                        <div class="field" fxFlex="50">
+                                                            <label for="example5-month"
+                                                                data-tid="elements_examples.form.month_label">Expiry
+                                                                Month</label>
+                                                            <!-- <input id="example5-month" matInput name="month"
+                                                                data-tid="elements_examples.form.month_placeholder"
+                                                                class="input" type="text" placeholder="Expiry Month"
+                                                                formControlName="exp_month"
+                                                                autocomplete="address-level2"> -->
+                                                            <mat-select formControlName="exp_month">
+                                                                <mat-option *ngFor="let month of months"
+                                                                    [value]="month">{{month}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </div>
+                                                        <div class="field" fxFlex="50">
+                                                            <label for="example5-year"
+                                                                data-tid="elements_examples.form.year_label">Expiry
+                                                                Year</label>
+                                                            <!-- <input id="example5-year" matInput name="year"
+                                                                data-tid="elements_examples.form.year_placeholder"
+                                                                class="input empty" type="text"
+                                                                formControlName="exp_year" placeholder="Expiry Year"
+                                                                autocomplete="address-level1"> -->
+                                                            <mat-select formControlName="exp_year">
+                                                                <mat-option *ngFor="let year of years" [value]="year">
+                                                                    {{year}}
+                                                                </mat-option>
+                                                            </mat-select>
                                                         </div>
                                                         <!-- </div> -->
                                                     </div>
@@ -564,7 +609,7 @@
                                                 <div class="field p-l-20" fxFlex="100">
                                                     <label for="example5-card"
                                                         data-tid="elements_examples.form.card_label"
-                                                        *ngIf="isAddCreditCard">Card</label>
+                                                        *ngIf="isAddCreditCard && !isUpdate">Card</label>
                                                     <div *ngIf="!hideCard" id="card-info" #cardInfo></div>
                                                 </div>
                                             </div>

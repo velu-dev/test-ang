@@ -21,6 +21,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 import { StripeService } from '../service/stripe.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
+import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 
 
 /*Treeview*/
@@ -163,7 +164,6 @@ export class SubscriberSettingsComponent implements OnInit {
   elements: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   profile_bg = globals.profile_bg;
-  visa_card = globals.visa_card;
   user: any;
   currentUser: any;
   userForm: FormGroup;
@@ -189,7 +189,8 @@ export class SubscriberSettingsComponent implements OnInit {
   isAddCreditCard: boolean = false;
   editingCard: any;
   @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
-
+  months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  years = [2021, 2022, 2023, 2024, 2025, 2026, 2026, 2027, 2028, 2029, 2030, 2031, 2031, 2032, 2033, 2034]
   /* Tree view */
   private _transformer = (node: PaymentHistroy, level: number) => {
     return {
@@ -294,6 +295,8 @@ export class SubscriberSettingsComponent implements OnInit {
       name: ["", Validators.compose([Validators.required])],
       email: ["", Validators.compose([Validators.email])],
       phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      exp_month: [""],
+      exp_year: [""],
       // address: this.formBuilder.group({
       address_city: [""],
       address_line1: [""],
@@ -339,7 +342,6 @@ export class SubscriberSettingsComponent implements OnInit {
       });
     }
 
-
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
     }, error => {
@@ -352,6 +354,7 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   publicKey: any;
   addCard() {
+    this.isUpdate = false;
     this.hideCard = false;
     this.stripeService.getPK().subscribe(res => {
       this.isAddCreditCard = true;
@@ -364,6 +367,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.isUpdate = true;
     this.editingCard = card;
     this.isAddCreditCard = true;
+    this.changeState(card.address_state)
     this.billings.patchValue(card);
   }
   onChange({ error }) {
@@ -400,6 +404,29 @@ export class SubscriberSettingsComponent implements OnInit {
     // this.card.blur();
     // document.getElementsByName("cvc")[0].type = 'password';
   }
+  showImage(type) {
+    if (type == 'Visa') {
+      return globals.visa_card
+    }
+    if (type == "MasterCard") {
+      return globals.mastercard_card;
+    }
+    if (type == "American Express") {
+      return globals.amex_card;
+    }
+    if (type == "Discover") {
+      return globals.discover_card;
+    }
+    if (type == "UnionPay") {
+      return globals.unionpay_card;
+    }
+    if (type == "JCB") {
+      return globals.jcb_card;
+    }
+    if (type == "Diners Club") {
+      return globals.diners_club_card;
+    }
+  }
   isCardSubmit = false;
   async createStripeToken() {
     if (this.isUpdate) {
@@ -431,12 +458,17 @@ export class SubscriberSettingsComponent implements OnInit {
       address_zip: this.billings.value.address_zip,
       address_country: this.billings.value.address_country
     }).then(res => {
+      console.log(res)
       this.stripeService.createCard({ source: res.token.id }).subscribe(card => {
         this.listCard();
         this.hideCard = true;
         this.billings.reset();
         this.isAddCreditCard = false;
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, "error")
       })
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error")
     })
     // this.stripe.createPaymentMethod(data).then(res => {
     //   if (res.paymentMethod) {
@@ -447,6 +479,13 @@ export class SubscriberSettingsComponent implements OnInit {
     //     this.onError(res);
     //   }
     // });
+  }
+  cardState: any;
+  changeState(state_code?) {
+    if (state_code) {
+      this.cardState = state_code;
+      return
+    }
   }
   hideCard = false;
   cancleAddCard() {
@@ -478,11 +517,19 @@ export class SubscriberSettingsComponent implements OnInit {
     })
   }
   deleteCard(card) {
-    this.stripeService.deleteCard(card).subscribe(res => {
-      this.alertService.openSnackBar(res.message, "success");
-      this.listCard()
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, "error")
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '500px',
+      data: { name: 'remove this card', address: true, title: (card.brand + " card ending in " + card.last4) }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.stripeService.deleteCard(card).subscribe(res => {
+          this.alertService.openSnackBar(res.message, "success");
+          this.listCard()
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, "error")
+        })
+      }
     })
   }
   onSuccess(token) {

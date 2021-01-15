@@ -27,6 +27,13 @@ export const mp3 = '/assets/images/mp3.svg'
 export const status_complete = '/assets/images/status-complete.svg'
 export const status_inprogress = '/assets/images/status-inprogress.svg'
 export const visa_card = '/assets/images/visa.svg'
+export const amex_card = '/assets/images/amex.png'
+export const cartes_bancaires_card = '/assets/images/cartes_bancaires.png'
+export const diners_club_card = '/assets/images/diners_club.png'
+export const discover_card = '/assets/images/discover.png'
+export const jcb_card = '/assets/images/jcb.png'
+export const mastercard_card = '/assets/images/mastercard.jpg'
+export const unionpay_card = '/assets/images/unionpay.png'
 export const error = '/assets/images/error.svg'
 
 
