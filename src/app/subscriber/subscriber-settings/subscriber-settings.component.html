@@ -575,7 +575,8 @@
                                                                 </mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
-                                                        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+                                                        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100"
+                                                            *ngIf="isUpdate">
                                                             <mat-label>Zip</mat-label>
                                                             <input matInput placeholder="Zip" mask="9{10}"
                                                                 formControlName="address_zip" autocomplete="off">

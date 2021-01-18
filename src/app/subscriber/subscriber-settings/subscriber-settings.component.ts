@@ -190,7 +190,7 @@ export class SubscriberSettingsComponent implements OnInit {
   editingCard: any;
   @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
   months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-  years = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045]
+  years = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040]
   /* Tree view */
   private _transformer = (node: PaymentHistroy, level: number) => {
     return {
@@ -481,6 +481,7 @@ export class SubscriberSettingsComponent implements OnInit {
         this.alertService.openSnackBar(error.error.message, "error")
       })
     }, error => {
+      this.isAddingCard = false;
       this.alertService.openSnackBar(error.error.message, "error")
     })
     // this.stripe.createPaymentMethod(data).then(res => {
