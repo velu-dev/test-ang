@@ -278,9 +278,11 @@ export class SubscriberSettingsComponent implements OnInit {
     })
     this.dataSourceList.data = TREE_DATA;/* Tree view */
   }
+  cardCount = 0;
   listCard() {
     this.stripeService.listCard().subscribe(res => {
       this.cardDataSource = new MatTableDataSource(res.data)
+      this.cardCount = res.data.length;
     })
   }
   isViewInit: boolean = false;
@@ -354,6 +356,10 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   publicKey: any;
   addCard() {
+    if (this.cardCount >= 5) {
+      this.alertService.openSnackBar("Maximum number of cards per Subscriber is 5 only", "error")
+      return
+    }
     this.isUpdate = false;
     this.hideCard = false;
     this.stripeService.getPK().subscribe(res => {
