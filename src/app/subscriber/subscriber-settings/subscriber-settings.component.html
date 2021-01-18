@@ -473,9 +473,9 @@
                                 </div>
 
                                 <div>
-                                    <div class="cell pay-type example5" id="example-5">
+                                    <div class="cell pay-type pay" id="example-5">
                                         <form [formGroup]="billings">
-                                            <div id="example5-paymentRequest">
+                                            <div id="pay-paymentRequest">
 
                                             </div>
                                             <fieldset *ngIf="isAddCreditCard">
@@ -496,7 +496,7 @@
                                                 </div>
 
                                                 <div data-locale-reversible class="row" fxLayout="row wrap">
-                                                    <div class="field" fxFlex="50">
+                                                    <!-- <div class="field" fxFlex="50">
                                                         <label for="phone"
                                                             data-tid="elements_examples.form.address_label">Phone</label>
                                                         <input id="phone" matInput name="phone"
@@ -512,9 +512,9 @@
                                                             data-tid="elements_examples.form.address_placeholder"
                                                             class="input" type="text" formControlName="email"
                                                             placeholder="Email" autocomplete="address-line1">
-                                                    </div>
+                                                    </div> -->
                                                     <!-- <div formGroupName="address"> -->
-                                                    <div class="field" fxFlex="50">
+                                                    <div class="field" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
                                                         <label for="street_address_1"
                                                             data-tid="elements_examples.form.address_label">Street
                                                             Address
@@ -525,7 +525,7 @@
                                                             formControlName="address_line1"
                                                             autocomplete="address-line1">
                                                     </div>
-                                                    <div class="field" fxFlex="50">
+                                                    <div class="field" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
                                                         <label for="street_address_2"
                                                             data-tid="elements_examples.form.address_label">Street
                                                             Address
@@ -539,25 +539,25 @@
 
                                                     <div data-locale-reversible class="row" fxFlex="100"
                                                         fxLayout="row wrap">
-                                                        <div class="field" fxFlex="50">
-                                                            <label for="example5-city"
+                                                        <div class="field" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+                                                            <label for="pay-city"
                                                                 data-tid="elements_examples.form.city_label">City</label>
-                                                            <input id="example5-city" matInput name="city"
+                                                            <input id="pay-city" matInput name="city"
                                                                 data-tid="elements_examples.form.city_placeholder"
                                                                 class="input" type="text" placeholder="City"
                                                                 formControlName="address_city"
                                                                 autocomplete="address-level2">
                                                         </div>
-                                                        <div class="field" fxFlex="50">
-                                                            <label for="example5-state"
+                                                        <div class="field" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+                                                            <label for="pay-state"
                                                                 data-tid="elements_examples.form.state_label">State</label>
-                                                            <!-- <input id="example5-state" matInput name="state"
+                                                            <!-- <input id="pay-state" matInput name="state"
                                                                 data-tid="elements_examples.form.state_placeholder"
                                                                 class="input empty" type="text"
                                                                 formControlName="address_state" placeholder="State"
                                                                 autocomplete="address-level1"> -->
                                                             <mat-select formControlName="address_state"
-                                                                (selectionChange)="changeState($event.value)">
+                                                                (selectionChange)="changeState($event.value)" class="custom-mat-select">
                                                                 <mat-select-trigger>
                                                                     {{cardState}}
                                                                 </mat-select-trigger>
@@ -571,31 +571,31 @@
                                                     </div>
                                                     <div data-locale-reversible class="row" fxFlex="100"
                                                         fxLayout="row wrap" *ngIf="isUpdate">
-                                                        <div class="field" fxFlex="50">
-                                                            <label for="example5-month"
+                                                        <div class="field" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+                                                            <label for="pay-month"
                                                                 data-tid="elements_examples.form.month_label">Expiry
                                                                 Month</label>
-                                                            <!-- <input id="example5-month" matInput name="month"
+                                                            <!-- <input id="pay-month" matInput name="month"
                                                                 data-tid="elements_examples.form.month_placeholder"
                                                                 class="input" type="text" placeholder="Expiry Month"
                                                                 formControlName="exp_month"
                                                                 autocomplete="address-level2"> -->
-                                                            <mat-select formControlName="exp_month">
+                                                            <mat-select formControlName="exp_month"  class="custom-mat-select">
                                                                 <mat-option *ngFor="let month of months"
                                                                     [value]="month">{{month}}
                                                                 </mat-option>
                                                             </mat-select>
                                                         </div>
-                                                        <div class="field" fxFlex="50">
-                                                            <label for="example5-year"
+                                                        <div class="field" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+                                                            <label for="pay-year"
                                                                 data-tid="elements_examples.form.year_label">Expiry
                                                                 Year</label>
-                                                            <!-- <input id="example5-year" matInput name="year"
+                                                            <!-- <input id="pay-year" matInput name="year"
                                                                 data-tid="elements_examples.form.year_placeholder"
                                                                 class="input empty" type="text"
                                                                 formControlName="exp_year" placeholder="Expiry Year"
                                                                 autocomplete="address-level1"> -->
-                                                            <mat-select formControlName="exp_year">
+                                                            <mat-select formControlName="exp_year"  class="custom-mat-select">
                                                                 <mat-option *ngFor="let year of years" [value]="year">
                                                                     {{year}}
                                                                 </mat-option>
@@ -607,7 +607,7 @@
                                             </fieldset>
                                             <div class="row pay-type" fxLayout="row wrap">
                                                 <div class="field p-l-20" fxFlex="100">
-                                                    <label for="example5-card"
+                                                    <label for="pay-card"
                                                         data-tid="elements_examples.form.card_label"
                                                         *ngIf="isAddCreditCard && !isUpdate">Card</label>
                                                     <div *ngIf="!hideCard" id="card-info" #cardInfo></div>

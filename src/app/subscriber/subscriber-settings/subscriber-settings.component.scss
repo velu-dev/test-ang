@@ -139,19 +139,19 @@ mat-form-field {
   width: 150px;
 }
 
-#example5-paymentRequest {
+#pay-paymentRequest {
   max-width: 500px;
   width: 100%;
   margin-bottom: 10px;
 }
 
-// .example.example5 fieldset {
+// .example.pay fieldset {
 //   border: 1px solid #ccc;
 //   padding: 15px;
 //   border-radius: 6px;
 // }
 
-// .example.example5 fieldset legend {
+// .example.pay fieldset legend {
 //   margin: 0 auto;
 //   padding: 0 10px;
 //   text-align: center;
@@ -163,24 +163,24 @@ mat-form-field {
 fieldset {
   border: none;
 }
-.pay-type.example5 fieldset legend + * {
+.pay-type.pay fieldset legend + * {
   clear: both;
 }
 
-.pay-type.example5 .card-only {
+.pay-type.pay .card-only {
   display: block;
 }
-.pay-type.example5 .payment-request-available {
+.pay-type.pay .payment-request-available {
   display: none;
 }
 
-.pay-type.example5 .row {
+.pay-type.pay .row {
   display: -ms-flexbox;
   display: flex;
   margin: 0 0 10px;
 }
 
-.pay-type.example5 .field {
+.pay-type.pay .field {
   position: relative;
   width: 100%;
 
@@ -188,11 +188,11 @@ fieldset {
   padding: 5px;
 }
 
-.pay-type.example5 .field + .field {
-  // margin-left: 10px;
-}
+// .pay-type.pay .field + .field {
+//   // margin-left: 10px;
+// }
 
-.pay-type.example5 label {
+.pay-type.pay label {
   width: 100%;
   color: $text-gray;
   font-size: 13px;
@@ -202,7 +202,7 @@ fieldset {
   white-space: nowrap;
 }
 
-.pay-type.example5 .input {
+.pay-type.pay .input {
   width: 100%;
   color: 000;
   background: transparent;
@@ -220,40 +220,40 @@ fieldset {
   transition: border-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.pay-type.example5 .input::-webkit-input-placeholder {
+.pay-type.pay .input::-webkit-input-placeholder {
   color: $menu-light;
 }
 
-.pay-type.example5 .input::-moz-placeholder {
+.pay-type.pay .input::-moz-placeholder {
   color: $menu-light;
 }
 
-.pay-type.example5 .input:-ms-input-placeholder {
+.pay-type.pay .input:-ms-input-placeholder {
   color: $menu-light;
 }
 
-.pay-type.example5 .input.StripeElement--focus,
-.pay-type.example5 .input:focus {
+.pay-type.pay .input.StripeElement--focus,
+.pay-type.pay .input:focus {
   border-color: #000;
 }
-.pay-type.example5 .input.StripeElement--invalid {
+.pay-type.pay .input.StripeElement--invalid {
   border-color: #000;
 }
 
-.pay-type.example5 input:-webkit-autofill,
-.pay-type.example5 select:-webkit-autofill {
+.pay-type.pay input:-webkit-autofill,
+.pay-type.pay select:-webkit-autofill {
   -webkit-text-fill-color: $black;
   transition: background-color 100000000s;
   -webkit-animation: 1ms void-animation-out;
 }
 
-.pay-type.example5 .StripeElement--webkit-autofill {
+.pay-type.pay .StripeElement--webkit-autofill {
   background: transparent !important;
 }
 
-.pay-type.example5 input,
-// .pay-type.example5 button,
-.pay-type.example5 select {
+.pay-type.pay input,
+// .pay-type.pay button,
+.pay-type.pay select {
   -webkit-animation: 1ms void-animation-out;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -263,8 +263,9 @@ fieldset {
   border-radius: 0;
 }
 
-// .pay-type.example5 select.input,
-// .pay-type.example5 select:-webkit-autofill {
+
+// .pay-type.pay select.input,
+// .pay-type.pay select:-webkit-autofill {
 //   background-image: url('data:image/svg+xml;utf8,<svg width="10px" height="5px" viewBox="0 0 10 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="#fff" d="M5.35355339,4.64644661 L9.14644661,0.853553391 L9.14644661,0.853553391 C9.34170876,0.658291245 9.34170876,0.341708755 9.14644661,0.146446609 C9.05267842,0.0526784202 8.92550146,-2.43597394e-17 8.79289322,0 L1.20710678,0 L1.20710678,0 C0.930964406,5.07265313e-17 0.707106781,0.223857625 0.707106781,0.5 C0.707106781,0.632608245 0.759785201,0.759785201 0.853553391,0.853553391 L4.64644661,4.64644661 L4.64644661,4.64644661 C4.84170876,4.84170876 5.15829124,4.84170876 5.35355339,4.64644661 Z" id="shape"></path></svg>');
 //   background-position: 100%;
 //   background-size: 10px 5px;
@@ -274,7 +275,7 @@ fieldset {
 //   padding-right: 20px;
 // }
 
-// .pay-type.example5 button {
+// .pay-type.pay button {
 //   display: block;
 //   width: 100%;
 //   height: 40px;
@@ -286,35 +287,35 @@ fieldset {
 //   cursor: pointer;
 // }
 
-// .pay-type.example5 button:active {
+// .pay-type.pay button:active {
 //   background-color: #cdd0f8;
 // }
 
-// .pay-type.example5 .error svg .base {
+// .pay-type.pay .error svg .base {
 //   fill: #fff;
 // }
 
-// .pay-type.example5 .error .message {
+// .pay-type.pay .error .message {
 //   color: #fff;
 // }
 
-// .pay-type.example5 .success .icon .border {
+// .pay-type.pay .success .icon .border {
 //   stroke: #bfaef6;
 // }
 
-// .pay-type.example5 .success .icon .checkmark {
+// .pay-type.pay .success .icon .checkmark {
 //   stroke: #fff;
 // }
 
-// .pay-type.example5 .success .title {
+// .pay-type.pay .success .title {
 //   color: #fff;
 // }
 
-// .pay-type.example5 .success .message {
+// .pay-type.pay .success .message {
 //   color: #cdd0f8;
 // }
 
-// .pay-type.example5 .success .reset path {
+// .pay-type.pay .success .reset path {
 //   fill: #fff;
 // }
 
