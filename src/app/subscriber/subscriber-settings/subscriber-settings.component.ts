@@ -433,6 +433,10 @@ export class SubscriberSettingsComponent implements OnInit {
       this.updateCard();
       return
     }
+    Object.keys(this.billings.controls).forEach((key) => {
+      if (this.billings.get(key).value && typeof (this.billings.get(key).value) == 'string')
+        this.billings.get(key).setValue(this.billings.get(key).value.trim());
+    });
     if (!this.billings.valid) {
       this.alertService.openSnackBar("Please fill all required fields", "error");
       return

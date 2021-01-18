@@ -1659,3 +1659,9 @@ input:-webkit-autofill {
     min-height: 35px !important;
   }
 }
+
+// card dropdown custom style 
+    .custom-mat-select {
+      border-bottom: 1px solid $menu-light;
+      padding: 5px 0;
+}
