@@ -486,7 +486,7 @@
                                                             <mat-label>Name*</mat-label>
                                                             <input matInput placeholder="Full Name"
                                                                 formControlName="name" autocomplete="off">
-                                                            <mat-error *ngIf="billings.hasError('required')">
+                                                            <mat-error>
                                                                 Please enter a name</mat-error>
                                                         </mat-form-field>
                                                         <!-- <label for="name"
@@ -521,19 +521,17 @@
                                                             placeholder="Email" autocomplete="address-line1">
                                                     </div> -->
                                                     <!-- <div formGroupName="address"> -->
-                                                        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-                                                            <mat-label>Street Address 1</mat-label>
-                                                            <input matInput  placeholder="Street Address 1"
-                                                            formControlName="address_line1"
-                                                            autocomplete="off">
-                                                        </mat-form-field>
+                                                    <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+                                                        <mat-label>Street Address 1</mat-label>
+                                                        <input matInput placeholder="Street Address 1"
+                                                            formControlName="address_line1" autocomplete="off">
+                                                    </mat-form-field>
 
-                                                        <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-                                                            <mat-label>Street Address 2</mat-label>
-                                                            <input matInput  placeholder="Street Address 2"
-                                                            formControlName="address_line2"
-                                                            autocomplete="off">
-                                                        </mat-form-field>
+                                                    <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+                                                        <mat-label>Street Address 2</mat-label>
+                                                        <input matInput placeholder="Street Address 2"
+                                                            formControlName="address_line2" autocomplete="off">
+                                                    </mat-form-field>
                                                     <!-- <div class="field" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
                                                         <label for="street_address_1"
                                                             data-tid="elements_examples.form.address_label">Street Address 1</label>
@@ -560,22 +558,21 @@
 
                                                         <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
                                                             <mat-label>City</mat-label>
-                                                            <input matInput  placeholder="City"
-                                                            formControlName="address_city"
-                                                            autocomplete="off">
+                                                            <input matInput placeholder="City"
+                                                                formControlName="address_city" autocomplete="off">
                                                         </mat-form-field>
-                                                        
+
                                                         <mat-form-field fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
                                                             <mat-label>State</mat-label>
                                                             <mat-select formControlName="address_state">
-                                                            <!-- <mat-select-trigger>
+                                                                <!-- <mat-select-trigger>
                                                                 {{cardState}}
                                                             </mat-select-trigger> -->
-                                                            <mat-option *ngFor="let state of states"
-                                                                [value]="state.state_code">{{state.state_code}} -
-                                                                {{state.state}}
-                                                            </mat-option>
-                                                        </mat-select>
+                                                                <mat-option *ngFor="let state of states"
+                                                                    [value]="state.state_code">{{state.state_code}} -
+                                                                    {{state.state}}
+                                                                </mat-option>
+                                                            </mat-select>
                                                         </mat-form-field>
 
                                                         <!-- <div class="field" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
