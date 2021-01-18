@@ -290,11 +290,17 @@ export class ReportComponent implements OnInit {
 
   }
 
-  inOutdownload(data, element) {
+  inOutdownload(data, element, status?) {
     console.log(element)
     this.claimService.updateActionLog({ type: "report", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billable_item_id, "documents_ids": [element.document_id] }).subscribe(res => {
     })
-    saveAs(data.file_url, data.file_name);
+    if (status == 'received') {
+      data.map(receive_doc =>{
+        saveAs(receive_doc.file_url, receive_doc.file_name);
+      })
+    } else {
+      saveAs(data.file_url, data.file_name);
+    }
   }
 
   onDemandSubmit() {

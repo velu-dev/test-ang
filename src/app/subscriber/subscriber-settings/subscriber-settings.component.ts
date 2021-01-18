@@ -354,6 +354,7 @@ export class SubscriberSettingsComponent implements OnInit {
 
   selectedTabChange(event) {
   }
+  isAddingCard = false;
   publicKey: any;
   addCard() {
     if (this.cardCount >= 5) {
@@ -447,6 +448,7 @@ export class SubscriberSettingsComponent implements OnInit {
       this.alertService.openSnackBar("Please fill all required fields", "error");
       return
     }
+    this.isAddingCard = true;
     this.isCardSubmit = true;
     let billingData = this.billings.value;
     for (var propName in billingData) {
@@ -474,6 +476,7 @@ export class SubscriberSettingsComponent implements OnInit {
         this.hideCard = true;
         this.billings.reset();
         this.isAddCreditCard = false;
+        this.isAddingCard = false;
       }, error => {
         this.alertService.openSnackBar(error.error.message, "error")
       })

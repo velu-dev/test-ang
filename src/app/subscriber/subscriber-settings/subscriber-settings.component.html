@@ -675,8 +675,8 @@
                                             <div class="text-center w-100 p-t-10" *ngIf="isAddCreditCard">
                                                 <button mat-stroked-button type="button" class="outline-danger"
                                                     (click)="cancleAddCard()">Cancel</button>
-                                                <button type="submit" mat-stroked-button class="outline-success m-l-10"
-                                                    (click)="createStripeToken()">Save
+                                                <button type="submit" [disabled]="isAddingCard" mat-stroked-button
+                                                    class="outline-success m-l-10" (click)="createStripeToken()">Save
                                                     Card</button>
                                             </div>
 

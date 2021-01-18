@@ -285,10 +285,17 @@ export class RecordsComponent implements OnInit {
 
   }
 
-  inOutdownload(data, element) {
+  inOutdownload(data, element, status?) {
     this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 4, "claim_id": element.claim_id, "billable_item_id": element.billable_item_id, "documents_ids": [element.document_id] }).subscribe(res => {
     })
-    saveAs(data.file_url, data.file_name);
+    if (status == 'received') {
+      data.map(receive_doc => {
+        saveAs(receive_doc.file_url, receive_doc.file_name);
+      })
+    } else {
+      saveAs(data.file_url, data.file_name);
+    }
+
   }
 
   onDemandSubmit() {

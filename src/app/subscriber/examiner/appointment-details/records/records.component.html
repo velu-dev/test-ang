@@ -166,7 +166,8 @@
       <div class="user-detail vertical-fixed default-cursor">
         <table mat-table [dataSource]="dataSoruceOut" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">{{columnName[i]}}</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+              {{columnName[i]}}</th>
             <td mat-cell *matCellDef="let element">
               <span *ngIf="i == 0 && isMobile">
                 <mat-icon mat-raised-button
@@ -175,9 +176,10 @@
                 </mat-icon>
               </span>
               <div>
-                 <!-- <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
+                <!-- <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img
                     [src]="element?.file_name | fileType" alt=""></span> -->
-                <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'" class="no-wrap-td">{{element?.request_reference_id }}</span>    
+                <span *ngIf="column == 'request_reference_id' || element?.action == 'SFTP'"
+                  class="no-wrap-td">{{element?.request_reference_id }}</span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'no_of_units'">{{element?.no_of_units}}</span>
                 <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ?
@@ -188,10 +190,11 @@
                 <span *ngIf="column == 'date_of_communication' && element?.received"
                   class="no-wrap-td">{{element?.received?.date_of_communication | date:'MM-dd-yyyy' }}</span>
                 <span *ngIf="column == 'download' && element?.send">
-                  <a class="text-success" (click)="inOutdownload(element?.send, element)">Download</a>
+                  <a class="text-success" (click)="inOutdownload(element?.send, element, 'sent')">Download</a>
                 </span>
                 <span *ngIf="column == 'download1' && element?.received">
-                  <a class="text-success" (click)="inOutdownload(element?.received, element)">Download</a>
+                  <a class="text-success" *ngIf="element?.received.length !=0"
+                    (click)="inOutdownload(element?.received, element, 'received')">Download</a>
                 </span>
               </div>
             </td>
@@ -200,7 +203,8 @@
             <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
               <div class="detail" [@detailExpand]="expandIdOut == element.document_id ? 'expanded' : 'collapsed'">
                 <div class="responsive-table">
-                  <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
+                  <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref #</span><span>
+                      {{element?.request_reference_id}} </span></div>
                   <div><span>File Name</span><span>{{element?.file_name}} </span></div>
                   <div class="no-wrap-td"><span>Rush Request?</span><span>
                       {{element?.service_priority == 'rush' ? 'Yes' : ''}}
@@ -213,12 +217,13 @@
                   <!-- <div class="no-wrap-td"><span>Date Requested</span><span> {{element?.request_date}} </span></div> -->
                   <div><span>Download Record Document</span>
                     <span *ngIf="element?.send">
-                      <a class="text-success" (click)="inOutdownload(element?.send, element)">Download</a>
+                      <a class="text-success" (click)="inOutdownload(element?.send, element, 'sent')">Download</a>
                     </span>
                   </div>
                   <div><span>Download Record Summary</span>
                     <span *ngIf="element?.received">
-                      <a class="text-success" (click)="inOutdownload(element?.received, element)">Download</a>
+                      <a *ngIf="element?.received.length !=0" class="text-success"
+                        (click)="inOutdownload(element?.received, element, 'received')">Download</a>
                     </span>
                   </div>
                 </div>
