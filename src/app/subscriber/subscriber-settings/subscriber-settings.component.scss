@@ -181,87 +181,86 @@ fieldset {
 }
 
 .pay-type.pay .field {
-  position: relative;
+  // position: relative;
   width: 100%;
-
   margin-top: 20px;
-  padding: 5px;
+  // padding: 5px;
 }
 
 // .pay-type.pay .field + .field {
 //   // margin-left: 10px;
 // }
 
-.pay-type.pay label {
-  width: 100%;
-  color: $text-gray;
-  font-size: 13px;
-  font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+// .pay-type.pay label {
+//   width: 100%;
+//   color: $text-gray;
+//   font-size: 13px;
+//   font-weight: 500;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+// }
 
-.pay-type.pay .input {
-  width: 100%;
-  color: 000;
-  background: transparent;
-  padding: 5px 0 6px 0;
-  border-bottom: 1px solid $menu-light;
-  transition: border-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
+// .pay-type.pay .input {
+//   width: 100%;
+//   color: 000;
+//   background: transparent;
+//   padding: 5px 0 6px 0;
+//   border-bottom: 1px solid $menu-light;
+//   transition: border-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+// }
 
-.pay-type input {
-  width: 100%;
-  color: 000;
-  background: transparent;
-  padding: 5px 0 6px 0;
-  border-bottom: 1px solid $menu-light;
-  transition: border-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
+// .pay-type input {
+//   width: 100%;
+//   color: 000;
+//   background: transparent;
+//   padding: 5px 0 6px 0;
+//   border-bottom: 1px solid $menu-light;
+//   transition: border-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+// }
 
-.pay-type.pay .input::-webkit-input-placeholder {
-  color: $menu-light;
-}
+// .pay-type.pay .input::-webkit-input-placeholder {
+//   color: $menu-light;
+// }
 
-.pay-type.pay .input::-moz-placeholder {
-  color: $menu-light;
-}
+// .pay-type.pay .input::-moz-placeholder {
+//   color: $menu-light;
+// }
 
-.pay-type.pay .input:-ms-input-placeholder {
-  color: $menu-light;
-}
+// .pay-type.pay .input:-ms-input-placeholder {
+//   color: $menu-light;
+// }
 
-.pay-type.pay .input.StripeElement--focus,
-.pay-type.pay .input:focus {
-  border-color: #000;
-}
-.pay-type.pay .input.StripeElement--invalid {
-  border-color: #000;
-}
+// .pay-type.pay .input.StripeElement--focus,
+// .pay-type.pay .input:focus {
+//   border-color: #000;
+// }
+// .pay-type.pay .input.StripeElement--invalid {
+//   border-color: #000;
+// }
 
-.pay-type.pay input:-webkit-autofill,
-.pay-type.pay select:-webkit-autofill {
-  -webkit-text-fill-color: $black;
-  transition: background-color 100000000s;
-  -webkit-animation: 1ms void-animation-out;
-}
+// .pay-type.pay input:-webkit-autofill,
+// .pay-type.pay select:-webkit-autofill {
+//   -webkit-text-fill-color: $black;
+//   transition: background-color 100000000s;
+//   -webkit-animation: 1ms void-animation-out;
+// }
 
-.pay-type.pay .StripeElement--webkit-autofill {
-  background: transparent !important;
-}
+// .pay-type.pay .StripeElement--webkit-autofill {
+//   background: transparent !important;
+// }
 
-.pay-type.pay input,
-// .pay-type.pay button,
-.pay-type.pay select {
-  -webkit-animation: 1ms void-animation-out;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  outline: none;
-  border-style: none;
-  border-radius: 0;
-}
+// .pay-type.pay input,
+// // .pay-type.pay button,
+// .pay-type.pay select {
+//   -webkit-animation: 1ms void-animation-out;
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   appearance: none;
+//   outline: none;
+//   border-style: none;
+//   border-radius: 0;
+// }
 
 
 // .pay-type.pay select.input,
