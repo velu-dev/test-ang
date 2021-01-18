@@ -398,7 +398,7 @@ export class SubscriberSettingsComponent implements OnInit {
         iconColor: '#fa755a',
       },
     };
-    this.card = this.elements.create('card', { hidePostalCode: true, style: cardStyle });
+    this.card = this.elements.create('card', { style: cardStyle });
     this.card.mount(this.cardInfo.nativeElement);
     this.card.addEventListener('change', this.cardHandler);
     // this.card.blur();

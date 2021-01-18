@@ -482,7 +482,15 @@
 
                                                 <div class="row">
                                                     <div class="field m-t-0">
-                                                        <label for="name"
+                                                        <mat-form-field fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
+                                                            fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="50">
+                                                            <mat-label>Name*</mat-label>
+                                                            <input matInput placeholder="Full Name"
+                                                                formControlName="name" autocomplete="off">
+                                                            <mat-error *ngIf="billings.hasError('required')">
+                                                                Please enter a name</mat-error>
+                                                        </mat-form-field>
+                                                        <!-- <label for="name"
                                                             data-tid="elements_examples.form.name_label">Name on
                                                             Card*</label>
                                                         <input id="name" matInput name="name"
@@ -491,28 +499,11 @@
                                                             formControlName="name" required autocomplete="name">
                                                         <mat-error *ngIf="billings.hasError('required')">
                                                             Please enter a name
-                                                        </mat-error>
+                                                        </mat-error> -->
                                                     </div>
                                                 </div>
 
                                                 <div data-locale-reversible class="row" fxLayout="row wrap">
-                                                    <div class="field" fxFlex="50">
-                                                        <label for="phone"
-                                                            data-tid="elements_examples.form.address_label">Phone</label>
-                                                        <input id="phone" matInput name="phone"
-                                                            data-tid="elements_examples.form.address_placeholder"
-                                                            class="input" type="text" (keypress)="numberOnly($event)"
-                                                            mask="(000) 000-0000" placeholder="Phone"
-                                                            formControlName="phone" autocomplete="address-line1">
-                                                    </div>
-                                                    <div class="field" fxFlex="50">
-                                                        <label for="email"
-                                                            data-tid="elements_examples.form.address_label">Email</label>
-                                                        <input id="email" matInput name="email"
-                                                            data-tid="elements_examples.form.address_placeholder"
-                                                            class="input" type="text" formControlName="email"
-                                                            placeholder="Email" autocomplete="address-line1">
-                                                    </div>
                                                     <!-- <div formGroupName="address"> -->
                                                     <div class="field" fxFlex="50">
                                                         <label for="street_address_1"
