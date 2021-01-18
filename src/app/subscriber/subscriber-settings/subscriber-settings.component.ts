@@ -504,8 +504,8 @@ export class SubscriberSettingsComponent implements OnInit {
       address_zip: this.billings.value.address_zip,
       address_country: this.billings.value.address_country,
       "customer": this.editingCard.customer,
-      "exp_month": 12,
-      "exp_year": 2030,
+      "exp_month": this.billings.value.exp_month,
+      "exp_year": this.billings.value.exp_year,
     }
     this.stripeService.updateCard(card).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
