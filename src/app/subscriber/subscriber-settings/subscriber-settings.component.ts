@@ -184,7 +184,7 @@ export class SubscriberSettingsComponent implements OnInit {
   isSubmitted = false;
   myControl = new FormControl();
   options: string[] = ['AmericanExpress card ending in 1234', 'Visa card ending in 1234'];
-  displayedColumns: string[] = ['card_img', 'credit_card', 'action'];
+  displayedColumns: string[] = ['card_img', 'credit_card','default_card', 'action'];
   cardDataSource: any;
   isAddCreditCard: boolean = false;
   editingCard: any;
