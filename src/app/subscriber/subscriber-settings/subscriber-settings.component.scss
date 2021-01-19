@@ -177,16 +177,26 @@ fieldset {
 .pay-type.pay .row {
   display: -ms-flexbox;
   display: flex;
-  margin: 0 0 10px;
+  // margin: 0 0 10px;
 }
 
 .pay-type.pay .field {
   // position: relative;
   width: 100%;
-  margin-top: 20px;
+  // margin-top: 20px;
   // padding: 5px;
 }
 
+.pay-type.pay {
+  .checkbox_ {
+    margin:10px 0 0 5px;
+    background: $light-color;
+    padding: 10px;
+    display: block;
+    width: fit-content;
+    border-radius: 3px;
+  }
+}
 // .pay-type.pay .field + .field {
 //   // margin-left: 10px;
 // }
