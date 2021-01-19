@@ -311,17 +311,12 @@ export class AddEditServiceLocationComponent implements OnInit {
         zip_code: null,
         phone_no: null,
         fax_no: null,
-        email: null
+        email: null,
+        primary_contact: "",
+        primary_contact_phone: "",
+        alternate_contact_1_phone: "",
       }
-      this.locationForm.patchValue({
-        primary_contact: this.locationData['primary_contact'],
-        primary_contact_phone: this.locationData['primary_contact_phone'],
-        alternate_contact_1: this.locationData['alternate_contact_1'],
-        alternate_contact_1_phone: this.locationData['alternate_contact_1_phone'],
-        alternate_contact_2: this.locationData['alternate_contact_2'],
-        alternate_contact_2_phone: this.locationData['alternate_contact_2_phone'],
-      })
-      this.locationForm.patchValue(this.locationData);
+      this.locationForm.patchValue(addresEmpty)
     }
   }
 
