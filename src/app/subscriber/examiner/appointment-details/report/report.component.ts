@@ -92,8 +92,8 @@ export class ReportComponent implements OnInit {
         this.columnName = ["", "File Name"]
         this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
-        this.columnName = ["Ref #", "File Name", "Rush Request?", "Date Requested", "Date Received", "Download Submitted Items", "Download Compiled Document"]
-        this.columnsToDisplay = ['request_reference_id', 'file_name', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
+        this.columnName = ["Ref #", "File Name", "Action", "Rush Request?", "Date Requested", "Date Received", "Download Submitted Items", "Download Compiled Document"]
+        this.columnsToDisplay = ['request_reference_id', 'file_name', 'actions', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
       }
     })
     // this.isHandset$.subscribe(res => {
@@ -295,7 +295,7 @@ export class ReportComponent implements OnInit {
     this.claimService.updateActionLog({ type: "report", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billable_item_id, "documents_ids": [element.document_id] }).subscribe(res => {
     })
     if (status == 'received') {
-      data.map(receive_doc =>{
+      data.map(receive_doc => {
         saveAs(receive_doc.file_url, receive_doc.file_name);
       })
     } else {

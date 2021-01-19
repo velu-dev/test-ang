@@ -163,7 +163,8 @@ export class HistoryComponent implements OnInit {
       this.alertService.openSnackBar("Medical History Questionnaire On Demand created successfully", 'success');
       this.getHistory();
     }, error => {
-      if (error.error && error.error.error.data.length) {
+      if (error.error && error.error.error && error.error.error.data && error.error.error.data.length) {
+        console.log(error)
         const dialogRef = this.dialog.open(BillingAlertComponent, {
           width: '500px',
           data: { title: 'Incomplete Information', incompleteInformation: error.error.error.data, ok: true }
