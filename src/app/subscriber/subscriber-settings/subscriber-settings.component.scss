@@ -139,8 +139,11 @@ mat-form-field {
       td {
         &:nth-child(2) {
           @media only screen and (min-width: 1024px) {
-            width: 70%;
+            width: 60%;
+          }
         }
+        .font-13 {
+          font-size: $font-size-7;
         }
       }
     }
@@ -200,7 +203,7 @@ fieldset {
 
 .pay-type.pay {
   .checkbox_ {
-    margin:10px 0 0 5px;
+    margin: 10px 0 0 5px;
     background: $light-color;
     padding: 10px;
     display: block;
@@ -282,7 +285,6 @@ fieldset {
 //   border-style: none;
 //   border-radius: 0;
 // }
-
 
 // .pay-type.pay select.input,
 // .pay-type.pay select:-webkit-autofill {

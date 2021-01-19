@@ -469,8 +469,7 @@
                                                         (click)="$event.stopPropagation();updateCustomer(element)"
                                                         class="filled-lightgray mini-btn" mat-raised-button>Make as
                                                         Default</button>
-                                                    <button *ngIf="i == 0" class="filled-lightgray mini-btn"
-                                                        mat-raised-button>Default Card</button>
+                                                    <div *ngIf="i == 0" class="font-13">Default Payment Preference</div>
                                                 </td>
                                             </ng-container>
 
