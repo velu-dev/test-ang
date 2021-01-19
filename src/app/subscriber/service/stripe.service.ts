@@ -28,4 +28,7 @@ export class StripeService {
   deleteCard(card): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteCard + card.id + "/" + card.customer)
   }
+  updateCustomer(customer): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updateCustomer, customer)
+  }
 }

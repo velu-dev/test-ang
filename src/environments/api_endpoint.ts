@@ -58,6 +58,7 @@ export const api_endpoint = {
     listCards: "payment/list-all-cards",
     createCard: "payment/create-card",
     updateCard: "payment/update-card",
+    updateCustomer: "payment/update-customer",
     deleteCard: "payment/delete-card/",
     upcomingAppointment: 'examiner-dashboard/upcoming-appointments',
     dashboardBilling: 'examiner-dashboard/billing',

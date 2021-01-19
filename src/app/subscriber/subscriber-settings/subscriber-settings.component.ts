@@ -184,7 +184,7 @@ export class SubscriberSettingsComponent implements OnInit {
   isSubmitted = false;
   myControl = new FormControl();
   options: string[] = ['AmericanExpress card ending in 1234', 'Visa card ending in 1234'];
-  displayedColumns: string[] = ['card_img', 'credit_card','default_card', 'action'];
+  displayedColumns: string[] = ['card_img', 'credit_card', 'default_card', 'action'];
   cardDataSource: any;
   isAddCreditCard: boolean = false;
   editingCard: any;
@@ -299,6 +299,7 @@ export class SubscriberSettingsComponent implements OnInit {
       phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       exp_month: [""],
       exp_year: [""],
+      default: [false],
       // address: this.formBuilder.group({
       address_city: [""],
       address_line1: [""],
@@ -386,7 +387,6 @@ export class SubscriberSettingsComponent implements OnInit {
     this.cd.detectChanges();
   }
   initiateCardElement(token) {
-    console.log(token);
     this.stripe = Stripe(token); // use your test publishable key
     this.elements = this.stripe.elements();
     // Giving a base style here, but most of the style is in scss file
@@ -470,19 +470,23 @@ export class SubscriberSettingsComponent implements OnInit {
       address_zip: this.billings.value.address_zip,
       address_country: this.billings.value.address_country
     }).then(res => {
-      console.log(res)
-      this.stripeService.createCard({ source: res.token.id }).subscribe(card => {
-        this.listCard();
-        this.hideCard = true;
-        this.billings.reset();
-        this.isAddCreditCard = false;
+      if (res.token) {
+        this.stripeService.createCard({ card_token: res.token.id, default: this.billings.value.default }).subscribe(card => {
+          this.listCard();
+          this.hideCard = true;
+          this.billings.reset();
+          this.isAddCreditCard = false;
+          this.isAddingCard = false;
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, "error")
+        })
+      } else {
         this.isAddingCard = false;
-      }, error => {
-        this.alertService.openSnackBar(error.error.message, "error")
-      })
-    }, error => {
+        this.alertService.openSnackBar(res.error.message, "error")
+      }
+    }).catch(error => {
       this.isAddingCard = false;
-      this.alertService.openSnackBar(error.error.message, "error")
+      this.alertService.openSnackBar(error.message, "error")
     })
     // this.stripe.createPaymentMethod(data).then(res => {
     //   if (res.paymentMethod) {
@@ -538,6 +542,22 @@ export class SubscriberSettingsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
         this.stripeService.deleteCard(card).subscribe(res => {
+          this.alertService.openSnackBar(res.message, "success");
+          this.listCard()
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, "error")
+        })
+      }
+    })
+  }
+  updateCustomer(card) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '500px',
+      data: { name: 'make default', address: true, title: (card.brand + " card ending in " + card.last4) }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.stripeService.updateCustomer({ customer_id: card.customer, default_source: card.id }).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
           this.listCard()
         }, error => {
