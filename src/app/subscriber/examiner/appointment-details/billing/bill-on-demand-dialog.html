@@ -56,10 +56,9 @@
                         <span><i class="fas fa-info-circle"></i>Address incomplete</span>
                     </div>
 
-                    <span class="custom-list" *ngIf="element.type == 'custom'">
+                    <span class="custom-list" *ngIf="element.type == 'custom' && !element?.isCustomRecipientAssigned">
                         <a class="text-success" (click)="$event.stopPropagation();editRecipient(element)">Edit</a>
-                        <a class="text-danger m-l-10"
-                            (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
+                        <a class="text-danger m-l-10" (click)="$event.stopPropagation();deleteRecipient(element)">Remove</a>
                     </span>
                 </td>
             </ng-container>

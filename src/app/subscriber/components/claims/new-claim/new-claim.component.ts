@@ -1611,7 +1611,6 @@ export class NewClaimComponent implements OnInit {
   note: string = '';
   documents_ids = [];
   correspondFormSubmit() {
-    console.log(this.claim.value)
     if (this.file == null) {
       this.fileErrors.file.isError = true;
       this.fileErrors.file.error = "Please select file";
@@ -1619,7 +1618,7 @@ export class NewClaimComponent implements OnInit {
     }
     let formData = new FormData();
     formData.append('file', this.selectedFile);
-    this.note = this.note.trim();
+    this.note = this.note ? this.note.trim() : this.note;
     formData.append('notes', this.note);
     if (this.claim.value.claim_details.id) {
       formData.append('claim_id', this.claim.value.claim_details.id)
