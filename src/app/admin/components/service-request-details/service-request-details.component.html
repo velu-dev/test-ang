@@ -229,6 +229,11 @@
                     <td mat-cell *matCellDef="let element"> {{element?.file_name}}</td>
                 </ng-container>
 
+                <ng-container *ngIf="serviceRequestDetails?.service_request_type_id == 5" matColumnDef="workcompedi_bill_id">
+                    <th mat-header-cell *matHeaderCellDef>WorkCompEDIBillID</th>
+                    <td mat-cell *matCellDef="let element"> {{element?.workcompedi_bill_id}}</td>
+                </ng-container>
+
                 <!-- Sent Document Name Column -->
                 <ng-container matColumnDef="received_on">
                     <th mat-header-cell *matHeaderCellDef>Received On</th>

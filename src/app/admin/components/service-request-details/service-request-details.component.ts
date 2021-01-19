@@ -91,6 +91,11 @@ export class ServiceRequestDetailsComponent implements OnInit {
   getData() {
     this.userService.getServiceRequest(this.service_request_id).subscribe(res => {
       this.serviceRequestDetails = res.service_request;
+      if(res.service_request && res.service_request.service_request_type_id == 5){
+        this.displayedColumnsReqRes = ['file_name', 'workcompedi_bill_id', 'received_on', 'status', 'download'];
+      }else{
+        this.displayedColumnsReqRes = ['file_name', 'received_on', 'status', 'download'];
+      }
       let requestDocuments = [];
       let receivedDocument = [];
       res.service_request_doc.map(doc => {
