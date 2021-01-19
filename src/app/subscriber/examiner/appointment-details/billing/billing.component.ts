@@ -1608,7 +1608,7 @@ export class billingOnDemandDialog {
 
 
   download(data) {
-    saveAs(data.exam_report_file_url, data.file_name, '_self');
+    saveAs(data.exam_report_file_url, data.file_name);
     this.alertService.openSnackBar("File downloaded successfully", "success");
   }
 
@@ -1704,15 +1704,10 @@ export class billingOnDemandDialog {
                       this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
                     }
                     if (bill.data.bill_on_demand_signed_zip_file_url) {
-                      setTimeout(() => {
                         this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
-                      }, 1000);
-
                     }
                     if (bill.data.dtm_file_url) {
-                      setTimeout(() => {
                         this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
-                      }, 2000);
                     }
                     this.onDemandStatus = true;
                     this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
@@ -1738,15 +1733,11 @@ export class billingOnDemandDialog {
                   this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
                 }
                 if (bill.data.bill_on_demand_signed_zip_file_url) {
-                  setTimeout(() => {
                     this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
-                  }, 1000);
 
                 }
                 if (bill.data.dtm_file_url) {
-                  setTimeout(() => {
                     this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
-                  }, 2000);
                 }
                 this.onDemandStatus = true;
                 this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
@@ -1780,15 +1771,10 @@ export class billingOnDemandDialog {
                 this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
               }
               if (bill.data.bill_on_demand_signed_zip_file_url) {
-                setTimeout(() => {
                   this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
-                }, 1000);
-
               }
               if (bill.data.dtm_file_url) {
-                setTimeout(() => {
                   this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
-                }, 2000);
               }
               this.onDemandStatus = true;
               this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
@@ -1814,16 +1800,12 @@ export class billingOnDemandDialog {
             this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
           }
           if (bill.data.bill_on_demand_signed_zip_file_url) {
-            setTimeout(() => {
               this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
-            }, 1000);
 
           }
 
           if (bill.data.dtm_file_url) {
-            setTimeout(() => {
               this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
-            }, 2000);
           }
           this.onDemandStatus = true;
           this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
