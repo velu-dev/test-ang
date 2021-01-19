@@ -134,6 +134,17 @@ mat-form-field {
     float: right;
     margin-top: 25px;
   }
+  .basic-table {
+    table {
+      td {
+        &:nth-child(2) {
+          @media only screen and (min-width: 1024px) {
+            width: 70%;
+        }
+        }
+      }
+    }
+  }
 }
 .w-150 {
   width: 150px;
