@@ -283,6 +283,12 @@ export class SubscriberSettingsComponent implements OnInit {
     this.stripeService.listCard().subscribe(res => {
       this.cardDataSource = new MatTableDataSource(res.data)
       this.cardCount = res.data.length;
+    }, error => {
+      // this.alertService.openSnackBar(error.error.message, 'error');
+      if (!error.error.status) {
+        this.cardDataSource = new MatTableDataSource([])
+        this.cardCount = [].length;
+      }
     })
   }
   isViewInit: boolean = false;
@@ -376,6 +382,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.editingCard = card;
     this.isAddCreditCard = true;
     this.changeState(card.address_state)
+    this.billings.controls['address_zip'].setValidators([Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]);
     this.billings.patchValue(card);
   }
   onChange({ error }) {
@@ -436,16 +443,16 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   isCardSubmit = false;
   async createStripeToken() {
-    if (this.isUpdate) {
-      this.updateCard();
-      return
-    }
     Object.keys(this.billings.controls).forEach((key) => {
       if (this.billings.get(key).value && typeof (this.billings.get(key).value) == 'string')
         this.billings.get(key).setValue(this.billings.get(key).value.trim());
     });
     if (!this.billings.valid) {
       this.alertService.openSnackBar("Please fill all required fields", "error");
+      return
+    }
+    if (this.isUpdate) {
+      this.updateCard();
       return
     }
     this.isAddingCard = true;
