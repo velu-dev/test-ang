@@ -1868,11 +1868,11 @@ export class billingOnDemandDialog {
     //   this.alertService.openSnackBar("Document not found", "error");
     //   return;
     // }
+    if (this.selection1.selected.length > 12) {
+      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+      return;
+    }
     this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId, { isPopupValidate: true }).subscribe(res => {
-      if (this.selection1.selected.length > 12) {
-        this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
-        return;
-      }
       if (!this.data.is_w9_form) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
