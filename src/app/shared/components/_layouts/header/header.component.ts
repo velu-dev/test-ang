@@ -144,11 +144,12 @@ export class HeaderComponent implements OnInit {
           this.filteredClaimants = []
           return;
         }
-        if (res) {
+        if (res.trim()) {
           this.userService.searchClaimant({ "claimant_search_text": res }).subscribe(search => {
             this.filteredClaimants = search.data ? search.data : [];
           }, error => {
-            console.log(error)
+            console.log(error);
+            this.filteredClaimants = []
           })
 
         }

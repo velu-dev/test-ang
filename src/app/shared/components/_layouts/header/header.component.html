@@ -27,6 +27,9 @@
                                     </span></li>
                             </ul>
                         </mat-option>
+                        <mat-option disabled *ngIf="claimantCtrl.value && filteredClaimants?.length == 0">
+                            Not Found
+                        </mat-option>
                     </mat-autocomplete>
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
