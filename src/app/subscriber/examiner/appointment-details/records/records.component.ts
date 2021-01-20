@@ -13,7 +13,7 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
-
+import * as moment from 'moment-timezone';
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
@@ -324,6 +324,12 @@ export class RecordsComponent implements OnInit {
       this.alertService.openSnackBar("Record Summary On Demand created successfully", 'success');
       this.getRecord();
     }, error => {
+      if (typeof(error.error.message) == 'object') {
+        let timezone = moment.tz.guess();
+        let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+        this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
+        return;
+      }
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
