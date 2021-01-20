@@ -13,7 +13,7 @@ import { User } from 'src/app/admin/models/user.model';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { finalize, map, startWith } from 'rxjs/operators';
+import { debounceTime, finalize, map, startWith } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import * as headerActions from "./../../../../shared/store/header.actions";
 import * as breadcrumbActions from "./../../../../shared/store/breadcrumb.actions";
@@ -35,7 +35,7 @@ export interface Claimant {
 })
 export class HeaderComponent implements OnInit {
   claimantCtrl = new FormControl();
-  filteredClaimants: Observable<Claimant[]>;
+  filteredClaimants: any;
   @Output() isClosed: EventEmitter<any> = new EventEmitter<any>();
   claimants: Claimant[] = [
     // {
@@ -91,6 +91,7 @@ export class HeaderComponent implements OnInit {
   user$: Observable<any>;
   toggleClass = 'fullscreen';
   role: string;
+  filteredClaimant: any;
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
@@ -129,17 +130,35 @@ export class HeaderComponent implements OnInit {
       })
     })
 
-    this.filteredClaimants = this.claimantCtrl.valueChanges
+    // this.filteredClaimants = this.claimantCtrl.valueChanges
+    //   .pipe(
+    //     startWith(''),
+    //     map(claimant => claimant ? this._filterClaimants(claimant) : this.claimants.slice())
+    //   );
+
+    this.claimantCtrl.valueChanges
       .pipe(
-        startWith(''),
-        map(claimant => claimant ? this._filterClaimants(claimant) : this.claimants.slice())
-      );
-      window.onresize = () => {
-       this.ngOnInit();
-       this.isOpen = this.inputSideNav.opened;
-       this.isClosed.emit(this.isOpen)
-      };
-      
+        debounceTime(300),
+      ).subscribe(res => {
+        if (!res || (res && res.length < 3 && res != '*')) {
+          this.filteredClaimants = []
+          return;
+        }
+        if (res) {
+          this.userService.searchClaimant({ "claimant_search_text": res }).subscribe(search => {
+            this.filteredClaimants = search.data ? search.data : [];
+          }, error => {
+            console.log(error)
+          })
+
+        }
+      });
+    window.onresize = () => {
+      this.ngOnInit();
+      this.isOpen = this.inputSideNav.opened;
+      this.isClosed.emit(this.isOpen)
+    };
+
   }
   private _filterClaimants(value: string): Claimant[] {
     const filterValue = value.toLowerCase();
@@ -150,6 +169,7 @@ export class HeaderComponent implements OnInit {
     // this.user$ = this.store.pipe(select('header'));
     this.elem = document.documentElement;
     this.isOpen = this.inputSideNav.opened;
+
   }
 
   openSidenav() {
@@ -261,4 +281,50 @@ export class HeaderComponent implements OnInit {
         return 'User';
     }
   }
+
+  searchClick(source) {
+    this.claimantCtrl.reset();
+    console.log(source);
+    let data = source._source;
+    let baseUrl = "";
+    let role = this.cookieService.get('role_id')
+    console.log(role)
+    switch (role) {
+      case '1':
+        baseUrl = "/admin";
+        break;
+      case '2':
+        baseUrl = "/subscriber/";
+        break;
+      case '3':
+        baseUrl = "/subscriber/manager/";
+        break;
+      case '4':
+        baseUrl = "/subscriber/staff/";
+        break;
+      case '11':
+        baseUrl = "/subscriber/examiner/";
+        break;
+      default:
+        baseUrl = "/";
+        break;
+    }
+    if (data.billable_item_id) {
+      this.router.navigate([baseUrl + "claimants/claimant/" + data.claimant_id + "/claim/" + data.claim_id + "/billable-item/" + data.billable_item_id]);
+      return;
+    }
+
+    if (data.claim_id) {
+      this.router.navigate([baseUrl + "claimants/claimant/" + data.claimant_id + "/claim/" + data.claim_id]);
+      return;
+    }
+
+    if (data.claimant_id) {
+      this.router.navigate([baseUrl + "claimants/claimant/" + data.claimant_id]);
+      return;
+    }
+
+  }
+
+
 }
