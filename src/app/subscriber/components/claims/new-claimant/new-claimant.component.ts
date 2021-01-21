@@ -245,7 +245,7 @@ export class NewClaimantComponent implements OnInit {
         this.claimantChanges = false;
       }, error => {
         console.log(error);
-        this.alertService.openSnackBar(error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
         this.claimantChanges = true;
       })
     } else {
@@ -256,7 +256,7 @@ export class NewClaimantComponent implements OnInit {
         this.claimantForm.disable();
         this.claimantChanges = false;
       }, error => {
-        this.alertService.openSnackBar(error.error, 'error');
+        this.alertService.openSnackBar(error.error.message, 'error');
         this.claimantChanges = true;
       })
     }

@@ -300,9 +300,9 @@ export class SubscriberSettingsComponent implements OnInit {
   ngOnInit() {
     this.billings = this.formBuilder.group({
       // address: { city: "", country: "US", line1: "", line2: "", state: null, postal_code: "" },
-      name: ["", Validators.compose([Validators.required])],
-      email: ["", Validators.compose([Validators.email])],
-      phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      name: ["", Validators.compose([Validators.required, Validators.pattern("(?<! )[-a-zA-Z,. ]{2,60}")])],
+      // email: ["", Validators.compose([Validators.email])],
+      // phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       exp_month: [""],
       exp_year: [""],
       default: [false],
