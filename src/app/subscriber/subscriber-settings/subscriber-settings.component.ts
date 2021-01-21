@@ -377,13 +377,14 @@ export class SubscriberSettingsComponent implements OnInit {
     })
   }
   isUpdate: boolean = false;
-  editCard(card) {
+  editCard(card, index) {
     this.isUpdate = true;
     this.editingCard = card;
     this.isAddCreditCard = true;
     this.changeState(card.address_state)
-    this.billings.controls['address_zip'].setValidators([Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]);
+    this.billings.controls['address_zip'].setValidators([Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}?$')])]);
     this.billings.patchValue(card);
+    index == 0 ? this.billings.patchValue({ default: true }) : this.billings.patchValue({ default: false })
   }
   onChange({ error }) {
     if (error) {
@@ -528,6 +529,7 @@ export class SubscriberSettingsComponent implements OnInit {
       address_state: this.billings.value.address_state,
       address_zip: this.billings.value.address_zip,
       address_country: this.billings.value.address_country,
+      default: this.billings.value.default,
       "customer": this.editingCard.customer,
       "exp_month": this.billings.value.exp_month,
       "exp_year": this.billings.value.exp_year,
