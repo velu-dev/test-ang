@@ -390,6 +390,7 @@ export class SubscriberSettingsComponent implements OnInit {
       this.billings.get('default').disable();
       this.billings.patchValue({ default: true })
     } else {
+      this.billings.get('default').enable();
       this.billings.patchValue({ default: false })
     }
   }
@@ -493,6 +494,7 @@ export class SubscriberSettingsComponent implements OnInit {
           this.isAddCreditCard = false;
           this.isAddingCard = false;
         }, error => {
+          this.isAddingCard = false;
           this.alertService.openSnackBar(error.error.message, "error")
         })
       } else {
