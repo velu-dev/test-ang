@@ -299,10 +299,7 @@ export class SubscriberSettingsComponent implements OnInit {
   billings: FormGroup;
   ngOnInit() {
     this.billings = this.formBuilder.group({
-      // address: { city: "", country: "US", line1: "", line2: "", state: null, postal_code: "" },
-      name: ["", Validators.compose([Validators.required, Validators.pattern("(?<! )[-a-zA-Z,. ]{2,60}")])],
-      // email: ["", Validators.compose([Validators.email])],
-      // phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      name: ["", Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z\-]+$")])],
       exp_month: [""],
       exp_year: [""],
       default: [false],
@@ -366,6 +363,7 @@ export class SubscriberSettingsComponent implements OnInit {
   addCard() {
     this.billings.controls['address_zip'].setValidators(null);
     this.billings.controls['address_zip'].updateValueAndValidity();
+    this.billings.get('default').enable();
     if (this.cardCount >= 5) {
       this.alertService.openSnackBar("Maximum number of cards per Subscriber is 5 only", "error")
       return
@@ -456,6 +454,7 @@ export class SubscriberSettingsComponent implements OnInit {
       if (this.billings.get(key).value && typeof (this.billings.get(key).value) == 'string')
         this.billings.get(key).setValue(this.billings.get(key).value.trim());
     });
+    this.isCardSubmit = true;
     if (!this.billings.valid) {
       this.alertService.openSnackBar("Please fill all required fields", "error");
       return
@@ -465,7 +464,6 @@ export class SubscriberSettingsComponent implements OnInit {
       return
     }
     this.isAddingCard = true;
-    this.isCardSubmit = true;
     let billingData = this.billings.value;
     for (var propName in billingData) {
       if (billingData[propName] === null || billingData[propName] === "") {
@@ -493,6 +491,7 @@ export class SubscriberSettingsComponent implements OnInit {
           this.billings.reset();
           this.isAddCreditCard = false;
           this.isAddingCard = false;
+          this.isCardSubmit = false;
         }, error => {
           this.isAddingCard = false;
           this.alertService.openSnackBar(error.error.message, "error")
@@ -548,6 +547,7 @@ export class SubscriberSettingsComponent implements OnInit {
       this.listCard();
       this.isAddCreditCard = false;
       this.billings.reset();
+      this.isCardSubmit = false;
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error");
     })
