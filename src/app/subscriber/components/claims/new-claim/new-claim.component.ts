@@ -1045,6 +1045,9 @@ export class NewClaimComponent implements OnInit {
         case '11':
           baseUrl = "/subscriber/examiner/";
           break;
+        case '12':
+          baseUrl = "/subscriber/staff/";
+          break;
         default:
           baseUrl = "/";
           break;
@@ -1722,6 +1725,9 @@ export class NewClaimComponent implements OnInit {
         break;
       case '11':
         this.router.navigate(["/subscriber/examiner"]);
+        break;
+      case '12':
+        this.router.navigate(["/subscriber/staff"]);
         break;
       default:
         this.router.navigate(["/"]);

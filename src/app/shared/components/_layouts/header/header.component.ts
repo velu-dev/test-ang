@@ -260,6 +260,9 @@ export class HeaderComponent implements OnInit {
       case '11':
         this.router.navigate(["/subscriber/examiner/settings"]);
         break;
+      case '12':
+        this.router.navigate(["/subscriber/settings"]);
+        break;
       default:
         this.router.navigate(["/settings"]);
         break;
@@ -278,6 +281,8 @@ export class HeaderComponent implements OnInit {
         return 'Staff';
       case 11:
         return 'Examiner';
+      case 12:
+        return 'Staff Biller';
       default:
         return 'User';
     }
@@ -303,6 +308,9 @@ export class HeaderComponent implements OnInit {
         break;
       case '11':
         baseUrl = "/subscriber/examiner/";
+        break;
+      case '12':
+        baseUrl = "/subscriber/staff/";
         break;
       default:
         baseUrl = "/";

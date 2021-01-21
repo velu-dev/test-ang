@@ -616,6 +616,9 @@ export class NewExaminerUserComponent implements OnInit {
       case '4':
         this.router.navigate(["/subscriber/staff/users"]);
         break;
+      case '12':
+        this.router.navigate(["/subscriber/staff/users"]);
+        break;
       default:
         this._location.back();
         break;

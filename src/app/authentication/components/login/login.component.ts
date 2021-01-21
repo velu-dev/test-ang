@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
     // { role_id: 9, redirect_url: "/vendor/transcriber/dashboard" },
     // { role_id: 10, redirect_url: "/vendor/transcriber/staff/dashboard" },
     { role_id: 11, redirect_url: "/subscriber/examiner/" },
+    { role_id: 12, redirect_url: "/subscriber/staff/" },
   ]
   constructor(
     private router: Router,

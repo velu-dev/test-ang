@@ -467,8 +467,7 @@
                                                 <td mat-cell *matCellDef="let element, let i=index">
                                                     <button *ngIf="i != 0"
                                                         (click)="$event.stopPropagation();updateCustomer(element)"
-                                                        class="filled-lightgray mini-btn" mat-raised-button>Set as
-                                                        Default Card</button>
+                                                        class="filled-lightgray mini-btn" mat-raised-button>Set as Default Payment Card</button>
                                                     <div *ngIf="i == 0" class="font-13">Current Default Card</div>
                                                 </td>
                                             </ng-container>

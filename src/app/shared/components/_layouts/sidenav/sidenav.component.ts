@@ -161,6 +161,9 @@ export class SidenavComponent implements OnInit {
       case '11':
         this.router.navigate(["/subscriber/examiner"]);
         break;
+      case '12':
+        this.router.navigate(["/subscriber/staff"]);
+        break;
       default:
         this.router.navigate(["/"]);
         break;

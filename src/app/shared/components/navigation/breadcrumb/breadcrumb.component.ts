@@ -19,7 +19,7 @@ export class BreadcrumbComponent implements OnInit {
     routeUrl: string;
     isname: string = 'false';
     name: string = "";
-    info:any;
+    info: any;
     constructor(private router: Router, private store: Store<{ breadcrumb: any }>, private cookieService: CookieService) {
         this.menu$ = store.pipe(select('breadcrumb'));
         // this.menu$.subscribe(res => {
@@ -33,8 +33,8 @@ export class BreadcrumbComponent implements OnInit {
         this.store.dispatch(new breadcrumbActions.ListBreadcrumb());
     }
     breadCrumb(menu, index) {
-        if(menu.submenu.length != 0){ 
-        this.router.navigate([menu.path])
+        if (menu.submenu.length != 0) {
+            this.router.navigate([menu.path])
         }
         this.store.dispatch(new breadcrumbActions.RemoveBreadcrumb({ index: index }));
     }
@@ -76,6 +76,9 @@ export class BreadcrumbComponent implements OnInit {
             //     break;
             case '11':
                 this.router.navigate(["/subscriber/examiner"]);
+                break;
+            case '12':
+                this.router.navigate(["/subscriber/staff"]);
                 break;
             default:
                 this.router.navigate(["/"]);
