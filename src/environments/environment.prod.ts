@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   baseUrl: 'https://dev01api.simplexam.com/', //dev
-
+  searchUrl: 'https://dev01esapi.simplexam.com/elastic/search',
   cookieSecure : true,
   Amplify: {
     Auth: {

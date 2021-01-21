@@ -140,7 +140,7 @@ export class HeaderComponent implements OnInit {
       .pipe(
         debounceTime(300),
       ).subscribe(res => {
-        if (!res || (res && res.length < 3 && res != '*')) {
+        if (!res || (res && res.length < 2 && res != '*')) {
           this.filteredClaimants = []
           return;
         }
@@ -285,11 +285,9 @@ export class HeaderComponent implements OnInit {
 
   searchClick(source) {
     this.claimantCtrl.reset();
-    console.log(source);
     let data = source._source;
     let baseUrl = "";
     let role = this.cookieService.get('role_id')
-    console.log(role)
     switch (role) {
       case '1':
         baseUrl = "/admin";

@@ -32,6 +32,6 @@ export class UserService {
     }
 
     searchClaimant(data): Observable<any> {
-        return this.http.post('https://dev01esapi.simplexam.com/elastic/search', data)
+        return this.http.post(environment.searchUrl, data)
     }
 }
