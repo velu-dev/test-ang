@@ -69,10 +69,13 @@ export class CommonLayoutComponent implements OnInit {
       //     this.router.navigate(["/vendor/transcriber/staff"]);
       //   }
       //   break;
-        case '11':
+      case '11':
         if (this.routeUrl != 'subscriber') {
           this.router.navigate(["/subscriber/examiner"]);
         }
+        break;
+      case '12':
+        this.router.navigate(["/subscriber/staff"]);
         break;
       default:
         this.router.navigate(["/"]);

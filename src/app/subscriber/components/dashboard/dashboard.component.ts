@@ -86,6 +86,9 @@ export class DashboardComponent implements OnInit {
       case '11':
         this.router.navigate(["/subscriber/examiner"]);
         break;
+      case '12':
+        this.router.navigate(["/subscriber/staff"]);
+        break;
     }
   }
 
@@ -123,7 +126,7 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
   }
 
-  navigateBillableItem(element){
+  navigateBillableItem(element) {
     this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
     this.intercom.setClaimNumber(element.claim_number);
     this.cookieService.set('claimNumber', element.claim_number)

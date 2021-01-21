@@ -52,6 +52,9 @@ export class SessionGuard implements CanActivate {
           case '11':
             this.router.navigate(["/subscriber/examiner"]);
             break;
+          case '12':
+            this.router.navigate(["/subscriber/staff"]);
+            break;
           default:
             this.cookieService.deleteAll()
             return true;

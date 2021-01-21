@@ -506,6 +506,9 @@ export class EventdetailDialog {
       case '11':
         baseUrl = "/subscriber/examiner/";
         break;
+      case '12':
+        baseUrl = "/subscriber/staff/";
+        break;
       default:
         baseUrl = "/";
         break;
