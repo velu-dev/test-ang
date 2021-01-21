@@ -285,7 +285,13 @@ export class AddEditServiceLocationComponent implements OnInit {
             zip_code: null,
             phone_no: null,
             fax_no: null,
-            email: null
+            email: null,
+            primary_contact: "",
+            primary_contact_phone: "",
+            alternate_contact_1_phone: "",
+            alternate_contact_1: "",
+            alternate_contact_2: "",
+            alternate_contact_2_phone: "",
           }
           this.locationForm.patchValue(addresEmpty);
         })
@@ -315,6 +321,9 @@ export class AddEditServiceLocationComponent implements OnInit {
         primary_contact: "",
         primary_contact_phone: "",
         alternate_contact_1_phone: "",
+        alternate_contact_1: "",
+        alternate_contact_2: "",
+        alternate_contact_2_phone: "",
       }
       this.locationForm.patchValue(addresEmpty)
     }
