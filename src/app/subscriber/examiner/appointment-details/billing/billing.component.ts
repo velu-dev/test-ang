@@ -23,6 +23,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
+import * as moment from 'moment-timezone';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -1712,6 +1713,12 @@ export class billingOnDemandDialog {
                     this.onDemandStatus = true;
                     this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
                   }, error => {
+                    if (typeof(error.error.message) == 'object') {
+                      let timezone = moment.tz.guess();
+                      let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+                      this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
+                      return;
+                    }
                     this.alertService.openSnackBar(error.error.message, 'error');
                   })
                 } else {
@@ -1742,6 +1749,12 @@ export class billingOnDemandDialog {
                 this.onDemandStatus = true;
                 this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
               }, error => {
+                if (typeof(error.error.message) == 'object') {
+                  let timezone = moment.tz.guess();
+                  let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+                  this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
+                  return;
+                }
                 this.alertService.openSnackBar(error.error.message, 'error');
               })
             }
@@ -1779,6 +1792,12 @@ export class billingOnDemandDialog {
               this.onDemandStatus = true;
               this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
             }, error => {
+              if (typeof(error.error.message) == 'object') {
+                let timezone = moment.tz.guess();
+                let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+                this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
+                return;
+              }
               this.alertService.openSnackBar(error.error.message, 'error');
             })
           } else {
@@ -1810,6 +1829,12 @@ export class billingOnDemandDialog {
           this.onDemandStatus = true;
           this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
         }, error => {
+          if (typeof(error.error.message) == 'object') {
+            let timezone = moment.tz.guess();
+            let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+            this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
+            return;
+          }
           this.alertService.openSnackBar(error.error.message, 'error');
         })
       }
@@ -1843,11 +1868,11 @@ export class billingOnDemandDialog {
     //   this.alertService.openSnackBar("Document not found", "error");
     //   return;
     // }
+    if (this.selection1.selected.length > 12) {
+      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+      return;
+    }
     this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId, { isPopupValidate: true }).subscribe(res => {
-      if (this.selection1.selected.length > 12) {
-        this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
-        return;
-      }
       if (!this.data.is_w9_form) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',

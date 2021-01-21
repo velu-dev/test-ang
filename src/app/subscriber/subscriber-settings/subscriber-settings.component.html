@@ -457,19 +457,19 @@
 
 
                                             <ng-container matColumnDef="credit_card">
-                                                <th mat-header-cell *matHeaderCellDef> Credit Card </th>
+                                                <th mat-header-cell *matHeaderCellDef>Credit Card</th>
                                                 <td mat-cell *matCellDef="let element"> {{element.brand}} card ending in
                                                     {{element.last4}} </td>
                                             </ng-container>
 
                                             <ng-container matColumnDef="default_card">
-                                                <th mat-header-cell *matHeaderCellDef> Default Selection </th>
+                                                <th mat-header-cell *matHeaderCellDef>Default Card</th>
                                                 <td mat-cell *matCellDef="let element, let i=index">
                                                     <button *ngIf="i != 0"
                                                         (click)="$event.stopPropagation();updateCustomer(element)"
-                                                        class="filled-lightgray mini-btn" mat-raised-button>Make as
-                                                        Default</button>
-                                                    <div *ngIf="i == 0" class="font-13">Default Payment Preference</div>
+                                                        class="filled-lightgray mini-btn" mat-raised-button>Set as
+                                                        Default Card</button>
+                                                    <div *ngIf="i == 0" class="font-13">Current Default Card</div>
                                                 </td>
                                             </ng-container>
 
@@ -609,7 +609,7 @@
 
                                                         <div fxFlex="50">
                                                             <mat-checkbox formControlName="default" class="checkbox_">
-                                                                Make as Default Payment Card
+                                                                Set as Default Payment Card
                                                             </mat-checkbox>
                                                         </div>
 

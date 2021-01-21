@@ -13,6 +13,7 @@ import { saveAs } from 'file-saver';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
+import * as moment from 'moment-timezone';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -327,6 +328,12 @@ export class ReportComponent implements OnInit {
       this.alertService.openSnackBar("Transcribe and Compile created successfully", 'success');
       this.getReport();
     }, error => {
+      if (typeof(error.error.message) == 'object') {
+        let timezone = moment.tz.guess();
+        let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+        this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
+        return;
+      }
       this.alertService.openSnackBar(error.error.message, 'error');
     })
   }

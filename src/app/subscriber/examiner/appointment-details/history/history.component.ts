@@ -11,6 +11,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import * as moment from 'moment-timezone';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -172,6 +173,12 @@ export class HistoryComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
           return
         })
+        return;
+      }
+      if (typeof(error.error.message) == 'object') {
+        let timezone = moment.tz.guess();
+        let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+        this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
         return;
       }
       this.alertService.openSnackBar(error.error.message, 'error');

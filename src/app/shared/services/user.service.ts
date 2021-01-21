@@ -30,4 +30,8 @@ export class UserService {
     verifyUserRole(): Observable<any> {
         return this.http.get(environment.baseUrl + api_endpoint.verifyUserRole)
     }
+
+    searchClaimant(data): Observable<any> {
+        return this.http.post(environment.searchUrl, data)
+    }
 }

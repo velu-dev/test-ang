@@ -4,13 +4,13 @@
 export const environment = {
   production: false,
 
-   baseUrl: 'https://dev01api.simplexam.com/', //Dev
+  baseUrl: 'https://dev01api.simplexam.com/', //Dev
   //  baseUrl: 'https://tst01api.simplexam.com/', //Test
   // baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
   // baseUrl: 'http://192.168.1.122:3000/', //Rajan-local
   // baseUrl: 'http://localhost:3000/', //local
-
-  cookieSecure : false,
+  searchUrl: 'https://dev01esapi.simplexam.com/elastic/search',
+  cookieSecure: false,
 
   Amplify: {
     Auth: {
