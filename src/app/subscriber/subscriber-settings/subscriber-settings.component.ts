@@ -364,6 +364,8 @@ export class SubscriberSettingsComponent implements OnInit {
   isAddingCard = false;
   publicKey: any;
   addCard() {
+    this.billings.controls['address_zip'].setValidators(null);
+    this.billings.controls['address_zip'].updateValueAndValidity();
     if (this.cardCount >= 5) {
       this.alertService.openSnackBar("Maximum number of cards per Subscriber is 5 only", "error")
       return
@@ -384,7 +386,12 @@ export class SubscriberSettingsComponent implements OnInit {
     this.changeState(card.address_state)
     this.billings.controls['address_zip'].setValidators([Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}?$')])]);
     this.billings.patchValue(card);
-    index == 0 ? this.billings.patchValue({ default: true }) : this.billings.patchValue({ default: false })
+    if (index == 0) {
+      this.billings.get('default').disable();
+      this.billings.patchValue({ default: true })
+    } else {
+      this.billings.patchValue({ default: false })
+    }
   }
   onChange({ error }) {
     if (error) {
