@@ -746,8 +746,12 @@ input:-webkit-autofill {
   font-size: $font-size-1;
   background-color: $white;
   .mat-form-field {
+    width: 500px;
     @media screen and (max-width: 1024px) and (min-width: 768px) {
-      max-width: 250px;
+      max-width: 280px;
+    }
+    @media screen and (max-width: 568px) and (min-width: 320px) {
+      max-width: 100%;
     }
   }
   ::ng-deep {
@@ -1632,7 +1636,7 @@ input:-webkit-autofill {
         @media screen and (max-width: 568px) {
           width: 50%;
           text-align: left;
-       }
+        }
       }
       &:nth-child(3) {
         width: 30%;
@@ -1641,7 +1645,7 @@ input:-webkit-autofill {
         @media screen and (max-width: 568px) {
           width: 50%;
           text-align: right;
-       }
+        }
       }
     }
     .divider {
@@ -1660,7 +1664,7 @@ input:-webkit-autofill {
   }
 }
 
-// card dropdown custom style 
+// card dropdown custom style
 //     .custom-mat-select {
 //       border-bottom: 1px solid $menu-light;
 //       padding: 5px 0;

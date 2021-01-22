@@ -86,7 +86,8 @@ export class HeaderComponent implements OnInit {
   folders = [];
   currentUserID = "";
   user: User;
-  isOpen: any
+  isOpen: any;
+  isSearch: boolean = false;
   isLoading: boolean = false;
   user$: Observable<any>;
   toggleClass = 'fullscreen';

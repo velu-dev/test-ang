@@ -36,7 +36,28 @@ mat-toolbar-row {
     color: $primary-dark;
     font-weight: $font-weight-bold;
   }
+  .overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    cursor: pointer;
+  }
+  .simplexam-logo {
+    @media screen and (max-width: 568px) and (min-width: 320px) {
+      width: 140px;
+      padding-top: 5px;
+    }
+  }
   mat-card-actions {
+    // .mobile-search {
+    //   color: $text-gray;
+    // }
     .support-btn {
       margin-top: 15px;
       color: $light-gray;
@@ -111,6 +132,16 @@ mat-toolbar-row {
   }
 }
 
+.custom-dropdown {
+  position: absolute;
+  top: 55px;
+  left: 10px;
+  z-index: 9999999;
+  border-radius: 5px;
+  width: 90%;
+  margin: 0 !important;
+}
+
 .custom-option {
   width: 100%;
   height: auto;
@@ -171,6 +202,14 @@ mat-toolbar-row {
             width: 100%;
             min-width: 300px;
             max-width: 300px;
+            @media screen and (max-width: 1024px) and (min-width: 768px) {
+              min-width: 130px;
+              max-width: 130px;
+            }
+            @media screen and (max-width: 568px) and (min-width: 320px) {
+              min-width: 150px;
+              max-width: 150px;
+            }
           }
           &:nth-child(2) {
             vertical-align: text-bottom;
