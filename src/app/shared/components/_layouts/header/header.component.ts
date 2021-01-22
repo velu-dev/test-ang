@@ -158,7 +158,8 @@ export class HeaderComponent implements OnInit {
     window.onresize = () => {
       this.ngOnInit();
       this.isOpen = this.inputSideNav.opened;
-      this.isClosed.emit(this.isOpen)
+      this.isClosed.emit(this.isOpen);
+      this.isSearch = false;
     };
 
   }
