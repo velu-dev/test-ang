@@ -299,7 +299,7 @@ export class SubscriberSettingsComponent implements OnInit {
   billings: FormGroup;
   ngOnInit() {
     this.billings = this.formBuilder.group({
-      name: ["", Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z\-]+$")])],
+      name: ["", Validators.compose([Validators.required, Validators.pattern("^(?=.*?[A-z])[a-zA-Z\-,. ]+")])],
       exp_month: [""],
       exp_year: [""],
       default: [false],
