@@ -142,7 +142,7 @@
                             <!-- <div (click)="openExtract(element,'reports')"><span>Transcription</span>
                                 {{element?.transcription_status}}
                             </div> -->
-                            <div (click)="openExtract(element,'billing')"> <span>Billing</span>
+                            <div (click)="openExtract(element,'billing')" *ngIf="role != 4"> <span>Billing</span>
                                 {{element?.billing_status}}</div>
                         </div>
                     </div>

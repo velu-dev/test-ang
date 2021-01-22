@@ -33,6 +33,7 @@ export class StaffDashboardComponent implements OnInit {
   isMobile = false;
   columnName = [];
   filterValue: string;
+  role: any;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService, private intercom: IntercomService, private cookieService: CookieService) {
@@ -51,6 +52,7 @@ export class StaffDashboardComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'claimant_name', 'examiner_name', "exam_procedure_name", "standing", 'dos', 'critical']
       }
     })
+    this.role = this.cookieService.get('role_id')
   }
 
   ngOnInit() {
@@ -89,7 +91,7 @@ export class StaffDashboardComponent implements OnInit {
     this.router.navigate(['subscriber/staff/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
   }
 
-  navigateBillableItem(element){
+  navigateBillableItem(element) {
     this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
     this.intercom.setClaimNumber(element.claim_number);
     this.cookieService.set('claimNumber', element.claim_number)

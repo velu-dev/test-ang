@@ -191,6 +191,7 @@ export class SubscriberSettingsComponent implements OnInit {
   @ViewChild('cardInfo', { static: false }) cardInfo: ElementRef;
   months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   years = [2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040]
+  role = this.cookieService.get('role_id')
   /* Tree view */
   private _transformer = (node: PaymentHistroy, level: number) => {
     return {
