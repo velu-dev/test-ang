@@ -86,7 +86,7 @@
         </div>
     </div>
     <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100">
-        <div class="simple-card" [ngClass]="{'billing-status-active bg_light': status.name === 'Billing'}"
+        <div class="simple-card" *ngIf="!(status.name === 'Billing' && role == 4)" [ngClass]="{'billing-status-active bg_light': status.name === 'Billing'}"
             (click)="clickNav(status.url)">
             <i [class]="status.icon"></i>
             <div class="p-l-10 text-center">

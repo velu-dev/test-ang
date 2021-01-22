@@ -10,7 +10,7 @@ import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatAutoco
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { formatDate } from '@angular/common';
@@ -24,6 +24,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
 import * as moment from 'moment-timezone';
+import { Location } from '@angular/common';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -120,6 +121,7 @@ export class BilllableBillingComponent implements OnInit {
   incompleteInformation: any;
   isIncompleteError: any = true;
   isExpandDetail = true;
+  role = this.cookieService.get('role_id');
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -127,8 +129,12 @@ export class BilllableBillingComponent implements OnInit {
     public billingService: BillingService,
     private fb: FormBuilder,
     private intercom: IntercomService,
+    private _location: Location,
     private cookieService: CookieService) {
-
+    if (+this.role == 4) {
+      this._location.back();
+      return;
+    }
     this.intercom.setBillNo('Bill');
     this.cookieService.set('billNo', null)
     this.route.params.subscribe(param => {
@@ -1705,15 +1711,15 @@ export class billingOnDemandDialog {
                       this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
                     }
                     if (bill.data.bill_on_demand_signed_zip_file_url) {
-                        this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+                      this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
                     }
                     if (bill.data.dtm_file_url) {
-                        this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
+                      this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
                     }
                     this.onDemandStatus = true;
                     this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
                   }, error => {
-                    if (typeof(error.error.message) == 'object') {
+                    if (typeof (error.error.message) == 'object') {
                       let timezone = moment.tz.guess();
                       let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
                       this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
@@ -1740,16 +1746,16 @@ export class billingOnDemandDialog {
                   this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
                 }
                 if (bill.data.bill_on_demand_signed_zip_file_url) {
-                    this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+                  this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
 
                 }
                 if (bill.data.dtm_file_url) {
-                    this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
+                  this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
                 }
                 this.onDemandStatus = true;
                 this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
               }, error => {
-                if (typeof(error.error.message) == 'object') {
+                if (typeof (error.error.message) == 'object') {
                   let timezone = moment.tz.guess();
                   let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
                   this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
@@ -1784,15 +1790,15 @@ export class billingOnDemandDialog {
                 this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
               }
               if (bill.data.bill_on_demand_signed_zip_file_url) {
-                  this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+                this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
               }
               if (bill.data.dtm_file_url) {
-                  this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
+                this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
               }
               this.onDemandStatus = true;
               this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
             }, error => {
-              if (typeof(error.error.message) == 'object') {
+              if (typeof (error.error.message) == 'object') {
                 let timezone = moment.tz.guess();
                 let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
                 this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
@@ -1819,17 +1825,17 @@ export class billingOnDemandDialog {
             this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
           }
           if (bill.data.bill_on_demand_signed_zip_file_url) {
-              this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+            this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
 
           }
 
           if (bill.data.dtm_file_url) {
-              this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
+            this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
           }
           this.onDemandStatus = true;
           this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
         }, error => {
-          if (typeof(error.error.message) == 'object') {
+          if (typeof (error.error.message) == 'object') {
             let timezone = moment.tz.guess();
             let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
             this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');

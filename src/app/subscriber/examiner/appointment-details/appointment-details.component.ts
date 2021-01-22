@@ -175,6 +175,7 @@ export class AppointmentDetailsComponent implements OnInit {
   notecolumnName = [];
   notes: any;
   appointment_scheduled_date_time: any = null;
+  role = this.cookieService.get('role_id');
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,

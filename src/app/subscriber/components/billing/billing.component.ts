@@ -9,6 +9,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { User } from 'src/app/shared/model/user.model';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { Location } from '@angular/common';
 export interface PeriodicElement {
   bill_no: string;
   claim_no: string;
@@ -40,6 +41,7 @@ export class BillingComponent implements OnInit {
   displayedColumns = [];
   expandedElement: User | null;
   isMobile = false;
+  role = this.cookieService.get('role_id');
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -53,7 +55,12 @@ export class BillingComponent implements OnInit {
     private claimService: ClaimService,
     public router: Router,
     private cookieService: CookieService,
+    private _location: Location,
     private intercom: IntercomService) {
+      if (+this.role == 4) {
+        this._location.back();
+        return;
+      }
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })
