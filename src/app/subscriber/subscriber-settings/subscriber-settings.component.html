@@ -510,7 +510,7 @@
                                                             <mat-label>Name*</mat-label>
                                                             <input matInput placeholder="Full Name"
                                                                 formControlName="name" autocomplete="off">
-                                                            <mat-error>
+                                                            <mat-error *ngIf="isCardSubmit">
                                                                 Please enter a valid name</mat-error>
                                                         </mat-form-field>
                                                         <!-- <label for="name"
@@ -604,7 +604,7 @@
                                                             <mat-label>Zip</mat-label>
                                                             <input matInput placeholder="Zip" mask="00000"
                                                                 formControlName="address_zip" autocomplete="off">
-                                                            <mat-error>
+                                                            <mat-error *ngIf="isCardSubmit">
                                                                 Please enter a valid zipcode</mat-error>
                                                         </mat-form-field>
 
