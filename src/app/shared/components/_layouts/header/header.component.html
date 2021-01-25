@@ -7,7 +7,7 @@
         <div [ngClass]="{'opened': isOpen, 'closed': !isOpen}" class="hide-mobile"></div>
         <img [src]="nav_logo" alt="logo" class="p-l-5 simplexam-logo">
         <div [ngClass]="{'overlay': isSearch,'hide-mobile': !isSearch}" *ngIf="isSearch" (click)="isSearch = !isSearch"></div>
-        <div class="searchable-dropdown m-t-5 m-l-15" [ngClass]="{'custom-dropdown': isSearch, 'hide-mobile' : !isSearch}">
+        <div class="searchable-dropdown m-t-5 m-l-15 hide-mobile" [ngClass]="{'custom-dropdown': isSearch}">
             <form class="example-form">
                 <mat-form-field appearance="outline" hideRequiredMarker="hideRequiredControl.auto"
                     floatLabel="floatLabelControl.auto">
