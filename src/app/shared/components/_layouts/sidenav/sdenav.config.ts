@@ -143,7 +143,7 @@ export const ROUTES: SideNavInterface[] = [
             }]
     }, {
         // group: "Subscriber Staff Manager",
-        group: "Staff Manager",
+        group: "Manager",
         short_group: "SM",
         role_id: 3,
         menu: [
@@ -277,14 +277,15 @@ export const ROUTES: SideNavInterface[] = [
                 submenu: [],
                 group: "Subscriber",
                 role: 4
-            },{
-                path: '/subscriber/staff/users',
-                title: 'Users',
-                icon: 'user-tie',
-                submenu: [],
-                group: "Subscriber",
-                role: 3
             }
+            // ,{
+            //     path: '/subscriber/staff/users',
+            //     title: 'Users',
+            //     icon: 'user-tie',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 3
+            // }
             // {
             //     path: '/subscriber/staff/claims',
             //     title: 'Claims',
@@ -416,14 +417,15 @@ export const ROUTES: SideNavInterface[] = [
                 submenu: [],
                 group: "Subscriber",
                 role: 12
-            },{
-                path: '/subscriber/staff/users',
-                title: 'Users',
-                icon: 'user-tie',
-                submenu: [],
-                group: "Subscriber",
-                role: 12
             }
+            // ,{
+            //     path: '/subscriber/staff/users',
+            //     title: 'Users',
+            //     icon: 'user-tie',
+            //     submenu: [],
+            //     group: "Subscriber",
+            //     role: 12
+            // }
             // {
             //     path: '/subscriber/staff/claims',
             //     title: 'Claims',

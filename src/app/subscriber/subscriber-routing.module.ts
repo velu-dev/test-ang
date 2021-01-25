@@ -685,74 +685,74 @@ const routes: Routes = [{
       component: StaffDashboardComponent,
       data: { breadcrumb: { skip: true } }
     }, {
-      path: "users",
-      children: [{
-        path: "",
-        component: UserComponent,
-        data: { breadcrumb: "Users" }
-      }, {
-        path: "new",
-        component: NewUserComponent,
-        data: { breadcrumb: "New" }
-      }, {
-        path: "edit/:id",
-        component: NewUserComponent,
-        data: { breadcrumb: "Edit" }
-      }, {
-        path: "new-examiner",
-        children: [
-          {
-            path: "",
-            component: NewExaminerUserComponent,
-            data: { breadcrumb: "New Examiner" }
-          }, {
-            path: "add-location/:status/:id",
-            component: AddEditServiceLocationComponent,
-            data: { breadcrumb: "New" }
-          }, {
-            path: "edit-location/:location_id/:status/:id",
-            component: AddEditServiceLocationComponent,
-            data: { breadcrumb: "Edit" }
-          }
-        ]
-      }, {
-        path: "examiner/:id",
-        children: [{
-          path: "",
-          component: NewExaminerUserComponent,
-          data: { breadcrumb: "Examiner" }
-        }, {
-          path: "edit-location/:location_id/:status",
-          component: AddEditServiceLocationComponent,
-          data: { breadcrumb: "Edit" }
-        },
-        {
-          path: "add-location/:status/:examiner",
-          component: AddEditServiceLocationComponent,
-          data: { breadcrumb: "New" }
-        }]
-      },
-      {
-        path: "examiner/:id/:status",
-        children: [{
-          path: "",
-          component: NewExaminerUserComponent,
-          data: { breadcrumb: "Examiner" }
-        }, {
-          path: "edit-location/:location_id/:status",
-          component: AddEditServiceLocationComponent,
-          data: { breadcrumb: "Edit" }
-        }, {
-          path: "edit-location/:id/:status/:location_id",
-          component: AddEditServiceLocationComponent,
-          data: { breadcrumb: "Edit" }
-        },
-        {
-          path: "add-location/:status/:examiner",
-          component: AddEditServiceLocationComponent,
-          data: { breadcrumb: "New" }
-        }]
-      }]
+      //path: "users",
+      // children: [{
+      //   path: "",
+      //   component: UserComponent,
+      //   data: { breadcrumb: "Users" }
+      // }, {
+      //   path: "new",
+      //   component: NewUserComponent,
+      //   data: { breadcrumb: "New" }
+      // }, {
+      //   path: "edit/:id",
+      //   component: NewUserComponent,
+      //   data: { breadcrumb: "Edit" }
+      // }, {
+      //   path: "new-examiner",
+      //   children: [
+      //     {
+      //       path: "",
+      //       component: NewExaminerUserComponent,
+      //       data: { breadcrumb: "New Examiner" }
+      //     }, {
+      //       path: "add-location/:status/:id",
+      //       component: AddEditServiceLocationComponent,
+      //       data: { breadcrumb: "New" }
+      //     }, {
+      //       path: "edit-location/:location_id/:status/:id",
+      //       component: AddEditServiceLocationComponent,
+      //       data: { breadcrumb: "Edit" }
+      //     }
+      //   ]
+      // }, {
+      //   path: "examiner/:id",
+      //   children: [{
+      //     path: "",
+      //     component: NewExaminerUserComponent,
+      //     data: { breadcrumb: "Examiner" }
+      //   }, {
+      //     path: "edit-location/:location_id/:status",
+      //     component: AddEditServiceLocationComponent,
+      //     data: { breadcrumb: "Edit" }
+      //   },
+      //   {
+      //     path: "add-location/:status/:examiner",
+      //     component: AddEditServiceLocationComponent,
+      //     data: { breadcrumb: "New" }
+      //   }]
+      // },
+      // {
+      //   path: "examiner/:id/:status",
+      //   children: [{
+      //     path: "",
+      //     component: NewExaminerUserComponent,
+      //     data: { breadcrumb: "Examiner" }
+      //   }, {
+      //     path: "edit-location/:location_id/:status",
+      //     component: AddEditServiceLocationComponent,
+      //     data: { breadcrumb: "Edit" }
+      //   }, {
+      //     path: "edit-location/:id/:status/:location_id",
+      //     component: AddEditServiceLocationComponent,
+      //     data: { breadcrumb: "Edit" }
+      //   },
+      //   {
+      //     path: "add-location/:status/:examiner",
+      //     component: AddEditServiceLocationComponent,
+      //     data: { breadcrumb: "New" }
+      //   }]
+      // }]
     }, {
       path: "claimant-awaiting",
       children: [

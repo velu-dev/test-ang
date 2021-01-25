@@ -278,13 +278,13 @@ export class HeaderComponent implements OnInit {
       case 2:
         return 'Subscriber';
       case 3:
-        return 'Staff Manager';
+        return 'Manager';
       case 4:
         return 'Staff';
       case 11:
         return 'Examiner';
       case 12:
-        return 'Staff Biller';
+        return 'Biller';
       default:
         return 'User';
     }
