@@ -7,7 +7,7 @@
         <div [ngClass]="{'opened': isOpen, 'closed': !isOpen}" class="hide-mobile"></div>
         <img [src]="nav_logo" alt="logo" class="p-l-5 simplexam-logo">
         <div [ngClass]="{'overlay': isSearch,'hide-mobile': !isSearch}" *ngIf="isSearch" (click)="isSearch = !isSearch"></div>
-        <div class="searchable-dropdown m-t-5 m-l-15 hide-mobile" [ngClass]="{'custom-dropdown': isSearch}">
+        <div class="searchable-dropdown m-t-5 m-l-15 hide-mobile" [ngClass]="{'custom-dropdown': isSearch}" *ngIf="user?.role_id != 1">
             <form class="example-form">
                 <mat-form-field appearance="outline" hideRequiredMarker="hideRequiredControl.auto"
                     floatLabel="floatLabelControl.auto">
@@ -60,7 +60,7 @@
                     </mat-icon>
                 </button>
                 -->
-                <button mat-icon-button class="show-mobile mobile-search m-r-10" (click)="isSearch = true">
+                <button *ngIf="user?.role_id != 1" mat-icon-button class="show-mobile mobile-search m-r-10" (click)="isSearch = true">
                     <mat-icon matBadgeColor="warn">search</mat-icon>
                 </button>
                 <div class="support-btn hide-mobile p-r-20"><a href="javaScript:void(0)">Help</a>|<a
