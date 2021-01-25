@@ -684,7 +684,8 @@ const routes: Routes = [{
       path: "dashboard",
       component: StaffDashboardComponent,
       data: { breadcrumb: { skip: true } }
-    }, {
+    },
+    // {
       //path: "users",
       // children: [{
       //   path: "",
@@ -753,7 +754,8 @@ const routes: Routes = [{
       //     data: { breadcrumb: "New" }
       //   }]
       // }]
-    }, {
+    //}, 
+    {
       path: "claimant-awaiting",
       children: [
         {
