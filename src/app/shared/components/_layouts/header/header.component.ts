@@ -159,7 +159,7 @@ export class HeaderComponent implements OnInit {
       this.ngOnInit();
       this.isOpen = this.inputSideNav.opened;
       this.isClosed.emit(this.isOpen);
-      this.isSearch = false;
+      // this.isSearch = false;
     };
 
   }
