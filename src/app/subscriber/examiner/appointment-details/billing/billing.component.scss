@@ -178,6 +178,11 @@
             }
         }
     }
+    .payment-response {
+        .vertical-fixed {
+            overflow: inherit !important;
+        }
+    }
     .documents {
         // @extend .examiner-info;
         mat-card {
