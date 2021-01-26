@@ -27,7 +27,7 @@
                             <span *ngIf="column == 'procedure_type'">{{element?.exam_type_code}} - {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}}</span>
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'charge'">{{element?.charge ? '$ ' + element?.charge : '' }}</span>
-                            <span *ngIf="column == 'bill_date'">{{element?.bill_first_submission_date}}</span>
+                            <span *ngIf="column == 'bill_date'">{{element?.bill_first_submission_date | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'balance'">{{element?.balance_due ? '$ ' + element?.balance_due : ''}}</span>
                         </div>
                     </td>
@@ -40,7 +40,7 @@
                                 <div><span>Exam Procedure Type</span><span>{{element?.exam_type_code}} - {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}}</span></div>
                                 <div><span>Date of service</span><span>{{element?.date_of_service | date:'MM-dd-yyyy'}}</span></div>
                                 <div><span>Charge</span><span>{{element?.charge ? '$ ' + element?.charge : '' }}</span></div>
-                                <div><span>Date Of First Submission</span><span>{{element?.bill_first_submission_date}}</span></div>
+                                <div><span>Date Of First Submission</span><span>{{element?.bill_first_submission_date | date:'MM-dd-yyyy'}}</span></div>
                                 <div><span>Balance Due</span><span>{{element?.balance_due ? '$ ' + element?.balance_due : ''}}</span></div>
                             </div>
                         </div>
