@@ -62,7 +62,7 @@
     .border-dashed-blue {
         margin: 30px 0px 30px 0;
     }
-    
+
     .examiner-info {
         margin-top: 20px;
         mat-card {
@@ -181,6 +181,72 @@
     .payment-response {
         .vertical-fixed {
             overflow: inherit !important;
+            // .pay-response {
+            //     width: 2000px;
+            //     thead {
+            //             th {
+            //                 &:first-child {
+            //                     position: sticky;
+            //                     left: 0;
+            //                     z-index: 99999;
+            //                 }
+            //                 &:last-child {
+            //                     position: sticky;
+            //                     right: 0;
+            //                     z-index: 99999;
+            //                 }
+            //             }
+            //     }
+            //     tbody {
+            //         tr {
+            //             th {
+            //                 &:first-child {
+            //                     position: sticky;
+            //                     left: 0;
+            //                     background-color: $white;
+            //                     z-index: 99999;
+            //                 }
+            //                 &:last-child {
+            //                     position: sticky;
+            //                     right: 0;
+            //                     z-index: 99999;
+            //                 }
+            //             }
+            //             td {
+            //                 &:first-child {
+            //                     position: sticky;
+            //                     left: 0;
+            //                     background-color: $white;
+            //                     z-index: 99999;
+            //                 }
+            //                 &:last-child {
+            //                     position: sticky;
+            //                     right: 0;
+            //                     background-color: $white;
+            //                     z-index: 99999;
+            //                 }
+            //             }
+            //         }
+            //     }
+            //     tfoot {
+            //         tr {
+            //             td {
+            //                 &:first-child {
+            //                     position: sticky;
+            //                     left: 0;
+            //                     background-color: $white;
+            //                     z-index: 99999;
+            //                 }
+            //                 &:last-child {
+            //                     position: sticky;
+            //                     right: 0;
+            //                     background-color: $white;
+            //                     z-index: 99999;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
         }
     }
     .documents {

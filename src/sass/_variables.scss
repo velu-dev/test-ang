@@ -1045,6 +1045,9 @@ input:-webkit-autofill {
     button.outline-danger {
       @extend .outline-danger;
     }
+    button.filled-ternary {
+      @extend .filled-ternary
+    }
     .upload-file {
       .mat-form-field {
         padding-left: 5px !important;

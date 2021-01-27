@@ -1,0 +1,25 @@
+<div class="dialog custom-dialog">
+    <mat-card-header class="model-header">
+        <div class="content-wrapper-main-title p-t-5">Close Bill</div>
+        <span class="spacer"></span>
+        <button class="close-model" color="warn" (click)="onNoClick()"> <i class="fa fa-close"></i> close </button>
+    </mat-card-header>
+   <mat-divider></mat-divider>
+    <mat-card-content>
+        <div fxLayout="row wrap" class="p-t-20">
+            <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+                <div class="main-title p-b-3">Reason for bill close</div>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Bill Close Reason</mat-label>
+                    <input matInput placeholder="Bill Close Reason">
+                    <mat-error>Error message comes here...</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxFlex="100" class="m-t-20 text-center">
+                <button mat-stroked-button type="button" (click)="onNoClick()" class="outline-danger">Cancel</button>
+                <button mat-stroked-button class="outline-success text-center m-l-10">Save</button>
+            </div>
+
+        </div>
+    </mat-card-content>
+</div>

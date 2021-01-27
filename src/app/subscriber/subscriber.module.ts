@@ -60,7 +60,7 @@ import { RecordsComponent } from './examiner/appointment-details/records/records
 import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
 import { BillingCorrespondanceComponent, CustomDocuments, CustomRecipient, AddAddress } from './examiner/appointment-details/correspondance/correspondance.component';
-import { BilllableBillingComponent, BillingPaymentDialog, billingOnDemandDialog, BillingCustomRecipient, VoidPayment } from './examiner/appointment-details/billing/billing.component';
+import { BilllableBillingComponent, BillingPaymentDialog, billingOnDemandDialog, BillingCustomRecipient, VoidPayment, CloseBill, SecondBillReview } from './examiner/appointment-details/billing/billing.component';
 import { OnDemandService } from './service/on-demand.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { BillingService } from './service/billing.service';
@@ -140,7 +140,9 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     AddAddress,
     billingOnDemandDialog,
     BillingCustomRecipient,
-    VoidPayment
+    VoidPayment,
+    CloseBill,
+    SecondBillReview
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -159,7 +161,9 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     AddAddress,
     billingOnDemandDialog,
     BillingCustomRecipient,
-    VoidPayment
+    VoidPayment,
+    CloseBill,
+    SecondBillReview
     // DefenseAttorneyComponent,
     // ApplicationAttorneyComponent,
     // DeoComponent,
