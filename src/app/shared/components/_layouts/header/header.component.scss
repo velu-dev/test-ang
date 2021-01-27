@@ -140,7 +140,7 @@ mat-toolbar-row {
   border-radius: 5px;
   width: 90%;
   margin: 0 !important;
-  display: block !important
+  display: block !important;
 }
 
 .custom-option {
@@ -187,6 +187,8 @@ mat-toolbar-row {
         color: $black;
         font-size: $font-size-7;
         display: block;
+        white-space: break-spaces;
+        overflow-wrap: break-word;
       }
       p {
         width: $width-100;
@@ -195,9 +197,12 @@ mat-toolbar-row {
         span {
           font-size: $font-size-7;
           color: $text-gray;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+          // white-space: nowrap;
+          // overflow: hidden;
+          // text-overflow: ellipsis;
+          text-overflow: inherit;
+          white-space: break-spaces;
+          overflow-wrap: break-word;
           @media screen and (max-width: 1024px) and (min-width: 768px) {
             text-overflow: inherit;
             white-space: break-spaces;
@@ -211,8 +216,8 @@ mat-toolbar-row {
           &:first-child {
             display: inline-block;
             width: 100%;
-            min-width: 300px;
-            max-width: 300px;
+            min-width: 250px;
+            max-width: 250px;
             @media screen and (max-width: 1024px) and (min-width: 768px) {
               min-width: 120px;
               max-width: 120px;
