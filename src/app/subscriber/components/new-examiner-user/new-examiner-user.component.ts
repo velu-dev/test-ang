@@ -913,7 +913,7 @@ export class NewExaminerUserComponent implements OnInit {
   editStatus: boolean = false;
   licenseChangeStatus: boolean = false;
   openLicense(data?: any, index?) {
-    this.editStatus = index ? true : false;
+    this.editStatus = index || index == 0 ? true : false;
     const dialogRef = this.dialog.open(LicenseDialog, {
       width: '800px',
       data: { states: this.states, details: data, editStatus: data && data.id ? true : false }
