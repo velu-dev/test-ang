@@ -55,6 +55,7 @@ export class UserComponent implements OnInit {
   tabIndex: number = 0;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   user: any = {};
+  searchPlaceholder: any = "Search by name, email, role, etc.";
   constructor(
     private userService: SubscriberUserService,
     private router: Router,
@@ -183,12 +184,17 @@ export class UserComponent implements OnInit {
       this.tabName = 'examiners'
     }
 
-
+    if (event == 3) {
+      this.searchPlaceholder = "Search by name, login allowed, etc."
+    } else {
+      this.searchPlaceholder = "Search by name, email, role, etc."
+    }
 
     this.users = this.allUser[this.tabName];
     this.users.map(user => {
       user.enroll = moment(user.createdAt).format("MM-DD-YYYY")
       user.subscriber = user.issubscriber ? 'subscriber' : '';
+      user.login = user.sign_in_email_id.includes('@') ? 'Yes' : 'No';
     })
     this.dataSource = new MatTableDataSource(this.users)
     this.dataSource.paginator = this.paginator;

@@ -123,7 +123,7 @@ export class NewUserComponent implements OnInit {
 
             this.userForm.patchValue(user)
             this.userForm.get('sign_in_email_id').disable();
-            if (this.user.role_id != 2 &&  user.role_id == 2) {
+            if (this.user.role_id != 2 && user.role_id == 2) {
               this.userForm.disable();
             }
           })
@@ -144,9 +144,9 @@ export class NewUserComponent implements OnInit {
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])]
     });
 
-    if (this.user.role_id == 3) {
-      this.userForm.patchValue({ role_id: 4 })
-    }
+    // if (this.user.role_id == 3) {
+    //   this.userForm.patchValue({ role_id: 4 })
+    // }
 
   }
 
@@ -184,6 +184,10 @@ export class NewUserComponent implements OnInit {
         // this.router.navigate(['/subscriber/users'])
         this._location.back();
       }, error => {
+        if (error.error.message == "You were been disabled by the Subscriber") {
+          this.alertService.openSnackBar("Invitation not accepted by User", "error");
+          return;
+        }
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     }
