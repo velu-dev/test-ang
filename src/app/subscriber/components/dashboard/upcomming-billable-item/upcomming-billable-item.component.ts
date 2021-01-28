@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 import { saveAs } from 'file-saver';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-upcomming-billable-item',
   templateUrl: './upcomming-billable-item.component.html',
@@ -35,7 +36,7 @@ export class UpcommingBillableItemComponent implements OnInit {
   filterValue: string;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
+  constructor(public router: Router, private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
     private alertService: AlertService,
     private _location: Location) {
     this.isHandset$.subscribe(res => {
@@ -53,12 +54,12 @@ export class UpcommingBillableItemComponent implements OnInit {
   ngOnInit() {
 
     this.examinerService.getUpcomingAppointment().subscribe(res => {
-      res.data.map(data=>{
+      res.data.map(data => {
         data.claimant = data.last_name + ' ' + data.first_name;
         data.type = data.exam_type_code + ' - ' + (data.procedure_type == 'Evaluation' || data.procedure_type == 'Reevaluation' ? 'Examination' : data.procedure_type);
-        data.dos = data.date_of_service ? moment(data.date_of_service , 'MM-dd-yyyy'): '';
+        data.dos = data.date_of_service ? moment(data.date_of_service, 'MM-dd-yyyy') : '';
       })
-      console.log( res.data)
+      console.log(res.data)
       this.upcomingAppointment = new MatTableDataSource(res.data);
       this.upcomingAppointment.paginator = this.paginator;
       this.upcomingAppointment.sort = this.sort;
@@ -68,12 +69,15 @@ export class UpcommingBillableItemComponent implements OnInit {
   }
   expandId: any = null;
   openElement(element) {
-    if (this.isMobile)
+    if (this.isMobile) {
       if (this.expandId && this.expandId == element) {
         this.expandId = null;
       } else {
         this.expandId = element;
       }
+    } else {
+      this.router.navigate(['subscriber/claimants/claimant/' + element.claimant_id + '/claim/' + element.claim_id + '/billable-item/' + element.bill_id])
+    }
   }
   applyFilter(filterValue: string) {
     this.upcomingAppointment.filter = filterValue.trim().toLowerCase();
