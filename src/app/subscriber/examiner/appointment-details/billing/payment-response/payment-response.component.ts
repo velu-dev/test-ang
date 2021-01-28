@@ -4,17 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 
-export interface PeriodicElement {
-  item: string;
-  procedure_code_1: string;
-  modifier_1: string;
-  unit: string;
-  charges: string;
-  first_submission: string;
-  balances: string;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
+const ELEMENT_DATA:any = [
   { item: 'QME', procedure_code_1: 'ML201', modifier_1: '93', unit: '1', charges: '2200.00', first_submission: '0', balances: '2200.00' },
   { item: 'Excess Report Pages', procedure_code_1: '', modifier_1: '', unit: '758', charges: '1516.00', first_submission: '0', balances: '1516.00' },
 ];
@@ -38,19 +29,18 @@ export class PaymentResponseComponent implements OnInit {
   initiateForm(): FormGroup {
     return this.fb.group({
       id: [''],
-      item_description: ['', Validators.compose([Validators.required])],
-      procedure_code: ['', Validators.compose([Validators.required])],
-      modifierList: [[]],
-      modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
-      unitType: [''],
-      units: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      submission: ['', Validators.compose([Validators.required])],
+      date_sent: ['', Validators.compose([Validators.required])],
+      duedate: [[]],
+      change: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
+      referencen_number: ['', Validators.compose([Validators.required, Validators.min(0)])],
       charge: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(99999999.99)])],
       payment: [0],
       balance: [0],
-      total_charge: [0],
-      isEditable: [true],
-      is_post_payment: [],
-      post_payment_id: []
+      postdate: [0],
+      posttype: [true],
+      eor: [],
+      status: []
     });
   }
   openVoidDialog(): void {
@@ -124,8 +114,8 @@ export class VoidPayment {
 })
 export class SecondBillReview {
   displayedColumns: string[] = ['select', 'item', 'procedure_code_1', 'modifier_1', 'unit', 'charges', 'first_submission', 'balances'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  selection = new SelectionModel(true, []);
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -142,7 +132,7 @@ export class SecondBillReview {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row?): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
