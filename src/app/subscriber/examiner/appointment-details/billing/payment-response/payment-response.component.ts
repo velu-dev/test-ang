@@ -19,6 +19,7 @@ const ELEMENT_DATA:any = [
 export class PaymentResponseComponent implements OnInit {
 
   userTable: FormGroup;
+  mode: boolean;
   constructor(public dialog: MatDialog, private fb: FormBuilder) { }
 
   ngOnInit() {
