@@ -1,9 +1,13 @@
 <mat-card class="m-card">
     <mat-card-content class="m-b-0">
-        <div class="table-filter">
-            <input matInput autocomplete="off" (keyup)="applyFilter($event.target.value)" title="Search by Name, Claim, Examiner, Procedure type or Date" [(ngModel)]="filterValue"
-                [placeholder]="'Search by name, claim, examiner, procedure type or date' | ellipsis:50">
-            <mat-icon>search</mat-icon>
+        <div class="w-100">
+            <div class="table-filter">
+                <input matInput autocomplete="off" (keyup)="applyFilter($event.target.value)" title="Search by Name, Claim, Examiner, Procedure type or Date" [(ngModel)]="filterValue"
+                    [placeholder]="'Search by name, claim, examiner, procedure type or date' | ellipsis:50">
+                <mat-icon>search</mat-icon>
+            </div>
+            <!-- <span class="spacer"></span>
+            <button mat-raised-button class="float-right filled-gray m-t-5"  (click)="back()" style="float: right;">Go to Dashboard</button> -->
         </div>
         <div class="user-detail default-cursor">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
@@ -13,7 +17,7 @@
                         <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">{{columnName[i]}}</th>
                     </ng-container>
                     <ng-container *ngIf="columnName[i] == 'Icon'">
-                        <th mat-header-cell *matHeaderCellDef> <mat-icon (click)="back()" class="p-t-10">fullscreen_exit</mat-icon></th>
+                        <th mat-header-cell *matHeaderCellDef> <mat-icon (click)="back()" class="p-t-10 exit">fullscreen_exit</mat-icon></th>
                     </ng-container>
                     <td mat-cell *matCellDef="let element;let m">
                         <span *ngIf="i == 0 && isMobile">
