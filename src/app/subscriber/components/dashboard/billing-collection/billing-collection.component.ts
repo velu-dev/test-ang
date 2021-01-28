@@ -6,6 +6,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatTableDataSource } from '@angular/material';
 import { ExaminerService } from 'src/app/subscriber/service/examiner.service';
 import { Location } from '@angular/common';
+import { Route } from '@angular/compiler/src/core';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-billing-collection',
   templateUrl: './billing-collection.component.html',
@@ -24,13 +26,13 @@ export class BillingCollectionComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-    billingData: any = new MatTableDataSource([])
+  billingData: any = new MatTableDataSource([])
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
-  constructor(private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
+  constructor(public router: Router, private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
     private _location: Location) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -45,7 +47,7 @@ export class BillingCollectionComponent implements OnInit {
   }
 
   ngOnInit() {
-     
+
     this.examinerService.getDashboardBilling().subscribe(res => {
       this.billingData = new MatTableDataSource(res.data);
     }, error => {
@@ -54,12 +56,15 @@ export class BillingCollectionComponent implements OnInit {
   }
   expandId: any;
   openElement(element) {
-    if (this.isMobile)
+    if (this.isMobile) {
       if (this.expandId && this.expandId == element) {
         this.expandId = null;
       } else {
         this.expandId = element;
       }
+    } else {
+      this.router.navigate(['/subscriber/claimants/claimant/' + element.claimant_id + '/claim/' + element.claim_id + '/billable-item/' + element.bill_id + '/billing']);
+    }
   }
   applyFilter(filterValue: string) {
     this.billingData.filter = filterValue.trim().toLowerCase();
