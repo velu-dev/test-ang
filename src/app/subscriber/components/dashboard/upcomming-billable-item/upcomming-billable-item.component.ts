@@ -76,7 +76,8 @@ export class UpcommingBillableItemComponent implements OnInit {
         this.expandId = element;
       }
     } else {
-      this.router.navigate(['subscriber/claimants/claimant/' + element.claimant_id + '/claim/' + element.claim_id + '/billable-item/' + element.bill_id])
+      console.log(element)
+      this.router.navigate(['subscriber/claimants/claimant/' + element.claimant_id + '/claim/' + element.claim_id + '/billable-item/' + element.billable_item_id])
     }
   }
   applyFilter(filterValue: string) {
