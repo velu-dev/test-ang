@@ -25,20 +25,6 @@ import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/ale
 import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
 import * as moment from 'moment-timezone';
 import { Location } from '@angular/common';
-export interface PeriodicElement {
-  item: string;
-  procedure_code_1: string;
-  modifier_1: string;
-  unit: string;
-  charges: string;
-  first_submission: string;
-  balances: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {item: 'QME', procedure_code_1: 'ML201', modifier_1: '93', unit: '1', charges:'2200.00', first_submission:'0', balances:'2200.00'},
-  {item: 'Excess Report Pages', procedure_code_1: '', modifier_1: '', unit: '758', charges:'1516.00', first_submission:'0', balances:'1516.00'},
-];
 
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
@@ -290,34 +276,7 @@ export class BilllableBillingComponent implements OnInit {
     });
   }
 
-  openVoidDialog(): void {
-    const dialogRef = this.dialog.open(VoidPayment, {
-      width: '800px',
-      // data: {name: this.name, animal: this.animal}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
-    });
-  }
-  openCloseBillDialog(): void {
-    const dialogRef = this.dialog.open(CloseBill, {
-      width: '800px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
-    });
-  }
-  openSecondBillReviewDialog(): void {
-    const dialogRef = this.dialog.open(SecondBillReview, {
-      width: '800px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
-    });
-  }
+  
 
   openBillOnDemand(): void {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
@@ -2039,73 +1998,3 @@ export class BillingCustomRecipient {
 
 }
 
-
-@Component({
-  selector: 'void-payment',
-  templateUrl: 'void-payment.html',
-})
-export class VoidPayment {
-
-  constructor(
-    public dialogRef: MatDialogRef<VoidPayment>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}
-@Component({
-  selector: 'close-bill',
-  templateUrl: 'close-bill.html',
-})
-export class CloseBill {
-
-  constructor(
-    public dialogRef: MatDialogRef<CloseBill>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}
-@Component({
-  selector: 'second-bill-review',
-  templateUrl: 'second-bill-review.html',
-})
-export class SecondBillReview {
-  displayedColumns: string[] = ['select', 'item', 'procedure_code_1', 'modifier_1', 'unit', 'charges', 'first_submission', 'balances'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.item + 1}`;
-  }
-  constructor(
-    public dialogRef: MatDialogRef<SecondBillReview>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-}
