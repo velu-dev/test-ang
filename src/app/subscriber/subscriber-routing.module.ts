@@ -36,6 +36,7 @@ import { HistoryComponent } from './examiner/appointment-details/history/history
 import { RecordsComponent } from './examiner/appointment-details/records/records.component';
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
 import { BilllableBillingComponent } from './examiner/appointment-details/billing/billing.component';
+import { RouteGuardService } from '../shared/guard/route-guard.service';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -46,6 +47,7 @@ const routes: Routes = [{
   }]
 }, {
   path: "new-examiner",
+  canActivate: [RouteGuardService],
   children: [
     {
       path: "",
@@ -64,6 +66,7 @@ const routes: Routes = [{
 }, {
   path: "new",
   component: NewUserComponent,
+  canActivate: [RouteGuardService],
   data: { breadcrumb: "New" }
 },
 {
@@ -272,6 +275,7 @@ const routes: Routes = [{
 },
 {
   path: "users",
+  canActivate: [RouteGuardService],
   children: [{
     path: "",
     component: UserComponent,
@@ -669,6 +673,7 @@ const routes: Routes = [{
   component: SubscriberSettingsComponent,
   data: { breadcrumb: "Settings" }
 },
+//staff path
 {
   path: "staff",
   children: [
@@ -1246,7 +1251,7 @@ const routes: Routes = [{
     },
   ]
 },
-{
+{//manger path
   path: "manager",
   children: [
     {
@@ -1256,6 +1261,7 @@ const routes: Routes = [{
     },
     {
       path: "new-examiner",
+      canActivate: [RouteGuardService],
       children: [
         {
           path: "",
@@ -1274,6 +1280,7 @@ const routes: Routes = [{
     },
     {
       path: "new-staff",
+      canActivate: [RouteGuardService],
       component: NewUserComponent,
       data: { breadcrumb: "New" }
     },
@@ -1492,6 +1499,7 @@ const routes: Routes = [{
     },
     {
       path: "users",
+      canActivate: [RouteGuardService],
       children: [{
         path: "",
         component: UserComponent,
