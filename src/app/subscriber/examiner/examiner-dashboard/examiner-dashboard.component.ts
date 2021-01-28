@@ -22,6 +22,15 @@ export class ExaminerDashboardComponent implements OnInit {
 
     })
   }
+  openLink(link) {
+    if (link == 'upcomming') {
+      this.router.navigate(['/subscriber/examiner/upcomming-billable-item']);
+    } else if (link == 'billing') {
+      this.router.navigate(['/subscriber/examiner/billing-collection']);
+    } else if (link == 'item') {
+      this.router.navigate(['/subscriber/examiner/billable-item-awaiting']);
+    }
+  }
   openMenu(menu) {
     if (menu == 'intake') {
       this.router.navigate(['subscriber/examiner/new-intake'])
