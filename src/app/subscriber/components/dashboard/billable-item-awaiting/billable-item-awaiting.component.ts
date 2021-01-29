@@ -62,6 +62,7 @@ export class BillableItemAwaitingComponent implements OnInit {
 
   ngOnInit() {
     this.examinerService.getItemsAwaiting().subscribe(billable => {
+      console.log(billable)
       // billable.data.map(bill => {
       //   bill.date_of_birth = bill.date_of_birth ? moment(bill.date_of_birth).format("MM-DD-YYYY") : '';
       //   bill.claimant_name = bill.claimant_last_name + ', ' + bill.claimant_first_name;
@@ -169,10 +170,17 @@ export class BillableItemAwaitingComponent implements OnInit {
   }
 
   downloadDocumet(element) {
-    this.examinerService.downloadOndemandDocuments({ file_url: element.compiled_report_file_url }).subscribe(res => {
-      this.alertService.openSnackBar("File downloaded successfully", "success");
-      saveAs(res.signed_file_url, element.compiled_report_file_name);
+    element.compiled_reports.map(res => {
+      this.examinerService.downloadOndemandDocuments({ file_url: res.exam_report_file_url }).subscribe(result => {
+        this.alertService.openSnackBar("File downloaded successfully", "success");
+        saveAs(result.signed_file_url, res.file_name);
+      })
     })
   }
-
+  downloadfinalDocumet(element) {
+    this.examinerService.downloadOndemandDocuments({ file_url: element.final_report_file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.final_report_file_name);
+    })
+  }
 }

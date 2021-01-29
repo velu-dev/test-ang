@@ -823,9 +823,17 @@ export class NewClaimComponent implements OnInit {
 
   }
   selectionChange(event) {
+    console.log(event.selectedIndex)
     if (event.selectedIndex == 0) {
-      this.titleName = " Claimant";
+      this.titleName = " Claimant"
     } else if (event.selectedIndex == 1) {
+      this.createClaimant('tab');
+      console.log(this.claimant_id)
+      if (!this.claimant_id) {
+        this.stepper.selected.completed = false;
+        this.stepper.previous();
+        return
+      }
       if (this.claimId) {
         this.claimService.getClaim(this.claimId).subscribe(res => {
           this.injuryInfodata = res.data.claim_injuries;
