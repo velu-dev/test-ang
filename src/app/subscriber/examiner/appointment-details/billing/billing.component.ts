@@ -142,7 +142,7 @@ export class BilllableBillingComponent implements OnInit {
       this.paramsId = param;
       if (!param.billingId) {
         this.billingService.billCreate(param.claim_id, param.billId).subscribe(bill => {
-          this.logger.log(bill)
+          console.log(bill)
           this.billingId = bill.data.bill_id
         }, error => {
           this.logger.error(error)
@@ -276,7 +276,7 @@ export class BilllableBillingComponent implements OnInit {
     });
   }
 
-  
+
 
   openBillOnDemand(): void {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
@@ -392,88 +392,90 @@ export class BilllableBillingComponent implements OnInit {
   getBillingDetails() {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
-      this.billingData = billing.data;
-      this.statusBarChanges(this.billingData.on_demand_progress_status);
-      if (!billing.data) {
-        return;
-      }
-      // this.payerResponse = billing.data.payor_response_messages;
-      for (let payer in billing.data.payor_response_messages) {
-        if (billing.data.payor_response_messages[payer].payor_response_status == 'R') {
-          if (billing.data.payor_response_messages[payer].payor_response_message.length) {
-            for (let arr in billing.data.payor_response_messages[payer].payor_response_message) {
-              billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
-              this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes);
-            }
+      if (billing.data) {
+        this.billingData = billing.data;
+        this.statusBarChanges(this.billingData.on_demand_progress_status);
+        if (!billing.data) {
+          return;
+        }
+        // this.payerResponse = billing.data.payor_response_messages;
+        for (let payer in billing.data.payor_response_messages) {
+          if (billing.data.payor_response_messages[payer].payor_response_status == 'R') {
+            if (billing.data.payor_response_messages[payer].payor_response_message.length) {
+              for (let arr in billing.data.payor_response_messages[payer].payor_response_message) {
+                billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
+                this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes);
+              }
 
-          } else {
-            billing.data.payor_response_messages[payer].payor_response_message._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
-            this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message._attributes);
+            } else {
+              billing.data.payor_response_messages[payer].payor_response_message._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
+              this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message._attributes);
+            }
           }
         }
-      }
 
-      if (!this.billingData.certified_interpreter_required) {
-        let index = this.modiferList.indexOf('93');
-        this.modiferList.splice(index, 1)
-      }
-      if (!this.billingData.is_psychological_exam) {
-        let index = this.modiferList.indexOf('96');
-        this.modiferList.splice(index, 1)
-      }
-      this.filteredmodifier = this.modiferList
-      if (this.billingData && this.billingData.bill_no) {
-        this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
-        this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
-      } else {
-        this.intercom.setBillNo('Bill');
-      }
-      this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
-      this.IcdDataSource = new MatTableDataSource(this.icdData);
-      this.IcdDataSource.sort = this.sort;
-      billing.data.documets_sent_and_received.map(doccc => {
-        if (doccc.file_name == "DOCUMENTS_1140121036_BILL_20201209_051281_819.pdf") {
-          this.logger.log("billing", doccc)
+        if (!this.billingData.certified_interpreter_required) {
+          let index = this.modiferList.indexOf('93');
+          this.modiferList.splice(index, 1)
         }
-      })
+        if (!this.billingData.is_psychological_exam) {
+          let index = this.modiferList.indexOf('96');
+          this.modiferList.splice(index, 1)
+        }
+        this.filteredmodifier = this.modiferList
+        if (this.billingData && this.billingData.bill_no) {
+          this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
+          this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
+        } else {
+          this.intercom.setBillNo('Bill');
+        }
+        this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
+        this.IcdDataSource = new MatTableDataSource(this.icdData);
+        this.IcdDataSource.sort = this.sort;
+        billing.data.documets_sent_and_received.map(doccc => {
+          if (doccc.file_name == "DOCUMENTS_1140121036_BILL_20201209_051281_819.pdf") {
+            this.logger.log("billing", doccc)
+          }
+        })
 
-      this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
-      // if (billing.data && billing.data.billing_line_items) {
-      //   billing.data.billing_line_items.map((item, index) => {
-      //     let firstData = {};
-      //     this.addRow(1);
-      //     let modifier = item.modifier ? item.modifier.split('-') : [];
-      //     billing.data.billing_line_items[index].modifierList = modifier;
-      //     firstData = {
-      //       id: item.id,
-      //       modifierList: modifier,
-      //       item_description: item.item_description,
-      //       procedure_code: item.procedure_code,
-      //       modifier: item.modifier,
-      //       unitType: item.unit_type,
-      //       units: item.units,
-      //       charge: item.charge,
-      //       payment: 0,
-      //       balance: 1,
-      //       isEditable: [true]
-      //     }
-      //     if (item.is_post_payment) {
-      //       this.getFormControls.controls[index].get('item_description').setValidators([]);
-      //       this.getFormControls.controls[index].get('procedure_code').setValidators([]);
-      //       this.getFormControls.controls[index].get('units').setValidators([]);
-      //       this.getFormControls.controls[index].get('charge').setValidators([]);
-      //       this.getFormControls.controls[index].get('item_description').updateValueAndValidity();
-      //       this.getFormControls.controls[index].get('procedure_code').updateValueAndValidity();
-      //       this.getFormControls.controls[index].get('units').updateValueAndValidity();
-      //       this.getFormControls.controls[index].get('charge').updateValueAndValidity();
-      //     }
-      //     this.getFormControls.controls[index].patchValue(firstData)
-      //     if (this.getFormControls.controls[index].status == "VALID") {
-      //       this.getFormControls.controls[index].get('isEditable').setValue(false);
-      //     }
-      //   })
+        this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
+        // if (billing.data && billing.data.billing_line_items) {
+        //   billing.data.billing_line_items.map((item, index) => {
+        //     let firstData = {};
+        //     this.addRow(1);
+        //     let modifier = item.modifier ? item.modifier.split('-') : [];
+        //     billing.data.billing_line_items[index].modifierList = modifier;
+        //     firstData = {
+        //       id: item.id,
+        //       modifierList: modifier,
+        //       item_description: item.item_description,
+        //       procedure_code: item.procedure_code,
+        //       modifier: item.modifier,
+        //       unitType: item.unit_type,
+        //       units: item.units,
+        //       charge: item.charge,
+        //       payment: 0,
+        //       balance: 1,
+        //       isEditable: [true]
+        //     }
+        //     if (item.is_post_payment) {
+        //       this.getFormControls.controls[index].get('item_description').setValidators([]);
+        //       this.getFormControls.controls[index].get('procedure_code').setValidators([]);
+        //       this.getFormControls.controls[index].get('units').setValidators([]);
+        //       this.getFormControls.controls[index].get('charge').setValidators([]);
+        //       this.getFormControls.controls[index].get('item_description').updateValueAndValidity();
+        //       this.getFormControls.controls[index].get('procedure_code').updateValueAndValidity();
+        //       this.getFormControls.controls[index].get('units').updateValueAndValidity();
+        //       this.getFormControls.controls[index].get('charge').updateValueAndValidity();
+        //     }
+        //     this.getFormControls.controls[index].patchValue(firstData)
+        //     if (this.getFormControls.controls[index].status == "VALID") {
+        //       this.getFormControls.controls[index].get('isEditable').setValue(false);
+        //     }
+        //   })
 
-      // }
+        // }
+      }
     }, error => {
       this.logger.error(error)
     })

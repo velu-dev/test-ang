@@ -63,7 +63,14 @@ export class BillingCollectionComponent implements OnInit {
         this.expandId = element;
       }
     } else {
-      this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.bill_id+ '/billing'])
+      console.log(element)
+      let billing = "";
+      if (element.bill_id) {
+        billing = '/billing/' + element.bill_id;
+      } else {
+        billing = '/billing'
+      }
+      this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.bill_item_id + billing])
     }
   }
   applyFilter(filterValue: string) {
