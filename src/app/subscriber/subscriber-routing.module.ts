@@ -40,6 +40,7 @@ import { RouteGuardService } from '../shared/guard/route-guard.service';
 
 const routes: Routes = [{
   path: "dashboard",
+  canActivate: [RouteGuardService],
   children: [{
     path: "",
     component: DashboardComponent,
@@ -347,6 +348,7 @@ const routes: Routes = [{
 },
 {
   path: "appointment",
+  canActivate: [RouteGuardService],
   children: [{
     path: "",
     component: AppointmentComponent,
@@ -398,6 +400,7 @@ const routes: Routes = [{
 },
 {
   path: "claimants",
+  canActivate: [RouteGuardService],
   children: [
     {
       path: "",
@@ -552,6 +555,7 @@ const routes: Routes = [{
 },
 {
   path: "billing",
+  canActivate: [RouteGuardService],
   children: [{
     path: "",
     component: BillingComponent,
@@ -641,10 +645,12 @@ const routes: Routes = [{
 {
   path: "new-intake",
   component: NewClaimComponent,
+  canActivate: [RouteGuardService],
   data: { breadcrumb: "New Intake" }
 },
 {
   path: "claims",
+  canActivate: [RouteGuardService],
   children: [{
     path: "",
     component: ClaimListComponent,
@@ -671,11 +677,13 @@ const routes: Routes = [{
 }, {
   path: "settings",
   component: SubscriberSettingsComponent,
+  canActivate: [RouteGuardService],
   data: { breadcrumb: "Settings" }
 },
 //staff path
 {
   path: "staff",
+  canActivate: [RouteGuardService],
   children: [
     {
       path: "",
@@ -1253,6 +1261,7 @@ const routes: Routes = [{
 },
 {//manger path
   path: "manager",
+  canActivate: [RouteGuardService],
   children: [
     {
       path: "new-intake",
@@ -1823,8 +1832,9 @@ const routes: Routes = [{
       data: { breadcrumb: "Settings" }
     }]
 },
-{
+{ //examiner path
   path: "examiner",
+  canActivate: [RouteGuardService],
   children: [{
     path: "",
     component: ExaminerDashboardComponent,

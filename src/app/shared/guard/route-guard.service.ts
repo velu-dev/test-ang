@@ -11,23 +11,43 @@ export class RouteGuardService {
   constructor(private router: Router, private cookieService: CookieService, private cognitoService: CognitoService) { }
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.cognitoService.session().then(session => {
-      let role = this.cookieService.get('role_id')
-      if (role == '4' || role == '12') {
-        if(state.url.includes('staff')){
-          return true;
-        }else{
-          this.router.navigate(['**']);
-          return false;
-        }
-        
-      }else{
+    return this.getRoleDetails(state)
+  }
+
+  getRoleDetails(state) {
+    let role = this.cookieService.get('role_id');
+    if (role == '2') {
+      if (state.url.includes('staff') || state.url.includes('examiner') || state.url.includes('manager')) {
+        //this.router.navigate(['**']);
+        return false;
+      } else {
         return true;
       }
-    }, error => {
-      this.router.navigate(['/login']);
-      console.log(error)
-      return false;
-    })
+    } else if (role == '3') {
+      if (state.url.includes('manager')) {
+        return true;
+      } else {
+        this.router.navigate(['**']);
+        return false;
+      }
+
+    } else if (role == '4' || role == '12') {
+      if (state.url.includes('staff')) {
+        return true;
+      } else {
+        this.router.navigate(['**']);
+        return false;
+      }
+
+    } else if (role == '11') {
+      if (state.url.includes('examiner')) {
+        return true;
+      } else {
+        this.router.navigate(['**']);
+        return false;
+      }
+    } else {
+      return true;
+    }
   }
 }
