@@ -77,7 +77,7 @@ export class BillableItemAwaitingComponent implements OnInit {
       // this.dataSource.filterPredicate = function (data, filter: string): boolean {
       //   return data.claimant_name.toLowerCase().includes(filter) || (data.date_of_birth && data.date_of_birth.includes(filter)) || (data.claim_number && data.claim_number.includes(filter)) || (data.examiner && data.examiner.toLowerCase().includes(filter)) || (data.created_date && data.created_date.includes(filter)) || (data.created_time && data.created_time.toLowerCase().includes(filter)) || (data.procedure_type && data.procedure_type.toLowerCase().includes(filter));
       // };
-     // this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      // this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     }, error => {
       this.dataSource = new MatTableDataSource([])
     })
@@ -108,32 +108,32 @@ export class BillableItemAwaitingComponent implements OnInit {
   selectedFile: File;
   formData = new FormData();
   errors = { file: { isError: false, error: "" } }
-  uploadFile(element,e) {
+  uploadFile(element, e) {
     this.selectedFile = null;
     this.selectedFile = element.target.files[0];
-   
+
     let fileTypes = ['pdf', 'doc', 'docx'];
-      if (fileTypes.includes(this.selectedFile.name.split('.').pop().toLowerCase())) {
-        var FileSize = this.selectedFile.size / 1024 / 1024; // in MB
-        if (FileSize > 501) {
-          const dialogRef = this.dialog.open(AlertDialogueComponent, {
-            width: '500px',
-            data: { title: this.selectedFile.name, message: "File size is too large. Contact your organization's Simplexam Admin",  yes: false, ok: true, no: false, type: "info", info: true }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-          })
-          this.fileUpload.nativeElement.value = "";
-          return;
-        }
-        this.errors = { file: { isError: false, error: "" } }
-      } else {
-        this.selectedFile = null;
+    if (fileTypes.includes(this.selectedFile.name.split('.').pop().toLowerCase())) {
+      var FileSize = this.selectedFile.size / 1024 / 1024; // in MB
+      if (FileSize > 501) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: this.selectedFile.name, message: "File size is too large. Contact your organization's Simplexam Admin", yes: false, ok: true, no: false, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+        })
         this.fileUpload.nativeElement.value = "";
-        this.errors.file.isError = true;
-        this.errors.file.error = "This file type is not accepted";
-        this.alertService.openSnackBar("This file type is not accepted", 'error');
+        return;
       }
-    
+      this.errors = { file: { isError: false, error: "" } }
+    } else {
+      this.selectedFile = null;
+      this.fileUpload.nativeElement.value = "";
+      this.errors.file.isError = true;
+      this.errors.file.error = "This file type is not accepted";
+      this.alertService.openSnackBar("This file type is not accepted", 'error');
+    }
+
     if (!this.selectedFile) {
       this.alertService.openSnackBar("Please select file", 'error');
       this.errors.file.isError = true;
@@ -165,7 +165,7 @@ export class BillableItemAwaitingComponent implements OnInit {
     this.cookieService.set('claimNumber', e.claim_number)
     this.intercom.setBillableItem(e.exam_procedure_name);
     this.cookieService.set('billableItem', e.exam_procedure_name)
-    this.router.navigate(['/subscriber/examiner/claimants/claimant/' + e.claimant_id + '/claim/' + e.claim_id + '/billable-item/' + e.bill_item_id + '/reports'])
+    this.router.navigate([this.router.url + "/billable-item/" + e.claim_id + '/' + e.claimant_id + '/' + e.bill_item_id + '/reports'])
   }
 
   downloadDocumet(element) {
