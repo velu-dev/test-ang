@@ -691,74 +691,74 @@ const routes: Routes = [{
       data: { breadcrumb: { skip: true } }
     },
     // {
-      //path: "users",
-      // children: [{
-      //   path: "",
-      //   component: UserComponent,
-      //   data: { breadcrumb: "Users" }
-      // }, {
-      //   path: "new",
-      //   component: NewUserComponent,
-      //   data: { breadcrumb: "New" }
-      // }, {
-      //   path: "edit/:id",
-      //   component: NewUserComponent,
-      //   data: { breadcrumb: "Edit" }
-      // }, {
-      //   path: "new-examiner",
-      //   children: [
-      //     {
-      //       path: "",
-      //       component: NewExaminerUserComponent,
-      //       data: { breadcrumb: "New Examiner" }
-      //     }, {
-      //       path: "add-location/:status/:id",
-      //       component: AddEditServiceLocationComponent,
-      //       data: { breadcrumb: "New" }
-      //     }, {
-      //       path: "edit-location/:location_id/:status/:id",
-      //       component: AddEditServiceLocationComponent,
-      //       data: { breadcrumb: "Edit" }
-      //     }
-      //   ]
-      // }, {
-      //   path: "examiner/:id",
-      //   children: [{
-      //     path: "",
-      //     component: NewExaminerUserComponent,
-      //     data: { breadcrumb: "Examiner" }
-      //   }, {
-      //     path: "edit-location/:location_id/:status",
-      //     component: AddEditServiceLocationComponent,
-      //     data: { breadcrumb: "Edit" }
-      //   },
-      //   {
-      //     path: "add-location/:status/:examiner",
-      //     component: AddEditServiceLocationComponent,
-      //     data: { breadcrumb: "New" }
-      //   }]
-      // },
-      // {
-      //   path: "examiner/:id/:status",
-      //   children: [{
-      //     path: "",
-      //     component: NewExaminerUserComponent,
-      //     data: { breadcrumb: "Examiner" }
-      //   }, {
-      //     path: "edit-location/:location_id/:status",
-      //     component: AddEditServiceLocationComponent,
-      //     data: { breadcrumb: "Edit" }
-      //   }, {
-      //     path: "edit-location/:id/:status/:location_id",
-      //     component: AddEditServiceLocationComponent,
-      //     data: { breadcrumb: "Edit" }
-      //   },
-      //   {
-      //     path: "add-location/:status/:examiner",
-      //     component: AddEditServiceLocationComponent,
-      //     data: { breadcrumb: "New" }
-      //   }]
-      // }]
+    //path: "users",
+    // children: [{
+    //   path: "",
+    //   component: UserComponent,
+    //   data: { breadcrumb: "Users" }
+    // }, {
+    //   path: "new",
+    //   component: NewUserComponent,
+    //   data: { breadcrumb: "New" }
+    // }, {
+    //   path: "edit/:id",
+    //   component: NewUserComponent,
+    //   data: { breadcrumb: "Edit" }
+    // }, {
+    //   path: "new-examiner",
+    //   children: [
+    //     {
+    //       path: "",
+    //       component: NewExaminerUserComponent,
+    //       data: { breadcrumb: "New Examiner" }
+    //     }, {
+    //       path: "add-location/:status/:id",
+    //       component: AddEditServiceLocationComponent,
+    //       data: { breadcrumb: "New" }
+    //     }, {
+    //       path: "edit-location/:location_id/:status/:id",
+    //       component: AddEditServiceLocationComponent,
+    //       data: { breadcrumb: "Edit" }
+    //     }
+    //   ]
+    // }, {
+    //   path: "examiner/:id",
+    //   children: [{
+    //     path: "",
+    //     component: NewExaminerUserComponent,
+    //     data: { breadcrumb: "Examiner" }
+    //   }, {
+    //     path: "edit-location/:location_id/:status",
+    //     component: AddEditServiceLocationComponent,
+    //     data: { breadcrumb: "Edit" }
+    //   },
+    //   {
+    //     path: "add-location/:status/:examiner",
+    //     component: AddEditServiceLocationComponent,
+    //     data: { breadcrumb: "New" }
+    //   }]
+    // },
+    // {
+    //   path: "examiner/:id/:status",
+    //   children: [{
+    //     path: "",
+    //     component: NewExaminerUserComponent,
+    //     data: { breadcrumb: "Examiner" }
+    //   }, {
+    //     path: "edit-location/:location_id/:status",
+    //     component: AddEditServiceLocationComponent,
+    //     data: { breadcrumb: "Edit" }
+    //   }, {
+    //     path: "edit-location/:id/:status/:location_id",
+    //     component: AddEditServiceLocationComponent,
+    //     data: { breadcrumb: "Edit" }
+    //   },
+    //   {
+    //     path: "add-location/:status/:examiner",
+    //     component: AddEditServiceLocationComponent,
+    //     data: { breadcrumb: "New" }
+    //   }]
+    // }]
     //}, 
     {
       path: "claimant-awaiting",
@@ -1941,8 +1941,56 @@ const routes: Routes = [{
   },
   {
     path: "upcomming-billable-item",
-    component: UpcommingBillableItemComponent,
-    data: { breadcrumb: "Upcoming Appointments" }
+    children: [{
+      path: "",
+      component: UpcommingBillableItemComponent,
+      data: {
+        breadcrumb: "Upcoming Appointments"
+      }
+    }, {
+      path: "billable-item/:claim_id/:claimant_id/:billId",
+      children: [{
+        path: "",
+        component: AppointmentDetailsComponent,
+        data: { breadcrumb: { alias: '@Billable Item' } }
+      }, {
+        path: "correspondence",
+        component: BillingCorrespondanceComponent,
+        data: { breadcrumb: "Correspondence" }
+      }, {
+        path: "correspondence/:examiner_id",
+        component: BillingCorrespondanceComponent,
+        data: { breadcrumb: "Correspondence" },
+      }, {
+        path: "examination",
+        component: ExaminationComponent,
+        data: { breadcrumb: "Examination" }
+      }, {
+        path: "history",
+        component: HistoryComponent,
+        data: { breadcrumb: "History" }
+      }, {
+        path: "history/:examiner",
+        component: HistoryComponent,
+        data: { breadcrumb: "History" }
+      }, {
+        path: "records",
+        component: RecordsComponent,
+        data: { breadcrumb: "Records" }
+      }, {
+        path: "reports",
+        component: ReportComponent,
+        data: { breadcrumb: "Report" }
+      }, {
+        path: "billing",
+        component: BilllableBillingComponent,
+        data: { breadcrumb: { alias: '@Bill' } }
+      }, {
+        path: "billing/:billingId",
+        component: BilllableBillingComponent,
+        data: { breadcrumb: { alias: '@Bill' } }
+      }]
+    }]
   },
   {
     path: "claim-awaiting",
@@ -2020,8 +2068,54 @@ const routes: Routes = [{
   },
   {
     path: "billing-collection",
-    component: BillingCollectionComponent,
-    data: { breadcrumb: "Billing and Collections" }
+    children: [{
+      path: "",
+      component: BillingCollectionComponent,
+      data: { breadcrumb: "Billing and Collections" }
+    }, {
+      path: "billable-item/:claim_id/:claimant_id/:billId",
+      children: [{
+        path: "",
+        component: AppointmentDetailsComponent,
+        data: { breadcrumb: { alias: '@Billable Item' } }
+      }, {
+        path: "correspondence",
+        component: BillingCorrespondanceComponent,
+        data: { breadcrumb: "Correspondence" }
+      }, {
+        path: "correspondence/:examiner_id",
+        component: BillingCorrespondanceComponent,
+        data: { breadcrumb: "Correspondence" },
+      }, {
+        path: "examination",
+        component: ExaminationComponent,
+        data: { breadcrumb: "Examination" }
+      }, {
+        path: "history",
+        component: HistoryComponent,
+        data: { breadcrumb: "History" }
+      }, {
+        path: "history/:examiner",
+        component: HistoryComponent,
+        data: { breadcrumb: "History" }
+      }, {
+        path: "records",
+        component: RecordsComponent,
+        data: { breadcrumb: "Records" }
+      }, {
+        path: "reports",
+        component: ReportComponent,
+        data: { breadcrumb: "Report" }
+      }, {
+        path: "billing",
+        component: BilllableBillingComponent,
+        data: { breadcrumb: { alias: '@Bill' } }
+      }, {
+        path: "billing/:billingId",
+        component: BilllableBillingComponent,
+        data: { breadcrumb: { alias: '@Bill' } }
+      }]
+    }]
   },
   {
     path: "billable-item-awaiting",
@@ -2029,6 +2123,50 @@ const routes: Routes = [{
       path: "",
       component: BillableItemAwaitingComponent,
       data: { breadcrumb: "Items Awaiting Report" },
+    },
+    {
+      path: "billable-item/:claim_id/:claimant_id/:billId",
+      children: [{
+        path: "",
+        component: AppointmentDetailsComponent,
+        data: { breadcrumb: { alias: '@Billable Item' } }
+      }, {
+        path: "correspondence",
+        component: BillingCorrespondanceComponent,
+        data: { breadcrumb: "Correspondence" }
+      }, {
+        path: "correspondence/:examiner_id",
+        component: BillingCorrespondanceComponent,
+        data: { breadcrumb: "Correspondence" },
+      }, {
+        path: "examination",
+        component: ExaminationComponent,
+        data: { breadcrumb: "Examination" }
+      }, {
+        path: "history",
+        component: HistoryComponent,
+        data: { breadcrumb: "History" }
+      }, {
+        path: "history/:examiner",
+        component: HistoryComponent,
+        data: { breadcrumb: "History" }
+      }, {
+        path: "records",
+        component: RecordsComponent,
+        data: { breadcrumb: "Records" }
+      }, {
+        path: "reports",
+        component: ReportComponent,
+        data: { breadcrumb: "Report" }
+      }, {
+        path: "billing",
+        component: BilllableBillingComponent,
+        data: { breadcrumb: { alias: '@Bill' } }
+      }, {
+        path: "billing/:billingId",
+        component: BilllableBillingComponent,
+        data: { breadcrumb: { alias: '@Bill' } }
+      }]
     },
     {
       path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
