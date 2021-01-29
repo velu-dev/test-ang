@@ -232,9 +232,9 @@ mat-card {
     }
   }
 }
-.county {
-  padding-top: 0px !important;
-}
+// .county {
+//   padding-top: 0px !important;
+// }
 .checkbox_ {
   background-color: $light-color;
   padding: 10px 20px;
@@ -278,6 +278,15 @@ mat-card {
     }
     .address {
       padding: 5px 5px 5px 5px;
+    }
+  }
+}
+.new-location {
+  box-shadow: none !important;
+  min-height: 55vh;
+  .mat-card-content {
+    .cursor-pointer {
+      cursor: pointer;
     }
   }
 }
