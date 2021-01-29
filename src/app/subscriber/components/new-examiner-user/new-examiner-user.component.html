@@ -792,7 +792,7 @@
                     <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
                 </mat-card-content>
 
-                <mat-card class="m-card new-location m-b-20" *ngIf="locationAddStatus">
+                <mat-card class="m-card new-location m-b-20" [ngStyle]="{'display':!locationAddStatus ? 'none' : 'block' }">
                     <mat-card-header>
                         <div class="m-0 content-wrapper-main-title">Search Existing Service Locations</div>
                     </mat-card-header>

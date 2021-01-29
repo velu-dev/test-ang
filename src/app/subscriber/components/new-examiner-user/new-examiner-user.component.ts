@@ -1038,8 +1038,10 @@ export class NewExaminerUserComponent implements OnInit {
     this.locationAddStatus = true;
     this.locationData = null;
     this.national_provider_identifier = null;
+    setTimeout(() => {
     event.stopPropagation();
     trigger.openPanel();
+  }, 300);
     //this.router.navigate(['/subscriber/location/existing-location', this.examinerId])
   }
 
