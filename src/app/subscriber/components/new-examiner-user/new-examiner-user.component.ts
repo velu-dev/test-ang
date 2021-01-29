@@ -5,7 +5,7 @@ import { SubscriberUserService } from '../../service/subscriber-user.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatDialog, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSort, MatPaginator } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSort, MatPaginator, MatAutocompleteTrigger } from '@angular/material';
 import { Observable } from 'rxjs';
 import { shareReplay, map, startWith } from 'rxjs/operators';
 import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
@@ -88,7 +88,7 @@ export class NewExaminerUserComponent implements OnInit {
   w9Url: any;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   @ViewChild('uploaderBilling', { static: true }) fileUploadBilling: ElementRef;
-
+  @ViewChild(MatAutocompleteTrigger, { static: false }) addressAutocomplete: MatAutocompleteTrigger;
   //@ViewChild(MatSort, { static: false }) sort: MatSort;
   //@ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   private paginator: MatPaginator;
@@ -1033,13 +1033,14 @@ export class NewExaminerUserComponent implements OnInit {
     this.texonomySearch.patchValue(this.texonomyValue)
     this.renderingForm.patchValue({ taxonomy_id: e })
   }
-
-  assignLocation() {
-    //this.router.navigate(['/subscriber/location/existing-location', this.examinerId])
+  assignLocation(event: Event, trigger: MatAutocompleteTrigger) {
     this.addresssearch.patchValue(null);
     this.locationAddStatus = true;
     this.locationData = null;
     this.national_provider_identifier = null;
+    event.stopPropagation();
+    trigger.openPanel();
+    //this.router.navigate(['/subscriber/location/existing-location', this.examinerId])
   }
 
   removeLocation(e, index) {
