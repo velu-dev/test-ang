@@ -172,7 +172,7 @@
 <mat-card class="billable-item-info m-b-20">
     <form [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-card-header>
-            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Call Information</div>
+            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information</div>
             <span class="spacer"></span>
             <span *ngIf="!isExamTypeChanged && !billableData?.isExaminerDisabled">
                 <button type="button" class="filled-gray m-b-5"
