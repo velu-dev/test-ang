@@ -134,6 +134,16 @@
   <div class="border-dashed-blue m-t-30 m-b-30"></div>
 
   <div fxLayout="row wrap" class="ondemand_request">
+<div fxFlex="100" >
+  <mat-form-field appearance="outline">
+    <mat-label>Select Option</mat-label>
+    <mat-select>
+      <mat-option>option 1</mat-option>
+      <mat-option>option 2</mat-option>
+    </mat-select>
+    <mat-error>Error message comes here</mat-error>
+  </mat-form-field>
+</div>
     <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100">
       <div>
         <mat-checkbox [disabled]="recordData?.is_exam_type_changed || recordData?.isExaminerDisabled"

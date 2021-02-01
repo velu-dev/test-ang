@@ -77,6 +77,12 @@ th {
 }
 
 .ondemand_request {
+    .mat-form-field {
+        width: 100%;
+        @media only screen and (min-width: 1024px) {
+            min-width: 295px;
+        }
+    }
     mat-checkbox {
         display: block;
         margin-bottom: 20px;
