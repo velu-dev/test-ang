@@ -52,7 +52,7 @@ export class RecordsComponent implements OnInit {
   rushRequest: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   statusBarValues = { value: null, status: '', class: '' }
-
+  service_provider_name: any = null;
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -318,13 +318,14 @@ export class RecordsComponent implements OnInit {
       document_category_id: this.recordData.documets[0].document_category_id,
       billable_item_id: this.paramsId.billId,
       service_request_type_id: this.recordData.documets[0].service_request_type_id,
-      service_provider_id: this.recordData.documets[0].service_provider_id // default 3
+      service_provider_id: this.recordData.documets[0].service_provider_id, // default 3
+      service_provider_name: this.service_provider_name
     }
     this.onDemandService.requestCreate(data).subscribe(record => {
       this.alertService.openSnackBar("Record Summary On Demand created successfully", 'success');
       this.getRecord();
     }, error => {
-      if (typeof(error.error.message) == 'object') {
+      if (typeof (error.error.message) == 'object') {
         let timezone = moment.tz.guess();
         let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
         this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
