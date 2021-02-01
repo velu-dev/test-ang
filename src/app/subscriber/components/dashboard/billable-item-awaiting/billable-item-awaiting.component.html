@@ -75,7 +75,7 @@
                                 <div><span>Status</span><span> {{element?.status}}</span></div>
                                 <div><span>Compiled Report</span><span>
                                         <a [routerLink]="[]" (click)="downloadDocumet(element)"
-                                            class="text-ternary">Download</a>
+                                            class="text-ternary">Download <i class="fas fa-download p-l-5"></i></a>
                                     </span></div>
                                 <div><span>Upload Final Report</span><span *ngIf="element?.compiled_report_file_name">
                                         <button type="button" (click)="uploader.click()">Upload Final Report</button>
