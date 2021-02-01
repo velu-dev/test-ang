@@ -43,7 +43,7 @@
                             <span *ngIf="column == 'status'">{{element?.status}}</span>
                             <span *ngIf="column == 'compiled_report'">
                                 <a [routerLink]="[]" (click)="downloadDocumet(element)"
-                                    class="text-ternary">Download</a>
+                                    class="text-ternary">Download<i class="fas fa-download p-l-5"></i></a>
                             </span>
                             <span *ngIf="column == 'final_report' && element?.compiled_reports"><button type="button"
                                     (click)="uploader.click()" mat-raised-button
