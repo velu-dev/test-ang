@@ -2,7 +2,8 @@
     <mat-card-content class="m-b-0">
         <div class="w-100">
             <div class="table-filter">
-                <input matInput autocomplete="off" (keyup)="applyFilter($event.target.value)" title="Search by Name, Claim, Examiner, Procedure type or Date" [(ngModel)]="filterValue"
+                <input matInput autocomplete="off" (keyup)="applyFilter($event.target.value)"
+                    title="Search by Name, Claim, Examiner, Procedure type or Date" [(ngModel)]="filterValue"
                     [placeholder]="'Search by name, claim, examiner, procedure type or date' | ellipsis:50">
                 <mat-icon>search</mat-icon>
             </div>
@@ -14,10 +15,13 @@
                 matSort>
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                     <ng-container *ngIf="columnName[i] != 'Icon'">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">{{columnName[i]}}</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+                            {{columnName[i]}}</th>
                     </ng-container>
                     <ng-container *ngIf="columnName[i] == 'Icon'">
-                        <th mat-header-cell *matHeaderCellDef> <mat-icon (click)="back()" class="p-t-10 exit">fullscreen_exit</mat-icon></th>
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-icon (click)="back()" class="p-t-10 exit">fullscreen_exit</mat-icon>
+                        </th>
                     </ng-container>
                     <td mat-cell *matCellDef="let element;let m">
                         <span *ngIf="i == 0 && isMobile">
@@ -27,18 +31,27 @@
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}} {{element?.first_name}}</span>
-                            <span *ngIf="column == 'procedure_type'">{{element?.exam_type_code}} - {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}}</span>
+                            <span *ngIf="column == 'claimant_name'">{{element?.last_name}}
+                                {{element?.first_name}}</span>
+                            <span *ngIf="column == 'procedure_type'">{{element?.exam_type_code}} -
+                                {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ?
+                                'Examination' : element?.procedure_type}}</span>
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'due_date'">{{element?.due_date | date:'MM-dd-yyyy'}}</span>
-                            <span *ngIf="column == 'report'"><a [routerLink]="[]" (click)="goToReport(element)" class="text-ternary">Go To Report Service</a></span>
+                            <span *ngIf="column == 'report'"><a [routerLink]="[]" (click)="goToReport(element)"
+                                    class="text-ternary">Go To Report Service</a></span>
                             <span *ngIf="column == 'status'">{{element?.status}}</span>
                             <span *ngIf="column == 'compiled_report'">
-                                <a [routerLink]="[]" (click)="downloadDocumet(element)"  class="text-ternary">Download Compiled Report</a>
+                                <a [routerLink]="[]" (click)="downloadDocumet(element)"
+                                    class="text-ternary">Download</a>
                             </span>
-                            <span *ngIf="column == 'final_report' && element?.compiled_reports"><button type="button" (click)="uploader.click()"   mat-raised-button class="mini-btn filled-lightgray-1">Upload Final Report</button>
-                                <input type="file" #uploader hidden (change)="uploadFile($event, element)" accept=".pdf, .doc, .docx" required> <br>
-                                <a [routerLink]="[]" (click)="downloadfinalDocumet(element)"  class="text-ternary">{{element?.final_report_file_url}}</a>
+                            <span *ngIf="column == 'final_report' && element?.compiled_reports"><button type="button"
+                                    (click)="uploader.click()" mat-raised-button
+                                    class="mini-btn filled-lightgray-1">Upload Final Report</button>
+                                <input type="file" #uploader hidden (change)="uploadFile($event, element)"
+                                    accept=".pdf, .doc, .docx" required> <br>
+                                <a [routerLink]="[]" (click)="downloadfinalDocumet(element)"
+                                    class="text-ternary">{{element?.final_report_file_url}}</a>
                             </span>
                         </div>
                     </td>
@@ -47,16 +60,29 @@
                     <td mat-cell *matCellDef="let element;let n" [attr.colspan]="columnsToDisplay.length">
                         <div class="detail" [@detailExpand]="expandId == n ? 'expanded' : 'collapsed'">
                             <div class="responsive-table" (click)="navigateBillableEdit(element)">
-                                <div><span>Claimant</span><span> {{element?.last_name}} {{element?.first_name}}</span></div>
-                                <div><span>Exam Procedure Type</span><span> {{element?.exam_type_code}} - {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}}</span></div>
-                                <div><span>Date of service / Date Item Received</span><span>{{element?.date_of_service | date:'MM-dd-yyyy'}}</span></div>
-                                <div><span>Date Due</span><span> {{element?.bill_due_date | date:'MM-dd-yyyy'}} </span></div>
-                                <div><span>Report SimpleService</span><span> <a [routerLink]="[]" (click)="goToReport(element)" class="text-ternary">Go To Report Service</a></span></div>
+                                <div><span>Claimant</span><span> {{element?.last_name}} {{element?.first_name}}</span>
+                                </div>
+                                <div><span>Exam Procedure Type</span><span> {{element?.exam_type_code}} -
+                                        {{element?.procedure_type == 'Evaluation' || element?.procedure_type ==
+                                        'Reevaluation' ? 'Examination' : element?.procedure_type}}</span></div>
+                                <div><span>Date of service / Date Item Received</span><span>{{element?.date_of_service |
+                                        date:'MM-dd-yyyy'}}</span></div>
+                                <div><span>Date Due</span><span> {{element?.bill_due_date | date:'MM-dd-yyyy'}} </span>
+                                </div>
+                                <div><span>Report SimpleService</span><span> <a [routerLink]="[]"
+                                            (click)="goToReport(element)" class="text-ternary">Go To Report
+                                            Service</a></span></div>
                                 <div><span>Status</span><span> {{element?.status}}</span></div>
-                                <div><span>Compiled Report</span><span><a [routerLink]="[]"  (click)="downloadDocumet(element)">{{element?.compiled_report_file_name}}</a></span></div>
-                                <div><span>Upload Final Report</span><span *ngIf="element?.compiled_report_file_name"> <button type="button" (click)="uploader.click()">Upload Final Report</button>
-                                    <input type="file" #uploader hidden (change)="uploadFile($event, element)"
-                                    accept=".pdf, .doc, .docx" required></span></div>
+                                <div><span>Compiled Report</span><span>
+                                        <a [routerLink]="[]" (click)="downloadDocumet(element)"
+                                            class="text-ternary">Download</a>
+                                    </span></div>
+                                <div><span>Upload Final Report</span><span *ngIf="element?.compiled_report_file_name">
+                                        <button type="button" (click)="uploader.click()">Upload Final Report</button>
+                                        <input type="file" #uploader hidden (change)="uploadFile($event, element)"
+                                            accept=".pdf, .doc, .docx" required> <br>
+                                        <a [routerLink]="[]" (click)="downloadfinalDocumet(element)"
+                                            class="text-ternary">{{element?.final_report_file_url}}</a></span></div>
                             </div>
                         </div>
                     </td>
