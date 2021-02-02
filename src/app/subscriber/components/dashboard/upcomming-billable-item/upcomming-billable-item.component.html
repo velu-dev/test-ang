@@ -30,7 +30,7 @@
                             <span *ngIf="column == 'type'">{{element?.exam_type_code}} -
                                 {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}}</span>
                             <span *ngIf="column == 'location'">{{element?.service_location_name}} - {{element?.street1}} {{element?.street2}}
-                                {{element?.city}} {{element?.state_name}} {{element?.zip_code}}</span>
+                                {{element?.city}} {{element?.state_code}} {{element?.zip_code}}</span>
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
 
                             <span *ngIf="column == 'history_on_demand'"><a [routerLink]="[]"
@@ -50,7 +50,7 @@
                                         {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ? 'Examination' : element?.procedure_type}}</span></div>
                                 <div>
                                     <span>Location</span><span>{{element?.service_location_name}} - {{element?.street1}}
-                                        {{element?.street2}} {{element?.city}} {{element?.state_name}}
+                                        {{element?.street2}} {{element?.city}} {{element?.state_code}}
                                         {{element?.zip_code}}</span></div>
                                 <div><span>Date of service /<br />
                                         Date Item Received</span><span>{{element?.date_of_service | date:'MM-dd-yyyy'}}</span></div>
