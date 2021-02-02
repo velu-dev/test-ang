@@ -143,4 +143,8 @@ export class ClaimService {
     data.is_billable_item_document = is_billable_item_document ? true : false;
     return this.http.post(environment.baseUrl + api_endpoint.activityLogUpdate, data)
   }
+
+  searchClaim(data): Observable<any> {
+    return this.http.post(environment.searchUrl + "-claimnumber", data)
+}
 }

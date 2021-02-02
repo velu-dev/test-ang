@@ -48,7 +48,7 @@ const routes: Routes = [{
     data: { breadcrumb: { skip: true } }
   }]
 },{
-  path:'Search',
+  path:'search',
   component: SearchClaimComponent,
   data: { breadcrumb: "New Billable Item" }
 },
@@ -704,6 +704,11 @@ const routes: Routes = [{
       component: StaffDashboardComponent,
       data: { breadcrumb: { skip: true } }
     },
+    {
+      path:'search',
+      component: SearchClaimComponent,
+      data: { breadcrumb: "New Billable Item" }
+    },
     // {
     //path: "users",
     // children: [{
@@ -1273,6 +1278,11 @@ const routes: Routes = [{
       path: "new-intake",
       component: NewClaimComponent,
       data: { breadcrumb: "New Intake" }
+    },
+    {
+      path:'search',
+      component: SearchClaimComponent,
+      data: { breadcrumb: "New Billable Item" }
     },
     {
       path: "new-examiner",
@@ -1849,6 +1859,11 @@ const routes: Routes = [{
     path: "dashboard",
     component: ExaminerDashboardComponent,
     data: { breadcrumb: { skip: true } }
+  },
+  {
+    path:'search',
+    component: SearchClaimComponent,
+    data: { breadcrumb: "New Billable Item" }
   },
   {
     path: "claimant-awaiting",
