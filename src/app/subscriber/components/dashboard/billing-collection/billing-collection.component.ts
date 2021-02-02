@@ -73,6 +73,15 @@ export class BillingCollectionComponent implements OnInit {
       this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.bill_item_id + billing])
     }
   }
+  openElementDetail(element) {
+    let billing = "";
+    if (element.bill_id) {
+      billing = '/billing/' + element.bill_id;
+    } else {
+      billing = '/billing'
+    }
+    this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.bill_item_id + billing])
+  }
   applyFilter(filterValue: string) {
     this.billingData.filter = filterValue.trim().toLowerCase();
     if (this.billingData.paginator) {
