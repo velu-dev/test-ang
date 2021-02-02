@@ -32,6 +32,16 @@
     }
     .exa_status {
         float: right;
+        div {
+            position: relative;
+            cursor: pointer;
+            .exit {
+                position: absolute;
+                top: 0;
+                right: 0;
+                cursor: pointer;
+            }
+        }
         p {
             .lv {
                 color: #f27120;
