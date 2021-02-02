@@ -572,7 +572,7 @@ export class SubscriberSettingsComponent implements OnInit {
   updateCustomer(card) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: 'make default', address: true, title: (card.brand + " card ending in " + card.last4) }
+      data: { name: 'make this card the default card', address: true, title: (card.brand + " card ending in " + card.last4) }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
