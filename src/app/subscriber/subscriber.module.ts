@@ -68,6 +68,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { StripeService } from './service/stripe.service';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { CloseBill, PaymentResponseComponent, SecondBillReview, VoidPayment } from './examiner/appointment-details/billing/payment-response/payment-response.component';
+import { SearchClaimComponent } from './components/search-claim/search-claim.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -145,6 +146,7 @@ import { CloseBill, PaymentResponseComponent, SecondBillReview, VoidPayment } fr
     VoidPayment,
     CloseBill,
     SecondBillReview,
+    SearchClaimComponent,
    
   ],
   entryComponents: [

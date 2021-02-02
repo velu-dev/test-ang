@@ -37,6 +37,7 @@ import { RecordsComponent } from './examiner/appointment-details/records/records
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
 import { BilllableBillingComponent } from './examiner/appointment-details/billing/billing.component';
 import { RouteGuardService } from '../shared/guard/route-guard.service';
+import { SearchClaimComponent } from './components/search-claim/search-claim.component';
 
 const routes: Routes = [{
   path: "dashboard",
@@ -46,7 +47,12 @@ const routes: Routes = [{
     component: DashboardComponent,
     data: { breadcrumb: { skip: true } }
   }]
-}, {
+},{
+  path:'Search',
+  component: SearchClaimComponent,
+  data: { breadcrumb: "New Billable Item" }
+},
+{
   path: "new-examiner",
   canActivate: [RouteGuardService],
   children: [

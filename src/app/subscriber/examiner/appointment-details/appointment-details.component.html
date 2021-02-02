@@ -283,12 +283,12 @@
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Intake Contact</mat-label>
-                            <input matInput placeholder="Intake Contact" formControlName="caller_name"
+                            <mat-label>Intake Caller</mat-label>
+                            <input matInput placeholder="Intake Caller" formControlName="caller_name"
                                 autocomplete="off">
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Intake Contact Affiliation</mat-label>
+                            <mat-label>Requesting Party</mat-label>
                             <mat-select formControlName="caller_affiliation">
                                 <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                     {{caller.agent_type_name}}</mat-option>
@@ -296,7 +296,7 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Intake Date</mat-label>
+                            <mat-label>Request Receipt Date</mat-label>
                             <!-- <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
                                 [value]="changeDateType(billable_item?.value?.intake_call?.call_date)"
                                 formControlName="call_date" autocomplete="off" [min]="minDate" [max]="todayDate.intake"
