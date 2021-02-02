@@ -50,7 +50,7 @@ const routes: Routes = [{
 },{
   path:'Search',
   component: SearchClaimComponent,
-  data: { breadcrumb: "Search" }
+  data: { breadcrumb: "New Billable Item" }
 },
 {
   path: "new-examiner",

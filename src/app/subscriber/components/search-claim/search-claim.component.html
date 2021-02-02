@@ -1,1 +1,40 @@
-<p>search-claim works!</p>
+<div class="billable-item-search text-left">
+    <div class="container m-t-100">
+        <div class="main-title">Search by Claimant Name or Claim number for create new billable item</div>
+        <div class="searchable-dropdown">
+            <form class="example-form">
+                <mat-form-field appearance="outline" hideRequiredMarker="hideRequiredControl.auto"
+                    floatLabel="floatLabelControl.auto">
+                    <input matInput placeholder="Search by Claimant Name or Claim Number"
+                        aria-label="Search by Claimant Name or Claim Number" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option class="custom-option">
+                            <ul>
+                                <li>
+                                    <div class="cn">Venkatesan Mariyappan</div>
+                                </li>
+                                <li>
+                                    <p>
+                                        <span class="ex_na">Examiner Name </span>
+                                        <span>
+                                            <strong class="mw">Claim #</strong> 98745663210
+                                        </span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        <span>Exam Procedure Type</span>
+                                        <span>
+                                            <strong class="mw">DOS</strong>10-10-2021
+                                        </span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+</div>

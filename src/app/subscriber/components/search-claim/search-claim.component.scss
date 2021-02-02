@@ -1,0 +1,128 @@
+@import "variables";
+
+.billable-item-search {
+    min-height: 50vh;
+    @media screen and (max-width: 568px) and (min-width: 320px) {
+        min-height: auto;
+    }
+    .container {
+        background-color: $white;
+        box-shadow: $shadow-style-one;
+        padding: 50px;
+        width: fit-content;
+        margin: 0px auto;
+        border-radius: 5px;
+        @media screen and (max-width: 1024px) and (min-width: 768px) {
+            padding: 20px;
+        }
+        @media screen and (max-width: 568px) and (min-width: 320px) {
+            padding: 5px;
+            box-shadow: none;
+            margin-top: 0 !important;
+            width: 100%;
+            font-size: $font-size-1;
+        }
+        .main-title {
+            font-size: $font-size-10;
+            color: $text-gray;
+            padding-bottom: 20px;
+        }
+        .searchable-dropdown {
+            .mat-form-field {
+                background-color: $light-color;
+                width: 800px;
+                &:focus {
+                    background-color: $white;
+                }
+                @media screen and (max-width: 1024px) and (min-width: 768px) {
+                    max-width: 580px;
+                }
+                @media screen and (max-width: 568px) and (min-width: 320px) {
+                    max-width: 100%;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.custom-option {
+    width: 100%;
+    height: auto;
+    line-height: 1.5;
+    border-bottom: 1px solid $light-color;
+    ul {
+        padding: 5px 0 5px 0;
+        margin: 0;
+        li {
+            list-style-type: none;
+            list-style: none;
+            .cn {
+                width: $width-100;
+                font-weight: $font-weight-bold;
+                color: $black;
+                font-size: $font-size-7;
+                display: block;
+                white-space: break-spaces;
+                overflow-wrap: break-word;
+            }
+            p {
+                width: $width-100;
+                margin: 3px 0;
+                display: flex;
+                span {
+                    font-size: $font-size-7;
+                    color: $text-gray;
+                    // white-space: nowrap;
+                    // overflow: hidden;
+                    // text-overflow: ellipsis;
+                    text-overflow: inherit;
+                    white-space: break-spaces;
+                    overflow-wrap: break-word;
+                    @media screen and (max-width: 1024px) and (min-width: 768px) {
+                        text-overflow: inherit;
+                        white-space: break-spaces;
+                        overflow-wrap: break-word;
+                    }
+                    @media screen and (max-width: 568px) and (min-width: 320px) {
+                        text-overflow: inherit;
+                        white-space: break-spaces;
+                        overflow-wrap: break-word;
+                    }
+                    &:first-child {
+                        display: inline-block;
+                        // width: 100%;
+                        min-width: 60%;
+                        max-width: 60%;
+                        @media screen and (max-width: 1024px) and (min-width: 768px) {
+                            min-width: 60%;
+                            max-width: 60%;
+                            padding-right: 5px;
+                        }
+                        @media screen and (max-width: 568px) and (min-width: 320px) {
+                            min-width: 120px;
+                            max-width: 120px;
+                            padding-right: 5px;
+                        }
+                    }
+                    &:nth-child(2) {
+                        vertical-align: text-bottom;
+                        strong {
+                            font-weight: $font-weight-bold;
+                            width: 47px;
+                            display: -webkit-inline-box;
+                            @media screen and (max-width: 1024px) and (min-width: 768px) {
+                                width: auto;
+                                display: initial;
+                            }
+                            @media screen and (max-width: 568px) and (min-width: 320px) {
+                                width: auto;
+                                display: initial;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
