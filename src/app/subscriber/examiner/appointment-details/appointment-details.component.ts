@@ -112,7 +112,7 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E", "S"], url: "/history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" }, { name: "Examination", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" }, { name: "Report", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" }, { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
+  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" }, { name: "Examination", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" }, { name: "Report", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" }, { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
@@ -256,13 +256,13 @@ export class AppointmentDetailsComponent implements OnInit {
       this.notesDataSource.paginator.firstPage();
     }
   }
-loadActivity(){
-  this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
-    this.activityLog = new MatTableDataSource(res.data);
-    this.activityLog.sort = this.sort;
-    this.activityLog.paginator = this.paginator;
-  })
-}
+  loadActivity() {
+    this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
+      this.activityLog = new MatTableDataSource(res.data);
+      this.activityLog.sort = this.sort;
+      this.activityLog.paginator = this.paginator;
+    })
+  }
   isExamTypeChanged = false;
   examinerId = null;
   examinerName = "";
@@ -405,10 +405,10 @@ loadActivity(){
           this.examinationDetails.exam_type_code = bills.data.exam_type_code;
           this.examinationDetails.exam_type_name = bills.data.exam_type_name;
 
-          if (this.examinationDetails.procedure_type == "Supplemental") {
-            let ind = this.documentList.findIndex(element => element.id == 5);
-            this.documentList.splice(ind, 1);
-          }
+          // if (this.examinationDetails.procedure_type == "Supplemental") {
+          //   let ind = this.documentList.findIndex(element => element.id == 5);
+          //   this.documentList.splice(ind, 1);
+          // }
           if (this.examinationDetails.procedure_type == "Deposition") {
             let documentListArr = [6, 8, 9];
             let documentList: any = this.documentList;
