@@ -255,7 +255,7 @@ const routes: Routes = [{
   children: [{
     path: "",
     component: BillableItemAwaitingComponent,
-    data: { breadcrumb: "Items Awaiting Report" },
+    data: { breadcrumb: "Items Awaiting Reports" },
   },
   {
     path: "billable-item/edit-billable-item/:claim_id/:claimant_id/:billable",
@@ -2153,7 +2153,7 @@ const routes: Routes = [{
     children: [{
       path: "",
       component: BillableItemAwaitingComponent,
-      data: { breadcrumb: "Items Awaiting Report" },
+      data: { breadcrumb: "Items Awaiting Reports" },
     },
     {
       path: "billable-item/:claim_id/:claimant_id/:billId",

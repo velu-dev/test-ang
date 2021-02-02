@@ -1106,7 +1106,7 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-panel-title>
-                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item</div>
+                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information</div>
                         </mat-panel-title>
                     </mat-card-header>
                     <mat-divider> </mat-divider>
@@ -1242,13 +1242,13 @@
                             <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
-                                    <mat-label>Intake Contact</mat-label>
-                                    <input matInput placeholder="Intake Contact" formControlName="caller_name"
+                                    <mat-label>Intake Caller</mat-label>
+                                    <input matInput placeholder="Intake Caller" formControlName="caller_name"
                                         autocomplete="off">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
-                                    <mat-label>Intake Contact Affiliation</mat-label>
+                                    <mat-label>Requesting Party</mat-label>
                                     <mat-select formControlName="caller_affiliation">
                                         <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                             {{caller.agent_type_name}}</mat-option>
@@ -1257,7 +1257,7 @@
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
-                                    <mat-label>Intake Date</mat-label>
+                                    <mat-label>Request Receipt Date</mat-label>
                                     <!-- <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
                                         autocomplete="off" [min]="minDate" [max]="todayDate.intake"
                                         [owlDateTime]="intake"
