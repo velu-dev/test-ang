@@ -56,7 +56,7 @@
 </mat-card>
 <mat-card class="m-card" *ngIf="!isLoading">
     <mat-card-header>
-        <div class="m-0 sub-title">Billable Item and Intake Information</div>
+        <div class="m-0 sub-title">Billable Item - Intake Information</div>
     </mat-card-header>
     <mat-divider></mat-divider>
 
@@ -189,11 +189,11 @@
                 </div>
                 <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Intake Contact</mat-label>
-                        <input matInput placeholder="Intake Contact" formControlName="caller_name" autocomplete="off">
+                        <mat-label>Intake Caller</mat-label>
+                        <input matInput placeholder="Intake Caller" formControlName="caller_name" autocomplete="off">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Intake Contact Affiliation</mat-label>
+                        <mat-label>Requesting Party</mat-label>
                         <mat-select formControlName="caller_affiliation">
                             <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                 {{caller.agent_type_name}}</mat-option>
@@ -201,7 +201,7 @@
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Intake Call Date</mat-label>
+                        <mat-label>Request Receipt Date</mat-label>
                         <!-- <input matInput placeholder="MM-DD-YYYY" formControlName="call_date"
                             autocomplete="off" [matDatepicker]="intake" [min]="minDate" [max]="todayDate.intake" >
                         <mat-datepicker-toggle matSuffix [for]="intake">
@@ -249,6 +249,13 @@
                         <input matInput placeholder="Intake Notes" formControlName="notes" autocomplete="off">
                     </mat-form-field>
                 </div>
+                <!-- <div class="custom-check">
+                    <div>Supplemental Items Received</div>
+                    <mat-checkbox class="p-t-10">Supplemental Cover Letter</mat-checkbox>
+                    <mat-checkbox>Diagnostics</mat-checkbox>
+                    <mat-checkbox>Medical Records</mat-checkbox>
+                    <mat-checkbox>Other</mat-checkbox>
+                </div> -->
                 <div class="text-center w-100 m-t-10 m-b-10 action-button">
                     <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                         (click)="cancel()">Cancel</button>
