@@ -17,7 +17,8 @@ export class RouteGuardService {
   getRoleDetails(state) {
     let role = this.cookieService.get('role_id');
     if (role == '2') {
-      if (state.url.includes('staff') || state.url.includes('examiner') || state.url.includes('manager')) {
+
+      if (state.url.includes('staff') || state.url.includes('manager') || state.url.split('/').includes('examiner')) {
         //this.router.navigate(['**']);
         return false;
       } else {
