@@ -8,7 +8,7 @@
                     <input matInput placeholder="Search by Claimant Name or Claim Number"
                         aria-label="Search by Claimant Name or Claim Number" [formControl]="claimCtrl" [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let claimant of filteredClaimants" (click)="searchClick(claimant); isSearch = false" [value]="claimant._source?.clmd_lname"
+                            <mat-option *ngFor="let claimant of filteredClaimants" (click)="searchClick(claimant)" [value]="claimant._source?.clmd_lname"
                                 class="custom-option">
                                 <ul>
                                     <li>
