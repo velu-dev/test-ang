@@ -8,7 +8,7 @@ import { EventInput, memoize } from '@fullcalendar/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 import { ExaminerService } from '../../service/examiner.service';
-import { formatDate } from '@angular/common';
+import { formatDate, Location } from '@angular/common';
 import { OWL_DATE_TIME_FORMATS, DateTimeAdapter, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
@@ -97,7 +97,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   @Output() getList = new EventEmitter();
   defaultView = "dayGridMonth";
   routeUrl: any = "";
-  constructor(private router: Router, private routerService: RouterExtService, private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
+  constructor(private _location: Location, private router: Router, private routerService: RouterExtService, private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
     // console.log(this.routerService.getPreviousUrl())
     this.routeUrl = this.router.url;
     this.currentMonth = moment().month();
@@ -164,6 +164,10 @@ export class ExaminationCalanderViewComponent implements OnInit {
     let middle_name = examiner.middle_name ? " " + examiner.middle_name : "";
     let suffix = examiner.suffix ? ", " + examiner.suffix : "";
     return examiner.first_name + " " + examiner.last_name + middle_name + suffix
+  }
+
+  back() {
+    this._location.back();
   }
   ngAfterViewInit() { }
   calendarPrev(event?) {

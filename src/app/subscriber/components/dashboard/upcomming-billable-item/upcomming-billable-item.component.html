@@ -28,9 +28,11 @@
                         </span>
                         <div>
                             <span *ngIf="column == 'claimant'">{{element?.last_name}} {{element?.first_name}}</span>
-                            <span *ngIf="column == 'type'">{{element?.exam_type_code}} -
+                            <span *ngIf="column == 'type'">{{element?.exam_procedure_name}}
+                                <!-- -
                                 {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ?
-                                'Examination' : element?.procedure_type}}</span>
+                                'Examination' : element?.procedure_type}} -->
+                            </span>
                             <span *ngIf="column == 'location'">{{element?.service_location_name}} - {{element?.street1}}
                                 {{element?.street2}}
                                 {{element?.city}} {{element?.state_code}} {{element?.zip_code}}</span>
@@ -49,9 +51,11 @@
                             <div class="responsive-table" (click)="openElement1(element)">
                                 <div><span>Claimant</span><span>{{element?.last_name}} {{element?.first_name}}</span>
                                 </div>
-                                <div><span>Procedure Type</span><span>{{element?.exam_type_code}} -
-                                        {{element?.procedure_type == 'Evaluation' || element?.procedure_type ==
-                                        'Reevaluation' ? 'Examination' : element?.procedure_type}}</span></div>
+                                <div><span>Procedure Type</span><span>
+                                        {{element?.exam_procedure_name}}
+                                        <!-- {{element?.procedure_type == 'Evaluation' || element?.procedure_type ==
+                                        'Reevaluation' ? 'Examination' : element?.procedure_type}} -->
+                                    </span></div>
                                 <div>
                                     <span>Location</span><span>{{element?.service_location_name}} - {{element?.street1}}
                                         {{element?.street2}} {{element?.city}} {{element?.state_code}}

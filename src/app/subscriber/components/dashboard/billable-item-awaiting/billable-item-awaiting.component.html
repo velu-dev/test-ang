@@ -33,9 +33,11 @@
                         <div>
                             <span *ngIf="column == 'claimant_name'">{{element?.last_name}}
                                 {{element?.first_name}}</span>
-                            <span *ngIf="column == 'procedure_type'">{{element?.exam_type_code}} -
+                            <span *ngIf="column == 'procedure_type'">{{element?.exam_procedure_name}}
+                                <!-- -
                                 {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ?
-                                'Examination' : element?.procedure_type}}</span>
+                                'Examination' : element?.procedure_type}} -->
+                            </span>
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'due_date'">{{element?.due_date | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'report'"><a [routerLink]="[]" (click)="goToReport(element)"
@@ -62,9 +64,11 @@
                             <div class="responsive-table">
                                 <div><span>Claimant</span><span> {{element?.last_name}} {{element?.first_name}}</span>
                                 </div>
-                                <div><span>Exam Procedure Type</span><span> {{element?.exam_type_code}} -
+                                <div><span>Exam Procedure Type</span><span> {{element?.exam_procedure_name}}
+                                        <!-- -
                                         {{element?.procedure_type == 'Evaluation' || element?.procedure_type ==
-                                        'Reevaluation' ? 'Examination' : element?.procedure_type}}</span></div>
+                                        'Reevaluation' ? 'Examination' : element?.procedure_type}} -->
+                                    </span></div>
                                 <div><span>Date of service / Date Item Received</span><span>{{element?.date_of_service |
                                         date:'MM-dd-yyyy'}}</span></div>
                                 <div><span>Date Due</span><span> {{element?.bill_due_date | date:'MM-dd-yyyy'}} </span>
