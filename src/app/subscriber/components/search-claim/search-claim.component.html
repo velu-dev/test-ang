@@ -16,6 +16,12 @@
                                     </li>
                                     <li>
                                         <p>
+                                           <span><strong>DOB</strong> : {{claimant?._source?.date_of_birth | date:'MM-dd-yyyy'}}</span>
+                                           <span><strong>Claim #</strong>: {{claimant?._source?.claim_number}}</span>
+                                        </p>
+                                    </li>
+                                    <!-- <li>
+                                        <p>
                                            <span class="ex_na" title="{{claimant?._source?.ex_last_name}} {{claimant?._source?.ex_first_name}}{{claimant?._source?.suffix ? ', '+ claimant?._source?.suffix : ''}}">{{claimant?._source?.ex_last_name}} {{claimant?._source?.ex_first_name}}{{claimant?._source?.suffix ? ', '+ claimant?._source?.suffix : ''}}</span>
                                            <span>
                                             <strong class="mw" title="{{claimant?._source?.claim_number}}">Claim #</strong>: {{claimant?._source?.claim_number}}
@@ -29,7 +35,7 @@
                                                 <strong class="mw" title="{{claimant?._source?.date_of_service | date:'MM-dd-yyyy'}}">DOS</strong>: {{claimant?._source?.date_of_service | date:'MM-dd-yyyy'}}
                                             </span>
                                         </p>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </mat-option>
                             <mat-option disabled *ngIf="claimCtrl?.value?.length > 1 && filteredClaimants?.length == 0">

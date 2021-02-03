@@ -32,6 +32,9 @@
     }
     .exa_status {
         float: right;
+        @media only screen and (max-width: 568px) {
+            float: left;
+        }
         div {
             position: relative;
             cursor: pointer;
@@ -42,15 +45,42 @@
                 cursor: pointer;
             }
         }
-        p {
-            .lv {
-                color: #f27120;
+        // p {
+        //     .lv {
+        //         color: #f27120;
+        //     }
+        //     .con {
+        //         color: #4fcc24;
+        //     }
+        //     .not_con {
+        //         color: #f27120;
+        //     }
+        // }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            @media only screen and (max-width: 568px) {
+                padding: 0;
             }
-            .con {
-                color: #4fcc24;
-            }
-            .not_con {
-                color: #f27120;
+            li {
+                float: left;
+                list-style-type: none;
+                padding-right: 10px;
+                &:last-child {
+                    padding-right: 0;
+                }
+                span {
+                    .lv {
+                        color: #f27120;
+                    }
+                    .con {
+                        color: #4fcc24;
+                    }
+                    .not_con {
+                        color: #f27120;
+                    }
+                }
             }
         }
     }

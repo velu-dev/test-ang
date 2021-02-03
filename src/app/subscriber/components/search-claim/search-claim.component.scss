@@ -68,7 +68,7 @@
             }
             p {
                 width: $width-100;
-                margin: 3px 0;
+                margin: 8px 0;
                 display: flex;
                 span {
                     font-size: $font-size-7;
@@ -79,24 +79,14 @@
                     text-overflow: inherit;
                     white-space: break-spaces;
                     overflow-wrap: break-word;
-                    @media screen and (max-width: 1024px) and (min-width: 768px) {
-                        text-overflow: inherit;
-                        white-space: break-spaces;
-                        overflow-wrap: break-word;
-                    }
-                    @media screen and (max-width: 568px) and (min-width: 320px) {
-                        text-overflow: inherit;
-                        white-space: break-spaces;
-                        overflow-wrap: break-word;
-                    }
                     &:first-child {
                         display: inline-block;
                         // width: 100%;
-                        min-width: 60%;
-                        max-width: 60%;
+                        min-width: 40%;
+                        max-width: 40%;
                         @media screen and (max-width: 1024px) and (min-width: 768px) {
-                            min-width: 60%;
-                            max-width: 60%;
+                            min-width: 40%;
+                            max-width: 40%;
                             padding-right: 5px;
                         }
                         @media screen and (max-width: 568px) and (min-width: 320px) {
