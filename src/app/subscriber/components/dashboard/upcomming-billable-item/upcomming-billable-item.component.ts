@@ -67,6 +67,9 @@ export class UpcommingBillableItemComponent implements OnInit {
       this.upcomingAppointment = new MatTableDataSource([])
     })
   }
+  openElement1(element) {
+    this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.billable_item_id])
+  }
   expandId: any = null;
   openElement(element) {
     if (this.isMobile) {
