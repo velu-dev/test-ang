@@ -74,7 +74,7 @@ export class SearchClaimComponent implements OnInit {
     this.cookieService.set('claimNumber', data.claim_number)
 
     if (data.claim_id) {
-      this.router.navigate([baseUrl + "claimants/claimant/" + data.claimant_id + "/claim/" + data.claim_id + '/new-billable-item']);
+      this.router.navigate([baseUrl + "claimants/claimant/" + data.claimant_id + "/claim/" + data.claim_id + '/new-billable-item/' + true]);
       return;
     }
 

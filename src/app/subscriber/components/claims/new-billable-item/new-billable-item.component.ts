@@ -12,6 +12,7 @@ import { NGXLogger } from 'ngx-logger';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'MM-DD-YYYY hh:mm A Z',
   fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
@@ -79,19 +80,23 @@ export class NewBillableItemComponent implements OnInit {
   isLoading = false;
   modifierList = [];
   appointment_scheduled_date_time: any = null;
+  isSearch: boolean = false;
+  baseUrl: any;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
     private _location: Location,
     private route: ActivatedRoute,
     private router: Router,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    private cookieService: CookieService
   ) {
     this.isLoading = true;
     this.claimService.seedData('exam_type').subscribe(res => {
       this.examTypes = res.data;
       this.route.params.subscribe(param => {
         this.claimId = param.claim_id;
+        this.isSearch = param.isSearch;
         console.log(param)
         if (param.claimant_id)
           this.claimantId = param.claimant_id;
@@ -216,6 +221,31 @@ export class NewBillableItemComponent implements OnInit {
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
     })
+
+    let role = this.cookieService.get('role_id')
+    switch (role) {
+      case '1':
+        this.baseUrl = "/admin";
+        break;
+      case '2':
+        this.baseUrl = "/subscriber/";
+        break;
+      case '3':
+        this.baseUrl = "/subscriber/manager/";
+        break;
+      case '4':
+        this.baseUrl = "/subscriber/staff/";
+        break;
+      case '11':
+        this.baseUrl = "/subscriber/examiner/";
+        break;
+      case '12':
+        this.baseUrl = "/subscriber/staff/";
+        break;
+      default:
+        this.baseUrl = "/";
+        break;
+    }
 
   }
   changeDateType(date) {
@@ -407,7 +437,11 @@ export class NewBillableItemComponent implements OnInit {
       console.log(this.claimantId, this.billable_item.value)
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
-        this._location.back();
+        if (this.isSearch) {
+          this.router.navigate([this.baseUrl + "claimants/claimant/" + this.claimantId + "/claim/" + this.claimId + "/billable-item/" + res.data.id])
+        } else {
+          this._location.back();
+        }
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -415,7 +449,12 @@ export class NewBillableItemComponent implements OnInit {
       this.claimService.updateBillableItem(this.billable_item.value, this.billableId).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
         //this.router.navigate(['/subscriber/claims'])
-        this._location.back();
+        if (this.isSearch) {
+          this.router.navigate([this.baseUrl + "claimants/claimant/" + this.claimantId + "/claim/" + this.claimId + "/billable-item/" + res.data.id])
+        } else {
+          this._location.back();
+        }
+
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -439,7 +478,11 @@ export class NewBillableItemComponent implements OnInit {
   }
 
   cancel() {
-    this._location.back();
+    if (this.isSearch) {
+      this.router.navigate([this.baseUrl])
+    } else {
+      this._location.back();
+    }
   }
 
   numberOnly(event): boolean {
