@@ -76,7 +76,8 @@ export class UpcommingBillableItemComponent implements OnInit {
         this.expandId = element;
       }
     } else {
-      this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.billable_item_id])
+     // this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.billable_item_id])
+      this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + "claimants/claimant/" + element.claimant_id + "/claim/" + element.claim_id + "/billable-item/" + element.billable_item_id]);
     }
   }
   applyFilter(filterValue: string) {

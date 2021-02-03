@@ -166,7 +166,7 @@ export class BillableItemAwaitingComponent implements OnInit {
     this.cookieService.set('claimNumber', e.claim_number)
     this.intercom.setBillableItem(e.exam_procedure_name);
     this.cookieService.set('billableItem', e.exam_procedure_name)
-    this.router.navigate([this.router.url + "/billable-item/" + e.claim_id + '/' + e.claimant_id + '/' + e.bill_item_id + '/reports'])
+    this.router.navigate(['subscriber/examiner/billable-item-awaiting/' +  "claimants/claimant/" + e.claimant_id + "/claim/" + e.claim_id + "/billable-item/" + e.bill_item_id + '/reports'])
   }
 
   downloadDocumet(element) {
