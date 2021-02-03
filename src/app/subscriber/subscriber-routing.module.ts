@@ -115,11 +115,11 @@ const routes: Routes = [{
               path: "new-billable-item",
               component: NewBillableItemComponent,
               data: { breadcrumb: "New Billable Item" },
-            },{
+            }, {
               path: "new-billable-item/:isSearch",
               component: NewBillableItemComponent,
               data: { breadcrumb: "New Billable Item" },
-            },{
+            }, {
               path: "billable-item/:billId",
               children: [{
                 path: "appointment/:examiner_id",
@@ -208,7 +208,7 @@ const routes: Routes = [{
         path: "new-billable-item/:isSearch",
         component: NewBillableItemComponent,
         data: { breadcrumb: "New Billable Item" },
-      },{
+      }, {
         path: "billable-item/:billId",
         children: [{
           path: "appointment/:examiner_id",
@@ -444,7 +444,7 @@ const routes: Routes = [{
           path: "new-billable-item",
           component: NewBillableItemComponent,
           data: { breadcrumb: "New Billable Item" },
-        },{
+        }, {
           path: "new-billable-item/:isSearch",
           component: NewBillableItemComponent,
           data: { breadcrumb: "New Billable Item" },
@@ -522,7 +522,7 @@ const routes: Routes = [{
     path: "new-billable-item/:claim_id/:claimant_id",
     component: NewBillableItemComponent,
     data: { breadcrumb: "New Billable Item" }
-  },{
+  }, {
     path: "new-billable-item/:claim_id/:claimant_id/:isSearch",
     component: NewBillableItemComponent,
     data: { breadcrumb: "New Billable Item" },
@@ -609,11 +609,11 @@ const routes: Routes = [{
         path: "new-billable-item",
         component: NewBillableItemComponent,
         data: { breadcrumb: "New Billable Item" },
-      },{
+      }, {
         path: "new-billable-item/:isSearch",
         component: NewBillableItemComponent,
         data: { breadcrumb: "New Billable Item" },
-      },{
+      }, {
         path: "billable-item/:billId",
         children: [{
           path: "appointment/:examiner_id",
@@ -838,11 +838,11 @@ const routes: Routes = [{
                   path: "new-billable-item",
                   component: NewBillableItemComponent,
                   data: { breadcrumb: "New Billable Item" },
-                },{
+                }, {
                   path: "new-billable-item/:isSearch",
                   component: NewBillableItemComponent,
                   data: { breadcrumb: "New Billable Item" },
-                },{
+                }, {
                   path: "billable-item/:billId",
                   children: [{
                     path: "appointment/:examiner_id",
@@ -926,7 +926,7 @@ const routes: Routes = [{
             path: "new-billable-item",
             component: NewBillableItemComponent,
             data: { breadcrumb: "New Billable Item" },
-          },{
+          }, {
             path: "new-billable-item/:isSearch",
             component: NewBillableItemComponent,
             data: { breadcrumb: "New Billable Item" },
@@ -1088,7 +1088,7 @@ const routes: Routes = [{
               path: "new-billable-item",
               component: NewBillableItemComponent,
               data: { breadcrumb: "New Billable Item" },
-            },{
+            }, {
               path: "new-billable-item/:isSearch",
               component: NewBillableItemComponent,
               data: { breadcrumb: "New Billable Item" },
@@ -1163,7 +1163,7 @@ const routes: Routes = [{
       }, {
         path: "new-billable-item/:claim_id/:claimant_id",
         component: NewBillableItemComponent
-      },{
+      }, {
         path: "new-billable-item/:claim_id/:claimant_id/:isSearch",
         component: NewBillableItemComponent,
         data: { breadcrumb: "New Billable Item" },
@@ -1228,7 +1228,7 @@ const routes: Routes = [{
             path: "new-billable-item",
             component: NewBillableItemComponent,
             data: { breadcrumb: "New Billable Item" },
-          },{
+          }, {
             path: "new-billable-item/:isSearch",
             component: NewBillableItemComponent,
             data: { breadcrumb: "New Billable Item" },
@@ -1397,7 +1397,7 @@ const routes: Routes = [{
                   path: "new-billable-item/:isSearch",
                   component: NewBillableItemComponent,
                   data: { breadcrumb: "New Billable Item" },
-                },{
+                }, {
                   path: "billable-item/:billId",
                   children: [{
                     path: "appointment/:examiner_id",
@@ -1481,7 +1481,7 @@ const routes: Routes = [{
             path: "new-billable-item",
             component: NewBillableItemComponent,
             data: { breadcrumb: "New Billable Item" },
-          },{
+          }, {
             path: "new-billable-item/:isSearch",
             component: NewBillableItemComponent,
             data: { breadcrumb: "New Billable Item" },
@@ -1702,7 +1702,7 @@ const routes: Routes = [{
               path: "new-billable-item",
               component: NewBillableItemComponent,
               data: { breadcrumb: "New Billable Item" },
-            },{
+            }, {
               path: "new-billable-item/:isSearch",
               component: NewBillableItemComponent,
               data: { breadcrumb: "New Billable Item" },
@@ -1778,7 +1778,7 @@ const routes: Routes = [{
       }, {
         path: "new-billable-item/:claim_id/:claimant_id",
         component: NewBillableItemComponent
-      },{
+      }, {
         path: "new-billable-item/:isSearch",
         component: NewBillableItemComponent,
         data: { breadcrumb: "New Billable Item" },
@@ -1847,7 +1847,7 @@ const routes: Routes = [{
             path: "new-billable-item/:isSearch",
             component: NewBillableItemComponent,
             data: { breadcrumb: "New Billable Item" },
-          },{
+          }, {
             path: "billable-item/:billId",
             children: [{
               path: "appointment/:examiner_id",
@@ -1924,6 +1924,10 @@ const routes: Routes = [{
     path: 'search',
     component: SearchClaimComponent,
     data: { breadcrumb: "New Billable Item" }
+  }, {
+    path: "appointments",
+    component: AppointmentComponent,
+    data: { breadcrumb: "Calendar" }
   },
   {
     path: "claimant-awaiting",
@@ -1964,7 +1968,7 @@ const routes: Routes = [{
                 path: "new-billable-item",
                 component: NewBillableItemComponent,
                 data: { breadcrumb: "New Billable Item" },
-              },{
+              }, {
                 path: "new-billable-item/:isSearch",
                 component: NewBillableItemComponent,
                 data: { breadcrumb: "New Billable Item" },
@@ -2105,7 +2109,7 @@ const routes: Routes = [{
           path: "new-billable-item",
           component: NewBillableItemComponent,
           data: { breadcrumb: "New Billable Item" },
-        },{
+        }, {
           path: "new-billable-item/:isSearch",
           component: NewBillableItemComponent,
           data: { breadcrumb: "New Billable Item" },
@@ -2356,7 +2360,7 @@ const routes: Routes = [{
             path: "new-billable-item",
             component: NewBillableItemComponent,
             data: { breadcrumb: "New Billable Item" },
-          },{
+          }, {
             path: "new-billable-item/:isSearch",
             component: NewBillableItemComponent,
             data: { breadcrumb: "New Billable Item" },
@@ -2437,7 +2441,7 @@ const routes: Routes = [{
       path: "new-billable-item/:claim_id/:claimant_id/:isSearch",
       component: NewBillableItemComponent,
       data: { breadcrumb: "New Billable Item" },
-    },{
+    }, {
       path: "edit-billable-item/:claim_id/:claimant_id/:billable",
       component: NewBillableItemComponent,
       data: { breadcrumb: "New Bill" }
@@ -2517,7 +2521,7 @@ const routes: Routes = [{
           path: "new-billable-item",
           component: NewBillableItemComponent,
           data: { breadcrumb: "New Billable Item" },
-        },{
+        }, {
           path: "new-billable-item/:isSearch",
           component: NewBillableItemComponent,
           data: { breadcrumb: "New Billable Item" },

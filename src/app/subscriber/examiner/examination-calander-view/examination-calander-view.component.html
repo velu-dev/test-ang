@@ -2,7 +2,8 @@
     <div fxFlex="40" fxFlex.sm="40" fxFlex.xs="100">
         <div class="toggle-switch" *ngIf="!CalendarView">
             <mat-icon class="active" matTooltip="Calender View" (click)="calViewChange(true)">event</mat-icon>
-            <mat-icon  matTooltip="List View for all Upcoming Appointments" (click)="calViewChange(false)">view_list</mat-icon>
+            <mat-icon matTooltip="List View for all Upcoming Appointments" (click)="calViewChange(false)">view_list
+            </mat-icon>
         </div>
         <mat-form-field *ngIf="roleId != 11" class="select-examiner">
             <mat-label>Select Examiner</mat-label>
@@ -20,7 +21,8 @@
     <div fxFlex="60" fxFlex.sm="60" fxFlex.xs="100">
         <div>
             <div class="exa_status">
-                <div class="m-b-20 hide-mobile"><i class="fas fa-compress exit"></i></div>
+                <div class="m-b-20 hide-mobile" *ngIf="routeUrl == '/subscriber/examiner/appointments'"><i
+                        class="fas fa-compress exit"></i></div>
                 <!-- <p class="m-b-0 float-right">
                     <span> <i class="fa fa-circle p-r-5 lv"></i> Left Voicemail</span>
                     <span class="p-l-10"> <i class="fa fa-circle p-r-5 con"></i> Confirmed</span>
@@ -43,7 +45,7 @@
 </div>
 
 <div class="app-calendar">
- <input matInput [owlDateTime]="intake" [(ngModel)]="selectedDate" [min]="minimumDate" (dateChange)="dateChanged()"
+    <input matInput [owlDateTime]="intake" [(ngModel)]="selectedDate" [min]="minimumDate" (dateChange)="dateChanged()"
         style="visibility: hidden;">
     <owl-date-time [hour12Timer]="true" [pickerMode]="'dialog'" [pickerType]="'calendar'"
         (afterPickerClosed)="dateChanged()" #intake>

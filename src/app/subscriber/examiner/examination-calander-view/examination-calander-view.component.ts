@@ -17,6 +17,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { ClaimService } from '../../service/claim.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { RouterExtService } from 'src/app/services/router.service';
 @Component({
   selector: 'app-examination-calander-view',
   templateUrl: './examination-calander-view.component.html',
@@ -95,7 +96,10 @@ export class ExaminationCalanderViewComponent implements OnInit {
   @Output() statusData = new EventEmitter();
   @Output() getList = new EventEmitter();
   defaultView = "dayGridMonth";
-  constructor(private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
+  routeUrl: any = "";
+  constructor(private router: Router, private routerService: RouterExtService, private cookieService: CookieService, public dialog: MatDialog, public examinarService: ExaminerService, private route: ActivatedRoute, private alertService: AlertService, private elementRef: ElementRef) {
+    // console.log(this.routerService.getPreviousUrl())
+    this.routeUrl = this.router.url;
     this.currentMonth = moment().month();
     let currentMonth = moment().month() + 1;
     if (currentMonth == 12) {
