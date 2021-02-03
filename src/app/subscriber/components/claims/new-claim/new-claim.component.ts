@@ -315,6 +315,8 @@ export class NewClaimComponent implements OnInit {
           this.languageStatus = res.data.claimant_details.certified_interpreter_required;
           this.changeState(res.data.claimant_details.state, 'claimant')
           this.claimant.patchValue(res.data.claimant_details)
+          this.intercom.setClaimant(res.data.first_name + ' ' + res.data.last_name);
+          this.cookieService.set('claimDetails', res.data.first_name + ' ' + res.data.last_name)
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           this.claim.patchValue({
             claim_details: {
