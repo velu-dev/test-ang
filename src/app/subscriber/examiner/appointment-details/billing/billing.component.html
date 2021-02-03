@@ -120,7 +120,8 @@
                                 <span class="text-danger">
                                     <mat-icon> error</mat-icon> {{incompleteInfo.name}}
                                 </span>
-                                <div class="incomplete-details" *ngIf="isExpandDetail && incompleteInfo?.value?.length > 0">
+                                <div class="incomplete-details"
+                                    *ngIf="isExpandDetail && incompleteInfo?.value?.length > 0">
                                     <ol>
                                         <li *ngFor="let val of incompleteInfo.value">{{val}}</li>
                                     </ol>
@@ -181,7 +182,9 @@
                     </div>
                     <div fxFlex="33.3" fxFlex.xs="100">
                         <div class="p-b-5"><b>Service Location</b> </div>
-                        <div *ngIf="!billingData?.is_virtual_location">{{billingData?.service_location_name ? billingData?.service_location_name + ' - ' : ''}}{{billingData?.service_location?.street1 }} {{billingData?.service_location?.street2 }}
+                        <div *ngIf="!billingData?.is_virtual_location">{{billingData?.service_location_name ?
+                            billingData?.service_location_name + ' - ' : ''}}{{billingData?.service_location?.street1 }}
+                            {{billingData?.service_location?.street2 }}
                             {{billingData?.service_location?.city}}
                             {{billingData?.state_code }}
                             {{billingData?.service_location?.zip_code ? '- ' + billingData?.service_location?.zip_code :
@@ -685,7 +688,7 @@
 
 
     <!-- ===== Payment Response ==== -->
-   <!-- <app-payment-response></app-payment-response> -->
+    <!-- <app-payment-response></app-payment-response> -->
 
     <!-- ===== Examination Submission Documents ==== -->
     <div fxlayout="row wrap" class="m-t-30 submission-document">
@@ -809,7 +812,7 @@
                                             <input type="file" #uploader hidden
                                                 (change)="addCompleteDoc($event,element)" hidden
                                                 accept=".pdf, .doc, .docx" required>
-                                            <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X'"
+                                            <a *ngIf="!(element?.form_action_type != 'C' && element?.form_action_type != 'X')"
                                                 class="text-danger no-wrap-td"
                                                 (click)=" element?.completed_document ? uploader.click() : ''">Remove
                                                 and Reupload
@@ -974,13 +977,16 @@
                                             <mat-icon *ngIf="element?.payor_response_status == 'R'" class="text-danger">
                                                 error</mat-icon>
                                         </span>
-                                        <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'" class="no-wrap-td">{{element?.request_reference_id}}</span>
+                                        <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'"
+                                            class="no-wrap-td">{{element?.request_reference_id}}</span>
                                         <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                                        <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element?.action">
+                                        <span *ngIf="column == 'action'" class="no-wrap-td"
+                                            [ngSwitch]="element?.action">
                                             <span *ngSwitchCase="'BD'">Downloaded</span>
                                             <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
-                                            <span *ngSwitchCase="'SFTP'"><span *ngIf="!element?.isdtm_request">Billed On Demand</span>
-                                            <span *ngIf="element?.isdtm_request">Mailed On Demand</span></span>
+                                            <span *ngSwitchCase="'SFTP'"><span *ngIf="!element?.isdtm_request">Billed On
+                                                    Demand</span>
+                                                <span *ngIf="element?.isdtm_request">Mailed On Demand</span></span>
                                         </span>
                                         <span *ngIf="column == 'date'" class="no-wrap-td">{{element?.date_of_request |
                                             date:'MM-dd-yyyy'}}</span>

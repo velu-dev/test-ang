@@ -86,8 +86,8 @@
         </div>
     </div>
     <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100">
-        <div class="simple-card" *ngIf="!(status.name === 'Billing' && role == '4')" [ngClass]="{'billing-status-active bg_light': status.name === 'Billing'}"
-            (click)="clickNav(status.url)">
+        <div class="simple-card" *ngIf="!(status.name === 'Billing' && role == '4')"
+            [ngClass]="{'billing-status-active bg_light': status.name === 'Billing'}" (click)="clickNav(status.url)">
             <i [class]="status.icon"></i>
             <div class="p-l-10 text-center">
                 <h4>{{status.name}}</h4>
@@ -176,10 +176,10 @@
             <span class="spacer"></span>
             <span *ngIf="!isExamTypeChanged && !billableData?.isExaminerDisabled">
                 <button type="button" class="filled-gray m-b-5"
-                    [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                    [disabled]="billableData.bill_id || appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                     *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
                 <button class="filled-success m-b-5"
-                    [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                    [disabled]="billableData.bill_id || appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                     *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
             </span>
         </mat-card-header>
@@ -391,8 +391,8 @@
                     </button>
                     <mat-form-field appearance="standard">
                         <input matInput [(ngModel)]="file" readonly placeholder="No file chosen">
-                        <input type="file" #uploader hidden (change)="addFile($event)" hidden
-                            accept=".pdf, .doc, .docx" required>
+                        <input type="file" #uploader hidden (change)="addFile($event)" hidden accept=".pdf, .doc, .docx"
+                            required>
                         <mat-hint>Supported file formats: .pdf, .doc, .docx</mat-hint>
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
@@ -407,7 +407,8 @@
                         <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" multiple
                             accept=".pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
-                        <mat-hint>Supported file formats: .pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct</mat-hint>
+                        <mat-hint>Supported file formats: .pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct
+                        </mat-hint>
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
@@ -416,11 +417,10 @@
 
 
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
-                    <button mat-stroked-button type="button" (click)="uploadFile()"
-                        class="filled-gray p-r-20">Add
+                    <button mat-stroked-button type="button" (click)="uploadFile()" class="filled-gray p-r-20">Add
                     </button>
                 </div>
-             
+
             </div>
             <!-- <div fxLayout="row wrap" *ngIf="isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
                
