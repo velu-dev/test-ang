@@ -177,6 +177,7 @@ export class AppointmentDetailsComponent implements OnInit {
   appointment_scheduled_date_time: any = null;
   role = this.cookieService.get('role_id');
   supplementalItems: any = [];
+  cancelSupplemental: any;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -291,7 +292,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
-       
         if (this.billableData.appointment.examiner_service_location_id == null) {
           this.service_location_name = '0';
         }
@@ -345,7 +345,7 @@ export class AppointmentDetailsComponent implements OnInit {
               controlArray[ind] = (true)
             }
           })
-          this.billable_item.patchValue({ 'documents_received':  controlArray })
+          this.billable_item.patchValue({ 'documents_received': controlArray })
         }
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
@@ -376,7 +376,12 @@ export class AppointmentDetailsComponent implements OnInit {
             this.claimService.seedData('deposition_status').subscribe(curres => {
               this.examinationStatus = curres.data;
             })
+          } else if (response.data.procedure_type == "Supplemental") {
+            this.examinerService.seedData('cancel_supplemental_status').subscribe(supp => {
+              this.cancelSupplemental = supp.data
+            })
           }
+
           this.procedureTypeList = [];
           this.procedureTypeStatus.map(pro => {
             if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
@@ -387,7 +392,7 @@ export class AppointmentDetailsComponent implements OnInit {
               }
             }
             if (response.data.procedure_type == "Supplemental") {
-              this.isDisplayStatus.status = false;
+              this.isDisplayStatus.status = true;
               if (pro.for.includes('S')) {
                 this.procedureTypeList.push(pro);
               }
@@ -513,11 +518,10 @@ export class AppointmentDetailsComponent implements OnInit {
       console.log(supp)
       this.supplementalItems = supp.data;
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
-      if (this.billableData &&  this.billableData.documents_received) {
+      if (this.billableData && this.billableData.documents_received) {
         this.billableData.documents_received.map((doc, index) => {
           let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
           if (ind != -1) {
-            console.log(ind)
             controlArray[ind].setValue(true)
           }
         })
@@ -715,7 +719,7 @@ export class AppointmentDetailsComponent implements OnInit {
           controlArray[ind] = (true)
         }
       })
-      this.billable_item.patchValue({ 'documents_received':  controlArray })
+      this.billable_item.patchValue({ 'documents_received': controlArray })
     }
   }
   // psychiatric(event) {
