@@ -428,7 +428,6 @@ export class NewBillableItemComponent implements OnInit {
   }
 
   submitBillableItem() {
-    console.log(this.billable_item.value);
     let selectedOrderIds = []
     if (this.isSuplimental) {
       selectedOrderIds = this.billable_item.value.documents_received

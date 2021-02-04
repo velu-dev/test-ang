@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MatTableDataSource, MatSort, NativeDateAdapter, MAT_DATE_FORMATS, DateAdapter, MAT_DATE_LOCALE, MatPaginator } from '@angular/material';
 import { saveAs } from 'file-saver';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { ClaimService } from '../../service/claim.service';
 import { Observable } from 'rxjs';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
@@ -176,6 +176,7 @@ export class AppointmentDetailsComponent implements OnInit {
   notes: any;
   appointment_scheduled_date_time: any = null;
   role = this.cookieService.get('role_id');
+  supplementalItems: any = [];
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -290,6 +291,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
         this.billableData = bills.data;
+       
         if (this.billableData.appointment.examiner_service_location_id == null) {
           this.service_location_name = '0';
         }
@@ -326,6 +328,7 @@ export class AppointmentDetailsComponent implements OnInit {
         }
 
         this.billable_item.patchValue(bills.data);
+      
         this.changeDateType(bills.data.appointment.appointment_scheduled_date_time)
         if (bills.data.appointment.is_virtual_location) {
           this.billable_item.patchValue({
@@ -493,7 +496,26 @@ export class AppointmentDetailsComponent implements OnInit {
         caller_phone: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])],
         caller_email: [{ value: null, disable: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         caller_fax: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])]
-      })
+      }),
+      //documents_received:[]
+    })
+    this.claimService.seedData("supplemental_item_received").subscribe(supp => {
+      console.log(supp)
+      this.supplementalItems = supp.data;
+      const controlArray = this.supplementalItems.map(c => new FormControl(false));
+      if (this.billableData) {
+        this.billableData.documents_received.map((doc, index) => {
+          let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
+        
+          if (ind != -1) {
+            console.log(ind)
+            controlArray[ind].setValue(true)
+          }
+        })
+        this.billable_item.addControl('documents_received', new FormArray(controlArray))
+        this.billable_item.get('documents_received').disable();
+      }
+     
     })
     this.notesForm = this.formBuilder.group({
       notes: [null],
@@ -879,6 +901,13 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   updateBillableItem() {
+    let selectedOrderIds = []
+    if (this.isSuplimental) {
+      selectedOrderIds = this.billable_item.value.documents_received
+        .map((v, i) => v ? this.supplementalItems[i].name : null)
+        .filter(v => v !== null);
+    }
+
     if (this.billable_item.value.appointment.is_virtual_location) {
       this.billable_item.patchValue({
         appointment: {
@@ -889,6 +918,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.billable_item.value.appointment.examiner_id = this.examinerId;
+    this.billable_item.value.documents_received = selectedOrderIds
     this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
       this.isEditBillableItem = false;
       this.billable_item.disable();

@@ -468,3 +468,12 @@
         }
     }
 }
+.mat-check {
+    padding-top: 30px;
+    padding-left: 20px;
+    display: block;
+    @media only screen and (max-width: 568px) {
+        padding-top: 0;
+        padding-left: 7px;
+    }
+}
