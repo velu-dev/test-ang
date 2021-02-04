@@ -289,7 +289,6 @@ export class AppointmentDetailsComponent implements OnInit {
       })
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
-        console.log(bills.data)
         this.billableData = bills.data;
         if (this.billableData.appointment.examiner_service_location_id == null) {
           this.service_location_name = '0';
