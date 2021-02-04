@@ -328,7 +328,6 @@ export class AppointmentDetailsComponent implements OnInit {
         }
 
         this.billable_item.patchValue(bills.data);
-      
         this.changeDateType(bills.data.appointment.appointment_scheduled_date_time)
         if (bills.data.appointment.is_virtual_location) {
           this.billable_item.patchValue({
@@ -336,6 +335,17 @@ export class AppointmentDetailsComponent implements OnInit {
               examiner_service_location_id: "0"
             }
           })
+        }
+        if (this.billableData && this.billableData.documents_received && this.billable_item.get('documents_received')) {
+          const controlArray = Array(this.supplementalItems.length).fill(false);
+          this.billableData.documents_received.map((doc, index) => {
+            let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
+
+            if (ind != -1) {
+              controlArray[ind] = (true)
+            }
+          })
+          this.billable_item.patchValue({ 'documents_received':  controlArray })
         }
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
@@ -503,10 +513,9 @@ export class AppointmentDetailsComponent implements OnInit {
       console.log(supp)
       this.supplementalItems = supp.data;
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
-      if (this.billableData) {
+      if (this.billableData &&  this.billableData.documents_received) {
         this.billableData.documents_received.map((doc, index) => {
           let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
-        
           if (ind != -1) {
             console.log(ind)
             controlArray[ind].setValue(true)
@@ -515,7 +524,6 @@ export class AppointmentDetailsComponent implements OnInit {
         this.billable_item.addControl('documents_received', new FormArray(controlArray))
         this.billable_item.get('documents_received').disable();
       }
-     
     })
     this.notesForm = this.formBuilder.group({
       notes: [null],
@@ -698,6 +706,17 @@ export class AppointmentDetailsComponent implements OnInit {
         this.procedure_type(proc);
       }
     })
+    if (this.billableData && this.billableData.documents_received && this.billable_item.get('documents_received')) {
+      const controlArray = Array(this.supplementalItems.length).fill(false);
+      this.billableData.documents_received.map((doc, index) => {
+        let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
+
+        if (ind != -1) {
+          controlArray[ind] = (true)
+        }
+      })
+      this.billable_item.patchValue({ 'documents_received':  controlArray })
+    }
   }
   // psychiatric(event) {
   //   this.isChecked = event.checked;
