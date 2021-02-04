@@ -8,32 +8,23 @@
     .container {
         background-color: $white;
         box-shadow: $shadow-style-one;
-        // border-top: 5px solid $text-gray;
-        padding: 5px;
         width: fit-content;
         margin: 0px auto;
         border-radius: 5px;
-        // @media screen and (max-width: 1024px) and (min-width: 768px) {
-        //     padding: 20px;
-        // }
         @media screen and (max-width: 568px) and (min-width: 320px) {
-            // padding: 5px;
-            box-shadow: none;
             margin-top: 0 !important;
-            // width: 100%;
-            // font-size: $font-size-1;
         }
         .main-title {
             font-size: $font-size-11;
             color: $info;
-            // padding-bottom: 10px;
             font-weight: $font-weight-bold;
-            width: 98%;
+            width: auto;
             background-color: $info-bg;
             border: 1px solid $info-border;
-            padding: 5px 5px 5px 5px;
+            padding: 10px;
             text-align: center;
-            border-radius: 5px;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
             margin: 0px auto;
         }
         .description {
