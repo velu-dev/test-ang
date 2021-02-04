@@ -140,6 +140,21 @@ export class BilllableBillingComponent implements OnInit {
     this.cookieService.set('billNo', null)
     this.route.params.subscribe(param => {
       this.paramsId = param;
+      let ids = {
+        claimant_id: param.claimant_id,
+        claim_id: param.claim_id,
+        billable_item_id: param.billId
+      }
+      this.billingService.getBreadcrumbDetails(ids).subscribe(details => {
+        this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
+        this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
+        this.intercom.setClaimNumber(details.data.claim_number);
+        this.cookieService.set('claimNumber', details.data.claim_number)
+        this.intercom.setBillableItem(details.data.exam_procedure_name);
+        this.cookieService.set('billableItem', details.data.exam_procedure_name)
+      }, error => {
+  
+      })
       if (!param.billingId) {
         this.billingService.billCreate(param.claim_id, param.billId).subscribe(bill => {
           console.log(bill)
@@ -190,6 +205,7 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
+    
   }
 
   openAuto(e, trigger: MatAutocompleteTrigger) {
