@@ -93,8 +93,8 @@ export class ReportComponent implements OnInit {
         this.columnName = ["", "File Name"]
         this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
-        this.columnName = ["Ref #", "File Name", "Action", "Rush Request?", "Date Requested", "Date Received", "Download Submitted Items", "Download Compiled Document"]
-        this.columnsToDisplay = ['request_reference_id', 'file_name', 'actions', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
+        this.columnName = ["Ref #", "File Name", "Action", "Rush Request?", "Document Lines", "Date Requested", "Date Received", "Download Submitted Items", "Download Compiled Document"]
+        this.columnsToDisplay = ['request_reference_id', 'file_name', 'actions', 'service_priority', "document_lines", "date_of_request", "date_of_communication", 'download', 'download1']
       }
     })
     // this.isHandset$.subscribe(res => {
@@ -328,7 +328,7 @@ export class ReportComponent implements OnInit {
       this.alertService.openSnackBar("Transcribe and Compile created successfully", 'success');
       this.getReport();
     }, error => {
-      if (typeof(error.error.message) == 'object') {
+      if (typeof (error.error.message) == 'object') {
         let timezone = moment.tz.guess();
         let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
         this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');

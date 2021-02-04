@@ -89,7 +89,7 @@ export class RecordsComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
         this.columnName = ["Ref #", "File Name", "Action", "Document Pages", "Rush Request?", "Date Requested ", "Date Received", "Download Record Document", "Download Record Summary"]
-        this.columnsToDisplay = ['request_reference_id', 'file_name', 'actions', 'no_of_units', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
+        this.columnsToDisplay = ['request_reference_id', 'file_name', 'actions', 'no_of_pages', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
       }
     })
 

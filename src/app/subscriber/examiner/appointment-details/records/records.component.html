@@ -192,7 +192,7 @@
                   class="no-wrap-td">{{element?.request_reference_id }}</span>
                 <span *ngIf="column == 'actions'">{{element?.action == 'RD' ? 'Downloaded' : 'Record On-demand'}}</span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
-                <span *ngIf="column == 'no_of_units'">{{element?.no_of_units}}</span>
+                <span *ngIf="column == 'no_of_pages'">{{element?.no_of_pages}}</span>
                 <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ?
                   'Yes' : ''}}
                   {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
@@ -218,6 +218,8 @@
                       {{element?.request_reference_id}} </span></div>
                   <div><span>File Name</span><span>{{element?.file_name}} </span></div>
                   <div><span>Action</span><span>{{element?.action == 'RD' ? 'Downloaded' : 'Record On-demand'}}</span>
+                  </div>
+                  <div><span>Document Pages</span><span>{{element?.no_of_pages}}</span>
                   </div>
                   <div class="no-wrap-td"><span>Rush Request?</span><span>
                       {{element?.service_priority == 'rush' ? 'Yes' : ''}}
