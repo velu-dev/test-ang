@@ -134,9 +134,10 @@
   <div class="border-dashed-blue m-t-30 m-b-30"></div>
 
   <div fxLayout="row wrap" class="ondemand_request">
+    <div class="sub-title">Select Record Summary Service Providers</div>
     <div fxFlex="100" *ngIf="recordData?.isdisplay_service_provider_dropdown">
       <mat-form-field appearance="outline">
-        <mat-label>Service Provider</mat-label>
+        <mat-label>Record Summary Service Provider</mat-label>
         <mat-select [(ngModel)]="service_provider_name">
           <mat-option *ngFor="let service of recordData?.service_providers" [value]="service">{{service}}</mat-option>
         </mat-select>
