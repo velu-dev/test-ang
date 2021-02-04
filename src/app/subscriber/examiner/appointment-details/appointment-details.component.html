@@ -176,10 +176,10 @@
             <span class="spacer"></span>
             <span *ngIf="!isExamTypeChanged && !billableData?.isExaminerDisabled">
                 <button type="button" class="filled-gray m-b-5"
-                    [disabled]="billableData.bill_id || appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                    [disabled]="billableData?.bill_id || appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                     *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
                 <button class="filled-success m-b-5"
-                    [disabled]="billableData.bill_id || appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
+                    [disabled]="billableData?.bill_id || appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                     *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
             </span>
         </mat-card-header>

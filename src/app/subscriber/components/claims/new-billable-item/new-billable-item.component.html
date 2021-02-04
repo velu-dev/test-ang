@@ -187,8 +187,8 @@
                         <mat-error>Please enter a valid Conference Phone</mat-error>
                     </mat-form-field>
                 </div>
-                <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call" >
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
                         <mat-label>Intake Caller</mat-label>
                         <input matInput placeholder="Intake Caller" formControlName="caller_name" autocomplete="off">
                     </mat-form-field>
@@ -216,7 +216,7 @@
                         <mat-error>Please enter valid date</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
                         <mat-label>Communication Type</mat-label>
                         <mat-select formControlName="call_type">
                             <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.id">
@@ -224,38 +224,40 @@
                         </mat-select>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
                         <mat-label>Intake Contact Phone</mat-label>
                         <input matInput placeholder="Intake Contact Phone" formControlName="caller_phone"
                             (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
                         <mat-error *ngIf="isBillSubmited">Please enter valid phone</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
                         <mat-label>Intake Contact Fax</mat-label>
                         <input matInput placeholder="Intake Contact Fax" formControlName="caller_fax" autocomplete="off"
                             (keypress)="numberOnly($event)" mask="(000) 000-0000">
                         <mat-error *ngIf="isBillSubmited">Please enter valid fax</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
                         <mat-label>Intake Contact Email</mat-label>
                         <input matInput placeholder="Intake Contact Email" formControlName="caller_email"
                             autocomplete="off">
                         <mat-error *ngIf="isBillSubmited">Please enter valid email</mat-error>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
                         <mat-label>Intake Notes</mat-label>
                         <input matInput placeholder="Intake Notes" formControlName="notes" autocomplete="off">
                     </mat-form-field>
                 </div>
-                <!-- <div class="custom-check">
+                <div class="custom-check" *ngIf="isSuplimental"> 
                     <div>Supplemental Items Received</div>
-                    <mat-checkbox class="p-t-10">Supplemental Cover Letter</mat-checkbox>
-                    <mat-checkbox>Diagnostics</mat-checkbox>
+                    <div formArrayName="documents_received" *ngFor="let order of billable_item.controls.documents_received.controls; let i = index">
+                    <mat-checkbox class="p-t-10" [formControlName]="i">{{supplementalItems[i]?.name}}</mat-checkbox>
+                   </div>
+                    <!-- <mat-checkbox>Diagnostics</mat-checkbox>
                     <mat-checkbox>Medical Records</mat-checkbox>
-                    <mat-checkbox>Other</mat-checkbox>
-                </div> -->
+                    <mat-checkbox>Other</mat-checkbox> -->
+                </div>
                 <div class="text-center w-100 m-t-10 m-b-10 action-button">
                     <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                         (click)="cancel()">Cancel</button>
