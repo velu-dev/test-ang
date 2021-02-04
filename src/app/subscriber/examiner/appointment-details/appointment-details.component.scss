@@ -361,6 +361,18 @@
         mat-form-field {
             padding: 10px 10px 0px 10px !important;
         }
+        .custom-check {
+            padding-left: 10px;
+            div {
+                font-size: $font-size-7;
+                color: $text-gray;
+                .mat-checkbox {
+                    display: block;
+                    padding: 0 0 5px 0;
+                    color: $black;
+                }
+            }
+        }
     }
 }
 .document-info {
@@ -466,5 +478,14 @@
             max-width: 110px;
             min-width: 110px;
         }
+    }
+}
+.mat-check {
+    padding-top: 30px;
+    padding-left: 20px;
+    display: block;
+    @media only screen and (max-width: 568px) {
+        padding-top: 0;
+        padding-left: 7px;
     }
 }

@@ -14,10 +14,11 @@ mat-card {
         div {
             font-size: $font-size-7;
             color: $text-gray;
-        }
-        .mat-checkbox {
-            display: block;
-            padding: 0 0 10px 0;
+            .mat-checkbox {
+                display: block;
+                padding: 0 0 5px 0;
+                color: $black;
+            }
         }
     }
     // .address-list {

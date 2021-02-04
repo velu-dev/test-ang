@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Optional, Inject, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import * as  errors from './../../../../shared/messages/errors'
 import { Observable } from 'rxjs';
 import { startWith, map, debounceTime, switchMap, shareReplay } from 'rxjs/operators';
@@ -221,6 +221,7 @@ export class NewClaimComponent implements OnInit {
   minimumDate = new Date(1900, 0, 1);
   currentTab = "";
   appointment_scheduled_date_time: any = null;
+  supplementalItems: any;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -720,7 +721,12 @@ export class NewClaimComponent implements OnInit {
       })
 
     })
-    // })
+    this.claimService.seedData("supplemental_item_received").subscribe(supp => {
+      console.log(supp)
+      this.supplementalItems = supp.data;
+      const controlArray = this.supplementalItems.map(c => new FormControl(false));
+      this.billable_item.addControl('documents_received', new FormArray(controlArray))
+    })
 
     this.correspondForm = this.formBuilder.group({
       file: ['', Validators.compose([Validators.required])],
@@ -1024,9 +1030,16 @@ export class NewClaimComponent implements OnInit {
     if (!this.billable_item.touched) {
       return;
     }
+    let selectedOrderIds = []
+    if (this.isSuplimental) {
+      selectedOrderIds = this.billable_item.value.documents_received
+        .map((v, i) => v ? this.supplementalItems[i].name : null)
+        .filter(v => v !== null);
+    }
     //if (!this.isEdit) {
     // this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
+    this.billable_item.value.documents_received = selectedOrderIds;
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
       //this._location.back();

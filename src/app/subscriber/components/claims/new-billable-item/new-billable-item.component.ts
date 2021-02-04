@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
@@ -82,6 +82,7 @@ export class NewBillableItemComponent implements OnInit {
   appointment_scheduled_date_time: any = null;
   isSearch: boolean = false;
   baseUrl: any;
+  supplementalItems: any;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -184,10 +185,16 @@ export class NewBillableItemComponent implements OnInit {
         caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
-      })
+      }),
+      //documents_received:[]
 
     })
-
+    this.claimService.seedData("supplemental_item_received").subscribe(supp => {
+      console.log(supp)
+      this.supplementalItems = supp.data;
+      const controlArray = this.supplementalItems.map(c => new FormControl(false));
+      this.billable_item.addControl('documents_received', new FormArray(controlArray))
+    })
     this.claimService.seedData("language").subscribe(res => {
       this.languageList = res.data;
     })
@@ -421,6 +428,13 @@ export class NewBillableItemComponent implements OnInit {
   }
 
   submitBillableItem() {
+    let selectedOrderIds = []
+    if (this.isSuplimental) {
+      selectedOrderIds = this.billable_item.value.documents_received
+        .map((v, i) => v ? this.supplementalItems[i].name : null)
+        .filter(v => v !== null);
+    }
+
     this.isBillSubmited = true;
     Object.keys(this.billable_item.controls).forEach((key) => {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
@@ -433,6 +447,7 @@ export class NewBillableItemComponent implements OnInit {
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.billable_item.value.claimant_id = this.claimantId;
     this.billable_item.value.claim_id = +this.claimId;
+    this.billable_item.value.documents_received = selectedOrderIds
     if (!this.isEdit) {
       console.log(this.claimantId, this.billable_item.value)
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
