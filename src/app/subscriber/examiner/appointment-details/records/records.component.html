@@ -134,7 +134,7 @@
   <div class="border-dashed-blue m-t-30 m-b-30"></div>
 
   <div fxLayout="row wrap" class="ondemand_request">
-    <div class="sub-title">Select Record Summary Service Providers</div>
+    <div class="sub-title" *ngIf="recordData?.isdisplay_service_provider_dropdown">Select Record Summary Service Providers</div>
     <div fxFlex="100" *ngIf="recordData?.isdisplay_service_provider_dropdown">
       <mat-form-field appearance="outline">
         <mat-label>Record Summary Service Provider</mat-label>

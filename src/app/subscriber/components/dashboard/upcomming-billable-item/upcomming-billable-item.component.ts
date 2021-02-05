@@ -10,6 +10,8 @@ import { saveAs } from 'file-saver';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { CookieService } from 'src/app/shared/services/cookie.service';
+import { IntercomService } from 'src/app/services/intercom.service';
 @Component({
   selector: 'app-upcomming-billable-item',
   templateUrl: './upcomming-billable-item.component.html',
@@ -38,7 +40,7 @@ export class UpcommingBillableItemComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
     private alertService: AlertService,
-    private _location: Location) {
+    private _location: Location,  private cookieService: CookieService,private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -68,6 +70,10 @@ export class UpcommingBillableItemComponent implements OnInit {
     })
   }
   openElement1(element) {
+    this.intercom.setClaimant(element.first_name + ' ' + element.last_name);
+      this.cookieService.set('claimDetails', element.first_name + ' ' + element.last_name)
+      this.intercom.setBillableItem(element.exam_procedure_name);
+      this.cookieService.set('billableItem', element.exam_procedure_name)//response.data.exam_procedure_name
     // this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.billable_item_id])
     this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + "claimants/claimant/" + element.claimant_id + "/claim/" + element.claim_id + "/billable-item/" + element.billable_item_id]);
   }
@@ -80,6 +86,10 @@ export class UpcommingBillableItemComponent implements OnInit {
         this.expandId = element;
       }
     } else {
+      this.intercom.setClaimant(element.first_name + ' ' + element.last_name);
+      this.cookieService.set('claimDetails', element.first_name + ' ' + element.last_name)
+      this.intercom.setBillableItem(element.exam_procedure_name);
+      this.cookieService.set('billableItem', element.exam_procedure_name)
       // this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.billable_item_id])
       this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + "claimants/claimant/" + element.claimant_id + "/claim/" + element.claim_id + "/billable-item/" + element.billable_item_id]);
     }
