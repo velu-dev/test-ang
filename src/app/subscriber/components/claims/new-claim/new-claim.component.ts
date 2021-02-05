@@ -1195,6 +1195,8 @@ export class NewClaimComponent implements OnInit {
           this.logger.log("update")
         this.claimService.updateClaimant(data).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
+          this.intercom.setClaimant(res.data.first_name + ' ' +  res.data.last_name);
+          this.cookieService.set('claimDetails', res.data.first_name + ' ' +  res.data.last_name)
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           this.claimantChanges = false;
           this.claim.patchValue({
