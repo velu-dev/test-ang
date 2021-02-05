@@ -521,13 +521,11 @@ export class NewExaminerUserComponent implements OnInit {
       this.userForm.controls.sign_in_email_id.setValidators([])
     }
     this.userForm.controls.sign_in_email_id.updateValueAndValidity();
-    console.log(this.userForm.errors);
     if (this.userForm.invalid) {
       window.scrollTo(0, 0)
       this.userForm.markAllAsTouched();
       return;
     }
-    console.log("dsfsdffdsfd");
     this.selectedUser = this.userForm.value;
     if (!this.isEdit) {
       this.userService.createExaminerUser(this.userForm.getRawValue()).subscribe(res => {

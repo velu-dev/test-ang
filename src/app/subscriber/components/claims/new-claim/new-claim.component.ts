@@ -610,7 +610,7 @@ export class NewClaimComponent implements OnInit {
         phone_no_1: [{ value: "", disabled: true }],
         date_of_birth: [{ value: "", disabled: true }],
         wcab_number: [null, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
-        claim_number: [null, Validators.compose([Validators.maxLength(50)])],
+        claim_number: [null, Validators.compose([Validators.maxLength(50), Validators.pattern('^(?!.*[-_]})(?=.*[a-z0-9]$)[a-z0-9][a-z0-9-]*$')])],
         panel_number: [null, Validators.compose([Validators.pattern('[0-9]{0,9}'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
