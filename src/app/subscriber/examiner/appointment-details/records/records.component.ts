@@ -114,6 +114,9 @@ export class RecordsComponent implements OnInit {
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.claim_id, this.paramsId.billId).subscribe(record => {
       this.recordData = record;
+      if(this.recordData.service_providers && this.recordData.service_providers.length){
+        this.service_provider_name = this.recordData.service_providers[0]
+      }
       record.documets.map(data => {
         data.page_number = data.no_of_units;
         data.isEdit = false;
