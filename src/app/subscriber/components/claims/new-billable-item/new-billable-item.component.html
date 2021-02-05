@@ -249,7 +249,7 @@
                         <input matInput placeholder="Intake Notes" formControlName="notes" autocomplete="off">
                     </mat-form-field>
                 </div>
-                <div class="custom-check" *ngIf="isSuplimental && billable_item.get('documents_received')"> 
+                <div class="supplemental-custom-check" *ngIf="isSuplimental && billable_item.get('documents_received')"> 
                     <div>Supplemental Items Received</div>
                     <div formArrayName="documents_received" *ngFor="let order of billable_item.get('documents_received')['controls']; let i = index">
                     <mat-checkbox class="p-t-10" [formControlName]="i">{{supplementalItems[i]?.name}}</mat-checkbox>

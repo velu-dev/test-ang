@@ -899,3 +899,16 @@ image-cropper {
     border: 1px solid $danger;
   }
 }
+// Supplemental Custom checkbox
+.supplemental-custom-check {
+  padding-left: 10px;
+  div {
+      font-size: $font-size-7;
+      color: $text-gray;
+      .mat-checkbox {
+          display: block;
+          padding: 0 0 5px 0;
+          color: $black;
+      }
+  }
+}

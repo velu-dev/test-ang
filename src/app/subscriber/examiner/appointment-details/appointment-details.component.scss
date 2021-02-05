@@ -361,18 +361,6 @@
         mat-form-field {
             padding: 10px 10px 0px 10px !important;
         }
-        .custom-check {
-            padding-left: 10px;
-            div {
-                font-size: $font-size-7;
-                color: $text-gray;
-                .mat-checkbox {
-                    display: block;
-                    padding: 0 0 5px 0;
-                    color: $black;
-                }
-            }
-        }
     }
 }
 .document-info {
