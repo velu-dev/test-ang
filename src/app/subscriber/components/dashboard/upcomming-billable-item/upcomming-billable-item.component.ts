@@ -44,8 +44,8 @@ export class UpcommingBillableItemComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Claimant", "Action"]
-        this.columnsToDisplay = ['is_expand', 'claimant', "disabled"]
+        this.columnName = ["", "Claimant"]
+        this.columnsToDisplay = ['is_expand', 'claimant']
       } else {
         this.columnName = ["Claimant", "Exam Procedure Type", "Location", "Date of service / Date Item Received", "History", "Records", 'Icon']
         this.columnsToDisplay = ['claimant', 'type', "location", "dos", 'history_on_demand', 'records_on_demand', 'icon']

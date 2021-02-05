@@ -83,10 +83,11 @@
                         (click)="editAddress(element)">
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
+                                <div><span>Location Name</span><span>{{element.service_location_name}}</span></div>
                                 <div><span>Address</span><span>{{element.street1}} {{element.street2}} {{element.city}}
                                         {{element.state_code}} - {{element.zip_code}}</span></div>
                                 <div><span>Service Type</span><span>{{element?.service_code}}{{element?.service_name ? ' - '+element?.service_name : ''}}</span></div>
-                                <div><span>Phone</span><span>{{element?.phone_no ? (element?.phone_no |  mask:'(000) 000-0000') : '' }}</span></div>
+                                <div><span>Phone</span><span>{{element?.primary_contact_phone ? (element?.primary_contact_phone |  mask:'(000) 000-0000') : '' }}</span></div>
                                 <!-- <div><span>Date Of Birth</span><span> {{element.date_of_birth | date: 'MM-dd-yyyy'}} </span></div> -->
                             </div>
                         </div>

@@ -37,8 +37,8 @@ export class BillingCollectionComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Claimant", "Action"]
-        this.columnsToDisplay = ['is_expand', 'claimant_name', "disabled"]
+        this.columnName = ["", "Claimant"]
+        this.columnsToDisplay = ['is_expand', 'claimant_name']
       } else {
         this.columnName = ["Claimant", "Exam Procedure Type", "Date of service", "Charge", "Date Of First Submission", "Balance Due", "Icon"]
         this.columnsToDisplay = ['claimant_name', 'procedure_type', "dos", "charge", 'bill_date', 'balance', 'icon']
