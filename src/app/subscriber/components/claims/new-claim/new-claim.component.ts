@@ -610,7 +610,7 @@ export class NewClaimComponent implements OnInit {
         phone_no_1: [{ value: "", disabled: true }],
         date_of_birth: [{ value: "", disabled: true }],
         wcab_number: [null, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
-        claim_number: [null, Validators.compose([Validators.maxLength(50), Validators.pattern('^(?!.*[-_]})(?=.*[a-z0-9]$)[a-z0-9][a-z0-9-]*$')])],
+        claim_number: [null, Validators.compose([Validators.maxLength(50), Validators.pattern('^(?!.*[-_]})(?=.*[a-zA-Z0-9]$)[a-zA-Z0-9][a-zA-Z0-9-]*$')])],
         panel_number: [null, Validators.compose([Validators.pattern('[0-9]{0,9}'), Validators.maxLength(9)])],
         exam_type_id: [null, Validators.required],
         claimant_id: [null]
@@ -1195,8 +1195,8 @@ export class NewClaimComponent implements OnInit {
           this.logger.log("update")
         this.claimService.updateClaimant(data).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
-          this.intercom.setClaimant(res.data.first_name + ' ' +  res.data.last_name);
-          this.cookieService.set('claimDetails', res.data.first_name + ' ' +  res.data.last_name)
+          this.intercom.setClaimant(res.data.first_name + ' ' + res.data.last_name);
+          this.cookieService.set('claimDetails', res.data.first_name + ' ' + res.data.last_name)
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           this.claimantChanges = false;
           this.claim.patchValue({
