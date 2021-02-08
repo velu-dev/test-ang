@@ -29,7 +29,7 @@ export class ClaimComponent implements OnInit {
     this.claim = this.formBuilder.group({
       id: [null],
       wcab_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
-      claim_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.maxLength(50), Validators.pattern('^(?!.*[-_]})(?=.*[a-z0-9]$)[a-z0-9][a-z0-9-]*$')])],
+      claim_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.maxLength(50), Validators.pattern('^(?!.*[-_]})(?=.*[a-zA-Z0-9]$)[a-zA-Z0-9][a-zA-Z0-9-]*$')])],
       panel_number: [{ value: null, disabled: !this.isEdit }, Validators.compose([Validators.pattern('[0-9]{0,9}'), Validators.maxLength(9)])],
       exam_type_id: [{ value: null, disabled: !this.isEdit }, Validators.required],
       claimant_id: [null]
