@@ -49,7 +49,8 @@
                             </span>
                             <span *ngIf="column == 'final_report' && element?.compiled_reports"><button type="button"
                                     (click)="uploader.click()" mat-raised-button
-                                    class="mini-btn filled-lightgray-1">Upload Final Report</button>
+                                    class="mini-btn filled-lightgray-1">{{element?.final_report_file_name ? 'Reupload' :
+                                    'Upload Final Report'}}</button>
                                 <input type="file" #uploader hidden (change)="uploadFile($event, element)"
                                     accept=".pdf, .doc, .docx" required> <br>
                                 <a [routerLink]="[]" (click)="downloadfinalDocumet(element)"
@@ -82,7 +83,9 @@
                                             class="text-ternary">Download <i class="fas fa-download p-l-5"></i></a>
                                     </span></div>
                                 <div><span>Upload Final Report</span><span *ngIf="element?.compiled_reports">
-                                        <button type="button" (click)="uploader.click()">Upload Final Report</button>
+                                        <button type="button"
+                                            (click)="uploader.click()">{{element?.final_report_file_name ? 'Reupload' :
+                                            'Upload Final Report'}}</button>
                                         <input type="file" #uploader hidden (change)="uploadFile($event, element)"
                                             accept=".pdf, .doc, .docx" required> <br>
                                         <a [routerLink]="[]" (click)="downloadfinalDocumet(element)"
