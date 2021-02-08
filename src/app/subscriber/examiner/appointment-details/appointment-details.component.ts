@@ -303,7 +303,15 @@ export class AppointmentDetailsComponent implements OnInit {
         //     this.procuderalCodes = procedure.data;
         //   })
         // })
-        this.claimService.getProcedureType(bills.data.exam_type_id).subscribe(procedure => {
+        // this.claimService.getProcedureType(bills.data.exam_type_id).subscribe(procedure => {
+        //   this.procuderalCodes = procedure.data;
+        //   procedure.data.map(proc => {
+        //     if (proc.exam_procedure_type_id == bills.data.exam_type.exam_procedure_type_id) {
+        //       this.procedure_type(proc);
+        //     }
+        //   })
+        // })
+        this.claimService.getProcedureTypeAttoney(this.claim_id, bills.data.exam_type_id).subscribe(procedure => {
           this.procuderalCodes = procedure.data;
           procedure.data.map(proc => {
             if (proc.exam_procedure_type_id == bills.data.exam_type.exam_procedure_type_id) {
@@ -515,7 +523,6 @@ export class AppointmentDetailsComponent implements OnInit {
       //documents_received:[]
     })
     this.claimService.seedData("supplemental_item_received").subscribe(supp => {
-      console.log(supp)
       this.supplementalItems = supp.data;
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
       if (this.billableData && this.billableData.documents_received) {

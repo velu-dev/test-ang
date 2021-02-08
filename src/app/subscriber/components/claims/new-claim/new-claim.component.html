@@ -337,9 +337,8 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
                                 <mat-label>Exam Type*</mat-label>
-                                <mat-select formControlName="exam_type_id"
-                                    (selectionChange)="examtypeChange($event.value)">
-                                    <mat-option *ngFor="let examType of examTypes" (click)="examtypeChange(examType.id)"
+                                <mat-select formControlName="exam_type_id">
+                                    <mat-option *ngFor="let examType of examTypes"
                                         [value]="examType.id">
                                         {{examType.exam_type_code}} - {{examType.exam_name}}
                                     </mat-option>

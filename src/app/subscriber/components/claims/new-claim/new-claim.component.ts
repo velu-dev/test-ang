@@ -722,7 +722,6 @@ export class NewClaimComponent implements OnInit {
 
     })
     this.claimService.seedData("supplemental_item_received").subscribe(supp => {
-      console.log(supp)
       this.supplementalItems = supp.data;
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
       this.billable_item.addControl('documents_received', new FormArray(controlArray))
@@ -865,9 +864,12 @@ export class NewClaimComponent implements OnInit {
       }
       this.titleName = " Claim";
     } else if (event.selectedIndex == 2) {
+
       if (this.claim.invalid) {
         return
       }
+      console.log(this.claim.value.claim_details)
+     
       if (this.claimantChanges) {
         this.createClaimant('tab');
       }
@@ -945,6 +947,7 @@ export class NewClaimComponent implements OnInit {
             this.routeDashboard();
           }
         })
+        this.examtypeChange(this.claimId, this.claim.value.claim_details)
         this.claimChanges = false;
         this.isClaimCreated = true;
       }, error => {
@@ -970,6 +973,7 @@ export class NewClaimComponent implements OnInit {
           this.routeDashboard();
         }
         this.claimChanges = false;
+        this.examtypeChange(this.claimId, this.claim.value.claim_details)
       }, error => {
         this.isClaimCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -1097,14 +1101,18 @@ export class NewClaimComponent implements OnInit {
   cancel(title) {
     this.openDialogCancel('cancel', "Create " + title)
   }
-  examtypeChange(type) {
-    this.claimService.getProcedureType(type).subscribe(res => {
-      this.billable_item.patchValue({
-        exam_type: {
-          exam_procedure_type_id: null
-        }
-      })
-      this.procuderalCodes = res.data;
+  examtypeChange(claim, type) {
+    // this.claimService.getProcedureType(type).subscribe(res => {
+    //   this.billable_item.patchValue({
+    //     exam_type: {
+    //       exam_procedure_type_id: null
+    //     }
+    //   })
+    //   this.procuderalCodes = res.data;
+    // })
+    this.claimService.getProcedureTypeAttoney(claim, type.exam_type_id).subscribe(procedure => {
+      this.procuderalCodes = procedure.data;
+      console.log(procedure)
     })
   }
   claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "" }
@@ -1195,8 +1203,8 @@ export class NewClaimComponent implements OnInit {
           this.logger.log("update")
         this.claimService.updateClaimant(data).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
-          this.intercom.setClaimant(res.data.first_name + ' ' +  res.data.last_name);
-          this.cookieService.set('claimDetails', res.data.first_name + ' ' +  res.data.last_name)
+          this.intercom.setClaimant(res.data.first_name + ' ' + res.data.last_name);
+          this.cookieService.set('claimDetails', res.data.first_name + ' ' + res.data.last_name)
           this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
           this.claimantChanges = false;
           this.claim.patchValue({
