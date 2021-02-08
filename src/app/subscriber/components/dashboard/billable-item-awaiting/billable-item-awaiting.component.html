@@ -42,7 +42,7 @@
                             <span *ngIf="column == 'due_date'">{{element?.due_date | date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'report'"><a [routerLink]="[]" (click)="goToReport(element)"
                                     class="text-ternary">Go To Report Service</a></span>
-                            <span *ngIf="column == 'status'">{{element?.status}}</span>
+                            <span *ngIf="column == 'status'" class="no-wrap-td">{{element?.status}}</span>
                             <span *ngIf="column == 'compiled_report'">
                                 <a [routerLink]="[]" (click)="downloadDocumet(element)" class="text-ternary">Download<i
                                         class="fas fa-download p-l-5"></i></a>
@@ -53,7 +53,7 @@
                                 <input type="file" #uploader hidden (change)="uploadFile($event, element)"
                                     accept=".pdf, .doc, .docx" required> <br>
                                 <a [routerLink]="[]" (click)="downloadfinalDocumet(element)"
-                                    class="text-ternary">{{element?.final_report_file_url}}</a>
+                                    class="text-ternary">{{element?.final_report_file_name}}</a>
                             </span>
                         </div>
                     </td>
@@ -86,7 +86,7 @@
                                         <input type="file" #uploader hidden (change)="uploadFile($event, element)"
                                             accept=".pdf, .doc, .docx" required> <br>
                                         <a [routerLink]="[]" (click)="downloadfinalDocumet(element)"
-                                            class="text-ternary">{{element?.final_report_file_url}}</a></span></div>
+                                            class="text-ternary">{{element?.final_report_file_name}}</a></span></div>
                             </div>
                         </div>
                     </td>
