@@ -178,6 +178,7 @@ export class AppointmentDetailsComponent implements OnInit {
   role = this.cookieService.get('role_id');
   supplementalItems: any = [];
   cancelSupplemental: any;
+  supplementalOtherIndex: number;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -334,7 +335,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.primary_language_spoken = true;
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
-
+        this.billableData.documents_received = this.billableData.documents_received ? this.billableData.documents_received : []
         this.billable_item.patchValue(bills.data);
         this.changeDateType(bills.data.appointment.appointment_scheduled_date_time)
         if (bills.data.appointment.is_virtual_location) {
@@ -344,17 +345,8 @@ export class AppointmentDetailsComponent implements OnInit {
             }
           })
         }
-        if (this.billableData && this.billableData.documents_received && this.billable_item.get('documents_received')) {
-          const controlArray = Array(this.supplementalItems.length).fill(false);
-          this.billableData.documents_received.map((doc, index) => {
-            let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
 
-            if (ind != -1) {
-              controlArray[ind] = (true)
-            }
-          })
-          this.billable_item.patchValue({ 'documents_received': controlArray })
-        }
+
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
           this.intercom.setClaimant(response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name);
@@ -494,6 +486,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item = this.formBuilder.group({
       id: [{ value: '', disable: true }],
       claim_id: [this.claim_id],
+      documents_received: this.formBuilder.array([]),
       exam_type: this.formBuilder.group({
         exam_procedure_type_id: [{ value: '', disable: true }, Validators.required],
         // modifier_id: [{ value: '', disable: true }],
@@ -520,22 +513,17 @@ export class AppointmentDetailsComponent implements OnInit {
         caller_email: [{ value: null, disable: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         caller_fax: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
-      //documents_received:[]
+
     })
     this.claimService.seedData("supplemental_item_received").subscribe(supp => {
       this.supplementalItems = supp.data;
+      this.supplementalOtherIndex = this.supplementalItems.findIndex(docs => docs.name.toLowerCase() == 'other')
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
-      if (this.billableData && this.billableData.documents_received) {
-        this.billableData.documents_received.map((doc, index) => {
-          let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
-          if (ind != -1) {
-            controlArray[ind].setValue(true)
-          }
-        })
-        this.billable_item.addControl('documents_received', new FormArray(controlArray))
-        this.billable_item.get('documents_received').disable();
-      }
+      this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
+      this.billable_item.get('documents_received').disable();
+      console.log(this.billable_item.get('documents_received').disabled)
     })
+
     this.notesForm = this.formBuilder.group({
       notes: [null],
       bill_item_id: [this.billableId]
@@ -726,7 +714,7 @@ export class AppointmentDetailsComponent implements OnInit {
           controlArray[ind] = (true)
         }
       })
-      this.billable_item.patchValue({ 'documents_received': controlArray })
+      this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
     }
   }
   // psychiatric(event) {
@@ -1259,6 +1247,22 @@ export class AppointmentDetailsComponent implements OnInit {
           conference_phone: null
         }
       })
+
+      if (this.billableData && this.billableData.documents_received && this.billable_item.get('documents_received')) {
+        const controlArray = Array(this.supplementalItems.length).fill(false);
+        this.billableData.documents_received.map((doc, index) => {
+          let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
+
+          if (ind != -1) {
+            controlArray[ind] = (true)
+          }
+        })
+        let disableStatus = this.billable_item.get('documents_received').disabled
+        this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
+        if (disableStatus) {
+          this.billable_item.get('documents_received').disable()
+        }
+      }
       this.appointment_scheduled_date_time = null;
     } else {
       this.isSuplimental = false;
