@@ -251,6 +251,10 @@ export class InjuryPopup {
     }
     dialogRef.disableClose = true;
   }
+  onDate(event): void {
+    this.injuryInfo.continuous_trauma = true;
+    this.injuryInfo.continuous_trauma_start_date = new Date(this.injuryInfo.date_of_injury);
+  }
   add(event: MatChipInputEvent): void {
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event

@@ -384,7 +384,9 @@
                                     <ng-container matColumnDef="date_of_injury">
                                         <th mat-header-cell *matHeaderCellDef>Date of injury</th>
                                         <td mat-cell *matCellDef="let element" class="no-wrap-td">
-                                            {{element?.date_of_injury | date:'MM-dd-yyyy'}}</td>
+                                            {{element?.date_of_injury |
+                                            date:'MM-dd-yyyy'}}{{element?.continuous_trauma_start_date ? " - ":
+                                            ""}}{{element?.continuous_trauma_start_date | date:'MM-dd-yyyy'}}</td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="action">
@@ -1106,7 +1108,8 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-panel-title>
-                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">{{isSuplimental ? 'Billable Item - Supplemental Intake Information' : 'Billable Item - Intake Information'}}</div>
+                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">{{isSuplimental ? 'Billable Item -
+                                Supplemental Intake Information' : 'Billable Item - Intake Information'}}</div>
                         </mat-panel-title>
                     </mat-card-header>
                     <mat-divider> </mat-divider>
@@ -1248,7 +1251,8 @@
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
-                                    <mat-label> {{isSuplimental ? 'Supplemental Requesting Party' : 'Requesting Party'}}</mat-label>
+                                    <mat-label> {{isSuplimental ? 'Supplemental Requesting Party' : 'Requesting Party'}}
+                                    </mat-label>
                                     <mat-select formControlName="caller_affiliation">
                                         <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                             {{caller.agent_type_name}}</mat-option>
@@ -1257,7 +1261,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
-                                    <mat-label>{{isSuplimental ? 'Supplemental Request Receipt Date': 'Request Receipt Date'}}</mat-label>
+                                    <mat-label>{{isSuplimental ? 'Supplemental Request Receipt Date': 'Request Receipt
+                                        Date'}}</mat-label>
                                     <!-- <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
                                         autocomplete="off" [min]="minDate" [max]="todayDate.intake"
                                         [owlDateTime]="intake"
@@ -1317,11 +1322,14 @@
 
                             </div>
 
-                            <div class="supplemental-custom-check" *ngIf="isSuplimental && billable_item?.get('documents_received')"> 
+                            <div class="supplemental-custom-check"
+                                *ngIf="isSuplimental && billable_item?.get('documents_received')">
                                 <div>Supplemental Items Received</div>
-                                <div formArrayName="documents_received" *ngFor="let order of billable_item.get('documents_received')['controls']; let i = index">
-                                <mat-checkbox class="p-t-10" [formControlName]="i">{{supplementalItems[i]?.name}}</mat-checkbox>
-                               </div>
+                                <div formArrayName="documents_received"
+                                    *ngFor="let order of billable_item.get('documents_received')['controls']; let i = index">
+                                    <mat-checkbox class="p-t-10" [formControlName]="i">{{supplementalItems[i]?.name}}
+                                    </mat-checkbox>
+                                </div>
                             </div>
                             <div class="text-center w-100 m-t-10 m-b-10 action-button">
                                 <button mat-stroked-button type="button" class="m-r-10 outline-warning"
