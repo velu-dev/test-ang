@@ -84,7 +84,7 @@ export class NewBillableItemComponent implements OnInit {
   baseUrl: any;
   supplementalItems: any;
   supplementalOtherIndex: number;
-  pastTwoYearDate= moment().subtract(2, 'year');
+  pastTwoYearDate = moment().subtract(2, 'year');
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -295,6 +295,17 @@ export class NewBillableItemComponent implements OnInit {
           is_virtual_location: false,
           conference_url: null,
           conference_phone: null
+        },
+        intake_call: {
+          caller_affiliation: null,
+          caller_name: null,
+          call_date: null,
+          call_type: null,
+          call_type_detail: null,
+          notes: null,
+          caller_phone: null,
+          caller_email: null,
+          caller_fax: null,
         }
       })
       if (this.billable_item.get('documents_received')) {
@@ -517,6 +528,14 @@ export class NewBillableItemComponent implements OnInit {
     }
     return true;
 
+  }
+
+  supplementalCheck() {
+    if (!this.billable_item.get('documents_received').value[this.supplementalOtherIndex]) {
+      this.billable_item.patchValue({
+        intake_call: { notes: null }
+      })
+    }
   }
 
 }

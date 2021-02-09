@@ -223,7 +223,7 @@ export class NewClaimComponent implements OnInit {
   appointment_scheduled_date_time: any = null;
   supplementalItems: any;
   supplementalOtherIndex: number;
-  pastTwoYearDate= moment().subtract(2, 'year');
+  pastTwoYearDate = moment().subtract(2, 'year');
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -872,7 +872,7 @@ export class NewClaimComponent implements OnInit {
         return
       }
       console.log(this.claim.value.claim_details)
-     
+
       if (this.claimantChanges) {
         this.createClaimant('tab');
       }
@@ -1610,6 +1610,17 @@ export class NewClaimComponent implements OnInit {
           is_virtual_location: false,
           conference_url: null,
           conference_phone: null
+        },
+        intake_call: {
+          caller_affiliation: null,
+          caller_name: null,
+          call_date: null,
+          call_type: null,
+          call_type_detail: null,
+          notes: null,
+          caller_phone: null,
+          caller_email: null,
+          caller_fax: null,
         }
       })
       if (this.billable_item.get('documents_received')) {
@@ -1620,6 +1631,14 @@ export class NewClaimComponent implements OnInit {
     } else {
 
       this.isSuplimental = false;
+    }
+  }
+
+  supplementalCheck() {
+    if (!this.billable_item.get('documents_received').value[this.supplementalOtherIndex]) {
+      this.billable_item.patchValue({
+        intake_call: { notes: null }
+      })
     }
   }
   selectedFile: File;

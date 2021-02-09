@@ -1324,7 +1324,7 @@
                             <div fxFlex="100" class="supplemental-custom-check" *ngIf="isSuplimental && billable_item?.get('documents_received')"> 
                                 <div>Supplemental Items Received</div>
                                 <div formArrayName="documents_received" *ngFor="let order of supplementalItems; let i = index">
-                                <mat-checkbox class="p-t-10" [formControlName]="i">{{supplementalItems[i]?.name}}</mat-checkbox>
+                                <mat-checkbox class="p-t-10" [formControlName]="i" (click)="supplementalCheck()">{{supplementalItems[i]?.name}}</mat-checkbox>
                                </div>
                             </div>
                             <mat-form-field  formGroupName="intake_call" appearance="outline" fxFlex="50" *ngIf="isSuplimental && billable_item.get('documents_received') && billable_item.get('documents_received').value[supplementalOtherIndex]">
