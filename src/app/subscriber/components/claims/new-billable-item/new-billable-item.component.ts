@@ -84,6 +84,7 @@ export class NewBillableItemComponent implements OnInit {
   baseUrl: any;
   supplementalItems: any;
   supplementalOtherIndex: number;
+  pastTwoYearDate= moment().subtract(2, 'year');
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,

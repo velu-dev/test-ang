@@ -210,7 +210,7 @@
                         <!-- <owl-date-time (afterPickerOpen)="pickerOpened('intake')" [hour12Timer]="true" #intake>
                         </owl-date-time> -->
                         <input matInput placeholder="MM-DD-YYYY" autocomplete="off" [matDatepicker]="call_date"
-                            [min]="minDate" [max]="todayDate.intake" formControlName="call_date">
+                            [min]="pastTwoYearDate" [max]="todayDate.intake" formControlName="call_date">
                         <mat-datepicker-toggle matSuffix [for]="call_date"></mat-datepicker-toggle>
                         <mat-datepicker #call_date disabled="false"></mat-datepicker>
                         <mat-error>Please enter valid date</mat-error>

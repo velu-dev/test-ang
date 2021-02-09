@@ -223,6 +223,7 @@ export class NewClaimComponent implements OnInit {
   appointment_scheduled_date_time: any = null;
   supplementalItems: any;
   supplementalOtherIndex: number;
+  pastTwoYearDate= moment().subtract(2, 'year');
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,

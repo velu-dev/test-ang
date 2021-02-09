@@ -179,6 +179,7 @@ export class AppointmentDetailsComponent implements OnInit {
   supplementalItems: any = [];
   cancelSupplemental: any;
   supplementalOtherIndex: number;
+  pastTwoYearDate= moment().subtract(2, 'year');
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
