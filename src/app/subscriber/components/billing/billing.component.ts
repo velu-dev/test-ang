@@ -57,10 +57,10 @@ export class BillingComponent implements OnInit {
     private cookieService: CookieService,
     private _location: Location,
     private intercom: IntercomService) {
-      if (+this.role == 4) {
-        this._location.back();
-        return;
-      }
+    if (+this.role == 4) {
+      this._location.back();
+      return;
+    }
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
     })
@@ -76,8 +76,8 @@ export class BillingComponent implements OnInit {
         this.columnName = ["", "Bill #", "Status"]
         this.displayedColumns = ['is_expand', 'bill_no', 'status']
       } else {
-        this.columnName = ["Bill #", "Claim #", "Claimant Name", "Examiner", "Bill Total", "Status"]
-        this.displayedColumns = ['bill_no', 'claim_number', 'claimant_first_name', "examiner_first_name", "paid_amt", "status"]
+        this.columnName = ["Bill #", "Claim #", "Claimant Name", "Date of Birth", "Examiner", "Bill Total", "Status"]
+        this.displayedColumns = ['bill_no', 'claim_number', 'claimant_first_name', "date_of_birth", "examiner_first_name", "paid_amt", "status"]
       }
     })
   }

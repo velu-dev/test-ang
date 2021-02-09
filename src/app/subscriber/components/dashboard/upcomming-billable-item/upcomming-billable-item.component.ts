@@ -40,15 +40,15 @@ export class UpcommingBillableItemComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
     private alertService: AlertService,
-    private _location: Location,  private cookieService: CookieService,private intercom: IntercomService) {
+    private _location: Location, private cookieService: CookieService, private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "Claimant"]
         this.columnsToDisplay = ['is_expand', 'claimant']
       } else {
-        this.columnName = ["Claimant", "Exam Procedure Type", "Location", "Date of service / Date Item Received", "History", "Records", 'Icon']
-        this.columnsToDisplay = ['claimant', 'type', "location", "dos", 'history_on_demand', 'records_on_demand', 'icon']
+        this.columnName = ["Claimant", "Date of Birth", "Exam Procedure Type", "Location", "Date of service / Date Item Received", "History", "Records", 'Icon']
+        this.columnsToDisplay = ['claimant', 'date_of_birth', 'type', "location", "dos", 'history_on_demand', 'records_on_demand', 'icon']
       }
     })
   }
@@ -71,9 +71,9 @@ export class UpcommingBillableItemComponent implements OnInit {
   }
   openElement1(element) {
     this.intercom.setClaimant(element.first_name + ' ' + element.last_name);
-      this.cookieService.set('claimDetails', element.first_name + ' ' + element.last_name)
-      this.intercom.setBillableItem(element.exam_procedure_name);
-      this.cookieService.set('billableItem', element.exam_procedure_name)//response.data.exam_procedure_name
+    this.cookieService.set('claimDetails', element.first_name + ' ' + element.last_name)
+    this.intercom.setBillableItem(element.exam_procedure_name);
+    this.cookieService.set('billableItem', element.exam_procedure_name)//response.data.exam_procedure_name
     // this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.billable_item_id])
     this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + "claimants/claimant/" + element.claimant_id + "/claim/" + element.claim_id + "/billable-item/" + element.billable_item_id]);
   }

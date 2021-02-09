@@ -92,7 +92,7 @@
 </div>
 
 <!-- ###~~~~~ DEU Office ~~~~~###-->
-<div class="deu_office m-t-25" fxLayout="row wrap">
+<div class="deu_office m-t-25" fxLayout="row wrap" *ngIf="!isLoading && claimDetail?.exam_type_id !=3">
     <div fxFlex="100">
         <app-deo *ngIf="!isLoading && claimDetail?.exam_type_id !=3" [state]="states" [deu]="deuDetail">
         </app-deo>

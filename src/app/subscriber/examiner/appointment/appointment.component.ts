@@ -58,8 +58,8 @@ export class AppointmentComponent implements OnInit {
         this.columnName = ["", "Service Location"]
         this.columnsToDisplay = ['is_expand', 'location_name']
       } else {
-        this.columnName = ["Location Name", "Service Location", "Claimant Name", "Examiner", "Appointment Date", "Appointment Time", "Procedure", "Interpreter Needed", "Days Until"]
-        this.columnsToDisplay = ['location_name', 'location', 'claimant_name', 'examiner', 'appointment_date', 'appointment_time', "procedure", 'interperter_needed', 'days_until']
+        this.columnName = ["Location Name", "Service Location", "Claimant Name", "Date of Birth", "Examiner", "Appointment Date", "Appointment Time", "Procedure", "Interpreter Needed", "Days Until"]
+        this.columnsToDisplay = ['location_name', 'location', 'claimant_name', 'date_of_birth', 'examiner', 'appointment_date', 'appointment_time', "procedure", 'interperter_needed', 'days_until']
       }
     })
   }
@@ -80,10 +80,10 @@ export class AppointmentComponent implements OnInit {
         data.appointment_date = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
         data.appointment_time = data.start && data.end ? moment(data.start).format("hh:mm a") + ' - ' + moment(data.end).format("hh:mm a") : '';
         if (data.appointment_scheduled_date_time) {
-          let startConvert =  moment(data.appointment_scheduled_date_time).format('YYYY-MM-DD').toString();
+          let startConvert = moment(data.appointment_scheduled_date_time).format('YYYY-MM-DD').toString();
           var end = moment().format('YYYY-MM-DD').toString();
           var start = moment(startConvert);
-          data.days = Math.round( moment.duration(start.diff(end)).asDays())
+          data.days = Math.round(moment.duration(start.diff(end)).asDays())
         } else {
           data.days = null
         }
