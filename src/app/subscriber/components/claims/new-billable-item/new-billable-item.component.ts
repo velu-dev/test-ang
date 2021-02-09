@@ -83,6 +83,8 @@ export class NewBillableItemComponent implements OnInit {
   isSearch: boolean = false;
   baseUrl: any;
   supplementalItems: any;
+  supplementalOtherIndex: number;
+  pastTwoYearDate= moment().subtract(2, 'year');
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -195,6 +197,7 @@ export class NewBillableItemComponent implements OnInit {
     this.claimService.seedData("supplemental_item_received").subscribe(supp => {
       console.log(supp)
       this.supplementalItems = supp.data;
+      this.supplementalOtherIndex = this.supplementalItems.findIndex(docs => docs.name.toLowerCase() == 'other')
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
       this.billable_item.addControl('documents_received', new FormArray(controlArray))
     })
@@ -294,6 +297,10 @@ export class NewBillableItemComponent implements OnInit {
           conference_phone: null
         }
       })
+      if (this.billable_item.get('documents_received')) {
+        const controlArray = Array(this.supplementalItems.length).fill(false);
+        this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
+      }
     } else {
       this.isSuplimental = false;
     }

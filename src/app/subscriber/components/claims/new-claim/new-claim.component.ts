@@ -222,6 +222,8 @@ export class NewClaimComponent implements OnInit {
   currentTab = "";
   appointment_scheduled_date_time: any = null;
   supplementalItems: any;
+  supplementalOtherIndex: number;
+  pastTwoYearDate= moment().subtract(2, 'year');
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -723,6 +725,7 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimService.seedData("supplemental_item_received").subscribe(supp => {
       this.supplementalItems = supp.data;
+      this.supplementalOtherIndex = this.supplementalItems.findIndex(docs => docs.name.toLowerCase() == 'other')
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
       this.billable_item.addControl('documents_received', new FormArray(controlArray))
     })
@@ -1609,6 +1612,10 @@ export class NewClaimComponent implements OnInit {
           conference_phone: null
         }
       })
+      if (this.billable_item.get('documents_received')) {
+        const controlArray = Array(this.supplementalItems.length).fill(false);
+        this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
+      }
       this.appointment_scheduled_date_time = null
     } else {
 
