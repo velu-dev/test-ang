@@ -67,7 +67,8 @@
                             <div class="responsive-table">
                                 <div><span>Body parts</span><span>{{element?.body_part}}</span></div>
                                 <div><span>Date of injury</span><span>{{element?.date_of_injury |
-                                        date:'MM-dd-yyyy'}}</span></div>
+                                        date:'MM-dd-yyyy'}}{{element?.continuous_trauma_start_date ? " - ":
+                                        ""}}{{element?.continuous_trauma_start_date | date:'MM-dd-yyyy'}}</span></div>
                             </div>
                         </div>
                     </td>

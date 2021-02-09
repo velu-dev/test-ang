@@ -54,8 +54,8 @@ export class BillableItemAwaitingComponent implements OnInit {
         this.columnName = ["", "Claimant"]
         this.columnsToDisplay = ['is_expand', 'claimant_name']
       } else {
-        this.columnName = ["Claimant", "Exam Procedure Type", "Date Of Service / Date Item Received", "Date Due", "Report SimpleService", "Status", "Compiled Report", "Upload Final Report", "Icon"]
-        this.columnsToDisplay = ['claimant_name', 'procedure_type', "dos", "due_date", "report", "status", "compiled_report", "final_report", "icon"]
+        this.columnName = ["Claimant", "Date of Birth", "Exam Procedure Type", "Date Of Service / Date Item Received", "Date Due", "Report SimpleService", "Status", "Compiled Report", "Upload Final Report", "Icon"]
+        this.columnsToDisplay = ['claimant_name', 'date_of_birth', 'procedure_type', "dos", "due_date", "report", "status", "compiled_report", "final_report", "icon"]
       }
     })
   }
@@ -166,7 +166,7 @@ export class BillableItemAwaitingComponent implements OnInit {
     this.cookieService.set('claimNumber', e.claim_number)
     this.intercom.setBillableItem(e.exam_procedure_name);
     this.cookieService.set('billableItem', e.exam_procedure_name)
-    this.router.navigate(['subscriber/examiner/billable-item-awaiting/' +  "claimants/claimant/" + e.claimant_id + "/claim/" + e.claim_id + "/billable-item/" + e.bill_item_id + '/reports'])
+    this.router.navigate(['subscriber/examiner/billable-item-awaiting/' + "claimants/claimant/" + e.claimant_id + "/claim/" + e.claim_id + "/billable-item/" + e.bill_item_id + '/reports'])
   }
 
   downloadDocumet(element) {

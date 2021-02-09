@@ -28,6 +28,8 @@
                         </span>
                         <div>
                             <span *ngIf="column == 'claimant'">{{element?.last_name}} {{element?.first_name}}</span>
+                            <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth |
+                                date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'type'">{{element?.exam_procedure_name}}
                                 <!-- -
                                 {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ?

@@ -33,6 +33,8 @@
                         <div>
                             <span *ngIf="column == 'claimant_name'">{{element?.last_name}}
                                 {{element?.first_name}}</span>
+                            <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth |
+                                date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'procedure_type'">{{element?.exam_procedure_name}}
                                 <!-- -
                                 {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ?
@@ -49,7 +51,8 @@
                             </span>
                             <span *ngIf="column == 'final_report' && element?.compiled_reports"><button type="button"
                                     (click)="uploader.click()" mat-raised-button
-                                    class="mini-btn filled-lightgray-1">{{element?.final_report_file_name ? 'Reupload' :
+                                    class="mini-btn filled-lightgray-1">{{element?.final_report_file_name ?
+                                    'Reupload' :
                                     'Upload Final Report'}}</button>
                                 <input type="file" #uploader hidden (change)="uploadFile($event, element)"
                                     accept=".pdf, .doc, .docx" required> <br>

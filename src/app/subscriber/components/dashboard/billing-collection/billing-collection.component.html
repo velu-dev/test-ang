@@ -28,13 +28,16 @@
                         <div>
                             <span *ngIf="column == 'claimant_name'">{{element?.last_name}}
                                 {{element?.first_name}}</span>
+                            <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth |
+                                date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'procedure_type'">{{element?.exam_procedure_name}}
-                                 <!-- -
+                                <!-- -
                                 {{element?.procedure_type == 'Evaluation' || element?.procedure_type == 'Reevaluation' ?
                                 'Examination' : element?.procedure_type}} -->
                             </span>
                             <span *ngIf="column == 'dos'">{{element?.date_of_service | date:'MM-dd-yyyy'}}</span>
-                            <span *ngIf="column == 'charge'">{{element?.charge ? '$ ' + element?.charge : '' }}</span>
+                            <span *ngIf="column == 'charge'">{{element?.charge ? '$ ' + element?.charge : ''
+                                }}</span>
                             <span *ngIf="column == 'bill_date'">{{element?.bill_first_submission_date |
                                 date:'MM-dd-yyyy'}}</span>
                             <span *ngIf="column == 'balance'">{{element?.balance_due ? '$ ' + element?.balance_due :
@@ -48,7 +51,7 @@
                             <div class="responsive-table" (click)="openElementDetail(element)">
                                 <!-- <div><span>Claimant</span><span> {{element?.last_name}} {{element?.first_name}}</span></div> -->
                                 <div><span>Exam Procedure Type</span><span>{{element?.exam_procedure_name}}
-                                     <!-- -
+                                        <!-- -
                                         {{element?.procedure_type == 'Evaluation' || element?.procedure_type ==
                                         'Reevaluation' ? 'Examination' : element?.procedure_type}} -->
                                     </span></div>
