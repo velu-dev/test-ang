@@ -10,7 +10,8 @@
         <div fxLayout="row wrap" fxFlex="100" class="">
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Body Parts</mat-label>
-                <mat-select [(ngModel)]="injuryInfo.body_part_id" placeholder="Body Part" [multiple]="true" [disabled]="isEdit">
+                <mat-select [(ngModel)]="injuryInfo.body_part_id" placeholder="Body Part" [multiple]="true"
+                    [disabled]="isEdit">
                     <mat-option>
                         <ngx-mat-select-search [formControl]="bodyPartCtrl" placeholderLabel="Find Body Part"
                             i18n-placeholderLabel noEntriesFoundLabel="No Matching Body Part Found"
@@ -60,7 +61,7 @@
                     [matDatepicker]="date_of_injury1" [(ngModel)]="injuryInfo.date_of_injury">
                 <mat-datepicker-toggle matSuffix [for]="date_of_injury1" (opened)="changeEvent()">
                 </mat-datepicker-toggle>
-                <mat-datepicker #date_of_injury1 disabled="false"></mat-datepicker>
+                <mat-datepicker #date_of_injury1 disabled="false" (closed)="onDate($event)"></mat-datepicker>
                 <mat-error>Please enter valid date of injury</mat-error>
             </mat-form-field>
 
