@@ -145,6 +145,10 @@ export class ClaimService {
   }
 
   searchClaim(data): Observable<any> {
-    return this.http.post(environment.searchUrl + "-claimnumber", data)
-}
+    return this.http.post(environment.searchUrl + api_endpoint.claimNumberSearch, data)
+  }
+
+  getProcedureTypeAttoney(claim_id, exam_type): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getProcedureTypeAttoney + claim_id + '/' + exam_type);
+  }
 }

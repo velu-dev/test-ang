@@ -111,6 +111,7 @@ export const api_endpoint = {
     //seed data
     seedData: 'claim/seed-data/',
     bodyParts: "seed-data/body_part",
+    getProcedureTypeAttoney: 'claim/claim-exam-procedure-type/',
 
     //manage-address
     addAddress: 'subscriber/examiner/add-address',
@@ -203,6 +204,7 @@ export const api_endpoint = {
 
     //dashboard
     getAllData: "examiner-dashboard/all-count-details",
+    claimNumberSearch: '-claimnumber',
 
     //stripe
     getPublicKey: "payment/publishable-token",

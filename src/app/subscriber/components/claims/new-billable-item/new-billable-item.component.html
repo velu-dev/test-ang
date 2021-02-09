@@ -249,15 +249,17 @@
                         <input matInput placeholder="Intake Notes" formControlName="notes" autocomplete="off">
                     </mat-form-field>
                 </div>
-                <div class="supplemental-custom-check" *ngIf="isSuplimental && billable_item.get('documents_received')"> 
+                <div fxFlex="100" class="supplemental-custom-check" *ngIf="isSuplimental && billable_item.get('documents_received')"> 
                     <div>Supplemental Items Received</div>
                     <div formArrayName="documents_received" *ngFor="let order of billable_item.get('documents_received')['controls']; let i = index">
                     <mat-checkbox class="p-t-10" [formControlName]="i">{{supplementalItems[i]?.name}}</mat-checkbox>
                    </div>
-                    <!-- <mat-checkbox>Diagnostics</mat-checkbox>
-                    <mat-checkbox>Medical Records</mat-checkbox>
-                    <mat-checkbox>Other</mat-checkbox> -->
                 </div>
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <!-- <input matInput type="text" autocomplete="off" placeholder="Notes" [ngModelOptions]="{standalone: true}" [(ngModel)]="notes"> -->
+                    <textarea matInput placeholder="Other description" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" autocomplete="off" ></textarea>
+                    <mat-error *ngIf="noteError">Please enter valid Other Description</mat-error>
+                </mat-form-field>
                 <div class="text-center w-100 m-t-10 m-b-10 action-button">
                     <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                         (click)="cancel()">Cancel</button>
