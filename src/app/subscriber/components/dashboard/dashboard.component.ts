@@ -62,8 +62,8 @@ export class DashboardComponent implements OnInit {
         this.columnName = ["", "Claimant", "Critical"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "critical"]
       } else {
-        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date Item Received", "Critical"]
-        this.columnsToDisplay = ['is_expand', 'claimant_name', 'date_of_birth', 'examiner_name', "exam_procedure_name", "standing", 'date_of_service', 'critical']
+        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date Item Received", "Due Date", "Critical"]
+        this.columnsToDisplay = ['is_expand', 'claimant_name', 'date_of_birth', 'examiner_name', "exam_procedure_name", "standing", 'date_of_service', 'due_date', 'critical']
       }
     })
   }
