@@ -126,7 +126,7 @@
                             {{element?.examiner_last_name}}</span>
                         <span *ngIf="column == 'exam_procedure_name'">{{element?.exam_procedure_name}}</span>
                         <span *ngIf="column == 'standing'">{{element?.standing}}</span>
-                        <span *ngIf="column == 'date_of_service'">{{element?.date_of_service| date:'MM-dd-yyyy'}}</span>
+                        <span *ngIf="column == 'date_of_service'">{{element?.appointment_scheduled_date_time| date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'due_date'" class="no-wrap-td">{{element?.due_date | date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'critical'"
                             [ngClass]="{'text-primary': element?.is_critical}">{{element?.is_critical ? "Critical" : "-"}}</span>
@@ -144,7 +144,7 @@
                                     {{element?.examiner_last_name}}</div>
                                 <div><span>Exam Procedure Type</span>{{element?.exam_procedure_name}}</div>
                                 <div><span>Standing</span>{{element?.standing}}</div>
-                                <div><span>Date of Service / Date Item Received</span>{{element?.date_of_service| date:'MM-dd-yyyy'}}</div>
+                                <div><span>Date of Service / Date Item Received</span>{{element?.appointment_scheduled_date_time| date:'MM-dd-yyyy'}}</div>
                                 <div><span>Due Date</span>{{element?.due_date | date:'MM-dd-yyyy'}}</div>
                              </section>
                             <section class="navigation">
