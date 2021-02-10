@@ -220,6 +220,18 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
     });
   }
+  openMailOnDemandConfirm(): void {
+    const dialogRef = this.dialog.open(MailOnDemandConfirm, {
+      width: '800px',
+      data: { claim_id: this.claim_id, billable_id: this.billableId, isEdit: false }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getData();
+      }
+    });
+  }
   ngOnInit() {
   }
   downloadForms(sign) {
@@ -830,3 +842,72 @@ export class AddAddress {
   }
 
 }
+export interface Section {
+  recipient_name: string;
+  recipient_address: string;
+  recipient: string
+}
+export interface Section1 {
+  doc_name: string;
+}
+
+@Component({
+  selector: 'mail-on-demand-confirm',
+  templateUrl: 'mail-on-demand-confirm.html',
+})
+export class MailOnDemandConfirm {
+
+
+  constructor(
+    public dialogRef: MatDialogRef<MailOnDemandConfirm>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  documents: Section1[] = [
+    {
+      doc_name: "QME Appointment Notification Form 110",
+    },
+    {
+      doc_name: "QME or AME Appointment Notification Letter",
+    },
+    {
+      doc_name: "Declaration of Service",
+    },
+    // {
+    //   doc_name: "QME or AME conflict of interest disclosure form and objection or waiver",
+    // },
+    // {
+    //   doc_name: "Claimant Questionnaire",
+    // }
+  ];
+  recipients: Section[] = [
+    {
+      recipient: "Claimant",
+      recipient_name: "Venkatesan Mariyappan",
+      recipient_address: "4017 13TH AVE W 4017 13TH AVE W CA CZ - 12345"
+    },
+    {
+      recipient: "Insurance Company",
+      recipient_name: "AAA NCNU IE",
+      recipient_address: "4712 ADMIRALTY WAY STE 401  MARINA DEL REY CA - 90292"
+    },
+    // {
+    //   recipient: "Applicant Attorney",
+    //   recipient_name: "Rajan Mariappan",
+    //   recipient_address: "4017 13TH AVE W 4017 13TH AVE W CA CZ - 12345"
+    // },
+    // {
+    //   recipient: "DEU Office",
+    //   recipient_name: "Sarath Selvaraj",
+    //   recipient_address: "4712 ADMIRALTY WAY STE 401  MARINA DEL REY CA - 90292"
+    // },
+    // {
+    //   recipient: "Defense Attorney",
+    //   recipient_name: "Kitchen Remodel",
+    //   recipient_address: "4017 13TH AVE W 4017 13TH AVE W CA CZ - 12345"
+    // }
+  ];
+}
+

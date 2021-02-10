@@ -145,7 +145,12 @@ mat-card {
           // }
           a {
             text-decoration: none;
-            cursor: pointer;
+            color: $text-gray;
+            cursor: auto;
+          }
+          a.text-ternary {
+            color: $ternary !important;
+            cursor: pointer !important;
           }
         }
       }

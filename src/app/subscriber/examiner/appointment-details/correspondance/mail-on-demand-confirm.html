@@ -1,0 +1,27 @@
+<div class="confirm-dialog-on-demand">
+    <mat-card-content fxLayout="row wrap">
+        <div fxLayout="row wrap" fxFlex="100" class="main w-100">
+            <div class="main-title" fxFlex="100">Mail On Demand</div>
+            <mat-list fxFlex="100">
+                <h3 mat-subheader>Selected Documents</h3>
+                <mat-list-item *ngFor="let document of documents">
+                    <mat-icon mat-list-icon>insert_drive_file</mat-icon>
+                    <h4 mat-line>{{document.doc_name}}</h4>
+                </mat-list-item>
+                <h3 mat-subheader class="m-t-20">Send to</h3>
+                <mat-list-item *ngFor="let recipient of recipients" class="recipients">
+                    <mat-icon mat-list-icon>supervisor_account</mat-icon>
+                    <h4 mat-line><span>{{recipient.recipient}}</span> - {{recipient.recipient_name}}</h4>
+                    <p mat-line>{{recipient.recipient_address}}</p>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <div class="note" fxFlex="100">
+            Note : Once sent document can’t be reverted
+        </div>
+        <div fxFlex="100" class="m-t-20 text-center">
+            <button mat-stroked-button type="button" (click)="onNoClick()" class="outline-danger">Cancel</button>
+            <button mat-stroked-button type="submit" class="outline-success text-center m-l-10">Confirm</button>
+        </div>
+    </mat-card-content>
+</div>
