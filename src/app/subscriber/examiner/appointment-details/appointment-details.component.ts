@@ -534,7 +534,6 @@ export class AppointmentDetailsComponent implements OnInit {
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
       this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
       this.billable_item.get('documents_received').disable();
-      console.log(this.billable_item.get('documents_received').disabled)
     })
 
     this.notesForm = this.formBuilder.group({
@@ -850,6 +849,21 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billable_item.get('appointment').get('duration').setValidators([]);
     }
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
+    Object.keys(this.billable_item.controls).forEach((key) => {
+      console.log(this.billable_item.get(key).value)
+      if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
+      this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim());
+
+      // if(typeof(this.billable_item.get(key).value) == 'object'){
+      //   let secondKey = this.billable_item.get(key).value as FormArray;
+      //   console.log(secondKey)
+      //   Object.keys(secondKey).forEach((key1) => {
+      //     console.log(this.billable_item.get(key).value[key1])
+      //     if (this.billable_item.get(key).value[key1] && typeof (this.billable_item.get(key).value[key1]) == 'string')
+      //     this.billable_item.get(key).value[key1].setValue(this.billable_item.get(key).value[key1].trim());
+      //   })
+      // }
+    });
 
     if (this.billable_item.invalid) {
       return;
@@ -932,6 +946,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   updateBillableItem() {
+  
     let selectedOrderIds = []
     if (this.isSuplimental) {
       selectedOrderIds = this.billable_item.value.documents_received
