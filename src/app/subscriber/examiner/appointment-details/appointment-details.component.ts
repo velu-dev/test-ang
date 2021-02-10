@@ -853,16 +853,13 @@ export class AppointmentDetailsComponent implements OnInit {
       console.log(this.billable_item.get(key).value)
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
       this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim());
-
-      // if(typeof(this.billable_item.get(key).value) == 'object'){
-      //   let secondKey = this.billable_item.get(key).value as FormArray;
-      //   console.log(secondKey)
-      //   Object.keys(secondKey).forEach((key1) => {
-      //     console.log(this.billable_item.get(key).value[key1])
-      //     if (this.billable_item.get(key).value[key1] && typeof (this.billable_item.get(key).value[key1]) == 'string')
-      //     this.billable_item.get(key).value[key1].setValue(this.billable_item.get(key).value[key1].trim());
-      //   })
-      // }
+      if(typeof(this.billable_item.get(key).value) == 'object'){
+        let secondKey = this.billable_item.get(key).value as FormArray;
+        Object.keys(secondKey).forEach((key1) => {
+          if (this.billable_item.get(key).value[key1] && typeof (this.billable_item.get(key).value[key1]) == 'string')
+          this.billable_item.get(key).get(key1).setValue(this.billable_item.get(key).get(key1).value.trim());
+        })
+      }
     });
 
     if (this.billable_item.invalid) {

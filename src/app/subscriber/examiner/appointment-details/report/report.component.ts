@@ -322,7 +322,9 @@ export class ReportComponent implements OnInit {
       document_category_id: this.reportData.documets[0].document_category_id,
       billable_item_id: this.paramsId.billId,
       service_request_type_id: this.reportData.documets[0].service_request_type_id,
-      service_provider_id: this.reportData.documets[0].service_provider_id // default 3
+      service_provider_id: this.reportData.documets[0].service_provider_id, // default 3
+      examiner_detail_id: this.reportData.examiner_detail_id,
+      examiner_user_id: this.reportData.examiner_user_id
     }
     this.onDemandService.requestCreate(data).subscribe(record => {
       this.alertService.openSnackBar("Transcribe and Compile created successfully", 'success');
