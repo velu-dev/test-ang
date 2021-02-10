@@ -406,6 +406,7 @@ export class AppointmentDetailsComponent implements OnInit {
             }
             if (response.data.procedure_type == "Supplemental") {
               this.isDisplayStatus.status = true;
+              this.isDisplayStatus.name = "Supplemental";
               if (pro.for.includes('S')) {
                 this.procedureTypeList.push(pro);
               }
