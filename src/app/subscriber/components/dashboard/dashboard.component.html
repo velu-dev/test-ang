@@ -151,7 +151,7 @@
                         <span *ngIf="column == 'standing'">{{element?.standing}}</span>
                         <span *ngIf="column == 'date_of_service'">{{element?.appointment_scheduled_date_time |
                             date:'MM-dd-yyyy'}}</span>
-                        <span *ngIf="column == 'due_date'">{{element?.due_date | date:'MM-dd-yyyy'}}</span>    
+                        <span *ngIf="column == 'due_date'" class="no-wrap-td">{{element?.due_date | date:'MM-dd-yyyy'}}</span>    
                         <span *ngIf="column == 'critical'"
                             [ngClass]="{'text-primary': element?.is_critical}"><b>{{element?.is_critical ? "Critical" :
                                 "-"}}</b></span>
