@@ -61,12 +61,13 @@
                 </div>
 
                 <div class="grid-list">
-                    <div>DOS</div>
-                    <div>{{examinationDetails?.appointments?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}</div>
+                    <div>{{isSuplimental ? 'Date Item Received' : 'DOS'}}</div>
+                    <div *ngIf="!isSuplimental">{{examinationDetails?.appointments?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}</div>
+                    <div *ngIf="isSuplimental">{{billableData?.intake_call?.call_date | date:'MM-dd-yyyy'}}</div>
                 </div>
             </div>
 
-            <div fxFlex="100">
+            <div fxFlex="100" *ngIf="isDisplayStatus?.name == 'Examination'">
                 <div class="grid-list">
                     <div>Due Date</div>
                     <div>{{examinationDetails?.over_due_date | date:'MM-dd-yyyy'}}</div>
