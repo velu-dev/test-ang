@@ -168,7 +168,6 @@
                                 <div><span>Exam Procedure Type</span>{{element?.exam_procedure_name}}</div>
                                 <div><span>Standing</span>{{element?.standing}}</div>
                                 <div><span>Date of Service / Date Item Received</span>{{element?.date_of_service| date:'MM-dd-yyyy'}}</div>
-                                <span *ngIf="column == 'due_date'">{{element?.due_date | date:'MM-dd-yyyy'}}</span>
                                 <div><span>Due Date</span>{{element?.due_date | date:'MM-dd-yyyy'}}</div>
                                 <!-- <div [ngClass]="{'text-primary': element?.is_critical}"><span>Critical</span>{{element?.is_critical ? "Critical" : "-"}}</div> -->
                             </section>

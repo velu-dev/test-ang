@@ -715,7 +715,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isEditBillableItem = false;
     this.procuderalCodes.map(proc => {
       if (proc.exam_procedure_type_id == this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value) {
-        this.procedure_type(proc);
+        this.procedure_type(proc,true);
       }
     })
     if (this.billableData && this.billableData.documents_received && this.billable_item.get('documents_received')) {
