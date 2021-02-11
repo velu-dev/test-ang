@@ -5,7 +5,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
@@ -50,7 +50,7 @@ export class ExaminationComponent implements OnInit {
   uploadedDocument: any = new MatTableDataSource([]);
   constructor(private claimService: ClaimService, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog, private intercom: IntercomService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService, public router: Router) {
     this.route.params.subscribe(params => {
       this.claim_id = params.claim_id;
       this.billableId = params.billId;
@@ -65,7 +65,12 @@ export class ExaminationComponent implements OnInit {
         this.intercom.setClaimNumber(details.data.claim_number);
         this.cookieService.set('claimNumber', details.data.claim_number)
         this.intercom.setBillableItem(details.data.exam_procedure_name);
-        this.cookieService.set('billableItem', details.data.exam_procedure_name)
+        this.cookieService.set('billableItem', details.data.exam_procedure_name);
+        if (details.data.procedure_type == "Deposition") {
+          this.router.navigate(['**']);
+        } else if (details.data.procedure_type == "Supplemental") {
+          this.router.navigate(['**']);
+        }
       }, error => {
 
       })

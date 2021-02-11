@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { shareReplay, map, delay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
@@ -60,7 +60,8 @@ export class RecordsComponent implements OnInit {
     public claimService: ClaimService,
     private onDemandService: OnDemandService,
     private intercom: IntercomService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    public router: Router) {
 
 
     this.route.params.subscribe(param => {
@@ -77,6 +78,9 @@ export class RecordsComponent implements OnInit {
         this.cookieService.set('claimNumber', details.data.claim_number)
         this.intercom.setBillableItem(details.data.exam_procedure_name);
         this.cookieService.set('billableItem', details.data.exam_procedure_name)
+        if (details.data.procedure_type == "Deposition") {
+          this.router.navigate(['**']);
+        }
       }, error => {
 
       })

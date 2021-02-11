@@ -148,7 +148,7 @@
                                 <div><span>Due Date</span>{{element?.due_date | date:'MM-dd-yyyy'}}</div>
                              </section>
                              <section class="navigation">
-                                <div *ngFor="let type of dispalySimpleservice(element?.procedure_type)" (click)="openExtract(element, type.progress_name )">
+                                <div *ngFor="let type of dispalySimpleservice(element?.procedure_type)" [ngStyle]="{'display':role == 4 && type?.name == 'Billing' ? 'none' : 'block' }" (click)="openExtract(element, type.progress_name )">
                                     <span>{{type?.name}}</span>
                                     {{element[type?.status]}}
                                 </div>
