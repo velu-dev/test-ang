@@ -3,7 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
@@ -43,7 +43,7 @@ export class HistoryComponent implements OnInit {
   statusBarValues = { value: null, status: '', class: '' }
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private onDemandService: OnDemandService, private alertService: AlertService, private intercom: IntercomService,
-    public dialog: MatDialog, private cookieService: CookieService) {
+    public dialog: MatDialog, private cookieService: CookieService, public router: Router) {
 
     this.route.params.subscribe(param => {
       this.paramsId = param;
@@ -60,7 +60,13 @@ export class HistoryComponent implements OnInit {
         this.intercom.setClaimNumber(details.data.claim_number);
         this.cookieService.set('claimNumber', details.data.claim_number)
         this.intercom.setBillableItem(details.data.exam_procedure_name);
-        this.cookieService.set('billableItem', details.data.exam_procedure_name)
+        this.cookieService.set('billableItem', details.data.exam_procedure_name);
+        if (details.data.procedure_type == "Deposition") {
+          this.router.navigate(['**']);
+        } else if (details.data.procedure_type == "Supplemental") {
+          this.router.navigate(['**']);
+        }
+
       }, error => {
 
       })
@@ -175,7 +181,7 @@ export class HistoryComponent implements OnInit {
         })
         return;
       }
-      if (typeof(error.error.message) == 'object') {
+      if (typeof (error.error.message) == 'object') {
         let timezone = moment.tz.guess();
         let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
         this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
