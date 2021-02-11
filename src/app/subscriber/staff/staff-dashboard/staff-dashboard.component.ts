@@ -34,6 +34,7 @@ export class StaffDashboardComponent implements OnInit {
   columnName = [];
   filterValue: string;
   role: any;
+  procedureTypeStatus = []
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService, private intercom: IntercomService, private cookieService: CookieService) {
@@ -48,7 +49,7 @@ export class StaffDashboardComponent implements OnInit {
         this.columnName = ["", "Claimant", "Critical"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', "critical"]
       } else {
-        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service / Date Item Received", "Due Date", "Critical"]
+        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Due Date", "Critical"]
         this.columnsToDisplay = ['is_expand', 'claimant_name', 'date_of_birth', 'examiner_name', "exam_procedure_name", "standing", 'date_of_service', 'due_date', 'critical']
       }
     })
@@ -101,5 +102,27 @@ export class StaffDashboardComponent implements OnInit {
     let claim_id = element.claim_id;
     let billable_id = element.billable_item_id;
     this.router.navigate(['subscriber/staff/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
+  }
+  dispalySimpleservice(type): any {
+    if (type == "Evaluation" || type == "Reevaluation") {
+      return this.procedureTypeStatus = [
+        { name: "Correspondence", status: 'history_status', progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" },
+        { name: "History", status: 'record_status', progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" },
+        { name: "Records", status: 'history_status', progress_name: 'records', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" },
+        { name: "Examination", status: 'examination_status', progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" },
+        { name: "Report", status: 'reports_status', progress_name: 'reports', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" },
+        { name: "Billing", status: 'billing_status', progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
+    } else if (type == "Deposition") {
+      return this.procedureTypeStatus = [
+        { name: "Correspondence", status: 'history_status', progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" },
+        { name: "Report", status: 'reports_status', progress_name: 'reports', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" },
+        { name: "Billing", status: 'billing_status', progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
+    } else if (type == "Supplemental") {
+      return this.procedureTypeStatus = [
+        { name: "Correspondence", status: 'history_status', progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" },
+        { name: "Records", status: 'history_status', progress_name: 'records', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" },
+        { name: "Report", status: 'reports_status', progress_name: 'reports', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" },
+        { name: "Billing", status: 'billing_status', progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
+    }
   }
 }

@@ -900,20 +900,34 @@ image-cropper {
   }
 }
 // Supplemental Custom checkbox
+// .supplemental-custom {
+//   position: relative;
 .supplemental-custom-check {
-  padding-left: 10px;
+  padding-left: 20px;
   div {
     font-size: $font-size-7;
     color: $text-gray;
+    &:last-child {
+      padding-bottom: 15px;
+    }
     .mat-checkbox {
       display: block;
       padding: 0 0 5px 0;
       color: $black;
     }
   }
-}
-
-.confirm-dialog-on-demand {
+// }
+// .mat-form-field {
+//   position: absolute;
+//   bottom: 0;
+//   right: 0;
+//   min-width: calc(100% - 170px);
+//   .mat-form-field-wrapper {
+//     padding: 0;
+//     margin: 0;
+//   }
+// }
+}.confirm-dialog-on-demand {
   .mat-card-content {
     .main-title {
       padding: 10px 0;
