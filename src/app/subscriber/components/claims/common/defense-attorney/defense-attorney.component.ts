@@ -143,7 +143,8 @@ export class DefenseAttorneyComponent implements OnInit {
     }
     this.DefanceAttorney.disable();
     // this.isEditComplete.emit(true);
-    this.DefanceAttorney.patchValue(this.dattorneyDetail)
+    this.DefanceAttorney.patchValue(this.dattorneyDetail);
+    this.changeState(this.dattorneyDetail.state, this.dattorneyDetail.state_code);
   }
   clearAutoComplete() {
     this.DefanceAttorney.reset();

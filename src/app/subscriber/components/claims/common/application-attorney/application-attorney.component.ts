@@ -151,7 +151,8 @@ export class ApplicationAttorneyComponent implements OnInit {
     }
     // this.isEditComplete.emit(true);
     this.ApplicantAttorney.disable();
-    this.ApplicantAttorney.patchValue(this.aattorneyDetail)
+    this.ApplicantAttorney.patchValue(this.aattorneyDetail);
+    this.changeState(this.aattorneyDetail.state, this.aattorneyDetail.state_code);
   }
   clearAutoComplete() {
     this.ApplicantAttorney.reset();

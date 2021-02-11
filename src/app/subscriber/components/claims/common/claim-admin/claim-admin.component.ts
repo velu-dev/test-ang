@@ -147,6 +147,7 @@ export class ClaimAdminComponent implements OnInit {
     }
     this.claimAdminForm.disable();
     // this.isEditComplete.emit(true);
+    this.changeState(this.claimAdmin.state, this.claimAdmin.state_code);
     this.claimAdminForm.patchValue(this.claimAdmin)
   }
   clearAutoComplete() {
