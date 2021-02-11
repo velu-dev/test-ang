@@ -114,7 +114,7 @@ export class RecordsComponent implements OnInit {
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.claim_id, this.paramsId.billId).subscribe(record => {
       this.recordData = record;
-      if(this.recordData.service_providers && this.recordData.service_providers.length){
+      if (this.recordData.service_providers && this.recordData.service_providers.length) {
         this.service_provider_name = this.recordData.service_providers[0]
       }
       record.documets.map(data => {
@@ -322,7 +322,9 @@ export class RecordsComponent implements OnInit {
       billable_item_id: this.paramsId.billId,
       service_request_type_id: this.recordData.documets[0].service_request_type_id,
       service_provider_id: this.recordData.documets[0].service_provider_id, // default 3
-      service_provider_name: this.service_provider_name
+      service_provider_name: this.service_provider_name,
+      examiner_detail_id: this.recordData.examiner_detail_id,
+      examiner_user_id: this.recordData.examiner_user_id
     }
     this.onDemandService.requestCreate(data).subscribe(record => {
       this.alertService.openSnackBar("Record Summary On Demand created successfully", 'success');

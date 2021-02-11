@@ -179,7 +179,7 @@ export class AppointmentDetailsComponent implements OnInit {
   supplementalItems: any = [];
   cancelSupplemental: any;
   supplementalOtherIndex: number;
-  pastTwoYearDate= moment().subtract(2, 'year');
+  pastTwoYearDate = moment().subtract(2, 'year');
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -317,7 +317,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.procuderalCodes = procedure.data;
           procedure.data.map(proc => {
             if (proc.exam_procedure_type_id == bills.data.exam_type.exam_procedure_type_id) {
-              this.procedure_type(proc);
+              this.procedure_type(proc, true);
             }
           })
         })
@@ -346,7 +346,19 @@ export class AppointmentDetailsComponent implements OnInit {
             }
           })
         }
+        const controlArray = Array(this.supplementalItems.length).fill(false);
+        this.billableData.documents_received.map((doc, index) => {
+          let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
 
+          if (ind != -1) {
+            controlArray[ind] = (true)
+          }
+        })
+        let disableStatus = this.billable_item.get('documents_received').disabled
+        this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
+        if (disableStatus) {
+          this.billable_item.get('documents_received').disable()
+        }
 
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
@@ -387,6 +399,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.procedureTypeStatus.map(pro => {
             if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
               this.isDisplayStatus.status = true;
+              this.isDisplayStatus.isDeposition = false;
               this.isDisplayStatus.name = "Examination";
               if (pro.for.includes('E')) {
                 this.procedureTypeList.push(pro);
@@ -394,6 +407,7 @@ export class AppointmentDetailsComponent implements OnInit {
             }
             if (response.data.procedure_type == "Supplemental") {
               this.isDisplayStatus.status = true;
+              this.isDisplayStatus.name = "Supplemental";
               if (pro.for.includes('S')) {
                 this.procedureTypeList.push(pro);
               }
@@ -522,7 +536,6 @@ export class AppointmentDetailsComponent implements OnInit {
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
       this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
       this.billable_item.get('documents_received').disable();
-      console.log(this.billable_item.get('documents_received').disabled)
     })
 
     this.notesForm = this.formBuilder.group({
@@ -703,7 +716,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isEditBillableItem = false;
     this.procuderalCodes.map(proc => {
       if (proc.exam_procedure_type_id == this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value) {
-        this.procedure_type(proc);
+        this.procedure_type(proc,true);
       }
     })
     if (this.billableData && this.billableData.documents_received && this.billable_item.get('documents_received')) {
@@ -838,6 +851,18 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billable_item.get('appointment').get('duration').setValidators([]);
     }
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
+    Object.keys(this.billable_item.controls).forEach((key) => {
+      console.log(this.billable_item.get(key).value)
+      if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
+      this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim());
+      if(typeof(this.billable_item.get(key).value) == 'object'){
+        let secondKey = this.billable_item.get(key).value as FormArray;
+        Object.keys(secondKey).forEach((key1) => {
+          if (this.billable_item.get(key).value[key1] && typeof (this.billable_item.get(key).value[key1]) == 'string')
+          this.billable_item.get(key).get(key1).setValue(this.billable_item.get(key).get(key1).value.trim());
+        })
+      }
+    });
 
     if (this.billable_item.invalid) {
       return;
@@ -920,6 +945,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   updateBillableItem() {
+  
     let selectedOrderIds = []
     if (this.isSuplimental) {
       selectedOrderIds = this.billable_item.value.documents_received
@@ -1230,7 +1256,7 @@ export class AppointmentDetailsComponent implements OnInit {
     })
   }
   isSuplimental = false;
-  procedure_type(procuderalCode) {
+  procedure_type(procuderalCode, status?) {
     if (procuderalCode.modifier)
       this.modifiers = procuderalCode.modifier;
     this.billable_item.patchValue({
@@ -1238,18 +1264,17 @@ export class AppointmentDetailsComponent implements OnInit {
     })
     if (procuderalCode.exam_procedure_type.includes("SUPP")) {
       this.isSuplimental = true;
-      this.billable_item.patchValue({
-        appointment: {
-          appointment_scheduled_date_time: null,
-          duration: null,
-          examiner_service_location_id: null,
-          is_virtual_location: false,
-          conference_url: null,
-          conference_phone: null
-        }
-      })
-
-      if (this.billableData && this.billableData.documents_received && this.billable_item.get('documents_received')) {
+      if (status) {
+        this.billable_item.patchValue({
+          appointment: {
+            appointment_scheduled_date_time: null,
+            duration: null,
+            examiner_service_location_id: null,
+            is_virtual_location: false,
+            conference_url: null,
+            conference_phone: null
+          }
+        })
         const controlArray = Array(this.supplementalItems.length).fill(false);
         this.billableData.documents_received.map((doc, index) => {
           let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
@@ -1263,7 +1288,32 @@ export class AppointmentDetailsComponent implements OnInit {
         if (disableStatus) {
           this.billable_item.get('documents_received').disable()
         }
+      } else {
+        this.billable_item.patchValue({
+          appointment: {
+            appointment_scheduled_date_time: null,
+            duration: null,
+            examiner_service_location_id: null,
+            is_virtual_location: false,
+            conference_url: null,
+            conference_phone: null
+          },
+          intake_call: {
+            caller_affiliation: null,
+            caller_name: null,
+            call_date: null,
+            call_type: null,
+            call_type_detail: null,
+            notes: null,
+            caller_phone: null,
+            caller_email: null,
+            caller_fax: null,
+          }
+        })
+        const controlArray = Array(this.supplementalItems.length).fill(false);
+        this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
       }
+        
       this.appointment_scheduled_date_time = null;
     } else {
       this.isSuplimental = false;
@@ -1362,6 +1412,14 @@ export class AppointmentDetailsComponent implements OnInit {
       this.noteError = true;
     }
 
+  }
+
+  supplementalCheck() {
+    if (!this.billable_item.get('documents_received').value[this.supplementalOtherIndex]) {
+      this.billable_item.patchValue({
+        intake_call: { notes: null }
+      })
+    }
   }
 }
 

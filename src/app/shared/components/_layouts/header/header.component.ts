@@ -254,16 +254,16 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(["/subscriber/settings"]);
         break;
       case '3':
-        this.router.navigate(["/subscriber/settings"]);
+        this.router.navigate(["/subscriber/manager/settings"]);
         break;
       case '4':
-        this.router.navigate(["/subscriber/settings"]);
+        this.router.navigate(["/subscriber/staff/settings"]);
         break;
       case '11':
         this.router.navigate(["/subscriber/examiner/settings"]);
         break;
       case '12':
-        this.router.navigate(["/subscriber/settings"]);
+        this.router.navigate(["/subscriber/staff/settings"]);
         break;
       default:
         this.router.navigate(["/settings"]);

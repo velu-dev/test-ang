@@ -1109,8 +1109,7 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-panel-title>
-                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">{{isSuplimental ? 'Billable Item -
-                                Supplemental Intake Information' : 'Billable Item - Intake Information'}}</div>
+                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information</div>
                         </mat-panel-title>
                     </mat-card-header>
                     <mat-divider> </mat-divider>
@@ -1252,8 +1251,7 @@
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
-                                    <mat-label> {{isSuplimental ? 'Supplemental Requesting Party' : 'Requesting Party'}}
-                                    </mat-label>
+                                    <mat-label>Requesting Party</mat-label>
                                     <mat-select formControlName="caller_affiliation">
                                         <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                             {{caller.agent_type_name}}</mat-option>
@@ -1262,8 +1260,7 @@
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
-                                    <mat-label>{{isSuplimental ? 'Supplemental Request Receipt Date': 'Request Receipt
-                                        Date'}}</mat-label>
+                                    <mat-label>Request Receipt Date</mat-label>
                                     <!-- <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
                                         autocomplete="off" [min]="minDate" [max]="todayDate.intake"
                                         [owlDateTime]="intake"
@@ -1326,11 +1323,9 @@
                             <div fxFlex="100" class="supplemental-custom-check"
                                 *ngIf="isSuplimental && billable_item?.get('documents_received')">
                                 <div>Supplemental Items Received</div>
-                                <div formArrayName="documents_received"
-                                    *ngFor="let order of supplementalItems; let i = index">
-                                    <mat-checkbox class="p-t-10" [formControlName]="i">{{supplementalItems[i]?.name}}
-                                    </mat-checkbox>
-                                </div>
+                                <div formArrayName="documents_received" *ngFor="let order of supplementalItems; let i = index">
+                                <mat-checkbox class="p-t-10" [formControlName]="i" (click)="supplementalCheck()">{{supplementalItems[i]?.name}}</mat-checkbox>
+                               </div>
                             </div>
                             <mat-form-field formGroupName="intake_call" appearance="outline" fxFlex="50"
                                 *ngIf="isSuplimental && billable_item.get('documents_received') && billable_item.get('documents_received').value[supplementalOtherIndex]">

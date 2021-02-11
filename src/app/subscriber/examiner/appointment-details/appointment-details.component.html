@@ -61,12 +61,13 @@
                 </div>
 
                 <div class="grid-list">
-                    <div>DOS</div>
-                    <div>{{examinationDetails?.appointments?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}</div>
+                    <div>{{isSuplimental ? 'Date Item Received' : 'DOS'}}</div>
+                    <div *ngIf="!isSuplimental">{{examinationDetails?.appointments?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}</div>
+                    <div *ngIf="isSuplimental">{{billableData?.intake_call?.call_date | date:'MM-dd-yyyy'}}</div>
                 </div>
             </div>
 
-            <div fxFlex="100">
+            <div fxFlex="100" *ngIf="isDisplayStatus?.name == 'Examination'">
                 <div class="grid-list">
                     <div>Due Date</div>
                     <div>{{examinationDetails?.over_due_date | date:'MM-dd-yyyy'}}</div>
@@ -231,7 +232,7 @@
 <mat-card class="billable-item-info m-b-20">
     <form [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-card-header>
-            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">{{isSuplimental ? 'Billable Item - Supplemental Intake Information' : 'Billable Item - Intake Information'}}</div>
+            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information</div>
             <span class="spacer"></span>
             <span *ngIf="!isExamTypeChanged && !billableData?.isExaminerDisabled">
                 <button type="button" class="filled-gray m-b-5"
@@ -347,7 +348,7 @@
                                 autocomplete="off">
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label> {{isSuplimental ? 'Supplemental Requesting Party' : 'Requesting Party'}}</mat-label>
+                            <mat-label>Requesting Party</mat-label>
                             <mat-select formControlName="caller_affiliation">
                                 <mat-option *ngFor="let caller of callerAffliation" [value]="caller.id">
                                     {{caller.agent_type_name}}</mat-option>
@@ -355,7 +356,7 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>{{isSuplimental ? 'Supplemental Request Receipt Date': 'Request Receipt Date'}}</mat-label>
+                            <mat-label>Request Receipt Date</mat-label>
                             <!-- <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
                                 [value]="changeDateType(billable_item?.value?.intake_call?.call_date)"
                                 formControlName="call_date" autocomplete="off" [min]="minDate" [max]="todayDate.intake"
@@ -411,7 +412,7 @@
                     <div fxFlex="100" class="supplemental-custom-check" *ngIf="isSuplimental && billable_item.get('documents_received')"> 
                         <div>Supplemental Items Received</div>
                         <div formArrayName="documents_received" *ngFor="let order of supplementalItems; let i = index">
-                        <mat-checkbox class="p-t-10" [formControlName]="i">{{supplementalItems[i]?.name}}</mat-checkbox>
+                        <mat-checkbox class="p-t-10" [formControlName]="i" (click)="supplementalCheck()">{{supplementalItems[i]?.name}}</mat-checkbox>
                        </div>
                     </div>
                     <mat-form-field  formGroupName="intake_call" appearance="outline" fxFlex="50" *ngIf="isSuplimental && billable_item.get('documents_received') && billable_item.get('documents_received').value[supplementalOtherIndex]">

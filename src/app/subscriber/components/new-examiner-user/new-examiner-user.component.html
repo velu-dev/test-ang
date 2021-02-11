@@ -262,7 +262,7 @@
                                 <div fxLayout="row wrap" *ngIf="file" class="w9-doc-filename">
                                     <div>
                                         <a (click)="downloadDocumet({file_name:file,file_url:w9Url})" [routerLink]="[]"
-                                            class="text-ternary">{{file}} <i class="fas fa-download p-l-5"></i></a>
+                                           [ngClass]="{'text-ternary': w9Url}">{{file}} <i class="fas fa-download p-l-5" *ngIf="w9Url"></i></a>
                                     </div>
                                 </div>
                             </div>

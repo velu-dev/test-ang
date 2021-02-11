@@ -59,7 +59,7 @@ import { HistoryComponent } from './examiner/appointment-details/history/history
 import { RecordsComponent } from './examiner/appointment-details/records/records.component';
 import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
-import { BillingCorrespondanceComponent, CustomDocuments, CustomRecipient, AddAddress } from './examiner/appointment-details/correspondance/correspondance.component';
+import { BillingCorrespondanceComponent, CustomDocuments, CustomRecipient, AddAddress, MailOnDemandConfirm } from './examiner/appointment-details/correspondance/correspondance.component';
 import { BilllableBillingComponent, BillingPaymentDialog, billingOnDemandDialog, BillingCustomRecipient} from './examiner/appointment-details/billing/billing.component';
 import { OnDemandService } from './service/on-demand.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -147,6 +147,7 @@ import { SearchClaimComponent } from './components/search-claim/search-claim.com
     CloseBill,
     SecondBillReview,
     SearchClaimComponent,
+    MailOnDemandConfirm
    
   ],
   entryComponents: [
@@ -168,7 +169,8 @@ import { SearchClaimComponent } from './components/search-claim/search-claim.com
     BillingCustomRecipient,
     VoidPayment,
     CloseBill,
-    SecondBillReview
+    SecondBillReview,
+    MailOnDemandConfirm
     // DefenseAttorneyComponent,
     // ApplicationAttorneyComponent,
     // DeoComponent,
