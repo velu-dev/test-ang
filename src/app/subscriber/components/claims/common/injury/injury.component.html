@@ -49,9 +49,15 @@
                         </span>
                         <div>
                             <span *ngIf="column == 'body_part'">{{element?.body_part}}</span>
-                            <span *ngIf="column == 'date_of_injury'">{{element?.date_of_injury |
+                            <span *ngIf="column == 'date_of_injury'">
+                                {{element?.continuous_trauma_end_date ? ((element?.continuous_trauma_start_date
+                                |
+                                date:'MM-dd-yyyy') + " - "+ (element?.continuous_trauma_end_date | date:'MM-dd-yyyy'))
+                                : element?.date_of_injury | date:'MM-dd-yyyy'}}
+                                <!-- {{element?.date_of_injury |
                                 date:'MM-dd-yyyy'}}{{element?.continuous_trauma_start_date ? " - ":
-                                ""}}{{element?.continuous_trauma_start_date | date:'MM-dd-yyyy'}}</span>
+                                ""}}{{element?.continuous_trauma_start_date | date:'MM-dd-yyyy'}} -->
+                            </span>
                             <span *ngIf="column == 'action'" class="text-center no-wrap-td">
                                 <a (click)="$event.stopPropagation();openDialog(element, i)"
                                     class="text-success m-r-20">Edit</a>
@@ -66,9 +72,19 @@
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Body parts</span><span>{{element?.body_part}}</span></div>
-                                <div><span>Date of injury</span><span>{{element?.date_of_injury |
+                                <div>
+                                    <span>Date of injury</span>
+                                    <span>
+                                        {{element?.continuous_trauma_end_date ? ((element?.continuous_trauma_start_date
+                                        |
+                                        date:'MM-dd-yyyy') + " - "+ (element?.continuous_trauma_end_date |
+                                        date:'MM-dd-yyyy'))
+                                        : element?.date_of_injury | date:'MM-dd-yyyy'}}
+                                        <!-- {{element?.date_of_injury |
                                         date:'MM-dd-yyyy'}}{{element?.continuous_trauma_start_date ? " - ":
-                                        ""}}{{element?.continuous_trauma_start_date | date:'MM-dd-yyyy'}}</span></div>
+                                        ""}}{{element?.continuous_trauma_start_date | date:'MM-dd-yyyy'}} -->
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </td>
