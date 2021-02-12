@@ -1,11 +1,15 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SelectionModel } from '@angular/cdk/collections';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 
 
-const ELEMENT_DATA:any = [
+const ELEMENT_DATA: any = [
   { item: 'QME', procedure_code_1: 'ML201', modifier_1: '93', unit: '1', charges: '2200.00', first_submission: '0', balances: '2200.00' },
   { item: 'Excess Report Pages', procedure_code_1: '', modifier_1: '', unit: '758', charges: '1516.00', first_submission: '0', balances: '1516.00' },
 ];
@@ -13,19 +17,56 @@ const ELEMENT_DATA:any = [
 @Component({
   selector: 'app-payment-response',
   templateUrl: './payment-response.component.html',
-  styleUrls: ['./payment-response.component.scss']
+  styleUrls: ['./payment-response.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 
 export class PaymentResponseComponent implements OnInit {
 
   userTable: FormGroup;
   mode: boolean;
-  constructor(public dialog: MatDialog, private fb: FormBuilder) { }
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  dataSource = ELEMENT_DATA1;
+  columnsToDisplay = [];
+  expandedElement;
+  isMobile = false;
+  columnName = [];
+  filterValue: string;
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (res) {
+        this.columnName = ["", "Bill #", "Action"]
+        this.columnsToDisplay = ['is_expand', 'bill_id', "action"]
+      } else {
+        this.columnName = ["", "Bill #", "Submission", "Date Sent", "Due Date", "Payment", "Balance", "Status", "Action"]
+        this.columnsToDisplay = ['is_expand', 'bill_id', 'submission', "sent_date", "due_date", 'charge', 'payment', 'balance', 'status', 'action']
+      }
+    })
+  }
 
   ngOnInit() {
     this.userTable = this.fb.group({
       tableRows: this.fb.array([])
     });
+  }
+  expandId: any;
+  openElement(element) {
+    if (this.expandId && this.expandId == element.id) {
+      this.expandId = null;
+    } else {
+      this.expandId = element.id;
+    }
   }
   initiateForm(): FormGroup {
     return this.fb.group({
@@ -148,3 +189,8 @@ export class SecondBillReview {
   }
 
 }
+const ELEMENT_DATA1 = [
+  { "id": 132, "bill_id": "CMBN10009320", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "",},
+  { "id": 131, "bill_id": "CMBN10009480", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "",},
+
+];

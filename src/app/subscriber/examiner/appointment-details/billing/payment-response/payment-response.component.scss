@@ -1,96 +1,176 @@
 @import "variables";
 @import "table";
 
-
-    .bill-item {
-        margin-top: 20px;
-        mat-card {
-            box-shadow: $shadow-style-one !important;
-            &:hover {
-                box-shadow: $shadow-style-one-hover;
-            }
+.bill-item {
+    margin-top: 20px;
+    mat-card {
+        box-shadow: $shadow-style-one !important;
+        &:hover {
+            box-shadow: $shadow-style-one-hover;
         }
-        .custom-input {
-            padding: 8px 3px;
-            border: 1px solid $gray;
-            width: 100px;
+    }
+    .custom-input {
+        padding: 8px 3px;
+        border: 1px solid $gray;
+        width: 100px;
+        border-radius: 3px;
+        &:disabled {
+            border: 1px solid $white;
+            background-color: transparent;
+            width: auto;
             border-radius: 3px;
-            &:disabled {
-                border: 1px solid $white;
-                background-color: transparent;
-                width: auto;
-                border-radius: 3px;
+        }
+    }
+}
+.payment-response {
+    .vertical-fixed {
+        overflow: inherit !important;
+        // .pay-response {
+        //     width: 2000px;
+        //     thead {
+        //             th {
+        //                 &:first-child {
+        //                     position: sticky;
+        //                     left: 0;
+        //                     z-index: 99999;
+        //                 }
+        //                 &:last-child {
+        //                     position: sticky;
+        //                     right: 0;
+        //                     z-index: 99999;
+        //                 }
+        //             }
+        //     }
+        //     tbody {
+        //         tr {
+        //             th {
+        //                 &:first-child {
+        //                     position: sticky;
+        //                     left: 0;
+        //                     background-color: $white;
+        //                     z-index: 99999;
+        //                 }
+        //                 &:last-child {
+        //                     position: sticky;
+        //                     right: 0;
+        //                     z-index: 99999;
+        //                 }
+        //             }
+        //             td {
+        //                 &:first-child {
+        //                     position: sticky;
+        //                     left: 0;
+        //                     background-color: $white;
+        //                     z-index: 99999;
+        //                 }
+        //                 &:last-child {
+        //                     position: sticky;
+        //                     right: 0;
+        //                     background-color: $white;
+        //                     z-index: 99999;
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     tfoot {
+        //         tr {
+        //             td {
+        //                 &:first-child {
+        //                     position: sticky;
+        //                     left: 0;
+        //                     background-color: $white;
+        //                     z-index: 99999;
+        //                 }
+        //                 &:last-child {
+        //                     position: sticky;
+        //                     right: 0;
+        //                     background-color: $white;
+        //                     z-index: 99999;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+    }
+}
+// New design implementation
+.m-card {
+    margin-bottom: 20px;
+    min-height: fit-content;
+    mat-card-content {
+        .user-detail {
+            min-height: auto !important;
+            table {
+                td {
+                    .detail {
+                        background-color: $white;
+                        position: relative;
+                        &::before {
+                            content: "";
+                            background-color: $black;
+                            width: 3px;
+                            position: absolute;
+                            left: 10px;
+                            height: 50%;
+                        }
+                        &::after {
+                            content: "";
+                            background-color: $black;
+                            width: 20px;
+                            position: absolute;
+                            left: 10px;
+                            top: 50%;
+                            height: 3px;
+                        }
+                        .expand-details-list {
+                            width: 92%;
+                            margin: 10px auto;
+                            padding: 20px;
+                            border: 2px solid $light-gray;
+                            border-radius: 5px;
+                            background-color: $table-solid;
+                            &::before {
+                                font-family: "Font Awesome 5 Free";
+                                font-weight: 900; 
+                                content: "\f0da";
+                                position: absolute;
+                                font-size: 25px;
+                                left: 30px;
+                                top: 41%;
+                            }
+                            // Error icon design
+                            // &::after {
+                            //     font-family: "Font Awesome 5 Free";
+                            //     font-weight: 900; 
+                            //     content: "\f00d";
+                            //     color: $danger;
+                            //     position: absolute;
+                            //     font-size: 25px;
+                            //     left: 20px;
+                            //     top: 41%;
+                            // }
+                            .expand-details {
+                                div {
+                                    padding: 5px 0;
+                                    span {
+                                        min-width: 150px;
+                                        display: -webkit-inline-box;
+                                        position: relative;
+                                        font-weight: $font-weight-bold;
+                                        &::after {
+                                            position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                            content: ":";
+                                            padding-right: 5px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-    .payment-response {
-        .vertical-fixed {
-            overflow: inherit !important;
-            // .pay-response {
-            //     width: 2000px;
-            //     thead {
-            //             th {
-            //                 &:first-child {
-            //                     position: sticky;
-            //                     left: 0;
-            //                     z-index: 99999;
-            //                 }
-            //                 &:last-child {
-            //                     position: sticky;
-            //                     right: 0;
-            //                     z-index: 99999;
-            //                 }
-            //             }
-            //     }
-            //     tbody {
-            //         tr {
-            //             th {
-            //                 &:first-child {
-            //                     position: sticky;
-            //                     left: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //                 &:last-child {
-            //                     position: sticky;
-            //                     right: 0;
-            //                     z-index: 99999;
-            //                 }
-            //             }
-            //             td {
-            //                 &:first-child {
-            //                     position: sticky;
-            //                     left: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //                 &:last-child {
-            //                     position: sticky;
-            //                     right: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //             }
-            //         }
-            //     }
-            //     tfoot {
-            //         tr {
-            //             td {
-            //                 &:first-child {
-            //                     position: sticky;
-            //                     left: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //                 &:last-child {
-            //                     position: sticky;
-            //                     right: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-        }
-    }
+}
