@@ -412,10 +412,10 @@ export class InjuryPopup {
       for (var i in this.injuryInfo['body_part_id']) {
         var part = {
           body_part_id: [this.injuryInfo['body_part_id'][i]],
-          date_of_injury: this.injuryInfo['date_of_injury'],
+          date_of_injury: this.injuryInfo.date_of_injury ? moment(this.injuryInfo.date_of_injury).format("MM-DD-YYYY") : null,
           continuous_trauma: this.injuryInfo['continuous_trauma'],
-          continuous_trauma_start_date: this.injuryInfo['continuous_trauma_start_date'],
-          continuous_trauma_end_date: this.injuryInfo['continuous_trauma_end_date'],
+          continuous_trauma_start_date: this.injuryInfo.continuous_trauma_start_date ? moment(this.injuryInfo.continuous_trauma_start_date).format("MM-DD-YYYY") : null,
+          continuous_trauma_end_date: this.injuryInfo.continuous_trauma_end_date ? moment(this.injuryInfo.continuous_trauma_end_date).format("MM-DD-YYYY") : null,
           injury_notes: this.injuryInfo['injury_notes'],
           diagram_url: this.injuryInfo['diagram_url'],
         };
