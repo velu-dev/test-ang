@@ -131,7 +131,7 @@
                             background-color: $table-solid;
                             &::before {
                                 font-family: "Font Awesome 5 Free";
-                                font-weight: 900; 
+                                font-weight: 900;
                                 content: "\f0da";
                                 position: absolute;
                                 font-size: 25px;
@@ -141,7 +141,7 @@
                             // Error icon design
                             // &::after {
                             //     font-family: "Font Awesome 5 Free";
-                            //     font-weight: 900; 
+                            //     font-weight: 900;
                             //     content: "\f00d";
                             //     color: $danger;
                             //     position: absolute;
@@ -152,7 +152,7 @@
                             .expand-details {
                                 div {
                                     padding: 5px 0;
-                                    span {
+                                    span.prp_ {
                                         min-width: 150px;
                                         display: -webkit-inline-box;
                                         position: relative;
@@ -165,6 +165,23 @@
                                             padding-right: 5px;
                                         }
                                     }
+                                }
+                            }
+                            .expand-details.editable {
+                                div {
+                                    display: flex;
+                                    ::ng-deep  {
+                                        .mat-form-field {
+                                            width: calc(100% - 20px)
+                                        }
+                                        .mat-form-field-wrapper {
+                                            padding: 0 !important;
+                                        }
+                                        .mat-form-field-appearance-outline .mat-form-field-infix {
+                                            padding: 5px 0 8px 0 !important;
+                                        }
+                                    } 
+                                  
                                 }
                             }
                         }

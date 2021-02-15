@@ -191,6 +191,6 @@ export class SecondBillReview {
 }
 const ELEMENT_DATA1 = [
   { "id": 132, "bill_id": "CMBN10009320", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "",},
-  { "id": 131, "bill_id": "CMBN10009480", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "",},
+  // { "id": 131, "bill_id": "CMBN10009480", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "",},
 
 ];
