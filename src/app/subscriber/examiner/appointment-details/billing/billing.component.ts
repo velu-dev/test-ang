@@ -153,7 +153,7 @@ export class BilllableBillingComponent implements OnInit {
         this.intercom.setBillableItem(details.data.exam_procedure_name);
         this.cookieService.set('billableItem', details.data.exam_procedure_name)
       }, error => {
-  
+
       })
       if (!param.billingId) {
         this.billingService.billCreate(param.claim_id, param.billId).subscribe(bill => {
@@ -205,7 +205,7 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
-    
+
   }
 
   openAuto(e, trigger: MatAutocompleteTrigger) {
@@ -777,6 +777,7 @@ export class BilllableBillingComponent implements OnInit {
       this.claimService.updateActionLog({ type: "billing", "document_category_id": 8, "claim_id": this.paramsId.claim_id, "billable_item_id": this.paramsId.billId, "documents_ids": [element.document_id ? element.document_id : details.document_id] }).subscribe(res => {
       })
       saveAs(res.signed_file_url, element.file_name);
+      this.getBillingDetails();
     })
   }
 

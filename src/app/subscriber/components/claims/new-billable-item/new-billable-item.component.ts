@@ -473,11 +473,11 @@ export class NewBillableItemComponent implements OnInit {
       console.log(this.claimantId, this.billable_item.value)
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
-        if (this.isSearch) {
-          this.router.navigate([this.baseUrl + "claimants/claimant/" + this.claimantId + "/claim/" + this.claimId + "/billable-item/" + res.data.id])
-        } else {
-          this._location.back();
-        }
+        // if (this.isSearch) {
+        this.router.navigate([this.baseUrl + "claimants/claimant/" + this.claimantId + "/claim/" + this.claimId + "/billable-item/" + res.data.id])
+        // } else {
+        // this._location.back();
+        // }
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })

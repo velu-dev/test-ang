@@ -75,20 +75,21 @@ export class UpdateBillableItemComponent implements OnInit {
     })
   }
 
-  openrouteElement(e) {
-    this.router.navigate([this.router.url + '/billable-item', e.id])
-  }
-  navigateBillableEdit(e) {
-    this.router.navigate(['/subscriber/billable-item/new-billable-item', this.claimId, this.claimantId, e.id])
-  }
-
-  expandId: any;
-  openElement(element) {
-    if (this.isMobile)
+  openrouteElement(element) {
+    if (this.isMobile) {
       if (this.expandId && this.expandId == element.id) {
         this.expandId = null;
       } else {
         this.expandId = element.id;
       }
+    } else {
+      this.router.navigate([this.router.url + '/billable-item', element.id])
+    }
+  }
+  navigateBillableEdit(e) {
+    this.router.navigate(['/subscriber/billable-item/new-billable-item', this.claimId, this.claimantId, e.id])
+  }
+  expandId: any;
+  openElement(element) {
   }
 }

@@ -387,7 +387,8 @@
                                             |
                                             date:'MM-dd-yyyy') + " - "+ (element?.continuous_trauma_end_date |
                                             date:'MM-dd-yyyy'))
-                                            : element?.date_of_injury | date:'MM-dd-yyyy'}}</td>
+                                            : ((element?.continuous_trauma_start_date | date:'MM-dd-yyyy') +" - "+
+                                            "Present")}}</td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="action">

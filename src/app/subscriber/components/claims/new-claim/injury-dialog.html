@@ -77,10 +77,10 @@
                 <mat-label>CT Start Date</mat-label>
                 <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
                     [matDatepicker]="continuous_trauma_start_date" [(ngModel)]="injuryInfo.continuous_trauma_start_date"
-                    [min]="minDate" [max]="today" (click)="changeEvent()">
+                    [min]="minDate" [max]="today" (click)="changeEvent()" disabled="true">
                 <mat-datepicker-toggle matSuffix [for]="continuous_trauma_start_date">
                 </mat-datepicker-toggle>
-                <mat-datepicker #continuous_trauma_start_date disabled="false" (opened)="changeEvent()">
+                <mat-datepicker #continuous_trauma_start_date disabled="true" (opened)="changeEvent()">
                 </mat-datepicker>
             </mat-form-field>
 

@@ -43,7 +43,8 @@
                         <span *ngIf="column == 'procedure_type_name'">{{element?.exam_procedure_type}} -
                             {{element?.exam_procedure_name }}</span>
                         <span
-                            *ngIf="column == 'appointment_scheduled_date_time'">{{element?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}</span>
+                            *ngIf="column == 'appointment_scheduled_date_time'">{{element?.appointment_scheduled_date_time
+                            | date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'examiner_name'">{{element?.examiner_name}}</span>
                         <span *ngIf="column == 'examiner_name'">{{element?.status}}</span>
                     </div>
@@ -55,18 +56,21 @@
                         <div class="responsive-table">
                             <!-- <div><span>Exam Type</span><span><a routerLink="" (click)="openrouteElement(element)"> {{element?.exam_type_code}} - {{element?.exam_type_name}}
                                 {{element?.procedure_type_name}}</a> </span></div> -->
-                            <div><span>Date of Service /<br />Date Item Received</span><span>{{element?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}</span></div>
+                            <div><span>Date of Service /<br />Date Item
+                                    Received</span><span>{{element?.appointment_scheduled_date_time |
+                                    date:'MM-dd-yyyy'}}</span></div>
                             <div><span>Examiner</span><span>{{element?.examiner_name}}</span></div>
                             <div><span>Status</span><span>{{element?.status}}</span></div>
                         </div>
                     </div>
                 </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
             <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
-                [class.row]="expandedElement === element" (click)="openElement(element)">
+                [class.row]="expandedElement === element" (click)="openrouteElement(element)">
             </tr>
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row" (click)="row.toggle(row)">
+            </tr>
         </table>
         <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </div>

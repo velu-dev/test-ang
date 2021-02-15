@@ -53,7 +53,7 @@
                                 {{element?.continuous_trauma_end_date ? ((element?.continuous_trauma_start_date
                                 |
                                 date:'MM-dd-yyyy') + " - "+ (element?.continuous_trauma_end_date | date:'MM-dd-yyyy'))
-                                : element?.date_of_injury | date:'MM-dd-yyyy'}}
+                                : ((element?.continuous_trauma_start_date | date:'MM-dd-yyyy') +" - "+ "Present")}}
                                 <!-- {{element?.date_of_injury |
                                 date:'MM-dd-yyyy'}}{{element?.continuous_trauma_start_date ? " - ":
                                 ""}}{{element?.continuous_trauma_start_date | date:'MM-dd-yyyy'}} -->
