@@ -1320,22 +1320,24 @@
 
                             </div>
 
-                            <div fxFlex="100" class="supplemental-custom-check"
-                                *ngIf="isSuplimental && billable_item?.get('documents_received')">
-                                <div>Supplemental Items Received</div>
-                                <div formArrayName="documents_received"
+                            <section class="supplemental-type" fxLayout="row wrap" fxFlex="100" *ngIf="isSuplimental && billable_item?.get('documents_received')">
+                                <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" class="supplemental-custom-check">
+                                <div class="m-b-10 label">Supplemental Items Received</div>
+                                <span formArrayName="documents_received"
                                     *ngFor="let order of supplementalItems; let i = index">
-                                    <mat-checkbox class="p-t-10" [formControlName]="i" (click)="supplementalCheck()">
+                                    <mat-checkbox class="m-r-10" [formControlName]="i" (click)="supplementalCheck()">
                                         {{supplementalItems[i]?.name}}</mat-checkbox>
-                                </div>
-                            </div>
-                            <mat-form-field formGroupName="intake_call" appearance="outline" fxFlex="50"
-                                *ngIf="isSuplimental && billable_item.get('documents_received') && billable_item.get('documents_received').value[supplementalOtherIndex]">
-                                <textarea matInput placeholder="Other description" formControlName="notes"
-                                    cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
-                                    autocomplete="off"></textarea>
-                                <!-- <mat-error *ngIf="noteError">Please enter valid Other Description</mat-error> -->
-                            </mat-form-field>
+                                </span>
+                             </div>
+                                <mat-form-field fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" formGroupName="intake_call" appearance="outline" fxFlex="50"
+                                    *ngIf="isSuplimental && billable_item.get('documents_received') && billable_item.get('documents_received').value[supplementalOtherIndex]">
+                                    <mat-label>Other description</mat-label>
+                                    <textarea matInput placeholder="Other description" formControlName="notes"
+                                        cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
+                                        autocomplete="off"></textarea>
+                                    <!-- <mat-error *ngIf="noteError">Please enter valid Other Description</mat-error> -->
+                                </mat-form-field>
+                            </section>
                             <div class="text-center w-100 m-t-10 m-b-10 action-button">
                                 <button mat-stroked-button type="button" class="m-r-10 outline-warning"
                                     matStepperPrevious>Previous</button>
