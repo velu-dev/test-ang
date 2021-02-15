@@ -408,6 +408,7 @@ export class BilllableBillingComponent implements OnInit {
   getBillingDetails() {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
+      console.log("hihii", billing.data)
       if (billing.data) {
         this.billingData = billing.data;
         this.statusBarChanges(this.billingData.on_demand_progress_status);

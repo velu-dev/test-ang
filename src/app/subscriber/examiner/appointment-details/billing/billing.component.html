@@ -180,7 +180,7 @@
                         </div>
                         <div *ngIf="!billingData?.rendering_is_persion">{{billingData?.rendering_provider_name}}</div>
                     </div>
-                    <div fxFlex="33.3" fxFlex.xs="100">
+                    <div fxFlex="33.3" fxFlex.xs="100" *ngIf="billingData.procedure_type != 'Supplemental'">
                         <div class="p-b-5"><b>Service Location</b> </div>
                         <div *ngIf="!billingData?.is_virtual_location">{{billingData?.service_location_name ?
                             billingData?.service_location_name + ' - ' : ''}}{{billingData?.service_location?.street1 }}
