@@ -382,13 +382,11 @@
                                     <ng-container matColumnDef="date_of_injury">
                                         <th mat-header-cell *matHeaderCellDef>Date of injury</th>
                                         <td mat-cell *matCellDef="let element" class="no-wrap-td">
-                                            {{element?.continuous_trauma_end_date ?
-                                            ((element?.continuous_trauma_start_date
+                                            {{element?.continuous_trauma ? ((element?.continuous_trauma_start_date
                                             |
-                                            date:'MM-dd-yyyy') + " - "+ (element?.continuous_trauma_end_date |
-                                            date:'MM-dd-yyyy'))
-                                            : ((element?.continuous_trauma_start_date | date:'MM-dd-yyyy') +" - "+
-                                            "Present")}}</td>
+                                            date:'MM-dd-yyyy') + " - "+ (element?.continuous_trauma_end_date ?
+                                            (element?.continuous_trauma_end_date | date:'MM-dd-yyyy') : "Present"))
+                                            : ((element?.date_of_injury | date:'MM-dd-yyyy'))}}</td>
                                     </ng-container>
 
                                     <ng-container matColumnDef="action">
@@ -1321,16 +1319,19 @@
 
                             </div>
 
-                            <section class="supplemental-type" fxLayout="row wrap" fxFlex="100" *ngIf="isSuplimental && billable_item?.get('documents_received')">
+                            <section class="supplemental-type" fxLayout="row wrap" fxFlex="100"
+                                *ngIf="isSuplimental && billable_item?.get('documents_received')">
                                 <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" class="supplemental-custom-check">
-                                <div class="m-b-10 label">Supplemental Items Received</div>
-                                <span formArrayName="documents_received"
-                                    *ngFor="let order of supplementalItems; let i = index">
-                                    <mat-checkbox class="m-r-10" [formControlName]="i" (click)="supplementalCheck()">
-                                        {{supplementalItems[i]?.name}}</mat-checkbox>
-                                </span>
-                             </div>
-                                <mat-form-field fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" formGroupName="intake_call" appearance="outline" fxFlex="50"
+                                    <div class="m-b-10 label">Supplemental Items Received</div>
+                                    <span formArrayName="documents_received"
+                                        *ngFor="let order of supplementalItems; let i = index">
+                                        <mat-checkbox class="m-r-10" [formControlName]="i"
+                                            (click)="supplementalCheck()">
+                                            {{supplementalItems[i]?.name}}</mat-checkbox>
+                                    </span>
+                                </div>
+                                <mat-form-field fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" formGroupName="intake_call"
+                                    appearance="outline" fxFlex="50"
                                     *ngIf="isSuplimental && billable_item.get('documents_received') && billable_item.get('documents_received').value[supplementalOtherIndex]">
                                     <mat-label>Other description</mat-label>
                                     <textarea matInput placeholder="Other description" formControlName="notes"
