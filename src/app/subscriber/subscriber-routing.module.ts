@@ -1618,6 +1618,27 @@ const routes: Routes = [{
           component: AddEditServiceLocationComponent,
           data: { breadcrumb: "New" }
         }]
+      },
+      {
+        path: "examiner/:id/:status",
+        children: [{
+          path: "",
+          component: NewExaminerUserComponent,
+          data: { breadcrumb: "Examiner" }
+        }, {
+          path: "edit-location/:location_id/:status",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "Edit" }
+        }, {
+          path: "edit-location/:id/:status/:location_id",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "Edit" }
+        },
+        {
+          path: "add-location/:status/:examiner",
+          component: AddEditServiceLocationComponent,
+          data: { breadcrumb: "New" }
+        }]
       }]
     },
     {
@@ -1794,10 +1815,19 @@ const routes: Routes = [{
         path: "",
         component: ManageLocationComponent,
         data: { breadcrumb: "Service Locations" }
-      }, {
+      },
+      // {
+      //   path: "edit-location/:examiner_id/:address_id",
+      //   component: EditAddressComponent
+      // }, 
+      {
         path: "new-location",
         component: ExaminerManageAddressComponent,
         data: { breadcrumb: "New" }
+      }, {
+        path: "existing-location/:id",
+        component: ExistingServiceLocationsComponent,
+        data: { breadcrumb: "Service Location" }
       },
       {
         path: "add-location",
@@ -1805,11 +1835,21 @@ const routes: Routes = [{
         data: { breadcrumb: "New" }
       },
       {
+        path: "add-location/:status/:id",
+        component: AddEditServiceLocationComponent,
+        data: { breadcrumb: "New" }
+      },
+      {
         path: "edit-location/:location_id",
         component: AddEditServiceLocationComponent,
         data: { breadcrumb: "Service Location" }
+      },
+      {
+        path: "edit-location/:location_id/:status/:id",
+        component: AddEditServiceLocationComponent,
+        data: { breadcrumb: "Service Location" }
       }]
-
+    
     },
     {
       path: "billing",
