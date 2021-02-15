@@ -899,35 +899,32 @@ image-cropper {
     border: 1px solid $danger;
   }
 }
-// Supplemental Custom checkbox
-// .supplemental-custom {
-//   position: relative;
-.supplemental-custom-check {
-  padding-left: 20px;
-  div {
-    font-size: $font-size-7;
-    color: $text-gray;
-    &:last-child {
-      padding-bottom: 15px;
+.supplemental-type {
+  min-height: 80px;
+  .supplemental-custom-check {
+    padding-left: 20px;
+    @media only screen and (max-width: 568px) {
+      padding-left: 10px;
     }
-    .mat-checkbox {
-      display: block;
-      padding: 0 0 5px 0;
-      color: $black;
+    div.label {
+      font-size: $font-size-7;
+      color: $text-gray;
+      .mat-checkbox {
+        display: block;
+        padding: 0 0 5px 0;
+        color: $black;
+      }
     }
   }
-// }
-// .mat-form-field {
-//   position: absolute;
-//   bottom: 0;
-//   right: 0;
-//   min-width: calc(100% - 170px);
-//   .mat-form-field-wrapper {
-//     padding: 0;
-//     margin: 0;
-//   }
-// }
-}.confirm-dialog-on-demand {
+  .mat-form-field {
+    .mat-form-field-wrapper {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+.confirm-dialog-on-demand {
   .mat-card-content {
     .main-title {
       padding: 10px 0;
