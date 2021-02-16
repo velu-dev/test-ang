@@ -1062,7 +1062,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   //existing location
-  addresssearch = new FormControl("", Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
+  addresssearch = new FormControl("", Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
   filteredOptions: any;
   locationData: any = null;
   national_provider_identifier: any = null;
