@@ -2,17 +2,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
-
-
-const ELEMENT_DATA: any = [
-  { item: 'QME', procedure_code_1: 'ML201', modifier_1: '93', unit: '1', charges: '2200.00', first_submission: '0', balances: '2200.00' },
-  { item: 'Excess Report Pages', procedure_code_1: '', modifier_1: '', unit: '758', charges: '1516.00', first_submission: '0', balances: '1516.00' },
-];
 
 @Component({
   selector: 'app-payment-response',
@@ -36,12 +30,13 @@ export class PaymentResponseComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource = ELEMENT_DATA1;
+  dataSource: any = new MatTableDataSource([]);
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
+  paymentForm: FormGroup;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -49,16 +44,27 @@ export class PaymentResponseComponent implements OnInit {
         this.columnName = ["", "Bill #", "Action"]
         this.columnsToDisplay = ['is_expand', 'bill_id', "action"]
       } else {
-        this.columnName = ["", "Bill #", "Submission", "Date Sent", "Due Date", "Payment", "Balance", "Status", "Action"]
+        this.columnName = ["", "Bill #", "Submission", "Date Sent", "Due Date","Charge", "Payment", "Balance", "Status", "Action"]
         this.columnsToDisplay = ['is_expand', 'bill_id', 'submission', "sent_date", "due_date", 'charge', 'payment', 'balance', 'status', 'action']
       }
     })
+    this.paymentForm = this.fb.group({
+      payments: this.fb.array([]),
+    })
+
+  
   }
 
   ngOnInit() {
-    this.userTable = this.fb.group({
-      tableRows: this.fb.array([])
-    });
+
+    for (var i in [0, 1]) {
+      this.addPayment();
+      this.payments().get(i).patchValue({ id: i, bill_id: i, submission: i })
+      this.addReviews(+i)
+    }
+    //console.log( this.payments());
+    this.dataSource = new MatTableDataSource(this.paymentForm.value.payments)
+    
   }
   expandId: any;
   openElement(element) {
@@ -68,23 +74,50 @@ export class PaymentResponseComponent implements OnInit {
       this.expandId = element.id;
     }
   }
-  initiateForm(): FormGroup {
+
+  newPayemntRes(): FormGroup {
     return this.fb.group({
-      id: [''],
-      submission: ['', Validators.compose([Validators.required])],
-      date_sent: ['', Validators.compose([Validators.required])],
-      duedate: [[]],
-      change: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
-      referencen_number: ['', Validators.compose([Validators.required, Validators.min(0)])],
-      charge: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(99999999.99)])],
-      payment: [0],
-      balance: [0],
-      postdate: [0],
-      posttype: [true],
-      eor: [],
-      status: []
-    });
+      bill_id: '',
+      id: '',
+      submission: '',
+      reviews: this.fb.array([])
+    })
   }
+
+  newReview(): FormGroup {
+    return this.fb.group({
+      post_date: '',
+      effictive_date: '',
+      deposit_date: '',
+      payment_amount: ''
+    })
+  }
+
+  payments(): FormArray {
+    return this.paymentForm.get("payments") as FormArray;
+  }
+
+  paymentReviews(index: number): FormArray {
+    console.log(index)
+    if(index != null)
+    console.log(this.payments().at(index).get("reviews") as FormArray)
+    return this.payments().at(index).get("reviews") as FormArray;
+  }
+
+  addPayment() {
+    this.payments().push(this.newPayemntRes());
+  }
+
+  addReviews(index: number) {
+    this.paymentReviews(index).push(this.newReview());
+  }
+
+  saveReview(){
+    console.log(this.paymentForm)
+  }
+
+
+  //Popup's list
   openVoidDialog(): void {
     const dialogRef = this.dialog.open(VoidPayment, {
       width: '800px',
@@ -156,7 +189,7 @@ export class VoidPayment {
 })
 export class SecondBillReview {
   displayedColumns: string[] = ['select', 'item', 'procedure_code_1', 'modifier_1', 'unit', 'charges', 'first_submission', 'balances'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource();
   selection = new SelectionModel(true, []);
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -190,7 +223,7 @@ export class SecondBillReview {
 
 }
 const ELEMENT_DATA1 = [
-  { "id": 132, "bill_id": "CMBN10009320", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "",},
-  // { "id": 131, "bill_id": "CMBN10009480", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "",},
+  { "id": 132, "bill_id": "CMBN10009320", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "", },
+  { "id": 131, "bill_id": "CMBN10009480", "submission": "Second", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "", },
 
 ];

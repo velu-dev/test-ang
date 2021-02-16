@@ -349,14 +349,16 @@
         </button> -->
     </mat-card-header>
     <mat-divider></mat-divider>
-    <mat-card-content class="m-b-10">
+    <mat-card-content class="m-b-10" *ngIf="payments().length > 0">
         <div class="user-detail m-t-10">
+            <form [formGroup]="paymentForm">
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table"
-                matSort>
+                matSort formArrayName="payments">
+               
                 <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
                         {{columnName[i]}} </th>
-                    <td mat-cell *matCellDef="let element">
+                    <td mat-cell *matCellDef="let element;let j"  [formGroupName]="element?.bill_id">
                         <span *ngIf="i == 0">
                             <mat-icon mat-raised-button
                                 [ngClass]="{'table-expand': expandId == element.id, 'expand-close': !(expandId == element.id)}">
@@ -364,7 +366,7 @@
                             </mat-icon>
                         </span>
                         <div>
-                            <span *ngIf="column == 'bill_id'">{{element?.bill_id}}</span>
+                            <span *ngIf="column == 'bill_id'">{{element?.bill_id}}ssss{{j}}</span>
                             <span *ngIf="column == 'submission'">{{element?.submission}}</span>
                             <span *ngIf="column == 'sent_date'">{{element?.sent_date}}</span>
                             <span *ngIf="column == 'due_date'">{{element?.due_date}}</span>
@@ -378,8 +380,8 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="expandedDetail">
-                    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-                        <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                    <td mat-cell *matCellDef="let element;let i" [attr.colspan]="columnsToDisplay.length"  formArrayName="reviews">
+                        <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'" *ngFor="let skill of paymentReviews(element?.bill_id).controls; let reviewIndex=index">
                             <div class="expand-details-list" fxLayout="row wrap">
                                 <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details">
                                     <div><span class="prp_">Explanation of Review</span><span class="prv_"><a class="text-ternary">EOR-12345678-person.pdf</a></span></div>
@@ -402,11 +404,10 @@
                             </div>
 
 
-
-                            <!-- <div class="expand-details-list" fxLayout="row wrap">
+                            <!-- <div class="expand-details-list" fxLayout="row wrap" [formGroupName]="reviewIndex">
                                 <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details editable">
                                     <div>
-                                        <span class="prp_">Explanation of Review</span>
+                                        <span class="prp_">Explanation of Review{{reviewIndex}}</span>
                                         <span class="prv_">
                                             <button class="filled-gray mini-btn" mat-raised-button>Upload</button>
                                         </span>
@@ -415,7 +416,7 @@
                                         <span class="prp_">Post Date</span>
                                         <span class="prv_">
                                             <mat-form-field appearance="outline" class="w-100">
-                                                <input matInput type="text" placeholder="" autocomplete="off">
+                                                <input formControlName="post_date" matInput type="text" placeholder="" autocomplete="off">
                                             </mat-form-field>
                                         </span>
                                     </div>
@@ -423,7 +424,7 @@
                                         <span class="prp_">Effective Date</span>
                                         <span class="prv_">
                                             <mat-form-field appearance="outline" class="w-100">
-                                                <input matInput type="text" placeholder="" autocomplete="off">
+                                                <input formControlName="effictive_date" matInput type="text" placeholder="" autocomplete="off">
                                             </mat-form-field>
                                         </span>
                                     </div>
@@ -431,7 +432,7 @@
                                         <span class="prp_">Deposit Date</span>
                                         <span class="prv_">
                                             <mat-form-field appearance="outline" class="w-100">
-                                                <input matInput type="text" placeholder="" autocomplete="off">
+                                                <input formControlName="deposit_date" matInput type="text" placeholder="" autocomplete="off">
                                             </mat-form-field>
                                         </span>
                                     </div>
@@ -511,7 +512,7 @@
                                 </div>
                                 <div class="w-100 text-center p-t-10">
                                     <button class="outline-danger m-r-10" mat-stroked-button>Cancel</button>
-                                    <button class="outline-success" mat-stroked-button>Save</button>
+                                    <button class="outline-success" mat-stroked-button (click)="saveReview()">Save</button>
                                 </div>
                             </div> -->
                         </div>
@@ -523,6 +524,7 @@
                 </tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
+        </form>
             <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
         </div>
     </mat-card-content>

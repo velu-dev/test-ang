@@ -27,6 +27,7 @@ export class AddEditServiceLocationComponent implements OnInit {
   examinerId: number;
   user: any;
   examiner_list: any;
+  baseUrl:any;
   constructor(private subscriberService: SubscriberService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -149,6 +150,31 @@ export class AddEditServiceLocationComponent implements OnInit {
     if (this.pageStatus == 2) {
       this.locationForm.addControl('national_provider_identifier', new FormControl(null, Validators.compose([Validators.pattern('^[0-9]*$'), Validators.maxLength(15)])));
     }
+
+    let role = this.cookieService.get('role_id')
+    switch (role) {
+      case '1':
+        this.baseUrl = "/admin";
+        break;
+      case '2':
+        this.baseUrl = "/subscriber/";
+        break;
+      case '3':
+        this.baseUrl = "/subscriber/manager/";
+        break;
+      case '4':
+        this.baseUrl = "/subscriber/staff/";
+        break;
+      case '11':
+        this.baseUrl = "/subscriber/examiner/";
+        break;
+      case '12':
+        this.baseUrl = "/subscriber/staff/";
+        break;
+      default:
+        this.baseUrl = "/";
+        break;
+    }
   }
   serviceState: any;
   changeState(state, state_code?) {
@@ -197,7 +223,7 @@ export class AddEditServiceLocationComponent implements OnInit {
         } else {
           this.alertService.openSnackBar('Service Location Created Successfully', 'success');
         }
-        this.router.navigate(['/subscriber/users/examiner', this.examinerId, 1])
+        this.router.navigate([this.baseUrl + 'users/examiner', this.examinerId, 1])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -213,7 +239,7 @@ export class AddEditServiceLocationComponent implements OnInit {
           this.alertService.openSnackBar('Service Location Created Successfully', 'success');
         }
 
-        this.router.navigate(['/subscriber/location'])
+        this.router.navigate([this.baseUrl + '/location'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -231,7 +257,7 @@ export class AddEditServiceLocationComponent implements OnInit {
 
   cancel() {
     if (this.pageStatus == 2) {
-      this.router.navigate(['/subscriber/users/examiner', this.examinerId, 1])
+      this.router.navigate([this.baseUrl + 'users/examiner', this.examinerId, 1])
       return;
     }
     if (this.locationId) {
@@ -346,7 +372,7 @@ export class AddEditServiceLocationComponent implements OnInit {
             this.alertService.openSnackBar('Service Location Created Successfully', 'success');
           }
 
-          this.router.navigate(['/subscriber/location'])
+          this.router.navigate([this.baseUrl + '/location'])
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
