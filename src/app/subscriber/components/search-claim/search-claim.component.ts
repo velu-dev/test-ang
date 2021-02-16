@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
@@ -12,7 +12,7 @@ import { ClaimService } from '../../service/claim.service';
   styleUrls: ['./search-claim.component.scss']
 })
 export class SearchClaimComponent implements OnInit {
-  claimCtrl = new FormControl();
+  claimCtrl = new FormControl('', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")]));
   filteredClaimants: any;
   constructor(private claimService: ClaimService, private cookieService: CookieService, private router: Router,
     private intercom: IntercomService) {
@@ -20,18 +20,22 @@ export class SearchClaimComponent implements OnInit {
       .pipe(
         debounceTime(300),
       ).subscribe(res => {
-        if (!res || (res && res.length < 2 && res != '*')) {
-          this.filteredClaimants = []
-          return;
-        }
-        if (res.trim()) {
-          this.claimService.searchClaim({ "claimant_search_text": res.trim() }).subscribe(search => {
-            this.filteredClaimants = search.data ? search.data : [];
-          }, error => {
-            console.log(error);
+        if (this.claimCtrl.errors) {
+          return
+        } else {
+          if (!res || (res && res.length < 2 && res != '*')) {
             this.filteredClaimants = []
-          })
+            return;
+          }
+          if (res.trim()) {
+            this.claimService.searchClaim({ "claimant_search_text": res.trim() }).subscribe(search => {
+              this.filteredClaimants = search.data ? search.data : [];
+            }, error => {
+              console.log(error);
+              this.filteredClaimants = []
+            })
 
+          }
         }
       });
   }

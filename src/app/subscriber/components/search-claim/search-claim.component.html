@@ -7,21 +7,25 @@
                 <mat-form-field appearance="outline" hideRequiredMarker="hideRequiredControl.auto"
                     floatLabel="floatLabelControl.auto">
                     <input matInput placeholder="Search by Claimant Name or Claim Number"
-                        aria-label="Search by Claimant Name or Claim Number" [formControl]="claimCtrl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let claimant of filteredClaimants" (click)="searchClick(claimant)" [value]="claimant._source?.clmd_lname"
-                                class="custom-option">
-                                <ul>
-                                    <li>
-                                        <div class="cn">{{claimant?._source?.clmd_lname}} {{claimant?._source?.clmd_fname}}</div>
-                                    </li>
-                                    <li>
-                                        <p>
-                                           <span><strong>DOB</strong> : {{claimant?._source?.date_of_birth | date:'MM-dd-yyyy'}}</span>
-                                           <span><strong>Claim #</strong>: {{claimant?._source?.claim_number}}</span>
-                                        </p>
-                                    </li>
-                                    <!-- <li>
+                        aria-label="Search by Claimant Name or Claim Number" [formControl]="claimCtrl"
+                        [matAutocomplete]="auto">
+                    
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let claimant of filteredClaimants" (click)="searchClick(claimant)"
+                            [value]="claimant._source?.clmd_lname" class="custom-option">
+                            <ul>
+                                <li>
+                                    <div class="cn">{{claimant?._source?.clmd_lname}} {{claimant?._source?.clmd_fname}}
+                                    </div>
+                                </li>
+                                <li>
+                                    <p>
+                                        <span><strong>DOB</strong> : {{claimant?._source?.date_of_birth |
+                                            date:'MM-dd-yyyy'}}</span>
+                                        <span><strong>Claim #</strong>: {{claimant?._source?.claim_number}}</span>
+                                    </p>
+                                </li>
+                                <!-- <li>
                                         <p>
                                            <span class="ex_na" title="{{claimant?._source?.ex_last_name}} {{claimant?._source?.ex_first_name}}{{claimant?._source?.suffix ? ', '+ claimant?._source?.suffix : ''}}">{{claimant?._source?.ex_last_name}} {{claimant?._source?.ex_first_name}}{{claimant?._source?.suffix ? ', '+ claimant?._source?.suffix : ''}}</span>
                                            <span>
@@ -37,13 +41,14 @@
                                             </span>
                                         </p>
                                     </li> -->
-                                </ul>
-                            </mat-option>
-                            <mat-option disabled *ngIf="claimCtrl?.value?.length > 1 && filteredClaimants?.length == 0">
-                                Claimant or Claim Details Not Available
-                            </mat-option>
-                        </mat-autocomplete>
+                            </ul>
+                        </mat-option>
+                        <mat-option disabled *ngIf="claimCtrl?.value?.length > 1 && filteredClaimants?.length == 0">
+                            Claimant or Claim Details Not Available
+                        </mat-option>
+                    </mat-autocomplete>
                     <mat-icon matSuffix>search</mat-icon>
+                    <mat-error>Please enter a valid claimant name or claim number</mat-error>
                 </mat-form-field>
             </form>
         </div>

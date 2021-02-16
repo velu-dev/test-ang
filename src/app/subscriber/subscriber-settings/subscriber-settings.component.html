@@ -467,7 +467,8 @@
                                                 <td mat-cell *matCellDef="let element, let i=index">
                                                     <button *ngIf="i != 0"
                                                         (click)="$event.stopPropagation();updateCustomer(element)"
-                                                        class="filled-lightgray mini-btn" mat-raised-button>Set as Default Payment Card</button>
+                                                        class="filled-lightgray mini-btn" mat-raised-button>Set as
+                                                        Default Payment Card</button>
                                                     <div *ngIf="i == 0" class="font-13">Current Default Card</div>
                                                 </td>
                                             </ng-container>
@@ -730,7 +731,7 @@
                         <ng-template mat-tab-label>
                             Payment History
                         </ng-template>
-                        <!-- <mat-card-content class="payment-history w-100" fxLayout="row wrap">
+                        <mat-card-content class="payment-history w-100" fxLayout="row wrap">
                             <div class="sub-title" fxFlex="100">Charges</div>
                             <div fxLayout="row wrap" class="charges" fxFlex="100">
                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
@@ -774,7 +775,7 @@
                                 <mat-tree [dataSource]="dataSourceList" [treeControl]="treeControl" class="pay-list">
                                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                                         <button mat-icon-button disabled></button>
-                                     
+
                                         <div class="pay-records">
                                             <span>{{node.name}}</span>
                                             <span>&nbsp;{{node.pages}}</span>
@@ -798,7 +799,7 @@
                                     </mat-tree-node>
                                 </mat-tree>
                             </div>
-                        </mat-card-content> -->
+                        </mat-card-content>
                     </mat-tab>
                 </mat-tab-group>
             </mat-card>
