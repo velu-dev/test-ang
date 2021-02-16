@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -30,13 +30,13 @@ export class PaymentResponseComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource: any = new MatTableDataSource([]);
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
   paymentForm: FormGroup;
+
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -44,34 +44,33 @@ export class PaymentResponseComponent implements OnInit {
         this.columnName = ["", "Bill #", "Action"]
         this.columnsToDisplay = ['is_expand', 'bill_id', "action"]
       } else {
-        this.columnName = ["", "Bill #", "Submission", "Date Sent", "Due Date","Charge", "Payment", "Balance", "Status", "Action"]
+        this.columnName = ["", "Bill #", "Submission", "Date Sent", "Due Date", "Charge", "Payment", "Balance", "Status", "Action"]
         this.columnsToDisplay = ['is_expand', 'bill_id', 'submission', "sent_date", "due_date", 'charge', 'payment', 'balance', 'status', 'action']
       }
     })
     this.paymentForm = this.fb.group({
       payments: this.fb.array([]),
     })
-
-  
+    //this.addEmployee()
+    for (var i in [0, 1]) {
+      this.addPayment();
+      this.payments().get(i).patchValue({ id: i, bill_id: i, submission: i, showStatus: false })
+      this.addReviews(+i)
+    }
   }
 
   ngOnInit() {
 
-    for (var i in [0, 1]) {
-      this.addPayment();
-      this.payments().get(i).patchValue({ id: i, bill_id: i, submission: i })
-      this.addReviews(+i)
-    }
-    //console.log( this.payments());
-    this.dataSource = new MatTableDataSource(this.paymentForm.value.payments)
-    
+
+
+
   }
   expandId: any;
   openElement(element) {
-    if (this.expandId && this.expandId == element.id) {
+    if (this.expandId && this.expandId == element) {
       this.expandId = null;
     } else {
-      this.expandId = element.id;
+      this.expandId = element;
     }
   }
 
@@ -80,6 +79,7 @@ export class PaymentResponseComponent implements OnInit {
       bill_id: '',
       id: '',
       submission: '',
+      showStatus: false,
       reviews: this.fb.array([])
     })
   }
@@ -98,10 +98,8 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   paymentReviews(index: number): FormArray {
-    console.log(index)
-    if(index != null)
-    console.log(this.payments().at(index).get("reviews") as FormArray)
-    return this.payments().at(index).get("reviews") as FormArray;
+    if (index != null)
+      return this.payments().at(index).get("reviews") as FormArray;
   }
 
   addPayment() {
@@ -112,10 +110,13 @@ export class PaymentResponseComponent implements OnInit {
     this.paymentReviews(index).push(this.newReview());
   }
 
-  saveReview(){
+  saveReview() {
     console.log(this.paymentForm)
   }
 
+  showReview(){
+
+  }
 
   //Popup's list
   openVoidDialog(): void {
