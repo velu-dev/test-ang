@@ -100,11 +100,26 @@
     mat-card-content {
         .user-detail {
             min-height: auto !important;
+            overflow: hidden;
+            .res-table {
+                tr {
+                    border-bottom: 1px solid $light-color;
+                    td {
+                        border-bottom: 1px solid $light-color;
+                        padding: 5px 0 5px 10px;
+                    }
+                    th {
+                        border:none !important;
+                    }
+                }
+            }
             table {
+                border: none;
                 td {
                     .detail {
                         background-color: $white;
                         position: relative;
+                        display: block;
                         &::before {
                             content: "";
                             background-color: $black;
@@ -170,9 +185,9 @@
                             .expand-details.editable {
                                 div {
                                     display: flex;
-                                    ::ng-deep  {
+                                    ::ng-deep {
                                         .mat-form-field {
-                                            width: calc(100% - 20px)
+                                            width: calc(100% - 20px);
                                         }
                                         .mat-form-field-wrapper {
                                             padding: 0 !important;
@@ -180,8 +195,7 @@
                                         .mat-form-field-appearance-outline .mat-form-field-infix {
                                             padding: 0px 0 5px 0 !important;
                                         }
-                                    } 
-                                  
+                                    }
                                 }
                             }
                         }
