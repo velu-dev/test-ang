@@ -16,6 +16,8 @@
                                         <input matInput id="claimant-input" placeholder="Search by name, date of birth "
                                             [matAutocomplete]="claimantAutocomplete" #trigger="matAutocompleteTrigger"
                                             [formControl]="searchInput" class="p-l-10">
+                                        <mat-error *ngIf="isSearchClaimantError">{{errorMessages.claimantSearchError}}
+                                        </mat-error>
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                             <mat-option *ngFor="let option of filteredClaimant?.data"
                                                 (click)="selectClaimant(option)">
@@ -952,6 +954,7 @@
                                 <mat-label>Office Name</mat-label>
                                 <input matInput placeholder="Please Select Office Name" aria-label="Office Name"
                                     [matAutocomplete]="deuAuto" [formControl]="deuCtrl">
+                                <mat-error>Please enter a valid office name</mat-error>
                                 <mat-autocomplete #deuAuto="matAutocomplete">
                                     <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)"
                                         [value]="deu.deu_office">

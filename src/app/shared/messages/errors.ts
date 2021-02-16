@@ -29,4 +29,5 @@ export const handedness = "Please enter a valid handedness";
 export const language = "Please enter a valid language";
 export const userdisable = "User is disabled.";
 export const oldpasswordworng = "Incorrect old password";
-export const entervalidsuffix = "Please enter a valid suffix"
+export const entervalidsuffix = "Please enter a valid suffix";
+export const claimantSearchError = "Please enter a valid data";

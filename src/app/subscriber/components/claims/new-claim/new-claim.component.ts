@@ -124,7 +124,7 @@ export class NewClaimComponent implements OnInit {
   isLinear = false;
   isSubmit = false;
   emasSearchInput = new FormControl('', Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')]));
-  searchInput = new FormControl();
+  searchInput = new FormControl('', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")]));
   filteredClaimant: any;
   claimForm: FormGroup;
   errorMessages = errors;
@@ -186,13 +186,14 @@ export class NewClaimComponent implements OnInit {
   dataSource1 = [];
   deuDetails = [];
   filteredDeu: Observable<any[]>;
-  deuCtrl = new FormControl();
+  deuCtrl = new FormControl('', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")]));
   iseams_entry: boolean = false;
   role: string;
   date: any;
   primary_language_spoken: boolean = false;
   claimant_id: any;
   modifierList = [];
+  isSearchClaimantError = false;
   private _filterAddress(value: string): any {
     const filterValue = value.toLowerCase();
     return this.examinerOptions.filter(option => option.street1.toLowerCase().includes(filterValue));
@@ -244,11 +245,20 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;
-      this.filteredDeu = this.deuCtrl.valueChanges
+      this.deuCtrl.valueChanges
         .pipe(
-          startWith(''),
-          map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
-        );
+          debounceTime(300),
+        ).subscribe(res => {
+          if (this.deuCtrl.errors) {
+            return
+          } else {
+            this.filteredDeu = this.deuCtrl.valueChanges
+              .pipe(
+                startWith(''),
+                map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
+              );
+          }
+        })
     })
     this.logger.log(this.router.url)
     if (this.router.url === "/subscriber/claims/new-claim") {
@@ -457,11 +467,17 @@ export class NewClaimComponent implements OnInit {
       .pipe(
         debounceTime(300),
       ).subscribe(res => {
-        if (res == '') {
-          this.filteredClaimant.data = []
+        if (this.searchInput.errors) {
+          this.isSearchClaimantError = true;
         } else {
-          this.claimService.searchClaimant({ basic_search: res, isadvanced: this.searchStatus }).subscribe(response =>
-            this.filteredClaimant = response)
+          console.log(res)
+          this.isSearchClaimantError = false;
+          if (res == '') {
+            this.filteredClaimant.data = []
+          } else {
+            this.claimService.searchClaimant({ basic_search: res, isadvanced: this.searchStatus }).subscribe(response =>
+              this.filteredClaimant = response)
+          }
         }
       });
     // this.filteredClaimant = this.searchInput.valueChanges
@@ -621,7 +637,7 @@ export class NewClaimComponent implements OnInit {
       InsuranceAdjuster: this.formBuilder.group({
         id: [null],
         payor_id: [null],
-        company_name: [null],
+        company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")])],
         name: [null],
         street1: [null],
         street2: [null],
@@ -647,7 +663,7 @@ export class NewClaimComponent implements OnInit {
       }),
       ApplicantAttorney: this.formBuilder.group({
         id: [null],
-        company_name: [null],
+        company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")])],
         name: [null],
         street1: [null],
         street2: [null],
@@ -660,7 +676,7 @@ export class NewClaimComponent implements OnInit {
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [null],
-        company_name: [null],
+        company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")])],
         name: [null],
         email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         street1: [null],
@@ -673,7 +689,7 @@ export class NewClaimComponent implements OnInit {
       }),
       DEU: this.formBuilder.group({
         id: [null],
-        name: [null],
+        name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")])],
         street1: [null],
         street2: [null],
         city: [null],
@@ -748,32 +764,44 @@ export class NewClaimComponent implements OnInit {
       }
     );
     this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges.subscribe(input => {
-      if (input) {
-        if (input.length >= 3 || input.length == 0) {
-          this.claimService.searchEAMSAdmin({ search: input }).subscribe(res => {
-            let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
-            this.claimAdminGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
-          })
+      if (this.claim.get(['InsuranceAdjuster', 'company_name']).errors) {
+        return
+      } else {
+        if (input) {
+          if (input.length >= 3 || input.length == 0) {
+            this.claimService.searchEAMSAdmin({ search: input }).subscribe(res => {
+              let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+              this.claimAdminGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+            })
+          }
         }
       }
     });
     this.claim.get(['ApplicantAttorney', 'company_name'])!.valueChanges.subscribe(input => {
-      if (input) {
-        if (input.length >= 3 || input.length == 0) {
-          this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
-            let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
-            this.aattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
-          })
+      if (this.claim.get(['ApplicantAttorney', 'company_name']).errors) {
+        return
+      } else {
+        if (input) {
+          if (input.length >= 3 || input.length == 0) {
+            this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
+              let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+              this.aattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+            })
+          }
         }
       }
     });
     this.claim.get(['DefenseAttorney', 'company_name'])!.valueChanges.subscribe(input => {
-      if (input) {
-        if (input.length >= 3 || input.length == 0) {
-          this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
-            let ind = this.dattroneyGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
-            this.dattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
-          })
+      if (this.claim.get(['DefenseAttorney', 'company_name']).errors) {
+        return
+      } else {
+        if (input) {
+          if (input.length >= 3 || input.length == 0) {
+            this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
+              let ind = this.dattroneyGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+              this.dattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+            })
+          }
         }
       }
     })

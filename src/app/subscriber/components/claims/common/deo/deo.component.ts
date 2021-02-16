@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, debounceTime } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -19,7 +19,7 @@ export class DeoComponent implements OnInit {
   attroneylist = [];
   @Input('state') states;
   filteredDeu: Observable<any[]>;
-  deuCtrl = new FormControl();
+  deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")]));
   deuDetails = [];
   deuId = "";
   constructor(public dialogRef: MatDialogRef<DeoComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
@@ -37,11 +37,20 @@ export class DeoComponent implements OnInit {
     });
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;
-      this.filteredDeu = this.deuCtrl.valueChanges
+      this.deuCtrl.valueChanges
         .pipe(
-          startWith(''),
-          map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
-        );
+          debounceTime(300),
+        ).subscribe(res => {
+          if (this.deuCtrl.errors) {
+            return
+          } else {
+            this.filteredDeu = this.deuCtrl.valueChanges
+              .pipe(
+                startWith(''),
+                map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
+              );
+          }
+        })
     })
 
   }
