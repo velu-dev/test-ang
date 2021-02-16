@@ -44,7 +44,7 @@ export class PaymentResponseComponent implements OnInit {
         this.columnName = ["", "Bill #", "Action"]
         this.columnsToDisplay = ['is_expand', 'bill_id', "action"]
       } else {
-        this.columnName = ["", "Bill #", "Submission", "Date Sent", "Due Date", "Payment", "Balance", "Status", "Action"]
+        this.columnName = ["", "Bill #", "Submission", "Date Sent", "Due Date","Charge", "Payment", "Balance", "Status", "Action"]
         this.columnsToDisplay = ['is_expand', 'bill_id', 'submission', "sent_date", "due_date", 'charge', 'payment', 'balance', 'status', 'action']
       }
     })
