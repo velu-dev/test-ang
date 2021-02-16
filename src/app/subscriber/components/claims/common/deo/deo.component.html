@@ -33,6 +33,7 @@
                 <mat-label>Office Name</mat-label>
                 <input matInput placeholder="Select Office Name" aria-label="Office Name" [matAutocomplete]="deuAuto"
                     [formControl]="deuCtrl">
+                <mat-error>Please enter a valid office name</mat-error>
                 <mat-autocomplete #deuAuto="matAutocomplete">
                     <mat-option *ngFor="let deu of (filteredDeu | async)" (click)="deuSelect(deu)"
                         [value]="deu.deu_office">

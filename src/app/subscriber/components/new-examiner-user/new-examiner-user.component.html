@@ -262,7 +262,8 @@
                                 <div fxLayout="row wrap" *ngIf="file" class="w9-doc-filename">
                                     <div>
                                         <a (click)="downloadDocumet({file_name:file,file_url:w9Url})" [routerLink]="[]"
-                                           [ngClass]="{'text-ternary': w9Url}">{{file}} <i class="fas fa-download p-l-5" *ngIf="w9Url"></i></a>
+                                            [ngClass]="{'text-ternary': w9Url}">{{file}} <i
+                                                class="fas fa-download p-l-5" *ngIf="w9Url"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -794,9 +795,11 @@
 
                 <mat-card class="new-location m-b-20" [ngStyle]="{'display':!locationAddStatus ? 'none' : 'block' }">
                     <mat-card-header>
-                        <div class="m-0 content-wrapper-main-title m-t-10">Search & Assign Existing Service Locations</div>
+                        <div class="m-0 content-wrapper-main-title m-t-10">Search & Assign Existing Service Locations
+                        </div>
                         <span class="spacer"></span>
-                        <button mat-stroked-button class="m-l-10 outline-success" (click)="locationRoute()">Create New Service Location</button>
+                        <button mat-stroked-button class="m-l-10 outline-success" (click)="locationRoute()">Create New
+                            Service Location</button>
                     </mat-card-header>
                     <mat-divider></mat-divider>
                     <mat-card-content>
@@ -814,7 +817,9 @@
                                         {{option?.city}}
                                         {{option?.state_code }} {{option?.zip_code }}
                                     </mat-option>
-                                    <mat-option *ngIf="(filteredOptions | async)?.length == 0" disabled>No Existing service location found. Please create a <a class="text-ternary" (click)="locationRoute()" style="cursor: pointer;">new service location</a>.
+                                    <mat-option *ngIf="(filteredOptions | async)?.length == 0" disabled>No Existing
+                                        service location found. Please create a <a class="text-ternary"
+                                            (click)="locationRoute()" style="cursor: pointer;">new service location</a>.
                                     </mat-option>
                                 </mat-autocomplete>
                                 <span matSuffix class="search-icon icons">
@@ -846,7 +851,9 @@
                                    Create Service Location
                                 </button> -->
                                 <div *ngIf="(filteredOptions | async)?.length == 0 && locationData == null"
-                                    class="text-center p-b-40">No Existing service location found. Please create a <a class="text-ternary cursor-pointer" (click)="locationRoute()">new service location</a>.</div>
+                                    class="text-center p-b-40">No Existing service location found. Please create a <a
+                                        class="text-ternary cursor-pointer" (click)="locationRoute()">new service
+                                        location</a>.</div>
                             </div>
 
                             <div fxFlex="50" fxFlex.xl="50" fxFlex.lg="50" fxFlex.md="50" fxFlex.sm="100"
@@ -886,7 +893,8 @@
                             <div class="text-center w-100 m-t-10 m-b-10">
                                 <button mat-stroked-button type="button" class="outline-danger"
                                     (click)="locationCancel()">Cancel</button>
-                                <button mat-stroked-button class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>
+                                <button mat-stroked-button class="m-l-10 outline-success"
+                                    (click)="locationSubmit()">Save </button>
                                 <!-- <button mat-stroked-button
                                     *ngIf="(filteredOptions | async)?.length != 0 || ((filteredOptions | async)?.length >= 1 || locationData)"
                                     class="m-l-10 outline-success" (click)="locationSubmit()">Save </button>

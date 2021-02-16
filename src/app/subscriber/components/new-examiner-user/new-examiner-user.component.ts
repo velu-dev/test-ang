@@ -7,7 +7,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatDialog, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatSort, MatPaginator, MatAutocompleteTrigger } from '@angular/material';
 import { Observable } from 'rxjs';
-import { shareReplay, map, startWith } from 'rxjs/operators';
+import { shareReplay, map, startWith, debounceTime } from 'rxjs/operators';
 import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
 import * as  errors from '../../../shared/messages/errors'
 import { Store } from '@ngrx/store';
@@ -107,6 +107,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+  isAddresssearchError = false;
   constructor(private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userService: SubscriberUserService,
@@ -248,12 +249,22 @@ export class NewExaminerUserComponent implements OnInit {
     //     //this.filteredOptions = null;
     //  }
     // })
-    this.filteredOptions = this.addresssearch.valueChanges
+    this.addresssearch.valueChanges
       .pipe(
-        startWith(''),
-        map(value => this._filterLocation(value))
-      );
-
+        debounceTime(300),
+      ).subscribe(res => {
+        if (this.addresssearch.errors) {
+          this.isAddresssearchError = true;
+          return
+        } else {
+          this.isAddresssearchError = false;
+          this.filteredOptions = this.addresssearch.valueChanges
+            .pipe(
+              startWith(''),
+              map(value => this._filterLocation(value))
+            );
+        }
+      })
   }
 
   enableEmail(status) {
@@ -1051,7 +1062,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   //existing location
-  addresssearch = new FormControl();
+  addresssearch = new FormControl("", Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")]));
   filteredOptions: any;
   locationData: any = null;
   national_provider_identifier: any = null;

@@ -42,7 +42,7 @@ export class DefenseAttorneyComponent implements OnInit {
     //     );
     // })
     this.DefanceAttorney = this.formBuilder.group({
-      company_name: [{ value: null, disabled: true }],
+      company_name: [{ value: null, disabled: true }, , Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")])],
       id: [],
       name: [{ value: null, disabled: true }],
       street1: [{ value: null, disabled: true }],
@@ -55,11 +55,15 @@ export class DefenseAttorneyComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.DefanceAttorney.get('company_name')!.valueChanges.subscribe(input => {
-      if (input) {
-        if (input.length >= 3 || input.length == 0) {
-          this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
-            this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
-          })
+      if (this.DefanceAttorney.get('company_name').errors) {
+        return
+      } else {
+        if (input) {
+          if (input.length >= 3 || input.length == 0) {
+            this.claimService.searchEAMSAttorney({ search: input }).subscribe(res => {
+              this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+            })
+          }
         }
       }
     });
