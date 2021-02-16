@@ -44,7 +44,7 @@ export class PaymentResponseComponent implements OnInit {
         this.columnName = ["", "Bill #", "Action"]
         this.columnsToDisplay = ['is_expand', 'bill_id', "action"]
       } else {
-        this.columnName = ["", "Bill #", "Submission", "Date Sent", "Due Date","Charge", "Payment", "Balance", "Status", "Action"]
+        this.columnName = ["", "Bill #", "Submission", "Date Sent", "Due Date", "Charge", "Payment", "Balance", "Status", "Action"]
         this.columnsToDisplay = ['is_expand', 'bill_id', 'submission', "sent_date", "due_date", 'charge', 'payment', 'balance', 'status', 'action']
       }
     })
@@ -54,23 +54,23 @@ export class PaymentResponseComponent implements OnInit {
     //this.addEmployee()
     for (var i in [0, 1]) {
       this.addPayment();
-      this.payments().get(i).patchValue({ id: i, bill_id: i, submission: i })
+      this.payments().get(i).patchValue({ id: i, bill_id: i, submission: i, showStatus: false })
       this.addReviews(+i)
     }
   }
 
   ngOnInit() {
 
-   
-  
-    
+
+
+
   }
   expandId: any;
   openElement(element) {
-    if (this.expandId && this.expandId == element.id) {
+    if (this.expandId && this.expandId == element) {
       this.expandId = null;
     } else {
-      this.expandId = element.id;
+      this.expandId = element;
     }
   }
 
@@ -79,6 +79,7 @@ export class PaymentResponseComponent implements OnInit {
       bill_id: '',
       id: '',
       submission: '',
+      showStatus: false,
       reviews: this.fb.array([])
     })
   }
@@ -97,8 +98,8 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   paymentReviews(index: number): FormArray {
-    if(index != null)
-    return this.payments().at(index).get("reviews") as FormArray;
+    if (index != null)
+      return this.payments().at(index).get("reviews") as FormArray;
   }
 
   addPayment() {
@@ -109,12 +110,15 @@ export class PaymentResponseComponent implements OnInit {
     this.paymentReviews(index).push(this.newReview());
   }
 
-  saveReview(){
+  saveReview() {
     console.log(this.paymentForm)
   }
 
+  showReview(){
 
-    //Popup's list
+  }
+
+  //Popup's list
   openVoidDialog(): void {
     const dialogRef = this.dialog.open(VoidPayment, {
       width: '800px',

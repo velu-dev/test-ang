@@ -25,7 +25,7 @@
                     <thead *ngFor="let payemnt of payments().controls; let payIndex=index" [formGroupName]="payIndex">
                         <tr>
                             <td>
-                                <mat-icon class="text-success">add_circle</mat-icon>
+                                <mat-icon class="text-success" (click)="openElement(payemnt.get('id').value)">{{expandId == payemnt.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon>
                             </td>
                             <td>{{payemnt.get('bill_id').value}}</td>
                             <td>First</td>
@@ -39,7 +39,7 @@
                             <td><button mat-raised-button class="mini-btn filled-gray">Add Response</button></td>
                         </tr>
 
-                        <tr formArrayName="reviews">
+                        <tr formArrayName="reviews" *ngIf="expandId == payemnt.get('id').value">
                             <td colspan="10">
                                 <div class="detail"
                                     *ngFor="let review of paymentReviews(payIndex).controls; let reviewIndex=index">
@@ -202,7 +202,7 @@
                                             </div>
                                             <div class="w-100 text-center p-t-10">
                                                 <button class="outline-danger m-r-10" mat-stroked-button>Cancel</button>
-                                                <button class="outline-success" mat-stroked-button>Save</button>
+                                                <button class="outline-success" (click)="saveReview()" mat-stroked-button>Save</button>
                                             </div>
                                         </div>
                                     </div>
