@@ -19,7 +19,7 @@ export class DeoComponent implements OnInit {
   attroneylist = [];
   @Input('state') states;
   filteredDeu: Observable<any[]>;
-  deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")]));
+  deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
   deuDetails = [];
   deuId = "";
   constructor(public dialogRef: MatDialogRef<DeoComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
