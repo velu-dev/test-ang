@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -30,13 +30,13 @@ export class PaymentResponseComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
-  dataSource: any = new MatTableDataSource([]);
   columnsToDisplay = [];
   expandedElement;
   isMobile = false;
   columnName = [];
   filterValue: string;
   paymentForm: FormGroup;
+
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -51,19 +51,18 @@ export class PaymentResponseComponent implements OnInit {
     this.paymentForm = this.fb.group({
       payments: this.fb.array([]),
     })
-
-  
-  }
-
-  ngOnInit() {
-
+    //this.addEmployee()
     for (var i in [0, 1]) {
       this.addPayment();
       this.payments().get(i).patchValue({ id: i, bill_id: i, submission: i })
       this.addReviews(+i)
     }
-    //console.log( this.payments());
-    this.dataSource = new MatTableDataSource(this.paymentForm.value.payments)
+  }
+
+  ngOnInit() {
+
+   
+  
     
   }
   expandId: any;
@@ -98,9 +97,7 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   paymentReviews(index: number): FormArray {
-    console.log(index)
     if(index != null)
-    console.log(this.payments().at(index).get("reviews") as FormArray)
     return this.payments().at(index).get("reviews") as FormArray;
   }
 
@@ -117,7 +114,7 @@ export class PaymentResponseComponent implements OnInit {
   }
 
 
-  //Popup's list
+    //Popup's list
   openVoidDialog(): void {
     const dialogRef = this.dialog.open(VoidPayment, {
       width: '800px',
