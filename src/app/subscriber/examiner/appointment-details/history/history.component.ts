@@ -40,6 +40,9 @@ export class HistoryComponent implements OnInit {
   historyData: any;
   rushRequest: any;
   inFile: any = [];
+  dataSource1 = ELEMENT_DATA;
+  columnsToDisplays = [];
+  columnNames = [];
   statusBarValues = { value: null, status: '', class: '' }
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private onDemandService: OnDemandService, private alertService: AlertService, private intercom: IntercomService,
@@ -82,7 +85,16 @@ export class HistoryComponent implements OnInit {
         this.columnName = ["Ref #", "Date Requested", "File Name", "Rush Request?", "Date Received", "Download"]
         this.columnsToDisplay = ['request_reference_id', "date_of_request", 'file_name', 'service_priority', "date_of_communication", 'download']
       }
+      this.isMobile = res;
+        if (res) {
+          this.columnNames = ["", "Phone Number"]
+          this.columnsToDisplays = ['is_expand', 'phone_number']
+        } else {
+          this.columnNames = ["Phone Number","Call Start Time", "Call End Time", "Narration", "Created Date Time", "Cancel Reason", "Cancel Notes"]
+          this.columnsToDisplays = ['phone_number','call_start_time', "call_end_time", "narration", 'created_date_time', 'cancel_reason', 'cancel_notes']
+        }
     })
+    
   }
 
   ngOnInit() {
@@ -138,6 +150,13 @@ export class HistoryComponent implements OnInit {
       }
 
   }
+  expandId1: any;
+  openElement1(element) {
+    if (this.isMobile) {
+      this.expandId1 = element.id;
+       }
+  }
+
 
   onDemandSubmit() {
 
@@ -199,3 +218,8 @@ export class HistoryComponent implements OnInit {
   }
 
 }
+const ELEMENT_DATA = [
+  { "id": 1, "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "Call #Scheduled By Super Admin","created_date_time": "2021-02-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
+  { "id": 2, "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "VoiceMail #3rd Attempt","created_date_time": "2021-02-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
+  { "id": 3, "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "VoiceMail #2rd Attempt","created_date_time": "2021-02-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
+  ];
