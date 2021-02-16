@@ -340,13 +340,10 @@
             </mat-card-content>
         </mat-card>
     </div> -->
-<mat-card class="m-card m-t-10">
+<!-- <mat-card class="m-card m-t-10">
     <mat-card-header>
         <div class="content-wrapper-main-title">Payment Responses</div>
         <span class="spacer"></span>
-        <!-- <button mat-raised-button class="filled-gray m-b-5">
-            Add Payment
-        </button> -->
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="m-b-10" *ngIf="payments().length > 0">
@@ -401,10 +398,10 @@
                                     <div><span class="prp_">Interest Paid</span><span class="prv_"></span></div>
                                     <div><span class="prp_">Void,Void Reason</span><span class="prv_"></span></div>
                                 </div>
-                            </div>
+                            </div> -->
 
 
-                            <!-- <div class="expand-details-list" fxLayout="row wrap" [formGroupName]="reviewIndex">
+<!-- <div class="expand-details-list" fxLayout="row wrap" [formGroupName]="reviewIndex">
                                 <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details editable">
                                     <div>
                                         <span class="prp_">Explanation of Review{{reviewIndex}}</span>
@@ -515,7 +512,7 @@
                                     <button class="outline-success" mat-stroked-button (click)="saveReview()">Save</button>
                                 </div>
                             </div> -->
-                        </div>
+<!-- </div>
                     </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
@@ -524,8 +521,198 @@
                 </tr>
                 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
             </table>
-        </form>
-            <!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+        </form> -->
+<!-- <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> -->
+<!-- </div>
+    </mat-card-content>
+</mat-card> -->
+
+
+
+
+<mat-card class="m-card m-t-10">
+    <mat-card-header>
+        <div class="content-wrapper-main-title">Payment Responses</div>
+        <span class="spacer"></span>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="m-b-10">
+        <div class="user-detail m-t-10">
+            <table class="table res-table pay-response">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Bill #</th>
+                        <th>Submission</th>
+                        <th>Date Sent</th>
+                        <th>Due Date</th>
+                        <th>Charge</th>
+                        <th>Payment</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <thead>
+                    <tr>
+                        <td>
+                            <mat-icon class="text-success">add_circle</mat-icon>
+                        </td>
+                        <td>CMBN10009320</td>
+                        <td>First</td>
+                        <td>12-07-2020</td>
+                        <td>02-05-2021</td>
+                        <td>$3516.00</td>
+                        <td>$100.00</td>
+                        <td class="text-danger">$3416.00</td>
+                        <td class="text-success">Partially Paid</td>
+                        <td><button mat-raised-button class="mini-btn filled-gray">Add Response</button></td>
+                    </tr>
+                    <tr>
+                        <td colspan="10">
+                            <div class="detail">
+                                <div class="expand-details-list" fxLayout="row wrap">
+                                    <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details">
+                                        <div><span class="prp_">Explanation of Review</span><span class="prv_"><a class="text-ternary">EOR-12345678-person.pdf</a></span></div>
+                                        <div><span class="prp_">Post Date</span><span class="prv_">29-01-2021</span></div>
+                                        <div><span class="prp_">Effective Date</span><span class="prv_">06-02-2021</span></div>
+                                        <div><span class="prp_">Deposit Date</span><span class="prv_">30-01-2021</span></div>
+                                    </div>
+                                    <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details">
+                                        <div><span class="prp_">Payment Amount</span><span class="prv_">$100.00</span></div>
+                                        <div><span class="prp_">Payment Method</span><span class="prv_">Check</span></div>
+                                        <div><span class="prp_">Penalty Charged</span><span class="prv_">30-12-1899</span></div>
+                                        <div><span class="prp_">Penalty Paid</span><span class="prv_">30-12-1899</span></div>
+                                    </div>
+                                    <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details">
+                                        <div><span class="prp_">Reference Number</span><span class="prv_">7863485435</span></div>
+                                        <div><span class="prp_">Interest Charged</span><span class="prv_"></span></div>
+                                        <div><span class="prp_">Interest Paid</span><span class="prv_"></span></div>
+                                        <div><span class="prp_">Void,Void Reason</span><span class="prv_"></span></div>
+                                    </div>
+                                </div>
+                                <div class="expand-details-list" fxLayout="row wrap">
+                                    <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details editable">
+                                        <div>
+                                            <span class="prp_">Explanation of Review{{reviewIndex}}</span>
+                                            <span class="prv_">
+                                                <button class="filled-gray mini-btn" mat-raised-button>Upload</button>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="prp_">Post Date</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input formControlName="post_date" matInput type="text"
+                                                        placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="prp_">Effective Date</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input formControlName="effictive_date" matInput type="text"
+                                                        placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="prp_">Deposit Date</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input formControlName="deposit_date" matInput type="text"
+                                                        placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details editable">
+                                        <div>
+                                            <span class="prp_">Payment Amount</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input matInput type="text" placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="prp_">Payment Method</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input matInput type="text" placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="prp_">Penalty Charged</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input matInput type="text" placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="prp_">Penalty Paid</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input matInput type="text" placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details editable">
+                                        <div>
+                                            <span class="prp_">Reference Number</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input matInput type="text" placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="prp_">Interest Charged</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input matInput type="text" placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="prp_">Interest Paid</span>
+                                            <span class="prv_">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input matInput type="text" placeholder="" autocomplete="off">
+                                                </mat-form-field>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <span class="prp_">Void</span>
+                                            <mat-radio-group aria-label="Select an option">
+                                                <mat-radio-button value="1" class="m-r-10">Yes</mat-radio-button>
+                                                <mat-radio-button value="2">No</mat-radio-button>
+                                            </mat-radio-group>
+                                        </div>
+
+                                        <div>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <input matInput type="text" placeholder="Void Reason"
+                                                    autocomplete="off">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="w-100 text-center p-t-10">
+                                        <button class="outline-danger m-r-10" mat-stroked-button>Cancel</button>
+                                        <button class="outline-success" mat-stroked-button
+                                            (click)="saveReview()">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </mat-card-content>
 </mat-card>
