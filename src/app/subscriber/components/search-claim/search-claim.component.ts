@@ -12,7 +12,7 @@ import { ClaimService } from '../../service/claim.service';
   styleUrls: ['./search-claim.component.scss']
 })
 export class SearchClaimComponent implements OnInit {
-  claimCtrl = new FormControl('', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-/& ]{0,15}$")]));
+  claimCtrl = new FormControl('', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
   filteredClaimants: any;
   constructor(private claimService: ClaimService, private cookieService: CookieService, private router: Router,
     private intercom: IntercomService) {
