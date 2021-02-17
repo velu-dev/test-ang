@@ -26,99 +26,99 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 
 /*Treeview*/
 interface PaymentHistroy {
-  name: string;
-  pages: string;
-  charges: string;
+  id?: number;
+  first_name?: string;
+  middle_name?: string;
+  last_name?: string;
+  suffix?: string;
+  name?: string;
+  pages: any;
+  charges: any;
+  request_reference_id?: number;
+  lines?: any;
+  extra_units_charged?: any;
+  no_of_units_charged?: any;
+
   children?: PaymentHistroy[];
 }
 const TREE_DATA: PaymentHistroy[] = [
-  // {
-  //   name: 'Venkatesan Mariyappan',
-  //   pages: '',
-  //   charges: '',
-  //   children: [
-  //     { name: 'Report Generated',pages:'55', charges:'$34578.00' },
-  //     { name: 'Report Generated',pages:'55', charges:'$34578.00' },
-  //     { name: 'Report Generated',pages:'55', charges:'$34578.00' },
-  //     { name: 'Report Generated',pages:'55', charges:'$34578.00' }
-  //   ]
-  // },
   {
-    name: 'Examiner : Rajan Mariappan',
-    pages: '',
-    charges: '$795.60',
-    children: [
+    "id": 3,
+    "first_name": "Wade",
+    "middle_name": "A.D",
+    "last_name": "Cartwright",
+    "suffix": "MD",
+    // name: "MD Wade A.D Cartwright",
+    "pages": "",
+    "charges": "",
+    "children": [
       {
-        name: 'Subscription Charges',
-        pages: '',
-        charges: '$525',
-        children: [
-          { name: '$2.50 postage per packet per recipient', pages: '', charges: '$250.0' },
-          { name: '$0.10 per extra page in packet greater than 10 pages', pages: '', charges: '$250.0' }
-        ]
-      }, {
-        name: 'SimpleService™ Charges',
-        pages: '',
-        charges: '$423',
-        children: [
+        "name": "Subscription Charges",
+        "pages": "",
+        "charges": "$525",
+        "children": [
           {
-            name: 'Correspondence', pages: '', charges: '$250.0',
-            children: [
-              { name: '$2.50 postage per packet per recipient', pages: '4 items', charges: '$250.0' },
-              { name: '$0.10 per extra page in packet greater than 10 pages', pages: '8 items', charges: '$250.0' }
-
-            ]
+            "name": "$2.50 postage per packet per recipient",
+            "pages": 0,
+            "charges": 0
           },
           {
-            name: 'History', pages: '', charges: '$250.0',
-            children: [
-              { name: '$2.50 postage per packet per recipient', pages: '4 items', charges: '$250.0' },
-              { name: '$0.10 per extra page in packet greater than 10 pages', pages: '8 items', charges: '$250.0' }
-
-            ]
-          },
+            "name": "$0.10 per extra page in packet greater than 10 pages",
+            "pages": 0,
+            "charges": 0
+          }
         ]
       },
-    ]
-  },
-  {
-    name: 'Examiner : Venkatesan Mariyappan',
-    pages: '',
-    charges: '$795.60',
-    children: [
       {
-        name: 'Subscription Charges',
-        pages: '',
-        charges: '$525',
-        children: [
-          { name: '$2.50 postage per packet per recipient', pages: '', charges: '$250.0' },
-          { name: '$0.10 per extra page in packet greater than 10 pages', pages: '', charges: '$250.0' }
-        ]
-      }, {
-        name: 'SimpleService™ Charges',
-        pages: '',
-        charges: '$423',
-        children: [
+        "name": "SimpleService™ Charges",
+        "pages": "",
+        "charges": "",
+        "children": [
           {
-            name: 'Correspondence', pages: '', charges: '$250.0',
-            children: [
-              { name: '$2.50 postage per packet per recipient', pages: '4 items', charges: '$250.0' },
-              { name: '$0.10 per extra page in packet greater than 10 pages', pages: '8 items', charges: '$250.0' }
-
+            "name": "Record",
+            "pages": 1000548,
+            "charges": 130000,
+            "children": [
+              {
+                "request_reference_id": 1021003442,
+                "charges": "130000",
+                "no_of_units_charged": 1,
+                "extra_units_charged": null,
+                "name": "0.13 per page reviewed",
+                "pages": 1000000,
+                "lines": ""
+              },
+              {
+                "request_reference_id": 1021003434,
+                "charges": "0",
+                "no_of_units_charged": 1,
+                "extra_units_charged": null,
+                "name": "0.30 per page reviewed",
+                "pages": 548,
+                "lines": ""
+              }
             ]
           },
           {
-            name: 'History', pages: '', charges: '$250.0',
-            children: [
-              { name: '$2.50 postage per packet per recipient', pages: '4 items', charges: '$250.0' },
-              { name: '$0.10 per extra page in packet greater than 10 pages', pages: '8 items', charges: '$250.0' }
-
+            "name": "Transcription",
+            "pages": 16,
+            "charges": 432,
+            "children": [
+              {
+                "request_reference_id": 1021003435,
+                "charges": "432",
+                "no_of_units_charged": 1,
+                "extra_units_charged": null,
+                "name": "0.18 per line transcribed",
+                "pages": 16,
+                "lines": 2400
+              }
             ]
-          },
+          }
         ]
-      },
+      }
     ]
-  },
+  }
 ];
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
@@ -194,9 +194,10 @@ export class SubscriberSettingsComponent implements OnInit {
   role = this.cookieService.get('role_id')
   /* Tree view */
   private _transformer = (node: PaymentHistroy, level: number) => {
+    let name = node.name ? node.name : node.first_name
     return {
       expandable: !!node.children && node.children.length > 0,
-      name: node.name,
+      name: name,
       pages: node.pages,
       charges: node.charges,
       level: level,
@@ -211,6 +212,7 @@ export class SubscriberSettingsComponent implements OnInit {
 
   dataSourceList = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   /* Tree view end */
+  @ViewChild('tree', { static: false }) tree;
 
   constructor(
     private spinnerService: NgxSpinnerService,
@@ -277,7 +279,11 @@ export class SubscriberSettingsComponent implements OnInit {
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
       this.userForm.patchValue(userDetails)
     })
-    this.dataSourceList.data = TREE_DATA;/* Tree view */
+    // this.userService.getPaymentHistory(new Date()).subscribe(res => {
+    //   this.dataSourceList.data = res.data;/* Tree view */
+    // })
+    this.dataSourceList.data = TREE_DATA
+
   }
   cardCount = 0;
   listCard() {
@@ -295,6 +301,16 @@ export class SubscriberSettingsComponent implements OnInit {
   isViewInit: boolean = false;
   ngAfterViewInit() {
     this.isViewInit = true;
+  }
+  isExpanded = false;
+  expandAll() {
+    if (!this.isExpanded) {
+      this.isExpanded = true;
+      this.treeControl.expandAll();
+    } else {
+      this.isExpanded = false;
+      this.treeControl.collapseAll();
+    }
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   billings: FormGroup;

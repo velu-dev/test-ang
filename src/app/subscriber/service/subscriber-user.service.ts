@@ -115,4 +115,7 @@ export class SubscriberUserService {
   diasbleExaminer(id, status): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.examinerDisable + id, { status: status })
   }
+  getPaymentHistory(date): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.paymentHistory + date)
+  }
 }

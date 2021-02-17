@@ -765,14 +765,15 @@
                                     <div class="sub-title m-t-10">Details</div>
                                 </div>
                                 <div fxFlex="50" class="text-right">
-                                    <button mat-raised-button class="filled-lightgray m-t-15">
-                                        <mat-icon>add</mat-icon> Expand All
+                                    <button (click)="expandAll()" mat-raised-button class="filled-lightgray m-t-15">
+                                        <mat-icon>add</mat-icon> {{isExpanded ? "Collapse All" : "Expand All"}}
                                     </button>
                                 </div>
                                 <div class="divider"></div>
                             </div>
                             <div fxLayout="row wrap" class="details" fxFlex="100">
-                                <mat-tree [dataSource]="dataSourceList" [treeControl]="treeControl" class="pay-list">
+                                <mat-tree #tree [dataSource]="dataSourceList" [treeControl]="treeControl"
+                                    class="pay-list">
                                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
                                         <button mat-icon-button disabled></button>
 
@@ -790,7 +791,7 @@
                                             </mat-icon>
                                         </button>
                                         <div class="pay-records">
-                                            <span><b>{{node.name}}</b></span>
+                                            <span><b>{{node.name}}2</b></span>
                                             <span>&nbsp;{{node.pages}}</span>
                                             <span><b>{{node.charges}}</b></span>
                                             <div class="divider"></div>

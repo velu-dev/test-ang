@@ -55,6 +55,7 @@ export const api_endpoint = {
     verifyRole: 'subscriber/examiner/verify-role',
     verifyUserRole: 'subscriber/examiner/verify-user-role',
     examinerDisable: 'subscriber/disable-examiner/',
+    paymentHistory: 'subscription-charges/details/',
     listCards: "payment/list-all-cards",
     createCard: "payment/create-card",
     updateCard: "payment/update-card",
