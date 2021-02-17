@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
@@ -36,7 +36,7 @@ export class PaymentResponseComponent implements OnInit {
   columnName = [];
   filterValue: string;
   paymentForm: FormGroup;
-
+  @Input() billingData: any;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -60,7 +60,7 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   ngOnInit() {
-
+console.log(this.billingData)
 
 
 
@@ -114,7 +114,7 @@ export class PaymentResponseComponent implements OnInit {
     console.log(this.paymentForm)
   }
 
-  showReview(){
+  showReview() {
 
   }
 
