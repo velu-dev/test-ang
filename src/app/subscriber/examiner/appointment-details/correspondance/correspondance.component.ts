@@ -61,6 +61,9 @@ export class BillingCorrespondanceComponent implements OnInit {
   isLoading: boolean = false;
   correspondData: any;
   states = [];
+  dataSource1 = ELEMENT_DATA;
+  columnsToDisplays = [];
+  columnNames = [];
   statusBarValues = { value: null, status: '', class: '' }
   statusOfAppointment = { isEmptyNoDate: false, IsEmptyAppointmentDate: false, isEmptyDuration: false, isEmptyLocation: false }
   is_appointment_incomplete = false;
@@ -99,6 +102,14 @@ export class BillingCorrespondanceComponent implements OnInit {
       } else {
         this.columnName = ["Ref #", "File Name", "Action", "Date", "Recipients", "Download Generated Items", "Download On Demand Proof of Service", "Further Information"]
         this.columnsToDisplay = ['request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'download1', 'further_info']
+      }
+      this.isMobile = res;
+      if (res) {
+        this.columnNames = ["", "Ref #"]
+        this.columnsToDisplays = ['is_expand', 'ref_id']
+      } else {
+        this.columnNames = ["Ref #","Receiver Name", "Tracking Number", "Details"]
+        this.columnsToDisplays = ['ref_id','receiver_name', "tracking_id", "more"]
       }
     })
   }
@@ -366,6 +377,13 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.expandId = element.document_id;
       }
   }
+  expandId2: any;
+  openElement2(element) {
+    if (this.isMobile) {
+      this.expandId2 = element.id;
+       }
+  }
+
 
   allOrNone(status) {
     if (!status) {
@@ -911,3 +929,8 @@ export class MailOnDemandConfirm {
   ];
 }
 
+const ELEMENT_DATA = [
+  { "id": 1, "ref_id": "2093218926", "receiver_name": "Venkatesan Mariyappan", "tracking_id": "9400 1000 0000 0000 0000 00"},
+  { "id": 2, "ref_id": "2093218926", "receiver_name": "Venkatesan Mariyappan", "tracking_id": "9205 5000 0000 0000 0000 00"},
+  { "id": 3, "ref_id": "2093218926", "receiver_name": "Venkatesan Mariyappan", "tracking_id": "9303 3000 0000 0000 0000 00"},
+  ];
