@@ -172,4 +172,10 @@ th {
 }
 .traking-details {
     @extend .send-document;
+    .more-btn {
+        background: none;
+        border: none;
+        color: $text-gray;
+        cursor: pointer;
+    }
 }

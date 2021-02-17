@@ -367,7 +367,19 @@
               <span *ngIf="column == 'ref_id'">{{element?.ref_id}}</span>
               <span *ngIf="column == 'receiver_name'">{{element?.receiver_name}}</span>
               <span *ngIf="column == 'tracking_id'">{{element?.tracking_id}}</span>
-              <span *ngIf="column == 'more'">View Details <i class="fa fa-caret-down"></i></span>
+              <span *ngIf="column == 'more'">
+                <button [matMenuTriggerFor]="menu" class="more-btn">View Tracing Details <i class="fa fa-caret-down"></i></button>
+              </span>
+              <mat-menu #menu="matMenu" class="custom-menu" [overlapTrigger]="false">
+               <div  (click)="$event.stopPropagation()" class="more-details">
+                 <div class="main-title">Tracing # : {{element?.tracking_id}}</div>
+                <ul>
+                  <li>
+                    Tracing Details Will Comes Here...
+                  </li>
+                </ul>
+               </div>
+                </mat-menu>
             </div>
           </td>
         </ng-container>
@@ -379,7 +391,7 @@
                 <div><span>Receiver Name</span>{{element?.receiver_name}}</div>
                 <div><span>Tracking Number</span>{{element?.tracking_id}}</div>
                 <div><span>Tracking Number</span>{{element?.tracking_id}}</div>
-                <div><span>View Details</span>{{element?.more}}</div>
+                <div><span>View Details</span>View Details <i class="fa fa-caret-down"></i></div>
 
               </div>
             </div>
