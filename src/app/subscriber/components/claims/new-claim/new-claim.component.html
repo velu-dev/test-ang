@@ -16,8 +16,6 @@
                                         <input matInput id="claimant-input" placeholder="Search by name, date of birth "
                                             [matAutocomplete]="claimantAutocomplete" #trigger="matAutocompleteTrigger"
                                             [formControl]="searchInput" class="p-l-10">
-                                        <mat-error *ngIf="isSearchClaimantError">{{errorMessages.claimantSearchError}}
-                                        </mat-error>
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                             <mat-option *ngFor="let option of filteredClaimant?.data"
                                                 (click)="selectClaimant(option)">
@@ -31,6 +29,8 @@
                                         <span matSuffix class="search-icon icons">
                                             <mat-icon>search</mat-icon>
                                         </span>
+                                        <mat-error *ngIf="isSearchClaimantError">{{errorMessages.claimantSearchError}}
+                                        </mat-error>
                                     </mat-form-field>
                                 </mat-tab>
 
@@ -742,7 +742,7 @@
                                         </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
-                                <mat-error>Please enter valid attroney</mat-error>
+                                <mat-error>Please enter valid attorney</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -848,7 +848,7 @@
                                         </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
-                                <mat-error>Please enter valid attroney</mat-error>
+                                <mat-error>Please enter valid attorney</mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">

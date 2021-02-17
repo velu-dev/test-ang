@@ -124,7 +124,7 @@ export class NewClaimComponent implements OnInit {
   isLinear = false;
   isSubmit = false;
   emasSearchInput = new FormControl('', Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')]));
-  searchInput = new FormControl('', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
+  searchInput = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
   filteredClaimant: any;
   claimForm: FormGroup;
   errorMessages = errors;
@@ -186,7 +186,7 @@ export class NewClaimComponent implements OnInit {
   dataSource1 = [];
   deuDetails = [];
   filteredDeu: Observable<any[]>;
-  deuCtrl = new FormControl('', Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
+  deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
   iseams_entry: boolean = false;
   role: string;
   date: any;
@@ -470,7 +470,6 @@ export class NewClaimComponent implements OnInit {
         if (this.searchInput.errors) {
           this.isSearchClaimantError = true;
         } else {
-          console.log(res)
           this.isSearchClaimantError = false;
           if (res == '') {
             this.filteredClaimant.data = []
@@ -498,7 +497,7 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimantEdit = false;
   selectClaimant(option) {
-    // this.logger.log(option)
+    this.isSearchClaimantError = false;
     this.claimant_id = option.id;
     this.isClaimantEdit = true;
     this.claimant.reset();
