@@ -6,6 +6,56 @@
             <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class"></mat-progress-bar>
             <div class="text-center">{{historyData?.on_demand_status}}</div>
         </div>
+        <!-- <div  fxFlex="100" class="m-t-20">
+            <div class="main-title m-b-10">History Call Tracking</div>
+            <div class="user-detail vertical-fixed mh-auto">
+                  <table mat-table [dataSource]="dataSource1" multiTemplateDataRows class="mat-elevation-z8 user-table"
+                      matSort>
+                      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplays; let i=index">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnNames[i] == 'Action'">
+                              {{columnNames[i]}} </th>
+                          <td mat-cell *matCellDef="let element">
+                              <span *ngIf="i == 0 && isMobile">
+                                  <mat-icon mat-raised-button
+                                      [ngClass]="{'table-expand': expandId1 == element.id, 'expand-close': !(expandId1 == element.id)}">
+                                      {{ expandId1 == element.id ? 'remove_circle' : 'add_circle'}}
+                                  </mat-icon>
+                              </span>
+                              <div>
+                                  <span *ngIf="column == 'phone_number'">{{element?.phone_number}}</span>
+                                  <span *ngIf="column == 'call_start_time'">{{element?.call_start_time}}</span>
+                                  <span *ngIf="column == 'call_end_time'">{{element?.call_end_time}}</span>
+                                  <span *ngIf="column == 'narration'">{{element?.narration}}</span>
+                                  <span *ngIf="column == 'created_date_time'">{{element?.created_date_time}}</span>
+                                  <span *ngIf="column == 'cancel_reason'">{{element?.cancel_reason}}</span>
+                                  <span *ngIf="column == 'cancel_notes'">{{element?.cancel_notes}}</span>
+                              </div>
+                          </td>
+                      </ng-container>
+                      <ng-container matColumnDef="expandedDetail">
+                          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplays.length">
+                              <div class="detail" [@detailExpand]="expandId1 == element.id ? 'expanded' : 'collapsed'">
+                                  <div class="responsive-table">
+                                      <div><span>Phone Number</span>{{element?.phone_number}}</div>
+                                      <div><span>Call Start Time</span>{{element?.call_start_time}}</div>
+                                      <div><span>Call End Time</span>{{element?.call_end_time}}</div>
+                                      <div><span>Narration</span>{{element?.narration}}</div>
+                                      <div><span>Created Date Time</span>{{element?.created_date_time}}</div>
+                                      <div><span>Cancel Reason</span>{{element?.cancel_reason}}</div>
+                                      <div><span>Cancel Notes</span>{{element?.cancel_notes}}</div>
+                                  </div>
+                              </div>
+                          </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="columnsToDisplays; sticky: true"></tr>
+                      <tr mat-row *matRowDef="let element; columns: columnsToDisplays;" class="row"
+                          [class.row]="expandedElement === element" (click)="openElement1(element)">
+                      </tr>
+                      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+                  </table>
+                  <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> 
+              </div>
+        </div> -->
         <div fxFlex="100" class="text-center m-t-20 m-b-20" *ngIf="historyData?.on_demand_status == 'Unsent' || historyData?.on_demand_status == 'Completed' || historyData?.on_demand_status == 'Error' || historyData?.on_demand_status == 'Cancelled'">
           <mat-checkbox [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled " [(ngModel)]="rushRequest" >Rush Request?</mat-checkbox>
       </div>
