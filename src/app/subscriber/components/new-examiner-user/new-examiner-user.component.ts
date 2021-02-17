@@ -559,11 +559,8 @@ export class NewExaminerUserComponent implements OnInit {
         if (this.isEmailId) {
           this.userForm.controls.is_examiner_with_email.setValue(false);
           this.isEmailId = true;
-          if (this.userData) {
-            this.userData.examiner_details.is_examiner_login = true;
-          } else {
-            this.userData = { examiner_details: { is_examiner_login: true } }
-          }
+          this.userData = { examiner_details: { is_examiner_login: true } }
+
         }
         this.userForm.get('role_id').updateValueAndValidity();
         if (status == 'next') {
@@ -588,12 +585,7 @@ export class NewExaminerUserComponent implements OnInit {
           this.userForm.controls.sign_in_email_id.disable();
           this.userForm.controls.is_examiner_with_email.setValue(false)
           this.isEmailId = true;
-          if (this.userData) {
-            this.userData.examiner_details.is_examiner_login = true;
-          } else {
-            this.userData = { examiner_details: { is_examiner_login: true } }
-          }
-
+          this.userData = { examiner_details: { is_examiner_login: true } }
         }
 
         // this.router.navigate(['/subscriber/users'])
