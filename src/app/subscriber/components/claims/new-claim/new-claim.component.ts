@@ -497,7 +497,7 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimantEdit = false;
   selectClaimant(option) {
-    // this.logger.log(option)
+    this.isSearchClaimantError = false;
     this.claimant_id = option.id;
     this.isClaimantEdit = true;
     this.claimant.reset();
