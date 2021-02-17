@@ -213,7 +213,7 @@ export class SubscriberSettingsComponent implements OnInit {
   dataSourceList = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   /* Tree view end */
   @ViewChild('tree', { static: false }) tree;
-
+  subscriptionCharges = [];
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -240,6 +240,9 @@ export class SubscriberSettingsComponent implements OnInit {
         this.columnName = ["Invoice Number", "Amount", "Status", "Date", "Action"]
         this.columnsToDisplay = ['invoice_number', 'amount', "status", "date", "action",]
       }
+    })
+    this.userService.subscriptionCharges().subscribe(res => {
+      this.subscriptionCharges = res.data;
     })
     this.listCard();
     this.userService.getProfile().subscribe(res => {
@@ -279,10 +282,7 @@ export class SubscriberSettingsComponent implements OnInit {
       this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null
       this.userForm.patchValue(userDetails)
     })
-    // this.userService.getPaymentHistory(new Date()).subscribe(res => {
-    //   this.dataSourceList.data = res.data;/* Tree view */
-    // })
-    this.dataSourceList.data = TREE_DATA
+    // this.dataSourceList.data = TREE_DATA
 
   }
   cardCount = 0;
@@ -301,6 +301,17 @@ export class SubscriberSettingsComponent implements OnInit {
   isViewInit: boolean = false;
   ngAfterViewInit() {
     this.isViewInit = true;
+  }
+  isDataAvailable = false;
+  getHistory(date) {
+    this.userService.getPaymentHistory(date).subscribe(res => {
+      this.isDataAvailable = true;
+      this.alertService.openSnackBar(res.message, 'success');
+      this.dataSourceList.data = res.data;/* Tree view */
+    }, error => {
+      this.isDataAvailable = false;
+      this.alertService.openSnackBar(error.error.message, 'error')
+    })
   }
   isExpanded = false;
   expandAll() {

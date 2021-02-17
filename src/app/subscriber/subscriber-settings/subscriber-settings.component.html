@@ -739,9 +739,10 @@
                                         fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
                                         <mat-label>Date</mat-label>
                                         <mat-select>
-                                            <mat-option value="0">Nov 2020</mat-option>
-                                            <mat-option value="1">Dec 2020</mat-option>
-                                            <mat-option value="2">Jan 2021</mat-option>
+                                            <mat-option *ngFor="let date of subscriptionCharges"
+                                                (click)="getHistory(date.date)" [value]="date.date">
+                                                {{date.date}}
+                                            </mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
@@ -760,7 +761,7 @@
                                 <div class="note" fxFlex="100">The total charge will be displayed when the invoice is
                                     complete.</div>
                             </div>
-                            <div fxLayout="row wrap" class="details" fxFlex="100">
+                            <div fxLayout="row wrap" class="details" fxFlex="100" *ngIf="isDataAvailable">
                                 <div fxFlex="50">
                                     <div class="sub-title m-t-10">Details</div>
                                 </div>
@@ -791,7 +792,7 @@
                                             </mat-icon>
                                         </button>
                                         <div class="pay-records">
-                                            <span><b>{{node.name}}2</b></span>
+                                            <span><b>{{node.name}}</b></span>
                                             <span>&nbsp;{{node.pages}}</span>
                                             <span><b>{{node.charges}}</b></span>
                                             <div class="divider"></div>
