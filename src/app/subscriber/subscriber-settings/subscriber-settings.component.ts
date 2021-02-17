@@ -214,6 +214,10 @@ export class SubscriberSettingsComponent implements OnInit {
   /* Tree view end */
   @ViewChild('tree', { static: false }) tree;
   subscriptionCharges = [];
+  currentMonth = new Date().getMonth();
+  selectedMonth: any;
+  selectedDate = "";
+  month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -244,6 +248,10 @@ export class SubscriberSettingsComponent implements OnInit {
     this.userService.subscriptionCharges().subscribe(res => {
       this.subscriptionCharges = res.data;
     })
+    var m = new Date().getMonth();
+    var y = new Date().getFullYear();
+    this.selectedDate = this.month[m] + " " + y;
+    this.getHistory(this.month[m] + " " + y);
     this.listCard();
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)
@@ -304,13 +312,15 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   isDataAvailable = false;
   getHistory(date) {
+    this.selectedMonth = new Date(date).getMonth();
     this.userService.getPaymentHistory(date).subscribe(res => {
       this.isDataAvailable = true;
       this.alertService.openSnackBar(res.message, 'success');
       this.dataSourceList.data = res.data;/* Tree view */
     }, error => {
       this.isDataAvailable = false;
-      this.alertService.openSnackBar(error.error.message, 'error')
+      this.alertService.openSnackBar(error.error.message, 'error');
+      this.dataSourceList.data = [];/* Tree view */
     })
   }
   isExpanded = false;
