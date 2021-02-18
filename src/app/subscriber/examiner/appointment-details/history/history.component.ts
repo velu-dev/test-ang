@@ -90,8 +90,8 @@ export class HistoryComponent implements OnInit {
           this.columnNames = ["", "Phone Number"]
           this.columnsToDisplays = ['is_expand', 'phone_number']
         } else {
-          this.columnNames = ["Phone Number","Call Start Time", "Call End Time", "Narration", "Created Date Time", "Cancel Reason", "Cancel Notes"]
-          this.columnsToDisplays = ['phone_number','call_start_time', "call_end_time", "narration", 'created_date_time', 'cancel_reason', 'cancel_notes']
+          this.columnNames = ["Historian", "Phone Number","Call Start Time", "Call End Time", "Narration", "Created Date Time", "Cancel Reason", "Cancel Notes"]
+          this.columnsToDisplays = ['historian','phone_number','call_start_time', "call_end_time", "narration", 'created_date_time', 'cancel_reason', 'cancel_notes']
         }
     })
     
@@ -219,7 +219,7 @@ export class HistoryComponent implements OnInit {
 
 }
 const ELEMENT_DATA = [
-  { "id": 1, "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "Call #Scheduled By Super Admin","created_date_time": "2021-02-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
-  { "id": 2, "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "VoiceMail #3rd Attempt","created_date_time": "2021-02-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
-  { "id": 3, "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "VoiceMail #2rd Attempt","created_date_time": "2021-02-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
+  { "id": 1, "historian": "Super Admin", "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "Call #Scheduled By Super Admin","created_date_time": "2021-05-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
+  { "id": 2, "historian": "Ash-historian Saboo", "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "VoiceMail #3rd Attempt","created_date_time": "2021-05-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
+  { "id": 3, "historian": "Ash-historian Saboo", "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "VoiceMail #2rd Attempt","created_date_time": "2021-05-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
   ];

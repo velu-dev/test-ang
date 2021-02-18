@@ -22,11 +22,12 @@
                                   </mat-icon>
                               </span>
                               <div>
-                                  <span *ngIf="column == 'phone_number'">{{element?.phone_number}}</span>
-                                  <span *ngIf="column == 'call_start_time'">{{element?.call_start_time}}</span>
-                                  <span *ngIf="column == 'call_end_time'">{{element?.call_end_time}}</span>
+                                  <span *ngIf="column == 'historian'">{{element?.historian}}</span>
+                                  <span *ngIf="column == 'phone_number'">{{element?.phone_number ? (element?.phone_number |  mask:'(000) 000-0000') : '' }}</span>
+                                  <span *ngIf="column == 'call_start_time'">{{element?.call_start_time | date:'MM-dd-yyyy hh:mm a'}}</span>
+                                  <span *ngIf="column == 'call_end_time'">{{element?.call_end_time | date:'MM-dd-yyyy hh:mm a'}}</span>
                                   <span *ngIf="column == 'narration'">{{element?.narration}}</span>
-                                  <span *ngIf="column == 'created_date_time'">{{element?.created_date_time}}</span>
+                                  <span *ngIf="column == 'created_date_time'">{{element?.created_date_time | date:'MM-dd-yyyy hh:mm a'}}</span>
                                   <span *ngIf="column == 'cancel_reason'">{{element?.cancel_reason}}</span>
                                   <span *ngIf="column == 'cancel_notes'">{{element?.cancel_notes}}</span>
                               </div>
@@ -36,11 +37,12 @@
                           <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplays.length">
                               <div class="detail" [@detailExpand]="expandId1 == element.id ? 'expanded' : 'collapsed'">
                                   <div class="responsive-table">
-                                      <div><span>Phone Number</span>{{element?.phone_number}}</div>
-                                      <div><span>Call Start Time</span>{{element?.call_start_time}}</div>
-                                      <div><span>Call End Time</span>{{element?.call_end_time}}</div>
+                                      <div><span>Historian</span>{{element?.historian}}</div>
+                                      <div><span>Phone Number</span>{{element?.phone_number ? (element?.phone_number |  mask:'(000) 000-0000') : '' }}</div>
+                                      <div><span>Call Start Time</span>{{element?.call_start_time | date:'MM-dd-yyyy hh:mm a'}}</div>
+                                      <div><span>Call End Time</span>{{element?.call_end_time | date:'MM-dd-yyyy hh:mm a'}}</div>
                                       <div><span>Narration</span>{{element?.narration}}</div>
-                                      <div><span>Created Date Time</span>{{element?.created_date_time}}</div>
+                                      <div><span>Created Date Time</span>{{element?.created_date_time | date:'MM-dd-yyyy hh:mm a'}}</div>
                                       <div><span>Cancel Reason</span>{{element?.cancel_reason}}</div>
                                       <div><span>Cancel Notes</span>{{element?.cancel_notes}}</div>
                                   </div>
