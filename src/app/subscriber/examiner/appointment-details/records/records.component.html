@@ -199,7 +199,7 @@
                 <span *ngIf="column == 'date_of_request'" class="no-wrap-td">{{element?.date_of_request |
                   date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'date_of_communication' && element?.received"
-                  class="no-wrap-td">{{element?.received?.date_of_communication | date:'MM-dd-yyyy' }}</span>
+                  class="no-wrap-td">{{element?.received[0]?.date_of_communication | date:'MM-dd-yyyy' }}</span>
                 <span *ngIf="column == 'download' && element?.send">
                   <a class="text-success" (click)="inOutdownload(element?.send, element, 'sent')">Download</a>
                 </span>
@@ -227,7 +227,7 @@
                   <div class="no-wrap-td"><span>Date
                       Requested</span><span>{{element?.date_of_request | date:'MM-dd-yyyy'}}</span></div>
                   <div><span>Date
-                      Received</span><span>{{element?.received?.date_of_communication | date:'MM-dd-yyyy' }}</span>
+                      Received</span><span>{{element?.received[0]?.date_of_communication | date:'MM-dd-yyyy' }}</span>
                   </div>
                   <!-- <div class="no-wrap-td"><span>Date Requested</span><span> {{element?.request_date}} </span></div> -->
                   <div><span>Download Record Document</span>
