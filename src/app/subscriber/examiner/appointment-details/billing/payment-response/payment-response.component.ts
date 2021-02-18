@@ -51,11 +51,10 @@ export class PaymentResponseComponent implements OnInit {
     this.paymentForm = this.fb.group({
       payments: this.fb.array([]),
     })
-    //this.addEmployee()
     for (var i in [0, 1]) {
       this.addPayment();
       this.payments().get(i).patchValue({ id: i, bill_id: i, submission: i, showStatus: false })
-      this.addReviews(+i)
+     // this.addReviews(+i)
     }
   }
 

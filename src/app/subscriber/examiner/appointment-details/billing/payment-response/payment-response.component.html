@@ -34,9 +34,8 @@
                             <td>$3516.00</td>
                             <td>$100.00</td>
                             <td class="text-danger">$3416.00</td>
-                            <td class="text-success">Partially Paid <button type="button"
-                                    (click)="addReviews(payIndex)">Add review</button></td>
-                            <td><button mat-raised-button class="mini-btn filled-gray">Add Response</button></td>
+                            <td class="text-success">Partially Paid</td>
+                            <td><button mat-raised-button class="mini-btn filled-gray" (click)="paymentReviews(payIndex)?.controls?.length == 0 ? addReviews(payIndex) : ''">Add Response</button></td>
                         </tr>
 
                         <tr formArrayName="reviews" *ngIf="expandId == payemnt.get('id').value">
