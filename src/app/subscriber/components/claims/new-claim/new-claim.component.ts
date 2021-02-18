@@ -1427,6 +1427,9 @@ export class NewClaimComponent implements OnInit {
       this.claimService.searchbyEams(this.emasSearchInput.value.replace(/\s/g, ''), data).subscribe(res => {
         if (res.data) {
           this.isEdit = false;
+          this.claimant.reset();
+          this.claim.reset();
+          this.billable_item.reset();
           if (!this.fromClaimant) {
             this.isClaimantEdit = false;
             this.addNewClaimant = true;
