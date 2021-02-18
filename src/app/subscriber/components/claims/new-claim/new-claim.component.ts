@@ -922,8 +922,21 @@ export class NewClaimComponent implements OnInit {
     // }
 
     Object.keys(this.claim.controls).forEach((key) => {
-      if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string')
+      console.log(Object.keys(this.claim.controls), key)
+      if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string') {
         this.claim.get(key).setValue(this.claim.get(key).value.trim())
+      }
+      if (key != "claim_injuries") {
+        console.log(key)
+        console.log(Object.keys(this.claim.get(key)['controls']))
+        Object.keys(this.claim.get(key)['controls']).forEach(key1 => {
+          console.log(key1)
+          //   console.log(key,)
+          if (this.claim.get([key, key1]).value && typeof (this.claim.get([key, key1]).value) == 'string') {
+            this.claim.get([key, key1]).setValue(this.claim.get([key, key1]).value.trim())
+          }
+        })
+      }
     });
     if (this.claim.invalid) {
       this.getFormValidationErrors();
@@ -1182,6 +1195,7 @@ export class NewClaimComponent implements OnInit {
       let data = this.claimant.value;
       data['certified_interpreter_required'] = this.languageStatus;
       data['date_of_birth'] = moment(this.claimant.value.date_of_birth).format("MM-DD-YYYY"); //new Date()//.toDateString();
+      this.searchInput.reset();
       if (!this.isClaimantEdit) {
         this.claimService.createClaimant(this.claimant.value).subscribe(res => {
           this.claimant_id = res.data.id;
