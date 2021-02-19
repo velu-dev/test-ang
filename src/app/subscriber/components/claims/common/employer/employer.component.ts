@@ -18,6 +18,7 @@ export class EmployerComponent implements OnInit {
   employerList = [];
   @Input('state') states;
   employerEdit = false;
+  id: any;
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.employer = this.formBuilder.group({
       id: [],
@@ -41,6 +42,7 @@ export class EmployerComponent implements OnInit {
     }
     this.changeState(this.employerDetail.state, this.employerDetail.state_code)
     this.employer.patchValue(this.employerDetail)
+    this.id = this.employerDetail.id;
   }
   empState: any;
   changeState(state, state_code?) {
@@ -54,6 +56,10 @@ export class EmployerComponent implements OnInit {
       }
     })
   }
+  clearAutoComplete() {
+    this.employer.reset();
+    this.empState = null;
+  }
   updateEmployer() {
     Object.keys(this.employer.controls).forEach((key) => {
       if (this.employer.get(key).value && typeof (this.employer.get(key).value) == 'string')
@@ -62,6 +68,7 @@ export class EmployerComponent implements OnInit {
     if (this.employer.invalid) {
       return;
     }
+    this.employer.value['id'] = this.id;
     this.claimService.updateAgent(this.employer.value.id, { Employer: this.employer.value }).subscribe(res => {
       // this.isEdit = false;
       this.alertService.openSnackBar("Employer updated successfully", 'success');
