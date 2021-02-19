@@ -1622,6 +1622,11 @@ input:-webkit-autofill {
   .pay-records {
     width: $width-100;
     position: relative;
+    // border-bottom: 1px solid $lightgray;
+    // padding-bottom: 5px;
+    // &:last-child {
+    // border-bottom: none !important;
+    // }
     span {
       float: left;
       &:first-child {
@@ -1658,13 +1663,27 @@ input:-webkit-autofill {
       height: 1px;
       width: 100%;
       margin: 0;
-      position: absolute;
-      top: 28px;
+      position: inherit;
+      top: 24px;
+      // position: absolute;
+      // top: 28px;
     }
   }
-  .mat-tree-node {
-    min-height: 35px !important;
+  // .mat-tree-node {
+  //   min-height: 25px !important;
+  // }
+    .mat-tree-node{
+      min-height: 33px !important;
+      button {
+        width: 20px !important;
+        height: 20px !important;
+        padding-right: 30px;
+      }
+      .mat-icon-button .mat-icon, .mat-icon-button i {
+        line-height: 0 !important;
+      }
   }
+
 }
 
 // card dropdown custom style
