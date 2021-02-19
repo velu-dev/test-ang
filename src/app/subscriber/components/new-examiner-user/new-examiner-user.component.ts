@@ -223,7 +223,11 @@ export class NewExaminerUserComponent implements OnInit {
       setTimeout(() => {
         this.texonomyChange(this.renderingForm.value.taxonomy_id)
       }, 1000);
-
+      this.texonomySearch.valueChanges.subscribe(res => {
+        if (res == "") {
+          this.clearAutoComplete();
+        }
+      })
       this.texonomyFilteredOptions = this.texonomySearch.valueChanges
         .pipe(
           startWith(''),
