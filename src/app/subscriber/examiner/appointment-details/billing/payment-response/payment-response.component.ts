@@ -58,6 +58,20 @@ export class PaymentResponseComponent implements OnInit {
     }
   }
 
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EditResponse, {
+      width: '800px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
+
+
   ngOnInit() {
 console.log(this.billingData)
 
@@ -227,3 +241,21 @@ const ELEMENT_DATA1 = [
   { "id": 131, "bill_id": "CMBN10009480", "submission": "Second", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "", },
 
 ];
+
+
+
+@Component({
+  selector: 'edit-response',
+  templateUrl: 'edit-response.html',
+})
+export class EditResponse {
+
+  constructor(
+    public dialogRef: MatDialogRef<EditResponse>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}

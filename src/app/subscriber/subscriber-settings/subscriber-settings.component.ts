@@ -315,11 +315,11 @@ export class SubscriberSettingsComponent implements OnInit {
     this.selectedMonth = new Date(date).getMonth();
     this.userService.getPaymentHistory(date).subscribe(res => {
       this.isDataAvailable = true;
-      this.alertService.openSnackBar(res.message, 'success');
+      //this.alertService.openSnackBar(res.message, 'success');
       this.dataSourceList.data = res.data;/* Tree view */
     }, error => {
       this.isDataAvailable = false;
-      this.alertService.openSnackBar(error.error.message, 'error');
+     // this.alertService.openSnackBar(error.error.message, 'error');
       this.dataSourceList.data = [];/* Tree view */
     })
   }

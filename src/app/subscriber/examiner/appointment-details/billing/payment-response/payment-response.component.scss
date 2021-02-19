@@ -151,7 +151,7 @@
                                 position: absolute;
                                 font-size: 25px;
                                 left: 30px;
-                                top: 41%;
+                                top: 43.5%;
                             }
                             // Error icon design
                             // &::after {
@@ -196,6 +196,13 @@
                                             padding: 0px 0 5px 0 !important;
                                         }
                                     }
+                                }
+                            }
+                        }
+                        .expand-details-list.strike {
+                            div {
+                                .prv_ {
+                                    text-decoration: line-through;
                                 }
                             }
                         }
