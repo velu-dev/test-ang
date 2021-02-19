@@ -567,6 +567,10 @@
                             </mat-select> -->
                             <input type="text" matInput [formControl]="texonomySearch"
                                 [matAutocomplete]="examinerAutocomplete">
+                            <button mat-button *ngIf="renderingForm.value.taxonomy_id" matSuffix mat-icon-button
+                                aria-label="Clear" (click)="clearAutoComplete()">
+                                <mat-icon>close</mat-icon>
+                            </button>
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete"
                                 (optionSelected)="texonomyChange($event.option.value)">
                                 <mat-option *ngFor="let option of (texonomyFilteredOptions | async)" [value]="option.id"

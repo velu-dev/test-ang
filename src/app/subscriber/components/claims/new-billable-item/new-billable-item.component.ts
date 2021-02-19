@@ -455,7 +455,12 @@ export class NewBillableItemComponent implements OnInit {
         .map((v, i) => v ? this.supplementalItems[i].name : null)
         .filter(v => v !== null);
     }
-
+    if (this.isSuplimental) {
+      this.billable_item.get('intake_call').get('call_date').setValidators([Validators.compose([Validators.required])]);
+    } else {
+      this.billable_item.get('intake_call').get('call_date').setValidators([]);
+    }
+    this.billable_item.get('intake_call').get('call_date').updateValueAndValidity();
     this.isBillSubmited = true;
     Object.keys(this.billable_item.controls).forEach((key) => {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')

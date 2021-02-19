@@ -1067,6 +1067,12 @@ export class NewClaimComponent implements OnInit {
   submitBillableItem(state?) {
     this.currentTab = "billable_item"
     this.isBillSubmited = true;
+    if (this.isSuplimental) {
+      this.billable_item.get('intake_call').get('call_date').setValidators([Validators.compose([Validators.required])]);
+    } else {
+      this.billable_item.get('intake_call').get('call_date').setValidators([]);
+    }
+    this.billable_item.get('intake_call').get('call_date').updateValueAndValidity();
     Object.keys(this.billable_item.controls).forEach((key) => {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())

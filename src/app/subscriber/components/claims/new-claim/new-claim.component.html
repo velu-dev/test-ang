@@ -1270,7 +1270,7 @@
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100">
-                                    <mat-label>Request Receipt Date</mat-label>
+                                    <mat-label>Request Receipt Date{{isSuplimental ? '*' : ''}}</mat-label>
                                     <!-- <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" formControlName="call_date"
                                         autocomplete="off" [min]="minDate" [max]="todayDate.intake"
                                         [owlDateTime]="intake"
@@ -1286,7 +1286,7 @@
                                         formControlName="call_date">
                                     <mat-datepicker-toggle matSuffix [for]="call_date"></mat-datepicker-toggle>
                                     <mat-datepicker #call_date disabled="false"></mat-datepicker>
-                                    <mat-error>Please enter valid date</mat-error>
+                                    <mat-error *ngIf="isBillSubmited">Please enter valid date</mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"

@@ -783,7 +783,7 @@
                                         <div [class]="'pay-records node'+node?.level">
                                             <span>{{node.name}}</span>
                                             <span>&nbsp;{{node.pages}}</span>
-                                            <span><b>{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
+                                            <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
                                                     "$0.00"}}</b></span>
                                         </div>
                                     </mat-tree-node>
@@ -797,7 +797,7 @@
                                         <div [class]="'pay-records node'+node?.level">
                                             <span><b>{{node.name}}</b></span>
                                             <span>&nbsp;{{node.pages}}</span>
-                                            <span><b>{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
+                                            <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
                                                     "$0.00"}}</b></span>
                                             <div class="divider"></div>
                                         </div>

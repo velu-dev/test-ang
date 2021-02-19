@@ -850,7 +850,15 @@ export class AppointmentDetailsComponent implements OnInit {
     } else {
       this.billable_item.get('appointment').get('duration').setValidators([]);
     }
+    
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
+
+    if (this.isSuplimental) {
+      this.billable_item.get('intake_call').get('call_date').setValidators([Validators.compose([Validators.required])]);
+    } else {
+      this.billable_item.get('intake_call').get('call_date').setValidators([]);
+    }
+    this.billable_item.get('intake_call').get('call_date').updateValueAndValidity();
     Object.keys(this.billable_item.controls).forEach((key) => {
       console.log(this.billable_item.get(key).value)
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
