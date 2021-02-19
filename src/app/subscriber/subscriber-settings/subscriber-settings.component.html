@@ -789,9 +789,9 @@
                                     </mat-tree-node>
                                     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  matTreeNodePaddingIndent="15">
                                         <button mat-icon-button matTreeNodeToggle
-                                            [attr.aria-label]="'toggle ' + node.name">
+                                            [attr.aria-label]="'toggle ' + node.name" disableRipple="true">
                                             <mat-icon class="mat-icon-rtl-mirror">
-                                                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                {{treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right'}}
                                             </mat-icon>
                                         </button>
                                         <div class="pay-records" [class]="'node'+node?.level">

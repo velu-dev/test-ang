@@ -79,6 +79,7 @@ $yellow: #f2cf3c;
 $light_green: #b5cc18;
 $icon-gray: #a7a7a7;
 $text-light: #707070;
+$mat-tree:#4D4F5C;
 
 //alert colors
 $text-success: rgb(3, 90, 6);
@@ -1633,6 +1634,7 @@ input:-webkit-autofill {
         width: 50%;
         min-width: 50%;
         text-align: left;
+        color:$mat-tree;
         @media screen and (max-width: 568px) {
           width: 100%;
         }
@@ -1681,6 +1683,7 @@ input:-webkit-autofill {
       }
       .mat-icon-button .mat-icon, .mat-icon-button i {
         line-height: 0 !important;
+        color:$mat-tree ;
       }
   }
 
