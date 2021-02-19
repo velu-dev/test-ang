@@ -768,8 +768,8 @@
                                     <div class="sub-title m-t-10">Details</div>
                                 </div>
                                 <div fxFlex="50" class="text-right m-b-5">
-                                    <button (click)="expandAll()" mat-raised-button class="filled-lightgray m-t-15">
-                                        <mat-icon>add</mat-icon> {{isExpanded ? "Collapse All" : "Expand All"}}
+                                    <button (click)="expandAll()" mat-raised-button class="filled-lightgray mini-btn m-t-15">
+                                        <i class="fas fa-plus"></i> {{isExpanded ? "Collapse All" : "Expand All"}}
                                     </button>
                                 </div>
                                 <div class="divider"></div>
@@ -783,8 +783,8 @@
                                         <div [class]="'pay-records node'+node?.level">
                                             <span>{{node.name}}</span>
                                             <span>&nbsp;{{node.pages}}</span>
-                                            <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
-                                                    "$0.00"}}</b></span>
+                                            <span>{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
+                                                    "$0.00"}}</span>
                                         </div>
                                     </mat-tree-node>
                                     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  matTreeNodePaddingIndent="10">
