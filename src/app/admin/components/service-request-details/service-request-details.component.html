@@ -295,6 +295,11 @@
                     <td mat-cell *matCellDef="let element">{{element.transmitted_file_name}}</td>
                 </ng-container>
 
+                <ng-container matColumnDef="date_of_communication">
+                    <th mat-header-cell *matHeaderCellDef>Date Received</th>
+                    <td mat-cell *matCellDef="let element">{{element.date_of_communication | date:'MM-dd-yyyy'}}</td>
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="receivedDocumentdisplayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: receivedDocumentdisplayedColumns;"></tr>
             </table>

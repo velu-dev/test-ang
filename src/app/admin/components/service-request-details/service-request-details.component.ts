@@ -93,7 +93,7 @@ export class ServiceRequestDetailsComponent implements OnInit {
     this.userService.getServiceRequest(this.service_request_id).subscribe(res => {
       this.serviceRequestDetails = res.service_request;
       if (this.serviceRequestDetails.service_request_type == 'Record Review' || this.serviceRequestDetails.service_request_type == 'Transcription') {
-        this.receivedDocumentdisplayedColumns = ['transmitted_file_name', 'document_lines', 'file_name'];
+        this.receivedDocumentdisplayedColumns = ['transmitted_file_name', 'date_of_communication', 'document_lines', 'file_name'];
       }
       if (res.service_request && res.service_request.service_request_type_id == 5) {
         this.displayedColumnsReqRes = ['file_name', 'workcompedi_bill_id', 'received_on', 'status', 'download'];
