@@ -780,7 +780,7 @@
                                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding  matTreeNodePaddingIndent="15">
                                         <button mat-icon-button disabled></button>
 
-                                        <div class="pay-records">
+                                        <div class="pay-records" [class]="'node'+node?.level">
                                             <span>{{node.name}}</span>
                                             <span>&nbsp;{{node.pages}}</span>
                                             <span><b>{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
@@ -794,7 +794,7 @@
                                                 {{treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right'}}
                                             </mat-icon>
                                         </button>
-                                        <div class="pay-records">
+                                        <div class="pay-records" [class]="'node'+node?.level">
                                             <span><b>{{node.name}}</b></span>
                                             <span>&nbsp;{{node.pages}}</span>
                                             <span><b>{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
