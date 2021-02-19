@@ -367,7 +367,7 @@ mat-tab-group {
   .payment-history {
     .charges {
       mat-form-field {
-        padding-left: 0;
+        padding-left: 0 !important;
       }
     }
     .estimation {
