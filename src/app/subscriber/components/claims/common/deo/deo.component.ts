@@ -22,6 +22,7 @@ export class DeoComponent implements OnInit {
   deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
   deuDetails = [];
   deuId = "";
+  id: any;
   constructor(public dialogRef: MatDialogRef<DeoComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.DEU = this.formBuilder.group({
       id: [null],
@@ -77,6 +78,7 @@ export class DeoComponent implements OnInit {
     this.changeState(this.deuDetail.state, this.deuDetail.state_code);
     this.DEU.patchValue(this.deuDetail);
     // console.log(this.deuDetail)
+    this.id = this.deuDetail.id;
     this.deuCtrl.setValue(this.deuDetail.name);
   }
   deuState: any;
@@ -95,6 +97,11 @@ export class DeoComponent implements OnInit {
   appAttorney(sdsd) {
 
   }
+  clearAutoComplete() {
+    this.DEU.reset();
+    this.deuState = null;
+    this.deuCtrl.reset();
+  }
   editDEU() {
     this.DEU.enable();
     this.deoEdit = true;
@@ -108,6 +115,7 @@ export class DeoComponent implements OnInit {
     if (this.DEU.invalid) {
       return;
     }
+    this.DEU.value['id'] = this.id;
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
       this.deoEdit = false;
       this.DEU.patchValue(res.data);

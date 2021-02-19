@@ -1599,6 +1599,15 @@ export class NewClaimComponent implements OnInit {
         this.caState = null;
         this.claim.get('InsuranceAdjuster').reset();
         break;
+      case 'emp':
+        this.empState = null;
+        this.claim.get('Employer').reset();
+        break;
+      case 'deu':
+        this.deuState = null;
+        this.deuCtrl.reset();
+        this.claim.get('DEU').reset();
+        break;
     }
   }
   todayDate = { appointment: new Date(), intake: new Date() }
