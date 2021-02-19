@@ -247,11 +247,11 @@ export class SubscriberSettingsComponent implements OnInit {
     })
     this.userService.subscriptionCharges().subscribe(res => {
       this.subscriptionCharges = res.data;
+      var m = new Date().getMonth();
+      var y = new Date().getFullYear();
+      this.selectedDate = this.month[m] + " " + y;
+      this.getHistory(this.month[m] + " " + y);
     })
-    var m = new Date().getMonth();
-    var y = new Date().getFullYear();
-    this.selectedDate = this.month[m] + " " + y;
-    this.getHistory(this.month[m] + " " + y);
     this.listCard();
     this.userService.getProfile().subscribe(res => {
       console.log("res obj", res)
@@ -319,7 +319,7 @@ export class SubscriberSettingsComponent implements OnInit {
       this.dataSourceList.data = res.data;/* Tree view */
     }, error => {
       this.isDataAvailable = false;
-     // this.alertService.openSnackBar(error.error.message, 'error');
+      // this.alertService.openSnackBar(error.error.message, 'error');
       this.dataSourceList.data = [];/* Tree view */
     })
   }

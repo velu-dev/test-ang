@@ -1450,6 +1450,8 @@ export class NewClaimComponent implements OnInit {
           this.claimant.reset();
           this.claim.reset();
           this.billable_item.reset();
+          this.isNewClaim = true;
+          this.claimId = "";
           if (!this.fromClaimant) {
             this.isClaimantEdit = false;
             this.addNewClaimant = true;
