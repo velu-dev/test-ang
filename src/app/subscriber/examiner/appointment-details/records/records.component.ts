@@ -92,8 +92,8 @@ export class RecordsComponent implements OnInit {
         this.columnName = ["", "File Name"]
         this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
-        this.columnName = ["Ref #", "File Name", "Action", "Document Pages", "Rush Request?", "Date Requested ", "Date Received", "Download Record Document", "Download Record Summary"]
-        this.columnsToDisplay = ['request_reference_id', 'file_name', 'actions', 'no_of_pages', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1']
+        this.columnName = ["Ref #", "Summarizer", "File Name", "Action", "Document" + '\n' + "Pages", "Rush Request?", "Date Requested ", "Date Received", "Download Record" + '\n' + "Document", "Download Record" + '\n' + "Summary", "Further Information"]
+        this.columnsToDisplay = ['request_reference_id', 'summarizer', 'file_name', 'actions', 'no_of_pages', 'service_priority', "date_of_request", "date_of_communication", 'download', 'download1', 'further_info']
       }
     })
 

@@ -76,19 +76,22 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(["/admin"]);
         break;
       case '2':
-        this.router.navigate(["/subscriber"]);
+        this.router.navigate(["/subscriber/dashboard"]);
         break;
       case '3':
-        this.router.navigate(["/subscriber/manager"]);
+        this.router.navigate(["/subscriber/manager/dashboard"]);
         break;
       case '4':
-        this.router.navigate(["/subscriber/staff"]);
+        this.router.navigate(["/subscriber/staff/dashboard"]);
         break;
       case '11':
-        this.router.navigate(["/subscriber/examiner"]);
+        this.router.navigate(["/subscriber/examiner/dashboard"]);
         break;
       case '12':
-        this.router.navigate(["/subscriber/staff"]);
+        this.router.navigate(["/subscriber/staff/dashboard"]);
+        break;
+      default:
+        this.router.navigate([""]);
         break;
     }
   }
@@ -128,6 +131,7 @@ export class DashboardComponent implements OnInit {
   }
 
   navigateBillableItem(element) {
+    this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
     this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
     this.intercom.setClaimNumber(element.claim_number);
     this.cookieService.set('claimNumber', element.claim_number)

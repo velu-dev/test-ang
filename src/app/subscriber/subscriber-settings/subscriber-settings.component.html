@@ -768,8 +768,8 @@
                                     <div class="sub-title m-t-10">Details</div>
                                 </div>
                                 <div fxFlex="50" class="text-right m-b-5">
-                                    <button (click)="expandAll()" mat-raised-button class="filled-lightgray m-t-15">
-                                        <mat-icon>add</mat-icon> {{isExpanded ? "Collapse All" : "Expand All"}}
+                                    <button (click)="expandAll()" mat-raised-button class="filled-lightgray mini-btn m-t-15">
+                                        <i class="fas fa-plus"></i> {{isExpanded ? "Collapse All" : "Expand All"}}
                                     </button>
                                 </div>
                                 <div class="divider"></div>
@@ -777,24 +777,24 @@
                             <div fxLayout="row wrap" class="details m-t-10" fxFlex="100">
                                 <mat-tree #tree [dataSource]="dataSourceList" [treeControl]="treeControl"
                                     class="pay-list">
-                                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding  matTreeNodePaddingIndent="15">
+                                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding  matTreeNodePaddingIndent="10">
                                         <button mat-icon-button disabled></button>
 
-                                        <div class="pay-records" [class]="'node'+node?.level">
+                                        <div [class]="'pay-records node'+node?.level">
                                             <span>{{node.name}}</span>
                                             <span>&nbsp;{{node.pages ? node.pages : " "}}</span>
                                             <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
                                                     "$0.00"}}</b></span>
                                         </div>
                                     </mat-tree-node>
-                                    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  matTreeNodePaddingIndent="15">
+                                    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  matTreeNodePaddingIndent="10">
                                         <button mat-icon-button matTreeNodeToggle
                                             [attr.aria-label]="'toggle ' + node.name" disableRipple="true">
                                             <mat-icon class="mat-icon-rtl-mirror">
                                                 {{treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right'}}
                                             </mat-icon>
                                         </button>
-                                        <div class="pay-records" [class]="'node'+node?.level">
+                                        <div [class]="'pay-records node'+node?.level">
                                             <span><b>{{node.name}}</b></span>
                                             <span>&nbsp;{{node.pages}}</span>
                                             <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :

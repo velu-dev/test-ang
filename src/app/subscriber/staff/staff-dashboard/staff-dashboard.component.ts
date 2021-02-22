@@ -93,6 +93,7 @@ export class StaffDashboardComponent implements OnInit {
   }
 
   navigateBillableItem(element) {
+    this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
     this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
     this.intercom.setClaimNumber(element.claim_number);
     this.cookieService.set('claimNumber', element.claim_number)
