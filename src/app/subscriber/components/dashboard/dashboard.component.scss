@@ -36,7 +36,60 @@
         }
     }
 }
-
+.filter-card {
+    margin-bottom: 20px;
+    div {
+        div {
+            mat-card.simple-card {
+                max-height: 115px;
+                text-align: center;
+                border: 2px solid $black;
+                box-shadow: none;
+                cursor: pointer;
+                height: auto;
+                &:hover {
+                    background: $light-color;
+                    h4 {
+                        color: $ternary;
+                    }
+                }
+                mat-card-content {
+                    h4 {
+                        min-height: 42px;
+                        margin-bottom: 0;
+                        font-size: $font-size-2;
+                    }
+                    ul {
+                        padding: 0;
+                        margin: 0;
+                        li {
+                            list-style-type: none;
+                            text-align: center;
+                            font-size: $font-size-13;
+                            font-weight: bold;
+                            padding-bottom: 3px;
+                            &:first-child {
+                                color: $primary;
+                            }
+                            &:nth-child(2) {
+                                border-bottom: 2px dotted $gray;
+                            }
+                            &:last-child {
+                                color: $secondary;
+                            }
+                        }
+                    }
+                }
+            }
+            mat-card.simple-card.active {
+                background: $light-color;
+                h4 {
+                    color: $ternary;
+                }
+            }
+        }
+    }
+}
 .dashboard-list {
     box-shadow: $shadow-style-one;
     .user-detail {
