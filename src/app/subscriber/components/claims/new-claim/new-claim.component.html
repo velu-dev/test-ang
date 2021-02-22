@@ -520,7 +520,7 @@
                                 <input type="text" matInput placeholder="Insurance Name" formControlName="company_name"
                                     [matAutocomplete]="caAuto">
                                 <button mat-button *ngIf="claim.value.InsuranceAdjuster.company_name" matSuffix
-                                    mat-icon-button aria-label="Clear" (click)="clearAutoComplete('ca')"  matTooltip="Clear" matTooltipPosition="above">
+                                    mat-icon-button aria-label="Clear" (click)="clearAutoComplete('ca')"  matTooltip="Clear Address" matTooltipPosition="above">
                                     <mat-icon>close</mat-icon>
                                 </button>
                                 <mat-autocomplete #caAuto="matAutocomplete">
@@ -628,7 +628,7 @@
                                 <mat-label>Name</mat-label>
                                 <input matInput placeholder="Name" formControlName="name" autocomplete="off">
                                 <button mat-button *ngIf="claim.value.Employer.name" matSuffix mat-icon-button
-                                    aria-label="Clear" (click)="clearAutoComplete('emp')"  matTooltip="Clear" matTooltipPosition="above">
+                                    aria-label="Clear" (click)="clearAutoComplete('emp')"  matTooltip="Clear Address" matTooltipPosition="above">
                                     <mat-icon>close</mat-icon>
                                 </button>
                             </mat-form-field>
@@ -734,7 +734,7 @@
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                                     [matAutocomplete]="aaAuto">
                                 <button mat-button *ngIf="claim.value.ApplicantAttorney.company_name" matSuffix
-                                    mat-icon-button aria-label="Clear" (click)="clearAutoComplete('aa')"  matTooltip="Clear" matTooltipPosition="above">
+                                    mat-icon-button aria-label="Clear" (click)="clearAutoComplete('aa')"  matTooltip="Clear Address" matTooltipPosition="above">
                                     <mat-icon>close</mat-icon>
                                 </button>
                                 <mat-autocomplete #aaAuto="matAutocomplete">
@@ -840,7 +840,7 @@
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                                     [matAutocomplete]="daAuto">
                                 <button mat-button *ngIf="claim.value.DefenseAttorney.company_name" matSuffix
-                                    mat-icon-button aria-label="Clear" (click)="clearAutoComplete('da')"  matTooltip="Clear" matTooltipPosition="above">
+                                    mat-icon-button aria-label="Clear" (click)="clearAutoComplete('da')"  matTooltip="Clear Address" matTooltipPosition="above">
                                     <mat-icon>close</mat-icon>
                                 </button>
                                 <mat-autocomplete #daAuto="matAutocomplete">
@@ -959,7 +959,7 @@
                                 <input matInput placeholder="Please Select Office Name" aria-label="Office Name"
                                     [matAutocomplete]="deuAuto" [formControl]="deuCtrl">
                                 <button mat-button *ngIf="claim.value.DEU.name" matSuffix mat-icon-button
-                                    aria-label="Clear" (click)="clearAutoComplete('deu')" matTooltip="Clear"
+                                    aria-label="Clear" (click)="clearAutoComplete('deu')" matTooltip="Clear Address"
                                     matTooltipPosition="above">
                                     <mat-icon>close</mat-icon>
                                 </button>
