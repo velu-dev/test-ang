@@ -95,9 +95,17 @@ export class DashboardComponent implements OnInit {
         break;
     }
   }
-
+  isExpandAll = false;
+  expandAll() {
+    if (!this.isExpandAll) {
+      this.isExpandAll = true;
+    } else {
+      this.isExpandAll = false;
+    }
+  }
   expandId: any;
   openElement(element) {
+    this.isExpandAll = false
     if (this.expandId && this.expandId == element.appointment_id) {
       this.expandId = null;
     } else {
