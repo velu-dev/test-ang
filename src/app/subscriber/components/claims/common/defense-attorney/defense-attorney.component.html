@@ -29,7 +29,7 @@
                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                     [matAutocomplete]="daAuto">
                 <button mat-button *ngIf="DefanceAttorney.value.company_name && daEdit" matSuffix mat-icon-button
-                    aria-label="Clear" (click)="clearAutoComplete()" matTooltip="Clear Address" matTooltipPosition="above">
+                    aria-label="Clear" (click)="$event.stopPropagation();clearAutoComplete()" matTooltip="Clear Address" matTooltipPosition="above">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-autocomplete #daAuto="matAutocomplete">
