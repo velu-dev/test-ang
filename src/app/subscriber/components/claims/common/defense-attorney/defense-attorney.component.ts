@@ -42,7 +42,7 @@ export class DefenseAttorneyComponent implements OnInit {
     //     );
     // })
     this.DefanceAttorney = this.formBuilder.group({
-      company_name: [{ value: null, disabled: true }, , Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")])],
+      company_name: [{ value: null, disabled: true }, Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")])],
       id: [],
       name: [{ value: null, disabled: true }],
       street1: [{ value: null, disabled: true }],
