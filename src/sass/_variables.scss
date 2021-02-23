@@ -1629,10 +1629,10 @@ input:-webkit-autofill {
     // border-bottom: none !important;
     // }
     div.property {
-       text-align: left;
-       width: 50%;
-       float: left;
-       min-width: 50%;
+      text-align: left;
+      width: 50%;
+      float: left;
+      min-width: 50%;
     }
     div.items {
       text-align: right;
@@ -1644,10 +1644,15 @@ input:-webkit-autofill {
         margin-bottom: 0;
       }
     }
-    div.total { width: 30%;
+    div.total {
+      width: 30%;
       min-width: 30%;
       float: right;
       text-align: right;
+      @media only screen and (max-width: 568px) {
+      width: 50%;
+      min-width: 50%;
+      }
     }
     // span {
     //   float: left;
@@ -1700,7 +1705,7 @@ input:-webkit-autofill {
     button {
       width: 20px !important;
       height: 20px !important;
-      padding-right: 30px;
+      padding-right: 25px;
     }
     .mat-icon-button .mat-icon,
     .mat-icon-button i {
@@ -1710,39 +1715,44 @@ input:-webkit-autofill {
   }
   .node0 {
     font-size: $font-size-2;
+    @media only screen and (max-width: 568px) {
+      font-size: $font-size-1;
+    }
     div.items {
       p {
-       margin-right: 0;
+        margin-right: 0;
       }
-     }
-
+    }
   }
   .node1 {
     font-size: $font-size-11;
+    @media only screen and (max-width: 568px) {
+      font-size: $font-size-1;
+    }
     div.items {
       p {
-       margin-right: 4px;
+        margin-right: 4px;
       }
-     }
+    }
   }
   .node2 {
     font-size: $font-size-1;
     div.items {
       p {
-       margin-right: 8px;
+        margin-right: 8px;
       }
-     }
+    }
   }
   .node3 {
     font-size: $font-size-3;
     div.property {
-     text-decoration: underline;
+      text-decoration: underline;
     }
     div.items {
       p {
-       margin-right: 12px;
+        margin-right: 12px;
       }
-     }
+    }
     // span {
     //   &:first-child {
     //       text-decoration: underline;
@@ -1752,9 +1762,9 @@ input:-webkit-autofill {
   .node4 {
     div.items {
       p {
-       margin-right: 16px;
+        margin-right: 16px;
       }
-     }
+    }
     font-size: $font-size-3;
   }
 }

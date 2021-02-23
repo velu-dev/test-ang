@@ -786,8 +786,9 @@
                                             <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
                                                     "$0.00"}}</b></span> -->
                                                     <div class="property">{{node.name}}</div>
-                                                    <div class="items"><p>&nbsp;{{node.pages ? node.pages : " "}}</p></div>
+                                                    <div class="items hide-mobile"><p>&nbsp;{{node.pages ? node.pages : " "}}</p></div>
                                                     <div class="total">{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) : "$0.00"}}</div>
+                                                    <div class="show-mobile"><b>{{node.pages ? node.pages : " "}}</b></div>
                                         </div>
                                     </mat-tree-node>
                                     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  matTreeNodePaddingIndent="10">
@@ -803,7 +804,7 @@
                                             <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
                                                     "$0.00"}}</b></span> -->
                                                     <div class="property"><b>{{node.name}}</b></div>
-                                                    <div class="items"><p>&nbsp;</p></div>
+                                                    <div class="items hide-mobile"><p>&nbsp;</p></div>
                                                     <div class="total"><b>{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) : "$0.00"}}</b></div>
                                             <div class="divider"></div>
                                         </div>

@@ -498,6 +498,7 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
   billing_line_items: any;
+  newFeeScheduleStatus: boolean;
   getBillLineItem() {
     this.touchedRows = [];
     this.userTable = this.fb.group({
@@ -506,9 +507,18 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId).subscribe(line => {
       if (line.data) {
         this.billing_line_items = line.data;
+
         line.data.map((item, index) => {
+          console.log(item)
+          this.newFeeScheduleStatus = item.is_new_fee_schedule;
           let firstData = {};
           this.addRow(1);
+          if (this.newFeeScheduleStatus && index == 0) {
+            if (item.unit_type == 'unit') item.unit_type = 'Units';
+            item.units = item.units ? item.units : 1;
+            item.charge = item.units * item.billing_code_details.unit_price;
+            item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0
+          }
           let modifier = item.modifier ? item.modifier.split('-') : [];
           line.data[index].modifierList = modifier;
           firstData = {
@@ -523,19 +533,21 @@ export class BilllableBillingComponent implements OnInit {
             payment: item.payment_amount ? item.payment_amount : 0.00,
             balance: 0,
             isEditable: [true],
+            unit_price: item.unit_price ? item.unit_price : null,
             is_post_payment: item.is_post_payment,
-            post_payment_id: item.post_payment_id
+            post_payment_id: item.post_payment_id,
+            billing_code_details: item.billing_code_details
           }
-          if (item.is_post_payment) {
-            this.getFormControls.controls[index].get('item_description').setValidators([]);
-            this.getFormControls.controls[index].get('procedure_code').setValidators([]);
-            this.getFormControls.controls[index].get('units').setValidators([]);
-            this.getFormControls.controls[index].get('charge').setValidators([]);
-            this.getFormControls.controls[index].get('item_description').updateValueAndValidity();
-            this.getFormControls.controls[index].get('procedure_code').updateValueAndValidity();
-            this.getFormControls.controls[index].get('units').updateValueAndValidity();
-            this.getFormControls.controls[index].get('charge').updateValueAndValidity();
-          }
+          // if (item.is_post_payment) {
+          //   this.getFormControls.controls[index].get('item_description').setValidators([]);
+          //   this.getFormControls.controls[index].get('procedure_code').setValidators([]);
+          //   this.getFormControls.controls[index].get('units').setValidators([]);
+          //   this.getFormControls.controls[index].get('charge').setValidators([]);
+          //   this.getFormControls.controls[index].get('item_description').updateValueAndValidity();
+          //   this.getFormControls.controls[index].get('procedure_code').updateValueAndValidity();
+          //   this.getFormControls.controls[index].get('units').updateValueAndValidity();
+          //   this.getFormControls.controls[index].get('charge').updateValueAndValidity();
+          // }
           this.getFormControls.controls[index].patchValue(firstData)
           if (this.getFormControls.controls[index].status == "VALID") {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
@@ -862,14 +874,16 @@ export class BilllableBillingComponent implements OnInit {
       modifierList: [[]],
       modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
       unitType: [''],
-      units: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      units: ['', Validators.compose([Validators.required, Validators.min(1), Validators.pattern('^(0|[0-9]{1,100}\d*)$')])],
       charge: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(99999999.99)])],
       payment: [0],
       balance: [0],
       total_charge: [0],
       isEditable: [true],
       is_post_payment: [],
-      post_payment_id: []
+      post_payment_id: [],
+      unit_price: [null],
+      billing_code_details: []
     });
   }
 
@@ -933,8 +947,13 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  editRow(group: FormGroup) {
+  editRow(group: FormGroup, i) {
     group.get('isEditable').setValue(true);
+    if (i == 0 && this.newFeeScheduleStatus) {
+      group.get('procedure_code').disable();
+      group.get('unitType').disable();
+      group.get('charge').disable();
+    }
   }
 
   doneRow(group: FormGroup, index) {
@@ -958,7 +977,7 @@ export class BilllableBillingComponent implements OnInit {
       procedure_code: group.value.procedure_code,
       modifier: moidfier,
       units: group.value.units,
-      charge: group.value.charge ? parseFloat(group.value.charge).toFixed(2) : group.value.charge,
+      charge: group.get('charge').value ? parseFloat(group.get('charge').value).toFixed(2) : group.get('charge').value,
       total_charge: this.calculateTotal(),
       unit_type: group.value.unitType,
       unit_short_code: this.getUnitCode(group.value.unitType)
@@ -989,6 +1008,14 @@ export class BilllableBillingComponent implements OnInit {
   get getFormControls() {
     const control = this.userTable.get('tableRows') as FormArray;
     return control;
+  }
+
+  unitChange(group, i, e) {
+    if (e && i == 0 && this.newFeeScheduleStatus) {
+      console.log(group.get('unit_price'))
+      let charge = e * group.get('unit_price').value
+      group.get('charge').patchValue(+charge)
+    }
   }
 
   getUnitCode(code) {
@@ -1041,8 +1068,8 @@ export class BilllableBillingComponent implements OnInit {
   calculateTotal() {
     let total: any = 0;
     for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].value.charge) {
-        total += parseFloat(this.getFormControls.controls[j].value.charge)
+      if (this.getFormControls.controls[j].get('charge').value) {
+        total += parseFloat(this.getFormControls.controls[j].get('charge').value)
       }
     }
     return total.toFixed(2);
@@ -1052,11 +1079,11 @@ export class BilllableBillingComponent implements OnInit {
     let total: any = 0;
     let payment: any = 0
     for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].value.charge) {
-        total += parseFloat(this.getFormControls.controls[j].value.charge)
+      if (this.getFormControls.controls[j].get('charge').value) {
+        total += parseFloat(this.getFormControls.controls[j].get('charge').value)
       }
-      if (this.getFormControls.controls[j].value.payment) {
-        payment += parseFloat(this.getFormControls.controls[j].value.payment)
+      if (this.getFormControls.controls[j].get('payment').value) {
+        payment += parseFloat(this.getFormControls.controls[j].get('payment').value)
       }
     }
     return (total - payment).toFixed(2);
@@ -1065,8 +1092,8 @@ export class BilllableBillingComponent implements OnInit {
   calculateTotalPayment() {
     let total: any = 0;
     for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].value.payment) {
-        total += parseFloat(this.getFormControls.controls[j].value.payment)
+      if (this.getFormControls.controls[j].get('payment').value) {
+        total += parseFloat(this.getFormControls.controls[j].get('payment').value)
       }
     }
     return total.toFixed(2);
@@ -1354,7 +1381,7 @@ export class BillingPaymentDialog {
       file: null,
       file_name: [null],
       url: null,
-      save_status: [false]
+      save_status: [false],
     });
   }
 
