@@ -44,11 +44,12 @@
                 max-height: 115px;
                 text-align: center;
                 border: 2px solid $black;
-                box-shadow: none;
+                box-shadow: $box-shadow-7;
                 cursor: pointer;
                 height: auto;
                 &:hover {
                     background: $light-color;
+                    box-shadow: $shadow-style-one;
                     h4 {
                         color: $ternary;
                     }

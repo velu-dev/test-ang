@@ -781,10 +781,13 @@
                                         <button mat-icon-button disabled></button>
 
                                         <div [class]="'pay-records node'+node?.level">
-                                            <span>{{node.name}}</span>
+                                            <!-- <span>{{node.name}}</span>
                                             <span>&nbsp;{{node.pages ? node.pages : " "}}</span>
                                             <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
-                                                    "$0.00"}}</b></span>
+                                                    "$0.00"}}</b></span> -->
+                                                    <div class="property">{{node.name}}</div>
+                                                    <div class="items"><p>&nbsp;{{node.pages ? node.pages : " "}}</p></div>
+                                                    <div class="total">{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) : "$0.00"}}</div>
                                         </div>
                                     </mat-tree-node>
                                     <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  matTreeNodePaddingIndent="10">
@@ -795,10 +798,13 @@
                                             </mat-icon>
                                         </button>
                                         <div [class]="'pay-records node'+node?.level">
-                                            <span><b>{{node.name}}</b></span>
+                                            <!-- <span><b>{{node.name}}</b></span>
                                             <span>&nbsp;{{node.pages}}</span>
                                             <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
-                                                    "$0.00"}}</b></span>
+                                                    "$0.00"}}</b></span> -->
+                                                    <div class="property"><b>{{node.name}}</b></div>
+                                                    <div class="items"><p>&nbsp;</p></div>
+                                                    <div class="total"><b>{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) : "$0.00"}}</b></div>
                                             <div class="divider"></div>
                                         </div>
 
