@@ -7,6 +7,7 @@ import Auth from "@aws-amplify/auth";
 import { catchError } from "rxjs/operators";
 import { CookieService } from '../services/cookie.service';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 export const InterceptorSkipHeader = "X-Skip-Interceptor";
 
 @Injectable({
@@ -38,6 +39,7 @@ export class TokenInterceptorService implements HttpInterceptor {
           const headers: { [name: string]: string | string[] } = {};
           headers["Authorization"] = "Bearer " + token['idToken'].jwtToken;
           headers["role"] = this.roleId;
+          headers["timezone"] =  moment && moment.tz && moment.tz.guess() ? moment.tz.guess() : '';
           const newHeader = new HttpHeaders(headers);
           const reqClone = req.clone({
             headers: newHeader

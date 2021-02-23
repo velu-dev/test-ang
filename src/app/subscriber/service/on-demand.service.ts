@@ -101,4 +101,8 @@ export class OnDemandService {
   getBreadcrumbDetails(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.getBreadcrumbDetails, data)
   }
+
+  getHistoryCallTracking(claim_id, billable_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.historyCallTracking + claim_id + "/" + billable_item_id);
+  }
 }

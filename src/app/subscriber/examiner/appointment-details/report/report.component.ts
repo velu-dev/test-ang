@@ -93,8 +93,8 @@ export class ReportComponent implements OnInit {
         this.columnName = ["", "File Name"]
         this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
-        this.columnName = ["Ref #", "Summarizer", "File Name", "Action", "Rush Request?", "Document" + '\n' + "Lines", "Date Requested", "Date Received", "Download Submitted" + '\n' + "Items", "Download Compiled" + '\n' + "Document", "Further Information"]
-        this.columnsToDisplay = ['request_reference_id', 'summarizer', 'file_name', 'actions', 'service_priority', "document_lines", "date_of_request", "date_of_communication", 'download', 'download1', 'further_info']
+        this.columnName = ["Ref #","Transcriptionist", "File Name", "Action", "Rush Request?", "Document" + '\n' + "Lines", "Date Requested", "Date Received", "Download Submitted" + '\n' + "Items", "Download Compiled" + '\n' + "Document", "Further Information"]
+        this.columnsToDisplay = ['request_reference_id','transcriptionist', 'file_name', 'actions', 'service_priority', "document_lines", "date_of_request", "date_of_communication", 'download', 'download1', 'further_info']
       }
     })
     // this.isHandset$.subscribe(res => {

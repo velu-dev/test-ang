@@ -162,6 +162,7 @@ export const api_endpoint = {
     reportDownload: 'billing/ondemand/report-transcription-download/',
     onDemandCorrespondence: 'service-requests/correspondence/mail-on-demand/create',
     onDemandHistory: 'service-requests/history-report/on-demand/create',
+    historyCallTracking: 'billing/ondemand/history/call-tracking/',
     //Corresponding
     getcorrespondence_data: "billing/ondemand/correspondence/",
     document_upload: "examinations/document-upload",

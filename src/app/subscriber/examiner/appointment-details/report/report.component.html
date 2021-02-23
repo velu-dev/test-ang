@@ -166,7 +166,7 @@
                     alt=""></span> -->
                 <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'"
                   class="no-wrap-td">{{element?.request_reference_id}}</span>
-                <span *ngIf="column == 'summarizer'">{{element?.summarizer}}</span>
+                <span *ngIf="column == 'transcriptionist'">{{element?.transcriptionist}}</span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'actions'">{{element?.action == 'RTD' ? 'Downloaded' : 'Report
                   On-demand'}}</span>
@@ -195,7 +195,7 @@
                 <div class="responsive-table">
                   <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref
                       #</span><span> {{element?.request_reference_id}} </span></div>
-                  <div><span>Summarizer</span><span>{{element?.summarizer}} </span></div>
+                  <div><span>Transcriptionist</span><span>{{element?.transcriptionist}} </span></div>
                   <div><span>File Name</span><span>{{element?.file_name}}</span></div>
                   <div><span>Action</span><span>{{element?.action == 'RTD' ? 'Downloaded' : 'Report On-demand'}}</span>
                   </div>

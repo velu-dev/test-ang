@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { saveAs } from 'file-saver';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
@@ -40,10 +40,11 @@ export class HistoryComponent implements OnInit {
   historyData: any;
   rushRequest: any;
   inFile: any = [];
-  dataSource1 = ELEMENT_DATA;
+  historyTrackingDatasource: any;
   columnsToDisplays = [];
   columnNames = [];
   statusBarValues = { value: null, status: '', class: '' }
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private onDemandService: OnDemandService, private alertService: AlertService, private intercom: IntercomService,
     public dialog: MatDialog, private cookieService: CookieService, public router: Router) {
@@ -86,19 +87,20 @@ export class HistoryComponent implements OnInit {
         this.columnsToDisplay = ['request_reference_id', "date_of_request", 'file_name', 'service_priority', "date_of_communication", 'download']
       }
       this.isMobile = res;
-        if (res) {
-          this.columnNames = ["", "Phone Number"]
-          this.columnsToDisplays = ['is_expand', 'phone_number']
-        } else {
-          this.columnNames = ["Historian", "Phone Number","Call Start Time", "Call End Time", "Narration", "Created Date Time", "Cancel Reason", "Cancel Notes"]
-          this.columnsToDisplays = ['historian','phone_number','call_start_time', "call_end_time", "narration", 'created_date_time', 'cancel_reason', 'cancel_notes']
-        }
+      if (res) {
+        this.columnNames = ["", "Phone Number"]
+        this.columnsToDisplays = ['is_expand', 'phone_number']
+      } else {
+        this.columnNames = ["Historian", "Phone Number", "Call Start Time", "Call End Time", "Narration", "Created Date Time", "Cancel Reason", "Cancel Notes"]
+        this.columnsToDisplays = ['historian', 'phone_number', 'call_start_time', "call_end_time", "narration", 'created_date_time', 'cancel_reason', 'cancel_notes']
+      }
     })
-    
+
   }
 
   ngOnInit() {
     this.getHistory();
+    this.getHistoryCallTracking();
   }
 
   getHistory() {
@@ -117,6 +119,16 @@ export class HistoryComponent implements OnInit {
       this.dataSource = new MatTableDataSource([])
     })
   }
+
+  getHistoryCallTracking() {
+    this.onDemandService.getHistoryCallTracking(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
+      this.historyTrackingDatasource = new MatTableDataSource(history.data ? history.data : []);
+      this.historyTrackingDatasource.sort = this.sort;
+    }, error => {
+      this.dataSource = new MatTableDataSource([])
+    })
+  }
+
 
   statusBarChanges(status) {
     switch (status) {
@@ -154,7 +166,7 @@ export class HistoryComponent implements OnInit {
   openElement1(element) {
     if (this.isMobile) {
       this.expandId1 = element.id;
-       }
+    }
   }
 
 
@@ -218,8 +230,3 @@ export class HistoryComponent implements OnInit {
   }
 
 }
-const ELEMENT_DATA = [
-  { "id": 1, "historian": "Super Admin", "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "Call #Scheduled By Super Admin","created_date_time": "2021-05-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
-  { "id": 2, "historian": "Ash-historian Saboo", "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "VoiceMail #3rd Attempt","created_date_time": "2021-05-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
-  { "id": 3, "historian": "Ash-historian Saboo", "phone_number": "2093218926", "call_start_time": "2021-02-11T08:29:27.893", "call_end_time": "2021-02-11T08:29:27.893", "narration": "VoiceMail #2rd Attempt","created_date_time": "2021-05-11T08:29:27.893","cancel_reason": "", "cancel_notes": ""},
-  ];
