@@ -204,7 +204,7 @@
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                 <span *ngIf="i == 0">
                     <th mat-header-cell *matHeaderCellDef>
-                        <button (click)="expandAll()">+</button>
+                        <button (click)="expandAll()">{{isExpandAll ? "- ": "+"}}</button>
                     </th>
                 </span>
                 <th mat-header-cell *matHeaderCellDef mat-sort-header
