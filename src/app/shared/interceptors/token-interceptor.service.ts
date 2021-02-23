@@ -39,7 +39,7 @@ export class TokenInterceptorService implements HttpInterceptor {
           const headers: { [name: string]: string | string[] } = {};
           headers["Authorization"] = "Bearer " + token['idToken'].jwtToken;
           headers["role"] = this.roleId;
-          headers["timezone"] =  moment && moment.tz && moment.tz.guess() ? moment.tz.guess() : '';
+          headers["x-simplexam-timezone"] =  moment && moment.tz && moment.tz.guess() ? moment.tz.guess() : '';
           const newHeader = new HttpHeaders(headers);
           const reqClone = req.clone({
             headers: newHeader

@@ -61,7 +61,14 @@ export class ManagerDashboardComponent implements OnInit {
       this.router.navigate(['subscriber/manager/new-intake'])
     }
   }
-
+  isExpandAll = false;
+  expandAll() {
+    if (!this.isExpandAll) {
+      this.isExpandAll = true;
+    } else {
+      this.isExpandAll = false;
+    }
+  }
   expandId: any;
   openElement(element) {
     if (this.expandId && this.expandId == element.appointment_id) {
@@ -88,7 +95,7 @@ export class ManagerDashboardComponent implements OnInit {
     this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
   }
 
-  navigateBillableItem(element){
+  navigateBillableItem(element) {
     this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
     this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
     this.intercom.setClaimNumber(element.claim_number);
