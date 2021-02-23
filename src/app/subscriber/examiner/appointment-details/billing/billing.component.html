@@ -368,7 +368,7 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput min="0" type="number" autocomplete="off"
+                                                    <input matInput min="1" (change)="unitChange(group,i,$event.target.value)" type="number" autocomplete="off"
                                                         formControlName="units">
                                                 </mat-form-field>
                                             </td>
@@ -383,7 +383,7 @@
                                             </td>
                                             <td>
                                                 <span class="text-danger">
-                                                    {{group.value.charge - group.value.payment | number :
+                                                    {{group.get('charge').value - group.value.payment | number :
                                                     '1.2-2'}}</span>
                                             </td>
 
@@ -424,7 +424,7 @@
                                             <td class="no-wrap-td">
 
                                                 <a class="text-success"
-                                                    (click)="group.get('is_post_payment').value ? openDialog(true,group) : editRow(group)">
+                                                    (click)="group.get('is_post_payment').value ? openDialog(true,group) : editRow(group,i)">
                                                     Edit
                                                 </a>
 
