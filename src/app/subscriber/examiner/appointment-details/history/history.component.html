@@ -6,7 +6,7 @@
             <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class"></mat-progress-bar>
             <div class="text-center">{{historyData?.on_demand_status}}</div>
         </div>
-        <div  fxFlex="100" class="m-t-20">
+        <div  fxFlex="100" class="m-t-20" *ngIf="historyTrackingDatasource?.filteredData?.length > 0">
             <div class="main-title m-b-10">History Call Tracking</div>
             <div class="user-detail vertical-fixed mh-auto">
                   <table mat-table [dataSource]="historyTrackingDatasource" multiTemplateDataRows class="mat-elevation-z8 user-table"
