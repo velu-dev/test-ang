@@ -185,7 +185,8 @@ export class NewClaimComponent implements OnInit {
   employerList = [];
   dataSource1 = [];
   deuDetails = [];
-  filteredDeu: Observable<any[]>;
+  // filteredDeu: Observable<any[]>;
+  filteredDeu: any = [];
   deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
   iseams_entry: boolean = false;
   role: string;
@@ -244,19 +245,34 @@ export class NewClaimComponent implements OnInit {
       this.isMobile = res;
     })
     this.claimService.getDeuDetails().subscribe(res => {
-      this.deuDetails = res.data;
+      let deuOffice = [];
+      res.data.map(deu => {
+        deu.name = deu.code + " - " + deu.deu_office
+        deuOffice.push(deu)
+      })
+      console.log(deuOffice)
+      this.deuDetails = deuOffice;
+      this.filteredDeu = this.deuDetails;
       this.deuCtrl.valueChanges
         .pipe(
           debounceTime(300),
-        ).subscribe(res => {
+        ).subscribe(val => {
           if (this.deuCtrl.errors) {
             return
           } else {
-            this.filteredDeu = this.deuCtrl.valueChanges
-              .pipe(
-                startWith(''),
-                map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
-              );
+            this.filteredDeu = this._filteDeu(val)
+            // this.deuCtrl.valueChanges
+            //   .pipe(
+            //     startWith(''),
+            //     map(deu => {
+            //       if (deu) {
+            //         this.filteredDeu = this._filteDeu(deu)
+            //       }
+            //       else {
+            //         this.filteredDeu = this.deuDetails.slice()
+            //       }
+            //     })
+            //   );
           }
         })
     })
@@ -487,7 +503,7 @@ export class NewClaimComponent implements OnInit {
   private _filteDeu(value: string): any[] {
     const filterValue = value.toLowerCase();
 
-    return this.deuDetails.filter(deu => deu.deu_office.toLowerCase().indexOf(filterValue) === 0);
+    return this.deuDetails.filter(deu => deu.name.toLowerCase().indexOf(filterValue) === 0);
   }
   isLoading = false;
   advanceTabChanged(event) {
@@ -982,7 +998,7 @@ export class NewClaimComponent implements OnInit {
             DefenseAttorney: { id: res.data.agent_details.DefenseAttorney.id },
             DEU: { id: res.data.agent_details.DEU.id },
           })
-          this.alertService.openSnackBar(res.message, 'success');
+          // this.alertService.openSnackBar(res.message, 'success');
           if (status == 'next') {
 
             this.stepper.next();
@@ -1494,7 +1510,11 @@ export class NewClaimComponent implements OnInit {
           //   res.name = res.company_name;
           //   claim_admin.push(res)
           // })
-          this.claimAdminList = [{ name: "EAMS ADJ Addresses", data: res.data.claims_administrator }, { name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
+          if (res.data.claims_administrator.length != 0) {
+            this.claimAdminList = [{ name: "EAMS ADJ Addresses", data: res.data.claims_administrator }, { name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
+          } else {
+            this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
+          }
           this.claimAdminGroupOptions = this.claimAdminList;
           // this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges.pipe(
           //   startWith(''),

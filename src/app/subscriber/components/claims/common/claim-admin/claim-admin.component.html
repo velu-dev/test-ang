@@ -29,8 +29,8 @@
                 <mat-label>Insurance Name{{fromPop ? "*" : ""}}</mat-label>
                 <input type="text" matInput placeholder="Insurance Name" formControlName="company_name"
                     [matAutocomplete]="caAuto">
-                <button mat-button *ngIf="claimAdminForm.value.company_name && claimAdminEdit" matSuffix mat-icon-button
-                    aria-label="Clear" (click)="clearAutoComplete()" matTooltip="Clear Address" matTooltipPosition="above">
+                <button mat-button *ngIf="claimAdminEdit" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="clearAutoComplete()" matTooltip="Clear Address" matTooltipPosition="above">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-autocomplete #caAuto="matAutocomplete">

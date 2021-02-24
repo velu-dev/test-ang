@@ -33,7 +33,7 @@
                 <mat-label>Office Name</mat-label>
                 <input matInput placeholder="Select Office Name" aria-label="Office Name" [matAutocomplete]="deuAuto"
                     [formControl]="deuCtrl">
-                <button mat-button *ngIf="DEU.value.name" matSuffix mat-icon-button aria-label="Clear"
+                <button mat-button *ngIf="deoEdit" matSuffix mat-icon-button aria-label="Clear"
                     (click)="clearAutoComplete()" matTooltip="Clear Address" matTooltipPosition="above">
                     <mat-icon>close</mat-icon>
                 </button>
