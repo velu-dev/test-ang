@@ -28,8 +28,9 @@
                 <mat-label>Law Firm Name{{fromPop ? "*" : ""}}</mat-label>
                 <input type="text" matInput placeholder="Law Firm Name" formControlName="company_name"
                     [matAutocomplete]="daAuto">
-                <button mat-button *ngIf="DefanceAttorney.value.company_name && daEdit" matSuffix mat-icon-button
-                    aria-label="Clear" (click)="$event.stopPropagation();clearAutoComplete()" matTooltip="Clear Address" matTooltipPosition="above">
+                <button mat-button *ngIf="daEdit" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="$event.stopPropagation();clearAutoComplete()" matTooltip="Clear Address"
+                    matTooltipPosition="above">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-autocomplete #daAuto="matAutocomplete">

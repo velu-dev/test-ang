@@ -185,7 +185,8 @@ export class NewClaimComponent implements OnInit {
   employerList = [];
   dataSource1 = [];
   deuDetails = [];
-  filteredDeu: Observable<any[]>;
+  // filteredDeu: Observable<any[]>;
+  filteredDeu: any = [];
   deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
   iseams_entry: boolean = false;
   role: string;
@@ -244,19 +245,34 @@ export class NewClaimComponent implements OnInit {
       this.isMobile = res;
     })
     this.claimService.getDeuDetails().subscribe(res => {
-      this.deuDetails = res.data;
+      let deuOffice = [];
+      res.data.map(deu => {
+        deu.name = deu.code + " - " + deu.deu_office
+        deuOffice.push(deu)
+      })
+      console.log(deuOffice)
+      this.deuDetails = deuOffice;
+      this.filteredDeu = this.deuDetails;
       this.deuCtrl.valueChanges
         .pipe(
           debounceTime(300),
-        ).subscribe(res => {
+        ).subscribe(val => {
           if (this.deuCtrl.errors) {
             return
           } else {
-            this.filteredDeu = this.deuCtrl.valueChanges
-              .pipe(
-                startWith(''),
-                map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
-              );
+            this.filteredDeu = this._filteDeu(val)
+            // this.deuCtrl.valueChanges
+            //   .pipe(
+            //     startWith(''),
+            //     map(deu => {
+            //       if (deu) {
+            //         this.filteredDeu = this._filteDeu(deu)
+            //       }
+            //       else {
+            //         this.filteredDeu = this.deuDetails.slice()
+            //       }
+            //     })
+            //   );
           }
         })
     })
@@ -487,7 +503,7 @@ export class NewClaimComponent implements OnInit {
   private _filteDeu(value: string): any[] {
     const filterValue = value.toLowerCase();
 
-    return this.deuDetails.filter(deu => deu.deu_office.toLowerCase().indexOf(filterValue) === 0);
+    return this.deuDetails.filter(deu => deu.name.toLowerCase().indexOf(filterValue) === 0);
   }
   isLoading = false;
   advanceTabChanged(event) {
