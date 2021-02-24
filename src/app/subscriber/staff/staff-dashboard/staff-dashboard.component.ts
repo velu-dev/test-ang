@@ -69,18 +69,17 @@ export class StaffDashboardComponent implements OnInit {
       this.isExpandAll = true;
     } else {
       this.isExpandAll = false;
+      this.expandId = null;
     }
   }
   expandId: any;
   openElement(element) {
-    // if (this.isMobile) {
+    this.isExpandAll = false;
     if (this.expandId && this.expandId == element.appointment_id) {
       this.expandId = null;
     } else {
       this.expandId = element.appointment_id;
     }
-    // this.expandId = element.appointment_id;
-    // }
   }
   openExtract(element, type) {
     this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
