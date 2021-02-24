@@ -1620,6 +1620,29 @@ input:-webkit-autofill {
 // Tree custom css
 .mat-tree {
   width: $width-100;
+  .pay-records-expand.node4 {
+    div.property {
+      @media only screen and (max-width: 568px) {
+        width: 100%;
+        min-width: 100%;
+      }
+    }
+    div.total {
+      @media only screen and (max-width: 568px) {
+        width: 50%;
+        float: left;
+        position: inherit;
+        padding-top: 4px;
+      }
+    }
+    div.show-mobile {
+      @media only screen and (max-width: 568px) {
+        width: 50%;
+        float: left;
+        padding: 5px 0 10px 0;
+      }
+    }
+  }
   .pay-records {
     width: $width-100;
     position: relative;
@@ -1630,30 +1653,48 @@ input:-webkit-autofill {
     // }
     div.property {
       text-align: left;
-      width: 50%;
+      width: 70%;
       float: left;
-      min-width: 50%;
+      min-width: 70%;
+      @media screen and (max-width: 1024px) and (min-width: 768px) {
+        width: 60%;
+        min-width: 60%;
+      }
+      @media only screen and (max-width: 568px) {
+        width: 50%;
+        min-width: 50%;
+        line-height: 1;
+      }
     }
     div.items {
       text-align: right;
-      width: 20%;
+      width: 15%;
       float: left;
-      min-width: 20%;
+      min-width: 15%;
+      @media screen and (max-width: 1024px) and (min-width: 768px) {
+        width: 20%;
+        min-width: 20%;
+      }
       p {
         margin-top: 0;
         margin-bottom: 0;
       }
     }
     div.total {
-      width: 30%;
-      min-width: 30%;
+      width: 15%;
+      min-width: 15%;
       float: right;
       text-align: right;
       @media only screen and (max-width: 568px) {
-      width: 50%;
-      min-width: 50%;
+        width: 50%;
+        min-width: 50%;
+      }
+      @media screen and (max-width: 1024px) and (min-width: 768px) {
+        width: 20%;
+        min-width: 20%;
       }
     }
+
     // span {
     //   float: left;
     //   &:first-child {
@@ -1693,15 +1734,13 @@ input:-webkit-autofill {
       margin: 0;
       position: inherit;
       top: 24px;
-      // position: absolute;
-      // top: 28px;
     }
   }
-  // .mat-tree-node {
-  //   min-height: 25px !important;
-  // }
   .mat-tree-node {
     min-height: 33px !important;
+    @media only screen and (max-width: 568px) {
+      min-height: 45px !important;
+    }
     button {
       width: 20px !important;
       height: 20px !important;
@@ -1723,6 +1762,11 @@ input:-webkit-autofill {
         margin-right: 0;
       }
     }
+    .divider {
+      @media only screen and (max-width: 568px) {
+        top: 29px;
+      }
+    }
   }
   .node1 {
     font-size: $font-size-11;
@@ -1731,7 +1775,12 @@ input:-webkit-autofill {
     }
     div.items {
       p {
-        margin-right: 4px;
+        margin-right: 2px;
+      }
+    }
+    .divider {
+      @media only screen and (max-width: 568px) {
+        top: 29px;
       }
     }
   }
@@ -1739,7 +1788,7 @@ input:-webkit-autofill {
     font-size: $font-size-1;
     div.items {
       p {
-        margin-right: 8px;
+        margin-right: 4px;
       }
     }
   }
@@ -1750,27 +1799,16 @@ input:-webkit-autofill {
     }
     div.items {
       p {
-        margin-right: 12px;
+        margin-right: 5px;
       }
     }
-    // span {
-    //   &:first-child {
-    //       text-decoration: underline;
-    //   }
-    // }
   }
   .node4 {
     div.items {
       p {
-        margin-right: 16px;
+        margin-right: 6px;
       }
     }
     font-size: $font-size-3;
   }
 }
-
-// card dropdown custom style
-//     .custom-mat-select {
-//       border-bottom: 1px solid $menu-light;
-//       padding: 5px 0;
-// }
