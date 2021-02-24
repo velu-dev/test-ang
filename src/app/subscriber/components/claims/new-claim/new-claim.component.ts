@@ -982,7 +982,7 @@ export class NewClaimComponent implements OnInit {
             DefenseAttorney: { id: res.data.agent_details.DefenseAttorney.id },
             DEU: { id: res.data.agent_details.DEU.id },
           })
-          this.alertService.openSnackBar(res.message, 'success');
+          // this.alertService.openSnackBar(res.message, 'success');
           if (status == 'next') {
 
             this.stepper.next();
@@ -1494,7 +1494,11 @@ export class NewClaimComponent implements OnInit {
           //   res.name = res.company_name;
           //   claim_admin.push(res)
           // })
-          this.claimAdminList = [{ name: "EAMS ADJ Addresses", data: res.data.claims_administrator }, { name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
+          if (res.data.claims_administrator.length != 0) {
+            this.claimAdminList = [{ name: "EAMS ADJ Addresses", data: res.data.claims_administrator }, { name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
+          } else {
+            this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }]
+          }
           this.claimAdminGroupOptions = this.claimAdminList;
           // this.claimAdminGroupOptions = this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges.pipe(
           //   startWith(''),
