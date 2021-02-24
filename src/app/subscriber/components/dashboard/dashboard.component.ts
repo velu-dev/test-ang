@@ -101,11 +101,12 @@ export class DashboardComponent implements OnInit {
       this.isExpandAll = true;
     } else {
       this.isExpandAll = false;
+      this.expandId = null;
     }
   }
   expandId: any;
   openElement(element) {
-    this.isExpandAll = false
+    this.isExpandAll = false;
     if (this.expandId && this.expandId == element.appointment_id) {
       this.expandId = null;
     } else {
