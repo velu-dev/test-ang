@@ -144,7 +144,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="expandedDetail">
-                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length" (click)="navigateBillableItem(element)">
                     <div class="detail"
                         [@detailExpand]="(expandId == element.appointment_id || isExpandAll) ? 'expanded' : 'collapsed'">
                         <div class="responsive-table">
