@@ -185,6 +185,7 @@ export class NewClaimComponent implements OnInit {
   employerList = [];
   dataSource1 = [];
   deuDetails = [];
+  empDetails = [];
   // filteredDeu: Observable<any[]>;
   filteredDeu: any = [];
   deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
@@ -250,7 +251,6 @@ export class NewClaimComponent implements OnInit {
         deu.name = deu.code + " - " + deu.deu_office
         deuOffice.push(deu)
       })
-      console.log(deuOffice)
       this.deuDetails = deuOffice;
       this.filteredDeu = this.deuDetails;
       this.deuCtrl.valueChanges
@@ -260,7 +260,11 @@ export class NewClaimComponent implements OnInit {
           if (this.deuCtrl.errors) {
             return
           } else {
-            this.filteredDeu = this._filteDeu(val)
+            if (val) {
+              this.filteredDeu = this._filteDeu(val)
+            } else {
+              this.filteredDeu = this.deuDetails.slice()
+            }
             // this.deuCtrl.valueChanges
             //   .pipe(
             //     startWith(''),
@@ -504,6 +508,11 @@ export class NewClaimComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.deuDetails.filter(deu => deu.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+  private _filteEmp(value: string): any[] {
+    const filterValue = value.toLowerCase();
+
+    return this.employerList.filter(emp => emp.name.toLowerCase().indexOf(filterValue) === 0);
   }
   isLoading = false;
   advanceTabChanged(event) {
@@ -778,6 +787,17 @@ export class NewClaimComponent implements OnInit {
         this.claimChanges = true;
       }
     );
+    this.claim.get(['Employer', 'name'])!.valueChanges.subscribe(input => {
+      if (this.claim.get(['Employer', 'name']).errors) {
+        return
+      } else {
+        if (input) {
+          this.empDetails = this._filteEmp(input)
+        } else {
+          this.empDetails = this.employerList.slice();
+        }
+      }
+    });
     this.claim.get(['InsuranceAdjuster', 'company_name'])!.valueChanges.subscribe(input => {
       if (this.claim.get(['InsuranceAdjuster', 'company_name']).errors) {
         return
@@ -1488,17 +1508,18 @@ export class NewClaimComponent implements OnInit {
             inj.date_of_injury = injury.date_of_injury ? moment(injury.date_of_injury) : null;
             inj.continuous_trauma_start_date = injury.continuous_trauma_start_date ? moment(injury.continuous_trauma_start_date) : null;
             inj.continuous_trauma_end_date = injury.continuous_trauma_end_date ? moment(injury.continuous_trauma_end_date) : null;
-            console.log(inj)
             this.injuryInfodata.push(inj)
           })
           // this.injuryInfodata = res.data.injuryInfodata;
-          if (res.data.employer.length == 1) {
-            this.employerList = [];
-            this.changeState(res.data.employer[0].state, 'emp')
-            this.appEmployer(res.data.employer[0])
-          } else {
+          if (res.data.employer.length > 1) {
             this.employerList = res.data.employer;
+            this.empDetails = res.data.employer;
           }
+          // this.changeState(res.data.employer[0].state, 'emp')
+          // this.appEmployer(res.data.employer[0])
+          // } else {
+          //   this.empDetails = res.data.employer;
+          // }
           // if (res.data.claims_administrator.length == 1) {
           //   this.claimAdminList = [];
           //   // this.appClaimAdmin(res.data.claims_administrator[0])
