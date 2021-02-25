@@ -132,12 +132,12 @@
 
 <div fxLayout="column" fxLayoutGap="25px" class="dashboard-list">
     <div class="user-detail">
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort [ngClass]="isExpandAll ? 'row-background': ''">
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
                 <span *ngIf="i == 0">
                     <th mat-header-cell *matHeaderCellDef>
                         <!-- <button (click)="expandAll()">{{isExpandAll ? "- ": "+"}}</button> -->
-                        <mat-icon mat-raised-button class="text-white m-t-5"
+                        <mat-icon mat-raised-button class="text-white m-t-5 m-l-5"
                             [matTooltip]="isExpandAll ? 'Collapse All' : 'Expand All'" matTooltipPosition="above"
                             (click)="expandAll()">{{isExpandAll ? 'remove_circle' : 'add_circle'}}</mat-icon>
                     </th>
@@ -193,11 +193,12 @@
                                 <!-- <div [ngClass]="{'text-primary': element?.is_critical}"><span>Critical</span>{{element?.is_critical ? "Critical" : "-"}}</div> -->
                             </section>
                             <section class="navigation" *ngIf="(expandId == element.appointment_id) || isExpandAll">
-                                <div *ngFor="let type of dispalySimpleservice(element?.procedure_type)"
-                                    (click)="openExtract(element, type.progress_name )">
+                                <span class="box-layout" *ngFor="let type of dispalySimpleservice(element?.procedure_type)">
+                                    <div (click)="openExtract(element, type.progress_name )">
                                     <span>{{type?.name}}</span>
                                     {{element[type?.status]}}
                                 </div>
+                                </span>
                             </section>
                             <!-- <section class="navigation">
                                 <div (click)="openExtract(element, 'correspondence' )"><span>Correspondence</span>

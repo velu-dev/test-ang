@@ -335,7 +335,7 @@
                                                     <mat-chip-list #chipList aria-label="Modifier selection"
                                                         formControlName="modifierList">
                                                         <mat-chip *ngFor="let modifier of group.value.modifierList"
-                                                            [removable]="removable" (removed)="remove(modifier,group)">
+                                                            [removable]="removable" (removed)="remove(modifier,group,i)">
                                                             {{modifier}}
                                                             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                                                         </mat-chip>
@@ -348,7 +348,7 @@
                                                             (click)="openAuto($event,trigger)">
                                                     </mat-chip-list>
                                                     <mat-autocomplete #auto1="matAutocomplete"
-                                                        (optionSelected)="selected($event,group)">
+                                                        (optionSelected)="selected($event,group,i)">
                                                         <mat-option *ngFor="let modifier of filteredmodifier"
                                                             [value]="modifier">
                                                             {{modifier}}
@@ -501,7 +501,7 @@
                                                             formControlName="modifierList">
                                                             <mat-chip *ngFor="let modifier of group.value.modifierList"
                                                                 [removable]="removable"
-                                                                (removed)="remove(modifier,group)">
+                                                                (removed)="remove(modifier,group,i)">
                                                                 {{modifier}}
                                                                 <mat-icon matChipRemove *ngIf="removable">cancel
                                                                 </mat-icon>
@@ -515,7 +515,7 @@
                                                                 (click)="openAuto($event,trigger)">
                                                         </mat-chip-list>
                                                         <mat-autocomplete #auto1="matAutocomplete"
-                                                            (optionSelected)="selected($event,group)">
+                                                            (optionSelected)="selected($event,group,i)">
                                                             <mat-option *ngFor="let modifier of filteredmodifier"
                                                                 [value]="modifier">
                                                                 {{modifier}}

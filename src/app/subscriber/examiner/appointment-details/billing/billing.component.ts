@@ -110,7 +110,7 @@ export class BilllableBillingComponent implements OnInit {
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
-  filteredmodifier: Observable<string[]>;
+  filteredmodifier: any;
   modiferList: any = ['93', '94', '95', '96'];
   @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
   //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
@@ -241,25 +241,54 @@ export class BilllableBillingComponent implements OnInit {
     // }
   }
 
-  remove(val: string, group: FormGroup): void {
+  remove(val: string, group: FormGroup, gruopindex?): void {
     const index = group.value.modifierList.indexOf(val);
+    if (index == 0 && this.newFeeScheduleStatus) {
+      group.value.modifier_seed_data.map((e, i) => {
+        if (e.modifier_code == val) {
+          e.exclude_modifiers.map((ex, ind) => {
+            if(!this.filteredmodifier.includes(ex)) this.filteredmodifier.push(ex)
+          })
+          if (+e.price_increase > 0) {
+            let calculateChange = (e.price_increase / 100) * group.value.billing_code_details.unit_price;
+            group.get('charge').patchValue(+group.get('charge').value - +calculateChange)
+          }
+        }
+        // console.log(e.price_increase)
+        // console.log(group.value.billing_code_details.unit_price)
 
+      });
+    }
     if (index >= 0) {
       group.get('modifierList').value.splice(index, 1);
     }
     group.get('modifierList').updateValueAndValidity();
   }
 
-  selected(event: MatAutocompleteSelectedEvent, group: FormGroup): void {
+  selected(event: MatAutocompleteSelectedEvent, group: FormGroup, index?): void {
     if (group.value.modifierList.length > 0 && group.value.modifierList.includes(event.option.viewValue)) {
       this.alertService.openSnackBar("Already added", "error");
-      this.fruitCtrl.reset()
       return;
     }
     if (group.value.modifierList.length > 3) {
-      this.fruitCtrl.reset()
       this.alertService.openSnackBar("Maximum 4 value", "error");
       return;
+    }
+    if (index == 0 && this.newFeeScheduleStatus) {
+      console.log(group.value.billing_code_details, group.value.modifier_seed_data)
+      group.value.modifier_seed_data.map((e, i) => {
+        if (e.modifier_code == event.option.viewValue) {
+          e.exclude_modifiers.map((ex, ind) => {
+            let filterIndex = this.filteredmodifier.findIndex(m => m == ex)
+            this.filteredmodifier.splice(filterIndex, 1)
+          });
+          if (+e.price_increase > 0) {
+            let calculateChange = (e.price_increase / 100) * group.value.billing_code_details.unit_price;
+            group.get('charge').patchValue(+calculateChange + +group.get('charge').value)
+          }
+        }
+
+      });
     }
     let modify = group.value.modifierList;
     modify.push(event.option.viewValue)
@@ -439,7 +468,7 @@ export class BilllableBillingComponent implements OnInit {
           let index = this.modiferList.indexOf('96');
           this.modiferList.splice(index, 1)
         }
-        this.filteredmodifier = this.modiferList
+        // this.filteredmodifier = this.modiferList
         if (this.billingData && this.billingData.bill_no) {
           this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
           this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
@@ -507,20 +536,29 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId).subscribe(line => {
       if (line.data) {
         this.billing_line_items = line.data;
-
+        this.newFeeScheduleStatus = this.billing_line_items[0].is_new_fee_schedule;
         line.data.map((item, index) => {
           console.log(item)
-          this.newFeeScheduleStatus = item.is_new_fee_schedule;
+
           let firstData = {};
           this.addRow(1);
+          let modifier = item.modifier ? item.modifier.split('-') : [];
+          line.data[index].modifierList = modifier;
+          if (item.unit_type == 'unit') item.unit_type = 'Units';
           if (this.newFeeScheduleStatus && index == 0) {
             if (item.unit_type == 'unit') item.unit_type = 'Units';
             item.units = item.units ? item.units : 1;
             item.charge = item.units * item.billing_code_details.unit_price;
-            item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0
+            item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
+            this.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
+            console.log(this.filteredmodifier)
+          }else{
+            setTimeout(() => {
+              this.filteredmodifier = this.modiferList
+            }, 2000);
+            
           }
-          let modifier = item.modifier ? item.modifier.split('-') : [];
-          line.data[index].modifierList = modifier;
+
           firstData = {
             id: item.id,
             modifierList: modifier,
@@ -536,7 +574,8 @@ export class BilllableBillingComponent implements OnInit {
             unit_price: item.unit_price ? item.unit_price : null,
             is_post_payment: item.is_post_payment,
             post_payment_id: item.post_payment_id,
-            billing_code_details: item.billing_code_details
+            billing_code_details: item.billing_code_details,
+            modifier_seed_data: item.modifier_seed_data
           }
           // if (item.is_post_payment) {
           //   this.getFormControls.controls[index].get('item_description').setValidators([]);
@@ -883,7 +922,8 @@ export class BilllableBillingComponent implements OnInit {
       is_post_payment: [],
       post_payment_id: [],
       unit_price: [null],
-      billing_code_details: []
+      billing_code_details: [],
+      modifier_seed_data: []
     });
   }
 
@@ -1013,7 +1053,7 @@ export class BilllableBillingComponent implements OnInit {
   unitChange(group, i, e) {
     if (e && i == 0 && this.newFeeScheduleStatus) {
       console.log(group.get('unit_price'))
-      let charge = e * group.get('unit_price').value
+      let charge = (e * group.get('unit_price').value) + +group.get('charge').value
       group.get('charge').patchValue(+charge)
     }
   }

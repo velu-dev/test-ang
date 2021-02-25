@@ -94,6 +94,23 @@
 .dashboard-list {
     box-shadow: $shadow-style-one;
     .user-detail {
+        .row-background {
+            tr {
+                &:nth-child(even) {
+                    td {
+                        padding: 0px !important;
+                    }
+                }
+                td {
+                    background: $light-color;
+                }
+            }
+            .detail {
+                .responsive-table {
+                    margin: 0px !important;
+                }
+            }
+        }
         table {
             tr {
                 td {
@@ -101,30 +118,50 @@
                     .responsive-table {
                         background-color: $white;
                         .navigation {
-                            div {
-                                border: 2px solid $table-border;
-                                padding: 5px 10px;
-                                border-radius: 3px;
-                                @media screen and (min-width: 1024px) {
-                                    margin: 5px 0 5px 20px;
-                                    min-width: 100px;
-                                    // &:last-child {
-                                    //     margin-right: 0;
-                                    // }
-                                }
-                                @media screen and (max-width: 1024px) and (min-width: 481px) {
-                                    margin: 5px 0 5px 20px;
-                                    // &:last-child {
-                                    //     margin-right: 0;
-                                    // }
-                                }
-
+                            width: 100%;
+                            .box-layout {
+                                width: 50%;
+                                float: left;
+                                display: table-caption;
                                 @media screen and (max-width: 568px) {
-                                    width: 88%;
-                                    margin: 10px 0 0 0;
+                                    width: 100%;
+                                    float: none;
                                 }
-                                &:hover {
-                                    background-color: $table-solid;
+                                div {
+                                    border: 2px solid $table-border;
+                                    padding: 5px 10px;
+                                    border-radius: 3px;
+                                    min-width: 300px;
+                                    display: -webkit-inline-box;
+                                    @media screen and (max-width: 568px) {
+                                        width: 100%;
+                                        margin: 10px 0 0 0;
+                                    }
+                                    @media screen and (min-width: 1024px) {
+                                        margin: 5px 0 5px 40px;
+                                    }
+                                    @media screen and (max-width: 1024px) and (min-width: 481px) {
+                                        margin: 5px 0 5px 20px;
+                                    }
+
+                                    @media screen and (max-width: 568px) {
+                                        width: 88%;
+                                        margin: 10px 0 0 0;
+                                    }
+                                    &:hover {
+                                        background-color: $table-solid;
+                                    }
+                                    span {
+                                        min-width: 115px;
+                                        display: table-caption;
+                                        position: relative;
+                                        padding-right: 0px !important;
+                                        &::after {
+                                            position: absolute;
+                                            top: 0;
+                                            right: 0;
+                                        }
+                                    }
                                 }
                             }
                         }
