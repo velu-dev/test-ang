@@ -314,12 +314,12 @@
                                         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
                                             (click)="rowSelected(group)">
                                             <td>
-                                                <mat-form-field appearance="outline" *ngIf="i != 0">
+                                                <mat-form-field appearance="outline" *ngIf="!group.get('is_auto_generate').value">
                                                     <input matInput type="text" name="item_description"
                                                         autocomplete="off" formControlName="item_description"
                                                         pattern="[a-zA-Z0-9/ -]+">
                                                 </mat-form-field>
-                                                <span *ngIf="i == 0">
+                                                <span *ngIf="group.get('is_auto_generate').value">
                                                     {{group.get('item_description').value}}
                                                 </span>
                                             </td>
@@ -349,7 +349,7 @@
                                                     </mat-chip-list>
                                                     <mat-autocomplete #auto1="matAutocomplete"
                                                         (optionSelected)="selected($event,group,i)">
-                                                        <mat-option *ngFor="let modifier of filteredmodifier"
+                                                        <mat-option *ngFor="let modifier of group.value.filteredmodifier"
                                                             [value]="modifier">
                                                             {{modifier}}
                                                         </mat-option>
