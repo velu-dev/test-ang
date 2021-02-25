@@ -90,6 +90,7 @@ export class EmployerComponent implements OnInit {
       return
     }
     this.employer.disable();
+    this.changeState(this.employerDetail.state, this.employerDetail.state_code);
     this.employer.patchValue(this.employerDetail)
   }
   numberOnly(event): boolean {

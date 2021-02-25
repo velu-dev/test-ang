@@ -69,7 +69,8 @@
             <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
                 [class.row]="expandedElement === element" (click)="openrouteElement(element)">
             </tr>
-            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row" (click)="row.toggle(row)">
+            <tr mat-row *matRowDef="let element;let row; columns: ['expandedDetail']" class="detail-row"
+                (click)="openrouteMobileElement(element)">
             </tr>
         </table>
         <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>

@@ -105,7 +105,7 @@ export class DeoComponent implements OnInit {
   editDEU() {
     this.DEU.enable();
     this.deoEdit = true;
-
+    this.deuCtrl.setValue(this.deuDetail.name);
   }
   updateDEU() {
     Object.keys(this.DEU.controls).forEach((key) => {
@@ -144,8 +144,11 @@ export class DeoComponent implements OnInit {
       this.dialogRef.close(false);
       return
     }
+    this.deoEdit
     this.DEU.disable();
-    this.DEU.patchValue(this.deuDetail)
+    this.DEU.patchValue(this.deuDetail);
+    this.deuCtrl.setValue(this.deuDetail.name);
+    this.changeState(this.deuDetail.state, this.deuDetail.state_code);
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;

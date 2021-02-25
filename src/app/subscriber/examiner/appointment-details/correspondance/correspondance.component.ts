@@ -108,8 +108,8 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.columnNames = ["", "Ref #"]
         this.columnsToDisplays = ['is_expand', 'ref_id']
       } else {
-        this.columnNames = ["Ref #","Receiver Name", "Tracking Number", "Details"]
-        this.columnsToDisplays = ['ref_id','receiver_name', "tracking_id", "more"]
+        this.columnNames = ["Ref #", "Receiver Name", "Tracking Number", "Details"]
+        this.columnsToDisplays = ['ref_id', 'receiver_name', "tracking_id", "more"]
       }
     })
   }
@@ -381,7 +381,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   openElement2(element) {
     if (this.isMobile) {
       this.expandId2 = element.id;
-       }
+    }
   }
 
 
@@ -514,12 +514,14 @@ export class BillingCorrespondanceComponent implements OnInit {
 
 
     let documents_ids: any = [];
+    let document_ids_display_order: any = [];
     let custom_documents_ids: any = [];
     let selected_recipients: any = [];
     this.selection.selected.map(res => {
       if (res.doc_type == "custom") {
         custom_documents_ids.push(res.id)
       } else {
+        document_ids_display_order.push({ form_id: res.id, custom_display_order: res.custom_display_oder })
         documents_ids.push(res.id)
       }
     })
@@ -544,6 +546,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       billable_item_id: this.billableId,
       service_request_type_id: 4,
       documents_ids: documents_ids,
+      document_ids_display_order: document_ids_display_order,
       custom_documents_ids: custom_documents_ids,
       recipients_ids: recipientsDocuments_ids,
       custom_recipients_ids: recipientsCustom_documents_ids,
@@ -930,7 +933,7 @@ export class MailOnDemandConfirm {
 }
 
 const ELEMENT_DATA = [
-  { "id": 1, "ref_id": "4739634", "receiver_name": "Brock Curry", "tracking_id": "9400 1000 0000 0000 0000 00"},
-  { "id": 2, "ref_id": "4739486", "receiver_name": "Frank Curry", "tracking_id": "9205 5000 0000 0000 0000 00"},
-  { "id": 3, "ref_id": "4739674", "receiver_name": "Dr. Sameer Gupta", "tracking_id": "9303 3000 0000 0000 0000 00"},
-  ];
+  { "id": 1, "ref_id": "4739634", "receiver_name": "Brock Curry", "tracking_id": "9400 1000 0000 0000 0000 00" },
+  { "id": 2, "ref_id": "4739486", "receiver_name": "Frank Curry", "tracking_id": "9205 5000 0000 0000 0000 00" },
+  { "id": 3, "ref_id": "4739674", "receiver_name": "Dr. Sameer Gupta", "tracking_id": "9303 3000 0000 0000 0000 00" },
+];

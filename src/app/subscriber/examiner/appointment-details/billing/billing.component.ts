@@ -797,8 +797,7 @@ export class BilllableBillingComponent implements OnInit {
           this.addRow(1);
           let modifier = item.modifier ? item.modifier.split('-') : [];
           line.data[index].modifierList = modifier;
-          if (item.unit_type == 'unit') item.unit_type = 'Units';
-          if (this.newFeeScheduleStatus && item.is_auto_generate) {
+          if (this.newFeeScheduleStatus && item.is_auto_generate && !item.is_excess_pages) {
             if (item.unit_type == 'unit') item.unit_type = 'Units';
             item.units = item.units ? item.units : 1;
             item.charge = item.charge ? item.charge : item.units * item.billing_code_details.unit_price;
@@ -806,10 +805,10 @@ export class BilllableBillingComponent implements OnInit {
             this.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
             console.log(this.filteredmodifier)
           } else {
-            setTimeout(() => {
-              this.filteredmodifier = this.modiferList
-            }, 2000);
-
+            if (item.is_excess_pages) {
+              item.unit_type = item.billing_code_details.extra_unit_type == 'page' ? 'Pages' : '';
+              this.filteredmodifier = []
+            }
           }
 
           firstData = {
@@ -831,7 +830,8 @@ export class BilllableBillingComponent implements OnInit {
             modifier_seed_data: item.modifier_seed_data,
             is_auto_generate: item.is_auto_generate,
             filteredmodifier: this.filteredmodifier,
-            unitTotal: +item.charge
+            unitTotal: +item.charge,
+            is_excess_pages: item.is_excess_pages
           }
           // if (item.is_post_payment) {
           //   this.getFormControls.controls[index].get('item_description').setValidators([]);
@@ -846,6 +846,12 @@ export class BilllableBillingComponent implements OnInit {
           this.getFormControls.controls[index].patchValue(firstData)
           if (this.getFormControls.controls[index].status == "VALID") {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
+          } else {
+            if (this.newFeeScheduleStatus || this.getFormControls.controls[index].get('is_excess_pages').value) {
+              this.getFormControls.controls[index].get('procedure_code').disable();
+              this.getFormControls.controls[index].get('unitType').disable();
+              this.getFormControls.controls[index].get('charge').disable();
+            }
           }
         })
 
@@ -878,7 +884,8 @@ export class BilllableBillingComponent implements OnInit {
       is_auto_generate: [null],
       filteredmodifier: [[]],
       modifierTotal: [0],
-      unitTotal: [0]
+      unitTotal: [0],
+      is_excess_pages: [null]
     });
   }
 
@@ -945,7 +952,7 @@ export class BilllableBillingComponent implements OnInit {
   editRow(group: FormGroup, i) {
     group.get('isEditable').setValue(true);
     console.log(group.value.is_auto_generate)
-    if (group.value.is_auto_generate && this.newFeeScheduleStatus) {
+    if (group.value.is_auto_generate && this.newFeeScheduleStatus || group.value.is_excess_pages) {
       group.get('procedure_code').disable();
       group.get('unitType').disable();
       group.get('charge').disable();
@@ -1007,10 +1014,26 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   unitChange(group, i, e) {
-    if (e && group.value.is_auto_generate && this.newFeeScheduleStatus) {
+    if (e && group.value.is_auto_generate && this.newFeeScheduleStatus && !group.value.is_excess_pages) {
       console.log(group);
+      let calculateChange = 0;
+      if (group.get('modifierList').value.length) {
+        group.value.modifier_seed_data.map((e, i) => {
+          if (group.get('modifierList').value.includes(e.modifier_code)) {
+            if (+e.price_increase > 0) {
+              calculateChange += (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
+            }
+          }
+
+        });
+        group.get('modifierTotal').patchValue(+calculateChange);
+      }
+      //group.get('charge').patchValue(+group.get('modifierTotal').value + +group.get('unitTotal').value);
       let charge = (e * group.get('unit_price').value) + +group.get('modifierTotal').value
       group.get('unitTotal').patchValue(+(e * group.get('unit_price').value))
+      group.get('charge').patchValue(+charge)
+    } else if (group.value.is_excess_pages) {
+      let charge = +group.get('units').value * +group.value.billing_code_details.rate_for_extra_units
       group.get('charge').patchValue(+charge)
     }
   }
@@ -1061,14 +1084,14 @@ export class BilllableBillingComponent implements OnInit {
 
   remove(val: string, group: FormGroup, gruopindex?): void {
     const index = group.value.modifierList.indexOf(val);
-    if (group.value.is_auto_generate && this.newFeeScheduleStatus) {
+    if (group.value.is_auto_generate && this.newFeeScheduleStatus && !group.value.is_excess_pages) {
       group.value.modifier_seed_data.map((e, i) => {
         if (e.modifier_code == val) {
           let modifier = e.exclude_modifiers.map((ex, ind) => {
             if (!group.get('filteredmodifier').value.includes(ex)) group.get('filteredmodifier').value.push(ex)
           })
           if (+e.price_increase > 0) {
-            let calculateChange = (e.price_increase / 100) * group.value.billing_code_details.unit_price;
+            let calculateChange = (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
             group.get('modifierTotal').patchValue(+group.get('modifierTotal').value - +calculateChange);
             group.get('charge').patchValue(+group.get('modifierTotal').value + +group.get('unitTotal').value);
 
@@ -1100,7 +1123,7 @@ export class BilllableBillingComponent implements OnInit {
             group.get('filteredmodifier').value.splice(filterIndex, 1)
           });
           if (+e.price_increase > 0) {
-            let calculateChange = (e.price_increase / 100) * group.value.billing_code_details.unit_price;
+            let calculateChange = (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
             group.get('modifierTotal').patchValue(+group.get('modifierTotal').value + +calculateChange);
             group.get('charge').patchValue(+group.get('modifierTotal').value + +group.get('unitTotal').value);
 
