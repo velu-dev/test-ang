@@ -226,7 +226,8 @@
                 <!-- <span *ngIf="column == 'doc_image'" class="file_type_icon">
                   <mat-icon *ngIf="element?.file_processing_status == 'FAIL'" class="text-danger">error</mat-icon>
                 </span> -->
-                <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'" class="no-wrap-td">{{element?.request_reference_id}}</span>
+                <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'"
+                  class="no-wrap-td">{{element?.request_reference_id}}</span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'action'" class="no-wrap-td" [ngSwitch]="element.action"><span
                     *ngSwitchCase="'MD'">Downloaded</span>
@@ -260,7 +261,8 @@
 
           <!-- <div><span></span> <img [src]="element?.file_name | fileType" alt="docx"> </div> -->
           <!-- <div><span>File Name</span><span> {{element?.file_name}} </span></div> -->
-           <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref #</span><span> {{element?.request_reference_id}} </span></div>
+          <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref #</span><span>
+              {{element?.request_reference_id}} </span></div>
           <div class="no-wrap-td"><span>Action</span>
             <span [ngSwitch]="element.action">
               <p *ngSwitchCase="'MD'" class="m-b-0">Downloaded</p>
@@ -348,7 +350,7 @@
       </div>
     </div>
   </div> -->
-<div fxLayout="row wrap" class="traking-details">
+<!-- <div fxLayout="row wrap" class="traking-details">
   <div fxFlex="100" class="m-t-20">
     <div class="main-title m-b-10">Tracking</div>
     <div class="user-detail vertical-fixed mh-auto">
@@ -367,25 +369,6 @@
               <span *ngIf="column == 'ref_id'">{{element?.ref_id}}</span>
               <span *ngIf="column == 'receiver_name'">{{element?.receiver_name}}</span>
               <span *ngIf="column == 'tracking_id'">{{element?.tracking_id}}</span>
-              <!-- <span *ngIf="column == 'more'">
-                <button [matMenuTriggerFor]="menu" class="more-btn">View Tracing Details <i class="fa fa-caret-down"></i></button>
-              </span>
-              <mat-menu #menu="matMenu" class="custom-menu" [overlapTrigger]="false">
-               <div  (click)="$event.stopPropagation()" class="more-details">
-                 <div class="main-title">Tracing Details</div>
-                <ul>
-                  <li>
-                    INDIO CA Phase 4c - Delivery
-                  </li>
-                  <li>
-                    SAN BERNARDINO CA Phase 3c - Destination Sequenced Carrier Sortation
-                  </li>
-                  <li>
-                    SAN BERNARDINO CA Phase 3a - Destination Secondary Processing
-                  </li>
-                </ul>
-               </div>
-                </mat-menu> -->
             </div>
           </td>
         </ng-container>
@@ -408,7 +391,7 @@
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
       </table>
-      <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> 
+      <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </div>
   </div>
 </div>
@@ -432,34 +415,44 @@
               <span *ngIf="column == 'receiver_name'">{{element?.receiver_name}}</span>
               <span *ngIf="column == 'tracing_id'">{{element?.tracing_id}}</span>
               <span *ngIf="column == 'more'">
-                <button [matMenuTriggerFor]="menu" class="more-btn">View Tracing Details <i class="fa fa-caret-down"></i></button>
+                <button [matMenuTriggerFor]="menu" class="more-btn">View Tracing Details <i
+                    class="fa fa-caret-down"></i></button>
               </span>
               <mat-menu #menu="matMenu" class="custom-menu" [overlapTrigger]="false">
-               <div  (click)="$event.stopPropagation()" class="more-details">
-                 <div class="main-title">Internal Tracing #: {{element?.tracing_id}}</div>
-                <ul>
-                  <li>
-                    <div>02-24-2021</div>
-                    SAINT PAUL MN CA Phase 4c - Delivery
-                  </li>
-                  <li>
-                    <div>02-20-2021</div>
-                    <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                    <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                    <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                    <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                    <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                    <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                  </li>
-                  <li>
-                    <div>02-19-2021</div>
-                    <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Transportation</span>
-                    <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Transportation</span>
-                    <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Transportation</span>
-                  </li>
-                </ul>
-               </div>
-                </mat-menu>
+                <div (click)="$event.stopPropagation()" class="more-details">
+                  <div class="main-title">Internal Tracing #: {{element?.tracing_id}}</div>
+                  <ul>
+                    <li>
+                      <div>02-24-2021</div>
+                      SAINT PAUL MN CA Phase 4c - Delivery
+                    </li>
+                    <li>
+                      <div>02-20-2021</div>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                    </li>
+                    <li>
+                      <div>02-19-2021</div>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN
+                        Transportation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN
+                        Transportation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN
+                        Transportation</span>
+                    </li>
+                  </ul>
+                </div>
+              </mat-menu>
             </div>
           </td>
         </ng-container>
@@ -470,33 +463,43 @@
                 <div><span>Ref #</span>{{element?.ref_id}}</div>
                 <div><span>Receiver Name</span>{{element?.receiver_name}}</div>
                 <div><span>Tracing Number</span>{{element?.tracing_id}}</div>
-                <div><span>View Details</span><button [matMenuTriggerFor]="menu1" class="more-btn">View Tracing Details <i class="fa fa-caret-down"></i></button></div>
+                <div><span>View Details</span><button [matMenuTriggerFor]="menu1" class="more-btn">View Tracing Details
+                    <i class="fa fa-caret-down"></i></button></div>
                 <mat-menu #menu1="matMenu" class="custom-menu" [overlapTrigger]="false">
-                  <div  (click)="$event.stopPropagation()" class="more-details">
+                  <div (click)="$event.stopPropagation()" class="more-details">
                     <div class="main-title">Internal Tracing #: {{element?.tracing_id}}</div>
-                   <ul>
-                     <li>
-                       <div>02-24-2021</div>
-                       SAINT PAUL MN CA Phase 4c - Delivery
-                     </li>
-                     <li>
-                       <div>02-20-2021</div>
-                       <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                       <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                       <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                       <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                       <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                       <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c - Destination Sequenced Carrier Sortation</span>
-                     </li>
-                     <li>
-                       <div>02-19-2021</div>
-                       <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Transportation</span>
-                       <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Transportation</span>
-                       <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Transportation</span>
-                     </li>
-                   </ul>
+                    <ul>
+                      <li>
+                        <div>02-24-2021</div>
+                        SAINT PAUL MN CA Phase 4c - Delivery
+                      </li>
+                      <li>
+                        <div>02-20-2021</div>
+                        <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                          Destination Sequenced Carrier Sortation</span>
+                        <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                          Destination Sequenced Carrier Sortation</span>
+                        <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                          Destination Sequenced Carrier Sortation</span>
+                        <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                          Destination Sequenced Carrier Sortation</span>
+                        <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                          Destination Sequenced Carrier Sortation</span>
+                        <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                          Destination Sequenced Carrier Sortation</span>
+                      </li>
+                      <li>
+                        <div>02-19-2021</div>
+                        <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN
+                          Transportation</span>
+                        <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN
+                          Transportation</span>
+                        <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN
+                          Transportation</span>
+                      </li>
+                    </ul>
                   </div>
-                   </mat-menu>
+                </mat-menu>
 
               </div>
             </div>
@@ -508,8 +511,8 @@
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
       </table>
-      <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata> 
+      <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </div>
   </div>
-</div>
+</div> -->
 </div>
