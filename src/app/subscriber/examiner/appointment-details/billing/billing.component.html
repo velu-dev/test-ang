@@ -325,7 +325,7 @@
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline">
-                                                    <input matInput type="text" name="procedure_code" autocomplete="off"
+                                                    <input matInput type="text" (change)="procedureChange($event.target.value)" name="procedure_code" autocomplete="off"
                                                         formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
                                                 </mat-form-field>
                                             </td>
@@ -349,7 +349,7 @@
                                                     </mat-chip-list>
                                                     <mat-autocomplete #auto1="matAutocomplete"
                                                         (optionSelected)="selected($event,group,i)">
-                                                        <mat-option *ngFor="let modifier of group.value.filteredmodifier"
+                                                        <mat-option *ngFor="let modifier of group.get('is_auto_generate').value ? group.value.filteredmodifier : filteredmodifier"
                                                             [value]="modifier">
                                                             {{modifier}}
                                                         </mat-option>

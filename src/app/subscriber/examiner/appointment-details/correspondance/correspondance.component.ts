@@ -64,6 +64,9 @@ export class BillingCorrespondanceComponent implements OnInit {
   dataSource1 = ELEMENT_DATA;
   columnsToDisplays = [];
   columnNames = [];
+  dataSource2 = ELEMENT_DATA_1;
+  columnsToDisplayTracing = [];
+  columnNameTracing = [];
   statusBarValues = { value: null, status: '', class: '' }
   statusOfAppointment = { isEmptyNoDate: false, IsEmptyAppointmentDate: false, isEmptyDuration: false, isEmptyLocation: false }
   is_appointment_incomplete = false;
@@ -108,8 +111,16 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.columnNames = ["", "Ref #"]
         this.columnsToDisplays = ['is_expand', 'ref_id']
       } else {
-        this.columnNames = ["Ref #", "Receiver Name", "Tracking Number", "Details"]
-        this.columnsToDisplays = ['ref_id', 'receiver_name', "tracking_id", "more"]
+        this.columnNames = ["Ref #", "Receiver Name", "Tracking Number"]
+        this.columnsToDisplays = ['ref_id', 'receiver_name', "tracking_id" ]
+      }
+      this.isMobile = res;
+      if (res) {
+        this.columnNameTracing = ["", "Ref #"]
+        this.columnsToDisplayTracing = ['is_expand', 'ref_id']
+      } else {
+        this.columnNameTracing = ["Ref #", "Receiver Name", "Internal Tracing Number", "Details"]
+        this.columnsToDisplayTracing = ['ref_id', 'receiver_name', "tracing_id", "more"]
       }
     })
   }
@@ -383,7 +394,12 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.expandId2 = element.id;
     }
   }
-
+  expandId3: any;
+  openElement3(element) {
+    if (this.isMobile) {
+      this.expandId3 = element.id;
+    }
+  }
 
   allOrNone(status) {
     if (!status) {
@@ -933,7 +949,10 @@ export class MailOnDemandConfirm {
 }
 
 const ELEMENT_DATA = [
-  { "id": 1, "ref_id": "4739634", "receiver_name": "Brock Curry", "tracking_id": "9400 1000 0000 0000 0000 00" },
-  { "id": 2, "ref_id": "4739486", "receiver_name": "Frank Curry", "tracking_id": "9205 5000 0000 0000 0000 00" },
-  { "id": 3, "ref_id": "4739674", "receiver_name": "Dr. Sameer Gupta", "tracking_id": "9303 3000 0000 0000 0000 00" },
+  { "id": 1, "ref_id": "1000000044", "receiver_name": "NEXT LEVEL FOLSOM", "tracking_id": "9205590129526702151513" },
+  { "id": 2, "ref_id": "1000000051", "receiver_name": "SEDGWICK 619079 ROSEVILLE, Victoria Greene", "tracking_id": "9205590129526702151636" },
+];
+const ELEMENT_DATA_1 = [
+  { "id": 1, "ref_id": "1000000044", "receiver_name": "NEXT LEVEL FOLSOM", "tracing_id": "00270901295267150185" },
+  { "id": 1, "ref_id": "1000000051", "receiver_name": "SEDGWICK 619079 ROSEVILLE, Victoria Greene", "tracing_id": "00270901295267581051" }
 ];
