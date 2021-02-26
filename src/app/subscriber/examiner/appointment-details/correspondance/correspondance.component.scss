@@ -179,3 +179,7 @@ th {
         cursor: pointer;
     }
 }
+.tracing-details {
+    @extend .send-document;
+    @extend .traking-details
+}
