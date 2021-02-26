@@ -22,7 +22,7 @@
       padding: 0px 10px !important;
       border-bottom: 1px solid $table-border;
       white-space: break-spaces;
-      word-break: break-word;
+      word-break: inherit;
     }
     &:hover {
       background-color: $table-solid;
