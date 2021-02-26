@@ -80,12 +80,11 @@
                                 [src]="element?.file_name | fileType" alt=""></span>
                         <span *ngIf="column == 'file_name'"><b class="p-t-5">{{element?.file_name}}</b>
                             <br />
-                            <small class="hide-mobile">Note : {{element?.notes}}</small>
+                            <small class="hide-mobile">Note : {{element?.notes ? element?.notes : ""}}</small>
                         </span>
-                        <span *ngIf="column == 'uploaded_on'"
-                            class="no-wrap-td">{{element?.updatedAt |  date:'MM-dd-yyyy' }} <small class="p-l-10"><span
-                                    class="fa fa-clock-o"></span>
-                                {{element?.updatedAt |  date:'hh:mm a' }}</small></span>
+                        <span *ngIf="column == 'uploaded_on'" class="no-wrap-td">{{element?.updatedAt |
+                            date:'MM-dd-yyyy' }} <small class="p-l-10"><span class="fa fa-clock-o"></span>
+                                {{element?.updatedAt | date:'hh:mm a' }}</small></span>
                         <span *ngIf="column == 'action'" class="text-center no-wrap-td">
                             <a target="_self" class="text-success" (click)="download(element)">
                                 Download
@@ -103,8 +102,9 @@
                         <div class="responsive-table">
                             <!-- <div><span>File Name</span><span>{{element?.file_name}}</span></div> -->
                             <div><span>Note</span><span>{{element?.notes}}</span></div>
-                            <div><span>Uploaded On</span><span>{{element?.updatedAt |  date:'MM-dd-yyyy' }}<small class="p-l-5"><i class="fa fa-clock-o"></i>
-                                        {{element?.updatedAt |  date:'hh:mm a' }}</small> </span></div>
+                            <div><span>Uploaded On</span><span>{{element?.updatedAt | date:'MM-dd-yyyy' }}<small
+                                        class="p-l-5"><i class="fa fa-clock-o"></i>
+                                        {{element?.updatedAt | date:'hh:mm a' }}</small> </span></div>
                             <div><span>Action</span><span>
                                     <a target="_self" class="text-success" (click)="download(element)">
                                         Download
