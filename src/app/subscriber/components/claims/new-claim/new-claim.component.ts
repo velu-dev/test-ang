@@ -1483,7 +1483,7 @@ export class NewClaimComponent implements OnInit {
       this.claimService.searchbyEams(this.emasSearchInput.value.replace(/\s/g, ''), data).subscribe(res => {
         if (res.data) {
           this.isEdit = false;
-          this.claimant.reset();
+          // this.claimant.reset();
           this.claim.reset();
           this.billable_item.reset();
           this.isNewClaim = true;
@@ -1511,7 +1511,7 @@ export class NewClaimComponent implements OnInit {
             this.injuryInfodata.push(inj)
           })
           // this.injuryInfodata = res.data.injuryInfodata;
-          if (res.data.employer.length > 1) {
+          if (res.data.employer.length > 0) {
             this.employerList = res.data.employer;
             this.empDetails = res.data.employer;
           }
