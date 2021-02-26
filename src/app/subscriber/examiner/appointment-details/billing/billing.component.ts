@@ -350,7 +350,7 @@ export class BilllableBillingComponent implements OnInit {
 
     this.getDocumentData();
     this.getBillingDetails();
-    this.getBillLineItem()
+    // this.getBillLineItem()
     this.getBillDocument();
     //table
     this.touchedRows = [];
@@ -416,7 +416,8 @@ export class BilllableBillingComponent implements OnInit {
           let index = this.modiferList.indexOf('96');
           this.modiferList.splice(index, 1)
         }
-        // this.filteredmodifier = this.modiferList
+        this.filteredmodifier = this.modiferList
+        this.getBillLineItem()
         if (this.billingData && this.billingData.bill_no) {
           this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
           this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
@@ -802,12 +803,11 @@ export class BilllableBillingComponent implements OnInit {
             item.units = item.units ? item.units : 1;
             item.charge = item.charge ? item.charge : item.units * item.billing_code_details.unit_price;
             item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
-            this.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
-            console.log(this.filteredmodifier)
+            item.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
           } else {
             if (item.is_excess_pages) {
               item.unit_type = item.billing_code_details.extra_unit_type == 'page' ? 'Pages' : '';
-              this.filteredmodifier = []
+              item.filteredmodifier = []
             }
           }
 
@@ -829,7 +829,7 @@ export class BilllableBillingComponent implements OnInit {
             billing_code_details: item.billing_code_details,
             modifier_seed_data: item.modifier_seed_data,
             is_auto_generate: item.is_auto_generate,
-            filteredmodifier: this.filteredmodifier,
+            filteredmodifier: item.filteredmodifier,
             unitTotal: +item.charge,
             is_excess_pages: item.is_excess_pages
           }
@@ -951,7 +951,6 @@ export class BilllableBillingComponent implements OnInit {
 
   editRow(group: FormGroup, i) {
     group.get('isEditable').setValue(true);
-    console.log(group.value.is_auto_generate)
     if (group.value.is_auto_generate && this.newFeeScheduleStatus || group.value.is_excess_pages) {
       group.get('procedure_code').disable();
       group.get('unitType').disable();
@@ -1038,6 +1037,15 @@ export class BilllableBillingComponent implements OnInit {
     }
   }
 
+  procedureChange(val) {
+    let valReplace;
+    if (val && val.trim()) {
+      valReplace = val.replace(/[^a-zA-Z]/g, "");
+      if (valReplace.toLowerCase() == 'mlprr') {
+        console.log(valReplace)
+      }
+    }
+  }
   getUnitCode(code) {
     if (code) {
       for (var c in this.unitTypes) {
