@@ -988,6 +988,8 @@ export class NewClaimComponent implements OnInit {
       claim['claim_details'].iseams_entry = this.iseams_entry;
     }
     this.fileErrors.file.isError = false;
+    claim['claim_details'].claimant_id = this.claimant_id;
+    console.log(claim)
     if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
         this.claimId = res.data.id;
@@ -1299,6 +1301,7 @@ export class NewClaimComponent implements OnInit {
           this.claimantChanges = false;
           this.claim.patchValue({
             claim_details: {
+              claimant_id: this.claimant_id,
               claimant_name: this.claimantDetails.claimant_name,
               date_of_birth: res.data.date_of_birth,
               phone_no_1: res.data.phone_no_1
