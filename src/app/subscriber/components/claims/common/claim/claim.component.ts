@@ -84,7 +84,8 @@ export class ClaimComponent implements OnInit {
       this.claimDetail.internal_reference = this.internalReferanceNumber;
       this.alertService.openSnackBar("Claim updated successfully", 'success')
     }, error => {
-      this.alertService.openSnackBar(error.error.message, "error");
+      console.log(error.error.message)
+      this.alertService.openSnackBar(error.error.message.message, "error");
     })
   }
   cancel() {

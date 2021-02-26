@@ -1495,6 +1495,7 @@ export class NewClaimComponent implements OnInit {
           this.billable_item.reset();
           this.isNewClaim = true;
           this.claimId = "";
+          this.correspondenceSource = new MatTableDataSource([]);
           if (!this.fromClaimant) {
             this.isClaimantEdit = false;
             this.addNewClaimant = true;
