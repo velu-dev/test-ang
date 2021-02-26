@@ -812,7 +812,7 @@
                                             <input type="file" #uploader hidden
                                                 (change)="addCompleteDoc($event,element)" hidden
                                                 accept=".pdf, .doc, .docx" required>
-                                            <a *ngIf="!(element?.form_action_type != 'C' && element?.form_action_type != 'X')"
+                                            <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X'"
                                                 class="text-danger no-wrap-td"
                                                 (click)=" element?.completed_document ? uploader.click() : ''">Remove
                                                 and Reupload

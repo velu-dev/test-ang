@@ -27,7 +27,7 @@ export class AddEditServiceLocationComponent implements OnInit {
   examinerId: number;
   user: any;
   examiner_list: any;
-  baseUrl:any;
+  baseUrl: any;
   constructor(private subscriberService: SubscriberService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -60,6 +60,8 @@ export class AddEditServiceLocationComponent implements OnInit {
           this.examinerName = res.examiner_details.last_name + ' ' + res.examiner_details.first_name + (res.examiner_details.suffix ? ', ' + res.examiner_details.suffix : '')
         })
     })
+
+    this.getMailingAddress();
   }
   locationData = {};
   examinerName: string;
@@ -282,45 +284,55 @@ export class AddEditServiceLocationComponent implements OnInit {
     console.log(e.value, this.user.role_id)
 
   }
-
-  maillingAddress: any;
+  isMailingAddressPresent = false;
+  maillingAddress: any
+  getMailingAddress() {
+    this.subscriberService.getMaillingAddress(this.examinerId).subscribe(address => {
+      if (address.data) {
+        this.isMailingAddressPresent = true;
+        address.data.notes = null;
+        this.maillingAddress = address.data
+      } else {
+        this.isMailingAddressPresent = false;
+      }
+    }, error => {
+      this.isMailingAddressPresent = false;
+      this.maillingAddress = null
+      console.log(error.error.message);
+      let addresEmpty = {
+        street1: null,
+        street2: null,
+        city: null,
+        state: null,
+        zip_code: null,
+        phone_no: null,
+        fax_no: null,
+        email: null,
+        primary_contact: "",
+        primary_contact_phone: "",
+        alternate_contact_1_phone: "",
+        alternate_contact_1: "",
+        alternate_contact_2: "",
+        alternate_contact_2_phone: "",
+      }
+      this.locationForm.patchValue(addresEmpty);
+    })
+  }
   sameAsMailling(e) {
     console.log(e.checked)
     if (e.checked) {
       if (!this.maillingAddress) {
-        this.subscriberService.getMaillingAddress(this.examinerId).subscribe(address => {
-          address.data.notes = null;
-          this.maillingAddress = address.data
-          this.locationForm.patchValue(address.data);
-          this.locationForm.patchValue({
-            primary_contact: address.data.contact_person,
-            primary_contact_phone: address.data.phone_no1,
-            alternate_contact_1: "",
-            alternate_contact_1_phone: address.data.phone_no2,
-            alternate_contact_2: "",
-            alternate_contact_2_phone: "",
-          })
-          this.changeState(address.data.state, address.data.state_code)
-        }, error => {
-          console.log(error.error.message);
-          let addresEmpty = {
-            street1: null,
-            street2: null,
-            city: null,
-            state: null,
-            zip_code: null,
-            phone_no: null,
-            fax_no: null,
-            email: null,
-            primary_contact: "",
-            primary_contact_phone: "",
-            alternate_contact_1_phone: "",
-            alternate_contact_1: "",
-            alternate_contact_2: "",
-            alternate_contact_2_phone: "",
-          }
-          this.locationForm.patchValue(addresEmpty);
+        this.locationForm.patchValue(this.maillingAddress);
+        this.locationForm.patchValue({
+          primary_contact: this.maillingAddress.contact_person,
+          primary_contact_phone: this.maillingAddress.phone_no1,
+          alternate_contact_1: "",
+          alternate_contact_1_phone: this.maillingAddress.phone_no2,
+          alternate_contact_2: "",
+          alternate_contact_2_phone: "",
         })
+        this.changeState(this.maillingAddress.state, this.maillingAddress.state_code)
+
       } else {
         this.locationForm.patchValue({
           primary_contact: this.maillingAddress.contact_person,

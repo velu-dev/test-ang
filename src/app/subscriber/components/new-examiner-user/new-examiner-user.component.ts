@@ -876,11 +876,11 @@ export class NewExaminerUserComponent implements OnInit {
     this.renderingForm.patchValue({
       taxonomy_id: null
     })
+    this.texonomyValue = null;
     this.texonomySearch.reset();
   }
   renderingSubmit: boolean = false;
   renderingFormSubmit(status?) {
-    console.log(this.renderingForm.value)
     this.renderingSubmit = true;
     if (this.renderingForm.value.is_person) {
       this.renderingForm.get('first_name').setValidators([Validators.required, Validators.maxLength(50)]);
@@ -900,6 +900,10 @@ export class NewExaminerUserComponent implements OnInit {
     if (this.renderingForm.invalid) {
       window.scrollTo(0, 0)
       return;
+    }
+    if (!this.texonomyValue) {
+      this.texonomyValue = null
+      this.texonomySearch.patchValue("")
     }
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
     this.renderingForm.value.signature = sign;

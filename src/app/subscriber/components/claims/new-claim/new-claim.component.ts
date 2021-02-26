@@ -990,6 +990,8 @@ export class NewClaimComponent implements OnInit {
     this.fileErrors.file.isError = false;
     if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
+        this.claimId = res.data.id;
+        this.examtypeChange(this.claimId, this.claim.value.claim_details);
         let examtype = "";
         this.examTypes.map(exam => {
           if (res.data.exam_type_id == exam.id) {
@@ -998,7 +1000,6 @@ export class NewClaimComponent implements OnInit {
         })
         this.claimDetails = { claim_number: res.data.claim_number, exam_type_id: examtype, wcab_number: res.data.wcab_number }
         this.isClaimCreated = true;
-        this.claimId = res.data.id;
         this.claim.patchValue({
           claim_details: {
             id: res.data.id
@@ -1026,7 +1027,6 @@ export class NewClaimComponent implements OnInit {
             this.routeDashboard();
           }
         })
-        this.examtypeChange(this.claimId, this.claim.value.claim_details)
         this.claimChanges = false;
         this.isClaimCreated = true;
       }, error => {
@@ -1037,6 +1037,7 @@ export class NewClaimComponent implements OnInit {
     } else {
       claim['claim_injuries'] = this.injuryInfodata;
       this.claimService.updateClaimAll(claim, this.claimId).subscribe(res => {
+        this.examtypeChange(this.claimId, this.claim.value.claim_details);
         let examtype = "";
 
         this.examTypes.map(exam => {
@@ -1052,7 +1053,6 @@ export class NewClaimComponent implements OnInit {
           this.routeDashboard();
         }
         this.claimChanges = false;
-        this.examtypeChange(this.claimId, this.claim.value.claim_details)
       }, error => {
         this.isClaimCreated = false;
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -1196,8 +1196,12 @@ export class NewClaimComponent implements OnInit {
     //   this.procuderalCodes = res.data;
     // })
     this.claimService.getProcedureTypeAttoney(claim, type.exam_type_id).subscribe(procedure => {
+      this.billable_item.patchValue({
+        exam_type: {
+          exam_procedure_type_id: null
+        }
+      })
       this.procuderalCodes = procedure.data;
-      console.log(procedure)
     })
   }
   claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "" }
@@ -1636,26 +1640,80 @@ export class NewClaimComponent implements OnInit {
     switch (form) {
       case 'aa':
         this.selectedAAttorney = null;
-        this.claim.get('ApplicantAttorney').reset();
+        this.claim.get('ApplicantAttorney').patchValue({
+          city: null,
+          company_name: null,
+          email: null,
+          fax: null,
+          name: null,
+          phone: null,
+          state: null,
+          street1: null,
+          street2: null,
+          zip_code: null,
+        });
         this.aaState = null;
         break;
       case 'da':
         this.selectedDAttorney = null;
         this.daState = null;
-        this.claim.get('DefenseAttorney').reset();
+        this.claim.get('DefenseAttorney').patchValue({
+          city: null,
+          email: null,
+          company_name: null,
+          fax: null,
+          name: null,
+          phone: null,
+          state: null,
+          street1: null,
+          street2: null,
+          zip_code: null
+        });
         break;
       case 'ca':
         this.caState = null;
-        this.claim.get('InsuranceAdjuster').reset();
+        this.claim.get('InsuranceAdjuster').patchValue({
+          city: null,
+          company_name: null,
+          email: null,
+          fax: null,
+          name: null,
+          payor_id: null,
+          phone: null,
+          state: null,
+          street1: null,
+          street2: null,
+          zip_code: null
+        });
         break;
       case 'emp':
         this.empState = null;
-        this.claim.get('Employer').reset();
+        this.claim.get('Employer').patchValue({
+          city: null,
+          email: null,
+          fax: null,
+          name: null,
+          phone: null,
+          state: null,
+          street1: null,
+          street2: null,
+          zip_code: null
+        });
         break;
       case 'deu':
         this.deuState = null;
         this.deuCtrl.reset();
-        this.claim.get('DEU').reset();
+        this.claim.get('DEU').patchValue({
+          city: null,
+          email: null,
+          fax: null,
+          name: null,
+          phone: null,
+          state: null,
+          street1: null,
+          street2: null,
+          zip_code: null
+        });
         break;
     }
   }

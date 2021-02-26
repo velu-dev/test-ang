@@ -56,6 +56,8 @@ export class ClaimComponent implements OnInit {
   }
   updateClaim() {
     if (!this.claim.touched) {
+      this.isEdit = false;
+      this.claim.disable();
       return
     }
     Object.keys(this.claim.controls).forEach((key) => {

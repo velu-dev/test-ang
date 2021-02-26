@@ -47,7 +47,9 @@
                 </div>
 
                 <div fxFlex="100" *ngIf="this.pageStatus == 2">
-                    <mat-checkbox class="checkbox_ m-t-0" (change)="sameAsMailling($event)">Mailing Address is also a
+                    <mat-checkbox [disabled]="!isMailingAddressPresent" class="checkbox_ m-t-0"
+                        (change)="sameAsMailling($event)">
+                        Mailing Address is also a
                         Service Location</mat-checkbox>
                 </div>
 
@@ -172,7 +174,8 @@
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Alternate Contact 1</mat-label>
-                    <input matInput placeholder="Alternate Contact 1" formControlName="alternate_contact_1" autocomplete="off">
+                    <input matInput placeholder="Alternate Contact 1" formControlName="alternate_contact_1"
+                        autocomplete="off">
                     <!-- <mat-error *ngIf="locationSubmit">Please enter valid Alternate contact person</mat-error> -->
                 </mat-form-field>
 
@@ -187,7 +190,8 @@
                 <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
                     fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Alternate Contact 2</mat-label>
-                    <input matInput placeholder="Alternate Contact 2" formControlName="alternate_contact_2" autocomplete="off">
+                    <input matInput placeholder="Alternate Contact 2" formControlName="alternate_contact_2"
+                        autocomplete="off">
                     <!-- <mat-error *ngIf="locationSubmit">Please enter valid location contact person</mat-error> -->
                 </mat-form-field>
 
