@@ -100,7 +100,7 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.columnName = ["", "File Name"]
         this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
-        this.columnName = ["Ref #", "File Name", "Action", "Date", "Recipients", "Download Generated Items", "Download On Demand Proof of Service", "Further Information"]
+        this.columnName = ["Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Generated Items", "Download" + '\n' + "On Demand Proof of Service", "Further Information"]
         this.columnsToDisplay = ['request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'download1', 'further_info']
       }
       this.isMobile = res;
