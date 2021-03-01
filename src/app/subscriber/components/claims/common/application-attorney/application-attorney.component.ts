@@ -117,8 +117,9 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   appAttorney(aa) {
     delete aa.id;
+    this.ApplicantAttorney.reset();
+    this.ApplicantAttorney.patchValue(aa);
     this.changeState(aa.state);
-    this.ApplicantAttorney.patchValue(aa)
   }
   editAA() {
     this.aaEdit = true;
@@ -136,8 +137,8 @@ export class ApplicationAttorneyComponent implements OnInit {
     this.claimService.updateAgent(this.ApplicantAttorney.value.id, { ApplicantAttorney: this.ApplicantAttorney.value }).subscribe(res => {
       // this.isEdit = false;
       this.aaEdit = false;
-      this.aattorneyDetail = res.data;
-      this.ApplicantAttorney.patchValue(res.data);
+      this.aattorneyDetail = this.ApplicantAttorney.value;
+      this.ApplicantAttorney.patchValue(this.ApplicantAttorney.value);
       this.alertService.openSnackBar("Applicant Attorney updated successfully", 'success')
       this.ApplicantAttorney.disable();
       if (this.fromPop) {

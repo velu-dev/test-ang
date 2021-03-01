@@ -102,8 +102,9 @@ export class ClaimAdminComponent implements OnInit {
   }
   appClaimAdmin(aa) {
     delete aa.id;
-    this.changeState(aa.state)
+    this.claimAdminForm.reset();
     this.claimAdminForm.patchValue(aa)
+    this.changeState(aa.state);
   }
   private _filterAttroney(value: string, data) {
     if (value) {
@@ -126,8 +127,8 @@ export class ClaimAdminComponent implements OnInit {
     this.claimAdminForm.value['id'] = this.id;
     this.claimService.updateAgent(this.claimAdminForm.value.id, { InsuranceAdjuster: this.claimAdminForm.value }).subscribe(res => {
       this.claimAdminEdit = false;
-      this.claimAdminForm.patchValue(res.data);
-      this.claimAdmin = res.data;
+      this.claimAdminForm.patchValue(this.claimAdminForm.value);
+      this.claimAdmin = this.claimAdminForm.value;
       this.alertService.openSnackBar("Claim Administrator updated successfully", 'success');
       this.claimAdminForm.disable();
       this.claimUpdated = true;

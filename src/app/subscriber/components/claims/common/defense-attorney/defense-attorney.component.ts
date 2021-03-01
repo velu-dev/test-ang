@@ -110,8 +110,9 @@ export class DefenseAttorneyComponent implements OnInit {
   }
   defAttornety(da) {
     delete da.id;
-    this.changeState(da.state);
+    this.DefanceAttorney.reset();
     this.DefanceAttorney.patchValue(da)
+    this.changeState(da.state);
   }
   editDA() {
     this.daEdit = true;
@@ -128,8 +129,8 @@ export class DefenseAttorneyComponent implements OnInit {
     this.DefanceAttorney.value['id'] = this.id;
     this.claimService.updateAgent(this.DefanceAttorney.value.id, { DefenseAttorney: this.DefanceAttorney.value }).subscribe(res => {
       this.daEdit = false;
-      this.DefanceAttorney.patchValue(res.data);
-      this.dattorneyDetail = res.data;
+      this.DefanceAttorney.patchValue(this.DefanceAttorney.value);
+      this.dattorneyDetail = this.DefanceAttorney.value;
       this.alertService.openSnackBar("Defense Attorney updated successfully", 'success');
       this.DefanceAttorney.disable();
       if (this.fromPop) {

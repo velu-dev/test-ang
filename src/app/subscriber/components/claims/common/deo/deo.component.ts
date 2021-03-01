@@ -118,8 +118,8 @@ export class DeoComponent implements OnInit {
     this.DEU.value['id'] = this.id;
     this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
       this.deoEdit = false;
-      this.DEU.patchValue(res.data);
-      this.deuDetail = res.data;
+      this.DEU.patchValue(this.DEU.value);
+      this.deuDetail = this.DEU.value;
       this.alertService.openSnackBar("DEU updated successfully", 'success');
       this.DEU.disable();
       if (this.fromPop) {
@@ -133,6 +133,7 @@ export class DeoComponent implements OnInit {
   }
   deuSelect(deu) {
     deu.id = this.deuId;
+    this.DEU.reset();
     this.DEU.patchValue(deu)
     this.changeState(deu.state);
     this.DEU.patchValue({
