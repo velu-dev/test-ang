@@ -784,6 +784,7 @@ export class BilllableBillingComponent implements OnInit {
 
   billing_line_items: any;
   newFeeScheduleStatus: boolean;
+  billingCodeDetails: any;
   getBillLineItem() {
     this.touchedRows = [];
     this.userTable = this.fb.group({
@@ -792,8 +793,9 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId).subscribe(line => {
       if (line.data) {
         this.billing_line_items = line.data;
-        this.newFeeScheduleStatus = this.billing_line_items[0].is_new_fee_schedule;
         line.data.map((item, index) => {
+          this.newFeeScheduleStatus = this.billing_line_items[0].is_new_fee_schedule;
+          this.billingCodeDetails = this.billing_line_items[0].billing_code_details;
           let firstData = {};
           this.addRow(1);
           let modifier = item.modifier ? item.modifier.split('-') : [];
@@ -1032,17 +1034,21 @@ export class BilllableBillingComponent implements OnInit {
       group.get('unitTotal').patchValue(+(e * group.get('unit_price').value))
       group.get('charge').patchValue(+charge)
     } else if (group.value.is_excess_pages) {
-      let charge = +group.get('units').value * +group.value.billing_code_details.rate_for_extra_units
+      let charge = +group.get('units').value * + this.billingCodeDetails.rate_for_extra_units
       group.get('charge').patchValue(+charge)
     }
   }
 
-  procedureChange(val) {
+  procedureChange(val, group) {
     let valReplace;
-    if (val && val.trim()) {
+    if (val && val.trim() && this.newFeeScheduleStatus) {
       valReplace = val.replace(/[^a-zA-Z]/g, "");
       if (valReplace.toLowerCase() == 'mlprr') {
-        console.log(valReplace)
+        group.get('is_excess_pages').patchValue(true);
+        group.get('modifierList').patchValue([]);
+        group.get('unitType').patchValue(this.billingCodeDetails.extra_unit_type == 'page' ? 'Pages' : '');
+      } else {
+        group.get('is_excess_pages').patchValue(false);
       }
     }
   }

@@ -352,7 +352,7 @@
   </div> -->
 <!-- <div fxLayout="row wrap" class="traking-details">
   <div fxFlex="100" class="m-t-20">
-    <div class="main-title m-b-10">Tracking</div>
+    <div class="main-title m-b-10">Tracking Details</div>
     <div class="user-detail vertical-fixed mh-auto">
       <table mat-table [dataSource]="dataSource1" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
         <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplays; let i=index">
@@ -369,6 +369,45 @@
               <span *ngIf="column == 'ref_id'">{{element?.ref_id}}</span>
               <span *ngIf="column == 'receiver_name'">{{element?.receiver_name}}</span>
               <span *ngIf="column == 'tracking_id'">{{element?.tracking_id}}</span>
+              <span *ngIf="column == 'more'">
+                <button [matMenuTriggerFor]="menu" class="more-btn">View Tracing <i
+                    class="fa fa-caret-down"></i></button>
+              </span>
+              <mat-menu #menu="matMenu" class="custom-menu" [overlapTrigger]="false">
+                <div (click)="$event.stopPropagation()" class="more-details">
+                  <div class="main-title">Internal Tracing #: 00270901295267581051</div>
+                  <ul>
+                    <li>
+                      <div>02-24-2021</div>
+                      SAINT PAUL MN CA Phase 4c - Delivery
+                    </li>
+                    <li>
+                      <div>02-20-2021</div>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN Phase 3c -
+                        Destination Sequenced Carrier Sortation</span>
+                    </li>
+                    <li>
+                      <div>02-19-2021</div>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN
+                        Transportation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN
+                        Transportation</span>
+                      <span class="p-b-5" style="padding-bottom: 5px;display: block;">SAINT PAUL MN
+                        Transportation</span>
+                    </li>
+                  </ul>
+                </div>
+              </mat-menu>
             </div>
           </td>
         </ng-container>
@@ -391,7 +430,7 @@
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
       </table>
-      <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
+      <app-nodata *ngIf="dataSource1?.filteredData?.length == 0"></app-nodata>
     </div>
   </div>
 </div> -->

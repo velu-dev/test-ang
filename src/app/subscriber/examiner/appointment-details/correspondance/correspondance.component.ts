@@ -111,8 +111,8 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.columnNames = ["", "Ref #"]
         this.columnsToDisplays = ['is_expand', 'ref_id']
       } else {
-        this.columnNames = ["Ref #", "Receiver Name", "Tracking Number"]
-        this.columnsToDisplays = ['ref_id', 'receiver_name', "tracking_id" ]
+        this.columnNames = ["Ref #", "Receiver Name", "Tracking Number", "Details"]
+        this.columnsToDisplays = ['ref_id', 'receiver_name', "tracking_id", "more"]
       }
       this.isMobile = res;
       if (res) {
@@ -949,8 +949,8 @@ export class MailOnDemandConfirm {
 }
 
 const ELEMENT_DATA = [
-  { "id": 1, "ref_id": "1000000044", "receiver_name": "NEXT LEVEL FOLSOM", "tracking_id": "9205590129526702151513" },
-  { "id": 2, "ref_id": "1000000051", "receiver_name": "SEDGWICK 619079 ROSEVILLE, Victoria Greene", "tracking_id": "9205590129526702151636" },
+  { "id": 1, "ref_id": "1000000044", "receiver_name": "NEXT LEVEL FOLSOM", "tracking_id": "9205 5901 2952 6702 1515 13" },
+  { "id": 2, "ref_id": "1000000051", "receiver_name": "SEDGWICK 619079 ROSEVILLE, Victoria Greene", "tracking_id": "9205 5901 2952 6702 1515 13" },
 ];
 const ELEMENT_DATA_1 = [
   { "id": 1, "ref_id": "1000000044", "receiver_name": "NEXT LEVEL FOLSOM", "tracing_id": "00270901295267150185" },
