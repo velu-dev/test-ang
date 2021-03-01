@@ -1032,17 +1032,22 @@ export class BilllableBillingComponent implements OnInit {
       group.get('unitTotal').patchValue(+(e * group.get('unit_price').value))
       group.get('charge').patchValue(+charge)
     } else if (group.value.is_excess_pages) {
-      let charge = +group.get('units').value * +group.value.billing_code_details.rate_for_extra_units
+      let charge = +group.get('units').value * + this.billing_line_items[0].billing_code_details.rate_for_extra_units
       group.get('charge').patchValue(+charge)
     }
   }
 
-  procedureChange(val) {
+  procedureChange(val, group) {
     let valReplace;
-    if (val && val.trim()) {
+    if (val && val.trim() && this.newFeeScheduleStatus) {
       valReplace = val.replace(/[^a-zA-Z]/g, "");
       if (valReplace.toLowerCase() == 'mlprr') {
-        console.log(valReplace)
+        console.log(this.billing_line_items[0]);
+        group.get('is_excess_pages').patchValue(true);
+        group.get('modifierList').patchValue([]);
+        group.get('unitType').patchValue(this.billing_line_items[0].billing_code_details.extra_unit_type == 'page' ? 'Pages' : '');
+      }else{
+        group.get('is_excess_pages').patchValue(false);
       }
     }
   }
