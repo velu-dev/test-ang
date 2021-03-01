@@ -55,6 +55,10 @@ export class ClaimComponent implements OnInit {
     this.claim.patchValue(this.claimDetail);
   }
   updateClaim() {
+    this.isClaimSubmited = true;
+    if (this.claim.invalid) {
+      return;
+    }
     if (!this.claim.touched) {
       this.isEdit = false;
       this.claim.disable();
@@ -64,10 +68,6 @@ export class ClaimComponent implements OnInit {
       if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string')
         this.claim.get(key).setValue(this.claim.get(key).value.trim())
     });
-    this.isClaimSubmited = true;
-    if (this.claim.invalid) {
-      return;
-    }
     this.claimService.updateClaim(this.claim.value, this.claim.value.id).subscribe(res => {
       this.examType.emit(res.data.exam_type_id);
       if (this.claim.value.claim_number) {

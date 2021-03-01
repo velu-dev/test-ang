@@ -64,6 +64,10 @@ export class ClaimAdminComponent implements OnInit {
               this.claimAdminGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
             })
           }
+        } else {
+          this.claimService.searchEAMSAdmin({ search: "" }).subscribe(res => {
+            this.claimAdminGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+          })
         }
       }
     });
@@ -158,6 +162,9 @@ export class ClaimAdminComponent implements OnInit {
   clearAutoComplete() {
     this.claimAdminForm.reset();
     this.caState = null;
+    this.claimService.searchEAMSAdmin({ search: "" }).subscribe(res => {
+      this.claimAdminGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+    })
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;

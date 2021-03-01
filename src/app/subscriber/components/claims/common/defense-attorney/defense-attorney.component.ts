@@ -64,6 +64,10 @@ export class DefenseAttorneyComponent implements OnInit {
               this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
             })
           }
+        } else {
+          this.claimService.searchEAMSAttorney({ search: "" }).subscribe(res => {
+            this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+          })
         }
       }
     });
@@ -154,6 +158,9 @@ export class DefenseAttorneyComponent implements OnInit {
   clearAutoComplete() {
     this.DefanceAttorney.reset();
     this.daState = null;
+    this.claimService.searchEAMSAttorney({ search: "" }).subscribe(res => {
+      this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+    })
   }
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
