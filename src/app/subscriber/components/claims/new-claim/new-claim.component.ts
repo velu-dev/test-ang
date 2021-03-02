@@ -809,6 +809,11 @@ export class NewClaimComponent implements OnInit {
               this.claimAdminGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
             })
           }
+        } else {
+          this.claimService.searchEAMSAdmin({ search: "" }).subscribe(res => {
+            let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+            this.claimAdminGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+          })
         }
       }
     });
@@ -823,6 +828,11 @@ export class NewClaimComponent implements OnInit {
               this.aattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
             })
           }
+        } else {
+          this.claimService.searchEAMSAttorney({ search: "" }).subscribe(res => {
+            let ind = this.claimAdminGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+            this.aattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+          })
         }
       }
     });
@@ -837,6 +847,11 @@ export class NewClaimComponent implements OnInit {
               this.dattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
             })
           }
+        } else {
+          this.claimService.searchEAMSAttorney({ search: "" }).subscribe(res => {
+            let ind = this.dattroneyGroupOptions.map(function (e) { return e.name; }).indexOf('Simplexam Addresses');
+            this.dattroneyGroupOptions[ind] = { name: "Simplexam Addresses", data: res.data };
+          })
         }
       }
     })
