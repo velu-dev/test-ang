@@ -64,7 +64,6 @@ export class BillingCorrespondanceComponent implements OnInit {
   dataSource1: any;
   columnsToDisplays = [];
   columnNames = [];
-  dataSource2 = ELEMENT_DATA_1;
   columnsToDisplayTracing = [];
   columnNameTracing = [];
   statusBarValues = { value: null, status: '', class: '' }
@@ -965,11 +964,3 @@ export class MailOnDemandConfirm {
   ];
 }
 
-const ELEMENT_DATA = [
-  { "id": 1, "ref_id": "1000000044", "receiver_name": "NEXT LEVEL FOLSOM", "tracking_id": "9205 5901 2952 6702 1515 13" },
-  { "id": 2, "ref_id": "1000000051", "receiver_name": "SEDGWICK 619079 ROSEVILLE, Victoria Greene", "tracking_id": "9205 5901 2952 6702 1515 13" },
-];
-const ELEMENT_DATA_1 = [
-  { "id": 1, "ref_id": "1000000044", "receiver_name": "NEXT LEVEL FOLSOM", "tracing_id": "00270901295267150185" },
-  { "id": 1, "ref_id": "1000000051", "receiver_name": "SEDGWICK 619079 ROSEVILLE, Victoria Greene", "tracing_id": "00270901295267581051" }
-];
