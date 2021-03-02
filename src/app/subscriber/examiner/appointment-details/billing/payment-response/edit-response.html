@@ -1,16 +1,21 @@
 <div class="dialog custom-dialog">
     <mat-card-header class="model-header">
-        <div class="content-wrapper-main-title p-t-5">Void Reason</div>
+        <div class="content-wrapper-main-title p-t-5">Edit Reason</div>
         <span class="spacer"></span>
         <button class="close-model" color="warn" (click)="onNoClick()"> <i class="fa fa-close"></i> close </button>
     </mat-card-header>
    <mat-divider></mat-divider>
     <mat-card-content>
         <div fxLayout="row wrap" class="p-t-20">
+                <mat-radio-group aria-label="Select an option"  fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+                    <mat-radio-button value="1" class="m-r-15">Void Payment</mat-radio-button>
+                    <mat-radio-button value="2" class="m-r-15">Adjust Payment</mat-radio-button>
+                    <mat-radio-button value="3">Correction</mat-radio-button>
+                  </mat-radio-group>
             <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Void Reason</mat-label>
-                    <input matInput placeholder="Void Reason">
+                <mat-form-field appearance="outline" class="w-100 m-t-10">
+                    <mat-label>Reason</mat-label>
+                    <input matInput placeholder="Reason">
                     <mat-error>Error message comes here...</mat-error>
                 </mat-form-field>
             </div>

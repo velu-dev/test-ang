@@ -67,7 +67,7 @@ import { BillingService } from './service/billing.service';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { StripeService } from './service/stripe.service';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { CloseBill, EditResponse, PaymentResponseComponent, SecondBillReview, VoidPayment } from './examiner/appointment-details/billing/payment-response/payment-response.component';
+import { CloseBill, EditResponse, LateResponse, PaymentResponseComponent, SecondBillReview, VoidPayment } from './examiner/appointment-details/billing/payment-response/payment-response.component';
 import { SearchClaimComponent } from './components/search-claim/search-claim.component';
 @NgModule({
   declarations: [
@@ -148,7 +148,8 @@ import { SearchClaimComponent } from './components/search-claim/search-claim.com
     SecondBillReview,
     SearchClaimComponent,
     MailOnDemandConfirm,
-    EditResponse
+    EditResponse,
+    LateResponse
    
   ],
   entryComponents: [
@@ -172,7 +173,8 @@ import { SearchClaimComponent } from './components/search-claim/search-claim.com
     CloseBill,
     SecondBillReview,
     MailOnDemandConfirm,
-    EditResponse
+    EditResponse,
+    LateResponse
     // DefenseAttorneyComponent,
     // ApplicationAttorneyComponent,
     // DeoComponent,
