@@ -55,13 +55,17 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.locationId = params_res.location_id;
         this.getLocation();
       }
-      if (this.examinerId)
+      if (this.examinerId) {
         this.subscriberService.getExaminer(this.examinerId).subscribe(res => {
           this.examinerName = res.examiner_details.last_name + ' ' + res.examiner_details.first_name + (res.examiner_details.suffix ? ', ' + res.examiner_details.suffix : '')
         })
+        this.getMailingAddress();
+      } else {
+
+      }
     })
 
-    this.getMailingAddress();
+
   }
   locationData = {};
   examinerName: string;
@@ -298,7 +302,6 @@ export class AddEditServiceLocationComponent implements OnInit {
     }, error => {
       this.isMailingAddressPresent = false;
       this.maillingAddress = null
-      console.log(error.error.message);
       let addresEmpty = {
         street1: null,
         street2: null,
