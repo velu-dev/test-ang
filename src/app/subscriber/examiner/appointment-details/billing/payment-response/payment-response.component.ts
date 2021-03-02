@@ -70,6 +70,17 @@ export class PaymentResponseComponent implements OnInit {
       // this.animal = result;
     });
   }
+  openLateResponse(): void {
+    const dialogRef = this.dialog.open(LateResponse, {
+      width: '800px',
+      // data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // this.animal = result;
+    });
+  }
 
 
   ngOnInit() {
@@ -252,6 +263,23 @@ export class EditResponse {
 
   constructor(
     public dialogRef: MatDialogRef<EditResponse>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}
+
+
+@Component({
+  selector: 'late-response',
+  templateUrl: 'late-response.html',
+})
+export class LateResponse {
+
+  constructor(
+    public dialogRef: MatDialogRef<LateResponse>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {

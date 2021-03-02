@@ -5,7 +5,7 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="m-b-10">
-        <form [formGroup]="paymentForm">
+        <form [formGroup]="paymentForm" fxLayout="row wrap">
             <div class="user-detail m-t-10" formArrayName="payments">
                 <table class="table res-table pay-response">
                     <thead>
@@ -217,5 +217,12 @@
                 </table>
             </div>
         </form>
+        <div fxLayout="row wrap" class="m-t-15">
+            <button mat-raised-button class="filled-gray m-r-5">Close Bill</button>
+            <button mat-raised-button class="filled-gray m-r-5" (click)="openLateResponse()">Late Response</button>
+            <button mat-raised-button class="filled-gray m-r-5" disabled>Second Bill Review</button>
+            <button mat-raised-button class="filled-gray" disabled>Independent Bill Review</button>
+
+        </div>
     </mat-card-content>
 </mat-card>
