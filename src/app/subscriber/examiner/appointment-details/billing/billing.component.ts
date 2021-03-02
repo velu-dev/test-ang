@@ -806,11 +806,31 @@ export class BilllableBillingComponent implements OnInit {
             item.charge = item.charge ? item.charge : item.units * item.billing_code_details.unit_price;
             item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
             item.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
+            item.modifierTotal = 0
+            let modData = item.modifier_seed_data.map((e, i) => {
+              let presentMod = modifier.includes(e.modifier_code)
+              if (presentMod) {
+                let modIndex = modifier.findIndex(m => m == e.modifier_code)
+                if (e.modifier_code == modifier[modIndex]) {
+                  e.exclude_modifiers.map((ex, ind) => {
+                    let filterIndex = item.filteredmodifier.findIndex(m => m == ex)
+                    item.filteredmodifier.splice(filterIndex, 1)
+                  });
+                  if (+e.price_increase > 0) {
+
+                    let calculateChange = (+e.price_increase / 100) * (+item.units * +item.billing_code_details.unit_price);
+                    item.modifierTotal = (+item.modifierTotal + +calculateChange);
+                    item.charge = (+item.modifierTotal + +item.units * +item.billing_code_details.unit_price);
+                  }
+                }
+              }
+            })
           } else {
-            if (item.is_excess_pages) {
-              item.unit_type = item.billing_code_details.extra_unit_type == 'page' ? 'Pages' : '';
-              item.filteredmodifier = []
-            }
+
+            // if (item.is_excess_pages) {
+            //   item.unit_type = item.billing_code_details.extra_unit_type == 'page' ? 'Pages' : '';
+            //   item.filteredmodifier = []
+            // }
           }
 
           firstData = {
@@ -833,7 +853,8 @@ export class BilllableBillingComponent implements OnInit {
             is_auto_generate: item.is_auto_generate,
             filteredmodifier: item.filteredmodifier,
             unitTotal: +item.charge,
-            is_excess_pages: item.is_excess_pages
+            is_excess_pages: item.is_excess_pages,
+            modifierTotal: item.modifierTotal
           }
           // if (item.is_post_payment) {
           //   this.getFormControls.controls[index].get('item_description').setValidators([]);
@@ -952,6 +973,19 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   editRow(group: FormGroup, i) {
+    console.log(group)
+    if (group.get('procedure_code').value && group.get('procedure_code').value.trim() && this.newFeeScheduleStatus) {
+      let valReplace = group.get('procedure_code').value.replace(/[^a-zA-Z]/g, "");
+      if (valReplace.toLowerCase() == 'mlprr') {
+        console.log(valReplace)
+        group.get('is_excess_pages').patchValue(true);
+        this.getFormControls.at(i).get('modifier').disable()
+        this.getFormControls.at(i).get('modifierList').disable();
+        this.getFormControls.at(i).get('modifierList').updateValueAndValidity();
+        this.getFormControls.at(i).get('modifier').updateValueAndValidity();
+      }
+
+    }
     group.get('isEditable').setValue(true);
     if (group.value.is_auto_generate && this.newFeeScheduleStatus) {
       group.get('procedure_code').disable();
@@ -973,7 +1007,7 @@ export class BilllableBillingComponent implements OnInit {
       return;
     }
 
-    let moidfier = group.value.modifierList.toString();
+    let moidfier = group.get('modifierList').value.toString();
     moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
     let data = {
       id: group.value.id,
@@ -1047,8 +1081,16 @@ export class BilllableBillingComponent implements OnInit {
         group.get('is_excess_pages').patchValue(true);
         group.get('modifierList').patchValue([]);
         group.get('unitType').patchValue(this.billingCodeDetails.extra_unit_type == 'page' ? 'Pages' : '');
+        group.get('modifier').disable();
+        group.get('modifierList').disable();
+        group.get('modifierList').updateValueAndValidity();
+        group.get('modifier').updateValueAndValidity();
       } else {
         group.get('is_excess_pages').patchValue(false);
+        group.get('modifier').enable();
+        group.get('modifier').updateValueAndValidity();
+        group.get('modifierList').enable();
+        group.get('modifierList').updateValueAndValidity();
       }
     }
   }
@@ -1107,9 +1149,8 @@ export class BilllableBillingComponent implements OnInit {
           })
           if (+e.price_increase > 0) {
             let calculateChange = (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
-            group.get('modifierTotal').patchValue(+group.get('modifierTotal').value - +calculateChange);
-            group.get('charge').patchValue(+group.get('modifierTotal').value + +group.get('unitTotal').value);
-
+            group.get('modifierTotal').patchValue(Math.abs(+group.get('modifierTotal').value - +calculateChange));
+            group.get('charge').patchValue(Math.abs(+group.get('modifierTotal').value + (+group.get('units').value * +group.value.billing_code_details.unit_price)));
           }
         }
       });
@@ -1139,8 +1180,8 @@ export class BilllableBillingComponent implements OnInit {
           });
           if (+e.price_increase > 0) {
             let calculateChange = (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
-            group.get('modifierTotal').patchValue(+group.get('modifierTotal').value + +calculateChange);
-            group.get('charge').patchValue(+group.get('modifierTotal').value + +group.get('unitTotal').value);
+            group.get('modifierTotal').patchValue(Math.abs(+group.get('modifierTotal').value + +calculateChange));
+            group.get('charge').patchValue(Math.abs(+group.get('modifierTotal').value + (+group.get('units').value * +group.value.billing_code_details.unit_price)));
 
           }
         }
