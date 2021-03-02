@@ -314,18 +314,18 @@
                                         <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
                                             (click)="rowSelected(group)">
                                             <td>
-                                                <mat-form-field appearance="outline" *ngIf="!group.get('is_auto_generate').value">
+                                                <mat-form-field appearance="outline" *ngIf="!group.get('is_auto_generate').value && i != 0">
                                                     <input matInput type="text" name="item_description"
                                                         autocomplete="off" formControlName="item_description"
                                                         pattern="[a-zA-Z0-9/ -]+">
                                                 </mat-form-field>
-                                                <span *ngIf="group.get('is_auto_generate').value">
+                                                <span *ngIf="group.get('is_auto_generate').value || i == 0">
                                                     {{group.get('item_description').value}}
                                                 </span>
                                             </td>
                                             <td>
                                                 <mat-form-field appearance="outline">
-                                                    <input matInput type="text" (change)="procedureChange($event.target.value,group)" name="procedure_code" autocomplete="off"
+                                                    <input matInput type="text" oninput="this.value = this.value.toUpperCase()" (change)="procedureChange($event.target.value,group)" name="procedure_code" autocomplete="off"
                                                         formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
                                                 </mat-form-field>
                                             </td>

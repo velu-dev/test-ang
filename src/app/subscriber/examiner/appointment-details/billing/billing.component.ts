@@ -953,7 +953,7 @@ export class BilllableBillingComponent implements OnInit {
 
   editRow(group: FormGroup, i) {
     group.get('isEditable').setValue(true);
-    if (group.value.is_auto_generate && this.newFeeScheduleStatus || group.value.is_excess_pages) {
+    if (group.value.is_auto_generate && this.newFeeScheduleStatus) {
       group.get('procedure_code').disable();
       group.get('unitType').disable();
       group.get('charge').disable();
@@ -1075,7 +1075,8 @@ export class BilllableBillingComponent implements OnInit {
       this.deleteRow(i, group);
       return
     }
-
+    if (this.billing_line_items[i].unit_type == 'unit') this.billing_line_items[i].unit_type = 'Units';
+    if (this.billing_line_items[i].unit_type == 'page') this.billing_line_items[i].unit_type = 'Pages';
     let data = {
       id: this.billing_line_items[i].id,
       item_description: this.billing_line_items[i].item_description,
