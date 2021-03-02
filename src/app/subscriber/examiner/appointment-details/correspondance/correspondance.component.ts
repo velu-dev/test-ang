@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatPaginator, MatSort, MatMenuTrigger } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
-import { shareReplay, map } from 'rxjs/operators';
+import { shareReplay, map, subscribeOn } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute, Router, RouterState } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
@@ -61,7 +61,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   isLoading: boolean = false;
   correspondData: any;
   states = [];
-  dataSource1 = ELEMENT_DATA;
+  dataSource1: any;
   columnsToDisplays = [];
   columnNames = [];
   dataSource2 = ELEMENT_DATA_1;
@@ -72,6 +72,10 @@ export class BillingCorrespondanceComponent implements OnInit {
   is_appointment_incomplete = false;
   error_message = "";
   isExaminerChange = true;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('popupMenu', { static: false }) popupMenu: MatMenuTrigger;
+
   constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService, private intercom: IntercomService, private cookieService: CookieService) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
@@ -85,6 +89,11 @@ export class BillingCorrespondanceComponent implements OnInit {
         claim_id: params.claim_id,
         billable_item_id: params.billId
       }
+      this.onDemandService.getTrackingTable(this.claim_id, this.billableId).subscribe(res => {
+        this.dataSource1 = new MatTableDataSource(res.data)
+        this.dataSource1.paginator = this.paginator;
+        this.dataSource1.sort = this.sort;
+      })
       this.onDemandService.getBreadcrumbDetails(ids).subscribe(details => {
         this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
         this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
@@ -109,10 +118,10 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.isMobile = res;
       if (res) {
         this.columnNames = ["", "Ref #"]
-        this.columnsToDisplays = ['is_expand', 'ref_id']
+        this.columnsToDisplays = ['is_expand', 'request_reference_id']
       } else {
         this.columnNames = ["Ref #", "Receiver Name", "Tracking Number", "Details"]
-        this.columnsToDisplays = ['ref_id', 'receiver_name', "tracking_id", "more"]
+        this.columnsToDisplays = ['request_reference_id', 'receiver_name', "tracking_number", "more"]
       }
       this.isMobile = res;
       if (res) {
@@ -122,6 +131,14 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.columnNameTracing = ["Ref #", "Receiver Name", "Internal Tracing Number", "Details"]
         this.columnsToDisplayTracing = ['ref_id', 'receiver_name', "tracing_id", "more"]
       }
+    })
+  }
+  tracingpopupData = [];
+  openTracing(element) {
+    this.onDemandService.getTracingPopUp(element.id, this.claim_id, this.billableId).subscribe(res => {
+      this.tracingpopupData = [];
+      this.tracingpopupData = res.data;
+      this.popupMenu.openMenu();
     })
   }
   getData(data?) {
