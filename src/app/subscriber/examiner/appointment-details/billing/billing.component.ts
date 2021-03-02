@@ -825,14 +825,7 @@ export class BilllableBillingComponent implements OnInit {
                 }
               }
             })
-          } else {
-
-            // if (item.is_excess_pages) {
-            //   item.unit_type = item.billing_code_details.extra_unit_type == 'page' ? 'Pages' : '';
-            //   item.filteredmodifier = []
-            // }
           }
-
           firstData = {
             id: item.id,
             modifierList: modifier,
@@ -856,25 +849,9 @@ export class BilllableBillingComponent implements OnInit {
             is_excess_pages: item.is_excess_pages,
             modifierTotal: item.modifierTotal
           }
-          // if (item.is_post_payment) {
-          //   this.getFormControls.controls[index].get('item_description').setValidators([]);
-          //   this.getFormControls.controls[index].get('procedure_code').setValidators([]);
-          //   this.getFormControls.controls[index].get('units').setValidators([]);
-          //   this.getFormControls.controls[index].get('charge').setValidators([]);
-          //   this.getFormControls.controls[index].get('item_description').updateValueAndValidity();
-          //   this.getFormControls.controls[index].get('procedure_code').updateValueAndValidity();
-          //   this.getFormControls.controls[index].get('units').updateValueAndValidity();
-          //   this.getFormControls.controls[index].get('charge').updateValueAndValidity();
-          // }
           this.getFormControls.controls[index].patchValue(firstData)
           if (this.getFormControls.controls[index].status == "VALID") {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
-          } else {
-            if (this.newFeeScheduleStatus || this.getFormControls.controls[index].get('is_excess_pages').value) {
-              this.getFormControls.controls[index].get('procedure_code').disable();
-              this.getFormControls.controls[index].get('unitType').disable();
-              this.getFormControls.controls[index].get('charge').disable();
-            }
           }
         })
 
@@ -1117,24 +1094,82 @@ export class BilllableBillingComponent implements OnInit {
       this.deleteRow(i, group);
       return
     }
-    if (this.billing_line_items[i].unit_type == 'unit') this.billing_line_items[i].unit_type = 'Units';
-    if (this.billing_line_items[i].unit_type == 'page') this.billing_line_items[i].unit_type = 'Pages';
-    let data = {
-      id: this.billing_line_items[i].id,
-      item_description: this.billing_line_items[i].item_description,
-      procedure_code: this.billing_line_items[i].procedure_code,
-      modifier: this.billing_line_items[i].modifier,
-      modifierList: this.billing_line_items[i].modifierList,
-      units: this.billing_line_items[i].units,
-      charge: this.billing_line_items[i].charge,
-      unitType: this.billing_line_items[i].unit_type,
-      payment: 0,
-      balance: 0,
-      isEditable: [false]
-    }
-    let modifier = data.modifier ? data.modifier.split('-') : [];
-    data.modifierList = modifier;
-    group.patchValue(data);
+    console.log(group,i)
+    console.log(this.billing_line_items)
+    let data = [];
+    data.push(this.billing_line_items[i])
+    data.map((item, index) => {
+      let firstData = {};
+      let modifier = item.modifier ? item.modifier.split('-') : [];
+      if (this.newFeeScheduleStatus && item.is_auto_generate && !item.is_excess_pages) {
+        if (item.unit_type == 'unit') item.unit_type = 'Units';
+        item.units = item.units ? item.units : 1;
+        item.charge = item.charge ? item.charge : item.units * item.billing_code_details.unit_price;
+        item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
+        item.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
+        item.modifierTotal = 0
+        let modData = item.modifier_seed_data.map((e, i) => {
+          let presentMod = modifier.includes(e.modifier_code)
+          if (presentMod) {
+            let modIndex = modifier.findIndex(m => m == e.modifier_code)
+            if (e.modifier_code == modifier[modIndex]) {
+              e.exclude_modifiers.map((ex, ind) => {
+                let filterIndex = item.filteredmodifier.findIndex(m => m == ex)
+                item.filteredmodifier.splice(filterIndex, 1)
+              });
+              if (+e.price_increase > 0) {
+
+                let calculateChange = (+e.price_increase / 100) * (+item.units * +item.billing_code_details.unit_price);
+                item.modifierTotal = (+item.modifierTotal + +calculateChange);
+                item.charge = (+item.modifierTotal + +item.units * +item.billing_code_details.unit_price);
+              }
+            }
+          }
+        })
+      }
+      firstData = {
+        id: item.id,
+        modifierList: modifier,
+        item_description: item.item_description,
+        procedure_code: item.procedure_code,
+        modifier: item.modifier,
+        unitType: item.unit_type,
+        units: item.units,
+        charge: +item.charge,
+        payment: item.payment_amount ? item.payment_amount : 0.00,
+        balance: 0,
+        isEditable: [true],
+        unit_price: item.unit_price ? +item.unit_price : null,
+        is_post_payment: item.is_post_payment,
+        post_payment_id: item.post_payment_id,
+        billing_code_details: item.billing_code_details,
+        modifier_seed_data: item.modifier_seed_data,
+        is_auto_generate: item.is_auto_generate,
+        filteredmodifier: item.filteredmodifier,
+        unitTotal: +item.charge,
+        is_excess_pages: item.is_excess_pages,
+        modifierTotal: item.modifierTotal
+      }
+      this.getFormControls.controls[i].patchValue(firstData)
+    })
+    // if (this.billing_line_items[i].unit_type == 'unit') this.billing_line_items[i].unit_type = 'Units';
+    // if (this.billing_line_items[i].unit_type == 'page') this.billing_line_items[i].unit_type = 'Pages';
+    // let data = {
+    //   id: this.billing_line_items[i].id,
+    //   item_description: this.billing_line_items[i].item_description,
+    //   procedure_code: this.billing_line_items[i].procedure_code,
+    //   modifier: this.billing_line_items[i].modifier,
+    //   modifierList: this.billing_line_items[i].modifierList,
+    //   units: this.billing_line_items[i].units,
+    //   charge: this.billing_line_items[i].charge,
+    //   unitType: this.billing_line_items[i].unit_type,
+    //   payment: 0,
+    //   balance: 0,
+    //   isEditable: [false]
+    // }
+    // let modifier = data.modifier ? data.modifier.split('-') : [];
+    // data.modifierList = modifier;
+    // group.patchValue(data);
     group.get('isEditable').setValue(false);
 
   }
