@@ -165,6 +165,8 @@ export const api_endpoint = {
     historyCallTracking: 'billing/ondemand/history/call-tracking/',
     //Corresponding
     getcorrespondence_data: "billing/ondemand/correspondence/",
+    getTracking: "service-requests/correspondence/tracking/",
+    tracingPopup: "service-requests/correspondence/tracing/",
     document_upload: "examinations/document-upload",
     create_custom_recipient: "billing/ondemand/correspondence/add-custom-recipient/",
     removeCustomDocument: "claim/correspondence-remove/",

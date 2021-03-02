@@ -35,6 +35,12 @@ export class OnDemandService {
   downloadCorrespondanceForm(claim_id, bill_item_id, documents_ids): Observable<any> {
     return this.http.post(environment.baseUrl + "billing/ondemand/correspondence-download/" + claim_id + "/" + bill_item_id, documents_ids);
   }
+  getTrackingTable(claim_id, bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getTracking + claim_id + "/" + bill_item_id)
+  }
+  getTracingPopUp(tracking_id, claim_id, bill_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.tracingPopup + tracking_id + "/" + claim_id + "/" + bill_item_id)
+  }
   uploadDocument(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.document_upload, data);
   }
