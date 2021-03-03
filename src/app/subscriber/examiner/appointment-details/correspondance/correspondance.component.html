@@ -370,12 +370,13 @@
               <span *ngIf="column == 'receiver_name'">{{element?.receiver_name}}</span>
               <span *ngIf="column == 'tracking_number'">{{element?.tracking_number}}</span>
               <span *ngIf="column == 'more'">
-                <button [matMenuTriggerFor]="popupMenu" class="more-btn" (click)="openTracing(element)">View Tracing <i
-                    class="fa fa-caret-down"></i></button>
+                <button *ngIf="element.istracing_available" [matMenuTriggerFor]="popupMenu" class="more-btn"
+                  (click)="openTracing(element)">View Tracing <i class="fa fa-caret-down"></i></button>
               </span>
               <mat-menu #popupMenu="matMenu" class="custom-menu" [overlapTrigger]="false">
                 <div (click)="$event.stopPropagation()" class="more-details" *ngFor="let data of tracingpopupData">
-                  <div class="main-title">Internal Tracing #: {{data?.internal_tracing_number | mask : "0000 0000 0000 0000 0000 00"}}</div>
+                  <div class="main-title">Internal Tracing #: {{data?.internal_tracing_number | mask : "0000 0000 0000
+                    0000 0000 00"}}</div>
                   <ul>
                     <li>
                       <div>{{data.details.tracing_date | date:'MM-dd-yyyy'}}</div>

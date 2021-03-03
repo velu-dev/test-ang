@@ -163,6 +163,7 @@ export const api_endpoint = {
     onDemandCorrespondence: 'service-requests/correspondence/mail-on-demand/create',
     onDemandHistory: 'service-requests/history-report/on-demand/create',
     historyCallTracking: 'billing/ondemand/history/call-tracking/',
+    getZipFile: "billing/ondemand/record-summary/processed-zip-download",
     //Corresponding
     getcorrespondence_data: "billing/ondemand/correspondence/",
     getTracking: "service-requests/correspondence/tracking/",
