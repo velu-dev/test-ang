@@ -126,14 +126,14 @@
                         </mat-icon>
                     </span>
                     <div>
-                        <span *ngIf="column == 'claimant_name'">{{element?.claimant_first_name}}
+                        <span *ngIf="column == 'claimant_first_name'">{{element?.claimant_first_name}}
                             {{element?.claimant_last_name}}</span>
                         <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth | date:'MM-dd-yyyy'}}</span>
-                        <span *ngIf="column == 'examiner_name'">{{element?.examiner_first_name}}
+                        <span *ngIf="column == 'examiner_first_name'">{{element?.examiner_first_name}}
                             {{element?.examiner_last_name}}</span>
                         <span *ngIf="column == 'exam_procedure_name'">{{element?.exam_procedure_name}}</span>
                         <span *ngIf="column == 'standing'">{{element?.standing}}</span>
-                        <span *ngIf="column == 'date_of_service'">{{element?.appointment_scheduled_date_time|
+                        <span *ngIf="column == 'appointment_scheduled_date_time'">{{element?.appointment_scheduled_date_time|
                             date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'due_date'" class="no-wrap-td">{{element?.due_date |
                             date:'MM-dd-yyyy'}}</span>
