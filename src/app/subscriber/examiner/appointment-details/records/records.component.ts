@@ -50,6 +50,7 @@ export class RecordsComponent implements OnInit {
   paramsId: any;
   recordData: any;
   rushRequest: any;
+  ids = {}
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   statusBarValues = { value: null, status: '', class: '' }
   service_provider_name: any = null;
@@ -66,12 +67,12 @@ export class RecordsComponent implements OnInit {
 
     this.route.params.subscribe(param => {
       this.paramsId = param;
-      let ids = {
+      this.ids = {
         claimant_id: param.claimant_id,
         claim_id: param.claim_id,
         billable_item_id: param.billId
       }
-      this.onDemandService.getBreadcrumbDetails(ids).subscribe(details => {
+      this.onDemandService.getBreadcrumbDetails(this.ids).subscribe(details => {
         this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
         this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
         this.intercom.setClaimNumber(details.data.claim_number);
@@ -298,8 +299,20 @@ export class RecordsComponent implements OnInit {
     this.claimService.updateActionLog({ type: "correspondance", "document_category_id": 4, "claim_id": element.claim_id, "billable_item_id": element.billable_item_id, "documents_ids": [element.document_id] }).subscribe(res => {
     })
     if (status == 'received') {
-      data.map(receive_doc => {
-        saveAs(receive_doc.file_url, receive_doc.file_name);
+      let sendData: any;
+      let d_ids = []
+      data.map(dd => {
+        d_ids.push(dd.document_id)
+      })
+      sendData = {
+        "claim_id": this.ids['claim_id'],
+        "billable_item_id": this.ids['billable_item_id'],
+        "document_category_id": 4,
+        "on_demand_service_request_id": element.id,
+        "documents_ids": d_ids
+      }
+      this.onDemandService.getZipFile(sendData).subscribe(res => {
+        saveAs(res.file_url, res.file_name);
       })
     } else {
       saveAs(data.file_url, data.file_name);
