@@ -56,6 +56,7 @@ export class DashboardComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
