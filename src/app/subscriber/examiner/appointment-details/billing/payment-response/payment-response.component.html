@@ -218,7 +218,7 @@
             </div>
         </form>
         <div fxLayout="row wrap" class="m-t-15">
-            <button mat-raised-button class="filled-gray m-r-5">Close Bill</button>
+            <button mat-raised-button class="filled-gray m-r-5" (click)="openCloseBillDialog()">Close Bill</button>
             <button mat-raised-button class="filled-gray m-r-5" (click)="openLateResponse()">Late Response</button>
             <button mat-raised-button class="filled-gray m-r-5" disabled>Second Bill Review</button>
             <button mat-raised-button class="filled-gray" disabled>Independent Bill Review</button>

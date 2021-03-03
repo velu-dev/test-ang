@@ -1111,6 +1111,24 @@ input:-webkit-autofill {
     }
   }
 }
+.custom-dialog.late-response {
+  mat-card-content {
+    mat-radio-group {
+      .mat-radio-button {
+        display: flex;
+        flex-direction: column;
+        margin: 15px 0;
+        .mat-radio-label {
+          display: block;
+          .mat-radio-container {
+            float: right;
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+  }
+}
 .dialog {
   mat-card-header {
     .content-wrapper-main-title {
