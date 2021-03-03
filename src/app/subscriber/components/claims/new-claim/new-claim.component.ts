@@ -124,7 +124,7 @@ export class NewClaimComponent implements OnInit {
   isLinear = false;
   isSubmit = false;
   emasSearchInput = new FormControl('', Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')]));
-  searchInput = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
+  searchInput = new FormControl('');
   filteredClaimant: any;
   claimForm: FormGroup;
   errorMessages = errors;
@@ -494,7 +494,15 @@ export class NewClaimComponent implements OnInit {
           if (res == '') {
             this.filteredClaimant.data = []
           } else {
-            this.claimService.searchClaimant({ basic_search: res, isadvanced: this.searchStatus }).subscribe(response =>
+            let input = [];
+            res.split("").map(inp => {
+              if (inp == "'") {
+                input.push("'" + "'")
+              } else {
+                input.push(inp)
+              }
+            })
+            this.claimService.searchClaimant({ basic_search: input.join(""), isadvanced: this.searchStatus }).subscribe(response =>
               this.filteredClaimant = response)
           }
         }
