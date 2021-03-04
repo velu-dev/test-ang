@@ -466,20 +466,20 @@
                     <table>
                         <tbody>
                             <ng-container formArrayName="tableRows"
-                                *ngFor="let group of getFormControls.controls ; let i=index">
+                            *ngFor="let group of getFormControls.controls ; let i=index">
                                 <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
-                                    (click)="rowSelected(group)" class="editable-bill">
+                                (click)="rowSelected(group)" class="editable-bill">
                                     <td>
                                         <mat-card>
                                             <div class="flex">
                                                 <div class="bill-property">Item</div>
                                                 <div class="editable">
-                                                    <mat-form-field appearance="outline" *ngIf="i != 0">
-                                                        <input matInput type="text" [disabled]="" autocomplete="off"
-                                                            formControlName="item_description"
+                                                    <mat-form-field appearance="outline" *ngIf="!group.get('is_auto_generate').value && i != 0">
+                                                        <input matInput type="text" name="item_description"
+                                                            autocomplete="off" formControlName="item_description"
                                                             pattern="[a-zA-Z0-9/ -]+">
                                                     </mat-form-field>
-                                                    <span *ngIf="i == 0">
+                                                    <span *ngIf="group.get('is_auto_generate').value || i == 0">
                                                         {{group.get('item_description').value}}
                                                     </span>
                                                 </div>
@@ -488,7 +488,7 @@
                                                 <div class="bill-property">Procedure Code</div>
                                                 <div class="editable">
                                                     <mat-form-field appearance="outline">
-                                                        <input matInput type="text" autocomplete="off"
+                                                        <input matInput type="text" oninput="this.value = this.value.toUpperCase()" (change)="procedureChange($event.target.value,group)" name="procedure_code" autocomplete="off"
                                                             formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
                                                     </mat-form-field>
                                                 </div>
@@ -500,11 +500,9 @@
                                                         <mat-chip-list #chipList aria-label="Modifier selection"
                                                             formControlName="modifierList">
                                                             <mat-chip *ngFor="let modifier of group.value.modifierList"
-                                                                [removable]="removable"
-                                                                (removed)="remove(modifier,group,i)">
+                                                                [removable]="removable" (removed)="remove(modifier,group,i)">
                                                                 {{modifier}}
-                                                                <mat-icon matChipRemove *ngIf="removable">cancel
-                                                                </mat-icon>
+                                                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                                                             </mat-chip>
                                                             <input #modifierInput formControlName="modifier"
                                                                 [matAutocomplete]="auto1" [matChipInputFor]="chipList"
@@ -516,7 +514,7 @@
                                                         </mat-chip-list>
                                                         <mat-autocomplete #auto1="matAutocomplete"
                                                             (optionSelected)="selected($event,group,i)">
-                                                            <mat-option *ngFor="let modifier of filteredmodifier"
+                                                            <mat-option *ngFor="let modifier of group.get('is_auto_generate').value || group.get('is_excess_pages').value? group.value.filteredmodifier : filteredmodifier"
                                                                 [value]="modifier">
                                                                 {{modifier}}
                                                             </mat-option>
@@ -541,7 +539,7 @@
                                                 <div class="bill-property">Units</div>
                                                 <div class="editable">
                                                     <mat-form-field appearance="outline" class="w-100">
-                                                        <input matInput type="number" autocomplete="off"
+                                                        <input matInput min="1" (change)="unitChange(group,i,$event.target.value)" type="number" autocomplete="off"
                                                             formControlName="units">
                                                     </mat-form-field>
                                                 </div>
@@ -550,20 +548,21 @@
                                                 <div class="bill-property">Charge</div>
                                                 <div class="editable">
                                                     <mat-form-field appearance="outline" class="w-100">
-                                                        <input matInput type="number" autocomplete="off"
-                                                            formControlName="charge"
-                                                            (change)="setTwoNumberDecimal($event)">
+                                                        <input matInput min="0" type="number" autocomplete="off"
+                                                            formControlName="charge" (change)="setTwoNumberDecimal($event)">
                                                     </mat-form-field>
                                                 </div>
                                             </div>
                                             <div class="flex">
                                                 <div class="bill-property">Payment</div>
-                                                <div class="editable"> {{group.value.payment | number : '1.2-2'}}</div>
+                                                <div class="editable">{{group.value.payment | number : '1.2-2'}}</div>
                                             </div>
                                             <div class="flex">
                                                 <div class="bill-property">Balance</div>
                                                 <div class="editable">
-                                                    {{(group.get('charge').value) | number : '1.2-2'}}</div>
+                                                    <span class="text-danger">
+                                                        {{group.get('charge').value - group.value.payment | number :
+                                                        '1.2-2'}}</span></div>
                                             </div>
                                             <div class="flex">
                                                 <div class="bill-property">Action </div>
@@ -602,11 +601,11 @@
                                                     </div>
                                                     <div class="flex">
                                                         <div class="bill-property">Modifier</div>
-                                                        <div class="value"> {{group.get('modifierList').value}}</div>
+                                                        <div class="value">{{group.get('modifierList').value}}</div>
                                                     </div>
                                                     <div class="flex">
                                                         <div class="bill-property">Unit Type</div>
-                                                        <div class="value"> {{group.get('unitType').value}}</div>
+                                                        <div class="value">{{group.get('unitType').value}}</div>
                                                     </div>
                                                     <div class="flex">
                                                         <div class="bill-property">Units</div>
@@ -629,15 +628,9 @@
                                                     </div>
                                                     <div class="flex">
                                                         <div class="bill-property">Action </div>
-                                                        <div class="value"> <a class="text-success"
-                                                                (click)="group.get('is_post_payment').value ? openDialog(true,group) : editRow(group,i)">
-                                                                Edit
-                                                            </a>
-
-                                                            <a *ngIf="i != 0" class="text-danger m-l-10"
-                                                                (click)="deleteRow(i,group)">
-                                                                Remove
-                                                            </a>
+                                                        <div class="value"> 
+                                                            <a class="text-success" (click)="group.get('is_post_payment').value ? openDialog(true,group) : editRow(group,i)">Edit</a>
+                                                            <a *ngIf="i != 0" class="text-danger m-l-10" (click)="deleteRow(i,group)">Remove</a>
                                                         </div>
                                                     </div>
                                                 </mat-card>
