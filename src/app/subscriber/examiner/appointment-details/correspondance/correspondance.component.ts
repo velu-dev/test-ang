@@ -323,6 +323,7 @@ export class BillingCorrespondanceComponent implements OnInit {
     let recipientsDocuments_ids: any = [];
     let recipientsCustom_documents_ids: any = [];
     let selected_recipients: any = [];
+    let document_ids_display_order: any = [];
     let addressEmpty = false;
     this.selection1.selected.map(res => {
       if (res.type == "custom") {
@@ -331,6 +332,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       } else {
         recipientsDocuments_ids.push(res.id)
         selected_recipients.push(res.data);
+        document_ids_display_order.push({ form_id: res.id, custom_display_order: res.custom_display_oder })
       }
       if (res.message) {
         addressEmpty = true;
@@ -343,7 +345,8 @@ export class BillingCorrespondanceComponent implements OnInit {
       custom_recipients_ids: recipientsCustom_documents_ids,
       hide_sign: signHide,
       examiner_id: this.examinerId,
-      selected_recipients: selected_recipients
+      selected_recipients: selected_recipients,
+      document_ids_display_order: document_ids_display_order,
     }
 
     if (addressEmpty) {
