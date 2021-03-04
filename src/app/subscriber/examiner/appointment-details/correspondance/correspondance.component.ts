@@ -325,6 +325,12 @@ export class BillingCorrespondanceComponent implements OnInit {
     let selected_recipients: any = [];
     let document_ids_display_order: any = [];
     let addressEmpty = false;
+
+    this.selection.selected.map(res => {
+      if (res.doc_type != "custom") {
+        document_ids_display_order.push({ form_id: res.id, custom_display_order: res.custom_display_oder })
+      }
+    })
     this.selection1.selected.map(res => {
       if (res.type == "custom") {
         recipientsCustom_documents_ids.push(res.id)
@@ -332,7 +338,6 @@ export class BillingCorrespondanceComponent implements OnInit {
       } else {
         recipientsDocuments_ids.push(res.id)
         selected_recipients.push(res.data);
-        document_ids_display_order.push({ form_id: res.id, custom_display_order: res.custom_display_oder })
       }
       if (res.message) {
         addressEmpty = true;
