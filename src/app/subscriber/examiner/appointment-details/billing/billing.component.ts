@@ -807,7 +807,7 @@ export class BilllableBillingComponent implements OnInit {
             item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
             item.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
             item.modifierTotal = 0
-            let modData = item.modifier_seed_data.map((e, i) => {
+            let modData = item.modifier_seed_data && item.modifier_seed_data.map((e, i) => {
               let presentMod = modifier.includes(e.modifier_code)
               if (presentMod) {
                 let modIndex = modifier.findIndex(m => m == e.modifier_code)
