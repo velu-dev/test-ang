@@ -292,12 +292,24 @@ export class ReportComponent implements OnInit {
   }
 
   inOutdownload(data, element, status?) {
-    console.log(element)
+    console.log(data)
     this.claimService.updateActionLog({ type: "report", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billable_item_id, "documents_ids": [element.document_id] }).subscribe(res => {
     })
     if (status == 'received') {
-      data.map(receive_doc => {
-        saveAs(receive_doc.file_url, receive_doc.file_name);
+      let sendData: any;
+      let d_ids = []
+      data.map(dd => {
+        d_ids.push(dd.document_id)
+      })
+      sendData = {
+        "claim_id": this.paramsId.claim_id,
+        "billable_item_id": this.paramsId.billId,
+        "document_category_id": 6,
+        "on_demand_service_request_id": element.id,
+        "documents_ids": d_ids
+      }
+      this.onDemandService.getZipFile(sendData).subscribe(res => {
+        saveAs(res.file_url, res.file_name);
       })
     } else {
       saveAs(data.file_url, data.file_name);
