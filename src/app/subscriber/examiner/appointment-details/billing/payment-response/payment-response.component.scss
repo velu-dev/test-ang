@@ -118,25 +118,16 @@
                 td {
                     .detail {
                         background-color: $white;
-                        position: relative;
                         display: block;
-                        &::before {
-                            content: "";
-                            background-color: $black;
-                            width: 3px;
-                            position: absolute;
-                            left: 10px;
-                            height: 50%;
-                        }
-                        &::after {
-                            content: "";
-                            background-color: $black;
-                            width: 20px;
-                            position: absolute;
-                            left: 10px;
-                            top: 50%;
-                            height: 3px;
-                        }
+                        // &::after {
+                        //     content: "";
+                        //     background-color: $black;
+                        //     width: 20px;
+                        //     position: absolute;
+                        //     left: 10px;
+                        //     top: 50%;
+                        //     height: 3px;
+                        // }
                         .expand-details-list {
                             width: 92%;
                             margin: 10px auto;
@@ -144,15 +135,51 @@
                             border: 2px solid $light-gray;
                             border-radius: 5px;
                             background-color: $table-solid;
+                            position: relative;
+                            &:last-child {
+                                &::after {
+                                    content: "";
+                                    background-color: $black;
+                                    width: 3px;
+                                    position: absolute;
+                                    left: -30px;
+                                    top: 0;
+                                    height: -moz-calc(54.3% - 0px);
+                                    height: -webkit-calc(54.3% - 0px);
+                                    height: calc(54.3% - 0px);
+                                }
+                            }
                             &::before {
                                 font-family: "Font Awesome 5 Free";
                                 font-weight: 900;
-                                content: "\f0da";
+                                content: "\f30b";
                                 position: absolute;
                                 font-size: 25px;
-                                left: 30px;
-                                top: 43.5%;
+                                left: -28px;
+                                top: 50%;
                             }
+                            &::after {
+                                content: "";
+                                background-color: $black;
+                                width: 3px;
+                                position: absolute;
+                                left: -30px;
+                                top: 0;
+                                height: -moz-calc(100% + (5px + 10px));
+                                height: -webkit-calc(100% + (5px + 10px));
+                                height: calc(100% + (5px + 10px));
+                            }
+
+                            // &::after {
+                            //     content: "";
+                            //     background-color: $black;
+                            //     width: 20px;
+                            //     position: absolute;
+                            //     left: -35px;
+                            //     top: 50%;
+                            //     height: 3px;
+                            //     margin-top: 16px;
+                            // }
                             // Error icon design
                             // &::after {
                             //     font-family: "Font Awesome 5 Free";
@@ -205,10 +232,25 @@
                                 }
                             }
                         }
-                        .expand-details-list.strike {
+                        .expand-details.strike {
                             div {
                                 .prv_ {
                                     text-decoration: line-through;
+                                }
+                                &:nth-child(5),
+                                &:last-child {
+                                    .prv_ {
+                                        text-decoration: none;
+                                    }
+                                }
+                            }
+                            &:last-child {
+                                div {
+                                    &:last-child {
+                                        .prv_ {
+                                            text-decoration: none;
+                                        }
+                                    }
                                 }
                             }
                         }

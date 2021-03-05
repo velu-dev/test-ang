@@ -47,13 +47,10 @@
                                     *ngFor="let review of paymentReviews(payIndex).controls; let reviewIndex=index">
                                     <div [formGroupName]="reviewIndex">
                                         <div class="expand-details-list" fxLayout="row wrap">
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details strike">
                                                 <div><span class="prp_">Explanation of Review</span><span
-                                                        class="prv_"><a
-                                                            class="text-ternary">EOR-12345678-person.pdf</a>
-                                                        <button mat-raised-button class="mini-btn filled-gray">
-                                                            Replace
-                                                        </button></span>
+                                                        class="prv_"><a class="text-ternary">EOR-12345678-person.pdf</a>
+                                                    </span>
                                                 </div>
                                                 <div><span class="prp_">Post Date</span><span
                                                         class="prv_">29-01-2021</span></div>
@@ -61,8 +58,12 @@
                                                         class="prv_">06-02-2021</span></div>
                                                 <div><span class="prp_">Deposit Date</span><span
                                                         class="prv_">30-01-2021</span></div>
+                                                <div><span class="prp_">Created By</span><span class="prv_">Venkatesan
+                                                        Mariyappan</span></div>
+                                                <div><span class="prp_">Created On</span><span
+                                                        class="prv_">30-01-2021</span></div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details strike">
                                                 <div><span class="prp_">Payment Amount</span><span
                                                         class="prv_">$100.00</span></div>
                                                 <div><span class="prp_">Payment Method</span><span
@@ -71,23 +72,28 @@
                                                         class="prv_">30-12-1899</span></div>
                                                 <div><span class="prp_">Penalty Paid</span><span
                                                         class="prv_">30-12-1899</span></div>
+                                                <div><span class="prp_">Updated By</span><span class="prv_">Rajan
+                                                        Mariyappan</span></div>
+                                                <div><span class="prp_">Updated On</span><span
+                                                        class="prv_">30-12-1899</span></div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details strike">
                                                 <div><span class="prp_">Reference Number</span><span
                                                         class="prv_">7863485435</span></div>
                                                 <div><span class="prp_">Interest Charged</span><span
                                                         class="prv_"></span></div>
                                                 <div><span class="prp_">Interest Paid</span><span class="prv_"></span>
                                                 </div>
-                                                <div><span class="prp_">Void,Void Reason</span><span
-                                                        class="prv_"></span></div>
+                                                <div><span class="prp_">Void Reason</span><span class="prv_">Void Reason Comes Here</span>
+                                                </div>
                                             </div>
                                             <div fxFlex="100">
-                                                <button mat-raised-button class="filled-gray m-t-15" (click)="openDialog()">Edit Response</button>
+                                                <button mat-raised-button class="filled-gray m-t-15"
+                                                    (click)="openDialog()">Edit Response</button>
 
                                             </div>
                                         </div>
-                                        <!-- <div class="expand-details-list" fxLayout="row wrap">
+                                        <div class="expand-details-list" fxLayout="row wrap">
                                             <div fxFlex="100">
                                                 <div fxLayout="row wrap">
                                                     <div class="main-title p-l-0 p-b-10" fxFlex="100">First Bill Submission Edit
@@ -221,7 +227,7 @@
                                                 <button class="outline-success" (click)="saveReview()"
                                                     mat-stroked-button>Save</button>
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div>
                             </td>
