@@ -132,7 +132,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
     })
   }
-  tracingpopupData = [];
+  tracingpopupData:any = [];
   openTracing(element) {
     this.tracingpopupData = [];
     this.onDemandService.getTracingPopUp(element.id, this.claim_id, this.billableId).subscribe(res => {

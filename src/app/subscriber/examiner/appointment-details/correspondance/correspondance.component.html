@@ -371,7 +371,7 @@
               <span *ngIf="column == 'tracking_number'">{{element?.tracking_number | mask : "0000 0000 0000
                 0000 0000 0000 0000"}}</span>
               <span *ngIf="column == 'more'">
-                <button *ngIf="element.istracing_available" [matMenuTriggerFor]="popupMenu" class="more-btn"
+                <button *ngIf="element?.istracing_available" [matMenuTriggerFor]="popupMenu" class="more-btn"
                   (click)="openTracing(element)">View Tracing <i class="fa fa-caret-down"></i></button>
               </span>
               <mat-menu #popupMenu="matMenu" yPosition="above" class="custom-menu" [overlapTrigger]="false">
