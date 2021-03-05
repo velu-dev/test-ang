@@ -374,14 +374,14 @@
                 <button *ngIf="element.istracing_available" [matMenuTriggerFor]="popupMenu" class="more-btn"
                   (click)="openTracing(element)">View Tracing <i class="fa fa-caret-down"></i></button>
               </span>
-              <mat-menu #popupMenu="matMenu" class="custom-menu" [overlapTrigger]="false">
+              <mat-menu #popupMenu="matMenu" yPosition="above" class="custom-menu" [overlapTrigger]="false">
                 <ngx-spinner type="ball-clip-rotate" size="medium"></ngx-spinner>
                 <div (click)="$event.stopPropagation()" class="more-details">
                   <div class="main-title">Internal Tracing # : {{tracingpopupData?.internal_tracing_number}}</div>
                   <ul>
                     <li *ngFor="let data of tracingpopupData?.tracing_details">
                       <div>{{data.tracing_date | date:'MM-dd-yyyy'}}</div>
-                      <div *ngFor="let details of data?.details">{{details.tracing_detail}}</div>
+                      <span *ngFor="let details of data?.details">{{details.tracing_detail}}</span>
                     </li>
                   </ul>
                 </div>
