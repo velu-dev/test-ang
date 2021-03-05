@@ -19,7 +19,7 @@ export class DeoComponent implements OnInit {
   attroneylist = [];
   @Input('state') states;
   filteredDeu: Observable<any[]>;
-  deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
+  deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")]));
   deuDetails = [];
   deuId = "";
   id: any;

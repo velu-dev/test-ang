@@ -494,16 +494,18 @@ export class NewClaimComponent implements OnInit {
           if (res == '') {
             this.filteredClaimant.data = []
           } else {
-            let input = [];
-            res.split("").map(inp => {
-              if (inp == "'") {
-                input.push("'" + "'")
-              } else {
-                input.push(inp)
-              }
-            })
-            this.claimService.searchClaimant({ basic_search: input.join(""), isadvanced: this.searchStatus }).subscribe(response =>
-              this.filteredClaimant = response)
+            if (res) {
+              let input = [];
+              res.split("").map(inp => {
+                if (inp == "'") {
+                  input.push("'" + "'")
+                } else {
+                  input.push(inp)
+                }
+              });
+              this.claimService.searchClaimant({ basic_search: input.join(""), isadvanced: this.searchStatus }).subscribe(response =>
+                this.filteredClaimant = response)
+            }
           }
         }
       });
@@ -669,7 +671,7 @@ export class NewClaimComponent implements OnInit {
       InsuranceAdjuster: this.formBuilder.group({
         id: [null],
         payor_id: [null],
-        company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")])],
+        company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")])],
         name: [null],
         street1: [null],
         street2: [null],
@@ -695,7 +697,7 @@ export class NewClaimComponent implements OnInit {
       }),
       ApplicantAttorney: this.formBuilder.group({
         id: [null],
-        company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")])],
+        company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")])],
         name: [null],
         street1: [null],
         street2: [null],
@@ -708,7 +710,7 @@ export class NewClaimComponent implements OnInit {
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [null],
-        company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")])],
+        company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")])],
         name: [null],
         email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         street1: [null],
@@ -721,7 +723,7 @@ export class NewClaimComponent implements OnInit {
       }),
       DEU: this.formBuilder.group({
         id: [null],
-        name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")])],
+        name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")])],
         street1: [null],
         street2: [null],
         city: [null],

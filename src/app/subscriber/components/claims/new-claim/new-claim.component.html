@@ -532,7 +532,6 @@
                                         </mat-option>
                                     </mat-optgroup>
                                 </mat-autocomplete>
-                                <mat-error>Please enter valid claim administrator</mat-error>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -628,7 +627,7 @@
                                 fxFlex.xs="100">
                                 <mat-label>Name</mat-label>
                                 <input type="text" matInput placeholder="Law Firm Name" formControlName="name"
-                                    [matAutocomplete]="empAuto">
+                                    [matAutocomplete]="empAuto" autocomplete="off">
                                 <button mat-button matSuffix mat-icon-button aria-label="Clear"
                                     (click)="clearAutoComplete('emp')" matTooltip="Clear Address"
                                     matTooltipPosition="above">

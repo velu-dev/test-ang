@@ -51,7 +51,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     // })
     this.ApplicantAttorney = this.formBuilder.group({
       id: [],
-      company_name: [{ value: null, disabled: true }, Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")])],
+      company_name: [{ value: null, disabled: true }, Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")])],
       name: [{ value: null, disabled: true }],
       street1: [{ value: null, disabled: true }],
       street2: [{ value: null, disabled: true }],
