@@ -971,8 +971,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.billable_item.value.appointment.examiner_id = this.examinerId;
-    this.billable_item.value.documents_received = selectedOrderIds
-    this.examinerService.updateBillableItem(this.billable_item.value).subscribe(res => {
+    this.billable_item.value.documents_received = selectedOrderIds;
+    this.billable_item.value.id = this.examinationDetails.appointments.id
+    this.examinerService.updateBillableItem(this.billableData.id, this.billable_item.value).subscribe(res => {
       this.isEditBillableItem = false;
       this.billable_item.disable();
       this.alertService.openSnackBar(res.message, "success");
