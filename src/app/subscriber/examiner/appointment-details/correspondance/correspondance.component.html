@@ -374,14 +374,14 @@
                 <button *ngIf="element?.istracing_available" [matMenuTriggerFor]="popupMenu" class="more-btn"
                   (click)="openTracing(element)">View Tracing <i class="fa fa-caret-down"></i></button>
               </span>
-              <mat-menu #popupMenu="matMenu" class="custom-menu" [overlapTrigger]="false">
+              <mat-menu #popupMenu="matMenu" yPosition="above" class="custom-menu" [overlapTrigger]="false">
                 <ngx-spinner type="ball-clip-rotate" size="medium"></ngx-spinner>
                 <div (click)="$event.stopPropagation()" class="more-details">
                   <div class="main-title">Internal Tracing # : {{tracingpopupData?.internal_tracing_number}}</div>
                   <ul>
                     <li *ngFor="let data of tracingpopupData?.tracing_details">
                       <div>{{data.tracing_date | date:'MM-dd-yyyy'}}</div>
-                      <div *ngFor="let details of data?.details">{{details.tracing_detail}}</div>
+                      <span *ngFor="let details of data?.details">{{details.tracing_detail}}</span>
                     </li>
                   </ul>
                 </div>
@@ -396,8 +396,22 @@
                 <div><span>Ref #</span>{{element?.request_reference_id}}</div>
                 <div><span>Receiver Name</span>{{element?.receiver_name}}</div>
                 <div><span>Tracking Number</span>{{element?.tracking_number}}</div>
-                <div><span>View Details</span>View Details <i class="fa fa-caret-down"></i></div>
-
+                <div><span>View Details</span>
+                  <button *ngIf="element?.istracing_available" [matMenuTriggerFor]="popupMenu1" class="more-btn"
+                    (click)="openTracing(element)">View Tracing <i class="fa fa-caret-down"></i></button>
+                </div>
+                <mat-menu #popupMenu1="matMenu" yPosition="above" class="custom-menu" [overlapTrigger]="false">
+                  <ngx-spinner type="ball-clip-rotate" size="medium"></ngx-spinner>
+                  <div (click)="$event.stopPropagation()" class="more-details">
+                    <div class="main-title">Internal Tracing # : {{tracingpopupData?.internal_tracing_number}}</div>
+                    <ul>
+                      <li *ngFor="let data of tracingpopupData?.tracing_details">
+                        <div>{{data.tracing_date | date:'MM-dd-yyyy'}}</div>
+                        <span *ngFor="let details of data?.details">{{details.tracing_detail}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </mat-menu>
               </div>
             </div>
           </td>

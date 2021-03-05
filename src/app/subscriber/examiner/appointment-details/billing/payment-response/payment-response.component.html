@@ -1,4 +1,4 @@
-<mat-card class="m-card m-t-10">
+<mat-card class="m-card m-t-20">
     <mat-card-header>
         <div class="content-wrapper-main-title">Payment Responses</div>
         <span class="spacer"></span>
@@ -25,7 +25,8 @@
                     <thead *ngFor="let payemnt of payments().controls; let payIndex=index" [formGroupName]="payIndex">
                         <tr>
                             <td>
-                                <mat-icon class="text-success" (click)="openElement(payemnt.get('id').value)">{{expandId == payemnt.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                                <mat-icon class="text-success" (click)="openElement(payemnt.get('id').value)">{{expandId
+                                    == payemnt.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon>
                             </td>
                             <td>{{payemnt.get('bill_id').value}}</td>
                             <td>First</td>
@@ -35,7 +36,9 @@
                             <td>$100.00</td>
                             <td class="text-danger">$3416.00</td>
                             <td class="text-success">Partially Paid</td>
-                            <td><button mat-raised-button class="mini-btn filled-gray" (click)="paymentReviews(payIndex)?.controls?.length == 0 ? addReviews(payIndex) : ''">Add Response</button></td>
+                            <td><button mat-raised-button class="mini-btn filled-gray"
+                                    (click)="paymentReviews(payIndex)?.controls?.length == 0 ? addReviews(payIndex) : ''">Add
+                                    Response</button></td>
                         </tr>
 
                         <tr formArrayName="reviews" *ngIf="expandId == payemnt.get('id').value">
@@ -47,7 +50,10 @@
                                             <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details">
                                                 <div><span class="prp_">Explanation of Review</span><span
                                                         class="prv_"><a
-                                                            class="text-ternary">EOR-12345678-person.pdf</a></span>
+                                                            class="text-ternary">EOR-12345678-person.pdf</a>
+                                                        <button mat-raised-button class="mini-btn filled-gray">
+                                                            Replace
+                                                        </button></span>
                                                 </div>
                                                 <div><span class="prp_">Post Date</span><span
                                                         class="prv_">29-01-2021</span></div>
@@ -82,6 +88,28 @@
                                             </div>
                                         </div>
                                         <!-- <div class="expand-details-list" fxLayout="row wrap">
+                                            <div fxFlex="100">
+                                                <div fxLayout="row wrap">
+                                                    <div class="main-title p-l-0 p-b-10" fxFlex="100">First Bill Submission Edit
+                                                        Reason</div>
+                                                    <mat-radio-group aria-label="Select an option" fxFlex="100"
+                                                        fxFlex.sm="100" fxFlex.xs="100">
+                                                        <mat-radio-button value="1" class="m-r-15">Void Payment
+                                                        </mat-radio-button>
+                                                        <mat-radio-button value="2" class="m-r-15">Adjust Payment
+                                                        </mat-radio-button>
+                                                        <mat-radio-button value="3">Correction</mat-radio-button>
+                                                    </mat-radio-group>
+                                                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+                                                        <mat-form-field appearance="outline" class="w-100 m-t-10">
+                                                            <mat-label>Reason</mat-label>
+                                                            <input matInput placeholder="Reason">
+                                                            <mat-error>Error message comes here...</mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="main-title m-t-10 p-l-0 p-b-10">Add new response</div>
+                                                </div>
+                                            </div>
                                             <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
                                                 class="expand-details editable">
                                                 <div>
@@ -187,25 +215,11 @@
                                                         </mat-form-field>
                                                     </span>
                                                 </div>
-                                                <div>
-                                                    <span class="prp_">Void</span>
-                                                    <mat-radio-group aria-label="Select an option">
-                                                        <mat-radio-button value="1" class="m-r-10">Yes
-                                                        </mat-radio-button>
-                                                        <mat-radio-button value="2">No</mat-radio-button>
-                                                    </mat-radio-group>
-                                                </div>
-
-                                                <div>
-                                                    <mat-form-field appearance="outline" class="w-100">
-                                                        <input matInput type="text" placeholder="Void Reason"
-                                                            autocomplete="off">
-                                                    </mat-form-field>
-                                                </div>
                                             </div>
                                             <div class="w-100 text-center p-t-10">
                                                 <button class="outline-danger m-r-10" mat-stroked-button>Cancel</button>
-                                                <button class="outline-success" (click)="saveReview()" mat-stroked-button>Save</button>
+                                                <button class="outline-success" (click)="saveReview()"
+                                                    mat-stroked-button>Save</button>
                                             </div>
                                         </div> -->
                                     </div>

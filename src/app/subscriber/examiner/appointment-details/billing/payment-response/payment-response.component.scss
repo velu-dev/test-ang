@@ -164,6 +164,12 @@
                             //     left: 20px;
                             //     top: 41%;
                             // }
+                            .main-title {
+                                padding-bottom: 0;
+                                border-bottom: 1px solid $light_color;
+                                margin-bottom: 10px;
+                                width: $width-100;
+                            }
                             .expand-details {
                                 div {
                                     padding: 5px 0;

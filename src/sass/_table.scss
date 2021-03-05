@@ -642,9 +642,14 @@ tr.detail-row {
   .mat-menu-panel.custom-menu {
     max-width: 500px;
     min-width: 500px;
+    @media only screen and (max-width: 568px) {
+      max-width: 380px;
+      min-width: 380px;
+      width: 100%;
+    }
     .mat-menu-content {
       box-shadow: $box-shadow-1;
-      padding:0;
+      padding: 0;
       .more-details {
         .main-title {
           background-color: $info-bg;
@@ -662,37 +667,66 @@ tr.detail-row {
           max-height: 300px;
           overflow-y: auto;
           margin: 0;
-          &::before {
-            content: "";
-            // background-color: $info-bg;
-            border-left: 2px dashed $info;
-            width: 3px;
-            height: 85%;
-            position: absolute;
-            left: 10px;
-            top: 16px;
-          }
+          // &::before {
+          //   content: "";
+          //   // background-color: $info-bg;
+          //   border-left: 2px dashed $info;
+          //   width: 3px;
+          //   height: 88%;
+          //   position: absolute;
+          //   left: 10px;
+          //   top: 16px;
+          // }
           li {
             list-style-type: none;
             padding-bottom: 18px;
             font-size: $font-size-1;
+            position: relative;
+            &:last-child {
+              &::after {
+                content: "";
+                border-left: 0px dashed $info;
+                width: 3px;
+                height: 100%;
+                position: absolute;
+                left: -13px;
+                top: 8px;
+              }
+            }
             &::before {
-              content: '';
+              content: "";
               position: absolute;
-              // top: 10px;
               margin-top: 6px;
-              left: 5px;
+              left: -18px;
               width: 10px;
               height: 10px;
               border: 1px solid $info;
               background: $white;
               border-radius: 50%;
+              z-index: 1;
+            }
+            &::after {
+              content: "";
+              border-left: 2px dashed $info;
+              width: 3px;
+              height: 100%;
+              position: absolute;
+              left: -13px;
+              top: 8px;
             }
             div {
               font-weight: $font-weight-bold;
               color: $black;
               display: block;
               width: $width-100;
+            }
+            span {
+              width: 100%;
+              display: block;
+              margin-bottom: 5px;
+              @media only screen and (max-width: 568px) {
+                margin-bottom: 10px;
+              }
             }
           }
         }
