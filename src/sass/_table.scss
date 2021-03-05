@@ -643,8 +643,9 @@ tr.detail-row {
     max-width: 500px;
     min-width: 500px;
     @media only screen and (max-width: 568px) {
-      max-width: 320;
-      min-width: 320;
+      max-width: 380px;
+      min-width: 380px;
+      width: 100%;
     }
     .mat-menu-content {
       box-shadow: $box-shadow-1;
@@ -722,6 +723,10 @@ tr.detail-row {
             span {
               width: 100%;
               display: block;
+              margin-bottom: 5px;
+              @media only screen and (max-width: 568px) {
+                margin-bottom: 10px;
+              }
             }
           }
         }
