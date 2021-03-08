@@ -728,8 +728,12 @@ export class NewExaminerUserComponent implements OnInit {
       if (this.billingProviderForm.touched)
         this.billingPrviderSubmit();
     } else if (this.tab == 3) {
-      if (this.renderingForm.touched || this.licenseChangeStatus)
+      if (this.renderingForm.touched || this.licenseChangeStatus){
         this.renderingFormSubmit();
+      }
+      if(this.texonomySearch.touched){
+        this.renderingFormSubmit();
+      }
     } else if (this.tab == 4) {
       // if (this.loca.touched)
       // this.locationSubmit();
@@ -1069,7 +1073,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   //existing location
-  addresssearch = new FormControl("", Validators.compose([Validators.pattern("^[a-zA-Z0-9-& ]{0,100}$")]));
+  addresssearch = new FormControl("", Validators.compose([Validators.pattern("^[a-zA-Z0-9-&, ]{0,100}$")]));
   filteredOptions: any;
   locationData: any = null;
   national_provider_identifier: any = null;
