@@ -1,13 +1,36 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
+import { DateAdapter, MatDialog, MatDialogRef, MatTableDataSource, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, NativeDateAdapter } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
+export class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'MM-dd-yyyy', this.locale);
+    } else {
+      return date.toDateString();
+    }
+  }
+}
+export const PICK_FORMATS = {
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
+  display: {
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  }
+};
 @Component({
   selector: 'app-payment-response',
   templateUrl: './payment-response.component.html',
@@ -19,6 +42,11 @@ import { DialogData } from 'src/app/shared/components/dialogue/dialogue.componen
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
+  providers: [
+    { provide: DateAdapter, useClass: PickDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }
+  ]
 })
 
 export class PaymentResponseComponent implements OnInit {
@@ -37,7 +65,12 @@ export class PaymentResponseComponent implements OnInit {
   filterValue: string;
   paymentForm: FormGroup;
   @Input() billingData: any;
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver) {
+  paymentTypes: any = ["Paper Check", "EFT", "Virtual Credit Card"];
+  currentDate = new Date();
+  minimumDate = new Date(1900, 0, 1);
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
+    private alertService: AlertService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -54,7 +87,7 @@ export class PaymentResponseComponent implements OnInit {
     for (var i in [0, 1]) {
       this.addPayment();
       this.payments().get(i).patchValue({ id: i, bill_id: i, submission: i, showStatus: false })
-     // this.addReviews(+i)
+      this.addReviews(+i)
     }
   }
 
@@ -84,7 +117,7 @@ export class PaymentResponseComponent implements OnInit {
 
 
   ngOnInit() {
-console.log(this.billingData)
+    console.log(this.billingData)
 
 
 
@@ -110,10 +143,19 @@ console.log(this.billingData)
 
   newReview(): FormGroup {
     return this.fb.group({
+      payment_amount: '',
+      reference_no: '',
+      effective_date: '',
+      payment_method: '',
       post_date: '',
-      effictive_date: '',
       deposit_date: '',
-      payment_amount: ''
+      penalty_charged: 0,
+      penalty_paid: 0,
+      interest_charged: 0,
+      interest_paid: 0,
+      void_type: '',
+      void_reason: '',
+      paper_eor_document_id: null
     })
   }
 
@@ -140,6 +182,30 @@ console.log(this.billingData)
 
   showReview() {
 
+  }
+
+  selectedFile: File;
+  addEOR(event, group?) {
+    this.selectedFile = null;
+    let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
+
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+      if (FileSize > 30) {
+        this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
+        return;
+      }
+
+      this.selectedFile = event.target.files[0];
+      let file = {
+        file: event.target.files[0],
+        file_name: event.target.files[0].name
+      }
+      console.log(this.selectedFile)
+    } else {
+      this.selectedFile = null;
+      this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
+    }
   }
 
   //Popup's list
@@ -208,15 +274,20 @@ export class VoidPayment {
   }
 
 }
+export interface PeriodicElement2 {
+  name: string;
+  action: string;
+}
 @Component({
   selector: 'second-bill-review',
   templateUrl: '../second-bill-review.html',
 })
 export class SecondBillReview {
   displayedColumns: string[] = ['select', 'item', 'procedure_code_1', 'modifier_1', 'unit', 'charges', 'first_submission', 'balances'];
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource(ELEMENT_DATA1);
   selection = new SelectionModel(true, []);
-
+  displayedColumns1: string[] = ['name', 'action'];
+  dataSource1 = ELEMENT_DATA2;
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -248,11 +319,13 @@ export class SecondBillReview {
 
 }
 const ELEMENT_DATA1 = [
-  { "id": 132, "bill_id": "CMBN10009320", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "", },
-  { "id": 131, "bill_id": "CMBN10009480", "submission": "Second", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "", },
+    {item: 'QME', procedure_code_1: 'ML201', modifier_1: '93', unit: '1', charges:'2200.00', first_submission:'0', balances:'2200.00'},
+    {item: 'Excess Report Pages', procedure_code_1: '', modifier_1: '', unit: '758', charges:'1516.00', first_submission:'0', balances:'1516.00'},
+  ];
 
-];
-
+  const ELEMENT_DATA2: PeriodicElement2[] = [
+    {action:'', name: 'Document_filename.pdf'},
+  ];
 
 
 @Component({
@@ -263,7 +336,7 @@ export class EditResponse {
 
   constructor(
     public dialogRef: MatDialogRef<EditResponse>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -280,7 +353,7 @@ export class LateResponse {
 
   constructor(
     public dialogRef: MatDialogRef<LateResponse>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   onNoClick(): void {
     this.dialogRef.close();

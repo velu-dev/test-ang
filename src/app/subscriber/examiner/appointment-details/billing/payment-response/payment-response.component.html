@@ -119,36 +119,45 @@
                                             <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
                                                 class="expand-details editable">
                                                 <div>
-                                                    <span class="prp_">Explanation of Review</span>
+                                                    <span class="prp_">Explanation of Review *</span>
                                                     <span class="prv_">
                                                         <button class="filled-gray mini-btn"
-                                                            mat-raised-button>Upload</button>
+                                                            mat-raised-button (click)="uploader.click()">Upload</button>
+                                                            <input type="file" #uploader hidden
+                                                            (change)="addEOR($event,reviews)"
+                                                            accept=".pdf, .jpg, .jpeg, .png" required>
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span class="prp_">Post Date</span>
+                                                    <span class="prp_">Post Date *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
                                                             <input formControlName="post_date" matInput type="text"
-                                                                placeholder="" autocomplete="off">
+                                                                placeholder="" autocomplete="off" [min]="minimumDate" [matDatepicker]="post_date">
+                                                                <mat-datepicker-toggle matSuffix [for]="post_date"></mat-datepicker-toggle>
+                                                                <mat-datepicker #post_date></mat-datepicker>    
                                                         </mat-form-field>
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span class="prp_">Effective Date</span>
+                                                    <span class="prp_">Effective Date *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input matInput type="text" placeholder=""
-                                                                autocomplete="off">
+                                                            <input formControlName="effective_date" matInput type="text"
+                                                                autocomplete="off" placeholder="" [min]="minimumDate" [matDatepicker]="effective">
+                                                                <mat-datepicker-toggle matSuffix [for]="effective"></mat-datepicker-toggle>
+                                                                <mat-datepicker #effective></mat-datepicker>
                                                         </mat-form-field>
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span class="prp_">Deposit Date</span>
+                                                    <span class="prp_">Deposit Date *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input matInput type="text" placeholder=""
-                                                                autocomplete="off">
+                                                            <input formControlName="deposit_date" matInput type="text" placeholder=""
+                                                                autocomplete="off" [min]="minimumDate" [max]="currentDate" [matDatepicker]="deposited">
+                                                                <mat-datepicker-toggle matSuffix [for]="deposited"></mat-datepicker-toggle>
+                                                                <mat-datepicker #deposited></mat-datepicker>
                                                         </mat-form-field>
                                                     </span>
                                                 </div>
@@ -156,20 +165,23 @@
                                             <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
                                                 class="expand-details editable">
                                                 <div>
-                                                    <span class="prp_">Payment Amount</span>
+                                                    <span class="prp_">Payment Amount *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input matInput type="text" placeholder=""
+                                                            <input formControlName="payment_amount" matInput type="number" placeholder=""
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span class="prp_">Payment Method</span>
+                                                    <span class="prp_">Payment Method *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input matInput type="text" placeholder=""
-                                                                autocomplete="off">
+                                                            <mat-select formControlName="payment_method">
+                                                                <mat-option *ngFor="let payment of paymentTypes" [value]="payment">
+                                                                    {{payment}}
+                                                                </mat-option>
+                                                            </mat-select>
                                                         </mat-form-field>
                                                     </span>
                                                 </div>
@@ -177,7 +189,7 @@
                                                     <span class="prp_">Penalty Charged</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input matInput type="text" placeholder=""
+                                                            <input formControlName="penalty_charged" matInput type="number" placeholder=""
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
@@ -186,7 +198,7 @@
                                                     <span class="prp_">Penalty Paid</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input matInput type="text" placeholder=""
+                                                            <input formControlName="penalty_paid" matInput type="number" placeholder=""
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
@@ -195,10 +207,10 @@
                                             <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
                                                 class="expand-details editable">
                                                 <div>
-                                                    <span class="prp_">Reference Number</span>
+                                                    <span class="prp_">Reference Number *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input matInput type="text" placeholder=""
+                                                            <input formControlName="reference_no" matInput type="text" placeholder=""
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
@@ -207,7 +219,7 @@
                                                     <span class="prp_">Interest Charged</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input matInput type="text" placeholder=""
+                                                            <input formControlName="interest_charged" matInput type="number" placeholder=""
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
@@ -216,7 +228,7 @@
                                                     <span class="prp_">Interest Paid</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input matInput type="text" placeholder=""
+                                                            <input formControlName="interest_paid" matInput type="number" placeholder=""
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
@@ -240,7 +252,7 @@
         <div fxLayout="row wrap" class="m-t-15">
             <button mat-raised-button class="filled-gray m-r-5" (click)="openCloseBillDialog()">Close Bill</button>
             <button mat-raised-button class="filled-gray m-r-5" (click)="openLateResponse()">Late Response</button>
-            <button mat-raised-button class="filled-gray m-r-5" disabled>Second Bill Review</button>
+            <button mat-raised-button class="filled-gray m-r-5" (click)="openSecondBillReviewDialog()">Second Bill Review</button>
             <button mat-raised-button class="filled-gray" disabled>Independent Bill Review</button>
 
         </div>
