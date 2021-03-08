@@ -366,7 +366,7 @@ export class BilllableBillingComponent implements OnInit {
     console.log(color);
     const head = document.getElementsByTagName("head")[0];
     const css = `
-  .progress .mat-progress-bar-fill::after {
+  .progress-status .mat-progress-bar-fill::after {
     background-color: ${color} !important;
   }  `;
     this.styleElement.innerHTML = "";
