@@ -353,7 +353,7 @@
 <div fxLayout="row wrap" class="traking-details">
   <div fxFlex="100" class="m-t-20">
     <div class="main-title m-b-10">Tracking Details</div>
-    <div class="user-detail vertical-fixed mh-auto">
+    <div class="user-detail vertical-fixed mh-auto default-cursor">
       <table mat-table [dataSource]="dataSource1" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
         <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplays; let i=index">
           <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnNames[i] == 'Action'">
@@ -379,6 +379,10 @@
                 <div (click)="$event.stopPropagation()" class="more-details">
                   <div class="main-title">Internal Tracing # : {{tracingpopupData?.internal_tracing_number}}</div>
                   <ul>
+                    <li *ngFor="let data of tracingpopupData?.tracing_details">
+                      <div>{{data.tracing_date | date:'MM-dd-yyyy'}}</div>
+                      <span *ngFor="let details of data?.details">{{details.tracing_detail}}</span>
+                    </li>
                     <li *ngFor="let data of tracingpopupData?.tracing_details">
                       <div>{{data.tracing_date | date:'MM-dd-yyyy'}}</div>
                       <span *ngFor="let details of data?.details">{{details.tracing_detail}}</span>
